@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export default function DiscoveryV1Page() {
   const [company, setCompany] = useState("");
   const [website, setWebsite] = useState("");
@@ -10,10 +12,12 @@ export default function DiscoveryV1Page() {
   const [messyInput, setMessyInput] = useState("");
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [loadingStep, setLoadingStep] = useState(0);
   const [showWhy, setShowWhy] = useState(false);
 
   async function runInvestigation() {
     setLoading(true);
+    setLoadingStep(1);
     setResult(null);
     setShowWhy(false);
 
@@ -24,6 +28,17 @@ export default function DiscoveryV1Page() {
     });
 
     const data = await response.json();
+
+    await sleep(650);
+    setLoadingStep(2);
+    await sleep(650);
+    setLoadingStep(3);
+    await sleep(650);
+    setLoadingStep(4);
+    await sleep(650);
+    setLoadingStep(5);
+    await sleep(500);
+
     setResult(data);
     setLoading(false);
   }
@@ -55,7 +70,24 @@ export default function DiscoveryV1Page() {
           <span style={pillStyle}>Discovery V1</span>
         </header>
 
-        {!result && (
+        {loading && (
+          <section style={loadingPanelStyle}>
+            <p style={eyebrowStyle}>Investigation forming</p>
+            <h1 style={resultTitleStyle}>
+              {loadingStep === 1 && "Evidence is surfacing."}
+              {loadingStep === 2 && "Patterns are connecting."}
+              {loadingStep === 3 && "Disagreements are being tested."}
+              {loadingStep === 4 && "Understanding is crystallizing."}
+              {loadingStep === 5 && "Understanding emerged."}
+            </h1>
+            <p style={bodyStyle}>
+              Discovery is moving from evidence to patterns to a current belief.
+            </p>
+            <Organism score={Math.min(loadingStep * 20, 90)} />
+          </section>
+        )}
+
+        {!result && !loading && (
           <>
             <section style={heroIntroStyle}>
               <p style={eyebrowStyle}>Discovery Alpha</p>
@@ -83,7 +115,7 @@ export default function DiscoveryV1Page() {
               />
 
               <button style={buttonStyle} onClick={runInvestigation} disabled={loading}>
-                {loading ? "Building understanding..." : "Begin investigation"}
+                Begin investigation
               </button>
             </section>
           </>
@@ -528,6 +560,16 @@ const pillStyle: React.CSSProperties = {
 const heroIntroStyle: React.CSSProperties = {
   maxWidth: 900,
   margin: "80px auto 40px",
+  textAlign: "center",
+};
+
+const loadingPanelStyle: React.CSSProperties = {
+  maxWidth: 900,
+  margin: "90px auto",
+  border: "1px solid rgba(229,189,98,0.22)",
+  borderRadius: 34,
+  padding: 42,
+  background: "rgba(229,189,98,0.06)",
   textAlign: "center",
 };
 
