@@ -2753,3 +2753,349 @@ body:has(.organism-viewer) {
     height: 560px;
   }
 }
+
+/* Sprint 18C — Explainable Belief Cards */
+
+.discovery-v2 .explainable-belief-list {
+  display: grid;
+  gap: 18px;
+}
+
+.discovery-v2 .explainable-belief-card {
+  border: 1px solid rgba(247, 239, 226, 0.12);
+  border-radius: 28px;
+  padding: 28px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.025));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+}
+
+.discovery-v2 .explainable-belief-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.discovery-v2 .explainable-belief-card h3 {
+  margin: 0;
+  color: #f7f1e7;
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+
+.discovery-v2 .belief-confidence-pill {
+  flex: 0 0 auto;
+  border: 1px solid rgba(217, 183, 112, 0.38);
+  border-radius: 999px;
+  padding: 10px 14px;
+  color: #d9b770;
+  background: rgba(217, 183, 112, 0.08);
+  font-weight: 800;
+}
+
+.discovery-v2 .belief-explanation {
+  margin: 18px 0 0;
+  max-width: 880px;
+  color: rgba(247, 241, 231, 0.72);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.discovery-v2 .belief-explanation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.discovery-v2 .belief-section {
+  border: 1px solid rgba(247, 239, 226, 0.1);
+  border-radius: 20px;
+  padding: 18px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.discovery-v2 .belief-section span {
+  display: block;
+  margin-bottom: 10px;
+  color: #d9b770;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.discovery-v2 .belief-section ul {
+  margin: 0;
+  padding-left: 18px;
+  color: rgba(247, 241, 231, 0.74);
+  line-height: 1.5;
+}
+
+.discovery-v2 .belief-section li + li {
+  margin-top: 8px;
+}
+
+.discovery-v2 .belief-section p {
+  margin: 0;
+  color: rgba(247, 241, 231, 0.58);
+  line-height: 1.5;
+}
+
+.discovery-v2 .belief-trace-button {
+  margin-top: 20px;
+  border: 1px solid rgba(217, 183, 112, 0.4);
+  border-radius: 999px;
+  background: rgba(217, 183, 112, 0.07);
+  color: #f7f1e7;
+  padding: 13px 18px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  .discovery-v2 .belief-explanation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .discovery-v2 .explainable-belief-header {
+    display: grid;
+  }
+}
+
+/* Sprint 18C — Unified Executive Briefing */
+
+.executive-briefing {
+  width: min(1440px, calc(100vw - 48px));
+  margin: 0 auto;
+  padding: 72px 0 120px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 72px;
+}
+
+.briefing-main {
+  display: grid;
+  gap: 28px;
+}
+
+.briefing-hero h1 {
+  margin: 8px 0 22px;
+  color: #f7f1e7;
+  font-size: clamp(48px, 6vw, 92px);
+  line-height: 0.92;
+  letter-spacing: -0.07em;
+}
+
+.briefing-hero p {
+  max-width: 860px;
+  color: rgba(247, 241, 231, 0.76);
+  font-size: 20px;
+  line-height: 1.48;
+}
+
+.briefing-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.briefing-meta span,
+.organism-vitals-clean div {
+  border: 1px solid rgba(217, 183, 112, 0.22);
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: rgba(247, 241, 231, 0.72);
+  background: rgba(217, 183, 112, 0.06);
+}
+
+.briefing-primary-button {
+  border: 1px solid rgba(217, 183, 112, 0.44);
+  border-radius: 999px;
+  background: rgba(217, 183, 112, 0.08);
+  color: #f7f1e7;
+  padding: 14px 20px;
+  font-size: 16px;
+}
+
+.briefing-primary-button.full {
+  width: 100%;
+}
+
+.briefing-panel,
+.briefing-organism-card {
+  border: 1px solid rgba(247, 239, 226, 0.12);
+  border-radius: 30px;
+  padding: 28px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.025));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+}
+
+.briefing-panel h2 {
+  margin: 0 0 12px;
+  color: #f7f1e7;
+  font-size: clamp(30px, 3vw, 48px);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.belief-explainer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.briefing-block {
+  border: 1px solid rgba(247, 239, 226, 0.1);
+  border-radius: 22px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.briefing-block span,
+.hypothesis-clean span,
+.delta-narrative-list span {
+  display: block;
+  margin-bottom: 10px;
+  color: #d9b770;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.briefing-block h3,
+.hypothesis-clean h3 {
+  margin: 0;
+  color: #f7f1e7;
+  font-size: 22px;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.briefing-block p,
+.briefing-block li,
+.hypothesis-clean p,
+.briefing-muted {
+  color: rgba(247, 241, 231, 0.66);
+  line-height: 1.5;
+}
+
+.briefing-block ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.hypothesis-list-clean {
+  display: grid;
+  gap: 14px;
+}
+
+.hypothesis-clean {
+  border: 1px solid rgba(247, 239, 226, 0.1);
+  border-radius: 22px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.delta-narrative-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.delta-narrative-list div {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 14px;
+  align-items: start;
+  border-top: 1px solid rgba(247, 239, 226, 0.08);
+  padding-top: 14px;
+}
+
+.delta-narrative-list p {
+  margin: 0;
+  color: rgba(247, 241, 231, 0.72);
+  line-height: 1.5;
+}
+
+.briefing-organism-column {
+  position: relative;
+}
+
+.briefing-organism-card {
+  position: sticky;
+  top: 32px;
+}
+
+.briefing-organism-preview {
+  height: 220px;
+  display: grid;
+  place-items: center;
+}
+
+.briefing-organism-core {
+  width: 126px;
+  height: 126px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, rgba(245, 210, 112, 0.95), rgba(245, 210, 112, 0.22) 12%, rgba(245, 210, 112, 0.05) 58%, transparent 70%);
+  border: 1px solid rgba(217, 183, 112, 0.34);
+  box-shadow: 0 0 80px rgba(217, 183, 112, 0.22);
+  animation: organismBreath 5s ease-in-out infinite;
+}
+
+.briefing-organism-card h2 {
+  margin: 0 0 10px;
+  color: #f7f1e7;
+  font-size: 28px;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.briefing-organism-card p {
+  color: rgba(247, 241, 231, 0.58);
+  line-height: 1.45;
+}
+
+.organism-vitals-clean {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 22px 0;
+}
+
+.organism-vitals-clean div {
+  border-radius: 18px;
+}
+
+.organism-vitals-clean span {
+  display: block;
+  margin-bottom: 6px;
+  color: rgba(247, 241, 231, 0.56);
+  font-size: 13px;
+}
+
+.organism-vitals-clean strong {
+  color: #d9b770;
+  font-size: 26px;
+}
+
+@media (max-width: 980px) {
+  .executive-briefing {
+    grid-template-columns: 1fr;
+  }
+
+  .briefing-organism-card {
+    position: relative;
+    top: auto;
+  }
+
+  .belief-explainer-grid {
+    grid-template-columns: 1fr;
+  }
+}

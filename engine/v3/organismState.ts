@@ -52,6 +52,22 @@ export function buildOrganismState({
       connections: item.evidenceIds,
     })),
 
+    ...mechanisms.slice(0, 8).map((item) => ({
+      id: `OP-${item.id}`,
+      kind: "mechanism" as const,
+      label: item.title,
+      sourceId: item.id,
+      confidence: item.confidence,
+      strength: item.strength ?? item.confidence,
+      connections: [
+        ...item.evidenceIds,
+        ...item.themeIds,
+        ...item.beliefIds,
+        ...item.relationshipIds,
+        ...item.contradictionIds,
+      ],
+    })),
+
     ...contradictions.slice(0, 6).map((item) => ({
       id: `OP-${item.id}`,
       kind: "contradiction" as const,
@@ -60,16 +76,6 @@ export function buildOrganismState({
       confidence: item.confidence,
       strength: strengthToNumber(item.severity),
       connections: item.evidenceIds,
-    })),
-
-    ...mechanisms.slice(0, 6).map((item) => ({
-      id: `OP-${item.id}`,
-      kind: "causal" as const,
-      label: item.title,
-      sourceId: item.id,
-      confidence: item.confidence,
-      strength: item.confidence,
-      connections: [...item.evidenceIds, ...item.relationshipIds],
     })),
 
     ...hypotheses.slice(0, 6).map((item) => ({
@@ -98,6 +104,9 @@ export function buildOrganismState({
       connections: [
         ...item.supportingEvidenceIds,
         ...item.contradictingEvidenceIds,
+        ...item.mechanismIds,
+        ...item.themeIds,
+        ...item.contradictionIds,
       ],
     })),
 
@@ -112,6 +121,7 @@ export function buildOrganismState({
         ...understanding.evidenceIds,
         ...understanding.themeIds,
         ...understanding.causalChainIds,
+        ...(understanding.mechanismIds ?? []),
         ...mechanisms.map((mechanism) => mechanism.id),
       ],
     },
@@ -138,13 +148,17 @@ export function buildOrganismState({
     understanding.supportScore - understanding.contradictionScore * 0.35
   );
 
+  const mechanismCoverage = Math.min(1, mechanisms.length / 4);
+  const beliefCoverage = Math.min(1, beliefs.length / 5);
+  const hypothesisCoverage = Math.min(1, hypotheses.length / 4);
+
   const uncertainty = clamp(
     1 -
       understanding.confidence * 0.42 -
       coherence * 0.24 -
-      Math.min(1, mechanisms.length / 4) * 0.08 -
-      Math.min(1, beliefs.length / 5) * 0.18 -
-      Math.min(1, hypotheses.length / 4) * 0.08
+      mechanismCoverage * 0.08 -
+      beliefCoverage * 0.18 -
+      hypothesisCoverage * 0.08
   );
 
   return {
@@ -172,9 +186,9 @@ export function buildOrganismState({
     maturity: clamp(
       understanding.confidence * 0.42 +
         understanding.supportScore * 0.24 +
-        Math.min(1, mechanisms.length / 4) * 0.08 +
-        Math.min(1, beliefs.length / 4) * 0.18 +
-        Math.min(1, hypotheses.length / 4) * 0.08
+        mechanismCoverage * 0.08 +
+        beliefCoverage * 0.18 +
+        hypothesisCoverage * 0.08
     ),
   };
 }
@@ -222,13 +236,13 @@ function buildEmergingPatterns({
     .sort((a, b) => b.confidence - a.confidence)
     .slice(0, 3);
 
-  const mechanismPatterns = mechanisms.slice(0, 2).map((mechanism) => ({
+  const mechanismPatterns = mechanisms.slice(0, 3).map((mechanism) => ({
     id: `EP-${mechanism.id}`,
     title: mechanism.title,
     description: mechanism.explanation,
     evidenceIds: mechanism.evidenceIds,
     confidence: mechanism.confidence,
-    strength: mechanism.confidence,
+    strength: mechanism.strength ?? mechanism.confidence,
   }));
 
   const hypothesisPatterns = hypotheses.slice(0, 2).map((hypothesis) => ({

@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import ExecutiveSummary from "./ExecutiveSummary";
-import SupportingUnderstandings from "./SupportingUnderstandings";
-import HypothesesPanel from "../understanding/HypothesesPanel";
+import { useEffect, useMemo, useRef, useState } from "react";
 import OrganismPreview from "../organism/OrganismPreview";
 import TraceUnderstandingPage from "../trace/TraceUnderstandingPage";
+import ExecutiveBrief from "./ExecutiveBrief";
+import UnderstandingWorkspace from "./UnderstandingWorkspace";
 
 type ResultsOverviewProps = {
   understanding?: any;
@@ -17,6 +16,7 @@ type ResultsOverviewProps = {
   evidence?: any[];
   reasoningGraph?: any;
   organismState?: any;
+  delta?: any;
 };
 
 export default function ResultsOverview({
@@ -29,99 +29,142 @@ export default function ResultsOverview({
   evidence = [],
   reasoningGraph,
   organismState,
+  delta,
 }: ResultsOverviewProps) {
-  const [showReasoning, setShowReasoning] = useState(false);
-  const [showPastInsights, setShowPastInsights] = useState(false);
+  const [showExplore, setShowExplore] = useState(false);
   const [showOrganismExplorer, setShowOrganismExplorer] = useState(false);
   const [showReasoningTrace, setShowReasoningTrace] = useState(false);
+  const workspaceRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!showExplore) return;
+
+    requestAnimationFrame(() => {
+      workspaceRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  }, [showExplore]);
+
+  const primaryBelief = beliefs[0];
+
+  const confidence = Math.round(
+    ((primaryBelief?.confidence ?? understanding?.confidence) || 0.75) * 100
+  );
+
+  const narrative = useMemo(
+    () =>
+      buildWhatChangedNarrative({
+        delta,
+        organismState,
+        beliefs,
+        contradictions,
+      }),
+    [delta, organismState, beliefs, contradictions]
+  );
+
+  const headline =
+    understanding?.headline ??
+    primaryBelief?.headline ??
+    "Discovery formed a current understanding.";
+
+  const explanation =
+    understanding?.explanation ??
+    primaryBelief?.explanation ??
+    "Discovery connected evidence, themes, mechanisms, and beliefs into a current executive understanding.";
+
+  const whyItMatters =
+    understanding?.whyItMatters ??
+    understanding?.implication ??
+    primaryBelief?.implication ??
+    "This pattern may affect execution quality, coordination, or strategic timing.";
+
+  const recommendedNextStep =
+    understanding?.recommendedNextStep ??
+    understanding?.recommendation ??
+    primaryBelief?.recommendedNextStep ??
+    primaryBelief?.nextQuestions?.[0] ??
+    "Explore the strongest supporting signals before deciding the next action.";
 
   return (
-    <section className="executive-results">
-      <div className="results-left">
-        <p className="overview-label">Investigation complete</p>
-
-        <ExecutiveSummary
-          executiveUnderstanding={understanding}
-          evidenceCount={evidence.length}
-          onTrace={() => setShowReasoningTrace(true)}
-        />
-
-        <OrganismSignals organismState={organismState} />
-
-        <HypothesesPanel hypotheses={hypotheses} />
-
-        <SupportingUnderstandings
-          beliefs={beliefs}
-          onTrace={() => setShowReasoningTrace(true)}
-        />
-
-        <div className="overview-actions">
-          <button onClick={() => setShowReasoning(!showReasoning)}>
-            {showReasoning ? "Hide reasoning ↑" : "Explore the reasoning →"}
-          </button>
-
-          <button onClick={() => setShowPastInsights(!showPastInsights)}>
-            {showPastInsights ? "Hide past insights ↑" : "Past insights →"}
-          </button>
-        </div>
-      </div>
-
-      <OrganismPreview
-        open={showOrganismExplorer}
-        onOpen={() => setShowOrganismExplorer(true)}
-        onClose={() => setShowOrganismExplorer(false)}
-        organismState={organismState}
+    <section className="executive-briefing">
+      <ExecutiveBrief
+        headline={headline}
+        explanation={explanation}
+        whyItMatters={whyItMatters}
+        recommendedNextStep={recommendedNextStep}
+        confidence={confidence}
+        evidenceCount={evidence.length}
+        mechanismCount={organismState?.mechanisms?.length ?? 0}
+        narrative={narrative}
+        onExplore={() => setShowExplore(true)}
       />
 
-      {(showReasoning || showPastInsights) && (
-        <div className="expanded-results">
-          {showReasoning && (
-            <>
-              <ReasoningBlock title="What led us here" items={evidence} />
-              <ReasoningBlock title="Patterns we noticed" items={themes} />
-              <ReasoningBlock
-                title="Questions we're still exploring"
-                items={contradictions}
-              />
-              <ReasoningBlock title="Causal reasoning" items={causalChains} />
-            </>
-          )}
+      <aside className="briefing-organism-column">
+        <div className="briefing-organism-card">
+          <p className="overview-label">Living understanding</p>
 
-          {showPastInsights && (
-            <ReasoningBlock
-              title="Past insights"
-              items={beliefs.map((belief: any) => ({
-                title: getReadableReasoning(belief),
-                summary:
-                  belief?.explanation ??
-                  belief?.summary ??
-                  "Discovery found this supporting pattern.",
-              }))}
-            />
-          )}
+          <div className="briefing-organism-preview">
+            <div className="briefing-organism-core" />
+          </div>
+
+          <h2>
+            {organismState?.emergingPatterns?.[0]?.title ??
+              primaryBelief?.headline ??
+              "Understanding is stabilizing"}
+          </h2>
+
+          <p>
+            {organismState?.particles?.length ?? 0} particles ·{" "}
+            {Math.round((organismState?.tension ?? 0) * 100)}% tension ·{" "}
+            {Math.round((organismState?.maturity ?? 0) * 100)}% mature
+          </p>
+
+          <button
+            className="briefing-primary-button full"
+            onClick={() => setShowOrganismExplorer(true)}
+          >
+            Explore organism →
+          </button>
+
+          <p className="briefing-muted">
+            Rendered from Discovery’s internal reasoning state.
+          </p>
+        </div>
+      </aside>
+
+      {showExplore && (
+        <div ref={workspaceRef} className="workspace-scroll-target">
+          <UnderstandingWorkspace
+            understanding={understanding}
+            beliefs={beliefs}
+            hypotheses={hypotheses}
+            themes={themes}
+            contradictions={contradictions}
+            causalChains={causalChains}
+            evidence={evidence}
+            organismState={organismState}
+            onClose={() => setShowExplore(false)}
+            onTrace={() => setShowReasoningTrace(true)}
+          />
         </div>
       )}
 
-      <footer className="results-footer">
-        <span>Investigation: Strategic Review</span>
-        <span>{evidence.length} sources analyzed</span>
-        <span>Completed just now</span>
-      </footer>
+      {showOrganismExplorer && (
+        <OrganismPreview
+          open={showOrganismExplorer}
+          onOpen={() => setShowOrganismExplorer(true)}
+          onClose={() => setShowOrganismExplorer(false)}
+          organismState={organismState}
+        />
+      )}
 
       <TraceUnderstandingPage
         open={showReasoningTrace}
         onClose={() => setShowReasoningTrace(false)}
-        headline={
-          understanding?.headline ??
-          beliefs[0]?.headline ??
-          "Current Understanding"
-        }
-        confidence={
-          beliefs[0]?.priority?.confidence ??
-          beliefs[0]?.confidence ??
-          understanding?.confidence ??
-          0.75
-        }
+        headline={headline}
+        confidence={(primaryBelief?.confidence ?? understanding?.confidence) || 0.75}
         executiveUnderstanding={understanding}
         beliefs={beliefs}
         themes={themes}
@@ -133,83 +176,65 @@ export default function ResultsOverview({
   );
 }
 
-function OrganismSignals({ organismState }: { organismState?: any }) {
-  if (!organismState) return null;
+function buildWhatChangedNarrative({
+  delta,
+  organismState,
+  beliefs,
+  contradictions,
+}: {
+  delta?: any;
+  organismState?: any;
+  beliefs: any[];
+  contradictions: any[];
+}) {
+  const newBeliefs = delta?.newBeliefs?.length ?? beliefs.length ?? 0;
+  const newContradictions =
+    delta?.newContradictions?.length ?? contradictions.length ?? 0;
+  const mechanisms = organismState?.mechanisms?.length ?? 0;
 
-  const topPattern = organismState.emergingPatterns?.[0];
+  const items: string[] = [];
 
-  return (
-    <section className="organism-signals-card">
-      <div>
-        <p className="overview-label">Organism state</p>
-        <h3>{topPattern?.title ?? "Understanding is stabilizing"}</h3>
-        <p>
-          Discovery is tracking coherence, tension, uncertainty, and emerging
-          patterns as part of the living understanding.
-        </p>
-      </div>
+  if (newBeliefs > 0) {
+    items.push(
+      `${newBeliefs} working belief${
+        newBeliefs === 1 ? "" : "s"
+      } formed from the investigation.`
+    );
+  }
 
-      <div className="organism-signal-grid">
-        <SignalMetric label="Coherence" value={organismState.coherence} />
-        <SignalMetric label="Tension" value={organismState.tension} />
-        <SignalMetric label="Uncertainty" value={organismState.uncertainty} />
-        <SignalMetric label="Maturity" value={organismState.maturity} />
-      </div>
+  if (mechanisms > 0) {
+    items.push(
+      `${mechanisms} explanatory mechanism${
+        mechanisms === 1 ? "" : "s"
+      } emerged to connect patterns with beliefs.`
+    );
+  }
 
-      <div className="organism-signal-counts">
-        <span>{organismState.evidenceClusters?.length ?? 0} clusters</span>
-        <span>{organismState.mechanisms?.length ?? 0} mechanisms</span>
-        <span>{organismState.hypotheses?.length ?? 0} hypotheses</span>
-        <span>{organismState.contradictions?.length ?? 0} tensions</span>
-      </div>
-    </section>
-  );
-}
+  if (newContradictions > 0) {
+    items.push(
+      `${newContradictions} unresolved tension${
+        newContradictions === 1 ? "" : "s"
+      } remain important to pressure-test.`
+    );
+  }
 
-function SignalMetric({ label, value }: { label: string; value?: number }) {
-  const percent = Math.round((value ?? 0) * 100);
+  if (organismState) {
+    items.push(
+      `The organism is ${Math.round(
+        (organismState.maturity ?? 0) * 100
+      )}% mature with ${Math.round(
+        (organismState.uncertainty ?? 0) * 100
+      )}% uncertainty.`
+    );
+  }
 
-  return (
-    <div className="organism-signal-metric">
-      <span>{label}</span>
-      <strong>{percent}%</strong>
-    </div>
-  );
-}
-
-function getReadableReasoning(item: any): string {
-  if (!item) return "No detail available.";
-
-  return (
-    item.headline ??
-    item.statement ??
-    item.title ??
-    item.summary ??
-    item.explanation ??
-    item.claim ??
-    item.text ??
-    item.cause ??
-    item.effect ??
-    JSON.stringify(item)
-  );
-}
-
-function ReasoningBlock({ title, items }: { title: string; items: any[] }) {
-  return (
-    <section className="reasoning-block">
-      <h3>{title}</h3>
-
-      {items.length === 0 ? (
-        <p className="empty-reasoning">Nothing surfaced yet.</p>
-      ) : (
-        <div className="reasoning-list">
-          {items.slice(0, 8).map((item, index) => (
-            <div key={item.id ?? index} className="reasoning-item">
-              {getReadableReasoning(item)}
-            </div>
-          ))}
-        </div>
-      )}
-    </section>
-  );
+  return {
+    headline:
+      mechanisms > 0
+        ? "Understanding became more explainable"
+        : "Discovery formed a new working understanding",
+    summary:
+      items[0] ??
+      "Discovery formed an initial understanding from the available evidence.",
+  };
 }

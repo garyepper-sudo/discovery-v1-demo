@@ -1,12 +1,18 @@
-import type { Metadata } from 'next';
-import './globals.css';
+import type { Metadata } from "next";
+import "./globals.css";
+import "../styles/sprint18.css";
 
 export const metadata: Metadata = {
-  title: 'Discovery Alpha',
-  description: 'A living investigation workspace for organizational understanding.'
+  title: "Discovery Alpha",
+  description:
+    "A living investigation workspace for organizational understanding.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>{children}</body>

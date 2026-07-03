@@ -16,6 +16,7 @@ import {
   V3Signal,
   V3Theme,
   V3Understanding,
+  V3UnderstandingDelta,
 } from "./types";
 
 export type InvestigationWorkspace = {
@@ -38,6 +39,7 @@ export type InvestigationWorkspace = {
   executiveUnderstanding?: V3ExecutiveUnderstanding;
   reasoningGraph?: V3ReasoningGraph;
   organismState?: V3OrganismState;
+  delta?: V3UnderstandingDelta;
 
   metadata: {
     createdAt: string;
@@ -70,6 +72,7 @@ export function createInvestigationWorkspace(
     executiveUnderstanding: undefined,
     reasoningGraph: undefined,
     organismState: undefined,
+    delta: undefined,
 
     metadata: {
       createdAt: new Date().toISOString(),
@@ -101,6 +104,8 @@ export function workspaceToResult(
     executiveUnderstanding:
       workspace.executiveUnderstanding ??
       buildFallbackExecutiveUnderstanding(workspace),
+
+    delta: workspace.delta,
 
     reasoningGraph: workspace.reasoningGraph,
     organismState: workspace.organismState,

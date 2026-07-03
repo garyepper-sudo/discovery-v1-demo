@@ -3,6 +3,7 @@ import { buildBeliefs } from "./beliefs";
 import { buildCausalChains } from "./causal";
 import { propagateConfidence } from "./confidencePropagation";
 import { detectContradictions } from "./contradictions";
+import { buildInitialDelta } from "./delta";
 import { buildEmergenceEvents } from "./emergence";
 import { buildEvidence } from "./evidence";
 import { buildEvidenceNetwork } from "./evidenceNetwork";
@@ -49,9 +50,6 @@ ${input.context}
   workspace.evidenceNetwork = buildEvidenceNetwork(workspace.evidence);
   workspace.evidenceRelationships = workspace.evidenceNetwork.relationships;
 
-  workspace.metadata.stage = "mechanisms";
-  workspace.mechanisms = buildMechanisms(workspace.evidenceNetwork);
-
   workspace.metadata.stage = "signals";
   workspace.signals = scoreSignals(detectSignals(workspace.evidence));
 
@@ -63,6 +61,13 @@ ${input.context}
   workspace.metadata.stage = "contradictions";
   workspace.contradictions = scoreContradictions(
     detectContradictions(workspace.evidence, workspace.themes)
+  );
+
+  workspace.metadata.stage = "mechanisms";
+  workspace.mechanisms = buildMechanisms(
+    workspace.evidenceNetwork,
+    workspace.themes,
+    workspace.contradictions
   );
 
   workspace.metadata.stage = "causalChains";
@@ -85,7 +90,13 @@ ${input.context}
   );
 
   workspace.metadata.stage = "beliefs";
-  workspace.beliefs = scoreBeliefs(buildBeliefs(draftUnderstanding));
+  workspace.beliefs = scoreBeliefs(
+    buildBeliefs(
+      draftUnderstanding,
+      workspace.mechanisms,
+      workspace.contradictions
+    )
+  );
 
   workspace.metadata.stage = "confidencePropagation";
   const propagatedConfidence = propagateConfidence({
@@ -138,9 +149,17 @@ ${input.context}
     evidence: workspace.evidence,
     themes: workspace.themes,
     contradictions: workspace.contradictions,
+    mechanisms: workspace.mechanisms,
     hypotheses: workspace.hypotheses,
     beliefs: workspace.beliefs,
     understanding: canonicalUnderstanding,
+  });
+
+  workspace.metadata.stage = "delta";
+  workspace.delta = buildInitialDelta({
+    beliefs: workspace.beliefs,
+    contradictions: workspace.contradictions,
+    organismState: workspace.organismState,
   });
 
   workspace.metadata.stage = "reasoningGraph";

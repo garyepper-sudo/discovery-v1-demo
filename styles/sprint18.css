@@ -1,0 +1,340 @@
+/* =====================================================
+   Sprint 18 Phase 2 — Continuous Executive Briefing
+   Removes card heaviness from the left side
+   ===================================================== */
+
+.briefing-main {
+  gap: 46px;
+}
+
+.briefing-hero,
+.briefing-panel {
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.briefing-hero {
+  padding-bottom: 18px;
+}
+
+.briefing-panel {
+  max-width: 900px;
+}
+
+.briefing-panel + .briefing-panel {
+  padding-top: 38px;
+  border-top: 1px solid rgba(247, 241, 231, 0.08);
+}
+
+.briefing-panel h2 {
+  max-width: 850px;
+  font-size: clamp(32px, 3.5vw, 52px);
+  line-height: 1.04;
+}
+
+.briefing-hero h1 {
+  max-width: 980px;
+}
+
+.briefing-hero > p:not(.overview-label) {
+  max-width: 860px;
+}
+
+.overview-actions {
+  margin-top: -4px;
+}
+
+.overview-actions button {
+  min-width: 245px;
+  justify-content: center;
+}
+
+.briefing-organism-card {
+  position: sticky;
+  top: 32px;
+}
+
+.expanded-results {
+  margin-top: 10px;
+}
+
+/* =====================================================
+   Sprint 18 Phase 3 — Scientific Notebook Workspace
+   Makes Explore Understanding feel like an instrument,
+   not a dashboard.
+   ===================================================== */
+
+.understanding-workspace {
+  grid-column: 1 / -1;
+  margin-top: 28px;
+  padding: clamp(28px, 4vw, 46px);
+  border-top: 1px solid rgba(247, 241, 231, 0.1);
+  animation: workspaceReveal 280ms ease both;
+}
+
+.workspace-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: flex-start;
+  margin-bottom: 26px;
+}
+
+.workspace-header h2 {
+  margin: 0;
+  color: #f7f1e7;
+  font-size: clamp(42px, 5vw, 72px);
+  line-height: 0.94;
+  letter-spacing: -0.065em;
+}
+
+.workspace-close {
+  border: 0;
+  background: transparent;
+  color: rgba(247, 241, 231, 0.56);
+  font-size: 14px;
+  padding: 8px 0;
+}
+
+.workspace-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin: 28px 0 44px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(247, 241, 231, 0.09);
+}
+
+.workspace-tabs button {
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  color: rgba(247, 241, 231, 0.48);
+  padding: 0 0 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.workspace-tabs button.active {
+  color: #f7f1e7;
+  border-bottom-color: rgba(217, 183, 112, 0.95);
+}
+
+.workspace-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: clamp(42px, 6vw, 84px);
+  align-items: start;
+}
+
+.workspace-panel {
+  min-width: 0;
+}
+
+.workspace-section {
+  max-width: 900px;
+  animation: workspaceReveal 240ms ease both;
+}
+
+.workspace-section h3 {
+  margin: 0 0 34px;
+  color: #f7f1e7;
+  font-size: clamp(34px, 4.2vw, 62px);
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+  font-weight: 650;
+}
+
+.workspace-section > p:not(.overview-label):not(.empty-reasoning) {
+  max-width: 720px;
+  margin: 0 0 26px;
+  color: rgba(247, 241, 231, 0.64);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.workspace-notebook {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid rgba(247, 241, 231, 0.09);
+}
+
+.notebook-row {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 28px;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(247, 241, 231, 0.08);
+}
+
+.notebook-row span {
+  color: rgba(217, 183, 112, 0.88);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.notebook-row p {
+  margin: 0;
+  color: rgba(247, 241, 231, 0.74);
+  font-size: 18px;
+  line-height: 1.48;
+}
+
+.workspace-disclosure {
+  margin-top: 28px;
+  border: 0;
+  background: transparent;
+  color: rgba(217, 183, 112, 0.95);
+  padding: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.workspace-detail {
+  margin-top: 26px;
+  max-width: 760px;
+  padding: 24px 0 0;
+  border-top: 1px solid rgba(217, 183, 112, 0.22);
+  color: rgba(247, 241, 231, 0.66);
+  animation: workspaceReveal 220ms ease both;
+}
+
+.workspace-detail p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.58;
+}
+
+.workspace-organism-compass {
+  position: sticky;
+  top: 32px;
+  padding: 24px 0 0;
+  border-top: 1px solid rgba(247, 241, 231, 0.09);
+}
+
+.workspace-organism-orb {
+  height: 220px;
+  display: grid;
+  place-items: center;
+  margin: 6px 0 18px;
+}
+
+.workspace-organism-orb .briefing-organism-core {
+  width: 130px;
+  height: 108px;
+  opacity: 0.9;
+}
+
+.workspace-organism-compass h3 {
+  margin: 0 0 12px;
+  color: #f7f1e7;
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.workspace-organism-compass p:not(.overview-label) {
+  margin: 0;
+  color: rgba(247, 241, 231, 0.52);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.empty-reasoning {
+  color: rgba(247, 241, 231, 0.48);
+}
+
+@keyframes workspaceReveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 980px) {
+  .understanding-workspace {
+    padding-inline: 0;
+  }
+
+  .workspace-body {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace-organism-compass {
+    position: relative;
+    top: auto;
+  }
+
+  .notebook-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+/* Sprint 18 — Workspace sidebar containment fix */
+
+.workspace-body {
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+  gap: clamp(64px, 8vw, 120px);
+}
+
+.workspace-organism-compass {
+  max-width: 320px;
+  overflow: hidden;
+}
+
+.workspace-state-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.workspace-state-row {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 14px;
+  align-items: baseline;
+}
+
+.workspace-state-row span {
+  color: rgba(217, 183, 112, 0.78);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.workspace-state-row strong {
+  min-width: 0;
+  color: rgba(247, 241, 231, 0.72);
+  font-size: 15px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.workspace-organism-compass p:not(.overview-label) {
+  max-width: 280px;
+  overflow-wrap: anywhere;
+}
+
+.causal-flow {
+  max-width: 620px;
+}
+
+@media (max-width: 980px) {
+  .workspace-body {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+
+  .workspace-organism-compass {
+    max-width: none;
+  }
+}

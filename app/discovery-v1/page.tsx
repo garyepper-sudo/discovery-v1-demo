@@ -1,7 +1,7 @@
 "use client";
 
-import ResultsOverview from "../../components/results/ResultsOverview";
 import { useState } from "react";
+import ResultsOverview from "../../components/results/ResultsOverview";
 
 import type {
   BeliefObject,
@@ -27,32 +27,38 @@ export default function DiscoveryV1Page() {
   const belief = buildBeliefFromV3(v3);
 
   async function runInvestigation() {
-  setLoading(true);
-  setResult(null);
-  setError(null);
-  setFlipped(false);
-  setFeedback(null);
-  setShowInspect(false);
+    setLoading(true);
+    setResult(null);
+    setError(null);
+    setFlipped(false);
+    setFeedback(null);
+    setShowInspect(false);
 
-  try {
-    const response = await fetch("/api/discovery-lab", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ company, website, industry, question, messyInput }),
-    });
+    try {
+      const response = await fetch("/api/discovery-lab", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          company,
+          website,
+          industry,
+          question,
+          messyInput,
+        }),
+      });
 
-    if (!response.ok) {
-      throw new Error(`API returned ${response.status}`);
+      if (!response.ok) {
+        throw new Error(`API returned ${response.status}`);
+      }
+
+      const data = await response.json();
+      setResult(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Investigation failed.");
+    } finally {
+      setLoading(false);
     }
-
-    const data = await response.json();
-    setResult(data);
-  } catch (err) {
-    setError(err instanceof Error ? err.message : "Investigation failed.");
-  } finally {
-    setLoading(false);
   }
-}
 
   return (
     <main className="discovery-page discovery-v2">
@@ -104,33 +110,35 @@ export default function DiscoveryV1Page() {
               onChange={(e) => setMessyInput(e.target.value)}
             />
 
-           <button
-  className="primary-button full"
-  onClick={runInvestigation}
-  disabled={loading}
->
-  {loading ? "Building understanding..." : "Begin investigation"}
-</button>
+            <button
+              className="primary-button full"
+              onClick={runInvestigation}
+              disabled={loading}
+            >
+              {loading ? "Building understanding..." : "Begin investigation"}
+            </button>
 
-{error && <p className="error-message">{error}</p>}
+            {error && <p className="error-message">{error}</p>}
           </section>
         </section>
       )}
 
       {result && report && (
-  <section>
-    <ResultsOverview
-  understanding={v3?.executiveUnderstanding}
-  beliefs={v3?.beliefs}
-  themes={v3?.themes}
-  contradictions={v3?.contradictions}
-  causalChains={v3?.causalChains}
-  evidence={v3?.evidence}
-  reasoningGraph={v3?.reasoningGraph}
-  organismState={v3?.organismState}
-/>
-  </section>
-)}
+        <section>
+          <ResultsOverview
+            understanding={v3?.executiveUnderstanding}
+            beliefs={v3?.beliefs}
+            hypotheses={v3?.hypotheses}
+            themes={v3?.themes}
+            contradictions={v3?.contradictions}
+            causalChains={v3?.causalChains}
+            evidence={v3?.evidence}
+            reasoningGraph={v3?.reasoningGraph}
+            organismState={v3?.organismState}
+            delta={v3?.delta}
+          />
+        </section>
+      )}
 
       {result && report && showInspect && (
         <section className="inspection-panel">

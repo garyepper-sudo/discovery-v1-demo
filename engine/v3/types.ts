@@ -19,6 +19,14 @@ export type V3SignalStrength = "weak" | "moderate" | "strong";
 
 export type V3ConfidenceBand = "low" | "medium" | "high";
 
+export type V3PriorityScore = {
+  confidence: number;
+  importance: number;
+  connectedness: number;
+  urgency: number;
+  total: number;
+};
+
 export type V3Evidence = {
   id: string;
   text: string;
@@ -115,53 +123,6 @@ export type V3EvidenceNetwork = {
   };
 };
 
-export type V3MechanismType =
-  | "causal"
-  | "reinforcing"
-  | "constraint"
-  | "tension"
-  | "dependency"
-  | "unknown";
-
-export type V3Mechanism = {
-  id: string;
-  title: string;
-  type: V3MechanismType;
-  cause: string;
-  mechanism: string;
-  effect: string;
-  evidenceIds: string[];
-  relationshipIds: string[];
-  confidence: number;
-  explanation: string;
-  openQuestions: string[];
-};
-
-export type V3HypothesisStatus =
-  | "leading"
-  | "plausible"
-  | "weak"
-  | "challenged";
-
-export type V3Hypothesis = {
-  id: string;
-  title: string;
-  explanation: string;
-  status: V3HypothesisStatus;
-  confidence: number;
-
-  supportingEvidenceIds: string[];
-  weakeningEvidenceIds: string[];
-  mechanismIds: string[];
-  themeIds: string[];
-  beliefIds: string[];
-  contradictionIds: string[];
-
-  strengths: string[];
-  weaknesses: string[];
-  distinguishingQuestions: string[];
-};
-
 export type V3Signal = {
   id: string;
   title: string;
@@ -185,14 +146,6 @@ export type V3Theme = {
   strength?: V3SignalStrength;
   stability?: number;
   priority?: V3PriorityScore;
-};
-
-export type V3PriorityScore = {
-  confidence: number;
-  importance: number;
-  connectedness: number;
-  urgency: number;
-  total: number;
 };
 
 export type V3ThemeRelationship = {
@@ -224,6 +177,84 @@ export type V3Contradiction = {
   priority?: V3PriorityScore;
 };
 
+export type V3MechanismType =
+  | "causal"
+  | "reinforcing"
+  | "constraint"
+  | "tension"
+  | "dependency"
+  | "unknown";
+
+export type V3Mechanism = {
+  id: string;
+  title: string;
+  type: V3MechanismType;
+
+  /**
+   * Explicit engine chain:
+   * Theme → Mechanism → Belief
+   */
+  themeIds: string[];
+  beliefIds: string[];
+
+  /**
+   * Human-readable causal structure.
+   */
+  cause: string;
+  mechanism: string;
+  effect: string;
+
+  /**
+   * Explainability links.
+   */
+  evidenceIds: string[];
+  supportingEvidenceIds: string[];
+  contradictingEvidenceIds: string[];
+  relationshipIds: string[];
+  contradictionIds: string[];
+
+  /**
+   * Executive explanation.
+   */
+  explanation: string;
+  assumptions: string[];
+  risks: string[];
+  openQuestions: string[];
+
+  /**
+   * Engine scoring.
+   */
+  confidence: number;
+  strength: number;
+  stability: number;
+  priority?: V3PriorityScore;
+};
+
+export type V3HypothesisStatus =
+  | "leading"
+  | "plausible"
+  | "weak"
+  | "challenged";
+
+export type V3Hypothesis = {
+  id: string;
+  title: string;
+  explanation: string;
+  status: V3HypothesisStatus;
+  confidence: number;
+
+  supportingEvidenceIds: string[];
+  weakeningEvidenceIds: string[];
+  mechanismIds: string[];
+  themeIds: string[];
+  beliefIds: string[];
+  contradictionIds: string[];
+
+  strengths: string[];
+  weaknesses: string[];
+  distinguishingQuestions: string[];
+};
+
 export type V3CausalChain = {
   id: string;
   cause: string;
@@ -250,6 +281,7 @@ export type V3Explanation = {
   signalIds?: string[];
   themeIds?: string[];
   causalChainIds?: string[];
+  mechanismIds?: string[];
   contradictionIds?: string[];
 };
 
@@ -275,6 +307,7 @@ export type V3Understanding = {
   themeIds: string[];
   explanationIds: string[];
   causalChainIds: string[];
+  mechanismIds?: string[];
   supportingReasons: string[];
   contradictions: string[];
   unknowns: string[];
@@ -287,6 +320,63 @@ export type V3Understanding = {
   priority?: V3PriorityScore;
 };
 
+export type V3Belief = {
+  id: string;
+  headline: string;
+  confidence: number;
+  explanation: string;
+  understandingId: string;
+
+  /**
+   * Explicit belief construction.
+   */
+  supportingEvidenceIds: string[];
+  contradictingEvidenceIds: string[];
+  mechanismIds: string[];
+  themeIds: string[];
+  contradictionIds: string[];
+
+  /**
+   * Executive-facing reasoning.
+   */
+  supportingReasons: string[];
+  concerns: string[];
+  nextQuestions: string[];
+
+  /**
+   * Engine scoring.
+   */
+  stability?: number;
+  utility?: number;
+  priority?: V3PriorityScore;
+
+  signalIds?: string[];
+  causalChainIds?: string[];
+};
+
+export type V3UnderstandingDelta = {
+  newBeliefs: string[];
+  strengthenedBeliefs: string[];
+  weakenedBeliefs: string[];
+  resolvedContradictions: string[];
+  newContradictions: string[];
+  confidenceChanges: {
+    sourceId: string;
+    sourceType: "theme" | "mechanism" | "belief" | "understanding";
+    previousConfidence?: number;
+    currentConfidence: number;
+    direction: "up" | "down" | "unchanged";
+    explanation: string;
+  }[];
+  healthChanges: {
+    metric: "density" | "coherence" | "tension" | "maturity" | "uncertainty";
+    previousValue?: number;
+    currentValue: number;
+    direction: "up" | "down" | "unchanged";
+    explanation: string;
+  }[];
+};
+
 export type V3EmergenceEvent = {
   id: string;
   title: string;
@@ -297,6 +387,7 @@ export type V3EmergenceEvent = {
 
   signalIds?: string[];
   themeIds?: string[];
+  mechanismIds?: string[];
   beliefIds?: string[];
   eventType?:
     | "new_pattern"
@@ -305,30 +396,11 @@ export type V3EmergenceEvent = {
     | "confidence_shift";
 };
 
-export type V3Belief = {
-  id: string;
-  headline: string;
-  confidence: number;
-  explanation: string;
-  understandingId: string;
-  supportingEvidenceIds: string[];
-  contradictingEvidenceIds: string[];
-  supportingReasons: string[];
-  concerns: string[];
-  nextQuestions: string[];
-
-  signalIds?: string[];
-  themeIds?: string[];
-  causalChainIds?: string[];
-  stability?: number;
-  utility?: number;
-  priority?: V3PriorityScore;
-};
-
 export type V3ReasoningNodeType =
   | "evidence"
   | "signal"
   | "theme"
+  | "mechanism"
   | "contradiction"
   | "causal"
   | "explanation"
@@ -374,6 +446,7 @@ export type V3OrganismParticleKind =
   | "evidence"
   | "signal"
   | "theme"
+  | "mechanism"
   | "contradiction"
   | "causal"
   | "belief"
@@ -435,20 +508,29 @@ export type DiscoveryV3Result = {
   evidence: V3Evidence[];
   evidenceRelationships: V3EvidenceRelationship[];
   evidenceNetwork?: V3EvidenceNetwork;
-  mechanisms: V3Mechanism[];
-  hypotheses: V3Hypothesis[];
-  propagatedConfidence?: import("./confidencePropagation").V3PropagatedConfidence;
 
   signals: V3Signal[];
   themes: V3Theme[];
   contradictions: V3Contradiction[];
+
+  mechanisms: V3Mechanism[];
+  hypotheses: V3Hypothesis[];
+
+  /**
+   * Keep causalChains for backward compatibility.
+   * Sprint 18 should increasingly treat mechanisms as canonical.
+   */
   causalChains: V3CausalChain[];
+
   explanations: V3Explanation[];
   understanding: V3Understanding[];
   beliefs: V3Belief[];
   emergenceEvents: V3EmergenceEvent[];
   executiveUnderstanding: V3ExecutiveUnderstanding;
 
+  delta?: V3UnderstandingDelta;
+
+  propagatedConfidence?: import("./confidencePropagation").V3PropagatedConfidence;
   reasoningGraph?: V3ReasoningGraph;
   organismState?: V3OrganismState;
 };
