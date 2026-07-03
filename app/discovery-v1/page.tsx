@@ -120,14 +120,15 @@ export default function DiscoveryV1Page() {
       {result && report && (
   <section>
     <ResultsOverview
-      understanding={v3?.executiveUnderstanding}
-      beliefs={v3?.beliefs}
-      themes={v3?.themes}
-      contradictions={v3?.contradictions}
-      causalChains={v3?.causalChains}
-      evidence={v3?.evidence}
-      reasoningGraph={v3?.reasoningGraph}
-    />
+  understanding={v3?.executiveUnderstanding}
+  beliefs={v3?.beliefs}
+  themes={v3?.themes}
+  contradictions={v3?.contradictions}
+  causalChains={v3?.causalChains}
+  evidence={v3?.evidence}
+  reasoningGraph={v3?.reasoningGraph}
+  organismState={v3?.organismState}
+/>
   </section>
 )}
 
@@ -316,7 +317,7 @@ function buildReportFromV3(v3: any, companyName: string): EngineReport | null {
         v3.dialectic?.evidenceThatWouldChangeDiscoverysMind ?? [],
       exportTitle: "Discovery Current Belief Brief",
     },
-    organismState: undefined,
+    organismState: v3.organismState,
     raw: v3,
   };
 }

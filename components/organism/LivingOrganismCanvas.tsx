@@ -24,6 +24,8 @@ type Props = {
   className?: string;
   height?: number;
   compact?: boolean;
+  selectedParticleId?: string | null;
+  onParticleSelected?: (particle: any) => void;
 };
 
 type Particle = {
@@ -40,6 +42,25 @@ type Particle = {
   wobbleSpeed: number;
   phase: number;
   eccentricity: number;
+  connections: string[];
+  anchorThemeIndex?: number;
+  localOrbitRadius?: number;
+  localOrbitSpeed?: number;
+};
+
+type PositionedParticle = {
+  particle: Particle;
+  x: number;
+  y: number;
+};
+
+type RenderState = {
+  alpha: number;
+  glow: number;
+  sizeMultiplier: number;
+  highlighted: boolean;
+  selected: boolean;
+  dimmed: boolean;
 };
 
 const COLORS: Record<ParticleKind, string> = {
@@ -52,7 +73,7 @@ const COLORS: Record<ParticleKind, string> = {
 };
 
 const MAX_COUNTS: Record<ParticleKind, number> = {
-  evidence: 14,
+  evidence: 18,
   theme: 8,
   contradiction: 6,
   causal: 7,
@@ -95,24 +116,38 @@ function buildParticles(props: Props): Particle[] {
   const uncertainty = organismState?.uncertainty ?? 0.35;
 
   if (organismState?.particles?.length) {
-    return organismState.particles.slice(0, 42).map((source: any, index: number) => {
+    const sourceParticles = organismState.particles.slice(0, 48);
+    const themeCount = Math.max(
+      1,
+      sourceParticles.filter((p: any) => normalizeKind(p.kind) === "theme")
+        .length
+    );
+
+    return sourceParticles.map((source: any, index: number) => {
       const kind = normalizeKind(source.kind);
       const rand = seededRandom(`${source.id}-${kind}-${index}`);
+
       const baseRadius =
         kind === "understanding"
           ? 0
           : kind === "belief"
-          ? 42
+          ? 52
           : kind === "theme"
-          ? 62
+          ? 96
           : kind === "causal"
-          ? 86
+          ? 128
           : kind === "contradiction"
-          ? 112
-          : 132;
+          ? 168
+          : 136;
 
-      const spread = 22 + uncertainty * 42 + tension * 20;
-      const coherencePull = 1 - coherence * 0.28;
+      const spread =
+        kind === "evidence"
+          ? 24
+          : kind === "contradiction"
+          ? 38 + tension * 28
+          : 16 + uncertainty * 18;
+
+      const coherencePull = 1 - coherence * 0.12;
 
       return {
         id: source.id ?? `${kind}-${index}`,
@@ -120,28 +155,61 @@ function buildParticles(props: Props): Particle[] {
         label: source.label ?? kind,
         confidence: source.confidence ?? 0.5,
         strength: source.strength ?? source.confidence ?? 0.5,
-        orbitRadius: (baseRadius + (rand() - 0.5) * spread) * scale * coherencePull,
-        angle: (Math.PI * 2 * index) / Math.max(1, organismState.particles.length) + rand() * 0.5,
+        connections: Array.isArray(source.connections)
+          ? source.connections
+          : [],
+        orbitRadius:
+          (baseRadius + (rand() - 0.5) * spread) * scale * coherencePull,
+        angle:
+          kind === "theme"
+            ? (Math.PI * 2 * index) / Math.max(1, themeCount)
+            : rand() * Math.PI * 2,
         speed:
-          (kind === "contradiction" ? 0.0018 : 0.00035) *
-          (0.7 + uncertainty) *
-          (rand() > 0.5 ? 1 : -1),
+          kind === "contradiction"
+            ? 0.0024 * (0.8 + tension)
+            : kind === "belief"
+            ? 0.00016
+            : kind === "theme"
+            ? 0.00012
+            : kind === "evidence"
+            ? 0.0012
+            : 0.00035,
         size:
           (kind === "understanding"
-            ? 9
+            ? 10
             : kind === "belief"
-            ? 6.5
+            ? 8.6
             : kind === "theme"
-            ? 5
+            ? 6.6
             : kind === "contradiction"
-            ? 5.2
-            : 3.6) *
+            ? 5.4
+            : kind === "causal"
+            ? 4.4
+            : 3.4) *
           scale *
-          (0.82 + (source.strength ?? 0.5) * 0.45),
-        wobble: (4 + uncertainty * 18 + rand() * 8) * scale,
-        wobbleSpeed: 0.35 + rand() * 0.75 + uncertainty * 0.6,
+          (0.86 + (source.strength ?? 0.5) * 0.4),
+        wobble:
+          (kind === "contradiction"
+            ? 11 + tension * 16
+            : kind === "belief"
+            ? 2
+            : 4 + uncertainty * 8) * scale,
+        wobbleSpeed:
+          kind === "contradiction" ? 1.4 + rand() * 1.4 : 0.35 + rand() * 0.65,
         phase: rand() * Math.PI * 2,
-        eccentricity: kind === "contradiction" ? 0.68 + tension * 0.22 : 0.86 + rand() * 0.12,
+        eccentricity:
+          kind === "contradiction"
+            ? 0.78 + tension * 0.18
+            : kind === "theme"
+            ? 0.72
+            : 0.9,
+        anchorThemeIndex: kind === "evidence" ? index % themeCount : undefined,
+        localOrbitRadius:
+          kind === "evidence" ? (22 + rand() * 28) * scale : undefined,
+        localOrbitSpeed:
+          kind === "evidence"
+            ? (0.0011 + rand() * 0.0011) * (rand() > 0.5 ? 1 : -1)
+            : undefined,
       };
     });
   }
@@ -164,7 +232,6 @@ function buildFallbackParticles(props: Props, scale: number): Particle[] {
     kind: ParticleKind,
     count: number,
     baseRadius: number,
-    spread: number,
     baseSize: number,
     baseSpeed: number
   ) => {
@@ -180,31 +247,121 @@ function buildFallbackParticles(props: Props, scale: number): Particle[] {
         label: kind,
         confidence: 0.65,
         strength: 0.65,
-        orbitRadius: baseRadius + (rand() - 0.5) * spread,
+        connections: [],
+        orbitRadius: baseRadius * scale,
         angle: rand() * Math.PI * 2,
         speed: baseSpeed * (0.75 + rand() * 0.7) * (rand() > 0.5 ? 1 : -1),
-        size: baseSize * (0.75 + rand() * 0.55),
-        wobble: 5 + rand() * 16,
-        wobbleSpeed: 0.45 + rand() * 0.9,
+        size: baseSize * scale * (0.85 + rand() * 0.35),
+        wobble: kind === "contradiction" ? 14 * scale : 5 * scale,
+        wobbleSpeed: kind === "contradiction" ? 1.8 : 0.65,
         phase: rand() * Math.PI * 2,
-        eccentricity:
-          kind === "contradiction" ? 0.72 + rand() * 0.18 : 0.88 + rand() * 0.1,
+        eccentricity: kind === "theme" ? 0.72 : 0.9,
+        anchorThemeIndex:
+          kind === "evidence" ? index % Math.max(1, themeCount) : undefined,
+        localOrbitRadius:
+          kind === "evidence" ? (24 + rand() * 28) * scale : undefined,
+        localOrbitSpeed:
+          kind === "evidence"
+            ? (0.0011 + rand() * 0.0011) * (rand() > 0.5 ? 1 : -1)
+            : undefined,
       });
     }
   };
 
-  addGroup("understanding", understandingCount, 0, 0, 8 * scale, 0);
-  addGroup("theme", themeCount, 48 * scale, 18 * scale, 4.2 * scale, 0.00055);
-  addGroup("causal", causalPathCount, 78 * scale, 26 * scale, 3.6 * scale, 0.00042);
-  addGroup("contradiction", contradictionCount, 98 * scale, 36 * scale, 4.4 * scale, 0.0027);
-  addGroup("evidence", evidenceCount, 124 * scale, 42 * scale, 3.3 * scale, 0.00036);
+  addGroup("understanding", understandingCount, 0, 10, 0);
+  addGroup("belief", 3, 52, 8.4, 0.00016);
+  addGroup("theme", themeCount, 96, 6.4, 0.00012);
+  addGroup("causal", causalPathCount, 124, 4.2, 0.00035);
+  addGroup("contradiction", contradictionCount, 168, 5.4, 0.0024);
+  addGroup("evidence", evidenceCount, 136, 3.4, 0.0012);
 
   return particles;
+}
+
+function buildActiveParticleIds(
+  particles: Particle[],
+  selectedParticleId?: string | null
+) {
+  if (!selectedParticleId) return new Set<string>();
+
+  const selected = particles.find((particle) => particle.id === selectedParticleId);
+  if (!selected) return new Set<string>();
+
+  const activeIds = new Set<string>();
+  activeIds.add(selected.id);
+
+  selected.connections.forEach((connectionId) => activeIds.add(connectionId));
+
+  particles.forEach((particle) => {
+    if (particle.connections.includes(selected.id)) {
+      activeIds.add(particle.id);
+    }
+  });
+
+  const selectedKind = selected.kind;
+
+  if (selectedKind === "belief") {
+    particles
+      .filter((particle) => particle.kind === "understanding")
+      .forEach((particle) => activeIds.add(particle.id));
+  }
+
+  if (selectedKind === "theme") {
+    particles
+      .filter(
+        (particle) =>
+          particle.kind === "evidence" &&
+          particle.anchorThemeIndex ===
+            particles
+              .filter((candidate) => candidate.kind === "theme")
+              .findIndex((candidate) => candidate.id === selected.id)
+      )
+      .forEach((particle) => activeIds.add(particle.id));
+  }
+
+  return activeIds;
+}
+
+function buildRenderStates({
+  particles,
+  selectedParticleId,
+  highlightKind,
+}: {
+  particles: Particle[];
+  selectedParticleId?: string | null;
+  highlightKind: OrganismHighlightKind;
+}) {
+  const activeIds = buildActiveParticleIds(particles, selectedParticleId);
+  const hasSelection = Boolean(selectedParticleId && activeIds.size > 0);
+  const renderStates = new Map<string, RenderState>();
+
+  particles.forEach((particle) => {
+    const selected = selectedParticleId === particle.id;
+    const pathHighlighted = hasSelection && activeIds.has(particle.id);
+    const kindHighlighted = highlightKind === particle.kind;
+    const highlighted = selected || pathHighlighted || kindHighlighted;
+    const dimmed =
+      (hasSelection && !pathHighlighted) ||
+      Boolean(highlightKind && highlightKind !== particle.kind);
+
+    renderStates.set(particle.id, {
+      selected,
+      highlighted,
+      dimmed,
+      alpha: dimmed ? 0.12 : highlighted ? 1 : 0.82,
+      glow: selected ? 0.4 : highlighted ? 0.28 : 0.12 + particle.confidence * 0.08,
+      sizeMultiplier: selected ? 1.42 : highlighted ? 1.16 : 1,
+    });
+  });
+
+  return renderStates;
 }
 
 export default function LivingOrganismCanvas(props: Props) {
   const {
     organismState,
+    selectedParticleId,
+    onParticleSelected,
     className,
     height = 360,
     highlightKind = null,
@@ -215,8 +372,19 @@ export default function LivingOrganismCanvas(props: Props) {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const animationRef = useRef<number | null>(null);
   const [hoveredParticle, setHoveredParticle] = useState<Particle | null>(null);
+  const [animationPaused, setAnimationPaused] = useState(false);
 
   const particles = useMemo(() => buildParticles(props), [props]);
+
+  const renderStates = useMemo(
+    () =>
+      buildRenderStates({
+        particles,
+        selectedParticleId,
+        highlightKind,
+      }),
+    [particles, selectedParticleId, highlightKind]
+  );
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -266,19 +434,30 @@ export default function LivingOrganismCanvas(props: Props) {
       ctx.fill();
     };
 
-    const getPosition = (p: Particle, t: number) => {
+    const getCorePosition = (p: Particle, t: number) => {
       const centerX = width / 2;
       const centerY = heightPx / 2;
 
       if (p.kind === "understanding") {
+        const breath = animationPaused ? 1 : 1 + Math.sin(t * 0.0018) * 0.035;
+
         return {
-          x: centerX + Math.cos(t * 0.001 + p.phase) * (1 + uncertainty * 3),
-          y: centerY + Math.sin(t * 0.0013 + p.phase) * (1 + uncertainty * 3),
+          x: centerX + Math.cos(t * 0.001 + p.phase) * breath,
+          y: centerY + Math.sin(t * 0.0013 + p.phase) * breath,
         };
       }
 
-      const angle = p.angle + t * p.speed;
-      const wobble = Math.sin(t * 0.001 * p.wobbleSpeed + p.phase) * p.wobble;
+      const motionScale = animationPaused
+        ? 0
+        : selectedParticleId || hoveredParticle
+        ? 0.04
+        : 0.18;
+
+      const angle = p.angle + t * p.speed * motionScale;
+      const wobble =
+        animationPaused
+          ? 0
+          : Math.sin(t * 0.001 * p.wobbleSpeed + p.phase) * p.wobble;
       const radius = p.orbitRadius + wobble;
 
       return {
@@ -287,109 +466,307 @@ export default function LivingOrganismCanvas(props: Props) {
       };
     };
 
+    const drawConnection = ({
+      from,
+      to,
+      color,
+      alpha,
+      width,
+      dashed = false,
+      curve = false,
+    }: {
+      from: PositionedParticle;
+      to: PositionedParticle;
+      color: string;
+      alpha: number;
+      width: number;
+      dashed?: boolean;
+      curve?: boolean;
+    }) => {
+      if (dashed) ctx.setLineDash([5, 7]);
+
+      ctx.strokeStyle = color.replace("1)", `${alpha})`);
+      ctx.lineWidth = width;
+
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+
+      if (curve) {
+        ctx.quadraticCurveTo(
+          (from.x + to.x) / 2,
+          (from.y + to.y) / 2 - 24,
+          to.x,
+          to.y
+        );
+      } else {
+        ctx.lineTo(to.x, to.y);
+      }
+
+      ctx.stroke();
+
+      if (dashed) ctx.setLineDash([]);
+    };
+
     const draw = (t: number) => {
       ctx.clearRect(0, 0, width, heightPx);
 
       const centerX = width / 2;
       const centerY = heightPx / 2;
 
-      const pulse = 1 + Math.sin(t * 0.0007) * (0.02 + uncertainty * 0.045);
-      const membraneRadius = (compact ? 96 : 150) * pulse * (0.92 + maturity * 0.16);
+      const pulse =
+        animationPaused
+          ? 1
+          : 1 + Math.sin(t * 0.0007) * (0.018 + uncertainty * 0.035);
+      const membraneRadius =
+        (compact ? 118 : 188) * pulse * (0.92 + maturity * 0.16);
 
       ctx.strokeStyle =
-        tension > 0.42 ? "rgba(255,139,76,0.18)" : "rgba(255,255,255,0.055)";
+        tension > 0.42 ? "rgba(255,139,76,0.2)" : "rgba(255,255,255,0.06)";
       ctx.lineWidth = tension > 0.42 ? 1.4 : 1;
 
       ctx.beginPath();
       ctx.ellipse(
         centerX,
         centerY,
-        membraneRadius * (1 + tension * 0.12),
-        membraneRadius * (0.78 + coherence * 0.12),
+        membraneRadius * (1 + tension * 0.1),
+        membraneRadius * (0.72 + coherence * 0.1),
         Math.sin(t * 0.00018) * (0.08 + uncertainty * 0.1),
         0,
         Math.PI * 2
       );
       ctx.stroke();
 
-      drawGlow(centerX, centerY, compact ? 92 : 145, "rgba(245, 190, 88, 1)", 0.045 + coherence * 0.035);
-      drawGlow(centerX, centerY, compact ? 74 : 104, COLORS.understanding, 0.08 + maturity * 0.08);
-      drawGlow(centerX, centerY, compact ? 34 : 48, COLORS.belief, 0.12 + coherence * 0.08);
+      drawGlow(
+        centerX,
+        centerY,
+        compact ? 104 : 152,
+        "rgba(245, 190, 88, 1)",
+        0.035 + coherence * 0.035
+      );
+      drawGlow(
+        centerX,
+        centerY,
+        compact ? 60 : 84,
+        COLORS.understanding,
+        0.08 + maturity * 0.08
+      );
 
-      const positions = particles.map((particle) => ({
+      const basePositions = particles.map((particle) => ({
         particle,
-        ...getPosition(particle, t),
+        ...getCorePosition(particle, t),
       }));
 
+      const themes = basePositions.filter((p) => p.particle.kind === "theme");
+
+      const positions: PositionedParticle[] = basePositions.map((position) => {
+        const { particle } = position;
+
+        if (particle.kind !== "evidence" || themes.length === 0) {
+          return position;
+        }
+
+        const anchor =
+          themes[
+            particle.anchorThemeIndex !== undefined
+              ? particle.anchorThemeIndex % themes.length
+              : 0
+          ];
+
+        const motionScale = animationPaused
+          ? 0
+          : selectedParticleId || hoveredParticle
+          ? 0.04
+          : 0.18;
+
+        const localAngle =
+          particle.angle +
+          t * (particle.localOrbitSpeed ?? 0.0012) * motionScale;
+        const localRadius = particle.localOrbitRadius ?? 32;
+
+        return {
+          particle,
+          x: anchor.x + Math.cos(localAngle) * localRadius,
+          y: anchor.y + Math.sin(localAngle) * localRadius * 0.78,
+        };
+      });
+
       const mechanisms = positions.filter((p) => p.particle.kind === "causal");
-      const themes = positions.filter((p) => p.particle.kind === "theme");
       const beliefs = positions.filter((p) => p.particle.kind === "belief");
-      const contradictions = positions.filter((p) => p.particle.kind === "contradiction");
+      const contradictions = positions.filter(
+        (p) => p.particle.kind === "contradiction"
+      );
+      const understanding = positions.find(
+        (p) => p.particle.kind === "understanding"
+      );
 
-      mechanisms.forEach((mechanism, index) => {
-        const target = themes[index % Math.max(themes.length, 1)] ?? beliefs[index % Math.max(beliefs.length, 1)];
-        if (!target) return;
+      themes.forEach((theme) => {
+        const state = renderStates.get(theme.particle.id);
+        const alpha = state?.dimmed ? 0.035 : state?.highlighted ? 0.18 : 0.09;
 
-        const active = !highlightKind || highlightKind === "causal" || highlightKind === target.particle.kind;
+        drawGlow(theme.x, theme.y, compact ? 42 : 58, COLORS.theme, alpha);
 
-        ctx.strokeStyle = active
-          ? `rgba(120, 180, 255, ${0.12 + coherence * 0.18})`
-          : "rgba(255,255,255,0.035)";
-        ctx.lineWidth = 1 + mechanism.particle.strength;
-
+        ctx.strokeStyle = `rgba(92, 220, 150, ${alpha})`;
+        ctx.lineWidth = state?.highlighted ? 1.6 : 1;
         ctx.beginPath();
-        ctx.moveTo(mechanism.x, mechanism.y);
-        ctx.quadraticCurveTo(
-          centerX + Math.sin(t * 0.001 + index) * 20,
-          centerY + Math.cos(t * 0.0012 + index) * 20,
-          target.x,
-          target.y
-        );
+        ctx.ellipse(theme.x, theme.y, 34, 24, 0, 0, Math.PI * 2);
         ctx.stroke();
       });
 
+      mechanisms.forEach((mechanism, index) => {
+        const theme = themes[index % Math.max(themes.length, 1)];
+        const belief = beliefs[index % Math.max(beliefs.length, 1)];
+
+        if (!theme && !belief) return;
+
+        const mechanismState = renderStates.get(mechanism.particle.id);
+        const themeState = theme ? renderStates.get(theme.particle.id) : null;
+        const beliefState = belief ? renderStates.get(belief.particle.id) : null;
+
+        const active =
+          mechanismState?.highlighted ||
+          themeState?.highlighted ||
+          beliefState?.highlighted;
+
+        const alpha = mechanismState?.dimmed ? 0.04 : active ? 0.55 : 0.16;
+
+        if (theme && belief) {
+          drawConnection({
+            from: theme,
+            to: belief,
+            color: COLORS.causal,
+            alpha,
+            width: active ? 2.2 : 1 + mechanism.particle.strength,
+            curve: true,
+          });
+        } else if (theme) {
+          drawConnection({
+            from: theme,
+            to: mechanism,
+            color: COLORS.causal,
+            alpha,
+            width: active ? 2 : 1,
+          });
+        } else if (belief) {
+          drawConnection({
+            from: mechanism,
+            to: belief,
+            color: COLORS.causal,
+            alpha,
+            width: active ? 2 : 1,
+          });
+        }
+      });
+
+      beliefs.forEach((belief) => {
+        if (!understanding) return;
+
+        const beliefState = renderStates.get(belief.particle.id);
+        const understandingState = renderStates.get(understanding.particle.id);
+        const active = beliefState?.highlighted || understandingState?.highlighted;
+
+        drawConnection({
+          from: belief,
+          to: understanding,
+          color: COLORS.belief,
+          alpha: beliefState?.dimmed ? 0.035 : active ? 0.58 : 0.18,
+          width: active ? 2.1 : 1.2,
+        });
+      });
+
       contradictions.forEach((contradiction, index) => {
-        const target = beliefs[index % Math.max(beliefs.length, 1)] ?? themes[index % Math.max(themes.length, 1)];
+        const target =
+          beliefs[index % Math.max(beliefs.length, 1)] ??
+          themes[index % Math.max(themes.length, 1)];
+
         if (!target) return;
 
-        ctx.setLineDash([6, 8]);
-        ctx.strokeStyle = `rgba(255, 139, 76, ${0.18 + tension * 0.42})`;
-        ctx.lineWidth = 1.2 + tension * 1.4;
+        const contradictionState = renderStates.get(contradiction.particle.id);
+        const targetState = renderStates.get(target.particle.id);
+        const active =
+          contradictionState?.highlighted || targetState?.highlighted;
 
-        ctx.beginPath();
-        ctx.moveTo(contradiction.x, contradiction.y);
-        ctx.lineTo(target.x, target.y);
-        ctx.stroke();
-        ctx.setLineDash([]);
+        drawConnection({
+          from: contradiction,
+          to: target,
+          color: COLORS.contradiction,
+          alpha: contradictionState?.dimmed ? 0.035 : active ? 0.66 : 0.22 + tension * 0.28,
+          width: active ? 2.4 : 1.1 + tension * 1.3,
+          dashed: true,
+        });
       });
 
       let nearest: Particle | null = null;
       let nearestDistance = Infinity;
 
       positions.forEach(({ particle, x, y }) => {
-        const distance = Math.hypot(pointer.x - x, pointer.y - y);
-        if (distance < particle.size + 18 && distance < nearestDistance) {
+        const state = renderStates.get(particle.id);
+
+        const unstableJitter =
+          particle.kind === "contradiction" && !animationPaused
+            ? Math.sin(t * 0.004 + particle.phase) * (0.8 + tension * 1.6)
+            : 0;
+
+        const drawX = x + unstableJitter;
+        const drawY = y - unstableJitter * 0.6;
+
+        const distance = Math.hypot(pointer.x - drawX, pointer.y - drawY);
+
+        if (distance < particle.size + 20 && distance < nearestDistance) {
           nearest = particle;
           nearestDistance = distance;
         }
 
-        const externallyHighlighted = highlightKind === particle.kind;
-        const dimmed = highlightKind && highlightKind !== particle.kind;
-        const alpha = dimmed ? 0.22 : externallyHighlighted ? 1 : 0.78;
         const color = COLORS[particle.kind];
 
+        const beliefPulse =
+          particle.kind === "belief" && !animationPaused
+            ? 1 + Math.sin(t * 0.003 + particle.phase) * 0.08
+            : 1;
+
+        const understandingPulse =
+          particle.kind === "understanding" && !animationPaused
+            ? 1 + Math.sin(t * 0.0024) * 0.08
+            : 1;
+
+        const finalSize =
+          particle.size *
+          beliefPulse *
+          understandingPulse *
+          (state?.sizeMultiplier ?? 1);
+
         drawGlow(
-          x,
-          y,
-          particle.size * (externallyHighlighted ? 8 : 5),
+          drawX,
+          drawY,
+          finalSize * (state?.selected ? 10 : state?.highlighted ? 8 : 5.5),
           color,
-          externallyHighlighted ? 0.28 : 0.12 + particle.confidence * 0.08
+          state?.glow ?? 0.14
         );
 
-        ctx.fillStyle = color.replace("1)", `${alpha})`);
+        ctx.fillStyle = color.replace("1)", `${state?.alpha ?? 0.82})`);
         ctx.beginPath();
-        ctx.arc(x, y, particle.size, 0, Math.PI * 2);
+        ctx.arc(drawX, drawY, finalSize, 0, Math.PI * 2);
         ctx.fill();
+
+        if (particle.kind === "contradiction") {
+          ctx.strokeStyle = `rgba(255, 139, 76, ${
+            state?.dimmed ? 0.08 : 0.35 + tension * 0.25
+          })`;
+          ctx.lineWidth = state?.highlighted ? 1.6 : 1;
+          ctx.beginPath();
+          ctx.moveTo(drawX - finalSize, drawY - finalSize);
+          ctx.lineTo(drawX + finalSize, drawY + finalSize);
+          ctx.moveTo(drawX + finalSize, drawY - finalSize);
+          ctx.lineTo(drawX - finalSize, drawY + finalSize);
+          ctx.stroke();
+        }
+
+        if (state?.selected) {
+          ctx.strokeStyle = "rgba(255,255,255,0.86)";
+          ctx.lineWidth = 1.6;
+          ctx.beginPath();
+          ctx.arc(drawX, drawY, finalSize * 2.1, 0, Math.PI * 2);
+          ctx.stroke();
+        }
       });
 
       if (nearest !== hoveredParticle) {
@@ -398,8 +775,6 @@ export default function LivingOrganismCanvas(props: Props) {
 
       animationRef.current = requestAnimationFrame(draw);
     };
-
-    resize();
 
     const handleMove = (event: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
@@ -414,9 +789,18 @@ export default function LivingOrganismCanvas(props: Props) {
       setHoveredParticle(null);
     };
 
+    const handleClick = () => {
+      if (hoveredParticle && onParticleSelected) {
+        onParticleSelected(hoveredParticle);
+      }
+    };
+
+    resize();
+
     window.addEventListener("resize", resize);
     canvas.addEventListener("pointermove", handleMove);
     canvas.addEventListener("pointerleave", handleLeave);
+    canvas.addEventListener("click", handleClick);
 
     animationRef.current = requestAnimationFrame(draw);
 
@@ -424,12 +808,23 @@ export default function LivingOrganismCanvas(props: Props) {
       window.removeEventListener("resize", resize);
       canvas.removeEventListener("pointermove", handleMove);
       canvas.removeEventListener("pointerleave", handleLeave);
+      canvas.removeEventListener("click", handleClick);
 
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [particles, highlightKind, compact, hoveredParticle, organismState]);
+  }, [
+    particles,
+    renderStates,
+    highlightKind,
+    compact,
+    hoveredParticle,
+    organismState,
+    selectedParticleId,
+    onParticleSelected,
+    animationPaused,
+  ]);
 
   return (
     <div
@@ -438,7 +833,8 @@ export default function LivingOrganismCanvas(props: Props) {
       style={{
         position: "relative",
         width: "100%",
-        height,
+        height: "100%",
+        minHeight: height,
         overflow: "hidden",
         borderRadius: compact ? 18 : 28,
       }}
@@ -450,14 +846,39 @@ export default function LivingOrganismCanvas(props: Props) {
           display: "block",
           width: "100%",
           height: "100%",
+          cursor: hoveredParticle ? "pointer" : "default",
         }}
       />
+
+      <button
+        type="button"
+        onClick={() => setAnimationPaused((current) => !current)}
+        style={{
+          position: "absolute",
+          right: 18,
+          bottom: 18,
+          zIndex: 20,
+          border: "1px solid rgba(255,255,255,0.14)",
+          background: "rgba(10,10,12,0.72)",
+          color: "rgba(255,255,255,0.86)",
+          borderRadius: 999,
+          padding: "8px 12px",
+          fontSize: 11,
+          letterSpacing: "0.12em",
+          textTransform: "uppercase",
+          cursor: "pointer",
+          backdropFilter: "blur(10px)",
+        }}
+      >
+        {animationPaused ? "Resume" : "Pause"}
+      </button>
 
       {hoveredParticle && (
         <div className="organism-hover-card">
           <strong>{hoveredParticle.label}</strong>
           <span>
-            {hoveredParticle.kind} · {Math.round(hoveredParticle.confidence * 100)}%
+            {hoveredParticle.kind} ·{" "}
+            {Math.round(hoveredParticle.confidence * 100)}%
           </span>
         </div>
       )}
