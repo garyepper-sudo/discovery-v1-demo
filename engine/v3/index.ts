@@ -138,6 +138,7 @@ ${input.context}
     evidence: workspace.evidence,
     themes: workspace.themes,
     contradictions: workspace.contradictions,
+    hypotheses: workspace.hypotheses,
     beliefs: workspace.beliefs,
     understanding: canonicalUnderstanding,
   });

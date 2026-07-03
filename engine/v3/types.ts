@@ -389,9 +389,42 @@ export type V3OrganismParticle = {
   connections: string[];
 };
 
+export type V3OrganismEvidenceCluster = {
+  id: string;
+  label: string;
+  evidenceIds: string[];
+  confidence: number;
+  tension: number;
+};
+
+export type V3OrganismEmergingPattern = {
+  id: string;
+  title: string;
+  description: string;
+  evidenceIds: string[];
+  confidence: number;
+  strength: number;
+};
+
 export type V3OrganismState = {
   particles: V3OrganismParticle[];
   centerId?: string;
+
+  evidenceClusters: V3OrganismEvidenceCluster[];
+
+  mechanisms: V3Mechanism[];
+  hypotheses: V3Hypothesis[];
+  beliefs: V3Belief[];
+  contradictions: V3Contradiction[];
+
+  mechanismIds: string[];
+  hypothesisIds: string[];
+  beliefIds: string[];
+  contradictionIds: string[];
+
+  uncertainty: number;
+  emergingPatterns: V3OrganismEmergingPattern[];
+
   density: number;
   coherence: number;
   tension: number;
@@ -405,7 +438,7 @@ export type DiscoveryV3Result = {
   mechanisms: V3Mechanism[];
   hypotheses: V3Hypothesis[];
   propagatedConfidence?: import("./confidencePropagation").V3PropagatedConfidence;
-  
+
   signals: V3Signal[];
   themes: V3Theme[];
   contradictions: V3Contradiction[];

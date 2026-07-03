@@ -2,6 +2,10 @@ import {
   V3Belief,
   V3Contradiction,
   V3Evidence,
+  V3Hypothesis,
+  V3Mechanism,
+  V3OrganismEmergingPattern,
+  V3OrganismEvidenceCluster,
   V3OrganismParticle,
   V3OrganismState,
   V3Theme,
@@ -12,6 +16,8 @@ type BuildOrganismStateInput = {
   evidence: V3Evidence[];
   themes: V3Theme[];
   contradictions: V3Contradiction[];
+  mechanisms?: V3Mechanism[];
+  hypotheses?: V3Hypothesis[];
   beliefs: V3Belief[];
   understanding: V3Understanding;
 };
@@ -20,6 +26,8 @@ export function buildOrganismState({
   evidence,
   themes,
   contradictions,
+  mechanisms = [],
+  hypotheses = [],
   beliefs,
   understanding,
 }: BuildOrganismStateInput): V3OrganismState {
@@ -54,6 +62,32 @@ export function buildOrganismState({
       connections: item.evidenceIds,
     })),
 
+    ...mechanisms.slice(0, 6).map((item) => ({
+      id: `OP-${item.id}`,
+      kind: "causal" as const,
+      label: item.title,
+      sourceId: item.id,
+      confidence: item.confidence,
+      strength: item.confidence,
+      connections: [...item.evidenceIds, ...item.relationshipIds],
+    })),
+
+    ...hypotheses.slice(0, 6).map((item) => ({
+      id: `OP-${item.id}`,
+      kind: "belief" as const,
+      label: item.title,
+      sourceId: item.id,
+      confidence: item.confidence,
+      strength: hypothesisStatusToStrength(item.status),
+      connections: [
+        ...item.supportingEvidenceIds,
+        ...item.weakeningEvidenceIds,
+        ...item.mechanismIds,
+        ...item.themeIds,
+        ...item.contradictionIds,
+      ],
+    })),
+
     ...beliefs.slice(0, 6).map((item) => ({
       id: `OP-${item.id}`,
       kind: "belief" as const,
@@ -78,24 +112,177 @@ export function buildOrganismState({
         ...understanding.evidenceIds,
         ...understanding.themeIds,
         ...understanding.causalChainIds,
+        ...mechanisms.map((mechanism) => mechanism.id),
       ],
     },
   ];
 
+  const evidenceClusters = buildEvidenceClusters({
+    themes,
+    contradictions,
+  });
+
+  const emergingPatterns = buildEmergingPatterns({
+    themes,
+    mechanisms,
+    hypotheses,
+    beliefs,
+    understanding,
+  });
+
+  const tension = clamp(
+    contradictions.length / Math.max(1, themes.length + contradictions.length)
+  );
+
+  const coherence = clamp(
+    understanding.supportScore - understanding.contradictionScore * 0.35
+  );
+
+  const uncertainty = clamp(
+    1 -
+      understanding.confidence * 0.42 -
+      coherence * 0.24 -
+      Math.min(1, mechanisms.length / 4) * 0.08 -
+      Math.min(1, beliefs.length / 5) * 0.18 -
+      Math.min(1, hypotheses.length / 4) * 0.08
+  );
+
   return {
     particles,
     centerId: `OP-${understanding.id}`,
+
+    evidenceClusters,
+
+    mechanisms,
+    hypotheses,
+    beliefs,
+    contradictions,
+
+    mechanismIds: mechanisms.map((mechanism) => mechanism.id),
+    hypothesisIds: hypotheses.map((hypothesis) => hypothesis.id),
+    beliefIds: beliefs.map((belief) => belief.id),
+    contradictionIds: contradictions.map((contradiction) => contradiction.id),
+
+    uncertainty,
+    emergingPatterns,
+
     density: clamp(particles.length / 30),
-    coherence: clamp(understanding.supportScore - understanding.contradictionScore * 0.35),
-    tension: clamp(
-      contradictions.length / Math.max(1, themes.length + contradictions.length)
-    ),
+    coherence,
+    tension,
     maturity: clamp(
-      understanding.confidence * 0.5 +
-        understanding.supportScore * 0.3 +
-        Math.min(1, beliefs.length / 4) * 0.2
+      understanding.confidence * 0.42 +
+        understanding.supportScore * 0.24 +
+        Math.min(1, mechanisms.length / 4) * 0.08 +
+        Math.min(1, beliefs.length / 4) * 0.18 +
+        Math.min(1, hypotheses.length / 4) * 0.08
     ),
   };
+}
+
+function buildEvidenceClusters({
+  themes,
+  contradictions,
+}: {
+  themes: V3Theme[];
+  contradictions: V3Contradiction[];
+}): V3OrganismEvidenceCluster[] {
+  return themes.slice(0, 8).map((theme) => {
+    const relatedContradictions = contradictions.filter((contradiction) =>
+      contradiction.evidenceIds.some((evidenceId) =>
+        theme.evidenceIds.includes(evidenceId)
+      )
+    );
+
+    return {
+      id: `OC-${theme.id}`,
+      label: theme.title,
+      evidenceIds: theme.evidenceIds,
+      confidence: theme.confidence,
+      tension: clamp(
+        relatedContradictions.length / Math.max(1, contradictions.length)
+      ),
+    };
+  });
+}
+
+function buildEmergingPatterns({
+  themes,
+  mechanisms,
+  hypotheses,
+  beliefs,
+  understanding,
+}: {
+  themes: V3Theme[];
+  mechanisms: V3Mechanism[];
+  hypotheses: V3Hypothesis[];
+  beliefs: V3Belief[];
+  understanding: V3Understanding;
+}): V3OrganismEmergingPattern[] {
+  const strongestThemes = [...themes]
+    .sort((a, b) => b.confidence - a.confidence)
+    .slice(0, 3);
+
+  const mechanismPatterns = mechanisms.slice(0, 2).map((mechanism) => ({
+    id: `EP-${mechanism.id}`,
+    title: mechanism.title,
+    description: mechanism.explanation,
+    evidenceIds: mechanism.evidenceIds,
+    confidence: mechanism.confidence,
+    strength: mechanism.confidence,
+  }));
+
+  const hypothesisPatterns = hypotheses.slice(0, 2).map((hypothesis) => ({
+    id: `EP-${hypothesis.id}`,
+    title: hypothesis.title,
+    description: hypothesis.explanation,
+    evidenceIds: [
+      ...hypothesis.supportingEvidenceIds,
+      ...hypothesis.weakeningEvidenceIds,
+    ],
+    confidence: hypothesis.confidence,
+    strength: hypothesisStatusToStrength(hypothesis.status),
+  }));
+
+  const beliefPatterns = beliefs.slice(0, 2).map((belief) => ({
+    id: `EP-${belief.id}`,
+    title: belief.headline,
+    description: belief.explanation,
+    evidenceIds: belief.supportingEvidenceIds,
+    confidence: belief.confidence,
+    strength: belief.stability ?? belief.utility ?? belief.confidence,
+  }));
+
+  const themePatterns = strongestThemes.map((theme) => ({
+    id: `EP-${theme.id}`,
+    title: theme.title,
+    description: theme.description,
+    evidenceIds: theme.evidenceIds,
+    confidence: theme.confidence,
+    strength: theme.stability ?? strengthToNumber(theme.strength),
+  }));
+
+  return [
+    {
+      id: `EP-${understanding.id}`,
+      title: understanding.title,
+      description: understanding.summary,
+      evidenceIds: understanding.evidenceIds,
+      confidence: understanding.confidence,
+      strength: understanding.supportScore,
+    },
+    ...mechanismPatterns,
+    ...hypothesisPatterns,
+    ...beliefPatterns,
+    ...themePatterns,
+  ];
+}
+
+function hypothesisStatusToStrength(status: V3Hypothesis["status"]): number {
+  if (status === "leading") return 0.9;
+  if (status === "plausible") return 0.7;
+  if (status === "weak") return 0.4;
+  if (status === "challenged") return 0.3;
+  return 0.5;
 }
 
 function strengthToNumber(strength?: "weak" | "moderate" | "strong"): number {
