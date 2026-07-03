@@ -1,19 +1,18 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-
-import { ActionPanel } from '../components/ActionPanel';
-import { BeliefCard } from '../components/BeliefCard';
-import { DeveloperPanel } from '../components/DeveloperPanel';
-import { EvidencePrompt } from '../components/EvidencePrompt';
+import { ActionPanel } from '../components/investigation/ActionPanel';
+import {BeliefCard} from "../components/understanding/BeliefCard";
+import { DeveloperPanel } from '../components/investigation/DeveloperPanel';
+import {EvidencePrompt} from "../components/investigation/EvidencePrompt";
 import { Hero } from '../components/Hero';
-import { InspectionDrawer } from '../components/InspectionDrawer';
+import {InspectionDrawer} from "../components/investigation/InspectionDrawer";
 import { Organism } from '../components/Organism';
 import { PrivateWorkspace } from '../components/PrivateWorkspace';
-import { StewardshipBrief } from '../components/StewardshipBrief';
-import { UnderstandingTimeline } from '../components/UnderstandingTimeline';
+import {StewardshipBrief} from "../components/understanding/StewardshipBrief";
+import {UnderstandingTimeline} from "../components/understanding/UnderstandingTimeline";
 
-import type { DemoDoc, EngineReport, InsightFeedback } from '../components/types';
+import type { DemoDoc, EngineReport, InsightFeedback } from '../components/investigation/types';
 
 const nvidiaDocs: DemoDoc[] = [
   {

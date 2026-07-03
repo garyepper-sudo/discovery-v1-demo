@@ -1,4 +1,5 @@
 import {
+  V3Belief,
   V3CausalChain,
   V3Contradiction,
   V3ExecutiveUnderstanding,
@@ -12,7 +13,11 @@ export function buildUnderstanding(
   explanations: V3Explanation[],
   causalChains: V3CausalChain[]
 ): V3Understanding[] {
-  return explanations.map((explanation, index) => {
+  const sortedExplanations = [...explanations].sort(
+    (a, b) => b.confidence - a.confidence
+  );
+
+  return sortedExplanations.map((explanation, index) => {
     const linkedThemes = themes.filter((theme) =>
       theme.evidenceIds.some((id) =>
         explanation.supportingEvidenceIds.includes(id)
@@ -29,14 +34,27 @@ export function buildUnderstanding(
     const hasCausalSupport = linkedCausalChains.length > 0;
     const hasThemeSupport = linkedThemes.length > 0;
 
+    const supportScore =
+      explanation.supportingEvidenceIds.length +
+      linkedThemes.length +
+      linkedCausalChains.length;
+
+    const contradictionScore = explanation.weakeningEvidenceIds.length;
+
+    const noveltyScore = calculateNoveltyScore(
+      hasWeakeningEvidence,
+      hasCausalSupport,
+      hasThemeSupport
+    );
+
     return {
       id: `U${index + 1}`,
       title: explanation.title,
       summary: explanation.explanation,
       confidence: explanation.confidence,
-      supportScore: explanation.supportingEvidenceIds.length,
-      contradictionScore: explanation.weakeningEvidenceIds.length,
-      noveltyScore: hasWeakeningEvidence ? 0.8 : 0.5,
+      supportScore,
+      contradictionScore,
+      noveltyScore,
       evidenceIds: [
         ...explanation.supportingEvidenceIds,
         ...explanation.weakeningEvidenceIds,
@@ -63,6 +81,20 @@ export function buildUnderstanding(
       ),
     };
   });
+}
+
+function calculateNoveltyScore(
+  hasWeakeningEvidence: boolean,
+  hasCausalSupport: boolean,
+  hasThemeSupport: boolean
+): number {
+  let score = 0.4;
+
+  if (hasWeakeningEvidence) score += 0.2;
+  if (hasCausalSupport) score += 0.2;
+  if (!hasThemeSupport) score += 0.1;
+
+  return Math.min(score, 1);
 }
 
 function buildSupportingReasons(
@@ -208,8 +240,13 @@ function buildRecommendations(
 export function buildExecutiveUnderstanding(
   explanations: V3Explanation[],
   contradictions: V3Contradiction[],
-  understanding: V3Understanding[] = []
+  understanding: V3Understanding[] = [],
+  beliefs: V3Belief[] = []
 ): V3ExecutiveUnderstanding {
+  const primaryBelief = [...beliefs].sort(
+    (a, b) => b.confidence - a.confidence
+  )[0];
+
   const primaryUnderstanding = [...understanding].sort(
     (a, b) => b.confidence - a.confidence
   )[0];
@@ -220,45 +257,54 @@ export function buildExecutiveUnderstanding(
 
   return {
     headline:
+      primaryBelief?.headline ??
       primaryUnderstanding?.title ??
       fallbackExplanation?.title ??
       "No dominant strategic understanding has emerged.",
 
     explanation:
+      primaryBelief?.explanation ??
       primaryUnderstanding?.summary ??
       fallbackExplanation?.explanation ??
       "Additional evidence is required before forming a reliable executive understanding.",
 
     confidence:
+      primaryBelief?.confidence ??
       primaryUnderstanding?.confidence ??
       fallbackExplanation?.confidence ??
       0.5,
 
     evidenceSummary:
-      primaryUnderstanding?.supportingReasons ??
-      explanations.slice(0, 3).map((e) => e.title),
+      primaryBelief?.supportingReasons?.length
+        ? primaryBelief.supportingReasons
+        : primaryUnderstanding?.supportingReasons ??
+          explanations.slice(0, 3).map((e) => e.title),
 
     contradictions:
-      primaryUnderstanding?.contradictions?.length
-        ? primaryUnderstanding.contradictions
-        : contradictions.map((c) => c.title),
+      primaryBelief?.concerns?.length
+        ? primaryBelief.concerns
+        : primaryUnderstanding?.contradictions?.length
+          ? primaryUnderstanding.contradictions
+          : contradictions.map((c) => c.title),
 
     openQuestions:
-      primaryUnderstanding?.unknowns?.length
-        ? primaryUnderstanding.unknowns
-        : [
-            "Which explanation would change if new customer evidence arrived?",
-            "What evidence would falsify the leading explanation?",
-            "Which contradiction should leadership investigate first?",
-          ],
+      primaryBelief?.nextQuestions?.length
+        ? primaryBelief.nextQuestions
+        : primaryUnderstanding?.unknowns?.length
+          ? primaryUnderstanding.unknowns
+          : [
+              "Which explanation would change if new customer evidence arrived?",
+              "What evidence would falsify the leading explanation?",
+              "Which contradiction should leadership investigate first?",
+            ],
 
     nextMoves:
       primaryUnderstanding?.recommendations?.length
         ? primaryUnderstanding.recommendations
         : [
-            "Collect evidence that directly challenges the leading explanation.",
-            "Separate customer friction by pricing, content, and plan complexity.",
-            "Measure which strategic bets actually improve retention.",
+            "Collect evidence that directly challenges the leading belief.",
+            "Identify what evidence would weaken the current belief.",
+            "Compare the current belief against alternative explanations.",
           ],
   };
 }

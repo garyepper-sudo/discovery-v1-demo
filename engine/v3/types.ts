@@ -8,6 +8,17 @@ export type V3EvidenceType =
   | "metric"
   | "unknown";
 
+export type V3Polarity =
+  | "positive"
+  | "negative"
+  | "neutral"
+  | "mixed"
+  | "unknown";
+
+export type V3SignalStrength = "weak" | "moderate" | "strong";
+
+export type V3ConfidenceBand = "low" | "medium" | "high";
+
 export type V3Evidence = {
   id: string;
   text: string;
@@ -16,6 +27,149 @@ export type V3Evidence = {
   keywords: string[];
   entities: string[];
   source: string;
+
+  polarity?: V3Polarity;
+  strength?: V3SignalStrength;
+  confidenceBand?: V3ConfidenceBand;
+  relatedEvidenceIds?: string[];
+  inferredFrom?: string[];
+};
+
+export type V3EvidenceRelationshipType =
+  | "supports"
+  | "contradicts"
+  | "depends_on"
+  | "explains"
+  | "extends"
+  | "duplicates";
+
+export type V3EvidenceRelationship = {
+  id: string;
+  sourceEvidenceId: string;
+  targetEvidenceId: string;
+  type: V3EvidenceRelationshipType;
+  confidence: number;
+  explanation: string;
+};
+
+export type V3EvidenceGraphNode = {
+  id: string;
+  evidenceId: string;
+  label: string;
+  confidence: number;
+  type: V3Evidence["type"];
+  polarity?: V3Evidence["polarity"];
+  strength?: V3Evidence["strength"];
+  keywords: string[];
+  entities: string[];
+  connectionCount: number;
+};
+
+export type V3EvidenceGraphEdge = {
+  id: string;
+  fromEvidenceId: string;
+  toEvidenceId: string;
+  type: V3EvidenceRelationshipType;
+  confidence: number;
+  explanation: string;
+};
+
+export type V3EvidenceCluster = {
+  id: string;
+  evidenceIds: string[];
+  dominantRelationshipTypes: V3EvidenceRelationshipType[];
+  confidence: number;
+  label: string;
+};
+
+export type V3EvidenceGraph = {
+  nodes: V3EvidenceGraphNode[];
+  edges: V3EvidenceGraphEdge[];
+  clusters: V3EvidenceCluster[];
+
+  metrics: {
+    evidenceCount: number;
+    relationshipCount: number;
+    density: number;
+    averageConfidence: number;
+    contradictionCount: number;
+    supportCount: number;
+    explanationCount: number;
+  };
+};
+
+export type V3EvidenceNetwork = {
+  evidence: V3Evidence[];
+  relationships: V3EvidenceRelationship[];
+  graph: V3EvidenceGraph;
+
+  summary: {
+    evidenceCount: number;
+    relationshipCount: number;
+    clusterCount: number;
+    dominantRelationshipTypes: V3EvidenceRelationshipType[];
+    mostConnectedEvidenceIds: string[];
+    contradictionCount: number;
+    density: number;
+    averageConfidence: number;
+  };
+};
+
+export type V3MechanismType =
+  | "causal"
+  | "reinforcing"
+  | "constraint"
+  | "tension"
+  | "dependency"
+  | "unknown";
+
+export type V3Mechanism = {
+  id: string;
+  title: string;
+  type: V3MechanismType;
+  cause: string;
+  mechanism: string;
+  effect: string;
+  evidenceIds: string[];
+  relationshipIds: string[];
+  confidence: number;
+  explanation: string;
+  openQuestions: string[];
+};
+
+export type V3HypothesisStatus =
+  | "leading"
+  | "plausible"
+  | "weak"
+  | "challenged";
+
+export type V3Hypothesis = {
+  id: string;
+  title: string;
+  explanation: string;
+  status: V3HypothesisStatus;
+  confidence: number;
+
+  supportingEvidenceIds: string[];
+  weakeningEvidenceIds: string[];
+  mechanismIds: string[];
+  themeIds: string[];
+  beliefIds: string[];
+  contradictionIds: string[];
+
+  strengths: string[];
+  weaknesses: string[];
+  distinguishingQuestions: string[];
+};
+
+export type V3Signal = {
+  id: string;
+  title: string;
+  description: string;
+  evidenceIds: string[];
+  confidence: number;
+  polarity: "positive" | "negative" | "neutral";
+  priority?: V3PriorityScore;
 };
 
 export type V3Theme = {
@@ -24,6 +178,37 @@ export type V3Theme = {
   description: string;
   evidenceIds: string[];
   confidence: number;
+  signalIds?: string[];
+  keywords?: string[];
+  entities?: string[];
+  polarity?: V3Polarity;
+  strength?: V3SignalStrength;
+  stability?: number;
+  priority?: V3PriorityScore;
+};
+
+export type V3PriorityScore = {
+  confidence: number;
+  importance: number;
+  connectedness: number;
+  urgency: number;
+  total: number;
+};
+
+export type V3ThemeRelationship = {
+  id: string;
+  sourceThemeId: string;
+  targetThemeId: string;
+  relationship:
+    | "supports"
+    | "reinforces"
+    | "contradicts"
+    | "depends_on"
+    | "causes"
+    | "correlates";
+  confidence: number;
+  explanation: string;
+  sharedEvidenceIds: string[];
 };
 
 export type V3Contradiction = {
@@ -32,6 +217,11 @@ export type V3Contradiction = {
   explanation: string;
   evidenceIds: string[];
   confidence: number;
+  signalIds?: string[];
+  severity?: V3SignalStrength;
+  unresolvedQuestion?: string;
+  opposingEvidenceIds?: string[];
+  priority?: V3PriorityScore;
 };
 
 export type V3CausalChain = {
@@ -42,6 +232,11 @@ export type V3CausalChain = {
   evidenceIds: string[];
   themeIds: string[];
   confidence: number;
+  signalIds?: string[];
+  strength?: V3SignalStrength;
+  assumptions?: string[];
+  risks?: string[];
+  priority?: V3PriorityScore;
 };
 
 export type V3Explanation = {
@@ -51,6 +246,11 @@ export type V3Explanation = {
   supportingEvidenceIds: string[];
   weakeningEvidenceIds: string[];
   confidence: number;
+
+  signalIds?: string[];
+  themeIds?: string[];
+  causalChainIds?: string[];
+  contradictionIds?: string[];
 };
 
 export type V3ExecutiveUnderstanding = {
@@ -65,36 +265,26 @@ export type V3ExecutiveUnderstanding = {
 
 export type V3Understanding = {
   id: string;
-
   title: string;
-
   summary: string;
-
   confidence: number;
-
   supportScore: number;
-
   contradictionScore: number;
-
   noveltyScore: number;
-
   evidenceIds: string[];
-
   themeIds: string[];
-
   explanationIds: string[];
-
   causalChainIds: string[];
-
   supportingReasons: string[];
-
   contradictions: string[];
-
   unknowns: string[];
-
   implications: string[];
-
   recommendations: string[];
+
+  signalIds?: string[];
+  beliefIds?: string[];
+  organismState?: V3OrganismState;
+  priority?: V3PriorityScore;
 };
 
 export type V3EmergenceEvent = {
@@ -104,15 +294,128 @@ export type V3EmergenceEvent = {
   understandingId?: string;
   strength: number;
   evidenceIds: string[];
+
+  signalIds?: string[];
+  themeIds?: string[];
+  beliefIds?: string[];
+  eventType?:
+    | "new_pattern"
+    | "resolved_tension"
+    | "new_tension"
+    | "confidence_shift";
+};
+
+export type V3Belief = {
+  id: string;
+  headline: string;
+  confidence: number;
+  explanation: string;
+  understandingId: string;
+  supportingEvidenceIds: string[];
+  contradictingEvidenceIds: string[];
+  supportingReasons: string[];
+  concerns: string[];
+  nextQuestions: string[];
+
+  signalIds?: string[];
+  themeIds?: string[];
+  causalChainIds?: string[];
+  stability?: number;
+  utility?: number;
+  priority?: V3PriorityScore;
+};
+
+export type V3ReasoningNodeType =
+  | "evidence"
+  | "signal"
+  | "theme"
+  | "contradiction"
+  | "causal"
+  | "explanation"
+  | "understanding"
+  | "belief"
+  | "executive";
+
+export type V3ReasoningEdgeType =
+  | "supports"
+  | "explains"
+  | "complicates"
+  | "contradicts"
+  | "causes"
+  | "summarizes"
+  | "forms";
+
+export type V3ReasoningNode = {
+  id: string;
+  type: V3ReasoningNodeType;
+  label: string;
+  description?: string;
+  confidence?: number;
+  sourceId: string;
+};
+
+export type V3ReasoningEdge = {
+  id: string;
+  from: string;
+  to: string;
+  type: V3ReasoningEdgeType;
+  weight: number;
+  primary?: boolean;
+  explanation?: string;
+};
+
+export type V3ReasoningGraph = {
+  nodes: V3ReasoningNode[];
+  edges: V3ReasoningEdge[];
+  executiveNodeId?: string;
+};
+
+export type V3OrganismParticleKind =
+  | "evidence"
+  | "signal"
+  | "theme"
+  | "contradiction"
+  | "causal"
+  | "belief"
+  | "understanding";
+
+export type V3OrganismParticle = {
+  id: string;
+  kind: V3OrganismParticleKind;
+  label: string;
+  sourceId: string;
+  confidence: number;
+  strength: number;
+  connections: string[];
+};
+
+export type V3OrganismState = {
+  particles: V3OrganismParticle[];
+  centerId?: string;
+  density: number;
+  coherence: number;
+  tension: number;
+  maturity: number;
 };
 
 export type DiscoveryV3Result = {
   evidence: V3Evidence[];
+  evidenceRelationships: V3EvidenceRelationship[];
+  evidenceNetwork?: V3EvidenceNetwork;
+  mechanisms: V3Mechanism[];
+  hypotheses: V3Hypothesis[];
+  propagatedConfidence?: import("./confidencePropagation").V3PropagatedConfidence;
+  
+  signals: V3Signal[];
   themes: V3Theme[];
   contradictions: V3Contradiction[];
   causalChains: V3CausalChain[];
   explanations: V3Explanation[];
   understanding: V3Understanding[];
+  beliefs: V3Belief[];
   emergenceEvents: V3EmergenceEvent[];
   executiveUnderstanding: V3ExecutiveUnderstanding;
+
+  reasoningGraph?: V3ReasoningGraph;
+  organismState?: V3OrganismState;
 };

@@ -1,21 +1,21 @@
-import { buildBeliefs } from "./beliefs";
+import { buildBeliefs } from "./archive/v1/beliefs";
 import {
   detectReasoningPatterns,
   buildCausalChains,
   generateCompetingExplanations,
-} from "./reasoning";
-import { extractEvidence } from "./extractEvidence";
-import { detectTensions } from "./tensions";
-import { generateHypotheses } from "./hypotheses";
-import { buildGraph } from "./graph";
+} from "./archive/v1/reasoning";
+import { extractEvidence } from "./archive/v1/extractEvidence";
+import { detectTensions } from "./archive/v1/tensions";
+import { generateHypotheses } from "./archive/v1/hypotheses";
+import { buildGraph } from "./archive/v1/graph";
 import { InvestigationInput, EngineResult } from "./types";
-import { parse } from "./parse";
-import { createObservations } from "./observations";
-import { buildWorkspace } from "./workspace";
-import { extractSignals } from "./signals";
-import { createUnderstandings } from "./understanding";
-import { createBrief } from "./brief";
-import { detectSurprises } from "./surprise";
+import { parse } from "./archive/v1/parse";
+import { createObservations } from "./archive/v1/observations";
+import { buildWorkspace } from "./archive/v1/workspace";
+import { extractSignals } from "./archive/v1/signals";
+import { createUnderstandings } from "./archive/v1/understanding";
+import { createBrief } from "./archive/v1/brief";
+import { detectSurprises } from "./archive/v1/surprise";
 
 export async function runDiscovery(
   input: InvestigationInput
