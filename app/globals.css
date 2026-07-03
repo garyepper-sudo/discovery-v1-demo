@@ -2275,3 +2275,80 @@ pre { white-space: pre-wrap; word-break: break-word; color: rgba(244,236,220,.72
   background: #5d97da;
   color: #5d97da;
 }
+
+/* Sprint 16 organism state card */
+
+.discovery-v2 .organism-signals-card {
+  margin: 28px 0;
+  border: 1px solid rgba(217, 183, 112, 0.22);
+  border-radius: 28px;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(217, 183, 112, 0.12), transparent 34%),
+    rgba(255, 255, 255, 0.045);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+}
+
+.discovery-v2 .organism-signals-card h3 {
+  margin: 0 0 10px;
+  color: #f7f1e7;
+  font-size: 28px;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.discovery-v2 .organism-signals-card p {
+  margin: 0;
+  max-width: 720px;
+  color: rgba(247, 241, 231, 0.66);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.discovery-v2 .organism-signal-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.discovery-v2 .organism-signal-metric {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 14px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.discovery-v2 .organism-signal-metric span {
+  display: block;
+  margin-bottom: 6px;
+  color: rgba(247, 241, 231, 0.58);
+  font-size: 12px;
+}
+
+.discovery-v2 .organism-signal-metric strong {
+  color: #d9b770;
+  font-size: 24px;
+}
+
+.discovery-v2 .organism-signal-counts {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.discovery-v2 .organism-signal-counts span {
+  border: 1px solid rgba(217, 183, 112, 0.18);
+  border-radius: 999px;
+  padding: 8px 11px;
+  color: rgba(247, 241, 231, 0.68);
+  background: rgba(217, 183, 112, 0.055);
+  font-size: 12px;
+}
+
+@media (max-width: 720px) {
+  .discovery-v2 .organism-signal-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

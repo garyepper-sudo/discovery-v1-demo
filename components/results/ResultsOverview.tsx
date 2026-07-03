@@ -16,6 +16,7 @@ type ResultsOverviewProps = {
   causalChains?: any[];
   evidence?: any[];
   reasoningGraph?: any;
+  organismState?: any;
 };
 
 export default function ResultsOverview({
@@ -27,10 +28,12 @@ export default function ResultsOverview({
   causalChains = [],
   evidence = [],
   reasoningGraph,
+  organismState,
 }: ResultsOverviewProps) {
   const [showReasoning, setShowReasoning] = useState(false);
   const [showPastInsights, setShowPastInsights] = useState(false);
-  const [showOrganismView, setShowOrganismView] = useState(false);
+  const [showOrganismExplorer, setShowOrganismExplorer] = useState(false);
+  const [showReasoningTrace, setShowReasoningTrace] = useState(false);
 
   return (
     <section className="executive-results">
@@ -40,14 +43,16 @@ export default function ResultsOverview({
         <ExecutiveSummary
           executiveUnderstanding={understanding}
           evidenceCount={evidence.length}
-          onTrace={() => setShowOrganismView(true)}
+          onTrace={() => setShowReasoningTrace(true)}
         />
+
+        <OrganismSignals organismState={organismState} />
 
         <HypothesesPanel hypotheses={hypotheses} />
 
         <SupportingUnderstandings
           beliefs={beliefs}
-          onTrace={() => setShowOrganismView(true)}
+          onTrace={() => setShowReasoningTrace(true)}
         />
 
         <div className="overview-actions">
@@ -62,13 +67,10 @@ export default function ResultsOverview({
       </div>
 
       <OrganismPreview
-        open={false}
-        onOpen={() => setShowOrganismView(true)}
-        onClose={() => setShowOrganismView(false)}
-        evidence={evidence}
-        themes={themes}
-        contradictions={contradictions}
-        causalChains={causalChains}
+        open={showOrganismExplorer}
+        onOpen={() => setShowOrganismExplorer(true)}
+        onClose={() => setShowOrganismExplorer(false)}
+        organismState={organismState}
       />
 
       {(showReasoning || showPastInsights) && (
@@ -107,8 +109,8 @@ export default function ResultsOverview({
       </footer>
 
       <TraceUnderstandingPage
-        open={showOrganismView}
-        onClose={() => setShowOrganismView(false)}
+        open={showReasoningTrace}
+        onClose={() => setShowReasoningTrace(false)}
         headline={
           understanding?.headline ??
           beliefs[0]?.headline ??
@@ -128,6 +130,50 @@ export default function ResultsOverview({
         reasoningGraph={reasoningGraph}
       />
     </section>
+  );
+}
+
+function OrganismSignals({ organismState }: { organismState?: any }) {
+  if (!organismState) return null;
+
+  const topPattern = organismState.emergingPatterns?.[0];
+
+  return (
+    <section className="organism-signals-card">
+      <div>
+        <p className="overview-label">Organism state</p>
+        <h3>{topPattern?.title ?? "Understanding is stabilizing"}</h3>
+        <p>
+          Discovery is tracking coherence, tension, uncertainty, and emerging
+          patterns as part of the living understanding.
+        </p>
+      </div>
+
+      <div className="organism-signal-grid">
+        <SignalMetric label="Coherence" value={organismState.coherence} />
+        <SignalMetric label="Tension" value={organismState.tension} />
+        <SignalMetric label="Uncertainty" value={organismState.uncertainty} />
+        <SignalMetric label="Maturity" value={organismState.maturity} />
+      </div>
+
+      <div className="organism-signal-counts">
+        <span>{organismState.evidenceClusters?.length ?? 0} clusters</span>
+        <span>{organismState.mechanisms?.length ?? 0} mechanisms</span>
+        <span>{organismState.hypotheses?.length ?? 0} hypotheses</span>
+        <span>{organismState.contradictions?.length ?? 0} tensions</span>
+      </div>
+    </section>
+  );
+}
+
+function SignalMetric({ label, value }: { label: string; value?: number }) {
+  const percent = Math.round((value ?? 0) * 100);
+
+  return (
+    <div className="organism-signal-metric">
+      <span>{label}</span>
+      <strong>{percent}%</strong>
+    </div>
   );
 }
 

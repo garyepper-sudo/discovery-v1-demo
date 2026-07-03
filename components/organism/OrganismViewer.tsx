@@ -5,21 +5,28 @@ import LivingOrganismCanvas from "./LivingOrganismCanvas";
 type OrganismViewerProps = {
   open: boolean;
   onClose: () => void;
-  evidence?: any[];
-  themes?: any[];
-  contradictions?: any[];
-  causalChains?: any[];
+  organismState?: any;
 };
 
 export default function OrganismViewer({
   open,
   onClose,
-  evidence = [],
-  themes = [],
-  contradictions = [],
-  causalChains = [],
+  organismState,
 }: OrganismViewerProps) {
   if (!open) return null;
+
+  const evidenceCount = organismState?.particles?.filter(
+    (particle: any) => particle.kind === "evidence"
+  ).length ?? 0;
+
+  const themeCount = organismState?.particles?.filter(
+    (particle: any) => particle.kind === "theme"
+  ).length ?? 0;
+
+  const contradictionCount = organismState?.contradictions?.length ?? 0;
+  const mechanismCount = organismState?.mechanisms?.length ?? 0;
+  const hypothesisCount = organismState?.hypotheses?.length ?? 0;
+  const topPattern = organismState?.emergingPatterns?.[0];
 
   return (
     <div className="organism-viewer">
@@ -30,18 +37,19 @@ export default function OrganismViewer({
       <div className="organism-viewer-shell">
         <div className="organism-viewer-main">
           <p className="overview-label">Trace Understanding</p>
-          <h1>Tracing this understanding</h1>
+          <h1>{topPattern?.title ?? "Tracing this understanding"}</h1>
           <p>
-            Discovery is exposing the evidence, patterns, tensions, and causal
-            paths that shaped this understanding.
+            Discovery is rendering the organism from its internal reasoning
+            state: evidence, mechanisms, hypotheses, beliefs, contradictions,
+            uncertainty, and emerging patterns.
           </p>
 
           <div className="canvas-organism-wrap">
             <LivingOrganismCanvas
-              evidenceCount={evidence.length}
-              themeCount={themes.length}
-              contradictionCount={contradictions.length}
-              causalPathCount={causalChains.length}
+              evidenceCount={evidenceCount}
+              themeCount={themeCount}
+              contradictionCount={contradictionCount}
+              causalPathCount={mechanismCount}
             />
           </div>
         </div>
@@ -51,30 +59,37 @@ export default function OrganismViewer({
 
           <ReasoningMetric
             kind="evidence"
-            label="Evidence Objects"
-            value={evidence.length}
+            label="Evidence Particles"
+            value={evidenceCount}
             description="Signals Discovery used to form the current understanding."
           />
 
           <ReasoningMetric
             kind="theme"
-            label="Patterns"
-            value={themes.length}
-            description="Repeated signals that appear across the evidence."
+            label="Evidence Clusters"
+            value={organismState?.evidenceClusters?.length ?? 0}
+            description="Grouped evidence regions forming stable areas of meaning."
+          />
+
+          <ReasoningMetric
+            kind="causal"
+            label="Mechanisms"
+            value={mechanismCount}
+            description="Connective tissue explaining why pieces of evidence belong together."
+          />
+
+          <ReasoningMetric
+            kind="theme"
+            label="Hypotheses"
+            value={hypothesisCount}
+            description="Possible explanations Discovery is comparing."
           />
 
           <ReasoningMetric
             kind="tension"
             label="Open Tensions"
-            value={contradictions.length}
+            value={contradictionCount}
             description="Places where the evidence does not fully agree."
-          />
-
-          <ReasoningMetric
-            kind="causal"
-            label="Causal Paths"
-            value={causalChains.length}
-            description="Likely cause-and-effect relationships behind the insight."
           />
         </aside>
       </div>
