@@ -3,6 +3,8 @@ import type {
   OrganizationalUnderstandingState,
 } from "../runtime/organizationalUnderstandingState";
 import {
+  createDefaultUnderstandingMechanism,
+  createUnderstandingTitle,
   getConfidenceBand,
   getUnderstandingStatus,
 } from "../runtime/organizationalUnderstandingState";
@@ -25,7 +27,8 @@ type ConsolidationChange = {
     | "new_understanding"
     | "strengthened_understanding"
     | "weakened_understanding"
-    | "stabilized_understanding";
+    | "stabilized_understanding"
+    | "merged_understanding";
   title: string;
   description: string;
   relatedUnderstandingIds: string[];
@@ -36,12 +39,213 @@ type ConsolidationResult = {
   changes: ConsolidationChange[];
 };
 
+const BAD_UNDERSTANDING_TOKENS = new Set([
+  "discovery",
+  "treats",
+  "strong",
+  "belief",
+  "believes",
+  "industrial",
+  "strategic",
+  "signal",
+  "signals",
+  "pattern",
+  "patterns",
+  "organizational",
+]);
+
+const SEMANTIC_GROUPS: Record<string, string[]> = {
+  centralized_decision_authority: [
+    "decision",
+    "authority",
+    "approval",
+    "leadership",
+    "centralized",
+    "central",
+    "executive",
+  ],
+  execution_friction: [
+    "execution",
+    "delivery",
+    "implementation",
+    "follow",
+    "operational",
+    "delay",
+    "blocked",
+  ],
+  knowledge_retention: [
+    "knowledge",
+    "memory",
+    "retained",
+    "individual",
+    "person",
+    "systems",
+    "institutional",
+  ],
+  coordination_fragmentation: [
+    "coordination",
+    "cross",
+    "functional",
+    "ownership",
+    "handoff",
+    "fragmented",
+    "silo",
+  ],
+  planning_execution_gap: [
+    "planning",
+    "strategy",
+    "execution",
+    "changes",
+    "faster",
+    "alignment",
+  ],
+  resource_constraint: [
+    "resource",
+    "capacity",
+    "constraint",
+    "limited",
+    "staffing",
+    "bandwidth",
+    "funding",
+  ],
+};
+
 function normalizeText(value: string): string {
   return value
     .toLowerCase()
-    .replace(/[^\w\s]/g, "")
+    .replace(/[^\w\s-]/g, "")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function cleanStatement(value: string): string {
+  return value
+    .replace(/Discovery treats this as a strong belief:?/gi, "")
+    .replace(/Discovery believes:?/gi, "")
+    .replace(/_/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function isTokenSoup(value: string): boolean {
+  const tokens = normalizeText(value).split(" ").filter(Boolean);
+
+  if (tokens.length <= 2) return true;
+
+  const badTokenCount = tokens.filter((token) =>
+    BAD_UNDERSTANDING_TOKENS.has(token)
+  ).length;
+
+  return badTokenCount >= Math.max(2, Math.floor(tokens.length * 0.45));
+}
+
+function normalizeUnderstandingStatement(value: string): string {
+  const cleaned = cleanStatement(value);
+
+  if (!cleaned || isTokenSoup(cleaned)) {
+    return "Organizational behavior requires clearer evidence before forming a durable understanding.";
+  }
+
+  const trimmed = cleaned.replace(/[.;:,\s]+$/g, "");
+  const sentence = trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
+
+  return `${sentence}.`;
+}
+
+function createSummary(statement: string): string {
+  return statement;
+}
+
+function createWhyItMatters(statement: string): string {
+  const normalized = normalizeText(statement);
+
+  if (
+    normalized.includes("decision") ||
+    normalized.includes("authority") ||
+    normalized.includes("approval")
+  ) {
+    return "Decision structure shapes speed, accountability, and the organization's ability to act without unnecessary escalation.";
+  }
+
+  if (
+    normalized.includes("execution") ||
+    normalized.includes("delivery") ||
+    normalized.includes("implementation")
+  ) {
+    return "Execution quality determines whether strategic intent becomes durable operational progress.";
+  }
+
+  if (
+    normalized.includes("knowledge") ||
+    normalized.includes("memory") ||
+    normalized.includes("retained")
+  ) {
+    return "Knowledge retention affects continuity, resilience, and the organization's ability to preserve understanding through change.";
+  }
+
+  if (
+    normalized.includes("coordination") ||
+    normalized.includes("ownership") ||
+    normalized.includes("cross")
+  ) {
+    return "Coordination patterns affect accountability, handoffs, and the organization's ability to work across functions.";
+  }
+
+  return "This may represent a recurring organizational behavior that affects how the organization understands, decides, and acts.";
+}
+
+function createImplications(statement: string): string[] {
+  const normalized = normalizeText(statement);
+
+  if (
+    normalized.includes("decision") ||
+    normalized.includes("authority") ||
+    normalized.includes("approval")
+  ) {
+    return [
+      "Decisions may slow when senior leaders are unavailable.",
+      "Teams may hesitate to act without explicit approval.",
+      "Accountability may concentrate around a small number of decision makers.",
+    ];
+  }
+
+  if (
+    normalized.includes("execution") ||
+    normalized.includes("delivery") ||
+    normalized.includes("implementation")
+  ) {
+    return [
+      "Plans may outpace operational capacity.",
+      "Priorities may require stronger translation into execution routines.",
+      "Progress may depend on clearer ownership and follow-through.",
+    ];
+  }
+
+  if (
+    normalized.includes("knowledge") ||
+    normalized.includes("memory") ||
+    normalized.includes("retained")
+  ) {
+    return [
+      "Turnover may create knowledge loss.",
+      "Important context may remain informal or person-dependent.",
+      "The organization may need stronger systems for preserving institutional memory.",
+    ];
+  }
+
+  if (
+    normalized.includes("coordination") ||
+    normalized.includes("ownership") ||
+    normalized.includes("cross")
+  ) {
+    return [
+      "Cross-functional work may require clearer ownership.",
+      "Handoffs may create avoidable friction.",
+      "Teams may interpret responsibility differently across functions.",
+    ];
+  }
+
+  return [];
 }
 
 function tokenSimilarity(a: string, b: string): number {
@@ -56,6 +260,26 @@ function tokenSimilarity(a: string, b: string): number {
   return overlap / union;
 }
 
+function semanticGroupKey(statement: string): string | undefined {
+  const normalized = normalizeText(statement);
+
+  for (const [group, terms] of Object.entries(SEMANTIC_GROUPS)) {
+    const matches = terms.filter((term) => normalized.includes(term)).length;
+    if (matches >= 2) return group;
+  }
+
+  return undefined;
+}
+
+function semanticSimilarity(a: string, b: string): number {
+  const aGroup = semanticGroupKey(a);
+  const bGroup = semanticGroupKey(b);
+
+  if (aGroup && bGroup && aGroup === bGroup) return 0.82;
+
+  return tokenSimilarity(a, b);
+}
+
 function isContradictory(candidate: string, existing: string): boolean {
   const candidateText = normalizeText(candidate);
   const existingText = normalizeText(existing);
@@ -68,23 +292,78 @@ function isContradictory(candidate: string, existing: string): boolean {
     candidateText.includes("eliminated") ||
     candidateText.includes("accelerated");
 
-  const existingConstraintSignal =
+  const constraintSignal =
     existingText.includes("delay") ||
     existingText.includes("constraint") ||
     existingText.includes("risk") ||
     existingText.includes("slowing") ||
     existingText.includes("blocked") ||
-    existingText.includes("limited");
+    existingText.includes("limited") ||
+    existingText.includes("friction");
 
-  return improvementSignal && existingConstraintSignal;
+  return improvementSignal && constraintSignal;
 }
 
 function clampConfidence(value: number): number {
-  return Math.max(0.05, Math.min(0.98, Number(value.toFixed(2))));
+  return Math.max(0.15, Math.min(0.94, Number(value.toFixed(2))));
+}
+
+function clampMetric(value: number): number {
+  return Math.max(0, Math.min(1, Number(value.toFixed(2))));
+}
+
+function calibrateConfidence(params: {
+  existingConfidence?: number;
+  candidateConfidence?: number;
+  supportCount: number;
+  evidenceCount: number;
+  observationCount: number;
+  mechanismCount: number;
+  contradictionCount: number;
+  contradictory: boolean;
+}): number {
+  const existingConfidence = params.existingConfidence ?? 0.55;
+  const candidateConfidence = params.candidateConfidence ?? 0.55;
+
+  const supportSignal = Math.min(0.16, params.supportCount * 0.025);
+  const evidenceSignal = Math.min(0.18, params.evidenceCount * 0.02);
+  const observationSignal = Math.min(0.14, params.observationCount * 0.015);
+  const mechanismSignal = Math.min(0.1, params.mechanismCount * 0.025);
+  const contradictionPenalty = Math.min(
+    0.28,
+    params.contradictionCount * 0.07 + (params.contradictory ? 0.12 : 0)
+  );
+
+  return clampConfidence(
+    existingConfidence * 0.52 +
+      candidateConfidence * 0.18 +
+      0.18 +
+      supportSignal +
+      evidenceSignal +
+      observationSignal +
+      mechanismSignal -
+      contradictionPenalty
+  );
+}
+
+function deriveStrength(confidence: number, supportCount: number): number {
+  return clampMetric(confidence * 0.75 + Math.min(0.2, supportCount * 0.05));
+}
+
+function deriveStability(params: {
+  confidence: number;
+  supportCount: number;
+  contradictionCount: number;
+}): number {
+  return clampMetric(
+    params.confidence * 0.6 +
+      Math.min(0.3, params.supportCount * 0.075) -
+      Math.min(0.2, params.contradictionCount * 0.05)
+  );
 }
 
 function createId(statement: string): string {
-  const normalized = normalizeText(statement).slice(0, 48).replace(/\s+/g, "-");
+  const normalized = normalizeText(statement).slice(0, 56).replace(/\s+/g, "-");
   return `understanding-${normalized}-${Date.now()}`;
 }
 
@@ -92,51 +371,89 @@ function mergeIds(existing: string[], incoming?: string[]): string[] {
   return Array.from(new Set([...existing, ...(incoming ?? [])]));
 }
 
+function getSupportCount(params: {
+  supportCount: number;
+  evidenceIds: string[];
+  observationIds: string[];
+  beliefIds: string[];
+  themeIds: string[];
+  mechanismIds: string[];
+}): number {
+  return Math.max(
+    params.supportCount,
+    params.evidenceIds.length,
+    params.observationIds.length,
+    params.beliefIds.length,
+    params.themeIds.length,
+    params.mechanismIds.length
+  );
+}
+
+function completeCanonicalUnderstanding(
+  understanding: OrganizationalUnderstandingItem
+): OrganizationalUnderstandingItem {
+  const statement = normalizeUnderstandingStatement(understanding.statement);
+
+  return {
+    ...understanding,
+
+    title: understanding.title || createUnderstandingTitle(statement),
+    statement,
+    summary: createSummary(statement),
+    mechanism:
+      understanding.mechanism || createDefaultUnderstandingMechanism(statement),
+
+    strength:
+      understanding.strength ??
+      deriveStrength(understanding.confidence, understanding.supportCount),
+
+    stability:
+      understanding.stability ??
+      deriveStability({
+        confidence: understanding.confidence,
+        supportCount: understanding.supportCount,
+        contradictionCount: understanding.contradictionIds.length,
+      }),
+
+    supportingDynamics: understanding.supportingDynamics ?? [],
+    supportingCapabilities: understanding.supportingCapabilities ?? [],
+    investigationIds: understanding.investigationIds ?? [],
+
+    whyItMatters: understanding.whyItMatters || createWhyItMatters(statement),
+    implications: understanding.implications ?? [],
+    openQuestions: understanding.openQuestions ?? [],
+  };
+}
+
 export function consolidateUnderstanding(
   currentState: OrganizationalUnderstandingState,
   candidates: UnderstandingCandidate[]
 ): ConsolidationResult {
   const now = new Date().toISOString();
-  const updatedUnderstandings = [...currentState.currentUnderstandings];
+  const updatedUnderstandings = currentState.currentUnderstandings.map(
+    completeCanonicalUnderstanding
+  );
   const changes: ConsolidationChange[] = [];
 
   for (const candidate of candidates) {
+    const normalizedStatement = normalizeUnderstandingStatement(
+      candidate.statement
+    );
+
     const bestMatch = updatedUnderstandings
       .map((existing) => ({
         existing,
-        similarity: tokenSimilarity(candidate.statement, existing.statement),
+        similarity: semanticSimilarity(normalizedStatement, existing.statement),
       }))
       .sort((a, b) => b.similarity - a.similarity)[0];
 
-    const candidateConfidence = candidate.confidence ?? 0.55;
-
-    if (bestMatch && bestMatch.similarity >= 0.45) {
+    if (bestMatch && bestMatch.similarity >= 0.5) {
       const existing = bestMatch.existing;
       const previousConfidence = existing.confidence;
       const contradictory = isContradictory(
-        candidate.statement,
+        normalizedStatement,
         existing.statement
       );
-
-      const nextConfidence = contradictory
-        ? clampConfidence(existing.confidence - 0.12)
-        : clampConfidence(existing.confidence + 0.08 * candidateConfidence);
-
-      const nextSupportCount = contradictory
-        ? existing.supportCount
-        : existing.supportCount + 1;
-
-      existing.confidence = nextConfidence;
-      existing.confidenceBand = getConfidenceBand(nextConfidence);
-      existing.status = contradictory
-        ? "weakening"
-        : getUnderstandingStatus({
-            confidence: nextConfidence,
-            supportCount: nextSupportCount,
-          });
-
-      existing.supportCount = nextSupportCount;
-      existing.lastUpdatedAt = now;
 
       existing.evidenceIds = mergeIds(existing.evidenceIds, candidate.evidenceIds);
       existing.observationIds = mergeIds(
@@ -154,6 +471,57 @@ export function consolidateUnderstanding(
         candidate.contradictionIds
       );
 
+      const nextSupportCount = contradictory
+        ? existing.supportCount
+        : getSupportCount({
+            supportCount: existing.supportCount + 1,
+            evidenceIds: existing.evidenceIds,
+            observationIds: existing.observationIds,
+            beliefIds: existing.beliefIds,
+            themeIds: existing.themeIds,
+            mechanismIds: existing.mechanismIds,
+          });
+
+      const nextConfidence = calibrateConfidence({
+        existingConfidence: existing.confidence,
+        candidateConfidence: candidate.confidence,
+        supportCount: nextSupportCount,
+        evidenceCount: existing.evidenceIds.length,
+        observationCount: existing.observationIds.length,
+        mechanismCount: existing.mechanismIds.length,
+        contradictionCount: existing.contradictionIds.length,
+        contradictory,
+      });
+
+      existing.statement = normalizeUnderstandingStatement(existing.statement);
+      existing.title = existing.title || createUnderstandingTitle(existing.statement);
+      existing.summary = createSummary(existing.statement);
+      existing.mechanism =
+        existing.mechanism ||
+        createDefaultUnderstandingMechanism(existing.statement);
+      existing.whyItMatters = createWhyItMatters(existing.statement);
+      existing.implications = createImplications(existing.statement);
+      existing.confidence = nextConfidence;
+      existing.confidenceBand = getConfidenceBand(nextConfidence);
+      existing.strength = deriveStrength(nextConfidence, nextSupportCount);
+      existing.stability = deriveStability({
+        confidence: nextConfidence,
+        supportCount: nextSupportCount,
+        contradictionCount: existing.contradictionIds.length,
+      });
+      existing.supportingDynamics = existing.supportingDynamics ?? [];
+      existing.supportingCapabilities = existing.supportingCapabilities ?? [];
+      existing.investigationIds = existing.investigationIds ?? [];
+      existing.status = contradictory
+        ? "weakening"
+        : getUnderstandingStatus({
+            confidence: nextConfidence,
+            supportCount: nextSupportCount,
+          });
+
+      existing.supportCount = nextSupportCount;
+      existing.lastUpdatedAt = now;
+
       existing.history = [
         ...existing.history,
         {
@@ -162,8 +530,8 @@ export function consolidateUnderstanding(
           previousConfidence,
           nextConfidence,
           reason: contradictory
-            ? `New experience weakened this understanding: "${candidate.statement}"`
-            : `New experience reinforced this understanding: "${candidate.statement}"`,
+            ? `Evidence contradicted this understanding: "${normalizedStatement}"`
+            : `New experience reinforced this understanding: "${normalizedStatement}"`,
         },
       ];
 
@@ -172,49 +540,79 @@ export function consolidateUnderstanding(
           ? "weakened_understanding"
           : nextSupportCount >= 4 && nextConfidence >= 0.75
             ? "stabilized_understanding"
-            : "strengthened_understanding",
+            : bestMatch.similarity >= 0.75
+              ? "merged_understanding"
+              : "strengthened_understanding",
         title: contradictory
           ? "Understanding weakened"
-          : "Understanding strengthened",
+          : bestMatch.similarity >= 0.75
+            ? "Understanding merged"
+            : "Understanding strengthened",
         description: contradictory
-          ? `Discovery found evidence that may contradict: "${existing.statement}"`
-          : `Discovery connected new experience to existing understanding: "${existing.statement}"`,
+          ? `Evidence may contradict this understanding: "${existing.statement}"`
+          : `Related organizational evidence was merged into: "${existing.statement}"`,
         relatedUnderstandingIds: [existing.id],
       });
 
       continue;
     }
 
-    const confidence = clampConfidence(candidateConfidence);
+    const confidence = calibrateConfidence({
+      candidateConfidence: candidate.confidence,
+      supportCount: 1,
+      evidenceCount: candidate.evidenceIds?.length ?? 0,
+      observationCount: candidate.observationIds?.length ?? 0,
+      mechanismCount: candidate.mechanismIds?.length ?? 0,
+      contradictionCount: candidate.contradictionIds?.length ?? 0,
+      contradictory: false,
+    });
 
     const newUnderstanding: OrganizationalUnderstandingItem = {
-      id: candidate.id ?? createId(candidate.statement),
-      statement: candidate.statement,
-      summary: candidate.statement,
+      id: candidate.id ?? createId(normalizedStatement),
+
+      title: createUnderstandingTitle(normalizedStatement),
+      statement: normalizedStatement,
+      summary: createSummary(normalizedStatement),
+      mechanism: createDefaultUnderstandingMechanism(normalizedStatement),
+
       confidence,
       confidenceBand: getConfidenceBand(confidence),
+      strength: deriveStrength(confidence, 1),
+      stability: deriveStability({
+        confidence,
+        supportCount: 1,
+        contradictionCount: candidate.contradictionIds?.length ?? 0,
+      }),
+
       status: getUnderstandingStatus({ confidence, supportCount: 1 }),
+
       firstSeenAt: now,
       lastUpdatedAt: now,
       supportCount: 1,
+
       evidenceIds: candidate.evidenceIds ?? [],
       observationIds: candidate.observationIds ?? [],
       beliefIds: candidate.beliefIds ?? [],
       themeIds: candidate.themeIds ?? [],
       mechanismIds: candidate.mechanismIds ?? [],
       contradictionIds: candidate.contradictionIds ?? [],
-      whyItMatters:
-        "This may represent a recurring organizational pattern worth tracking.",
+
+      supportingDynamics: [],
+      supportingCapabilities: [],
+      investigationIds: [],
+
+      whyItMatters: createWhyItMatters(normalizedStatement),
       openQuestions: [
-        "Will future organizational experience reinforce or weaken this understanding?",
+        "Will future organizational experience reinforce, weaken, or clarify this understanding?",
       ],
-      implications: [],
+      implications: createImplications(normalizedStatement),
+
       history: [
         {
           date: now,
           event: "created",
           nextConfidence: confidence,
-          reason: `New organizational understanding created from experience: "${candidate.statement}"`,
+          reason: `New organizational understanding created from evidence: "${normalizedStatement}"`,
         },
       ],
     };
@@ -224,7 +622,7 @@ export function consolidateUnderstanding(
     changes.push({
       type: "new_understanding",
       title: "New understanding created",
-      description: `Discovery formed a new organizational understanding: "${candidate.statement}"`,
+      description: `A new durable organizational understanding was formed: "${normalizedStatement}"`,
       relatedUnderstandingIds: [newUnderstanding.id],
     });
   }

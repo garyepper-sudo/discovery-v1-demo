@@ -1,10 +1,24 @@
-import {
-  BeliefChange,
+import type {
   PersistentBelief,
-  UnderstandingEngineInput,
+  BeliefChange,
 } from "../../understanding/types";
 
-type MergeBeliefsResult = {
+export type { PersistentBelief, BeliefChange };
+
+type BeliefInvestigationInput = {
+  summary?: string;
+  title?: string;
+  statement?: string;
+  context?: string;
+  question?: string;
+  [key: string]: unknown;
+};
+
+type BeliefWithSupportCount = PersistentBelief & {
+  supportCount?: number;
+};
+
+export type BeliefMergeResult = {
   beliefs: PersistentBelief[];
   addedBeliefs: PersistentBelief[];
   strengthenedBeliefs: BeliefChange[];
@@ -19,157 +33,94 @@ function normalizeText(value: string): string {
     .trim();
 }
 
-function calculateSimilarity(a: string, b: string): number {
-  const wordsA = new Set(normalizeText(a).split(" ").filter(Boolean));
-  const wordsB = new Set(normalizeText(b).split(" ").filter(Boolean));
-
-  if (wordsA.size === 0 || wordsB.size === 0) return 0;
-
-  const overlap = [...wordsA].filter((word) => wordsB.has(word)).length;
-  const totalUnique = new Set([...wordsA, ...wordsB]).size;
-
-  return overlap / totalUnique;
+function createBeliefId(statement: string): string {
+  const normalized = normalizeText(statement).slice(0, 56).replace(/\s+/g, "-");
+  return `belief-${normalized}`;
 }
 
-function getStability(occurrenceCount: number): PersistentBelief["stability"] {
-  if (occurrenceCount >= 4) return "stable";
-  if (occurrenceCount >= 2) return "forming";
-  return "emerging";
+function clampConfidence(value: number): number {
+  return Math.max(0.1, Math.min(0.95, Number(value.toFixed(2))));
 }
 
-function getBeliefStatement(belief: any): string {
-  return (
-    belief?.statement ||
-    belief?.headline ||
-    belief?.claim ||
-    belief?.title ||
-    belief?.label ||
-    "Unspecified belief"
-  );
+function isUsefulStatement(value: unknown): value is string {
+  if (typeof value !== "string") return false;
+
+  const normalized = normalizeText(value);
+  return normalized.length >= 12 && normalized.split(" ").length >= 3;
 }
 
-function getBeliefRationale(belief: any): string {
-  return (
-    belief?.rationale ||
-    belief?.reason ||
-    belief?.explanation ||
-    belief?.description ||
-    belief?.summary ||
-    "This belief emerged from the latest investigation."
-  );
-}
-
-function getBeliefConfidence(belief: any): number {
-  const rawConfidence = belief?.confidence;
-
-  if (typeof rawConfidence === "number") {
-    return Math.max(0, Math.min(1, rawConfidence));
-  }
-
-  return 0.55;
-}
-
-function getBeliefEvidenceIds(belief: any): string[] {
-  const ids = [
-    ...(belief?.evidenceIds || []),
-    ...(belief?.supportingEvidenceIds || []),
-  ];
-
-  return Array.from(new Set(ids.filter(Boolean)));
-}
-
-function getBeliefThemeIds(belief: any): string[] {
-  return Array.from(new Set([...(belief?.themeIds || [])].filter(Boolean)));
+function extractCandidateStatements(
+  investigation: BeliefInvestigationInput
+): string[] {
+  return [
+    investigation.summary,
+    investigation.title,
+    investigation.statement,
+    investigation.context,
+    investigation.question,
+  ].filter(isUsefulStatement);
 }
 
 export function mergeBeliefs(params: {
   previousBeliefs: PersistentBelief[];
-  investigation: UnderstandingEngineInput;
+  investigation: BeliefInvestigationInput;
   uploadId: string;
   now: string;
-}): MergeBeliefsResult {
-  const nextBeliefs = [...params.previousBeliefs];
+}): BeliefMergeResult {
+  const beliefs = [...params.previousBeliefs] as BeliefWithSupportCount[];
+
   const addedBeliefs: PersistentBelief[] = [];
   const strengthenedBeliefs: BeliefChange[] = [];
   const weakenedBeliefs: BeliefChange[] = [];
 
-  const incomingBeliefs = params.investigation.beliefs ?? [];
+  const candidateStatements = extractCandidateStatements(params.investigation);
 
-  incomingBeliefs.forEach((incomingBelief, index) => {
-    const statement = getBeliefStatement(incomingBelief);
-    const rationale = getBeliefRationale(incomingBelief);
-    const confidence = getBeliefConfidence(incomingBelief);
-    const evidenceIds = getBeliefEvidenceIds(incomingBelief);
-    const themeIds = getBeliefThemeIds(incomingBelief);
+  for (const statement of candidateStatements) {
+    const normalizedStatement = normalizeText(statement);
 
-    const existingIndex = nextBeliefs.findIndex((existingBelief) => {
-      return calculateSimilarity(existingBelief.statement, statement) >= 0.42;
-    });
-
-    if (existingIndex === -1) {
-      const newBelief: PersistentBelief = {
-        id: `belief-${params.uploadId}-${index}`,
-        statement,
-        rationale,
-        confidence,
-        stability: "emerging",
-        firstSeenAt: params.now,
-        lastSeenAt: params.now,
-        evidenceIds,
-        observationIds: [],
-        themeIds,
-        occurrenceCount: 1,
-      };
-
-      nextBeliefs.push(newBelief);
-      addedBeliefs.push(newBelief);
-      return;
-    }
-
-    const existingBelief = nextBeliefs[existingIndex];
-    const previousConfidence = existingBelief.confidence;
-    const occurrenceCount = existingBelief.occurrenceCount + 1;
-
-    const nextConfidence = Math.min(
-      0.98,
-      Number(
-        (
-          previousConfidence +
-          (confidence - previousConfidence) * 0.25 +
-          0.05
-        ).toFixed(2)
-      )
+    const existing = beliefs.find(
+      (belief) => normalizeText(belief.statement) === normalizedStatement
     );
 
-    const updatedBelief: PersistentBelief = {
-      ...existingBelief,
-      rationale,
-      confidence: nextConfidence,
+    if (existing) {
+      const previousConfidence = existing.confidence;
+      const nextConfidence = clampConfidence(existing.confidence + 0.06);
+
+      existing.confidence = nextConfidence;
+      existing.supportCount = (existing.supportCount ?? 1) + 1;
+      existing.lastSeenAt = params.now;
+      existing.evidenceIds = Array.from(
+        new Set([...existing.evidenceIds, params.uploadId])
+      );
+
+      strengthenedBeliefs.push({
+        beliefId: existing.id,
+        statement: existing.statement,
+        direction: "strengthened",
+        previousConfidence,
+        nextConfidence,
+        reason: `Belief reinforced by new investigation evidence: "${statement}"`,
+      });
+
+      continue;
+    }
+
+    const newBelief = {
+      id: createBeliefId(statement),
+      statement,
+      confidence: 0.58,
+      evidenceIds: [params.uploadId],
+      firstSeenAt: params.now,
       lastSeenAt: params.now,
-      occurrenceCount,
-      stability: getStability(occurrenceCount),
-      evidenceIds: Array.from(
-        new Set([...(existingBelief.evidenceIds || []), ...evidenceIds])
-      ),
-      themeIds: Array.from(
-        new Set([...(existingBelief.themeIds || []), ...themeIds])
-      ),
-    };
+      supportCount: 1,
+    } as BeliefWithSupportCount;
 
-    nextBeliefs[existingIndex] = updatedBelief;
-
-    strengthenedBeliefs.push({
-      beliefId: updatedBelief.id,
-      statement: updatedBelief.statement,
-      direction: "strengthened",
-      previousConfidence,
-      nextConfidence,
-      reason: "A similar belief appeared again in the latest investigation.",
-    });
-  });
+    beliefs.push(newBelief);
+    addedBeliefs.push(newBelief as PersistentBelief);
+  }
 
   return {
-    beliefs: nextBeliefs,
+    beliefs: beliefs as PersistentBelief[],
     addedBeliefs,
     strengthenedBeliefs,
     weakenedBeliefs,

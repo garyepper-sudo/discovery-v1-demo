@@ -25,7 +25,7 @@ type EvolvedObservation = {
   [key: string]: any;
 };
 
-type ObservationInput = {
+export type ObservationInput = {
   id?: string;
   statement?: string;
   text?: string;

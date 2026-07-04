@@ -1,15 +1,29 @@
-export type OrganizationalCapabilityStatus = "new" | "reinforced" | "stable";
+import type {
+  KnowledgeReference,
+  OrganizationalKnowledgeNode,
+} from "../cognition/cognitiveGraph";
 
-export type OrganizationalCapability = {
-  id: string;
-  label: string;
+export type OrganizationalCapabilityStatus =
+  | "new"
+  | "reinforced"
+  | "stable";
+
+export type OrganizationalCapability = Omit<
+  OrganizationalKnowledgeNode,
+  "type" | "status" | "supportedBy" | "supports"
+> & {
+  type: "capability";
+
   description: string;
 
-  confidence: number;
-  strength: number;
-  stability: number;
   status: OrganizationalCapabilityStatus;
 
+  stability: number;
+
+  supportedBy: KnowledgeReference[];
+  supports: KnowledgeReference[];
+
+  dynamicIds: string[];
   understandingIds: string[];
   meaningIds: string[];
   conceptIds: string[];
@@ -17,9 +31,6 @@ export type OrganizationalCapability = {
 
   supportingEvidence: string[];
   contradictingEvidence: string[];
-
-  createdAt: string;
-  updatedAt: string;
 };
 
 export type OrganizationalCapabilitiesState = {
@@ -31,6 +42,10 @@ export type DetectedOrganizationalCapability = {
   label: string;
   description: string;
   confidence: number;
+
   evidence: string[];
   understandingIds: string[];
+
+  dynamicIds: string[];
+  supportedBy: KnowledgeReference[];
 };

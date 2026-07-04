@@ -1,5 +1,7 @@
 import type { DiscoveryV3Result } from "../types";
 import {
+  createDefaultUnderstandingMechanism,
+  createUnderstandingTitle,
   getConfidenceBand,
   getUnderstandingStatus,
   OrganizationalUnderstandingItem,
@@ -8,6 +10,18 @@ import {
 
 function makeUnderstandingId(index: number): string {
   return `understanding-${Date.now()}-${index}`;
+}
+
+function clamp(value: number): number {
+  return Math.max(0, Math.min(1, Number(value.toFixed(2))));
+}
+
+function deriveStrength(confidence: number, supportCount: number): number {
+  return clamp(confidence * 0.75 + Math.min(0.2, supportCount * 0.05));
+}
+
+function deriveStability(confidence: number, supportCount: number): number {
+  return clamp(confidence * 0.6 + Math.min(0.3, supportCount * 0.075));
 }
 
 export function updateOrganizationalUnderstandingState(params: {
@@ -21,13 +35,22 @@ export function updateOrganizationalUnderstandingState(params: {
     (belief, index) => {
       const confidence = belief.confidence ?? 0.6;
       const supportCount = 1;
+      const statement = belief.headline;
+      const summary = belief.explanation || belief.headline;
 
       return {
         id: makeUnderstandingId(index),
-        statement: belief.headline,
-        summary: belief.explanation,
+
+        title: createUnderstandingTitle(statement),
+        statement,
+        summary,
+        mechanism: createDefaultUnderstandingMechanism(statement),
+
         confidence,
         confidenceBand: getConfidenceBand(confidence),
+        strength: deriveStrength(confidence, supportCount),
+        stability: deriveStability(confidence, supportCount),
+
         status: getUnderstandingStatus({ confidence, supportCount }),
 
         firstSeenAt: now,
@@ -40,6 +63,10 @@ export function updateOrganizationalUnderstandingState(params: {
         themeIds: belief.themeIds || [],
         mechanismIds: belief.mechanismIds || [],
         contradictionIds: belief.contradictionIds || [],
+
+        supportingDynamics: [],
+        supportingCapabilities: [],
+        investigationIds: [],
 
         whyItMatters:
           belief.supportingReasons?.[0] ||
@@ -60,10 +87,7 @@ export function updateOrganizationalUnderstandingState(params: {
     }
   );
 
-  const currentUnderstandings = [
-    ...state.currentUnderstandings,
-    ...newItems,
-  ];
+  const currentUnderstandings = [...state.currentUnderstandings, ...newItems];
 
   return {
     ...state,

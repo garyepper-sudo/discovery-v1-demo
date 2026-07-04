@@ -1,141 +1,222 @@
 import type {
   FunctionalInterpretation,
+  FunctionalInterpretationCategory,
   FunctionalInterpretationState,
+  OrganizationalDynamic,
 } from "./functionalInterpretation";
 
 type UnderstandingLike = {
   id: string;
   statement?: string;
+  title?: string;
   summary?: string;
   description?: string;
   confidence?: number;
   strength?: number;
 };
 
+type DynamicRule = {
+  label: string;
+  category: FunctionalInterpretationCategory;
+  description: string;
+  terms: string[];
+};
+
+const DYNAMIC_RULES: DynamicRule[] = [
+  {
+    label: "Authority Centralized",
+    category: "authority",
+    description:
+      "Decision authority appears concentrated in a small number of people or leadership roles.",
+    terms: ["approval", "executive", "leader", "escalation", "permission"],
+  },
+  {
+    label: "Decision Latency",
+    category: "decision",
+    description:
+      "Decisions appear to slow down because work depends on approvals, escalation, or unclear authority.",
+    terms: ["delay", "waiting", "blocked", "approval", "decision"],
+  },
+  {
+    label: "Coordination Fragmented",
+    category: "coordination",
+    description:
+      "Work appears fragmented across teams, handoffs, or dependencies.",
+    terms: ["handoff", "coordination", "fragmented", "dependency", "silo"],
+  },
+  {
+    label: "Ownership Diffuse",
+    category: "ownership",
+    description:
+      "Responsibility appears unclear or distributed without strong accountability.",
+    terms: ["ownership", "owner", "accountability", "responsibility", "unclear"],
+  },
+  {
+    label: "Knowledge Continuity Weak",
+    category: "knowledge",
+    description:
+      "Important knowledge appears difficult to preserve, reuse, or transfer across time.",
+    terms: [
+      "knowledge",
+      "documentation",
+      "memory",
+      "continuity",
+      "tribal",
+      "retained",
+      "learning",
+    ],
+  },
+  {
+    label: "Learning Localized",
+    category: "learning",
+    description:
+      "Learning appears to remain local to individuals or teams rather than becoming shared organizational knowledge.",
+    terms: ["lesson", "learned", "feedback", "localized", "repeat"],
+  },
+  {
+    label: "Communication Inconsistent",
+    category: "communication",
+    description:
+      "Information appears to move inconsistently across the organization.",
+    terms: ["communication", "message", "clarity", "unclear", "information"],
+  },
+  {
+    label: "Execution Constrained",
+    category: "execution",
+    description:
+      "The organization appears constrained in its ability to convert intent into completed work.",
+    terms: ["execution", "blocked", "delay", "capacity", "follow-through"],
+  },
+  {
+    label: "Prioritization Unclear",
+    category: "prioritization",
+    description:
+      "The organization appears to lack clear prioritization or shared focus.",
+    terms: ["priority", "priorities", "focus", "tradeoff", "competing"],
+  },
+  {
+    label: "Resource Allocation Strained",
+    category: "resourceAllocation",
+    description:
+      "People, time, budget, or tools appear insufficient or unevenly allocated.",
+    terms: ["resource", "budget", "staffing", "headcount", "capacity"],
+  },
+];
+
 function normalizeText(value: unknown): string {
   return typeof value === "string" ? value.trim().toLowerCase() : "";
 }
 
-function includesAny(text: string, terms: string[]): boolean {
-  return terms.some((term) => text.includes(term));
+function getUnderstandingText(understanding: UnderstandingLike): string {
+  return [
+    understanding.statement,
+    understanding.title,
+    understanding.summary,
+    understanding.description,
+  ]
+    .map(normalizeText)
+    .filter(Boolean)
+    .join(" ");
 }
 
-function inferCategory(text: string): FunctionalInterpretation["category"] {
-  if (includesAny(text, ["approval", "authority", "permission", "executive"])) {
-    return "authority";
-  }
+function average(values: number[], fallback: number): number {
+  if (values.length === 0) return fallback;
 
-  if (includesAny(text, ["coordinate", "handoff", "alignment", "department"])) {
-    return "coordination";
-  }
-
-  if (includesAny(text, ["knowledge", "documentation", "memory", "retained"])) {
-    return "knowledge";
-  }
-
-  if (includesAny(text, ["execute", "execution", "delivery", "process"])) {
-    return "execution";
-  }
-
-  if (includesAny(text, ["decision", "decide", "prioritize"])) {
-    return "decision";
-  }
-
-  if (includesAny(text, ["owner", "ownership", "accountable", "responsible"])) {
-    return "ownership";
-  }
-
-  return "unknown";
+  return values.reduce((sum, value) => sum + value, 0) / values.length;
 }
 
-function inferStatement(text: string): string {
-  if (includesAny(text, ["approval", "permission", "executive"])) {
-    return "Decision authority appears centralized.";
-  }
-
-  if (includesAny(text, ["coordinate", "handoff", "alignment"])) {
-    return "Coordination appears dependent on fragile handoffs.";
-  }
-
-  if (includesAny(text, ["knowledge", "documentation", "memory", "retained"])) {
-    return "Knowledge does not appear consistently retained by the organization.";
-  }
-
-  if (includesAny(text, ["process", "execute", "execution", "delivery"])) {
-    return "Execution appears inconsistent across operating contexts.";
-  }
-
-  if (includesAny(text, ["owner", "ownership", "responsible", "accountable"])) {
-    return "Ownership appears unclear or weakly enforced.";
-  }
-
-  return "An organizational dynamic is implied but not yet clearly classified.";
+function unique(values: string[]): string[] {
+  return Array.from(new Set(values.filter(Boolean)));
 }
 
-export function inferFunctionalInterpretations(params: {
+function createDynamicId(label: string): string {
+  return `dynamic-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+}
+
+export function inferOrganizationalDynamics(params: {
   understandings: UnderstandingLike[];
   existingState?: FunctionalInterpretationState;
-  now?: string;
+  now: string;
 }): FunctionalInterpretationState {
-  const { understandings, existingState } = params;
-  const now = params.now ?? new Date().toISOString();
+  const { understandings, existingState, now } = params;
 
-  const existing = existingState?.interpretations ?? [];
-  const nextInterpretations = [...existing];
+  const existingByLabel = new Map(
+    (existingState?.interpretations ?? []).map((dynamic) => [
+      dynamic.label,
+      dynamic,
+    ])
+  );
 
-  for (const understanding of understandings) {
-    const text = [
-      understanding.statement,
-      understanding.summary,
-      understanding.description,
-    ]
-      .map(normalizeText)
-      .filter(Boolean)
-      .join(" ");
+  const dynamics: FunctionalInterpretation[] = DYNAMIC_RULES.reduce<
+    FunctionalInterpretation[]
+  >((acc, rule) => {
+    const matchedUnderstandings = understandings.filter((understanding) => {
+      const text = getUnderstandingText(understanding);
+      return rule.terms.some((term) => text.includes(term));
+    });
 
-    if (!text) continue;
+    if (matchedUnderstandings.length === 0) return acc;
 
-    const statement = inferStatement(text);
-    const category = inferCategory(text);
+    const existing = existingByLabel.get(rule.label);
 
-    const existingMatch = nextInterpretations.find(
-      (interpretation) => interpretation.statement === statement
+    const supportingUnderstandingIds = unique(
+      matchedUnderstandings.map((understanding) => understanding.id)
     );
 
-    if (existingMatch) {
-      existingMatch.strength = Math.min(1, existingMatch.strength + 0.08);
-      existingMatch.confidence = Math.min(
-        1,
-        existingMatch.confidence + 0.05
-      );
-      existingMatch.status =
-        existingMatch.strength >= 0.75 ? "stable" : "reinforced";
-      existingMatch.updatedAt = now;
+    const confidence = Math.min(
+      0.95,
+      average(
+        matchedUnderstandings.map(
+          (understanding) => understanding.confidence ?? 0.65
+        ),
+        0.65
+      ) + 0.05
+    );
 
-      if (!existingMatch.supportingUnderstandingIds.includes(understanding.id)) {
-        existingMatch.supportingUnderstandingIds.push(understanding.id);
-      }
+    const strength = Math.min(
+      1,
+      average(
+        matchedUnderstandings.map(
+          (understanding) => understanding.strength ?? confidence
+        ),
+        confidence
+      )
+    );
 
-      continue;
-    }
+    const status: OrganizationalDynamic["status"] = existing
+      ? confidence > existing.confidence
+        ? "reinforced"
+        : "stable"
+      : "new";
 
-    nextInterpretations.push({
-      id: `functional-interpretation-${nextInterpretations.length + 1}`,
-      statement,
-      category,
-      description:
-        "A reusable organizational dynamic inferred from accumulated understanding.",
-      confidence: Math.max(0.45, understanding.confidence ?? 0.55),
-      strength: Math.max(0.35, understanding.strength ?? 0.45),
-      status: "new",
-      supportingUnderstandingIds: [understanding.id],
-      createdAt: now,
+    acc.push({
+      id: existing?.id ?? createDynamicId(rule.label),
+      type: "dynamic",
+      label: rule.label,
+      statement: rule.label,
+      category: rule.category,
+      description: rule.description,
+      confidence,
+      strength,
+      status,
+      supportedBy: supportingUnderstandingIds.map((id) => ({
+        id,
+        type: "understanding",
+      })),
+      supports: existing?.supports ?? [],
+      supportingUnderstandingIds,
+      supportingCapabilityIds: existing?.supportingCapabilityIds,
+      createdAt: existing?.createdAt ?? now,
       updatedAt: now,
     });
-  }
+
+    return acc;
+  }, []);
 
   return {
-    interpretations: nextInterpretations,
+    interpretations: dynamics,
     lastUpdatedAt: now,
   };
 }
+
+export const inferFunctionalInterpretations = inferOrganizationalDynamics;

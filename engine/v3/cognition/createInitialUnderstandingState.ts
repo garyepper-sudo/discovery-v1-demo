@@ -24,6 +24,8 @@ export function createInitialUnderstandingState(
     stablePatterns: [],
     openQuestions: [],
 
+    understandingClusters: [],
+
     organism: {
       version: 1,
       nodes: [],

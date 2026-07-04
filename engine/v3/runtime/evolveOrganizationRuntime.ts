@@ -1,5 +1,6 @@
 import type { DiscoveryV3Result } from "../types";
 import type { OrganizationRuntime } from "./organizationRuntime";
+import type { OrganizationalUnderstandingState } from "./organizationalUnderstandingState";
 import { runOrganizationCognition } from "../cognition/cognitionEngine";
 import { updateOrganizationalUnderstandingState } from "./updateOrganizationalUnderstandingState";
 import { consolidateUnderstanding } from "../understanding/consolidateUnderstanding";
@@ -11,6 +12,9 @@ import { extractMeaningSignals } from "../meaning/extractMeaning";
 import { inferOrganizationalCapabilities } from "../capabilities/inferOrganizationalCapabilities";
 import { updateOrganizationalCapabilities } from "../capabilities/updateOrganizationalCapabilities";
 import { inferFunctionalInterpretations } from "../functional/inferFunctionalInterpretations";
+import { createEmptyOrganizationalUnderstandingState } from "./organizationalUnderstandingState";
+import { synchronizeOrganizationModel } from "../model/synchronizeOrganizationModel";
+import { inferOrganizationRelationships } from "../model/inferOrganizationRelationships";
 
 export function evolveOrganizationRuntime(params: {
   runtime: OrganizationRuntime;
@@ -24,30 +28,28 @@ export function evolveOrganizationRuntime(params: {
   };
 }): OrganizationRuntime {
   const { runtime, result, input } = params;
+
+  const memory = runtime.memory as typeof runtime.memory & {
+    functionalInterpretationState?: any;
+    organizationalCapabilitiesState?: any;
+    organizationalPhenomenaState?: any;
+    meaningSignals: any[];
+    organizationalConcepts: any[];
+  };
+
   const now = new Date().toISOString();
+  const eventId = `event-${memory.events.length + 1}`;
 
-  const eventId = `event-${runtime.memory.events.length + 1}`;
-
-  const existingOrganizationalUnderstandingState =
-    runtime.memory.organizationalUnderstandingState ?? {
+  const existingOrganizationalUnderstandingState:
+    OrganizationalUnderstandingState =
+    memory.organizationalUnderstandingState ??
+    createEmptyOrganizationalUnderstandingState({
       organizationId: runtime.metadata.organizationId,
       name: input.company || runtime.metadata.name,
       industry: input.industry || runtime.metadata.industry,
       website: input.website || runtime.metadata.website,
-      lastUpdatedAt: now,
-      currentUnderstandings: [],
-      organizationalConcepts: [],
-      confidenceLandscape: [],
-      activeQuestions: [],
-      strategicRisks: [],
-      evolutionHistory: [],
-      health: {
-        maturity: 0,
-        coherence: 0,
-        uncertainty: 1,
-        adaptation: 0,
-      },
-    };
+      now,
+    });
 
   const candidateUnderstandings = (result.understanding ?? [])
     .map((understanding) => ({
@@ -75,69 +77,72 @@ export function evolveOrganizationRuntime(params: {
     candidateUnderstandings
   );
 
-  const updatedOrganizationalUnderstandingState = {
-    ...baseOrganizationalUnderstandingState,
-    currentUnderstandings: consolidationResult.updatedUnderstandings,
-    lastUpdatedAt: now,
-    evolutionHistory: [
-      ...(baseOrganizationalUnderstandingState.evolutionHistory ?? []),
-      ...consolidationResult.changes.map((change) => ({
-        id: `understanding-change-${now}-${Math.random()
-          .toString(36)
-          .slice(2)}`,
-        date: now,
-        type: change.type,
-        title: change.title,
-        description: change.description,
-        relatedUnderstandingIds: change.relatedUnderstandingIds,
-      })),
-    ],
-  };
+  const updatedOrganizationalUnderstandingState: OrganizationalUnderstandingState =
+    {
+      ...baseOrganizationalUnderstandingState,
+      currentUnderstandings: consolidationResult.updatedUnderstandings,
+      lastUpdatedAt: now,
+      evolutionHistory: [
+        ...baseOrganizationalUnderstandingState.evolutionHistory,
+        ...consolidationResult.changes.map((change) => ({
+          id: `understanding-change-${Date.now()}-${Math.random()
+            .toString(36)
+            .slice(2)}`,
+          date: now,
+          type: change.type,
+          title: change.title,
+          description: change.description,
+          relatedUnderstandingIds: change.relatedUnderstandingIds,
+        })),
+      ],
+    };
 
-  const functionalInterpretationState = inferFunctionalInterpretations({
+  const organizationalDynamicsState = inferFunctionalInterpretations({
     understandings: updatedOrganizationalUnderstandingState.currentUnderstandings,
-    existingState: runtime.memory.functionalInterpretationState,
+    existingState: memory.functionalInterpretationState,
     now,
   });
 
   const detectedCapabilities = inferOrganizationalCapabilities({
-    interpretations: functionalInterpretationState.interpretations,
+    interpretations: organizationalDynamicsState.interpretations,
   });
 
   const organizationalCapabilitiesState = updateOrganizationalCapabilities({
-    existingState: runtime.memory.organizationalCapabilitiesState,
+    existingState: memory.organizationalCapabilitiesState,
     detectedCapabilities,
     now,
   });
 
   const understandingClusters = buildUnderstandingClusters({
     understandings: updatedOrganizationalUnderstandingState.currentUnderstandings,
-    existingClusters: runtime.memory.understandingClusters ?? [],
+    existingClusters: memory.understandingClusters,
     now,
   });
 
   const semanticConcepts = runSemanticCompression({
+    dynamics: organizationalDynamicsState.interpretations,
     understandings: updatedOrganizationalUnderstandingState.currentUnderstandings,
   });
 
   const meaningSignals = extractMeaningSignals({
-    interpretations: functionalInterpretationState.interpretations,
-    existingSignals: runtime.memory.meaningSignals ?? [],
+    interpretations: organizationalDynamicsState.interpretations,
+    existingSignals: memory.meaningSignals ?? [],
   });
 
   const organizationalConcepts = synthesizeOrganizationalConcepts({
     meaningSignals,
-    existingConcepts: runtime.memory.organizationalConcepts ?? [],
+    existingConcepts: memory.organizationalConcepts ?? [],
   });
 
   const organizationalPhenomenaState = inferOrganizationalPhenomena({
     clusters: understandingClusters,
-    previousState: runtime.memory.organizationalPhenomenaState,
+    previousState: memory.organizationalPhenomenaState,
     now,
   });
 
   const runtimeWithEvent: OrganizationRuntime = {
     ...runtime,
+
     metadata: {
       ...runtime.metadata,
       name: input.company || runtime.metadata.name,
@@ -146,31 +151,36 @@ export function evolveOrganizationRuntime(params: {
       updatedAt: now,
       investigationCount: runtime.metadata.investigationCount + 1,
     },
+
     memory: {
-      ...runtime.memory,
+      ...memory,
+
       understandingState: result,
       organizationalUnderstandingState: updatedOrganizationalUnderstandingState,
-      functionalInterpretationState,
+
+      functionalInterpretationState: organizationalDynamicsState,
       organizationalCapabilitiesState,
+      organizationalPhenomenaState,
+
       understandingClusters,
       semanticConcepts,
       meaningSignals,
       organizationalConcepts,
-      organizationalPhenomenaState,
+
       events: [
-        ...runtime.memory.events,
+        ...memory.events,
         {
           id: eventId,
           timestamp: now,
           company: input.company,
           question: input.question,
-          evidenceCount: result.evidence.length,
-          beliefCount: result.beliefs.length,
-          themeCount: result.themes.length,
-          contradictionCount: result.contradictions.length,
+          evidenceCount: result.evidence?.length ?? 0,
+          beliefCount: result.beliefs?.length ?? 0,
+          themeCount: result.themes?.length ?? 0,
+          contradictionCount: result.contradictions?.length ?? 0,
           understandingClusterCount: understandingClusters.length,
           functionalInterpretationCount:
-            functionalInterpretationState.interpretations.length,
+            organizationalDynamicsState.interpretations.length,
           organizationalCapabilityCount:
             organizationalCapabilitiesState.capabilities.length,
           semanticConceptCount: semanticConcepts.length,
@@ -180,8 +190,10 @@ export function evolveOrganizationRuntime(params: {
             organizationalPhenomenaState.phenomena.length,
         },
       ],
-      deltas: [...runtime.memory.deltas, result.delta].filter(Boolean),
+
+      deltas: [...memory.deltas, result.delta].filter(Boolean),
     },
+
     organism: {
       ...runtime.organism,
       organismState: result.organismState || runtime.organism.organismState,
@@ -191,10 +203,23 @@ export function evolveOrganizationRuntime(params: {
     },
   };
 
-  return runOrganizationCognition({
+  const cognitivelyUpdatedRuntime = runOrganizationCognition({
     runtime: runtimeWithEvent,
     result,
     eventId,
     now,
   });
+
+  const synchronizedOrganizationModel = synchronizeOrganizationModel(
+    cognitivelyUpdatedRuntime
+  );
+
+  const organizationModel = inferOrganizationRelationships(
+    synchronizedOrganizationModel
+  );
+
+  return {
+    ...cognitivelyUpdatedRuntime,
+    organizationModel,
+  };
 }
