@@ -8,6 +8,9 @@ import { createInitialUnderstandingState } from "./createInitialUnderstandingSta
 import { mergeObservations } from "./observations/mergeObservations";
 import { evolveOrganismFromState } from "./organism/organismEvolution";
 import { mergeBeliefs } from "./beliefs/mergeBeliefs";
+import { compareObservationsToState } from "./comparison/comparisonEngine";
+import { detectPatternsFromComparison } from "./patterns/patternDetectionEngine";
+import { mergePatternsIntoState } from "./patterns/mergePatterns";
 
 export type EvolutionInput = {
   organizationId: string;
@@ -47,6 +50,42 @@ export function evolveUnderstandingState({
     now,
   });
 
+  const comparison = compareObservationsToState({
+    state: currentState,
+    observations: observationMerge.observations,
+  });
+
+  const patternDetection = detectPatternsFromComparison(comparison);
+
+  const mergedPatterns = mergePatternsIntoState({
+    state: currentState,
+    detectedPatterns: patternDetection.detectedPatterns,
+    now,
+  });
+
+  const newStablePatterns = mergedPatterns.filter((pattern) => {
+    const existedBefore = (currentState.patterns ?? []).some(
+      (existingPattern) => existingPattern.id === pattern.id
+    );
+
+    return !existedBefore && pattern.status === "stable";
+  });
+
+  const changedStablePatterns = mergedPatterns.filter((pattern) => {
+    const previousPattern = (currentState.patterns ?? []).find(
+      (existingPattern) => existingPattern.id === pattern.id
+    );
+
+    if (!previousPattern) return false;
+
+    return (
+      previousPattern.status !== pattern.status ||
+      previousPattern.confidence !== pattern.confidence ||
+      previousPattern.strength !== pattern.strength ||
+      previousPattern.occurrences !== pattern.occurrences
+    );
+  });
+
   const delta: UnderstandingDelta = {
     uploadId,
     createdAt: now,
@@ -66,15 +105,35 @@ export function evolveUnderstandingState({
 
     newMechanisms: [],
 
-    newStablePatterns: [],
-    changedStablePatterns: [],
+    newStablePatterns,
+
+    changedStablePatterns: changedStablePatterns.map((pattern) => ({
+      stablePatternId: pattern.id,
+      label: pattern.label,
+      direction: pattern.status === "stable" ? "strengthened" : "unchanged",
+      reason: pattern.reason,
+    })),
 
     executiveNarrative: {
-      headline: buildHeadline(deltaCounts(observationMerge, beliefMerge)),
-      summary: buildSummary(observationMerge, beliefMerge),
-      whatChanged: buildWhatChanged(observationMerge, beliefMerge),
-      whyItMatters: buildWhyItMatters(observationMerge, beliefMerge),
-      suggestedQuestions: buildSuggestedQuestions(observationMerge, beliefMerge),
+      headline: buildHeadline(
+        deltaCounts(observationMerge, beliefMerge, patternDetection)
+      ),
+      summary: buildSummary(observationMerge, beliefMerge, patternDetection),
+      whatChanged: buildWhatChanged(
+        observationMerge,
+        beliefMerge,
+        patternDetection
+      ),
+      whyItMatters: buildWhyItMatters(
+        observationMerge,
+        beliefMerge,
+        patternDetection
+      ),
+      suggestedQuestions: buildSuggestedQuestions(
+        observationMerge,
+        beliefMerge,
+        patternDetection
+      ),
     },
   };
 
@@ -103,23 +162,28 @@ export function evolveUnderstandingState({
     ...event.strengthenedObservationIds,
     ...event.addedBeliefIds,
     ...event.strengthenedBeliefIds,
+    ...patternDetection.detectedPatterns.map((pattern) => pattern.id),
   ];
 
-  const nextState: UnderstandingState = {
+  const nextStateWithoutOrganism: UnderstandingState = {
     ...currentState,
     version: currentState.version + 1,
     updatedAt: now,
     events: [...currentState.events, event],
     observations: observationMerge.observations,
     beliefs: beliefMerge.beliefs,
+    patterns: mergedPatterns,
+    stablePatterns: mergedPatterns.filter(
+      (pattern) => pattern.status === "stable"
+    ),
+  };
+
+  const nextState: UnderstandingState = {
+    ...nextStateWithoutOrganism,
     organism: evolveOrganismFromState(
-  {
-    ...currentState,
-    observations: observationMerge.observations,
-    beliefs: beliefMerge.beliefs,
-  },
-  recentChangeNodeIds
-),
+      nextStateWithoutOrganism,
+      recentChangeNodeIds
+    ),
   };
 
   return {
@@ -131,13 +195,15 @@ export function evolveUnderstandingState({
 
 function deltaCounts(
   observationMerge: ReturnType<typeof mergeObservations>,
-  beliefMerge: ReturnType<typeof mergeBeliefs>
+  beliefMerge: ReturnType<typeof mergeBeliefs>,
+  patternDetection: ReturnType<typeof detectPatternsFromComparison>
 ) {
   return {
     addedObservations: observationMerge.addedObservations.length,
     strengthenedObservations: observationMerge.strengthenedObservations.length,
     addedBeliefs: beliefMerge.addedBeliefs.length,
     strengthenedBeliefs: beliefMerge.strengthenedBeliefs.length,
+    detectedPatterns: patternDetection.detectedPatterns.length,
   };
 }
 
@@ -145,6 +211,10 @@ function buildHeadline(counts: ReturnType<typeof deltaCounts>): string {
   const totalNew = counts.addedObservations + counts.addedBeliefs;
   const totalStrengthened =
     counts.strengthenedObservations + counts.strengthenedBeliefs;
+
+  if (counts.detectedPatterns > 0) {
+    return "A recurring organizational pattern is emerging";
+  }
 
   if (totalNew > 0 && totalStrengthened > 0) {
     return "New signals emerged while existing understanding strengthened";
@@ -163,7 +233,8 @@ function buildHeadline(counts: ReturnType<typeof deltaCounts>): string {
 
 function buildSummary(
   observationMerge: ReturnType<typeof mergeObservations>,
-  beliefMerge: ReturnType<typeof mergeBeliefs>
+  beliefMerge: ReturnType<typeof mergeBeliefs>,
+  patternDetection: ReturnType<typeof detectPatternsFromComparison>
 ): string {
   const parts: string[] = [];
 
@@ -199,6 +270,14 @@ function buildSummary(
     );
   }
 
+  if (patternDetection.detectedPatterns.length > 0) {
+    parts.push(
+      `${patternDetection.detectedPatterns.length} recurring pattern${
+        patternDetection.detectedPatterns.length === 1 ? "" : "s"
+      } detected`
+    );
+  }
+
   if (parts.length === 0) {
     return "The latest upload was processed without materially changing the persistent understanding.";
   }
@@ -208,7 +287,8 @@ function buildSummary(
 
 function buildWhatChanged(
   observationMerge: ReturnType<typeof mergeObservations>,
-  beliefMerge: ReturnType<typeof mergeBeliefs>
+  beliefMerge: ReturnType<typeof mergeBeliefs>,
+  patternDetection: ReturnType<typeof detectPatternsFromComparison>
 ): string[] {
   const changes: string[] = [];
 
@@ -224,12 +304,17 @@ function buildWhatChanged(
     changes.push(`Strengthened belief: ${change.statement}`);
   });
 
+  patternDetection.detectedPatterns.slice(0, 3).forEach((pattern) => {
+    changes.push(`Emerging pattern: ${pattern.statement}`);
+  });
+
   return changes;
 }
 
 function buildWhyItMatters(
   observationMerge: ReturnType<typeof mergeObservations>,
-  beliefMerge: ReturnType<typeof mergeBeliefs>
+  beliefMerge: ReturnType<typeof mergeBeliefs>,
+  patternDetection: ReturnType<typeof detectPatternsFromComparison>
 ): string[] {
   const reasons: string[] = [];
 
@@ -251,12 +336,19 @@ function buildWhyItMatters(
     );
   }
 
+  if (patternDetection.detectedPatterns.length > 0) {
+    reasons.push(
+      "Recurring patterns are the first sign that Discovery is learning across uploads rather than only analyzing documents independently."
+    );
+  }
+
   return reasons;
 }
 
 function buildSuggestedQuestions(
   observationMerge: ReturnType<typeof mergeObservations>,
-  beliefMerge: ReturnType<typeof mergeBeliefs>
+  beliefMerge: ReturnType<typeof mergeBeliefs>,
+  patternDetection: ReturnType<typeof detectPatternsFromComparison>
 ): string[] {
   const questions: string[] = [];
 
@@ -272,6 +364,12 @@ function buildSuggestedQuestions(
 
   if (beliefMerge.strengthenedBeliefs.length > 0) {
     questions.push("Are these repeated patterns now strong enough to act on?");
+  }
+
+  if (patternDetection.detectedPatterns.length > 0) {
+    questions.push(
+      "Should this emerging pattern become something Discovery tracks over time?"
+    );
   }
 
   if (questions.length === 0) {

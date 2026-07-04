@@ -51,13 +51,12 @@ export type ExecutiveNarrative = {
 };
 
 /* =====================================================
-   Sprint 20 — Persistent Organizational Understanding
-
-   These types describe what Discovery learns over time.
-   The existing types above describe one investigation.
+   Persistent Organizational Understanding
    ===================================================== */
 
 export type StabilityLevel = "emerging" | "forming" | "stable";
+
+export type PatternStatus = "forming" | "stable" | "weakening" | "dissolved";
 
 export type ChangeDirection =
   | "new"
@@ -144,18 +143,25 @@ export type PersistentMechanism = {
   relatedBeliefIds: string[];
 };
 
-export type StablePattern = {
+export type PersistentPattern = {
   id: string;
   label: string;
+  statement: string;
   description: string;
   confidence: number;
+  strength: number;
   stability: StabilityLevel;
+  status: PatternStatus;
+  occurrences: number;
   firstSeenAt: string;
   lastSeenAt: string;
   relatedObservationIds: string[];
   relatedBeliefIds: string[];
   relatedThemeIds: string[];
+  reason: string;
 };
+
+export type StablePattern = PersistentPattern;
 
 export type OpenQuestion = {
   id: string;
@@ -212,9 +218,10 @@ export type UnderstandingState = {
   contradictions: PersistentContradiction[];
   mechanisms: PersistentMechanism[];
 
+  patterns: PersistentPattern[];
   stablePatterns: StablePattern[];
-  openQuestions: OpenQuestion[];
 
+  openQuestions: OpenQuestion[];
   organism: PersistentOrganismState;
 };
 

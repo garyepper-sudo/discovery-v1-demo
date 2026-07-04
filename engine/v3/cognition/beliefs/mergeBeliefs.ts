@@ -40,6 +40,7 @@ function getStability(occurrenceCount: number): PersistentBelief["stability"] {
 function getBeliefStatement(belief: any): string {
   return (
     belief?.statement ||
+    belief?.headline ||
     belief?.claim ||
     belief?.title ||
     belief?.label ||
@@ -51,6 +52,7 @@ function getBeliefRationale(belief: any): string {
   return (
     belief?.rationale ||
     belief?.reason ||
+    belief?.explanation ||
     belief?.description ||
     belief?.summary ||
     "This belief emerged from the latest investigation."
@@ -65,6 +67,19 @@ function getBeliefConfidence(belief: any): number {
   }
 
   return 0.55;
+}
+
+function getBeliefEvidenceIds(belief: any): string[] {
+  const ids = [
+    ...(belief?.evidenceIds || []),
+    ...(belief?.supportingEvidenceIds || []),
+  ];
+
+  return Array.from(new Set(ids.filter(Boolean)));
+}
+
+function getBeliefThemeIds(belief: any): string[] {
+  return Array.from(new Set([...(belief?.themeIds || [])].filter(Boolean)));
 }
 
 export function mergeBeliefs(params: {
@@ -84,6 +99,8 @@ export function mergeBeliefs(params: {
     const statement = getBeliefStatement(incomingBelief);
     const rationale = getBeliefRationale(incomingBelief);
     const confidence = getBeliefConfidence(incomingBelief);
+    const evidenceIds = getBeliefEvidenceIds(incomingBelief);
+    const themeIds = getBeliefThemeIds(incomingBelief);
 
     const existingIndex = nextBeliefs.findIndex((existingBelief) => {
       return calculateSimilarity(existingBelief.statement, statement) >= 0.42;
@@ -98,9 +115,9 @@ export function mergeBeliefs(params: {
         stability: "emerging",
         firstSeenAt: params.now,
         lastSeenAt: params.now,
-        evidenceIds: [],
+        evidenceIds,
         observationIds: [],
-        themeIds: [],
+        themeIds,
         occurrenceCount: 1,
       };
 
@@ -111,9 +128,17 @@ export function mergeBeliefs(params: {
 
     const existingBelief = nextBeliefs[existingIndex];
     const previousConfidence = existingBelief.confidence;
+    const occurrenceCount = existingBelief.occurrenceCount + 1;
+
     const nextConfidence = Math.min(
       0.98,
-      previousConfidence + (confidence - previousConfidence) * 0.25 + 0.05
+      Number(
+        (
+          previousConfidence +
+          (confidence - previousConfidence) * 0.25 +
+          0.05
+        ).toFixed(2)
+      )
     );
 
     const updatedBelief: PersistentBelief = {
@@ -121,8 +146,14 @@ export function mergeBeliefs(params: {
       rationale,
       confidence: nextConfidence,
       lastSeenAt: params.now,
-      occurrenceCount: existingBelief.occurrenceCount + 1,
-      stability: getStability(existingBelief.occurrenceCount + 1),
+      occurrenceCount,
+      stability: getStability(occurrenceCount),
+      evidenceIds: Array.from(
+        new Set([...(existingBelief.evidenceIds || []), ...evidenceIds])
+      ),
+      themeIds: Array.from(
+        new Set([...(existingBelief.themeIds || []), ...themeIds])
+      ),
     };
 
     nextBeliefs[existingIndex] = updatedBelief;

@@ -11,6 +11,7 @@ import {
   V3Explanation,
   V3Hypothesis,
   V3Mechanism,
+  V3Observation,
   V3OrganismState,
   V3ReasoningGraph,
   V3Signal,
@@ -23,8 +24,11 @@ export type InvestigationWorkspace = {
   rawText: string;
 
   evidence: V3Evidence[];
+  observations: V3Observation[];
+
   evidenceRelationships: V3EvidenceRelationship[];
   evidenceNetwork?: V3EvidenceNetwork;
+
   mechanisms: V3Mechanism[];
   hypotheses: V3Hypothesis[];
 
@@ -36,6 +40,7 @@ export type InvestigationWorkspace = {
   understanding: V3Understanding[];
   beliefs: V3Belief[];
   emergenceEvents: V3EmergenceEvent[];
+
   executiveUnderstanding?: V3ExecutiveUnderstanding;
   reasoningGraph?: V3ReasoningGraph;
   organismState?: V3OrganismState;
@@ -55,8 +60,11 @@ export function createInvestigationWorkspace(
     rawText,
 
     evidence: [],
+    observations: [],
+
     evidenceRelationships: [],
     evidenceNetwork: undefined,
+
     mechanisms: [],
     hypotheses: [],
 
@@ -87,8 +95,11 @@ export function workspaceToResult(
 ): DiscoveryV3Result {
   return {
     evidence: workspace.evidence,
+    observations: workspace.observations,
+
     evidenceRelationships: workspace.evidenceRelationships,
     evidenceNetwork: workspace.evidenceNetwork,
+
     mechanisms: workspace.mechanisms,
     hypotheses: workspace.hypotheses,
 
@@ -117,15 +128,25 @@ function buildFallbackExecutiveUnderstanding(
 ): V3ExecutiveUnderstanding {
   return {
     headline: "Discovery is still forming an executive understanding.",
+
     explanation:
       "The investigation has evidence, but the executive understanding layer has not been finalized yet.",
+
     confidence: 0.45,
-    evidenceSummary: workspace.evidence.slice(0, 3).map((item) => item.text),
-    contradictions: workspace.contradictions.map((item) => item.title),
+
+    evidenceSummary: workspace.evidence
+      .slice(0, 3)
+      .map((item) => item.text),
+
+    contradictions: workspace.contradictions.map(
+      (item) => item.title
+    ),
+
     openQuestions: workspace.evidence
       .filter((item) => item.type === "question")
       .slice(0, 3)
       .map((item) => item.text),
+
     nextMoves: [
       "Review the strongest evidence.",
       "Look for missing context.",

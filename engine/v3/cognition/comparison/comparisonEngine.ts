@@ -4,6 +4,8 @@ import {
   UnderstandingState,
 } from "../../understanding/types";
 
+import { semanticSimilarity } from "../semanticSimilarity";
+
 export type ObservationComparison = {
   observationId: string;
   statement: string;
@@ -20,26 +22,6 @@ export type UnderstandingComparison = {
   possiblyRelatedObservations: ObservationComparison[];
 };
 
-function normalizeText(value: string): string {
-  return value
-    .toLowerCase()
-    .replace(/[^\w\s]/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function calculateSimilarity(a: string, b: string): number {
-  const wordsA = new Set(normalizeText(a).split(" ").filter(Boolean));
-  const wordsB = new Set(normalizeText(b).split(" ").filter(Boolean));
-
-  if (wordsA.size === 0 || wordsB.size === 0) return 0;
-
-  const overlap = [...wordsA].filter((word) => wordsB.has(word)).length;
-  const totalUnique = new Set([...wordsA, ...wordsB]).size;
-
-  return overlap / totalUnique;
-}
-
 function findRelatedObservations(params: {
   observation: PersistentObservation;
   state: UnderstandingState;
@@ -47,12 +29,12 @@ function findRelatedObservations(params: {
   return params.state.observations.filter((existingObservation) => {
     if (existingObservation.id === params.observation.id) return false;
 
-    return (
-      calculateSimilarity(
-        existingObservation.statement,
-        params.observation.statement
-      ) >= 0.32
+    const similarity = semanticSimilarity(
+      existingObservation.statement,
+      params.observation.statement
     );
+
+    return similarity.score >= 0.34;
   });
 }
 
@@ -61,8 +43,30 @@ function findRelatedBeliefs(params: {
   state: UnderstandingState;
 }): PersistentBelief[] {
   return params.state.beliefs.filter((belief) => {
-    return calculateSimilarity(belief.statement, params.observation.statement) >= 0.28;
+    const similarity = semanticSimilarity(
+      belief.statement,
+      params.observation.statement
+    );
+
+    return similarity.score >= 0.34;
   });
+}
+
+function buildReason(params: {
+  comparisonType: ObservationComparison["comparisonType"];
+  observation: PersistentObservation;
+  relatedObservations: PersistentObservation[];
+  relatedBeliefs: PersistentBelief[];
+}): string {
+  if (params.comparisonType === "reinforces") {
+    return "This observation semantically reinforces something already present in organizational memory.";
+  }
+
+  if (params.comparisonType === "possibly_related") {
+    return "This observation appears semantically related to an existing belief, but it is not yet a repeated observation.";
+  }
+
+  return "This appears to be a new signal in organizational memory.";
 }
 
 export function compareObservationsToState(params: {
@@ -92,8 +96,12 @@ export function compareObservationsToState(params: {
         relatedObservationIds: relatedObservations.map((item) => item.id),
         relatedBeliefIds: relatedBeliefs.map((item) => item.id),
         confidence: observation.confidence,
-        reason:
-          "This observation resembles something already present in organizational memory.",
+        reason: buildReason({
+          comparisonType: "reinforces",
+          observation,
+          relatedObservations,
+          relatedBeliefs,
+        }),
       });
 
       return;
@@ -107,8 +115,12 @@ export function compareObservationsToState(params: {
         relatedObservationIds: [],
         relatedBeliefIds: relatedBeliefs.map((item) => item.id),
         confidence: observation.confidence,
-        reason:
-          "This observation may relate to an existing belief, but it is not yet a repeated observation.",
+        reason: buildReason({
+          comparisonType: "possibly_related",
+          observation,
+          relatedObservations,
+          relatedBeliefs,
+        }),
       });
 
       return;
@@ -121,7 +133,12 @@ export function compareObservationsToState(params: {
       relatedObservationIds: [],
       relatedBeliefIds: [],
       confidence: observation.confidence,
-      reason: "This appears to be a new signal in organizational memory.",
+      reason: buildReason({
+        comparisonType: "new",
+        observation,
+        relatedObservations,
+        relatedBeliefs,
+      }),
     });
   });
 

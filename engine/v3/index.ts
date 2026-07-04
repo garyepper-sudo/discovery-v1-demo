@@ -10,6 +10,7 @@ import { buildEvidenceNetwork } from "./evidenceNetwork";
 import { generateExplanations } from "./explanations";
 import { buildHypotheses } from "./hypotheses";
 import { buildMechanisms } from "./mechanism";
+import { buildObservations } from "./observations";
 import { buildOrganismState } from "./organismState";
 import {
   scoreBeliefs,
@@ -57,6 +58,13 @@ ${input.context}
   workspace.themes = scoreThemes(
     detectThemes(workspace.evidence, workspace.signals)
   );
+
+  workspace.metadata.stage = "observations";
+  workspace.observations = buildObservations({
+    evidence: workspace.evidence,
+    signals: workspace.signals,
+    themes: workspace.themes,
+  });
 
   workspace.metadata.stage = "contradictions";
   workspace.contradictions = scoreContradictions(

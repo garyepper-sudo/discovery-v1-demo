@@ -1,83 +1,93 @@
-# Sprint 20
+# Discovery Sprint 24
 
-We are no longer building a document investigation tool.
+We have completed the first generation of the Organization Runtime and Cognition Engine.
 
-We are building a Living Organizational Understanding Engine.
+Discovery now remembers observations across investigations.
 
-Before writing code, please read PROJECT_STATE.md.
+However, we discovered an important architectural limitation.
 
-Our architecture has changed.
+The system is remembering observations instead of learning organizational patterns.
 
-Current investigation engine remains:
+Example:
 
-Upload
-↓
+Observation 1
+"Hiring delays are slowing execution."
+
+Observation 2
+"Engineering headcount remains below plan."
+
+Observation 3
+"Recruiting continues to constrain delivery."
+
+Humans immediately recognize these as one underlying organizational pattern.
+
+Discovery currently does not.
+
+Sprint 24 introduces a new reasoning layer.
+
+# Goal
+
+Build the Persistent Pattern Engine.
+
+Pipeline becomes:
 
 Evidence
 
 ↓
 
-Themes
+Observation
 
 ↓
 
-Contradictions
+Repeated Observation
 
 ↓
 
-Mechanisms
+Persistent Pattern
 
 ↓
 
-Beliefs
+Belief
 
 ↓
 
 Executive Understanding
 
-Sprint 20 introduces:
+The Pattern Engine should:
 
-Persistent UnderstandingState
+• cluster similar observations
+• merge semantically related observations
+• create long-lived organizational patterns
+• strengthen patterns as evidence accumulates
+• weaken patterns when conflicting evidence appears
+• maintain trend direction
+• maintain confidence
+• maintain support count
+• record first appearance
+• record last reinforcement
 
-EvolutionEngine
+The Cognition Inspector should evolve.
 
-UnderstandingDelta
+Instead of showing hundreds of observations, it should summarize:
 
-Organism evolution
+New Patterns
 
-Executive "What's Changed" narrative
+Strengthened Patterns
 
-Our goal is to transform Discovery from:
+Weakening Patterns
 
-"Analyze documents"
+Stable Patterns
 
-into
+The Organization Memory card should eventually display:
 
-"Maintain organizational understanding."
+Organization Memory
 
-The organism should now become a visual representation of the organization's evolving understanding rather than a visualization of a single investigation.
+8 Persistent Patterns
 
-During Sprint 20 we should:
+instead of
 
-1. Design UnderstandingState
+214 Remembered Observations
 
-2. Design UnderstandingDelta
+The overall objective is to move Discovery from remembering sentences to remembering organizational truths.
 
-3. Build EvolutionEngine
-
-4. Refactor organism around persistent understanding
-
-5. Begin showing understanding evolution after uploads
-
-Maintain our existing UX principles:
-
-- Executive first
-- Progressive disclosure
-- Minimal reading
-- Premium interface
-- Living organism
-- Scientific notebook
-
-The UI should now emerge naturally from the engine.
-
-Let's build Discovery's memory.
+This Pattern Engine will become the foundation for later belief evolution, forecasting, executive recommendations, and the Living Organizational Organism.

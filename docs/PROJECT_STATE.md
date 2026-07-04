@@ -1,346 +1,191 @@
-# Discovery — Project State
-Last Updated: Sprint 19 Complete
+# Discovery Project State
+
+## Current Sprint
+
+Sprint 23 Complete
+
+Status:
+The Organization Runtime now persists across investigations and includes the first generation of a Cognition Engine.
 
 ---
 
-# Vision
-
-Discovery is no longer just an investigation engine.
-
-Discovery is evolving into a Living Organizational Understanding Engine.
-
-Rather than analyzing individual document uploads independently, Discovery continuously develops and maintains an evolving understanding of an organization.
-
-Every upload changes the organization's internal model.
-
-The primary product is no longer an investigation.
-
-The primary product is organizational understanding.
-
----
-
-# Product Philosophy
-
-Traditional AI answers:
-
-> "What does this document say?"
-
-Discovery answers:
-
-> "How has our understanding of the organization changed?"
-
-Every upload becomes another observation that either:
-
-- reinforces understanding
-- weakens understanding
-- creates new understanding
-- resolves uncertainty
-
-Discovery behaves more like a scientist than a chatbot.
-
----
-
-# Canon UX Principles
-
-## Progressive Disclosure
-
-The interface should never overwhelm the user.
-
-Only show enough information to answer the next question.
-
-Everything else unfolds naturally.
-
----
-
-## Executive First
-
-Executives want conclusions.
-
-Not evidence.
-
-Not graphs.
-
-Not reading.
-
-The UI should always begin with:
-
-Current Understanding
-
-then naturally unfold:
-
-Why
-
-How
-
-Confidence
-
-Unknowns
-
-Revisions
-
-Evidence
-
-Trace
-
----
-
-## Notebook Experience
-
-The new workspace is a narrative notebook.
-
-Users scroll through one evolving understanding instead of switching between disconnected tabs.
-
-Navigation acts as chapter markers rather than page navigation.
-
----
-
-## Organism Philosophy
-
-The organism is NOT a graph.
-
-The organism represents living organizational understanding.
-
-Nodes represent evolving beliefs.
-
-Connections represent relationships between understandings.
-
-Node behavior should evolve over time.
-
-The organism should visibly grow as Discovery learns.
-
----
-
-# Current Engine
-
-Current pipeline:
+# Current Architecture
 
 Upload
+
 ↓
+
+Discovery Investigation Engine (V3)
+
+↓
+
+Organization Runtime
+
+↓
+
+Cognition Engine
+
+↓
+
+Organization Memory
+
+↓
+
+Executive UI
+
+---
+
+# Runtime
+
+The runtime now stores:
+
+- investigation history
+- remembered observations
+- beliefs
+- patterns
+- organism state
+- deltas
+- metadata
+
+Each investigation evolves the same organization instead of starting over.
+
+---
+
+# Cognition Engine
+
+The first cognition layer is operational.
+
+Current capability:
+
+- detects duplicate observations
+- reinforces repeated observations
+- tracks support count
+- tracks confidence
+- reports newly created observations
+- reports reinforced observations
+
+The Cognition Inspector visualizes these changes after every investigation.
+
+---
+
+# Current Limitation
+
+Discovery still stores individual observations.
+
+Example:
+
+"Hiring delays..."
+
+"Engineering headcount..."
+
+"Recruiting..."
+
+These are remembered separately.
+
+This creates an ever-growing observation list.
+
+The engine does NOT yet recognize that they all represent one larger organizational phenomenon.
+
+---
+
+# Architectural Insight
+
+The next layer should not operate on observations.
+
+It should operate on persistent organizational patterns.
+
+Desired hierarchy:
 
 Evidence
 
 ↓
 
-Themes
+Observation
 
 ↓
 
-Contradictions
+Repeated Observation
 
 ↓
 
-Mechanisms
+Persistent Pattern
 
 ↓
 
-Beliefs
+Belief
 
 ↓
 
 Executive Understanding
 
-This engine is stable.
-
-It now becomes one stage inside a larger learning system.
+The Pattern layer becomes the organization's long-term memory.
 
 ---
 
-# Next Major Architecture
+# Vision
 
-Discovery now needs persistent understanding.
+Instead of remembering hundreds of observations...
 
-Introduce:
+Discovery should remember things like:
 
-UnderstandingState
+Execution Capacity Limited by Hiring
 
-Persistent representation of the organization's current understanding.
+Strategic Uncertainty Increasing
 
-Contains:
+Customer Trust Improving
 
-- beliefs
-- themes
-- mechanisms
-- uncertainties
-- organism
-- confidence
-- history
+Board Alignment Weakening
 
-This object survives between uploads.
+These become living organizational truths that strengthen or weaken over time.
 
 ---
 
-# Evolution Engine
+# Sprint 24 Goal
 
-New engine:
+Introduce the Persistent Pattern Engine.
 
-Existing UnderstandingState
+The Pattern Engine consumes observations and produces:
 
-+
+- persistent patterns
+- strengthening trends
+- weakening trends
+- confidence evolution
+- organizational stability
 
-New Investigation
-
-↓
-
-UnderstandingDelta
-
-↓
-
-Updated UnderstandingState
-
-↓
-
-Updated Organism
-
-↓
-
-Executive Change Narrative
+Beliefs should eventually emerge from patterns rather than directly from observations.
 
 ---
 
-# Understanding Delta
+# Long-Term Architecture
 
-Every upload should produce an UnderstandingDelta.
+Evidence
 
-Possible outputs include:
+↓
 
-New Beliefs
+Observation Engine
 
-Strengthened Beliefs
+↓
 
-Weakened Beliefs
+Cognition Engine
 
-Resolved Beliefs
+↓
 
-New Themes
+Pattern Engine
 
-Resolved Themes
+↓
 
-New Contradictions
+Belief Engine
 
-Resolved Contradictions
+↓
 
-Confidence Changes
+Understanding Engine
 
-Organism Changes
+↓
 
 Executive Narrative
 
-The delta becomes the heartbeat of Discovery.
+↓
 
----
+Living Organizational Organism
 
-# Organism Evolution
-
-The organism should evolve instead of reset.
-
-Uploads should:
-
-Grow nodes
-
-Shrink nodes
-
-Strengthen connections
-
-Remove obsolete relationships
-
-Highlight new understanding
-
-Represent stable patterns visually.
-
----
-
-# Stable Understanding
-
-Understanding becomes stable through repeated reinforcement.
-
-Discovery should detect:
-
-Repeated observations
-
-Repeated mechanisms
-
-Repeated strategic themes
-
-Repeated executive concerns
-
-Long-term stability is significantly more valuable than one-time insight.
-
----
-
-# Executive Experience
-
-The future executive briefing begins with:
-
-What's Changed
-
-instead of
-
-Summary
-
-Possible output:
-
-+ Three beliefs strengthened
-
-+ One uncertainty resolved
-
-+ Two new strategic themes emerged
-
-+ Confidence increased
-
-+ Organism evolved
-
-Only then does Discovery explain the current understanding.
-
----
-
-# Current Sprint Status
-
-Sprint 19 Complete.
-
-Major accomplishments:
-
-✓ Narrative notebook workspace
-
-✓ Executive understanding chapters
-
-✓ Premium workspace navigation
-
-✓ Progressive disclosure workspace
-
-✓ Notebook component architecture
-
-✓ Living Understanding product vision established
-
-The UI is now sufficiently mature.
-
-Future effort shifts toward engine evolution.
-
----
-
-# Sprint 20 Goal
-
-Build the first version of persistent organizational understanding.
-
-The UI should now follow the engine—not lead it.
-
-# Project State — Discovery
-
-## Current Sprint
-
-Sprint 20 — Living Understanding Engine
-
-## Major Architectural Pivot
-
-Discovery is no longer being optimized as a one-upload document analysis tool.
-
-The product is now evolving into a Living Organizational Understanding Engine.
-
-The existing V3 investigation pipeline remains intact:
-
-```txt
-Evidence
-  → Themes
-  → Contradictions
-  → Mechanisms
-  → Beliefs
-  → Executive Understanding
+This architecture more closely represents genuine organizational reasoning instead of document summarization.

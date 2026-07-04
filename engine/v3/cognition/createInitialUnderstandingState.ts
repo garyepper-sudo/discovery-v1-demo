@@ -19,6 +19,7 @@ export function createInitialUnderstandingState(
     mechanisms: [],
     evidenceIndex: [],
     observations: [],
+    patterns: [],
 
     stablePatterns: [],
     openQuestions: [],

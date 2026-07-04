@@ -16,6 +16,7 @@ type ResultsOverviewProps = {
   evidence?: any[];
   reasoningGraph?: any;
   organismState?: any;
+  organizationRuntime?: any;
   delta?: any;
 };
 
@@ -29,6 +30,7 @@ export default function ResultsOverview({
   evidence = [],
   reasoningGraph,
   organismState,
+  organizationRuntime,
   delta,
 }: ResultsOverviewProps) {
   const [showExplore, setShowExplore] = useState(false);
@@ -49,6 +51,16 @@ export default function ResultsOverview({
 
   const primaryBelief = beliefs[0];
 
+  const runtimeMemory = organizationRuntime?.memory;
+  const runtimeMetadata = organizationRuntime?.metadata;
+  const runtimeOrganism = organizationRuntime?.organism;
+
+  const runtimeInvestigationCount = runtimeMetadata?.investigationCount ?? 1;
+  const runtimeBeliefCount = runtimeMemory?.beliefs?.length ?? beliefs.length;
+  const runtimePatternCount = runtimeMemory?.patterns?.length ?? themes.length;
+  const runtimeObservationCount = runtimeMemory?.observations?.length ?? evidence.length;
+  const runtimeLastEvolutionAt = runtimeOrganism?.lastEvolutionAt;
+
   const confidence = Math.round(
     ((primaryBelief?.confidence ?? understanding?.confidence) || 0.75) * 100
   );
@@ -60,8 +72,9 @@ export default function ResultsOverview({
         organismState,
         beliefs,
         contradictions,
+        organizationRuntime,
       }),
-    [delta, organismState, beliefs, contradictions]
+    [delta, organismState, beliefs, contradictions, organizationRuntime]
   );
 
   const headline =
@@ -103,7 +116,7 @@ export default function ResultsOverview({
 
       <aside className="briefing-organism-column">
         <div className="briefing-organism-card">
-          <p className="overview-label">Living understanding</p>
+          <p className="overview-label">Organization memory</p>
 
           <div className="briefing-organism-preview">
             <div className="briefing-organism-core" />
@@ -116,9 +129,20 @@ export default function ResultsOverview({
           </h2>
 
           <p>
-            {organismState?.particles?.length ?? 0} particles ·{" "}
-            {Math.round((organismState?.tension ?? 0) * 100)}% tension ·{" "}
-            {Math.round((organismState?.maturity ?? 0) * 100)}% mature
+            {runtimeInvestigationCount} investigation
+            {runtimeInvestigationCount === 1 ? "" : "s"} ·{" "}
+            {runtimeBeliefCount} belief
+            {runtimeBeliefCount === 1 ? "" : "s"} ·{" "}
+            {runtimePatternCount} pattern
+            {runtimePatternCount === 1 ? "" : "s"}
+          </p>
+
+          <p className="briefing-muted">
+            {runtimeObservationCount} remembered signal
+            {runtimeObservationCount === 1 ? "" : "s"}
+            {runtimeLastEvolutionAt
+              ? ` · evolved ${formatRuntimeDate(runtimeLastEvolutionAt)}`
+              : ""}
           </p>
 
           <button
@@ -129,7 +153,7 @@ export default function ResultsOverview({
           </button>
 
           <p className="briefing-muted">
-            Rendered from Discovery’s internal reasoning state.
+            Rendered from the organization’s persistent understanding.
           </p>
         </div>
       </aside>
@@ -156,7 +180,7 @@ export default function ResultsOverview({
           open={showOrganismExplorer}
           onOpen={() => setShowOrganismExplorer(true)}
           onClose={() => setShowOrganismExplorer(false)}
-          organismState={organismState}
+          organismState={runtimeOrganism?.organismState ?? organismState}
         />
       )}
 
@@ -181,18 +205,28 @@ function buildWhatChangedNarrative({
   organismState,
   beliefs,
   contradictions,
+  organizationRuntime,
 }: {
   delta?: any;
   organismState?: any;
   beliefs: any[];
   contradictions: any[];
+  organizationRuntime?: any;
 }) {
   const newBeliefs = delta?.newBeliefs?.length ?? beliefs.length ?? 0;
   const newContradictions =
     delta?.newContradictions?.length ?? contradictions.length ?? 0;
   const mechanisms = organismState?.mechanisms?.length ?? 0;
+  const investigationCount =
+    organizationRuntime?.metadata?.investigationCount ?? 1;
 
   const items: string[] = [];
+
+  if (investigationCount > 1) {
+    items.push(
+      `This organization has now evolved across ${investigationCount} investigations.`
+    );
+  }
 
   if (newBeliefs > 0) {
     items.push(
@@ -230,11 +264,26 @@ function buildWhatChangedNarrative({
 
   return {
     headline:
-      mechanisms > 0
-        ? "Understanding became more explainable"
-        : "Discovery formed a new working understanding",
+      investigationCount > 1
+        ? "Organizational understanding evolved"
+        : mechanisms > 0
+          ? "Understanding became more explainable"
+          : "Discovery formed a new working understanding",
     summary:
       items[0] ??
       "Discovery formed an initial understanding from the available evidence.",
   };
+}
+
+function formatRuntimeDate(value: string) {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "recently";
+  }
+
+  return date.toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+  });
 }

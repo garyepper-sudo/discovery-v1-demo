@@ -1,0 +1,2835 @@
+{
+  "metadata": {
+    "organizationId": "Gary1",
+    "name": "Gary1",
+    "createdAt": "2026-07-04T02:51:05.701Z",
+    "updatedAt": "2026-07-04T02:51:35.172Z",
+    "investigationCount": 3
+  },
+  "memory": {
+    "understandingState": {
+      "evidence": [
+        {
+          "id": "E1",
+          "text": "Company: Gary1",
+          "type": "metric",
+          "confidence": 0.84,
+          "confidenceBand": "high",
+          "polarity": "neutral",
+          "strength": "strong",
+          "keywords": [
+            "gary1"
+          ],
+          "entities": [
+            "Company",
+            "Gary1"
+          ],
+          "source": "user",
+          "relatedEvidenceIds": [],
+          "inferredFrom": []
+        },
+        {
+          "id": "E2",
+          "text": "Website:",
+          "type": "fact",
+          "confidence": 0.78,
+          "confidenceBand": "high",
+          "polarity": "neutral",
+          "strength": "moderate",
+          "keywords": [],
+          "entities": [
+            "Website"
+          ],
+          "source": "user",
+          "relatedEvidenceIds": [],
+          "inferredFrom": []
+        },
+        {
+          "id": "E3",
+          "text": "Industry:",
+          "type": "fact",
+          "confidence": 0.78,
+          "confidenceBand": "high",
+          "polarity": "neutral",
+          "strength": "moderate",
+          "keywords": [],
+          "entities": [
+            "Industry"
+          ],
+          "source": "user",
+          "relatedEvidenceIds": [],
+          "inferredFrom": []
+        },
+        {
+          "id": "E4",
+          "text": "Question:",
+          "type": "fact",
+          "confidence": 0.78,
+          "confidenceBand": "high",
+          "polarity": "neutral",
+          "strength": "moderate",
+          "keywords": [],
+          "entities": [
+            "Question"
+          ],
+          "source": "user",
+          "relatedEvidenceIds": [],
+          "inferredFrom": []
+        },
+        {
+          "id": "E5",
+          "text": "Context:",
+          "type": "fact",
+          "confidence": 0.78,
+          "confidenceBand": "high",
+          "polarity": "neutral",
+          "strength": "moderate",
+          "keywords": [],
+          "entities": [
+            "Context"
+          ],
+          "source": "user",
+          "relatedEvidenceIds": [],
+          "inferredFrom": []
+        },
+        {
+          "id": "E6",
+          "text": "Engineering headcount constraints are delaying the roadmap.",
+          "type": "fact",
+          "confidence": 0.78,
+          "confidenceBand": "high",
+          "polarity": "negative",
+          "strength": "moderate",
+          "keywords": [
+            "engineering",
+            "headcount",
+            "constraints",
+            "delaying",
+            "roadmap"
+          ],
+          "entities": [
+            "Engineering"
+          ],
+          "source": "user",
+          "relatedEvidenceIds": [],
+          "inferredFrom": []
+        }
+      ],
+      "evidenceRelationships": [],
+      "evidenceNetwork": {
+        "evidence": [
+          {
+            "id": "E1",
+            "text": "Company: Gary1",
+            "type": "metric",
+            "confidence": 0.84,
+            "confidenceBand": "high",
+            "polarity": "neutral",
+            "strength": "strong",
+            "keywords": [
+              "gary1"
+            ],
+            "entities": [
+              "Company",
+              "Gary1"
+            ],
+            "source": "user",
+            "relatedEvidenceIds": [],
+            "inferredFrom": []
+          },
+          {
+            "id": "E2",
+            "text": "Website:",
+            "type": "fact",
+            "confidence": 0.78,
+            "confidenceBand": "high",
+            "polarity": "neutral",
+            "strength": "moderate",
+            "keywords": [],
+            "entities": [
+              "Website"
+            ],
+            "source": "user",
+            "relatedEvidenceIds": [],
+            "inferredFrom": []
+          },
+          {
+            "id": "E3",
+            "text": "Industry:",
+            "type": "fact",
+            "confidence": 0.78,
+            "confidenceBand": "high",
+            "polarity": "neutral",
+            "strength": "moderate",
+            "keywords": [],
+            "entities": [
+              "Industry"
+            ],
+            "source": "user",
+            "relatedEvidenceIds": [],
+            "inferredFrom": []
+          },
+          {
+            "id": "E4",
+            "text": "Question:",
+            "type": "fact",
+            "confidence": 0.78,
+            "confidenceBand": "high",
+            "polarity": "neutral",
+            "strength": "moderate",
+            "keywords": [],
+            "entities": [
+              "Question"
+            ],
+            "source": "user",
+            "relatedEvidenceIds": [],
+            "inferredFrom": []
+          },
+          {
+            "id": "E5",
+            "text": "Context:",
+            "type": "fact",
+            "confidence": 0.78,
+            "confidenceBand": "high",
+            "polarity": "neutral",
+            "strength": "moderate",
+            "keywords": [],
+            "entities": [
+              "Context"
+            ],
+            "source": "user",
+            "relatedEvidenceIds": [],
+            "inferredFrom": []
+          },
+          {
+            "id": "E6",
+            "text": "Engineering headcount constraints are delaying the roadmap.",
+            "type": "fact",
+            "confidence": 0.78,
+            "confidenceBand": "high",
+            "polarity": "negative",
+            "strength": "moderate",
+            "keywords": [
+              "engineering",
+              "headcount",
+              "constraints",
+              "delaying",
+              "roadmap"
+            ],
+            "entities": [
+              "Engineering"
+            ],
+            "source": "user",
+            "relatedEvidenceIds": [],
+            "inferredFrom": []
+          }
+        ],
+        "relationships": [],
+        "graph": {
+          "nodes": [
+            {
+              "id": "EGN-E1",
+              "evidenceId": "E1",
+              "label": "Company: Gary1",
+              "confidence": 0.84,
+              "type": "metric",
+              "polarity": "neutral",
+              "strength": "strong",
+              "keywords": [
+                "gary1"
+              ],
+              "entities": [
+                "Company",
+                "Gary1"
+              ],
+              "connectionCount": 0
+            },
+            {
+              "id": "EGN-E2",
+              "evidenceId": "E2",
+              "label": "Website:",
+              "confidence": 0.78,
+              "type": "fact",
+              "polarity": "neutral",
+              "strength": "moderate",
+              "keywords": [],
+              "entities": [
+                "Website"
+              ],
+              "connectionCount": 0
+            },
+            {
+              "id": "EGN-E3",
+              "evidenceId": "E3",
+              "label": "Industry:",
+              "confidence": 0.78,
+              "type": "fact",
+              "polarity": "neutral",
+              "strength": "moderate",
+              "keywords": [],
+              "entities": [
+                "Industry"
+              ],
+              "connectionCount": 0
+            },
+            {
+              "id": "EGN-E4",
+              "evidenceId": "E4",
+              "label": "Question:",
+              "confidence": 0.78,
+              "type": "fact",
+              "polarity": "neutral",
+              "strength": "moderate",
+              "keywords": [],
+              "entities": [
+                "Question"
+              ],
+              "connectionCount": 0
+            },
+            {
+              "id": "EGN-E5",
+              "evidenceId": "E5",
+              "label": "Context:",
+              "confidence": 0.78,
+              "type": "fact",
+              "polarity": "neutral",
+              "strength": "moderate",
+              "keywords": [],
+              "entities": [
+                "Context"
+              ],
+              "connectionCount": 0
+            },
+            {
+              "id": "EGN-E6",
+              "evidenceId": "E6",
+              "label": "Engineering headcount constraints are delaying the roadmap.",
+              "confidence": 0.78,
+              "type": "fact",
+              "polarity": "negative",
+              "strength": "moderate",
+              "keywords": [
+                "engineering",
+                "headcount",
+                "constraints",
+                "delaying",
+                "roadmap"
+              ],
+              "entities": [
+                "Engineering"
+              ],
+              "connectionCount": 0
+            }
+          ],
+          "edges": [],
+          "clusters": [],
+          "metrics": {
+            "evidenceCount": 6,
+            "relationshipCount": 0,
+            "density": 0,
+            "averageConfidence": 0,
+            "contradictionCount": 0,
+            "supportCount": 0,
+            "explanationCount": 0
+          }
+        },
+        "summary": {
+          "evidenceCount": 6,
+          "relationshipCount": 0,
+          "clusterCount": 0,
+          "dominantRelationshipTypes": [],
+          "mostConnectedEvidenceIds": [],
+          "contradictionCount": 0,
+          "density": 0,
+          "averageConfidence": 0
+        }
+      },
+      "mechanisms": [],
+      "hypotheses": [
+        {
+          "id": "H-1",
+          "title": "Strategic uncertainty may be shaping the strategic picture",
+          "explanation": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Strategic uncertainty and Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.. The current mechanism is: Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question:",
+          "status": "leading",
+          "confidence": 0.67,
+          "supportingEvidenceIds": [
+            "E4"
+          ],
+          "weakeningEvidenceIds": [],
+          "mechanismIds": [],
+          "themeIds": [
+            "ST1"
+          ],
+          "beliefIds": [
+            "B1"
+          ],
+          "contradictionIds": [],
+          "strengths": [
+            "Supported by 1 evidence item."
+          ],
+          "weaknesses": [
+            "No major weakening evidence has been identified yet."
+          ],
+          "distinguishingQuestions": [
+            "What evidence would most clearly confirm or weaken this explanation?",
+            "What alternative explanation could account for the same evidence?"
+          ]
+        },
+        {
+          "id": "H-2",
+          "title": "Execution risk may be shaping the strategic picture",
+          "explanation": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Execution risk is creating strategic pressure and Execution risk may weaken confidence, slow momentum, or create execution risk unless the underlying causes are resolved.. The current mechanism is: Execution risk appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Engineering headcount constraints are delaying the roadmap.",
+          "status": "plausible",
+          "confidence": 0.67,
+          "supportingEvidenceIds": [
+            "E6"
+          ],
+          "weakeningEvidenceIds": [],
+          "mechanismIds": [],
+          "themeIds": [
+            "ST2"
+          ],
+          "beliefIds": [
+            "B2"
+          ],
+          "contradictionIds": [],
+          "strengths": [
+            "Supported by 1 evidence item."
+          ],
+          "weaknesses": [
+            "No major weakening evidence has been identified yet."
+          ],
+          "distinguishingQuestions": [
+            "What evidence would most clearly confirm or weaken this explanation?",
+            "What alternative explanation could account for the same evidence?"
+          ]
+        }
+      ],
+      "signals": [
+        {
+          "id": "S4",
+          "title": "Strategic uncertainty remains",
+          "description": "Evidence suggests the company is making bets whose impact is not yet fully clear. This signal appears in 1 evidence object, led by: Question:",
+          "evidenceIds": [
+            "E4"
+          ],
+          "confidence": 0.59,
+          "polarity": "neutral",
+          "priority": {
+            "confidence": 0.59,
+            "importance": 0.39,
+            "connectedness": 0.1,
+            "urgency": 0.5,
+            "total": 0.44
+          }
+        },
+        {
+          "id": "S5",
+          "title": "Execution risk is present",
+          "description": "Evidence suggests operational, timing, or implementation risk may affect outcomes. This signal appears in 1 evidence object, led by: Engineering headcount constraints are delaying the roadmap.",
+          "evidenceIds": [
+            "E6"
+          ],
+          "confidence": 0.59,
+          "polarity": "negative",
+          "priority": {
+            "confidence": 0.59,
+            "importance": 0.39,
+            "connectedness": 0.1,
+            "urgency": 0.8,
+            "total": 0.47
+          }
+        }
+      ],
+      "themes": [
+        {
+          "id": "ST1",
+          "title": "Strategic uncertainty",
+          "description": "Evidence suggests the company is making bets whose impact is not yet fully clear. This signal appears in 1 evidence object, led by: Question:",
+          "evidenceIds": [
+            "E4"
+          ],
+          "signalIds": [
+            "S4"
+          ],
+          "confidence": 0.59,
+          "keywords": [],
+          "entities": [
+            "Question"
+          ],
+          "polarity": "neutral",
+          "strength": "moderate",
+          "stability": 0.49,
+          "priority": {
+            "confidence": 0.59,
+            "importance": 0.51,
+            "connectedness": 0.2,
+            "urgency": 0.45,
+            "total": 0.5
+          }
+        },
+        {
+          "id": "ST2",
+          "title": "Execution risk",
+          "description": "Evidence suggests operational, timing, or implementation risk may affect outcomes. This signal appears in 1 evidence object, led by: Engineering headcount constraints are delaying the roadmap.",
+          "evidenceIds": [
+            "E6"
+          ],
+          "signalIds": [
+            "S5"
+          ],
+          "confidence": 0.59,
+          "keywords": [
+            "engineering",
+            "headcount",
+            "constraints",
+            "delaying",
+            "roadmap"
+          ],
+          "entities": [
+            "Engineering"
+          ],
+          "polarity": "negative",
+          "strength": "moderate",
+          "stability": 0.49,
+          "priority": {
+            "confidence": 0.59,
+            "importance": 0.51,
+            "connectedness": 0.2,
+            "urgency": 0.85,
+            "total": 0.54
+          }
+        }
+      ],
+      "contradictions": [],
+      "causalChains": [
+        {
+          "id": "CC1",
+          "cause": "Strategic uncertainty",
+          "mechanism": "Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question:",
+          "effect": "Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.",
+          "evidenceIds": [
+            "E4"
+          ],
+          "themeIds": [
+            "ST1"
+          ],
+          "confidence": 0.61,
+          "strength": "moderate",
+          "assumptions": [
+            "The evidence connected to Strategic uncertainty is representative of the broader situation."
+          ],
+          "risks": [
+            "The causal path may be thin because it rests on limited evidence."
+          ],
+          "priority": {
+            "confidence": 0.61,
+            "importance": 0.51,
+            "connectedness": 0.2,
+            "urgency": 0.6,
+            "total": 0.53
+          }
+        },
+        {
+          "id": "CC2",
+          "cause": "Execution risk is creating strategic pressure",
+          "mechanism": "Execution risk appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Engineering headcount constraints are delaying the roadmap.",
+          "effect": "Execution risk may weaken confidence, slow momentum, or create execution risk unless the underlying causes are resolved.",
+          "evidenceIds": [
+            "E6"
+          ],
+          "themeIds": [
+            "ST2"
+          ],
+          "confidence": 0.61,
+          "strength": "moderate",
+          "assumptions": [
+            "The evidence connected to Execution risk is representative of the broader situation."
+          ],
+          "risks": [
+            "Execution risk may create downside risk if left unresolved.",
+            "The causal path may be thin because it rests on limited evidence."
+          ],
+          "priority": {
+            "confidence": 0.61,
+            "importance": 0.51,
+            "connectedness": 0.2,
+            "urgency": 0.6,
+            "total": 0.53
+          }
+        }
+      ],
+      "explanations": [
+        {
+          "id": "EX1",
+          "title": "Strategic uncertainty may be shaping the strategic picture",
+          "explanation": "Discovery sees a possible relationship between Strategic uncertainty and Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.. The current mechanism is: Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question:",
+          "supportingEvidenceIds": [
+            "E4"
+          ],
+          "weakeningEvidenceIds": [],
+          "confidence": 0.61
+        },
+        {
+          "id": "EX2",
+          "title": "Execution risk may be shaping the strategic picture",
+          "explanation": "Discovery sees a possible relationship between Execution risk is creating strategic pressure and Execution risk may weaken confidence, slow momentum, or create execution risk unless the underlying causes are resolved.. The current mechanism is: Execution risk appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Engineering headcount constraints are delaying the roadmap.",
+          "supportingEvidenceIds": [
+            "E6"
+          ],
+          "weakeningEvidenceIds": [],
+          "confidence": 0.61
+        }
+      ],
+      "understanding": [
+        {
+          "id": "U-CANONICAL-1",
+          "title": "Strategic uncertainty may be shaping the strategic picture",
+          "summary": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Strategic uncertainty and Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.. The current mechanism is: Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question: It is supported by 2 major patterns.",
+          "confidence": 0.77,
+          "supportScore": 5,
+          "contradictionScore": 0,
+          "noveltyScore": 0.25,
+          "evidenceIds": [
+            "E4",
+            "E6"
+          ],
+          "themeIds": [
+            "ST1",
+            "ST2"
+          ],
+          "explanationIds": [],
+          "causalChainIds": [
+            "CC1"
+          ],
+          "supportingReasons": [
+            "1 evidence item(s) support this explanation.",
+            "It is connected to 1 broader theme(s): Strategic uncertainty.",
+            "It is reinforced by 1 causal chain(s).",
+            "Strategic uncertainty is supported by 1 evidence object.",
+            "Execution risk is supported by 1 evidence object."
+          ],
+          "contradictions": [],
+          "unknowns": [
+            "The next unknown is whether this pattern holds across additional evidence."
+          ],
+          "implications": [
+            "This belief does not yet have a clear explanatory mechanism attached to it.",
+            "There are still open questions attached to this belief."
+          ],
+          "recommendations": [
+            "Review the strongest supporting evidence behind the current belief.",
+            "Test whether strategic uncertainty is worsening, stabilizing, or resolving.",
+            "The next unknown is whether this pattern holds across additional evidence."
+          ],
+          "beliefIds": [
+            "B1",
+            "B2"
+          ]
+        }
+      ],
+      "beliefs": [
+        {
+          "id": "B1",
+          "headline": "Strategic uncertainty may be shaping the strategic picture",
+          "confidence": 1,
+          "explanation": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Strategic uncertainty and Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.. The current mechanism is: Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question:",
+          "understandingId": "U1",
+          "supportingEvidenceIds": [
+            "E4"
+          ],
+          "contradictingEvidenceIds": [],
+          "mechanismIds": [],
+          "themeIds": [
+            "ST1"
+          ],
+          "contradictionIds": [],
+          "supportingReasons": [
+            "1 evidence item(s) support this explanation.",
+            "It is connected to 1 broader theme(s): Strategic uncertainty.",
+            "It is reinforced by 1 causal chain(s)."
+          ],
+          "concerns": [
+            "This belief does not yet have a clear explanatory mechanism attached to it.",
+            "There are still open questions attached to this belief."
+          ],
+          "nextQuestions": [
+            "The next unknown is whether this pattern holds across additional evidence."
+          ],
+          "causalChainIds": [
+            "CC1"
+          ],
+          "stability": 0.53,
+          "utility": 0.35,
+          "priority": {
+            "confidence": 1,
+            "importance": 0.69,
+            "connectedness": 0.2,
+            "urgency": 0.75,
+            "total": 0.76
+          }
+        },
+        {
+          "id": "B2",
+          "headline": "Execution risk may be shaping the strategic picture",
+          "confidence": 1,
+          "explanation": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Execution risk is creating strategic pressure and Execution risk may weaken confidence, slow momentum, or create execution risk unless the underlying causes are resolved.. The current mechanism is: Execution risk appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Engineering headcount constraints are delaying the roadmap.",
+          "understandingId": "U2",
+          "supportingEvidenceIds": [
+            "E6"
+          ],
+          "contradictingEvidenceIds": [],
+          "mechanismIds": [],
+          "themeIds": [
+            "ST2"
+          ],
+          "contradictionIds": [],
+          "supportingReasons": [
+            "1 evidence item(s) support this explanation.",
+            "It is connected to 1 broader theme(s): Execution risk.",
+            "It is reinforced by 1 causal chain(s)."
+          ],
+          "concerns": [
+            "This belief does not yet have a clear explanatory mechanism attached to it.",
+            "There are still open questions attached to this belief."
+          ],
+          "nextQuestions": [
+            "The next unknown is whether this pattern holds across additional evidence."
+          ],
+          "causalChainIds": [
+            "CC2"
+          ],
+          "stability": 0.53,
+          "utility": 0.35,
+          "priority": {
+            "confidence": 1,
+            "importance": 0.69,
+            "connectedness": 0.2,
+            "urgency": 0.75,
+            "total": 0.76
+          }
+        }
+      ],
+      "emergenceEvents": [
+        {
+          "id": "EE-1",
+          "title": "Evidence entered the workspace",
+          "description": "6 evidence objects were ingested and prepared for investigation.",
+          "strength": 0.6,
+          "evidenceIds": [
+            "E1",
+            "E2",
+            "E3",
+            "E4",
+            "E5",
+            "E6"
+          ]
+        },
+        {
+          "id": "EE-2",
+          "title": "Themes began to stabilize",
+          "description": "2 recurring patterns emerged from the evidence.",
+          "strength": 0.59,
+          "evidenceIds": [
+            "E4",
+            "E6"
+          ]
+        },
+        {
+          "id": "EE-4",
+          "title": "A candidate belief formed",
+          "description": "Strategic uncertainty may be shaping the strategic picture",
+          "understandingId": "U-CANONICAL-1",
+          "strength": 1,
+          "evidenceIds": [
+            "E4"
+          ]
+        },
+        {
+          "id": "EE-5",
+          "title": "Current understanding stabilized",
+          "description": "Strategic uncertainty may be shaping the strategic picture",
+          "understandingId": "U-CANONICAL-1",
+          "strength": 0.77,
+          "evidenceIds": [
+            "E4",
+            "E6"
+          ]
+        }
+      ],
+      "executiveUnderstanding": {
+        "headline": "Strategic uncertainty is the clearest strategic signal",
+        "explanation": "Strategic uncertainty appears to be shaping the strategic picture. The strongest signal is: Company: Gary1 Leadership should pay attention because this signal appears to be the strongest area of strategic movement. Discovery is moderately confident in this assessment. The main uncertainty is: No major unresolved tension is visible yet, but Discovery should continue looking for disconfirming evidence.",
+        "confidence": 0.77,
+        "evidenceSummary": [
+          "Question:",
+          "Engineering headcount constraints are delaying the roadmap."
+        ],
+        "contradictions": [],
+        "openQuestions": [
+          "What evidence would confirm that strategic uncertainty is becoming more important?"
+        ],
+        "nextMoves": [
+          "Ask the team to validate whether strategic uncertainty is accelerating, stabilizing, or fading.",
+          "Watch for new evidence connected to strategic uncertainty.",
+          "What evidence would confirm that strategic uncertainty is becoming more important?"
+        ]
+      },
+      "delta": {
+        "newBeliefs": [
+          "B1",
+          "B2"
+        ],
+        "strengthenedBeliefs": [],
+        "weakenedBeliefs": [],
+        "resolvedContradictions": [],
+        "newContradictions": [],
+        "confidenceChanges": [
+          {
+            "sourceId": "B1",
+            "sourceType": "belief",
+            "currentConfidence": 1,
+            "direction": "up",
+            "explanation": "New belief formed in this investigation."
+          },
+          {
+            "sourceId": "B2",
+            "sourceType": "belief",
+            "currentConfidence": 1,
+            "direction": "up",
+            "explanation": "New belief formed in this investigation."
+          }
+        ],
+        "healthChanges": [
+          {
+            "metric": "density",
+            "currentValue": 0.43,
+            "direction": "up",
+            "explanation": "density was established at 0.43."
+          },
+          {
+            "metric": "coherence",
+            "currentValue": 1,
+            "direction": "up",
+            "explanation": "coherence was established at 1."
+          },
+          {
+            "metric": "tension",
+            "currentValue": 0,
+            "direction": "up",
+            "explanation": "tension was established at 0."
+          },
+          {
+            "metric": "maturity",
+            "currentValue": 1,
+            "direction": "up",
+            "explanation": "maturity was established at 1."
+          },
+          {
+            "metric": "uncertainty",
+            "currentValue": 0.32,
+            "direction": "up",
+            "explanation": "uncertainty was established at 0.32."
+          }
+        ]
+      },
+      "reasoningGraph": {
+        "nodes": [
+          {
+            "id": "E1",
+            "type": "evidence",
+            "label": "user",
+            "description": "Company: Gary1",
+            "confidence": 0.84,
+            "sourceId": "E1"
+          },
+          {
+            "id": "E2",
+            "type": "evidence",
+            "label": "user",
+            "description": "Website:",
+            "confidence": 0.78,
+            "sourceId": "E2"
+          },
+          {
+            "id": "E3",
+            "type": "evidence",
+            "label": "user",
+            "description": "Industry:",
+            "confidence": 0.78,
+            "sourceId": "E3"
+          },
+          {
+            "id": "E4",
+            "type": "evidence",
+            "label": "user",
+            "description": "Question:",
+            "confidence": 0.78,
+            "sourceId": "E4"
+          },
+          {
+            "id": "E5",
+            "type": "evidence",
+            "label": "user",
+            "description": "Context:",
+            "confidence": 0.78,
+            "sourceId": "E5"
+          },
+          {
+            "id": "E6",
+            "type": "evidence",
+            "label": "user",
+            "description": "Engineering headcount constraints are delaying the roadmap.",
+            "confidence": 0.78,
+            "sourceId": "E6"
+          },
+          {
+            "id": "S4",
+            "type": "signal",
+            "label": "Strategic uncertainty remains",
+            "description": "Evidence suggests the company is making bets whose impact is not yet fully clear. This signal appears in 1 evidence object, led by: Question:",
+            "confidence": 0.59,
+            "sourceId": "S4"
+          },
+          {
+            "id": "S5",
+            "type": "signal",
+            "label": "Execution risk is present",
+            "description": "Evidence suggests operational, timing, or implementation risk may affect outcomes. This signal appears in 1 evidence object, led by: Engineering headcount constraints are delaying the roadmap.",
+            "confidence": 0.59,
+            "sourceId": "S5"
+          },
+          {
+            "id": "ST1",
+            "type": "theme",
+            "label": "Strategic uncertainty",
+            "description": "Evidence suggests the company is making bets whose impact is not yet fully clear. This signal appears in 1 evidence object, led by: Question:",
+            "confidence": 0.59,
+            "sourceId": "ST1"
+          },
+          {
+            "id": "ST2",
+            "type": "theme",
+            "label": "Execution risk",
+            "description": "Evidence suggests operational, timing, or implementation risk may affect outcomes. This signal appears in 1 evidence object, led by: Engineering headcount constraints are delaying the roadmap.",
+            "confidence": 0.59,
+            "sourceId": "ST2"
+          },
+          {
+            "id": "CC1",
+            "type": "causal",
+            "label": "Strategic uncertainty → Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.",
+            "description": "Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question:",
+            "confidence": 0.61,
+            "sourceId": "CC1"
+          },
+          {
+            "id": "CC2",
+            "type": "causal",
+            "label": "Execution risk is creating strategic pressure → Execution risk may weaken confidence, slow momentum, or create execution risk unless the underlying causes are resolved.",
+            "description": "Execution risk appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Engineering headcount constraints are delaying the roadmap.",
+            "confidence": 0.61,
+            "sourceId": "CC2"
+          },
+          {
+            "id": "EX1",
+            "type": "explanation",
+            "label": "Strategic uncertainty may be shaping the strategic picture",
+            "description": "Discovery sees a possible relationship between Strategic uncertainty and Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.. The current mechanism is: Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question:",
+            "confidence": 0.61,
+            "sourceId": "EX1"
+          },
+          {
+            "id": "EX2",
+            "type": "explanation",
+            "label": "Execution risk may be shaping the strategic picture",
+            "description": "Discovery sees a possible relationship between Execution risk is creating strategic pressure and Execution risk may weaken confidence, slow momentum, or create execution risk unless the underlying causes are resolved.. The current mechanism is: Execution risk appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Engineering headcount constraints are delaying the roadmap.",
+            "confidence": 0.61,
+            "sourceId": "EX2"
+          },
+          {
+            "id": "U-CANONICAL-1",
+            "type": "understanding",
+            "label": "Strategic uncertainty may be shaping the strategic picture",
+            "description": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Strategic uncertainty and Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.. The current mechanism is: Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question: It is supported by 2 major patterns.",
+            "confidence": 0.77,
+            "sourceId": "U-CANONICAL-1"
+          },
+          {
+            "id": "B1",
+            "type": "belief",
+            "label": "Strategic uncertainty may be shaping the strategic picture",
+            "description": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Strategic uncertainty and Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.. The current mechanism is: Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question:",
+            "confidence": 1,
+            "sourceId": "B1"
+          },
+          {
+            "id": "B2",
+            "type": "belief",
+            "label": "Execution risk may be shaping the strategic picture",
+            "description": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Execution risk is creating strategic pressure and Execution risk may weaken confidence, slow momentum, or create execution risk unless the underlying causes are resolved.. The current mechanism is: Execution risk appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Engineering headcount constraints are delaying the roadmap.",
+            "confidence": 1,
+            "sourceId": "B2"
+          },
+          {
+            "id": "EXECUTIVE_UNDERSTANDING",
+            "type": "executive",
+            "label": "Strategic uncertainty is the clearest strategic signal",
+            "description": "Strategic uncertainty appears to be shaping the strategic picture. The strongest signal is: Company: Gary1 Leadership should pay attention because this signal appears to be the strongest area of strategic movement. Discovery is moderately confident in this assessment. The main uncertainty is: No major unresolved tension is visible yet, but Discovery should continue looking for disconfirming evidence.",
+            "confidence": 0.77,
+            "sourceId": "EXECUTIVE_UNDERSTANDING"
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge-E4-S4",
+            "from": "E4",
+            "to": "S4",
+            "type": "supports",
+            "weight": 0.9,
+            "primary": true,
+            "explanation": "This evidence contributes to the signal."
+          },
+          {
+            "id": "edge-E6-S5",
+            "from": "E6",
+            "to": "S5",
+            "type": "supports",
+            "weight": 0.9,
+            "primary": true,
+            "explanation": "This evidence contributes to the signal."
+          },
+          {
+            "id": "edge-S4-ST1",
+            "from": "S4",
+            "to": "ST1",
+            "type": "forms",
+            "weight": 0.9,
+            "primary": true,
+            "explanation": "This signal helps form the theme."
+          },
+          {
+            "id": "edge-E4-ST1",
+            "from": "E4",
+            "to": "ST1",
+            "type": "supports",
+            "weight": 0.85,
+            "primary": true,
+            "explanation": "This evidence supports the theme."
+          },
+          {
+            "id": "edge-S5-ST2",
+            "from": "S5",
+            "to": "ST2",
+            "type": "forms",
+            "weight": 0.9,
+            "primary": true,
+            "explanation": "This signal helps form the theme."
+          },
+          {
+            "id": "edge-E6-ST2",
+            "from": "E6",
+            "to": "ST2",
+            "type": "supports",
+            "weight": 0.85,
+            "primary": true,
+            "explanation": "This evidence supports the theme."
+          },
+          {
+            "id": "edge-ST1-CC1",
+            "from": "ST1",
+            "to": "CC1",
+            "type": "causes",
+            "weight": 0.9,
+            "primary": true,
+            "explanation": "This theme participates in the causal chain."
+          },
+          {
+            "id": "edge-E4-CC1",
+            "from": "E4",
+            "to": "CC1",
+            "type": "supports",
+            "weight": 0.75,
+            "primary": true,
+            "explanation": "This evidence supports the causal chain."
+          },
+          {
+            "id": "edge-ST2-CC2",
+            "from": "ST2",
+            "to": "CC2",
+            "type": "causes",
+            "weight": 0.9,
+            "primary": true,
+            "explanation": "This theme participates in the causal chain."
+          },
+          {
+            "id": "edge-E6-CC2",
+            "from": "E6",
+            "to": "CC2",
+            "type": "supports",
+            "weight": 0.75,
+            "primary": true,
+            "explanation": "This evidence supports the causal chain."
+          },
+          {
+            "id": "edge-E4-EX1",
+            "from": "E4",
+            "to": "EX1",
+            "type": "explains",
+            "weight": 0.85,
+            "primary": true,
+            "explanation": "This evidence supports the explanation."
+          },
+          {
+            "id": "edge-E6-EX2",
+            "from": "E6",
+            "to": "EX2",
+            "type": "explains",
+            "weight": 0.85,
+            "primary": true,
+            "explanation": "This evidence supports the explanation."
+          },
+          {
+            "id": "edge-ST1-U-CANONICAL-1",
+            "from": "ST1",
+            "to": "U-CANONICAL-1",
+            "type": "supports",
+            "weight": 0.85,
+            "primary": true,
+            "explanation": "This theme supports the understanding."
+          },
+          {
+            "id": "edge-ST2-U-CANONICAL-1",
+            "from": "ST2",
+            "to": "U-CANONICAL-1",
+            "type": "supports",
+            "weight": 0.6,
+            "primary": false,
+            "explanation": "This theme supports the understanding."
+          },
+          {
+            "id": "edge-U1-B1",
+            "from": "U1",
+            "to": "B1",
+            "type": "forms",
+            "weight": 0.95,
+            "primary": true,
+            "explanation": "This understanding stabilizes into a belief."
+          },
+          {
+            "id": "edge-ST1-B1",
+            "from": "ST1",
+            "to": "B1",
+            "type": "supports",
+            "weight": 0.8,
+            "primary": false,
+            "explanation": "This theme supports the belief."
+          },
+          {
+            "id": "edge-U2-B2",
+            "from": "U2",
+            "to": "B2",
+            "type": "forms",
+            "weight": 0.95,
+            "primary": true,
+            "explanation": "This understanding stabilizes into a belief."
+          },
+          {
+            "id": "edge-ST2-B2",
+            "from": "ST2",
+            "to": "B2",
+            "type": "supports",
+            "weight": 0.8,
+            "primary": false,
+            "explanation": "This theme supports the belief."
+          },
+          {
+            "id": "edge-B1-EXECUTIVE_UNDERSTANDING",
+            "from": "B1",
+            "to": "EXECUTIVE_UNDERSTANDING",
+            "type": "summarizes",
+            "weight": 1,
+            "primary": true,
+            "explanation": "This belief contributes to the executive understanding."
+          },
+          {
+            "id": "edge-B2-EXECUTIVE_UNDERSTANDING",
+            "from": "B2",
+            "to": "EXECUTIVE_UNDERSTANDING",
+            "type": "summarizes",
+            "weight": 0.7,
+            "primary": false,
+            "explanation": "This belief contributes to the executive understanding."
+          }
+        ],
+        "executiveNodeId": "EXECUTIVE_UNDERSTANDING"
+      },
+      "organismState": {
+        "particles": [
+          {
+            "id": "OP-E1",
+            "kind": "evidence",
+            "label": "Company: Gary1",
+            "sourceId": "E1",
+            "confidence": 0.84,
+            "strength": 0.9,
+            "connections": [
+              "gary1"
+            ]
+          },
+          {
+            "id": "OP-E2",
+            "kind": "evidence",
+            "label": "Website:",
+            "sourceId": "E2",
+            "confidence": 0.78,
+            "strength": 0.65,
+            "connections": []
+          },
+          {
+            "id": "OP-E3",
+            "kind": "evidence",
+            "label": "Industry:",
+            "sourceId": "E3",
+            "confidence": 0.78,
+            "strength": 0.65,
+            "connections": []
+          },
+          {
+            "id": "OP-E4",
+            "kind": "evidence",
+            "label": "Question:",
+            "sourceId": "E4",
+            "confidence": 0.78,
+            "strength": 0.65,
+            "connections": []
+          },
+          {
+            "id": "OP-E5",
+            "kind": "evidence",
+            "label": "Context:",
+            "sourceId": "E5",
+            "confidence": 0.78,
+            "strength": 0.65,
+            "connections": []
+          },
+          {
+            "id": "OP-E6",
+            "kind": "evidence",
+            "label": "Engineering headcount constraints are delaying the roadmap.",
+            "sourceId": "E6",
+            "confidence": 0.78,
+            "strength": 0.65,
+            "connections": [
+              "engineering",
+              "headcount",
+              "constraints",
+              "delaying",
+              "roadmap"
+            ]
+          },
+          {
+            "id": "OP-ST1",
+            "kind": "theme",
+            "label": "Strategic uncertainty",
+            "sourceId": "ST1",
+            "confidence": 0.59,
+            "strength": 0.49,
+            "connections": [
+              "E4"
+            ]
+          },
+          {
+            "id": "OP-ST2",
+            "kind": "theme",
+            "label": "Execution risk",
+            "sourceId": "ST2",
+            "confidence": 0.59,
+            "strength": 0.49,
+            "connections": [
+              "E6"
+            ]
+          },
+          {
+            "id": "OP-H-1",
+            "kind": "belief",
+            "label": "Strategic uncertainty may be shaping the strategic picture",
+            "sourceId": "H-1",
+            "confidence": 0.67,
+            "strength": 0.9,
+            "connections": [
+              "E4",
+              "ST1"
+            ]
+          },
+          {
+            "id": "OP-H-2",
+            "kind": "belief",
+            "label": "Execution risk may be shaping the strategic picture",
+            "sourceId": "H-2",
+            "confidence": 0.67,
+            "strength": 0.7,
+            "connections": [
+              "E6",
+              "ST2"
+            ]
+          },
+          {
+            "id": "OP-B1",
+            "kind": "belief",
+            "label": "Strategic uncertainty may be shaping the strategic picture",
+            "sourceId": "B1",
+            "confidence": 1,
+            "strength": 0.53,
+            "connections": [
+              "E4",
+              "ST1"
+            ]
+          },
+          {
+            "id": "OP-B2",
+            "kind": "belief",
+            "label": "Execution risk may be shaping the strategic picture",
+            "sourceId": "B2",
+            "confidence": 1,
+            "strength": 0.53,
+            "connections": [
+              "E6",
+              "ST2"
+            ]
+          },
+          {
+            "id": "OP-U-CANONICAL-1",
+            "kind": "understanding",
+            "label": "Strategic uncertainty may be shaping the strategic picture",
+            "sourceId": "U-CANONICAL-1",
+            "confidence": 0.77,
+            "strength": 5,
+            "connections": [
+              "E4",
+              "E6",
+              "ST1",
+              "ST2",
+              "CC1"
+            ]
+          }
+        ],
+        "centerId": "OP-U-CANONICAL-1",
+        "evidenceClusters": [
+          {
+            "id": "OC-ST1",
+            "label": "Strategic uncertainty",
+            "evidenceIds": [
+              "E4"
+            ],
+            "confidence": 0.59,
+            "tension": 0
+          },
+          {
+            "id": "OC-ST2",
+            "label": "Execution risk",
+            "evidenceIds": [
+              "E6"
+            ],
+            "confidence": 0.59,
+            "tension": 0
+          }
+        ],
+        "mechanisms": [],
+        "hypotheses": [
+          {
+            "id": "H-1",
+            "title": "Strategic uncertainty may be shaping the strategic picture",
+            "explanation": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Strategic uncertainty and Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.. The current mechanism is: Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question:",
+            "status": "leading",
+            "confidence": 0.67,
+            "supportingEvidenceIds": [
+              "E4"
+            ],
+            "weakeningEvidenceIds": [],
+            "mechanismIds": [],
+            "themeIds": [
+              "ST1"
+            ],
+            "beliefIds": [
+              "B1"
+            ],
+            "contradictionIds": [],
+            "strengths": [
+              "Supported by 1 evidence item."
+            ],
+            "weaknesses": [
+              "No major weakening evidence has been identified yet."
+            ],
+            "distinguishingQuestions": [
+              "What evidence would most clearly confirm or weaken this explanation?",
+              "What alternative explanation could account for the same evidence?"
+            ]
+          },
+          {
+            "id": "H-2",
+            "title": "Execution risk may be shaping the strategic picture",
+            "explanation": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Execution risk is creating strategic pressure and Execution risk may weaken confidence, slow momentum, or create execution risk unless the underlying causes are resolved.. The current mechanism is: Execution risk appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Engineering headcount constraints are delaying the roadmap.",
+            "status": "plausible",
+            "confidence": 0.67,
+            "supportingEvidenceIds": [
+              "E6"
+            ],
+            "weakeningEvidenceIds": [],
+            "mechanismIds": [],
+            "themeIds": [
+              "ST2"
+            ],
+            "beliefIds": [
+              "B2"
+            ],
+            "contradictionIds": [],
+            "strengths": [
+              "Supported by 1 evidence item."
+            ],
+            "weaknesses": [
+              "No major weakening evidence has been identified yet."
+            ],
+            "distinguishingQuestions": [
+              "What evidence would most clearly confirm or weaken this explanation?",
+              "What alternative explanation could account for the same evidence?"
+            ]
+          }
+        ],
+        "beliefs": [
+          {
+            "id": "B1",
+            "headline": "Strategic uncertainty may be shaping the strategic picture",
+            "confidence": 1,
+            "explanation": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Strategic uncertainty and Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.. The current mechanism is: Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question:",
+            "understandingId": "U1",
+            "supportingEvidenceIds": [
+              "E4"
+            ],
+            "contradictingEvidenceIds": [],
+            "mechanismIds": [],
+            "themeIds": [
+              "ST1"
+            ],
+            "contradictionIds": [],
+            "supportingReasons": [
+              "1 evidence item(s) support this explanation.",
+              "It is connected to 1 broader theme(s): Strategic uncertainty.",
+              "It is reinforced by 1 causal chain(s)."
+            ],
+            "concerns": [
+              "This belief does not yet have a clear explanatory mechanism attached to it.",
+              "There are still open questions attached to this belief."
+            ],
+            "nextQuestions": [
+              "The next unknown is whether this pattern holds across additional evidence."
+            ],
+            "causalChainIds": [
+              "CC1"
+            ],
+            "stability": 0.53,
+            "utility": 0.35,
+            "priority": {
+              "confidence": 1,
+              "importance": 0.69,
+              "connectedness": 0.2,
+              "urgency": 0.75,
+              "total": 0.76
+            }
+          },
+          {
+            "id": "B2",
+            "headline": "Execution risk may be shaping the strategic picture",
+            "confidence": 1,
+            "explanation": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Execution risk is creating strategic pressure and Execution risk may weaken confidence, slow momentum, or create execution risk unless the underlying causes are resolved.. The current mechanism is: Execution risk appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Engineering headcount constraints are delaying the roadmap.",
+            "understandingId": "U2",
+            "supportingEvidenceIds": [
+              "E6"
+            ],
+            "contradictingEvidenceIds": [],
+            "mechanismIds": [],
+            "themeIds": [
+              "ST2"
+            ],
+            "contradictionIds": [],
+            "supportingReasons": [
+              "1 evidence item(s) support this explanation.",
+              "It is connected to 1 broader theme(s): Execution risk.",
+              "It is reinforced by 1 causal chain(s)."
+            ],
+            "concerns": [
+              "This belief does not yet have a clear explanatory mechanism attached to it.",
+              "There are still open questions attached to this belief."
+            ],
+            "nextQuestions": [
+              "The next unknown is whether this pattern holds across additional evidence."
+            ],
+            "causalChainIds": [
+              "CC2"
+            ],
+            "stability": 0.53,
+            "utility": 0.35,
+            "priority": {
+              "confidence": 1,
+              "importance": 0.69,
+              "connectedness": 0.2,
+              "urgency": 0.75,
+              "total": 0.76
+            }
+          }
+        ],
+        "contradictions": [],
+        "mechanismIds": [],
+        "hypothesisIds": [
+          "H-1",
+          "H-2"
+        ],
+        "beliefIds": [
+          "B1",
+          "B2"
+        ],
+        "contradictionIds": [],
+        "uncertainty": 0.32,
+        "emergingPatterns": [
+          {
+            "id": "EP-U-CANONICAL-1",
+            "title": "Strategic uncertainty may be shaping the strategic picture",
+            "description": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Strategic uncertainty and Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.. The current mechanism is: Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question: It is supported by 2 major patterns.",
+            "evidenceIds": [
+              "E4",
+              "E6"
+            ],
+            "confidence": 0.77,
+            "strength": 5
+          },
+          {
+            "id": "EP-H-1",
+            "title": "Strategic uncertainty may be shaping the strategic picture",
+            "description": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Strategic uncertainty and Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.. The current mechanism is: Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question:",
+            "evidenceIds": [
+              "E4"
+            ],
+            "confidence": 0.67,
+            "strength": 0.9
+          },
+          {
+            "id": "EP-H-2",
+            "title": "Execution risk may be shaping the strategic picture",
+            "description": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Execution risk is creating strategic pressure and Execution risk may weaken confidence, slow momentum, or create execution risk unless the underlying causes are resolved.. The current mechanism is: Execution risk appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Engineering headcount constraints are delaying the roadmap.",
+            "evidenceIds": [
+              "E6"
+            ],
+            "confidence": 0.67,
+            "strength": 0.7
+          },
+          {
+            "id": "EP-B1",
+            "title": "Strategic uncertainty may be shaping the strategic picture",
+            "description": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Strategic uncertainty and Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.. The current mechanism is: Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question:",
+            "evidenceIds": [
+              "E4"
+            ],
+            "confidence": 1,
+            "strength": 0.53
+          },
+          {
+            "id": "EP-B2",
+            "title": "Execution risk may be shaping the strategic picture",
+            "description": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Execution risk is creating strategic pressure and Execution risk may weaken confidence, slow momentum, or create execution risk unless the underlying causes are resolved.. The current mechanism is: Execution risk appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Engineering headcount constraints are delaying the roadmap.",
+            "evidenceIds": [
+              "E6"
+            ],
+            "confidence": 1,
+            "strength": 0.53
+          },
+          {
+            "id": "EP-ST1",
+            "title": "Strategic uncertainty",
+            "description": "Evidence suggests the company is making bets whose impact is not yet fully clear. This signal appears in 1 evidence object, led by: Question:",
+            "evidenceIds": [
+              "E4"
+            ],
+            "confidence": 0.59,
+            "strength": 0.49
+          },
+          {
+            "id": "EP-ST2",
+            "title": "Execution risk",
+            "description": "Evidence suggests operational, timing, or implementation risk may affect outcomes. This signal appears in 1 evidence object, led by: Engineering headcount constraints are delaying the roadmap.",
+            "evidenceIds": [
+              "E6"
+            ],
+            "confidence": 0.59,
+            "strength": 0.49
+          }
+        ],
+        "density": 0.43,
+        "coherence": 1,
+        "tension": 0,
+        "maturity": 1
+      }
+    },
+    "observations": [
+      {
+        "id": "E1",
+        "text": "Company: Gary1",
+        "type": "metric",
+        "confidence": 0.84,
+        "confidenceBand": "high",
+        "polarity": "neutral",
+        "strength": "strong",
+        "keywords": [
+          "gary1"
+        ],
+        "entities": [
+          "Company",
+          "Gary1"
+        ],
+        "source": "user",
+        "relatedEvidenceIds": [],
+        "inferredFrom": [],
+        "statement": "Company: Gary1",
+        "normalizedStatement": "company gary1",
+        "supportCount": 3,
+        "status": "reinforced",
+        "firstSeenAt": "2026-07-04T02:51:05.710Z",
+        "lastSeenAt": "2026-07-04T02:51:35.171Z",
+        "evidenceIds": [
+          "event-1",
+          "event-2",
+          "event-3"
+        ],
+        "history": [
+          {
+            "date": "2026-07-04T02:51:05.710Z",
+            "event": "created",
+            "statement": "Company: Gary1",
+            "confidence": 0.84
+          },
+          {
+            "date": "2026-07-04T02:51:15.636Z",
+            "event": "reinforced",
+            "statement": "Company: Gary1",
+            "confidence": 0.84
+          },
+          {
+            "date": "2026-07-04T02:51:35.171Z",
+            "event": "reinforced",
+            "statement": "Company: Gary1",
+            "confidence": 0.84
+          }
+        ]
+      },
+      {
+        "id": "E2",
+        "text": "Website:",
+        "type": "fact",
+        "confidence": 0.78,
+        "confidenceBand": "high",
+        "polarity": "neutral",
+        "strength": "moderate",
+        "keywords": [],
+        "entities": [
+          "Website"
+        ],
+        "source": "user",
+        "relatedEvidenceIds": [],
+        "inferredFrom": [],
+        "statement": "Website:",
+        "normalizedStatement": "website",
+        "supportCount": 3,
+        "status": "reinforced",
+        "firstSeenAt": "2026-07-04T02:51:05.710Z",
+        "lastSeenAt": "2026-07-04T02:51:35.171Z",
+        "evidenceIds": [
+          "event-1",
+          "event-2",
+          "event-3"
+        ],
+        "history": [
+          {
+            "date": "2026-07-04T02:51:05.710Z",
+            "event": "created",
+            "statement": "Website:",
+            "confidence": 0.78
+          },
+          {
+            "date": "2026-07-04T02:51:15.636Z",
+            "event": "reinforced",
+            "statement": "Website:",
+            "confidence": 0.78
+          },
+          {
+            "date": "2026-07-04T02:51:35.171Z",
+            "event": "reinforced",
+            "statement": "Website:",
+            "confidence": 0.78
+          }
+        ]
+      },
+      {
+        "id": "E3",
+        "text": "Industry:",
+        "type": "fact",
+        "confidence": 0.78,
+        "confidenceBand": "high",
+        "polarity": "neutral",
+        "strength": "moderate",
+        "keywords": [],
+        "entities": [
+          "Industry"
+        ],
+        "source": "user",
+        "relatedEvidenceIds": [],
+        "inferredFrom": [],
+        "statement": "Industry:",
+        "normalizedStatement": "industry",
+        "supportCount": 3,
+        "status": "reinforced",
+        "firstSeenAt": "2026-07-04T02:51:05.710Z",
+        "lastSeenAt": "2026-07-04T02:51:35.171Z",
+        "evidenceIds": [
+          "event-1",
+          "event-2",
+          "event-3"
+        ],
+        "history": [
+          {
+            "date": "2026-07-04T02:51:05.710Z",
+            "event": "created",
+            "statement": "Industry:",
+            "confidence": 0.78
+          },
+          {
+            "date": "2026-07-04T02:51:15.636Z",
+            "event": "reinforced",
+            "statement": "Industry:",
+            "confidence": 0.78
+          },
+          {
+            "date": "2026-07-04T02:51:35.171Z",
+            "event": "reinforced",
+            "statement": "Industry:",
+            "confidence": 0.78
+          }
+        ]
+      },
+      {
+        "id": "E4",
+        "text": "Question:",
+        "type": "fact",
+        "confidence": 0.78,
+        "confidenceBand": "high",
+        "polarity": "neutral",
+        "strength": "moderate",
+        "keywords": [],
+        "entities": [
+          "Question"
+        ],
+        "source": "user",
+        "relatedEvidenceIds": [],
+        "inferredFrom": [],
+        "statement": "Question:",
+        "normalizedStatement": "question",
+        "supportCount": 3,
+        "status": "reinforced",
+        "firstSeenAt": "2026-07-04T02:51:05.710Z",
+        "lastSeenAt": "2026-07-04T02:51:35.171Z",
+        "evidenceIds": [
+          "event-1",
+          "event-2",
+          "event-3"
+        ],
+        "history": [
+          {
+            "date": "2026-07-04T02:51:05.710Z",
+            "event": "created",
+            "statement": "Question:",
+            "confidence": 0.78
+          },
+          {
+            "date": "2026-07-04T02:51:15.636Z",
+            "event": "reinforced",
+            "statement": "Question:",
+            "confidence": 0.78
+          },
+          {
+            "date": "2026-07-04T02:51:35.171Z",
+            "event": "reinforced",
+            "statement": "Question:",
+            "confidence": 0.78
+          }
+        ]
+      },
+      {
+        "id": "E5",
+        "text": "Context:",
+        "type": "fact",
+        "confidence": 0.78,
+        "confidenceBand": "high",
+        "polarity": "neutral",
+        "strength": "moderate",
+        "keywords": [],
+        "entities": [
+          "Context"
+        ],
+        "source": "user",
+        "relatedEvidenceIds": [],
+        "inferredFrom": [],
+        "statement": "Context:",
+        "normalizedStatement": "context",
+        "supportCount": 3,
+        "status": "reinforced",
+        "firstSeenAt": "2026-07-04T02:51:05.710Z",
+        "lastSeenAt": "2026-07-04T02:51:35.171Z",
+        "evidenceIds": [
+          "event-1",
+          "event-2",
+          "event-3"
+        ],
+        "history": [
+          {
+            "date": "2026-07-04T02:51:05.710Z",
+            "event": "created",
+            "statement": "Context:",
+            "confidence": 0.78
+          },
+          {
+            "date": "2026-07-04T02:51:15.636Z",
+            "event": "reinforced",
+            "statement": "Context:",
+            "confidence": 0.78
+          },
+          {
+            "date": "2026-07-04T02:51:35.171Z",
+            "event": "reinforced",
+            "statement": "Context:",
+            "confidence": 0.78
+          }
+        ]
+      },
+      {
+        "id": "E6",
+        "text": "Hiring delays are slowing product execution.",
+        "type": "risk",
+        "confidence": 0.72,
+        "confidenceBand": "medium",
+        "polarity": "negative",
+        "strength": "moderate",
+        "keywords": [
+          "hiring",
+          "delays",
+          "slowing",
+          "product",
+          "execution"
+        ],
+        "entities": [
+          "Hiring"
+        ],
+        "source": "user",
+        "relatedEvidenceIds": [],
+        "inferredFrom": [],
+        "statement": "Hiring delays are slowing product execution.",
+        "normalizedStatement": "hiring delays are slowing product execution",
+        "supportCount": 1,
+        "status": "new",
+        "firstSeenAt": "2026-07-04T02:51:05.710Z",
+        "lastSeenAt": "2026-07-04T02:51:05.710Z",
+        "evidenceIds": [
+          "event-1"
+        ],
+        "history": [
+          {
+            "date": "2026-07-04T02:51:05.710Z",
+            "event": "created",
+            "statement": "Hiring delays are slowing product execution.",
+            "confidence": 0.72
+          }
+        ]
+      },
+      {
+        "id": "E6",
+        "text": "Recruiting bottlenecks are limiting delivery speed.",
+        "type": "fact",
+        "confidence": 0.78,
+        "confidenceBand": "high",
+        "polarity": "neutral",
+        "strength": "moderate",
+        "keywords": [
+          "recruiting",
+          "bottlenecks",
+          "limiting",
+          "delivery",
+          "speed"
+        ],
+        "entities": [
+          "Recruiting"
+        ],
+        "source": "user",
+        "relatedEvidenceIds": [],
+        "inferredFrom": [],
+        "statement": "Recruiting bottlenecks are limiting delivery speed.",
+        "normalizedStatement": "recruiting bottlenecks are limiting delivery speed",
+        "supportCount": 1,
+        "status": "new",
+        "firstSeenAt": "2026-07-04T02:51:15.636Z",
+        "lastSeenAt": "2026-07-04T02:51:15.636Z",
+        "evidenceIds": [
+          "event-2"
+        ],
+        "history": [
+          {
+            "date": "2026-07-04T02:51:15.636Z",
+            "event": "created",
+            "statement": "Recruiting bottlenecks are limiting delivery speed.",
+            "confidence": 0.78
+          }
+        ]
+      },
+      {
+        "id": "E6",
+        "text": "Engineering headcount constraints are delaying the roadmap.",
+        "type": "fact",
+        "confidence": 0.78,
+        "confidenceBand": "high",
+        "polarity": "negative",
+        "strength": "moderate",
+        "keywords": [
+          "engineering",
+          "headcount",
+          "constraints",
+          "delaying",
+          "roadmap"
+        ],
+        "entities": [
+          "Engineering"
+        ],
+        "source": "user",
+        "relatedEvidenceIds": [],
+        "inferredFrom": [],
+        "statement": "Engineering headcount constraints are delaying the roadmap.",
+        "normalizedStatement": "engineering headcount constraints are delaying the roadmap",
+        "supportCount": 1,
+        "status": "new",
+        "firstSeenAt": "2026-07-04T02:51:35.171Z",
+        "lastSeenAt": "2026-07-04T02:51:35.171Z",
+        "evidenceIds": [
+          "event-3"
+        ],
+        "history": [
+          {
+            "date": "2026-07-04T02:51:35.171Z",
+            "event": "created",
+            "statement": "Engineering headcount constraints are delaying the roadmap.",
+            "confidence": 0.78
+          }
+        ]
+      }
+    ],
+    "beliefs": [],
+    "patterns": [],
+    "deltas": [
+      {
+        "newBeliefs": [
+          "B1",
+          "B2",
+          "B3"
+        ],
+        "strengthenedBeliefs": [],
+        "weakenedBeliefs": [],
+        "resolvedContradictions": [],
+        "newContradictions": [],
+        "confidenceChanges": [
+          {
+            "sourceId": "B1",
+            "sourceType": "belief",
+            "currentConfidence": 1,
+            "direction": "up",
+            "explanation": "New belief formed in this investigation."
+          },
+          {
+            "sourceId": "B2",
+            "sourceType": "belief",
+            "currentConfidence": 1,
+            "direction": "up",
+            "explanation": "New belief formed in this investigation."
+          },
+          {
+            "sourceId": "B3",
+            "sourceType": "belief",
+            "currentConfidence": 1,
+            "direction": "up",
+            "explanation": "New belief formed in this investigation."
+          }
+        ],
+        "healthChanges": [
+          {
+            "metric": "density",
+            "currentValue": 0.53,
+            "direction": "up",
+            "explanation": "density was established at 0.53."
+          },
+          {
+            "metric": "coherence",
+            "currentValue": 1,
+            "direction": "up",
+            "explanation": "coherence was established at 1."
+          },
+          {
+            "metric": "tension",
+            "currentValue": 0,
+            "direction": "up",
+            "explanation": "tension was established at 0."
+          },
+          {
+            "metric": "maturity",
+            "currentValue": 1,
+            "direction": "up",
+            "explanation": "maturity was established at 1."
+          },
+          {
+            "metric": "uncertainty",
+            "currentValue": 0.27,
+            "direction": "up",
+            "explanation": "uncertainty was established at 0.27."
+          }
+        ]
+      },
+      {
+        "newBeliefs": [
+          "B1"
+        ],
+        "strengthenedBeliefs": [],
+        "weakenedBeliefs": [],
+        "resolvedContradictions": [],
+        "newContradictions": [],
+        "confidenceChanges": [
+          {
+            "sourceId": "B1",
+            "sourceType": "belief",
+            "currentConfidence": 1,
+            "direction": "up",
+            "explanation": "New belief formed in this investigation."
+          }
+        ],
+        "healthChanges": [
+          {
+            "metric": "density",
+            "currentValue": 0.33,
+            "direction": "up",
+            "explanation": "density was established at 0.33."
+          },
+          {
+            "metric": "coherence",
+            "currentValue": 1,
+            "direction": "up",
+            "explanation": "coherence was established at 1."
+          },
+          {
+            "metric": "tension",
+            "currentValue": 0,
+            "direction": "up",
+            "explanation": "tension was established at 0."
+          },
+          {
+            "metric": "maturity",
+            "currentValue": 0.98,
+            "direction": "up",
+            "explanation": "maturity was established at 0.98."
+          },
+          {
+            "metric": "uncertainty",
+            "currentValue": 0.38,
+            "direction": "up",
+            "explanation": "uncertainty was established at 0.38."
+          }
+        ]
+      },
+      {
+        "newBeliefs": [
+          "B1",
+          "B2"
+        ],
+        "strengthenedBeliefs": [],
+        "weakenedBeliefs": [],
+        "resolvedContradictions": [],
+        "newContradictions": [],
+        "confidenceChanges": [
+          {
+            "sourceId": "B1",
+            "sourceType": "belief",
+            "currentConfidence": 1,
+            "direction": "up",
+            "explanation": "New belief formed in this investigation."
+          },
+          {
+            "sourceId": "B2",
+            "sourceType": "belief",
+            "currentConfidence": 1,
+            "direction": "up",
+            "explanation": "New belief formed in this investigation."
+          }
+        ],
+        "healthChanges": [
+          {
+            "metric": "density",
+            "currentValue": 0.43,
+            "direction": "up",
+            "explanation": "density was established at 0.43."
+          },
+          {
+            "metric": "coherence",
+            "currentValue": 1,
+            "direction": "up",
+            "explanation": "coherence was established at 1."
+          },
+          {
+            "metric": "tension",
+            "currentValue": 0,
+            "direction": "up",
+            "explanation": "tension was established at 0."
+          },
+          {
+            "metric": "maturity",
+            "currentValue": 1,
+            "direction": "up",
+            "explanation": "maturity was established at 1."
+          },
+          {
+            "metric": "uncertainty",
+            "currentValue": 0.32,
+            "direction": "up",
+            "explanation": "uncertainty was established at 0.32."
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "id": "event-1",
+        "timestamp": "2026-07-04T02:51:05.710Z",
+        "company": "Gary1",
+        "question": "",
+        "evidenceCount": 6,
+        "beliefCount": 3,
+        "themeCount": 3,
+        "contradictionCount": 0
+      },
+      {
+        "id": "event-2",
+        "timestamp": "2026-07-04T02:51:15.636Z",
+        "company": "Gary1",
+        "question": "",
+        "evidenceCount": 6,
+        "beliefCount": 1,
+        "themeCount": 1,
+        "contradictionCount": 0
+      },
+      {
+        "id": "event-3",
+        "timestamp": "2026-07-04T02:51:35.171Z",
+        "company": "Gary1",
+        "question": "",
+        "evidenceCount": 6,
+        "beliefCount": 2,
+        "themeCount": 2,
+        "contradictionCount": 0
+      }
+    ]
+  },
+  "organism": {
+    "organismState": {
+      "particles": [
+        {
+          "id": "OP-E1",
+          "kind": "evidence",
+          "label": "Company: Gary1",
+          "sourceId": "E1",
+          "confidence": 0.84,
+          "strength": 0.9,
+          "connections": [
+            "gary1"
+          ]
+        },
+        {
+          "id": "OP-E2",
+          "kind": "evidence",
+          "label": "Website:",
+          "sourceId": "E2",
+          "confidence": 0.78,
+          "strength": 0.65,
+          "connections": []
+        },
+        {
+          "id": "OP-E3",
+          "kind": "evidence",
+          "label": "Industry:",
+          "sourceId": "E3",
+          "confidence": 0.78,
+          "strength": 0.65,
+          "connections": []
+        },
+        {
+          "id": "OP-E4",
+          "kind": "evidence",
+          "label": "Question:",
+          "sourceId": "E4",
+          "confidence": 0.78,
+          "strength": 0.65,
+          "connections": []
+        },
+        {
+          "id": "OP-E5",
+          "kind": "evidence",
+          "label": "Context:",
+          "sourceId": "E5",
+          "confidence": 0.78,
+          "strength": 0.65,
+          "connections": []
+        },
+        {
+          "id": "OP-E6",
+          "kind": "evidence",
+          "label": "Engineering headcount constraints are delaying the roadmap.",
+          "sourceId": "E6",
+          "confidence": 0.78,
+          "strength": 0.65,
+          "connections": [
+            "engineering",
+            "headcount",
+            "constraints",
+            "delaying",
+            "roadmap"
+          ]
+        },
+        {
+          "id": "OP-ST1",
+          "kind": "theme",
+          "label": "Strategic uncertainty",
+          "sourceId": "ST1",
+          "confidence": 0.59,
+          "strength": 0.49,
+          "connections": [
+            "E4"
+          ]
+        },
+        {
+          "id": "OP-ST2",
+          "kind": "theme",
+          "label": "Execution risk",
+          "sourceId": "ST2",
+          "confidence": 0.59,
+          "strength": 0.49,
+          "connections": [
+            "E6"
+          ]
+        },
+        {
+          "id": "OP-H-1",
+          "kind": "belief",
+          "label": "Strategic uncertainty may be shaping the strategic picture",
+          "sourceId": "H-1",
+          "confidence": 0.67,
+          "strength": 0.9,
+          "connections": [
+            "E4",
+            "ST1"
+          ]
+        },
+        {
+          "id": "OP-H-2",
+          "kind": "belief",
+          "label": "Execution risk may be shaping the strategic picture",
+          "sourceId": "H-2",
+          "confidence": 0.67,
+          "strength": 0.7,
+          "connections": [
+            "E6",
+            "ST2"
+          ]
+        },
+        {
+          "id": "OP-B1",
+          "kind": "belief",
+          "label": "Strategic uncertainty may be shaping the strategic picture",
+          "sourceId": "B1",
+          "confidence": 1,
+          "strength": 0.53,
+          "connections": [
+            "E4",
+            "ST1"
+          ]
+        },
+        {
+          "id": "OP-B2",
+          "kind": "belief",
+          "label": "Execution risk may be shaping the strategic picture",
+          "sourceId": "B2",
+          "confidence": 1,
+          "strength": 0.53,
+          "connections": [
+            "E6",
+            "ST2"
+          ]
+        },
+        {
+          "id": "OP-U-CANONICAL-1",
+          "kind": "understanding",
+          "label": "Strategic uncertainty may be shaping the strategic picture",
+          "sourceId": "U-CANONICAL-1",
+          "confidence": 0.77,
+          "strength": 5,
+          "connections": [
+            "E4",
+            "E6",
+            "ST1",
+            "ST2",
+            "CC1"
+          ]
+        }
+      ],
+      "centerId": "OP-U-CANONICAL-1",
+      "evidenceClusters": [
+        {
+          "id": "OC-ST1",
+          "label": "Strategic uncertainty",
+          "evidenceIds": [
+            "E4"
+          ],
+          "confidence": 0.59,
+          "tension": 0
+        },
+        {
+          "id": "OC-ST2",
+          "label": "Execution risk",
+          "evidenceIds": [
+            "E6"
+          ],
+          "confidence": 0.59,
+          "tension": 0
+        }
+      ],
+      "mechanisms": [],
+      "hypotheses": [
+        {
+          "id": "H-1",
+          "title": "Strategic uncertainty may be shaping the strategic picture",
+          "explanation": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Strategic uncertainty and Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.. The current mechanism is: Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question:",
+          "status": "leading",
+          "confidence": 0.67,
+          "supportingEvidenceIds": [
+            "E4"
+          ],
+          "weakeningEvidenceIds": [],
+          "mechanismIds": [],
+          "themeIds": [
+            "ST1"
+          ],
+          "beliefIds": [
+            "B1"
+          ],
+          "contradictionIds": [],
+          "strengths": [
+            "Supported by 1 evidence item."
+          ],
+          "weaknesses": [
+            "No major weakening evidence has been identified yet."
+          ],
+          "distinguishingQuestions": [
+            "What evidence would most clearly confirm or weaken this explanation?",
+            "What alternative explanation could account for the same evidence?"
+          ]
+        },
+        {
+          "id": "H-2",
+          "title": "Execution risk may be shaping the strategic picture",
+          "explanation": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Execution risk is creating strategic pressure and Execution risk may weaken confidence, slow momentum, or create execution risk unless the underlying causes are resolved.. The current mechanism is: Execution risk appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Engineering headcount constraints are delaying the roadmap.",
+          "status": "plausible",
+          "confidence": 0.67,
+          "supportingEvidenceIds": [
+            "E6"
+          ],
+          "weakeningEvidenceIds": [],
+          "mechanismIds": [],
+          "themeIds": [
+            "ST2"
+          ],
+          "beliefIds": [
+            "B2"
+          ],
+          "contradictionIds": [],
+          "strengths": [
+            "Supported by 1 evidence item."
+          ],
+          "weaknesses": [
+            "No major weakening evidence has been identified yet."
+          ],
+          "distinguishingQuestions": [
+            "What evidence would most clearly confirm or weaken this explanation?",
+            "What alternative explanation could account for the same evidence?"
+          ]
+        }
+      ],
+      "beliefs": [
+        {
+          "id": "B1",
+          "headline": "Strategic uncertainty may be shaping the strategic picture",
+          "confidence": 1,
+          "explanation": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Strategic uncertainty and Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.. The current mechanism is: Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question:",
+          "understandingId": "U1",
+          "supportingEvidenceIds": [
+            "E4"
+          ],
+          "contradictingEvidenceIds": [],
+          "mechanismIds": [],
+          "themeIds": [
+            "ST1"
+          ],
+          "contradictionIds": [],
+          "supportingReasons": [
+            "1 evidence item(s) support this explanation.",
+            "It is connected to 1 broader theme(s): Strategic uncertainty.",
+            "It is reinforced by 1 causal chain(s)."
+          ],
+          "concerns": [
+            "This belief does not yet have a clear explanatory mechanism attached to it.",
+            "There are still open questions attached to this belief."
+          ],
+          "nextQuestions": [
+            "The next unknown is whether this pattern holds across additional evidence."
+          ],
+          "causalChainIds": [
+            "CC1"
+          ],
+          "stability": 0.53,
+          "utility": 0.35,
+          "priority": {
+            "confidence": 1,
+            "importance": 0.69,
+            "connectedness": 0.2,
+            "urgency": 0.75,
+            "total": 0.76
+          }
+        },
+        {
+          "id": "B2",
+          "headline": "Execution risk may be shaping the strategic picture",
+          "confidence": 1,
+          "explanation": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Execution risk is creating strategic pressure and Execution risk may weaken confidence, slow momentum, or create execution risk unless the underlying causes are resolved.. The current mechanism is: Execution risk appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Engineering headcount constraints are delaying the roadmap.",
+          "understandingId": "U2",
+          "supportingEvidenceIds": [
+            "E6"
+          ],
+          "contradictingEvidenceIds": [],
+          "mechanismIds": [],
+          "themeIds": [
+            "ST2"
+          ],
+          "contradictionIds": [],
+          "supportingReasons": [
+            "1 evidence item(s) support this explanation.",
+            "It is connected to 1 broader theme(s): Execution risk.",
+            "It is reinforced by 1 causal chain(s)."
+          ],
+          "concerns": [
+            "This belief does not yet have a clear explanatory mechanism attached to it.",
+            "There are still open questions attached to this belief."
+          ],
+          "nextQuestions": [
+            "The next unknown is whether this pattern holds across additional evidence."
+          ],
+          "causalChainIds": [
+            "CC2"
+          ],
+          "stability": 0.53,
+          "utility": 0.35,
+          "priority": {
+            "confidence": 1,
+            "importance": 0.69,
+            "connectedness": 0.2,
+            "urgency": 0.75,
+            "total": 0.76
+          }
+        }
+      ],
+      "contradictions": [],
+      "mechanismIds": [],
+      "hypothesisIds": [
+        "H-1",
+        "H-2"
+      ],
+      "beliefIds": [
+        "B1",
+        "B2"
+      ],
+      "contradictionIds": [],
+      "uncertainty": 0.32,
+      "emergingPatterns": [
+        {
+          "id": "EP-U-CANONICAL-1",
+          "title": "Strategic uncertainty may be shaping the strategic picture",
+          "description": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Strategic uncertainty and Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.. The current mechanism is: Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question: It is supported by 2 major patterns.",
+          "evidenceIds": [
+            "E4",
+            "E6"
+          ],
+          "confidence": 0.77,
+          "strength": 5
+        },
+        {
+          "id": "EP-H-1",
+          "title": "Strategic uncertainty may be shaping the strategic picture",
+          "description": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Strategic uncertainty and Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.. The current mechanism is: Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question:",
+          "evidenceIds": [
+            "E4"
+          ],
+          "confidence": 0.67,
+          "strength": 0.9
+        },
+        {
+          "id": "EP-H-2",
+          "title": "Execution risk may be shaping the strategic picture",
+          "description": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Execution risk is creating strategic pressure and Execution risk may weaken confidence, slow momentum, or create execution risk unless the underlying causes are resolved.. The current mechanism is: Execution risk appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Engineering headcount constraints are delaying the roadmap.",
+          "evidenceIds": [
+            "E6"
+          ],
+          "confidence": 0.67,
+          "strength": 0.7
+        },
+        {
+          "id": "EP-B1",
+          "title": "Strategic uncertainty may be shaping the strategic picture",
+          "description": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Strategic uncertainty and Strategic uncertainty may be shaping the strategic outcome and should be tested against additional evidence.. The current mechanism is: Strategic uncertainty appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Question:",
+          "evidenceIds": [
+            "E4"
+          ],
+          "confidence": 1,
+          "strength": 0.53
+        },
+        {
+          "id": "EP-B2",
+          "title": "Execution risk may be shaping the strategic picture",
+          "description": "Discovery treats this as a strong belief: Discovery sees a possible relationship between Execution risk is creating strategic pressure and Execution risk may weaken confidence, slow momentum, or create execution risk unless the underlying causes are resolved.. The current mechanism is: Execution risk appears to matter because 1 evidence object point to a moderate signal. The clearest evidence says: Engineering headcount constraints are delaying the roadmap.",
+          "evidenceIds": [
+            "E6"
+          ],
+          "confidence": 1,
+          "strength": 0.53
+        },
+        {
+          "id": "EP-ST1",
+          "title": "Strategic uncertainty",
+          "description": "Evidence suggests the company is making bets whose impact is not yet fully clear. This signal appears in 1 evidence object, led by: Question:",
+          "evidenceIds": [
+            "E4"
+          ],
+          "confidence": 0.59,
+          "strength": 0.49
+        },
+        {
+          "id": "EP-ST2",
+          "title": "Execution risk",
+          "description": "Evidence suggests operational, timing, or implementation risk may affect outcomes. This signal appears in 1 evidence object, led by: Engineering headcount constraints are delaying the roadmap.",
+          "evidenceIds": [
+            "E6"
+          ],
+          "confidence": 0.59,
+          "strength": 0.49
+        }
+      ],
+      "density": 0.43,
+      "coherence": 1,
+      "tension": 0,
+      "maturity": 1
+    },
+    "lastEvolutionAt": "2026-07-04T02:51:35.171Z"
+  },
+  "cognition": {
+    "lastUpdatedAt": "2026-07-04T02:51:35.171Z",
+    "lastEvolution": {
+      "observationChanges": {
+        "created": [
+          {
+            "id": "E6",
+            "text": "Engineering headcount constraints are delaying the roadmap.",
+            "type": "fact",
+            "confidence": 0.78,
+            "confidenceBand": "high",
+            "polarity": "negative",
+            "strength": "moderate",
+            "keywords": [
+              "engineering",
+              "headcount",
+              "constraints",
+              "delaying",
+              "roadmap"
+            ],
+            "entities": [
+              "Engineering"
+            ],
+            "source": "user",
+            "relatedEvidenceIds": [],
+            "inferredFrom": [],
+            "statement": "Engineering headcount constraints are delaying the roadmap.",
+            "normalizedStatement": "engineering headcount constraints are delaying the roadmap",
+            "supportCount": 1,
+            "status": "new",
+            "firstSeenAt": "2026-07-04T02:51:35.171Z",
+            "lastSeenAt": "2026-07-04T02:51:35.171Z",
+            "evidenceIds": [
+              "event-3"
+            ],
+            "history": [
+              {
+                "date": "2026-07-04T02:51:35.171Z",
+                "event": "created",
+                "statement": "Engineering headcount constraints are delaying the roadmap.",
+                "confidence": 0.78
+              }
+            ]
+          }
+        ],
+        "reinforced": [
+          {
+            "id": "E1",
+            "text": "Company: Gary1",
+            "type": "metric",
+            "confidence": 0.84,
+            "confidenceBand": "high",
+            "polarity": "neutral",
+            "strength": "strong",
+            "keywords": [
+              "gary1"
+            ],
+            "entities": [
+              "Company",
+              "Gary1"
+            ],
+            "source": "user",
+            "relatedEvidenceIds": [],
+            "inferredFrom": [],
+            "statement": "Company: Gary1",
+            "normalizedStatement": "company gary1",
+            "supportCount": 3,
+            "status": "reinforced",
+            "firstSeenAt": "2026-07-04T02:51:05.710Z",
+            "lastSeenAt": "2026-07-04T02:51:35.171Z",
+            "evidenceIds": [
+              "event-1",
+              "event-2",
+              "event-3"
+            ],
+            "history": [
+              {
+                "date": "2026-07-04T02:51:05.710Z",
+                "event": "created",
+                "statement": "Company: Gary1",
+                "confidence": 0.84
+              },
+              {
+                "date": "2026-07-04T02:51:15.636Z",
+                "event": "reinforced",
+                "statement": "Company: Gary1",
+                "confidence": 0.84
+              },
+              {
+                "date": "2026-07-04T02:51:35.171Z",
+                "event": "reinforced",
+                "statement": "Company: Gary1",
+                "confidence": 0.84
+              }
+            ]
+          },
+          {
+            "id": "E2",
+            "text": "Website:",
+            "type": "fact",
+            "confidence": 0.78,
+            "confidenceBand": "high",
+            "polarity": "neutral",
+            "strength": "moderate",
+            "keywords": [],
+            "entities": [
+              "Website"
+            ],
+            "source": "user",
+            "relatedEvidenceIds": [],
+            "inferredFrom": [],
+            "statement": "Website:",
+            "normalizedStatement": "website",
+            "supportCount": 3,
+            "status": "reinforced",
+            "firstSeenAt": "2026-07-04T02:51:05.710Z",
+            "lastSeenAt": "2026-07-04T02:51:35.171Z",
+            "evidenceIds": [
+              "event-1",
+              "event-2",
+              "event-3"
+            ],
+            "history": [
+              {
+                "date": "2026-07-04T02:51:05.710Z",
+                "event": "created",
+                "statement": "Website:",
+                "confidence": 0.78
+              },
+              {
+                "date": "2026-07-04T02:51:15.636Z",
+                "event": "reinforced",
+                "statement": "Website:",
+                "confidence": 0.78
+              },
+              {
+                "date": "2026-07-04T02:51:35.171Z",
+                "event": "reinforced",
+                "statement": "Website:",
+                "confidence": 0.78
+              }
+            ]
+          },
+          {
+            "id": "E3",
+            "text": "Industry:",
+            "type": "fact",
+            "confidence": 0.78,
+            "confidenceBand": "high",
+            "polarity": "neutral",
+            "strength": "moderate",
+            "keywords": [],
+            "entities": [
+              "Industry"
+            ],
+            "source": "user",
+            "relatedEvidenceIds": [],
+            "inferredFrom": [],
+            "statement": "Industry:",
+            "normalizedStatement": "industry",
+            "supportCount": 3,
+            "status": "reinforced",
+            "firstSeenAt": "2026-07-04T02:51:05.710Z",
+            "lastSeenAt": "2026-07-04T02:51:35.171Z",
+            "evidenceIds": [
+              "event-1",
+              "event-2",
+              "event-3"
+            ],
+            "history": [
+              {
+                "date": "2026-07-04T02:51:05.710Z",
+                "event": "created",
+                "statement": "Industry:",
+                "confidence": 0.78
+              },
+              {
+                "date": "2026-07-04T02:51:15.636Z",
+                "event": "reinforced",
+                "statement": "Industry:",
+                "confidence": 0.78
+              },
+              {
+                "date": "2026-07-04T02:51:35.171Z",
+                "event": "reinforced",
+                "statement": "Industry:",
+                "confidence": 0.78
+              }
+            ]
+          },
+          {
+            "id": "E4",
+            "text": "Question:",
+            "type": "fact",
+            "confidence": 0.78,
+            "confidenceBand": "high",
+            "polarity": "neutral",
+            "strength": "moderate",
+            "keywords": [],
+            "entities": [
+              "Question"
+            ],
+            "source": "user",
+            "relatedEvidenceIds": [],
+            "inferredFrom": [],
+            "statement": "Question:",
+            "normalizedStatement": "question",
+            "supportCount": 3,
+            "status": "reinforced",
+            "firstSeenAt": "2026-07-04T02:51:05.710Z",
+            "lastSeenAt": "2026-07-04T02:51:35.171Z",
+            "evidenceIds": [
+              "event-1",
+              "event-2",
+              "event-3"
+            ],
+            "history": [
+              {
+                "date": "2026-07-04T02:51:05.710Z",
+                "event": "created",
+                "statement": "Question:",
+                "confidence": 0.78
+              },
+              {
+                "date": "2026-07-04T02:51:15.636Z",
+                "event": "reinforced",
+                "statement": "Question:",
+                "confidence": 0.78
+              },
+              {
+                "date": "2026-07-04T02:51:35.171Z",
+                "event": "reinforced",
+                "statement": "Question:",
+                "confidence": 0.78
+              }
+            ]
+          },
+          {
+            "id": "E5",
+            "text": "Context:",
+            "type": "fact",
+            "confidence": 0.78,
+            "confidenceBand": "high",
+            "polarity": "neutral",
+            "strength": "moderate",
+            "keywords": [],
+            "entities": [
+              "Context"
+            ],
+            "source": "user",
+            "relatedEvidenceIds": [],
+            "inferredFrom": [],
+            "statement": "Context:",
+            "normalizedStatement": "context",
+            "supportCount": 3,
+            "status": "reinforced",
+            "firstSeenAt": "2026-07-04T02:51:05.710Z",
+            "lastSeenAt": "2026-07-04T02:51:35.171Z",
+            "evidenceIds": [
+              "event-1",
+              "event-2",
+              "event-3"
+            ],
+            "history": [
+              {
+                "date": "2026-07-04T02:51:05.710Z",
+                "event": "created",
+                "statement": "Context:",
+                "confidence": 0.78
+              },
+              {
+                "date": "2026-07-04T02:51:15.636Z",
+                "event": "reinforced",
+                "statement": "Context:",
+                "confidence": 0.78
+              },
+              {
+                "date": "2026-07-04T02:51:35.171Z",
+                "event": "reinforced",
+                "statement": "Context:",
+                "confidence": 0.78
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

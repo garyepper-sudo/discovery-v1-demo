@@ -8,6 +8,16 @@ export type V3EvidenceType =
   | "metric"
   | "unknown";
 
+  export type V3Observation = {
+  id: string;
+  statement: string;
+  evidenceIds: string[];
+  confidence: number;
+  keywords: string[];
+  entities: string[];
+  source: "evidence" | "signal" | "theme" | "inference";
+};
+
 export type V3Polarity =
   | "positive"
   | "negative"
@@ -506,6 +516,7 @@ export type V3OrganismState = {
 
 export type DiscoveryV3Result = {
   evidence: V3Evidence[];
+  observations: V3Observation[];
   evidenceRelationships: V3EvidenceRelationship[];
   evidenceNetwork?: V3EvidenceNetwork;
 

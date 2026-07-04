@@ -277,3 +277,87 @@
     font-size: 22px;
   }
 }
+.cognition-inspector {
+  margin-top: 28px;
+  padding: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at top left, rgba(215, 181, 94, 0.14), transparent 34%),
+    rgba(255, 255, 255, 0.035);
+}
+
+.cognition-inspector-eyebrow {
+  margin-bottom: 14px;
+  color: rgba(215, 181, 94, 0.9);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.cognition-inspector h3 {
+  margin: 0 0 20px;
+  color: rgba(255, 250, 238, 0.95);
+  font-size: clamp(1.4rem, 2vw, 2rem);
+  letter-spacing: -0.04em;
+}
+
+.cognition-inspector-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.cognition-inspector-grid div {
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.cognition-inspector-grid span {
+  display: block;
+  color: rgba(255, 250, 238, 0.96);
+  font-size: 1.65rem;
+  font-weight: 800;
+}
+
+.cognition-inspector-grid p,
+.cognition-inspector-summary p,
+.cognition-inspector-item p {
+  margin: 0;
+  color: rgba(255, 250, 238, 0.6);
+}
+
+.cognition-inspector-summary {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.cognition-inspector-list {
+  display: grid;
+  gap: 10px;
+}
+
+.cognition-inspector-item {
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.cognition-inspector-item strong {
+  display: block;
+  margin-bottom: 6px;
+  color: rgba(255, 250, 238, 0.9);
+  font-size: 0.95rem;
+  line-height: 1.25;
+}
+
+@media (max-width: 760px) {
+  .cognition-inspector-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,359 @@
+# Discovery Engine Map
+
+**Version:** 1.0
+
+**Status:** Canonical
+
+**Architectural Milestone:** Cognitive Architecture Foundation
+
+---
+
+# Purpose
+
+The purpose of this document is to map Discovery's current implementation onto its canonical cognitive architecture.
+
+Unlike the Cognitive Architecture document, which defines Discovery's enduring principles, this document describes how those principles are currently realized within the codebase.
+
+The Engine Map serves four purposes:
+
+- Map every implementation to a cognitive responsibility.
+- Ensure every implementation has a clear architectural owner.
+- Prevent duplication of cognitive responsibilities.
+- Identify opportunities for architectural improvement as Discovery evolves.
+
+As implementations evolve, this document should be updated to reflect their current architectural ownership.
+
+---
+
+# Mapping Philosophy
+
+Discovery is organized around cognitive responsibilities rather than software modules.
+
+Every implementation should answer four questions:
+
+1. Which cognitive layer owns this implementation?
+2. Which cognitive transformation does it perform?
+3. Which cognitive objects does it create, modify, preserve, or express?
+4. Which dimensions of the Cognitive Fitness Profile does it improve?
+
+The purpose of this document is not to catalog files.
+
+Its purpose is to explain how Discovery's implementation supports its cognitive architecture.
+
+---
+
+# Cognitive Architecture Mapping
+
+```
+Organizational Experience
+            │
+            ▼
+      Perception Layer
+            │
+            ▼
+    Understanding Layer
+            │
+            ▼
+ Organizational Memory
+            │
+            ▼
+    Integration Layer
+            │
+            ▼
+ Executive Expression
+            │
+            ▼
+     Executive Action
+```
+
+Every implementation within Discovery belongs to one of these architectural layers.
+
+---
+
+# Perception Layer
+
+## Purpose
+
+Transform organizational experience into observable organizational signals.
+
+The Perception Layer identifies meaningful information before attempting to explain what it means.
+
+### Primary Cognitive Transformations
+
+Organizational Experience
+
+↓
+
+Observation
+
+↓
+
+Evidence
+
+### Cognitive Objects
+
+Creates:
+
+- Observations
+- Evidence
+- Organizational Signals
+- Entities
+
+### Current Responsibilities
+
+Examples include:
+
+- Observation generation
+- Evidence extraction
+- Signal detection
+- Entity identification
+- Initial confidence estimation
+
+### Primary Fitness Dimensions
+
+- Perception
+- Explainability
+
+---
+
+# Understanding Layer
+
+## Purpose
+
+Transform observations into organizational understanding.
+
+This layer constructs explanations rather than simply collecting information.
+
+### Primary Cognitive Transformations
+
+Observation
+
+↓
+
+Evidence
+
+↓
+
+Belief
+
+↓
+
+Hypothesis
+
+↓
+
+Mechanism
+
+↓
+
+Organizational Understanding
+
+### Cognitive Objects
+
+Creates:
+
+- Beliefs
+- Hypotheses
+- Mechanisms
+- Contradictions
+- Organizational Understanding
+
+### Current Responsibilities
+
+Examples include:
+
+- Belief construction
+- Hypothesis generation
+- Mechanism identification
+- Contradiction detection
+- Executive understanding synthesis
+
+### Primary Fitness Dimensions
+
+- Compression
+- Explainability
+- Executive Utility
+
+---
+
+# Organizational Memory Layer
+
+## Purpose
+
+Preserve organizational understanding across investigations.
+
+Memory ensures Discovery continuously builds upon prior understanding rather than restarting every investigation from scratch.
+
+### Primary Cognitive Transformations
+
+Organizational Understanding
+
+↓
+
+Organizational Memory
+
+### Cognitive Objects
+
+Creates:
+
+- Persistent Understanding
+- Organizational Memory
+- Historical Context
+
+### Current Responsibilities
+
+Examples include:
+
+- Memory persistence
+- Delta generation
+- Understanding evolution
+- Historical continuity
+
+### Primary Fitness Dimensions
+
+- Continuity
+
+---
+
+# Integration Layer
+
+## Purpose
+
+Connect new organizational understanding with accumulated organizational memory.
+
+Integration gradually develops a coherent model of the organization rather than isolated investigations.
+
+### Primary Cognitive Transformations
+
+Organizational Memory
+
+↓
+
+Integrated Organizational Understanding
+
+### Cognitive Objects
+
+Creates:
+
+- Integrated Understanding
+- Organizational Patterns
+- Organizational Networks
+- Relationships
+
+### Current Responsibilities
+
+Examples include:
+
+- Evidence network construction
+- Semantic similarity
+- Reasoning graph generation
+- Cross-investigation synthesis
+- Pattern identification
+
+### Primary Fitness Dimensions
+
+- Integration
+- Adaptation
+- Emergence
+
+---
+
+# Executive Expression Layer
+
+## Purpose
+
+Express organizational understanding in forms that improve executive decision-making.
+
+This layer communicates understanding but does not generate it.
+
+### Primary Cognitive Transformations
+
+Integrated Organizational Understanding
+
+↓
+
+Executive Expression
+
+### Cognitive Objects
+
+Creates:
+
+- Executive Summaries
+- Strategic Narratives
+- Recommendations
+- Dashboards
+- Investigations
+
+### Current Responsibilities
+
+Examples include:
+
+- Executive summaries
+- Strategic recommendations
+- Investigation reports
+- Narrative generation
+- Executive visualizations
+
+### Primary Fitness Dimensions
+
+- Executive Utility
+
+---
+
+# Research Layer
+
+## Purpose
+
+Provide a safe environment for exploring new models of organizational cognition before introducing them into Discovery's production architecture.
+
+### Current Responsibilities
+
+Examples include:
+
+- Cognitive Lab
+- Experimental reasoning
+- Alternative cognitive transformations
+- Architectural research
+- Prototype evaluation
+
+Research implementations do not become production capabilities until they demonstrate measurable improvements to Discovery's Cognitive Fitness Profile.
+
+---
+
+# Current Architectural Assessment
+
+## Strengths
+
+- Strong organizational perception.
+- Strong executive understanding.
+- Strong explainability.
+- Clear organizational reasoning pipeline.
+- Well-defined cognitive architecture.
+
+## Current Architectural Debt
+
+- Adaptation remains relatively weak.
+- Cross-investigation integration is still developing.
+- Organizational understanding state is not yet explicitly modeled.
+- Long-term organizational learning is still emerging.
+
+## Current Priority
+
+The next implementation milestone should strengthen the weakest dimension of Discovery's Cognitive Fitness Profile rather than introducing additional standalone capabilities.
+
+---
+
+# Guiding Principle
+
+Discovery does not evolve by adding more engines.
+
+Discovery evolves by improving cognitive transformations.
+
+Every implementation should:
+
+- Strengthen the Cognitive Fitness Profile.
+- Improve organizational understanding.
+- Increase organizational self-awareness.
+- Preserve architectural coherence.
+
+If an implementation does not measurably improve organizational understanding, it should not become part of Discovery's production architecture.

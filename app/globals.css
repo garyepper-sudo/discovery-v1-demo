@@ -3099,3 +3099,390 @@ body:has(.organism-viewer) {
     grid-template-columns: 1fr;
   }
 }
+/* =====================================================
+   Sprint 25 — Cognitive Lab v0.1
+   ===================================================== */
+
+.cognitive-lab-page {
+  min-height: 100vh;
+  padding: 32px;
+  color: #f4efe7;
+  background:
+    radial-gradient(circle at top left, rgba(198, 157, 91, 0.14), transparent 32%),
+    linear-gradient(135deg, #0f1115 0%, #17181d 52%, #0d0e12 100%);
+}
+
+.cognitive-lab-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.cognitive-lab-header h1 {
+  margin: 0;
+  font-size: clamp(32px, 5vw, 56px);
+  letter-spacing: -0.06em;
+}
+
+.cognitive-lab-header p {
+  max-width: 680px;
+  margin: 8px 0 0;
+  color: rgba(244, 239, 231, 0.68);
+}
+
+.lab-kicker {
+  margin: 0 0 8px !important;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(198, 157, 91, 0.9) !important;
+}
+
+.lab-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.lab-actions button {
+  border: 1px solid rgba(244, 239, 231, 0.16);
+  border-radius: 999px;
+  padding: 10px 14px;
+  color: #f4efe7;
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+}
+
+.lab-actions button:hover {
+  border-color: rgba(198, 157, 91, 0.55);
+  background: rgba(198, 157, 91, 0.12);
+}
+
+.lab-stage-strip {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  margin-bottom: 20px;
+  padding-bottom: 4px;
+}
+
+.lab-stage-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: max-content;
+  border: 1px solid rgba(244, 239, 231, 0.12);
+  border-radius: 999px;
+  padding: 9px 12px;
+  color: rgba(244, 239, 231, 0.55);
+  background: rgba(255, 255, 255, 0.035);
+  font-size: 13px;
+}
+
+.lab-stage-pill span {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 12px;
+}
+
+.lab-stage-pill.active {
+  color: #f4efe7;
+  border-color: rgba(198, 157, 91, 0.6);
+  background: rgba(198, 157, 91, 0.14);
+}
+
+.lab-stage-pill.complete {
+  color: rgba(244, 239, 231, 0.8);
+}
+
+.cognitive-lab-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(300px, 1.2fr) minmax(260px, 0.95fr) minmax(280px, 1fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.lab-panel {
+  min-height: 640px;
+  border: 1px solid rgba(244, 239, 231, 0.12);
+  border-radius: 24px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.lab-panel-header {
+  margin-bottom: 14px;
+}
+
+.lab-panel-header p {
+  margin: 0 0 4px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: rgba(198, 157, 91, 0.86);
+}
+
+.lab-panel-header h2 {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: -0.03em;
+}
+
+.lab-panel textarea {
+  width: 100%;
+  min-height: 540px;
+  resize: vertical;
+  border: 1px solid rgba(244, 239, 231, 0.12);
+  border-radius: 18px;
+  padding: 16px;
+  color: #f4efe7;
+  background: rgba(0, 0, 0, 0.2);
+  line-height: 1.55;
+  outline: none;
+}
+
+.lab-panel textarea:focus {
+  border-color: rgba(198, 157, 91, 0.55);
+}
+
+.lab-stack {
+  display: grid;
+  gap: 12px;
+  max-height: 560px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.lab-block {
+  border: 1px solid rgba(244, 239, 231, 0.1);
+  border-radius: 18px;
+  padding: 14px;
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.lab-block h3 {
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
+.lab-block p,
+.empty-state {
+  margin: 0;
+  color: rgba(244, 239, 231, 0.5);
+  font-size: 14px;
+}
+
+.lab-block ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.lab-block li {
+  color: rgba(244, 239, 231, 0.78);
+  line-height: 1.45;
+}
+
+.memory-card {
+  border: 1px solid rgba(198, 157, 91, 0.22);
+  border-radius: 18px;
+  padding: 14px;
+  margin-bottom: 12px;
+  background: rgba(198, 157, 91, 0.08);
+}
+
+.memory-card.muted {
+  border-color: rgba(244, 239, 231, 0.1);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.memory-card p {
+  margin: 0 0 6px;
+  color: rgba(198, 157, 91, 0.9);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.memory-card h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.memory-card span {
+  display: block;
+  color: rgba(244, 239, 231, 0.58);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.mini-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.mini-list small {
+  border: 1px solid rgba(244, 239, 231, 0.12);
+  border-radius: 999px;
+  padding: 5px 8px;
+  color: rgba(244, 239, 231, 0.72);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.executive-panel {
+  background:
+    radial-gradient(circle at top right, rgba(198, 157, 91, 0.12), transparent 42%),
+    rgba(255, 255, 255, 0.045);
+}
+
+.executive-output {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.55;
+  letter-spacing: -0.025em;
+  color: #f4efe7;
+}
+
+@media (max-width: 1250px) {
+  .cognitive-lab-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .lab-panel {
+    min-height: 520px;
+  }
+}
+
+@media (max-width: 760px) {
+  .cognitive-lab-page {
+    padding: 20px;
+  }
+
+  .cognitive-lab-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .cognitive-lab-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-panel {
+    min-height: auto;
+  }
+
+  .lab-panel textarea {
+    min-height: 360px;
+  }
+}
+
+/* =====================================================
+   Sprint 25 — Cognitive Lab v0.2 Expert Reasoning
+   ===================================================== */
+
+.lab-grid-five {
+  grid-template-columns:
+    minmax(240px, 0.85fr)
+    minmax(260px, 1fr)
+    minmax(260px, 1fr)
+    minmax(260px, 1fr)
+    minmax(260px, 1fr);
+}
+
+.lab-stage-pill {
+  cursor: pointer;
+}
+
+.expert-panel {
+  background:
+    radial-gradient(circle at top left, rgba(198, 157, 91, 0.1), transparent 38%),
+    rgba(255, 255, 255, 0.045);
+}
+
+.expert-prompt {
+  margin: 0 0 14px;
+  color: rgba(244, 239, 231, 0.62);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.expert-textarea {
+  min-height: 260px !important;
+  margin-bottom: 14px;
+}
+
+.difference-card,
+.research-question-card {
+  border: 1px solid rgba(198, 157, 91, 0.28);
+  border-radius: 18px;
+  padding: 14px;
+  background: rgba(198, 157, 91, 0.09);
+}
+
+.difference-card p,
+.research-question-card p {
+  margin: 0 0 6px;
+  color: rgba(198, 157, 91, 0.9);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.difference-card h3,
+.research-question-card h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.difference-card span {
+  color: rgba(244, 239, 231, 0.64);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.compare-box {
+  display: grid;
+  gap: 6px;
+  border: 1px solid rgba(244, 239, 231, 0.1);
+  border-radius: 14px;
+  padding: 12px;
+  margin-top: 12px;
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.compare-box strong {
+  color: rgba(244, 239, 231, 0.9);
+  font-size: 13px;
+}
+
+.compare-box span {
+  white-space: pre-wrap;
+  color: rgba(244, 239, 231, 0.62);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+@media (max-width: 1500px) {
+  .lab-grid-five {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .lab-grid-five {
+    grid-template-columns: 1fr;
+  }
+}
