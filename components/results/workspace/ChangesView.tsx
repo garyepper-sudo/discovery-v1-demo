@@ -10,15 +10,13 @@ export default function ChangesView({
   const nextQuestions = primaryBelief?.nextQuestions ?? [];
   const possibleChangers = [
     ...nextQuestions,
-    ...hypotheses.map((item: any) => item.title ?? item.headline ?? item.summary),
+    ...hypotheses.map(
+      (item: any) => item.title ?? item.headline ?? item.summary
+    ),
   ].filter(Boolean);
 
   return (
-    <section className="workspace-section">
-      <p className="overview-label">What Changes This</p>
-
-      <h3>What would make Discovery revise this understanding.</h3>
-
+    <div className="workspace-content">
       <div className="workspace-notebook">
         {possibleChangers.slice(0, 5).map((item: string, index: number) => (
           <NotebookRow
@@ -35,15 +33,16 @@ export default function ChangesView({
           />
         )}
       </div>
-    </section>
+    </div>
   );
 }
 
 function NotebookRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="notebook-row">
-      <span>{label}</span>
-      <p>{value}</p>
+    <div className="workspace-row">
+      <div className="workspace-row-label">{label}</div>
+      <div className="workspace-row-divider" />
+      <div className="workspace-row-value">{value}</div>
     </div>
   );
 }

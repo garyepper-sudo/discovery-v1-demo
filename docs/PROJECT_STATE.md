@@ -1,214 +1,346 @@
-# Discovery
-## Project State
-Last Updated: Sprint 17
+# Discovery — Project State
+Last Updated: Sprint 19 Complete
 
 ---
 
 # Vision
 
-Discovery is building an Understanding Engine rather than a search engine or chatbot.
+Discovery is no longer just an investigation engine.
 
-The system's job is to transform raw information into executive understanding by constructing an explicit reasoning model.
+Discovery is evolving into a Living Organizational Understanding Engine.
 
-Information should not simply be summarized.
+Rather than analyzing individual document uploads independently, Discovery continuously develops and maintains an evolving understanding of an organization.
 
-It should become:
+Every upload changes the organization's internal model.
+
+The primary product is no longer an investigation.
+
+The primary product is organizational understanding.
+
+---
+
+# Product Philosophy
+
+Traditional AI answers:
+
+> "What does this document say?"
+
+Discovery answers:
+
+> "How has our understanding of the organization changed?"
+
+Every upload becomes another observation that either:
+
+- reinforces understanding
+- weakens understanding
+- creates new understanding
+- resolves uncertainty
+
+Discovery behaves more like a scientist than a chatbot.
+
+---
+
+# Canon UX Principles
+
+## Progressive Disclosure
+
+The interface should never overwhelm the user.
+
+Only show enough information to answer the next question.
+
+Everything else unfolds naturally.
+
+---
+
+## Executive First
+
+Executives want conclusions.
+
+Not evidence.
+
+Not graphs.
+
+Not reading.
+
+The UI should always begin with:
+
+Current Understanding
+
+then naturally unfold:
+
+Why
+
+How
+
+Confidence
+
+Unknowns
+
+Revisions
 
 Evidence
-→ Patterns
-→ Mechanisms
-→ Hypotheses
-→ Beliefs
-→ Executive Understanding
 
-Everything the user sees should ultimately be explainable through that reasoning chain.
+Trace
 
 ---
 
-# Product Direction
+## Notebook Experience
 
-Current focus:
+The new workspace is a narrative notebook.
 
-Build the best executive investigation engine possible.
+Users scroll through one evolving understanding instead of switching between disconnected tabs.
 
-Future phases include:
-
-• Persistent organizational understanding
-• Living understanding organism
-• Organizational continuity
-• Department-level understanding
-• Continuous understanding evolution
-
-These are future layers.
-
-The current priority is building a stable, trustworthy investigation engine.
+Navigation acts as chapter markers rather than page navigation.
 
 ---
 
-# Core Engine Architecture
+## Organism Philosophy
+
+The organism is NOT a graph.
+
+The organism represents living organizational understanding.
+
+Nodes represent evolving beliefs.
+
+Connections represent relationships between understandings.
+
+Node behavior should evolve over time.
+
+The organism should visibly grow as Discovery learns.
+
+---
+
+# Current Engine
 
 Current pipeline:
 
-Raw Documents
+Upload
+↓
+
+Evidence
 
 ↓
 
-Evidence Extraction
+Themes
 
 ↓
 
-Theme Detection
+Contradictions
 
 ↓
 
-Contradiction Detection
+Mechanisms
 
 ↓
 
-Causal Chains
-
-↓
-
-Mechanism Engine
-
-↓
-
-Hypothesis Engine
-
-↓
-
-Belief Engine
+Beliefs
 
 ↓
 
 Executive Understanding
 
-↓
+This engine is stable.
 
-Living Organism State
-
-↓
-
-Executive UX
-
-Every stage should consume the previous stage's outputs.
-
-No UI component should invent reasoning on its own.
+It now becomes one stage inside a larger learning system.
 
 ---
 
-# Living Understanding Organism
+# Next Major Architecture
 
-The organism is now rendered entirely from engine output.
+Discovery now needs persistent understanding.
 
-The organism tracks:
+Introduce:
 
-• particles
-• evidence clusters
-• mechanisms
-• hypotheses
-• beliefs
-• contradictions
-• uncertainty
-• coherence
-• maturity
-• tension
-• emerging patterns
+UnderstandingState
 
-The organism is no longer decorative.
+Persistent representation of the organization's current understanding.
 
-It represents Discovery's internal reasoning state.
+Contains:
+
+- beliefs
+- themes
+- mechanisms
+- uncertainties
+- organism
+- confidence
+- history
+
+This object survives between uploads.
 
 ---
 
-# Current UX Philosophy
+# Evolution Engine
 
-Executives should never feel overwhelmed.
+New engine:
 
-Discovery should progressively reveal understanding.
+Existing UnderstandingState
 
-Default screen:
++
 
-Executive Understanding
+New Investigation
 
 ↓
 
-Why this matters
+UnderstandingDelta
 
 ↓
 
-Living Organism
+Updated UnderstandingState
 
 ↓
 
-Explore Understanding
+Updated Organism
 
-Everything else should remain hidden until requested.
+↓
 
-Long explanations belong behind progressive disclosure.
-
----
-
-# Current Major Components
-
-Executive Summary
-
-Supporting Understandings
-
-Hypotheses Panel
-
-Living Organism
-
-Trace Understanding
-
-Reasoning Explorer
-
-Understanding Evolution
-
-Organism Explorer
+Executive Change Narrative
 
 ---
 
-# What Sprint 17 Completed
+# Understanding Delta
 
-✓ Mechanism Engine
+Every upload should produce an UnderstandingDelta.
 
-✓ Hypothesis Engine
+Possible outputs include:
 
-✓ Belief Engine
+New Beliefs
 
-✓ Organism State Builder
+Strengthened Beliefs
 
-✓ Organism rendered from engine state
+Weakened Beliefs
 
-✓ Understanding Evolution
+Resolved Beliefs
 
-✓ Organism Health Metrics
+New Themes
 
-✓ Competing Explanations
+Resolved Themes
 
-✓ Belief explanations
+New Contradictions
 
-✓ Trace Understanding integration
+Resolved Contradictions
 
-The engine now produces a complete explainable reasoning model.
+Confidence Changes
 
----
+Organism Changes
 
-# Biggest Lesson
+Executive Narrative
 
-The engine now generates more understanding than should be shown.
-
-The bottleneck has shifted from engine capability to UX clarity.
-
-Future work should prioritize reducing visible complexity while increasing explainability.
+The delta becomes the heartbeat of Discovery.
 
 ---
 
-# Guiding Principle
+# Organism Evolution
 
-The engine should become more sophisticated.
+The organism should evolve instead of reset.
 
-The interface should become simpler.
+Uploads should:
 
-That asymmetry is intentional.
+Grow nodes
+
+Shrink nodes
+
+Strengthen connections
+
+Remove obsolete relationships
+
+Highlight new understanding
+
+Represent stable patterns visually.
+
+---
+
+# Stable Understanding
+
+Understanding becomes stable through repeated reinforcement.
+
+Discovery should detect:
+
+Repeated observations
+
+Repeated mechanisms
+
+Repeated strategic themes
+
+Repeated executive concerns
+
+Long-term stability is significantly more valuable than one-time insight.
+
+---
+
+# Executive Experience
+
+The future executive briefing begins with:
+
+What's Changed
+
+instead of
+
+Summary
+
+Possible output:
+
++ Three beliefs strengthened
+
++ One uncertainty resolved
+
++ Two new strategic themes emerged
+
++ Confidence increased
+
++ Organism evolved
+
+Only then does Discovery explain the current understanding.
+
+---
+
+# Current Sprint Status
+
+Sprint 19 Complete.
+
+Major accomplishments:
+
+✓ Narrative notebook workspace
+
+✓ Executive understanding chapters
+
+✓ Premium workspace navigation
+
+✓ Progressive disclosure workspace
+
+✓ Notebook component architecture
+
+✓ Living Understanding product vision established
+
+The UI is now sufficiently mature.
+
+Future effort shifts toward engine evolution.
+
+---
+
+# Sprint 20 Goal
+
+Build the first version of persistent organizational understanding.
+
+The UI should now follow the engine—not lead it.
+
+# Project State — Discovery
+
+## Current Sprint
+
+Sprint 20 — Living Understanding Engine
+
+## Major Architectural Pivot
+
+Discovery is no longer being optimized as a one-upload document analysis tool.
+
+The product is now evolving into a Living Organizational Understanding Engine.
+
+The existing V3 investigation pipeline remains intact:
+
+```txt
+Evidence
+  → Themes
+  → Contradictions
+  → Mechanisms
+  → Beliefs
+  → Executive Understanding

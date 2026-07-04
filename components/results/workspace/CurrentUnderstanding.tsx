@@ -17,27 +17,24 @@ export default function CurrentUnderstanding({
     understanding?.explanation ??
     "Discovery connected the available evidence into a coherent working understanding.";
 
+  const confidence = primaryBelief?.confidence
+    ? `${Math.round(primaryBelief.confidence * 100)}%`
+    : "Moderate";
+
   return (
-    <section className="workspace-section">
-      <p className="overview-label">Current Understanding</p>
+    <div className="workspace-content">
+      <h2 className="workspace-headline">{headline}</h2>
 
-      <h3>{headline}</h3>
-
-      <p>{explanation}</p>
+      <p className="workspace-summary">
+  Discovery currently treats this as a working understanding. The sections below
+  explain why, how confident Discovery is, and what could change the conclusion.
+</p>
 
       <div className="workspace-notebook">
-        <NotebookRow
-          label="Current conclusion"
-          value={headline}
-        />
-
+    
         <NotebookRow
           label="Confidence"
-          value={
-            primaryBelief?.confidence
-              ? `${Math.round(primaryBelief.confidence * 100)}%`
-              : "Moderate"
-          }
+          value={confidence}
         />
 
         <NotebookRow
@@ -45,7 +42,7 @@ export default function CurrentUnderstanding({
           value="Working understanding"
         />
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -57,9 +54,16 @@ function NotebookRow({
   value: string;
 }) {
   return (
-    <div className="notebook-row">
-      <span>{label}</span>
-      <p>{value}</p>
+    <div className="workspace-row">
+      <div className="workspace-row-label">
+        {label}
+      </div>
+
+      <div className="workspace-row-divider" />
+
+      <div className="workspace-row-value">
+        {value}
+      </div>
     </div>
   );
 }

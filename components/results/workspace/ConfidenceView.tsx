@@ -18,11 +18,7 @@ export default function ConfidenceView({
   const mechanisms = organismState?.mechanisms?.length ?? 0;
 
   return (
-    <section className="workspace-section">
-      <p className="overview-label">Confidence</p>
-
-      <h3>Why Discovery is {confidence}% confident.</h3>
-
+    <div className="workspace-content">
       <div className="workspace-notebook">
         <NotebookRow
           label="Evidence"
@@ -44,7 +40,7 @@ export default function ConfidenceView({
           value={getConfidenceAssessment(confidence)}
         />
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -56,9 +52,16 @@ function NotebookRow({
   value: string;
 }) {
   return (
-    <div className="notebook-row">
-      <span>{label}</span>
-      <p>{value}</p>
+    <div className="workspace-row">
+      <div className="workspace-row-label">
+        {label}
+      </div>
+
+      <div className="workspace-row-divider" />
+
+      <div className="workspace-row-value">
+        {value}
+      </div>
     </div>
   );
 }

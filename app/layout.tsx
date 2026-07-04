@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "../styles/sprint18.css";
+import "../styles/sprint19.css";
 
 export const metadata: Metadata = {
   title: "Discovery Alpha",

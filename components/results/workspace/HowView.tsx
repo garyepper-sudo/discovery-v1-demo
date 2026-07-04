@@ -11,11 +11,7 @@ export default function HowView({
   const primaryMechanism = mechanisms[0];
 
   return (
-    <section className="workspace-section">
-      <p className="overview-label">How</p>
-
-      <h3>How the pattern appears to work.</h3>
-
+    <div className="workspace-content">
       <div className="causal-flow">
         <FlowStep
           label="Cause"
@@ -52,15 +48,16 @@ export default function HowView({
           ))}
         </div>
       )}
-    </section>
+    </div>
   );
 }
 
 function FlowStep({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flow-step">
-      <span>{label}</span>
-      <p>{value}</p>
+    <div className="workspace-row">
+      <div className="workspace-row-label">{label}</div>
+      <div className="workspace-row-divider" />
+      <div className="workspace-row-value">{value}</div>
     </div>
   );
 }
@@ -71,9 +68,10 @@ function FlowArrow() {
 
 function NotebookRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="notebook-row">
-      <span>{label}</span>
-      <p>{value}</p>
+    <div className="workspace-row">
+      <div className="workspace-row-label">{label}</div>
+      <div className="workspace-row-divider" />
+      <div className="workspace-row-value">{value}</div>
     </div>
   );
 }

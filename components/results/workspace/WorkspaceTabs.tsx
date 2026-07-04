@@ -15,13 +15,16 @@ type WorkspaceTabsProps = {
   onChange: (view: WorkspaceView) => void;
 };
 
-const WORKSPACE_TABS: { id: WorkspaceView; label: string }[] = [
+const SECTIONS: {
+  id: WorkspaceView;
+  label: string;
+}[] = [
   { id: "understanding", label: "Understanding" },
   { id: "why", label: "Why" },
   { id: "how", label: "How" },
   { id: "confidence", label: "Confidence" },
   { id: "uncertainty", label: "Uncertainty" },
-  { id: "changes", label: "What Changes This" },
+  { id: "changes", label: "Changes" },
   { id: "evidence", label: "Evidence" },
   { id: "trace", label: "Trace" },
 ];
@@ -31,14 +34,25 @@ export default function WorkspaceTabs({
   onChange,
 }: WorkspaceTabsProps) {
   return (
-    <nav className="workspace-tabs" aria-label="Explore understanding">
-      {WORKSPACE_TABS.map((tab) => (
+    <nav
+      className="workspace-tabs"
+      aria-label="Understanding sections"
+    >
+      {SECTIONS.map((section) => (
         <button
-          key={tab.id}
-          className={activeView === tab.id ? "active" : ""}
-          onClick={() => onChange(tab.id)}
+          key={section.id}
+          type="button"
+          className={
+            activeView === section.id
+              ? "workspace-tab active"
+              : "workspace-tab"
+          }
+          aria-current={
+            activeView === section.id ? "location" : undefined
+          }
+          onClick={() => onChange(section.id)}
         >
-          {tab.label}
+          {section.label}
         </button>
       ))}
     </nav>

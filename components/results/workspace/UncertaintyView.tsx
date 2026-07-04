@@ -14,11 +14,7 @@ export default function UncertaintyView({
     "Discovery has not detected a major unresolved uncertainty yet.";
 
   return (
-    <section className="workspace-section">
-      <p className="overview-label">Uncertainty</p>
-
-      <h3>What Discovery does not know yet.</h3>
-
+    <div className="workspace-content">
       <div className="workspace-notebook">
         <NotebookRow label="Current unknown" value={primaryConcern} />
 
@@ -38,15 +34,16 @@ export default function UncertaintyView({
           }
         />
       </div>
-    </section>
+    </div>
   );
 }
 
 function NotebookRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="notebook-row">
-      <span>{label}</span>
-      <p>{value}</p>
+    <div className="workspace-row">
+      <div className="workspace-row-label">{label}</div>
+      <div className="workspace-row-divider" />
+      <div className="workspace-row-value">{value}</div>
     </div>
   );
 }

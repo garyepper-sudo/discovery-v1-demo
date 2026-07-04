@@ -6,11 +6,7 @@ export default function EvidenceView({
   evidence = [],
 }: EvidenceViewProps) {
   return (
-    <section className="workspace-section">
-      <p className="overview-label">Evidence</p>
-
-      <h3>The strongest supporting evidence.</h3>
-
+    <div className="workspace-content">
       <div className="workspace-notebook">
         {evidence.length === 0 ? (
           <NotebookRow
@@ -27,7 +23,7 @@ export default function EvidenceView({
           ))
         )}
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -39,9 +35,10 @@ function NotebookRow({
   value: string;
 }) {
   return (
-    <div className="notebook-row">
-      <span>{label}</span>
-      <p>{value}</p>
+    <div className="workspace-row">
+      <div className="workspace-row-label">{label}</div>
+      <div className="workspace-row-divider" />
+      <div className="workspace-row-value">{value}</div>
     </div>
   );
 }

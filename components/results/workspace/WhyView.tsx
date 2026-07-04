@@ -12,11 +12,7 @@ export default function WhyView({
   const reasons = primaryBelief?.supportingReasons ?? [];
 
   return (
-    <section className="workspace-section">
-      <p className="overview-label">Why</p>
-
-      <h3>Why Discovery believes this.</h3>
-
+    <div className="workspace-content">
       <div className="workspace-notebook">
         <NotebookRow
           label="Strongest reason"
@@ -49,15 +45,24 @@ export default function WhyView({
           }
         />
       </div>
-    </section>
+    </div>
   );
 }
 
-function NotebookRow({ label, value }: { label: string; value: string }) {
+function NotebookRow({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
   return (
-    <div className="notebook-row">
-      <span>{label}</span>
-      <p>{value}</p>
+    <div className="workspace-row">
+      <div className="workspace-row-label">{label}</div>
+
+      <div className="workspace-row-divider" />
+
+      <div className="workspace-row-value">{value}</div>
     </div>
   );
 }
