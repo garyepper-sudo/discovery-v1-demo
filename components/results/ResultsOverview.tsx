@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import OrganismPreview from "../organism/OrganismPreview";
 import TraceUnderstandingPage from "../trace/TraceUnderstandingPage";
 import ExecutiveBrief from "./ExecutiveBrief";
+import SemanticConceptInspector from "./SemanticConceptInspector";
 import UnderstandingWorkspace from "./UnderstandingWorkspace";
 
 type ResultsOverviewProps = {
@@ -58,7 +59,8 @@ export default function ResultsOverview({
   const runtimeInvestigationCount = runtimeMetadata?.investigationCount ?? 1;
   const runtimeBeliefCount = runtimeMemory?.beliefs?.length ?? beliefs.length;
   const runtimePatternCount = runtimeMemory?.patterns?.length ?? themes.length;
-  const runtimeObservationCount = runtimeMemory?.observations?.length ?? evidence.length;
+  const runtimeObservationCount =
+    runtimeMemory?.observations?.length ?? evidence.length;
   const runtimeLastEvolutionAt = runtimeOrganism?.lastEvolutionAt;
 
   const confidence = Math.round(
@@ -158,6 +160,8 @@ export default function ResultsOverview({
         </div>
       </aside>
 
+      <SemanticConceptInspector runtime={organizationRuntime} />
+
       {showExplore && (
         <div ref={workspaceRef} className="workspace-scroll-target">
           <UnderstandingWorkspace
@@ -188,7 +192,9 @@ export default function ResultsOverview({
         open={showReasoningTrace}
         onClose={() => setShowReasoningTrace(false)}
         headline={headline}
-        confidence={(primaryBelief?.confidence ?? understanding?.confidence) || 0.75}
+        confidence={
+          (primaryBelief?.confidence ?? understanding?.confidence) || 0.75
+        }
         executiveUnderstanding={understanding}
         beliefs={beliefs}
         themes={themes}

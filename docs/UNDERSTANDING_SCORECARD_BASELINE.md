@@ -315,3 +315,7 @@ Discovery's progress should be measured by improvements to its Cognitive Fitness
 Every architectural milestone should measurably strengthen one or more dimensions of organizational cognition while preserving the coherence of Discovery's cognitive architecture.
 
 This baseline establishes Version 1.0 of Discovery's cognitive fitness and serves as the reference point for all future architectural evolution.
+
+Compression measures Discovery's ability to transform many organizational experiences into a small number of durable explanatory structures.
+
+Increasing organizational intelligence should reduce the number of independent understandings required to explain organizational behavior.

@@ -2,6 +2,15 @@ import type { DiscoveryV3Result } from "../types";
 import type { OrganizationRuntime } from "./organizationRuntime";
 import { runOrganizationCognition } from "../cognition/cognitionEngine";
 import { updateOrganizationalUnderstandingState } from "./updateOrganizationalUnderstandingState";
+import { consolidateUnderstanding } from "../understanding/consolidateUnderstanding";
+import { buildUnderstandingClusters } from "../understanding/understandingClusters";
+import { runSemanticCompression } from "../compression/semanticCompression";
+import { inferOrganizationalPhenomena } from "../phenomena/inferOrganizationalPhenomena";
+import { synthesizeOrganizationalConcepts } from "../concepts/synthesizeOrganizationalConcepts";
+import { extractMeaningSignals } from "../meaning/extractMeaning";
+import { inferOrganizationalCapabilities } from "../capabilities/inferOrganizationalCapabilities";
+import { updateOrganizationalCapabilities } from "../capabilities/updateOrganizationalCapabilities";
+import { inferFunctionalInterpretations } from "../functional/inferFunctionalInterpretations";
 
 export function evolveOrganizationRuntime(params: {
   runtime: OrganizationRuntime;
@@ -27,6 +36,7 @@ export function evolveOrganizationRuntime(params: {
       website: input.website || runtime.metadata.website,
       lastUpdatedAt: now,
       currentUnderstandings: [],
+      organizationalConcepts: [],
       confidenceLandscape: [],
       activeQuestions: [],
       strategicRisks: [],
@@ -39,12 +49,92 @@ export function evolveOrganizationRuntime(params: {
       },
     };
 
-  const updatedOrganizationalUnderstandingState =
+  const candidateUnderstandings = (result.understanding ?? [])
+    .map((understanding) => ({
+      id: understanding.id,
+      statement: understanding.summary || understanding.title,
+      confidence: understanding.confidence,
+      evidenceIds: understanding.evidenceIds ?? [],
+      beliefIds: understanding.beliefIds ?? [],
+      themeIds: understanding.themeIds ?? [],
+      mechanismIds: understanding.mechanismIds ?? [],
+      contradictionIds: [],
+      source: "understanding",
+    }))
+    .filter((candidate) => Boolean(candidate.statement));
+
+  const baseOrganizationalUnderstandingState =
     updateOrganizationalUnderstandingState({
       state: existingOrganizationalUnderstandingState,
       result,
       now,
     });
+
+  const consolidationResult = consolidateUnderstanding(
+    baseOrganizationalUnderstandingState,
+    candidateUnderstandings
+  );
+
+  const updatedOrganizationalUnderstandingState = {
+    ...baseOrganizationalUnderstandingState,
+    currentUnderstandings: consolidationResult.updatedUnderstandings,
+    lastUpdatedAt: now,
+    evolutionHistory: [
+      ...(baseOrganizationalUnderstandingState.evolutionHistory ?? []),
+      ...consolidationResult.changes.map((change) => ({
+        id: `understanding-change-${now}-${Math.random()
+          .toString(36)
+          .slice(2)}`,
+        date: now,
+        type: change.type,
+        title: change.title,
+        description: change.description,
+        relatedUnderstandingIds: change.relatedUnderstandingIds,
+      })),
+    ],
+  };
+
+  const functionalInterpretationState = inferFunctionalInterpretations({
+    understandings: updatedOrganizationalUnderstandingState.currentUnderstandings,
+    existingState: runtime.memory.functionalInterpretationState,
+    now,
+  });
+
+  const detectedCapabilities = inferOrganizationalCapabilities({
+    interpretations: functionalInterpretationState.interpretations,
+  });
+
+  const organizationalCapabilitiesState = updateOrganizationalCapabilities({
+    existingState: runtime.memory.organizationalCapabilitiesState,
+    detectedCapabilities,
+    now,
+  });
+
+  const understandingClusters = buildUnderstandingClusters({
+    understandings: updatedOrganizationalUnderstandingState.currentUnderstandings,
+    existingClusters: runtime.memory.understandingClusters ?? [],
+    now,
+  });
+
+  const semanticConcepts = runSemanticCompression({
+    understandings: updatedOrganizationalUnderstandingState.currentUnderstandings,
+  });
+
+  const meaningSignals = extractMeaningSignals({
+    interpretations: functionalInterpretationState.interpretations,
+    existingSignals: runtime.memory.meaningSignals ?? [],
+  });
+
+  const organizationalConcepts = synthesizeOrganizationalConcepts({
+    meaningSignals,
+    existingConcepts: runtime.memory.organizationalConcepts ?? [],
+  });
+
+  const organizationalPhenomenaState = inferOrganizationalPhenomena({
+    clusters: understandingClusters,
+    previousState: runtime.memory.organizationalPhenomenaState,
+    now,
+  });
 
   const runtimeWithEvent: OrganizationRuntime = {
     ...runtime,
@@ -60,6 +150,13 @@ export function evolveOrganizationRuntime(params: {
       ...runtime.memory,
       understandingState: result,
       organizationalUnderstandingState: updatedOrganizationalUnderstandingState,
+      functionalInterpretationState,
+      organizationalCapabilitiesState,
+      understandingClusters,
+      semanticConcepts,
+      meaningSignals,
+      organizationalConcepts,
+      organizationalPhenomenaState,
       events: [
         ...runtime.memory.events,
         {
@@ -71,6 +168,16 @@ export function evolveOrganizationRuntime(params: {
           beliefCount: result.beliefs.length,
           themeCount: result.themes.length,
           contradictionCount: result.contradictions.length,
+          understandingClusterCount: understandingClusters.length,
+          functionalInterpretationCount:
+            functionalInterpretationState.interpretations.length,
+          organizationalCapabilityCount:
+            organizationalCapabilitiesState.capabilities.length,
+          semanticConceptCount: semanticConcepts.length,
+          meaningSignalCount: meaningSignals.length,
+          organizationalConceptCount: organizationalConcepts.length,
+          organizationalPhenomenonCount:
+            organizationalPhenomenaState.phenomena.length,
         },
       ],
       deltas: [...runtime.memory.deltas, result.delta].filter(Boolean),

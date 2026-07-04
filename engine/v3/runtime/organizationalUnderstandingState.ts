@@ -1,3 +1,5 @@
+import type { OrganizationalConcept } from "../concepts/synthesizeOrganizationalConcepts";
+
 export type UnderstandingStateStatus =
   | "emerging"
   | "forming"
@@ -95,6 +97,8 @@ export type OrganizationalUnderstandingState = {
   lastUpdatedAt: string;
 
   currentUnderstandings: OrganizationalUnderstandingItem[];
+  organizationalConcepts?: OrganizationalConcept[];
+
   confidenceLandscape: OrganizationalConfidenceArea[];
   activeQuestions: OrganizationalOpenQuestion[];
   strategicRisks: OrganizationalStrategicRisk[];
@@ -142,6 +146,8 @@ export function createEmptyOrganizationalUnderstandingState(params: {
     lastUpdatedAt: params.now,
 
     currentUnderstandings: [],
+    organizationalConcepts: [],
+
     confidenceLandscape: [],
     activeQuestions: [],
     strategicRisks: [],

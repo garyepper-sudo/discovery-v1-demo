@@ -357,3 +357,24 @@ Every implementation should:
 - Preserve architectural coherence.
 
 If an implementation does not measurably improve organizational understanding, it should not become part of Discovery's production architecture.
+
+## Understanding Compression
+
+Purpose:
+
+Continuously reduce related organizational understandings into coherent explanatory structures.
+
+Current Status:
+
+Planned
+
+Future Outputs:
+
+- Understanding Clusters
+- Mental Models
+
+Primary Understanding Scorecard Impact:
+
+- Compression
+- Integration
+- Emergence

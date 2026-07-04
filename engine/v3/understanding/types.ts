@@ -163,6 +163,36 @@ export type PersistentPattern = {
 
 export type StablePattern = PersistentPattern;
 
+/* =====================================================
+   Understanding Compression
+   ===================================================== */
+
+export type UnderstandingClusterStatus =
+  | "emerging"
+  | "reinforcing"
+  | "stable"
+  | "fragmented";
+
+export type UnderstandingCluster = {
+  id: string;
+  label: string;
+  description: string;
+
+  memberUnderstandingIds: string[];
+
+  sharedThemes: string[];
+  sharedMechanisms: string[];
+
+  confidence: number;
+  cohesion: number;
+  stability: number;
+
+  status: UnderstandingClusterStatus;
+
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type OpenQuestion = {
   id: string;
   question: string;
@@ -220,6 +250,8 @@ export type UnderstandingState = {
 
   patterns: PersistentPattern[];
   stablePatterns: StablePattern[];
+
+  understandingClusters: UnderstandingCluster[];
 
   openQuestions: OpenQuestion[];
   organism: PersistentOrganismState;

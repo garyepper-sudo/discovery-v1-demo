@@ -1,4 +1,11 @@
 import type { OrganizationalUnderstandingState } from "./organizationalUnderstandingState";
+import type { OrganizationalPhenomenaState } from "../phenomena/organizationalPhenomena";
+import type { UnderstandingCluster } from "../understanding/types";
+import type { OrganizationalConcept } from "../concepts/synthesizeOrganizationalConcepts";
+import type { OrganizationalConcept as SemanticConcept } from "../compression/types";
+import type { MeaningSignal } from "../meaning/types";
+import type { OrganizationalCapabilitiesState } from "../capabilities/organizationalCapabilities";
+import type { FunctionalInterpretationState } from "../functional/functionalInterpretation";
 
 export type OrganizationRuntimeMetadata = {
   organizationId: string;
@@ -11,41 +18,32 @@ export type OrganizationRuntimeMetadata = {
 };
 
 export type OrganizationRuntimeMemory = {
-  /**
-   * Latest investigation output.
-   * This is the raw understanding produced by the most recent investigation.
-   */
   understandingState: any;
-
-  /**
-   * Discovery's persistent understanding of the organization.
-   * This is continuously refined as new organizational experience is added.
-   */
   organizationalUnderstandingState: OrganizationalUnderstandingState;
 
+  understandingClusters: UnderstandingCluster[];
+
+  semanticConcepts: SemanticConcept[];
+
+  meaningSignals: MeaningSignal[];
+
+  organizationalConcepts: OrganizationalConcept[];
+
+  organizationalCapabilitiesState: OrganizationalCapabilitiesState;
+
   /**
-   * Persistent organizational observations.
+   * Persistent organizational dynamics inferred from
+   * accumulated understandings. This becomes the
+   * cognitive bridge between Understanding and Capability.
    */
+  functionalInterpretationState: FunctionalInterpretationState;
+
+  organizationalPhenomenaState: OrganizationalPhenomenaState;
+
   observations: any[];
-
-  /**
-   * Persistent organizational beliefs.
-   */
   beliefs: any[];
-
-  /**
-   * Emerging organizational patterns.
-   */
   patterns: any[];
-
-  /**
-   * Historical understanding changes.
-   */
   deltas: any[];
-
-  /**
-   * Investigation history.
-   */
   events: any[];
 };
 
@@ -80,33 +78,49 @@ export function createEmptyOrganizationRuntime(params: {
     },
 
     memory: {
-      /**
-       * Latest investigation result.
-       */
       understandingState: null,
 
-      /**
-       * Canonical organizational cognitive state.
-       */
       organizationalUnderstandingState: {
         organizationId: params.organizationId,
         name: params.name,
         industry: params.industry,
         website: params.website,
         lastUpdatedAt: now,
-
         currentUnderstandings: [],
+        organizationalConcepts: [],
         confidenceLandscape: [],
         activeQuestions: [],
         strategicRisks: [],
         evolutionHistory: [],
-
         health: {
           maturity: 0,
           coherence: 0,
           uncertainty: 1,
           adaptation: 0,
         },
+      },
+
+      understandingClusters: [],
+
+      semanticConcepts: [],
+
+      meaningSignals: [],
+
+      organizationalConcepts: [],
+
+      organizationalCapabilitiesState: {
+        capabilities: [],
+        lastUpdated: now,
+      },
+
+      functionalInterpretationState: {
+        interpretations: [],
+        lastUpdatedAt: now,
+      },
+
+      organizationalPhenomenaState: {
+        phenomena: [],
+        lastUpdatedAt: now,
       },
 
       observations: [],
