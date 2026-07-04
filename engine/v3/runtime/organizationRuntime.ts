@@ -1,11 +1,12 @@
 import type { OrganizationalUnderstandingState } from "./organizationalUnderstandingState";
-import type { OrganizationalPhenomenaState } from "../phenomena/organizationalPhenomena";
-import type { UnderstandingCluster } from "../understanding/types";
-import type { OrganizationalConcept } from "../concepts/synthesizeOrganizationalConcepts";
-import type { OrganizationalConcept as SemanticConcept } from "../compression/types";
-import type { MeaningSignal } from "../meaning/types";
-import type { OrganizationalCapabilitiesState } from "../capabilities/organizationalCapabilities";
-import type { FunctionalInterpretationState } from "../functional/functionalInterpretation";
+import type {
+  PersistentBelief,
+  UnderstandingCluster,
+} from "../understanding/types";
+import type { ObservationInput } from "../cognition/observations/evolveObservations";
+import { createOrganizationModel } from "../model/createOrganizationModel";
+import type { OrganizationModel } from "../model/organizationModel";
+import type { EntityMention } from "../entities/entityLifecycle";
 
 export type OrganizationRuntimeMetadata = {
   organizationId: string;
@@ -18,43 +19,62 @@ export type OrganizationRuntimeMetadata = {
 };
 
 export type OrganizationRuntimeMemory = {
-  understandingState: any;
+  understandingState: unknown;
   organizationalUnderstandingState: OrganizationalUnderstandingState;
-
   understandingClusters: UnderstandingCluster[];
 
-  semanticConcepts: SemanticConcept[];
-
-  meaningSignals: MeaningSignal[];
-
-  organizationalConcepts: OrganizationalConcept[];
-
-  organizationalCapabilitiesState: OrganizationalCapabilitiesState;
-
   /**
-   * Persistent organizational dynamics inferred from
-   * accumulated understandings. This becomes the
-   * cognitive bridge between Understanding and Capability.
+   * Sprint 36
+   *
+   * Perceptual entity mentions extracted from investigation material.
+   * These are not yet persistent organizational memory.
+   * They are raw recognized references that can later be resolved
+   * into stable OrganizationalEntity records in the OrganizationModel.
    */
-  functionalInterpretationState: FunctionalInterpretationState;
+  entityMentions: EntityMention[];
 
-  organizationalPhenomenaState: OrganizationalPhenomenaState;
+  observations: ObservationInput[];
+  beliefs: PersistentBelief[];
 
-  observations: any[];
-  beliefs: any[];
-  patterns: any[];
-  deltas: any[];
-  events: any[];
+  patterns: unknown[];
+  deltas: unknown[];
+  events: unknown[];
+
+  functionalInterpretationState: unknown;
+  organizationalCapabilitiesState: unknown;
+  organizationalPhenomenaState: unknown;
+
+  semanticConcepts: unknown[];
+  meaningSignals: unknown[];
+  organizationalConcepts: unknown[];
 };
 
 export type OrganizationRuntimeOrganism = {
-  organismState: any;
+  organismState: unknown;
   lastEvolutionAt: string | null;
 };
 
 export type OrganizationRuntime = {
   metadata: OrganizationRuntimeMetadata;
+
+  /**
+   * Sprint 35
+   *
+   * Canonical representation of organizational understanding.
+   * Every cognitive engine should gradually migrate to reading
+   * from and contributing back into this shared model.
+   */
+  organizationModel: OrganizationModel;
+
+  /**
+   * Legacy cognitive state.
+   *
+   * These structures remain during the migration to the unified
+   * organizational model and will increasingly become cached
+   * projections rather than primary sources of truth.
+   */
   memory: OrganizationRuntimeMemory;
+
   organism: OrganizationRuntimeOrganism;
 };
 
@@ -76,6 +96,8 @@ export function createEmptyOrganizationRuntime(params: {
       updatedAt: now,
       investigationCount: 0,
     },
+
+    organizationModel: createOrganizationModel(params.organizationId),
 
     memory: {
       understandingState: null,
@@ -102,32 +124,22 @@ export function createEmptyOrganizationRuntime(params: {
 
       understandingClusters: [],
 
-      semanticConcepts: [],
-
-      meaningSignals: [],
-
-      organizationalConcepts: [],
-
-      organizationalCapabilitiesState: {
-        capabilities: [],
-        lastUpdated: now,
-      },
-
-      functionalInterpretationState: {
-        interpretations: [],
-        lastUpdatedAt: now,
-      },
-
-      organizationalPhenomenaState: {
-        phenomena: [],
-        lastUpdatedAt: now,
-      },
+      entityMentions: [],
 
       observations: [],
       beliefs: [],
+
       patterns: [],
       deltas: [],
       events: [],
+
+      functionalInterpretationState: null,
+      organizationalCapabilitiesState: null,
+      organizationalPhenomenaState: null,
+
+      semanticConcepts: [],
+      meaningSignals: [],
+      organizationalConcepts: [],
     },
 
     organism: {
