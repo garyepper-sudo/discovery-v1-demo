@@ -97,7 +97,9 @@ function inferExecutivePriority(
   return scoreToPriority(score);
 }
 
-function inferStability(candidate: MechanismCandidate): OrganizationalMechanism["stability"] {
+function inferStability(
+  candidate: MechanismCandidate,
+): OrganizationalMechanism["stability"] {
   if (candidate.convergenceScore >= 0.75) return "reinforced";
   if (candidate.convergenceScore >= 0.45) return "emerging";
   return "unknown";
@@ -178,6 +180,9 @@ export function interpretMechanismCandidates(
 
       return {
         id: `organizational-mechanism-${index + 1}-${type}`,
+        cognitiveLayer: "mechanism",
+        ontologyVersion: "1.0",
+
         type,
         title: profile.title,
 

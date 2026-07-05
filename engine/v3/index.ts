@@ -194,3 +194,5 @@ export {
   createInvestigationWorkspace,
   workspaceToResult,
 } from "./workspace";
+
+export * from "./model/cognition/cognitiveOntology";

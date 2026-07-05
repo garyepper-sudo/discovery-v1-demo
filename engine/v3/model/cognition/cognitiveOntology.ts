@@ -7,6 +7,35 @@ export type CognitiveLayer =
   | "organizationalTheory"
   | "executiveUnderstanding";
 
+export type CognitiveObjectId = string;
+
+export type CognitiveObjectLifecycle =
+  | "detected"
+  | "forming"
+  | "stable"
+  | "weakening"
+  | "retired";
+
+export type CognitiveObjectBase<Layer extends CognitiveLayer> = {
+  /**
+   * Stable identifier for the cognitive object.
+   */
+  id: CognitiveObjectId;
+
+  /**
+   * Canonical ontology layer this object belongs to.
+   * This should never change during the object's lifetime.
+   */
+  cognitiveLayer: Layer;
+
+  /**
+   * Ontology specification version that produced this object.
+   * Future ontology revisions can increment this while preserving
+   * backward compatibility.
+   */
+  ontologyVersion: "1.0";
+};
+
 export type CognitiveTransformation =
   | "observation"
   | "generalization"
@@ -35,7 +64,8 @@ export const COGNITIVE_ONTOLOGY: CognitiveLayerDefinition[] = [
   {
     layer: "belief",
     questionAnswered: "What appears to be true?",
-    responsibility: "Localized organizational observations inferred from evidence.",
+    responsibility:
+      "Localized organizational observations inferred from evidence.",
     transformationFromPrevious: "observation",
     shouldBeUserFacing: false,
     organismRepresentation: "Small internal signals or nodes",
@@ -43,10 +73,12 @@ export const COGNITIVE_ONTOLOGY: CognitiveLayerDefinition[] = [
   {
     layer: "pattern",
     questionAnswered: "What repeats?",
-    responsibility: "Recurring organizational behavior across multiple beliefs.",
+    responsibility:
+      "Recurring organizational behavior across multiple beliefs.",
     transformationFromPrevious: "generalization",
     shouldBeUserFacing: false,
-    organismRepresentation: "Clusters, constellations, or recurring formations",
+    organismRepresentation:
+      "Clusters, constellations, or recurring formations",
   },
   {
     layer: "mechanism",
@@ -58,8 +90,10 @@ export const COGNITIVE_ONTOLOGY: CognitiveLayerDefinition[] = [
   },
   {
     layer: "capability",
-    questionAnswered: "What organizational ability is being strengthened or weakened?",
-    responsibility: "Organizational health, vitality, and functional strength.",
+    questionAnswered:
+      "What organizational ability is being strengthened or weakened?",
+    responsibility:
+      "Organizational health, vitality, and functional strength.",
     transformationFromPrevious: "impactAssessment",
     shouldBeUserFacing: true,
     organismRepresentation: "Major organism regions or organs",
@@ -67,7 +101,8 @@ export const COGNITIVE_ONTOLOGY: CognitiveLayerDefinition[] = [
   {
     layer: "organizationalTheory",
     questionAnswered: "How do mechanisms interact?",
-    responsibility: "Causal models connecting mechanisms and capability impacts.",
+    responsibility:
+      "Causal models connecting mechanisms and capability impacts.",
     transformationFromPrevious: "systemModeling",
     shouldBeUserFacing: false,
     organismRepresentation: "Flows between organism regions",

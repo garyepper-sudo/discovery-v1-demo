@@ -1,4 +1,5 @@
 import type { KnowledgeReference } from "../../cognition/cognitiveGraph";
+import type { CognitiveObjectBase } from "../cognition/cognitiveOntology";
 
 export type OrganizationalMechanismType =
   | "decisionLatency"
@@ -38,96 +39,96 @@ export type MechanismActionability =
   | "unknown"
   | number;
 
-export type OrganizationalMechanism = {
-  id: string;
-  type: OrganizationalMechanismType;
-  title: string;
+export type OrganizationalMechanism =
+  CognitiveObjectBase<"mechanism"> & {
+    type: OrganizationalMechanismType;
+    title: string;
 
-  summary: string;
-  interpretation: string;
-  executiveImplication: string;
+    summary: string;
+    interpretation: string;
+    executiveImplication: string;
 
-  executiveName: string;
-  executiveSummary: string;
-  organizationalBehavior: string;
+    executiveName: string;
+    executiveSummary: string;
+    organizationalBehavior: string;
 
-  confidence: number;
+    confidence: number;
 
-  // Legacy interpreter compatibility
-  severity: number | string;
-  executivePriority: number | string;
+    // Legacy interpreter compatibility
+    severity: number | string;
+    executivePriority: number | string;
 
-  actionability: MechanismActionability;
-  stability: MechanismStability;
+    actionability: MechanismActionability;
+    stability: MechanismStability;
 
-  organizationalScope?: string;
+    organizationalScope?: string;
 
-  /**
-   * Executive-facing capabilities affected by this mechanism.
-   */
-  affectedCapabilities: string[];
-  affectedCapabilityIds: string[];
+    /**
+     * Executive-facing capabilities affected by this mechanism.
+     */
+    affectedCapabilities: string[];
+    affectedCapabilityIds: string[];
 
-  /**
-   * Canonical support relationships.
-   * These make the mechanism the hub object for organizational understanding.
-   */
-  supportingEvidenceIds: string[];
-  supportingExplanationIds: string[];
-  supportingReasoningPathIds?: string[];
-  supportingJudgmentIds?: string[];
-  supportingClusterIds: string[];
-  supportingPhenomenonIds: string[];
-  supportingCapabilityIds?: string[];
-  supportingSemanticConceptIds?: string[];
+    /**
+     * Canonical support relationships.
+     * These make the mechanism the hub object for organizational understanding.
+     */
+    supportingEvidenceIds: string[];
+    supportingExplanationIds: string[];
+    supportingReasoningPathIds?: string[];
+    supportingJudgmentIds?: string[];
+    supportingClusterIds: string[];
+    supportingPhenomenonIds: string[];
+    supportingCapabilityIds?: string[];
+    supportingSemanticConceptIds?: string[];
 
-  /**
-   * Mechanism-centric enrichment.
-   * These allow capabilities, phenomena, clusters, and concepts
-   * to become supporting context rather than peer objects.
-   */
-  observedThroughPhenomenonIds?: string[];
-  observedThroughClusterIds?: string[];
-  explainsCapabilityIds?: string[];
-  explainsCapabilityLabels?: string[];
-  compressedIntoConceptIds?: string[];
+    /**
+     * Mechanism-centric enrichment.
+     * These allow capabilities, phenomena, clusters, and concepts
+     * to become supporting context rather than peer objects.
+     */
+    observedThroughPhenomenonIds?: string[];
+    observedThroughClusterIds?: string[];
+    explainsCapabilityIds?: string[];
+    explainsCapabilityLabels?: string[];
+    compressedIntoConceptIds?: string[];
 
-  /**
-   * Mechanism network relationships.
-   */
-  upstreamMechanismIds: string[];
-  downstreamMechanismIds: string[];
-  reinforcingMechanismIds: string[];
-  conflictingMechanismIds?: string[];
-  networkNeighborIds?: string[];
+    /**
+     * Mechanism network relationships.
+     */
+    upstreamMechanismIds: string[];
+    downstreamMechanismIds: string[];
+    reinforcingMechanismIds: string[];
+    conflictingMechanismIds?: string[];
+    networkNeighborIds?: string[];
 
-  /**
-   * Aggregated support metrics.
-   */
-  supportCount?: number;
-  evidenceSupportCount?: number;
-  explanationSupportCount?: number;
-  reasoningPathSupportCount?: number;
-  clusterSupportCount?: number;
-  phenomenonSupportCount?: number;
-  capabilitySupportCount?: number;
-  semanticConceptSupportCount?: number;
+    /**
+     * Aggregated support metrics.
+     */
+    supportCount?: number;
+    evidenceSupportCount?: number;
+    explanationSupportCount?: number;
+    reasoningPathSupportCount?: number;
+    clusterSupportCount?: number;
+    phenomenonSupportCount?: number;
+    capabilitySupportCount?: number;
+    semanticConceptSupportCount?: number;
 
-  /**
-   * Legacy aliases.
-   */
-  explanationIds?: string[];
-  reasoningPathIds?: string[];
-  capabilityIds?: string[];
-  clusterIds?: string[];
-  judgmentIds?: string[];
+    /**
+     * Legacy aliases.
+     */
+    explanationIds?: string[];
+    reasoningPathIds?: string[];
+    capabilityIds?: string[];
+    clusterIds?: string[];
+    judgmentIds?: string[];
 
-  sourcePhenomenonIds?: string[];
-  sourceClusterIds?: string[];
+    sourcePhenomenonIds?: string[];
+    sourceClusterIds?: string[];
 
-  evidenceReferences: KnowledgeReference[];
+    evidenceReferences: KnowledgeReference[];
 
-  firstObserved?: string;
-  lastObserved?: string;
-  observationCount?: number;
-};
+    firstObserved?: string;
+    lastObserved?: string;
+    observationCount?: number;
+  };
