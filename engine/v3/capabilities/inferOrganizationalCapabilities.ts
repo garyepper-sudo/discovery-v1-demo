@@ -1,6 +1,22 @@
 import type { DetectedOrganizationalCapability } from "./organizationalCapabilities";
 import type { FunctionalInterpretation } from "../functional/functionalInterpretation";
 
+type OrganizationReasoningNode = {
+  entityId: string;
+  canonicalName: string;
+  category: string;
+  aliases: string[];
+  confidence: number;
+  evidenceIds: string[];
+  relatedEntityIds: string[];
+};
+
+type OrganizationReasoningGraph = {
+  organizationId: string;
+  generatedAt: string;
+  nodes: OrganizationReasoningNode[];
+};
+
 const CAPABILITY_VOCABULARY = [
   {
     label: "Decision Making",
@@ -15,6 +31,15 @@ const CAPABILITY_VOCABULARY = [
       "escalation",
       "decision latency",
     ],
+    entitySignals: [
+      "leadership",
+      "executive",
+      "approval",
+      "decision",
+      "bottleneck",
+      "latency",
+    ],
+    categories: ["actor", "team"],
   },
   {
     label: "Governance",
@@ -29,6 +54,8 @@ const CAPABILITY_VOCABULARY = [
       "executive dependency",
       "escalation",
     ],
+    entitySignals: ["leadership", "executive", "policy", "approval", "control"],
+    categories: ["actor", "team", "process"],
   },
   {
     label: "Leadership",
@@ -42,6 +69,8 @@ const CAPABILITY_VOCABULARY = [
       "guidance",
       "escalation",
     ],
+    entitySignals: ["leadership", "executive", "manager", "ceo"],
+    categories: ["actor", "team"],
   },
   {
     label: "Execution",
@@ -56,6 +85,15 @@ const CAPABILITY_VOCABULARY = [
       "coordination",
       "local autonomy",
     ],
+    entitySignals: [
+      "scheduling",
+      "delay",
+      "bottleneck",
+      "failure",
+      "operations",
+      "process",
+    ],
+    categories: ["process", "system", "risk"],
   },
   {
     label: "Coordination",
@@ -69,6 +107,15 @@ const CAPABILITY_VOCABULARY = [
       "alignment",
       "cross-functional",
     ],
+    entitySignals: [
+      "operations",
+      "support",
+      "scheduling",
+      "dashboard",
+      "communication",
+      "team",
+    ],
+    categories: ["team", "system", "process"],
   },
   {
     label: "Communication",
@@ -82,6 +129,14 @@ const CAPABILITY_VOCABULARY = [
       "unclear",
       "transparency",
     ],
+    entitySignals: [
+      "communication",
+      "narrative",
+      "support",
+      "human resources",
+      "operations",
+    ],
+    categories: ["team", "actor", "unknown"],
   },
   {
     label: "Knowledge Management",
@@ -95,6 +150,15 @@ const CAPABILITY_VOCABULARY = [
       "knowledge remains",
       "tribal knowledge",
     ],
+    entitySignals: [
+      "knowledge",
+      "documentation",
+      "training",
+      "onboarding",
+      "senior employee",
+      "human resources",
+    ],
+    categories: ["process", "team", "actor", "unknown"],
   },
   {
     label: "Organizational Memory",
@@ -108,6 +172,15 @@ const CAPABILITY_VOCABULARY = [
       "institutional knowledge",
       "learning localized",
     ],
+    entitySignals: [
+      "knowledge",
+      "continuity",
+      "documentation",
+      "senior employee",
+      "onboarding",
+      "human resources",
+    ],
+    categories: ["process", "team", "actor", "unknown"],
   },
   {
     label: "Alignment",
@@ -121,6 +194,14 @@ const CAPABILITY_VOCABULARY = [
       "disconnect",
       "fragmented",
     ],
+    entitySignals: [
+      "leadership narrative gap",
+      "growth pressure",
+      "operations",
+      "support",
+      "leadership",
+    ],
+    categories: ["team", "actor", "unknown"],
   },
   {
     label: "Innovation",
@@ -134,6 +215,8 @@ const CAPABILITY_VOCABULARY = [
       "creativity",
       "research",
     ],
+    entitySignals: ["innovation", "experiment", "prototype", "research"],
+    categories: ["process", "system", "unknown"],
   },
   {
     label: "Planning",
@@ -147,6 +230,8 @@ const CAPABILITY_VOCABULARY = [
       "milestone",
       "sequencing",
     ],
+    entitySignals: ["planning", "scheduling", "timeline", "roadmap"],
+    categories: ["process", "system"],
   },
   {
     label: "Prioritization",
@@ -160,6 +245,8 @@ const CAPABILITY_VOCABULARY = [
       "competing priorities",
       "attention",
     ],
+    entitySignals: ["priority", "scheduling", "leadership", "operations"],
+    categories: ["process", "actor", "team"],
   },
   {
     label: "Resource Allocation",
@@ -175,6 +262,14 @@ const CAPABILITY_VOCABULARY = [
       "allocation",
       "vendor purchases",
     ],
+    entitySignals: [
+      "staffing",
+      "capacity",
+      "nurses",
+      "managers",
+      "human resources",
+    ],
+    categories: ["actor", "team", "process", "unknown"],
   },
   {
     label: "Customer Responsiveness",
@@ -190,6 +285,8 @@ const CAPABILITY_VOCABULARY = [
       "complaint",
       "refund",
     ],
+    entitySignals: ["customer", "support", "customer friction"],
+    categories: ["team", "unknown", "risk"],
   },
   {
     label: "Accountability",
@@ -204,6 +301,8 @@ const CAPABILITY_VOCABULARY = [
       "commitment",
       "empowered",
     ],
+    entitySignals: ["leadership", "manager", "operations", "owner"],
+    categories: ["actor", "team"],
   },
   {
     label: "Risk Management",
@@ -219,6 +318,15 @@ const CAPABILITY_VOCABULARY = [
       "safer to wait",
       "challenged later",
     ],
+    entitySignals: [
+      "burnout",
+      "failure",
+      "bottleneck",
+      "delay",
+      "friction",
+      "risk",
+    ],
+    categories: ["risk", "unknown"],
   },
   {
     label: "Learning",
@@ -232,6 +340,8 @@ const CAPABILITY_VOCABULARY = [
       "adapt",
       "knowledge retained",
     ],
+    entitySignals: ["learning", "feedback", "knowledge", "documentation"],
+    categories: ["process", "unknown"],
   },
   {
     label: "Adaptation",
@@ -247,6 +357,8 @@ const CAPABILITY_VOCABULARY = [
       "changing conditions",
       "demand spikes",
     ],
+    entitySignals: ["growth pressure", "customer friction", "delay", "change"],
+    categories: ["risk", "unknown", "process"],
   },
 ];
 
@@ -269,12 +381,68 @@ function unique(values: string[]): string[] {
   return Array.from(new Set(values.filter(Boolean)));
 }
 
-export function inferOrganizationalCapabilities(params: {
+function nodeText(node: OrganizationReasoningNode): string {
+  return [
+    node.canonicalName,
+    node.category,
+    ...node.aliases,
+    ...node.relatedEntityIds,
+  ]
+    .map(normalizeText)
+    .filter(Boolean)
+    .join(" ");
+}
+
+function inferFromGraph(params: {
+  organizationReasoningGraph: OrganizationReasoningGraph;
+}): DetectedOrganizationalCapability[] {
+  const { organizationReasoningGraph } = params;
+
+  return CAPABILITY_VOCABULARY.map((capability) => {
+    const matchedNodes = organizationReasoningGraph.nodes.filter((node) => {
+      const text = nodeText(node);
+
+      const signalMatch = capability.entitySignals.some((signal) =>
+        text.includes(normalizeText(signal))
+      );
+
+      const categoryMatch = capability.categories.includes(node.category);
+
+      return signalMatch || (categoryMatch && node.confidence >= 0.95);
+    });
+
+    if (matchedNodes.length === 0) return null;
+
+    const evidence = unique(
+      matchedNodes.map(
+        (node) => `${node.canonicalName} (${node.category})`
+      )
+    );
+
+    const understandingIds = unique(matchedNodes.map((node) => node.entityId));
+
+    const averageConfidence =
+      matchedNodes.reduce((sum, node) => sum + node.confidence, 0) /
+      matchedNodes.length;
+
+    return {
+      label: capability.label,
+      description: capability.description,
+      confidence: Math.min(0.95, averageConfidence),
+      evidence,
+      understandingIds,
+    };
+  }).filter((capability): capability is DetectedOrganizationalCapability =>
+    Boolean(capability)
+  );
+}
+
+function inferFromInterpretations(params: {
   interpretations: FunctionalInterpretation[];
 }): DetectedOrganizationalCapability[] {
   const { interpretations } = params;
 
-  const detected = CAPABILITY_VOCABULARY.map((capability) => {
+  return CAPABILITY_VOCABULARY.map((capability) => {
     const matchedInterpretations = interpretations.filter((interpretation) => {
       const text = getInterpretationText(interpretation);
       return capability.dynamics.some((dynamic) => text.includes(dynamic));
@@ -310,6 +478,25 @@ export function inferOrganizationalCapabilities(params: {
   }).filter((capability): capability is DetectedOrganizationalCapability =>
     Boolean(capability)
   );
+}
 
-  return detected;
+export function inferOrganizationalCapabilities(params: {
+  interpretations: FunctionalInterpretation[];
+  organizationReasoningGraph?: OrganizationReasoningGraph;
+}): DetectedOrganizationalCapability[] {
+  const { interpretations, organizationReasoningGraph } = params;
+
+  if (
+    organizationReasoningGraph &&
+    Array.isArray(organizationReasoningGraph.nodes) &&
+    organizationReasoningGraph.nodes.length > 0
+  ) {
+    const graphCapabilities = inferFromGraph({ organizationReasoningGraph });
+
+    if (graphCapabilities.length > 0) {
+      return graphCapabilities;
+    }
+  }
+
+  return inferFromInterpretations({ interpretations });
 }

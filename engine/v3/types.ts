@@ -1,3 +1,9 @@
+import type {
+  OrganizationalAssessment,
+  OrganizationalExplanation,
+  OrganizationalJudgment,
+} from "./model/judgment/organizationalJudgment";
+
 export type V3EvidenceType =
   | "fact"
   | "claim"
@@ -8,7 +14,7 @@ export type V3EvidenceType =
   | "metric"
   | "unknown";
 
-  export type V3Observation = {
+export type V3Observation = {
   id: string;
   statement: string;
   evidenceIds: string[];
@@ -200,40 +206,24 @@ export type V3Mechanism = {
   title: string;
   type: V3MechanismType;
 
-  /**
-   * Explicit engine chain:
-   * Theme → Mechanism → Belief
-   */
   themeIds: string[];
   beliefIds: string[];
 
-  /**
-   * Human-readable causal structure.
-   */
   cause: string;
   mechanism: string;
   effect: string;
 
-  /**
-   * Explainability links.
-   */
   evidenceIds: string[];
   supportingEvidenceIds: string[];
   contradictingEvidenceIds: string[];
   relationshipIds: string[];
   contradictionIds: string[];
 
-  /**
-   * Executive explanation.
-   */
   explanation: string;
   assumptions: string[];
   risks: string[];
   openQuestions: string[];
 
-  /**
-   * Engine scoring.
-   */
   confidence: number;
   strength: number;
   stability: number;
@@ -337,25 +327,16 @@ export type V3Belief = {
   explanation: string;
   understandingId: string;
 
-  /**
-   * Explicit belief construction.
-   */
   supportingEvidenceIds: string[];
   contradictingEvidenceIds: string[];
   mechanismIds: string[];
   themeIds: string[];
   contradictionIds: string[];
 
-  /**
-   * Executive-facing reasoning.
-   */
   supportingReasons: string[];
   concerns: string[];
   nextQuestions: string[];
 
-  /**
-   * Engine scoring.
-   */
   stability?: number;
   utility?: number;
   priority?: V3PriorityScore;
@@ -527,10 +508,6 @@ export type DiscoveryV3Result = {
   mechanisms: V3Mechanism[];
   hypotheses: V3Hypothesis[];
 
-  /**
-   * Keep causalChains for backward compatibility.
-   * Sprint 18 should increasingly treat mechanisms as canonical.
-   */
   causalChains: V3CausalChain[];
 
   explanations: V3Explanation[];
@@ -544,4 +521,8 @@ export type DiscoveryV3Result = {
   propagatedConfidence?: import("./confidencePropagation").V3PropagatedConfidence;
   reasoningGraph?: V3ReasoningGraph;
   organismState?: V3OrganismState;
+
+  organizationalExplanations?: OrganizationalExplanation[];
+  organizationalJudgments?: OrganizationalJudgment[];
+  executiveAssessment?: OrganizationalAssessment;
 };

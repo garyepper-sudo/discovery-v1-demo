@@ -1,0 +1,370 @@
+import type { OrganizationalMechanismType } from "./organizationalMechanism";
+
+export type MechanismProfile = {
+  type: OrganizationalMechanismType;
+  title: string;
+  executiveName: string;
+
+  summary: string;
+  description: string;
+  interpretation: string;
+  executiveImplication: string;
+  defaultInterpretation: string;
+  defaultExecutiveImplication: string;
+  organizationalBehavior: string;
+
+  behaviors: string[];
+  capabilities: string[];
+  consequences: string[];
+
+  affectedCapabilities: string[];
+
+  severity: number;
+  actionability: number;
+  executivePriority: number;
+};
+
+function profile(input: Omit<MechanismProfile, "defaultInterpretation" | "defaultExecutiveImplication" | "affectedCapabilities">): MechanismProfile {
+  return {
+    ...input,
+    defaultInterpretation: input.interpretation,
+    defaultExecutiveImplication: input.executiveImplication,
+    affectedCapabilities: input.capabilities,
+  };
+}
+
+export const MECHANISM_PROFILES: Record<
+  OrganizationalMechanismType,
+  MechanismProfile
+> = {
+  decisionLatency: profile({
+    type: "decisionLatency",
+    title: "Decision Latency",
+    executiveName: "Decision Latency",
+    summary: "Decisions appear to slow down, stall, or require excessive escalation.",
+    description: "Important decisions are delayed by unclear authority, approval drag, or missing context.",
+    interpretation: "The organization may be losing speed because decision rights, authority, or information flow are unclear.",
+    executiveImplication: "Leadership may need to clarify decision ownership, reduce approval drag, or improve escalation paths.",
+    organizationalBehavior: "Decisions take longer than expected despite visible activity.",
+    behaviors: ["delay", "approval", "escalation", "waiting", "slow decision", "bottleneck"],
+    capabilities: ["decision-making", "execution", "adaptation"],
+    consequences: ["slower execution", "missed timing", "unclear ownership"],
+    severity: 0.75,
+    actionability: 0.8,
+    executivePriority: 0.85,
+  }),
+
+  coordinationBreakdown: profile({
+    type: "coordinationBreakdown",
+    title: "Coordination Breakdown",
+    executiveName: "Coordination Breakdown",
+    summary: "Teams or functions appear misaligned in how work moves across the organization.",
+    description: "Cross-functional work is impaired by handoff failures, unclear dependencies, or fragmented operating rhythms.",
+    interpretation: "Execution may be impaired by handoff failures, unclear dependencies, or fragmented operating rhythms.",
+    executiveImplication: "Leadership may need to improve cross-functional coordination, operating cadence, and dependency visibility.",
+    organizationalBehavior: "Work moves unevenly across teams and gaps appear between intent and execution.",
+    behaviors: ["handoff", "misalignment", "dependency", "coordination", "disconnect", "silo"],
+    capabilities: ["coordination", "execution", "communication"],
+    consequences: ["execution gaps", "duplicated work", "missed dependencies"],
+    severity: 0.8,
+    actionability: 0.75,
+    executivePriority: 0.85,
+  }),
+
+  governanceFriction: profile({
+    type: "governanceFriction",
+    title: "Governance Friction",
+    executiveName: "Governance Friction",
+    summary: "Governance, approvals, or oversight structures appear to slow progress.",
+    description: "Control structures may be mismatched to the speed or complexity of the work.",
+    interpretation: "The organization may have control structures that are not well matched to the speed or complexity of the work.",
+    executiveImplication: "Leadership may need to clarify governance roles, simplify approval paths, or rebalance control and autonomy.",
+    organizationalBehavior: "Progress is slowed by unclear approval structures, competing authorities, or governance overhead.",
+    behaviors: ["approval", "governance", "oversight", "committee", "control", "review"],
+    capabilities: ["governance", "execution", "accountability"],
+    consequences: ["slower progress", "approval drag", "unclear authority"],
+    severity: 0.75,
+    actionability: 0.7,
+    executivePriority: 0.8,
+  }),
+
+  knowledgeConcentration: profile({
+    type: "knowledgeConcentration",
+    title: "Knowledge Concentration",
+    executiveName: "Knowledge Concentration",
+    summary: "Critical knowledge appears concentrated in too few people or informal channels.",
+    description: "The organization may be vulnerable to bottlenecks, dependency risk, and knowledge loss.",
+    interpretation: "The organization may be vulnerable to bottlenecks, dependency risk, and knowledge loss.",
+    executiveImplication: "Leadership may need to distribute knowledge, document critical context, and reduce single points of failure.",
+    organizationalBehavior: "Progress depends heavily on a small number of people or informal knowledge holders.",
+    behaviors: ["knowledge", "single point", "expert", "tribal", "dependency", "handoff"],
+    capabilities: ["knowledge", "continuity", "resilience"],
+    consequences: ["bottlenecks", "knowledge loss", "dependency risk"],
+    severity: 0.8,
+    actionability: 0.75,
+    executivePriority: 0.85,
+  }),
+
+  executionDrag: profile({
+    type: "executionDrag",
+    title: "Execution Drag",
+    executiveName: "Execution Drag",
+    summary: "High effort is not converting into proportional progress.",
+    description: "Execution may be slowed by accumulated friction across priorities, ownership, process, or coordination.",
+    interpretation: "Execution may be slowed by accumulated friction across priorities, ownership, process, or coordination.",
+    executiveImplication: "Leadership may need to remove friction, simplify priorities, and improve the operating system around execution.",
+    organizationalBehavior: "Activity remains high while forward progress feels slower than expected.",
+    behaviors: ["slow", "drag", "blocked", "friction", "rework", "stalled"],
+    capabilities: ["execution", "prioritization", "delivery"],
+    consequences: ["missed goals", "slow delivery", "reduced momentum"],
+    severity: 0.85,
+    actionability: 0.8,
+    executivePriority: 0.9,
+  }),
+
+  feedbackFailure: profile({
+    type: "feedbackFailure",
+    title: "Feedback Failure",
+    executiveName: "Feedback Failure",
+    summary: "The organization is not converting signals or lessons into timely adjustment.",
+    description: "Learning loops may be weak, delayed, ignored, or disconnected from decision-making.",
+    interpretation: "Learning loops may be weak, delayed, ignored, or disconnected from decision-making.",
+    executiveImplication: "Leadership may need to strengthen feedback channels, review rhythms, and mechanisms for adaptation.",
+    organizationalBehavior: "The same issues recur because signals are not translated into organizational learning.",
+    behaviors: ["feedback", "recurring", "lesson", "signal", "ignored", "repeat"],
+    capabilities: ["learning", "adaptation", "decision-making"],
+    consequences: ["repeated issues", "slow learning", "weak adaptation"],
+    severity: 0.75,
+    actionability: 0.75,
+    executivePriority: 0.8,
+  }),
+
+  capabilityConstraint: profile({
+    type: "capabilityConstraint",
+    title: "Capability Constraint",
+    executiveName: "Capability Constraint",
+    summary: "A required capability appears insufficient for the strategy or operating demand.",
+    description: "The organization may be asking a team, process, or system to perform beyond its current capability.",
+    interpretation: "The organization may be asking a team, process, or system to perform beyond its current capability.",
+    executiveImplication: "Leadership may need to invest in capability building, resourcing, process redesign, or talent support.",
+    organizationalBehavior: "Performance is constrained by a missing, underdeveloped, or overloaded capability.",
+    behaviors: ["capability", "gap", "capacity", "skill", "constraint", "underdeveloped"],
+    capabilities: ["capability-building", "execution", "resilience"],
+    consequences: ["performance constraint", "delivery risk", "scaling limits"],
+    severity: 0.85,
+    actionability: 0.7,
+    executivePriority: 0.9,
+  }),
+
+  priorityConflict: profile({
+    type: "priorityConflict",
+    title: "Priority Conflict",
+    executiveName: "Priority Conflict",
+    summary: "Multiple priorities appear to compete for attention, resources, or sequencing.",
+    description: "The organization may lack sufficient priority clarity, causing tradeoffs to be pushed down into execution.",
+    interpretation: "The organization may lack sufficient priority clarity, causing tradeoffs to be pushed down into execution.",
+    executiveImplication: "Leadership may need to clarify strategic priorities, sequence work, and make tradeoff decisions explicit.",
+    organizationalBehavior: "Teams face competing demands and unclear tradeoffs.",
+    behaviors: ["priority", "tradeoff", "competing", "conflict", "focus", "sequence"],
+    capabilities: ["prioritization", "execution", "resource-allocation"],
+    consequences: ["focus dilution", "resource conflict", "execution drag"],
+    severity: 0.8,
+    actionability: 0.85,
+    executivePriority: 0.9,
+  }),
+
+  accountabilityGap: profile({
+    type: "accountabilityGap",
+    title: "Accountability Gap",
+    executiveName: "Accountability Gap",
+    summary: "Ownership, responsibility, or follow-through appears unclear.",
+    description: "Unclear accountability boundaries may be weakening execution reliability.",
+    interpretation: "The organization may have unclear accountability boundaries, weakening execution reliability.",
+    executiveImplication: "Leadership may need to clarify owners, decision rights, success metrics, and follow-through expectations.",
+    organizationalBehavior: "Important work lacks clear ownership or consistent follow-through.",
+    behaviors: ["owner", "accountability", "responsibility", "follow-through", "unclear", "handoff"],
+    capabilities: ["accountability", "execution", "governance"],
+    consequences: ["missed ownership", "execution risk", "slow follow-through"],
+    severity: 0.8,
+    actionability: 0.85,
+    executivePriority: 0.9,
+  }),
+
+  resourceConstraint: profile({
+    type: "resourceConstraint",
+    title: "Resource Constraint",
+    executiveName: "Resource Constraint",
+    summary: "The organization appears constrained by insufficient time, people, budget, capacity, or attention.",
+    description: "Operating demand may exceed available resources or capacity.",
+    interpretation: "The operating demand may exceed available resources or capacity.",
+    executiveImplication: "Leadership may need to rebalance scope, increase capacity, sequence priorities, or reduce load.",
+    organizationalBehavior: "Teams struggle to absorb demand with available resources.",
+    behaviors: ["resource", "capacity", "budget", "headcount", "time", "overload"],
+    capabilities: ["resource-allocation", "execution", "capacity"],
+    consequences: ["overload", "missed delivery", "capacity strain"],
+    severity: 0.75,
+    actionability: 0.8,
+    executivePriority: 0.85,
+  }),
+
+  coordination: profile({
+    type: "coordination",
+    title: "Coordination Breakdown",
+    executiveName: "Coordination Breakdown",
+    summary: "Legacy coordination profile mapped to coordination breakdown.",
+    description: "Legacy compatibility profile.",
+    interpretation: "Execution may be impaired by weak cross-functional coordination.",
+    executiveImplication: "Leadership may need to improve operating cadence and dependency visibility.",
+    organizationalBehavior: "Teams are not coordinating effectively across dependencies.",
+    behaviors: ["coordination", "handoff", "dependency", "silo"],
+    capabilities: ["coordination", "execution", "communication"],
+    consequences: ["execution gaps", "missed dependencies"],
+    severity: 0.8,
+    actionability: 0.75,
+    executivePriority: 0.85,
+  }),
+
+  governance: profile({
+    type: "governance",
+    title: "Governance Friction",
+    executiveName: "Governance Friction",
+    summary: "Legacy governance profile mapped to governance friction.",
+    description: "Legacy compatibility profile.",
+    interpretation: "Governance may be creating friction or ambiguity.",
+    executiveImplication: "Leadership may need to clarify governance roles and approval paths.",
+    organizationalBehavior: "Governance structures slow or complicate progress.",
+    behaviors: ["governance", "approval", "oversight", "review"],
+    capabilities: ["governance", "execution", "accountability"],
+    consequences: ["approval drag", "unclear authority"],
+    severity: 0.75,
+    actionability: 0.7,
+    executivePriority: 0.8,
+  }),
+
+  execution: profile({
+    type: "execution",
+    title: "Execution Drag",
+    executiveName: "Execution Drag",
+    summary: "Legacy execution profile mapped to execution drag.",
+    description: "Legacy compatibility profile.",
+    interpretation: "The organization may be experiencing execution friction.",
+    executiveImplication: "Leadership may need to remove friction and simplify execution paths.",
+    organizationalBehavior: "Activity is not converting into proportional progress.",
+    behaviors: ["execution", "drag", "blocked", "slow", "friction"],
+    capabilities: ["execution", "delivery", "prioritization"],
+    consequences: ["slow delivery", "reduced momentum"],
+    severity: 0.85,
+    actionability: 0.8,
+    executivePriority: 0.9,
+  }),
+
+  knowledge: profile({
+    type: "knowledge",
+    title: "Knowledge Concentration",
+    executiveName: "Knowledge Concentration",
+    summary: "Legacy knowledge profile mapped to knowledge concentration.",
+    description: "Legacy compatibility profile.",
+    interpretation: "Critical knowledge may be too concentrated.",
+    executiveImplication: "Leadership may need to distribute and preserve organizational knowledge.",
+    organizationalBehavior: "Work depends on concentrated knowledge holders.",
+    behaviors: ["knowledge", "expert", "tribal", "dependency"],
+    capabilities: ["knowledge", "continuity", "resilience"],
+    consequences: ["knowledge loss", "dependency risk"],
+    severity: 0.8,
+    actionability: 0.75,
+    executivePriority: 0.85,
+  }),
+
+  decision: profile({
+    type: "decision",
+    title: "Decision Latency",
+    executiveName: "Decision Latency",
+    summary: "Legacy decision profile mapped to decision latency.",
+    description: "Legacy compatibility profile.",
+    interpretation: "Decision-making may be slower than the operating context requires.",
+    executiveImplication: "Leadership may need to clarify decision rights and escalation paths.",
+    organizationalBehavior: "Decisions stall, slow down, or require excessive escalation.",
+    behaviors: ["decision", "approval", "delay", "escalation"],
+    capabilities: ["decision-making", "execution", "adaptation"],
+    consequences: ["slower execution", "missed timing"],
+    severity: 0.75,
+    actionability: 0.8,
+    executivePriority: 0.85,
+  }),
+
+  capability: profile({
+    type: "capability",
+    title: "Capability Constraint",
+    executiveName: "Capability Constraint",
+    summary: "Legacy capability profile mapped to capability constraint.",
+    description: "Legacy compatibility profile.",
+    interpretation: "A required organizational capability may be underdeveloped.",
+    executiveImplication: "Leadership may need to invest in capability building or redesign work around constraints.",
+    organizationalBehavior: "Performance is limited by a capability gap.",
+    behaviors: ["capability", "gap", "capacity", "constraint"],
+    capabilities: ["capability-building", "execution", "resilience"],
+    consequences: ["performance constraint", "delivery risk"],
+    severity: 0.85,
+    actionability: 0.7,
+    executivePriority: 0.9,
+  }),
+
+  feedback: profile({
+    type: "feedback",
+    title: "Feedback Failure",
+    executiveName: "Feedback Failure",
+    summary: "Legacy feedback profile mapped to feedback failure.",
+    description: "Legacy compatibility profile.",
+    interpretation: "Feedback loops may be weak or disconnected from decisions.",
+    executiveImplication: "Leadership may need to strengthen learning loops and adaptation rhythms.",
+    organizationalBehavior: "Signals are not translated into timely learning or adjustment.",
+    behaviors: ["feedback", "signal", "lesson", "repeat"],
+    capabilities: ["learning", "adaptation", "decision-making"],
+    consequences: ["repeated issues", "slow learning"],
+    severity: 0.75,
+    actionability: 0.75,
+    executivePriority: 0.8,
+  }),
+
+  priority: profile({
+    type: "priority",
+    title: "Priority Conflict",
+    executiveName: "Priority Conflict",
+    summary: "Legacy priority profile mapped to priority conflict.",
+    description: "Legacy compatibility profile.",
+    interpretation: "Competing priorities may be creating execution drag.",
+    executiveImplication: "Leadership may need to clarify priorities and make tradeoffs explicit.",
+    organizationalBehavior: "Teams face competing demands and unclear tradeoffs.",
+    behaviors: ["priority", "tradeoff", "focus", "conflict"],
+    capabilities: ["prioritization", "execution", "resource-allocation"],
+    consequences: ["focus dilution", "resource conflict"],
+    severity: 0.8,
+    actionability: 0.85,
+    executivePriority: 0.9,
+  }),
+
+  unknown: profile({
+    type: "unknown",
+    title: "Unclassified Organizational Mechanism",
+    executiveName: "Unclassified Mechanism",
+    summary: "A recurring organizational dynamic appears present but does not yet map cleanly to a known mechanism type.",
+    description: "Discovery has detected a possible organizational pattern that requires more evidence before classification.",
+    interpretation: "Discovery has detected a possible organizational pattern that requires more evidence before classification.",
+    executiveImplication: "Leadership should treat this as an emerging signal rather than a settled conclusion.",
+    organizationalBehavior: "A recurring but not yet fully classified organizational behavior is visible.",
+    behaviors: ["pattern", "signal", "recurring"],
+    capabilities: ["unknown"],
+    consequences: ["unclear organizational implication"],
+    severity: 0.5,
+    actionability: 0.4,
+    executivePriority: 0.5,
+  }),
+};
+
+export const mechanismProfiles = MECHANISM_PROFILES;
+
+export function getMechanismProfile(
+  type: OrganizationalMechanismType,
+): MechanismProfile {
+  return MECHANISM_PROFILES[type] ?? MECHANISM_PROFILES.unknown;
+}
