@@ -7,7 +7,10 @@ import {
 
 export type OrganizationId = string;
 
-const STORE_DIR = path.join(process.cwd(), ".discovery-runtime", "organizations");
+const STORE_DIR =
+  process.env.VERCEL === "1"
+    ? path.join("/tmp", ".discovery-runtime", "organizations")
+    : path.join(process.cwd(), ".discovery-runtime", "organizations");
 
 function ensureStoreDir() {
   if (!fs.existsSync(STORE_DIR)) {
