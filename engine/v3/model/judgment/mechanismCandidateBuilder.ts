@@ -26,6 +26,81 @@ function allProfileTerms(): {
   };
 }
 
+function inferFallbackTerms(text: string): {
+  behaviors: string[];
+  capabilities: string[];
+  consequences: string[];
+} {
+  const behaviors: string[] = [];
+  const capabilities: string[] = [];
+  const consequences: string[] = [];
+
+  if (countMatches(text, ["delay", "delays", "latency", "bottleneck", "stall", "approval"]) > 0) {
+    behaviors.push("delay", "latency", "bottleneck");
+    capabilities.push("decision", "execution", "coordination");
+    consequences.push("slow execution", "missed timing");
+  }
+
+  if (countMatches(text, ["dashboard", "failure", "failures", "system", "platform", "process"]) > 0) {
+    behaviors.push("process failure", "system breakdown");
+    capabilities.push("execution", "coordination");
+    consequences.push("operational drag", "execution risk");
+  }
+
+  if (countMatches(text, ["leadership", "manager", "managers", "ownership", "owns", "accountability"]) > 0) {
+    behaviors.push("ownership ambiguity", "governance friction");
+    capabilities.push("governance", "accountability", "decision");
+    consequences.push("decision drag", "coordination risk");
+  }
+
+  if (countMatches(text, ["narrative", "communication", "alignment", "clarity", "friction"]) > 0) {
+    behaviors.push("communication gap", "alignment gap");
+    capabilities.push("communication", "alignment");
+    consequences.push("coordination breakdown");
+  }
+
+  if (countMatches(text, ["customer", "support", "feedback"]) > 0) {
+    behaviors.push("feedback failure", "customer signal loss");
+    capabilities.push("customer responsiveness", "learning");
+    consequences.push("customer friction");
+  }
+
+  if (countMatches(text, ["growth", "pressure", "burnout", "resource", "capacity"]) > 0) {
+    behaviors.push("capacity strain", "resource constraint");
+    capabilities.push("resource allocation", "planning", "adaptation");
+    consequences.push("execution drag", "burnout risk");
+  }
+
+  return {
+    behaviors: unique(behaviors),
+    capabilities: unique(capabilities),
+    consequences: unique(consequences),
+  };
+}
+
+function mergeTerms(
+  shared: {
+    behaviors: string[];
+    capabilities: string[];
+    consequences: string[];
+  },
+  fallback: {
+    behaviors: string[];
+    capabilities: string[];
+    consequences: string[];
+  },
+): {
+  behaviors: string[];
+  capabilities: string[];
+  consequences: string[];
+} {
+  return {
+    behaviors: unique([...shared.behaviors, ...fallback.behaviors]),
+    capabilities: unique([...shared.capabilities, ...fallback.capabilities]),
+    consequences: unique([...shared.consequences, ...fallback.consequences]),
+  };
+}
+
 export function buildMechanismCandidates({
   explanations,
   reasoningPaths = [],
@@ -42,6 +117,7 @@ export function buildMechanismCandidates({
   const explanationSignals = explanations.map((explanation) => ({
     id: explanation.id,
     text: normalizeText(
+      explanation.title,
       explanation.summary,
       explanation.interpretation,
       explanation.executiveImplication,
@@ -54,6 +130,8 @@ export function buildMechanismCandidates({
   const candidates: MechanismCandidate[] = [];
 
   explanationSignals.forEach((signal, index) => {
+    const fallbackForSignal = inferFallbackTerms(signal.text);
+
     const relatedSignals = explanationSignals.filter((other) => {
       if (other.id === signal.id) return true;
 
@@ -72,30 +150,46 @@ export function buildMechanismCandidates({
         vocabulary.consequences,
       ).length;
 
+      const fallbackOverlap =
+        countMatches(other.text, fallbackForSignal.behaviors) +
+        countMatches(other.text, fallbackForSignal.capabilities) +
+        countMatches(other.text, fallbackForSignal.consequences);
+
       return (
         sharedBehaviorCount +
           sharedCapabilityCount +
-          sharedConsequenceCount >
+          sharedConsequenceCount +
+          fallbackOverlap >
         0
       );
     });
 
     const sourceTexts = unique(relatedSignals.map((item) => item.text));
 
-    const sharedBehaviors = extractSharedTerms(
-      sourceTexts,
-      vocabulary.behaviors,
+    const sharedTerms = {
+      behaviors: extractSharedTerms(sourceTexts, vocabulary.behaviors),
+      capabilities: extractSharedTerms(sourceTexts, vocabulary.capabilities),
+      consequences: extractSharedTerms(sourceTexts, vocabulary.consequences),
+    };
+
+    const fallbackTerms = sourceTexts.reduce(
+      (acc, text) => {
+        const inferred = inferFallbackTerms(text);
+
+        return {
+          behaviors: unique([...acc.behaviors, ...inferred.behaviors]),
+          capabilities: unique([...acc.capabilities, ...inferred.capabilities]),
+          consequences: unique([...acc.consequences, ...inferred.consequences]),
+        };
+      },
+      {
+        behaviors: [] as string[],
+        capabilities: [] as string[],
+        consequences: [] as string[],
+      },
     );
 
-    const sharedCapabilities = extractSharedTerms(
-      sourceTexts,
-      vocabulary.capabilities,
-    );
-
-    const sharedConsequences = extractSharedTerms(
-      sourceTexts,
-      vocabulary.consequences,
-    );
+    const enrichedTerms = mergeTerms(sharedTerms, fallbackTerms);
 
     const reasoningPathIds = reasoningPaths
       .filter((path) => {
@@ -108,9 +202,9 @@ export function buildMechanismCandidates({
         );
 
         return (
-          countMatches(pathText, sharedBehaviors) +
-            countMatches(pathText, sharedCapabilities) +
-            countMatches(pathText, sharedConsequences) >
+          countMatches(pathText, enrichedTerms.behaviors) +
+            countMatches(pathText, enrichedTerms.capabilities) +
+            countMatches(pathText, enrichedTerms.consequences) >
           0
         );
       })
@@ -127,9 +221,9 @@ export function buildMechanismCandidates({
         );
 
         return (
-          countMatches(capabilityText, sharedBehaviors) +
-            countMatches(capabilityText, sharedCapabilities) +
-            countMatches(capabilityText, sharedConsequences) >
+          countMatches(capabilityText, enrichedTerms.behaviors) +
+            countMatches(capabilityText, enrichedTerms.capabilities) +
+            countMatches(capabilityText, enrichedTerms.consequences) >
           0
         );
       })
@@ -144,9 +238,9 @@ export function buildMechanismCandidates({
         );
 
         return (
-          countMatches(clusterText, sharedBehaviors) +
-            countMatches(clusterText, sharedCapabilities) +
-            countMatches(clusterText, sharedConsequences) >
+          countMatches(clusterText, enrichedTerms.behaviors) +
+            countMatches(clusterText, enrichedTerms.capabilities) +
+            countMatches(clusterText, enrichedTerms.consequences) >
           0
         );
       })
@@ -164,9 +258,9 @@ export function buildMechanismCandidates({
         const judgmentText = normalizeText(judgment.summary);
 
         return (
-          countMatches(judgmentText, sharedBehaviors) +
-            countMatches(judgmentText, sharedCapabilities) +
-            countMatches(judgmentText, sharedConsequences) >
+          countMatches(judgmentText, enrichedTerms.behaviors) +
+            countMatches(judgmentText, enrichedTerms.capabilities) +
+            countMatches(judgmentText, enrichedTerms.consequences) >
           0
         );
       })
@@ -187,9 +281,9 @@ export function buildMechanismCandidates({
       judgments.length;
 
     const sharedTermCount =
-      sharedBehaviors.length +
-      sharedCapabilities.length +
-      sharedConsequences.length;
+      enrichedTerms.behaviors.length +
+      enrichedTerms.capabilities.length +
+      enrichedTerms.consequences.length;
 
     candidates.push({
       id: `mechanism-candidate-${index + 1}`,
@@ -199,9 +293,9 @@ export function buildMechanismCandidates({
       clusterIds: unique(clusterIds),
       judgmentIds: unique(judgmentIds),
       sourceTexts,
-      sharedBehaviors,
-      sharedCapabilities,
-      sharedConsequences,
+      sharedBehaviors: enrichedTerms.behaviors,
+      sharedCapabilities: enrichedTerms.capabilities,
+      sharedConsequences: enrichedTerms.consequences,
       convergenceScore: clamp01(supportCount / Math.max(1, totalSignalCount)),
       noveltyScore: clamp01(
         sharedTermCount === 0 ? 0.75 : 0.25 / Math.max(1, sharedTermCount),
@@ -221,6 +315,10 @@ export function buildMechanismCandidates({
       [...candidate.reasoningPathIds].sort().join("|"),
       [...candidate.capabilityIds].sort().join("|"),
       [...candidate.clusterIds].sort().join("|"),
+      [...candidate.judgmentIds].sort().join("|"),
+      [...candidate.sharedBehaviors].sort().join("|"),
+      [...candidate.sharedCapabilities].sort().join("|"),
+      [...candidate.sharedConsequences].sort().join("|"),
     ].join("::");
 
     const existing = deduped.get(key);

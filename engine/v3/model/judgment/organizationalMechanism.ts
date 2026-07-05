@@ -62,15 +62,60 @@ export type OrganizationalMechanism = {
 
   organizationalScope?: string;
 
+  /**
+   * Executive-facing capabilities affected by this mechanism.
+   */
   affectedCapabilities: string[];
   affectedCapabilityIds: string[];
 
+  /**
+   * Canonical support relationships.
+   * These make the mechanism the hub object for organizational understanding.
+   */
   supportingEvidenceIds: string[];
   supportingExplanationIds: string[];
+  supportingReasoningPathIds?: string[];
+  supportingJudgmentIds?: string[];
   supportingClusterIds: string[];
   supportingPhenomenonIds: string[];
+  supportingCapabilityIds?: string[];
+  supportingSemanticConceptIds?: string[];
 
-  // Legacy aliases
+  /**
+   * Mechanism-centric enrichment.
+   * These allow capabilities, phenomena, clusters, and concepts
+   * to become supporting context rather than peer objects.
+   */
+  observedThroughPhenomenonIds?: string[];
+  observedThroughClusterIds?: string[];
+  explainsCapabilityIds?: string[];
+  explainsCapabilityLabels?: string[];
+  compressedIntoConceptIds?: string[];
+
+  /**
+   * Mechanism network relationships.
+   */
+  upstreamMechanismIds: string[];
+  downstreamMechanismIds: string[];
+  reinforcingMechanismIds: string[];
+  conflictingMechanismIds?: string[];
+  networkNeighborIds?: string[];
+
+  /**
+   * Aggregated support metrics.
+   */
+  supportCount?: number;
+  evidenceSupportCount?: number;
+  explanationSupportCount?: number;
+  reasoningPathSupportCount?: number;
+  clusterSupportCount?: number;
+  phenomenonSupportCount?: number;
+  capabilitySupportCount?: number;
+  semanticConceptSupportCount?: number;
+
+  /**
+   * Legacy aliases.
+   */
   explanationIds?: string[];
   reasoningPathIds?: string[];
   capabilityIds?: string[];
@@ -79,10 +124,6 @@ export type OrganizationalMechanism = {
 
   sourcePhenomenonIds?: string[];
   sourceClusterIds?: string[];
-
-  upstreamMechanismIds: string[];
-  downstreamMechanismIds: string[];
-  reinforcingMechanismIds: string[];
 
   evidenceReferences: KnowledgeReference[];
 

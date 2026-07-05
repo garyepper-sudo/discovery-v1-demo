@@ -3,6 +3,7 @@ import {
   type MechanismNetwork,
 } from "./buildMechanismNetwork";
 import { buildMechanismCandidates } from "./mechanismCandidateBuilder";
+import { consolidateOrganizationalMechanisms } from "./consolidateOrganizationalMechanisms";
 import { interpretMechanismCandidates } from "./mechanismInterpreter";
 import type { InferOrganizationalMechanismsInput } from "./mechanismInferenceTypes";
 import type { OrganizationalMechanism } from "./organizationalMechanism";
@@ -27,7 +28,9 @@ export function inferOrganizationalMechanisms({
     judgments,
   });
 
-  const mechanisms = interpretMechanismCandidates(candidates);
+  const rawMechanisms = interpretMechanismCandidates(candidates);
+
+  const mechanisms = consolidateOrganizationalMechanisms(rawMechanisms);
 
   return buildMechanismNetwork(mechanisms);
 }
