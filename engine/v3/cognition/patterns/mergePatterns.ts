@@ -27,7 +27,7 @@ export function mergePatternsIntoState(params: {
 
   params.detectedPatterns.forEach((detectedPattern) => {
     const existingIndex = mergedPatterns.findIndex(
-      (pattern) => pattern.id === detectedPattern.id
+      (pattern) => pattern.id === detectedPattern.id,
     );
 
     if (existingIndex >= 0) {
@@ -42,21 +42,21 @@ export function mergePatternsIntoState(params: {
           new Set([
             ...existing.relatedObservationIds,
             ...detectedPattern.observationIds,
-          ])
+          ]),
         ),
         relatedBeliefIds: Array.from(
           new Set([
             ...existing.relatedBeliefIds,
             ...detectedPattern.beliefIds,
-          ])
+          ]),
         ),
         strength: Math.min(
           1,
-          Math.max(existing.strength, detectedPattern.strength)
+          Math.max(existing.strength, detectedPattern.strength),
         ),
         confidence: Math.min(
           0.98,
-          Math.max(existing.confidence, detectedPattern.confidence)
+          Math.max(existing.confidence, detectedPattern.confidence),
         ),
         occurrences: nextOccurrences,
         lastSeenAt: params.now,
@@ -72,6 +72,8 @@ export function mergePatternsIntoState(params: {
 
     mergedPatterns.push({
       id: detectedPattern.id,
+      cognitiveLayer: "pattern",
+      ontologyVersion: "1.0",
       label: buildPatternLabel(detectedPattern.statement),
       statement: detectedPattern.statement,
       description: detectedPattern.statement,

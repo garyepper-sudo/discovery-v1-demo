@@ -143,8 +143,7 @@ export type PersistentMechanism = {
   relatedBeliefIds: string[];
 };
 
-export type PersistentPattern = {
-  id: string;
+export type PersistentPattern = CognitiveObjectBase<"pattern"> & {
   label: string;
   statement: string;
   description: string;
