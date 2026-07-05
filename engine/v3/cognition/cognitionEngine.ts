@@ -57,6 +57,7 @@ export function runOrganizationCognition(params: {
 
   const organizationModel = syncOrganizationEntities({
     organizationModel: runtime.organizationModel,
+    organizationId: runtime.metadata.organizationId,
     entityMentions,
   });
 

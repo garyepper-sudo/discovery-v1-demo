@@ -26,6 +26,7 @@ const mentions = observations.flatMap((text, index) =>
 
 const updatedModel = syncOrganizationEntities({
   organizationModel: model,
+  organizationId,
   entityMentions: mentions,
 });
 
