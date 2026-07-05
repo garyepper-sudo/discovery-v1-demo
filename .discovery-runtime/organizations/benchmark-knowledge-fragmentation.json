@@ -1,15 +1,15 @@
 {
   "metadata": {
     "organizationId": "benchmark-knowledge-fragmentation",
-    "createdAt": "2026-07-05T21:27:49.943Z",
-    "updatedAt": "2026-07-05T21:27:49.943Z",
+    "createdAt": "2026-07-05T21:58:00.115Z",
+    "updatedAt": "2026-07-05T21:58:00.115Z",
     "investigationCount": 0
   },
   "organizationModel": {
     "organizationId": "benchmark-knowledge-fragmentation",
     "version": 1,
-    "createdAt": "2026-07-05T21:27:49.943Z",
-    "updatedAt": "2026-07-05T21:27:49.943Z",
+    "createdAt": "2026-07-05T21:58:00.115Z",
+    "updatedAt": "2026-07-05T21:58:00.115Z",
     "entities": [],
     "entityRelationships": [],
     "nodes": [],
@@ -27,7 +27,7 @@
     "understandingState": null,
     "organizationalUnderstandingState": {
       "organizationId": "benchmark-knowledge-fragmentation",
-      "lastUpdatedAt": "2026-07-05T21:27:49.943Z",
+      "lastUpdatedAt": "2026-07-05T21:58:00.115Z",
       "currentUnderstandings": [],
       "organizationalConcepts": [],
       "confidenceLandscape": [],

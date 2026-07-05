@@ -40,6 +40,15 @@ type ObservationDefinition = {
   description: string;
 };
 
+type PatternDefinition = {
+  type: OrganizationalPatternType;
+  label: string;
+  description: string;
+  meaningIds: string[];
+  observationTypes: OrganizationalObservationType[];
+  possiblePhenomenonTypes: string[];
+};
+
 const OBSERVATION_DEFINITIONS: ObservationDefinition[] = [
   {
     type: "distributed_documentation",
@@ -167,40 +176,131 @@ const OBSERVATION_DEFINITIONS: ObservationDefinition[] = [
   },
 ];
 
-const PATTERN_MEANING_HINTS: Record<OrganizationalPatternType, string[]> = {
-  documentation_distributed_across_systems: [
+const OBSERVATION_MEANING_HINTS: Record<
+  OrganizationalObservationType,
+  string[]
+> = {
+  distributed_documentation: [
     "knowledge_continuity",
     "organizational_memory",
     "communication",
     "coordination",
   ],
-  work_is_being_repeated: [
+  duplicated_work: [
     "knowledge_continuity",
     "organizational_memory",
     "execution_capacity",
-    "organizational_agility",
   ],
-  knowledge_not_transferring: [
-    "knowledge_continuity",
-    "organizational_memory",
-    "communication",
-    "coordination",
-  ],
-  decisions_wait_for_approval: [
-    "decision_authority",
-    "leadership_dependency",
-    "governance",
-    "organizational_agility",
-  ],
-  ownership_is_unclear: ["ownership", "accountability", "coordination"],
-  learning_is_not_compounding: [
+  repeated_experiment: [
     "knowledge_continuity",
     "organizational_memory",
     "innovation_flow",
   ],
-  coordination_is_fragmented: ["coordination", "alignment", "communication"],
-  generic_pattern: [],
+  knowledge_stored_locally: [
+    "knowledge_continuity",
+    "organizational_memory",
+    "leadership_dependency",
+  ],
+  weak_handoff: ["knowledge_continuity", "communication", "coordination"],
+  missing_owner: ["ownership", "accountability", "coordination"],
+  approval_waiting: [
+    "decision_authority",
+    "leadership_dependency",
+    "governance",
+  ],
+  executive_escalation: [
+    "decision_authority",
+    "leadership_dependency",
+    "governance",
+  ],
+  conflicting_documentation: [
+    "knowledge_continuity",
+    "organizational_memory",
+    "alignment",
+  ],
+  learning_not_reused: [
+    "knowledge_continuity",
+    "organizational_memory",
+    "innovation_flow",
+  ],
+  coordination_gap: ["coordination", "alignment", "communication"],
+  generic_observation: [],
 };
+
+const PATTERN_DEFINITIONS: PatternDefinition[] = [
+  {
+    type: "documentation_distributed_across_systems",
+    label: "Documentation Distributed Across Systems",
+    description:
+      "Multiple observations reinforce the concept that organizational knowledge is distributed across systems, documents, or people.",
+    meaningIds: [
+      "knowledge_continuity",
+      "organizational_memory",
+      "communication",
+      "coordination",
+    ],
+    observationTypes: ["distributed_documentation", "knowledge_stored_locally"],
+    possiblePhenomenonTypes: [
+      "knowledge_fragmentation",
+      "scattered_documentation",
+      "institutional_memory_loss",
+    ],
+  },
+  {
+    type: "work_is_being_repeated",
+    label: "Work Is Being Repeated",
+    description:
+      "Multiple observations reinforce the concept that work, experiments, or learning loops may be repeating instead of compounding.",
+    meaningIds: [
+      "knowledge_continuity",
+      "organizational_memory",
+      "execution_capacity",
+      "organizational_agility",
+    ],
+    observationTypes: ["duplicated_work", "repeated_experiment"],
+    possiblePhenomenonTypes: [
+      "duplicated_work",
+      "repeated_experimentation",
+      "organizational_learning_failure",
+    ],
+  },
+  {
+    type: "knowledge_not_transferring",
+    label: "Knowledge Is Not Transferring",
+    description:
+      "Multiple observations reinforce the concept that knowledge is not moving reliably across people, teams, or time.",
+    meaningIds: [
+      "knowledge_continuity",
+      "organizational_memory",
+      "communication",
+      "coordination",
+    ],
+    observationTypes: [
+      "weak_handoff",
+      "knowledge_stored_locally",
+      "learning_not_reused",
+    ],
+    possiblePhenomenonTypes: [
+      "weak_knowledge_transfer",
+      "institutional_memory_loss",
+      "organizational_learning_failure",
+    ],
+  },
+  {
+    type: "decisions_wait_for_approval",
+    label: "Decisions Wait For Approval",
+    description:
+      "Multiple observations reinforce the concept that work or decisions are waiting on approval, escalation, or leadership dependency.",
+    meaningIds: [
+      "decision_authority",
+      "leadership_dependency",
+      "governance",
+      "organizational_agility",
+    ],
+    observationTypes: ["approval_waiting", "executive_escalation"],
+    possiblePhenomenonTypes: ["approval_bottleneck", "decision_latency"],
+  },
+];
 
 function normalizeText(value: unknown): string {
   return typeof value === "string" ? value.trim().toLowerCase() : "";
@@ -244,6 +344,20 @@ function average(values: number[]): number {
   return values.reduce((sum, value) => sum + value, 0) / values.length;
 }
 
+function semanticSummaryForObservation(
+  definition: ObservationDefinition
+): string {
+  const meaningIds = OBSERVATION_MEANING_HINTS[definition.type] ?? [];
+
+  if (meaningIds.length === 0) {
+    return definition.description;
+  }
+
+  return `${definition.description} Semantically, this observation may indicate ${meaningIds
+    .map((meaningId) => meaningId.replace(/_/g, " "))
+    .join(", ")}.`;
+}
+
 function findRelatedEntities(params: {
   evidenceId: string;
   evidenceText: string;
@@ -259,6 +373,7 @@ function findRelatedEntities(params: {
           ? entity.evidenceIds
           : [];
 
+        if (!id) return false;
         if (entityEvidenceIds.includes(evidenceId)) return true;
 
         const text = entityText(entity);
@@ -303,6 +418,9 @@ function inferObservations(params: {
         sourceEvidenceIds: [id],
         relatedEntityIds,
         matchedTerms,
+        supportingMeaningIds: OBSERVATION_MEANING_HINTS[definition.type] ?? [],
+        semanticSummary: semanticSummaryForObservation(definition),
+        semanticStrength: clamp01(0.5 + matchedTerms.length * 0.08),
         confidence: clamp01(0.55 + matchedTerms.length * 0.08),
         strength: clamp01(0.5 + matchedTerms.length * 0.1),
       });
@@ -312,16 +430,22 @@ function inferObservations(params: {
   return observations;
 }
 
-function getConceptReinforcement(params: {
-  type: OrganizationalPatternType;
+function conceptScore(concept: SemanticConceptLike): number {
+  return clamp01(
+    concept.emergenceScore ?? concept.strength ?? concept.confidence ?? 0
+  );
+}
+
+function getConceptSupport(params: {
+  meaningIds: string[];
   semanticConcepts: SemanticConceptLike[];
 }): {
   supportingConceptIds: string[];
   supportingMeaningIds: string[];
   conceptReinforcement: number;
 } {
-  const { type, semanticConcepts } = params;
-  const relevantMeaningIds = new Set(PATTERN_MEANING_HINTS[type] ?? []);
+  const { meaningIds, semanticConcepts } = params;
+  const relevantMeaningIds = new Set(meaningIds);
 
   if (!relevantMeaningIds.size || !semanticConcepts.length) {
     return {
@@ -342,40 +466,70 @@ function getConceptReinforcement(params: {
   );
 
   const supportingMeaningIds = unique(
-    supportingConcepts.flatMap((concept) => concept.supportingMeaningIds ?? [])
-  );
-
-  const conceptReinforcement = clamp01(
-    average(
-      supportingConcepts.map(
-        (concept) =>
-          concept.emergenceScore ?? concept.strength ?? concept.confidence ?? 0
+    supportingConcepts.flatMap((concept) =>
+      (concept.supportingMeaningIds ?? []).filter((meaningId) =>
+        relevantMeaningIds.has(meaningId)
       )
     )
   );
 
+  const conceptReinforcement = average(supportingConcepts.map(conceptScore));
+
   return {
     supportingConceptIds,
     supportingMeaningIds,
-    conceptReinforcement,
+    conceptReinforcement: clamp01(conceptReinforcement),
   };
 }
 
-function makePattern(params: {
-  type: OrganizationalPatternType;
-  label: string;
-  description: string;
+function observationsForDefinition(params: {
+  definition: PatternDefinition;
   observations: OrganizationalObservation[];
-  possiblePhenomenonTypes: string[];
-  semanticConcepts?: SemanticConceptLike[];
+  conceptReinforcement: number;
+}): OrganizationalObservation[] {
+  const { definition, observations, conceptReinforcement } = params;
+  const allowedTypes = new Set(definition.observationTypes);
+
+  const semanticMeaningIds = new Set(definition.meaningIds);
+
+  const matchingObservations = observations.filter((observation) => {
+    const typeMatches = allowedTypes.has(observation.type);
+    const meaningMatches = observation.supportingMeaningIds.some((meaningId) =>
+      semanticMeaningIds.has(meaningId)
+    );
+
+    return typeMatches || meaningMatches;
+  });
+
+  if (conceptReinforcement <= 0) {
+    return matchingObservations;
+  }
+
+  const strongObservations = matchingObservations.filter(
+    (observation) =>
+      observation.confidence >= 0.55 ||
+      observation.strength >= 0.5 ||
+      observation.semanticStrength >= 0.5
+  );
+
+  return strongObservations.length > 0
+    ? strongObservations
+    : matchingObservations;
+}
+
+function makePattern(params: {
+  definition: PatternDefinition;
+  observations: OrganizationalObservation[];
+  supportingConceptIds: string[];
+  supportingMeaningIds: string[];
+  conceptReinforcement: number;
 }): OrganizationalPattern {
   const {
-    type,
-    label,
-    description,
+    definition,
     observations,
-    possiblePhenomenonTypes,
-    semanticConcepts = [],
+    supportingConceptIds,
+    supportingMeaningIds,
+    conceptReinforcement,
   } = params;
 
   const baseConfidence = clamp01(
@@ -388,20 +542,15 @@ function makePattern(params: {
       Math.max(1, observations.length)
   );
 
-  const {
-    supportingConceptIds,
-    supportingMeaningIds,
-    conceptReinforcement,
-  } = getConceptReinforcement({
-    type,
-    semanticConcepts,
-  });
+  const semanticStrength = clamp01(
+    average(observations.map((observation) => observation.semanticStrength))
+  );
 
   return {
-    id: `pattern-${type}`,
-    type,
-    label,
-    description,
+    id: `pattern-${definition.type}`,
+    type: definition.type,
+    label: definition.label,
+    description: definition.description,
     observationIds: observations.map((observation) => observation.id),
     sourceEvidenceIds: unique(
       observations.flatMap((observation) => observation.sourceEvidenceIds)
@@ -410,11 +559,20 @@ function makePattern(params: {
       observations.flatMap((observation) => observation.relatedEntityIds)
     ),
     supportingConceptIds,
-    supportingMeaningIds,
+    supportingMeaningIds: unique([
+      ...supportingMeaningIds,
+      ...observations.flatMap((observation) => observation.supportingMeaningIds),
+    ]),
     conceptReinforcement,
-    confidence: clamp01(baseConfidence * 0.75 + conceptReinforcement * 0.25),
-    strength: clamp01(baseStrength * 0.7 + conceptReinforcement * 0.3),
-    possiblePhenomenonTypes,
+    confidence: clamp01(
+      baseConfidence * 0.5 +
+        semanticStrength * 0.2 +
+        conceptReinforcement * 0.3
+    ),
+    strength: clamp01(
+      baseStrength * 0.45 + semanticStrength * 0.25 + conceptReinforcement * 0.3
+    ),
+    possiblePhenomenonTypes: definition.possiblePhenomenonTypes,
   };
 }
 
@@ -422,109 +580,38 @@ function inferPatterns(
   observations: OrganizationalObservation[],
   semanticConcepts: SemanticConceptLike[] = []
 ): OrganizationalPattern[] {
-  const byType = new Map<
-    OrganizationalObservationType,
-    OrganizationalObservation[]
-  >();
-
-  observations.forEach((observation) => {
-    const existing = byType.get(observation.type) ?? [];
-    existing.push(observation);
-    byType.set(observation.type, existing);
-  });
-
   const patterns: OrganizationalPattern[] = [];
 
-  const documentationObservations = [
-    ...(byType.get("distributed_documentation") ?? []),
-    ...(byType.get("knowledge_stored_locally") ?? []),
-  ];
+  PATTERN_DEFINITIONS.forEach((definition) => {
+    const {
+      supportingConceptIds,
+      supportingMeaningIds,
+      conceptReinforcement,
+    } = getConceptSupport({
+      meaningIds: definition.meaningIds,
+      semanticConcepts,
+    });
 
-  if (documentationObservations.length > 0) {
+    const supportingObservations = observationsForDefinition({
+      definition,
+      observations,
+      conceptReinforcement,
+    });
+
+    if (supportingObservations.length === 0) return;
+
     patterns.push(
       makePattern({
-        type: "documentation_distributed_across_systems",
-        label: "Documentation Distributed Across Systems",
-        description:
-          "Multiple observations suggest knowledge is distributed across systems, documents, or people.",
-        observations: documentationObservations,
-        possiblePhenomenonTypes: [
-          "knowledge_fragmentation",
-          "scattered_documentation",
-          "institutional_memory_loss",
-        ],
-        semanticConcepts,
+        definition,
+        observations: supportingObservations,
+        supportingConceptIds,
+        supportingMeaningIds,
+        conceptReinforcement,
       })
     );
-  }
+  });
 
-  const repeatedWorkObservations = [
-    ...(byType.get("duplicated_work") ?? []),
-    ...(byType.get("repeated_experiment") ?? []),
-  ];
-
-  if (repeatedWorkObservations.length > 0) {
-    patterns.push(
-      makePattern({
-        type: "work_is_being_repeated",
-        label: "Work Is Being Repeated",
-        description:
-          "Multiple observations suggest the organization may be repeating work or experiments.",
-        observations: repeatedWorkObservations,
-        possiblePhenomenonTypes: [
-          "duplicated_work",
-          "repeated_experimentation",
-          "organizational_learning_failure",
-        ],
-        semanticConcepts,
-      })
-    );
-  }
-
-  const transferObservations = [
-    ...(byType.get("weak_handoff") ?? []),
-    ...(byType.get("knowledge_stored_locally") ?? []),
-    ...(byType.get("learning_not_reused") ?? []),
-  ];
-
-  if (transferObservations.length > 0) {
-    patterns.push(
-      makePattern({
-        type: "knowledge_not_transferring",
-        label: "Knowledge Is Not Transferring",
-        description:
-          "Multiple observations suggest knowledge is not moving reliably across people, teams, or time.",
-        observations: transferObservations,
-        possiblePhenomenonTypes: [
-          "weak_knowledge_transfer",
-          "institutional_memory_loss",
-          "organizational_learning_failure",
-        ],
-        semanticConcepts,
-      })
-    );
-  }
-
-  const approvalObservations = [
-    ...(byType.get("approval_waiting") ?? []),
-    ...(byType.get("executive_escalation") ?? []),
-  ];
-
-  if (approvalObservations.length > 0) {
-    patterns.push(
-      makePattern({
-        type: "decisions_wait_for_approval",
-        label: "Decisions Wait For Approval",
-        description:
-          "Multiple observations suggest work or decisions are waiting on approval or escalation.",
-        observations: approvalObservations,
-        possiblePhenomenonTypes: ["approval_bottleneck", "decision_latency"],
-        semanticConcepts,
-      })
-    );
-  }
-
-  return patterns;
+  return patterns.sort((a, b) => b.strength - a.strength);
 }
 
 export function inferOrganizationalObservations(params: {

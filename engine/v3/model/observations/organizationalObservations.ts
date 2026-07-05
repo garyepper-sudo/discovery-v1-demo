@@ -23,6 +23,10 @@ export type OrganizationalObservation = {
 
   matchedTerms: string[];
 
+  supportingMeaningIds: string[];
+  semanticSummary: string;
+  semanticStrength: number;
+
   confidence: number;
   strength: number;
 };
