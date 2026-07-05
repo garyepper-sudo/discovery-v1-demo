@@ -3,8 +3,8 @@ export type CognitiveLayer =
   | "belief"
   | "pattern"
   | "mechanism"
-  | "capability"
   | "organizationalTheory"
+  | "capability"
   | "executiveUnderstanding";
 
 export type CognitiveObjectId = string;
@@ -30,8 +30,6 @@ export type CognitiveObjectBase<Layer extends CognitiveLayer> = {
 
   /**
    * Ontology specification version that produced this object.
-   * Future ontology revisions can increment this while preserving
-   * backward compatibility.
    */
   ontologyVersion: "1.0";
 };
@@ -40,8 +38,8 @@ export type CognitiveTransformation =
   | "observation"
   | "generalization"
   | "explanation"
-  | "impactAssessment"
   | "systemModeling"
+  | "capabilityAssessment"
   | "executiveCompression";
 
 export type CognitiveLayerDefinition = {
@@ -89,23 +87,23 @@ export const COGNITIVE_ONTOLOGY: CognitiveLayerDefinition[] = [
     organismRepresentation: "Forces, pressures, distortions, or fields",
   },
   {
-    layer: "capability",
-    questionAnswered:
-      "What organizational ability is being strengthened or weakened?",
-    responsibility:
-      "Organizational health, vitality, and functional strength.",
-    transformationFromPrevious: "impactAssessment",
-    shouldBeUserFacing: true,
-    organismRepresentation: "Major organism regions or organs",
-  },
-  {
     layer: "organizationalTheory",
     questionAnswered: "How do mechanisms interact?",
     responsibility:
-      "Causal models connecting mechanisms and capability impacts.",
+      "Causal organizational models describing how mechanisms interact.",
     transformationFromPrevious: "systemModeling",
     shouldBeUserFacing: false,
     organismRepresentation: "Flows between organism regions",
+  },
+  {
+    layer: "capability",
+    questionAnswered: "How healthy is this organizational ability?",
+    responsibility:
+      "Evaluates organizational health based on mechanisms and organizational theory.",
+    transformationFromPrevious: "capabilityAssessment",
+    shouldBeUserFacing: true,
+    organismRepresentation:
+      "Major organism regions, organs, or vital signs",
   },
   {
     layer: "executiveUnderstanding",
