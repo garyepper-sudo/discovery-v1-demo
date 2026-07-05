@@ -1,0 +1,89 @@
+{
+  "id": "approval-bottleneck",
+  "title": "Approval Bottleneck",
+  "company": "Atlas Precision Manufacturing",
+  "industry": "Manufacturing",
+  "question": "Why has execution speed slowed dramatically despite increased investment in people and technology?",
+  "context": "Benchmark designed to test whether Discovery identifies decision latency and centralized governance as the dominant organizational mechanisms.",
+  "evidence": [
+    {
+      "id": "AB-1",
+      "title": "Executive Interviews",
+      "content": "Department leaders report that nearly every significant operational decision requires executive approval before work can proceed."
+    },
+    {
+      "id": "AB-2",
+      "title": "Operations Review",
+      "content": "The average time from identifying a production issue to approving corrective action has increased from 18 hours to 5.6 days."
+    },
+    {
+      "id": "AB-3",
+      "title": "Engineering Retrospective",
+      "content": "Engineering teams frequently finish technical designs but wait several days for leadership approval before implementation can begin."
+    },
+    {
+      "id": "AB-4",
+      "title": "Employee Survey",
+      "content": "74% of managers report uncertainty about their authority to make routine operational decisions."
+    },
+    {
+      "id": "AB-5",
+      "title": "Procurement Audit",
+      "content": "Purchasing requests over $2,500 require approvals from three management levels before orders can be placed."
+    },
+    {
+      "id": "AB-6",
+      "title": "Project Postmortem",
+      "content": "Three major customer projects missed delivery dates because approval requests remained unresolved during executive travel."
+    },
+    {
+      "id": "AB-7",
+      "title": "Leadership Meeting",
+      "content": "Executives expressed concern that decentralizing decisions could reduce quality and increase organizational risk."
+    },
+    {
+      "id": "AB-8",
+      "title": "Customer Success Report",
+      "content": "Customer issues often remain unresolved while teams wait for authorization to provide refunds or implement corrective actions."
+    },
+    {
+      "id": "AB-9",
+      "title": "Continuous Improvement Program",
+      "content": "Employees submitted more than 200 improvement suggestions, but fewer than 10 percent were implemented because they required senior leadership approval."
+    },
+    {
+      "id": "AB-10",
+      "title": "Organizational Observation",
+      "content": "Departments execute effectively once work begins, but progress repeatedly pauses while awaiting cross-functional approvals."
+    }
+  ],
+  "expected": {
+    "primaryMechanisms": [
+      "decision latency"
+    ],
+    "secondaryMechanisms": [
+      "approval bottlenecks",
+      "centralized governance",
+      "governance friction"
+    ],
+    "affectedCapabilities": [
+      "decision making",
+      "execution",
+      "coordination",
+      "organizational agility",
+      "customer responsiveness"
+    ],
+    "compressedConceptThemes": [
+      "approval flow",
+      "decision authority",
+      "centralized governance",
+      "execution delays",
+      "organizational friction"
+    ],
+    "avoid": [
+      "teams pattern",
+      "technology advantage",
+      "strategic bet"
+    ]
+  }
+}

@@ -1,5 +1,9 @@
 import type { V3Understanding } from "../types";
 import type {
+  OrganizationReasoningGraph,
+  OrganizationReasoningNode,
+} from "../model/buildOrganizationReasoningGraph";
+import type {
   UnderstandingCluster,
   UnderstandingClusterStatus,
 } from "./types";
@@ -19,21 +23,9 @@ type ClusterableUnderstanding = Partial<V3Understanding> & {
   themeIds?: string[];
 };
 
-type OrganizationReasoningNode = {
-  entityId: string;
-  canonicalName: string;
-  category: string;
-  aliases: string[];
-  confidence: number;
-  evidenceIds: string[];
-  relatedEntityIds: string[];
-};
-
-type OrganizationReasoningGraph = {
-  organizationId: string;
-  generatedAt: string;
-  nodes: OrganizationReasoningNode[];
-};
+function reasoningNodeId(node: OrganizationReasoningNode): string {
+  return node.id ?? node.entityId ?? node.phenomenonId ?? node.canonicalName;
+}
 
 function normalizeText(value: string): string {
   return value
@@ -215,8 +207,8 @@ function entitySimilarity(
   }
 
   if (
-    a.relatedEntityIds.includes(b.entityId) ||
-    b.relatedEntityIds.includes(a.entityId)
+    a.relatedEntityIds.includes(reasoningNodeId(b)) ||
+    b.relatedEntityIds.includes(reasoningNodeId(a))
   ) {
     score += 0.35;
   }
@@ -316,7 +308,7 @@ function buildEntityCentricClusters(params: {
   return clusters
     .filter((cluster) => cluster.length > 1)
     .map((cluster, index) => {
-      const memberIds = cluster.map((node) => node.entityId);
+      const memberIds = cluster.map((node) => reasoningNodeId(node));
 
       const previousCluster = findExactPreviousCluster({
         existingClusters,
@@ -371,7 +363,7 @@ function buildEntityCentricClusters(params: {
         label,
 
         description: `Multiple organizational entities appear to describe a related organizational structure: ${label}.`,
-        
+
         memberUnderstandingIds: memberIds,
         sharedThemes,
         sharedMechanisms,

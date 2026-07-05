@@ -41,7 +41,9 @@ type ObservationEvolutionResult = {
   };
 };
 
-function normalizeText(value: string): string {
+function normalizeText(value: unknown): string {
+  if (typeof value !== "string") return "";
+
   return value
     .toLowerCase()
     .replace(/[^\w\s]/g, "")
@@ -49,7 +51,7 @@ function normalizeText(value: string): string {
     .trim();
 }
 
-function tokenize(value: string): Set<string> {
+function tokenize(value: unknown): Set<string> {
   const stopWords = new Set([
     "the",
     "a",
@@ -82,11 +84,11 @@ function tokenize(value: string): Set<string> {
   return new Set(
     normalizeText(value)
       .split(" ")
-      .filter((word) => word.length > 2 && !stopWords.has(word))
+      .filter((word) => word.length > 2 && !stopWords.has(word)),
   );
 }
 
-function similarity(a: string, b: string): number {
+function similarity(a: unknown, b: unknown): number {
   const aTokens = tokenize(a);
   const bTokens = tokenize(b);
 
@@ -103,11 +105,11 @@ function similarity(a: string, b: string): number {
   return overlap / union;
 }
 
-function getObservationStatement(observation: ObservationInput): string {
+function getObservationStatement(observation: ObservationInput | undefined): string {
   return (
-    observation.statement ||
-    observation.text ||
-    observation.summary ||
+    observation?.statement ||
+    observation?.text ||
+    observation?.summary ||
     "Unspecified observation"
   );
 }
@@ -115,14 +117,16 @@ function getObservationStatement(observation: ObservationInput): string {
 function createObservation(
   observation: ObservationInput,
   now: string,
-  fallbackEvidenceId: string
+  fallbackEvidenceId: string,
 ): EvolvedObservation {
   const statement = getObservationStatement(observation);
   const confidence = observation.confidence ?? 0.65;
   const evidenceId = observation.evidenceId || fallbackEvidenceId;
 
   return {
-    id: observation.id || `obs_${Date.now()}_${Math.random().toString(36).slice(2)}`,
+    id:
+      observation.id ||
+      `obs_${Date.now()}_${Math.random().toString(36).slice(2)}`,
     statement,
     normalizedStatement: normalizeText(statement),
     supportCount: 1,
@@ -146,7 +150,7 @@ function reinforceObservation(
   existing: EvolvedObservation,
   incoming: ObservationInput,
   now: string,
-  fallbackEvidenceId: string
+  fallbackEvidenceId: string,
 ): EvolvedObservation {
   const statement = getObservationStatement(incoming);
   const incomingConfidence = incoming.confidence ?? existing.confidence;
@@ -155,7 +159,12 @@ function reinforceObservation(
   const supportCount = existing.supportCount + 1;
   const confidence = Math.min(
     0.98,
-    Number(((existing.confidence * existing.supportCount + incomingConfidence) / supportCount).toFixed(2))
+    Number(
+      (
+        (existing.confidence * existing.supportCount + incomingConfidence) /
+        supportCount
+      ).toFixed(2),
+    ),
   );
 
   let status: EvolutionStatus = "reinforced";
@@ -168,6 +177,8 @@ function reinforceObservation(
 
   return {
     ...existing,
+    statement: existing.statement || "Unspecified observation",
+    normalizedStatement: normalizeText(existing.statement),
     supportCount,
     confidence,
     status,
@@ -176,7 +187,7 @@ function reinforceObservation(
       ? Array.from(new Set([...existing.evidenceIds, evidenceId]))
       : existing.evidenceIds,
     history: [
-      ...existing.history,
+      ...(existing.history ?? []),
       {
         date: now,
         event: "reinforced",
@@ -213,7 +224,7 @@ export function evolveObservations(params: {
     let bestScore = 0;
 
     evolved.forEach((existing, index) => {
-      const score = similarity(existing.statement, incomingStatement);
+      const score = similarity(existing?.statement, incomingStatement);
 
       if (score > bestScore) {
         bestScore = score;
@@ -226,7 +237,7 @@ export function evolveObservations(params: {
         evolved[bestMatchIndex],
         incoming,
         now,
-        eventId
+        eventId,
       );
 
       evolved[bestMatchIndex] = updated;

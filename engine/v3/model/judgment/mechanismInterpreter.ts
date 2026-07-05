@@ -10,6 +10,8 @@ import { clamp01, countMatches, unique } from "./mechanismUtils";
 type OrganizationalScope = OrganizationalMechanism["organizationalScope"];
 type ExecutivePriority = OrganizationalMechanism["executivePriority"];
 
+type MechanismProfileKey = keyof typeof mechanismProfiles;
+
 function scoreToPriority(score: number): ExecutivePriority {
   if (score >= 0.85) return "critical";
   if (score >= 0.7) return "high";
@@ -21,6 +23,20 @@ function scoreToActionability(score: number): MechanismActionability {
   if (score >= 0.75) return "high";
   if (score >= 0.45) return "medium";
   return "low";
+}
+
+function candidateMechanismType(
+  candidate: MechanismCandidate,
+): OrganizationalMechanismType | undefined {
+  const maybeType = candidate.mechanismType as
+    | OrganizationalMechanismType
+    | undefined;
+
+  if (maybeType && mechanismProfiles[maybeType as MechanismProfileKey]) {
+    return maybeType;
+  }
+
+  return undefined;
 }
 
 function mechanismFitScore(
@@ -42,6 +58,12 @@ function mechanismFitScore(
 function chooseMechanismType(
   candidate: MechanismCandidate,
 ): OrganizationalMechanismType {
+  const directType = candidateMechanismType(candidate);
+
+  if (directType) {
+    return directType;
+  }
+
   let bestType: OrganizationalMechanismType = "unknown";
   let bestScore = 0;
 
@@ -66,7 +88,11 @@ function chooseMechanismType(
 function inferOrganizationalScope(
   candidate: MechanismCandidate,
 ): OrganizationalScope {
-  if (candidate.clusterIds.length >= 2 || candidate.capabilityIds.length >= 2) {
+  if (
+    candidate.phenomenonIds.length >= 2 ||
+    candidate.clusterIds.length >= 2 ||
+    candidate.capabilityIds.length >= 2
+  ) {
     return "systemic";
   }
 
@@ -77,7 +103,10 @@ function inferOrganizationalScope(
     return "crossFunctional";
   }
 
-  if (candidate.explanationIds.length > 0) {
+  if (
+    candidate.phenomenonIds.length > 0 ||
+    candidate.explanationIds.length > 0
+  ) {
     return "local";
   }
 
@@ -92,7 +121,8 @@ function inferExecutivePriority(
     candidate.confidence * 0.35 +
     candidate.convergenceScore * 0.35 +
     (type === "unknown" ? 0.05 : 0.15) +
-    Math.min(0.15, candidate.explanationIds.length * 0.03);
+    Math.min(0.15, candidate.explanationIds.length * 0.03) +
+    Math.min(0.15, candidate.phenomenonIds.length * 0.05);
 
   return scoreToPriority(score);
 }
@@ -101,7 +131,10 @@ function inferStability(
   candidate: MechanismCandidate,
 ): OrganizationalMechanism["stability"] {
   if (candidate.convergenceScore >= 0.75) return "reinforced";
-  if (candidate.convergenceScore >= 0.45) return "emerging";
+  if (candidate.convergenceScore >= 0.45 || candidate.phenomenonIds.length > 0) {
+    return "emerging";
+  }
+
   return "unknown";
 }
 
@@ -124,7 +157,9 @@ function buildExecutiveSummary(
 ): string {
   const profile = mechanismProfiles[type];
 
-  return `${profile.title} is supported by ${candidate.explanationIds.length} explanation${
+  return `${profile.title} is supported by ${candidate.phenomenonIds.length} phenomenon${
+    candidate.phenomenonIds.length === 1 ? "" : "a"
+  }, ${candidate.explanationIds.length} explanation${
     candidate.explanationIds.length === 1 ? "" : "s"
   }, ${candidate.reasoningPathIds.length} reasoning path${
     candidate.reasoningPathIds.length === 1 ? "" : "s"
@@ -164,13 +199,17 @@ export function interpretMechanismCandidates(
       const profile = mechanismProfiles[type];
 
       const confidence = clamp01(
-        candidate.confidence * 0.65 + candidate.convergenceScore * 0.35,
+        candidate.confidence * 0.65 +
+          candidate.convergenceScore * 0.25 +
+          Math.min(0.1, candidate.phenomenonIds.length * 0.05),
       );
 
       const actionabilityScore = clamp01(
         type === "unknown"
           ? 0.5 + candidate.convergenceScore * 0.2
-          : 0.65 + candidate.convergenceScore * 0.25,
+          : 0.65 +
+              candidate.convergenceScore * 0.2 +
+              Math.min(0.1, candidate.phenomenonIds.length * 0.05),
       );
 
       const affectedCapabilities = unique([
@@ -212,7 +251,7 @@ export function interpretMechanismCandidates(
         supportingEvidenceIds: [],
         supportingExplanationIds: candidate.explanationIds,
         supportingClusterIds: candidate.clusterIds,
-        supportingPhenomenonIds: [],
+        supportingPhenomenonIds: candidate.phenomenonIds,
 
         explanationIds: candidate.explanationIds,
         reasoningPathIds: candidate.reasoningPathIds,
@@ -220,7 +259,7 @@ export function interpretMechanismCandidates(
         clusterIds: candidate.clusterIds,
         judgmentIds: candidate.judgmentIds,
 
-        sourcePhenomenonIds: [],
+        sourcePhenomenonIds: candidate.phenomenonIds,
         sourceClusterIds: candidate.clusterIds,
 
         upstreamMechanismIds: [],
@@ -232,9 +271,9 @@ export function interpretMechanismCandidates(
     })
     .filter((mechanism) => {
       const supportCount =
+        (mechanism.supportingPhenomenonIds?.length ?? 0) +
         (mechanism.explanationIds?.length ?? 0) +
         (mechanism.reasoningPathIds?.length ?? 0) +
-        (mechanism.capabilityIds?.length ?? 0) +
         (mechanism.clusterIds?.length ?? 0) +
         (mechanism.judgmentIds?.length ?? 0);
 

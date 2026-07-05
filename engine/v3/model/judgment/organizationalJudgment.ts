@@ -89,5 +89,9 @@ export type OrganizationalAssessment = {
   executiveNarrative: string;
   recommendedFocus: string[];
 
+  primaryMechanismIds?: string[];
+  primaryMechanismSummaries?: string[];
+  mechanismCenteredNarrative?: string;
+
   confidence: number;
 };

@@ -12,6 +12,19 @@ export type PatternLike = {
   relatedObservationIds?: string[];
 };
 
+export type PhenomenonLike = {
+  id: string;
+  type?: string;
+  label?: string;
+  summary?: string;
+  description?: string;
+  confidence?: number;
+  strength?: number;
+  relatedPatternIds?: string[];
+  relatedObservationIds?: string[];
+  possibleMechanismTypes?: string[];
+};
+
 export type ReasoningPathLike = {
   id: string;
   sourceLabel?: string;
@@ -40,6 +53,20 @@ export type UnderstandingClusterLike = {
   confidence?: number;
 };
 
+/**
+ * Semantic concepts represent compressed organizational understanding.
+ * They remain useful reinforcement signals, but they are no longer
+ * the primary source of mechanism inference.
+ */
+export type SemanticConceptLike = {
+  id: string;
+  title?: string;
+  label?: string;
+  summary?: string;
+  description?: string;
+  confidence?: number;
+};
+
 export type OrganizationalJudgmentLike = {
   id: string;
   explanationId?: string;
@@ -59,13 +86,27 @@ export type ExplanationLike = OrganizationalExplanation & {
 export type InferOrganizationalMechanismsInput = {
   /**
    * Primary ontology input.
-   * Mechanisms should increasingly be inferred from recurring patterns.
+   * Phenomena represent interpreted organizational conditions.
+   * Mechanisms should be inferred from these conditions as operating forces.
+   */
+  phenomena?: PhenomenonLike[];
+
+  /**
+   * Supporting ontology input.
+   * Patterns provide recurrence evidence that can reinforce mechanisms.
    */
   patterns?: PatternLike[];
 
   /**
+   * Compressed organizational understanding.
+   * Concepts can reinforce or contextualize operating forces.
+   */
+  semanticConcepts?: SemanticConceptLike[];
+
+  /**
    * Transitional compatibility inputs.
-   * These remain until the ontology migration is complete.
+   * These enrich mechanism inference but should not be the primary source
+   * of the mechanism ontology.
    */
   explanations?: ExplanationLike[];
   reasoningPaths?: ReasoningPathLike[];
@@ -77,11 +118,15 @@ export type InferOrganizationalMechanismsInput = {
 export type MechanismCandidate = {
   id: string;
 
+  phenomenonIds: string[];
+  patternIds: string[];
   explanationIds: string[];
   reasoningPathIds: string[];
   capabilityIds: string[];
   clusterIds: string[];
   judgmentIds: string[];
+  semanticConceptIds: string[];
+  mechanismType?: string;
 
   sourceTexts: string[];
 

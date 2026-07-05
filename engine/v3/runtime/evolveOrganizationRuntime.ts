@@ -2,6 +2,7 @@ import type { DiscoveryV3Result } from "../types";
 import type { OrganizationRuntime } from "./organizationRuntime";
 import type { OrganizationalUnderstandingState } from "./organizationalUnderstandingState";
 import { buildOrganizationReasoningGraph } from "../model/buildOrganizationReasoningGraph";
+import { inferOrganizationalObservations } from "../model/observations/inferOrganizationalObservations";
 import { inferReasoningRelationships } from "../model/inferReasoningRelationships";
 import { runOrganizationalReasoningEngine } from "../model/reasoning";
 import { synthesizeExplanations } from "../model/judgment/synthesizeExplanations";
@@ -148,13 +149,14 @@ export function evolveOrganizationRuntime(params: {
     now,
   });
 
-  const cognitiveMemory = cognitivelyUpdatedRuntime.memory as typeof cognitivelyUpdatedRuntime.memory & {
-    understandingState?: {
-      patterns?: any[];
-      stablePatterns?: any[];
-      beliefs?: any[];
+  const cognitiveMemory =
+    cognitivelyUpdatedRuntime.memory as typeof cognitivelyUpdatedRuntime.memory & {
+      understandingState?: {
+        patterns?: any[];
+        stablePatterns?: any[];
+        beliefs?: any[];
+      };
     };
-  };
 
   const ontologyPatterns = [
     ...(cognitiveMemory.understandingState?.stablePatterns ?? []),
@@ -169,8 +171,55 @@ export function evolveOrganizationRuntime(params: {
     synchronizedOrganizationModel,
   );
 
-  const organizationReasoningGraph =
+  const preliminaryReasoningGraph =
     buildOrganizationReasoningGraph(organizationModel);
+
+  const understandingClusters = buildUnderstandingClusters({
+    understandings: updatedOrganizationalUnderstandingState.currentUnderstandings,
+    organizationReasoningGraph: preliminaryReasoningGraph,
+    existingClusters: memory.understandingClusters,
+    now,
+  });
+
+  console.log("Understanding Clusters", understandingClusters);
+
+  const organizationalDynamicsState = inferFunctionalInterpretations({
+    understandings: updatedOrganizationalUnderstandingState.currentUnderstandings,
+    existingState: memory.functionalInterpretationState,
+    now,
+  });
+
+  const meaningSignals = extractMeaningSignals({
+    interpretations: organizationalDynamicsState.interpretations,
+    existingSignals: memory.meaningSignals ?? [],
+  });
+
+  const organizationalConcepts = synthesizeOrganizationalConcepts({
+    meaningSignals,
+    existingConcepts: memory.organizationalConcepts ?? [],
+  });
+
+  const organizationalObservationState = inferOrganizationalObservations({
+    evidence: result.evidence ?? [],
+    entities: organizationModel.entities,
+    semanticConcepts: organizationalConcepts,
+    now,
+  });
+
+  const organizationalPhenomenaState = inferOrganizationalPhenomena({
+    patterns: organizationalObservationState.patterns,
+    clusters: understandingClusters,
+    previousState: memory.organizationalPhenomenaState,
+    now,
+  });
+
+  console.log("Organizational Observations", organizationalObservationState);
+  console.log("Organizational Phenomena", organizationalPhenomenaState);
+
+  const organizationReasoningGraph = buildOrganizationReasoningGraph({
+    ...organizationModel,
+    organizationalPhenomena: organizationalPhenomenaState,
+  });
 
   const organizationReasoningRelationships =
     inferReasoningRelationships(organizationReasoningGraph);
@@ -201,10 +250,6 @@ export function evolveOrganizationRuntime(params: {
     judgments: organizationalJudgments,
   });
 
-  const executiveAssessment = buildExecutiveAssessment({
-    judgments: organizationalJudgments,
-  });
-
   console.log("Organization Reasoning Graph", organizationReasoningGraph);
   console.log(
     "Organization Reasoning Relationships",
@@ -213,22 +258,6 @@ export function evolveOrganizationRuntime(params: {
   console.log("Organizational Reasoning", organizationalReasoning);
   console.log("Organizational Explanations", organizationalExplanations);
   console.log("Organizational Judgments", organizationalJudgments);
-  console.log("Executive Assessment", executiveAssessment);
-
-  const understandingClusters = buildUnderstandingClusters({
-    understandings: updatedOrganizationalUnderstandingState.currentUnderstandings,
-    organizationReasoningGraph,
-    existingClusters: memory.understandingClusters,
-    now,
-  });
-
-  console.log("Understanding Clusters", understandingClusters);
-
-  const organizationalDynamicsState = inferFunctionalInterpretations({
-    understandings: updatedOrganizationalUnderstandingState.currentUnderstandings,
-    existingState: memory.functionalInterpretationState,
-    now,
-  });
 
   const detectedCapabilities = inferOrganizationalCapabilities({
     interpretations: organizationalDynamicsState.interpretations,
@@ -243,36 +272,29 @@ export function evolveOrganizationRuntime(params: {
     now,
   });
 
-  const organizationalPhenomenaState = inferOrganizationalPhenomena({
-    clusters: understandingClusters,
-    previousState: memory.organizationalPhenomenaState,
-    now,
-  });
-
   const mechanismNetwork = inferOrganizationalMechanisms({
+    phenomena: organizationalPhenomenaState.phenomena,
     patterns: ontologyPatterns,
     explanations: organizationalExplanations,
     reasoningPaths: organizationalReasoning.paths,
     capabilities: organizationalCapabilitiesState.capabilities,
     understandingClusters,
     judgments: organizationalJudgments,
+    semanticConcepts: organizationalConcepts,
   });
 
   console.log("Mechanism Network", mechanismNetwork);
 
+  const executiveAssessment = buildExecutiveAssessment({
+    judgments: organizationalJudgments,
+    mechanisms: mechanismNetwork.mechanisms,
+  });
+
+  console.log("Executive Assessment", executiveAssessment);
+
   const semanticConcepts = runSemanticCompression({
     dynamics: organizationalDynamicsState.interpretations,
     understandings: updatedOrganizationalUnderstandingState.currentUnderstandings,
-  });
-
-  const meaningSignals = extractMeaningSignals({
-    interpretations: organizationalDynamicsState.interpretations,
-    existingSignals: memory.meaningSignals ?? [],
-  });
-
-  const organizationalConcepts = synthesizeOrganizationalConcepts({
-    meaningSignals,
-    existingConcepts: memory.organizationalConcepts ?? [],
   });
 
   const updatedMemory = {

@@ -1,16 +1,18 @@
+import { collectMechanismSignals } from "./mechanismSignals";
 import { mechanismProfiles } from "./mechanismProfiles";
 import type {
   InferOrganizationalMechanismsInput,
   MechanismCandidate,
 } from "./mechanismInferenceTypes";
 import {
-  average,
   clamp01,
   countMatches,
   extractSharedTerms,
   normalizeText,
   unique,
 } from "./mechanismUtils";
+
+type MechanismProfileKey = keyof typeof mechanismProfiles;
 
 function allProfileTerms(): {
   behaviors: string[];
@@ -102,7 +104,9 @@ function inferFallbackTerms(text: string): {
     consequences.push("coordination breakdown");
   }
 
-  if (countMatches(text, ["customer", "support", "feedback", "onboarding"]) > 0) {
+  if (
+    countMatches(text, ["customer", "support", "feedback", "onboarding"]) > 0
+  ) {
     behaviors.push("feedback failure", "customer signal loss");
     capabilities.push("customer responsiveness", "learning");
     consequences.push("customer friction");
@@ -152,259 +156,485 @@ function mergeTerms(
   };
 }
 
+function mechanismTypeToProfileTerms(mechanismType: string): {
+  behaviors: string[];
+  capabilities: string[];
+  consequences: string[];
+} {
+  const profile = mechanismProfiles[mechanismType as MechanismProfileKey];
+
+  if (!profile) {
+    return {
+      behaviors: [],
+      capabilities: [],
+      consequences: [],
+    };
+  }
+
+  return {
+    behaviors: profile.behaviors,
+    capabilities: profile.capabilities,
+    consequences: profile.consequences,
+  };
+}
+
+function textMatchesTerms(
+  text: string,
+  terms: {
+    behaviors: string[];
+    capabilities: string[];
+    consequences: string[];
+  },
+): boolean {
+  return (
+    countMatches(text, terms.behaviors) +
+      countMatches(text, terms.capabilities) +
+      countMatches(text, terms.consequences) >
+    0
+  );
+}
+
+function phenomenonText(phenomenon: {
+  label?: string;
+  name?: string;
+  title?: string;
+  summary?: string;
+  description?: string;
+  evidence?: string;
+}): string {
+  return normalizeText(
+    phenomenon.label,
+    phenomenon.name,
+    phenomenon.title,
+    phenomenon.summary,
+    phenomenon.description,
+    phenomenon.evidence,
+  );
+}
+
+function getCandidateKey(candidate: MechanismCandidate): string {
+  return [
+    [...candidate.phenomenonIds].sort().join("|"),
+    [...candidate.patternIds].sort().join("|"),
+    [...candidate.explanationIds].sort().join("|"),
+    [...candidate.reasoningPathIds].sort().join("|"),
+    [...candidate.capabilityIds].sort().join("|"),
+    [...candidate.clusterIds].sort().join("|"),
+    [...candidate.judgmentIds].sort().join("|"),
+    [...candidate.sharedBehaviors].sort().join("|"),
+    [...candidate.sharedCapabilities].sort().join("|"),
+    [...candidate.sharedConsequences].sort().join("|"),
+  ].join("::");
+}
+
 export function buildMechanismCandidates({
+  phenomena = [],
   patterns = [],
+  semanticConcepts = [],
   explanations = [],
   reasoningPaths = [],
   capabilities = [],
   understandingClusters = [],
   judgments = [],
 }: InferOrganizationalMechanismsInput): MechanismCandidate[] {
+  const hasPhenomena = Array.isArray(phenomena) && phenomena.length > 0;
   const hasPatterns = Array.isArray(patterns) && patterns.length > 0;
-  const hasExplanations = Array.isArray(explanations) && explanations.length > 0;
+  const hasExplanations =
+    Array.isArray(explanations) && explanations.length > 0;
 
-  if (!hasPatterns && !hasExplanations) {
+  if (!hasPhenomena && !hasPatterns && !hasExplanations) {
     return [];
   }
 
   const vocabulary = allProfileTerms();
 
-  const patternSignals = patterns.map((pattern) => ({
-    id: pattern.id,
-    text: normalizeText(
-      pattern.label,
-      pattern.statement,
-      pattern.description,
-      pattern.reason,
-    ),
-    confidence:
-      typeof pattern.confidence === "number"
-        ? pattern.confidence
-        : pattern.strength ?? 0.65,
-  }));
-
-  const explanationSignals = explanations.map((explanation) => ({
-    id: explanation.id,
-    text: normalizeText(
-      explanation.title,
-      explanation.summary,
-      explanation.interpretation,
-      explanation.executiveImplication,
-      explanation.type,
-    ),
-    confidence:
-      typeof explanation.confidence === "number" ? explanation.confidence : 0.65,
-  }));
-
-  const primarySignals = patternSignals.length > 0 ? patternSignals : explanationSignals;
+  const primarySignals = collectMechanismSignals({
+    patterns,
+    semanticConcepts,
+    explanations,
+  });
 
   const candidates: MechanismCandidate[] = [];
 
-  primarySignals.forEach((signal, index) => {
-    const fallbackForSignal = inferFallbackTerms(signal.text);
-
-    const relatedSignals = primarySignals.filter((other) => {
-      if (other.id === signal.id) return true;
-
-      const sharedBehaviorCount = extractSharedTerms(
-        [signal.text, other.text],
-        vocabulary.behaviors,
-      ).length;
-
-      const sharedCapabilityCount = extractSharedTerms(
-        [signal.text, other.text],
-        vocabulary.capabilities,
-      ).length;
-
-      const sharedConsequenceCount = extractSharedTerms(
-        [signal.text, other.text],
-        vocabulary.consequences,
-      ).length;
-
-      const fallbackOverlap =
-        countMatches(other.text, fallbackForSignal.behaviors) +
-        countMatches(other.text, fallbackForSignal.capabilities) +
-        countMatches(other.text, fallbackForSignal.consequences);
-
-      return (
-        sharedBehaviorCount +
-          sharedCapabilityCount +
-          sharedConsequenceCount +
-          fallbackOverlap >
-        0
-      );
-    });
-
-    const sourceTexts = unique(relatedSignals.map((item) => item.text));
-
-    const sharedTerms = {
-      behaviors: extractSharedTerms(sourceTexts, vocabulary.behaviors),
-      capabilities: extractSharedTerms(sourceTexts, vocabulary.capabilities),
-      consequences: extractSharedTerms(sourceTexts, vocabulary.consequences),
-    };
-
-    const fallbackTerms = sourceTexts.reduce(
-      (acc, text) => {
-        const inferred = inferFallbackTerms(text);
-
-        return {
-          behaviors: unique([...acc.behaviors, ...inferred.behaviors]),
-          capabilities: unique([...acc.capabilities, ...inferred.capabilities]),
-          consequences: unique([...acc.consequences, ...inferred.consequences]),
-        };
-      },
-      {
-        behaviors: [] as string[],
-        capabilities: [] as string[],
-        consequences: [] as string[],
-      },
+  phenomena.forEach((phenomenon, index) => {
+    const possibleMechanismTypes = unique(
+      phenomenon.possibleMechanismTypes ?? [],
     );
 
-    const enrichedTerms = mergeTerms(sharedTerms, fallbackTerms);
+    possibleMechanismTypes.forEach((mechanismType) => {
+      const profileTerms = mechanismTypeToProfileTerms(mechanismType);
+      const sourceText = phenomenonText(phenomenon);
 
-    const explanationIds = explanationSignals
-      .filter((explanation) => {
-        return (
-          countMatches(explanation.text, enrichedTerms.behaviors) +
-            countMatches(explanation.text, enrichedTerms.capabilities) +
-            countMatches(explanation.text, enrichedTerms.consequences) >
-          0
-        );
-      })
-      .map((explanation) => explanation.id);
+      const relatedSignals = primarySignals.filter((signal) =>
+        textMatchesTerms(signal.text, profileTerms),
+      );
 
-    const reasoningPathIds = reasoningPaths
-      .filter((path) => {
-        const pathText = normalizeText(
-          path.sourceLabel,
-          path.targetLabel,
-          path.reasoningType,
-          path.directness,
-          path.summary,
-        );
+      const sourceTexts = unique(
+        [
+          sourceText,
+          ...relatedSignals.map((signal) => signal.text),
+        ].filter(Boolean),
+      );
 
-        return (
-          countMatches(pathText, enrichedTerms.behaviors) +
-            countMatches(pathText, enrichedTerms.capabilities) +
-            countMatches(pathText, enrichedTerms.consequences) >
-          0
-        );
-      })
-      .map((path) => path.id);
+      const fallbackTerms = sourceTexts.reduce(
+        (acc, text) => {
+          const inferred = inferFallbackTerms(text);
 
-    const capabilityIds = capabilities
-      .filter((capability) => {
-        const capabilityText = normalizeText(
-          capability.name,
-          capability.title,
-          capability.summary,
-          capability.description,
-          capability.status,
-        );
+          return {
+            behaviors: unique([...acc.behaviors, ...inferred.behaviors]),
+            capabilities: unique([
+              ...acc.capabilities,
+              ...inferred.capabilities,
+            ]),
+            consequences: unique([
+              ...acc.consequences,
+              ...inferred.consequences,
+            ]),
+          };
+        },
+        {
+          behaviors: [] as string[],
+          capabilities: [] as string[],
+          consequences: [] as string[],
+        },
+      );
 
-        return (
-          countMatches(capabilityText, enrichedTerms.behaviors) +
-            countMatches(capabilityText, enrichedTerms.capabilities) +
-            countMatches(capabilityText, enrichedTerms.consequences) >
-          0
-        );
-      })
-      .map((capability) => capability.id);
+      const enrichedTerms = mergeTerms(profileTerms, fallbackTerms);
 
-    const clusterIds = understandingClusters
-      .filter((cluster) => {
-        const clusterText = normalizeText(
-          cluster.title,
-          cluster.summary,
-          cluster.description,
-        );
+      const explanationIds = explanations
+        .filter((explanation) => {
+          const explanationText = normalizeText(
+            explanation.title,
+            explanation.summary,
+          );
 
-        return (
-          countMatches(clusterText, enrichedTerms.behaviors) +
-            countMatches(clusterText, enrichedTerms.capabilities) +
-            countMatches(clusterText, enrichedTerms.consequences) >
-          0
-        );
-      })
-      .map((cluster) => cluster.id);
+          return textMatchesTerms(explanationText, enrichedTerms);
+        })
+        .map((explanation) => explanation.id);
 
-    const judgmentIds = judgments
-      .filter((judgment) => {
-        if (
-          judgment.explanationId &&
-          explanationIds.includes(judgment.explanationId)
-        ) {
-          return true;
-        }
+      const patternIds = patterns
+        .filter((pattern) => {
+          const patternText = normalizeText(
+            pattern.label,
+            pattern.statement,
+            pattern.description,
+            pattern.reason,
+          );
 
-        const judgmentText = normalizeText(judgment.summary);
+          return textMatchesTerms(patternText, enrichedTerms);
+        })
+        .map((pattern) => pattern.id);
 
-        return (
-          countMatches(judgmentText, enrichedTerms.behaviors) +
-            countMatches(judgmentText, enrichedTerms.capabilities) +
-            countMatches(judgmentText, enrichedTerms.consequences) >
-          0
-        );
-      })
-      .map((judgment) => judgment.id);
+      const reasoningPathIds = reasoningPaths
+        .filter((path) => {
+          const pathText = normalizeText(
+            path.sourceLabel,
+            path.targetLabel,
+            path.reasoningType,
+            path.directness,
+            path.summary,
+          );
 
-    const supportCount =
-      relatedSignals.length +
-      explanationIds.length +
-      reasoningPathIds.length +
-      capabilityIds.length +
-      clusterIds.length +
-      judgmentIds.length;
+          return textMatchesTerms(pathText, enrichedTerms);
+        })
+        .map((path) => path.id);
 
-    const totalSignalCount =
-      primarySignals.length +
-      explanations.length +
-      reasoningPaths.length +
-      capabilities.length +
-      understandingClusters.length +
-      judgments.length;
+      const capabilityIds = capabilities
+        .filter((capability) => {
+          const capabilityText = normalizeText(
+            capability.name,
+            capability.title,
+            capability.summary,
+            capability.description,
+            capability.status,
+          );
 
-    const sharedTermCount =
-      enrichedTerms.behaviors.length +
-      enrichedTerms.capabilities.length +
-      enrichedTerms.consequences.length;
+          return textMatchesTerms(capabilityText, enrichedTerms);
+        })
+        .map((capability) => capability.id);
 
-    candidates.push({
-      id: `mechanism-candidate-${index + 1}`,
-      explanationIds: unique(explanationIds),
-      reasoningPathIds: unique(reasoningPathIds),
-      capabilityIds: unique(capabilityIds),
-      clusterIds: unique(clusterIds),
-      judgmentIds: unique(judgmentIds),
-      sourceTexts,
-      sharedBehaviors: enrichedTerms.behaviors,
-      sharedCapabilities: enrichedTerms.capabilities,
-      sharedConsequences: enrichedTerms.consequences,
-      convergenceScore: clamp01(supportCount / Math.max(1, totalSignalCount)),
-      noveltyScore: clamp01(
-        sharedTermCount === 0 ? 0.75 : 0.25 / Math.max(1, sharedTermCount),
-      ),
-      confidence: clamp01(
-        average(relatedSignals.map((item) => item.confidence)) ||
-          Math.min(0.95, 0.55 + supportCount * 0.05),
-      ),
+      const clusterIds = understandingClusters
+        .filter((cluster) => {
+          const clusterText = normalizeText(
+            cluster.title,
+            cluster.summary,
+            cluster.description,
+          );
+
+          return textMatchesTerms(clusterText, enrichedTerms);
+        })
+        .map((cluster) => cluster.id);
+
+      const judgmentIds = judgments
+        .filter((judgment) => {
+          if (
+            judgment.explanationId &&
+            explanationIds.includes(judgment.explanationId)
+          ) {
+            return true;
+          }
+
+          const judgmentText = normalizeText(judgment.summary);
+
+          return textMatchesTerms(judgmentText, enrichedTerms);
+        })
+        .map((judgment) => judgment.id);
+
+      const supportCount =
+        1 +
+        relatedSignals.length +
+        explanationIds.length +
+        patternIds.length +
+        reasoningPathIds.length +
+        capabilityIds.length +
+        clusterIds.length +
+        judgmentIds.length;
+
+      const totalSignalCount =
+        phenomena.length +
+        primarySignals.length +
+        explanations.length +
+        reasoningPaths.length +
+        capabilities.length +
+        understandingClusters.length +
+        judgments.length;
+
+      const sharedTermCount =
+        enrichedTerms.behaviors.length +
+        enrichedTerms.capabilities.length +
+        enrichedTerms.consequences.length;
+
+      const convergenceScore = clamp01(
+        supportCount / Math.max(1, totalSignalCount),
+      );
+
+      const noveltyScore = clamp01(sharedTermCount / 12);
+
+      const confidence = clamp01(
+        (phenomenon.confidence ?? 0.72) * 0.55 +
+          convergenceScore * 0.25 +
+          noveltyScore * 0.15 +
+          Math.min(sourceTexts.length, 4) * 0.0125,
+      );
+
+      candidates.push({
+        id: `mechanism-candidate-phenomenon-${index + 1}-${mechanismType}`,
+        phenomenonIds: [phenomenon.id],
+        patternIds,
+        explanationIds,
+        reasoningPathIds,
+        mechanismType,
+        capabilityIds,
+        clusterIds,
+        judgmentIds,
+        semanticConceptIds: [],
+        sourceTexts,
+        sharedBehaviors: enrichedTerms.behaviors,
+        sharedCapabilities: enrichedTerms.capabilities,
+        sharedConsequences: enrichedTerms.consequences,
+        convergenceScore,
+        noveltyScore,
+        confidence,
+      });
     });
   });
+
+  if (candidates.length === 0) {
+    primarySignals.forEach((signal, index) => {
+      const fallbackForSignal = inferFallbackTerms(signal.text);
+
+      const relatedSignals = primarySignals.filter((other) => {
+        if (other.id === signal.id) return true;
+
+        const sharedBehaviorCount = extractSharedTerms(
+          [signal.text, other.text],
+          vocabulary.behaviors,
+        ).length;
+
+        const sharedCapabilityCount = extractSharedTerms(
+          [signal.text, other.text],
+          vocabulary.capabilities,
+        ).length;
+
+        const sharedConsequenceCount = extractSharedTerms(
+          [signal.text, other.text],
+          vocabulary.consequences,
+        ).length;
+
+        const fallbackOverlap =
+          countMatches(other.text, fallbackForSignal.behaviors) +
+          countMatches(other.text, fallbackForSignal.capabilities) +
+          countMatches(other.text, fallbackForSignal.consequences);
+
+        return (
+          sharedBehaviorCount +
+            sharedCapabilityCount +
+            sharedConsequenceCount +
+            fallbackOverlap >
+          0
+        );
+      });
+
+      const sourceTexts = unique(relatedSignals.map((item) => item.text));
+
+      const sharedTerms = {
+        behaviors: extractSharedTerms(sourceTexts, vocabulary.behaviors),
+        capabilities: extractSharedTerms(sourceTexts, vocabulary.capabilities),
+        consequences: extractSharedTerms(sourceTexts, vocabulary.consequences),
+      };
+
+      const fallbackTerms = sourceTexts.reduce(
+        (acc, text) => {
+          const inferred = inferFallbackTerms(text);
+
+          return {
+            behaviors: unique([...acc.behaviors, ...inferred.behaviors]),
+            capabilities: unique([
+              ...acc.capabilities,
+              ...inferred.capabilities,
+            ]),
+            consequences: unique([
+              ...acc.consequences,
+              ...inferred.consequences,
+            ]),
+          };
+        },
+        {
+          behaviors: [] as string[],
+          capabilities: [] as string[],
+          consequences: [] as string[],
+        },
+      );
+
+      const enrichedTerms = mergeTerms(sharedTerms, fallbackTerms);
+
+      const explanationIds = primarySignals
+        .filter((item) => item.source === "explanation")
+        .filter((explanation) =>
+          textMatchesTerms(explanation.text, enrichedTerms),
+        )
+        .map((explanation) => explanation.id);
+
+      const patternIds = primarySignals
+        .filter((item) => item.source === "pattern")
+        .filter((pattern) => textMatchesTerms(pattern.text, enrichedTerms))
+        .map((pattern) => pattern.id);
+
+      const reasoningPathIds = reasoningPaths
+        .filter((path) => {
+          const pathText = normalizeText(
+            path.sourceLabel,
+            path.targetLabel,
+            path.reasoningType,
+            path.directness,
+            path.summary,
+          );
+
+          return textMatchesTerms(pathText, enrichedTerms);
+        })
+        .map((path) => path.id);
+
+      const capabilityIds = capabilities
+        .filter((capability) => {
+          const capabilityText = normalizeText(
+            capability.name,
+            capability.title,
+            capability.summary,
+            capability.description,
+            capability.status,
+          );
+
+          return textMatchesTerms(capabilityText, enrichedTerms);
+        })
+        .map((capability) => capability.id);
+
+      const clusterIds = understandingClusters
+        .filter((cluster) => {
+          const clusterText = normalizeText(
+            cluster.title,
+            cluster.summary,
+            cluster.description,
+          );
+
+          return textMatchesTerms(clusterText, enrichedTerms);
+        })
+        .map((cluster) => cluster.id);
+
+      const judgmentIds = judgments
+        .filter((judgment) => {
+          if (
+            judgment.explanationId &&
+            explanationIds.includes(judgment.explanationId)
+          ) {
+            return true;
+          }
+
+          const judgmentText = normalizeText(judgment.summary);
+
+          return textMatchesTerms(judgmentText, enrichedTerms);
+        })
+        .map((judgment) => judgment.id);
+
+      const supportCount =
+        relatedSignals.length +
+        explanationIds.length +
+        patternIds.length +
+        reasoningPathIds.length +
+        capabilityIds.length +
+        clusterIds.length +
+        judgmentIds.length;
+
+      const totalSignalCount =
+        primarySignals.length +
+        explanations.length +
+        reasoningPaths.length +
+        capabilities.length +
+        understandingClusters.length +
+        judgments.length;
+
+      const sharedTermCount =
+        enrichedTerms.behaviors.length +
+        enrichedTerms.capabilities.length +
+        enrichedTerms.consequences.length;
+
+      const convergenceScore = clamp01(
+        supportCount / Math.max(1, totalSignalCount),
+      );
+
+      const noveltyScore = clamp01(sharedTermCount / 12);
+
+      const confidence = clamp01(
+        0.25 +
+          convergenceScore * 0.3 +
+          noveltyScore * 0.15 +
+          Math.min(sourceTexts.length, 4) * 0.0125,
+      );
+
+      candidates.push({
+        id: `mechanism-candidate-fallback-${index + 1}`,
+        phenomenonIds: [],
+        patternIds,
+        explanationIds,
+        reasoningPathIds,
+        capabilityIds,
+        clusterIds,
+        judgmentIds,
+        semanticConceptIds: [],
+        sourceTexts,
+        sharedBehaviors: enrichedTerms.behaviors,
+        sharedCapabilities: enrichedTerms.capabilities,
+        sharedConsequences: enrichedTerms.consequences,
+        convergenceScore,
+        noveltyScore,
+        confidence,
+      });
+    });
+  }
 
   const deduped = new Map<string, MechanismCandidate>();
 
   for (const candidate of candidates) {
-    const key = [
-      [...candidate.explanationIds].sort().join("|"),
-      [...candidate.reasoningPathIds].sort().join("|"),
-      [...candidate.capabilityIds].sort().join("|"),
-      [...candidate.clusterIds].sort().join("|"),
-      [...candidate.judgmentIds].sort().join("|"),
-      [...candidate.sharedBehaviors].sort().join("|"),
-      [...candidate.sharedCapabilities].sort().join("|"),
-      [...candidate.sharedConsequences].sort().join("|"),
-    ].join("::");
-
+    const key = getCandidateKey(candidate);
     const existing = deduped.get(key);
 
     if (!existing || candidate.convergenceScore > existing.convergenceScore) {
@@ -413,8 +643,15 @@ export function buildMechanismCandidates({
   }
 
   return Array.from(deduped.values()).sort((a, b) => {
-    const aScore = a.convergenceScore * 0.6 + a.confidence * 0.4;
-    const bScore = b.convergenceScore * 0.6 + b.confidence * 0.4;
+    const aScore =
+      a.phenomenonIds.length * 0.3 +
+      a.convergenceScore * 0.4 +
+      a.confidence * 0.3;
+
+    const bScore =
+      b.phenomenonIds.length * 0.3 +
+      b.convergenceScore * 0.4 +
+      b.confidence * 0.3;
 
     return bScore - aScore;
   });

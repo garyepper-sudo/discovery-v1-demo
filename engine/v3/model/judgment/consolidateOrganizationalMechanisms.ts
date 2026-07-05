@@ -40,8 +40,28 @@ function max(values: unknown[]): number {
   return Math.max(...valid);
 }
 
-function buildCanonicalId(type: OrganizationalMechanismType): string {
-  return `mechanism:${type}`;
+function normalizeKeyPart(value: string | undefined): string {
+  return (value ?? "unknown")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 48);
+}
+
+function buildCanonicalId(
+  type: OrganizationalMechanismType,
+  mechanism?: OrganizationalMechanism,
+): string {
+  if (type !== "unknown") {
+    return `mechanism:${type}`;
+  }
+
+  return `mechanism:unknown:${normalizeKeyPart(
+    mechanism?.organizationalBehavior ||
+      mechanism?.title ||
+      mechanism?.summary ||
+      "unlabeled",
+  )}`;
 }
 
 function titleForType(type: OrganizationalMechanismType): string {
@@ -64,15 +84,23 @@ function mergeText(values: Array<string | undefined>): string {
 export function consolidateOrganizationalMechanisms(
   mechanisms: OrganizationalMechanism[],
 ): OrganizationalMechanism[] {
-  const grouped = new Map<OrganizationalMechanismType, OrganizationalMechanism[]>();
+  const grouped = new Map<string, OrganizationalMechanism[]>();
 
   for (const mechanism of mechanisms) {
-    const existing = grouped.get(mechanism.type) ?? [];
+    const key =
+      mechanism.type === "unknown"
+        ? buildCanonicalId(mechanism.type, mechanism)
+        : mechanism.type;
+
+    const existing = grouped.get(key) ?? [];
     existing.push(mechanism);
-    grouped.set(mechanism.type, existing);
+    grouped.set(key, existing);
   }
 
-  return Array.from(grouped.entries()).map(([type, group]) => {
+  return Array.from(grouped.values()).map((group) => {
+    const representative = group[0];
+    const type = representative.type;
+
     const confidence = Math.min(
       1,
       average(group.map((mechanism) => mechanism.confidence)) +
@@ -104,15 +132,20 @@ export function consolidateOrganizationalMechanisms(
       group.flatMap((mechanism) => mechanism.affectedCapabilities ?? []),
     );
 
+    const canonicalId = buildCanonicalId(type, representative);
+
     const reinforcingMechanismIds = unique(
       group.flatMap((mechanism) => mechanism.reinforcingMechanismIds ?? []),
-    ).filter((id) => id !== buildCanonicalId(type));
+    ).filter((id) => id !== canonicalId);
 
     return {
-      ...group[0],
-      id: buildCanonicalId(type),
+      ...representative,
+      id: canonicalId,
       type,
-      title: titleForType(type),
+      title:
+        type === "unknown"
+          ? representative.title || titleForType(type)
+          : titleForType(type),
       summary: mergeText(group.map((mechanism) => mechanism.summary)),
       interpretation: mergeText(group.map((mechanism) => mechanism.interpretation)),
       executiveImplication: mergeText(

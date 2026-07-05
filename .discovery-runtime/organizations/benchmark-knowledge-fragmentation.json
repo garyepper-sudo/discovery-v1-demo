@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "organizationId": "benchmark-knowledge-fragmentation",
+    "createdAt": "2026-07-05T21:27:49.943Z",
+    "updatedAt": "2026-07-05T21:27:49.943Z",
+    "investigationCount": 0
+  },
+  "organizationModel": {
+    "organizationId": "benchmark-knowledge-fragmentation",
+    "version": 1,
+    "createdAt": "2026-07-05T21:27:49.943Z",
+    "updatedAt": "2026-07-05T21:27:49.943Z",
+    "entities": [],
+    "entityRelationships": [],
+    "nodes": [],
+    "edges": [],
+    "snapshots": [],
+    "metrics": {
+      "coherence": 0,
+      "continuity": 0,
+      "integration": 0,
+      "adaptability": 0,
+      "emergence": 0
+    }
+  },
+  "memory": {
+    "understandingState": null,
+    "organizationalUnderstandingState": {
+      "organizationId": "benchmark-knowledge-fragmentation",
+      "lastUpdatedAt": "2026-07-05T21:27:49.943Z",
+      "currentUnderstandings": [],
+      "organizationalConcepts": [],
+      "confidenceLandscape": [],
+      "activeQuestions": [],
+      "strategicRisks": [],
+      "evolutionHistory": [],
+      "health": {
+        "maturity": 0,
+        "coherence": 0,
+        "uncertainty": 1,
+        "adaptation": 0
+      }
+    },
+    "understandingClusters": [],
+    "entityMentions": [],
+    "observations": [],
+    "beliefs": [],
+    "patterns": [],
+    "deltas": [],
+    "events": [],
+    "functionalInterpretationState": null,
+    "organizationalCapabilitiesState": null,
+    "organizationalPhenomenaState": null,
+    "semanticConcepts": [],
+    "meaningSignals": [],
+    "organizationalConcepts": []
+  },
+  "organism": {
+    "organismState": null,
+    "lastEvolutionAt": null
+  }
+}

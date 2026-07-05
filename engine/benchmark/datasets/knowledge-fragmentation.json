@@ -1,0 +1,92 @@
+{
+  "id": "knowledge-fragmentation",
+  "title": "Knowledge Fragmentation",
+  "company": "NovaBio Therapeutics",
+  "industry": "Biotechnology",
+  "question": "Why are product development teams repeatedly solving the same problems despite hiring experienced employees and investing heavily in collaboration tools?",
+  "context": "Benchmark case designed to test whether Discovery can infer knowledge fragmentation from duplicated work, scattered documentation, weak knowledge transfer, and dependence on informal expertise.",
+  "evidence": [
+    {
+      "id": "KF-1",
+      "title": "Engineering Retrospective",
+      "content": "Three separate product teams independently developed nearly identical internal software tools without realizing similar solutions already existed elsewhere in the company."
+    },
+    {
+      "id": "KF-2",
+      "title": "Employee Survey",
+      "content": "68% of employees report they often struggle to locate existing documentation or determine whether previous work has already addressed a problem."
+    },
+    {
+      "id": "KF-3",
+      "title": "Research Division Review",
+      "content": "Scientists frequently repeat experiments because earlier findings are difficult to locate or are stored in personal notebooks rather than shared repositories."
+    },
+    {
+      "id": "KF-4",
+      "title": "New Employee Interviews",
+      "content": "Recently hired employees report it takes several months before they know who possesses critical expertise across the organization."
+    },
+    {
+      "id": "KF-5",
+      "title": "Customer Support Analysis",
+      "content": "Support teams regularly escalate issues to engineering because historical resolutions cannot be easily found in existing knowledge systems."
+    },
+    {
+      "id": "KF-6",
+      "title": "Product Development Audit",
+      "content": "Multiple teams maintain separate documentation systems with inconsistent formats and little cross-referencing between departments."
+    },
+    {
+      "id": "KF-7",
+      "title": "Executive Strategy Meeting",
+      "content": "Leadership noted that valuable organizational knowledge often leaves when experienced employees resign or transfer internally."
+    },
+    {
+      "id": "KF-8",
+      "title": "Project Postmortem",
+      "content": "A recently completed product launch encountered technical problems that had already been solved during a previous launch two years earlier, but those lessons were never reused."
+    },
+    {
+      "id": "KF-9",
+      "title": "IT Infrastructure Review",
+      "content": "The organization currently stores operational knowledge across shared drives, cloud folders, personal notes, email threads, Slack channels, and local documents without a unified indexing strategy."
+    },
+    {
+      "id": "KF-10",
+      "title": "Innovation Program Review",
+      "content": "Teams frequently describe discovering useful internal knowledge by accident through informal conversations rather than through organizational systems."
+    }
+  ],
+  "expected": {
+    "primaryMechanisms": ["knowledge fragmentation"],
+    "secondaryMechanisms": [
+      "information silos",
+      "weak knowledge transfer",
+      "organizational memory loss",
+      "expertise concentration"
+    ],
+    "affectedCapabilities": [
+      "learning",
+      "innovation",
+      "knowledge management",
+      "organizational memory",
+      "collaboration",
+      "execution"
+    ],
+    "compressedConcepts": [
+      "organizational continuity is weakening",
+      "knowledge is fragmented",
+      "teams are duplicating work",
+      "knowledge continuity",
+      "localized learning",
+      "not reliably preserving what it learns",
+      "organizational memory"
+    ],
+    "avoid": [
+      "teams pattern",
+      "strategic bet",
+      "technology advantage",
+      "strategic picture"
+    ]
+  }
+}

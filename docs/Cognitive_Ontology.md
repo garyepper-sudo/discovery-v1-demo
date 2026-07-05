@@ -17,7 +17,7 @@ Every cognitive layer must answer exactly one question.
 
 If two layers answer the same question, one should be removed, renamed, or demoted to an implementation detail.
 
-Discovery's cognitive hierarchy is:
+Discovery's cognitive model is:
 
 ```text
 Evidence
@@ -28,14 +28,16 @@ Patterns
     ↓
 Mechanisms
     ↓
-Capabilities
-    ↓
 Organizational Theory
+
+Capability Assessment
     ↓
 Executive Understanding
 ```
 
-Each layer compresses, interprets, or models the layer beneath it.
+Capability Assessment is not a causal reasoning layer.
+
+It is an evaluative layer produced from the cognitive model. Beliefs, Patterns, Mechanisms, and Organizational Theory describe how the organization works. Capability Assessment evaluates the health of the organization based on that model.
 
 ---
 
@@ -69,7 +71,7 @@ Evidence is not understanding.
 
 * Evidence may support beliefs.
 * Evidence should preserve source traceability.
-* Evidence should not directly produce mechanisms, capabilities, theories, or executive conclusions.
+* Evidence should not directly produce mechanisms, capability assessments, theories, or executive conclusions.
 
 ### Organism Representation
 
@@ -188,7 +190,7 @@ A mechanism should explain multiple patterns simultaneously.
 * Mechanisms should be canonicalized to avoid duplicate explanation-level mechanisms.
 * Mechanisms may reinforce or suppress other mechanisms.
 * Mechanisms should become durable memory objects over time.
-* Mechanisms should not be confused with capabilities.
+* Mechanisms should not be confused with capability assessments.
 
 ### Organism Representation
 
@@ -198,50 +200,7 @@ They shape how organizational behavior flows.
 
 ---
 
-## 5. Capabilities
-
-### Question Answered
-
-What organizational ability is being strengthened or weakened?
-
-### Responsibility
-
-Capabilities represent organizational health.
-
-They describe the condition of core organizational abilities.
-
-Capabilities are not causes.
-Capabilities are not explanations.
-Capabilities are affected by mechanisms.
-
-### Examples
-
-* Decision Making
-* Execution
-* Communication
-* Planning
-* Learning
-* Governance
-* Customer Responsiveness
-* Adaptation
-
-### Rules
-
-* Capabilities should represent health, vitality, or functional strength.
-* Capabilities should eventually contain measurable health signals.
-* Capabilities should not duplicate mechanisms.
-* Mechanisms explain why capabilities improve or degrade.
-* Capabilities help executives understand where the organization is strong, weak, or changing.
-
-### Organism Representation
-
-Capabilities appear as major organs or regions of the organism.
-
-Their visual state may reflect health, activity, stress, confidence, or trend.
-
----
-
-## 6. Organizational Theory
+## 5. Organizational Theory
 
 ### Question Answered
 
@@ -249,7 +208,7 @@ How do mechanisms interact?
 
 ### Responsibility
 
-Organizational theories model causal relationships between mechanisms and their effects on organizational capabilities.
+Organizational theories model causal relationships between mechanisms and their effects on the organization.
 
 Theories are causal organizational models.
 
@@ -276,7 +235,7 @@ Planning Instability
 ### Rules
 
 * Theories connect mechanisms into causal structures.
-* Theories may involve multiple capabilities.
+* Theories may explain effects across multiple capability areas.
 * Discovery may generate competing theories when evidence is ambiguous.
 * Theories should support executive understanding but should not replace it.
 * Theories should be inspectable, but not necessarily exposed by default.
@@ -289,6 +248,53 @@ They show how one part of the organization affects another.
 
 ---
 
+## 6. Capability Assessment
+
+### Question Answered
+
+How healthy is this organizational ability?
+
+### Responsibility
+
+Capability Assessment evaluates organizational health.
+
+It describes the condition of core organizational abilities based on the cognitive model.
+
+Capability Assessment is not a cause.
+Capability Assessment is not an explanation.
+Capability Assessment is not another mechanism.
+
+Mechanisms and Organizational Theories explain why a capability is healthy, stressed, improving, or declining.
+
+### Examples
+
+* Decision Making
+* Execution
+* Communication
+* Planning
+* Learning
+* Governance
+* Customer Responsiveness
+* Adaptation
+
+### Rules
+
+* Capability Assessment evaluates health, vitality, or functional strength.
+* Capability Assessment should be derived from mechanisms, theory, and supporting evidence.
+* Capability Assessment should eventually contain measurable health signals.
+* Capability Assessment should not duplicate mechanisms.
+* Mechanisms explain why capabilities improve or degrade.
+* Theories explain how multiple mechanisms interact to affect capabilities.
+* Capability Assessment helps executives understand where the organization is strong, weak, or changing.
+
+### Organism Representation
+
+Capability Assessment appears as major organs, regions, or vital signs of the organism.
+
+Its visual state may reflect health, activity, stress, confidence, or trend.
+
+---
+
 ## 7. Executive Understanding
 
 ### Question Answered
@@ -297,9 +303,9 @@ What should leadership understand?
 
 ### Responsibility
 
-Executive understanding is the distilled expression of Discovery's cognitive model.
+Executive Understanding is the distilled expression of Discovery's cognitive model.
 
-It translates evidence, beliefs, patterns, mechanisms, capabilities, and theories into leadership-relevant understanding.
+It translates evidence, beliefs, patterns, mechanisms, organizational theories, and capability assessments into leadership-relevant understanding.
 
 ### Examples
 
@@ -310,15 +316,15 @@ It translates evidence, beliefs, patterns, mechanisms, capabilities, and theorie
 
 ### Rules
 
-* Executive understanding should be concise.
-* Executive understanding should be grounded in the cognitive model.
-* Executive understanding should not expose every internal transformation.
-* Executive understanding should emphasize what matters, why it matters, and what leadership should watch.
-* Executive understanding is the primary user-facing output.
+* Executive Understanding should be concise.
+* Executive Understanding should be grounded in the cognitive model.
+* Executive Understanding should not expose every internal transformation.
+* Executive Understanding should emphasize what matters, why it matters, and what leadership should watch.
+* Executive Understanding is the primary user-facing output.
 
 ### Organism Representation
 
-Executive understanding appears as the organism's overall posture, state, or executive interpretation.
+Executive Understanding appears as the organism's overall posture, state, or executive interpretation.
 
 The organism should reveal what Discovery understands without exposing exactly how Discovery derived it.
 
@@ -338,10 +344,10 @@ Beliefs
 Patterns
     ↓ Explanation
 Mechanisms
-    ↓ Impact Assessment
-Capabilities
     ↓ System Modeling
 Organizational Theory
+    ↓ Capability Assessment
+Capability Assessment
     ↓ Executive Compression
 Executive Understanding
 ```
@@ -386,23 +392,11 @@ A mechanism should explain multiple patterns whenever possible.
 
 ---
 
-### Mechanisms → Capabilities
-
-Transformation: Impact Assessment
-
-Mechanisms affect organizational capabilities.
-
-Rule:
-
-Capabilities describe health; mechanisms explain causes.
-
----
-
-### Capabilities → Organizational Theory
+### Mechanisms → Organizational Theory
 
 Transformation: System Modeling
 
-Mechanisms and capability impacts are assembled into causal organizational theories.
+Mechanisms are assembled into causal organizational theories.
 
 Rule:
 
@@ -410,15 +404,27 @@ A theory should explain how mechanisms interact across the organization.
 
 ---
 
-### Organizational Theory → Executive Understanding
+### Organizational Theory → Capability Assessment
 
-Transformation: Executive Compression
+Transformation: Capability Assessment
 
-The theory is distilled into leadership-relevant understanding.
+The cognitive model is evaluated to determine the health of core organizational abilities.
 
 Rule:
 
-Executive understanding should communicate what matters without exposing unnecessary internal complexity.
+Capability Assessment describes health; mechanisms and theories explain causes.
+
+---
+
+### Capability Assessment → Executive Understanding
+
+Transformation: Executive Compression
+
+Capability Assessment and Organizational Theory are distilled into leadership-relevant understanding.
+
+Rule:
+
+Executive Understanding should communicate what matters without exposing unnecessary internal complexity.
 
 ---
 
@@ -448,7 +454,7 @@ They may support belief grouping, semantic similarity, and pattern formation, bu
 
 Semantic Concepts should become a compression artifact or labeling aid.
 
-They should not compete with beliefs, patterns, mechanisms, capabilities, or theories.
+They should not compete with beliefs, patterns, mechanisms, capability assessments, or theories.
 
 ---
 
@@ -462,9 +468,9 @@ Compression occurs throughout the ontology:
 Evidence compresses into Beliefs.
 Beliefs compress into Patterns.
 Patterns compress into Mechanisms.
-Mechanisms inform Capabilities.
-Mechanisms and Capabilities form Theories.
-Theories compress into Executive Understanding.
+Mechanisms compress into Organizational Theories.
+Organizational Theories inform Capability Assessment.
+Capability Assessment and Organizational Theories compress into Executive Understanding.
 ```
 
 Semantic Compression may remain an implementation module, but conceptually it should serve the whole cognitive hierarchy.
@@ -539,8 +545,8 @@ Discovery should preserve these invariants:
 2. Beliefs describe what appears true.
 3. Patterns describe what repeats.
 4. Mechanisms explain why patterns exist.
-5. Capabilities describe organizational health.
-6. Theories model how mechanisms interact.
+5. Organizational Theories model how mechanisms interact.
+6. Capability Assessment evaluates organizational health based on mechanisms and theories.
 7. Executive Understanding communicates what leadership should understand.
 8. The organism visualizes the modeled understanding, not the internal recipe.
 9. Every top-level cognitive object must answer a distinct question.
@@ -553,9 +559,9 @@ Discovery should preserve these invariants:
 Sprint 17 succeeds when:
 
 * every cognitive layer has one clearly defined purpose
-* overlap between beliefs, patterns, capabilities, mechanisms, and theories is minimized
+* overlap between beliefs, patterns, capability assessments, mechanisms, and theories is minimized
 * mechanisms explain patterns rather than observations
-* capabilities represent organizational health rather than causes
+* capability assessment represents organizational health rather than causes
 * organizational theories connect mechanisms into causal structures
 * executive understanding becomes a distilled expression of the cognitive model
 * deprecated concepts are either removed, renamed, or demoted to implementation details
@@ -572,9 +578,9 @@ Executives do not remember hundreds of observations.
 They remember:
 
 * recurring patterns
-* organizational capabilities
 * enduring mechanisms
 * causal theories
+* organizational health
 * executive-level understanding
 
 Discovery's internal representation should progressively mirror that hierarchy while keeping the proprietary cognitive machinery hidden behind a simple, intuitive executive experience.

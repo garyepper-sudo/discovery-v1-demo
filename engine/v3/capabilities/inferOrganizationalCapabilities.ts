@@ -1,21 +1,9 @@
 import type { DetectedOrganizationalCapability } from "./organizationalCapabilities";
 import type { FunctionalInterpretation } from "../functional/functionalInterpretation";
-
-type OrganizationReasoningNode = {
-  entityId: string;
-  canonicalName: string;
-  category: string;
-  aliases: string[];
-  confidence: number;
-  evidenceIds: string[];
-  relatedEntityIds: string[];
-};
-
-type OrganizationReasoningGraph = {
-  organizationId: string;
-  generatedAt: string;
-  nodes: OrganizationReasoningNode[];
-};
+import type {
+  OrganizationReasoningGraph,
+  OrganizationReasoningNode,
+} from "../model/buildOrganizationReasoningGraph";
 
 const CAPABILITY_VOCABULARY = [
   {
@@ -381,12 +369,19 @@ function unique(values: string[]): string[] {
   return Array.from(new Set(values.filter(Boolean)));
 }
 
+function reasoningNodeId(node: OrganizationReasoningNode): string {
+  return node.id ?? node.entityId ?? node.phenomenonId ?? node.canonicalName;
+}
+
 function nodeText(node: OrganizationReasoningNode): string {
   return [
     node.canonicalName,
     node.category,
-    ...node.aliases,
-    ...node.relatedEntityIds,
+    node.description,
+    node.status,
+    ...(node.aliases ?? []),
+    ...(node.relatedEntityIds ?? []),
+    ...(node.possibleMechanismTypes ?? []),
   ]
     .map(normalizeText)
     .filter(Boolean)
@@ -419,7 +414,9 @@ function inferFromGraph(params: {
       )
     );
 
-    const understandingIds = unique(matchedNodes.map((node) => node.entityId));
+    const understandingIds = unique(
+      matchedNodes.map((node) => reasoningNodeId(node))
+);
 
     const averageConfidence =
       matchedNodes.reduce((sum, node) => sum + node.confidence, 0) /

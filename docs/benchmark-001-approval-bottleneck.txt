@@ -1,0 +1,22 @@
+Company: Acme Manufacturing
+
+Over the last six months, nearly every customer implementation has finished later than originally promised.
+
+Project managers say work frequently sits idle while waiting for executive approval.
+
+Department managers cannot approve contracts larger than $5,000 without CEO review.
+
+Engineering managers report that feature requests often wait several days for prioritization decisions.
+
+Sales representatives say customers become frustrated because implementation dates continually move.
+
+Several employees mentioned that meetings often end with "we'll wait until the CEO decides."
+
+Operations managers estimate that approximately 25% of project time is spent waiting for approvals.
+
+Customer Success has documented an increase in complaints related to delayed onboarding.
+
+Employees generally agree that leadership wants high quality decisions, but many believe decision-making has become overly centralized.
+
+No evidence suggests employees are unwilling to work.
+Most delays appear to occur while waiting for decisions rather than performing work.

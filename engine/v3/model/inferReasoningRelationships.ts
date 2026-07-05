@@ -1,18 +1,7 @@
-export type OrganizationReasoningNode = {
-  entityId: string;
-  canonicalName: string;
-  category: string;
-  aliases: string[];
-  confidence: number;
-  evidenceIds: string[];
-  relatedEntityIds: string[];
-};
-
-export type OrganizationReasoningGraph = {
-  organizationId: string;
-  generatedAt: string;
-  nodes: OrganizationReasoningNode[];
-};
+import type {
+  OrganizationReasoningGraph,
+  OrganizationReasoningNode,
+} from "./buildOrganizationReasoningGraph";
 
 export type OrganizationReasoningRelationshipType =
   | "owns"
@@ -41,12 +30,19 @@ function normalizeText(value: unknown): string {
   return String(value ?? "").trim().toLowerCase();
 }
 
+function nodeId(node: OrganizationReasoningNode): string {
+  return node.id ?? node.entityId ?? node.phenomenonId ?? node.canonicalName;
+}
+
 function nodeText(node: OrganizationReasoningNode): string {
   return [
     node.canonicalName,
     node.category,
-    ...node.aliases,
-    ...node.relatedEntityIds,
+    node.description,
+    node.status,
+    ...(node.aliases ?? []),
+    ...(node.relatedEntityIds ?? []),
+    ...(node.possibleMechanismTypes ?? []),
   ]
     .map(normalizeText)
     .filter(Boolean)
@@ -72,14 +68,17 @@ function makeRelationship(params: {
   confidence: number;
   rationale: string;
 }): OrganizationReasoningRelationship {
+  const sourceId = nodeId(params.source);
+  const targetId = nodeId(params.target);
+
   return {
     id: relationshipId({
-      sourceId: params.source.entityId,
-      targetId: params.target.entityId,
+      sourceId,
+      targetId,
       relationship: params.relationship,
     }),
-    sourceId: params.source.entityId,
-    targetId: params.target.entityId,
+    sourceId,
+    targetId,
     sourceName: params.source.canonicalName,
     targetName: params.target.canonicalName,
     relationship: params.relationship,
@@ -104,35 +103,46 @@ function dedupeRelationships(
   return [...byId.values()].sort((a, b) => b.confidence - a.confidence);
 }
 
+function isEntityNode(node: OrganizationReasoningNode): boolean {
+  return node.kind === "entity" || Boolean(node.entityId);
+}
+
+function isPhenomenonNode(node: OrganizationReasoningNode): boolean {
+  return node.kind === "phenomenon" || Boolean(node.phenomenonId);
+}
+
 export function inferReasoningRelationships(
   graph: OrganizationReasoningGraph
 ): OrganizationReasoningRelationship[] {
   const nodes = Array.isArray(graph.nodes) ? graph.nodes : [];
+  const entityNodes = nodes.filter(isEntityNode);
+  const phenomenonNodes = nodes.filter(isPhenomenonNode);
+
   const relationships: OrganizationReasoningRelationship[] = [];
 
-  const leadershipNodes = nodes.filter((node) =>
+  const leadershipNodes = entityNodes.filter((node) =>
     includesAny(nodeText(node), ["leadership", "executive", "ceo", "manager"])
   );
 
-  const teamNodes = nodes.filter((node) =>
+  const teamNodes = entityNodes.filter((node) =>
     ["team", "actor"].includes(node.category)
   );
 
-  const systemNodes = nodes.filter((node) => node.category === "system");
+  const systemNodes = entityNodes.filter((node) => node.category === "system");
 
-  const processNodes = nodes.filter((node) => node.category === "process");
+  const processNodes = entityNodes.filter((node) => node.category === "process");
 
-  const riskNodes = nodes.filter((node) => node.category === "risk");
+  const riskNodes = entityNodes.filter((node) => node.category === "risk");
 
-  const schedulingNodes = nodes.filter((node) =>
+  const schedulingNodes = entityNodes.filter((node) =>
     includesAny(nodeText(node), ["scheduling", "dashboard", "operations"])
   );
 
-  const customerNodes = nodes.filter((node) =>
+  const customerNodes = entityNodes.filter((node) =>
     includesAny(nodeText(node), ["customer", "support", "client"])
   );
 
-  const workforceNodes = nodes.filter((node) =>
+  const workforceNodes = entityNodes.filter((node) =>
     includesAny(nodeText(node), [
       "burnout",
       "fatigue",
@@ -158,7 +168,7 @@ export function inferReasoningRelationships(
     }
 
     for (const team of teamNodes) {
-      if (team.entityId === leadership.entityId) continue;
+      if (nodeId(team) === nodeId(leadership)) continue;
 
       relationships.push(
         makeRelationship({
@@ -200,11 +210,15 @@ export function inferReasoningRelationships(
     const riskText = nodeText(risk);
 
     for (const scheduling of schedulingNodes) {
-      if (risk.entityId === scheduling.entityId) continue;
+      if (nodeId(risk) === nodeId(scheduling)) continue;
 
       if (
         includesAny(riskText, ["delay", "bottleneck", "failure"]) &&
-        includesAny(nodeText(scheduling), ["scheduling", "dashboard", "operations"])
+        includesAny(nodeText(scheduling), [
+          "scheduling",
+          "dashboard",
+          "operations",
+        ])
       ) {
         relationships.push(
           makeRelationship({
@@ -224,7 +238,7 @@ export function inferReasoningRelationships(
     includesAny(nodeText(node), ["delay", "bottleneck"])
   )) {
     for (const workforce of workforceNodes) {
-      if (delayRisk.entityId === workforce.entityId) continue;
+      if (nodeId(delayRisk) === nodeId(workforce)) continue;
 
       relationships.push(
         makeRelationship({
@@ -241,7 +255,7 @@ export function inferReasoningRelationships(
 
   for (const team of teamNodes) {
     for (const scheduling of schedulingNodes) {
-      if (team.entityId === scheduling.entityId) continue;
+      if (nodeId(team) === nodeId(scheduling)) continue;
 
       relationships.push(
         makeRelationship({
@@ -258,7 +272,7 @@ export function inferReasoningRelationships(
 
   for (const customer of customerNodes) {
     for (const risk of riskNodes) {
-      if (customer.entityId === risk.entityId) continue;
+      if (nodeId(customer) === nodeId(risk)) continue;
 
       if (includesAny(nodeText(risk), ["delay", "failure", "friction"])) {
         relationships.push(
@@ -275,9 +289,99 @@ export function inferReasoningRelationships(
     }
   }
 
-  nodes.forEach((source) => {
+  for (const phenomenon of phenomenonNodes) {
+    const text = nodeText(phenomenon);
+
+    for (const entity of entityNodes) {
+      const entityId = nodeId(entity);
+
+      if (!(phenomenon.relatedEntityIds ?? []).includes(entityId)) continue;
+
+      relationships.push(
+        makeRelationship({
+          source: entity,
+          target: phenomenon,
+          relationship: "contributesTo",
+          confidence: Math.min(0.82, phenomenon.confidence),
+          rationale:
+            "The phenomenon explicitly references this entity as participating in the organizational condition.",
+        })
+      );
+    }
+
+    if (
+      includesAny(text, [
+        "approval",
+        "bottleneck",
+        "decision latency",
+        "slow decision",
+      ])
+    ) {
+      for (const leadership of leadershipNodes) {
+        relationships.push(
+          makeRelationship({
+            source: leadership,
+            target: phenomenon,
+            relationship: "contributesTo",
+            confidence: 0.74,
+            rationale:
+              "Approval or decision-latency phenomena are commonly shaped by leadership decision rights or escalation patterns.",
+          })
+        );
+      }
+    }
+
+    if (
+      includesAny(text, [
+        "knowledge fragmentation",
+        "scattered documentation",
+        "weak knowledge transfer",
+        "institutional memory",
+        "organizational learning",
+      ])
+    ) {
+      for (const team of teamNodes) {
+        relationships.push(
+          makeRelationship({
+            source: team,
+            target: phenomenon,
+            relationship: "contributesTo",
+            confidence: 0.7,
+            rationale:
+              "Knowledge and learning phenomena commonly emerge from how teams preserve, share, and reuse organizational understanding.",
+          })
+        );
+      }
+    }
+  }
+
+  for (let i = 0; i < phenomenonNodes.length; i += 1) {
+    for (let j = i + 1; j < phenomenonNodes.length; j += 1) {
+      const source = phenomenonNodes[i];
+      const target = phenomenonNodes[j];
+
+      const sourceMechanisms = new Set(source.possibleMechanismTypes ?? []);
+      const sharedMechanism = (target.possibleMechanismTypes ?? []).find(
+        (mechanismType) => sourceMechanisms.has(mechanismType)
+      );
+
+      if (!sharedMechanism) continue;
+
+      relationships.push(
+        makeRelationship({
+          source,
+          target,
+          relationship: "isRelatedTo",
+          confidence: Math.min(source.confidence, target.confidence, 0.78),
+          rationale: `Both phenomena point toward a possible shared mechanism: ${sharedMechanism}.`,
+        })
+      );
+    }
+  }
+
+  entityNodes.forEach((source) => {
     source.relatedEntityIds.forEach((targetId) => {
-      const target = nodes.find((node) => node.entityId === targetId);
+      const target = entityNodes.find((node) => nodeId(node) === targetId);
       if (!target) return;
 
       relationships.push(
