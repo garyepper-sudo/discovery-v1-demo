@@ -75,7 +75,7 @@ export function runOrganizationCognition(params: {
 
     memory: {
       ...memory,
-      entityMentions: [...memory.entityMentions, ...entityMentions],
+      entityMentions: [...(memory.entityMentions ?? []), ...entityMentions],
       observations: observationEvolution.observations,
     },
 
