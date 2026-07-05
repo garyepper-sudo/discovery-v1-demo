@@ -35,37 +35,88 @@ function inferFallbackTerms(text: string): {
   const capabilities: string[] = [];
   const consequences: string[] = [];
 
-  if (countMatches(text, ["delay", "delays", "latency", "bottleneck", "stall", "approval"]) > 0) {
-    behaviors.push("delay", "latency", "bottleneck");
-    capabilities.push("decision", "execution", "coordination");
-    consequences.push("slow execution", "missed timing");
+  if (
+    countMatches(text, [
+      "delay",
+      "delays",
+      "latency",
+      "bottleneck",
+      "stall",
+      "approval",
+      "approvals",
+      "waiting",
+      "wait",
+      "centralized",
+      "centralised",
+    ]) > 0
+  ) {
+    behaviors.push("delay", "latency", "bottleneck", "governance friction");
+    capabilities.push("decision", "execution", "coordination", "governance");
+    consequences.push("slow execution", "missed timing", "execution drag");
   }
 
-  if (countMatches(text, ["dashboard", "failure", "failures", "system", "platform", "process"]) > 0) {
+  if (
+    countMatches(text, [
+      "dashboard",
+      "failure",
+      "failures",
+      "system",
+      "platform",
+      "process",
+    ]) > 0
+  ) {
     behaviors.push("process failure", "system breakdown");
     capabilities.push("execution", "coordination");
     consequences.push("operational drag", "execution risk");
   }
 
-  if (countMatches(text, ["leadership", "manager", "managers", "ownership", "owns", "accountability"]) > 0) {
+  if (
+    countMatches(text, [
+      "leadership",
+      "manager",
+      "managers",
+      "ownership",
+      "owns",
+      "accountability",
+      "ceo",
+      "executive",
+      "review",
+    ]) > 0
+  ) {
     behaviors.push("ownership ambiguity", "governance friction");
     capabilities.push("governance", "accountability", "decision");
     consequences.push("decision drag", "coordination risk");
   }
 
-  if (countMatches(text, ["narrative", "communication", "alignment", "clarity", "friction"]) > 0) {
+  if (
+    countMatches(text, [
+      "narrative",
+      "communication",
+      "alignment",
+      "clarity",
+      "friction",
+    ]) > 0
+  ) {
     behaviors.push("communication gap", "alignment gap");
     capabilities.push("communication", "alignment");
     consequences.push("coordination breakdown");
   }
 
-  if (countMatches(text, ["customer", "support", "feedback"]) > 0) {
+  if (countMatches(text, ["customer", "support", "feedback", "onboarding"]) > 0) {
     behaviors.push("feedback failure", "customer signal loss");
     capabilities.push("customer responsiveness", "learning");
     consequences.push("customer friction");
   }
 
-  if (countMatches(text, ["growth", "pressure", "burnout", "resource", "capacity"]) > 0) {
+  if (
+    countMatches(text, [
+      "growth",
+      "pressure",
+      "burnout",
+      "resource",
+      "capacity",
+    ]) > 0
+  ) {
     behaviors.push("capacity strain", "resource constraint");
     capabilities.push("resource allocation", "planning", "adaptation");
     consequences.push("execution drag", "burnout risk");
@@ -102,17 +153,35 @@ function mergeTerms(
 }
 
 export function buildMechanismCandidates({
-  explanations,
+  patterns = [],
+  explanations = [],
   reasoningPaths = [],
   capabilities = [],
   understandingClusters = [],
   judgments = [],
 }: InferOrganizationalMechanismsInput): MechanismCandidate[] {
-  if (!Array.isArray(explanations) || explanations.length === 0) {
+  const hasPatterns = Array.isArray(patterns) && patterns.length > 0;
+  const hasExplanations = Array.isArray(explanations) && explanations.length > 0;
+
+  if (!hasPatterns && !hasExplanations) {
     return [];
   }
 
   const vocabulary = allProfileTerms();
+
+  const patternSignals = patterns.map((pattern) => ({
+    id: pattern.id,
+    text: normalizeText(
+      pattern.label,
+      pattern.statement,
+      pattern.description,
+      pattern.reason,
+    ),
+    confidence:
+      typeof pattern.confidence === "number"
+        ? pattern.confidence
+        : pattern.strength ?? 0.65,
+  }));
 
   const explanationSignals = explanations.map((explanation) => ({
     id: explanation.id,
@@ -127,12 +196,14 @@ export function buildMechanismCandidates({
       typeof explanation.confidence === "number" ? explanation.confidence : 0.65,
   }));
 
+  const primarySignals = patternSignals.length > 0 ? patternSignals : explanationSignals;
+
   const candidates: MechanismCandidate[] = [];
 
-  explanationSignals.forEach((signal, index) => {
+  primarySignals.forEach((signal, index) => {
     const fallbackForSignal = inferFallbackTerms(signal.text);
 
-    const relatedSignals = explanationSignals.filter((other) => {
+    const relatedSignals = primarySignals.filter((other) => {
       if (other.id === signal.id) return true;
 
       const sharedBehaviorCount = extractSharedTerms(
@@ -190,6 +261,17 @@ export function buildMechanismCandidates({
     );
 
     const enrichedTerms = mergeTerms(sharedTerms, fallbackTerms);
+
+    const explanationIds = explanationSignals
+      .filter((explanation) => {
+        return (
+          countMatches(explanation.text, enrichedTerms.behaviors) +
+            countMatches(explanation.text, enrichedTerms.capabilities) +
+            countMatches(explanation.text, enrichedTerms.consequences) >
+          0
+        );
+      })
+      .map((explanation) => explanation.id);
 
     const reasoningPathIds = reasoningPaths
       .filter((path) => {
@@ -250,7 +332,7 @@ export function buildMechanismCandidates({
       .filter((judgment) => {
         if (
           judgment.explanationId &&
-          relatedSignals.some((item) => item.id === judgment.explanationId)
+          explanationIds.includes(judgment.explanationId)
         ) {
           return true;
         }
@@ -268,12 +350,14 @@ export function buildMechanismCandidates({
 
     const supportCount =
       relatedSignals.length +
+      explanationIds.length +
       reasoningPathIds.length +
       capabilityIds.length +
       clusterIds.length +
       judgmentIds.length;
 
     const totalSignalCount =
+      primarySignals.length +
       explanations.length +
       reasoningPaths.length +
       capabilities.length +
@@ -287,7 +371,7 @@ export function buildMechanismCandidates({
 
     candidates.push({
       id: `mechanism-candidate-${index + 1}`,
-      explanationIds: unique(relatedSignals.map((item) => item.id)),
+      explanationIds: unique(explanationIds),
       reasoningPathIds: unique(reasoningPathIds),
       capabilityIds: unique(capabilityIds),
       clusterIds: unique(clusterIds),

@@ -1,5 +1,17 @@
 import type { OrganizationalExplanation } from "./organizationalJudgment";
 
+export type PatternLike = {
+  id: string;
+  label?: string;
+  statement?: string;
+  description?: string;
+  reason?: string;
+  confidence?: number;
+  strength?: number;
+  relatedBeliefIds?: string[];
+  relatedObservationIds?: string[];
+};
+
 export type ReasoningPathLike = {
   id: string;
   sourceLabel?: string;
@@ -45,7 +57,17 @@ export type ExplanationLike = OrganizationalExplanation & {
 };
 
 export type InferOrganizationalMechanismsInput = {
-  explanations: ExplanationLike[];
+  /**
+   * Primary ontology input.
+   * Mechanisms should increasingly be inferred from recurring patterns.
+   */
+  patterns?: PatternLike[];
+
+  /**
+   * Transitional compatibility inputs.
+   * These remain until the ontology migration is complete.
+   */
+  explanations?: ExplanationLike[];
   reasoningPaths?: ReasoningPathLike[];
   capabilities?: CapabilityLike[];
   understandingClusters?: UnderstandingClusterLike[];

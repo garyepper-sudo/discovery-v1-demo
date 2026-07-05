@@ -9,18 +9,23 @@ import type { InferOrganizationalMechanismsInput } from "./mechanismInferenceTyp
 import type { OrganizationalMechanism } from "./organizationalMechanism";
 
 export function inferOrganizationalMechanisms({
-  explanations,
+  patterns = [],
+  explanations = [],
   reasoningPaths = [],
   capabilities = [],
   understandingClusters = [],
   judgments = [],
 }: InferOrganizationalMechanismsInput): MechanismNetwork {
-  if (!Array.isArray(explanations) || explanations.length === 0) {
+  const hasPatterns = Array.isArray(patterns) && patterns.length > 0;
+  const hasExplanations = Array.isArray(explanations) && explanations.length > 0;
+
+  if (!hasPatterns && !hasExplanations) {
     const mechanisms: OrganizationalMechanism[] = [];
     return buildMechanismNetwork(mechanisms);
   }
 
   const candidates = buildMechanismCandidates({
+    patterns,
     explanations,
     reasoningPaths,
     capabilities,

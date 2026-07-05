@@ -148,6 +148,19 @@ export function evolveOrganizationRuntime(params: {
     now,
   });
 
+  const cognitiveMemory = cognitivelyUpdatedRuntime.memory as typeof cognitivelyUpdatedRuntime.memory & {
+    understandingState?: {
+      patterns?: any[];
+      stablePatterns?: any[];
+      beliefs?: any[];
+    };
+  };
+
+  const ontologyPatterns = [
+    ...(cognitiveMemory.understandingState?.stablePatterns ?? []),
+    ...(cognitiveMemory.understandingState?.patterns ?? []),
+  ];
+
   const synchronizedOrganizationModel = synchronizeOrganizationModel(
     cognitivelyUpdatedRuntime,
   );
@@ -237,6 +250,7 @@ export function evolveOrganizationRuntime(params: {
   });
 
   const mechanismNetwork = inferOrganizationalMechanisms({
+    patterns: ontologyPatterns,
     explanations: organizationalExplanations,
     reasoningPaths: organizationalReasoning.paths,
     capabilities: organizationalCapabilitiesState.capabilities,
