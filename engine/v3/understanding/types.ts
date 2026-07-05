@@ -1,3 +1,4 @@
+import type { CognitiveObjectBase } from "../model/cognition/cognitiveOntology";
 import {
   V3Belief,
   V3Contradiction,
@@ -104,8 +105,7 @@ export type PersistentTheme = {
   occurrenceCount: number;
 };
 
-export type PersistentBelief = {
-  id: string;
+export type PersistentBelief = CognitiveObjectBase<"belief"> & {
   statement: string;
   rationale: string;
   confidence: number;

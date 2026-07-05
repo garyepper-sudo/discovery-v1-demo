@@ -50,7 +50,7 @@ function isUsefulStatement(value: unknown): value is string {
 }
 
 function extractCandidateStatements(
-  investigation: BeliefInvestigationInput
+  investigation: BeliefInvestigationInput,
 ): string[] {
   return [
     investigation.summary,
@@ -79,7 +79,7 @@ export function mergeBeliefs(params: {
     const normalizedStatement = normalizeText(statement);
 
     const existing = beliefs.find(
-      (belief) => normalizeText(belief.statement) === normalizedStatement
+      (belief) => normalizeText(belief.statement) === normalizedStatement,
     );
 
     if (existing) {
@@ -90,7 +90,7 @@ export function mergeBeliefs(params: {
       existing.supportCount = (existing.supportCount ?? 1) + 1;
       existing.lastSeenAt = params.now;
       existing.evidenceIds = Array.from(
-        new Set([...existing.evidenceIds, params.uploadId])
+        new Set([...existing.evidenceIds, params.uploadId]),
       );
 
       strengthenedBeliefs.push({
@@ -107,11 +107,18 @@ export function mergeBeliefs(params: {
 
     const newBelief = {
       id: createBeliefId(statement),
+      cognitiveLayer: "belief",
+      ontologyVersion: "1.0",
       statement,
+      rationale: "Belief inferred from repeated investigation input.",
       confidence: 0.58,
+      stability: "emerging",
       evidenceIds: [params.uploadId],
+      observationIds: [],
+      themeIds: [],
       firstSeenAt: params.now,
       lastSeenAt: params.now,
+      occurrenceCount: 1,
       supportCount: 1,
     } as BeliefWithSupportCount;
 
