@@ -3,7 +3,7 @@ import type {
   PersistentBelief,
   UnderstandingCluster,
 } from "../understanding/types";
-import type { ObservationInput } from "../cognition/observations/evolveObservations";
+import type { EvolvedObservation } from "../cognition/observationEvolution";
 import { createOrganizationModel } from "../model/createOrganizationModel";
 import type { OrganizationModel } from "../model/organizationModel";
 import type { EntityMention } from "../entities/entityLifecycle";
@@ -33,7 +33,7 @@ export type OrganizationRuntimeMemory = {
    */
   entityMentions: EntityMention[];
 
-  observations: ObservationInput[];
+  observations: EvolvedObservation[];
   beliefs: PersistentBelief[];
 
   patterns: unknown[];

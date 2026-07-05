@@ -1,7 +1,5 @@
 import type { OrganizationRuntime } from "../runtime/organizationRuntime";
-import {
-  upsertOrganizationModelNode,
-} from "./updateOrganizationModel";
+import { upsertOrganizationModelNode } from "./updateOrganizationModel";
 import type { OrganizationModel } from "./organizationModel";
 
 export function synchronizeOrganizationModel(
@@ -18,11 +16,11 @@ export function synchronizeOrganizationModel(
     model = upsertOrganizationModelNode(model, {
       id: `observation:${observation.id}`,
       type: "observation",
-      label: observation.title ?? observation.id,
-      summary: observation.summary ?? "",
+      label: observation.statement ?? observation.id,
+      summary: observation.statement ?? observation.normalizedStatement ?? "",
       confidence: observation.confidence ?? 0.5,
-      createdAt: now,
-      updatedAt: now,
+      createdAt: observation.firstSeenAt ?? now,
+      updatedAt: observation.lastSeenAt ?? now,
     });
   }
 

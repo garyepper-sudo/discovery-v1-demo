@@ -1,6 +1,6 @@
 import type { DiscoveryV3Result } from "../types";
 import type { OrganizationRuntime } from "../runtime/organizationRuntime";
-import { evolveObservations } from "./observations/evolveObservations";
+import { evolveObservations } from "./observationEvolution";
 import { extractEntityMentions } from "../entities/extractEntities";
 import { syncOrganizationEntities } from "../entities/syncOrganizationEntities";
 
