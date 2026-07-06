@@ -1,57 +1,28 @@
-import type { ConceptCandidate } from "./conceptCandidateTypes";
-
-type SourceRecord = {
-  id: string;
-  label?: string;
-  name?: string;
-  title?: string;
-  statement?: string;
-  summary?: string;
-  description?: string;
-  explanation?: string;
-  confidence?: number;
-  strength?: number;
-  status?: string;
-};
+import type { SemanticCohort, SemanticObservationSourceType } from "../semantic";
+import type { ConceptCandidate, ConceptCandidateSourceType } from "./conceptCandidateTypes";
 
 export type BuildConceptCandidatesParams = {
-  mechanisms?: SourceRecord[];
-  mechanismNetwork?: SourceRecord[];
-  mechanismPatterns?: SourceRecord[];
-  organizationalBeliefs?: SourceRecord[];
-  dynamics?: SourceRecord[];
-  understandingClusters?: SourceRecord[];
-  understandings?: SourceRecord[];
+  semanticCohorts?: SemanticCohort[];
 };
-
-type SourceType = ConceptCandidate["sourceType"];
 
 type TheoryPrototype = {
   id: string;
   statement: string;
   summary: string;
   keywords: string[];
+  concepts: string[];
+  weakTerms: string[];
   explanation: string;
 };
 
-type CognitiveObservation = {
-  id: string;
-  sourceType: SourceType;
-  sourceId: string;
-  sourceIds: string[];
-  text: string;
-  normalizedText: string;
-  keywords: string[];
-  confidence: number;
-};
-
-type ConceptCohort = {
+type ConceptInterpretation = {
   prototype: TheoryPrototype;
-  observations: CognitiveObservation[];
+  cohort: SemanticCohort;
   matchedKeywords: string[];
-  averageConfidence: number;
-  structuralDensity: number;
-  semanticDensity: number;
+  matchedConcepts: string[];
+  crossLayerSupport: number;
+  explanatoryBreadth: number;
+  prototypeMatchQuality: number;
 };
 
 const THEORY_PROTOTYPES: TheoryPrototype[] = [
@@ -76,7 +47,23 @@ const THEORY_PROTOTYPES: TheoryPrototype[] = [
       "tribal",
       "onboarding",
       "context",
+      "recreate",
+      "rediscover",
+      "reinvent",
+      "lost",
+      "loss",
     ],
+    concepts: [
+      "knowledge-preservation",
+      "institutional-memory",
+      "knowledge-transfer",
+      "context-loss",
+      "documentation-decay",
+      "repeat-work",
+      "onboarding-friction",
+      "learning-continuity",
+    ],
+    weakTerms: ["team", "teams", "organization", "recurring", "appears"],
     explanation:
       "Discovery formed this as a higher-order organizational theory because multiple signals point toward degradation in organizational memory, learning transfer, and continuity.",
   },
@@ -100,7 +87,21 @@ const THEORY_PROTOTYPES: TheoryPrototype[] = [
       "prioritization",
       "accountability",
       "permission",
+      "review",
+      "signoff",
+      "blocked",
+      "waiting",
     ],
+    concepts: [
+      "decision-latency",
+      "approval-dependency",
+      "authority-ambiguity",
+      "governance-drag",
+      "escalation-dependence",
+      "accountability-gap",
+      "ownership-uncertainty",
+    ],
+    weakTerms: ["approval", "team", "organization", "recurring", "appears"],
     explanation:
       "Discovery formed this as a higher-order organizational theory because several signals suggest decision flow is constrained by authority, escalation, or approval structure.",
   },
@@ -125,7 +126,20 @@ const THEORY_PROTOTYPES: TheoryPrototype[] = [
       "handoffs",
       "team",
       "teams",
+      "handover",
+      "sync",
+      "handoffs",
     ],
+    concepts: [
+      "coordination-friction",
+      "handoff-breakdown",
+      "ownership-boundary",
+      "siloed-execution",
+      "dependency-management",
+      "interface-breakdown",
+      "cross-functional-drag",
+    ],
+    weakTerms: ["team", "teams", "across", "organization", "recurring"],
     explanation:
       "Discovery formed this as a higher-order organizational theory because several signals cluster around coordination, ownership boundaries, and cross-functional execution.",
   },
@@ -150,7 +164,20 @@ const THEORY_PROTOTYPES: TheoryPrototype[] = [
       "workload",
       "demand",
       "focus",
+      "delay",
+      "delayed",
+      "backlog",
     ],
+    concepts: [
+      "capacity-mismatch",
+      "resource-constraint",
+      "delivery-pressure",
+      "focus-dilution",
+      "operational-overload",
+      "throughput-limitation",
+      "execution-delay",
+    ],
+    weakTerms: ["execution", "organization", "recurring", "appears"],
     explanation:
       "Discovery formed this as a higher-order organizational theory because several signals suggest delivery demand is exceeding available organizational capacity.",
   },
@@ -174,7 +201,20 @@ const THEORY_PROTOTYPES: TheoryPrototype[] = [
       "misalignment",
       "tradeoff",
       "tradeoffs",
+      "goal",
+      "goals",
+      "roadmap",
     ],
+    concepts: [
+      "priority-drift",
+      "strategic-ambiguity",
+      "goal-misalignment",
+      "narrative-fragmentation",
+      "focus-dilution",
+      "directional-inconsistency",
+      "tradeoff-ambiguity",
+    ],
+    weakTerms: ["alignment", "organization", "recurring", "appears"],
     explanation:
       "Discovery formed this as a higher-order organizational theory because several signals suggest teams are operating from inconsistent priorities or interpretations of what matters.",
   },
@@ -199,7 +239,19 @@ const THEORY_PROTOTYPES: TheoryPrototype[] = [
       "iteration",
       "knowledge",
       "practice",
+      "failure",
+      "pattern",
     ],
+    concepts: [
+      "feedback-loop-breakdown",
+      "lesson-retention-failure",
+      "experience-to-improvement-gap",
+      "adaptive-learning-failure",
+      "repeated-mistakes",
+      "retrospective-breakdown",
+      "practice-transfer-gap",
+    ],
+    weakTerms: ["recurring", "pattern", "organization", "appears"],
     explanation:
       "Discovery formed this as a higher-order organizational theory because several signals suggest the organization is not reliably converting experience into improved behavior.",
   },
@@ -224,53 +276,30 @@ const THEORY_PROTOTYPES: TheoryPrototype[] = [
       "decision rights",
       "accountability",
       "handoff",
+      "operating",
+      "model",
     ],
+    concepts: [
+      "role-ambiguity",
+      "ownership-ambiguity",
+      "workflow-uncertainty",
+      "decision-rights-confusion",
+      "accountability-gap",
+      "process-ambiguity",
+      "operating-expectation-gap",
+    ],
+    weakTerms: ["process", "organization", "recurring", "appears"],
     explanation:
       "Discovery formed this as a higher-order organizational theory because several signals suggest the operating model is not explicit enough to guide consistent action.",
   },
 ];
-
-const STOP_WORDS = new Set([
-  "about",
-  "after",
-  "again",
-  "also",
-  "another",
-  "because",
-  "before",
-  "being",
-  "between",
-  "could",
-  "from",
-  "into",
-  "more",
-  "most",
-  "over",
-  "same",
-  "should",
-  "some",
-  "such",
-  "that",
-  "their",
-  "there",
-  "these",
-  "this",
-  "those",
-  "through",
-  "under",
-  "when",
-  "where",
-  "which",
-  "while",
-  "with",
-  "would",
-]);
 
 function asArray<T>(value: T[] | undefined | null): T[] {
   return Array.isArray(value) ? value : [];
 }
 
 function clamp01(value: number): number {
+  if (!Number.isFinite(value)) return 0;
   return Math.max(0, Math.min(1, value));
 }
 
@@ -291,311 +320,268 @@ function unique(values: string[]): string[] {
   return Array.from(new Set(values.filter(Boolean)));
 }
 
-function textOf(record: SourceRecord): string {
-  return (
-    record.statement ??
-    record.label ??
-    record.name ??
-    record.title ??
-    record.summary ??
-    record.description ??
-    record.explanation ??
-    ""
-  ).trim();
-}
-
-function fullTextOf(record: SourceRecord): string {
-  return [
-    record.statement,
-    record.label,
-    record.name,
-    record.title,
-    record.summary,
-    record.description,
-    record.explanation,
-    record.status,
-  ]
-    .filter(Boolean)
-    .join(" ")
-    .trim();
-}
-
-function keywords(text: string): string[] {
-  return unique(
-    normalize(text)
-      .split(" ")
-      .filter((word) => word.length > 3)
-      .filter((word) => !STOP_WORDS.has(word)),
-  );
-}
-
-function confidenceOf(record: SourceRecord): number {
-  return clamp01(record.confidence ?? record.strength ?? 0.5);
-}
-
 function strengthOf(confidence: number): ConceptCandidate["strength"] {
   if (confidence >= 0.75) return "strong";
   if (confidence >= 0.45) return "moderate";
   return "weak";
 }
 
-function emptyCandidateSupport(): Pick<
-  ConceptCandidate,
-  | "supportingUnderstandingIds"
-  | "supportingMechanismIds"
-  | "supportingPatternIds"
-  | "supportingBeliefIds"
-  | "supportingDynamicIds"
-  | "supportingClusterIds"
-> {
-  return {
-    supportingUnderstandingIds: [],
-    supportingMechanismIds: [],
-    supportingPatternIds: [],
-    supportingBeliefIds: [],
-    supportingDynamicIds: [],
-    supportingClusterIds: [],
-  };
+function conceptCandidateSourceType(
+  sourceTypes: SemanticObservationSourceType[],
+): ConceptCandidateSourceType {
+  const supported: ConceptCandidateSourceType[] = [
+    "mechanism",
+    "mechanism-network",
+    "mechanism-pattern",
+    "organizational-belief",
+    "dynamic",
+    "understanding-cluster",
+    "understanding",
+  ];
+
+  return sourceTypes.find((sourceType): sourceType is ConceptCandidateSourceType =>
+    supported.includes(sourceType as ConceptCandidateSourceType),
+  ) ?? "mechanism";
 }
 
-function supportForObservations(
-  observations: CognitiveObservation[],
-): Pick<
-  ConceptCandidate,
-  | "supportingUnderstandingIds"
-  | "supportingMechanismIds"
-  | "supportingPatternIds"
-  | "supportingBeliefIds"
-  | "supportingDynamicIds"
-  | "supportingClusterIds"
-> {
-  const support = emptyCandidateSupport();
-
-  for (const observation of observations) {
-    if (observation.sourceType === "mechanism") {
-      support.supportingMechanismIds.push(observation.sourceId);
-    }
-
-    if (observation.sourceType === "mechanism-pattern") {
-      support.supportingPatternIds.push(observation.sourceId);
-    }
-
-    if (observation.sourceType === "organizational-belief") {
-      support.supportingBeliefIds.push(observation.sourceId);
-    }
-
-    if (observation.sourceType === "dynamic") {
-      support.supportingDynamicIds.push(observation.sourceId);
-    }
-
-    if (observation.sourceType === "understanding-cluster") {
-      support.supportingClusterIds.push(observation.sourceId);
-    }
-
-    if (observation.sourceType === "understanding") {
-      support.supportingUnderstandingIds.push(observation.sourceId);
-    }
-  }
-
-  return {
-    supportingUnderstandingIds: unique(support.supportingUnderstandingIds),
-    supportingMechanismIds: unique(support.supportingMechanismIds),
-    supportingPatternIds: unique(support.supportingPatternIds),
-    supportingBeliefIds: unique(support.supportingBeliefIds),
-    supportingDynamicIds: unique(support.supportingDynamicIds),
-    supportingClusterIds: unique(support.supportingClusterIds),
-  };
-}
-
-function buildObservations(
-  sourceType: SourceType,
-  records: SourceRecord[],
-): CognitiveObservation[] {
-  return records
-    .filter((record) => record.id && textOf(record).length > 0)
-    .map((record) => {
-      const text = fullTextOf(record);
-      const sourceIds = [record.id];
-
-      return {
-        id: `${sourceType}-${record.id}`,
-        sourceType,
-        sourceId: record.id,
-        sourceIds,
-        text,
-        normalizedText: normalize(text),
-        keywords: keywords(text),
-        confidence: confidenceOf(record),
-      };
-    });
+function interpretationText(cohort: SemanticCohort): string {
+  return normalize(
+    [
+      cohort.statement,
+      cohort.summary,
+      cohort.canonicalMeaning.statement,
+      cohort.canonicalMeaning.summary,
+      cohort.keywords.join(" "),
+      cohort.canonicalMeaning.conceptIds.join(" "),
+      cohort.semanticSignature,
+    ].join(" "),
+  );
 }
 
 function countPrototypeMatches(
-  observation: CognitiveObservation,
+  cohort: SemanticCohort,
   prototype: TheoryPrototype,
-): string[] {
-  return prototype.keywords.filter((keyword) =>
-    observation.normalizedText.includes(normalize(keyword)),
-  );
-}
+): {
+  keywords: string[];
+  concepts: string[];
+} {
+  const text = interpretationText(cohort);
+  const cohortKeywords = cohort.keywords.map(normalize);
+  const canonicalConcepts = cohort.canonicalMeaning.conceptIds.map(normalize);
 
-function sourceDiversity(observations: CognitiveObservation[]): number {
-  return new Set(observations.map((observation) => observation.sourceType)).size;
-}
+  const keywordMatches = prototype.keywords.filter((keyword) => {
+    const normalizedKeyword = normalize(keyword);
 
-function mechanismCount(observations: CognitiveObservation[]): number {
-  return observations.filter((observation) => observation.sourceType === "mechanism")
-    .length;
-}
-
-function sharedKeywordDensity(observations: CognitiveObservation[]): number {
-  const counts = new Map<string, number>();
-
-  for (const observation of observations) {
-    for (const keyword of observation.keywords) {
-      counts.set(keyword, (counts.get(keyword) ?? 0) + 1);
-    }
-  }
-
-  const recurringKeywords = Array.from(counts.values()).filter(
-    (count) => count >= 2,
-  ).length;
-
-  return clamp01(recurringKeywords / 8);
-}
-
-function buildPrototypeCohorts(
-  observations: CognitiveObservation[],
-): ConceptCohort[] {
-  return THEORY_PROTOTYPES.flatMap((prototype) => {
-    const matched = observations
-      .map((observation) => ({
-        observation,
-        matches: countPrototypeMatches(observation, prototype),
-      }))
-      .filter(({ matches }) => matches.length > 0);
-
-    const cohortObservations = matched.map(({ observation }) => observation);
-    const matchedKeywords = unique(matched.flatMap(({ matches }) => matches));
-
-    const hasEnoughSignals = cohortObservations.length >= 3;
-    const hasMechanismSupport = mechanismCount(cohortObservations) >= 2;
-    const hasCrossLayerSupport = sourceDiversity(cohortObservations) >= 2;
-
-    if (!hasEnoughSignals || (!hasMechanismSupport && !hasCrossLayerSupport)) {
-      return [];
-    }
-
-    const semanticDensity = clamp01(
-      matchedKeywords.length / Math.max(4, prototype.keywords.length * 0.45),
+    return (
+      text.includes(normalizedKeyword) ||
+      cohortKeywords.includes(normalizedKeyword)
     );
-
-    const structuralDensity = clamp01(
-      cohortObservations.length / 8 +
-        sourceDiversity(cohortObservations) / 8 +
-        mechanismCount(cohortObservations) / 8 +
-        sharedKeywordDensity(cohortObservations) * 0.5,
-    );
-
-    return [
-      {
-        prototype,
-        observations: cohortObservations,
-        matchedKeywords,
-        averageConfidence: average(
-          cohortObservations.map((observation) => observation.confidence),
-        ),
-        structuralDensity,
-        semanticDensity,
-      },
-    ];
   });
-}
 
-function cohortConfidence(cohort: ConceptCohort): number {
-  return clamp01(
-    cohort.averageConfidence * 0.45 +
-      cohort.structuralDensity * 0.35 +
-      cohort.semanticDensity * 0.2,
-  );
-}
+  const conceptMatches = prototype.concepts.filter((concept) => {
+    const normalizedConcept = normalize(concept);
 
-function buildCandidateFromCohort(cohort: ConceptCohort): ConceptCandidate {
-  const confidence = cohortConfidence(cohort);
-  const sourceIds = unique(
-    cohort.observations.flatMap((observation) => observation.sourceIds),
-  );
-
-  const support = supportForObservations(cohort.observations);
+    return (
+      canonicalConcepts.includes(normalizedConcept) ||
+      cohortKeywords.includes(normalizedConcept) ||
+      text.includes(normalizedConcept)
+    );
+  });
 
   return {
-    id: `concept-theory-${cohort.prototype.id}`,
-    statement: cohort.prototype.statement,
-    summary: cohort.prototype.summary,
-    sourceType: "mechanism",
-    sourceIds,
-    ...support,
-    keywords: unique([
-      ...cohort.prototype.keywords,
-      ...cohort.matchedKeywords,
-      ...cohort.observations.flatMap((observation) => observation.keywords),
-    ]).slice(0, 32),
-    semanticSignature: cohort.prototype.id,
-    confidence,
-    strength: strengthOf(confidence),
-    explanation: cohort.prototype.explanation,
+    keywords: unique(keywordMatches),
+    concepts: unique(conceptMatches),
   };
 }
 
-function buildEmergentKeywordCohorts(
-  observations: CognitiveObservation[],
-): ConceptCandidate[] {
-  const keywordGroups = new Map<string, CognitiveObservation[]>();
+function weakTermPenalty(
+  matchedKeywords: string[],
+  prototype: TheoryPrototype,
+): number {
+  const weakMatches = matchedKeywords.filter((keyword) =>
+    prototype.weakTerms.includes(normalize(keyword)),
+  );
 
-  for (const observation of observations) {
-    for (const keyword of observation.keywords) {
-      if (!keywordGroups.has(keyword)) {
-        keywordGroups.set(keyword, []);
+  if (matchedKeywords.length === 0) return 0;
+
+  return clamp01(weakMatches.length / matchedKeywords.length);
+}
+
+function sourceDiversity(cohort: SemanticCohort): number {
+  return new Set(cohort.sourceTypes).size;
+}
+
+function mechanismSupportCount(cohort: SemanticCohort): number {
+  return unique([
+    ...cohort.supportingMechanismIds,
+    ...cohort.supportingNetworkIds,
+    ...cohort.supportingPatternIds,
+  ]).length;
+}
+
+function crossLayerSupportScore(cohort: SemanticCohort): number {
+  return clamp01(sourceDiversity(cohort) / 5 + mechanismSupportCount(cohort) / 6);
+}
+
+function explanatoryBreadthScore(
+  cohort: SemanticCohort,
+  matchedConcepts: string[],
+): number {
+  const breadth = unique([
+    ...matchedConcepts,
+    ...cohort.canonicalMeaning.conceptIds,
+    ...cohort.keywords,
+  ]).length;
+
+  return clamp01(breadth / 10);
+}
+
+function prototypeMatchQuality(params: {
+  prototype: TheoryPrototype;
+  matchedKeywords: string[];
+  matchedConcepts: string[];
+}): number {
+  const { prototype, matchedKeywords, matchedConcepts } = params;
+
+  const keywordScore = clamp01(matchedKeywords.length / 5);
+  const conceptScore = clamp01(matchedConcepts.length / 3);
+  const weakPenalty = weakTermPenalty(matchedKeywords, prototype);
+
+  return clamp01(keywordScore * 0.4 + conceptScore * 0.6 - weakPenalty * 0.25);
+}
+
+function hasMeaningfulSupport(params: {
+  cohort: SemanticCohort;
+  matchedConcepts: string[];
+  matchedKeywords: string[];
+  prototype: TheoryPrototype;
+}): boolean {
+  const { cohort, matchedConcepts, matchedKeywords, prototype } = params;
+
+  const enoughSemanticMemory =
+    cohort.observationIds.length >= 2 || cohort.occurrenceCount >= 2;
+  const enoughMechanismSupport = mechanismSupportCount(cohort) >= 1;
+  const enoughLayerSupport = sourceDiversity(cohort) >= 2;
+  const enoughConcepts = matchedConcepts.length >= 1;
+  const enoughKeywords = matchedKeywords.length >= 2;
+  const weakPenalty = weakTermPenalty(matchedKeywords, prototype);
+
+  return (
+    enoughSemanticMemory &&
+    (enoughConcepts || enoughKeywords) &&
+    (enoughMechanismSupport || enoughLayerSupport) &&
+    weakPenalty < 0.6
+  );
+}
+
+function buildConceptInterpretations(
+  cohorts: SemanticCohort[],
+): ConceptInterpretation[] {
+  return THEORY_PROTOTYPES.flatMap((prototype) =>
+    cohorts.flatMap((cohort) => {
+      const matches = countPrototypeMatches(cohort, prototype);
+
+      if (
+        !hasMeaningfulSupport({
+          cohort,
+          matchedConcepts: matches.concepts,
+          matchedKeywords: matches.keywords,
+          prototype,
+        })
+      ) {
+        return [];
       }
 
-      keywordGroups.get(keyword)?.push(observation);
-    }
-  }
+      return [
+        {
+          prototype,
+          cohort,
+          matchedKeywords: matches.keywords,
+          matchedConcepts: matches.concepts,
+          crossLayerSupport: crossLayerSupportScore(cohort),
+          explanatoryBreadth: explanatoryBreadthScore(cohort, matches.concepts),
+          prototypeMatchQuality: prototypeMatchQuality({
+            prototype,
+            matchedKeywords: matches.keywords,
+            matchedConcepts: matches.concepts,
+          }),
+        },
+      ];
+    }),
+  );
+}
 
-  return Array.from(keywordGroups.entries())
-    .filter(([, group]) => group.length >= 4)
-    .filter(([, group]) => sourceDiversity(group) >= 2)
-    .filter(([, group]) => mechanismCount(group) >= 1)
-    .map(([keyword, group]) => {
-      const confidence = clamp01(
-        average(group.map((observation) => observation.confidence)) * 0.5 +
-          clamp01(group.length / 8) * 0.25 +
-          clamp01(sourceDiversity(group) / 5) * 0.25,
-      );
+function interpretationConfidence(interpretation: ConceptInterpretation): number {
+  const { cohort } = interpretation;
 
-      const support = supportForObservations(group);
-      const sourceIds = unique(
-        group.flatMap((observation) => observation.sourceIds),
-      );
+  return clamp01(
+    cohort.confidence * 0.25 +
+      cohort.canonicalMeaning.confidence * 0.2 +
+      interpretation.prototypeMatchQuality * 0.2 +
+      interpretation.crossLayerSupport * 0.15 +
+      interpretation.explanatoryBreadth * 0.1 +
+      cohort.semanticStability * 0.05 +
+      cohort.organizationalPersistence * 0.05,
+  );
+}
 
-      return {
-        id: `concept-emergent-${keyword}`,
-        statement: `Recurring ${keyword} pattern is emerging.`,
-        summary: `Multiple cognitive signals repeatedly reference ${keyword}, suggesting it may represent a deeper organizational theme.`,
-        sourceType: "mechanism",
-        sourceIds,
-        ...support,
-        keywords: unique([
-          keyword,
-          ...group.flatMap((observation) => observation.keywords),
-        ]).slice(0, 24),
-        semanticSignature: `emergent-${keyword}`,
-        confidence,
-        strength: strengthOf(confidence),
-        explanation:
-          "Discovery formed this candidate from recurring cross-layer cognitive signals rather than a single mechanism relationship.",
-      };
-    });
+function candidateExplanation(interpretation: ConceptInterpretation): string {
+  const { cohort } = interpretation;
+
+  const supportParts = [
+    cohort.observationIds.length > 0
+      ? `${cohort.observationIds.length} semantic observations`
+      : "",
+    sourceDiversity(cohort) > 1
+      ? `${sourceDiversity(cohort)} cognitive layers`
+      : "",
+    mechanismSupportCount(cohort) > 0
+      ? `${mechanismSupportCount(cohort)} mechanism-level supports`
+      : "",
+    interpretation.matchedConcepts.length > 0
+      ? `${interpretation.matchedConcepts.length} matched canonical concepts`
+      : "",
+    cohort.occurrenceCount > 1 ? `${cohort.occurrenceCount} occurrences` : "",
+  ].filter(Boolean);
+
+  return `${interpretation.prototype.explanation} It interprets the persistent semantic cohort "${cohort.canonicalMeaning.statement}" and is supported by ${supportParts.join(
+    ", ",
+  )}. This candidate classifies canonical semantic memory rather than rebuilding semantic meaning from raw observations.`;
+}
+
+function buildCandidateFromInterpretation(
+  interpretation: ConceptInterpretation,
+): ConceptCandidate {
+  const { cohort, prototype } = interpretation;
+  const confidence = interpretationConfidence(interpretation);
+
+  return {
+    id: `concept-theory-${prototype.id}`,
+    statement: prototype.statement,
+    summary: prototype.summary,
+    sourceType: conceptCandidateSourceType(cohort.sourceTypes),
+    sourceIds: unique(cohort.sourceIds),
+
+    supportingUnderstandingIds: unique(cohort.supportingUnderstandingIds),
+    supportingMechanismIds: unique(cohort.supportingMechanismIds),
+    supportingPatternIds: unique(cohort.supportingPatternIds),
+    supportingBeliefIds: [],
+    supportingDynamicIds: unique(cohort.supportingDynamicIds),
+    supportingClusterIds: unique(cohort.supportingClusterIds),
+
+    keywords: unique([
+      ...interpretation.matchedConcepts,
+      ...interpretation.matchedKeywords,
+      ...cohort.canonicalMeaning.conceptIds,
+      ...cohort.keywords,
+      ...prototype.keywords,
+    ]).slice(0, 32),
+
+    semanticSignature: prototype.id,
+    confidence,
+    strength: strengthOf(confidence),
+    explanation: candidateExplanation(interpretation),
+  };
 }
 
 function mergeCandidate(
@@ -671,27 +657,9 @@ function mergeCandidates(candidates: ConceptCandidate[]): ConceptCandidate[] {
 export function buildConceptCandidates(
   params: BuildConceptCandidatesParams,
 ): ConceptCandidate[] {
-  const observations = [
-    ...buildObservations("mechanism", asArray(params.mechanisms)),
-    ...buildObservations("mechanism-network", asArray(params.mechanismNetwork)),
-    ...buildObservations("mechanism-pattern", asArray(params.mechanismPatterns)),
-    ...buildObservations(
-      "organizational-belief",
-      asArray(params.organizationalBeliefs),
-    ),
-    ...buildObservations("dynamic", asArray(params.dynamics)),
-    ...buildObservations(
-      "understanding-cluster",
-      asArray(params.understandingClusters),
-    ),
-    ...buildObservations("understanding", asArray(params.understandings)),
-  ];
-
-  const prototypeCandidates = buildPrototypeCohorts(observations).map(
-    buildCandidateFromCohort,
+  const interpretations = buildConceptInterpretations(
+    asArray(params.semanticCohorts),
   );
 
-  const emergentCandidates = buildEmergentKeywordCohorts(observations);
-
-  return mergeCandidates([...prototypeCandidates, ...emergentCandidates]);
+  return mergeCandidates(interpretations.map(buildCandidateFromInterpretation));
 }

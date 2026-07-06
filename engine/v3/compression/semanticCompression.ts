@@ -1,15 +1,26 @@
+import {
+  buildSemanticCohorts,
+  buildSemanticObservations,
+  type SemanticReasoningResult,
+} from "../semantic";
 import type { OrganizationalDynamic } from "../functional/functionalInterpretation";
 import type { OrganizationalConcept } from "./types";
 
-type UnderstandingLike = {
+type SourceRecord = {
   id: string;
   label?: string;
+  name?: string;
+  title?: string;
+  statement?: string;
   summary?: string;
   description?: string;
+  explanation?: string;
   confidence?: number;
   strength?: number;
   status?: string;
 };
+
+type UnderstandingLike = SourceRecord;
 
 type ConceptRecipe = {
   id: string;
@@ -17,6 +28,19 @@ type ConceptRecipe = {
   summary: string;
   dynamicLabels: string[];
   keywords?: string[];
+};
+
+export type RunSemanticCompressionParams = {
+  mechanisms?: SourceRecord[];
+  mechanismNetwork?: SourceRecord[];
+  mechanismPatterns?: SourceRecord[];
+  organizationalBeliefs?: SourceRecord[];
+  dynamics?: OrganizationalDynamic[];
+  understandings?: UnderstandingLike[];
+  understandingClusters?: SourceRecord[];
+  meaningSignals?: SourceRecord[];
+  organizationalConcepts?: SourceRecord[];
+  phenomena?: SourceRecord[];
 };
 
 const CONCEPT_RECIPES: ConceptRecipe[] = [
@@ -182,7 +206,9 @@ function findDynamicsForRecipe(
   recipe: ConceptRecipe,
   dynamics: OrganizationalDynamic[],
 ): OrganizationalDynamic[] {
-  return asArray(dynamics).filter((dynamic) => dynamicMatchScore(recipe, dynamic) > 0);
+  return asArray(dynamics).filter(
+    (dynamic) => dynamicMatchScore(recipe, dynamic) > 0,
+  );
 }
 
 function createConceptFromDynamics(params: {
@@ -217,9 +243,7 @@ function createConceptFromDynamics(params: {
   );
 
   const supportingUnderstandingIds = unique(
-    dynamics.flatMap((dynamic) =>
-      asArray(dynamic.supportingUnderstandingIds),
-    ),
+    dynamics.flatMap((dynamic) => asArray(dynamic.supportingUnderstandingIds)),
   );
 
   return {
@@ -233,11 +257,7 @@ function createConceptFromDynamics(params: {
     novelty,
     explanatoryPower,
     status:
-      stability > 0.8
-        ? "stable"
-        : stability > 0.55
-        ? "reinforced"
-        : "new",
+      stability > 0.8 ? "stable" : stability > 0.55 ? "reinforced" : "new",
     explanation:
       "Discovery formed this concept by compressing structured organizational dynamics rather than reinterpreting prose.",
   };
@@ -344,7 +364,14 @@ function createThematicFallbackConcepts(
   });
 }
 
-export function runSemanticCompression(params: {
+/**
+ * Legacy concept compression retained for callers that still need
+ * OrganizationalConcept[] from dynamics and understandings.
+ *
+ * Sprint 31 should route higher-order semantic reasoning through
+ * runSemanticCompression(), which now returns canonical semantic memory.
+ */
+export function runLegacyConceptCompression(params: {
   dynamics?: OrganizationalDynamic[];
   understandings?: UnderstandingLike[];
 }): OrganizationalConcept[] {
@@ -393,4 +420,42 @@ export function runSemanticCompression(params: {
   return Array.from(conceptMap.values()).sort(
     (a, b) => b.explanatoryPower - a.explanatoryPower,
   );
+}
+
+/**
+ * Canonical semantic compression.
+ *
+ * This is Discovery's shared semantic-memory layer:
+ *
+ * lower-order organizational artifacts
+ *   → Semantic Observations
+ *   → Persistent Semantic Cohorts
+ *
+ * Higher-order layers such as Organizational Beliefs and Concept Candidates
+ * should consume these cohorts rather than rebuilding semantic meaning.
+ */
+export function runSemanticCompression(
+  params: RunSemanticCompressionParams,
+): SemanticReasoningResult {
+  const observations = buildSemanticObservations({
+    mechanisms: asArray(params.mechanisms),
+    mechanismNetworks: asArray(params.mechanismNetwork),
+    mechanismPatterns: asArray(params.mechanismPatterns),
+    organizationalBeliefs: asArray(params.organizationalBeliefs),
+    organizationalDynamics: asArray(params.dynamics),
+    meaningSignals: asArray(params.meaningSignals),
+    organizationalConcepts: asArray(params.organizationalConcepts),
+    phenomena: asArray(params.phenomena),
+    understandingClusters: asArray(params.understandingClusters),
+    understandings: asArray(params.understandings),
+  });
+
+  const cohorts = buildSemanticCohorts({
+    observations,
+  });
+
+  return {
+    observations,
+    cohorts,
+  };
 }

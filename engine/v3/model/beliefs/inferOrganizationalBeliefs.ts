@@ -1,3 +1,10 @@
+import {
+  buildSemanticCohorts,
+  buildSemanticObservations,
+  scoreSemanticCohorts,
+  type SemanticCohort,
+  type SemanticObservationInput,
+} from "../../semantic";
 import type { OrganizationalMechanism } from "../judgment/organizationalMechanism";
 import type { OrganizationalBelief } from "./organizationalBeliefs";
 
@@ -23,29 +30,6 @@ type MechanismLike = Pick<
   evidenceIds?: string[];
 };
 
-type MechanismBeliefCluster = {
-  id: string;
-  mechanisms: MechanismLike[];
-};
-
-type SemanticTheme = {
-  label: string;
-  score: number;
-};
-
-const SEMANTIC_THEMES: SemanticTheme[] = [
-  { label: "knowledge", score: 0 },
-  { label: "learning", score: 0 },
-  { label: "memory", score: 0 },
-  { label: "documentation", score: 0 },
-  { label: "transfer", score: 0 },
-  { label: "decision", score: 0 },
-  { label: "authority", score: 0 },
-  { label: "leadership", score: 0 },
-  { label: "coordination", score: 0 },
-  { label: "execution", score: 0 },
-];
-
 function asArray<T>(value: T[] | undefined | null): T[] {
   return Array.isArray(value) ? value : [];
 }
@@ -58,13 +42,6 @@ function clampConfidence(value: number): number {
   return Math.max(0, Math.min(1, value));
 }
 
-function splitSemanticText(text: string): string {
-  return text
-    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
-    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
-    .replace(/[_-]+/g, " ");
-}
-
 function normalizeIdPart(value: string): string {
   return value
     .toLowerCase()
@@ -72,386 +49,187 @@ function normalizeIdPart(value: string): string {
     .replace(/^_+|_+$/g, "");
 }
 
-function semanticTextForMechanism(mechanism: MechanismLike): string {
-  return [
-    mechanism.executiveName,
-    mechanism.title,
-    mechanism.type,
-    mechanism.summary,
-    mechanism.executiveSummary,
-    mechanism.interpretation,
-    mechanism.organizationalBehavior,
-    mechanism.executiveImplication,
-    mechanism.label,
-    mechanism.description,
-  ]
-    .filter(Boolean)
-    .join(" ");
-}
-
-function semanticTokensForMechanism(mechanism: MechanismLike): string[] {
-  return unique(
-    splitSemanticText(semanticTextForMechanism(mechanism))
-      .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, " ")
-      .split(/\s+/)
-      .filter((token) => token.length > 3),
+function beliefStatementForCohort(cohort: SemanticCohort): string {
+  return (
+    cohort.canonicalMeaning.statement ||
+    cohort.statement ||
+    "The organization is operating with an unresolved structural constraint."
   );
-}
-
-function semanticSimilarity(
-  left: MechanismLike,
-  right: MechanismLike,
-): number {
-  const leftTokens = new Set(semanticTokensForMechanism(left));
-  const rightTokens = new Set(semanticTokensForMechanism(right));
-
-  const shared = [...leftTokens].filter((token) =>
-    rightTokens.has(token),
-  ).length;
-
-  const total = new Set([...leftTokens, ...rightTokens]).size;
-
-  if (total === 0) {
-    return 0;
-  }
-
-  return shared / total;
-}
-
-function findRelatedMechanisms(
-  mechanism: MechanismLike,
-  mechanisms: MechanismLike[],
-): MechanismLike[] {
-  return mechanisms.filter((candidate) => {
-    if (candidate.id === mechanism.id) {
-      return false;
-    }
-
-    return semanticSimilarity(mechanism, candidate) >= 0.35;
-  });
-}
-
-function buildMechanismBeliefClusters(
-  mechanisms: MechanismLike[],
-): MechanismBeliefCluster[] {
-  const visitedMechanismIds = new Set<string>();
-  const clusters: MechanismBeliefCluster[] = [];
-
-  for (const mechanism of mechanisms) {
-    if (visitedMechanismIds.has(mechanism.id)) {
-      continue;
-    }
-
-    const relatedMechanisms = findRelatedMechanisms(mechanism, mechanisms);
-    const clusterMechanisms = [mechanism, ...relatedMechanisms];
-
-    for (const clusterMechanism of clusterMechanisms) {
-      visitedMechanismIds.add(clusterMechanism.id);
-    }
-
-    clusters.push({
-      id: `mechanism_cluster_${clusters.length + 1}`,
-      mechanisms: clusterMechanisms,
-    });
-  }
-
-  return clusters;
-}
-
-function dominantSemanticTermsForCluster(
-  cluster: MechanismBeliefCluster,
-): string[] {
-  const tokenCounts = new Map<string, number>();
-
-  for (const mechanism of cluster.mechanisms) {
-    for (const token of semanticTokensForMechanism(mechanism)) {
-      tokenCounts.set(token, (tokenCounts.get(token) ?? 0) + 1);
-    }
-  }
-
-  return Array.from(tokenCounts.entries())
-    .filter(([, count]) => count >= 2)
-    .sort((left, right) => right[1] - left[1])
-    .map(([token]) => token);
-}
-
-function clusterSemanticText(cluster: MechanismBeliefCluster): string {
-  return splitSemanticText(
-    cluster.mechanisms.map(semanticTextForMechanism).join(" "),
-  ).toLowerCase();
-}
-
-function scoreSemanticTheme(params: {
-  theme: string;
-  terms: string[];
-  text: string;
-}): number {
-  const { theme, terms, text } = params;
-
-  const termScore = terms.filter((term) => term.includes(theme)).length * 2;
-  const textScore = text.includes(theme) ? 1 : 0;
-
-  return termScore + textScore;
-}
-
-function rankedSemanticThemesForCluster(
-  cluster: MechanismBeliefCluster,
-): SemanticTheme[] {
-  const terms = dominantSemanticTermsForCluster(cluster);
-  const text = clusterSemanticText(cluster);
-
-  return SEMANTIC_THEMES.map((theme) => ({
-    ...theme,
-    score: scoreSemanticTheme({
-      theme: theme.label,
-      terms,
-      text,
-    }),
-  }))
-    .filter((theme) => theme.score > 0)
-    .sort((left, right) => right.score - left.score);
-}
-
-function beliefStatementForCluster(cluster: MechanismBeliefCluster): string {
-  const rankedThemes = rankedSemanticThemesForCluster(cluster);
-  const themeLabels = rankedThemes.map((theme) => theme.label);
-
-  const hasKnowledge = themeLabels.includes("knowledge");
-  const hasLearning = themeLabels.includes("learning");
-  const hasMemory = themeLabels.includes("memory");
-  const hasDocumentation = themeLabels.includes("documentation");
-  const hasTransfer = themeLabels.includes("transfer");
-
-  const hasDecision = themeLabels.includes("decision");
-  const hasAuthority = themeLabels.includes("authority");
-  const hasLeadership = themeLabels.includes("leadership");
-
-  const hasCoordination = themeLabels.includes("coordination");
-  const hasExecution = themeLabels.includes("execution");
-
-  if (
-    hasKnowledge &&
-    (hasTransfer || hasDocumentation || hasMemory || hasLearning)
-  ) {
-    return "The organization is failing to accumulate, preserve, and reuse knowledge.";
-  }
-
-  if (hasLearning && (hasKnowledge || hasMemory)) {
-    return "The organization is not converting experience into durable organizational learning.";
-  }
-
-  if (hasMemory && (hasKnowledge || hasDocumentation)) {
-    return "Organizational memory is not being preserved reliably over time.";
-  }
-
-  if (hasDocumentation && hasKnowledge) {
-    return "Documentation is not functioning as reliable organizational memory.";
-  }
-
-  if (hasDecision && (hasAuthority || hasLeadership)) {
-    return "Decision authority appears overly centralized.";
-  }
-
-  if (hasLeadership && hasAuthority) {
-    return "The organization is overly dependent on leadership for operating decisions.";
-  }
-
-  if (hasCoordination && hasExecution) {
-    return "Execution is being constrained by weak coordination across the organization.";
-  }
-
-  if (hasCoordination) {
-    return "Cross-functional coordination is not reliably supporting execution.";
-  }
-
-  if (hasExecution) {
-    return "The organization is struggling to convert intent into consistent execution.";
-  }
-
-  const leadingTheme = rankedThemes[0];
-
-  if (leadingTheme) {
-    return `The organization shows a recurring weakness in ${leadingTheme.label}.`;
-  }
-
-  return "The organization is exhibiting a recurring unresolved operating constraint.";
 }
 
 function beliefIdForStatement(statement: string): string {
   return `belief_${normalizeIdPart(statement)}`;
 }
 
-function derivedPatternIdsForCluster(
-  cluster: MechanismBeliefCluster,
+function derivedPatternIdsForCohort(
+  cohort: SemanticCohort,
   statement: string,
 ): string[] {
-  const rankedThemes = rankedSemanticThemesForCluster(cluster);
-  const themeIds = rankedThemes.slice(0, 3).map((theme) => {
-    return `pattern:belief-theme:${normalizeIdPart(theme.label)}`;
-  });
-
-  const mechanismTypeIds = unique(
-    cluster.mechanisms
-      .map((mechanism) => mechanism.type)
-      .filter(Boolean)
-      .map((type) => `pattern:mechanism-type:${normalizeIdPart(String(type))}`),
-  );
-
-  const statementPatternId = `pattern:belief:${normalizeIdPart(statement)}`;
-
-  return unique([statementPatternId, ...themeIds, ...mechanismTypeIds]);
+  return unique([
+    ...cohort.supportingPatternIds,
+    `pattern:semantic-cohort:${normalizeIdPart(cohort.id)}`,
+    `pattern:belief:${normalizeIdPart(statement)}`,
+    ...cohort.observationIds.map(
+      (observationId) =>
+        `pattern:semantic-observation:${normalizeIdPart(observationId)}`,
+    ),
+  ]);
 }
 
-function derivedConceptIdsForCluster(
-  cluster: MechanismBeliefCluster,
+function derivedConceptIdsForCohort(
+  cohort: SemanticCohort,
   statement: string,
 ): string[] {
-  const rankedThemes = rankedSemanticThemesForCluster(cluster);
-  const themeLabels = rankedThemes.map((theme) => theme.label);
+  return unique([
+    ...cohort.canonicalMeaning.conceptIds,
+    ...cohort.supportingConceptIds,
+    `concept:belief:${normalizeIdPart(statement)}`,
+  ]);
+}
 
-  const conceptIds: string[] = [];
+function supportingEvidenceIdsForCohort(
+  cohort: SemanticCohort,
+  mechanisms: MechanismLike[],
+): string[] {
+  const mechanismById = new Map(
+    mechanisms.map((mechanism) => [mechanism.id, mechanism]),
+  );
 
-  if (
-    themeLabels.includes("knowledge") ||
-    themeLabels.includes("learning") ||
-    themeLabels.includes("memory") ||
-    themeLabels.includes("documentation") ||
-    themeLabels.includes("transfer")
-  ) {
-    conceptIds.push("concept:organizational-continuity");
-  }
+  return unique(
+    cohort.supportingMechanismIds.flatMap((mechanismId) => {
+      const mechanism = mechanismById.get(mechanismId);
 
-  if (
-    themeLabels.includes("decision") ||
-    themeLabels.includes("authority") ||
-    themeLabels.includes("leadership")
-  ) {
-    conceptIds.push("concept:centralized-governance-bottleneck");
-  }
+      return mechanism
+        ? [
+            ...asArray(mechanism.supportingEvidenceIds),
+            ...asArray(mechanism.evidenceIds),
+          ]
+        : [];
+    }),
+  );
+}
 
-  if (
-    themeLabels.includes("coordination") ||
-    themeLabels.includes("execution")
-  ) {
-    conceptIds.push("concept:cross-functional-execution-friction");
-  }
+function confidenceForCohort(cohort: SemanticCohort): number {
+  return clampConfidence(
+    cohort.confidence * 0.45 +
+      cohort.canonicalMeaning.confidence * 0.25 +
+      cohort.explanatoryBreadth * 0.12 +
+      cohort.explanatoryDepth * 0.08 +
+      cohort.semanticStability * 0.1,
+  );
+}
 
-  conceptIds.push(`concept:belief:${normalizeIdPart(statement)}`);
+function mergeBelief(
+  existing: OrganizationalBelief,
+  incoming: OrganizationalBelief,
+): OrganizationalBelief {
+  const combinedMechanismIds = unique([
+    ...existing.supportingMechanismIds,
+    ...incoming.supportingMechanismIds,
+  ]);
 
-  return unique(conceptIds);
+  const revisedConfidence = clampConfidence(
+    (existing.confidence * Math.max(1, existing.supportingMechanismIds.length) +
+      incoming.confidence * Math.max(1, incoming.supportingMechanismIds.length)) /
+      Math.max(
+        1,
+        existing.supportingMechanismIds.length +
+          incoming.supportingMechanismIds.length,
+      ),
+  );
+
+  return {
+    ...existing,
+    confidence: revisedConfidence,
+    supportingMechanismIds: combinedMechanismIds,
+    supportingPatternIds: unique([
+      ...existing.supportingPatternIds,
+      ...incoming.supportingPatternIds,
+    ]),
+    supportingConceptIds: unique([
+      ...existing.supportingConceptIds,
+      ...incoming.supportingConceptIds,
+    ]),
+    supportingEvidenceIds: unique([
+      ...existing.supportingEvidenceIds,
+      ...incoming.supportingEvidenceIds,
+    ]),
+    contradictoryEvidenceIds: unique([
+      ...existing.contradictoryEvidenceIds,
+      ...incoming.contradictoryEvidenceIds,
+    ]),
+    trend:
+      revisedConfidence > existing.confidence
+        ? "strengthening"
+        : revisedConfidence < existing.confidence
+          ? "weakening"
+          : "stable",
+    lastUpdatedAt: incoming.lastUpdatedAt,
+  };
 }
 
 export function inferOrganizationalBeliefs(params: {
   mechanisms?: MechanismLike[];
+  mechanismNetwork?: SemanticObservationInput[];
+  centralMechanismIds?: string[];
+
+  dynamics?: SemanticObservationInput[];
+  understandingClusters?: SemanticObservationInput[];
+  understandings?: SemanticObservationInput[];
+
+  organizationalConcepts?: SemanticObservationInput[];
+  meaningSignals?: SemanticObservationInput[];
+  phenomena?: SemanticObservationInput[];
+
+  explanations?: unknown[];
+  judgments?: unknown[];
+  capabilities?: unknown[];
+
   now?: string;
 }): OrganizationalBelief[] {
   const now = params.now ?? new Date().toISOString();
   const mechanisms = asArray(params.mechanisms);
 
-  const beliefMap = new Map<string, OrganizationalBelief>();
-  const clusters = buildMechanismBeliefClusters(mechanisms);
+  const semanticObservations = buildSemanticObservations({
+    mechanisms,
+    mechanismNetworks: asArray(params.mechanismNetwork),
+    organizationalDynamics: asArray(params.dynamics),
+    understandingClusters: asArray(params.understandingClusters),
+    understandings: asArray(params.understandings),
+    organizationalConcepts: asArray(params.organizationalConcepts),
+    meaningSignals: asArray(params.meaningSignals),
+    phenomena: asArray(params.phenomena),
+  });
 
-  for (const cluster of clusters) {
-    const statement = beliefStatementForCluster(cluster);
+  const semanticCohorts = scoreSemanticCohorts({
+    cohorts: buildSemanticCohorts({
+      observations: semanticObservations,
+      minimumSharedKeywords: 2,
+    }),
+  }).filter((cohort) => cohort.supportingMechanismIds.length > 0);
+
+  const beliefMap = new Map<string, OrganizationalBelief>();
+
+  for (const cohort of semanticCohorts) {
+    const statement = beliefStatementForCohort(cohort);
     const id = beliefIdForStatement(statement);
+
+    const belief: OrganizationalBelief = {
+      id,
+      statement,
+      confidence: confidenceForCohort(cohort),
+      supportingMechanismIds: unique(cohort.supportingMechanismIds),
+      supportingPatternIds: derivedPatternIdsForCohort(cohort, statement),
+      supportingConceptIds: derivedConceptIdsForCohort(cohort, statement),
+      supportingEvidenceIds: supportingEvidenceIdsForCohort(cohort, mechanisms),
+      contradictoryEvidenceIds: [],
+      trend: cohort.cohortState === "weakening" ? "weakening" : "stable",
+      lastUpdatedAt: now,
+    };
 
     const existing = beliefMap.get(id);
 
-    const clusterMechanismIds = unique(
-      cluster.mechanisms.map((clusterMechanism) => clusterMechanism.id),
-    );
-
-    const explicitSupportingPatternIds = unique(
-      cluster.mechanisms.flatMap((clusterMechanism) =>
-        asArray(clusterMechanism.supportingPatternIds),
-      ),
-    );
-
-    const explicitSupportingConceptIds = unique(
-      cluster.mechanisms.flatMap((clusterMechanism) => [
-        ...asArray(clusterMechanism.supportingConceptIds),
-        ...asArray(clusterMechanism.supportingSemanticConceptIds),
-      ]),
-    );
-
-    const clusterSupportingPatternIds = unique([
-      ...explicitSupportingPatternIds,
-      ...derivedPatternIdsForCluster(cluster, statement),
-    ]);
-
-    const clusterSupportingConceptIds = unique([
-      ...explicitSupportingConceptIds,
-      ...derivedConceptIdsForCluster(cluster, statement),
-    ]);
-
-    const clusterSupportingEvidenceIds = unique(
-      cluster.mechanisms.flatMap((clusterMechanism) => [
-        ...asArray(clusterMechanism.supportingEvidenceIds),
-        ...asArray(clusterMechanism.evidenceIds),
-      ]),
-    );
-
-    const clusterConfidence = clampConfidence(
-      cluster.mechanisms.reduce(
-        (sum, clusterMechanism) =>
-          sum + clampConfidence(clusterMechanism.confidence ?? 0.5),
-        0,
-      ) / Math.max(1, cluster.mechanisms.length),
-    );
-
-    if (!existing) {
-      beliefMap.set(id, {
-        id,
-        statement,
-        confidence: clusterConfidence,
-        supportingMechanismIds: clusterMechanismIds,
-        supportingPatternIds: clusterSupportingPatternIds,
-        supportingConceptIds: clusterSupportingConceptIds,
-        supportingEvidenceIds: clusterSupportingEvidenceIds,
-        contradictoryEvidenceIds: [],
-        trend: "stable",
-        lastUpdatedAt: now,
-      });
-
-      continue;
-    }
-
-    const combinedMechanismIds = unique([
-      ...existing.supportingMechanismIds,
-      ...clusterMechanismIds,
-    ]);
-
-    const revisedConfidence = clampConfidence(
-      (existing.confidence * existing.supportingMechanismIds.length +
-        clusterConfidence * clusterMechanismIds.length) /
-        combinedMechanismIds.length,
-    );
-
-    beliefMap.set(id, {
-      ...existing,
-      confidence: revisedConfidence,
-      supportingMechanismIds: combinedMechanismIds,
-      supportingPatternIds: unique([
-        ...existing.supportingPatternIds,
-        ...clusterSupportingPatternIds,
-      ]),
-      supportingConceptIds: unique([
-        ...existing.supportingConceptIds,
-        ...clusterSupportingConceptIds,
-      ]),
-      supportingEvidenceIds: unique([
-        ...existing.supportingEvidenceIds,
-        ...clusterSupportingEvidenceIds,
-      ]),
-      trend:
-        revisedConfidence > existing.confidence
-          ? "strengthening"
-          : revisedConfidence < existing.confidence
-            ? "weakening"
-            : "stable",
-      lastUpdatedAt: now,
-    });
+    beliefMap.set(id, existing ? mergeBelief(existing, belief) : belief);
   }
 
   return Array.from(beliefMap.values()).sort(

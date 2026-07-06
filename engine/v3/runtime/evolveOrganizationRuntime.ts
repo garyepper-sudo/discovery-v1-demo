@@ -56,6 +56,7 @@ export function evolveOrganizationRuntime(params: {
     meaningSignals?: any[];
     organizationalConcepts?: any[];
     semanticConcepts?: any[];
+    semanticCohorts?: any[];
     conceptualUnderstanding?: any[];
     conceptCandidates?: any[];
     understandingClusters?: any[];
@@ -305,6 +306,21 @@ export function evolveOrganizationRuntime(params: {
 
   const inferredOrganizationalBeliefs = inferOrganizationalBeliefs({
     mechanisms: safeMechanismNetwork.mechanisms,
+    mechanismNetwork: safeMechanismNetwork.edges,
+    centralMechanismIds: safeMechanismNetwork.centralMechanismIds,
+
+    dynamics: organizationalDynamicsState.interpretations,
+    understandingClusters,
+    understandings: updatedOrganizationalUnderstandingState.currentUnderstandings,
+
+    organizationalConcepts,
+    meaningSignals,
+    phenomena: organizationalPhenomenaState.phenomena,
+
+    explanations: organizationalExplanations,
+    judgments: organizationalJudgments,
+    capabilities: organizationalCapabilitiesState.capabilities,
+
     now,
   });
 
@@ -321,18 +337,29 @@ export function evolveOrganizationRuntime(params: {
       lastUpdatedAt: now,
     };
 
-  const conceptCandidates = buildConceptCandidates({
-    mechanisms: safeMechanismNetwork.mechanisms,
-    mechanismNetwork: safeMechanismNetwork.edges,
-    organizationalBeliefs: organizationalBeliefState.beliefs,
+  const semanticReasoning = runSemanticCompression({
     dynamics: organizationalDynamicsState.interpretations,
-    understandingClusters,
     understandings:
       beliefUpdatedOrganizationalUnderstandingState.currentUnderstandings,
+    meaningSignals,
+    organizationalConcepts,
+    phenomena: organizationalPhenomenaState.phenomena,
+    mechanisms: safeMechanismNetwork.mechanisms,
+    mechanismNetwork: safeMechanismNetwork.edges,
+    mechanismPatterns: [],
+    organizationalBeliefs: organizationalBeliefState.beliefs,
+    understandingClusters,
+  });
+
+  const semanticConcepts = semanticReasoning.observations;
+
+  const conceptCandidates = buildConceptCandidates({
+    semanticCohorts: semanticReasoning.cohorts,
   });
 
   const conceptualUnderstanding = compressConceptCandidates(conceptCandidates);
 
+  console.log("Semantic Reasoning", semanticReasoning);
   console.log("Concept Candidates", conceptCandidates);
   console.log("Conceptual Understanding", conceptualUnderstanding);
 
@@ -351,12 +378,6 @@ export function evolveOrganizationRuntime(params: {
   });
 
   console.log("Executive Assessment", executiveAssessment);
-
-  const semanticConcepts = runSemanticCompression({
-    dynamics: organizationalDynamicsState.interpretations,
-    understandings:
-      beliefUpdatedOrganizationalUnderstandingState.currentUnderstandings,
-  });
 
   const updatedMemory = {
     ...cognitivelyUpdatedRuntime.memory,
@@ -383,6 +404,7 @@ export function evolveOrganizationRuntime(params: {
 
     understandingClusters,
     semanticConcepts,
+    semanticCohorts: semanticReasoning.cohorts,
     conceptCandidates,
     conceptualUnderstanding,
     meaningSignals,
@@ -408,6 +430,7 @@ export function evolveOrganizationRuntime(params: {
         organizationalCapabilityCount:
           organizationalCapabilitiesState.capabilities.length,
         semanticConceptCount: semanticConcepts.length,
+        semanticCohortCount: semanticReasoning.cohorts.length,
         conceptCandidateCount: conceptCandidates.length,
         conceptualUnderstandingCount: conceptualUnderstanding.length,
         meaningSignalCount: meaningSignals.length,
@@ -430,7 +453,7 @@ export function evolveOrganizationRuntime(params: {
         executiveAssessmentConfidence: executiveAssessment.confidence,
       },
     ],
-  } as typeof cognitivelyUpdatedRuntime.memory & {
+  } as unknown as typeof cognitivelyUpdatedRuntime.memory & {
     organizationReasoningGraph: typeof organizationReasoningGraph;
     organizationReasoningRelationships: typeof organizationReasoningRelationships;
     organizationalReasoning: typeof organizationalReasoning;
@@ -440,6 +463,7 @@ export function evolveOrganizationRuntime(params: {
     mechanismNetwork: typeof safeMechanismNetwork;
     organizationalUnderstandingState: typeof beliefUpdatedOrganizationalUnderstandingState;
     organizationalBeliefRevisions: typeof organizationalBeliefState.revisions;
+    semanticCohorts: typeof semanticReasoning.cohorts;
     conceptCandidates: typeof conceptCandidates;
     conceptualUnderstanding: typeof conceptualUnderstanding;
   };
