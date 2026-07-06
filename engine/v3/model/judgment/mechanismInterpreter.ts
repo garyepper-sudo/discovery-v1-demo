@@ -25,6 +25,31 @@ function scoreToActionability(score: number): MechanismActionability {
   return "low";
 }
 
+function safeArray<T>(value: T[] | undefined | null): T[] {
+  return Array.isArray(value) ? value : [];
+}
+
+function normalizeCandidate(candidate: MechanismCandidate): MechanismCandidate {
+  return {
+    ...candidate,
+
+    sourceTexts: safeArray(candidate.sourceTexts),
+
+    phenomenonIds: safeArray(candidate.phenomenonIds),
+    patternIds: safeArray(candidate.patternIds),
+    compressedThemeIds: safeArray(candidate.compressedThemeIds),
+    explanationIds: safeArray(candidate.explanationIds),
+    reasoningPathIds: safeArray(candidate.reasoningPathIds),
+    capabilityIds: safeArray(candidate.capabilityIds),
+    clusterIds: safeArray(candidate.clusterIds),
+    judgmentIds: safeArray(candidate.judgmentIds),
+
+    sharedBehaviors: safeArray(candidate.sharedBehaviors),
+    sharedCapabilities: safeArray(candidate.sharedCapabilities),
+    sharedConsequences: safeArray(candidate.sharedConsequences),
+  };
+}
+
 function candidateMechanismType(
   candidate: MechanismCandidate,
 ): OrganizationalMechanismType | undefined {
@@ -45,8 +70,9 @@ function mechanismFitScore(
 ): number {
   if (type === "unknown") return 0;
 
+  const normalizedCandidate = normalizeCandidate(candidate);
   const profile = mechanismProfiles[type];
-  const text = candidate.sourceTexts.join(" ");
+  const text = normalizedCandidate.sourceTexts.join(" ");
 
   return (
     countMatches(text, profile.behaviors ?? []) * 0.35 +
@@ -58,11 +84,10 @@ function mechanismFitScore(
 function chooseMechanismType(
   candidate: MechanismCandidate,
 ): OrganizationalMechanismType {
-  const directType = candidateMechanismType(candidate);
+  const normalizedCandidate = normalizeCandidate(candidate);
+  const directType = candidateMechanismType(normalizedCandidate);
 
-  if (directType) {
-    return directType;
-  }
+  if (directType) return directType;
 
   let bestType: OrganizationalMechanismType = "unknown";
   let bestScore = 0;
@@ -70,7 +95,7 @@ function chooseMechanismType(
   for (const type of Object.keys(
     mechanismProfiles,
   ) as OrganizationalMechanismType[]) {
-    const score = mechanismFitScore(candidate, type);
+    const score = mechanismFitScore(normalizedCandidate, type);
 
     if (score > bestScore) {
       bestType = type;
@@ -78,7 +103,7 @@ function chooseMechanismType(
     }
   }
 
-  if (bestScore < 1.2 && candidate.noveltyScore > 0.45) {
+  if (bestScore < 1.2 && (normalizedCandidate.noveltyScore ?? 0) > 0.45) {
     return "unknown";
   }
 
@@ -88,25 +113,29 @@ function chooseMechanismType(
 function inferOrganizationalScope(
   candidate: MechanismCandidate,
 ): OrganizationalScope {
+  const normalizedCandidate = normalizeCandidate(candidate);
+
+  const phenomena = normalizedCandidate.phenomenonIds;
+  const clusters = normalizedCandidate.clusterIds;
+  const capabilities = normalizedCandidate.capabilityIds;
+  const explanations = normalizedCandidate.explanationIds;
+
   if (
-    candidate.phenomenonIds.length >= 2 ||
-    candidate.clusterIds.length >= 2 ||
-    candidate.capabilityIds.length >= 2
+    phenomena.length >= 2 ||
+    clusters.length >= 2 ||
+    capabilities.length >= 2
   ) {
     return "systemic";
   }
 
   if (
-    candidate.reasoningPathIds.length >= 2 ||
-    candidate.explanationIds.length >= 3
+    normalizedCandidate.reasoningPathIds.length >= 2 ||
+    explanations.length >= 3
   ) {
     return "crossFunctional";
   }
 
-  if (
-    candidate.phenomenonIds.length > 0 ||
-    candidate.explanationIds.length > 0
-  ) {
+  if (phenomena.length > 0 || explanations.length > 0) {
     return "local";
   }
 
@@ -117,12 +146,16 @@ function inferExecutivePriority(
   candidate: MechanismCandidate,
   type: OrganizationalMechanismType,
 ): ExecutivePriority {
+  const normalizedCandidate = normalizeCandidate(candidate);
+  const themeSupport = normalizedCandidate.compressedThemeIds.length;
+
   const score =
-    candidate.confidence * 0.35 +
-    candidate.convergenceScore * 0.35 +
+    (normalizedCandidate.confidence ?? 0) * 0.35 +
+    (normalizedCandidate.convergenceScore ?? 0) * 0.35 +
     (type === "unknown" ? 0.05 : 0.15) +
-    Math.min(0.15, candidate.explanationIds.length * 0.03) +
-    Math.min(0.15, candidate.phenomenonIds.length * 0.05);
+    Math.min(0.15, normalizedCandidate.explanationIds.length * 0.03) +
+    Math.min(0.15, normalizedCandidate.phenomenonIds.length * 0.05) +
+    Math.min(0.08, themeSupport * 0.02);
 
   return scoreToPriority(score);
 }
@@ -130,8 +163,17 @@ function inferExecutivePriority(
 function inferStability(
   candidate: MechanismCandidate,
 ): OrganizationalMechanism["stability"] {
-  if (candidate.convergenceScore >= 0.75) return "reinforced";
-  if (candidate.convergenceScore >= 0.45 || candidate.phenomenonIds.length > 0) {
+  const normalizedCandidate = normalizeCandidate(candidate);
+  const themeSupport = normalizedCandidate.compressedThemeIds.length;
+
+  if ((normalizedCandidate.convergenceScore ?? 0) >= 0.75) return "reinforced";
+
+  if (themeSupport >= 2) return "reinforced";
+
+  if (
+    (normalizedCandidate.convergenceScore ?? 0) >= 0.45 ||
+    normalizedCandidate.phenomenonIds.length > 0
+  ) {
     return "emerging";
   }
 
@@ -142,46 +184,49 @@ function buildOrganizationalBehavior(
   candidate: MechanismCandidate,
   profileTitle: string,
 ): string {
-  const behaviors = candidate.sharedBehaviors.slice(0, 3);
-
-  if (behaviors.length > 0) {
-    return behaviors.join(", ");
-  }
-
-  return profileTitle;
+  const normalizedCandidate = normalizeCandidate(candidate);
+  const behaviors = normalizedCandidate.sharedBehaviors;
+  const sliced = behaviors.slice(0, 3);
+  return sliced.length > 0 ? sliced.join(", ") : profileTitle;
 }
 
 function buildExecutiveSummary(
   candidate: MechanismCandidate,
   type: OrganizationalMechanismType,
 ): string {
+  const normalizedCandidate = normalizeCandidate(candidate);
+
+  const phenomena = normalizedCandidate.phenomenonIds;
+  const explanations = normalizedCandidate.explanationIds;
+  const reasoning = normalizedCandidate.reasoningPathIds;
+  const capabilities = normalizedCandidate.capabilityIds;
+
   const profile = mechanismProfiles[type];
 
-  return `${profile.title} is supported by ${candidate.phenomenonIds.length} phenomenon${
-    candidate.phenomenonIds.length === 1 ? "" : "a"
-  }, ${candidate.explanationIds.length} explanation${
-    candidate.explanationIds.length === 1 ? "" : "s"
-  }, ${candidate.reasoningPathIds.length} reasoning path${
-    candidate.reasoningPathIds.length === 1 ? "" : "s"
-  }, and ${candidate.capabilityIds.length} capability signal${
-    candidate.capabilityIds.length === 1 ? "" : "s"
-  }.`;
+  return `${profile.title} is supported by ${
+    phenomena.length
+  } phenomenon${phenomena.length === 1 ? "" : "a"}, ${
+    explanations.length
+  } explanation${explanations.length === 1 ? "" : "s"}, ${
+    reasoning.length
+  } reasoning path${reasoning.length === 1 ? "" : "s"}, and ${
+    capabilities.length
+  } capability signal${capabilities.length === 1 ? "" : "s"}.`;
 }
 
 function buildInterpretation(
   candidate: MechanismCandidate,
   type: OrganizationalMechanismType,
 ): string {
+  const normalizedCandidate = normalizeCandidate(candidate);
   const profile = mechanismProfiles[type];
 
-  if (type !== "unknown") {
-    return profile.interpretation;
-  }
+  if (type !== "unknown") return profile.interpretation;
 
   const sharedSignals = unique([
-    ...candidate.sharedBehaviors,
-    ...candidate.sharedCapabilities,
-    ...candidate.sharedConsequences,
+    ...normalizedCandidate.sharedBehaviors,
+    ...normalizedCandidate.sharedCapabilities,
+    ...normalizedCandidate.sharedConsequences,
   ]);
 
   return `${profile.interpretation} Shared signals include: ${
@@ -191,25 +236,33 @@ function buildInterpretation(
 }
 
 export function interpretMechanismCandidates(
-  candidates: MechanismCandidate[],
+  candidates: MechanismCandidate[] = [],
 ): OrganizationalMechanism[] {
-  return candidates
-    .map((candidate, index): OrganizationalMechanism => {
+  return safeArray(candidates)
+    .map((rawCandidate, index): OrganizationalMechanism => {
+      const candidate = normalizeCandidate(rawCandidate);
+
       const type = chooseMechanismType(candidate);
       const profile = mechanismProfiles[type];
 
+      const themeSupport = candidate.compressedThemeIds.length;
+
       const confidence = clamp01(
-        candidate.confidence * 0.65 +
-          candidate.convergenceScore * 0.25 +
-          Math.min(0.1, candidate.phenomenonIds.length * 0.05),
+        (candidate.confidence ?? 0) * 0.62 +
+          (candidate.convergenceScore ?? 0) * 0.23 +
+          Math.min(0.1, candidate.phenomenonIds.length * 0.05) +
+          Math.min(0.08, themeSupport * 0.02),
       );
 
       const actionabilityScore = clamp01(
         type === "unknown"
-          ? 0.5 + candidate.convergenceScore * 0.2
+          ? 0.5 +
+              (candidate.convergenceScore ?? 0) * 0.2 +
+              Math.min(0.08, themeSupport * 0.02)
           : 0.65 +
-              candidate.convergenceScore * 0.2 +
-              Math.min(0.1, candidate.phenomenonIds.length * 0.05),
+              (candidate.convergenceScore ?? 0) * 0.2 +
+              Math.min(0.1, candidate.phenomenonIds.length * 0.05) +
+              Math.min(0.08, themeSupport * 0.02),
       );
 
       const affectedCapabilities = unique([
@@ -253,6 +306,8 @@ export function interpretMechanismCandidates(
         supportingClusterIds: candidate.clusterIds,
         supportingPhenomenonIds: candidate.phenomenonIds,
 
+        supportingCompressedThemeIds: candidate.compressedThemeIds,
+
         explanationIds: candidate.explanationIds,
         reasoningPathIds: candidate.reasoningPathIds,
         capabilityIds: candidate.capabilityIds,
@@ -272,11 +327,15 @@ export function interpretMechanismCandidates(
     .filter((mechanism) => {
       const supportCount =
         (mechanism.supportingPhenomenonIds?.length ?? 0) +
+        (mechanism.supportingExplanationIds?.length ?? 0) +
         (mechanism.explanationIds?.length ?? 0) +
         (mechanism.reasoningPathIds?.length ?? 0) +
         (mechanism.clusterIds?.length ?? 0) +
-        (mechanism.judgmentIds?.length ?? 0);
+        (mechanism.judgmentIds?.length ?? 0) +
+        (mechanism.supportingCompressedThemeIds?.length ?? 0) +
+        (mechanism.capabilityIds?.length ?? 0) +
+        (mechanism.affectedCapabilityIds?.length ?? 0);
 
-      return supportCount > 0;
+      return supportCount > 0 || mechanism.confidence >= 0.45;
     });
 }

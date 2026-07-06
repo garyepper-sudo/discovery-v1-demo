@@ -1,4 +1,5 @@
 import type {
+  CompressedPatternThemeLike,
   ExplanationLike,
   PatternLike,
   PhenomenonLike,
@@ -9,6 +10,7 @@ import { normalizeText } from "./mechanismUtils";
 export type MechanismSignalSource =
   | "phenomenon"
   | "pattern"
+  | "compressedPatternTheme"
   | "semanticConcept"
   | "explanation";
 
@@ -19,13 +21,24 @@ export type MechanismSignal = {
   confidence: number;
 };
 
+function asArray<T>(value: T[] | undefined | null): T[] {
+  return Array.isArray(value) ? value : [];
+}
+
+function normalizeConfidence(value: unknown, fallback: number): number {
+  if (typeof value !== "number") return fallback;
+
+  return Math.max(0, Math.min(1, value));
+}
+
 export function collectMechanismSignals(params: {
   phenomena?: PhenomenonLike[];
   patterns?: PatternLike[];
+  compressedPatternThemes?: CompressedPatternThemeLike[];
   semanticConcepts?: SemanticConceptLike[];
   explanations?: ExplanationLike[];
 }): MechanismSignal[] {
-  const phenomenonSignals: MechanismSignal[] = (params.phenomena ?? []).map(
+  const phenomenonSignals: MechanismSignal[] = asArray(params.phenomena).map(
     (phenomenon) => ({
       id: phenomenon.id,
       source: "phenomenon",
@@ -34,16 +47,16 @@ export function collectMechanismSignals(params: {
         phenomenon.label,
         phenomenon.summary,
         phenomenon.description,
-        ...(phenomenon.possibleMechanismTypes ?? []),
+        ...asArray(phenomenon.possibleMechanismTypes),
       ),
-      confidence:
-        typeof phenomenon.confidence === "number"
-          ? phenomenon.confidence
-          : phenomenon.strength ?? 0.75,
+      confidence: normalizeConfidence(
+        phenomenon.confidence,
+        phenomenon.strength ?? 0.75,
+      ),
     }),
   );
 
-  const patternSignals: MechanismSignal[] = (params.patterns ?? []).map(
+  const patternSignals: MechanismSignal[] = asArray(params.patterns).map(
     (pattern) => ({
       id: pattern.id,
       source: "pattern",
@@ -53,15 +66,24 @@ export function collectMechanismSignals(params: {
         pattern.description,
         pattern.reason,
       ),
-      confidence:
-        typeof pattern.confidence === "number"
-          ? pattern.confidence
-          : pattern.strength ?? 0.65,
+      confidence: normalizeConfidence(
+        pattern.confidence,
+        pattern.strength ?? 0.65,
+      ),
     }),
   );
 
-  const semanticConceptSignals: MechanismSignal[] = (
-    params.semanticConcepts ?? []
+  const compressedThemeSignals: MechanismSignal[] = asArray(
+    params.compressedPatternThemes,
+  ).map((theme) => ({
+    id: theme.id,
+    source: "compressedPatternTheme",
+    text: normalizeText(theme.label, theme.summary),
+    confidence: normalizeConfidence(theme.confidence, 0.75),
+  }));
+
+  const semanticConceptSignals: MechanismSignal[] = asArray(
+    params.semanticConcepts,
   ).map((concept) => ({
     id: concept.id,
     source: "semanticConcept",
@@ -71,12 +93,11 @@ export function collectMechanismSignals(params: {
       concept.summary,
       concept.description,
     ),
-    confidence:
-      typeof concept.confidence === "number" ? concept.confidence : 0.7,
+    confidence: normalizeConfidence(concept.confidence, 0.7),
   }));
 
-  const explanationSignals: MechanismSignal[] = (
-    params.explanations ?? []
+  const explanationSignals: MechanismSignal[] = asArray(
+    params.explanations,
   ).map((explanation) => ({
     id: explanation.id,
     source: "explanation",
@@ -87,16 +108,27 @@ export function collectMechanismSignals(params: {
       explanation.executiveImplication,
       explanation.type,
     ),
-    confidence:
-      typeof explanation.confidence === "number"
-        ? explanation.confidence
-        : 0.65,
+    confidence: normalizeConfidence(explanation.confidence, 0.65),
   }));
 
-  return [
+  const deduped = new Map<string, MechanismSignal>();
+
+  for (const signal of [
     ...phenomenonSignals,
     ...patternSignals,
+    ...compressedThemeSignals,
     ...semanticConceptSignals,
     ...explanationSignals,
-  ].filter((signal) => signal.text.length > 0);
+  ]) {
+    if (!signal.id || signal.text.length === 0) continue;
+
+    const key = `${signal.source}:${signal.id}`;
+    const existing = deduped.get(key);
+
+    if (!existing || signal.confidence > existing.confidence) {
+      deduped.set(key, signal);
+    }
+  }
+
+  return [...deduped.values()];
 }

@@ -78,6 +78,39 @@ export type RejectedExplanation = {
   confidence: number;
 };
 
+export type TheoryValidationEvidence = {
+  label: string;
+  rationale: string;
+  confidence?: number;
+};
+
+export type CompetingTheoryAssessment = {
+  theory: string;
+  reasonItWasConsidered: string;
+  reasonItLost: string;
+  confidence: number;
+};
+
+export type TheoryValidation = {
+  dominantTheory: string | null;
+
+  whyDiscoveryBelievesIt: string;
+
+  supportingMechanisms: TheoryValidationEvidence[];
+  supportingOrganizationalBeliefs: TheoryValidationEvidence[];
+
+  competingTheoriesConsidered: CompetingTheoryAssessment[];
+
+  contradictoryOrWeakeningEvidence: TheoryValidationEvidence[];
+
+  calibratedConfidenceExplanation: string;
+
+  additionalEvidenceThatWouldIncreaseConfidence: string[];
+  evidenceThatWouldFalsifyTheory: string[];
+
+  executiveRecommendation: string;
+};
+
 export type OrganizationalAssessment = {
   summary: string;
 
@@ -92,6 +125,8 @@ export type OrganizationalAssessment = {
   primaryMechanismIds?: string[];
   primaryMechanismSummaries?: string[];
   mechanismCenteredNarrative?: string;
+
+  theoryValidation?: TheoryValidation;
 
   confidence: number;
 };

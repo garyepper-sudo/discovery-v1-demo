@@ -1,3 +1,4 @@
+import type { OrganizationalBelief } from "../model/beliefs/organizationalBeliefs";
 import type { OrganizationalConcept } from "../concepts/synthesizeOrganizationalConcepts";
 
 export type UnderstandingStateStatus =
@@ -112,6 +113,7 @@ export type OrganizationalUnderstandingState = {
 
   currentUnderstandings: OrganizationalUnderstandingItem[];
   organizationalConcepts: OrganizationalConcept[];
+  organizationalBeliefs: OrganizationalBelief[];
 
   confidenceLandscape: OrganizationalConfidenceArea[];
   activeQuestions: OrganizationalOpenQuestion[];
@@ -214,7 +216,7 @@ export function createEmptyOrganizationalUnderstandingState(params: {
 
     currentUnderstandings: [],
     organizationalConcepts: [],
-    
+    organizationalBeliefs: [],
 
     confidenceLandscape: [],
     activeQuestions: [],

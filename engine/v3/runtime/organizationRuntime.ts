@@ -110,6 +110,7 @@ export function createEmptyOrganizationRuntime(params: {
         lastUpdatedAt: now,
         currentUnderstandings: [],
         organizationalConcepts: [],
+        organizationalBeliefs: [],
         confidenceLandscape: [],
         activeQuestions: [],
         strategicRisks: [],

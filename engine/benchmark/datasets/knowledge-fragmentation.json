@@ -4,7 +4,7 @@
   "company": "NovaBio Therapeutics",
   "industry": "Biotechnology",
   "question": "Why are product development teams repeatedly solving the same problems despite hiring experienced employees and investing heavily in collaboration tools?",
-  "context": "Benchmark case designed to test whether Discovery can infer knowledge fragmentation from duplicated work, scattered documentation, weak knowledge transfer, and dependence on informal expertise.",
+  "context": "Benchmark case designed to test whether Discovery can infer knowledge fragmentation from duplicated work, scattered documentation, weak knowledge transfer, organizational memory loss, and weakening organizational continuity.",
   "evidence": [
     {
       "id": "KF-1",
@@ -58,12 +58,16 @@
     }
   ],
   "expected": {
-    "primaryMechanisms": ["knowledge fragmentation"],
+    "primaryMechanisms": [
+      "knowledge fragmentation"
+    ],
     "secondaryMechanisms": [
       "information silos",
       "weak knowledge transfer",
       "organizational memory loss",
-      "expertise concentration"
+      "expertise concentration",
+      "documentation breakdown",
+      "knowledge continuity failure"
     ],
     "affectedCapabilities": [
       "learning",
@@ -71,22 +75,28 @@
       "knowledge management",
       "organizational memory",
       "collaboration",
-      "execution"
+      "execution",
+      "continuity"
     ],
     "compressedConcepts": [
+      "organizational continuity failure",
       "organizational continuity is weakening",
       "knowledge is fragmented",
       "teams are duplicating work",
       "knowledge continuity",
       "localized learning",
       "not reliably preserving what it learns",
-      "organizational memory"
+      "organizational memory",
+      "institutional memory loss",
+      "knowledge transfer is weak"
     ],
     "avoid": [
       "teams pattern",
       "strategic bet",
       "technology advantage",
-      "strategic picture"
+      "strategic picture",
+      "recurring teams pattern",
+      "recurring organization pattern"
     ]
   }
 }

@@ -1,15 +1,15 @@
 {
   "metadata": {
     "organizationId": "benchmark-approval-bottleneck",
-    "createdAt": "2026-07-05T21:58:00.090Z",
-    "updatedAt": "2026-07-05T21:58:00.090Z",
+    "createdAt": "2026-07-06T05:51:57.660Z",
+    "updatedAt": "2026-07-06T05:51:57.660Z",
     "investigationCount": 0
   },
   "organizationModel": {
     "organizationId": "benchmark-approval-bottleneck",
     "version": 1,
-    "createdAt": "2026-07-05T21:58:00.090Z",
-    "updatedAt": "2026-07-05T21:58:00.090Z",
+    "createdAt": "2026-07-06T05:51:57.661Z",
+    "updatedAt": "2026-07-06T05:51:57.661Z",
     "entities": [],
     "entityRelationships": [],
     "nodes": [],
@@ -27,9 +27,10 @@
     "understandingState": null,
     "organizationalUnderstandingState": {
       "organizationId": "benchmark-approval-bottleneck",
-      "lastUpdatedAt": "2026-07-05T21:58:00.090Z",
+      "lastUpdatedAt": "2026-07-06T05:51:57.660Z",
       "currentUnderstandings": [],
       "organizationalConcepts": [],
+      "organizationalBeliefs": [],
       "confidenceLandscape": [],
       "activeQuestions": [],
       "strategicRisks": [],

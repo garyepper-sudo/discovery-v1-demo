@@ -8,47 +8,54 @@ import { interpretMechanismCandidates } from "./mechanismInterpreter";
 import type { InferOrganizationalMechanismsInput } from "./mechanismInferenceTypes";
 import type { OrganizationalMechanism } from "./organizationalMechanism";
 
-export function inferOrganizationalMechanisms({
-  phenomena = [],
-  patterns = [],
-  semanticConcepts = [],
-  explanations = [],
-  reasoningPaths = [],
-  capabilities = [],
-  understandingClusters = [],
-  judgments = [],
-}: InferOrganizationalMechanismsInput): MechanismNetwork {
-  const hasPhenomena = Array.isArray(phenomena) && phenomena.length > 0;
-  const hasPatterns = Array.isArray(patterns) && patterns.length > 0;
-  const hasSemanticConcepts =
-    Array.isArray(semanticConcepts) && semanticConcepts.length > 0;
-  const hasExplanations =
-    Array.isArray(explanations) && explanations.length > 0;
+function asArray<T>(value: T[] | undefined | null): T[] {
+  return Array.isArray(value) ? value : [];
+}
 
-  if (
-    !hasPhenomena &&
-    !hasPatterns &&
-    !hasSemanticConcepts &&
-    !hasExplanations
-  ) {
+export function inferOrganizationalMechanisms(
+  input: InferOrganizationalMechanismsInput,
+): MechanismNetwork {
+  const safeSource = input ?? {};
+
+  const safeInput = {
+    phenomena: asArray(safeSource.phenomena),
+    patterns: asArray(safeSource.patterns),
+    compressedPatternThemes: asArray(safeSource.compressedPatternThemes),
+    semanticConcepts: asArray(safeSource.semanticConcepts),
+    explanations: asArray(safeSource.explanations),
+    reasoningPaths: asArray(safeSource.reasoningPaths),
+    capabilities: asArray(safeSource.capabilities),
+    understandingClusters: asArray(safeSource.understandingClusters),
+    judgments: asArray(safeSource.judgments),
+  };
+
+  const hasSignal =
+    safeInput.phenomena.length > 0 ||
+    safeInput.patterns.length > 0 ||
+    safeInput.compressedPatternThemes.length > 0 ||
+    safeInput.semanticConcepts.length > 0 ||
+    safeInput.explanations.length > 0 ||
+    safeInput.reasoningPaths.length > 0 ||
+    safeInput.capabilities.length > 0 ||
+    safeInput.understandingClusters.length > 0 ||
+    safeInput.judgments.length > 0;
+
+  if (!hasSignal) {
     const mechanisms: OrganizationalMechanism[] = [];
     return buildMechanismNetwork(mechanisms);
   }
 
-  const candidates = buildMechanismCandidates({
-    phenomena,
-    patterns,
-    semanticConcepts,
-    explanations,
-    reasoningPaths,
-    capabilities,
-    understandingClusters,
-    judgments,
-  });
+  const candidates = buildMechanismCandidates(safeInput);
 
-  const rawMechanisms = interpretMechanismCandidates(candidates);
+  const safeCandidates = Array.isArray(candidates) ? candidates : [];
 
-  const mechanisms = consolidateOrganizationalMechanisms(rawMechanisms);
+  const rawMechanisms = interpretMechanismCandidates(safeCandidates);
 
-  return buildMechanismNetwork(mechanisms);
+  const safeRawMechanisms = Array.isArray(rawMechanisms) ? rawMechanisms : [];
+
+  const mechanisms = consolidateOrganizationalMechanisms(safeRawMechanisms);
+
+  const safeMechanisms = Array.isArray(mechanisms) ? mechanisms : [];
+
+  return buildMechanismNetwork(safeMechanisms);
 }

@@ -42,7 +42,7 @@ export type CapabilityLike = {
   summary?: string;
   description?: string;
   status?: string;
-  confidence?: number;
+ confidence?: number;
 };
 
 export type UnderstandingClusterLike = {
@@ -65,6 +65,15 @@ export type SemanticConceptLike = {
   summary?: string;
   description?: string;
   confidence?: number;
+};
+
+export type CompressedPatternThemeLike = {
+  id: string;
+  label?: string;
+  summary?: string;
+  confidence?: number;
+  supportingPatternIds?: string[];
+  supportingObservationIds?: string[];
 };
 
 export type OrganizationalJudgmentLike = {
@@ -104,6 +113,13 @@ export type InferOrganizationalMechanismsInput = {
   semanticConcepts?: SemanticConceptLike[];
 
   /**
+   * Compressed pattern themes represent graph-derived abstractions across
+   * related patterns. They should become the preferred substrate for
+   * mechanism inference while preserving pattern traceability.
+   */
+  compressedPatternThemes?: CompressedPatternThemeLike[];
+
+  /**
    * Transitional compatibility inputs.
    * These enrich mechanism inference but should not be the primary source
    * of the mechanism ontology.
@@ -120,6 +136,7 @@ export type MechanismCandidate = {
 
   phenomenonIds: string[];
   patternIds: string[];
+  compressedThemeIds: string[];
   explanationIds: string[];
   reasoningPathIds: string[];
   capabilityIds: string[];

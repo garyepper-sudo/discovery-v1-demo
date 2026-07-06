@@ -26,11 +26,86 @@ export type MechanismNetwork = {
   centralMechanismIds: string[];
 };
 
-function overlap(a?: string[], b?: string[]): number {
-  if (!a?.length || !b?.length) return 0;
+function safeArray<T>(items: T[] | undefined | null): T[] {
+  return Array.isArray(items) ? items : [];
+}
 
-  const setA = new Set(a);
-  return b.filter((item) => setA.has(item)).length;
+function safeStringArray(items: Array<string | undefined> | undefined | null): string[] {
+  return Array.isArray(items)
+    ? items.filter((item): item is string => typeof item === "string" && item.length > 0)
+    : [];
+}
+
+function unique<T>(items: T[]): T[] {
+  return Array.from(new Set(items));
+}
+
+function overlap(a?: string[], b?: string[]): number {
+  const safeA = safeStringArray(a);
+  const safeB = safeStringArray(b);
+
+  if (safeA.length === 0 || safeB.length === 0) return 0;
+
+  const setA = new Set(safeA);
+  return safeB.filter((item) => setA.has(item)).length;
+}
+
+function mechanismSupportSignals(mechanism: OrganizationalMechanism): string[] {
+  return unique([
+    ...safeStringArray(mechanism.affectedCapabilities),
+    ...safeStringArray(mechanism.affectedCapabilityIds),
+    ...safeStringArray(mechanism.capabilityIds),
+    ...safeStringArray(mechanism.supportingCompressedThemeIds),
+    ...safeStringArray(mechanism.supportingPhenomenonIds),
+    ...safeStringArray(mechanism.sourcePhenomenonIds),
+    ...safeStringArray(mechanism.supportingExplanationIds),
+    ...safeStringArray(mechanism.explanationIds),
+    ...safeStringArray(mechanism.reasoningPathIds),
+    ...safeStringArray(mechanism.supportingClusterIds),
+    ...safeStringArray(mechanism.clusterIds),
+    ...safeStringArray(mechanism.sourceClusterIds),
+    ...safeStringArray(mechanism.judgmentIds),
+  ]);
+}
+
+function normalizeMechanism(
+  mechanism: OrganizationalMechanism,
+): OrganizationalMechanism {
+  return {
+    ...mechanism,
+
+    affectedCapabilities: safeStringArray(mechanism.affectedCapabilities),
+    affectedCapabilityIds: safeStringArray(mechanism.affectedCapabilityIds),
+    capabilityIds: safeStringArray(mechanism.capabilityIds),
+
+    supportingCompressedThemeIds: safeStringArray(
+      mechanism.supportingCompressedThemeIds,
+    ),
+
+    supportingPhenomenonIds: safeStringArray(
+      mechanism.supportingPhenomenonIds,
+    ),
+    sourcePhenomenonIds: safeStringArray(mechanism.sourcePhenomenonIds),
+
+    supportingExplanationIds: safeStringArray(
+      mechanism.supportingExplanationIds,
+    ),
+    explanationIds: safeStringArray(mechanism.explanationIds),
+    reasoningPathIds: safeStringArray(mechanism.reasoningPathIds),
+
+    supportingClusterIds: safeStringArray(mechanism.supportingClusterIds),
+    clusterIds: safeStringArray(mechanism.clusterIds),
+    sourceClusterIds: safeStringArray(mechanism.sourceClusterIds),
+
+    judgmentIds: safeStringArray(mechanism.judgmentIds),
+
+    upstreamMechanismIds: safeStringArray(mechanism.upstreamMechanismIds),
+    downstreamMechanismIds: safeStringArray(mechanism.downstreamMechanismIds),
+    reinforcingMechanismIds: safeStringArray(mechanism.reinforcingMechanismIds),
+
+    supportingEvidenceIds: safeStringArray(mechanism.supportingEvidenceIds),
+    evidenceReferences: safeArray(mechanism.evidenceReferences),
+  };
 }
 
 function makeEdgeId(
@@ -42,25 +117,43 @@ function makeEdgeId(
 }
 
 function inferRelationship(
-  source: OrganizationalMechanism,
-  target: OrganizationalMechanism,
+  rawSource: OrganizationalMechanism,
+  rawTarget: OrganizationalMechanism,
 ): MechanismNetworkEdge | null {
+  const source = normalizeMechanism(rawSource);
+  const target = normalizeMechanism(rawTarget);
+
   if (source.id === target.id) return null;
 
   const sharedCapabilities = overlap(
-    source.affectedCapabilities,
-    target.affectedCapabilities,
+    unique([
+      ...safeStringArray(source.affectedCapabilities),
+      ...safeStringArray(source.affectedCapabilityIds),
+      ...safeStringArray(source.capabilityIds),
+    ]),
+    unique([
+      ...safeStringArray(target.affectedCapabilities),
+      ...safeStringArray(target.affectedCapabilityIds),
+      ...safeStringArray(target.capabilityIds),
+    ]),
   );
 
-  if (sharedCapabilities <= 0) return null;
+  const sharedSupportSignals = overlap(
+    mechanismSupportSignals(source),
+    mechanismSupportSignals(target),
+  );
+
+  const totalSharedSignals = Math.max(sharedCapabilities, sharedSupportSignals);
+
+  if (totalSharedSignals <= 0) return null;
 
   const relationshipType: MechanismRelationshipType =
-    sharedCapabilities >= 2 ? "reinforces" : "dependsOn";
+    totalSharedSignals >= 2 ? "reinforces" : "dependsOn";
 
   const confidence = Math.min(
     0.95,
     0.45 +
-      sharedCapabilities * 0.12 +
+      totalSharedSignals * 0.12 +
       ((source.confidence ?? 0) + (target.confidence ?? 0)) / 10,
   );
 
@@ -69,7 +162,10 @@ function inferRelationship(
     sourceMechanismId: source.id,
     targetMechanismId: target.id,
     relationshipType,
-    summary: `${source.title} appears connected to ${target.title} through shared affected capabilities.`,
+    summary:
+      sharedCapabilities > 0
+        ? `${source.title} appears connected to ${target.title} through shared affected capabilities.`
+        : `${source.title} appears connected to ${target.title} through shared organizational support signals.`,
     confidence,
   };
 }
@@ -80,11 +176,11 @@ function rankCentralMechanisms(
 ): string[] {
   const scores = new Map<string, number>();
 
-  for (const mechanism of mechanisms) {
+  for (const mechanism of safeArray(mechanisms)) {
     scores.set(mechanism.id, mechanism.confidence ?? 0);
   }
 
-  for (const edge of edges) {
+  for (const edge of safeArray(edges)) {
     scores.set(
       edge.sourceMechanismId,
       (scores.get(edge.sourceMechanismId) ?? 0) + edge.confidence,
@@ -103,12 +199,13 @@ function rankCentralMechanisms(
 }
 
 export function buildMechanismNetwork(
-  mechanisms: OrganizationalMechanism[],
+  mechanisms: OrganizationalMechanism[] = [],
 ): MechanismNetwork {
+  const normalizedMechanisms = safeArray(mechanisms).map(normalizeMechanism);
   const edges: MechanismNetworkEdge[] = [];
 
-  for (const source of mechanisms) {
-    for (const target of mechanisms) {
+  for (const source of normalizedMechanisms) {
+    for (const target of normalizedMechanisms) {
       const edge = inferRelationship(source, target);
       if (edge) edges.push(edge);
     }
@@ -129,7 +226,7 @@ export function buildMechanismNetwork(
     );
   }
 
-  const upstreamMechanismIds = mechanisms
+  const upstreamMechanismIds = normalizedMechanisms
     .filter((mechanism) => {
       const out = outgoing.get(mechanism.id) ?? 0;
       const input = incoming.get(mechanism.id) ?? 0;
@@ -137,7 +234,7 @@ export function buildMechanismNetwork(
     })
     .map((mechanism) => mechanism.id);
 
-  const downstreamMechanismIds = mechanisms
+  const downstreamMechanismIds = normalizedMechanisms
     .filter((mechanism) => {
       const out = outgoing.get(mechanism.id) ?? 0;
       const input = incoming.get(mechanism.id) ?? 0;
@@ -146,10 +243,10 @@ export function buildMechanismNetwork(
     .map((mechanism) => mechanism.id);
 
   return {
-    mechanisms,
+    mechanisms: normalizedMechanisms,
     edges,
     upstreamMechanismIds,
     downstreamMechanismIds,
-    centralMechanismIds: rankCentralMechanisms(mechanisms, edges),
+    centralMechanismIds: rankCentralMechanisms(normalizedMechanisms, edges),
   };
 }

@@ -1,6 +1,7 @@
 import { collectMechanismSignals } from "./mechanismSignals";
 import { mechanismProfiles } from "./mechanismProfiles";
 import type {
+  CompressedPatternThemeLike,
   InferOrganizationalMechanismsInput,
   MechanismCandidate,
 } from "./mechanismInferenceTypes";
@@ -13,6 +14,10 @@ import {
 } from "./mechanismUtils";
 
 type MechanismProfileKey = keyof typeof mechanismProfiles;
+
+function asArray<T>(value: T[] | undefined | null): T[] {
+  return Array.isArray(value) ? value : [];
+}
 
 function allProfileTerms(): {
   behaviors: string[];
@@ -212,37 +217,192 @@ function phenomenonText(phenomenon: {
   );
 }
 
+function themeText(theme: CompressedPatternThemeLike): string {
+  return normalizeText(theme.label, theme.summary);
+}
+
+function candidateStructuralSupport(candidate: MechanismCandidate): number {
+  return (
+    asArray(candidate.phenomenonIds).length +
+    asArray(candidate.patternIds).length +
+    asArray(candidate.compressedThemeIds).length +
+    asArray(candidate.explanationIds).length +
+    asArray(candidate.reasoningPathIds).length +
+    asArray(candidate.capabilityIds).length +
+    asArray(candidate.clusterIds).length +
+    asArray(candidate.judgmentIds).length
+  );
+}
+
+function isValidCandidate(candidate: MechanismCandidate): boolean {
+  const sharedTermCount =
+    asArray(candidate.sharedBehaviors).length +
+    asArray(candidate.sharedCapabilities).length +
+    asArray(candidate.sharedConsequences).length;
+
+  const structuralSupport = candidateStructuralSupport(candidate);
+
+  return (
+    Boolean(candidate?.id) &&
+    Array.isArray(candidate.sourceTexts) &&
+    candidate.sourceTexts.length > 0 &&
+    (sharedTermCount > 0 ||
+      structuralSupport >= 2 ||
+      (candidate.confidence ?? 0) >= 0.45)
+  );
+}
+
+function candidateRetentionScore(candidate: MechanismCandidate): number {
+  return (candidate.convergenceScore ?? 0) * 0.6 + (candidate.confidence ?? 0) * 0.4;
+}
+
+function buildThemeCandidates(params: {
+  compressedPatternThemes: CompressedPatternThemeLike[];
+  patterns: InferOrganizationalMechanismsInput["patterns"];
+  primarySignals: ReturnType<typeof collectMechanismSignals>;
+  vocabulary: ReturnType<typeof allProfileTerms>;
+}): MechanismCandidate[] {
+  const {
+    compressedPatternThemes,
+    patterns = [],
+    primarySignals,
+    vocabulary,
+  } = params;
+
+  return compressedPatternThemes.flatMap((theme, index) => {
+    const sourceText = themeText(theme);
+    const fallbackTerms = inferFallbackTerms(sourceText);
+
+    const relatedSignals = primarySignals.filter((signal) => {
+      if (signal.id === theme.id) return true;
+
+      return (
+        countMatches(signal.text, fallbackTerms.behaviors) +
+          countMatches(signal.text, fallbackTerms.capabilities) +
+          countMatches(signal.text, fallbackTerms.consequences) >
+        0
+      );
+    });
+
+    const sourceTexts = unique([
+      sourceText,
+      ...relatedSignals.map((signal) => signal.text),
+    ]).filter(Boolean);
+
+    const sharedTerms = {
+      behaviors: extractSharedTerms(sourceTexts, vocabulary.behaviors),
+      capabilities: extractSharedTerms(sourceTexts, vocabulary.capabilities),
+      consequences: extractSharedTerms(sourceTexts, vocabulary.consequences),
+    };
+
+    const enrichedTerms = mergeTerms(sharedTerms, fallbackTerms);
+
+    const patternIds = unique([
+      ...(theme.supportingPatternIds ?? []),
+      ...patterns
+        .filter((pattern) =>
+          textMatchesTerms(
+            normalizeText(
+              pattern.label,
+              pattern.statement,
+              pattern.description,
+              pattern.reason,
+            ),
+            enrichedTerms,
+          ),
+        )
+        .map((pattern) => pattern.id),
+    ]).filter(Boolean);
+
+    const sharedTermCount =
+      enrichedTerms.behaviors.length +
+      enrichedTerms.capabilities.length +
+      enrichedTerms.consequences.length;
+
+    const supportCount = relatedSignals.length + patternIds.length;
+
+    if (sourceTexts.length === 0 || (sharedTermCount === 0 && supportCount < 2)) {
+      return [];
+    }
+
+    const convergenceScore = clamp01(
+      supportCount / Math.max(1, primarySignals.length + patterns.length),
+    );
+
+    const noveltyScore = clamp01(sharedTermCount / 12);
+
+    const confidence = clamp01(
+      (theme.confidence ?? 0.72) * 0.5 +
+        convergenceScore * 0.3 +
+        noveltyScore * 0.15 +
+        Math.min(sourceTexts.length, 4) * 0.0125,
+    );
+
+    return [
+      {
+        id: `mechanism-candidate-theme-${index + 1}`,
+        phenomenonIds: [],
+        patternIds,
+        compressedThemeIds: [theme.id].filter(Boolean),
+        explanationIds: [],
+        reasoningPathIds: [],
+        capabilityIds: [],
+        clusterIds: [],
+        judgmentIds: [],
+        semanticConceptIds: [],
+        sourceTexts,
+        sharedBehaviors: enrichedTerms.behaviors,
+        sharedCapabilities: enrichedTerms.capabilities,
+        sharedConsequences: enrichedTerms.consequences,
+        convergenceScore,
+        noveltyScore,
+        confidence,
+      },
+    ];
+  });
+}
+
 function getCandidateKey(candidate: MechanismCandidate): string {
   return [
-    [...candidate.phenomenonIds].sort().join("|"),
-    [...candidate.patternIds].sort().join("|"),
-    [...candidate.explanationIds].sort().join("|"),
-    [...candidate.reasoningPathIds].sort().join("|"),
-    [...candidate.capabilityIds].sort().join("|"),
-    [...candidate.clusterIds].sort().join("|"),
-    [...candidate.judgmentIds].sort().join("|"),
-    [...candidate.sharedBehaviors].sort().join("|"),
-    [...candidate.sharedCapabilities].sort().join("|"),
-    [...candidate.sharedConsequences].sort().join("|"),
+    ...asArray(candidate.phenomenonIds).sort(),
+    ...asArray(candidate.patternIds).sort(),
+    ...asArray(candidate.compressedThemeIds).sort(),
+    ...asArray(candidate.explanationIds).sort(),
+    ...asArray(candidate.reasoningPathIds).sort(),
+    ...asArray(candidate.capabilityIds).sort(),
+    ...asArray(candidate.clusterIds).sort(),
+    ...asArray(candidate.judgmentIds).sort(),
+    ...asArray(candidate.sharedBehaviors).sort(),
+    ...asArray(candidate.sharedCapabilities).sort(),
+    ...asArray(candidate.sharedConsequences).sort(),
   ].join("::");
 }
 
-export function buildMechanismCandidates({
-  phenomena = [],
-  patterns = [],
-  semanticConcepts = [],
-  explanations = [],
-  reasoningPaths = [],
-  capabilities = [],
-  understandingClusters = [],
-  judgments = [],
-}: InferOrganizationalMechanismsInput): MechanismCandidate[] {
-  const hasPhenomena = Array.isArray(phenomena) && phenomena.length > 0;
-  const hasPatterns = Array.isArray(patterns) && patterns.length > 0;
-  const hasExplanations =
-    Array.isArray(explanations) && explanations.length > 0;
+export function buildMechanismCandidates(
+  input: InferOrganizationalMechanismsInput,
+): MechanismCandidate[] {
+  const phenomena = asArray(input.phenomena);
+  const patterns = asArray(input.patterns);
+  const compressedPatternThemes = asArray(input.compressedPatternThemes);
+  const semanticConcepts = asArray(input.semanticConcepts);
+  const explanations = asArray(input.explanations);
+  const reasoningPaths = asArray(input.reasoningPaths);
+  const capabilities = asArray(input.capabilities);
+  const understandingClusters = asArray(input.understandingClusters);
+  const judgments = asArray(input.judgments);
 
-  if (!hasPhenomena && !hasPatterns && !hasExplanations) {
+  const hasSignal =
+    phenomena.length > 0 ||
+    patterns.length > 0 ||
+    compressedPatternThemes.length > 0 ||
+    semanticConcepts.length > 0 ||
+    explanations.length > 0 ||
+    reasoningPaths.length > 0 ||
+    capabilities.length > 0 ||
+    understandingClusters.length > 0 ||
+    judgments.length > 0;
+
+  if (!hasSignal) {
     return [];
   }
 
@@ -250,6 +410,7 @@ export function buildMechanismCandidates({
 
   const primarySignals = collectMechanismSignals({
     patterns,
+    compressedPatternThemes,
     semanticConcepts,
     explanations,
   });
@@ -270,10 +431,9 @@ export function buildMechanismCandidates({
       );
 
       const sourceTexts = unique(
-        [
-          sourceText,
-          ...relatedSignals.map((signal) => signal.text),
-        ].filter(Boolean),
+        [sourceText, ...relatedSignals.map((signal) => signal.text)].filter(
+          Boolean,
+        ),
       );
 
       const fallbackTerms = sourceTexts.reduce(
@@ -310,7 +470,8 @@ export function buildMechanismCandidates({
 
           return textMatchesTerms(explanationText, enrichedTerms);
         })
-        .map((explanation) => explanation.id);
+        .map((explanation) => explanation.id)
+        .filter(Boolean);
 
       const patternIds = patterns
         .filter((pattern) => {
@@ -323,7 +484,14 @@ export function buildMechanismCandidates({
 
           return textMatchesTerms(patternText, enrichedTerms);
         })
-        .map((pattern) => pattern.id);
+        .map((pattern) => pattern.id)
+        .filter(Boolean);
+
+      const compressedThemeIds = primarySignals
+        .filter((item) => item.source === "compressedPatternTheme")
+        .filter((theme) => textMatchesTerms(theme.text, enrichedTerms))
+        .map((theme) => theme.id)
+        .filter(Boolean);
 
       const reasoningPathIds = reasoningPaths
         .filter((path) => {
@@ -337,7 +505,8 @@ export function buildMechanismCandidates({
 
           return textMatchesTerms(pathText, enrichedTerms);
         })
-        .map((path) => path.id);
+        .map((path) => path.id)
+        .filter(Boolean);
 
       const capabilityIds = capabilities
         .filter((capability) => {
@@ -351,7 +520,8 @@ export function buildMechanismCandidates({
 
           return textMatchesTerms(capabilityText, enrichedTerms);
         })
-        .map((capability) => capability.id);
+        .map((capability) => capability.id)
+        .filter(Boolean);
 
       const clusterIds = understandingClusters
         .filter((cluster) => {
@@ -363,7 +533,8 @@ export function buildMechanismCandidates({
 
           return textMatchesTerms(clusterText, enrichedTerms);
         })
-        .map((cluster) => cluster.id);
+        .map((cluster) => cluster.id)
+        .filter(Boolean);
 
       const judgmentIds = judgments
         .filter((judgment) => {
@@ -378,13 +549,15 @@ export function buildMechanismCandidates({
 
           return textMatchesTerms(judgmentText, enrichedTerms);
         })
-        .map((judgment) => judgment.id);
+        .map((judgment) => judgment.id)
+        .filter(Boolean);
 
       const supportCount =
         1 +
         relatedSignals.length +
         explanationIds.length +
         patternIds.length +
+        compressedThemeIds.length +
         reasoningPathIds.length +
         capabilityIds.length +
         clusterIds.length +
@@ -404,6 +577,10 @@ export function buildMechanismCandidates({
         enrichedTerms.capabilities.length +
         enrichedTerms.consequences.length;
 
+      if (sourceTexts.length === 0 || (sharedTermCount === 0 && supportCount < 2)) {
+        return;
+      }
+
       const convergenceScore = clamp01(
         supportCount / Math.max(1, totalSignalCount),
       );
@@ -419,8 +596,9 @@ export function buildMechanismCandidates({
 
       candidates.push({
         id: `mechanism-candidate-phenomenon-${index + 1}-${mechanismType}`,
-        phenomenonIds: [phenomenon.id],
+        phenomenonIds: [phenomenon.id].filter(Boolean),
         patternIds,
+        compressedThemeIds,
         explanationIds,
         reasoningPathIds,
         mechanismType,
@@ -438,6 +616,15 @@ export function buildMechanismCandidates({
       });
     });
   });
+
+  candidates.push(
+    ...buildThemeCandidates({
+      compressedPatternThemes,
+      patterns,
+      primarySignals,
+      vocabulary,
+    }),
+  );
 
   if (candidates.length === 0) {
     primarySignals.forEach((signal, index) => {
@@ -475,7 +662,9 @@ export function buildMechanismCandidates({
         );
       });
 
-      const sourceTexts = unique(relatedSignals.map((item) => item.text));
+      const sourceTexts = unique(relatedSignals.map((item) => item.text)).filter(
+        Boolean,
+      );
 
       const sharedTerms = {
         behaviors: extractSharedTerms(sourceTexts, vocabulary.behaviors),
@@ -513,12 +702,20 @@ export function buildMechanismCandidates({
         .filter((explanation) =>
           textMatchesTerms(explanation.text, enrichedTerms),
         )
-        .map((explanation) => explanation.id);
+        .map((explanation) => explanation.id)
+        .filter(Boolean);
 
       const patternIds = primarySignals
         .filter((item) => item.source === "pattern")
         .filter((pattern) => textMatchesTerms(pattern.text, enrichedTerms))
-        .map((pattern) => pattern.id);
+        .map((pattern) => pattern.id)
+        .filter(Boolean);
+
+      const compressedThemeIds = primarySignals
+        .filter((item) => item.source === "compressedPatternTheme")
+        .filter((theme) => textMatchesTerms(theme.text, enrichedTerms))
+        .map((theme) => theme.id)
+        .filter(Boolean);
 
       const reasoningPathIds = reasoningPaths
         .filter((path) => {
@@ -532,7 +729,8 @@ export function buildMechanismCandidates({
 
           return textMatchesTerms(pathText, enrichedTerms);
         })
-        .map((path) => path.id);
+        .map((path) => path.id)
+        .filter(Boolean);
 
       const capabilityIds = capabilities
         .filter((capability) => {
@@ -546,7 +744,8 @@ export function buildMechanismCandidates({
 
           return textMatchesTerms(capabilityText, enrichedTerms);
         })
-        .map((capability) => capability.id);
+        .map((capability) => capability.id)
+        .filter(Boolean);
 
       const clusterIds = understandingClusters
         .filter((cluster) => {
@@ -558,7 +757,8 @@ export function buildMechanismCandidates({
 
           return textMatchesTerms(clusterText, enrichedTerms);
         })
-        .map((cluster) => cluster.id);
+        .map((cluster) => cluster.id)
+        .filter(Boolean);
 
       const judgmentIds = judgments
         .filter((judgment) => {
@@ -573,12 +773,14 @@ export function buildMechanismCandidates({
 
           return textMatchesTerms(judgmentText, enrichedTerms);
         })
-        .map((judgment) => judgment.id);
+        .map((judgment) => judgment.id)
+        .filter(Boolean);
 
       const supportCount =
         relatedSignals.length +
         explanationIds.length +
         patternIds.length +
+        compressedThemeIds.length +
         reasoningPathIds.length +
         capabilityIds.length +
         clusterIds.length +
@@ -597,6 +799,10 @@ export function buildMechanismCandidates({
         enrichedTerms.capabilities.length +
         enrichedTerms.consequences.length;
 
+      if (sourceTexts.length === 0 || (sharedTermCount === 0 && supportCount < 2)) {
+        return;
+      }
+
       const convergenceScore = clamp01(
         supportCount / Math.max(1, totalSignalCount),
       );
@@ -614,6 +820,7 @@ export function buildMechanismCandidates({
         id: `mechanism-candidate-fallback-${index + 1}`,
         phenomenonIds: [],
         patternIds,
+        compressedThemeIds,
         explanationIds,
         reasoningPathIds,
         capabilityIds,
@@ -631,13 +838,18 @@ export function buildMechanismCandidates({
     });
   }
 
+  const validCandidates = candidates.filter(isValidCandidate);
+
   const deduped = new Map<string, MechanismCandidate>();
 
-  for (const candidate of candidates) {
+  for (const candidate of validCandidates) {
     const key = getCandidateKey(candidate);
     const existing = deduped.get(key);
 
-    if (!existing || candidate.convergenceScore > existing.convergenceScore) {
+    if (
+      !existing ||
+      candidateRetentionScore(candidate) > candidateRetentionScore(existing)
+    ) {
       deduped.set(key, candidate);
     }
   }
@@ -645,13 +857,15 @@ export function buildMechanismCandidates({
   return Array.from(deduped.values()).sort((a, b) => {
     const aScore =
       a.phenomenonIds.length * 0.3 +
-      a.convergenceScore * 0.4 +
-      a.confidence * 0.3;
+      a.compressedThemeIds.length * 0.2 +
+      a.convergenceScore * 0.3 +
+      a.confidence * 0.2;
 
     const bScore =
       b.phenomenonIds.length * 0.3 +
-      b.convergenceScore * 0.4 +
-      b.confidence * 0.3;
+      b.compressedThemeIds.length * 0.2 +
+      b.convergenceScore * 0.3 +
+      b.confidence * 0.2;
 
     return bScore - aScore;
   });

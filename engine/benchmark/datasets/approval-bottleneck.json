@@ -4,7 +4,7 @@
   "company": "Atlas Precision Manufacturing",
   "industry": "Manufacturing",
   "question": "Why has execution speed slowed dramatically despite increased investment in people and technology?",
-  "context": "Benchmark designed to test whether Discovery identifies decision latency and centralized governance as the dominant organizational mechanisms.",
+  "context": "Benchmark designed to test whether Discovery identifies decision latency, approval bottlenecks, and centralized governance as manifestations of a deeper organizational execution constraint.",
   "evidence": [
     {
       "id": "AB-1",
@@ -64,7 +64,9 @@
     "secondaryMechanisms": [
       "approval bottlenecks",
       "centralized governance",
-      "governance friction"
+      "governance friction",
+      "decision authority concentration",
+      "execution friction"
     ],
     "affectedCapabilities": [
       "decision making",
@@ -73,17 +75,21 @@
       "organizational agility",
       "customer responsiveness"
     ],
-    "compressedConceptThemes": [
-      "approval flow",
-      "decision authority",
+    "compressedConcepts": [
+      "organizational execution constraint",
       "centralized governance",
-      "execution delays",
-      "organizational friction"
+      "decision authority concentration",
+      "approval bottleneck",
+      "execution friction",
+      "organizational agility is constrained",
+      "decision making is centralized"
     ],
     "avoid": [
       "teams pattern",
       "technology advantage",
-      "strategic bet"
+      "strategic bet",
+      "recurring teams pattern",
+      "recurring organization pattern"
     ]
   }
 }

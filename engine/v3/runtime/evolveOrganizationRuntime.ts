@@ -10,6 +10,8 @@ import { evaluateExplanations } from "../model/judgment/evaluateExplanations";
 import { detectJudgmentContradictions } from "../model/judgment/detectJudgmentContradictions";
 import { buildExecutiveAssessment } from "../model/judgment/buildExecutiveAssessment";
 import { inferOrganizationalMechanisms } from "../model/judgment/inferOrganizationalMechanisms";
+import { inferOrganizationalBeliefs } from "../model/beliefs/inferOrganizationalBeliefs";
+import { updateOrganizationalBeliefs } from "../model/beliefs/updateOrganizationalBeliefs";
 import { runOrganizationCognition } from "../cognition/cognitionEngine";
 import { updateOrganizationalUnderstandingState } from "./updateOrganizationalUnderstandingState";
 import { consolidateUnderstanding } from "../understanding/consolidateUnderstanding";
@@ -17,6 +19,8 @@ import { buildUnderstandingClusters } from "../understanding/understandingCluste
 import { runSemanticCompression } from "../compression/semanticCompression";
 import { inferOrganizationalPhenomena } from "../phenomena/inferOrganizationalPhenomena";
 import { synthesizeOrganizationalConcepts } from "../concepts/synthesizeOrganizationalConcepts";
+import { buildConceptCandidates } from "../concepts/buildConceptCandidates";
+import { compressConceptCandidates } from "../concepts/compressConceptCandidates";
 import { extractMeaningSignals } from "../meaning/extractMeaning";
 import { inferOrganizationalCapabilities } from "../capabilities/inferOrganizationalCapabilities";
 import { updateOrganizationalCapabilities } from "../capabilities/updateOrganizationalCapabilities";
@@ -51,7 +55,11 @@ export function evolveOrganizationRuntime(params: {
     executiveAssessment?: any;
     meaningSignals?: any[];
     organizationalConcepts?: any[];
+    semanticConcepts?: any[];
+    conceptualUnderstanding?: any[];
+    conceptCandidates?: any[];
     understandingClusters?: any[];
+    organizationalBeliefRevisions?: any[];
   };
 
   const now = new Date().toISOString();
@@ -177,7 +185,6 @@ export function evolveOrganizationRuntime(params: {
   const understandingClusters = buildUnderstandingClusters({
     understandings: updatedOrganizationalUnderstandingState.currentUnderstandings,
     organizationReasoningGraph: preliminaryReasoningGraph,
-    existingClusters: memory.understandingClusters,
     now,
   });
 
@@ -283,18 +290,72 @@ export function evolveOrganizationRuntime(params: {
     semanticConcepts: organizationalConcepts,
   });
 
-  console.log("Mechanism Network", mechanismNetwork);
+  const safeMechanismNetwork = {
+    ...mechanismNetwork,
+    mechanisms: Array.isArray(mechanismNetwork?.mechanisms)
+      ? mechanismNetwork.mechanisms
+      : [],
+    edges: Array.isArray(mechanismNetwork?.edges) ? mechanismNetwork.edges : [],
+    centralMechanismIds: Array.isArray(mechanismNetwork?.centralMechanismIds)
+      ? mechanismNetwork.centralMechanismIds
+      : [],
+  };
+
+  console.log("Mechanism Network", safeMechanismNetwork);
+
+  const inferredOrganizationalBeliefs = inferOrganizationalBeliefs({
+    mechanisms: safeMechanismNetwork.mechanisms,
+    now,
+  });
+
+  const organizationalBeliefState = updateOrganizationalBeliefs({
+    existingBeliefs: updatedOrganizationalUnderstandingState.organizationalBeliefs,
+    incomingBeliefs: inferredOrganizationalBeliefs,
+    now,
+  });
+
+  const beliefUpdatedOrganizationalUnderstandingState: OrganizationalUnderstandingState =
+    {
+      ...updatedOrganizationalUnderstandingState,
+      organizationalBeliefs: organizationalBeliefState.beliefs,
+      lastUpdatedAt: now,
+    };
+
+  const conceptCandidates = buildConceptCandidates({
+    mechanisms: safeMechanismNetwork.mechanisms,
+    mechanismNetwork: safeMechanismNetwork.edges,
+    organizationalBeliefs: organizationalBeliefState.beliefs,
+    dynamics: organizationalDynamicsState.interpretations,
+    understandingClusters,
+    understandings:
+      beliefUpdatedOrganizationalUnderstandingState.currentUnderstandings,
+  });
+
+  const conceptualUnderstanding = compressConceptCandidates(conceptCandidates);
+
+  console.log("Concept Candidates", conceptCandidates);
+  console.log("Conceptual Understanding", conceptualUnderstanding);
+
+  console.log("Organizational Beliefs", organizationalBeliefState.beliefs);
+  console.log(
+    "Organizational Belief Revisions",
+    organizationalBeliefState.revisions,
+  );
 
   const executiveAssessment = buildExecutiveAssessment({
     judgments: organizationalJudgments,
-    mechanisms: mechanismNetwork.mechanisms,
+    mechanisms: safeMechanismNetwork.mechanisms,
+    conceptCandidates,
+    conceptualUnderstanding,
+    organizationalBeliefs: organizationalBeliefState.beliefs,
   });
 
   console.log("Executive Assessment", executiveAssessment);
 
   const semanticConcepts = runSemanticCompression({
     dynamics: organizationalDynamicsState.interpretations,
-    understandings: updatedOrganizationalUnderstandingState.currentUnderstandings,
+    understandings:
+      beliefUpdatedOrganizationalUnderstandingState.currentUnderstandings,
   });
 
   const updatedMemory = {
@@ -311,10 +372,19 @@ export function evolveOrganizationRuntime(params: {
     functionalInterpretationState: organizationalDynamicsState,
     organizationalCapabilitiesState,
     organizationalPhenomenaState,
-    mechanismNetwork,
+    mechanismNetwork: safeMechanismNetwork,
+
+    organizationalUnderstandingState:
+      beliefUpdatedOrganizationalUnderstandingState,
+    organizationalBeliefRevisions: [
+      ...(memory.organizationalBeliefRevisions ?? []),
+      ...organizationalBeliefState.revisions,
+    ],
 
     understandingClusters,
     semanticConcepts,
+    conceptCandidates,
+    conceptualUnderstanding,
     meaningSignals,
     organizationalConcepts,
 
@@ -327,6 +397,9 @@ export function evolveOrganizationRuntime(params: {
         question: input.question,
         evidenceCount: result.evidence?.length ?? 0,
         beliefCount: result.beliefs?.length ?? 0,
+        organizationalBeliefCount: organizationalBeliefState.beliefs.length,
+        organizationalBeliefRevisionCount:
+          organizationalBeliefState.revisions.length,
         themeCount: result.themes?.length ?? 0,
         contradictionCount: result.contradictions?.length ?? 0,
         understandingClusterCount: understandingClusters.length,
@@ -335,13 +408,15 @@ export function evolveOrganizationRuntime(params: {
         organizationalCapabilityCount:
           organizationalCapabilitiesState.capabilities.length,
         semanticConceptCount: semanticConcepts.length,
+        conceptCandidateCount: conceptCandidates.length,
+        conceptualUnderstandingCount: conceptualUnderstanding.length,
         meaningSignalCount: meaningSignals.length,
         organizationalConceptCount: organizationalConcepts.length,
         organizationalPhenomenonCount:
           organizationalPhenomenaState.phenomena.length,
-        mechanismCount: mechanismNetwork.mechanisms.length,
-        mechanismEdgeCount: mechanismNetwork.edges.length,
-        centralMechanismCount: mechanismNetwork.centralMechanismIds.length,
+        mechanismCount: safeMechanismNetwork.mechanisms.length,
+        mechanismEdgeCount: safeMechanismNetwork.edges.length,
+        centralMechanismCount: safeMechanismNetwork.centralMechanismIds.length,
         organizationalReasoningPathCount: organizationalReasoning.paths.length,
         organizationalRootCauseCount: organizationalReasoning.rootCauses.length,
         organizationalReasoningConclusionCount:
@@ -362,7 +437,11 @@ export function evolveOrganizationRuntime(params: {
     organizationalExplanations: typeof organizationalExplanations;
     organizationalJudgments: typeof organizationalJudgments;
     executiveAssessment: typeof executiveAssessment;
-    mechanismNetwork: typeof mechanismNetwork;
+    mechanismNetwork: typeof safeMechanismNetwork;
+    organizationalUnderstandingState: typeof beliefUpdatedOrganizationalUnderstandingState;
+    organizationalBeliefRevisions: typeof organizationalBeliefState.revisions;
+    conceptCandidates: typeof conceptCandidates;
+    conceptualUnderstanding: typeof conceptualUnderstanding;
   };
 
   return {

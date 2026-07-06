@@ -29,32 +29,95 @@ function printDiagnosis(score: BenchmarkScore): void {
     console.log("      ✓ Evidence was ingested successfully.");
   }
 
-  if (score.patternScore >= 40) {
-    console.log("      ✓ Discovery compressed some recurring organizational concepts.");
+  if (score.patternCoherenceScore >= 60) {
+    console.log(
+      "      ✓ Patterns, mechanisms, and concepts are converging into coherent understanding.",
+    );
+  } else if (score.patternCoherenceScore >= 40) {
+    console.log(
+      "      ~ Discovery is forming patterns, but coherence across mechanisms and theory is still uneven.",
+    );
+  }
+
+  if (score.theoryValidationScore >= 70) {
+    console.log("      ✓ Discovery can defend the selected organizational theory.");
+  }
+
+  if (score.confidenceCalibrationScore >= 70) {
+    console.log("      ✓ Discovery is beginning to explain confidence and uncertainty.");
+  }
+
+  if (score.evidenceAttributionScore >= 70) {
+    console.log("      ✓ Executive conclusions are traceable to supporting evidence.");
   }
 
   if (score.mechanismInferenceScore < 50) {
-    console.log("      ✗ Latent organizational mechanisms were not inferred strongly enough.");
+    console.log(
+      "      ✗ Latent organizational mechanisms were not inferred strongly enough.",
+    );
+  }
+
+  if (score.theoryValidationScore < 50) {
+    console.log(
+      "      ✗ Discovery selected a theory but did not adequately validate why it deserves to survive.",
+    );
+  }
+
+  if (score.confidenceCalibrationScore < 50) {
+    console.log(
+      "      ✗ Discovery did not sufficiently calibrate confidence or explain uncertainty.",
+    );
+  }
+
+  if (score.evidenceAttributionScore < 50) {
+    console.log(
+      "      ✗ Discovery did not clearly trace conclusions back to evidence.",
+    );
   }
 
   if (score.executiveUnderstandingScore < 50) {
-    console.log("      ✗ Executive understanding did not clearly explain why this is happening.");
+    console.log(
+      "      ✗ Executive understanding did not clearly explain why this is happening.",
+    );
   }
 }
 
 function printRecommendation(score: BenchmarkScore): void {
   if (score.mechanismInferenceScore < 50) {
-    console.log("   Recommendation: improve inferOrganizationalMechanisms().");
+    console.log("   Recommendation: improve mechanism inference.");
+    return;
+  }
+
+  if (score.patternCoherenceScore < 50) {
+    console.log(
+      "   Recommendation: improve pattern coherence across mechanisms, concepts, and executive theory.",
+    );
+    return;
+  }
+
+  if (score.theoryValidationScore < 60) {
+    console.log(
+      "   Recommendation: improve theory validation inside buildExecutiveAssessment().",
+    );
+    return;
+  }
+
+  if (score.confidenceCalibrationScore < 60) {
+    console.log(
+      "   Recommendation: improve confidence calibration and uncertainty explanation.",
+    );
+    return;
+  }
+
+  if (score.evidenceAttributionScore < 60) {
+    console.log(
+      "   Recommendation: improve evidence attribution from executive conclusions back to mechanisms and concepts.",
+    );
     return;
   }
 
   if (score.executiveUnderstandingScore < 50) {
     console.log("   Recommendation: improve buildExecutiveAssessment().");
-    return;
-  }
-
-  if (score.patternScore < 50) {
-    console.log("   Recommendation: improve semantic compression and pattern formation.");
     return;
   }
 
@@ -75,19 +138,22 @@ export function printBenchmarkReport(report: BenchmarkReport): void {
 
   console.log("");
   console.log("--------------------------------------");
-  console.log("COGNITIVE PIPELINE");
+  console.log("ORGANIZATIONAL UNDERSTANDING SCORECARD");
   console.log("--------------------------------------");
 
   for (const score of report.scores) {
     console.log("");
     console.log(`${score.passed ? "✅" : "❌"} ${score.title}`);
-    console.log(`   Overall Understanding : ${score.score}%`);
-    console.log(`   Perception            : ${score.perceptionScore}%`);
-    console.log(`   Pattern Formation     : ${score.patternScore}%`);
-    console.log(`   Mechanism Inference   : ${score.mechanismInferenceScore}%`);
-    console.log(`   Capability Inference  : ${score.capabilityScore}%`);
+    console.log(`   Overall Understanding  : ${score.score}%`);
+    console.log(`   Perception             : ${score.perceptionScore}%`);
+    console.log(`   Pattern Coherence      : ${score.patternCoherenceScore}%`);
+    console.log(`   Mechanism Inference    : ${score.mechanismInferenceScore}%`);
+    console.log(`   Capability Inference   : ${score.capabilityScore}%`);
+    console.log(`   Semantic Compression   : ${score.compressionScore}%`);
     console.log(`   Executive Understanding: ${score.executiveUnderstandingScore}%`);
-    console.log(`   Semantic Compression  : ${score.compressionScore}%`);
+    console.log(`   Theory Validation      : ${score.theoryValidationScore}%`);
+    console.log(`   Confidence Calibration : ${score.confidenceCalibrationScore}%`);
+    console.log(`   Evidence Attribution   : ${score.evidenceAttributionScore}%`);
 
     if (score.notes.length > 0) {
       console.log("");

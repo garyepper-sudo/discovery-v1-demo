@@ -89,6 +89,13 @@ export type OrganizationalMechanism =
     supportingSemanticConceptIds?: string[];
 
     /**
+     * Semantic compression support.
+     * Preserves compressed organizational themes that contributed
+     * to this interpreted mechanism.
+     */
+    supportingCompressedThemeIds?: string[];
+
+    /**
      * Mechanism-centric enrichment.
      * These allow capabilities, phenomena, clusters, and concepts
      * to become supporting context rather than peer objects.
@@ -119,6 +126,11 @@ export type OrganizationalMechanism =
     phenomenonSupportCount?: number;
     capabilitySupportCount?: number;
     semanticConceptSupportCount?: number;
+
+    /**
+     * Semantic compression support metrics.
+     */
+    compressedThemeSupportCount?: number;
 
     /**
      * Legacy aliases.

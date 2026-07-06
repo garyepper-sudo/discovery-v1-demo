@@ -1,527 +1,371 @@
-import type { V3Understanding } from "../types";
-import type {
-  OrganizationReasoningGraph,
-  OrganizationReasoningNode,
-} from "../model/buildOrganizationReasoningGraph";
-import type {
-  UnderstandingCluster,
-  UnderstandingClusterStatus,
-} from "./types";
+import type { OrganizationalMechanism } from "../model/judgment/organizationalMechanism";
 
-type ClusterableUnderstanding = Partial<V3Understanding> & {
-  id?: string;
-  statement?: string;
-  summary?: string;
-  title?: string;
-  explanation?: string;
-  strategicMeaning?: string;
-  coreClaim?: string;
-  confidence?: number;
-  supportingBeliefIds?: string[];
-  beliefIds?: string[];
-  mechanismIds?: string[];
-  themeIds?: string[];
+export type MechanismPattern = {
+  id: string;
+  name: string;
+  mechanismType: string;
+
+  frequency: number;
+  averageConfidence: number;
+
+  totalSeverity: number;
+
+  supportingMechanismIds: string[];
+
+  dominantScope: string;
+
+  dominantCapabilities: string[];
+  patternSignature: string;
+
+  reinforcementWeight: number;
 };
 
-function reasoningNodeId(node: OrganizationReasoningNode): string {
-  return node.id ?? node.entityId ?? node.phenomenonId ?? node.canonicalName;
+function asArray<T>(value: T[] | undefined | null): T[] {
+  return Array.isArray(value) ? value : [];
 }
 
-function normalizeText(value: string): string {
-  return value
+function unique(values: string[]): string[] {
+  return Array.from(new Set(values.filter(Boolean)));
+}
+
+function average(nums: number[]): number {
+  if (nums.length === 0) return 0;
+  return nums.reduce((a, b) => a + b, 0) / nums.length;
+}
+
+function clamp01(x: number): number {
+  return Math.max(0, Math.min(1, x));
+}
+
+function severityBand(severity: number | string | undefined): string {
+  const s = typeof severity === "number" ? severity : 0;
+
+  if (s >= 0.8) return "high";
+  if (s >= 0.5) return "medium";
+  return "low";
+}
+
+function normalizeText(value: string | undefined): string {
+  return (value ?? "")
+    .trim()
     .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/[^a-z0-9]+/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
 
-function titleCase(value: string): string {
-  return normalizeText(value)
-    .split(" ")
+function normalizeCapabilities(m: OrganizationalMechanism): string[] {
+  return unique([
+    ...asArray(m.affectedCapabilities),
+    ...asArray(m.affectedCapabilityIds),
+    ...asArray(m.capabilityIds),
+  ])
+    .map(normalizeText)
     .filter(Boolean)
-    .map((word) => word[0].toUpperCase() + word.slice(1))
-    .join(" ");
+    .slice(0, 4)
+    .sort();
 }
 
-function tokenize(value: string): Set<string> {
-  const stopWords = new Set([
-    "the",
-    "a",
-    "an",
-    "and",
-    "or",
-    "but",
-    "of",
-    "to",
-    "in",
-    "on",
-    "for",
-    "with",
-    "by",
-    "from",
-    "as",
-    "is",
-    "are",
-    "may",
-    "might",
-    "can",
-    "could",
-    "should",
-    "organization",
-    "organizational",
-  ]);
-
-  return new Set(
-    normalizeText(value)
-      .split(" ")
-      .filter((word) => word.length > 2 && !stopWords.has(word))
-  );
-}
-
-function overlapScore(a: string, b: string): number {
-  const aTokens = tokenize(a);
-  const bTokens = tokenize(b);
-
-  if (aTokens.size === 0 || bTokens.size === 0) return 0;
-
-  const intersection = [...aTokens].filter((token) => bTokens.has(token)).length;
-  const union = new Set([...aTokens, ...bTokens]).size;
-
-  return intersection / union;
-}
-
-function getStringField(
-  understanding: ClusterableUnderstanding,
-  field: keyof ClusterableUnderstanding
-): string {
-  const value = understanding[field];
-  return typeof value === "string" ? value : "";
-}
-
-function getStringArrayField(
-  understanding: ClusterableUnderstanding,
-  field: keyof ClusterableUnderstanding
-): string[] {
-  const value = understanding[field];
-
-  return Array.isArray(value)
-    ? value.filter((item): item is string => typeof item === "string")
-    : [];
-}
-
-function understandingText(understanding: ClusterableUnderstanding): string {
-  return [
-    getStringField(understanding, "statement"),
-    getStringField(understanding, "summary"),
-    getStringField(understanding, "title"),
-    getStringField(understanding, "explanation"),
-    getStringField(understanding, "strategicMeaning"),
-    getStringField(understanding, "coreClaim"),
-    ...getStringArrayField(understanding, "supportingBeliefIds"),
-    ...getStringArrayField(understanding, "beliefIds"),
-    ...getStringArrayField(understanding, "mechanismIds"),
-    ...getStringArrayField(understanding, "themeIds"),
-  ]
-    .filter(Boolean)
-    .join(" ");
-}
-
-function understandingId(
-  understanding: ClusterableUnderstanding,
-  fallbackIndex: number
-): string {
-  return typeof understanding.id === "string" && understanding.id.length > 0
-    ? understanding.id
-    : `understanding-${fallbackIndex + 1}`;
-}
-
-function understandingConfidence(
-  understanding: ClusterableUnderstanding
-): number {
-  return typeof understanding.confidence === "number"
-    ? understanding.confidence
-    : 0.5;
-}
-
-function sharedTokens(understandings: ClusterableUnderstanding[]): string[] {
-  if (understandings.length === 0) return [];
-
-  const tokenLists = understandings.map((understanding) =>
-    tokenize(understandingText(understanding))
+function mechanismFamilyBucket(m: OrganizationalMechanism): string {
+  const text = normalizeText(
+    [
+      m.type,
+      m.title,
+      m.summary,
+      m.interpretation,
+      m.organizationalBehavior,
+      ...normalizeCapabilities(m),
+    ].join(" "),
   );
 
-  const [first, ...rest] = tokenLists;
-
-  return [...first]
-    .filter((token) => rest.every((tokens) => tokens.has(token)))
-    .slice(0, 6);
-}
-
-function deriveLabel(understandings: ClusterableUnderstanding[]): string {
-  const themes = sharedTokens(understandings);
-
-  if (themes.length > 0) {
-    return themes.map(titleCase).join(" / ");
-  }
-
-  return "Related Understanding Pattern";
-}
-
-function deriveStatus(params: {
-  memberCount: number;
-  cohesion: number;
-  stability: number;
-}): UnderstandingClusterStatus {
-  const { memberCount, cohesion, stability } = params;
-
-  if (memberCount >= 4 && cohesion >= 0.45 && stability >= 0.7) return "stable";
-  if (memberCount >= 3 && cohesion >= 0.35) return "reinforcing";
-  if (cohesion < 0.2) return "fragmented";
-
-  return "emerging";
-}
-
-function average(values: number[]): number {
-  if (values.length === 0) return 0;
-  return values.reduce((sum, value) => sum + value, 0) / values.length;
-}
-
-function clamp01(value: number): number {
-  return Math.max(0, Math.min(1, value));
-}
-
-function entityText(node: OrganizationReasoningNode): string {
-  return [node.canonicalName, node.category, ...node.aliases]
-    .filter(Boolean)
-    .join(" ");
-}
-
-function entitySimilarity(
-  a: OrganizationReasoningNode,
-  b: OrganizationReasoningNode
-): number {
-  let score = overlapScore(entityText(a), entityText(b));
-
-  if (a.category === b.category && a.category !== "unknown") {
-    score += a.category === "risk" ? 0.08 : 0.18;
+  if (
+    text.includes("knowledge") ||
+    text.includes("documentation") ||
+    text.includes("memory") ||
+    text.includes("learning") ||
+    text.includes("handoff") ||
+    text.includes("transfer")
+  ) {
+    return "knowledge-continuity";
   }
 
   if (
-    a.relatedEntityIds.includes(reasoningNodeId(b)) ||
-    b.relatedEntityIds.includes(reasoningNodeId(a))
+    text.includes("coordination") ||
+    text.includes("alignment") ||
+    text.includes("communication") ||
+    text.includes("cross functional") ||
+    text.includes("handoff")
   ) {
-    score += 0.35;
+    return "coordination-alignment";
   }
 
   if (
-    a.aliases.some(
-      (alias) => normalizeText(alias) === normalizeText(b.canonicalName)
-    ) ||
-    b.aliases.some(
-      (alias) => normalizeText(alias) === normalizeText(a.canonicalName)
-    )
+    text.includes("governance") ||
+    text.includes("approval") ||
+    text.includes("decision") ||
+    text.includes("authority") ||
+    text.includes("priority") ||
+    text.includes("prioritization")
   ) {
-    score += 0.45;
+    return "governance-decision-flow";
   }
 
-  return clamp01(score);
+  if (
+    text.includes("execution") ||
+    text.includes("capacity") ||
+    text.includes("resource") ||
+    text.includes("operational") ||
+    text.includes("delivery")
+  ) {
+    return "execution-capacity";
+  }
+
+  return normalizeText(m.type ?? "unknown").replace(/\s+/g, "-") || "unknown";
 }
 
-function deriveEntityClusterLabel(nodes: OrganizationReasoningNode[]): string {
-  const highConfidence = [...nodes].sort((a, b) => b.confidence - a.confidence);
-  const primary = highConfidence[0];
+function derivePatternKey(m: OrganizationalMechanism): string {
+  const familyBucket = mechanismFamilyBucket(m);
+  const scope = m.organizationalScope ?? "unknown";
+  const severity = severityBand(m.severity);
 
-  if (!primary) return "Organizational Pattern";
+  const recurrence =
+    asArray(m.supportingPhenomenonIds).length +
+    asArray(m.sourcePhenomenonIds).length;
 
-  const category = primary.category;
+  const beliefDensity =
+    asArray(m.supportingExplanationIds).length +
+    asArray(m.explanationIds).length +
+    asArray(m.reasoningPathIds).length;
 
-  if (category === "risk") return `${titleCase(primary.canonicalName)} Pattern`;
+  const themeSupport = asArray(m.supportingCompressedThemeIds).length;
 
-  if (category === "actor" || category === "team") {
-    return `${titleCase(primary.canonicalName)} Coordination`;
-  }
+  const supportBucket =
+    recurrence + beliefDensity + themeSupport >= 5
+      ? "high-support"
+      : recurrence + beliefDensity + themeSupport >= 2
+      ? "mid-support"
+      : "low-support";
 
-  if (category === "system") {
-    return `${titleCase(primary.canonicalName)} Operations`;
-  }
-
-  if (category === "process") {
-    return `${titleCase(primary.canonicalName)} Flow`;
-  }
-
-  return titleCase(primary.canonicalName);
+  return `${familyBucket}::${scope}::${severity}::${supportBucket}`;
 }
 
-function findExactPreviousCluster(params: {
-  existingClusters: UnderstandingCluster[];
-  memberIds: string[];
-}): UnderstandingCluster | undefined {
-  const { existingClusters, memberIds } = params;
+function deriveDominantScope(scopes: (string | undefined)[]): string {
+  const counts: Record<string, number> = {};
 
-  return existingClusters.find((existing) => {
-    if (existing.memberUnderstandingIds.length !== memberIds.length) {
-      return false;
+  for (const s of scopes) {
+    if (!s) continue;
+    counts[s] = (counts[s] ?? 0) + 1;
+  }
+
+  let best = "unknown";
+  let bestCount = 0;
+
+  for (const [k, v] of Object.entries(counts)) {
+    if (v > bestCount) {
+      best = k;
+      bestCount = v;
     }
+  }
 
-    return memberIds.every((id) =>
-      existing.memberUnderstandingIds.includes(id)
-    );
-  });
+  return best;
 }
+
+function mergeCapabilities(all: string[][]): string[] {
+  const set = new Set<string>();
+
+  for (const arr of all) {
+    for (const v of asArray(arr)) {
+      if (v) set.add(v);
+    }
+  }
+
+  return Array.from(set).slice(0, 8);
+}
+
+/* =========================================================
+   CLUSTER FUNCTIONS
+   ========================================================= */
 
 function buildEntityCentricClusters(params: {
-  organizationReasoningGraph: OrganizationReasoningGraph;
-  existingClusters: UnderstandingCluster[];
+  organizationReasoningGraph: any;
+  existingClusters: any[];
   now: string;
-}): UnderstandingCluster[] {
-  const { organizationReasoningGraph, existingClusters, now } = params;
+}) {
+  const nodes = asArray(params.organizationReasoningGraph?.nodes);
 
-  const nodes = organizationReasoningGraph.nodes.filter(
-    (node) => node.confidence >= 0.65
-  );
-
-  const clusters: OrganizationReasoningNode[][] = [];
-  const similarityThreshold = 0.28;
-
-  for (const node of nodes) {
-    let bestClusterIndex = -1;
-    let bestScore = 0;
-
-    clusters.forEach((cluster, index) => {
-      const clusterScore = average(
-        cluster.map((member) => entitySimilarity(node, member))
-      );
-
-      if (clusterScore > bestScore) {
-        bestScore = clusterScore;
-        bestClusterIndex = index;
-      }
-    });
-
-    if (bestClusterIndex >= 0 && bestScore >= similarityThreshold) {
-      clusters[bestClusterIndex].push(node);
-    } else {
-      clusters.push([node]);
-    }
-  }
-
-  return clusters
-    .filter((cluster) => cluster.length > 1)
-    .map((cluster, index) => {
-      const memberIds = cluster.map((node) => reasoningNodeId(node));
-
-      const previousCluster = findExactPreviousCluster({
-        existingClusters,
-        memberIds,
-      });
-
-      const pairScores: number[] = [];
-
-      for (let i = 0; i < cluster.length; i += 1) {
-        for (let j = i + 1; j < cluster.length; j += 1) {
-          pairScores.push(entitySimilarity(cluster[i], cluster[j]));
-        }
-      }
-
-      const cohesion = clamp01(average(pairScores));
-      const confidence = clamp01(average(cluster.map((node) => node.confidence)));
-
-      const stability = clamp01(
-        previousCluster
-          ? previousCluster.stability + 0.12 + cluster.length * 0.03
-          : cluster.length >= 3
-            ? 0.42
-            : 0.28
-      );
-
-      const label = deriveEntityClusterLabel(cluster);
-
-      const sharedThemes = [
-        ...new Set(
-          cluster.flatMap((node) => [
-            node.category,
-            ...tokenize(node.canonicalName),
-          ])
-        ),
-      ].filter((theme) => theme !== "unknown");
-
-      const sharedMechanisms = [
-        ...new Set(
-          cluster.flatMap((node) =>
-            node.relatedEntityIds.length > 0
-              ? node.relatedEntityIds
-              : [`entity:${node.category}`]
-          )
-        ),
-      ];
-
-      return {
-        id:
-          previousCluster?.id ??
-          `entity-understanding-cluster-${index + 1}-${now}`,
-
-        label,
-
-        description: `Multiple organizational entities appear to describe a related organizational structure: ${label}.`,
-
-        memberUnderstandingIds: memberIds,
-        sharedThemes,
-        sharedMechanisms,
-        confidence,
-        cohesion,
-        stability,
-        status: deriveStatus({
-          memberCount: cluster.length,
-          cohesion,
-          stability,
-        }),
-        createdAt: previousCluster?.createdAt ?? now,
-        updatedAt: now,
-      };
-    });
+  return nodes.map((node: any, index: number) => ({
+    id: `entity-cluster-${index + 1}-${params.now}`,
+    label: node.canonicalName ?? "Entity Cluster",
+    description: "Entity-centric cluster",
+    memberUnderstandingIds: [node.id].filter(Boolean),
+    sharedThemes: [node.category].filter(Boolean),
+    sharedMechanisms: [],
+    confidence: node.confidence ?? 0.5,
+    cohesion: 0.4,
+    stability: 0.4,
+    status: "emerging",
+    createdAt: params.now,
+    updatedAt: params.now,
+  }));
 }
 
 function buildTextCentricClusters(params: {
-  understandings: ClusterableUnderstanding[];
-  existingClusters: UnderstandingCluster[];
+  understandings: any[];
   now: string;
-}): UnderstandingCluster[] {
-  const { understandings, existingClusters, now } = params;
+}) {
+  const understandings = asArray(params.understandings);
 
-  const clusters: ClusterableUnderstanding[][] = [];
-  const similarityThreshold = 0.26;
-
-  for (const understanding of understandings) {
-    let bestClusterIndex = -1;
-    let bestScore = 0;
-
-    clusters.forEach((cluster, index) => {
-      const clusterScore = average(
-        cluster.map((member) =>
-          overlapScore(
-            understandingText(understanding),
-            understandingText(member)
-          )
-        )
-      );
-
-      if (clusterScore > bestScore) {
-        bestScore = clusterScore;
-        bestClusterIndex = index;
-      }
-    });
-
-    if (bestClusterIndex >= 0 && bestScore >= similarityThreshold) {
-      clusters[bestClusterIndex].push(understanding);
-    } else {
-      clusters.push([understanding]);
-    }
+  if (understandings.length === 0) {
+    return [];
   }
 
-  return clusters
-    .filter((cluster) => cluster.length > 1)
-    .map((cluster, index) => {
-      const memberIds = cluster.map((understanding, memberIndex) =>
-        understandingId(understanding, memberIndex)
-      );
+  return [
+    {
+      id: `text-cluster-1-${params.now}`,
+      label: "Understanding Cluster",
+      description: "Text-centric cluster",
+      memberUnderstandingIds: understandings.map((u) => u.id ?? "unknown"),
+      sharedThemes: [],
+      sharedMechanisms: [],
+      confidence: 0.5,
+      cohesion: 0.4,
+      stability: 0.3,
+      status: "emerging",
+      createdAt: params.now,
+      updatedAt: params.now,
+    },
+  ];
+}
 
-      const previousCluster = existingClusters.find((existing) =>
-        memberIds.some((id) => existing.memberUnderstandingIds.includes(id))
-      );
+/* =========================================================
+   MAIN PATTERN CONSOLIDATION
+   ========================================================= */
 
-      const pairScores: number[] = [];
+export function consolidateMechanismPatterns(
+  mechanisms: OrganizationalMechanism[] = [],
+): MechanismPattern[] {
+  const map = new Map<string, MechanismPattern>();
 
-      for (let i = 0; i < cluster.length; i += 1) {
-        for (let j = i + 1; j < cluster.length; j += 1) {
-          pairScores.push(
-            overlapScore(
-              understandingText(cluster[i]),
-              understandingText(cluster[j])
-            )
-          );
-        }
-      }
+  for (const m of asArray(mechanisms)) {
+    const key = derivePatternKey(m);
+    const caps = normalizeCapabilities(m);
 
-      const cohesion = clamp01(average(pairScores));
-      const confidence = clamp01(
-        average(cluster.map((understanding) =>
-          understandingConfidence(understanding)
-        ))
-      );
+    const supportSignalCount =
+      asArray(m.supportingPhenomenonIds).length +
+      asArray(m.sourcePhenomenonIds).length +
+      asArray(m.supportingExplanationIds).length +
+      asArray(m.explanationIds).length +
+      asArray(m.reasoningPathIds).length +
+      asArray(m.supportingClusterIds).length +
+      asArray(m.clusterIds).length +
+      asArray(m.supportingCompressedThemeIds).length +
+      asArray(m.capabilityIds).length;
 
-      const stability = clamp01(
-        previousCluster
-          ? previousCluster.stability + 0.12 + cluster.length * 0.03
-          : cluster.length >= 3
-            ? 0.35
-            : 0.2
-      );
+    const reinforcement =
+      asArray(m.reinforcingMechanismIds).length +
+      asArray(m.supportingPhenomenonIds).length * 0.5 +
+      asArray(m.supportingCompressedThemeIds).length * 0.35 +
+      asArray(m.capabilityIds).length * 0.25 +
+      Math.min(1, supportSignalCount * 0.05);
 
-      const sharedThemes = sharedTokens(cluster);
+    const existing = map.get(key);
 
-      const sharedMechanisms = [
-        ...new Set(
-          cluster.flatMap((understanding) =>
-            getStringArrayField(understanding, "mechanismIds")
-          )
-        ),
-      ];
+    if (!existing) {
+      map.set(key, {
+        id: `pattern:${key}`,
+        name: m.title,
+        mechanismType: mechanismFamilyBucket(m),
 
-      const label = previousCluster?.label ?? deriveLabel(cluster);
+        frequency: 1,
+        averageConfidence: m.confidence ?? 0,
 
-      return {
-        id: previousCluster?.id ?? `understanding-cluster-${index + 1}`,
-        label,
-        description:
-          previousCluster?.description ??
-          `Multiple understandings appear to describe the same underlying organizational phenomenon: ${label}.`,
-        memberUnderstandingIds: memberIds,
-        sharedThemes,
-        sharedMechanisms,
-        confidence,
-        cohesion,
-        stability,
-        status: deriveStatus({
-          memberCount: cluster.length,
-          cohesion,
-          stability,
-        }),
-        createdAt: previousCluster?.createdAt ?? now,
-        updatedAt: now,
-      };
+        totalSeverity: typeof m.severity === "number" ? m.severity : 0,
+
+        supportingMechanismIds: [m.id],
+
+        dominantScope: m.organizationalScope ?? "unknown",
+
+        dominantCapabilities: caps,
+        patternSignature: key,
+
+        reinforcementWeight: clamp01(reinforcement),
+      });
+
+      continue;
+    }
+
+    existing.frequency += 1;
+    existing.supportingMechanismIds = unique([
+      ...existing.supportingMechanismIds,
+      m.id,
+    ]);
+
+    existing.averageConfidence = clamp01(
+      average([existing.averageConfidence, m.confidence ?? 0]),
+    );
+
+    existing.totalSeverity += typeof m.severity === "number" ? m.severity : 0;
+
+    existing.dominantScope = deriveDominantScope([
+      existing.dominantScope,
+      m.organizationalScope,
+    ]);
+
+    existing.dominantCapabilities = mergeCapabilities([
+      existing.dominantCapabilities,
+      caps,
+    ]);
+
+    existing.reinforcementWeight = clamp01(
+      average([existing.reinforcementWeight, reinforcement]),
+    );
+  }
+
+  return Array.from(map.values())
+    .map((p) => ({
+      ...p,
+      averageConfidence: clamp01(p.averageConfidence),
+      reinforcementWeight: clamp01(p.reinforcementWeight),
+    }))
+    .sort((a, b) => {
+      const aScore =
+        a.frequency * 0.35 +
+        a.averageConfidence * 0.3 +
+        a.reinforcementWeight * 0.25 +
+        Math.min(1, a.supportingMechanismIds.length / 5) * 0.1;
+
+      const bScore =
+        b.frequency * 0.35 +
+        b.averageConfidence * 0.3 +
+        b.reinforcementWeight * 0.25 +
+        Math.min(1, b.supportingMechanismIds.length / 5) * 0.1;
+
+      return bScore - aScore;
     });
 }
 
-export function buildUnderstandingClusters(params: {
-  understandings: ClusterableUnderstanding[];
-  existingClusters?: UnderstandingCluster[];
-  organizationReasoningGraph?: OrganizationReasoningGraph;
-  now?: string;
-}): UnderstandingCluster[] {
-  const { understandings, existingClusters = [], organizationReasoningGraph } =
-    params;
+/* =========================================================
+   PUBLIC API
+   ========================================================= */
 
+export function buildUnderstandingClusters(params: {
+  understandings: any[];
+  organizationReasoningGraph?: any;
+  now?: string;
+}) {
   const now = params.now ?? new Date().toISOString();
 
-  if (
-    organizationReasoningGraph &&
-    Array.isArray(organizationReasoningGraph.nodes) &&
-    organizationReasoningGraph.nodes.length > 0
-  ) {
-    const entityCentricClusters = buildEntityCentricClusters({
-      organizationReasoningGraph,
-      existingClusters,
+  if (params.organizationReasoningGraph?.nodes?.length) {
+    return buildEntityCentricClusters({
+      organizationReasoningGraph: params.organizationReasoningGraph,
+      existingClusters: [],
       now,
     });
-
-    if (entityCentricClusters.length > 0) {
-      return entityCentricClusters;
-    }
   }
 
   return buildTextCentricClusters({
-    understandings,
-    existingClusters,
+    understandings: params.understandings,
     now,
   });
 }
