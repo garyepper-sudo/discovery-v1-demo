@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useState } from "react";
 import OrganismPreview from "../organism/OrganismPreview";
 import TraceUnderstandingPage from "../trace/TraceUnderstandingPage";
-import ExecutiveBrief from "./ExecutiveBrief";
-import SemanticConceptInspector from "./SemanticConceptInspector";
-import UnderstandingWorkspace from "./UnderstandingWorkspace";
+import ExecutiveAccordion from "../ui/ExecutiveAccordion";
+import MemoryUpdateOverview from "./MemoryUpdateOverview";
 
 type ResultsOverviewProps = {
   understanding?: any;
@@ -21,10 +20,20 @@ type ResultsOverviewProps = {
   delta?: any;
 };
 
+function oneSentence(value: string | undefined, fallback: string) {
+  if (!value) return fallback;
+
+  const cleaned = value.replace(/\s+/g, " ").trim();
+  const firstSentence = cleaned.split(/(?<=[.!?])\s+/)[0];
+
+  return firstSentence.length > 160
+    ? `${firstSentence.slice(0, 157)}...`
+    : firstSentence;
+}
+
 export default function ResultsOverview({
   understanding,
   beliefs = [],
-  hypotheses = [],
   themes = [],
   contradictions = [],
   causalChains = [],
@@ -34,150 +43,176 @@ export default function ResultsOverview({
   organizationRuntime,
   delta,
 }: ResultsOverviewProps) {
-  const [showExplore, setShowExplore] = useState(false);
   const [showOrganismExplorer, setShowOrganismExplorer] = useState(false);
   const [showReasoningTrace, setShowReasoningTrace] = useState(false);
-  const workspaceRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!showExplore) return;
-
-    requestAnimationFrame(() => {
-      workspaceRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    });
-  }, [showExplore]);
 
   const primaryBelief = beliefs[0];
-
-  const runtimeMemory = organizationRuntime?.memory;
-  const runtimeMetadata = organizationRuntime?.metadata;
   const runtimeOrganism = organizationRuntime?.organism;
-
-  const runtimeInvestigationCount = runtimeMetadata?.investigationCount ?? 1;
-  const runtimeBeliefCount = runtimeMemory?.beliefs?.length ?? beliefs.length;
-  const runtimePatternCount = runtimeMemory?.patterns?.length ?? themes.length;
-  const runtimeObservationCount =
-    runtimeMemory?.observations?.length ?? evidence.length;
-  const runtimeLastEvolutionAt = runtimeOrganism?.lastEvolutionAt;
-
-  const confidence = Math.round(
-    ((primaryBelief?.confidence ?? understanding?.confidence) || 0.75) * 100
-  );
-
-  const narrative = useMemo(
-    () =>
-      buildWhatChangedNarrative({
-        delta,
-        organismState,
-        beliefs,
-        contradictions,
-        organizationRuntime,
-      }),
-    [delta, organismState, beliefs, contradictions, organizationRuntime]
-  );
 
   const headline =
     understanding?.headline ??
     primaryBelief?.headline ??
     "Discovery formed a current understanding.";
 
-  const explanation =
-    understanding?.explanation ??
-    primaryBelief?.explanation ??
-    "Discovery connected evidence, themes, mechanisms, and beliefs into a current executive understanding.";
-
-  const whyItMatters =
-    understanding?.whyItMatters ??
-    understanding?.implication ??
-    primaryBelief?.implication ??
-    "This pattern may affect execution quality, coordination, or strategic timing.";
-
-  const recommendedNextStep =
-    understanding?.recommendedNextStep ??
-    understanding?.recommendation ??
-    primaryBelief?.recommendedNextStep ??
-    primaryBelief?.nextQuestions?.[0] ??
-    "Explore the strongest supporting signals before deciding the next action.";
-
   return (
-    <section className="executive-briefing">
-      <ExecutiveBrief
-        headline={headline}
-        explanation={explanation}
-        whyItMatters={whyItMatters}
-        recommendedNextStep={recommendedNextStep}
-        confidence={confidence}
-        evidenceCount={evidence.length}
-        mechanismCount={organismState?.mechanisms?.length ?? 0}
-        narrative={narrative}
-        onExplore={() => setShowExplore(true)}
+    <section className="results-overview-executive">
+      <MemoryUpdateOverview
+        organizationRuntime={organizationRuntime}
+        beliefs={beliefs}
+        themes={themes}
+        evidence={evidence}
+        delta={delta}
       />
 
-      <aside className="briefing-organism-column">
-        <div className="briefing-organism-card">
-          <p className="overview-label">Organization memory</p>
+      <section className="executive-compressed-sections">
+        <ExecutiveAccordion
+          title="Key Insights"
+          subtitle="The big ideas that explain what's happening."
+          badge={`${Math.min(beliefs.length || 0, 5)} found`}
+          icon="◎"
+          defaultOpen={false}
+        >
+          <div className="executive-row-list">
+            {beliefs.slice(0, 5).map((belief, index) => (
+              <article className="executive-insight-row" key={belief.id ?? index}>
+                <span className="executive-row-icon">◎</span>
 
-          <div className="briefing-organism-preview">
-            <div className="briefing-organism-core" />
+                <div>
+                  <h4>
+                    {belief.headline ??
+                      belief.statement ??
+                      "A meaningful pattern may be emerging."}
+                  </h4>
+                  <p>
+                    {oneSentence(
+                      belief.summary ?? belief.explanation,
+                      "A meaningful signal appears to be shaping the organization."
+                    )}
+                  </p>
+                </div>
+
+                <span className="executive-row-status">Insight</span>
+              </article>
+            ))}
           </div>
+        </ExecutiveAccordion>
 
-          <h2>
-            {organismState?.emergingPatterns?.[0]?.title ??
-              primaryBelief?.headline ??
-              "Understanding is stabilizing"}
-          </h2>
+        <ExecutiveAccordion
+          title="What's Happening"
+          subtitle="Important patterns and situations we're seeing."
+          badge={`${(themes.length || 0) + (contradictions.length || 0)} found`}
+          icon="⌁"
+          defaultOpen={false}
+        >
+          <div className="executive-row-list">
+            {themes.slice(0, 4).map((theme, index) => (
+              <article className="executive-insight-row" key={theme.id ?? index}>
+                <span className="executive-row-icon">⌁</span>
 
-          <p>
-            {runtimeInvestigationCount} investigation
-            {runtimeInvestigationCount === 1 ? "" : "s"} ·{" "}
-            {runtimeBeliefCount} belief
-            {runtimeBeliefCount === 1 ? "" : "s"} ·{" "}
-            {runtimePatternCount} pattern
-            {runtimePatternCount === 1 ? "" : "s"}
-          </p>
+                <div>
+                  <h4>{theme.title ?? theme.name ?? "Emerging pattern"}</h4>
+                  <p>
+                    {oneSentence(
+                      theme.summary ?? theme.description,
+                      "This pattern appears across the investigation."
+                    )}
+                  </p>
+                </div>
 
-          <p className="briefing-muted">
-            {runtimeObservationCount} remembered signal
-            {runtimeObservationCount === 1 ? "" : "s"}
-            {runtimeLastEvolutionAt
-              ? ` · evolved ${formatRuntimeDate(runtimeLastEvolutionAt)}`
-              : ""}
-          </p>
+                <span className="executive-row-status">Pattern</span>
+              </article>
+            ))}
 
-          <button
-            className="briefing-primary-button full"
-            onClick={() => setShowOrganismExplorer(true)}
-          >
-            Explore organism →
-          </button>
+            {contradictions.slice(0, 2).map((contradiction, index) => (
+              <article
+                className="executive-insight-row"
+                key={contradiction.id ?? index}
+              >
+                <span className="executive-row-icon">?</span>
 
-          <p className="briefing-muted">
-            Rendered from the organization’s persistent understanding.
-          </p>
-        </div>
-      </aside>
+                <div>
+                  <h4>
+                    {contradiction.title ??
+                      contradiction.statement ??
+                      "An unresolved tension remains."}
+                  </h4>
+                  <p>
+                    {oneSentence(
+                      contradiction.summary ?? contradiction.description,
+                      "This could change the interpretation if more evidence appears."
+                    )}
+                  </p>
+                </div>
 
-      <SemanticConceptInspector runtime={organizationRuntime} />
+                <span className="executive-row-status">Open</span>
+              </article>
+            ))}
+          </div>
+        </ExecutiveAccordion>
 
-      {showExplore && (
-        <div ref={workspaceRef} className="workspace-scroll-target">
-          <UnderstandingWorkspace
-            understanding={understanding}
-            beliefs={beliefs}
-            hypotheses={hypotheses}
-            themes={themes}
-            contradictions={contradictions}
-            causalChains={causalChains}
-            evidence={evidence}
-            organismState={organismState}
-            onClose={() => setShowExplore(false)}
-            onTrace={() => setShowReasoningTrace(true)}
-          />
-        </div>
-      )}
+        <ExecutiveAccordion
+          title="How We Work"
+          subtitle="Our strengths, systems, and ways of operating."
+          badge={`${organismState?.mechanisms?.length ?? causalChains.length ?? 0} found`}
+          icon="▣"
+          defaultOpen={false}
+        >
+          <div className="executive-row-list">
+            {(organismState?.mechanisms ?? causalChains ?? [])
+              .slice(0, 5)
+              .map((item: any, index: number) => (
+                <article className="executive-insight-row" key={item.id ?? index}>
+                  <span className="executive-row-icon">▣</span>
+
+                  <div>
+                    <h4>
+                      {item.title ??
+                        item.statement ??
+                        item.summary ??
+                        "Discovery found a possible operating pattern."}
+                    </h4>
+                    <p>
+                      {oneSentence(
+                        item.summary ?? item.description ?? item.explanation,
+                        "This behavior may explain why the pattern keeps appearing."
+                      )}
+                    </p>
+                  </div>
+
+                  <span className="executive-row-status">System</span>
+                </article>
+              ))}
+          </div>
+        </ExecutiveAccordion>
+
+        <ExecutiveAccordion
+          title="Remembered Evidence"
+          subtitle="All signals and observations we're tracking."
+          badge={`${evidence.length} total`}
+          icon="◉"
+          defaultOpen={false}
+        >
+          <div className="executive-row-list">
+            {evidence.slice(0, 5).map((item, index) => (
+              <article className="executive-insight-row" key={item.id ?? index}>
+                <span className="executive-row-icon">◉</span>
+
+                <div>
+                  <h4>{item.title ?? item.source ?? "Remembered signal"}</h4>
+                  <p>
+                    {oneSentence(
+                      item.summary ?? item.text ?? item.observation,
+                      "Evidence retained in organizational memory."
+                    )}
+                  </p>
+                </div>
+
+                <span className="executive-row-status">Evidence</span>
+              </article>
+            ))}
+          </div>
+        </ExecutiveAccordion>
+      </section>
 
       {showOrganismExplorer && (
         <OrganismPreview
@@ -204,92 +239,4 @@ export default function ResultsOverview({
       />
     </section>
   );
-}
-
-function buildWhatChangedNarrative({
-  delta,
-  organismState,
-  beliefs,
-  contradictions,
-  organizationRuntime,
-}: {
-  delta?: any;
-  organismState?: any;
-  beliefs: any[];
-  contradictions: any[];
-  organizationRuntime?: any;
-}) {
-  const newBeliefs = delta?.newBeliefs?.length ?? beliefs.length ?? 0;
-  const newContradictions =
-    delta?.newContradictions?.length ?? contradictions.length ?? 0;
-  const mechanisms = organismState?.mechanisms?.length ?? 0;
-  const investigationCount =
-    organizationRuntime?.metadata?.investigationCount ?? 1;
-
-  const items: string[] = [];
-
-  if (investigationCount > 1) {
-    items.push(
-      `This organization has now evolved across ${investigationCount} investigations.`
-    );
-  }
-
-  if (newBeliefs > 0) {
-    items.push(
-      `${newBeliefs} working belief${
-        newBeliefs === 1 ? "" : "s"
-      } formed from the investigation.`
-    );
-  }
-
-  if (mechanisms > 0) {
-    items.push(
-      `${mechanisms} explanatory mechanism${
-        mechanisms === 1 ? "" : "s"
-      } emerged to connect patterns with beliefs.`
-    );
-  }
-
-  if (newContradictions > 0) {
-    items.push(
-      `${newContradictions} unresolved tension${
-        newContradictions === 1 ? "" : "s"
-      } remain important to pressure-test.`
-    );
-  }
-
-  if (organismState) {
-    items.push(
-      `The organism is ${Math.round(
-        (organismState.maturity ?? 0) * 100
-      )}% mature with ${Math.round(
-        (organismState.uncertainty ?? 0) * 100
-      )}% uncertainty.`
-    );
-  }
-
-  return {
-    headline:
-      investigationCount > 1
-        ? "Organizational understanding evolved"
-        : mechanisms > 0
-          ? "Understanding became more explainable"
-          : "Discovery formed a new working understanding",
-    summary:
-      items[0] ??
-      "Discovery formed an initial understanding from the available evidence.",
-  };
-}
-
-function formatRuntimeDate(value: string) {
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return "recently";
-  }
-
-  return date.toLocaleDateString(undefined, {
-    month: "short",
-    day: "numeric",
-  });
 }

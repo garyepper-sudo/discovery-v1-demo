@@ -506,3 +506,794 @@
     align-self: flex-start;
   }
 }
+/* =====================================================
+   UI Sprint 1
+   Executive Experience Layout Shell
+   ===================================================== */
+
+.organization-workspace {
+  width: min(1500px, calc(100vw - 48px));
+  margin: 0 auto;
+  padding: 24px 0 96px;
+}
+
+.executive-experience-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 28px;
+  align-items: start;
+}
+
+.executive-experience-main {
+  min-width: 0;
+  display: grid;
+  gap: 28px;
+}
+
+.executive-details-shell {
+  min-width: 0;
+}
+
+.executive-experience-sidebar {
+  position: sticky;
+  top: 28px;
+  display: grid;
+  gap: 22px;
+  align-self: start;
+}
+
+.executive-experience-sidebar .cognition-inspector {
+  margin-top: 0;
+}
+
+.executive-experience-sidebar .cognition-inspector-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.executive-experience-sidebar .continue-learning-panel,
+.executive-experience-sidebar .final-prompt {
+  margin-top: 0;
+}
+
+@media (max-width: 1100px) {
+  .organization-workspace {
+    width: min(100% - 32px, 900px);
+    padding-top: 8px;
+  }
+
+  .executive-experience-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .executive-experience-sidebar {
+    position: relative;
+    top: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .organization-workspace {
+    width: min(100% - 24px, 900px);
+    padding-bottom: 72px;
+  }
+
+  .executive-experience-grid {
+    gap: 20px;
+  }
+
+  .executive-experience-main {
+    gap: 20px;
+  }
+
+  .executive-experience-sidebar {
+    gap: 18px;
+  }
+}
+
+.discovery-v2 .executive-accordion {
+  width: 100%;
+  border: 1px solid rgba(247, 241, 231, 0.11);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.035);
+  overflow: hidden;
+}
+
+.discovery-v2 .executive-accordion-header {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 22px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  text-align: left;
+}
+
+.discovery-v2 .executive-accordion-header h3 {
+  margin: 0;
+  color: #f7f1e7;
+  font-size: 21px;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.discovery-v2 .executive-accordion-header p {
+  margin: 8px 0 0;
+  color: rgba(247, 241, 231, 0.58);
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.discovery-v2 .executive-accordion-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+}
+
+.discovery-v2 .executive-accordion-badge {
+  min-width: 32px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(217, 183, 112, 0.1);
+  border: 1px solid rgba(217, 183, 112, 0.24);
+  color: #d9b770;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.discovery-v2 .executive-accordion-chevron {
+  color: rgba(247, 241, 231, 0.72);
+  font-size: 24px;
+  line-height: 1;
+  transition: transform 180ms ease;
+}
+
+.discovery-v2 .executive-accordion.is-open .executive-accordion-chevron {
+  transform: rotate(180deg);
+}
+
+.discovery-v2 .executive-accordion-body {
+  padding: 0 24px 24px;
+}
+
+.discovery-v2 .executive-advisor-panel {
+  display: grid;
+  gap: 18px;
+}
+
+.discovery-v2 .executive-advisor-card {
+  border: 1px solid rgba(247, 241, 231, 0.12);
+  border-radius: 28px;
+  padding: 26px;
+  background:
+    radial-gradient(circle at top left, rgba(217, 183, 112, 0.12), transparent 34%),
+    rgba(255, 255, 255, 0.035);
+}
+
+.discovery-v2 .executive-advisor-eyebrow {
+  margin: 0 0 14px;
+  color: rgba(217, 183, 112, 0.92);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.discovery-v2 .executive-advisor-card h3 {
+  margin: 0 0 12px;
+  color: #f7f1e7;
+  font-size: clamp(22px, 2vw, 31px);
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.discovery-v2 .executive-advisor-card p {
+  margin: 0;
+  color: rgba(247, 241, 231, 0.62);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.discovery-v2 .executive-memory-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.discovery-v2 .executive-memory-grid div {
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.discovery-v2 .executive-memory-grid strong {
+  display: block;
+  color: #f7f1e7;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.discovery-v2 .executive-memory-grid span {
+  display: block;
+  margin-top: 6px;
+  color: rgba(247, 241, 231, 0.58);
+  font-size: 13px;
+}
+
+.discovery-v2 .executive-understanding-orbit {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 22px auto 0;
+  border-radius: 999px;
+  border: 1px solid rgba(217, 183, 112, 0.22);
+}
+
+.discovery-v2 .executive-understanding-orbit span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  background: #d9b770;
+  box-shadow: 0 0 44px rgba(217, 183, 112, 0.72);
+}
+
+.discovery-v2 .executive-understanding-orbit i {
+  position: absolute;
+  border-radius: 999px;
+  border: 1px solid rgba(217, 183, 112, 0.16);
+}
+
+.discovery-v2 .executive-understanding-orbit i:nth-child(2) {
+  inset: 24px;
+}
+
+.discovery-v2 .executive-understanding-orbit i:nth-child(3) {
+  inset: 46px;
+}
+
+.discovery-v2 .executive-understanding-orbit i:nth-child(4) {
+  inset: 68px;
+}
+
+.discovery-v2 .cognition-inspector-technical {
+  display: grid;
+  gap: 22px;
+}
+.discovery-v2 .next-step-content {
+  display: grid;
+  grid-template-columns: 86px 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.discovery-v2 .next-step-icon {
+  width: 86px;
+  height: 86px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle, rgba(217, 183, 112, 0.24), rgba(217, 183, 112, 0.06));
+  color: #d9b770;
+  font-size: 42px;
+}
+
+.discovery-v2 .briefing-primary-button.compact {
+  margin-top: 22px;
+  padding: 12px 18px;
+  width: auto;
+}
+
+.discovery-v2 .understanding-card-layout {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.discovery-v2 .understanding-card-layout strong {
+  color: #d9b770;
+  font-weight: 700;
+}
+
+.discovery-v2 .executive-understanding-orbit {
+  margin: 0;
+}
+
+.discovery-v2 .orbit-node {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #d9b770;
+  box-shadow: 0 0 18px rgba(217, 183, 112, 0.72);
+}
+
+.discovery-v2 .orbit-node-one {
+  left: 26px;
+  top: 86px;
+}
+
+.discovery-v2 .orbit-node-two {
+  right: 44px;
+  top: 38px;
+}
+
+.discovery-v2 .orbit-node-three {
+  left: 62px;
+  bottom: 44px;
+}
+
+@media (max-width: 760px) {
+  .discovery-v2 .next-step-content,
+  .discovery-v2 .understanding-card-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================================
+   Memory Update Overview
+   North Star Left Column
+   ===================================================== */
+
+.discovery-v2 .memory-update-overview {
+  padding: 28px;
+  border: 1px solid rgba(247, 241, 231, 0.12);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at top left, rgba(217, 183, 112, 0.12), transparent 32%),
+    rgba(255, 255, 255, 0.035);
+}
+
+.discovery-v2 .memory-update-header {
+  margin-bottom: 24px;
+}
+
+.discovery-v2 .memory-update-eyebrow {
+  margin: 0 0 10px;
+  color: rgba(217, 183, 112, 0.92);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.discovery-v2 .memory-update-header h1 {
+  margin: 0 0 8px;
+  color: #f7f1e7;
+  font-size: 34px;
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+}
+
+.discovery-v2 .memory-update-header p {
+  margin: 0;
+  color: rgba(247, 241, 231, 0.62);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.discovery-v2 .memory-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.discovery-v2 .memory-metric-card {
+  padding: 18px;
+  border: 1px solid rgba(247, 241, 231, 0.1);
+  border-radius: 22px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.discovery-v2 .memory-metric-icon {
+  display: block;
+  margin-bottom: 10px;
+  color: #d9b770;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.discovery-v2 .memory-metric-card strong {
+  display: block;
+  color: #f7f1e7;
+  font-size: 34px;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.discovery-v2 .memory-metric-card p {
+  margin: 8px 0 4px;
+  color: rgba(247, 241, 231, 0.86);
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.discovery-v2 .memory-metric-card em {
+  color: rgba(247, 241, 231, 0.48);
+  font-size: 12px;
+  font-style: normal;
+}
+
+.discovery-v2 .memory-update-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 14px 0 22px;
+  border-bottom: 1px solid rgba(247, 241, 231, 0.1);
+}
+
+.discovery-v2 .memory-update-meta span {
+  padding: 7px 10px;
+  border: 1px solid rgba(217, 183, 112, 0.16);
+  border-radius: 999px;
+  color: rgba(247, 241, 231, 0.62);
+  background: rgba(217, 183, 112, 0.045);
+  font-size: 12px;
+}
+
+.discovery-v2 .top-memory-changes {
+  padding-top: 22px;
+}
+
+.discovery-v2 .top-memory-changes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.discovery-v2 .top-memory-changes-header h2 {
+  margin: 0;
+  color: #f7f1e7;
+  font-size: 20px;
+  letter-spacing: -0.03em;
+}
+
+.discovery-v2 .top-memory-changes-header button {
+  border: 0;
+  background: transparent;
+  color: #d9b770;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.discovery-v2 .top-memory-change-list {
+  display: grid;
+  gap: 10px;
+}
+
+.discovery-v2 .top-memory-change-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding: 15px 16px;
+  border: 1px solid rgba(247, 241, 231, 0.09);
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.discovery-v2 .top-memory-change-row h3 {
+  margin: 0;
+  color: #f7f1e7;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.discovery-v2 .top-memory-change-row p {
+  margin: 6px 0 0;
+  color: rgba(247, 241, 231, 0.54);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.discovery-v2 .top-memory-change-row > span {
+  padding: 7px 10px;
+  border-radius: 999px;
+  color: #d9b770;
+  background: rgba(217, 183, 112, 0.1);
+  border: 1px solid rgba(217, 183, 112, 0.2);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .discovery-v2 .memory-metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .discovery-v2 .memory-metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .discovery-v2 .top-memory-change-row {
+    grid-template-columns: 1fr;
+  }
+
+  .discovery-v2 .top-memory-change-row > span {
+    justify-self: start;
+  }
+}
+
+.discovery-v2 .executive-accordion-title-group {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.discovery-v2 .executive-accordion-icon,
+.discovery-v2 .executive-row-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: rgba(217, 183, 112, 0.1);
+  border: 1px solid rgba(217, 183, 112, 0.16);
+  color: #d9b770;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.discovery-v2 .executive-row-list {
+  display: grid;
+  gap: 8px;
+}
+
+.discovery-v2 .executive-insight-row {
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding: 13px 14px;
+  border: 1px solid rgba(247, 241, 231, 0.08);
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.discovery-v2 .executive-insight-row h4 {
+  margin: 0;
+  color: #f7f1e7;
+  font-size: 15px;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+.discovery-v2 .executive-insight-row p {
+  margin: 4px 0 0;
+  color: rgba(247, 241, 231, 0.52);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.discovery-v2 .executive-row-status {
+  padding: 7px 10px;
+  border-radius: 999px;
+  color: #d9b770;
+  background: rgba(217, 183, 112, 0.1);
+  border: 1px solid rgba(217, 183, 112, 0.2);
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .discovery-v2 .executive-insight-row {
+    grid-template-columns: 42px 1fr;
+  }
+
+  .discovery-v2 .executive-row-status {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+/* =====================================================
+   Memory Update Row Compression
+   North Star Match
+   ===================================================== */
+
+.discovery-v2 .top-memory-change-row {
+  grid-template-columns: 54px 1fr auto;
+  min-height: 64px;
+  padding: 10px 14px;
+}
+
+.discovery-v2 .top-memory-change-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: rgba(217, 183, 112, 0.12);
+  border: 1px solid rgba(217, 183, 112, 0.2);
+  color: #d9b770;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.discovery-v2 .top-memory-change-row h3 {
+  font-size: 15px;
+}
+
+.discovery-v2 .top-memory-change-row p {
+  max-width: 680px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.discovery-v2 .top-memory-change-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.discovery-v2 .top-memory-change-actions span {
+  padding: 7px 10px;
+  border-radius: 999px;
+  color: #d9b770;
+  background: rgba(217, 183, 112, 0.1);
+  border: 1px solid rgba(217, 183, 112, 0.2);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.discovery-v2 .top-memory-change-actions b {
+  color: rgba(247, 241, 231, 0.72);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.discovery-v2 .more-memory-changes-button {
+  width: 100%;
+  margin-top: 10px;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: rgba(247, 241, 231, 0.72);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.discovery-v2 .top-memory-change-row {
+  grid-template-columns: 46px 1fr auto !important;
+  min-height: 58px;
+  padding: 10px 14px !important;
+}
+
+.discovery-v2 .top-memory-change-icon {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 12px;
+}
+
+.discovery-v2 .top-memory-change-row h3 {
+  font-size: 14px !important;
+  line-height: 1.2;
+}
+
+.discovery-v2 .top-memory-change-row p {
+  margin-top: 4px;
+  font-size: 12px !important;
+  line-height: 1.25;
+  max-width: 620px;
+}
+
+.discovery-v2 .top-memory-change-actions span {
+  font-size: 11px;
+  padding: 6px 9px;
+}
+
+.discovery-v2 .memory-update-overview {
+  padding: 22px 26px !important;
+}
+
+.discovery-v2 .memory-update-header {
+  margin-bottom: 18px !important;
+}
+
+.discovery-v2 .memory-metric-grid {
+  gap: 12px !important;
+  margin-bottom: 14px !important;
+}
+
+.discovery-v2 .memory-metric-card {
+  min-height: 96px;
+  padding: 14px 16px !important;
+}
+
+.discovery-v2 .memory-metric-card strong {
+  font-size: 30px !important;
+}
+
+.discovery-v2 .memory-update-meta {
+  padding: 10px 0 16px !important;
+}
+
+.discovery-v2 .top-memory-changes {
+  padding-top: 16px !important;
+}
+
+.discovery-v2 .top-memory-changes-header {
+  margin-bottom: 10px !important;
+}
+
+.discovery-v2 .top-memory-change-list {
+  gap: 7px !important;
+}
+
+.discovery-v2 .top-memory-change-row {
+  min-height: 50px !important;
+  padding: 8px 12px !important;
+}
+
+.discovery-v2 .top-memory-change-icon {
+  width: 30px !important;
+  height: 30px !important;
+}
+
+.discovery-v2 .top-memory-change-row h3 {
+  font-size: 13px !important;
+}
+
+.discovery-v2 .top-memory-change-row p {
+  font-size: 11.5px !important;
+}
+
+.discovery-v2 .top-memory-change-actions span {
+  font-size: 10.5px !important;
+}
+
+.discovery-v2 .top-memory-change-main {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.discovery-v2 .top-memory-change-actions {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.discovery-v2 .top-memory-change-row.is-expanded {
+  align-items: start;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+}
+
+.discovery-v2 .top-memory-change-row.is-expanded .top-memory-change-icon {
+  margin-top: 2px;
+}
+
+.discovery-v2 .top-memory-change-detail {
+  margin-top: 8px;
+  max-width: 720px;
+  color: rgba(247, 241, 231, 0.62);
+  font-size: 12.5px;
+  line-height: 1.45;
+}

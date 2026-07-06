@@ -1,5 +1,10 @@
+"use client";
+
+import ExecutiveAccordion from "../ui/ExecutiveAccordion";
+
 type CognitionInspectorProps = {
   runtime?: any;
+  onExploreInsight?: () => void;
 };
 
 function countByStatus(observations: any[], status: string) {
@@ -12,12 +17,12 @@ function formatPercent(value: number | undefined) {
 
 export default function CognitionInspector({
   runtime,
+  onExploreInsight,
 }: CognitionInspectorProps) {
   const observations = runtime?.memory?.observations || [];
   const understandingClusters = runtime?.memory?.understandingClusters || [];
   const organizationalCapabilities =
     runtime?.memory?.organizationalCapabilitiesState?.capabilities || [];
-
   const organizationalPhenomena =
     runtime?.memory?.organizationalPhenomenaState?.phenomena || [];
 
@@ -34,208 +39,207 @@ export default function CognitionInspector({
   const latestObservations = observations.slice(-5).reverse();
 
   return (
-    <section className="cognition-inspector">
-      <div className="cognition-inspector-eyebrow">Cognition Inspector</div>
+    <aside className="executive-advisor-panel">
+      <section className="executive-advisor-card next-step-card">
+        <p className="executive-advisor-eyebrow">Recommended Next Step</p>
 
-      <h3>What changed in memory</h3>
+        <div className="next-step-content">
+          <div className="next-step-icon" aria-hidden="true">
+            <span>☼</span>
+          </div>
 
-      <div className="cognition-inspector-grid">
-        <div>
-          <span>{created.length}</span>
-          <p>Created</p>
+          <div>
+            <h3>
+              The next unknown is whether this pattern holds across additional
+              evidence.
+            </h3>
+
+            <button
+              type="button"
+              className="briefing-primary-button compact"
+              onClick={onExploreInsight}
+            >
+              Explore this insight →
+            </button>
+          </div>
         </div>
+      </section>
 
-        <div>
-          <span>{reinforced.length}</span>
-          <p>Reinforced</p>
+      <section className="executive-advisor-card understanding-card-compact">
+        <p className="executive-advisor-eyebrow">Our Understanding</p>
+
+        <div className="understanding-card-layout">
+          <div className="executive-understanding-orbit" aria-hidden="true">
+            <span />
+            <i />
+            <i />
+            <i />
+            <b className="orbit-node orbit-node-one" />
+            <b className="orbit-node orbit-node-two" />
+            <b className="orbit-node orbit-node-three" />
+          </div>
+
+          <div>
+            <h3>Organizational understanding is evolving</h3>
+            <p>
+              This organization has evolved across{" "}
+              <strong>{runtime?.metadata?.investigationCount ?? 1}</strong>{" "}
+              investigations.
+            </p>
+          </div>
         </div>
+      </section>
 
-        <div>
-          <span>{stableCount}</span>
-          <p>Stable</p>
+      <section className="executive-advisor-card memory-card-compact">
+        <p className="executive-advisor-eyebrow">Organizational Memory</p>
+        <h3>Discovery is remembering what changed.</h3>
+
+        <div className="executive-memory-grid">
+          <div>
+            <strong>{created.length}</strong>
+            <span>New</span>
+          </div>
+          <div>
+            <strong>{reinforced.length}</strong>
+            <span>Reinforced</span>
+          </div>
+          <div>
+            <strong>{stableCount}</strong>
+            <span>Stable</span>
+          </div>
+          <div>
+            <strong>{observations.length}</strong>
+            <span>Total</span>
+          </div>
         </div>
-
-        <div>
-          <span>{observations.length}</span>
-          <p>Total</p>
-        </div>
-      </div>
-
-      <div className="cognition-inspector-summary">
-        <p>
-          {reinforced.length > 0
-            ? `Discovery reinforced ${reinforced.length} existing signal${
-                reinforced.length === 1 ? "" : "s"
-              }.`
-            : created.length > 0
-            ? `Discovery created ${created.length} new signal${
-                created.length === 1 ? "" : "s"
-              }.`
-            : "No observation evolution detected yet."}
-        </p>
 
         <p>
           Status mix: {newCount} new · {reinforcedCount} reinforced ·{" "}
-          {stableCount} stable
+          {stableCount} stable.
         </p>
-      </div>
+      </section>
 
-      <div className="cognition-inspector-clusters">
-        <div className="cognition-inspector-section-header">
-          <span>Understanding Clusters</span>
-          <em>{understandingClusters.length} detected</em>
-        </div>
-
-        {understandingClusters.length === 0 ? (
-          <p className="cognition-inspector-empty">
-            No compressed understanding clusters detected yet.
-          </p>
-        ) : (
-          <div className="cognition-inspector-list">
-            {understandingClusters.map((cluster: any) => (
-              <div key={cluster.id} className="cognition-inspector-item">
-                <div>
-                  <strong>
-                    {cluster.label || "Related Understanding Pattern"}
-                  </strong>
-                  <p>
-                    {cluster.memberUnderstandingIds?.length || 0} understandings ·
-                    Cohesion {formatPercent(cluster.cohesion)} · Stability{" "}
-                    {formatPercent(cluster.stability)} ·{" "}
-                    {cluster.status || "emerging"}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div className="cognition-inspector-capabilities">
-        <div className="cognition-inspector-section-header">
-          <span>Organizational Capabilities</span>
-          <em>{organizationalCapabilities.length} detected</em>
-        </div>
-
-        {organizationalCapabilities.length === 0 ? (
-          <p className="cognition-inspector-empty">
-            No organizational capabilities recognized yet.
-          </p>
-        ) : (
-          <div className="cognition-inspector-list">
-            {organizationalCapabilities.map((capability: any) => (
-              <div key={capability.id} className="cognition-inspector-item">
-                <div>
-                  <strong>
-                    {capability.label || "Recognized Organizational Capability"}
-                  </strong>
-
-                  <p>
-                    {capability.status || "new"} · Confidence{" "}
-                    {formatPercent(capability.confidence)} · Strength{" "}
-                    {formatPercent(capability.strength)} · Stability{" "}
-                    {formatPercent(capability.stability)} ·{" "}
-                    {capability.understandingIds?.length || 0} understandings
-                  </p>
-
-                  {capability.description && <p>{capability.description}</p>}
-
-                  <details className="cognition-inspector-details">
-                    <summary>What reinforced this capability</summary>
-
-                    {capability.supportingEvidence?.length > 0 ? (
-                      <ul>
-                        {capability.supportingEvidence
-                          .slice(0, 4)
-                          .map((evidence: string, index: number) => (
-                            <li key={`${capability.id}-evidence-${index}`}>
-                              {evidence}
-                            </li>
-                          ))}
-                      </ul>
-                    ) : (
-                      <p>No supporting evidence stored yet.</p>
-                    )}
-                  </details>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div className="cognition-inspector-phenomena">
-        <div className="cognition-inspector-section-header">
-          <span>Organizational Phenomena</span>
-          <em>{organizationalPhenomena.length} detected</em>
-        </div>
-
-        {organizationalPhenomena.length === 0 ? (
-          <p className="cognition-inspector-empty">
-            No enduring organizational phenomena inferred yet.
-          </p>
-        ) : (
-          <div className="cognition-inspector-list">
-            {organizationalPhenomena.map((phenomenon: any) => (
-              <div key={phenomenon.id} className="cognition-inspector-item">
-                <div>
-                  <strong>
-                    {phenomenon.label || "Emerging Organizational Phenomenon"}
-                  </strong>
-
-                  <p>
-                    {phenomenon.status || "emerging"} · Confidence{" "}
-                    {formatPercent(phenomenon.confidence)} · Strength{" "}
-                    {formatPercent(phenomenon.strength)} ·{" "}
-                    {phenomenon.understandingIds?.length || 0} understandings
-                  </p>
-
-                  {phenomenon.executiveMeaning && (
-                    <p>{phenomenon.executiveMeaning}</p>
-                  )}
-
-                  <details className="cognition-inspector-details">
-                    <summary>Why Discovery inferred this</summary>
-
-                    {phenomenon.evidenceSummary && (
-                      <p>{phenomenon.evidenceSummary}</p>
-                    )}
-
-                    {phenomenon.changeExplanation && (
-                      <p>{phenomenon.changeExplanation}</p>
-                    )}
-
-                    {phenomenon.clusterIds?.length > 0 && (
-                      <p>
-                        Derived from {phenomenon.clusterIds.length} understanding
-                        cluster
-                        {phenomenon.clusterIds.length === 1 ? "" : "s"}.
-                      </p>
-                    )}
-                  </details>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {latestObservations.length > 0 && (
-        <div className="cognition-inspector-list">
-          {latestObservations.map((obs: any) => (
-            <div key={obs.id} className="cognition-inspector-item">
-              <div>
-                <strong>{obs.statement || obs.text || obs.summary}</strong>
-                <p>
-                  Support {obs.supportCount || 1} · Confidence{" "}
-                  {Math.round((obs.confidence || 0) * 100)}% ·{" "}
-                  {obs.status || "stored"}
-                </p>
-              </div>
+      <ExecutiveAccordion
+        title="Technical Details"
+        subtitle="Memory changes, patterns, capabilities, and observations."
+        badge="Advanced"
+        defaultOpen={false}
+      >
+        <section className="cognition-inspector-technical">
+          <div className="cognition-inspector-clusters">
+            <div className="cognition-inspector-section-header">
+              <span>Patterns We’ve Seen Before</span>
+              <em>{understandingClusters.length} detected</em>
             </div>
-          ))}
-        </div>
-      )}
-    </section>
+
+            {understandingClusters.length === 0 ? (
+              <p className="cognition-inspector-empty">
+                No recurring patterns detected yet.
+              </p>
+            ) : (
+              <div className="cognition-inspector-list">
+                {understandingClusters.slice(0, 8).map((cluster: any) => (
+                  <div key={cluster.id} className="cognition-inspector-item">
+                    <strong>
+                      {cluster.label || "Related Understanding Pattern"}
+                    </strong>
+                    <p>
+                      {cluster.memberUnderstandingIds?.length || 0} signals ·
+                      Cohesion {formatPercent(cluster.cohesion)} · Stability{" "}
+                      {formatPercent(cluster.stability)} ·{" "}
+                      {cluster.status || "emerging"}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="cognition-inspector-capabilities">
+            <div className="cognition-inspector-section-header">
+              <span>How We Operate</span>
+              <em>{organizationalCapabilities.length} detected</em>
+            </div>
+
+            {organizationalCapabilities.length === 0 ? (
+              <p className="cognition-inspector-empty">
+                No operating capabilities recognized yet.
+              </p>
+            ) : (
+              <div className="cognition-inspector-list">
+                {organizationalCapabilities
+                  .slice(0, 8)
+                  .map((capability: any) => (
+                    <div
+                      key={capability.id}
+                      className="cognition-inspector-item"
+                    >
+                      <strong>
+                        {capability.label ||
+                          "Recognized Organizational Capability"}
+                      </strong>
+
+                      <p>
+                        {capability.status || "new"} · Confidence{" "}
+                        {formatPercent(capability.confidence)} · Strength{" "}
+                        {formatPercent(capability.strength)} · Stability{" "}
+                        {formatPercent(capability.stability)}
+                      </p>
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
+
+          <div className="cognition-inspector-phenomena">
+            <div className="cognition-inspector-section-header">
+              <span>What’s Happening</span>
+              <em>{organizationalPhenomena.length} detected</em>
+            </div>
+
+            {organizationalPhenomena.length === 0 ? (
+              <p className="cognition-inspector-empty">
+                No enduring situations inferred yet.
+              </p>
+            ) : (
+              <div className="cognition-inspector-list">
+                {organizationalPhenomena.slice(0, 8).map((phenomenon: any) => (
+                  <div key={phenomenon.id} className="cognition-inspector-item">
+                    <strong>
+                      {phenomenon.label || "Emerging Organizational Situation"}
+                    </strong>
+
+                    <p>
+                      {phenomenon.status || "emerging"} · Confidence{" "}
+                      {formatPercent(phenomenon.confidence)} · Strength{" "}
+                      {formatPercent(phenomenon.strength)}
+                    </p>
+
+                    {phenomenon.executiveMeaning && (
+                      <p>{phenomenon.executiveMeaning}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {latestObservations.length > 0 && (
+            <div className="cognition-inspector-list">
+              {latestObservations.map((obs: any) => (
+                <div key={obs.id} className="cognition-inspector-item">
+                  <strong>{obs.statement || obs.text || obs.summary}</strong>
+                  <p>
+                    Support {obs.supportCount || 1} · Confidence{" "}
+                    {Math.round((obs.confidence || 0) * 100)}% ·{" "}
+                    {obs.status || "stored"}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      </ExecutiveAccordion>
+    </aside>
   );
 }
