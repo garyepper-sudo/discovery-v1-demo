@@ -94,7 +94,7 @@ function buildWhatChanged(
     (changes as any)?.changes ??
     (changes as any)?.highlights ??
     (changes as any)?.timeline ??
-    (learning as any)?.timeline ??
+    learning?.timeline ??
     [];
 
   if (!Array.isArray(source)) return [];
@@ -102,7 +102,11 @@ function buildWhatChanged(
   return source.slice(0, 5).map((item: any) => ({
     title: item.title ?? item.summary ?? "Organizational change",
     summary: item.summary ?? item.description ?? "",
-    reason: item.reason ?? item.why ?? item.explanation ?? "Derived from recent learning activity.",
+    reason:
+      item.reason ??
+      item.why ??
+      item.explanation ??
+      "Derived from recent learning activity.",
     confidence: item.confidence ?? item.confidenceDelta,
   }));
 }
@@ -115,7 +119,7 @@ function buildLeadershipAttention(
     (briefing as any)?.leadershipAttention ??
     (briefing as any)?.attention ??
     (briefing as any)?.recommendations ??
-    (learning as any)?.attention ??
+    learning?.recommendedAttention ??
     [];
 
   if (!Array.isArray(source)) return [];
@@ -124,7 +128,7 @@ function buildLeadershipAttention(
     title: item.title ?? item.label ?? "Leadership attention item",
     priority: item.priority ?? asPriority(index),
     reason: item.reason ?? item.summary ?? item.description ?? "",
-    source: item.source ?? "change-summary",
+    source: item.source ?? "executive-learning",
     confidence: item.confidence,
   }));
 }
@@ -132,7 +136,7 @@ function buildLeadershipAttention(
 function buildLearningTimeline(
   learning?: ExecutiveLearningSummary,
 ): ExecutiveTimelineEntry[] {
-  const source = (learning as any)?.timeline ?? [];
+  const source = learning?.timeline ?? [];
 
   if (!Array.isArray(source)) return [];
 
@@ -157,7 +161,10 @@ function buildNextRecommendedAction(
 
   return {
     title: action.title ?? "Run the next highest-value investigation",
-    reason: action.reason ?? action.summary ?? "This should improve organizational understanding.",
+    reason:
+      action.reason ??
+      action.summary ??
+      "This should improve organizational understanding.",
     expectedUnderstandingGain: action.expectedUnderstandingGain ?? "medium",
   };
 }
@@ -168,18 +175,17 @@ export function buildExecutiveState(
   const { runtime, briefing, learning, changes } = input;
 
   const metrics: ExecutiveMetricCard[] = [
-    buildMetricCard("Understanding", (learning as any)?.understanding, "%"),
-    buildMetricCard("Memory", (learning as any)?.memoryMaturity, "score"),
-    buildMetricCard("Learning", (learning as any)?.learning, "score"),
-    buildMetricCard("Confidence", (learning as any)?.confidence, "%"),
+    buildMetricCard("Understanding", learning?.understanding, "%"),
+    buildMetricCard("Memory", learning?.memoryMaturity, "score"),
+    buildMetricCard("Learning", learning?.learning, "score"),
+    buildMetricCard("Confidence", learning?.confidence, "%"),
   ];
 
   return {
     generatedAt: new Date().toISOString(),
 
     headline:
-      (briefing as any)?.headline ??
-      "Current Organizational Understanding",
+      (briefing as any)?.headline ?? "Current Organizational Understanding",
 
     summary:
       (briefing as any)?.summary ??
@@ -214,13 +220,9 @@ export function buildExecutiveState(
         (runtime as any)?.mechanisms ??
         [],
       workspace:
-        (runtime as any)?.workspace ??
-        (runtime as any)?.workingMemory ??
-        [],
+        (runtime as any)?.workspace ?? (runtime as any)?.workingMemory ?? [],
       evidence:
-        (runtime as any)?.observations ??
-        (runtime as any)?.evidence ??
-        [],
+        (runtime as any)?.observations ?? (runtime as any)?.evidence ?? [],
     },
   };
 }

@@ -24,14 +24,8 @@ export default function OrganizationWorkspace({
         <main className="executive-experience-main">
           <section className="executive-details-shell">
             <ResultsOverview
-              executiveDashboard={result?.executiveDashboard}
+              executiveDashboard={v3?.executiveDashboard}
               understanding={v3?.executiveUnderstanding}
-              beliefs={v3?.beliefs}
-              hypotheses={v3?.hypotheses}
-              themes={v3?.themes}
-              contradictions={v3?.contradictions}
-              causalChains={v3?.causalChains}
-              evidence={v3?.evidence}
               reasoningGraph={v3?.reasoningGraph}
               organismState={v3?.organismState}
               organizationRuntime={organizationRuntime}

@@ -1,51 +1,7 @@
-type DashboardMetric = {
-  title?: string;
-  label?: string;
-  current?: number;
-  value?: number | string;
-  delta?: number;
-};
-
-type DashboardAttentionItem = {
-  title?: string;
-  reason?: string;
-};
-
-type DashboardTimelineItem = {
-  timestamp?: string;
-  summary?: string;
-};
-
-type DashboardRecommendedAction = {
-  title?: string;
-  summary?: string;
-  prompt?: string;
-};
-
-type ExecutiveDashboard = {
-  hero?: {
-    headline?: string;
-    summary?: string;
-    generatedAt?: string;
-    status?: string;
-    organizationConfidence?: number;
-  };
-  metrics?: DashboardMetric[];
-  keyInsights?: {
-    title?: string;
-    summary?: string;
-    importance?: string;
-    confidence?: number;
-  }[];
-  sections?: {
-    attention?: DashboardAttentionItem[];
-    timeline?: DashboardTimelineItem[];
-  };
-  nextAction?: DashboardRecommendedAction;
-};
+import type { ExecutiveDashboard } from "../../engine/v3/executive/buildExecutiveDashboard";
 
 type ExecutiveDashboardViewProps = {
-  dashboard: ExecutiveDashboard;
+  executiveDashboard: ExecutiveDashboard;
 };
 
 function formatDate(value?: string): string {
@@ -57,30 +13,32 @@ function formatDate(value?: string): string {
   return date.toLocaleString();
 }
 
-function getMetricValue(metrics: DashboardMetric[], name: string): string {
+function getMetricValue(
+  metrics: ExecutiveDashboard["metrics"],
+  name: string,
+): string {
   const metric = metrics.find((item) =>
-    (item.label ?? item.title ?? "").toLowerCase().includes(name.toLowerCase()),
+    item.label.toLowerCase().includes(name.toLowerCase()),
   );
 
-  const value = metric?.value ?? metric?.current;
+  if (metric?.current === undefined) return "—";
 
-  if (value === undefined) return "—";
-
-  return String(value);
+  return String(metric.current);
 }
 
 export function ExecutiveDashboardView({
-  dashboard,
+  executiveDashboard,
 }: ExecutiveDashboardViewProps) {
-  const metrics = dashboard.metrics ?? [];
-  const attention = dashboard.sections?.attention ?? [];
-  const timeline = dashboard.sections?.timeline ?? [];
-  const confidence = dashboard.hero?.organizationConfidence ?? 0;
+  const dashboard = executiveDashboard;
+
+  const hero = dashboard.hero;
+  const metrics = dashboard.metrics;
+  const attention = dashboard.sections.attention;
+  const timeline = dashboard.sections.timeline;
+  const confidence = hero.organizationConfidence ?? 0;
 
   const nextAction =
     dashboard.nextAction?.title ??
-    dashboard.nextAction?.summary ??
-    dashboard.nextAction?.prompt ??
     "Investigate the highest-priority unresolved organizational change.";
 
   return (
@@ -91,9 +49,9 @@ export function ExecutiveDashboardView({
         <h1>Current Organizational State</h1>
 
         <div className="briefing-meta">
-          <span>Status: {dashboard.hero?.status ?? "Active"}</span>
+          <span>Status: {hero.status}</span>
           <span>Confidence: {confidence}%</span>
-          <span>Updated: {formatDate(dashboard.hero?.generatedAt)}</span>
+          <span>Updated: {formatDate(hero.generatedAt)}</span>
         </div>
 
         <div className="insight-card-list">
@@ -102,14 +60,8 @@ export function ExecutiveDashboardView({
 
             <div>
               <p className="insight-eyebrow">Executive Summary</p>
-              <h2>
-                {dashboard.hero?.headline ??
-                  "Discovery is building organizational understanding."}
-              </h2>
-              <p>
-                {dashboard.hero?.summary ??
-                  "Discovery is translating organizational learning into executive intelligence."}
-              </p>
+              <h2>{hero.headline}</h2>
+              <p>{hero.summary}</p>
             </div>
           </article>
 
@@ -125,19 +77,18 @@ export function ExecutiveDashboardView({
                   {attention.slice(0, 3).map((item, index) => (
                     <div
                       className="top-memory-change-row"
-                      key={`${item.title ?? "attention"}-${index}`}
+                      key={`${item.title}-${index}`}
                     >
                       <div className="top-memory-change-icon">!</div>
 
                       <div>
-                        <h3>{item.title ?? "Leadership signal"}</h3>
-                        <p>
-                          {item.reason ??
-                            "Discovery identified this as important."}
-                        </p>
+                        <h3>{item.title}</h3>
+                        <p>{item.reason}</p>
                       </div>
 
-                      <span>Review</span>
+                      <span>
+                        {item.priority === "highest" ? "Priority" : "Review"}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -153,6 +104,10 @@ export function ExecutiveDashboardView({
             <div>
               <p className="insight-eyebrow">Recommended Next Investigation</p>
               <h2>{nextAction}</h2>
+
+              {dashboard.nextAction?.reason && (
+                <p>{dashboard.nextAction.reason}</p>
+              )}
 
               <div className="overview-actions">
                 <button type="button">Start Investigation →</button>
@@ -172,15 +127,12 @@ export function ExecutiveDashboardView({
                   {timeline.slice(0, 4).map((item, index) => (
                     <div
                       className="timeline-step is-active"
-                      key={`${item.timestamp ?? "timeline"}-${index}`}
+                      key={`${item.timestamp}-${index}`}
                     >
                       <i />
                       <div>
                         <span>{formatDate(item.timestamp)}</span>
-                        <p>
-                          {item.summary ??
-                            "Discovery updated organizational understanding."}
-                        </p>
+                        <p>{item.summary}</p>
                       </div>
                     </div>
                   ))}
@@ -204,8 +156,8 @@ export function ExecutiveDashboardView({
             <div className="reasoning-block">
               <h3>Workspace</h3>
               <p className="empty-reasoning">
-                Detailed theories, beliefs, mechanisms, evidence, and reasoning
-                remain available below through progressive disclosure.
+                Deeper executive context is available through the dashboard,
+                reasoning trace, and organism explorer.
               </p>
             </div>
           </div>
@@ -218,7 +170,7 @@ export function ExecutiveDashboardView({
             <h2>Organizational Health</h2>
             <p>
               <span />
-              {dashboard.hero?.status ?? "Improving"}
+              {hero.status}
             </p>
           </div>
         </div>

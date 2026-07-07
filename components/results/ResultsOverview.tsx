@@ -1,24 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import type { ExecutiveDashboard } from "../../engine/v3/executive/buildExecutiveDashboard";
 import OrganismPreview from "../organism/OrganismPreview";
 import TraceUnderstandingPage from "../trace/TraceUnderstandingPage";
 import ExecutiveAccordion from "../ui/ExecutiveAccordion";
 import MemoryUpdateOverview from "./MemoryUpdateOverview";
 
 type ResultsOverviewProps = {
-  understanding?: any;
-  beliefs?: any[];
-  hypotheses?: any[];
-  themes?: any[];
-  contradictions?: any[];
-  causalChains?: any[];
-  evidence?: any[];
-  reasoningGraph?: any;
-  organismState?: any;
+  executiveDashboard: ExecutiveDashboard;
   organizationRuntime?: any;
+  reasoningGraph?: any;
+  understanding?: any;
+  organismState?: any;
   delta?: any;
-  executiveDashboard?: any;
 };
 
 function oneSentence(value: string | undefined, fallback: string) {
@@ -33,120 +28,30 @@ function oneSentence(value: string | undefined, fallback: string) {
 }
 
 export default function ResultsOverview({
-  understanding,
-  beliefs = [],
-  themes = [],
-  contradictions = [],
-  causalChains = [],
-  evidence = [],
-  reasoningGraph,
-  organismState,
-  organizationRuntime,
-  delta,
   executiveDashboard,
+  organizationRuntime,
+  reasoningGraph,
+  understanding,
+  organismState,
+  delta,
 }: ResultsOverviewProps) {
   const [showOrganismExplorer, setShowOrganismExplorer] = useState(false);
   const [showReasoningTrace, setShowReasoningTrace] = useState(false);
 
-  const primaryBelief = beliefs[0];
   const runtimeOrganism = organizationRuntime?.organism;
 
-  const keyInsights =
-    executiveDashboard?.keyInsights?.length > 0
-      ? executiveDashboard.keyInsights
-      : beliefs.slice(0, 5).map((belief, index) => ({
-          id: belief.id ?? index,
-          title:
-            belief.headline ??
-            belief.statement ??
-            "A meaningful pattern may be emerging.",
-          summary:
-            belief.summary ??
-            belief.explanation ??
-            "A meaningful signal appears to be shaping the organization.",
-          importance: "medium",
-          confidence: belief.confidence,
-        }));
-
+  const hero = executiveDashboard.hero;
+  const keyInsights = executiveDashboard.keyInsights;
   const currentOrganizationalState =
-    executiveDashboard?.currentOrganizationalState?.length > 0
-      ? executiveDashboard.currentOrganizationalState
-      : [
-          ...themes.slice(0, 4).map((theme, index) => ({
-            id: theme.id ?? `theme-${index}`,
-            title: theme.title ?? theme.name ?? "Emerging pattern",
-            summary:
-              theme.summary ??
-              theme.description ??
-              "This pattern appears across the investigation.",
-            category: "pattern",
-            priority: "medium",
-          })),
-          ...contradictions.slice(0, 2).map((contradiction, index) => ({
-            id: contradiction.id ?? `contradiction-${index}`,
-            title:
-              contradiction.title ??
-              contradiction.statement ??
-              "An unresolved tension remains.",
-            summary:
-              contradiction.summary ??
-              contradiction.description ??
-              "This could change the interpretation if more evidence appears.",
-            category: "risk",
-            priority: "high",
-          })),
-        ];
-
-  const operatingMechanisms =
-    executiveDashboard?.operatingMechanisms?.length > 0
-      ? executiveDashboard.operatingMechanisms
-      : (organismState?.mechanisms ?? causalChains ?? [])
-          .slice(0, 5)
-          .map((item: any, index: number) => ({
-            id: item.id ?? index,
-            title:
-              item.title ??
-              item.statement ??
-              item.summary ??
-              "Discovery found a possible operating pattern.",
-            summary:
-              item.summary ??
-              item.description ??
-              item.explanation ??
-              "This behavior may explain why the pattern keeps appearing.",
-            role: "system",
-            confidence: item.confidence,
-          }));
-
-  const rememberedEvidence =
-    executiveDashboard?.rememberedEvidence?.length > 0
-      ? executiveDashboard.rememberedEvidence
-      : evidence.slice(0, 5).map((item: any, index: number) => ({
-          id: item.id ?? index,
-          title: item.title ?? item.source ?? "Remembered signal",
-          summary:
-            item.summary ??
-            item.text ??
-            item.observation ??
-            "Evidence retained in organizational memory.",
-          source: item.source,
-          confidence: item.confidence,
-        }));
-
-  const headline =
-    executiveDashboard?.hero?.headline ??
-    understanding?.headline ??
-    primaryBelief?.headline ??
-    "Discovery formed a current understanding.";
+    executiveDashboard.currentOrganizationalState;
+  const operatingMechanisms = executiveDashboard.operatingMechanisms;
+  const rememberedEvidence = executiveDashboard.rememberedEvidence;
 
   return (
     <section className="results-overview-executive">
       <MemoryUpdateOverview
         executiveDashboard={executiveDashboard}
         organizationRuntime={organizationRuntime}
-        beliefs={beliefs}
-        themes={themes}
-        evidence={evidence}
         delta={delta}
       />
 
@@ -154,22 +59,20 @@ export default function ResultsOverview({
         <ExecutiveAccordion
           title="Key Insights"
           subtitle="The big ideas that explain what's happening."
-          badge={`${Math.min(keyInsights.length || 0, 5)} found`}
+          badge={`${Math.min(keyInsights.length, 5)} found`}
           icon="◎"
           defaultOpen={false}
         >
           <div className="executive-row-list">
-            {keyInsights.slice(0, 5).map((insight: any, index: number) => (
+            {keyInsights.slice(0, 5).map((insight, index) => (
               <article
                 className="executive-insight-row"
-                key={insight.id ?? insight.title ?? index}
+                key={insight.title ?? index}
               >
                 <span className="executive-row-icon">◎</span>
 
                 <div>
-                  <h4>
-                    {insight.title ?? "A meaningful pattern may be emerging."}
-                  </h4>
+                  <h4>{insight.title}</h4>
                   <p>
                     {oneSentence(
                       insight.summary,
@@ -187,105 +90,101 @@ export default function ResultsOverview({
         <ExecutiveAccordion
           title="What's Happening"
           subtitle="Important patterns and situations we're seeing."
-          badge={`${Math.min(currentOrganizationalState.length || 0, 5)} found`}
+          badge={`${Math.min(currentOrganizationalState.length, 5)} found`}
           icon="⌁"
           defaultOpen={false}
         >
           <div className="executive-row-list">
-            {currentOrganizationalState
-              .slice(0, 5)
-              .map((item: any, index: number) => (
-                <article
-                  className="executive-insight-row"
-                  key={item.id ?? item.title ?? index}
-                >
-                  <span className="executive-row-icon">
-                    {item.category === "risk" ? "?" : "⌁"}
-                  </span>
+            {currentOrganizationalState.slice(0, 5).map((item, index) => (
+              <article
+                className="executive-insight-row"
+                key={item.title ?? index}
+              >
+                <span className="executive-row-icon">
+                  {item.category === "risk" ? "?" : "⌁"}
+                </span>
 
-                  <div>
-                    <h4>{item.title ?? "Emerging organizational state"}</h4>
-                    <p>
-                      {oneSentence(
-                        item.summary,
-                        "Discovery identified an important organizational pattern.",
-                      )}
-                    </p>
-                  </div>
+                <div>
+                  <h4>{item.title}</h4>
+                  <p>
+                    {oneSentence(
+                      item.summary,
+                      "Discovery identified an important organizational pattern.",
+                    )}
+                  </p>
+                </div>
 
-                  <span className="executive-row-status">
-                    {item.category === "risk" ? "Open" : "Pattern"}
-                  </span>
-                </article>
-              ))}
+                <span className="executive-row-status">
+                  {item.category === "risk" ? "Open" : "Pattern"}
+                </span>
+              </article>
+            ))}
           </div>
         </ExecutiveAccordion>
 
         <ExecutiveAccordion
           title="How We Work"
           subtitle="Our strengths, systems, and ways of operating."
-          badge={`${Math.min(operatingMechanisms.length || 0, 5)} found`}
+          badge={`${Math.min(operatingMechanisms.length, 5)} found`}
           icon="▣"
           defaultOpen={false}
         >
           <div className="executive-row-list">
-            {operatingMechanisms
-              .slice(0, 5)
-              .map((item: any, index: number) => (
-                <article
-                  className="executive-insight-row"
-                  key={item.id ?? item.title ?? index}
-                >
-                  <span className="executive-row-icon">▣</span>
+            {operatingMechanisms.slice(0, 5).map((item, index) => (
+              <article
+                className="executive-insight-row"
+                key={item.title ?? index}
+              >
+                <span className="executive-row-icon">▣</span>
 
-                  <div>
-                    <h4>
-                      {item.title ??
-                        "Discovery found a possible operating pattern."}
-                    </h4>
-                    <p>
-                      {oneSentence(
-                        item.summary,
-                        "This behavior may explain why the pattern keeps appearing.",
-                      )}
-                    </p>
-                  </div>
+                <div>
+                  <h4>{item.title}</h4>
+                  <p>
+                    {oneSentence(
+                      item.summary,
+                      "This behavior may explain why the pattern keeps appearing.",
+                    )}
+                  </p>
+                </div>
 
-                  <span className="executive-row-status">
-                    {item.role === "strength" ? "Strength" : "System"}
-                  </span>
-                </article>
-              ))}
+                <span className="executive-row-status">
+                  {item.role === "strength" ? "Strength" : "System"}
+                </span>
+              </article>
+            ))}
           </div>
         </ExecutiveAccordion>
 
         <ExecutiveAccordion
-  title="Remembered Evidence"
-  subtitle="All signals and observations we're tracking."
-  badge={`${evidence.length} total`}
-  icon="◉"
-  defaultOpen={false}
->
-  <div className="executive-row-list">
-    {evidence.slice(0, 5).map((item, index) => (
-      <article className="executive-insight-row" key={item.id ?? index}>
-        <span className="executive-row-icon">◉</span>
+          title="Remembered Evidence"
+          subtitle="All signals and observations we're tracking."
+          badge={`${rememberedEvidence.length} total`}
+          icon="◉"
+          defaultOpen={false}
+        >
+          <div className="executive-row-list">
+            {rememberedEvidence.slice(0, 5).map((item, index) => (
+              <article
+                className="executive-insight-row"
+                key={item.title ?? index}
+              >
+                <span className="executive-row-icon">◉</span>
 
-        <div>
-          <h4>{item.title ?? item.source ?? "Remembered signal"}</h4>
-          <p>
-            {oneSentence(
-              item.summary ?? item.text ?? item.observation,
-              "Evidence retained in organizational memory.",
-            )}
-          </p>
-        </div>
+                <div>
+                  <h4>{item.title}</h4>
+                  <p>
+                    {oneSentence(
+                      item.summary,
+                      "Evidence retained in organizational memory.",
+                    )}
+                  </p>
+                </div>
 
-        <span className="executive-row-status">Evidence</span>
-      </article>
-    ))}
-  </div>
-</ExecutiveAccordion>
+                <span className="executive-row-status">Evidence</span>
+              </article>
+            ))}
+          </div>
+        </ExecutiveAccordion>
       </section>
 
       {showOrganismExplorer && (
@@ -300,15 +199,13 @@ export default function ResultsOverview({
       <TraceUnderstandingPage
         open={showReasoningTrace}
         onClose={() => setShowReasoningTrace(false)}
-        headline={headline}
-        confidence={
-          (primaryBelief?.confidence ?? understanding?.confidence) || 0.75
-        }
+        headline={hero.headline}
+        confidence={hero.organizationConfidence ?? 0}
         executiveUnderstanding={understanding}
-        beliefs={beliefs}
-        themes={themes}
-        contradictions={contradictions}
-        evidence={evidence}
+        beliefs={[]}
+        themes={[]}
+        contradictions={[]}
+        evidence={rememberedEvidence}
         reasoningGraph={reasoningGraph}
       />
     </section>

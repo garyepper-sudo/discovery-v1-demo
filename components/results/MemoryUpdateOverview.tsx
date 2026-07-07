@@ -1,58 +1,23 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
-type ExecutiveMetric = {
-  title?: string;
-  label?: string;
-  current?: number;
-  value?: number | string;
-  delta?: number;
-};
-
-type ExecutiveAttentionItem = {
-  id?: string;
-  title?: string;
-  reason?: string;
-  confidence?: number;
-};
-
-type ExecutiveDashboard = {
-  headline?: string;
-  summary?: string;
-  status?: string;
-  generatedAt?: string;
-  confidence?: {
-    current?: number;
-    delta?: number;
-  };
-  metrics?: ExecutiveMetric[];
-  leadershipAttention?: ExecutiveAttentionItem[];
-  recommendedAttention?: ExecutiveAttentionItem[];
-  recommendedAction?: string;
-  nextRecommendedAction?: string;
-};
+import type { ExecutiveDashboard } from "../../engine/v3/executive/buildExecutiveDashboard";
 
 type MemoryUpdateOverviewProps = {
   executiveDashboard?: ExecutiveDashboard;
   organizationRuntime?: any;
-  beliefs?: any[];
-  themes?: any[];
-  evidence?: any[];
   delta?: any;
 };
 
-function countByStatus(observations: any[], status: string) {
-  return observations.filter((obs) => obs?.status === status).length;
+function formatMetricValue(value: unknown): string | number {
+  if (typeof value === "number") return Math.round(value);
+  if (typeof value === "string") return value;
+  return 0;
 }
 
-function cleanSentence(value: unknown, fallback: string, maxLength = 92) {
-  const raw = String(value || fallback)
-    .replace(/^Discovery treats this as a strong belief:\s*/i, "")
-    .replace(/^Discovery sees\s*/i, "")
-    .replace(/\s+/g, " ")
-    .trim();
-
+function cleanSentence(value: unknown, fallback: string, maxLength = 104) {
+  const raw = String(value || fallback).replace(/\s+/g, " ").trim();
   const firstSentence = raw.split(/(?<=[.!?])\s+/)[0];
 
   return firstSentence.length > maxLength
@@ -61,145 +26,87 @@ function cleanSentence(value: unknown, fallback: string, maxLength = 92) {
 }
 
 function getMetricValue(
-  metrics: ExecutiveMetric[],
+  dashboard: ExecutiveDashboard | undefined,
   name: string,
   fallback: number | string,
 ): number | string {
-  const metric = metrics.find((item) =>
-    (item.label ?? item.title ?? "").toLowerCase().includes(name.toLowerCase()),
+  const metric = dashboard?.metrics.find(
+    (item: ExecutiveDashboard["metrics"][number]) =>
+      item.label.toLowerCase().includes(name.toLowerCase()),
   );
 
-  return metric?.value ?? metric?.current ?? fallback;
+  return formatMetricValue(metric?.current ?? fallback);
 }
 
-function getChangeTitle(item: any) {
-  const raw =
-    item?.title ??
-    item?.headline ??
-    item?.statement ??
-    item?.label ??
-    item?.summary ??
-    item?.text ??
-    "A meaningful signal deserves leadership attention.";
-
-  return cleanSentence(raw, "A meaningful signal deserves leadership attention.", 78);
-}
-
-function getChangeSummary(item: any) {
-  const raw =
-    item?.reason ??
-    item?.executiveSummary ??
-    item?.shortSummary ??
-    item?.description ??
-    item?.executiveMeaning ??
-    item?.summary ??
-    item?.explanation ??
-    "Discovery identified this as important to the current organizational state.";
-
-  return cleanSentence(
-    raw,
-    "Discovery identified this as important to the current organizational state.",
-    104,
-  );
-}
-
-function getExpandedDetail(item: any) {
-  const raw =
-    item?.reason ??
-    item?.explanation ??
-    item?.description ??
-    item?.executiveMeaning ??
-    item?.summary ??
-    item?.text ??
-    "This signal is part of the organization’s evolving executive intelligence.";
-
-  return String(raw)
-    .replace(/^Discovery treats this as a strong belief:\s*/i, "")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function getStatusLabel(status: string) {
-  if (status === "Insight") return "New";
-  if (status === "Pattern") return "Stable";
-  return status;
-}
-
-function getChangeIcon(index: number) {
+function getRowIcon(index: number) {
   if (index === 0) return "◷";
   if (index === 1) return "♙";
   if (index === 2) return "□";
-  if (index === 3) return "♙";
+  if (index === 3) return "◎";
   return "↗";
+}
+
+function getStatusLabel(priority?: string) {
+  if (priority === "highest") return "Priority";
+  if (priority === "high") return "Watch";
+  if (priority === "medium") return "Review";
+  return "Stable";
 }
 
 export default function MemoryUpdateOverview({
   executiveDashboard,
   organizationRuntime,
-  beliefs = [],
-  themes = [],
-  evidence = [],
   delta,
 }: MemoryUpdateOverviewProps) {
   const [showAllChanges, setShowAllChanges] = useState(false);
   const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
 
-  const observations = organizationRuntime?.memory?.observations ?? [];
+  const hero = executiveDashboard?.hero;
 
-  const created = delta?.observationChanges?.created ?? [];
-  const reinforced = delta?.observationChanges?.reinforced ?? [];
+  const attentionItems = executiveDashboard?.sections.attention ?? [];
+  const rememberedEvidence = executiveDashboard?.rememberedEvidence ?? [];
+  const keyInsights = executiveDashboard?.keyInsights ?? [];
+  const organizationalState =
+    executiveDashboard?.currentOrganizationalState ?? [];
 
-  const metrics = executiveDashboard?.metrics ?? [];
+  const created = delta?.observationChanges?.created?.length ?? 0;
+  const reinforced = delta?.observationChanges?.reinforced?.length ?? 0;
 
-  const confidence = executiveDashboard?.confidence?.current ?? 0;
+  const confidence = formatMetricValue(hero?.organizationConfidence ?? 0);
 
   const understanding = getMetricValue(
-    metrics,
+    executiveDashboard,
     "understanding",
-    organizationRuntime?.memory?.understandingState
-      ?.organizationalUnderstandingScore ?? 0,
+    confidence,
   );
 
   const memory = getMetricValue(
-    metrics,
+    executiveDashboard,
     "memory",
-    organizationRuntime?.memory?.understandingState?.memoryMaturityScore ??
-      observations.length,
+    rememberedEvidence.length,
   );
 
   const learning = getMetricValue(
-    metrics,
+    executiveDashboard,
     "learning",
-    created.length + reinforced.length || observations.length,
+    created + reinforced || attentionItems.length + rememberedEvidence.length,
   );
 
-  const totalSignals = observations.length || evidence.length;
-
-  const attentionItems =
-    executiveDashboard?.leadershipAttention ??
-    executiveDashboard?.recommendedAttention ??
-    [];
-
-  const fallbackChanges = useMemo(
-    () => [
-      ...reinforced.map((item: any) => ({
-        ...item,
-        statusLabel: "Reinforced",
-      })),
-      ...created.map((item: any) => ({ ...item, statusLabel: "New" })),
-      ...beliefs.map((item: any) => ({ ...item, statusLabel: "Insight" })),
-      ...themes.map((item: any) => ({ ...item, statusLabel: "Pattern" })),
-    ],
-    [reinforced, created, beliefs, themes],
-  );
+  const totalSignals = rememberedEvidence.length;
 
   const allChanges =
     attentionItems.length > 0
-      ? attentionItems.map((item) => ({
-          ...item,
-          statusLabel: "Review",
-        }))
-      : fallbackChanges;
+      ? attentionItems
+      : organizationalState.map(
+          (
+            item: ExecutiveDashboard["currentOrganizationalState"][number],
+          ) => ({
+            title: item.title,
+            reason: item.summary,
+            confidence: item.confidence,
+            priority: item.priority,
+          }),
+        );
 
   const visibleChanges = showAllChanges
     ? allChanges.slice(0, 12)
@@ -216,9 +123,9 @@ export default function MemoryUpdateOverview({
     <section className="memory-update-overview">
       <div className="memory-update-header">
         <p className="memory-update-eyebrow">Executive Intelligence</p>
-        <h1>Current Organizational State</h1>
+        <h1>{hero?.headline ?? "Current Organizational State"}</h1>
         <p>
-          {executiveDashboard?.summary ??
+          {hero?.summary ??
             "Discovery is translating organizational learning into executive intelligence."}
         </p>
       </div>
@@ -228,7 +135,7 @@ export default function MemoryUpdateOverview({
           <span className="memory-metric-icon">✦</span>
           <strong>{confidence}</strong>
           <p>Confidence</p>
-          <em>{executiveDashboard?.status ?? "Active"}</em>
+          <em>{hero?.status ?? "Active"}</em>
         </article>
 
         <article className="memory-metric-card memory-metric-reinforced">
@@ -249,15 +156,17 @@ export default function MemoryUpdateOverview({
           <span className="memory-metric-icon">+</span>
           <strong>{learning}</strong>
           <p>Learning</p>
-          <em>{totalSignals} signals tracked</em>
+          <em>{totalSignals} remembered signals</em>
         </article>
       </div>
 
       <div className="memory-update-meta">
-        <span>{organizationRuntime?.metadata?.investigationCount ?? 1} investigations</span>
-        <span>{beliefs.length} beliefs</span>
-        <span>{themes.length} patterns</span>
-        <span>{totalSignals} remembered signals</span>
+        <span>
+          {organizationRuntime?.metadata?.investigationCount ?? 1} investigations
+        </span>
+        <span>{keyInsights.length} insights</span>
+        <span>{organizationalState.length} state changes</span>
+        <span>{rememberedEvidence.length} remembered signals</span>
       </div>
 
       <section className="top-memory-changes">
@@ -267,12 +176,14 @@ export default function MemoryUpdateOverview({
             <p>The most important signals for leadership to understand now.</p>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setShowAllChanges((current) => !current)}
-          >
-            {showAllChanges ? "Show fewer" : "View all signals →"}
-          </button>
+          {allChanges.length > 5 && (
+            <button
+              type="button"
+              onClick={() => setShowAllChanges((current) => !current)}
+            >
+              {showAllChanges ? "Show fewer" : "View all signals →"}
+            </button>
+          )}
         </div>
 
         <div className="top-memory-change-list">
@@ -295,7 +206,7 @@ export default function MemoryUpdateOverview({
             </article>
           ) : (
             visibleChanges.map((item: any, index: number) => {
-              const rowId = item.id ?? `${item.statusLabel}-${index}`;
+              const rowId = item.id ?? `${item.title}-${index}`;
               const expanded = Boolean(expandedRows[rowId]);
 
               return (
@@ -306,7 +217,7 @@ export default function MemoryUpdateOverview({
                   key={rowId}
                 >
                   <span className="top-memory-change-icon">
-                    {getChangeIcon(index)}
+                    {getRowIcon(index)}
                   </span>
 
                   <button
@@ -315,12 +226,24 @@ export default function MemoryUpdateOverview({
                     onClick={() => toggleRow(rowId)}
                     aria-expanded={expanded}
                   >
-                    <h3>{getChangeTitle(item)}</h3>
-                    <p>{getChangeSummary(item)}</p>
+                    <h3>
+                      {cleanSentence(
+                        item.title,
+                        "A meaningful signal deserves leadership attention.",
+                        78,
+                      )}
+                    </h3>
+                    <p>
+                      {cleanSentence(
+                        item.reason,
+                        "Discovery identified this as important to the current organizational state.",
+                      )}
+                    </p>
 
                     {expanded && (
                       <div className="top-memory-change-detail">
-                        {getExpandedDetail(item)}
+                        {item.reason ??
+                          "This signal is part of the organization’s evolving executive intelligence."}
                       </div>
                     )}
                   </button>
@@ -331,7 +254,7 @@ export default function MemoryUpdateOverview({
                     onClick={() => toggleRow(rowId)}
                     aria-label={expanded ? "Collapse signal" : "Expand signal"}
                   >
-                    <span>{getStatusLabel(item.statusLabel)}</span>
+                    <span>{getStatusLabel(item.priority)}</span>
                     <b>{expanded ? "⌃" : "⌄"}</b>
                   </button>
                 </article>

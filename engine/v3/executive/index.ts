@@ -15,12 +15,18 @@ import {
   type BuildExecutiveStateInput,
 } from "./buildExecutiveState";
 
+import {
+  buildExecutiveDashboard,
+  type ExecutiveDashboard,
+} from "./buildExecutiveDashboard";
+
 import type { ExecutiveState } from "./executiveState";
 
 export type {
   ExecutiveLearningSummary,
   ExecutiveBriefing,
   ExecutiveState,
+  ExecutiveDashboard,
   BuildExecutiveStateInput,
 };
 
@@ -30,14 +36,18 @@ export * from "./buildExecutiveDashboard";
 
 export type ExecutiveLearningExperience = {
   /**
-   * Canonical executive presentation object.
-   * All new UI should consume this object.
+   * Internal executive cognition.
    */
   executiveState: ExecutiveState;
 
   /**
-   * Legacy exports retained for backwards compatibility.
-   * These can be removed after Sprint 37 migration.
+   * Canonical presentation model.
+   * All executive UI should consume this object.
+   */
+  executiveDashboard: ExecutiveDashboard;
+
+  /**
+   * Legacy exports retained temporarily for backwards compatibility.
    */
   summary: ExecutiveLearningSummary;
   briefing: ExecutiveBriefing;
@@ -56,8 +66,11 @@ export function buildExecutiveLearningExperience(
     learning: summary,
   });
 
+  const executiveDashboard = buildExecutiveDashboard(executiveState);
+
   return {
     executiveState,
+    executiveDashboard,
 
     // Legacy outputs
     summary,

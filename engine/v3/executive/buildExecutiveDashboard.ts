@@ -66,18 +66,8 @@ export type ExecutiveRememberedEvidence = {
 };
 
 export type ExecutiveDashboardSections = {
-  understanding: ExecutiveUnderstandingItem[];
-  changes: ExecutiveChangeItem[];
   attention: ExecutiveAttentionItem[];
   timeline: ExecutiveTimelineEntry[];
-};
-
-export type ExecutiveDashboardExpandable = {
-  theories: unknown[];
-  beliefs: unknown[];
-  mechanisms: unknown[];
-  workspace: unknown[];
-  evidence: unknown[];
 };
 
 export type ExecutiveDashboard = {
@@ -89,7 +79,6 @@ export type ExecutiveDashboard = {
   rememberedEvidence: ExecutiveRememberedEvidence[];
   sections: ExecutiveDashboardSections;
   nextAction?: ExecutiveRecommendedAction;
-  expandable: ExecutiveDashboardExpandable;
 };
 
 function resolveStatus(state: ExecutiveState): ExecutiveDashboardStatus {
@@ -229,14 +218,10 @@ export function buildExecutiveDashboard(
     rememberedEvidence: buildRememberedEvidence(state),
 
     sections: {
-      understanding: limitSection(state.currentUnderstanding, 3),
-      changes: limitSection(state.whatChanged, 3),
       attention: limitSection(state.leadershipAttention, 3),
       timeline: limitSection(state.learningTimeline, 5),
     },
 
     nextAction: state.nextRecommendedAction,
-
-    expandable: state.expandable,
   };
 }

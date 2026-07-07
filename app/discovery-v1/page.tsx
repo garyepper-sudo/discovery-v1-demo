@@ -115,7 +115,7 @@ export default function DiscoveryV1Page() {
       )}
 
       {result?.executiveDashboard && (
-        <ExecutiveDashboardView dashboard={result.executiveDashboard} />
+        <ExecutiveDashboardView executiveDashboard={result?.executiveDashboard} />
       )}
 
       {result && (
