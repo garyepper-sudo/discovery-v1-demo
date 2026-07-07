@@ -25,6 +25,7 @@ export type ExecutiveLearningTimelineEntry = {
 };
 
 export type ExecutiveAttentionItem = {
+  id?: string;
   title: string;
   reason: string;
   confidence?: number;
@@ -196,21 +197,25 @@ export function buildExecutiveLearningSummary(
 
   const recommendedAttention: ExecutiveAttentionItem[] = [
     ...changeSummary.stabilizedTheories.slice(0, 2).map((item) => ({
+      id: item.id,
       title: item.title,
       reason: item.reason,
       confidence: item.confidenceDelta,
     })),
     ...changeSummary.strengthenedTheories.slice(0, 2).map((item) => ({
+      id: item.id,
       title: item.title,
       reason: item.reason,
       confidence: item.confidenceDelta,
     })),
     ...changeSummary.strengthenedBeliefs.slice(0, 2).map((item) => ({
+      id: item.id,
       title: item.title,
       reason: item.reason,
       confidence: item.confidenceDelta,
     })),
     ...changeSummary.newBeliefs.slice(0, 2).map((item) => ({
+      id: item.id,
       title: item.title,
       reason: item.reason,
       confidence: item.confidenceDelta,

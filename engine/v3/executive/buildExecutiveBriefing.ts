@@ -4,6 +4,13 @@ import type {
   ExecutiveAttentionItem,
 } from "./executiveLearningSummary";
 
+import {
+  buildExecutiveHeadline,
+  buildExecutiveSummary,
+  translateExecutiveAttentionItem,
+  translateExecutiveTimelineEntry,
+} from "../expression/executive/executiveTranslator";
+
 export type ExecutiveMetricCard = {
   title: string;
   current: number;
@@ -27,33 +34,9 @@ export type ExecutiveBriefing = {
 };
 
 function determineTrend(delta: number): "up" | "down" | "flat" {
-  if (delta > 0) {
-    return "up";
-  }
-
-  if (delta < 0) {
-    return "down";
-  }
-
+  if (delta > 0) return "up";
+  if (delta < 0) return "down";
   return "flat";
-}
-
-function buildHeadline(
-  summary: ExecutiveLearningSummary,
-): string {
-  if (summary.understanding.delta > 0) {
-    return `Discovery expanded organizational understanding by ${summary.understanding.delta} points.`;
-  }
-
-  if (summary.newBeliefs > 0) {
-    return `Discovery identified ${summary.newBeliefs} new organizational beliefs.`;
-  }
-
-  if (summary.stabilizedTheories > 0) {
-    return `Discovery continues strengthening organizational theories.`;
-  }
-
-  return "Discovery completed another organizational learning cycle.";
 }
 
 export function buildExecutiveBriefing(
@@ -62,9 +45,9 @@ export function buildExecutiveBriefing(
   return {
     generatedAt: summary.generatedAt,
 
-    headline: buildHeadline(summary),
+    headline: buildExecutiveHeadline(summary),
 
-    summary: summary.narrative,
+    summary: buildExecutiveSummary(summary),
 
     metrics: [
       {
@@ -74,7 +57,6 @@ export function buildExecutiveBriefing(
         delta: summary.understanding.delta,
         trend: determineTrend(summary.understanding.delta),
       },
-
       {
         title: "Memory Maturity",
         current: summary.memoryMaturity.current,
@@ -82,7 +64,6 @@ export function buildExecutiveBriefing(
         delta: summary.memoryMaturity.delta,
         trend: determineTrend(summary.memoryMaturity.delta),
       },
-
       {
         title: "Learning",
         current: summary.learning.current,
@@ -90,7 +71,6 @@ export function buildExecutiveBriefing(
         delta: summary.learning.delta,
         trend: determineTrend(summary.learning.delta),
       },
-
       {
         title: "Confidence",
         current: summary.confidence.current,
@@ -100,8 +80,10 @@ export function buildExecutiveBriefing(
       },
     ],
 
-    timeline: summary.timeline,
+    timeline: summary.timeline.map(translateExecutiveTimelineEntry),
 
-    recommendedAttention: summary.recommendedAttention,
+    recommendedAttention: summary.recommendedAttention.map(
+      translateExecutiveAttentionItem,
+    ),
   };
 }

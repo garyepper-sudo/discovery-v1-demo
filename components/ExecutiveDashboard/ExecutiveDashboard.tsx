@@ -23,7 +23,20 @@ function getMetricValue(
 
   if (metric?.current === undefined) return "—";
 
-  return String(metric.current);
+  return `${metric.current}${metric.unit === "%" ? "%" : ""}`;
+}
+
+function formatGain(value?: "high" | "medium" | "low"): string {
+  if (value === "high") return "High";
+  if (value === "low") return "Low";
+  return "Medium";
+}
+
+function formatStatus(value: string): string {
+  return value
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
 }
 
 export function ExecutiveDashboardView({
@@ -37,140 +50,201 @@ export function ExecutiveDashboardView({
   const timeline = dashboard.sections.timeline;
   const confidence = hero.organizationConfidence ?? 0;
 
-  const nextAction =
-    dashboard.nextAction?.title ??
-    "Investigate the highest-priority unresolved organizational change.";
+  const primaryConditions =
+    attention.length > 0
+      ? attention.slice(0, 3)
+      : dashboard.currentOrganizationalState.slice(0, 3);
+
+  const nextAction = dashboard.nextAction;
+
+  const nextActionTitle =
+    nextAction?.title ?? "Identify the next highest-value investigation";
+
+  const nextActionReason =
+    nextAction?.reason ??
+    "Discovery needs one focused conversation to improve organizational understanding.";
 
   return (
-    <section className="executive-results">
+    <section className="executive-results sprint-44-briefing">
       <div className="results-left">
-        <p className="overview-label">Executive Intelligence</p>
+        <p className="overview-label">Monday Morning Briefing</p>
 
-        <h1>Current Organizational State</h1>
+        <section className="executive-hero-card">
+          <div>
+            <p className="insight-eyebrow">Current Organizational State</p>
+            <h1>{hero.headline}</h1>
+            <p>{hero.summary}</p>
+          </div>
 
-        <div className="briefing-meta">
-          <span>Status: {hero.status}</span>
-          <span>Confidence: {confidence}%</span>
-          <span>Updated: {formatDate(hero.generatedAt)}</span>
-        </div>
+          <div className="executive-health-score">
+            <span>{confidence}%</span>
+            <p>Confidence</p>
+          </div>
+        </section>
 
-        <div className="insight-card-list">
-          <article className="insight-card">
-            <div className="insight-number">01</div>
-
-            <div>
-              <p className="insight-eyebrow">Executive Summary</p>
-              <h2>{hero.headline}</h2>
-              <p>{hero.summary}</p>
-            </div>
+        <section className="executive-quick-read">
+          <article>
+            <span>Status</span>
+            <strong>{formatStatus(hero.status)}</strong>
           </article>
 
-          <article className="insight-card">
-            <div className="insight-number">02</div>
+          <article>
+            <span>Understanding</span>
+            <strong>{getMetricValue(metrics, "understanding")}</strong>
+          </article>
 
-            <div>
-              <p className="insight-eyebrow">Leadership Attention</p>
-              <h2>What deserves attention now</h2>
+          <article>
+            <span>Memory</span>
+            <strong>{getMetricValue(metrics, "memory")}</strong>
+          </article>
 
-              {attention.length > 0 ? (
-                <div className="top-memory-change-list">
-                  {attention.slice(0, 3).map((item, index) => (
-                    <div
-                      className="top-memory-change-row"
-                      key={`${item.title}-${index}`}
-                    >
-                      <div className="top-memory-change-icon">!</div>
+          <article>
+            <span>Learning</span>
+            <strong>{getMetricValue(metrics, "learning")}</strong>
+          </article>
+        </section>
 
-                      <div>
-                        <h3>{item.title}</h3>
-                        <p>{item.reason}</p>
-                      </div>
+        <section className="executive-decision-card">
+          <div>
+            <p className="insight-eyebrow">Highest Value Next Investigation</p>
+            <h2>{nextActionTitle}</h2>
+            <p>{nextActionReason}</p>
+          </div>
 
-                      <span>
-                        {item.priority === "highest" ? "Priority" : "Review"}
-                      </span>
-                    </div>
-                  ))}
+          <div className="decision-card-side">
+            <span>Expected Understanding Gain</span>
+            <strong>{formatGain(nextAction?.expectedUnderstandingGain)}</strong>
+            <button type="button">Begin Investigation →</button>
+          </div>
+        </section>
+
+        <section className="executive-section">
+          <div className="executive-section-heading">
+            <p className="insight-eyebrow">Conditions Requiring Attention</p>
+            <h2>What deserves attention</h2>
+          </div>
+
+          {primaryConditions.length > 0 ? (
+            <div className="condition-grid">
+              {primaryConditions.map((item, index) => (
+                <article className="condition-card" key={`${item.title}-${index}`}>
+                  <div className="condition-card-top">
+                    <span>{index + 1}</span>
+                    <strong>
+                      {"priority" in item
+                        ? formatStatus(String(item.priority))
+                        : "Review"}
+                    </strong>
+                  </div>
+
+                  <h3>{item.title}</h3>
+                  <p>{"reason" in item ? item.reason : item.summary}</p>
+
+                  {"confidence" in item && item.confidence !== undefined && (
+                    <small>{Math.round(item.confidence * 100)}% confidence</small>
+                  )}
+                </article>
+              ))}
+            </div>
+          ) : (
+            <article className="condition-card">
+              <h3>No urgent conditions detected</h3>
+              <p>
+                Discovery did not identify a current condition requiring immediate
+                executive attention.
+              </p>
+            </article>
+          )}
+        </section>
+
+        <section className="executive-section">
+          <div className="executive-section-heading">
+            <p className="insight-eyebrow">Recent Organizational Learning</p>
+            <h2>What changed recently</h2>
+          </div>
+
+          {timeline.length > 0 ? (
+            <div className="timeline-list executive-learning-list">
+              {timeline.slice(0, 3).map((item, index) => (
+                <div
+                  className="timeline-step is-active"
+                  key={`${item.timestamp}-${index}`}
+                >
+                  <i />
+                  <div>
+                    <span>{formatDate(item.timestamp)}</span>
+                    <p>{item.summary}</p>
+                  </div>
                 </div>
-              ) : (
-                <p>No urgent leadership attention items were detected.</p>
-              )}
+              ))}
             </div>
-          </article>
-
-          <article className="insight-card">
-            <div className="insight-number">03</div>
-
-            <div>
-              <p className="insight-eyebrow">Recommended Next Investigation</p>
-              <h2>{nextAction}</h2>
-
-              {dashboard.nextAction?.reason && (
-                <p>{dashboard.nextAction.reason}</p>
-              )}
-
-              <div className="overview-actions">
-                <button type="button">Start Investigation →</button>
-              </div>
-            </div>
-          </article>
-
-          <article className="insight-card">
-            <div className="insight-number">04</div>
-
-            <div>
-              <p className="insight-eyebrow">Recent Learning</p>
-              <h2>What changed recently</h2>
-
-              {timeline.length > 0 ? (
-                <div className="timeline-list">
-                  {timeline.slice(0, 4).map((item, index) => (
-                    <div
-                      className="timeline-step is-active"
-                      key={`${item.timestamp}-${index}`}
-                    >
-                      <i />
-                      <div>
-                        <span>{formatDate(item.timestamp)}</span>
-                        <p>{item.summary}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p>
-                  The learning timeline will appear after additional
-                  investigations.
-                </p>
-              )}
-            </div>
-          </article>
-        </div>
+          ) : (
+            <article className="condition-card">
+              <h3>Learning timeline pending</h3>
+              <p>
+                Discovery will show organizational learning after more
+                investigations are completed.
+              </p>
+            </article>
+          )}
+        </section>
 
         <details className="expanded-results">
           <summary className="reasoning-toggle">
-            Explore Organizational Understanding
+            Why Discovery believes this
           </summary>
 
           <div className="reasoning-drawer">
             <div className="reasoning-block">
-              <h3>Workspace</h3>
-              <p className="empty-reasoning">
-                Deeper executive context is available through the dashboard,
-                reasoning trace, and organism explorer.
-              </p>
+              <h3>Current Understanding</h3>
+
+              {dashboard.keyInsights.length > 0 ? (
+                dashboard.keyInsights.map((item, index) => (
+                  <div className="top-memory-change-row" key={`${item.title}-${index}`}>
+                    <div className="top-memory-change-icon">✓</div>
+                    <div>
+                      <h3>{item.title}</h3>
+                      <p>{item.summary}</p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="empty-reasoning">
+                  Discovery has not exposed deeper supporting understanding yet.
+                </p>
+              )}
+            </div>
+
+            <div className="reasoning-block">
+              <h3>Remembered Evidence</h3>
+
+              {dashboard.rememberedEvidence.length > 0 ? (
+                dashboard.rememberedEvidence.map((item, index) => (
+                  <div className="top-memory-change-row" key={`${item.title}-${index}`}>
+                    <div className="top-memory-change-icon">•</div>
+                    <div>
+                      <h3>{item.title}</h3>
+                      <p>{item.summary}</p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="empty-reasoning">
+                  Supporting evidence will appear as organizational memory grows.
+                </p>
+              )}
             </div>
           </div>
         </details>
       </div>
 
-      <aside className="organism-panel">
+      <aside className="organism-panel executive-briefing-panel">
         <div className="organism-header">
           <div>
             <h2>Organizational Health</h2>
             <p>
               <span />
-              {hero.status}
+              {formatStatus(hero.status)}
             </p>
           </div>
         </div>
@@ -202,6 +276,11 @@ export function ExecutiveDashboardView({
             <span className="gray-dot" />
             Learning <b>{getMetricValue(metrics, "learning")}</b>
           </p>
+        </div>
+
+        <div className="executive-question-card">
+          <span>Executive Question</span>
+          <p>What conversation would most improve organizational understanding?</p>
         </div>
       </aside>
     </section>

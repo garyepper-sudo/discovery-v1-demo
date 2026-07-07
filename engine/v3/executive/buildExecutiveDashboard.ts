@@ -81,6 +81,28 @@ export type ExecutiveDashboard = {
   nextAction?: ExecutiveRecommendedAction;
 };
 
+const executiveLanguageMap: Record<string, string> = {
+  "Leadership Dependency": "Critical decisions depend on too few people.",
+  "Organizational Continuity Failure":
+    "Knowledge transfer is becoming a business continuity risk.",
+  "Cross Functional Execution Friction":
+    "Teams are struggling to coordinate effectively.",
+};
+
+function translateTitle(title: string): string {
+  return executiveLanguageMap[title] ?? title;
+}
+
+function translateSummary(summary: string): string {
+  return summary
+    .replaceAll("Discovery identified", "The organization shows")
+    .replaceAll("Discovery believes", "The organization appears to show")
+    .replaceAll("Discovery strengthened", "The evidence strengthened")
+    .replaceAll("Discovery detected", "The organization shows")
+    .replaceAll("organizational theories", "stable organizational patterns")
+    .replaceAll("organizational beliefs", "operating assumptions");
+}
+
 function resolveStatus(state: ExecutiveState): ExecutiveDashboardStatus {
   if (state.status) return state.status;
 
@@ -110,35 +132,23 @@ function limitSection<T>(items: T[], limit: number): T[] {
 function resolveInsightImportance(
   item: ExecutiveUnderstandingItem,
 ): ExecutiveInsightImportance {
-  if (item.confidence !== undefined && item.confidence >= 0.75) {
-    return "high";
-  }
-
-  if (item.confidence !== undefined && item.confidence < 0.45) {
-    return "low";
-  }
-
+  if (item.confidence !== undefined && item.confidence >= 0.75) return "high";
+  if (item.confidence !== undefined && item.confidence < 0.45) return "low";
   return "medium";
 }
 
 function resolveStatePriority(
   item: ExecutiveChangeItem,
 ): ExecutiveOrganizationalStatePriority {
-  if (item.confidence !== undefined && item.confidence >= 0.75) {
-    return "high";
-  }
-
-  if (item.confidence !== undefined && item.confidence < 0.45) {
-    return "low";
-  }
-
+  if (item.confidence !== undefined && item.confidence >= 0.75) return "high";
+  if (item.confidence !== undefined && item.confidence < 0.45) return "low";
   return "medium";
 }
 
 function buildKeyInsights(state: ExecutiveState): ExecutiveKeyInsight[] {
   return limitSection(state.currentUnderstanding, 4).map((item) => ({
-    title: item.title,
-    summary: item.summary,
+    title: translateTitle(item.title),
+    summary: translateSummary(item.summary),
     importance: resolveInsightImportance(item),
     confidence: item.confidence,
   }));
@@ -148,8 +158,8 @@ function buildCurrentOrganizationalState(
   state: ExecutiveState,
 ): ExecutiveOrganizationalStateItem[] {
   return limitSection(state.whatChanged, 5).map((item) => ({
-    title: item.title,
-    summary: item.summary,
+    title: translateTitle(item.title),
+    summary: translateSummary(item.summary),
     category: "pattern",
     priority: resolveStatePriority(item),
     confidence: item.confidence,
@@ -161,16 +171,18 @@ function buildOperatingMechanisms(
 ): ExecutiveOperatingMechanism[] {
   return limitSection(state.expandable.mechanisms, 5).map(
     (item: any): ExecutiveOperatingMechanism => ({
-      title:
+      title: translateTitle(
         item.title ??
-        item.statement ??
+          item.statement ??
+          item.summary ??
+          "A possible operating pattern is emerging.",
+      ),
+      summary: translateSummary(
         item.summary ??
-        "Discovery found a possible operating pattern.",
-      summary:
-        item.summary ??
-        item.description ??
-        item.explanation ??
-        "This behavior may explain why the pattern keeps appearing.",
+          item.description ??
+          item.explanation ??
+          "This behavior may explain why the pattern keeps appearing.",
+      ),
       role: "system",
       confidence: item.confidence,
     }),
@@ -183,15 +195,36 @@ function buildRememberedEvidence(
   return limitSection(state.expandable.evidence, 5).map(
     (item: any): ExecutiveRememberedEvidence => ({
       title: item.title ?? item.source ?? "Remembered signal",
-      summary:
+      summary: translateSummary(
         item.summary ??
-        item.text ??
-        item.observation ??
-        "Evidence retained in organizational memory.",
+          item.text ??
+          item.observation ??
+          "Evidence retained in organizational memory.",
+      ),
       source: item.source,
       confidence: item.confidence,
     }),
   );
+}
+
+function buildAttentionItems(
+  state: ExecutiveState,
+): ExecutiveAttentionItem[] {
+  return limitSection(state.leadershipAttention, 3).map((item) => ({
+    ...item,
+    title: translateTitle(item.title),
+    reason: translateSummary(item.reason),
+  }));
+}
+
+function buildTimeline(state: ExecutiveState): ExecutiveTimelineEntry[] {
+  return limitSection(state.learningTimeline, 5).map((item) => ({
+    ...item,
+    summary:
+      "summary" in item && typeof item.summary === "string"
+        ? translateSummary(item.summary)
+        : item.summary,
+  }));
 }
 
 export function buildExecutiveDashboard(
@@ -199,8 +232,8 @@ export function buildExecutiveDashboard(
 ): ExecutiveDashboard {
   return {
     hero: {
-      headline: state.headline,
-      summary: state.summary,
+      headline: translateTitle(state.headline),
+      summary: translateSummary(state.summary),
       status: resolveStatus(state),
       organizationConfidence: state.organizationConfidence,
       generatedAt: state.generatedAt,
@@ -218,8 +251,8 @@ export function buildExecutiveDashboard(
     rememberedEvidence: buildRememberedEvidence(state),
 
     sections: {
-      attention: limitSection(state.leadershipAttention, 3),
-      timeline: limitSection(state.learningTimeline, 5),
+      attention: buildAttentionItems(state),
+      timeline: buildTimeline(state),
     },
 
     nextAction: state.nextRecommendedAction,
