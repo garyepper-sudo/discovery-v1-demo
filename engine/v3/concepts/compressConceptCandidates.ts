@@ -7,7 +7,23 @@ type ScoredCandidate = {
   penalties: number;
   supportIds: string[];
   layerCount: number;
+  conditionSignals: string[];
+  executiveLeverage: number;
+  persistenceSignal: number;
+  noveltySignal: number;
 };
+
+type ConceptCondition =
+  | "coordination"
+  | "learning"
+  | "knowledgeContinuity"
+  | "decisionFlow"
+  | "executionCapacity"
+  | "strategicAlignment"
+  | "operatingModel"
+  | "leadershipDependency"
+  | "adaptability"
+  | "unknown";
 
 function asArray<T>(value: T[] | undefined | null): T[] {
   return Array.isArray(value) ? value : [];
@@ -77,12 +93,14 @@ function supportCount(candidate: ConceptCandidate): number {
   return allSupportIds(candidate).length;
 }
 
-function isGarbageEmergentCandidate(candidate: ConceptCandidate): boolean {
-  const id = normalize(candidate.id);
-  const statement = normalize(candidate.statement);
-  const signature = normalize(candidate.semanticSignature);
+function candidateText(candidate: ConceptCandidate): string {
+  return normalize(
+    `${candidate.id} ${candidate.statement} ${candidate.summary} ${candidate.explanation} ${candidate.semanticSignature} ${asArray(candidate.keywords).join(" ")}`,
+  );
+}
 
-  const text = `${id} ${statement} ${signature}`;
+function isGarbageEmergentCandidate(candidate: ConceptCandidate): boolean {
+  const text = candidateText(candidate);
 
   const blocked = [
     "emergent appears",
@@ -126,9 +144,7 @@ function isMechanismNameEcho(candidate: ConceptCandidate): boolean {
 }
 
 function genericityPenalty(candidate: ConceptCandidate): number {
-  const text = normalize(
-    `${candidate.id} ${candidate.statement} ${candidate.summary} ${candidate.semanticSignature}`,
-  );
+  const text = candidateText(candidate);
 
   const weakGenericSignals = [
     "recurring knowledge",
@@ -166,9 +182,7 @@ function weakEmergentPenalty(candidate: ConceptCandidate): number {
 }
 
 function theorySignalScore(candidate: ConceptCandidate): number {
-  const text = normalize(
-    `${candidate.id} ${candidate.statement} ${candidate.summary} ${candidate.explanation}`,
-  );
+  const text = candidateText(candidate);
 
   const theorySignals = [
     "organizational continuity",
@@ -200,9 +214,7 @@ function theorySignalScore(candidate: ConceptCandidate): number {
 }
 
 function organizationalScopeScore(candidate: ConceptCandidate): number {
-  const text = normalize(
-    `${candidate.statement} ${candidate.summary} ${candidate.explanation}`,
-  );
+  const text = candidateText(candidate);
 
   const scopeSignals = [
     "organization",
@@ -222,6 +234,213 @@ function organizationalScopeScore(candidate: ConceptCandidate): number {
   const matches = scopeSignals.filter((signal) => text.includes(signal)).length;
 
   return clamp01(matches / 4);
+}
+
+function executiveLeverageScore(candidate: ConceptCandidate): number {
+  const text = candidateText(candidate);
+
+  const leverageSignals = [
+    "bottleneck",
+    "constraint",
+    "constraining",
+    "friction",
+    "breakdown",
+    "failure",
+    "deteriorating",
+    "weakening",
+    "centralized",
+    "dependency",
+    "latency",
+    "priority",
+    "decision",
+    "execution",
+    "capacity",
+    "governance",
+    "alignment",
+    "coordination",
+    "learning",
+    "continuity",
+  ];
+
+  const matchedSignals = leverageSignals.filter((signal) =>
+    text.includes(signal),
+  ).length;
+
+  const mechanismSupport = clamp01(
+    asArray(candidate.supportingMechanismIds).length / 5,
+  );
+  const beliefSupport = clamp01(asArray(candidate.supportingBeliefIds).length / 3);
+  const dynamicSupport = clamp01(
+    asArray(candidate.supportingDynamicIds).length / 3,
+  );
+
+  return clamp01(
+    clamp01(matchedSignals / 5) * 0.35 +
+      mechanismSupport * 0.3 +
+      beliefSupport * 0.2 +
+      dynamicSupport * 0.15,
+  );
+}
+
+function persistenceSignalScore(candidate: ConceptCandidate): number {
+  const text = candidateText(candidate);
+
+  const persistenceSignals = [
+    "stable",
+    "persistent",
+    "recurring",
+    "strengthening",
+    "continuity",
+    "memory",
+    "retention",
+    "repeated",
+    "across investigations",
+    "longitudinal",
+  ];
+
+  const matchedSignals = persistenceSignals.filter((signal) =>
+    text.includes(signal),
+  ).length;
+
+  const layerScore = clamp01(cognitiveLayerCount(candidate) / 5);
+  const supportScore = clamp01(supportCount(candidate) / 12);
+
+  return clamp01(
+    clamp01(matchedSignals / 3) * 0.35 + layerScore * 0.35 + supportScore * 0.3,
+  );
+}
+
+function noveltySignalScore(candidate: ConceptCandidate): number {
+  const text = candidateText(candidate);
+
+  const noveltySignals = [
+    "emerging",
+    "new",
+    "shift",
+    "changing",
+    "drift",
+    "increasing",
+    "weakening",
+    "deteriorating",
+    "improving",
+  ];
+
+  const matchedSignals = noveltySignals.filter((signal) =>
+    text.includes(signal),
+  ).length;
+
+  return clamp01(clamp01(matchedSignals / 3) * 0.75 + theorySignalScore(candidate) * 0.25);
+}
+
+function inferConditionSignals(candidate: ConceptCandidate): ConceptCondition[] {
+  const text = candidateText(candidate);
+
+  const matches: Array<[ConceptCondition, string[]]> = [
+    [
+      "coordination",
+      [
+        "coordination",
+        "cross functional",
+        "handoff",
+        "ownership",
+        "interface",
+        "silo",
+      ],
+    ],
+    [
+      "learning",
+      [
+        "learning",
+        "adaptation",
+        "experience",
+        "feedback",
+        "reuse",
+        "improvement",
+      ],
+    ],
+    [
+      "knowledgeContinuity",
+      [
+        "knowledge",
+        "documentation",
+        "memory",
+        "continuity",
+        "handoff",
+        "transfer",
+      ],
+    ],
+    [
+      "decisionFlow",
+      [
+        "decision",
+        "authority",
+        "approval",
+        "governance",
+        "latency",
+        "escalation",
+      ],
+    ],
+    [
+      "executionCapacity",
+      [
+        "execution",
+        "capacity",
+        "delivery",
+        "throughput",
+        "resource",
+        "overload",
+      ],
+    ],
+    [
+      "strategicAlignment",
+      [
+        "strategy",
+        "strategic",
+        "alignment",
+        "priority",
+        "tradeoff",
+        "narrative",
+      ],
+    ],
+    [
+      "operatingModel",
+      [
+        "operating model",
+        "role",
+        "workflow",
+        "ownership",
+        "expectation",
+        "process",
+      ],
+    ],
+    [
+      "leadershipDependency",
+      [
+        "leadership dependency",
+        "centralized",
+        "approval dependency",
+        "authority centralized",
+      ],
+    ],
+    [
+      "adaptability",
+      ["adaptive", "adaptability", "adaptation", "innovation", "change"],
+    ],
+  ];
+
+  const conditionSignals = matches
+    .filter(([, signals]) => signals.some((signal) => text.includes(signal)))
+    .map(([condition]) => condition);
+
+  return conditionSignals.length > 0 ? unique(conditionSignals) as ConceptCondition[] : ["unknown"];
+}
+
+function conditionSignalStrength(candidate: ConceptCandidate): number {
+  const conditionCount = inferConditionSignals(candidate).filter(
+    (condition) => condition !== "unknown",
+  ).length;
+
+  return clamp01(conditionCount / 3);
 }
 
 function explanatoryEfficiency(candidate: ConceptCandidate): number {
@@ -249,6 +468,9 @@ function theorySelectionScore(candidate: ConceptCandidate): number {
   const scopeScore = organizationalScopeScore(candidate);
   const theoryScore = theorySignalScore(candidate);
   const efficiencyScore = explanatoryEfficiency(candidate);
+  const executiveLeverage = executiveLeverageScore(candidate);
+  const persistenceSignal = persistenceSignalScore(candidate);
+  const conditionScore = conditionSignalStrength(candidate);
 
   const penalties =
     genericityPenalty(candidate) +
@@ -256,14 +478,17 @@ function theorySelectionScore(candidate: ConceptCandidate): number {
     weakEmergentPenalty(candidate);
 
   return clamp01(
-    confidence * 0.22 +
-      layerScore * 0.18 +
-      supportScore * 0.16 +
-      mechanismScore * 0.14 +
-      beliefScore * 0.1 +
-      scopeScore * 0.08 +
+    confidence * 0.18 +
+      layerScore * 0.15 +
+      supportScore * 0.13 +
+      mechanismScore * 0.12 +
+      beliefScore * 0.09 +
+      scopeScore * 0.07 +
       theoryScore * 0.07 +
-      efficiencyScore * 0.05 -
+      efficiencyScore * 0.04 +
+      executiveLeverage * 0.08 +
+      persistenceSignal * 0.04 +
+      conditionScore * 0.03 -
       penalties,
   );
 }
@@ -292,6 +517,10 @@ function scoreCandidate(candidate: ConceptCandidate): ScoredCandidate {
     penalties,
     supportIds,
     layerCount,
+    conditionSignals: inferConditionSignals(candidate),
+    executiveLeverage: executiveLeverageScore(candidate),
+    persistenceSignal: persistenceSignalScore(candidate),
+    noveltySignal: noveltySignalScore(candidate),
   };
 }
 
@@ -316,8 +545,21 @@ function isMostlySubsumedBy(
     stronger.supportIds.length >= weaker.supportIds.length;
   const strongerHasBroaderLayers = stronger.layerCount >= weaker.layerCount;
 
+  const weakerConditions = new Set(weaker.conditionSignals);
+  const strongerConditions = new Set(stronger.conditionSignals);
+
+  const sharedConditions = [...weakerConditions].filter((condition) =>
+    strongerConditions.has(condition),
+  ).length;
+
+  const sameConditionFamily =
+    weakerConditions.size > 0 &&
+    strongerConditions.size > 0 &&
+    sharedConditions / weakerConditions.size >= 0.5;
+
   return (
     supportOverlap >= 0.6 &&
+    sameConditionFamily &&
     strongerHasBroaderSupport &&
     strongerHasBroaderLayers &&
     stronger.score - weaker.score >= 0.08
@@ -335,6 +577,55 @@ function removeSubsumedCandidates(
 
     return !strongerCompetitor;
   });
+}
+
+function conditionDiversityScore(scored: ScoredCandidate): number {
+  const usefulConditions = scored.conditionSignals.filter(
+    (condition) => condition !== "unknown",
+  );
+
+  return clamp01(usefulConditions.length / 3);
+}
+
+function selectConditionAwareCandidates(
+  scoredCandidates: ScoredCandidate[],
+  limit: number,
+): ScoredCandidate[] {
+  const selected: ScoredCandidate[] = [];
+
+  for (const candidate of scoredCandidates) {
+    if (selected.length >= limit) break;
+
+    const candidateConditions = new Set(candidate.conditionSignals);
+
+    const alreadyCovered = selected.some((selectedCandidate) =>
+      selectedCandidate.conditionSignals.some((condition) =>
+        candidateConditions.has(condition),
+      ),
+    );
+
+    const highValueCandidate =
+      candidate.score >= 0.68 ||
+      candidate.executiveLeverage >= 0.7 ||
+      candidate.persistenceSignal >= 0.7;
+
+    if (!alreadyCovered || highValueCandidate || selected.length < 3) {
+      selected.push(candidate);
+    }
+  }
+
+  if (selected.length >= limit) return selected;
+
+  for (const candidate of scoredCandidates) {
+    if (selected.length >= limit) break;
+    if (selected.some((selectedCandidate) => selectedCandidate === candidate)) {
+      continue;
+    }
+
+    selected.push(candidate);
+  }
+
+  return selected;
 }
 
 function mergeCandidates(candidates: ConceptCandidate[]): ConceptCandidate[] {
@@ -442,11 +733,59 @@ function mergeCandidates(candidates: ConceptCandidate[]): ConceptCandidate[] {
   return Array.from(merged.values());
 }
 
-function createConceptFromCandidate(params: {
+function createConditionAwareExplanation(params: {
   candidate: ConceptCandidate;
+  conditionSignals: string[];
+  executiveLeverage: number;
+  persistenceSignal: number;
+  noveltySignal: number;
+}): string {
+  const {
+    candidate,
+    conditionSignals,
+    executiveLeverage,
+    persistenceSignal,
+    noveltySignal,
+  } = params;
+
+  const usefulConditions = conditionSignals.filter(
+    (condition) => condition !== "unknown",
+  );
+
+  const conditionText =
+    usefulConditions.length > 0
+      ? ` Discovery interprets this concept as a signal about ${usefulConditions.join(
+          ", ",
+        )}.`
+      : "";
+
+  const leverageText =
+    executiveLeverage >= 0.65
+      ? " It has elevated executive leverage because it appears connected to mechanisms leadership can act on."
+      : "";
+
+  const persistenceText =
+    persistenceSignal >= 0.65
+      ? " It also appears persistent enough to matter beyond a single observation."
+      : "";
+
+  const noveltyText =
+    noveltySignal >= 0.65
+      ? " It may represent an emerging shift rather than only a stable background condition."
+      : "";
+
+  return `${
+    candidate.explanation ||
+    "Discovery formed this concept by selecting and compressing concept candidates from multiple cognitive layers."
+  }${conditionText}${leverageText}${persistenceText}${noveltyText}`;
+}
+
+function createConceptFromCandidate(params: {
+  scored: ScoredCandidate;
   totalCandidates: number;
 }): OrganizationalConcept {
-  const { candidate, totalCandidates } = params;
+  const { scored, totalCandidates } = params;
+  const { candidate } = scored;
 
   const supportIds = allSupportIds(candidate);
   const layerCount = cognitiveLayerCount(candidate);
@@ -456,19 +795,24 @@ function createConceptFromCandidate(params: {
   const coverage = clamp01(supportIds.length / Math.max(1, totalCandidates));
 
   const stability = clamp01(
-    confidence * 0.3 +
-      clamp01(supportIds.length / 8) * 0.25 +
-      clamp01(layerCount / 4) * 0.2 +
-      selectionScore * 0.25,
+    confidence * 0.26 +
+      clamp01(supportIds.length / 8) * 0.22 +
+      clamp01(layerCount / 4) * 0.18 +
+      selectionScore * 0.2 +
+      scored.persistenceSignal * 0.14,
   );
 
-  const novelty = clamp01(1 - stability);
+  const novelty = clamp01(
+    noveltySignalScore(candidate) * 0.65 + (1 - stability) * 0.35,
+  );
 
   const explanatoryPower = clamp01(
-    confidence * 0.25 +
-      coverage * 0.1 +
-      stability * 0.2 +
-      selectionScore * 0.45,
+    confidence * 0.22 +
+      coverage * 0.08 +
+      stability * 0.18 +
+      selectionScore * 0.34 +
+      scored.executiveLeverage * 0.12 +
+      conditionDiversityScore(scored) * 0.06,
   );
 
   return {
@@ -487,9 +831,13 @@ function createConceptFromCandidate(params: {
     novelty,
     explanatoryPower,
     status: conceptStatus({ confidence, stability }),
-    explanation:
-      candidate.explanation ||
-      "Discovery formed this concept by selecting and compressing concept candidates from multiple cognitive layers.",
+    explanation: createConditionAwareExplanation({
+      candidate,
+      conditionSignals: scored.conditionSignals,
+      executiveLeverage: scored.executiveLeverage,
+      persistenceSignal: scored.persistenceSignal,
+      noveltySignal: scored.noveltySignal,
+    }),
   };
 }
 
@@ -514,6 +862,10 @@ export function compressConceptCandidates(
       const hasEnoughSupport = scored.supportIds.length >= 5;
       const isStrong =
         candidate.strength === "strong" || (candidate.confidence ?? 0) >= 0.75;
+      const hasStateSignal =
+        scored.executiveLeverage >= 0.55 ||
+        scored.persistenceSignal >= 0.55 ||
+        conditionDiversityScore(scored) >= 0.34;
 
       return (
         scored.score >= 0.48 ||
@@ -521,21 +873,38 @@ export function compressConceptCandidates(
         (hasCrossLayerSupport &&
           hasMechanismSupport &&
           hasEnoughSupport &&
-          isStrong)
+          isStrong) ||
+        (hasCrossLayerSupport &&
+          hasMechanismSupport &&
+          hasEnoughSupport &&
+          hasStateSignal)
       );
     })
-    .sort((a, b) => b.score - a.score);
+    .sort((a, b) => {
+      const scoreDelta = b.score - a.score;
+      if (Math.abs(scoreDelta) > 0.03) return scoreDelta;
+
+      return (
+        b.executiveLeverage +
+        b.persistenceSignal +
+        conditionDiversityScore(b) -
+        (a.executiveLeverage +
+          a.persistenceSignal +
+          conditionDiversityScore(a))
+      );
+    });
 
   if (scoredCandidates.length === 0) return [];
 
-  const selectedCandidates = removeSubsumedCandidates(scoredCandidates)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 7);
+  const selectedCandidates = selectConditionAwareCandidates(
+    removeSubsumedCandidates(scoredCandidates).sort((a, b) => b.score - a.score),
+    7,
+  );
 
   return selectedCandidates
     .map((scored) =>
       createConceptFromCandidate({
-        candidate: scored.candidate,
+        scored,
         totalCandidates: selectedCandidates.length,
       }),
     )

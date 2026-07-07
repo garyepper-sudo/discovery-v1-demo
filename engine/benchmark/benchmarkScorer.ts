@@ -17,6 +17,28 @@ type CompetingTheoryItem = {
   confidence?: number;
 };
 
+type OrganizationalConditionBenchmarkItem = {
+  name?: string;
+  status?: string;
+  priority?: string;
+  summary?: string;
+  whyItMatters?: string;
+  recommendedExecutiveAction?: string;
+};
+
+type OrganizationalStateBenchmarkItem = {
+  status?: string;
+  summary?: string;
+  executiveImplication?: string;
+  recommendedFocus?: string[];
+};
+
+type ExecutiveAssessmentBenchmarkItem = {
+  summary?: string;
+  executiveNarrative?: string;
+  recommendedFocus?: string[];
+};
+
 type ActualBenchmarkOutput = {
   organizationalLearningProfile?: unknown;
   mechanisms?: string[];
@@ -24,6 +46,9 @@ type ActualBenchmarkOutput = {
   compressedConcepts?: string[];
   conceptualUnderstanding?: string[];
   executiveText?: string;
+  organizationalConditions?: OrganizationalConditionBenchmarkItem[];
+  organizationalState?: OrganizationalStateBenchmarkItem;
+  executiveAssessment?: ExecutiveAssessmentBenchmarkItem;
   theoryValidation?: {
     dominantTheory?: string | null;
     whyDiscoveryBelievesIt?: string;
@@ -112,6 +137,48 @@ function theorySignalScore(text: string[]): number {
     "dominant organizational theory",
     "manifestations of a deeper",
     "supporting mechanisms",
+  ]);
+}
+
+function conditionSignalScore(text: string[]): number {
+  return signalScore(text, [
+    "leadership dependency",
+    "coordination system",
+    "knowledge continuity",
+    "decision flow",
+    "execution capacity",
+    "learning system",
+    "operating model",
+    "strategic alignment",
+    "organizational condition",
+    "condition level",
+    "organizational state",
+    "current organizational state",
+    "strained",
+    "constrained",
+    "deteriorating",
+    "executive attention",
+  ]);
+}
+
+function systemsSignalScore(text: string[]): number {
+  return signalScore(text, [
+    "reinforced by",
+    "reinforces",
+    "constrains",
+    "constraint",
+    "drives",
+    "depends on",
+    "limits",
+    "influences",
+    "upstream",
+    "downstream",
+    "interaction",
+    "connected to",
+    "shapes",
+    "primary condition",
+    "related constraint",
+    "condition",
   ]);
 }
 
@@ -206,6 +273,44 @@ function theoryValidationText(
   ].filter((value): value is string => Boolean(value));
 }
 
+function organizationalConditionText(
+  conditions: OrganizationalConditionBenchmarkItem[] = [],
+): string[] {
+  return conditions.flatMap((condition) => [
+    condition.name,
+    condition.status,
+    condition.priority,
+    condition.summary,
+    condition.whyItMatters,
+    condition.recommendedExecutiveAction,
+  ]).filter((value): value is string => Boolean(value));
+}
+
+function organizationalStateText(
+  state?: OrganizationalStateBenchmarkItem,
+): string[] {
+  if (!state) return [];
+
+  return [
+    state.status,
+    state.summary,
+    state.executiveImplication,
+    ...(state.recommendedFocus ?? []),
+  ].filter((value): value is string => Boolean(value));
+}
+
+function executiveAssessmentText(
+  assessment?: ExecutiveAssessmentBenchmarkItem,
+): string[] {
+  if (!assessment) return [];
+
+  return [
+    assessment.summary,
+    assessment.executiveNarrative,
+    ...(assessment.recommendedFocus ?? []),
+  ].filter((value): value is string => Boolean(value));
+}
+
 function patternCoherenceScore(params: {
   mechanisms: string[];
   finalConcepts: string[];
@@ -242,9 +347,12 @@ function patternCoherenceScore(params: {
     ...finalConcepts,
   ]);
 
+  const executiveConditionCoverage = conditionSignalScore(executiveText);
+
   const mechanismToTheoryAlignment = Math.max(
     executiveMechanismCoverage,
     executiveTheoryCoverage,
+    executiveConditionCoverage,
   );
 
   const recurringSignalBonus = Math.min(
@@ -263,6 +371,7 @@ function patternCoherenceScore(params: {
     "supporting",
     "deeper",
     "theory",
+    "condition",
     "continuity",
     "fragmentation",
     "bottleneck",
@@ -271,10 +380,161 @@ function patternCoherenceScore(params: {
 
   return clamp01(
     mechanismCoverage * 0.3 +
-      conceptCoverage * 0.25 +
-      mechanismToTheoryAlignment * 0.25 +
+      conceptCoverage * 0.2 +
+      mechanismToTheoryAlignment * 0.3 +
       coherenceLanguageScore * 0.1 +
       recurringSignalBonus,
+  );
+}
+
+function conditionReasoningScore(params: {
+  organizationalConditions?: OrganizationalConditionBenchmarkItem[];
+  executiveText: string[];
+}): number {
+  const { organizationalConditions = [], executiveText } = params;
+
+  const conditionText = organizationalConditionText(organizationalConditions);
+  const allText = [...conditionText, ...executiveText];
+
+  const conditionPresence = arrayPresenceScore(organizationalConditions, 4);
+  const conditionLanguage = conditionSignalScore(allText);
+
+  const uniqueSummaries = new Set(
+    organizationalConditions
+      .map((condition) => normalize(condition.summary ?? ""))
+      .filter(Boolean),
+  ).size;
+
+  const uniquenessScore =
+    organizationalConditions.length === 0
+      ? 0
+      : clamp01(uniqueSummaries / organizationalConditions.length);
+
+  const executiveLanguageScore = signalScore(allText, [
+    "executive attention",
+    "if ignored",
+    "if improved",
+    "performance",
+    "organizational health",
+    "current organizational state",
+    "leadership should",
+    "recommended focus",
+    "priority",
+    "constrained",
+    "deteriorating",
+  ]);
+
+  return clamp01(
+    conditionPresence * 0.25 +
+      conditionLanguage * 0.3 +
+      uniquenessScore * 0.2 +
+      executiveLanguageScore * 0.25,
+  );
+}
+
+function organizationalStateScore(params: {
+  organizationalState?: OrganizationalStateBenchmarkItem;
+  organizationalConditions?: OrganizationalConditionBenchmarkItem[];
+  executiveText: string[];
+}): number {
+  const { organizationalState, organizationalConditions = [], executiveText } =
+    params;
+
+  const stateText = organizationalStateText(organizationalState);
+  const allText = [...stateText, ...executiveText];
+
+  const statePresence = organizationalState ? 1 : 0;
+  const statusPresence = hasText(organizationalState?.status) ? 1 : 0;
+  const summaryPresence = hasText(organizationalState?.summary) ? 1 : 0;
+  const implicationPresence = hasText(organizationalState?.executiveImplication)
+    ? 1
+    : 0;
+  const focusPresence = arrayPresenceScore(
+    organizationalState?.recommendedFocus,
+    3,
+  );
+
+  const conditionAlignment = includesAny(
+    allText,
+    organizationalConditions
+      .map((condition) => condition.name ?? "")
+      .filter(Boolean),
+  );
+
+  return clamp01(
+    statePresence * 0.15 +
+      statusPresence * 0.15 +
+      summaryPresence * 0.2 +
+      implicationPresence * 0.2 +
+      focusPresence * 0.15 +
+      conditionAlignment * 0.15,
+  );
+}
+
+function executivePrioritizationScore(params: {
+  organizationalState?: OrganizationalStateBenchmarkItem;
+  executiveAssessment?: ExecutiveAssessmentBenchmarkItem;
+  executiveText: string[];
+}): number {
+  const { organizationalState, executiveAssessment, executiveText } = params;
+
+  const allText = [
+    ...organizationalStateText(organizationalState),
+    ...executiveAssessmentText(executiveAssessment),
+    ...executiveText,
+  ];
+
+  const focusScore = Math.max(
+    arrayPresenceScore(organizationalState?.recommendedFocus, 3),
+    arrayPresenceScore(executiveAssessment?.recommendedFocus, 3),
+  );
+
+  const priorityLanguage = signalScore(allText, [
+    "focus first",
+    "primary condition",
+    "recommended focus",
+    "executive attention",
+    "highest combined risk",
+    "priority",
+    "leadership should focus",
+    "most likely to limit",
+    "led by",
+  ]);
+
+  return clamp01(focusScore * 0.45 + priorityLanguage * 0.55);
+}
+
+function systemsThinkingScore(params: {
+  organizationalConditions?: OrganizationalConditionBenchmarkItem[];
+  organizationalState?: OrganizationalStateBenchmarkItem;
+  executiveAssessment?: ExecutiveAssessmentBenchmarkItem;
+  executiveText: string[];
+}): number {
+  const {
+    organizationalConditions = [],
+    organizationalState,
+    executiveAssessment,
+    executiveText,
+  } = params;
+
+  const allText = [
+    ...organizationalConditionText(organizationalConditions),
+    ...organizationalStateText(organizationalState),
+    ...executiveAssessmentText(executiveAssessment),
+    ...executiveText,
+  ];
+
+  const systemsLanguage = systemsSignalScore(allText);
+  const multiConditionScore = arrayPresenceScore(organizationalConditions, 4);
+  const stateFocusScore = arrayPresenceScore(
+    organizationalState?.recommendedFocus,
+    3,
+  );
+
+  return clamp01(
+    systemsLanguage * 0.5 +
+      multiConditionScore * 0.25 +
+      stateFocusScore * 0.25,
   );
 }
 
@@ -379,9 +639,9 @@ function confidenceCalibrationScore(params: {
   );
 
   const evidenceStrength = clamp01(
-    theoryValidationScore * 0.4 +
-      mechanismScore * 0.3 +
-      compressionScore * 0.3 -
+    theoryValidationScore * 0.3 +
+      mechanismScore * 0.35 +
+      compressionScore * 0.25 -
       avoidPenaltyScore,
   );
 
@@ -451,8 +711,19 @@ export function scoreBenchmark(
   const capabilities = actual.capabilities ?? [];
   const compressedConcepts = actual.compressedConcepts ?? [];
   const conceptualUnderstanding = actual.conceptualUnderstanding ?? [];
+
+  const conditionText = organizationalConditionText(
+    actual.organizationalConditions,
+  );
+
+  const stateText = organizationalStateText(actual.organizationalState);
+  const assessmentText = executiveAssessmentText(actual.executiveAssessment);
+
   const executiveText = [
     ...(actual.executiveText ? [actual.executiveText] : []),
+    ...stateText,
+    ...assessmentText,
+    ...conditionText,
     ...theoryValidationText(actual.theoryValidation),
   ];
 
@@ -497,7 +768,13 @@ export function scoreBenchmark(
     ...finalConcepts,
   ]);
 
-  const compressionScore = Math.max(finalConceptScore, executiveTheoryScore);
+  const executiveConditionScore = conditionSignalScore(executiveText);
+
+  const compressionScore = Math.max(
+    finalConceptScore,
+    executiveTheoryScore,
+    executiveConditionScore,
+  );
 
   const patternScore = patternCoherenceScore({
     mechanisms,
@@ -518,9 +795,38 @@ export function scoreBenchmark(
     benchmark.expected.avoid,
   );
 
+  const conditionReasoning = conditionReasoningScore({
+    organizationalConditions: actual.organizationalConditions,
+    executiveText,
+  });
+
+  const organizationalState = organizationalStateScore({
+    organizationalState: actual.organizationalState,
+    organizationalConditions: actual.organizationalConditions,
+    executiveText,
+  });
+
+  const executivePrioritization = executivePrioritizationScore({
+    organizationalState: actual.organizationalState,
+    executiveAssessment: actual.executiveAssessment,
+    executiveText,
+  });
+
+  const systemsThinking = systemsThinkingScore({
+    organizationalConditions: actual.organizationalConditions,
+    organizationalState: actual.organizationalState,
+    executiveAssessment: actual.executiveAssessment,
+    executiveText,
+  });
+
   const executiveScore = clamp01(
-    Math.max(executiveMechanismScore, executiveTheoryScore) -
-      executiveAvoidPenalty,
+    Math.max(
+      executiveMechanismScore,
+      executiveTheoryScore,
+      executiveConditionScore,
+      organizationalState,
+      executivePrioritization,
+    ) - executiveAvoidPenalty,
   );
 
   const theoryValidation = theoryValidationScore({
@@ -553,12 +859,14 @@ export function scoreBenchmark(
   });
 
   const score =
-    mechanismScore * 0.25 +
+    mechanismScore * 0.2 +
     capabilityScore * 0.1 +
-    compressionScore * 0.15 +
+    compressionScore * 0.1 +
+    conditionReasoning * 0.1 +
+    organizationalState * 0.1 +
     executiveScore * 0.15 +
-    patternScore * 0.1 +
-    theoryValidation * 0.1 +
+    systemsThinking * 0.05 +
+    theoryValidation * 0.05 +
     confidenceCalibration * 0.075 +
     evidenceAttribution * 0.075;
 
@@ -578,19 +886,43 @@ export function scoreBenchmark(
 
   if (compressionScore < 0.5) {
     notes.push(
-      "Final conceptual understanding did not clearly form the expected higher-order organizational theory.",
+      "Final conceptual understanding did not clearly form the expected higher-order organizational theory or condition.",
+    );
+  }
+
+  if (conditionReasoning < 0.6) {
+    notes.push(
+      "Condition reasoning is weak: Discovery did not clearly synthesize organizational conditions as first-class executive objects.",
+    );
+  }
+
+  if (organizationalState < 0.6) {
+    notes.push(
+      "Organizational state synthesis is weak: Discovery did not clearly combine conditions into a coherent current state.",
+    );
+  }
+
+  if (executivePrioritization < 0.6) {
+    notes.push(
+      "Executive prioritization is weak: Discovery did not clearly identify which organizational condition deserves attention first.",
+    );
+  }
+
+  if (systemsThinking < 0.5) {
+    notes.push(
+      "Systems thinking is weak: Discovery did not clearly explain how organizational conditions influence one another.",
     );
   }
 
   if (patternScore < 0.6) {
     notes.push(
-      "Pattern coherence is weak: mechanisms, concepts, and executive theory are not yet converging cleanly.",
+      "Pattern coherence is weak: mechanisms, concepts, conditions, and executive assessment are not yet converging cleanly.",
     );
   }
 
   if (theoryValidation < 0.6) {
     notes.push(
-      "Theory validation is weak: Discovery selected a theory but did not clearly defend why it deserves to survive.",
+      "Theory validation is weak: Discovery preserved theory support but did not clearly explain how theories support the condition-level assessment.",
     );
   }
 
@@ -602,13 +934,13 @@ export function scoreBenchmark(
 
   if (evidenceAttribution < 0.6) {
     notes.push(
-      "Evidence attribution is weak: Discovery did not clearly trace the executive conclusion back to mechanisms, concepts, or evidence.",
+      "Evidence attribution is weak: Discovery did not clearly trace the executive conclusion back to mechanisms, concepts, conditions, or evidence.",
     );
   }
 
   if (executiveScore < 0.5) {
     notes.push(
-      "Executive assessment did not clearly center the expected mechanism or higher-order theory.",
+      "Executive assessment did not clearly synthesize organizational conditions into a coherent organizational state.",
     );
   }
 

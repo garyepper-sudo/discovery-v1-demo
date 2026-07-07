@@ -33,6 +33,22 @@ type OrganizationalLearningProfileSnapshot = {
   learningVelocity?: string;
 };
 
+type OrganizationalConditionSnapshot = {
+  name?: string;
+  status?: string;
+  priority?: string;
+  summary?: string;
+  whyItMatters?: string;
+  recommendedExecutiveAction?: string;
+};
+
+type OrganizationalStateSnapshot = {
+  status?: string;
+  summary?: string;
+  executiveImplication?: string;
+  recommendedFocus?: string[];
+};
+
 export type BenchmarkRuntimeMemory = {
   observations?: unknown[];
 
@@ -72,6 +88,9 @@ export type BenchmarkRuntimeMemory = {
     reason?: string;
   }>;
 
+  organizationalConditions?: OrganizationalConditionSnapshot[];
+  organizationalState?: OrganizationalStateSnapshot;
+
   memoryMaturity?: MemoryMaturitySnapshot | null;
 
   organizationalLearningProfile?: OrganizationalLearningProfileSnapshot | null;
@@ -79,6 +98,8 @@ export type BenchmarkRuntimeMemory = {
   organizationalMemory?: {
     maturity?: MemoryMaturitySnapshot | null;
     organizationalLearningProfile?: OrganizationalLearningProfileSnapshot | null;
+    organizationalConditions?: OrganizationalConditionSnapshot[];
+    organizationalState?: OrganizationalStateSnapshot;
   } | null;
 
   executiveAssessment?: {
@@ -86,6 +107,7 @@ export type BenchmarkRuntimeMemory = {
     executiveNarrative?: string;
     mechanismCenteredNarrative?: string;
     primaryMechanismSummaries?: string[];
+    recommendedFocus?: string[];
     theoryValidation?: {
       dominantTheory?: string | null;
       whyDiscoveryBelievesIt?: string;
@@ -226,11 +248,40 @@ export function runBenchmarkInvestigation(params: {
   const conceptualUnderstanding =
     memory.conceptualUnderstanding?.map(conceptText) ?? [];
 
+  const organizationalConditions =
+    memory.organizationalConditions ??
+    memory.organizationalMemory?.organizationalConditions ??
+    [];
+
+  const organizationalState =
+    memory.organizationalState ??
+    memory.organizationalMemory?.organizationalState;
+
+  const executiveAssessment = memory.executiveAssessment
+    ? {
+        summary: memory.executiveAssessment.summary,
+        executiveNarrative: memory.executiveAssessment.executiveNarrative,
+        recommendedFocus: memory.executiveAssessment.recommendedFocus,
+      }
+    : undefined;
+
   const executiveText = [
     memory.executiveAssessment?.summary,
     memory.executiveAssessment?.executiveNarrative,
     memory.executiveAssessment?.mechanismCenteredNarrative,
     ...(memory.executiveAssessment?.primaryMechanismSummaries ?? []),
+    ...(memory.executiveAssessment?.recommendedFocus ?? []),
+    organizationalState?.summary,
+    organizationalState?.executiveImplication,
+    ...(organizationalState?.recommendedFocus ?? []),
+    ...organizationalConditions.flatMap((condition) => [
+      condition.name,
+      condition.status,
+      condition.priority,
+      condition.summary,
+      condition.whyItMatters,
+      condition.recommendedExecutiveAction,
+    ]),
     theoryValidationText(memory.executiveAssessment?.theoryValidation),
   ]
     .filter(Boolean)
@@ -252,6 +303,9 @@ export function runBenchmarkInvestigation(params: {
     executiveText,
     theoryValidation: memory.executiveAssessment?.theoryValidation,
     organizationalLearningProfile,
+    organizationalConditions,
+    organizationalState,
+    executiveAssessment,
   });
 
   const cognitiveFitness = scoreUnderstandingFitness({

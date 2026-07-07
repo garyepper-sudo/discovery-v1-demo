@@ -33,6 +33,7 @@ import { inferFunctionalInterpretations } from "../functional/inferFunctionalInt
 import { createEmptyOrganizationalUnderstandingState } from "./organizationalUnderstandingState";
 import { synchronizeOrganizationModel } from "../model/synchronizeOrganizationModel";
 import { inferOrganizationRelationships } from "../model/inferOrganizationRelationships";
+import { inferOrganizationalConditions } from "../model/state/inferOrganizationalConditions";
 
 export function evolveOrganizationRuntime(params: {
   runtime: OrganizationRuntime;
@@ -74,6 +75,8 @@ export function evolveOrganizationRuntime(params: {
     understandingSnapshots?: any[];
     learningEvents?: any[];
     organizationalLearningProfile?: any;
+    organizationalConditions?: any[];
+    organizationalState?: any;
   };
 
   const now = new Date().toISOString();
@@ -412,9 +415,30 @@ export function evolveOrganizationRuntime(params: {
 
   const conceptualUnderstanding = compressConceptCandidates(conceptCandidates);
 
+  const organizationalConditionResult = inferOrganizationalConditions({
+    conceptualUnderstanding,
+    organizationalBeliefs: organizationalBeliefState.beliefs,
+    mechanisms: safeMechanismNetwork.mechanisms,
+    theories: organizationalTheoryState.theories,
+    theoryEvolution: [
+      ...(memory.theoryEvolution ?? []),
+      ...organizationalTheoryState.theoryEvolution,
+    ],
+    capabilities: organizationalCapabilitiesState.capabilities,
+    memoryMaturity,
+    previousConditions: memory.organizationalConditions ?? [],
+    previousState: memory.organizationalState,
+    now,
+  });
+
+  const organizationalConditions = organizationalConditionResult.conditions;
+  const organizationalState = organizationalConditionResult.state;
+
   console.log("Semantic Reasoning", semanticReasoning);
   console.log("Concept Candidates", conceptCandidates);
   console.log("Conceptual Understanding", conceptualUnderstanding);
+  console.log("Organizational Conditions", organizationalConditions);
+  console.log("Organizational State", organizationalState);
 
   console.log("Organizational Beliefs", organizationalBeliefState.beliefs);
   console.log(
@@ -428,6 +452,8 @@ export function evolveOrganizationRuntime(params: {
     conceptCandidates,
     conceptualUnderstanding,
     organizationalBeliefs: organizationalBeliefState.beliefs,
+    organizationalConditions,
+    organizationalState,
   });
 
   console.log("Executive Assessment", executiveAssessment);
@@ -458,6 +484,9 @@ export function evolveOrganizationRuntime(params: {
     semanticConceptCount: semanticConcepts.length,
     conceptCandidateCount: conceptCandidates.length,
     conceptualUnderstandingCount: conceptualUnderstanding.length,
+    organizationalConditionCount: organizationalConditions.length,
+    organizationalStateSummary: organizationalState.summary,
+    organizationalStateConfidence: organizationalState.confidence,
 
     organizationalPhenomenonCount:
       organizationalPhenomenaState.phenomena.length,
@@ -532,6 +561,8 @@ export function evolveOrganizationRuntime(params: {
     organizationalExplanations,
     organizationalJudgments,
     executiveAssessment,
+    organizationalConditions,
+    organizationalState,
 
     functionalInterpretationState: organizationalDynamicsState,
     organizationalCapabilitiesState,
@@ -572,6 +603,8 @@ export function evolveOrganizationRuntime(params: {
       understandingSnapshots,
       learningEvents: allLearningEvents,
       organizationalLearningProfile,
+      organizationalConditions,
+      organizationalState,
     },
 
     understandingClusters,
@@ -609,6 +642,8 @@ export function evolveOrganizationRuntime(params: {
         semanticCohortCount: semanticReasoning.cohorts.length,
         conceptCandidateCount: conceptCandidates.length,
         conceptualUnderstandingCount: conceptualUnderstanding.length,
+        organizationalConditionCount: organizationalConditions.length,
+        organizationalStateConfidence: organizationalState.confidence,
         meaningSignalCount: meaningSignals.length,
         organizationalConceptCount: organizationalConcepts.length,
         organizationalPhenomenonCount:
@@ -660,6 +695,8 @@ export function evolveOrganizationRuntime(params: {
     understandingSnapshots: (typeof understandingSnapshot)[];
     learningEvents: typeof allLearningEvents;
     organizationalLearningProfile: typeof organizationalLearningProfile;
+    organizationalConditions: typeof organizationalConditions;
+    organizationalState: typeof organizationalState;
   };
 
   return {
