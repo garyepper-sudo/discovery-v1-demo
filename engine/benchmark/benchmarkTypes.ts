@@ -51,6 +51,31 @@ export type BenchmarkTheoryValidation = {
   executiveRecommendation?: string;
 };
 
+/* ===========================================================
+   Organizational Learning Benchmark
+   =========================================================== */
+
+export type OrganizationalLearningScore = {
+  organizationalLearningScore: number;
+
+  learningVelocity: number;
+  memoryGrowth: number;
+  understandingGrowth: number;
+
+  beliefStability: number;
+  theoryStability: number;
+  knowledgeRetention: number;
+
+  mechanismReuse: number;
+  conceptReuse: number;
+
+  adaptiveLearning: number;
+
+  passed: boolean;
+
+  diagnosis: string[];
+};
+
 export type DiscoveryBenchmarkCase = {
   id: string;
   title: string;
@@ -60,6 +85,22 @@ export type DiscoveryBenchmarkCase = {
   context?: string;
   evidence: BenchmarkEvidence[];
   expected: BenchmarkExpectedOutput;
+};
+
+export type CognitiveFitnessScore = {
+  perception: number;
+  patternFormation: number;
+  mechanisticReasoning: number;
+  organizationalMemory: number;
+  conceptFormation: number;
+  theoryFormation: number;
+  cognitiveIntegration: number;
+  executiveUnderstanding: number;
+  epistemicIntelligence: number;
+  emergence: number;
+
+  overall: number;
+  maturityLevel: number;
 };
 
 export type BenchmarkScore = {
@@ -84,14 +125,40 @@ export type BenchmarkScore = {
   confidenceCalibrationScore: number;
   evidenceAttributionScore: number;
 
+  /**
+   * Cognitive Fitness
+   */
+  cognitiveFitness?: CognitiveFitnessScore;
+
+  /**
+   * Organizational Learning
+   */
+  organizationalLearningScore?: number;
+  organizationalLearning?: OrganizationalLearningScore;
+
   notes: string[];
 };
 
 export type BenchmarkReport = {
   generatedAt: string;
+
   totalBenchmarks: number;
   passedBenchmarks: number;
   failedBenchmarks: number;
+
   overallScore: number;
+
+  /**
+   * Cognitive Fitness
+   */
+  cognitiveFitnessOverall?: number;
+  cognitiveFitness?: CognitiveFitnessScore;
+
+  /**
+   * Organizational Learning
+   */
+  organizationalLearningOverall?: number;
+  organizationalLearning?: OrganizationalLearningScore;
+
   scores: BenchmarkScore[];
 };

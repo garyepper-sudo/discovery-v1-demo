@@ -1,4 +1,5 @@
 import type { OrganizationalUnderstandingState } from "./organizationalUnderstandingState";
+import { createEmptyOrganizationalUnderstandingState } from "./organizationalUnderstandingState";
 import type {
   PersistentBelief,
   UnderstandingCluster,
@@ -7,6 +8,15 @@ import type { EvolvedObservation } from "../cognition/observationEvolution";
 import { createOrganizationModel } from "../model/createOrganizationModel";
 import type { OrganizationModel } from "../model/organizationModel";
 import type { EntityMention } from "../entities/entityLifecycle";
+
+import type { OrganizationalMemory } from "../model/memory/organizationalMemory";
+
+import type {
+  OrganizationalMemoryMaturity,
+  OrganizationalTheory,
+  OrganizationalTheoryEvolution,
+  UnderstandingEvolution,
+} from "../model/memory/organizationalTheories";
 
 export type OrganizationRuntimeMetadata = {
   organizationId: string;
@@ -19,22 +29,33 @@ export type OrganizationRuntimeMetadata = {
 };
 
 export type OrganizationRuntimeMemory = {
+  /**
+   * Sprint 34
+   *
+   * Canonical long-term organizational memory.
+   *
+   * During Sprint 34 this exists alongside the legacy runtime fields.
+   * Once migration is complete these legacy fields will be removed and
+   * OrganizationalMemory will become the single source of truth.
+   */
+  organizationalMemory: OrganizationalMemory | null;
+
+  /**
+   * Legacy runtime fields
+   * (kept temporarily for backwards compatibility)
+   */
   understandingState: unknown;
   organizationalUnderstandingState: OrganizationalUnderstandingState;
   understandingClusters: UnderstandingCluster[];
-
-  /**
-   * Sprint 36
-   *
-   * Perceptual entity mentions extracted from investigation material.
-   * These are not yet persistent organizational memory.
-   * They are raw recognized references that can later be resolved
-   * into stable OrganizationalEntity records in the OrganizationModel.
-   */
   entityMentions: EntityMention[];
 
   observations: EvolvedObservation[];
   beliefs: PersistentBelief[];
+
+  theories: OrganizationalTheory[];
+  theoryEvolution: OrganizationalTheoryEvolution[];
+  understandingEvolution: UnderstandingEvolution | null;
+  memoryMaturity: OrganizationalMemoryMaturity | null;
 
   patterns: unknown[];
   deltas: unknown[];
@@ -56,25 +77,8 @@ export type OrganizationRuntimeOrganism = {
 
 export type OrganizationRuntime = {
   metadata: OrganizationRuntimeMetadata;
-
-  /**
-   * Sprint 35
-   *
-   * Canonical representation of organizational understanding.
-   * Every cognitive engine should gradually migrate to reading
-   * from and contributing back into this shared model.
-   */
   organizationModel: OrganizationModel;
-
-  /**
-   * Legacy cognitive state.
-   *
-   * These structures remain during the migration to the unified
-   * organizational model and will increasingly become cached
-   * projections rather than primary sources of truth.
-   */
   memory: OrganizationRuntimeMemory;
-
   organism: OrganizationRuntimeOrganism;
 };
 
@@ -100,35 +104,38 @@ export function createEmptyOrganizationRuntime(params: {
     organizationModel: createOrganizationModel(params.organizationId),
 
     memory: {
+      /**
+       * Sprint 34 canonical memory.
+       *
+       * This starts as null and will be populated by the new
+       * Memory Consolidation pipeline.
+       */
+      organizationalMemory: null,
+
+      /**
+       * Legacy runtime state
+       */
       understandingState: null,
 
-      organizationalUnderstandingState: {
-        organizationId: params.organizationId,
-        name: params.name,
-        industry: params.industry,
-        website: params.website,
-        lastUpdatedAt: now,
-        currentUnderstandings: [],
-        organizationalConcepts: [],
-        organizationalBeliefs: [],
-        confidenceLandscape: [],
-        activeQuestions: [],
-        strategicRisks: [],
-        evolutionHistory: [],
-        health: {
-          maturity: 0,
-          coherence: 0,
-          uncertainty: 1,
-          adaptation: 0,
-        },
-      },
+      organizationalUnderstandingState:
+        createEmptyOrganizationalUnderstandingState({
+          organizationId: params.organizationId,
+          name: params.name,
+          industry: params.industry,
+          website: params.website,
+          now,
+        }),
 
       understandingClusters: [],
-
       entityMentions: [],
 
       observations: [],
       beliefs: [],
+
+      theories: [],
+      theoryEvolution: [],
+      understandingEvolution: null,
+      memoryMaturity: null,
 
       patterns: [],
       deltas: [],

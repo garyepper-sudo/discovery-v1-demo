@@ -1,4 +1,90 @@
-import type { BenchmarkReport, BenchmarkScore } from "./benchmarkTypes";
+import type {
+  BenchmarkReport,
+  BenchmarkScore,
+  CognitiveFitnessScore,
+  OrganizationalLearningScore,
+} from "./benchmarkTypes";
+
+function average(values: number[]): number {
+  if (values.length === 0) return 0;
+  return Math.round(values.reduce((sum, value) => sum + value, 0) / values.length);
+}
+
+function aggregateCognitiveFitness(
+  scores: BenchmarkScore[],
+): CognitiveFitnessScore | undefined {
+  const fitnessScores = scores
+    .map((score) => score.cognitiveFitness)
+    .filter((score): score is CognitiveFitnessScore => Boolean(score));
+
+  if (fitnessScores.length === 0) return undefined;
+
+  return {
+    perception: average(fitnessScores.map((score) => score.perception)),
+    patternFormation: average(fitnessScores.map((score) => score.patternFormation)),
+    mechanisticReasoning: average(
+      fitnessScores.map((score) => score.mechanisticReasoning),
+    ),
+    organizationalMemory: average(
+      fitnessScores.map((score) => score.organizationalMemory),
+    ),
+    conceptFormation: average(fitnessScores.map((score) => score.conceptFormation)),
+    theoryFormation: average(fitnessScores.map((score) => score.theoryFormation)),
+    cognitiveIntegration: average(
+      fitnessScores.map((score) => score.cognitiveIntegration),
+    ),
+    executiveUnderstanding: average(
+      fitnessScores.map((score) => score.executiveUnderstanding),
+    ),
+    epistemicIntelligence: average(
+      fitnessScores.map((score) => score.epistemicIntelligence),
+    ),
+    emergence: average(fitnessScores.map((score) => score.emergence)),
+    overall: average(fitnessScores.map((score) => score.overall)),
+    maturityLevel: average(fitnessScores.map((score) => score.maturityLevel)),
+  };
+}
+
+function aggregateOrganizationalLearning(
+  scores: BenchmarkScore[],
+): OrganizationalLearningScore | undefined {
+  const learningScores = scores
+    .map((score) => score.organizationalLearning)
+    .filter((score): score is OrganizationalLearningScore => Boolean(score));
+
+  if (learningScores.length === 0) return undefined;
+
+  return {
+    organizationalLearningScore: average(
+      learningScores.map((score) => score.organizationalLearningScore),
+    ),
+    learningVelocity: average(
+      learningScores.map((score) => score.learningVelocity),
+    ),
+    memoryGrowth: average(learningScores.map((score) => score.memoryGrowth)),
+    understandingGrowth: average(
+      learningScores.map((score) => score.understandingGrowth),
+    ),
+    beliefStability: average(
+      learningScores.map((score) => score.beliefStability),
+    ),
+    theoryStability: average(
+      learningScores.map((score) => score.theoryStability),
+    ),
+    knowledgeRetention: average(
+      learningScores.map((score) => score.knowledgeRetention),
+    ),
+    mechanismReuse: average(learningScores.map((score) => score.mechanismReuse)),
+    conceptReuse: average(learningScores.map((score) => score.conceptReuse)),
+    adaptiveLearning: average(
+      learningScores.map((score) => score.adaptiveLearning),
+    ),
+    passed: learningScores.every((score) => score.passed),
+    diagnosis: Array.from(
+      new Set(learningScores.flatMap((score) => score.diagnosis)),
+    ),
+  };
+}
 
 export function createBenchmarkReport(
   scores: BenchmarkScore[],
@@ -12,14 +98,48 @@ export function createBenchmarkReport(
           scores.reduce((sum, score) => sum + score.score, 0) / scores.length,
         );
 
+  const cognitiveFitness = aggregateCognitiveFitness(scores);
+  const organizationalLearning = aggregateOrganizationalLearning(scores);
+
   return {
     generatedAt: new Date().toISOString(),
     totalBenchmarks: scores.length,
     passedBenchmarks: passed,
     failedBenchmarks: scores.length - passed,
     overallScore,
+    cognitiveFitnessOverall: cognitiveFitness?.overall,
+    cognitiveFitness,
+    organizationalLearningOverall:
+      organizationalLearning?.organizationalLearningScore,
+    organizationalLearning,
     scores,
   };
+}
+
+function printCognitiveFitness(score: CognitiveFitnessScore): void {
+  console.log(`   Cognitive Fitness      : ${score.overall}%`);
+  console.log(`   Maturity Level         : ${score.maturityLevel}`);
+  console.log(`   Pattern Formation      : ${score.patternFormation}%`);
+  console.log(`   Mechanistic Reasoning  : ${score.mechanisticReasoning}%`);
+  console.log(`   Organizational Memory  : ${score.organizationalMemory}%`);
+  console.log(`   Concept Formation      : ${score.conceptFormation}%`);
+  console.log(`   Theory Formation       : ${score.theoryFormation}%`);
+  console.log(`   Cognitive Integration  : ${score.cognitiveIntegration}%`);
+  console.log(`   Epistemic Intelligence : ${score.epistemicIntelligence}%`);
+  console.log(`   Emergence              : ${score.emergence}%`);
+}
+
+function printOrganizationalLearning(score: OrganizationalLearningScore): void {
+  console.log(`   Organizational Learning: ${score.organizationalLearningScore}%`);
+  console.log(`   Learning Velocity      : ${score.learningVelocity}%`);
+  console.log(`   Memory Growth          : ${score.memoryGrowth}%`);
+  console.log(`   Understanding Growth   : ${score.understandingGrowth}%`);
+  console.log(`   Belief Stability       : ${score.beliefStability}%`);
+  console.log(`   Theory Stability       : ${score.theoryStability}%`);
+  console.log(`   Knowledge Retention    : ${score.knowledgeRetention}%`);
+  console.log(`   Mechanism Reuse        : ${score.mechanismReuse}%`);
+  console.log(`   Concept Reuse          : ${score.conceptReuse}%`);
+  console.log(`   Adaptive Learning      : ${score.adaptiveLearning}%`);
 }
 
 function printDiagnosis(score: BenchmarkScore): void {
@@ -49,6 +169,24 @@ function printDiagnosis(score: BenchmarkScore): void {
 
   if (score.evidenceAttributionScore >= 70) {
     console.log("      ✓ Executive conclusions are traceable to supporting evidence.");
+  }
+
+  if (score.organizationalLearning) {
+    for (const item of score.organizationalLearning.diagnosis) {
+      console.log(`      ✓ ${item}`);
+    }
+  }
+
+  if (score.cognitiveFitness?.cognitiveIntegration !== undefined) {
+    if (score.cognitiveFitness.cognitiveIntegration >= 80) {
+      console.log(
+        "      ✓ Cognitive layers are integrating into a unified organizational model.",
+      );
+    } else if (score.cognitiveFitness.cognitiveIntegration < 60) {
+      console.log(
+        "      ~ Cognitive integration remains the main frontier: outputs exist, but synthesis can improve.",
+      );
+    }
   }
 
   if (score.mechanismInferenceScore < 50) {
@@ -83,6 +221,36 @@ function printDiagnosis(score: BenchmarkScore): void {
 }
 
 function printRecommendation(score: BenchmarkScore): void {
+  if (
+    score.organizationalLearning &&
+    score.organizationalLearning.organizationalLearningScore < 60
+  ) {
+    console.log(
+      "   Recommendation: improve longitudinal learning, historical continuity, and evidence reuse across investigations.",
+    );
+    return;
+  }
+
+  if (
+    score.cognitiveFitness &&
+    score.cognitiveFitness.cognitiveIntegration < 60
+  ) {
+    console.log(
+      "   Recommendation: improve synthesis across beliefs, mechanisms, concepts, and executive conclusions.",
+    );
+    return;
+  }
+
+  if (
+    score.cognitiveFitness &&
+    score.cognitiveFitness.organizationalMemory < 60
+  ) {
+    console.log(
+      "   Recommendation: improve memory reuse, belief evolution, and historical continuity.",
+    );
+    return;
+  }
+
   if (score.mechanismInferenceScore < 50) {
     console.log("   Recommendation: improve mechanism inference.");
     return;
@@ -136,6 +304,19 @@ export function printBenchmarkReport(report: BenchmarkReport): void {
   console.log(`Failed     : ${report.failedBenchmarks}`);
   console.log(`Overall Understanding : ${report.overallScore}%`);
 
+  if (report.cognitiveFitness) {
+    console.log(`Cognitive Fitness     : ${report.cognitiveFitness.overall}%`);
+    console.log(
+      `Cognitive Maturity    : Level ${report.cognitiveFitness.maturityLevel}`,
+    );
+  }
+
+  if (report.organizationalLearning) {
+    console.log(
+      `Organizational Learning: ${report.organizationalLearning.organizationalLearningScore}%`,
+    );
+  }
+
   console.log("");
   console.log("--------------------------------------");
   console.log("ORGANIZATIONAL UNDERSTANDING SCORECARD");
@@ -154,6 +335,18 @@ export function printBenchmarkReport(report: BenchmarkReport): void {
     console.log(`   Theory Validation      : ${score.theoryValidationScore}%`);
     console.log(`   Confidence Calibration : ${score.confidenceCalibrationScore}%`);
     console.log(`   Evidence Attribution   : ${score.evidenceAttributionScore}%`);
+
+    if (score.cognitiveFitness) {
+      console.log("");
+      console.log("   Cognitive Fitness Profile:");
+      printCognitiveFitness(score.cognitiveFitness);
+    }
+
+    if (score.organizationalLearning) {
+      console.log("");
+      console.log("   Organizational Learning Profile:");
+      printOrganizationalLearning(score.organizationalLearning);
+    }
 
     if (score.notes.length > 0) {
       console.log("");

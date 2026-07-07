@@ -2,6 +2,7 @@ import type {
   BenchmarkScore,
   DiscoveryBenchmarkCase,
 } from "./benchmarkTypes";
+import { scoreOrganizationalLearningBenchmark } from "./organizationalLearningBenchmark";
 
 type TheoryValidationItem = {
   label?: string;
@@ -17,6 +18,7 @@ type CompetingTheoryItem = {
 };
 
 type ActualBenchmarkOutput = {
+  organizationalLearningProfile?: unknown;
   mechanisms?: string[];
   capabilities?: string[];
   compressedConcepts?: string[];
@@ -546,6 +548,10 @@ export function scoreBenchmark(
     theoryValidation: actual.theoryValidation,
   });
 
+  const organizationalLearning = scoreOrganizationalLearningBenchmark({
+    learningProfile: actual.organizationalLearningProfile ?? null,
+  });
+
   const score =
     mechanismScore * 0.25 +
     capabilityScore * 0.1 +
@@ -626,6 +632,10 @@ export function scoreBenchmark(
     theoryValidationScore: Math.round(theoryValidation * 100),
     confidenceCalibrationScore: Math.round(confidenceCalibration * 100),
     evidenceAttributionScore: Math.round(evidenceAttribution * 100),
+
+    organizationalLearningScore:
+      organizationalLearning.organizationalLearningScore,
+    organizationalLearning,
 
     notes,
   };

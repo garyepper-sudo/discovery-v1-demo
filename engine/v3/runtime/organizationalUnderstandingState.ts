@@ -10,6 +10,31 @@ export type UnderstandingStateStatus =
 
 export type UnderstandingStateConfidenceBand = "low" | "medium" | "high";
 
+export type OrganizationalDomainKey =
+  | "strategy"
+  | "finance"
+  | "operations"
+  | "customers"
+  | "employees"
+  | "products";
+
+export type OrganizationalDomainRelevance = Record<
+  OrganizationalDomainKey,
+  number
+>;
+
+export type OrganizationalUnderstandingScore = {
+  overall: number;
+  coverage: number;
+  confidence: number;
+  evidenceDiversity: number;
+  crossValidation: number;
+  continuity: number;
+  contradictionResolution: number;
+  emergence: number;
+  memoryMaturity: number;
+};
+
 export type OrganizationalUnderstandingHistoryEvent = {
   date: string;
   event:
@@ -22,6 +47,17 @@ export type OrganizationalUnderstandingHistoryEvent = {
   previousConfidence?: number;
   nextConfidence: number;
   reason: string;
+};
+
+export type OrganizationalUnderstandingRecommendation = {
+  id: string;
+  title: string;
+  description: string;
+  priority: "low" | "medium" | "high";
+  expectedImpact: number;
+  relatedDomain?: OrganizationalDomainKey;
+  relatedUnderstandingIds: string[];
+  suggestedEvidenceTypes: string[];
 };
 
 export type OrganizationalUnderstandingItem = {
@@ -37,11 +73,17 @@ export type OrganizationalUnderstandingItem = {
   strength: number;
   stability: number;
 
+  coverage: number;
+  novelty: number;
+  explanatoryPower: number;
+
   status: UnderstandingStateStatus;
 
   firstSeenAt: string;
   lastUpdatedAt: string;
   supportCount: number;
+
+  domainRelevance: OrganizationalDomainRelevance;
 
   evidenceIds: string[];
   observationIds: string[];
@@ -49,16 +91,45 @@ export type OrganizationalUnderstandingItem = {
   themeIds: string[];
   mechanismIds: string[];
   contradictionIds: string[];
+  recommendationIds: string[];
 
   supportingDynamics: string[];
   supportingCapabilities: string[];
   investigationIds: string[];
+
+  missingInformation: string[];
 
   whyItMatters: string;
   openQuestions: string[];
   implications: string[];
 
   history: OrganizationalUnderstandingHistoryEvent[];
+};
+
+export type OrganizationalDomainUnderstanding = {
+  domain: OrganizationalDomainKey;
+  label: string;
+
+  score: OrganizationalUnderstandingScore;
+
+  confidence: number;
+  coverage: number;
+
+  summary: string;
+
+  coreBeliefIds: string[];
+  patternIds: string[];
+  mechanismIds: string[];
+  contradictionIds: string[];
+  evidenceIds: string[];
+  recommendationIds: string[];
+
+  missingInformation: string[];
+  openQuestions: string[];
+
+  relatedUnderstandingIds: string[];
+
+  lastUpdatedAt: string;
 };
 
 export type OrganizationalConfidenceArea = {
@@ -111,9 +182,18 @@ export type OrganizationalUnderstandingState = {
 
   lastUpdatedAt: string;
 
+  score: OrganizationalUnderstandingScore;
+
+  executiveSummary: string;
+
   currentUnderstandings: OrganizationalUnderstandingItem[];
   organizationalConcepts: OrganizationalConcept[];
   organizationalBeliefs: OrganizationalBelief[];
+
+  domains: OrganizationalDomainUnderstanding[];
+
+  recommendations: OrganizationalUnderstandingRecommendation[];
+  missingInformation: string[];
 
   confidenceLandscape: OrganizationalConfidenceArea[];
   activeQuestions: OrganizationalOpenQuestion[];
@@ -127,6 +207,98 @@ export type OrganizationalUnderstandingState = {
     adaptation: number;
   };
 };
+
+export function createEmptyUnderstandingScore(): OrganizationalUnderstandingScore {
+  return {
+    overall: 0,
+    coverage: 0,
+    confidence: 0,
+    evidenceDiversity: 0,
+    crossValidation: 0,
+    continuity: 0,
+    contradictionResolution: 0,
+    emergence: 0,
+    memoryMaturity: 0,
+  };
+}
+
+export function createEmptyDomainRelevance(): OrganizationalDomainRelevance {
+  return {
+    strategy: 0,
+    finance: 0,
+    operations: 0,
+    customers: 0,
+    employees: 0,
+    products: 0,
+  };
+}
+
+export function createEmptyDomainUnderstanding(params: {
+  domain: OrganizationalDomainKey;
+  label: string;
+  now: string;
+}): OrganizationalDomainUnderstanding {
+  return {
+    domain: params.domain,
+    label: params.label,
+
+    score: createEmptyUnderstandingScore(),
+
+    confidence: 0,
+    coverage: 0,
+
+    summary: "",
+
+    coreBeliefIds: [],
+    patternIds: [],
+    mechanismIds: [],
+    contradictionIds: [],
+    evidenceIds: [],
+    recommendationIds: [],
+
+    missingInformation: [],
+    openQuestions: [],
+
+    relatedUnderstandingIds: [],
+
+    lastUpdatedAt: params.now,
+  };
+}
+
+export function createDefaultDomainUnderstandings(now: string): OrganizationalDomainUnderstanding[] {
+  return [
+    createEmptyDomainUnderstanding({
+      domain: "strategy",
+      label: "Strategy",
+      now,
+    }),
+    createEmptyDomainUnderstanding({
+      domain: "finance",
+      label: "Finance",
+      now,
+    }),
+    createEmptyDomainUnderstanding({
+      domain: "operations",
+      label: "Operations",
+      now,
+    }),
+    createEmptyDomainUnderstanding({
+      domain: "customers",
+      label: "Customers",
+      now,
+    }),
+    createEmptyDomainUnderstanding({
+      domain: "employees",
+      label: "Employees",
+      now,
+    }),
+    createEmptyDomainUnderstanding({
+      domain: "products",
+      label: "Products & Services",
+      now,
+    }),
+  ];
+}
 
 export function getConfidenceBand(
   confidence: number
@@ -214,9 +386,18 @@ export function createEmptyOrganizationalUnderstandingState(params: {
 
     lastUpdatedAt: params.now,
 
+    score: createEmptyUnderstandingScore(),
+
+    executiveSummary: "",
+
     currentUnderstandings: [],
     organizationalConcepts: [],
     organizationalBeliefs: [],
+
+    domains: createDefaultDomainUnderstandings(params.now),
+
+    recommendations: [],
+    missingInformation: [],
 
     confidenceLandscape: [],
     activeQuestions: [],

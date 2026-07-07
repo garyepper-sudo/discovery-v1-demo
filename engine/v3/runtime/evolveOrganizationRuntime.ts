@@ -2,6 +2,8 @@ import type { DiscoveryV3Result } from "../types";
 import type { OrganizationRuntime } from "./organizationRuntime";
 import type { OrganizationalUnderstandingState } from "./organizationalUnderstandingState";
 import { buildOrganizationReasoningGraph } from "../model/buildOrganizationReasoningGraph";
+import { buildUnderstandingEvolution } from "../model/memory/buildUnderstandingEvolution";
+import { calculateMemoryMaturity } from "../model/memory/calculateMemoryMaturity";
 import { inferOrganizationalObservations } from "../model/observations/inferOrganizationalObservations";
 import { inferReasoningRelationships } from "../model/inferReasoningRelationships";
 import { runOrganizationalReasoningEngine } from "../model/reasoning";
@@ -12,9 +14,12 @@ import { buildExecutiveAssessment } from "../model/judgment/buildExecutiveAssess
 import { inferOrganizationalMechanisms } from "../model/judgment/inferOrganizationalMechanisms";
 import { inferOrganizationalBeliefs } from "../model/beliefs/inferOrganizationalBeliefs";
 import { updateOrganizationalBeliefs } from "../model/beliefs/updateOrganizationalBeliefs";
+import { consolidateOrganizationalTheories } from "../model/memory/consolidateOrganizationalTheories";
+import { computeOrganizationalLearningProfile } from "../model/learning/computeOrganizationalLearningProfile";
 import { runOrganizationCognition } from "../cognition/cognitionEngine";
 import { updateOrganizationalUnderstandingState } from "./updateOrganizationalUnderstandingState";
 import { consolidateUnderstanding } from "../understanding/consolidateUnderstanding";
+import { synthesizeUnderstanding } from "../understanding/synthesizeUnderstanding";
 import { buildUnderstandingClusters } from "../understanding/understandingClusters";
 import { runSemanticCompression } from "../compression/semanticCompression";
 import { inferOrganizationalPhenomena } from "../phenomena/inferOrganizationalPhenomena";
@@ -61,6 +66,14 @@ export function evolveOrganizationRuntime(params: {
     conceptCandidates?: any[];
     understandingClusters?: any[];
     organizationalBeliefRevisions?: any[];
+    theories?: any[];
+    theoryEvolution?: any[];
+    understandingEvolution?: any;
+    memoryMaturity?: any;
+
+    understandingSnapshots?: any[];
+    learningEvents?: any[];
+    organizationalLearningProfile?: any;
   };
 
   const now = new Date().toISOString();
@@ -330,6 +343,41 @@ export function evolveOrganizationRuntime(params: {
     now,
   });
 
+  const organizationalTheoryState = consolidateOrganizationalTheories({
+    existingTheories: memory.theories ?? [],
+    beliefs: organizationalBeliefState.beliefs,
+    mechanisms: safeMechanismNetwork.mechanisms,
+    concepts: organizationalConcepts,
+    evidence: result.evidence ?? [],
+    now,
+  });
+
+  const understandingEvolution = buildUnderstandingEvolution({
+    beliefRevisions: organizationalBeliefState.revisions,
+    theoryEvolution: organizationalTheoryState.theoryEvolution,
+  });
+
+  const memoryMaturity = calculateMemoryMaturity({
+    persistentBeliefs: organizationalBeliefState.beliefs.length,
+    recurringMechanisms: safeMechanismNetwork.mechanisms.length,
+    stableTheories: organizationalTheoryState.theories.filter(
+      (theory) => theory.status === "stable" || theory.status === "strengthening",
+    ).length,
+    historicalEvents: cognitivelyUpdatedRuntime.memory.events.length + 1,
+    theoryEvolutionEvents: [
+      ...(memory.theoryEvolution ?? []),
+      ...organizationalTheoryState.theoryEvolution,
+    ].length,
+    conceptCount: organizationalConcepts.length,
+  });
+
+  console.log("Organizational Theories", organizationalTheoryState.theories);
+  console.log(
+    "Organizational Theory Evolution",
+    organizationalTheoryState.theoryEvolution,
+  );
+  console.log("Memory Maturity", memoryMaturity);
+
   const beliefUpdatedOrganizationalUnderstandingState: OrganizationalUnderstandingState =
     {
       ...updatedOrganizationalUnderstandingState,
@@ -337,10 +385,15 @@ export function evolveOrganizationRuntime(params: {
       lastUpdatedAt: now,
     };
 
+  const synthesizedOrganizationalUnderstandingState = synthesizeUnderstanding({
+    state: beliefUpdatedOrganizationalUnderstandingState,
+    now,
+  });
+
   const semanticReasoning = runSemanticCompression({
     dynamics: organizationalDynamicsState.interpretations,
     understandings:
-      beliefUpdatedOrganizationalUnderstandingState.currentUnderstandings,
+      synthesizedOrganizationalUnderstandingState.currentUnderstandings,
     meaningSignals,
     organizationalConcepts,
     phenomena: organizationalPhenomenaState.phenomena,
@@ -379,6 +432,96 @@ export function evolveOrganizationRuntime(params: {
 
   console.log("Executive Assessment", executiveAssessment);
 
+  const understandingSnapshot = {
+    id: `snapshot-${eventId}`,
+    investigationId: eventId,
+    timestamp: now,
+
+    company: input.company,
+    question: input.question,
+
+    memoryMaturityScore: memoryMaturity.score,
+    organizationalUnderstandingScore:
+      synthesizedOrganizationalUnderstandingState.score.overall,
+
+    beliefCount: organizationalBeliefState.beliefs.length,
+    theoryCount: organizationalTheoryState.theories.length,
+    stableTheoryCount: organizationalTheoryState.theories.filter(
+      (theory) => theory.status === "stable" || theory.status === "strengthening",
+    ).length,
+
+    mechanismCount: safeMechanismNetwork.mechanisms.length,
+    mechanismEdgeCount: safeMechanismNetwork.edges.length,
+    centralMechanismCount: safeMechanismNetwork.centralMechanismIds.length,
+
+    semanticCohortCount: semanticReasoning.cohorts.length,
+    semanticConceptCount: semanticConcepts.length,
+    conceptCandidateCount: conceptCandidates.length,
+    conceptualUnderstandingCount: conceptualUnderstanding.length,
+
+    organizationalPhenomenonCount:
+      organizationalPhenomenaState.phenomena.length,
+    organizationalCapabilityCount:
+      organizationalCapabilitiesState.capabilities.length,
+    understandingClusterCount: understandingClusters.length,
+
+    executiveAssessmentConfidence: executiveAssessment.confidence,
+  };
+
+  const learningEvents = [
+    ...organizationalBeliefState.revisions.map((revision) => ({
+      id: `learning-${eventId}-${revision.beliefId}`,
+      investigationId: eventId,
+      timestamp: now,
+
+      objectType: "belief",
+      objectId: revision.beliefId,
+
+      changeType: revision.trend,
+
+      previousConfidence: revision.previousConfidence,
+      currentConfidence: revision.revisedConfidence,
+      confidenceDelta:
+        revision.revisedConfidence - revision.previousConfidence,
+
+      reason: revision.reason,
+    })),
+
+    ...organizationalTheoryState.theoryEvolution.map((evolution) => ({
+      id: `learning-${eventId}-${evolution.theoryId}`,
+      investigationId: eventId,
+      timestamp: now,
+
+      objectType: "theory",
+      objectId: evolution.theoryId,
+
+      changeType: evolution.status,
+
+      previousConfidence: evolution.previousConfidence,
+      currentConfidence: evolution.currentConfidence,
+      confidenceDelta: evolution.delta,
+
+      reason: evolution.reason,
+    })),
+  ];
+
+  const understandingSnapshots = [
+    ...(memory.understandingSnapshots ?? []),
+    understandingSnapshot,
+  ];
+
+  const allLearningEvents = [
+    ...(memory.learningEvents ?? []),
+    ...learningEvents,
+  ];
+
+  const organizationalLearningProfile = computeOrganizationalLearningProfile({
+    snapshots: understandingSnapshots,
+    learningEvents: allLearningEvents,
+  });
+
+  console.log("Organizational Learning Profile", organizationalLearningProfile);
+
   const updatedMemory = {
     ...cognitivelyUpdatedRuntime.memory,
 
@@ -395,12 +538,41 @@ export function evolveOrganizationRuntime(params: {
     organizationalPhenomenaState,
     mechanismNetwork: safeMechanismNetwork,
 
-    organizationalUnderstandingState:
-      beliefUpdatedOrganizationalUnderstandingState,
+    organizationalUnderstandingState: synthesizedOrganizationalUnderstandingState,
     organizationalBeliefRevisions: [
       ...(memory.organizationalBeliefRevisions ?? []),
       ...organizationalBeliefState.revisions,
     ],
+
+    theories: organizationalTheoryState.theories,
+    theoryEvolution: [
+      ...(memory.theoryEvolution ?? []),
+      ...organizationalTheoryState.theoryEvolution,
+    ],
+
+    understandingEvolution,
+    memoryMaturity,
+
+    understandingSnapshots,
+    learningEvents: allLearningEvents,
+    organizationalLearningProfile,
+
+    organizationalMemory: {
+      beliefs: organizationalBeliefState.beliefs,
+      theories: organizationalTheoryState.theories,
+      theoryEvolution: [
+        ...(memory.theoryEvolution ?? []),
+        ...organizationalTheoryState.theoryEvolution,
+      ],
+      understandingEvolution,
+      maturity: memoryMaturity,
+      understandingState: synthesizedOrganizationalUnderstandingState,
+      lastUpdatedAt: now,
+
+      understandingSnapshots,
+      learningEvents: allLearningEvents,
+      organizationalLearningProfile,
+    },
 
     understandingClusters,
     semanticConcepts,
@@ -422,6 +594,10 @@ export function evolveOrganizationRuntime(params: {
         organizationalBeliefCount: organizationalBeliefState.beliefs.length,
         organizationalBeliefRevisionCount:
           organizationalBeliefState.revisions.length,
+        organizationalTheoryCount: organizationalTheoryState.theories.length,
+        organizationalTheoryEvolutionCount:
+          organizationalTheoryState.theoryEvolution.length,
+        memoryMaturityScore: memoryMaturity.score,
         themeCount: result.themes?.length ?? 0,
         contradictionCount: result.contradictions?.length ?? 0,
         understandingClusterCount: understandingClusters.length,
@@ -451,6 +627,17 @@ export function evolveOrganizationRuntime(params: {
         organizationalExplanationCount: organizationalExplanations.length,
         organizationalJudgmentCount: organizationalJudgments.length,
         executiveAssessmentConfidence: executiveAssessment.confidence,
+        organizationalUnderstandingScore:
+          synthesizedOrganizationalUnderstandingState.score.overall,
+
+        understandingSnapshotId: understandingSnapshot.id,
+        learningEventCount: learningEvents.length,
+        totalLearningEventCount: allLearningEvents.length,
+        learningVelocity: organizationalLearningProfile.learningVelocity,
+        learningVelocityScore:
+          organizationalLearningProfile.learningVelocityScore,
+        understandingGrowth: organizationalLearningProfile.understandingGrowth,
+        memoryGrowth: organizationalLearningProfile.memoryGrowth,
       },
     ],
   } as unknown as typeof cognitivelyUpdatedRuntime.memory & {
@@ -461,11 +648,18 @@ export function evolveOrganizationRuntime(params: {
     organizationalJudgments: typeof organizationalJudgments;
     executiveAssessment: typeof executiveAssessment;
     mechanismNetwork: typeof safeMechanismNetwork;
-    organizationalUnderstandingState: typeof beliefUpdatedOrganizationalUnderstandingState;
+    organizationalUnderstandingState: typeof synthesizedOrganizationalUnderstandingState;
     organizationalBeliefRevisions: typeof organizationalBeliefState.revisions;
+    theories: typeof organizationalTheoryState.theories;
+    theoryEvolution: typeof organizationalTheoryState.theoryEvolution;
+    understandingEvolution: typeof understandingEvolution;
+    memoryMaturity: typeof memoryMaturity;
     semanticCohorts: typeof semanticReasoning.cohorts;
     conceptCandidates: typeof conceptCandidates;
     conceptualUnderstanding: typeof conceptualUnderstanding;
+    understandingSnapshots: (typeof understandingSnapshot)[];
+    learningEvents: typeof allLearningEvents;
+    organizationalLearningProfile: typeof organizationalLearningProfile;
   };
 
   return {

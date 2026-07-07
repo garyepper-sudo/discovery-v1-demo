@@ -1,3 +1,13 @@
+/**
+ * Transitional type.
+ *
+ * Represents a normalized understanding before it is promoted into
+ * OrganizationalUnderstandingItem and OrganizationalUnderstandingState.
+ *
+ * Long-term this type will be retired once all understanding synthesis
+ * operates directly on OrganizationalUnderstandingItem.
+ */
+
 export type UnderstandingStatus =
   | "emerging"
   | "active"

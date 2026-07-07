@@ -24,6 +24,7 @@ export default function OrganizationWorkspace({
         <main className="executive-experience-main">
           <section className="executive-details-shell">
             <ResultsOverview
+              executiveDashboard={result?.executiveDashboard}
               understanding={v3?.executiveUnderstanding}
               beliefs={v3?.beliefs}
               hypotheses={v3?.hypotheses}

@@ -8,6 +8,10 @@ import {
   loadOrganizationRuntimeState,
   saveOrganizationRuntimeState,
 } from "../../../engine/v3/runtime";
+import {
+  buildExecutiveDashboard,
+  buildExecutiveLearningExperience,
+} from "../../../engine/v3/executive";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -43,11 +47,21 @@ export async function POST(req: Request) {
 
   const nextOrganizationRuntime = saveOrganizationRuntimeState(evolvedRuntime);
 
+  const executiveLearning = buildExecutiveLearningExperience(
+    nextOrganizationRuntime,
+  );
+
+  const executiveDashboard = buildExecutiveDashboard(
+    executiveLearning.executiveState,
+  );
+
   return NextResponse.json({
     ...result,
     understandingObject,
     v2,
     v3,
     organizationRuntime: nextOrganizationRuntime,
+    executiveLearning,
+    executiveDashboard,
   });
 }

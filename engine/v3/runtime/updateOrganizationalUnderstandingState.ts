@@ -1,11 +1,12 @@
 import type { DiscoveryV3Result } from "../types";
 import {
   createDefaultUnderstandingMechanism,
+  createEmptyDomainRelevance,
   createUnderstandingTitle,
   getConfidenceBand,
   getUnderstandingStatus,
-  OrganizationalUnderstandingItem,
-  OrganizationalUnderstandingState,
+  type OrganizationalUnderstandingItem,
+  type OrganizationalUnderstandingState,
 } from "./organizationalUnderstandingState";
 
 function makeUnderstandingId(index: number): string {
@@ -51,11 +52,17 @@ export function updateOrganizationalUnderstandingState(params: {
         strength: deriveStrength(confidence, supportCount),
         stability: deriveStability(confidence, supportCount),
 
+        coverage: confidence,
+        novelty: 0.15,
+        explanatoryPower: confidence,
+
         status: getUnderstandingStatus({ confidence, supportCount }),
 
         firstSeenAt: now,
         lastUpdatedAt: now,
         supportCount,
+
+        domainRelevance: createEmptyDomainRelevance(),
 
         evidenceIds: belief.supportingEvidenceIds || [],
         observationIds: [],
@@ -63,10 +70,13 @@ export function updateOrganizationalUnderstandingState(params: {
         themeIds: belief.themeIds || [],
         mechanismIds: belief.mechanismIds || [],
         contradictionIds: belief.contradictionIds || [],
+        recommendationIds: [],
 
         supportingDynamics: [],
         supportingCapabilities: [],
         investigationIds: [],
+
+        missingInformation: [],
 
         whyItMatters:
           belief.supportingReasons?.[0] ||

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ExecutiveDashboardView } from "../../components/ExecutiveDashboard";
 import OrganizationWorkspace from "../../components/workspace/OrganizationWorkspace";
 
 export default function DiscoveryV1Page() {
@@ -54,7 +55,7 @@ export default function DiscoveryV1Page() {
           <span className="brand-dot" />
           <strong>Discovery</strong>
         </div>
-        <span className="nav-pill">Organization Runtime</span>
+        <span className="nav-pill">Executive Intelligence</span>
       </header>
 
       {!result && (
@@ -74,16 +75,19 @@ export default function DiscoveryV1Page() {
                 value={company}
                 onChange={(event) => setCompany(event.target.value)}
               />
+
               <input
                 placeholder="Website"
                 value={website}
                 onChange={(event) => setWebsite(event.target.value)}
               />
+
               <input
                 placeholder="Industry"
                 value={industry}
                 onChange={(event) => setIndustry(event.target.value)}
               />
+
               <input
                 placeholder="Strategic question"
                 value={question}
@@ -108,6 +112,10 @@ export default function DiscoveryV1Page() {
             {error && <p className="error-message">{error}</p>}
           </section>
         </section>
+      )}
+
+      {result?.executiveDashboard && (
+        <ExecutiveDashboardView dashboard={result.executiveDashboard} />
       )}
 
       {result && (

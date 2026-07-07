@@ -4,6 +4,7 @@ import type {
 } from "../runtime/organizationalUnderstandingState";
 import {
   createDefaultUnderstandingMechanism,
+  createEmptyDomainRelevance,
   createUnderstandingTitle,
   getConfidenceBand,
   getUnderstandingStatus,
@@ -362,6 +363,47 @@ function deriveStability(params: {
   );
 }
 
+function deriveCoverage(params: {
+  evidenceCount: number;
+  observationCount: number;
+  mechanismCount: number;
+  beliefCount: number;
+}): number {
+  return clampMetric(
+    Math.min(0.35, params.evidenceCount * 0.05) +
+      Math.min(0.25, params.observationCount * 0.035) +
+      Math.min(0.25, params.mechanismCount * 0.08) +
+      Math.min(0.15, params.beliefCount * 0.075)
+  );
+}
+
+function deriveNovelty(params: {
+  confidence: number;
+  supportCount: number;
+  similarExistingCount: number;
+}): number {
+  return clampMetric(
+    0.35 -
+      Math.min(0.2, params.similarExistingCount * 0.08) +
+      Math.min(0.15, params.confidence * 0.15) -
+      Math.min(0.1, params.supportCount * 0.015)
+  );
+}
+
+function deriveExplanatoryPower(params: {
+  confidence: number;
+  mechanismCount: number;
+  beliefCount: number;
+  evidenceCount: number;
+}): number {
+  return clampMetric(
+    params.confidence * 0.45 +
+      Math.min(0.25, params.mechanismCount * 0.08) +
+      Math.min(0.2, params.beliefCount * 0.08) +
+      Math.min(0.1, params.evidenceCount * 0.025)
+  );
+}
+
 function createId(statement: string): string {
   const normalized = normalizeText(statement).slice(0, 56).replace(/\s+/g, "-");
   return `understanding-${normalized}-${Date.now()}`;
@@ -394,6 +436,24 @@ function completeCanonicalUnderstanding(
 ): OrganizationalUnderstandingItem {
   const statement = normalizeUnderstandingStatement(understanding.statement);
 
+  const coverage =
+    understanding.coverage ??
+    deriveCoverage({
+      evidenceCount: understanding.evidenceIds.length,
+      observationCount: understanding.observationIds.length,
+      mechanismCount: understanding.mechanismIds.length,
+      beliefCount: understanding.beliefIds.length,
+    });
+
+  const explanatoryPower =
+    understanding.explanatoryPower ??
+    deriveExplanatoryPower({
+      confidence: understanding.confidence,
+      mechanismCount: understanding.mechanismIds.length,
+      beliefCount: understanding.beliefIds.length,
+      evidenceCount: understanding.evidenceIds.length,
+    });
+
   return {
     ...understanding,
 
@@ -414,6 +474,22 @@ function completeCanonicalUnderstanding(
         supportCount: understanding.supportCount,
         contradictionCount: understanding.contradictionIds.length,
       }),
+
+    coverage,
+    novelty:
+      understanding.novelty ??
+      deriveNovelty({
+        confidence: understanding.confidence,
+        supportCount: understanding.supportCount,
+        similarExistingCount: 0,
+      }),
+    explanatoryPower,
+
+    domainRelevance:
+      understanding.domainRelevance ?? createEmptyDomainRelevance(),
+
+    recommendationIds: understanding.recommendationIds ?? [],
+    missingInformation: understanding.missingInformation ?? [],
 
     supportingDynamics: understanding.supportingDynamics ?? [],
     supportingCapabilities: understanding.supportingCapabilities ?? [],
@@ -509,6 +585,27 @@ export function consolidateUnderstanding(
         supportCount: nextSupportCount,
         contradictionCount: existing.contradictionIds.length,
       });
+      existing.coverage = deriveCoverage({
+        evidenceCount: existing.evidenceIds.length,
+        observationCount: existing.observationIds.length,
+        mechanismCount: existing.mechanismIds.length,
+        beliefCount: existing.beliefIds.length,
+      });
+      existing.novelty = deriveNovelty({
+        confidence: nextConfidence,
+        supportCount: nextSupportCount,
+        similarExistingCount: 1,
+      });
+      existing.explanatoryPower = deriveExplanatoryPower({
+        confidence: nextConfidence,
+        mechanismCount: existing.mechanismIds.length,
+        beliefCount: existing.beliefIds.length,
+        evidenceCount: existing.evidenceIds.length,
+      });
+      existing.domainRelevance =
+        existing.domainRelevance ?? createEmptyDomainRelevance();
+      existing.recommendationIds = existing.recommendationIds ?? [];
+      existing.missingInformation = existing.missingInformation ?? [];
       existing.supportingDynamics = existing.supportingDynamics ?? [];
       existing.supportingCapabilities = existing.supportingCapabilities ?? [];
       existing.investigationIds = existing.investigationIds ?? [];
@@ -584,6 +681,26 @@ export function consolidateUnderstanding(
         contradictionCount: candidate.contradictionIds?.length ?? 0,
       }),
 
+      coverage: deriveCoverage({
+        evidenceCount: candidate.evidenceIds?.length ?? 0,
+        observationCount: candidate.observationIds?.length ?? 0,
+        mechanismCount: candidate.mechanismIds?.length ?? 0,
+        beliefCount: candidate.beliefIds?.length ?? 0,
+      }),
+      novelty: deriveNovelty({
+        confidence,
+        supportCount: 1,
+        similarExistingCount: 0,
+      }),
+      explanatoryPower: deriveExplanatoryPower({
+        confidence,
+        mechanismCount: candidate.mechanismIds?.length ?? 0,
+        beliefCount: candidate.beliefIds?.length ?? 0,
+        evidenceCount: candidate.evidenceIds?.length ?? 0,
+      }),
+
+      domainRelevance: createEmptyDomainRelevance(),
+
       status: getUnderstandingStatus({ confidence, supportCount: 1 }),
 
       firstSeenAt: now,
@@ -596,10 +713,13 @@ export function consolidateUnderstanding(
       themeIds: candidate.themeIds ?? [],
       mechanismIds: candidate.mechanismIds ?? [],
       contradictionIds: candidate.contradictionIds ?? [],
+      recommendationIds: [],
 
       supportingDynamics: [],
       supportingCapabilities: [],
       investigationIds: [],
+
+      missingInformation: [],
 
       whyItMatters: createWhyItMatters(normalizedStatement),
       openQuestions: [
