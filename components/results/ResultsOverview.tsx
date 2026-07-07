@@ -8,7 +8,7 @@ import ExecutiveAccordion from "../ui/ExecutiveAccordion";
 import MemoryUpdateOverview from "./MemoryUpdateOverview";
 
 type ResultsOverviewProps = {
-  executiveDashboard: ExecutiveDashboard;
+  executiveDashboard?: ExecutiveDashboard;
   organizationRuntime?: any;
   reasoningGraph?: any;
   understanding?: any;
@@ -40,20 +40,22 @@ export default function ResultsOverview({
 
   const runtimeOrganism = organizationRuntime?.organism;
 
-  const hero = executiveDashboard.hero;
-  const keyInsights = executiveDashboard.keyInsights;
+  const hero = executiveDashboard?.hero;
+  const keyInsights = executiveDashboard?.keyInsights ?? [];
   const currentOrganizationalState =
-    executiveDashboard.currentOrganizationalState;
-  const operatingMechanisms = executiveDashboard.operatingMechanisms;
-  const rememberedEvidence = executiveDashboard.rememberedEvidence;
+    executiveDashboard?.currentOrganizationalState ?? [];
+  const operatingMechanisms = executiveDashboard?.operatingMechanisms ?? [];
+  const rememberedEvidence = executiveDashboard?.rememberedEvidence ?? [];
 
   return (
     <section className="results-overview-executive">
-      <MemoryUpdateOverview
-        executiveDashboard={executiveDashboard}
-        organizationRuntime={organizationRuntime}
-        delta={delta}
-      />
+      {executiveDashboard && (
+        <MemoryUpdateOverview
+          executiveDashboard={executiveDashboard}
+          organizationRuntime={organizationRuntime}
+          delta={delta}
+        />
+      )}
 
       <section className="executive-compressed-sections">
         <ExecutiveAccordion
@@ -199,8 +201,8 @@ export default function ResultsOverview({
       <TraceUnderstandingPage
         open={showReasoningTrace}
         onClose={() => setShowReasoningTrace(false)}
-        headline={hero.headline}
-        confidence={hero.organizationConfidence ?? 0}
+        headline={hero?.headline ?? "Discovery reasoning trace"}
+        confidence={hero?.organizationConfidence ?? 0}
         executiveUnderstanding={understanding}
         beliefs={[]}
         themes={[]}

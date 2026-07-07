@@ -63,6 +63,17 @@ type OrganizationalStateLike = {
   recommendedFocus?: string[];
 };
 
+type InvestigationOpportunityLike = {
+  id: string;
+  topic: string;
+  reason: string;
+  expectedConfidenceGain: number;
+  executiveLeverage: "high" | "medium" | "low";
+  affectedConditions: string[];
+  missingEvidence: string[];
+  suggestedExecutiveQuestion: string;
+};
+
 type BuildExecutiveAssessmentInput = {
   judgments: OrganizationalJudgment[];
   mechanisms?: OrganizationalMechanism[];
@@ -71,6 +82,7 @@ type BuildExecutiveAssessmentInput = {
   organizationalBeliefs?: OrganizationalBeliefLike[];
   organizationalConditions?: OrganizationalConditionLike[];
   organizationalState?: OrganizationalStateLike;
+  investigationOpportunities?: InvestigationOpportunityLike[];
 };
 
 const average = (values: number[]): number =>
@@ -483,6 +495,8 @@ export function buildExecutiveAssessment(
             .slice(0, 3)
             .map((judgment) => judgment.title);
 
+  const highestValueInvestigation = input.investigationOpportunities?.[0];
+
   const conditionConfidence = primaryCondition
     ? clamp01(
         average(
@@ -558,6 +572,10 @@ export function buildExecutiveAssessment(
         ? `${strongestJudgment.assessment} This explanation ranked highest because it had the strongest combined judgment score across evidence, explanatory power, causal plausibility, executive significance, and intervention leverage. ${theoryValidation.calibratedConfidenceExplanation}`
         : "The available reasoning paths did not produce a coherent executive assessment.";
 
+  const investigationNarrative = highestValueInvestigation
+    ? ` Discovery's highest-value next investigation is ${highestValueInvestigation.topic}. This investigation is expected to improve confidence by approximately ${highestValueInvestigation.expectedConfidenceGain}% across ${highestValueInvestigation.affectedConditions.join(", ")}. Suggested executive question: ${highestValueInvestigation.suggestedExecutiveQuestion}`
+    : "";
+
   const mechanismCenteredNarrative = primaryCondition
     ? `${primaryCondition.name} appears to be the primary condition shaping the organization's current state. Leadership should treat supporting theories and mechanisms as evidence for this condition rather than as the executive conclusion itself.`
     : primaryConcept
@@ -578,7 +596,7 @@ export function buildExecutiveAssessment(
       rank: index + 1,
     })),
     rejectedExplanations,
-    executiveNarrative,
+    executiveNarrative: executiveNarrative + investigationNarrative,
     recommendedFocus,
     primaryMechanismIds: primaryMechanisms
       .slice(0, 3)

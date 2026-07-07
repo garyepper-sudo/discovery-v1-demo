@@ -37,6 +37,9 @@ type ConditionAssessment = {
   trendReason: string;
   relationshipReason: string;
   recommendedExecutiveAction: string;
+  uncertaintySummary: string;
+  confidenceLimiters: string[];
+  missingEvidence: string[];
 };
 
 export type OrganizationalCondition = {
@@ -55,6 +58,9 @@ export type OrganizationalCondition = {
   supportingMechanismIds: string[];
   supportingTheoryIds: string[];
   recommendedExecutiveAction: string;
+  uncertaintySummary: string;
+  confidenceLimiters: string[];
+  missingEvidence: string[];
   lastUpdatedAt: string;
 };
 
@@ -409,6 +415,158 @@ function evidenceBreadthLabel(support: ConditionSupport): string {
   return joinHuman(parts);
 }
 
+function missingEvidenceForDefinition(
+  definition: ConditionDefinition,
+  support: ConditionSupport,
+): string[] {
+  const missing: string[] = [];
+
+  if (support.mechanisms.length === 0) {
+    missing.push(
+      `Concrete mechanism evidence showing how ${definition.name} appears in day-to-day work.`,
+    );
+  }
+
+  if (support.beliefs.length === 0) {
+    missing.push(
+      `Organizational belief evidence showing whether people consistently experience ${definition.name} as a real constraint.`,
+    );
+  }
+
+  if (support.theories.length === 0) {
+    missing.push(
+      `Higher-order theory evidence connecting ${definition.name} to broader organizational behavior.`,
+    );
+  }
+
+  if (support.evolution.length === 0) {
+    missing.push(
+      `Longitudinal evidence showing whether ${definition.name} is persistent, improving, or deteriorating over time.`,
+    );
+  }
+
+  if (definition.domain === "coordination") {
+    missing.push(
+      "Examples of cross-functional handoffs, ownership boundaries, and where work slows between teams.",
+    );
+  }
+
+  if (definition.domain === "knowledgeContinuity") {
+    missing.push(
+      "Evidence about where operational knowledge lives, how often it is reused, and whether documentation is trusted.",
+    );
+  }
+
+  if (definition.domain === "learning") {
+    missing.push(
+      "Evidence showing whether repeated problems become reusable process improvements or continue to recur.",
+    );
+  }
+
+  if (definition.domain === "decisionFlow") {
+    missing.push(
+      "Evidence about decision rights, approval paths, escalation frequency, and where decisions wait.",
+    );
+  }
+
+  if (definition.domain === "executionCapacity") {
+    missing.push(
+      "Evidence about workload, prioritization, delivery delays, and where demand exceeds operating capacity.",
+    );
+  }
+
+  if (definition.domain === "strategicAlignment") {
+    missing.push(
+      "Evidence about how teams interpret priorities, make tradeoffs, and resolve conflicting strategic narratives.",
+    );
+  }
+
+  if (definition.domain === "operatingModel") {
+    missing.push(
+      "Evidence about roles, workflows, decision rights, and whether operating expectations are explicit.",
+    );
+  }
+
+  if (definition.domain === "leadershipDependency") {
+    missing.push(
+      "Evidence about which decisions require leadership approval and how often teams can proceed without escalation.",
+    );
+  }
+
+  return unique(missing).slice(0, 5);
+}
+
+function inferConfidenceLimiters(params: {
+  definition: ConditionDefinition;
+  confidence: number;
+  strength: number;
+  support: ConditionSupport;
+  trend: OrganizationalCondition["trend"];
+}): string[] {
+  const { definition, confidence, strength, support, trend } = params;
+  const limiters: string[] = [];
+
+  if (confidence < 0.65) {
+    limiters.push(
+      `${definition.name} confidence is moderate because the supporting evidence is not yet strong enough for a high-confidence diagnosis.`,
+    );
+  }
+
+  if (strength < 0.65) {
+    limiters.push(
+      `${definition.name} strength is still developing, so Discovery should treat the condition as important but not fully settled.`,
+    );
+  }
+
+  if (support.mechanisms.length < 2) {
+    limiters.push(
+      "There are not yet enough concrete mechanisms explaining how this condition operates.",
+    );
+  }
+
+  if (support.beliefs.length === 0) {
+    limiters.push(
+      "Discovery has limited belief-level evidence showing how consistently this condition is experienced across the organization.",
+    );
+  }
+
+  if (support.evolution.length === 0 || trend === "new") {
+    limiters.push(
+      "Discovery has limited longitudinal evidence, so it cannot yet distinguish a persistent condition from a temporary signal.",
+    );
+  }
+
+  return unique(limiters).slice(0, 4);
+}
+
+function synthesizeUncertainty(params: {
+  definition: ConditionDefinition;
+  confidence: number;
+  support: ConditionSupport;
+  missingEvidence: string[];
+  confidenceLimiters: string[];
+}): string {
+  const { definition, confidence, support, missingEvidence, confidenceLimiters } =
+    params;
+
+  const confidencePercent = Math.round(confidence * 100);
+  const breadth = evidenceBreadthLabel(support);
+
+  if (confidenceLimiters.length === 0 && missingEvidence.length === 0) {
+    return `Discovery has relatively strong confidence in ${definition.name} because the condition is supported across ${breadth || "multiple organizational signals"}.`;
+  }
+
+  const primaryLimiter =
+    confidenceLimiters[0] ??
+    `Discovery needs more evidence before treating ${definition.name} as fully understood.`;
+
+  const primaryMissingEvidence =
+    missingEvidence[0] ??
+    "Additional operating evidence would improve this assessment.";
+
+  return `Discovery currently assigns ${confidencePercent}% confidence to ${definition.name}. ${primaryLimiter} The highest-value missing evidence is: ${primaryMissingEvidence}`;
+}
+
 function inferHealthReason(params: {
   definition: ConditionDefinition;
   status: OrganizationalConditionStatus;
@@ -645,12 +803,33 @@ function synthesizeConditionAssessment(params: {
     trendReason,
   ].join(" ");
 
+  const missingEvidence = missingEvidenceForDefinition(definition, support);
+
+  const confidenceLimiters = inferConfidenceLimiters({
+    definition,
+    confidence,
+    strength,
+    support,
+    trend,
+  });
+
+  const uncertaintySummary = synthesizeUncertainty({
+    definition,
+    confidence,
+    support,
+    missingEvidence,
+    confidenceLimiters,
+  });
+
   return {
     summary,
     healthReason,
     trendReason,
     relationshipReason: "",
     recommendedExecutiveAction: `${definition.executiveAction} ${healthReason}`,
+    uncertaintySummary,
+    confidenceLimiters,
+    missingEvidence,
   };
 }
 
@@ -829,6 +1008,9 @@ function scoreDomain(params: {
     supportingMechanismIds: unique(matchingMechanisms.map((mechanism) => mechanism.id)),
     supportingTheoryIds: unique(matchingTheories.map((theory) => theory.id)),
     recommendedExecutiveAction: assessment.recommendedExecutiveAction,
+    uncertaintySummary: assessment.uncertaintySummary,
+    confidenceLimiters: assessment.confidenceLimiters,
+    missingEvidence: assessment.missingEvidence,
     lastUpdatedAt: "",
   };
 }

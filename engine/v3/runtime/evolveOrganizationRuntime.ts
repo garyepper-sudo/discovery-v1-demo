@@ -34,6 +34,7 @@ import { createEmptyOrganizationalUnderstandingState } from "./organizationalUnd
 import { synchronizeOrganizationModel } from "../model/synchronizeOrganizationModel";
 import { inferOrganizationRelationships } from "../model/inferOrganizationRelationships";
 import { inferOrganizationalConditions } from "../model/state/inferOrganizationalConditions";
+import { buildInvestigationOpportunities } from "../model/investigation/buildInvestigationOpportunities";
 
 export function evolveOrganizationRuntime(params: {
   runtime: OrganizationRuntime;
@@ -77,6 +78,7 @@ export function evolveOrganizationRuntime(params: {
     organizationalLearningProfile?: any;
     organizationalConditions?: any[];
     organizationalState?: any;
+    investigationOpportunities?: any[];
   };
 
   const now = new Date().toISOString();
@@ -434,11 +436,15 @@ export function evolveOrganizationRuntime(params: {
   const organizationalConditions = organizationalConditionResult.conditions;
   const organizationalState = organizationalConditionResult.state;
 
+  const investigationOpportunities =
+    buildInvestigationOpportunities(organizationalConditions);
+
   console.log("Semantic Reasoning", semanticReasoning);
   console.log("Concept Candidates", conceptCandidates);
   console.log("Conceptual Understanding", conceptualUnderstanding);
   console.log("Organizational Conditions", organizationalConditions);
   console.log("Organizational State", organizationalState);
+  console.log("Investigation Opportunities", investigationOpportunities);
 
   console.log("Organizational Beliefs", organizationalBeliefState.beliefs);
   console.log(
@@ -454,6 +460,8 @@ export function evolveOrganizationRuntime(params: {
     organizationalBeliefs: organizationalBeliefState.beliefs,
     organizationalConditions,
     organizationalState,
+
+    investigationOpportunities,
   });
 
   console.log("Executive Assessment", executiveAssessment);
@@ -563,6 +571,7 @@ export function evolveOrganizationRuntime(params: {
     executiveAssessment,
     organizationalConditions,
     organizationalState,
+    investigationOpportunities,
 
     functionalInterpretationState: organizationalDynamicsState,
     organizationalCapabilitiesState,
@@ -605,6 +614,7 @@ export function evolveOrganizationRuntime(params: {
       organizationalLearningProfile,
       organizationalConditions,
       organizationalState,
+      investigationOpportunities,
     },
 
     understandingClusters,
@@ -697,6 +707,7 @@ export function evolveOrganizationRuntime(params: {
     organizationalLearningProfile: typeof organizationalLearningProfile;
     organizationalConditions: typeof organizationalConditions;
     organizationalState: typeof organizationalState;
+    investigationOpportunities: typeof investigationOpportunities;
   };
 
   return {
