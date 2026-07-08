@@ -4,12 +4,19 @@ import type {
   ExecutiveChangeItem,
   ExecutiveMetricCard,
   ExecutiveMetricTrend,
+  ExecutiveNarrative,
   ExecutiveRecommendedAction,
   ExecutiveState,
   ExecutiveTimelineEntry,
   ExecutiveUnderstandingItem,
 } from "./executiveState";
 
+import { resolveNarrativeId } from "./narrativeIdentity";
+import {
+  buildNarrativeContinuity,
+  clampConfidence,
+  getPreviousNarratives,
+} from "./narrativeContinuity";
 import type { OrganizationRuntime } from "../runtime/organizationRuntime";
 import type { ExecutiveBriefing } from "./buildExecutiveBriefing";
 import type { ExecutiveLearningSummary } from "./executiveLearningSummary";
@@ -128,7 +135,7 @@ function buildLeadershipAttention(
     title: item.title ?? item.label ?? "Leadership attention item",
     priority: item.priority ?? asPriority(index),
     reason: item.reason ?? item.summary ?? item.description ?? "",
-    source: item.source ?? "executive-learning",
+    source: item.source ?? "learning-event",
     confidence: item.confidence,
   }));
 }
@@ -169,10 +176,66 @@ function buildNextRecommendedAction(
   };
 }
 
+function buildExecutiveNarratives(
+  understanding: ExecutiveUnderstandingItem[],
+  attention: ExecutiveAttentionItem[],
+  evidence: unknown[],
+  previousNarratives: ExecutiveNarrative[],
+  timestamp: string,
+  investigationId?: string,
+): ExecutiveNarrative[] {
+  return understanding.slice(0, 5).map((item, index) => {
+    const relatedAttention = attention[index];
+    const id = resolveNarrativeId(item);
+    const previous = previousNarratives.find((narrative) => narrative.id === id);
+
+    const baseNarrative: ExecutiveNarrative = {
+      id,
+      headline: item.title,
+      observation:
+        item.summary ||
+        "The organization is showing a meaningful pattern that leadership should understand.",
+      businessImpact:
+        relatedAttention?.reason ||
+        "If this pattern continues, it may affect execution quality, organizational resilience, decision speed, or leadership focus.",
+      executiveConversation:
+        relatedAttention?.title ??
+        "What leadership conversation would help clarify ownership, risk, and next steps?",
+      supportingReasoning:
+        item.summary ||
+        relatedAttention?.reason ||
+        "This narrative is organized from existing executive understanding and leadership attention signals.",
+      evidence,
+      priority: relatedAttention?.priority ?? asPriority(index),
+      confidence: clampConfidence(item.confidence ?? relatedAttention?.confidence),
+      momentum: "stable",
+    };
+
+    const continuity = buildNarrativeContinuity({
+      narrative: baseNarrative,
+      previous,
+      timestamp,
+      investigationId,
+    });
+
+    return {
+      ...baseNarrative,
+      momentum:
+        continuity.lifecycle === "weakening"
+          ? "declining"
+          : continuity.lifecycle === "strengthening"
+            ? "improving"
+            : "stable",
+      continuity,
+    };
+  });
+}
+
 export function buildExecutiveState(
   input: BuildExecutiveStateInput,
 ): ExecutiveState {
   const { runtime, briefing, learning, changes } = input;
+  const generatedAt = new Date().toISOString();
 
   const metrics: ExecutiveMetricCard[] = [
     buildMetricCard("Understanding", learning?.understanding, "%"),
@@ -181,28 +244,56 @@ export function buildExecutiveState(
     buildMetricCard("Confidence", learning?.confidence, "%"),
   ];
 
+  const currentUnderstanding = buildCurrentUnderstanding(briefing);
+  const leadershipAttention = buildLeadershipAttention(briefing, learning);
+
+  const evidence =
+    (runtime as any)?.observations ?? (runtime as any)?.evidence ?? [];
+
+  const previousNarratives = getPreviousNarratives(runtime);
+
+  const investigationId =
+    (runtime as any)?.investigationId ??
+    (runtime as any)?.currentInvestigationId ??
+    (runtime as any)?.lastInvestigation;
+
+  const executiveNarratives = buildExecutiveNarratives(
+    currentUnderstanding,
+    leadershipAttention,
+    Array.isArray(evidence) ? evidence : [],
+    previousNarratives,
+    generatedAt,
+    investigationId,
+  );
+
   return {
-    generatedAt: new Date().toISOString(),
+    generatedAt,
 
     headline:
       (briefing as any)?.headline ?? "Current Organizational Understanding",
 
     summary:
-      (briefing as any)?.summary ??
-      (changes as any)?.summary ??
-      "Discovery has assembled the current executive view from organizational understanding, memory, learning, and recent change signals.",
+      previousNarratives.length > 0
+        ? "Discovery has updated the current executive view by comparing this investigation against prior executive narratives, preserving continuity in the organizational conversation."
+        : (briefing as any)?.summary ??
+          (changes as any)?.summary ??
+          "Discovery has assembled the current executive view from organizational understanding, memory, learning, and recent change signals.",
 
     metrics,
 
-    currentUnderstanding: buildCurrentUnderstanding(briefing),
+    executiveNarratives,
+
+    currentUnderstanding,
 
     whatChanged: buildWhatChanged(changes, learning),
 
-    leadershipAttention: buildLeadershipAttention(briefing, learning),
+    leadershipAttention,
 
     learningTimeline: buildLearningTimeline(learning),
 
     nextRecommendedAction: buildNextRecommendedAction(briefing),
+
+    lastInvestigation: investigationId,
 
     expandable: {
       theories:
@@ -221,8 +312,7 @@ export function buildExecutiveState(
         [],
       workspace:
         (runtime as any)?.workspace ?? (runtime as any)?.workingMemory ?? [],
-      evidence:
-        (runtime as any)?.observations ?? (runtime as any)?.evidence ?? [],
+      evidence,
     },
   };
 }

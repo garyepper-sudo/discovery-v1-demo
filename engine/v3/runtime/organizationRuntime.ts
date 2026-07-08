@@ -18,6 +18,8 @@ import type {
   UnderstandingEvolution,
 } from "../model/memory/organizationalTheories";
 
+import type { ExecutiveState } from "../executive/executiveState";
+
 export type OrganizationRuntimeMetadata = {
   organizationId: string;
   name?: string;
@@ -39,6 +41,17 @@ export type OrganizationRuntimeMemory = {
    * OrganizationalMemory will become the single source of truth.
    */
   organizationalMemory: OrganizationalMemory | null;
+
+  /**
+   * Sprint 47
+   *
+   * Executive narrative continuity memory.
+   *
+   * This does not change cognition. It preserves the previous
+   * executive expression state so the next investigation can explain
+   * whether narratives are new, continuing, stable, or changed.
+   */
+  previousExecutiveState?: ExecutiveState;
 
   /**
    * Legacy runtime fields
@@ -111,6 +124,11 @@ export function createEmptyOrganizationRuntime(params: {
        * Memory Consolidation pipeline.
        */
       organizationalMemory: null,
+
+      /**
+       * Sprint 47 executive narrative continuity starts empty.
+       */
+      previousExecutiveState: undefined,
 
       /**
        * Legacy runtime state

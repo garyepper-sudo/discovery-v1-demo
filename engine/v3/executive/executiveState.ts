@@ -57,71 +57,85 @@ export type ExecutiveTimelineEntry = {
   confidence?: number;
 };
 
+export type ExecutiveNarrativeMomentum =
+  | "improving"
+  | "stable"
+  | "declining";
+
+export type ExecutiveNarrativeLifecycle =
+  | "emerging"
+  | "active"
+  | "strengthening"
+  | "stable"
+  | "weakening"
+  | "resolved";
+
+export type ExecutiveNarrativeContinuityStatus =
+  | "new"
+  | "continuing"
+  | "changed"
+  | "stable"
+  | "resolved";
+
+export type ExecutiveNarrativeRevision = {
+  investigationId?: string;
+  timestamp: string;
+  headline: string;
+  confidence?: number;
+  momentum?: ExecutiveNarrativeMomentum;
+  summary: string;
+};
+
+export type ExecutiveNarrativeContinuity = {
+  status: ExecutiveNarrativeContinuityStatus;
+  lifecycle: ExecutiveNarrativeLifecycle;
+  previousHeadline?: string;
+  previousConfidence?: number;
+  confidenceDelta?: number;
+  whatChanged: string[];
+  whyChanged: string[];
+  history: ExecutiveNarrativeRevision[];
+};
+
+export type ExecutiveNarrative = {
+  id: string;
+  headline: string;
+  observation: string;
+  businessImpact: string;
+  executiveConversation: string;
+  supportingReasoning?: string;
+  evidence?: unknown[];
+  priority?: ExecutiveAttentionPriority;
+  confidence?: number;
+  momentum?: ExecutiveNarrativeMomentum;
+
+  /**
+   * Sprint 47
+   *
+   * Narrative continuity belongs to the Expression Layer.
+   * It does not change cognition. It helps Discovery preserve
+   * executive memory across investigations.
+   */
+  continuity?: ExecutiveNarrativeContinuity;
+};
+
 export type ExecutiveState = {
   generatedAt: string;
-
-  /**
-   * Executive headline shown at the top of the dashboard.
-   */
   headline: string;
-
-  /**
-   * One-paragraph executive summary.
-   */
   summary: string;
-
-  /**
-   * Overall confidence Discovery has in its current
-   * organizational understanding.
-   */
   organizationConfidence?: number;
-
-  /**
-   * Overall health/status label.
-   */
   status?: "improving" | "stable" | "watch" | "critical";
-
-  /**
-   * Optional identifier or timestamp of the most recent
-   * investigation incorporated into this state.
-   */
   lastInvestigation?: string;
 
-  /**
-   * Executive KPI cards.
-   */
   metrics: ExecutiveMetricCard[];
+  executiveNarratives: ExecutiveNarrative[];
 
-  /**
-   * What Discovery currently understands.
-   */
   currentUnderstanding: ExecutiveUnderstandingItem[];
-
-  /**
-   * What changed since the previous investigation.
-   */
   whatChanged: ExecutiveChangeItem[];
-
-  /**
-   * Highest priority leadership focus areas.
-   */
   leadershipAttention: ExecutiveAttentionItem[];
-
-  /**
-   * Organizational learning over time.
-   */
   learningTimeline: ExecutiveTimelineEntry[];
-
-  /**
-   * Highest-value next action.
-   */
   nextRecommendedAction?: ExecutiveRecommendedAction;
 
-  /**
-   * Progressive disclosure.
-   * These are passed directly from the cognitive engine
-   * and are rendered only when expanded.
-   */
   expandable: {
     theories: unknown[];
     beliefs: unknown[];

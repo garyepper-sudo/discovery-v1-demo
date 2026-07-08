@@ -2,6 +2,8 @@ import type {
   ExecutiveAttentionItem,
   ExecutiveChangeItem,
   ExecutiveMetricCard,
+  ExecutiveNarrative,
+  ExecutiveNarrativeContinuity,
   ExecutiveRecommendedAction,
   ExecutiveState,
   ExecutiveTimelineEntry,
@@ -65,7 +67,10 @@ export type ExecutiveRememberedEvidence = {
   confidence?: number;
 };
 
+export type ExecutiveDashboardNarrative = ExecutiveNarrative;
+
 export type ExecutiveDashboardSections = {
+  narratives: ExecutiveDashboardNarrative[];
   attention: ExecutiveAttentionItem[];
   timeline: ExecutiveTimelineEntry[];
 };
@@ -73,6 +78,7 @@ export type ExecutiveDashboardSections = {
 export type ExecutiveDashboard = {
   hero: ExecutiveDashboardHero;
   metrics: ExecutiveMetricCard[];
+  narratives: ExecutiveDashboardNarrative[];
   keyInsights: ExecutiveKeyInsight[];
   currentOrganizationalState: ExecutiveOrganizationalStateItem[];
   operatingMechanisms: ExecutiveOperatingMechanism[];
@@ -103,6 +109,23 @@ function translateSummary(summary: string): string {
     .replaceAll("organizational beliefs", "operating assumptions");
 }
 
+function translateContinuity(
+  continuity?: ExecutiveNarrativeContinuity,
+): ExecutiveNarrativeContinuity | undefined {
+  if (!continuity) return undefined;
+
+  return {
+    ...continuity,
+    whatChanged: continuity.whatChanged.map(translateSummary),
+    whyChanged: continuity.whyChanged.map(translateSummary),
+    history: continuity.history.map((revision) => ({
+      ...revision,
+      headline: translateTitle(revision.headline),
+      summary: translateSummary(revision.summary),
+    })),
+  };
+}
+
 function resolveStatus(state: ExecutiveState): ExecutiveDashboardStatus {
   if (state.status) return state.status;
 
@@ -118,7 +141,12 @@ function resolveStatus(state: ExecutiveState): ExecutiveDashboardStatus {
     (metric) => metric.trend === "up",
   ).length;
 
+  const decliningNarratives = state.executiveNarratives.filter(
+    (narrative) => narrative.momentum === "declining",
+  ).length;
+
   if (decliningMetrics >= 2) return "watch";
+  if (decliningNarratives >= 2) return "watch";
   if (criticalAttention) return "watch";
   if (improvingMetrics > decliningMetrics) return "improving";
 
@@ -143,6 +171,20 @@ function resolveStatePriority(
   if (item.confidence !== undefined && item.confidence >= 0.75) return "high";
   if (item.confidence !== undefined && item.confidence < 0.45) return "low";
   return "medium";
+}
+
+function buildNarratives(state: ExecutiveState): ExecutiveDashboardNarrative[] {
+  return limitSection(state.executiveNarratives, 5).map((narrative) => ({
+    ...narrative,
+    headline: translateTitle(narrative.headline),
+    observation: translateSummary(narrative.observation),
+    businessImpact: translateSummary(narrative.businessImpact),
+    executiveConversation: translateSummary(narrative.executiveConversation),
+    supportingReasoning: narrative.supportingReasoning
+      ? translateSummary(narrative.supportingReasoning)
+      : undefined,
+    continuity: translateContinuity(narrative.continuity),
+  }));
 }
 
 function buildKeyInsights(state: ExecutiveState): ExecutiveKeyInsight[] {
@@ -207,9 +249,7 @@ function buildRememberedEvidence(
   );
 }
 
-function buildAttentionItems(
-  state: ExecutiveState,
-): ExecutiveAttentionItem[] {
+function buildAttentionItems(state: ExecutiveState): ExecutiveAttentionItem[] {
   return limitSection(state.leadershipAttention, 3).map((item) => ({
     ...item,
     title: translateTitle(item.title),
@@ -230,6 +270,8 @@ function buildTimeline(state: ExecutiveState): ExecutiveTimelineEntry[] {
 export function buildExecutiveDashboard(
   state: ExecutiveState,
 ): ExecutiveDashboard {
+  const narratives = buildNarratives(state);
+
   return {
     hero: {
       headline: translateTitle(state.headline),
@@ -242,6 +284,8 @@ export function buildExecutiveDashboard(
 
     metrics: limitSection(state.metrics, 4),
 
+    narratives,
+
     keyInsights: buildKeyInsights(state),
 
     currentOrganizationalState: buildCurrentOrganizationalState(state),
@@ -251,6 +295,7 @@ export function buildExecutiveDashboard(
     rememberedEvidence: buildRememberedEvidence(state),
 
     sections: {
+      narratives,
       attention: buildAttentionItems(state),
       timeline: buildTimeline(state),
     },

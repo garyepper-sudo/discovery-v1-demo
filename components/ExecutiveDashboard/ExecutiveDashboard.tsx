@@ -26,17 +26,41 @@ function getMetricValue(
   return `${metric.current}${metric.unit === "%" ? "%" : ""}`;
 }
 
-function formatGain(value?: "high" | "medium" | "low"): string {
-  if (value === "high") return "High";
-  if (value === "low") return "Low";
-  return "Medium";
-}
+function formatStatus(value?: string): string {
+  if (!value) return "Unknown";
 
-function formatStatus(value: string): string {
   return value
     .split("-")
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(" ");
+}
+
+function normalizePercent(value?: number): number | undefined {
+  if (value === undefined) return undefined;
+  return value <= 1 ? Math.round(value * 100) : Math.round(value);
+}
+
+function formatConfidence(value?: number): string {
+  const percent = normalizePercent(value);
+  if (percent === undefined) return "";
+  return `${percent}% confidence`;
+}
+
+function formatConfidenceDelta(value?: number): string {
+  if (value === undefined) return "No prior comparison";
+  if (value > 0) return `Confidence increased +${value} pts`;
+  if (value < 0) return `Confidence decreased ${value} pts`;
+  return "Confidence stayed stable";
+}
+
+function evidenceCount(value?: unknown[]): number {
+  return Array.isArray(value) ? value.length : 0;
+}
+
+function momentumSymbol(value?: string): string {
+  if (value === "improving") return "↑";
+  if (value === "declining") return "↓";
+  return "→";
 }
 
 export function ExecutiveDashboardView({
@@ -46,23 +70,11 @@ export function ExecutiveDashboardView({
 
   const hero = dashboard.hero;
   const metrics = dashboard.metrics;
-  const attention = dashboard.sections.attention;
+  const narratives = dashboard.narratives ?? dashboard.sections.narratives ?? [];
   const timeline = dashboard.sections.timeline;
-  const confidence = hero.organizationConfidence ?? 0;
+  const confidence = normalizePercent(hero.organizationConfidence) ?? 0;
 
-  const primaryConditions =
-    attention.length > 0
-      ? attention.slice(0, 3)
-      : dashboard.currentOrganizationalState.slice(0, 3);
-
-  const nextAction = dashboard.nextAction;
-
-  const nextActionTitle =
-    nextAction?.title ?? "Identify the next highest-value investigation";
-
-  const nextActionReason =
-    nextAction?.reason ??
-    "Discovery needs one focused conversation to improve organizational understanding.";
+  const primaryNarratives = narratives.slice(0, 4);
 
   return (
     <section className="executive-results sprint-44-briefing">
@@ -104,54 +116,141 @@ export function ExecutiveDashboardView({
           </article>
         </section>
 
-        <section className="executive-decision-card">
-          <div>
-            <p className="insight-eyebrow">Highest Value Next Investigation</p>
-            <h2>{nextActionTitle}</h2>
-            <p>{nextActionReason}</p>
-          </div>
-
-          <div className="decision-card-side">
-            <span>Expected Understanding Gain</span>
-            <strong>{formatGain(nextAction?.expectedUnderstandingGain)}</strong>
-            <button type="button">Begin Investigation →</button>
-          </div>
-        </section>
-
         <section className="executive-section">
           <div className="executive-section-heading">
-            <p className="insight-eyebrow">Conditions Requiring Attention</p>
-            <h2>What deserves attention</h2>
+            <p className="insight-eyebrow">Executive Narratives</p>
+            <h2>What changed since we last talked</h2>
           </div>
 
-          {primaryConditions.length > 0 ? (
+          {primaryNarratives.length > 0 ? (
             <div className="condition-grid">
-              {primaryConditions.map((item, index) => (
-                <article className="condition-card" key={`${item.title}-${index}`}>
-                  <div className="condition-card-top">
-                    <span>{index + 1}</span>
-                    <strong>
-                      {"priority" in item
-                        ? formatStatus(String(item.priority))
-                        : "Review"}
-                    </strong>
-                  </div>
+              {primaryNarratives.map((narrative, index) => {
+                const continuity = narrative.continuity;
 
-                  <h3>{item.title}</h3>
-                  <p>{"reason" in item ? item.reason : item.summary}</p>
+                return (
+                  <article
+                    className="condition-card executive-narrative-card"
+                    key={narrative.id ?? `${narrative.headline}-${index}`}
+                  >
+                    <div className="condition-card-top">
+                      <span>{momentumSymbol(narrative.momentum)}</span>
+                      <strong>
+                        {continuity
+                          ? `${formatStatus(continuity.lifecycle)} · ${formatStatus(
+                              continuity.status,
+                            )}`
+                          : narrative.priority
+                            ? formatStatus(narrative.priority)
+                            : "Review"}
+                      </strong>
+                    </div>
 
-                  {"confidence" in item && item.confidence !== undefined && (
-                    <small>{Math.round(item.confidence * 100)}% confidence</small>
-                  )}
-                </article>
-              ))}
+                    <h3>{narrative.headline}</h3>
+
+                    {continuity && (
+                      <div className="narrative-continuity-strip">
+                        <span>Momentum: {formatStatus(narrative.momentum)}</span>
+                        <span>
+                          {formatConfidenceDelta(continuity.confidenceDelta)}
+                        </span>
+                      </div>
+                    )}
+
+                    {continuity?.whatChanged?.length ? (
+                      <details open={index === 0}>
+                        <summary>Since last investigation</summary>
+                        <ul>
+                          {continuity.whatChanged.map((item, changeIndex) => (
+                            <li key={`${narrative.id}-changed-${changeIndex}`}>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </details>
+                    ) : null}
+
+                    {continuity?.whyChanged?.length ? (
+                      <details>
+                        <summary>Why it changed</summary>
+                        <ul>
+                          {continuity.whyChanged.map((item, whyIndex) => (
+                            <li key={`${narrative.id}-why-${whyIndex}`}>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </details>
+                    ) : null}
+
+                    <details open={!continuity && index === 0}>
+                      <summary>What we’re observing</summary>
+                      <p>{narrative.observation}</p>
+                    </details>
+
+                    <details>
+                      <summary>Business impact</summary>
+                      <p>{narrative.businessImpact}</p>
+                    </details>
+
+                    <details>
+                      <summary>Leadership discussion</summary>
+                      <p>{narrative.executiveConversation}</p>
+                    </details>
+
+                    {narrative.supportingReasoning && (
+                      <details>
+                        <summary>Supporting reasoning</summary>
+                        <p>{narrative.supportingReasoning}</p>
+                      </details>
+                    )}
+
+                    {continuity?.history?.length ? (
+                      <details>
+                        <summary>
+                          Narrative history ({continuity.history.length})
+                        </summary>
+                        <div className="timeline-list executive-learning-list">
+                          {continuity.history.map((item, historyIndex) => (
+                            <div
+                              className="timeline-step is-active"
+                              key={`${item.timestamp}-${historyIndex}`}
+                            >
+                              <i />
+                              <div>
+                                <span>{formatDate(item.timestamp)}</span>
+                                <p>{item.summary}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </details>
+                    ) : null}
+
+                    {evidenceCount(narrative.evidence) > 0 && (
+                      <details>
+                        <summary>
+                          Supporting evidence ({evidenceCount(narrative.evidence)})
+                        </summary>
+                        <p>
+                          Evidence is available in the expanded reasoning drawer
+                          below.
+                        </p>
+                      </details>
+                    )}
+
+                    {narrative.confidence !== undefined && (
+                      <small>{formatConfidence(narrative.confidence)}</small>
+                    )}
+                  </article>
+                );
+              })}
             </div>
           ) : (
             <article className="condition-card">
-              <h3>No urgent conditions detected</h3>
+              <h3>No executive narratives available yet</h3>
               <p>
-                Discovery did not identify a current condition requiring immediate
-                executive attention.
+                Discovery will show complete executive narratives once current
+                understanding has been assembled.
               </p>
             </article>
           )}
@@ -190,9 +289,7 @@ export function ExecutiveDashboardView({
         </section>
 
         <details className="expanded-results">
-          <summary className="reasoning-toggle">
-            Why Discovery believes this
-          </summary>
+          <summary className="reasoning-toggle">Explore the reasoning</summary>
 
           <div className="reasoning-drawer">
             <div className="reasoning-block">
@@ -200,7 +297,10 @@ export function ExecutiveDashboardView({
 
               {dashboard.keyInsights.length > 0 ? (
                 dashboard.keyInsights.map((item, index) => (
-                  <div className="top-memory-change-row" key={`${item.title}-${index}`}>
+                  <div
+                    className="top-memory-change-row"
+                    key={`${item.title}-${index}`}
+                  >
                     <div className="top-memory-change-icon">✓</div>
                     <div>
                       <h3>{item.title}</h3>
@@ -220,7 +320,10 @@ export function ExecutiveDashboardView({
 
               {dashboard.rememberedEvidence.length > 0 ? (
                 dashboard.rememberedEvidence.map((item, index) => (
-                  <div className="top-memory-change-row" key={`${item.title}-${index}`}>
+                  <div
+                    className="top-memory-change-row"
+                    key={`${item.title}-${index}`}
+                  >
                     <div className="top-memory-change-icon">•</div>
                     <div>
                       <h3>{item.title}</h3>
@@ -279,8 +382,10 @@ export function ExecutiveDashboardView({
         </div>
 
         <div className="executive-question-card">
-          <span>Executive Question</span>
-          <p>What conversation would most improve organizational understanding?</p>
+          <span>Leadership Discussion</span>
+          <p>
+            What conversation would most improve organizational understanding?
+          </p>
         </div>
       </aside>
     </section>
