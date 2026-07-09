@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 import type { ExecutiveDashboard } from "../../engine/v3/executive/buildExecutiveDashboard";
 
 type MemoryUpdateOverviewProps = {
@@ -16,7 +14,7 @@ function formatMetricValue(value: unknown): string | number {
   return 0;
 }
 
-function cleanSentence(value: unknown, fallback: string, maxLength = 104) {
+function cleanSentence(value: unknown, fallback: string, maxLength = 112) {
   const raw = String(value || fallback).replace(/\s+/g, " ").trim();
   const firstSentence = raw.split(/(?<=[.!?])\s+/)[0];
 
@@ -25,32 +23,18 @@ function cleanSentence(value: unknown, fallback: string, maxLength = 104) {
     : firstSentence;
 }
 
-function getMetricValue(
-  dashboard: ExecutiveDashboard | undefined,
-  name: string,
-  fallback: number | string,
-): number | string {
-  const metric = dashboard?.metrics.find(
-    (item: ExecutiveDashboard["metrics"][number]) =>
-      item.label.toLowerCase().includes(name.toLowerCase()),
-  );
-
-  return formatMetricValue(metric?.current ?? fallback);
+function getTrajectory(index: number) {
+  if (index === 0) return "Strengthening";
+  if (index === 1) return "Evolving";
+  if (index === 2) return "Stable";
+  return "Tracked";
 }
 
-function getRowIcon(index: number) {
-  if (index === 0) return "◷";
-  if (index === 1) return "♙";
-  if (index === 2) return "□";
-  if (index === 3) return "◎";
-  return "↗";
-}
-
-function getStatusLabel(priority?: string) {
-  if (priority === "highest") return "Priority";
-  if (priority === "high") return "Watch";
-  if (priority === "medium") return "Review";
-  return "Stable";
+function getSparkline(index: number) {
+  if (index === 0) return "▁▂▃▄▆▇";
+  if (index === 1) return "▂▃▃▄▅▆";
+  if (index === 2) return "▅▅▅▆▅▆";
+  return "▂▃▄▅▆▇";
 }
 
 export default function MemoryUpdateOverview({
@@ -58,220 +42,124 @@ export default function MemoryUpdateOverview({
   organizationRuntime,
   delta,
 }: MemoryUpdateOverviewProps) {
-  const [showAllChanges, setShowAllChanges] = useState(false);
-  const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
-
   const hero = executiveDashboard?.hero;
+  const conversation = executiveDashboard?.conversation;
 
-  const attentionItems = executiveDashboard?.sections.attention ?? [];
-  const rememberedEvidence = executiveDashboard?.rememberedEvidence ?? [];
   const keyInsights = executiveDashboard?.keyInsights ?? [];
   const organizationalState =
     executiveDashboard?.currentOrganizationalState ?? [];
+  const narratives = executiveDashboard?.narratives ?? [];
+  const rememberedEvidence = executiveDashboard?.rememberedEvidence ?? [];
 
   const created = delta?.observationChanges?.created?.length ?? 0;
   const reinforced = delta?.observationChanges?.reinforced?.length ?? 0;
 
   const confidence = formatMetricValue(hero?.organizationConfidence ?? 0);
 
-  const understanding = getMetricValue(
-    executiveDashboard,
-    "understanding",
-    confidence,
-  );
-
-  const memory = getMetricValue(
-    executiveDashboard,
-    "memory",
-    rememberedEvidence.length,
-  );
-
-  const learning = getMetricValue(
-    executiveDashboard,
-    "learning",
-    created + reinforced || attentionItems.length + rememberedEvidence.length,
-  );
-
-  const totalSignals = rememberedEvidence.length;
-
-  const allChanges =
-    attentionItems.length > 0
-      ? attentionItems
-      : organizationalState.map(
-          (
-            item: ExecutiveDashboard["currentOrganizationalState"][number],
-          ) => ({
-            title: item.title,
-            reason: item.summary,
-            confidence: item.confidence,
-            priority: item.priority,
-          }),
-        );
-
-  const visibleChanges = showAllChanges
-    ? allChanges.slice(0, 12)
-    : allChanges.slice(0, 5);
-
-  function toggleRow(rowId: string) {
-    setExpandedRows((current) => ({
-      ...current,
-      [rowId]: !current[rowId],
-    }));
-  }
+  const livingUnderstandings =
+    keyInsights.length > 0
+      ? keyInsights.slice(0, 3)
+      : organizationalState.slice(0, 3).map((item) => ({
+          title: item.title,
+          summary: item.summary,
+          confidence: item.confidence,
+          importance: item.priority,
+        }));
 
   return (
-    <section className="memory-update-overview">
-      <div className="memory-update-header">
-        <p className="memory-update-eyebrow">Executive Intelligence</p>
-        <h1>{hero?.headline ?? "Current Organizational State"}</h1>
+    <section className="memory-update-overview living-briefing">
+      <div className="living-briefing-hero">
+        <p className="memory-update-eyebrow">Since We Last Spoke</p>
+
+        <h1>
+          {conversation?.sinceLastSpoke.headline ??
+            hero?.headline ??
+            "Discovery updated its understanding of the organization."}
+        </h1>
+
         <p>
-          {hero?.summary ??
-            "Discovery is translating organizational learning into executive intelligence."}
+          {conversation?.sinceLastSpoke.summary ??
+            hero?.summary ??
+            "Discovery compared this investigation against accumulated organizational memory."}
         </p>
+
+        <div className="living-briefing-pulse-row">
+          <span>{organizationRuntime?.metadata?.investigationCount ?? 1} investigations</span>
+          <span>{created + reinforced} learning updates</span>
+          <span>{rememberedEvidence.length} remembered signals</span>
+          <span>{confidence}% confidence</span>
+        </div>
       </div>
 
-      <div className="memory-metric-grid">
-        <article className="memory-metric-card memory-metric-new">
-          <span className="memory-metric-icon">✦</span>
-          <strong>{confidence}</strong>
-          <p>Confidence</p>
-          <em>{hero?.status ?? "Active"}</em>
-        </article>
-
-        <article className="memory-metric-card memory-metric-reinforced">
-          <span className="memory-metric-icon">↗</span>
-          <strong>{understanding}</strong>
-          <p>Understanding</p>
-          <em>Current score</em>
-        </article>
-
-        <article className="memory-metric-card memory-metric-stable">
-          <span className="memory-metric-icon">◎</span>
-          <strong>{memory}</strong>
-          <p>Memory</p>
-          <em>Organizational continuity</em>
-        </article>
-
-        <article className="memory-metric-card memory-metric-total">
-          <span className="memory-metric-icon">+</span>
-          <strong>{learning}</strong>
-          <p>Learning</p>
-          <em>{totalSignals} remembered signals</em>
-        </article>
-      </div>
-
-      <div className="memory-update-meta">
-        <span>
-          {organizationRuntime?.metadata?.investigationCount ?? 1} investigations
-        </span>
-        <span>{keyInsights.length} insights</span>
-        <span>{organizationalState.length} state changes</span>
-        <span>{rememberedEvidence.length} remembered signals</span>
-      </div>
-
-      <section className="top-memory-changes">
-        <div className="top-memory-changes-header">
+      <section className="living-understandings-panel">
+        <div className="living-understandings-header">
           <div>
-            <h2>Leadership attention</h2>
-            <p>The most important signals for leadership to understand now.</p>
+            <p className="memory-update-eyebrow">Living Understandings</p>
+            <h2>Top understandings Discovery is tracking</h2>
           </div>
 
-          {allChanges.length > 5 && (
-            <button
-              type="button"
-              onClick={() => setShowAllChanges((current) => !current)}
-            >
-              {showAllChanges ? "Show fewer" : "View all signals →"}
-            </button>
-          )}
+          <span>{livingUnderstandings.length} active</span>
         </div>
 
-        <div className="top-memory-change-list">
-          {visibleChanges.length === 0 ? (
-            <article className="top-memory-change-row">
-              <span className="top-memory-change-icon">+</span>
-
+        <div className="living-understandings-list">
+          {livingUnderstandings.length === 0 ? (
+            <article className="living-understanding-row">
               <div>
-                <h3>No urgent leadership attention items were detected.</h3>
+                <h3>No tracked understandings yet.</h3>
                 <p>
-                  Continue adding evidence to strengthen Discovery’s executive
-                  understanding.
+                  Add more evidence and Discovery will begin surfacing the
+                  organizational understandings worth tracking over time.
                 </p>
               </div>
-
-              <div className="top-memory-change-actions">
-                <span>Stable</span>
-                <b>⌄</b>
-              </div>
+              <span>Emerging</span>
             </article>
           ) : (
-            visibleChanges.map((item: any, index: number) => {
-              const rowId = item.id ?? `${item.title}-${index}`;
-              const expanded = Boolean(expandedRows[rowId]);
-
-              return (
-                <article
-                  className={`top-memory-change-row ${
-                    expanded ? "is-expanded" : ""
-                  }`}
-                  key={rowId}
-                >
-                  <span className="top-memory-change-icon">
-                    {getRowIcon(index)}
-                  </span>
-
-                  <button
-                    type="button"
-                    className="top-memory-change-main"
-                    onClick={() => toggleRow(rowId)}
-                    aria-expanded={expanded}
-                  >
-                    <h3>
-                      {cleanSentence(
-                        item.title,
-                        "A meaningful signal deserves leadership attention.",
-                        78,
-                      )}
-                    </h3>
+            livingUnderstandings.map((item: any, index: number) => (
+              <article className="living-understanding-row" key={item.title ?? index}>
+                <div className="living-understanding-main">
+                  <div className="living-understanding-orb" />
+                  <div>
+                    <h3>{cleanSentence(item.title, "Organizational understanding")}</h3>
                     <p>
                       {cleanSentence(
-                        item.reason,
-                        "Discovery identified this as important to the current organizational state.",
+                        item.summary,
+                        "Discovery is tracking this understanding as the organization evolves.",
                       )}
                     </p>
+                  </div>
+                </div>
 
-                    {expanded && (
-                      <div className="top-memory-change-detail">
-                        {item.reason ??
-                          "This signal is part of the organization’s evolving executive intelligence."}
-                      </div>
-                    )}
-                  </button>
+                <div className="living-understanding-trajectory">
+                  <strong>{getSparkline(index)}</strong>
+                  <span>{getTrajectory(index)}</span>
+                </div>
 
-                  <button
-                    type="button"
-                    className="top-memory-change-actions"
-                    onClick={() => toggleRow(rowId)}
-                    aria-label={expanded ? "Collapse signal" : "Expand signal"}
-                  >
-                    <span>{getStatusLabel(item.priority)}</span>
-                    <b>{expanded ? "⌃" : "⌄"}</b>
-                  </button>
-                </article>
-              );
-            })
+                <div className="living-understanding-confidence">
+                  <strong>
+                    {item.confidence !== undefined
+                      ? `${Math.round(item.confidence * 100)}%`
+                      : "—"}
+                  </strong>
+                  <span>Confidence</span>
+                </div>
+              </article>
+            ))
           )}
         </div>
+      </section>
 
-        {allChanges.length > 5 && (
-          <button
-            className="more-memory-changes-button"
-            type="button"
-            onClick={() => setShowAllChanges((current) => !current)}
-          >
-            {showAllChanges ? "⌃ Show fewer signals" : "⌄ More signals available"}
-          </button>
-        )}
+      <section className="living-todays-story">
+        <p className="memory-update-eyebrow">Today’s Story</p>
+        <h2>
+          {conversation?.currentOrganizationalStory.headline ??
+            narratives[0]?.headline ??
+            "Discovery is developing the organization’s current story."}
+        </h2>
+        <p>
+          {conversation?.currentOrganizationalStory.summary ??
+            narratives[0]?.observation ??
+            "As more evidence accumulates, Discovery will explain what changed, why it changed, and what leadership should discuss next."}
+        </p>
       </section>
     </section>
   );

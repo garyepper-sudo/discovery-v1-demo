@@ -1,14 +1,27 @@
+import {
+  buildSinceLastSpoke,
+  buildCurrentStory,
+  buildLeadershipConversation,
+  buildActionPlan,
+  buildExploreUnderstanding,
+} from "./expression/executiveConversation";
+
 import type {
   ExecutiveAttentionItem,
   ExecutiveChangeItem,
   ExecutiveMetricCard,
   ExecutiveNarrative,
-  ExecutiveNarrativeContinuity,
   ExecutiveRecommendedAction,
   ExecutiveState,
   ExecutiveTimelineEntry,
   ExecutiveUnderstandingItem,
 } from "./executiveState";
+
+import {
+  translateExecutiveTitle,
+  translateExecutiveSummary,
+  translateExecutiveContinuity,
+} from "./expression/executiveLanguage";
 
 export type ExecutiveDashboardStatus =
   | "improving"
@@ -67,9 +80,25 @@ export type ExecutiveRememberedEvidence = {
   confidence?: number;
 };
 
+export type ExecutiveConversationSection = {
+  eyebrow: string;
+  headline: string;
+  summary: string;
+  items: string[];
+};
+
+export type ExecutiveConversation = {
+  sinceLastSpoke: ExecutiveConversationSection;
+  currentOrganizationalStory: ExecutiveConversationSection;
+  leadershipConversation: ExecutiveConversationSection;
+  actionPlan: ExecutiveConversationSection;
+  exploreUnderstanding: ExecutiveConversationSection;
+};
+
 export type ExecutiveDashboardNarrative = ExecutiveNarrative;
 
 export type ExecutiveDashboardSections = {
+  conversation: ExecutiveConversation;
   narratives: ExecutiveDashboardNarrative[];
   attention: ExecutiveAttentionItem[];
   timeline: ExecutiveTimelineEntry[];
@@ -77,6 +106,7 @@ export type ExecutiveDashboardSections = {
 
 export type ExecutiveDashboard = {
   hero: ExecutiveDashboardHero;
+  conversation: ExecutiveConversation;
   metrics: ExecutiveMetricCard[];
   narratives: ExecutiveDashboardNarrative[];
   keyInsights: ExecutiveKeyInsight[];
@@ -86,45 +116,6 @@ export type ExecutiveDashboard = {
   sections: ExecutiveDashboardSections;
   nextAction?: ExecutiveRecommendedAction;
 };
-
-const executiveLanguageMap: Record<string, string> = {
-  "Leadership Dependency": "Critical decisions depend on too few people.",
-  "Organizational Continuity Failure":
-    "Knowledge transfer is becoming a business continuity risk.",
-  "Cross Functional Execution Friction":
-    "Teams are struggling to coordinate effectively.",
-};
-
-function translateTitle(title: string): string {
-  return executiveLanguageMap[title] ?? title;
-}
-
-function translateSummary(summary: string): string {
-  return summary
-    .replaceAll("Discovery identified", "The organization shows")
-    .replaceAll("Discovery believes", "The organization appears to show")
-    .replaceAll("Discovery strengthened", "The evidence strengthened")
-    .replaceAll("Discovery detected", "The organization shows")
-    .replaceAll("organizational theories", "stable organizational patterns")
-    .replaceAll("organizational beliefs", "operating assumptions");
-}
-
-function translateContinuity(
-  continuity?: ExecutiveNarrativeContinuity,
-): ExecutiveNarrativeContinuity | undefined {
-  if (!continuity) return undefined;
-
-  return {
-    ...continuity,
-    whatChanged: continuity.whatChanged.map(translateSummary),
-    whyChanged: continuity.whyChanged.map(translateSummary),
-    history: continuity.history.map((revision) => ({
-      ...revision,
-      headline: translateTitle(revision.headline),
-      summary: translateSummary(revision.summary),
-    })),
-  };
-}
 
 function resolveStatus(state: ExecutiveState): ExecutiveDashboardStatus {
   if (state.status) return state.status;
@@ -176,21 +167,23 @@ function resolveStatePriority(
 function buildNarratives(state: ExecutiveState): ExecutiveDashboardNarrative[] {
   return limitSection(state.executiveNarratives, 5).map((narrative) => ({
     ...narrative,
-    headline: translateTitle(narrative.headline),
-    observation: translateSummary(narrative.observation),
-    businessImpact: translateSummary(narrative.businessImpact),
-    executiveConversation: translateSummary(narrative.executiveConversation),
+    headline: translateExecutiveTitle(narrative.headline),
+    observation: translateExecutiveSummary(narrative.observation),
+    businessImpact: translateExecutiveSummary(narrative.businessImpact),
+    executiveConversation: translateExecutiveSummary(
+      narrative.executiveConversation,
+    ),
     supportingReasoning: narrative.supportingReasoning
-      ? translateSummary(narrative.supportingReasoning)
+      ? translateExecutiveSummary(narrative.supportingReasoning)
       : undefined,
-    continuity: translateContinuity(narrative.continuity),
+    continuity: translateExecutiveContinuity(narrative.continuity),
   }));
 }
 
 function buildKeyInsights(state: ExecutiveState): ExecutiveKeyInsight[] {
   return limitSection(state.currentUnderstanding, 4).map((item) => ({
-    title: translateTitle(item.title),
-    summary: translateSummary(item.summary),
+    title: translateExecutiveTitle(item.title),
+    summary: translateExecutiveSummary(item.summary),
     importance: resolveInsightImportance(item),
     confidence: item.confidence,
   }));
@@ -200,8 +193,8 @@ function buildCurrentOrganizationalState(
   state: ExecutiveState,
 ): ExecutiveOrganizationalStateItem[] {
   return limitSection(state.whatChanged, 5).map((item) => ({
-    title: translateTitle(item.title),
-    summary: translateSummary(item.summary),
+    title: translateExecutiveTitle(item.title),
+    summary: translateExecutiveSummary(item.summary),
     category: "pattern",
     priority: resolveStatePriority(item),
     confidence: item.confidence,
@@ -213,13 +206,13 @@ function buildOperatingMechanisms(
 ): ExecutiveOperatingMechanism[] {
   return limitSection(state.expandable.mechanisms, 5).map(
     (item: any): ExecutiveOperatingMechanism => ({
-      title: translateTitle(
+      title: translateExecutiveTitle(
         item.title ??
           item.statement ??
           item.summary ??
           "A possible operating pattern is emerging.",
       ),
-      summary: translateSummary(
+      summary: translateExecutiveSummary(
         item.summary ??
           item.description ??
           item.explanation ??
@@ -237,7 +230,7 @@ function buildRememberedEvidence(
   return limitSection(state.expandable.evidence, 5).map(
     (item: any): ExecutiveRememberedEvidence => ({
       title: item.title ?? item.source ?? "Remembered signal",
-      summary: translateSummary(
+      summary: translateExecutiveSummary(
         item.summary ??
           item.text ??
           item.observation ??
@@ -252,8 +245,8 @@ function buildRememberedEvidence(
 function buildAttentionItems(state: ExecutiveState): ExecutiveAttentionItem[] {
   return limitSection(state.leadershipAttention, 3).map((item) => ({
     ...item,
-    title: translateTitle(item.title),
-    reason: translateSummary(item.reason),
+    title: translateExecutiveTitle(item.title),
+    reason: translateExecutiveSummary(item.reason),
   }));
 }
 
@@ -262,25 +255,41 @@ function buildTimeline(state: ExecutiveState): ExecutiveTimelineEntry[] {
     ...item,
     summary:
       "summary" in item && typeof item.summary === "string"
-        ? translateSummary(item.summary)
+        ? translateExecutiveSummary(item.summary)
         : item.summary,
   }));
+}
+
+function buildExecutiveConversation(
+  state: ExecutiveState,
+  narratives: ExecutiveDashboardNarrative[],
+): ExecutiveConversation {
+  return {
+    sinceLastSpoke: buildSinceLastSpoke(state),
+    currentOrganizationalStory: buildCurrentStory(state, narratives),
+    leadershipConversation: buildLeadershipConversation(narratives),
+    actionPlan: buildActionPlan(state),
+    exploreUnderstanding: buildExploreUnderstanding(state),
+  };
 }
 
 export function buildExecutiveDashboard(
   state: ExecutiveState,
 ): ExecutiveDashboard {
   const narratives = buildNarratives(state);
+  const conversation = buildExecutiveConversation(state, narratives);
 
   return {
     hero: {
-      headline: translateTitle(state.headline),
-      summary: translateSummary(state.summary),
+      headline: conversation.sinceLastSpoke.headline,
+      summary: conversation.sinceLastSpoke.summary,
       status: resolveStatus(state),
       organizationConfidence: state.organizationConfidence,
       generatedAt: state.generatedAt,
       lastInvestigation: state.lastInvestigation,
     },
+
+    conversation,
 
     metrics: limitSection(state.metrics, 4),
 
@@ -295,6 +304,7 @@ export function buildExecutiveDashboard(
     rememberedEvidence: buildRememberedEvidence(state),
 
     sections: {
+      conversation,
       narratives,
       attention: buildAttentionItems(state),
       timeline: buildTimeline(state),

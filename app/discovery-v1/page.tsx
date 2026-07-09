@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { ExecutiveDashboardView } from "../../components/ExecutiveDashboard";
-import OrganizationWorkspace from "../../components/workspace/OrganizationWorkspace";
+
+import ExecutiveBriefing from "../../components/executive/ExecutiveBriefing";
+// Legacy dashboard kept for reference during Sprint 48.
+// import { ExecutiveDashboardView } from "../../components/ExecutiveDashboard";
+// import OrganizationWorkspace from "../../components/workspace/OrganizationWorkspace";
 
 export default function DiscoveryV1Page() {
   const [company, setCompany] = useState("");
@@ -115,9 +118,11 @@ export default function DiscoveryV1Page() {
       )}
 
       {result?.executiveDashboard && (
-        <ExecutiveDashboardView executiveDashboard={result?.executiveDashboard} />
+        <ExecutiveBriefing executiveDashboard={result.executiveDashboard} />
       )}
 
+      {/* Legacy workspace preserved, but hidden during Sprint 48B briefing experience. */}
+      {/*
       {result && (
         <OrganizationWorkspace
           result={result}
@@ -125,6 +130,7 @@ export default function DiscoveryV1Page() {
           onContinueLearning={(nextInput) => runInvestigation(nextInput)}
         />
       )}
+      */}
 
       {result && error && <p className="error-message">{error}</p>}
     </main>

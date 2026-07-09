@@ -1297,3 +1297,642 @@
   font-size: 12.5px;
   line-height: 1.45;
 }
+
+/* =====================================================
+   Sprint 48
+   Progressive Executive Conversation
+   ===================================================== */
+
+.discovery-v2 .executive-conversation-panel {
+  display: grid;
+  gap: 18px;
+  padding: 26px;
+  border: 1px solid rgba(247, 241, 231, 0.12);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at top left, rgba(217, 183, 112, 0.12), transparent 34%),
+    rgba(255, 255, 255, 0.035);
+}
+
+.discovery-v2 .executive-conversation-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 22px;
+  align-items: flex-start;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(247, 241, 231, 0.1);
+}
+
+.discovery-v2 .executive-section-kicker,
+.discovery-v2 .executive-conversation-eyebrow {
+  margin: 0 0 10px;
+  color: rgba(217, 183, 112, 0.92);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.discovery-v2 .executive-conversation-header h2 {
+  margin: 0 0 10px;
+  color: #f7f1e7;
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+}
+
+.discovery-v2 .executive-conversation-header p {
+  max-width: 680px;
+  margin: 0;
+  color: rgba(247, 241, 231, 0.62);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.discovery-v2 .executive-conversation-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.discovery-v2 .executive-conversation-actions button {
+  appearance: none;
+  border: 1px solid rgba(217, 183, 112, 0.22);
+  border-radius: 999px;
+  background: rgba(217, 183, 112, 0.08);
+  color: #d9b770;
+  padding: 10px 13px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.discovery-v2 .executive-conversation-list {
+  display: grid;
+  gap: 12px;
+}
+
+.discovery-v2 .executive-conversation-block {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 18px;
+  padding: 18px;
+  border: 1px solid rgba(247, 241, 231, 0.09);
+  border-radius: 22px;
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.discovery-v2 .executive-conversation-step {
+  width: 36px;
+  height: 36px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: rgba(217, 183, 112, 0.1);
+  border: 1px solid rgba(217, 183, 112, 0.18);
+  color: #d9b770;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.discovery-v2 .executive-conversation-copy h3 {
+  margin: 0 0 8px;
+  color: #f7f1e7;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.discovery-v2 .executive-conversation-copy p {
+  margin: 0;
+  color: rgba(247, 241, 231, 0.6);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.discovery-v2 .executive-conversation-copy ul {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.discovery-v2 .executive-conversation-copy li {
+  position: relative;
+  padding-left: 18px;
+  color: rgba(247, 241, 231, 0.72);
+  font-size: 13px;
+  line-height: 1.42;
+}
+
+.discovery-v2 .executive-conversation-copy li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(217, 183, 112, 0.82);
+}
+
+@media (max-width: 760px) {
+  .discovery-v2 .executive-conversation-panel {
+    padding: 20px;
+  }
+
+  .discovery-v2 .executive-conversation-header {
+    display: grid;
+  }
+
+  .discovery-v2 .executive-conversation-actions {
+    justify-content: flex-start;
+  }
+
+  .discovery-v2 .executive-conversation-block {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================================
+   Discovery UI v2 — Executive Briefing North Star
+   ===================================================== */
+
+.discovery-v2 .executive-briefing-v2 {
+  width: min(1480px, calc(100vw - 48px));
+  margin: 0 auto;
+  padding: 48px 0 92px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(360px, 0.75fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.discovery-v2 .executive-briefing-v2 > .since-last-spoke,
+.discovery-v2 .executive-briefing-v2 > .living-understandings-v2,
+.discovery-v2 .executive-briefing-v2 > .todays-story-v2 {
+  grid-column: 1;
+}
+
+.discovery-v2 .executive-briefing-v2 > .understanding-system {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  position: sticky;
+  top: 28px;
+}
+
+.discovery-v2 .briefing-section,
+.discovery-v2 .understanding-system {
+  border: 1px solid rgba(247, 241, 231, 0.11);
+  border-radius: 30px;
+  padding: 28px;
+  background:
+    radial-gradient(circle at top left, rgba(217, 183, 112, 0.1), transparent 34%),
+    rgba(255, 255, 255, 0.03);
+}
+
+.discovery-v2 .briefing-eyebrow,
+.discovery-v2 .briefing-section-label {
+  margin: 0 0 12px;
+  color: rgba(217, 183, 112, 0.92);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.discovery-v2 .briefing-section h1 {
+  max-width: 760px;
+  margin: 0 0 14px;
+  color: #f7f1e7;
+  font-size: clamp(44px, 5.6vw, 78px);
+  line-height: 0.98;
+  letter-spacing: -0.065em;
+}
+
+.discovery-v2 .briefing-section h2 {
+  margin: 0 0 12px;
+  color: #f7f1e7;
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+}
+
+.discovery-v2 .briefing-section h3,
+.discovery-v2 .understanding-system h3 {
+  margin: 0;
+  color: #f7f1e7;
+  font-size: 20px;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.discovery-v2 .briefing-section p,
+.discovery-v2 .understanding-system p {
+  max-width: 720px;
+  margin: 0;
+  color: rgba(247, 241, 231, 0.62);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* Since We Last Spoke */
+
+.discovery-v2 .since-last-spoke {
+  padding: 40px;
+}
+
+.discovery-v2 .since-last-spoke-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 190px;
+  gap: 30px;
+  align-items: center;
+}
+
+.discovery-v2 .briefing-pulse-card {
+  min-height: 160px;
+  border-left: 1px solid rgba(247, 241, 231, 0.12);
+  padding-left: 30px;
+  display: grid;
+  align-content: center;
+}
+
+.discovery-v2 .briefing-pulse-card span {
+  color: rgba(247, 241, 231, 0.42);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.discovery-v2 .briefing-pulse-card strong {
+  margin: 10px 0 6px;
+  color: #d9b770;
+  font-size: 64px;
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+}
+
+.discovery-v2 .briefing-pulse-card p {
+  color: rgba(247, 241, 231, 0.54);
+  font-size: 13px;
+}
+
+.discovery-v2 .briefing-evolution-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(247, 241, 231, 0.1);
+}
+
+.discovery-v2 .briefing-evolution-row span {
+  padding: 8px 11px;
+  border: 1px solid rgba(217, 183, 112, 0.15);
+  border-radius: 999px;
+  background: rgba(217, 183, 112, 0.06);
+  color: rgba(247, 241, 231, 0.66);
+  font-size: 12px;
+}
+
+/* Living Understandings */
+
+.discovery-v2 .briefing-section-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.discovery-v2 .briefing-count-pill {
+  padding: 8px 11px;
+  border: 1px solid rgba(217, 183, 112, 0.2);
+  border-radius: 999px;
+  color: #d9b770;
+  background: rgba(217, 183, 112, 0.08);
+  font-size: 12px;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+/* =====================================================
+   Living Understandings v3
+   Executive Watch List
+   ===================================================== */
+
+.discovery-v2 .living-understanding-list-v2{
+  display:grid;
+  gap:8px;
+}
+
+/* =====================================================
+   Living Understandings v4
+   ===================================================== */
+
+.discovery-v2 .living-understanding-list-v2{
+    display:grid;
+    gap:12px;
+}
+
+.discovery-v2 .living-understanding-row-v2{
+
+    appearance:none;
+    width:100%;
+
+    border:1px solid rgba(247,241,231,.08);
+    border-radius:22px;
+
+    background:rgba(255,255,255,.03);
+
+    padding:22px 26px;
+
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1fr)
+        130px
+        90px
+        80px
+        120px;
+
+    gap:28px;
+
+    align-items:center;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    transition:
+        background .18s,
+        border-color .18s,
+        transform .18s;
+}
+
+.discovery-v2 .living-understanding-row-v2:hover{
+
+    background:rgba(255,255,255,.05);
+
+    border-color:rgba(217,183,112,.24);
+}
+
+.discovery-v2 .living-understanding-row-v2.is-focused{
+
+    border-color:rgba(217,183,112,.48);
+
+    background:
+        radial-gradient(circle at left,
+        rgba(217,183,112,.14),
+        transparent 42%),
+        rgba(255,255,255,.045);
+
+    transform:translateX(3px);
+}
+
+.discovery-v2 .living-understanding-main-v2{
+
+    min-width:0;
+
+    display:grid;
+
+    gap:8px;
+}
+
+.discovery-v2 .living-understanding-main-v2 strong{
+
+    font-size:17px;
+
+    font-weight:700;
+
+    color:#f7f1e7;
+
+    line-height:1.15;
+}
+
+.discovery-v2 .living-understanding-main-v2 small{
+
+    color:rgba(247,241,231,.52);
+
+    font-size:13px;
+
+    overflow:hidden;
+
+    white-space:nowrap;
+
+    text-overflow:ellipsis;
+}
+
+.discovery-v2 .living-understanding-state-v2{
+
+    color:rgba(247,241,231,.68);
+
+    font-size:15px;
+
+    font-weight:650;
+}
+
+.discovery-v2 .living-understanding-confidence-v2{
+
+    text-align:right;
+
+    font-variant-numeric:tabular-nums;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    color:#f7f1e7;
+}
+
+.discovery-v2 .living-understanding-tracked-v2{
+
+    justify-self:end;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    background:rgba(217,183,112,.08);
+
+    border:1px solid rgba(217,183,112,.18);
+
+    color:#d9b770;
+
+    font-size:12px;
+
+    font-weight:800;
+}
+
+.discovery-v2 .living-understanding-spark-v2{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    gap:4px;
+
+    height:28px;
+}
+
+.discovery-v2 .living-understanding-spark-v2 span{
+
+    width:10px;
+
+    border-radius:3px;
+
+    background:#d9b770;
+}
+
+.discovery-v2 .living-understanding-empty-v2{
+
+    padding:34px;
+
+    border-radius:22px;
+
+    border:1px solid rgba(247,241,231,.08);
+
+    background:rgba(255,255,255,.03);
+}
+
+/* =====================================================
+   Sprint 49
+   Help Discovery Learn
+   ===================================================== */
+
+.discovery-v2 .continue-building-understanding-v2 {
+  grid-column: 1;
+  display: grid;
+  gap: 24px;
+}
+
+.discovery-v2 .continue-learning-header-v2 {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.discovery-v2 .continue-learning-grid-v2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 18px;
+}
+
+.discovery-v2 .continue-learning-card-v2 {
+  padding: 22px;
+  border: 1px solid rgba(247, 241, 231, 0.1);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.discovery-v2 .continue-learning-card-v2 h3 {
+  margin-bottom: 14px;
+}
+
+.discovery-v2 .continue-learning-card-v2 p {
+  font-size: 14px;
+}
+
+.discovery-v2 .confidence-gain-v2 {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(217, 183, 112, 0.22);
+  background: rgba(217, 183, 112, 0.08);
+}
+
+.discovery-v2 .confidence-gain-v2 span {
+  display: block;
+  color: rgba(217, 183, 112, 0.92);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.discovery-v2 .confidence-gain-v2 strong {
+  display: block;
+  margin-top: 6px;
+  color: #f7f1e7;
+  font-size: 34px;
+  line-height: 1;
+}
+
+.discovery-v2 .evidence-list-v2,
+.discovery-v2 .connection-list-v2,
+.discovery-v2 .upload-list-v2 {
+  display: grid;
+  gap: 10px;
+}
+
+.discovery-v2 .evidence-item-v2,
+.discovery-v2 .connection-button-v2,
+.discovery-v2 .upload-button-v2 {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  border: 1px solid rgba(247, 241, 231, 0.1);
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.16);
+  color: #f7f1e7;
+  text-align: left;
+}
+
+.discovery-v2 .connection-button-v2,
+.discovery-v2 .upload-button-v2 {
+  appearance: none;
+  cursor: pointer;
+}
+
+.discovery-v2 .connection-button-v2 {
+  justify-content: space-between;
+}
+
+.discovery-v2 .evidence-check-v2 {
+  color: #d9b770;
+  font-weight: 900;
+}
+
+.discovery-v2 .evidence-item-v2 strong {
+  display: block;
+  color: #f7f1e7;
+  font-size: 14px;
+}
+
+.discovery-v2 .evidence-item-v2 small {
+  display: block;
+  margin-top: 3px;
+  color: rgba(247, 241, 231, 0.52);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.discovery-v2 .show-more-learning-v2 {
+  margin-top: 12px;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #d9b770;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.discovery-v2 .learning-note-v2 {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.16);
+  border: 1px solid rgba(247, 241, 231, 0.08);
+}
+
+@media (max-width: 980px) {
+  .discovery-v2 .continue-learning-grid-v2 {
+    grid-template-columns: 1fr;
+  }
+}

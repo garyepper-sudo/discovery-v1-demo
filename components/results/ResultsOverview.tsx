@@ -27,6 +27,44 @@ function oneSentence(value: string | undefined, fallback: string) {
     : firstSentence;
 }
 
+function ConversationBlock({
+  eyebrow,
+  headline,
+  summary,
+  items,
+  index,
+}: {
+  eyebrow: string;
+  headline: string;
+  summary: string;
+  items: string[];
+  index: number;
+}) {
+  return (
+    <article className="executive-conversation-block">
+      <div className="executive-conversation-step">
+        {String(index + 1).padStart(2, "0")}
+      </div>
+
+      <div className="executive-conversation-copy">
+        <p className="executive-conversation-eyebrow">{eyebrow}</p>
+        <h3>{headline}</h3>
+        <p>{summary}</p>
+
+        {items.length > 0 && (
+          <ul>
+            {items.slice(0, 4).map((item, itemIndex) => (
+              <li key={`${eyebrow}-${itemIndex}`}>
+                {oneSentence(item, "A meaningful organizational signal changed.")}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </article>
+  );
+}
+
 export default function ResultsOverview({
   executiveDashboard,
   organizationRuntime,
@@ -41,11 +79,21 @@ export default function ResultsOverview({
   const runtimeOrganism = organizationRuntime?.organism;
 
   const hero = executiveDashboard?.hero;
+  const conversation = executiveDashboard?.conversation;
   const keyInsights = executiveDashboard?.keyInsights ?? [];
   const currentOrganizationalState =
     executiveDashboard?.currentOrganizationalState ?? [];
   const operatingMechanisms = executiveDashboard?.operatingMechanisms ?? [];
   const rememberedEvidence = executiveDashboard?.rememberedEvidence ?? [];
+
+  const conversationSections = conversation
+    ? [
+        conversation.sinceLastSpoke,
+        conversation.currentOrganizationalStory,
+        conversation.leadershipConversation,
+        conversation.actionPlan,
+      ]
+    : [];
 
   return (
     <section className="results-overview-executive">
@@ -55,6 +103,71 @@ export default function ResultsOverview({
           organizationRuntime={organizationRuntime}
           delta={delta}
         />
+      )}
+
+      {conversation && (
+        <section className="executive-conversation-panel">
+          <div className="executive-conversation-header">
+            <div>
+              <p className="executive-section-kicker">Executive Conversation</p>
+              <h2>Since we last spoke</h2>
+              <p>
+                Discovery is translating accumulated organizational memory into
+                the conversations leadership should have next.
+              </p>
+            </div>
+
+            <div className="executive-conversation-actions">
+              <button
+                type="button"
+                onClick={() => setShowOrganismExplorer(true)}
+              >
+                Explore organism
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setShowReasoningTrace(true)}
+              >
+                Show reasoning
+              </button>
+            </div>
+          </div>
+
+          <div className="executive-conversation-list">
+            {conversationSections.map((section, index) => (
+              <ConversationBlock
+                key={section.eyebrow}
+                eyebrow={section.eyebrow}
+                headline={section.headline}
+                summary={section.summary}
+                items={section.items}
+                index={index}
+              />
+            ))}
+          </div>
+
+          <ExecutiveAccordion
+            title={conversation.exploreUnderstanding.eyebrow}
+            subtitle={conversation.exploreUnderstanding.summary}
+            badge="Explore"
+            icon="◎"
+            defaultOpen={false}
+          >
+            <div className="executive-row-list">
+              {conversation.exploreUnderstanding.items.map((item, index) => (
+                <article className="executive-insight-row" key={index}>
+                  <span className="executive-row-icon">◎</span>
+                  <div>
+                    <h4>{index === 0 ? "Available depth" : "Supporting layer"}</h4>
+                    <p>{item}</p>
+                  </div>
+                  <span className="executive-row-status">Depth</span>
+                </article>
+              ))}
+            </div>
+          </ExecutiveAccordion>
+        </section>
       )}
 
       <section className="executive-compressed-sections">
