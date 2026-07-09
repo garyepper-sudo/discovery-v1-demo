@@ -69,6 +69,102 @@ function buildNarrativeRevision(
   };
 }
 
+function describeConfidenceEvolution(
+  currentConfidence?: number,
+  previousConfidence?: number,
+  confidenceDelta?: number,
+): string {
+  if (
+    typeof currentConfidence !== "number" ||
+    typeof previousConfidence !== "number" ||
+    typeof confidenceDelta !== "number"
+  ) {
+    return "Discovery continued refining this explanation without enough prior confidence history to measure the shift precisely.";
+  }
+
+  if (confidenceDelta >= 8) {
+    return `Discovery became more certain because the explanation strengthened from ${previousConfidence}% to ${currentConfidence}%.`;
+  }
+
+  if (confidenceDelta <= -8) {
+    return `Discovery became less certain because the explanation weakened from ${previousConfidence}% to ${currentConfidence}%.`;
+  }
+
+  return `Discovery's confidence remained broadly stable at ${currentConfidence}%, suggesting the newer evidence fits the existing explanation without materially changing it.`;
+}
+
+function describeImpactEvolution(
+  narrative: ExecutiveNarrative,
+  previous?: ExecutiveNarrative,
+): string {
+  if (!previous) {
+    return "Discovery is now treating this as a persistent executive narrative worth tracking across future investigations.";
+  }
+
+  if (narrative.businessImpact !== previous.businessImpact) {
+    return "Discovery now explains the leadership implications differently as the business impact became clearer.";
+  }
+
+  return "Discovery's view of the business impact remained coherent with the prior explanation.";
+}
+
+function describeConversationEvolution(
+  narrative: ExecutiveNarrative,
+  previous?: ExecutiveNarrative,
+): string {
+  if (!previous) {
+    return "Future investigations will test whether this explanation strengthens, weakens, or resolves.";
+  }
+
+  if (narrative.executiveConversation !== previous.executiveConversation) {
+    return "The leadership question changed because Discovery's explanation now points to a different uncertainty.";
+  }
+
+  return "The same leadership question remains important because the core uncertainty has not been fully resolved.";
+}
+
+function describeWhyModelChanged(
+  narrative: ExecutiveNarrative,
+  previous?: ExecutiveNarrative,
+): string[] {
+  if (!previous) {
+    return [
+      "This explanation emerged from current executive understanding and leadership attention signals.",
+      "Discovery does not yet know whether the pattern is durable, isolated, or part of a broader operating model.",
+    ];
+  }
+
+  const reasons: string[] = [
+    "Discovery compared the current explanation against the previous version of the same executive narrative.",
+  ];
+
+  if (narrative.observation !== previous.observation) {
+    reasons.push(
+      "The explanation changed because the newer understanding describes the pattern differently than before.",
+    );
+  }
+
+  if (narrative.businessImpact !== previous.businessImpact) {
+    reasons.push(
+      "The business interpretation changed, which means Discovery now sees different executive implications.",
+    );
+  }
+
+  if (narrative.executiveConversation !== previous.executiveConversation) {
+    reasons.push(
+      "The unresolved leadership question changed, which means Discovery's uncertainty moved.",
+    );
+  }
+
+  if (reasons.length === 1) {
+    reasons.push(
+      "The explanation did not materially change; the newer evidence mostly reinforced the existing model.",
+    );
+  }
+
+  return reasons;
+}
+
 export function buildNarrativeContinuity(params: {
   narrative: ExecutiveNarrative;
   previous?: ExecutiveNarrative;
@@ -95,31 +191,17 @@ export function buildNarrativeContinuity(params: {
     ? buildNarrativeRevision(previous, timestamp, investigationId)
     : undefined;
 
-  const whatChanged: string[] = previous
-    ? [
-        typeof confidenceDelta === "number"
-          ? `Confidence changed from ${previousConfidence}% to ${currentConfidence}%.`
-          : "Discovery continued tracking this organizational narrative.",
-        narrative.businessImpact !== previous.businessImpact
-          ? "Business impact was updated based on the latest executive understanding."
-          : "Business impact remained consistent with the previous investigation.",
-        narrative.executiveConversation !== previous.executiveConversation
-          ? "The recommended leadership conversation evolved."
-          : "The recommended leadership conversation remained consistent.",
-      ]
-    : [
-        "Discovery identified this as a new persistent executive narrative.",
-        "Future investigations will track whether this story strengthens, weakens, or stabilizes.",
-      ];
+  const whatChanged: string[] = [
+    describeConfidenceEvolution(
+      currentConfidence,
+      previousConfidence,
+      confidenceDelta,
+    ),
+    describeImpactEvolution(narrative, previous),
+    describeConversationEvolution(narrative, previous),
+  ];
 
-  const whyChanged: string[] = previous
-    ? [
-        "The Expression Layer compared the current executive narrative against the previous narrative with the same identity.",
-        "Continuity reflects changes in confidence, impact framing, and recommended leadership conversation.",
-      ]
-    : [
-        "This narrative emerged from current executive understanding and leadership attention signals.",
-      ];
+  const whyChanged = describeWhyModelChanged(narrative, previous);
 
   return {
     status,

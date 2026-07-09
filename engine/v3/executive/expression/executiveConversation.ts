@@ -4,6 +4,7 @@ import type {
 } from "../buildExecutiveDashboard";
 
 import type { ExecutiveState } from "../executiveState";
+import type { ExecutiveInterpretation } from "../interpretations/executiveInterpretationTypes";
 
 import {
   translateExecutiveTitle,
@@ -40,44 +41,36 @@ export function buildSinceLastSpoke(
 export function buildCurrentStory(
   state: ExecutiveState,
   narratives: ExecutiveDashboardNarrative[],
+  interpretation: ExecutiveInterpretation,
 ): ExecutiveConversationSection {
   const leadNarrative = narratives[0];
 
   return {
-    eyebrow: "Current Organizational Story",
+    eyebrow: "Current Explanation",
     headline:
       leadNarrative?.headline ??
       executiveVoice.currentStoryHeadline(translateExecutiveTitle(state.headline)),
-    summary: executiveVoice.currentStorySummary(
-      leadNarrative?.observation ?? translateExecutiveSummary(state.summary),
-    ),
-    items: narratives
-      .slice(0, 3)
-      .map((narrative) => translateExecutiveSummary(narrative.businessImpact)),
+    summary: interpretation.currentExplanation,
+    items: [
+      interpretation.explanationEvolution,
+      interpretation.confidenceNarrative,
+      interpretation.remainingUncertainty,
+    ],
   };
 }
 
 export function buildLeadershipConversation(
-  narratives: ExecutiveDashboardNarrative[],
+  interpretation: ExecutiveInterpretation,
 ): ExecutiveConversationSection {
-  const questions = narratives
-    .slice(0, 3)
-    .map((narrative) =>
-      translateExecutiveSummary(narrative.executiveConversation),
-    );
-
   return {
-    eyebrow: "Leadership Conversation",
+    eyebrow: "Why Discovery Believes It",
     headline: executiveVoice.leadershipHeadline(),
-    summary: executiveVoice.leadershipSummary(),
-    items:
-      questions.length > 0
-        ? questions
-        : [
-            "What evidence would increase confidence in this pattern?",
-            "Which assumptions should leadership challenge next?",
-            "Which decisions could be informed by additional investigation?",
-          ],
+    summary: interpretation.executiveSummary,
+    items: [
+      interpretation.confidenceNarrative,
+      interpretation.competingExplanationNarrative,
+      interpretation.evidenceThatCouldChangeTheExplanation,
+    ],
   };
 }
 
@@ -111,10 +104,14 @@ export function buildActionPlan(
       actionSummary ??
         actionDescription ??
         "Identify the highest-value missing evidence.",
-      "Strengthen confidence in the organization's most important operating patterns.",
-      "Determine whether the current organizational story is strengthening, stabilizing, or weakening.",
+      interpretationFallbackAction(),
+      "Determine whether the current explanation is strengthening, stabilizing, or weakening.",
     ],
   };
+}
+
+function interpretationFallbackAction(): string {
+  return "Gather evidence that could confirm, weaken, or revise Discovery's current explanation.";
 }
 
 export function buildExploreUnderstanding(
@@ -132,7 +129,7 @@ export function buildExploreUnderstanding(
       `${conditionCount} organizational conditions available for review.`,
       `${mechanismCount} operating mechanisms available for inspection.`,
       `${evidenceCount} remembered evidence signals available for exploration.`,
-      "Every conclusion can be traced back through supporting evidence, mechanisms, concepts, and reasoning.",
+      "Every explanation can be traced back through supporting evidence, mechanisms, concepts, and reasoning.",
     ],
   };
 }

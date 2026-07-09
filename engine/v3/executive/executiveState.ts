@@ -97,6 +97,22 @@ export type ExecutiveNarrativeContinuity = {
   history: ExecutiveNarrativeRevision[];
 };
 
+/**
+ * Sprint 51
+ *
+ * Describes how Discovery's explanation of the organization evolved.
+ * This does not create new cognition. It interprets existing executive
+ * understanding through a mental-model-evolution lens.
+ */
+export type ExecutiveMentalModelEvolution = {
+  currentExplanation: string;
+  explanationChanged: string;
+  confidenceChanged: string;
+  weakenedExplanations: string[];
+  remainingUncertainty: string;
+  whatCouldChangeDiscoverysMind: string;
+};
+
 export type ExecutiveNarrative = {
   id: string;
   headline: string;
@@ -111,12 +127,16 @@ export type ExecutiveNarrative = {
 
   /**
    * Sprint 47
-   *
-   * Narrative continuity belongs to the Expression Layer.
-   * It does not change cognition. It helps Discovery preserve
-   * executive memory across investigations.
    */
   continuity?: ExecutiveNarrativeContinuity;
+
+  /**
+   * Sprint 51
+   *
+   * Explains how Discovery's internal explanation evolved rather than
+   * simply reporting what Discovery observed.
+   */
+  mentalModelEvolution?: ExecutiveMentalModelEvolution;
 };
 
 export type ExecutiveState = {

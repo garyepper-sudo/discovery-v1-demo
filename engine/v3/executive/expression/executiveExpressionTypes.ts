@@ -31,6 +31,45 @@ export type ExecutiveCommunicationSection = {
   transition?: string;
 };
 
+/**
+ * Represents how Discovery's internal explanation of the organization
+ * has evolved between investigations.
+ *
+ * This does not create new organizational understanding.
+ * It interprets how Discovery's existing understanding has changed.
+ */
+export type ExecutiveMentalModelEvolution = {
+  /**
+   * Discovery's current explanation of the organization.
+   */
+  currentExplanation: string;
+
+  /**
+   * What Discovery now explains differently.
+   */
+  explanationChanged: string;
+
+  /**
+   * Why confidence changed.
+   */
+  confidenceChanged: string;
+
+  /**
+   * Explanations that became less likely.
+   */
+  weakenedExplanations: string[];
+
+  /**
+   * What Discovery still cannot confidently explain.
+   */
+  remainingUncertainty: string;
+
+  /**
+   * Which future evidence would most likely revise the current explanation.
+   */
+  whatCouldChangeDiscoverysMind: string;
+};
+
 export type ExecutiveNarrative = {
   headline: string;
   summary: string;
@@ -45,6 +84,14 @@ export type ExecutiveNarrative = {
   recommendedEvidence: string[];
   recommendedConnections: string[];
   confidenceGain?: string;
+
+  /**
+   * Sprint 51
+   *
+   * Describes how Discovery's internal explanation evolved rather than
+   * simply reporting observations.
+   */
+  mentalModelEvolution?: ExecutiveMentalModelEvolution;
 };
 
 export type ExecutiveExpressionContext = {

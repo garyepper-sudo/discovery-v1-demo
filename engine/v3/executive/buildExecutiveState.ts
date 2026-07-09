@@ -2,6 +2,7 @@ import type {
   ExecutiveAttentionItem,
   ExecutiveAttentionPriority,
   ExecutiveChangeItem,
+  ExecutiveMentalModelEvolution,
   ExecutiveMetricCard,
   ExecutiveMetricTrend,
   ExecutiveNarrative,
@@ -74,6 +75,92 @@ function asPriority(index: number): ExecutiveAttentionPriority {
   if (index === 1) return "high";
   if (index === 2) return "medium";
   return "watch";
+}
+
+function describeConfidenceChange(
+  confidence?: number,
+  previousConfidence?: number,
+): string {
+  if (confidence === undefined) {
+    return "Discovery is still gathering enough evidence to express confidence in this explanation.";
+  }
+
+  if (previousConfidence === undefined) {
+    if (confidence >= 0.75) {
+      return "Discovery can now express this explanation with meaningful confidence because the available signals point in the same direction.";
+    }
+
+    if (confidence >= 0.5) {
+      return "Discovery has enough evidence to treat this as a plausible explanation, but not enough to treat it as settled.";
+    }
+
+    return "Discovery is treating this explanation cautiously because the current evidence is still thin.";
+  }
+
+  const delta = confidence - previousConfidence;
+
+  if (delta > 0.08) {
+    return "Discovery's confidence increased because newer signals reinforced the same explanation rather than fragmenting into unrelated observations.";
+  }
+
+  if (delta < -0.08) {
+    return "Discovery's confidence weakened because newer signals made the prior explanation less complete.";
+  }
+
+  return "Discovery's confidence remained mostly stable because the newer evidence did not meaningfully overturn the prior explanation.";
+}
+
+function describeExplanationChange(
+  item: ExecutiveUnderstandingItem,
+  previous?: ExecutiveNarrative,
+): string {
+  if (!previous) {
+    return `Discovery now treats ${item.title.toLowerCase()} as part of the organization's operating model, not merely as an isolated observation.`;
+  }
+
+  if (previous.observation !== item.summary && item.summary) {
+    return `Discovery now explains ${item.title.toLowerCase()} more specifically than before, using newer evidence to refine the prior interpretation.`;
+  }
+
+  return `Discovery's explanation of ${item.title.toLowerCase()} is becoming more stable as new evidence continues to fit the same interpretation.`;
+}
+
+function buildMentalModelEvolution(params: {
+  item: ExecutiveUnderstandingItem;
+  relatedAttention?: ExecutiveAttentionItem;
+  previous?: ExecutiveNarrative;
+  confidence?: number;
+}): ExecutiveMentalModelEvolution {
+  const { item, relatedAttention, previous, confidence } = params;
+
+  return {
+    currentExplanation:
+      item.summary ||
+      `Discovery currently explains ${item.title.toLowerCase()} as a meaningful part of how the organization operates.`,
+
+    explanationChanged: describeExplanationChange(item, previous),
+
+    confidenceChanged: describeConfidenceChange(
+      confidence,
+      previous?.confidence,
+    ),
+
+    weakenedExplanations: previous
+      ? [
+          "The pattern is becoming less likely to be explained as an isolated event.",
+          "The pattern is becoming less likely to be explained only by local execution noise.",
+        ]
+      : [
+          "Discovery does not yet have enough prior history to eliminate competing explanations.",
+        ],
+
+    remainingUncertainty:
+      relatedAttention?.reason ||
+      "Discovery still needs more evidence before it can fully explain the cause, durability, and leadership implications of this pattern.",
+
+    whatCouldChangeDiscoverysMind:
+      "Discovery would revise this explanation if future investigations show the pattern does not repeat across teams, decisions, or operating contexts.",
+  };
 }
 
 function buildCurrentUnderstanding(
@@ -188,26 +275,29 @@ function buildExecutiveNarratives(
     const relatedAttention = attention[index];
     const id = resolveNarrativeId(item);
     const previous = previousNarratives.find((narrative) => narrative.id === id);
+    const confidence = clampConfidence(
+      item.confidence ?? relatedAttention?.confidence,
+    );
 
     const baseNarrative: ExecutiveNarrative = {
       id,
       headline: item.title,
       observation:
         item.summary ||
-        "The organization is showing a meaningful pattern that leadership should understand.",
+        "Discovery is beginning to explain this as a meaningful operating pattern rather than an isolated observation.",
       businessImpact:
         relatedAttention?.reason ||
-        "If this pattern continues, it may affect execution quality, organizational resilience, decision speed, or leadership focus.",
+        "If this explanation continues to strengthen, it may affect execution quality, organizational resilience, decision speed, or leadership focus.",
       executiveConversation:
         relatedAttention?.title ??
-        "What leadership conversation would help clarify ownership, risk, and next steps?",
+        "What evidence would most improve or challenge Discovery's current explanation?",
       supportingReasoning:
         item.summary ||
         relatedAttention?.reason ||
         "This narrative is organized from existing executive understanding and leadership attention signals.",
       evidence,
       priority: relatedAttention?.priority ?? asPriority(index),
-      confidence: clampConfidence(item.confidence ?? relatedAttention?.confidence),
+      confidence,
       momentum: "stable",
     };
 
@@ -216,6 +306,13 @@ function buildExecutiveNarratives(
       previous,
       timestamp,
       investigationId,
+    });
+
+    const mentalModelEvolution = buildMentalModelEvolution({
+      item,
+      relatedAttention,
+      previous,
+      confidence,
     });
 
     return {
@@ -227,6 +324,7 @@ function buildExecutiveNarratives(
             ? "improving"
             : "stable",
       continuity,
+      mentalModelEvolution,
     };
   });
 }
@@ -274,7 +372,7 @@ export function buildExecutiveState(
 
     summary:
       previousNarratives.length > 0
-        ? "Discovery has updated the current executive view by comparing this investigation against prior executive narratives, preserving continuity in the organizational conversation."
+        ? "Discovery has refined its explanation by comparing this investigation against prior executive narratives, preserving continuity in the organizational conversation."
         : (briefing as any)?.summary ??
           (changes as any)?.summary ??
           "Discovery has assembled the current executive view from organizational understanding, memory, learning, and recent change signals.",

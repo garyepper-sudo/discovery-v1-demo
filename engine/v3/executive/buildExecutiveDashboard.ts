@@ -6,6 +6,8 @@ import {
   buildExploreUnderstanding,
 } from "./expression/executiveConversation";
 
+import { buildExecutiveInterpretation } from "./interpretations/buildExecutiveInterpretation";
+
 import type {
   ExecutiveAttentionItem,
   ExecutiveChangeItem,
@@ -16,6 +18,8 @@ import type {
   ExecutiveTimelineEntry,
   ExecutiveUnderstandingItem,
 } from "./executiveState";
+
+import type { ExecutiveInterpretation } from "./interpretations/executiveInterpretationTypes";
 
 import {
   translateExecutiveTitle,
@@ -107,6 +111,7 @@ export type ExecutiveDashboardSections = {
 export type ExecutiveDashboard = {
   hero: ExecutiveDashboardHero;
   conversation: ExecutiveConversation;
+  interpretation: ExecutiveInterpretation;
   metrics: ExecutiveMetricCard[];
   narratives: ExecutiveDashboardNarrative[];
   keyInsights: ExecutiveKeyInsight[];
@@ -263,11 +268,16 @@ function buildTimeline(state: ExecutiveState): ExecutiveTimelineEntry[] {
 function buildExecutiveConversation(
   state: ExecutiveState,
   narratives: ExecutiveDashboardNarrative[],
+  interpretation: ExecutiveInterpretation,
 ): ExecutiveConversation {
   return {
     sinceLastSpoke: buildSinceLastSpoke(state),
-    currentOrganizationalStory: buildCurrentStory(state, narratives),
-    leadershipConversation: buildLeadershipConversation(narratives),
+    currentOrganizationalStory: buildCurrentStory(
+      state,
+      narratives,
+      interpretation,
+    ),
+    leadershipConversation: buildLeadershipConversation(interpretation),
     actionPlan: buildActionPlan(state),
     exploreUnderstanding: buildExploreUnderstanding(state),
   };
@@ -277,7 +287,19 @@ export function buildExecutiveDashboard(
   state: ExecutiveState,
 ): ExecutiveDashboard {
   const narratives = buildNarratives(state);
-  const conversation = buildExecutiveConversation(state, narratives);
+
+  const interpretation = buildExecutiveInterpretation({
+    narratives: state.executiveNarratives,
+    currentUnderstanding: state.currentUnderstanding,
+    whatChanged: state.whatChanged,
+    organizationConfidence: state.organizationConfidence,
+  });
+
+  const conversation = buildExecutiveConversation(
+    state,
+    narratives,
+    interpretation,
+  );
 
   return {
     hero: {
@@ -290,6 +312,8 @@ export function buildExecutiveDashboard(
     },
 
     conversation,
+
+    interpretation,
 
     metrics: limitSection(state.metrics, 4),
 

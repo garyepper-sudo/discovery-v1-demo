@@ -6,6 +6,9 @@ const executiveLanguageMap: Record<string, string> = {
     "Knowledge transfer is becoming a business continuity risk.",
   "Cross Functional Execution Friction":
     "Teams are struggling to coordinate effectively.",
+  "Decision Flow": "Decision ownership is shaping execution speed.",
+  "Decision flow is becoming more visible":
+    "Discovery increasingly explains execution delays through decision ownership rather than isolated approval bottlenecks.",
 };
 
 export function translateExecutiveTitle(title: string): string {
@@ -14,12 +17,46 @@ export function translateExecutiveTitle(title: string): string {
 
 export function translateExecutiveSummary(summary: string): string {
   return summary
-    .replaceAll("Discovery identified", "Discovery noticed")
-    .replaceAll("Discovery believes", "Discovery is still testing whether")
-    .replaceAll("Discovery strengthened", "Discovery strengthened")
-    .replaceAll("Discovery detected", "Discovery noticed")
-    .replaceAll("organizational theories", "stable organizational patterns")
-    .replaceAll("organizational beliefs", "operating assumptions");
+    .replaceAll(
+      "Discovery identified",
+      "Discovery now explains",
+    )
+    .replaceAll(
+      "Discovery detected",
+      "Discovery now explains",
+    )
+    .replaceAll(
+      "Discovery noticed",
+      "Discovery is beginning to explain",
+    )
+    .replaceAll(
+      "Discovery believes",
+      "Discovery is currently testing the explanation that",
+    )
+    .replaceAll(
+      "is becoming more visible",
+      "is becoming a stronger explanation for how the organization operates",
+    )
+    .replaceAll(
+      "stronger signals that",
+      "stronger support for the explanation that",
+    )
+    .replaceAll(
+      "this pattern is becoming more visible",
+      "this explanation is becoming more coherent across the organization",
+    )
+    .replaceAll(
+      "pattern worth continuing to watch",
+      "possible explanation worth testing across future investigations",
+    )
+    .replaceAll(
+      "organizational theories",
+      "stable organizational explanations",
+    )
+    .replaceAll(
+      "organizational beliefs",
+      "operating assumptions",
+    );
 }
 
 export function translateExecutiveContinuity(
