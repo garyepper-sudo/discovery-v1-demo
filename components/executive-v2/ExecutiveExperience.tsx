@@ -1,15 +1,23 @@
 "use client";
 
+import ExecutiveAnswerGrid from "./answers/ExecutiveAnswerGrid";
+import ExecutiveAttention from "./attention/ExecutiveAttention";
+import type { ExecutiveProjection } from "./projection/ExecutiveProjection";
 import UnderstandingCanvas from "./understanding/UnderstandingCanvas";
 
-const currentUnderstandingState = {
-  belief:
-    "Customer onboarding delays are primarily caused by fragmented cross-functional ownership.",
-  mindStatus: "Learning",
-  confidence: 84,
+type ExecutiveExperienceProps = {
+  projection: ExecutiveProjection;
 };
 
-export default function ExecutiveExperience() {
+export default function ExecutiveExperience({
+  projection,
+}: ExecutiveExperienceProps) {
+  const {
+    currentUnderstanding,
+    explanation,
+    executiveAttention,
+  } = projection;
+
   return (
     <main className="executive-v2-experience">
       <div className="executive-v2-shell">
@@ -21,46 +29,21 @@ export default function ExecutiveExperience() {
         </header>
 
         <UnderstandingCanvas
-          belief={currentUnderstandingState.belief}
-          mindStatus={currentUnderstandingState.mindStatus}
-          confidence={currentUnderstandingState.confidence}
+          belief={currentUnderstanding.belief}
+          mindStatus={currentUnderstanding.mindStatus}
+          confidence={currentUnderstanding.confidence}
+          organizationalCoherence={
+            currentUnderstanding.organizationalCoherence
+          }
         />
 
-        <section className="executive-v2-answer-grid executive-v2-answer-grid-quiet">
-          <article className="executive-v2-answer">
-            <p className="executive-v2-answer-label">Why?</p>
+        <ExecutiveAttention
+          attention={executiveAttention}
+        />
 
-            <p className="executive-v2-answer-copy">
-              Ownership repeatedly shifts between sales, implementation, and
-              customer success.
-            </p>
-          </article>
-
-          <article className="executive-v2-answer">
-            <p className="executive-v2-answer-label">
-              What could change this?
-            </p>
-
-            <p className="executive-v2-answer-copy">
-              Delays would need to persist even when one team has clear
-              end-to-end responsibility.
-            </p>
-          </article>
-
-          <article className="executive-v2-answer executive-v2-investigation">
-            <div>
-              <p className="executive-v2-answer-label">Next move</p>
-
-              <p className="executive-v2-answer-copy">
-                Compare high-performing onboarding teams with stalled accounts.
-              </p>
-            </div>
-
-            <button type="button" className="executive-v2-start-button">
-              Start Investigation
-            </button>
-          </article>
-        </section>
+        <ExecutiveAnswerGrid
+          explanation={explanation}
+        />
       </div>
     </main>
   );

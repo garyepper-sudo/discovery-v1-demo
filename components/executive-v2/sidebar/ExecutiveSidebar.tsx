@@ -1,6 +1,14 @@
 "use client";
 
-export default function ExecutiveSidebar() {
+type ExecutiveSidebarProps = {
+  understandingStrength: number;
+  mindStatus: string;
+};
+
+export default function ExecutiveSidebar({
+  understandingStrength,
+  mindStatus,
+}: ExecutiveSidebarProps) {
   return (
     <aside className="executive-workspace-sidebar">
       <div className="executive-workspace-brand">
@@ -123,8 +131,8 @@ export default function ExecutiveSidebar() {
         <p>Understanding Strength</p>
 
         <div className="executive-workspace-strength-summary">
-          <strong>84%</strong>
-          <span>Learning</span>
+          <strong>{understandingStrength}%</strong>
+          <span>{mindStatus}</span>
         </div>
 
         <div

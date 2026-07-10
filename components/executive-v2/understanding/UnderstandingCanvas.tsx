@@ -14,16 +14,14 @@ type UnderstandingCanvasProps = {
    * This is intentionally independent from the
    * confidence of the current belief.
    */
-  organizationalCoherence?: number;
+  organizationalCoherence: number;
 };
 
 export default function UnderstandingCanvas({
   belief,
   mindStatus,
   confidence,
-
-  // Demo value until the reasoning engine owns this.
-  organizationalCoherence = 42,
+  organizationalCoherence,
 }: UnderstandingCanvasProps) {
   return (
     <section className="executive-v2-hero">

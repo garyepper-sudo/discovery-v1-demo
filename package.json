@@ -7,9 +7,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+
     "typecheck": "tsc --noEmit",
+
     "benchmark": "tsx engine/benchmark/runBenchmarks.ts",
-    "evaluate": "tsx engine/benchmark/runBenchmarks.ts"
+    "evaluate": "tsx engine/benchmark/runBenchmarks.ts",
+
+    "validate": "npm run typecheck && npm run evaluate",
+
+    "sprint:start": "echo '' && echo '=== Discovery Sprint Startup ===' && echo '' && echo 'Sprint Update Documents:' && find 'docs/Sprint Updates' -maxdepth 1 -type f | sort && echo '' && echo 'Project Structure:' && find . \\( -path './node_modules' -o -path './.next' -o -path './.git' \\) -prune -o -maxdepth 3 -print | sort && echo '' && echo 'Recommended Startup Workflow:' && echo '  1. npm run validate' && echo '  2. Read docs/Sprint Updates' && echo '  3. Begin capability audit'",
+
+    "sprint:docs": "for f in docs/Sprint\\ Updates/*.md; do echo ''; echo '============================================================'; echo $(basename \"$f\"); echo '============================================================'; cat \"$f\"; done"
   },
   "dependencies": {
     "@types/node": "22.10.1",
