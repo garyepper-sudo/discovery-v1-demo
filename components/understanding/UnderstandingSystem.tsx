@@ -7,45 +7,91 @@ type Props = {
   onFocusUnderstanding?: (id: string) => void;
 };
 
+function formatConfidence(value?: number): string {
+  if (value === undefined || value <= 0) return "—";
+
+  const normalized = value <= 1 ? value * 100 : value;
+  return `${Math.round(normalized)}%`;
+}
+
 export default function UnderstandingSystem({
   executiveDashboard,
   focusedUnderstanding,
   onFocusUnderstanding,
 }: Props) {
-  const understandings = executiveDashboard.keyInsights.slice(0, 6);
+  const interpretation = executiveDashboard.interpretation;
+  const confidence = formatConfidence(
+    executiveDashboard.hero.organizationConfidence,
+  );
+
+  const understandingNodes = [
+    {
+      id: "current-explanation",
+      label: "Explanation",
+      value: interpretation.currentExplanation,
+    },
+    {
+      id: "confidence",
+      label: "Confidence",
+      value: interpretation.confidenceNarrative,
+    },
+    {
+      id: "competing-explanations",
+      label: "Alternatives",
+      value: interpretation.competingExplanationNarrative,
+    },
+    {
+      id: "remaining-uncertainty",
+      label: "Uncertainty",
+      value: interpretation.remainingUncertainty,
+    },
+    {
+      id: "next-evidence",
+      label: "Next Evidence",
+      value: interpretation.evidenceThatCouldChangeTheExplanation,
+    },
+  ].filter((item) => item.value && item.value.trim().length > 0);
 
   return (
     <section className="understanding-system">
       <div className="understanding-system-header">
         <p className="briefing-eyebrow">Understanding System</p>
-        <h2>Discovery’s current mental model.</h2>
+        <h2>Discovery&apos;s current organizational theory.</h2>
       </div>
 
       <div className="understanding-system-center">
         <div className="understanding-story-node">
           <span />
-          <h3>{focusedUnderstanding?.title ?? "Current Story"}</h3>
+
+          <p className="briefing-section-label">Current Explanation</p>
+
+          <h3>
+            {focusedUnderstanding?.summary ??
+              interpretation.currentExplanation}
+          </h3>
+
           <p>
-            {focusedUnderstanding
-              ? "This understanding is currently in focus."
-              : "Select an understanding to focus the briefing."}
+            Confidence: {confidence}. Discovery treats this as a living
+            explanation that can strengthen, weaken, or change as new evidence
+            arrives.
           </p>
         </div>
 
         <div className="understanding-node-row">
-          {understandings.map((item, index) => {
-            const id = item.title ?? `understanding-${index}`;
-            const isFocused = focusedUnderstanding?.id === id;
+          {understandingNodes.map((item) => {
+            const isFocused = focusedUnderstanding?.id === item.id;
 
             return (
               <button
-                key={id}
+                key={item.id}
                 type="button"
-                className={`understanding-node ${isFocused ? "is-focused" : ""}`}
-                onClick={() => onFocusUnderstanding?.(id)}
+                className={`understanding-node ${
+                  isFocused ? "is-focused" : ""
+                }`}
+                onClick={() => onFocusUnderstanding?.(item.id)}
               >
                 <span />
-                <strong>{item.title}</strong>
+                <strong>{item.label}</strong>
               </button>
             );
           })}

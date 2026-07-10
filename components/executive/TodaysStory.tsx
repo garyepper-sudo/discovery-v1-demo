@@ -1,6 +1,5 @@
 import type { ExecutiveDashboard } from "../../engine/v3/executive/buildExecutiveDashboard";
 import type { FocusedUnderstanding } from "./ExecutiveBriefing";
-import { buildExecutiveNarrative } from "./buildExecutiveNarrative";
 
 type TodaysStoryProps = {
   executiveDashboard: ExecutiveDashboard;
@@ -32,42 +31,39 @@ export default function TodaysStory({
   executiveDashboard,
   focusedUnderstanding,
 }: TodaysStoryProps) {
-  const story = executiveDashboard.conversation?.currentOrganizationalStory;
-  const primaryNarrative = executiveDashboard.narratives?.[0];
-
-  const narrative = buildExecutiveNarrative(focusedUnderstanding);
+  const interpretation = executiveDashboard.interpretation;
 
   const confidence = focusedUnderstanding
     ? formatConfidence(focusedUnderstanding.confidence)
-    : "72%";
+    : formatConfidence(executiveDashboard.hero.organizationConfidence);
 
   const state = focusedUnderstanding
     ? formatState(focusedUnderstanding.trajectory ?? focusedUnderstanding.state)
     : "Updated";
 
-  const storyItems =
-    story?.items?.length > 0
-      ? story.items
-      : primaryNarrative
-        ? [primaryNarrative.businessImpact, primaryNarrative.executiveConversation]
-        : [];
+  const explanationItems = [
+    interpretation.explanationEvolution,
+    interpretation.confidenceNarrative,
+    interpretation.competingExplanationNarrative,
+    interpretation.remainingUncertainty,
+  ].filter(Boolean);
 
   return (
     <section className="briefing-section todays-story-v2">
-      <p className="briefing-eyebrow">Today’s Story</p>
+      <p className="briefing-eyebrow">Current Explanation</p>
 
       <div className="todays-story-card-v2">
         <div className="todays-story-focus-v2">
           <span>Focused understanding</span>
 
           <strong>
-            {focusedUnderstanding?.title ?? "Current organization story"}
+            {focusedUnderstanding?.title ?? "Current organizational theory"}
           </strong>
         </div>
 
-        <h2>{narrative.confidenceNarrative}</h2>
+        <h2>{interpretation.currentMentalModel}</h2>
 
-        <p>{narrative.whyItMatters}</p>
+        <p>{interpretation.executiveSummary}</p>
 
         <div className="todays-story-metrics-v2">
           <span>{confidence} confidence</span>
@@ -77,17 +73,14 @@ export default function TodaysStory({
           <span>{state}</span>
         </div>
 
-        {storyItems.length > 0 && (
+        {explanationItems.length > 0 && (
           <div className="story-support-list-v2">
-            {storyItems
-              .filter(Boolean)
-              .slice(0, 3)
-              .map((item, index) => (
-                <article key={index}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <p>{item}</p>
-                </article>
-              ))}
+            {explanationItems.slice(0, 4).map((item, index) => (
+              <article key={index}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <p>{item}</p>
+              </article>
+            ))}
           </div>
         )}
       </div>

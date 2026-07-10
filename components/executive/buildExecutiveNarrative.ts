@@ -23,62 +23,101 @@ export function buildExecutiveNarrative(
 
   if (lower.includes("decision")) {
     return {
-      headline: `Discovery became more confident that ${title}.`,
+      headline:
+        "Discovery revised its explanation of how decisions move through the organization.",
+
       summary:
-        "Recent evidence suggests this pattern is becoming more visible across the organization.",
+        "Discovery increasingly explains execution speed through decision ownership rather than isolated approval bottlenecks.",
+
       confidenceNarrative:
-        "Discovery is seeing stronger signals that decision quality and decision flow are becoming more observable.",
+        "Independent investigations are reinforcing the same explanation, making fragmented decision ownership a stronger explanation for organizational performance.",
+
       whyItMatters:
-        "Decision flow affects execution speed, leadership alignment, and the organization's ability to respond to change.",
+        "Execution quality increasingly appears to depend on how decisions move between Product, Sales, Operations, and Leadership—not simply how quickly approvals occur.",
+
       learningQuestion:
-        "Discovery has not yet determined whether this pattern is driven primarily by leadership behavior, customer pressure, or operating cadence.",
+        "Discovery has not yet determined whether inconsistent decision ownership is the root cause or whether deeper factors such as technical debt or shifting priorities are producing the same behavior.",
+
       recommendedEvidence: [
         "Leadership Meeting Notes",
         "Customer Interview Summaries",
         "Product Roadmap Updates",
       ],
-      recommendedConnections: ["Google Drive", "Slack", "Jira", "Notion"],
+
+      recommendedConnections: [
+        "Google Drive",
+        "Slack",
+        "Jira",
+        "Notion",
+      ],
+
       confidenceGain: 18,
     };
   }
 
   if (lower.includes("leadership")) {
     return {
-      headline: `Discovery became more confident that ${title}.`,
+      headline:
+        "Discovery refined its explanation of leadership behavior.",
+
       summary:
-        "The current evidence suggests leadership behavior is becoming a meaningful organizational signal.",
+        "Recent investigations suggest leadership decisions are becoming more consistent, although execution teams do not yet appear to share the same operating model.",
+
       confidenceNarrative:
-        "Discovery is tracking whether this leadership pattern is stable across decisions, meetings, and execution rhythms.",
+        "Multiple observations support the same explanation, increasing confidence without eliminating important uncertainty.",
+
       whyItMatters:
-        "Leadership alignment influences clarity, prioritization, and the organization's ability to sustain momentum.",
+        "Leadership consistency appears to improve strategic alignment, but Discovery cannot yet conclude that operational execution has improved as a result.",
+
       learningQuestion:
-        "Discovery has not yet determined whether this alignment is durable or dependent on a small number of recent decisions.",
+        "Discovery would revise this explanation if future investigations show leadership consistency improving while execution performance remains unchanged.",
+
       recommendedEvidence: [
         "Leadership Meeting Notes",
         "Board Decks",
         "Quarterly Planning Documents",
       ],
-      recommendedConnections: ["Google Drive", "Slack", "Notion", "Microsoft Teams"],
+
+      recommendedConnections: [
+        "Google Drive",
+        "Slack",
+        "Notion",
+        "Microsoft Teams",
+      ],
+
       confidenceGain: 16,
     };
   }
 
   return {
-    headline: `Discovery became more confident that ${title}.`,
+    headline:
+      "Discovery refined its explanation of the organization.",
+
     summary:
-      "Discovery identified this as a pattern worth continuing to watch as more organizational evidence accumulates.",
+      "Recent investigations strengthened Discovery's current explanation, although important uncertainty remains.",
+
     confidenceNarrative:
-      "Discovery is tracking whether this pattern represents a lasting capability or a temporary observation.",
+      "Discovery is gradually replacing isolated observations with a more coherent explanation of how the organization operates.",
+
     whyItMatters:
-      "This understanding may help explain how the organization is changing over time.",
+      "The goal is not simply to detect patterns, but to develop explanations that continue improving as new organizational evidence becomes available.",
+
     learningQuestion:
-      "Discovery needs more evidence to determine what is causing this pattern and whether it will persist.",
+      "What new evidence would most likely challenge Discovery's current explanation of this organizational behavior?",
+
     recommendedEvidence: [
       "Leadership Meeting Notes",
       "Board Decks",
       "Research Reports",
     ],
-    recommendedConnections: ["Google Drive", "Slack", "Notion", "Microsoft Teams"],
+
+    recommendedConnections: [
+      "Google Drive",
+      "Slack",
+      "Notion",
+      "Microsoft Teams",
+    ],
+
     confidenceGain: 16,
   };
 }

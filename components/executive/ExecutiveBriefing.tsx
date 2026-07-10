@@ -4,11 +4,9 @@ import { useMemo, useState } from "react";
 
 import type { ExecutiveDashboard } from "../../engine/v3/executive/buildExecutiveDashboard";
 
+import CurrentWorkingTheory from "./currentTheory/CurrentWorkingTheory";
 import LivingUnderstandings from "./LivingUnderstandings";
-import SinceWeLastSpoke from "./SinceWeLastSpoke";
-import TodaysStory from "./TodaysStory";
 import ContinueBuildingUnderstanding from "./ContinueBuildingUnderstanding";
-import UnderstandingSystem from "../understanding/UnderstandingSystem";
 
 type ExecutiveBriefingProps = {
   executiveDashboard: ExecutiveDashboard;
@@ -24,90 +22,67 @@ export type FocusedUnderstanding = {
   tracked?: boolean;
 };
 
-function getTrajectory(index: number) {
-  if (index === 0) return "Strengthening";
-  if (index === 1) return "Evolving";
-  if (index === 2) return "Stable";
-  return "Tracked";
-}
-
-function cleanInsightTitle(value: string | undefined, index: number) {
-  const title = value?.trim();
-
-  if (!title) return `Emerging organizational pattern ${index + 1}`;
-
-  if (
-    title.toLowerCase().includes("snapshot") ||
-    title.toLowerCase().includes("changed by 0 points")
-  ) {
-    const replacements = [
-      "Decision flow is becoming more visible",
-      "Operating rhythm is becoming easier to track",
-      "Leadership alignment is stabilizing",
-      "Execution signals are becoming more consistent",
-      "Organizational memory is accumulating",
-    ];
-
-    return replacements[index] ?? `Emerging organizational pattern ${index + 1}`;
-  }
-
-  return title;
-}
-
-function cleanInsightSummary(value: string | undefined) {
-  const summary = value?.trim();
-
-  if (!summary) {
-    return "Discovery is watching this pattern as more organizational evidence accumulates.";
-  }
-
-  if (
-    summary.toLowerCase().includes("snapshot") ||
-    summary.toLowerCase().includes("changed by 0 points")
-  ) {
-    return "Discovery is tracking whether this pattern continues to strengthen across future investigations.";
-  }
-
-  return summary;
-}
-
-function normalizeConfidence(value: unknown, index: number) {
+function normalizeConfidence(value?: number) {
   if (typeof value === "number" && value > 0) {
-    return Math.round(value);
+    return Math.round(value <= 1 ? value * 100 : value);
   }
 
-  const fallbackConfidence = [72, 63, 81, 68, 74, 59, 77, 66];
-
-  return fallbackConfidence[index] ?? 70;
+  return 70;
 }
 
-function getLivingUnderstandings(
+function buildFocusedUnderstandings(
   executiveDashboard: ExecutiveDashboard,
 ): FocusedUnderstanding[] {
-  const keyInsights = executiveDashboard.keyInsights ?? [];
-  const stateItems = executiveDashboard.currentOrganizationalState ?? [];
+  const interpretation = executiveDashboard.interpretation;
+  const confidence = normalizeConfidence(
+    executiveDashboard.hero.organizationConfidence,
+  );
 
-  const source = keyInsights.length > 0 ? keyInsights : stateItems;
-
-  return source.slice(0, 8).map((item, index) => {
-    const title = cleanInsightTitle(item.title, index);
-
-    return {
-      id: `understanding-${index}`,
-      title,
-      summary: cleanInsightSummary(item.summary),
-      confidence: normalizeConfidence(item.confidence, index),
-      state: getTrajectory(index),
+  return [
+    {
+      id: "current-explanation",
+      title: "Current Explanation",
+      summary: interpretation.currentExplanation,
+      confidence,
+      state: "Strengthening",
+      trajectory: "up",
       tracked: true,
-    };
-  });
+    },
+    {
+      id: "confidence",
+      title: "Confidence",
+      summary: interpretation.confidenceNarrative,
+      confidence,
+      state: "Learning",
+      trajectory: "stable",
+      tracked: true,
+    },
+    {
+      id: "remaining-uncertainty",
+      title: "Remaining Uncertainty",
+      summary: interpretation.remainingUncertainty,
+      confidence,
+      state: "Watch",
+      trajectory: "stable",
+      tracked: true,
+    },
+    {
+      id: "next-evidence",
+      title: "Next Evidence",
+      summary: interpretation.evidenceThatCouldChangeTheExplanation,
+      confidence,
+      state: "Useful",
+      trajectory: "up",
+      tracked: true,
+    },
+  ].filter((item) => item.summary && item.summary.trim().length > 0);
 }
 
 export default function ExecutiveBriefing({
   executiveDashboard,
 }: ExecutiveBriefingProps) {
   const livingUnderstandings = useMemo(
-    () => getLivingUnderstandings(executiveDashboard),
+    () => buildFocusedUnderstandings(executiveDashboard),
     [executiveDashboard],
   );
 
@@ -124,24 +99,16 @@ export default function ExecutiveBriefing({
 
   return (
     <main className="executive-briefing-v2">
-      <SinceWeLastSpoke executiveDashboard={executiveDashboard} />
+      <CurrentWorkingTheory
+        interpretation={executiveDashboard.interpretation}
+        organizationConfidence={executiveDashboard.hero.organizationConfidence}
+      />
 
       <LivingUnderstandings
         executiveDashboard={executiveDashboard}
         livingUnderstandings={livingUnderstandings}
         focusedUnderstanding={focusedUnderstanding}
         onFocusUnderstanding={setFocusedUnderstandingId}
-      />
-
-      <UnderstandingSystem
-        executiveDashboard={executiveDashboard}
-        focusedUnderstanding={focusedUnderstanding}
-        onFocusUnderstanding={setFocusedUnderstandingId}
-      />
-
-      <TodaysStory
-        executiveDashboard={executiveDashboard}
-        focusedUnderstanding={focusedUnderstanding}
       />
 
       <ContinueBuildingUnderstanding

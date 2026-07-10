@@ -14,7 +14,14 @@ export type ExecutiveInterpretationInput = {
 };
 
 export type ExecutiveInterpretation = {
+  /**
+   * Canonical executive semantic model.
+   * Downstream layers should express or display these fields, not recreate them.
+   */
   currentExplanation: string;
+  organizationalTheory: string;
+  currentMentalModel: string;
+
   explanationEvolution: string;
   confidenceNarrative: string;
   competingExplanationNarrative: string;
@@ -22,6 +29,10 @@ export type ExecutiveInterpretation = {
   evidenceThatCouldChangeTheExplanation: string;
   executiveSummary: string;
 
+  /**
+   * Source traceability only.
+   * These fields explain where the interpretation came from.
+   */
   sourceNarrativeId?: string;
   sourceContinuity?: ExecutiveNarrativeContinuity;
   sourceMentalModelEvolution?: ExecutiveMentalModelEvolution;

@@ -1,23 +1,22 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
+
+import type { ExecutiveDashboard } from "../../engine/v3/executive/buildExecutiveDashboard";
 import type { FocusedUnderstanding } from "./ExecutiveBriefing";
-import { buildExecutiveNarrative } from "./buildExecutiveNarrative";
 
 interface ContinueBuildingUnderstandingProps {
-  executiveDashboard: any;
+  executiveDashboard: ExecutiveDashboard;
   focusedUnderstanding?: FocusedUnderstanding | null;
 }
 
 export default function ContinueBuildingUnderstanding({
+  executiveDashboard,
   focusedUnderstanding,
 }: ContinueBuildingUnderstandingProps) {
   const [expanded, setExpanded] = useState(false);
 
-  const narrative = useMemo(
-    () => buildExecutiveNarrative(focusedUnderstanding),
-    [focusedUnderstanding],
-  );
+  const interpretation = executiveDashboard.interpretation;
 
   const primaryUploads = [
     "Upload Documents",
@@ -35,14 +34,29 @@ export default function ContinueBuildingUnderstanding({
     ? [...primaryUploads, ...secondaryUploads]
     : primaryUploads;
 
+  const recommendedEvidence = [
+    interpretation.evidenceThatCouldChangeTheExplanation,
+    interpretation.remainingUncertainty,
+    "Evidence showing whether the current explanation strengthens, weakens, or changes over time.",
+  ].filter(
+    (item): item is string => typeof item === "string" && item.trim().length > 0,
+  );
+
+  const recommendedConnections = [
+    "Slack",
+    "Google Drive",
+    "Calendar",
+    "CRM",
+  ];
+
   return (
     <section className="briefing-section continue-building-understanding-v2">
       <div className="continue-learning-header-v2">
         <p className="briefing-eyebrow">Help Discovery Learn</p>
 
-        <h2>What would make this understanding stronger.</h2>
+        <h2>What would strengthen Discovery&apos;s current explanation?</h2>
 
-        <p>{narrative.learningQuestion}</p>
+        <p>{interpretation.evidenceThatCouldChangeTheExplanation}</p>
       </div>
 
       <div className="continue-learning-grid-v2">
@@ -50,19 +64,23 @@ export default function ContinueBuildingUnderstanding({
           <p className="briefing-section-label">Current Focus</p>
 
           <h3>
-            {focusedUnderstanding?.title ?? "Organizational Understanding"}
+            {focusedUnderstanding?.title ?? "Current Organizational Theory"}
           </h3>
 
-          <p>{narrative.summary}</p>
+          <p>
+            {focusedUnderstanding?.summary ??
+              interpretation.currentExplanation}
+          </p>
 
           <div className="confidence-gain-v2">
-            <span>Estimated Confidence Gain</span>
-            <strong>+{narrative.confidenceGain}%</strong>
+            <span>Potential Confidence Gain</span>
+            <strong>+12%</strong>
           </div>
 
           <div className="learning-note-v2">
             <p className="briefing-section-label">Why this matters</p>
-            <p>{narrative.whyItMatters}</p>
+
+            <p>{interpretation.confidenceNarrative}</p>
           </div>
         </article>
 
@@ -70,15 +88,16 @@ export default function ContinueBuildingUnderstanding({
           <h3>Highest Value Evidence</h3>
 
           <div className="evidence-list-v2">
-            {narrative.recommendedEvidence.map((item) => (
+            {recommendedEvidence.map((item) => (
               <div className="evidence-item-v2" key={item}>
                 <span className="evidence-check-v2">✓</span>
 
                 <div>
                   <strong>{item}</strong>
+
                   <small>
-                    Helps Discovery test whether this pattern is persistent
-                    across the organization.
+                    Helps Discovery determine whether the current explanation
+                    should strengthen, weaken, or be revised.
                   </small>
                 </div>
               </div>
@@ -112,18 +131,19 @@ export default function ContinueBuildingUnderstanding({
           <h3>Recommended Connections</h3>
 
           <p>
-            These systems are most likely to contain useful evidence for this
-            understanding.
+            These systems are most likely to contain evidence that could refine
+            Discovery&apos;s current organizational theory.
           </p>
 
           <div className="connection-list-v2">
-            {narrative.recommendedConnections.map((connection) => (
+            {recommendedConnections.map((connection) => (
               <button
                 className="connection-button-v2"
                 key={connection}
                 type="button"
               >
                 <span>{connection}</span>
+
                 <strong>Connect</strong>
               </button>
             ))}
@@ -131,12 +151,14 @@ export default function ContinueBuildingUnderstanding({
 
           <div className="learning-note-v2">
             <p className="briefing-section-label">
-              Discovery is still learning
+              Discovery is continuously learning
             </p>
 
             <p>
-              Each new piece of evidence helps Discovery distinguish temporary
-              observations from enduring organizational understanding.
+              Every new piece of evidence is evaluated against the current
+              organizational theory. Discovery may strengthen its confidence,
+              reduce confidence, or revise the explanation entirely as the
+              organization evolves.
             </p>
           </div>
         </article>

@@ -1,16 +1,13 @@
 import type { ExecutiveDashboard } from "../../engine/v3/executive/buildExecutiveDashboard";
-import type { FocusedUnderstanding } from "./ExecutiveBriefing";
-import { buildExecutiveNarrative } from "./buildExecutiveNarrative";
 
 type SinceWeLastSpokeProps = {
   executiveDashboard: ExecutiveDashboard;
 };
 
 function formatConfidence(value?: number): string {
-  if (value === undefined || value <= 0) return "72%";
+  if (value === undefined || value <= 0) return "—";
 
   const normalized = value <= 1 ? value * 100 : value;
-
   return `${Math.round(normalized)}%`;
 }
 
@@ -18,32 +15,20 @@ export default function SinceWeLastSpoke({
   executiveDashboard,
 }: SinceWeLastSpokeProps) {
   const hero = executiveDashboard.hero;
-  const rememberedEvidence = executiveDashboard.rememberedEvidence ?? [];
+  const interpretation = executiveDashboard.interpretation;
   const timeline = executiveDashboard.sections.timeline ?? [];
-  const keyInsights = executiveDashboard.keyInsights ?? [];
 
-  const primaryInsight = keyInsights[0];
+  const headline = "Discovery refined its current explanation.";
 
-  const primaryUnderstanding: FocusedUnderstanding | null = primaryInsight
-    ? {
-        id: "primary-understanding",
-        title: primaryInsight.title,
-        summary: primaryInsight.summary,
-        confidence: primaryInsight.confidence,
-        state: "Strengthening",
-        tracked: true,
-      }
-    : null;
+  const summary =
+    interpretation.currentExplanation ??
+    hero.summary ??
+    "Discovery continued refining its understanding using newly available organizational evidence.";
 
-  const narrative = buildExecutiveNarrative(primaryUnderstanding);
+  const confidence = formatConfidence(hero.organizationConfidence);
 
-  const confidence = formatConfidence(
-    primaryInsight?.confidence ?? hero.organizationConfidence,
-  );
-
-  const learningUpdates = Math.max(timeline.length, keyInsights.length, 1);
-  const rememberedSignals = rememberedEvidence.length;
-  const activeUnderstandings = keyInsights.length;
+  const learningUpdates = Math.max(timeline.length, 1);
+  const rememberedSignals = executiveDashboard.rememberedEvidence?.length ?? 0;
 
   return (
     <section className="briefing-section since-last-spoke">
@@ -51,22 +36,56 @@ export default function SinceWeLastSpoke({
 
       <div className="since-last-spoke-grid">
         <div>
-          <h1>{narrative.headline}</h1>
+          <h1>{headline}</h1>
 
-          <p>{narrative.summary}</p>
+          <p>{summary}</p>
+
+          <div
+            style={{
+              marginTop: "1rem",
+              display: "flex",
+              flexDirection: "column",
+              gap: ".75rem",
+            }}
+          >
+            <div>
+              <strong>How the explanation evolved</strong>
+              <p>{interpretation.explanationEvolution}</p>
+            </div>
+
+            <div>
+              <strong>Current confidence</strong>
+              <p>{interpretation.confidenceNarrative}</p>
+            </div>
+
+            <div>
+              <strong>What remains uncertain</strong>
+              <p>{interpretation.remainingUncertainty}</p>
+            </div>
+
+            <div>
+              <strong>Evidence that could change the explanation</strong>
+              <p>{interpretation.evidenceThatCouldChangeTheExplanation}</p>
+            </div>
+          </div>
         </div>
 
         <div className="briefing-pulse-card">
-          <span>Current Understanding</span>
+          <span>Current Confidence</span>
+
           <strong>{confidence}</strong>
-          <p>Confidence in the leading pattern</p>
+
+          <p>
+            Confidence reflects the strength of Discovery&apos;s current
+            explanation, not the certainty of the final answer.
+          </p>
         </div>
       </div>
 
       <div className="briefing-evolution-row">
         <span>{learningUpdates} learning updates</span>
         <span>{rememberedSignals} remembered signals</span>
-        <span>{activeUnderstandings} active understandings</span>
+        <span>1 active organizational theory</span>
       </div>
     </section>
   );

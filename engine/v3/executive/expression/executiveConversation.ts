@@ -7,8 +7,8 @@ import type { ExecutiveState } from "../executiveState";
 import type { ExecutiveInterpretation } from "../interpretations/executiveInterpretationTypes";
 
 import {
-  translateExecutiveTitle,
   translateExecutiveSummary,
+  translateExecutiveTitle,
 } from "./executiveLanguage";
 
 import { executiveVoice } from "./executiveVoice";
@@ -43,13 +43,9 @@ export function buildCurrentStory(
   narratives: ExecutiveDashboardNarrative[],
   interpretation: ExecutiveInterpretation,
 ): ExecutiveConversationSection {
-  const leadNarrative = narratives[0];
-
   return {
     eyebrow: "Current Explanation",
-    headline:
-      leadNarrative?.headline ??
-      executiveVoice.currentStoryHeadline(translateExecutiveTitle(state.headline)),
+    headline: "Discovery’s Current Organizational Theory",
     summary: interpretation.currentExplanation,
     items: [
       interpretation.explanationEvolution,
@@ -95,7 +91,7 @@ export function buildActionPlan(
       : undefined;
 
   return {
-    eyebrow: "Action Plan",
+    eyebrow: "Next Best Evidence",
     headline: action?.title ?? executiveVoice.actionHeadline(),
     summary: executiveVoice.actionSummary(
       actionReason ?? actionDescription ?? actionSummary,
@@ -122,7 +118,7 @@ export function buildExploreUnderstanding(
   const evidenceCount = state.expandable.evidence.length;
 
   return {
-    eyebrow: "Explore Understanding",
+    eyebrow: "Explore Living Understanding",
     headline: executiveVoice.exploreHeadline(),
     summary: executiveVoice.exploreSummary(),
     items: [

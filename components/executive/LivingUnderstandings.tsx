@@ -45,45 +45,68 @@ function getSparkBars(index: number) {
   return [28, 36, 46, 58, 70, 78];
 }
 
+function buildInterpretationUnderstandings(
+  executiveDashboard: ExecutiveDashboard,
+): LivingUnderstandingItem[] {
+  const interpretation = executiveDashboard.interpretation;
+  const confidence = executiveDashboard.hero.organizationConfidence;
+
+  return [
+    {
+      id: "current-explanation",
+      title: "Current Explanation",
+      summary: interpretation.currentExplanation,
+      confidence,
+      state: "Strengthening",
+      tracked: true,
+    },
+    {
+      id: "organizational-theory",
+      title: "Organizational Theory",
+      summary: interpretation.organizationalTheory,
+      confidence,
+      state: "Evolving",
+      tracked: true,
+    },
+    {
+      id: "current-mental-model",
+      title: "Current Mental Model",
+      summary: interpretation.currentMentalModel,
+      confidence,
+      state: "Tracked",
+      tracked: true,
+    },
+    {
+      id: "remaining-uncertainty",
+      title: "Remaining Uncertainty",
+      summary: interpretation.remainingUncertainty,
+      confidence,
+      state: "Watch",
+      tracked: true,
+    },
+  ].filter((item) => item.summary && item.summary.trim().length > 0);
+}
+
 export default function LivingUnderstandings({
   executiveDashboard,
   livingUnderstandings,
   focusedUnderstanding,
   onFocusUnderstanding,
 }: LivingUnderstandingsProps) {
-  const keyInsights = executiveDashboard.keyInsights ?? [];
-  const stateItems = executiveDashboard.currentOrganizationalState ?? [];
-
-  const fallbackUnderstandings: LivingUnderstandingItem[] =
-    keyInsights.length > 0
-      ? keyInsights.slice(0, 8).map((item, index) => ({
-          id: `fallback-insight-${index}`,
-          title: item.title,
-          summary: item.summary,
-          confidence: item.confidence,
-          state: getTrajectory(index),
-          tracked: true,
-        }))
-      : stateItems.slice(0, 8).map((item, index) => ({
-          id: `fallback-state-${index}`,
-          title: item.title,
-          summary: item.summary,
-          confidence: item.confidence,
-          state: getTrajectory(index),
-          tracked: true,
-        }));
+  const interpretationUnderstandings =
+    buildInterpretationUnderstandings(executiveDashboard);
 
   const understandings: LivingUnderstandingItem[] =
     livingUnderstandings && livingUnderstandings.length > 0
       ? livingUnderstandings
-      : fallbackUnderstandings;
+      : interpretationUnderstandings;
 
   return (
     <section className="briefing-section living-understandings-v2">
       <div className="briefing-section-header">
         <div>
-          <p className="briefing-eyebrow">Living Understandings</p>
-          <h2>What Discovery is continuing to watch.</h2>
+          <p className="briefing-eyebrow">Living Understanding</p>
+          <h2>How Discovery&apos;s organizational theory is evolving.</h2>
         </div>
 
         <span className="briefing-count-pill">
@@ -94,10 +117,10 @@ export default function LivingUnderstandings({
       <div className="living-understanding-list-v2">
         {understandings.length === 0 ? (
           <article className="living-understanding-empty-v2">
-            <h3>No living understandings yet</h3>
+            <h3>No living understanding yet</h3>
             <p>
-              Continue adding evidence and Discovery will begin tracking the
-              organizational understandings that matter over time.
+              Continue adding evidence and Discovery will begin forming
+              explanations that can strengthen, weaken, or resolve over time.
             </p>
           </article>
         ) : (
@@ -119,7 +142,7 @@ export default function LivingUnderstandings({
                   <small>
                     {cleanSentence(
                       item.summary,
-                      "Discovery is tracking this understanding over time.",
+                      "Discovery is testing this explanation over time.",
                     )}
                   </small>
                 </span>

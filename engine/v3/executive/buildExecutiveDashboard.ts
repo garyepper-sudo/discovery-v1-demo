@@ -22,9 +22,8 @@ import type {
 import type { ExecutiveInterpretation } from "./interpretations/executiveInterpretationTypes";
 
 import {
-  translateExecutiveTitle,
   translateExecutiveSummary,
-  translateExecutiveContinuity,
+  translateExecutiveTitle,
 } from "./expression/executiveLanguage";
 
 export type ExecutiveDashboardStatus =
@@ -99,6 +98,12 @@ export type ExecutiveConversation = {
   exploreUnderstanding: ExecutiveConversationSection;
 };
 
+/**
+ * Compatibility only.
+ *
+ * Sprint 53 direction:
+ * ExecutiveInterpretation is now the canonical executive semantic object.
+ */
 export type ExecutiveDashboardNarrative = ExecutiveNarrative;
 
 export type ExecutiveDashboardSections = {
@@ -111,13 +116,26 @@ export type ExecutiveDashboardSections = {
 export type ExecutiveDashboard = {
   hero: ExecutiveDashboardHero;
   conversation: ExecutiveConversation;
+
+  /**
+   * Canonical semantic object.
+   * Downstream expression and React layers should read executive meaning from here.
+   */
   interpretation: ExecutiveInterpretation;
+
   metrics: ExecutiveMetricCard[];
+
+  /**
+   * Compatibility fields.
+   * Keep temporarily so existing React components do not break.
+   * Do not add new semantic behavior here.
+   */
   narratives: ExecutiveDashboardNarrative[];
   keyInsights: ExecutiveKeyInsight[];
   currentOrganizationalState: ExecutiveOrganizationalStateItem[];
   operatingMechanisms: ExecutiveOperatingMechanism[];
   rememberedEvidence: ExecutiveRememberedEvidence[];
+
   sections: ExecutiveDashboardSections;
   nextAction?: ExecutiveRecommendedAction;
 };
@@ -169,22 +187,22 @@ function resolveStatePriority(
   return "medium";
 }
 
-function buildNarratives(state: ExecutiveState): ExecutiveDashboardNarrative[] {
-  return limitSection(state.executiveNarratives, 5).map((narrative) => ({
-    ...narrative,
-    headline: translateExecutiveTitle(narrative.headline),
-    observation: translateExecutiveSummary(narrative.observation),
-    businessImpact: translateExecutiveSummary(narrative.businessImpact),
-    executiveConversation: translateExecutiveSummary(
-      narrative.executiveConversation,
-    ),
-    supportingReasoning: narrative.supportingReasoning
-      ? translateExecutiveSummary(narrative.supportingReasoning)
-      : undefined,
-    continuity: translateExecutiveContinuity(narrative.continuity),
-  }));
+/**
+ * Compatibility wrapper only.
+ *
+ * This preserves old dashboard/UI consumers while Sprint 53 redirects
+ * downstream layers to ExecutiveInterpretation.
+ */
+function buildCompatibilityNarratives(
+  state: ExecutiveState,
+): ExecutiveDashboardNarrative[] {
+  return limitSection(state.executiveNarratives, 5);
 }
 
+/**
+ * Compatibility wrapper only.
+ * React should migrate from this to dashboard.interpretation.
+ */
 function buildKeyInsights(state: ExecutiveState): ExecutiveKeyInsight[] {
   return limitSection(state.currentUnderstanding, 4).map((item) => ({
     title: translateExecutiveTitle(item.title),
@@ -194,6 +212,10 @@ function buildKeyInsights(state: ExecutiveState): ExecutiveKeyInsight[] {
   }));
 }
 
+/**
+ * Compatibility wrapper only.
+ * React should migrate from this to dashboard.interpretation.
+ */
 function buildCurrentOrganizationalState(
   state: ExecutiveState,
 ): ExecutiveOrganizationalStateItem[] {
@@ -206,6 +228,10 @@ function buildCurrentOrganizationalState(
   }));
 }
 
+/**
+ * Compatibility wrapper only.
+ * React should migrate from this to dashboard.interpretation.
+ */
 function buildOperatingMechanisms(
   state: ExecutiveState,
 ): ExecutiveOperatingMechanism[] {
@@ -229,6 +255,10 @@ function buildOperatingMechanisms(
   );
 }
 
+/**
+ * Compatibility wrapper only.
+ * React should migrate from this to dashboard.interpretation.
+ */
 function buildRememberedEvidence(
   state: ExecutiveState,
 ): ExecutiveRememberedEvidence[] {
@@ -286,14 +316,14 @@ function buildExecutiveConversation(
 export function buildExecutiveDashboard(
   state: ExecutiveState,
 ): ExecutiveDashboard {
-  const narratives = buildNarratives(state);
-
   const interpretation = buildExecutiveInterpretation({
     narratives: state.executiveNarratives,
     currentUnderstanding: state.currentUnderstanding,
     whatChanged: state.whatChanged,
     organizationConfidence: state.organizationConfidence,
   });
+
+  const narratives = buildCompatibilityNarratives(state);
 
   const conversation = buildExecutiveConversation(
     state,
