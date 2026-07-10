@@ -6,18 +6,32 @@ type UnderstandingCanvasProps = {
   belief: string;
   mindStatus: string;
   confidence: number;
+
+  /**
+   * Represents how coherent Discovery's overall
+   * organizational understanding currently is.
+   *
+   * This is intentionally independent from the
+   * confidence of the current belief.
+   */
+  organizationalCoherence?: number;
 };
 
 export default function UnderstandingCanvas({
   belief,
   mindStatus,
   confidence,
+
+  // Demo value until the reasoning engine owns this.
+  organizationalCoherence = 42,
 }: UnderstandingCanvasProps) {
   return (
     <section className="executive-v2-hero">
       <div className="executive-v2-theory">
         <div className="executive-v2-mind">
-          <UnderstandingOrganism />
+          <UnderstandingOrganism
+            organizationalCoherence={organizationalCoherence}
+          />
 
           <div className="executive-v2-understanding">
             <UnderstandingBelief belief={belief} />

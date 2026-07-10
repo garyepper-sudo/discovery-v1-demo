@@ -236,8 +236,10 @@
 
 .executive-v2-answer-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  border-top: 1px solid #242321;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr)
+    minmax(360px, 1.12fr);
 }
 
 .executive-v2-answer {
@@ -636,6 +638,14 @@
   border-radius: 0;
   opacity: 0.92;
   animation: executive-v2-network-breathe 8s ease-in-out infinite;
+}
+
+.executive-v2-understanding {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .executive-v2-organism-network::before {
@@ -1113,9 +1123,17 @@
   inset: auto;
 
   justify-self: center;
+  align-self: center;
 
-  transform: scale(0.78);
+  width: 500px;
+  height: 410px;
+
+  margin: 0 auto;
+
+  transform: scale(0.92);
   transform-origin: center;
+
+  opacity: 1;
 }
 
 .executive-v2-understanding {
@@ -1160,3 +1178,1026 @@
   font-size: 13px;
   line-height: 1.55;
 }
+
+/* =====================================================
+   Sprint 58 — Understanding Canvas (Canonical)
+   Matches the Executive Overview reference composition
+   ===================================================== */
+
+/*
+  Sprint 58 intentionally overrides earlier canvas experiments
+  without changing the existing React component structure.
+*/
+
+.executive-v2-hero {
+  min-height: 340px;
+  padding: 30px 34px;
+  display: block;
+}
+
+.executive-v2-theory {
+  width: 100%;
+  height: 100%;
+  display: block;
+  text-align: left;
+}
+
+.executive-v2-mind {
+  width: 100%;
+  min-height: 280px;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(340px, 0.9fr)
+    minmax(0, 1.35fr);
+
+  align-items: center;
+
+  gap: 48px;
+
+  isolation: isolate;
+}
+
+.executive-v2-organism-network {
+  position: relative;
+  inset: auto;
+  left: auto;
+  top: auto;
+  width: 420px;
+  height: 350px;
+  margin: -18px auto -24px;
+  justify-self: center;
+  transform: scale(0.78);
+  transform-origin: center;
+  opacity: 0.96;
+}
+
+.executive-v2-understanding {
+  width: 100%;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px 4px 8px 0;
+}
+
+.executive-v2-belief {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.executive-v2-belief-prefix {
+  margin: 0 0 18px;
+  color: #e2b950;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.executive-v2-belief h1,
+.executive-v2-mind h1,
+.executive-v2-theory h1 {
+  max-width: 760px;
+  margin: 0;
+  padding: 0;
+  color: #f5f1e8;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  font-size: clamp(38px, 3.35vw, 54px);
+  font-weight: 430;
+  line-height: 1.08;
+  letter-spacing: -0.047em;
+  text-align: left;
+  text-wrap: balance;
+  text-shadow: none;
+}
+
+.executive-v2-status,
+.executive-v2-status-quiet {
+  width: 100%;
+  min-width: 0;
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, 0.58fr);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 0;
+}
+
+.executive-v2-status-item,
+.executive-v2-status-quiet .executive-v2-status-item {
+  min-height: 68px;
+  padding: 22px 24px 0 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 20px;
+  text-align: left;
+}
+
+.executive-v2-status-item + .executive-v2-status-item,
+.executive-v2-status-quiet
+  .executive-v2-status-item
+  + .executive-v2-status-item {
+  margin-left: 0;
+  padding-left: 36px;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.executive-v2-status-item span,
+.executive-v2-status-quiet .executive-v2-status-item span {
+  display: block;
+  color: rgba(244, 240, 231, 0.58);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.22em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.executive-v2-status-item strong,
+.executive-v2-status-quiet .executive-v2-status-item strong {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  color: #efc15b;
+  font-size: clamp(22px, 2vw, 31px);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.executive-v2-status-item:last-child strong,
+.executive-v2-status-quiet .executive-v2-status-item:last-child strong {
+  font-size: clamp(30px, 3vw, 48px);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+.executive-v2-status-dot {
+  width: 11px;
+  height: 11px;
+  margin-right: 12px;
+  background: #efc15b;
+  box-shadow:
+    0 0 12px rgba(239, 193, 91, 0.72),
+    0 0 26px rgba(239, 193, 91, 0.24);
+}
+
+/* Keep animation restrained so the organism reads as intelligence, not decoration. */
+
+.executive-v2-organism-network,
+.executive-v2-network-node,
+.executive-v2-network-path,
+.executive-v2-status-dot {
+  animation-duration: 10s;
+}
+
+/* Tablet */
+
+@media (max-width: 1100px) {
+  .executive-v2-hero {
+    padding: 28px 30px;
+  }
+
+  .executive-v2-mind {
+    grid-template-columns: minmax(230px, 0.7fr) minmax(0, 1.3fr);
+    gap: 30px;
+  }
+
+  .executive-v2-organism-network {
+    transform: scale(0.68);
+  }
+
+  .executive-v2-belief h1,
+  .executive-v2-mind h1,
+  .executive-v2-theory h1 {
+    font-size: clamp(34px, 4vw, 46px);
+  }
+}
+
+/* Stacked canvas */
+
+@media (max-width: 820px) {
+  .executive-v2-hero {
+    padding: 30px 26px 32px;
+  }
+
+  .executive-v2-mind {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .executive-v2-organism-network {
+    width: 420px;
+    height: 320px;
+    margin: -42px auto -76px;
+    transform: scale(0.64);
+  }
+
+  .executive-v2-understanding {
+    padding: 0;
+  }
+
+  .executive-v2-belief,
+  .executive-v2-belief h1,
+  .executive-v2-mind h1,
+  .executive-v2-theory h1 {
+    text-align: center;
+  }
+
+  .executive-v2-belief-prefix {
+    margin-bottom: 14px;
+  }
+
+  .executive-v2-status,
+  .executive-v2-status-quiet {
+    margin-top: 28px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 620px) {
+  .executive-v2-hero {
+    min-height: auto;
+    padding: 24px 20px 26px;
+  }
+
+  .executive-v2-organism-network {
+    width: 390px;
+    height: 300px;
+    margin: -52px auto -88px;
+    transform: scale(0.54);
+  }
+
+  .executive-v2-belief-prefix {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+  }
+
+  .executive-v2-belief h1,
+  .executive-v2-mind h1,
+  .executive-v2-theory h1 {
+    font-size: clamp(30px, 9vw, 40px);
+    line-height: 1.1;
+  }
+
+  .executive-v2-status,
+  .executive-v2-status-quiet {
+    grid-template-columns: 1fr;
+    border-top-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .executive-v2-status-item,
+  .executive-v2-status-quiet .executive-v2-status-item {
+    min-height: 58px;
+    padding: 18px 0;
+    grid-template-columns: minmax(118px, auto) 1fr;
+  }
+
+  .executive-v2-status-item + .executive-v2-status-item,
+  .executive-v2-status-quiet
+    .executive-v2-status-item
+    + .executive-v2-status-item {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .executive-v2-status-item:last-child strong,
+  .executive-v2-status-quiet .executive-v2-status-item:last-child strong {
+    font-size: 34px;
+  }
+}
+
+/* =====================================================
+   Sprint 58B — Organism Presence
+   Restores the organism as the visual lead
+   ===================================================== */
+
+.executive-v2-organism-network {
+  width: 500px;
+  height: 410px;
+  margin: -22px auto -28px;
+  transform: scale(0.92);
+  opacity: 1;
+  filter: saturate(1.08) brightness(1.08);
+}
+
+.executive-v2-organism-network::before {
+  inset: -72px;
+  background:
+    radial-gradient(
+      ellipse at 50% 50%,
+      rgba(226, 194, 125, 0.24),
+      rgba(198, 169, 108, 0.085) 34%,
+      rgba(198, 169, 108, 0.025) 55%,
+      transparent 74%
+    );
+  filter: blur(18px);
+}
+
+.executive-v2-organism-network::after {
+  inset: 5% 9%;
+  border-color: rgba(226, 194, 125, 0.16);
+  background:
+    radial-gradient(
+      ellipse at 49% 50%,
+      rgba(226, 194, 125, 0.13),
+      rgba(198, 169, 108, 0.045) 46%,
+      transparent 74%
+    );
+  box-shadow:
+    inset 0 0 40px rgba(226, 194, 125, 0.035),
+    0 0 60px rgba(198, 169, 108, 0.045);
+}
+
+.executive-v2-field {
+  border-color: rgba(226, 194, 125, 0.17);
+  opacity: 0.95;
+}
+
+.executive-v2-field-a {
+  border-color: rgba(226, 194, 125, 0.18);
+  box-shadow:
+    inset 0 0 34px rgba(226, 194, 125, 0.025),
+    0 0 28px rgba(198, 169, 108, 0.025);
+}
+
+.executive-v2-field-b {
+  border-color: rgba(226, 194, 125, 0.22);
+}
+
+.executive-v2-network-path {
+  height: 1px;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(239, 193, 91, 0.68),
+      rgba(215, 187, 123, 0.22)
+    );
+  opacity: 0.72;
+  box-shadow: 0 0 8px rgba(226, 194, 125, 0.12);
+}
+
+.executive-v2-network-path-e,
+.executive-v2-network-path-f {
+  opacity: 0.46;
+}
+
+.executive-v2-network-node {
+  width: 8px;
+  height: 8px;
+  background: #d9b968;
+  box-shadow:
+    0 0 12px rgba(239, 193, 91, 0.92),
+    0 0 30px rgba(226, 194, 125, 0.32);
+}
+
+.executive-v2-network-node-core {
+  width: 22px;
+  height: 22px;
+  margin-left: -2px;
+  margin-top: -2px;
+  background:
+    radial-gradient(
+      circle at 42% 38%,
+      #fff0b8 0%,
+      #efc15b 36%,
+      #c99632 100%
+    );
+  box-shadow:
+    0 0 18px rgba(255, 226, 145, 1),
+    0 0 46px rgba(239, 193, 91, 0.78),
+    0 0 96px rgba(198, 169, 108, 0.42);
+}
+
+@keyframes executive-v2-network-breathe {
+  0%,
+  100% {
+    opacity: 0.9;
+    transform: scale(0.9);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(0.94);
+  }
+}
+
+@keyframes executive-v2-network-path-pulse {
+  0%,
+  100% {
+    opacity: 0.42;
+  }
+
+  50% {
+    opacity: 0.82;
+  }
+}
+
+@keyframes executive-v2-network-node-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(0.98);
+    opacity: 0.82;
+  }
+
+  50% {
+    transform: translate(3px, -4px) scale(1.12);
+    opacity: 1;
+  }
+}
+
+@keyframes executive-v2-core-pulse {
+  0%,
+  100% {
+    transform: scale(0.96);
+    opacity: 0.94;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 1100px) {
+  .executive-v2-organism-network {
+    width: 460px;
+    height: 380px;
+    margin: -24px auto -32px;
+    transform: scale(0.82);
+  }
+}
+
+@media (max-width: 820px) {
+  .executive-v2-organism-network {
+    width: 430px;
+    height: 350px;
+    margin: -46px auto -78px;
+    transform: scale(0.7);
+  }
+}
+
+@media (max-width: 620px) {
+  .executive-v2-organism-network {
+    width: 400px;
+    height: 320px;
+    margin: -56px auto -92px;
+    transform: scale(0.58);
+  }
+}
+
+/* =====================================================
+   Sprint 58C — Final Organism Alignment
+   ===================================================== */
+
+.executive-v2-organism-network {
+  justify-self: center;
+  align-self: center;
+
+  width: 500px;
+  height: 410px;
+
+  margin: 0;
+
+  /*
+    Use the independent translate property so the organism's
+    animation can continue controlling transform: scale().
+  */
+  translate: -58px -42px;
+
+  transform-origin: center;
+}
+
+/* =====================================================
+   Sprint 58D — Annotation Row Depth
+   ===================================================== */
+
+.executive-v2-answer-grid {
+  min-height: 158px;
+}
+
+.executive-v2-answer {
+  padding: 26px 28px 24px;
+}
+
+.executive-v2-answer-label {
+  margin-bottom: 14px;
+}
+
+.executive-v2-answer-copy {
+  margin-top: 0;
+  max-width: 360px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.executive-v2-investigation {
+  min-height: 100%;
+  align-items: flex-end;
+}
+
+/* =====================================================
+   Sprint 58E — Status Labels
+   ===================================================== */
+
+.executive-v2-status-item,
+.executive-v2-status-quiet .executive-v2-status-item {
+  grid-template-columns: auto 1fr;
+}
+
+.executive-v2-status-item span,
+.executive-v2-status-quiet .executive-v2-status-item span {
+  display: block;
+}
+
+.executive-v2-status-item strong,
+.executive-v2-status-quiet .executive-v2-status-item strong {
+  justify-self: start;
+}
+
+.executive-v2-status-item:last-child strong,
+.executive-v2-status-quiet .executive-v2-status-item:last-child strong {
+  font-size: clamp(34px, 3vw, 48px);
+}
+
+/* =====================================================
+   Sprint 58F — Investigation Annotation
+   ===================================================== */
+
+.executive-v2-investigation {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 20px;
+}
+
+.executive-v2-investigation .executive-v2-answer-copy {
+  max-width: 230px;
+}
+
+.executive-v2-start-button {
+  min-width: 164px;
+  min-height: 42px;
+}
+
+/* =====================================================
+   Sprint 59A — Canonical Understanding Organism
+   Establishes a coherent cognitive field rather than
+   a visible node-and-connection diagram.
+   ===================================================== */
+
+/*
+  The React structure now groups the organism into:
+  - understanding field
+  - living membrane
+  - internal topology
+  - stable structure
+  - understanding core
+
+  Existing network class names remain as compatibility
+  hooks while the visual language transitions away from
+  an explicit graph.
+*/
+
+.executive-v2-understanding-field,
+.executive-v2-understanding-topology,
+.executive-v2-understanding-structure,
+.executive-v2-understanding-core {
+  display: contents;
+}
+
+/* The membrane becomes the organism's defining silhouette. */
+
+.executive-v2-understanding-membrane {
+  position: absolute;
+  inset: 54px 60px 48px 56px;
+  z-index: 0;
+
+  border: 1px solid rgba(239, 204, 126, 0.24);
+  border-radius: 48% 52% 45% 55% / 55% 43% 57% 45%;
+
+  background:
+    radial-gradient(
+      ellipse at 42% 38%,
+      rgba(255, 233, 170, 0.12),
+      transparent 30%
+    ),
+    radial-gradient(
+      ellipse at 63% 62%,
+      rgba(210, 165, 75, 0.09),
+      transparent 38%
+    ),
+    radial-gradient(
+      ellipse at 50% 50%,
+      rgba(217, 180, 102, 0.07),
+      rgba(176, 132, 53, 0.025) 52%,
+      transparent 73%
+    );
+
+  box-shadow:
+    inset 0 0 42px rgba(255, 224, 151, 0.04),
+    inset 18px -12px 55px rgba(166, 118, 35, 0.025),
+    0 0 42px rgba(216, 177, 94, 0.06);
+
+  animation: executive-v2-membrane-settle 18s ease-in-out infinite;
+}
+
+.executive-v2-understanding-membrane::before,
+.executive-v2-understanding-membrane::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.executive-v2-understanding-membrane::before {
+  inset: 10% 12% 13% 10%;
+
+  border: 1px solid rgba(239, 204, 126, 0.105);
+  border-radius: 55% 45% 51% 49% / 46% 58% 42% 54%;
+
+  background:
+    radial-gradient(
+      ellipse at 46% 48%,
+      rgba(247, 211, 131, 0.055),
+      transparent 66%
+    );
+
+  animation: executive-v2-inner-coherence 22s ease-in-out infinite;
+}
+
+.executive-v2-understanding-membrane::after {
+  inset: 24% 22% 21% 25%;
+
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      ellipse at 48% 47%,
+      rgba(255, 225, 151, 0.13),
+      rgba(218, 176, 91, 0.045) 38%,
+      transparent 72%
+    );
+
+  filter: blur(8px);
+  opacity: 0.8;
+}
+
+/* Broader fields now read as nested cognitive regions. */
+
+.executive-v2-field {
+  z-index: 0;
+  border-radius: 46% 54% 51% 49% / 55% 45% 55% 45%;
+  border-color: rgba(238, 203, 125, 0.095);
+  background:
+    radial-gradient(
+      ellipse at 50% 50%,
+      rgba(224, 187, 107, 0.035),
+      transparent 68%
+    );
+  box-shadow:
+    inset 0 0 32px rgba(242, 207, 126, 0.02),
+    0 0 26px rgba(190, 145, 61, 0.018);
+  opacity: 0.72;
+}
+
+.executive-v2-field-a {
+  width: 330px;
+  height: 270px;
+  left: 82px;
+  top: 66px;
+  transform: rotate(-7deg);
+  animation: executive-v2-field-a-settle 24s ease-in-out infinite;
+}
+
+.executive-v2-field-b {
+  width: 224px;
+  height: 184px;
+  left: 151px;
+  top: 111px;
+  transform: rotate(11deg);
+  border-color: rgba(244, 210, 130, 0.12);
+  animation: executive-v2-field-b-settle 20s ease-in-out infinite;
+}
+
+/*
+  Internal topology is intentionally faint. It should be
+  discovered after the organism is perceived as one object.
+*/
+
+.executive-v2-network-path {
+  z-index: 1;
+  height: 34px;
+
+  background: none;
+  border-top: 1px solid rgba(239, 201, 119, 0.24);
+  border-radius: 50%;
+
+  box-shadow: none;
+  opacity: 0.34;
+
+  filter: drop-shadow(0 0 5px rgba(226, 187, 102, 0.06));
+
+  animation: executive-v2-topology-settle 16s ease-in-out infinite;
+}
+
+.executive-v2-network-path-a {
+  width: 142px;
+  left: 257px;
+  top: 211px;
+  transform: rotate(-151deg) scaleY(0.72);
+}
+
+.executive-v2-network-path-b {
+  width: 151px;
+  left: 259px;
+  top: 209px;
+  transform: rotate(-41deg) scaleY(0.82);
+  animation-delay: -3s;
+}
+
+.executive-v2-network-path-c {
+  width: 126px;
+  left: 259px;
+  top: 210px;
+  transform: rotate(55deg) scaleY(0.68);
+  animation-delay: -6s;
+}
+
+.executive-v2-network-path-d {
+  width: 139px;
+  left: 259px;
+  top: 211px;
+  transform: rotate(146deg) scaleY(0.78);
+  animation-delay: -9s;
+}
+
+.executive-v2-network-path-e {
+  width: 112px;
+  left: 123px;
+  top: 137px;
+  transform: rotate(18deg) scaleY(0.58);
+  opacity: 0.2;
+  animation-delay: -12s;
+}
+
+.executive-v2-network-path-f {
+  width: 128px;
+  left: 352px;
+  top: 117px;
+  transform: rotate(100deg) scaleY(0.62);
+  opacity: 0.2;
+  animation-delay: -14s;
+}
+
+/* Stable beliefs become concentrations inside the field, not graph nodes. */
+
+.executive-v2-network-node {
+  z-index: 2;
+
+  width: 11px;
+  height: 11px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 231, 166, 0.88) 0%,
+      rgba(225, 184, 98, 0.42) 34%,
+      rgba(205, 157, 65, 0.08) 67%,
+      transparent 74%
+    );
+
+  box-shadow:
+    0 0 18px rgba(239, 196, 107, 0.22),
+    0 0 36px rgba(198, 148, 52, 0.08);
+
+  filter: blur(0.15px);
+  opacity: 0.74;
+
+  animation: executive-v2-concentration-settle 15s ease-in-out infinite;
+}
+
+.executive-v2-network-node-a,
+.executive-v2-network-node-b,
+.executive-v2-network-node-c,
+.executive-v2-network-node-d {
+  width: 13px;
+  height: 13px;
+}
+
+.executive-v2-network-node-e,
+.executive-v2-network-node-f {
+  width: 8px;
+  height: 8px;
+  opacity: 0.46;
+}
+
+/* The core is integrated into the whole organism rather than dominating it. */
+
+.executive-v2-network-node-core {
+  left: 250px;
+  top: 201px;
+
+  width: 24px;
+  height: 24px;
+  margin: 0;
+
+  background:
+    radial-gradient(
+      circle at 42% 38%,
+      rgba(255, 242, 199, 0.96) 0%,
+      rgba(239, 195, 101, 0.8) 24%,
+      rgba(205, 151, 55, 0.42) 48%,
+      rgba(185, 128, 35, 0.08) 70%,
+      transparent 76%
+    );
+
+  box-shadow:
+    0 0 16px rgba(255, 225, 151, 0.52),
+    0 0 38px rgba(236, 190, 96, 0.28),
+    0 0 78px rgba(192, 139, 42, 0.14);
+
+  animation: executive-v2-core-settle 12s ease-in-out infinite;
+}
+
+/* Reduce the old outer illustration treatment. */
+
+.executive-v2-organism-network {
+  filter: saturate(1.02) brightness(1.02);
+}
+
+.executive-v2-organism-network::before {
+  inset: -64px;
+  background:
+    radial-gradient(
+      ellipse at 48% 50%,
+      rgba(226, 190, 111, 0.17),
+      rgba(198, 153, 67, 0.052) 38%,
+      rgba(173, 125, 37, 0.015) 58%,
+      transparent 74%
+    );
+  filter: blur(22px);
+}
+
+.executive-v2-organism-network::after {
+  inset: 7% 10%;
+  border: 0;
+  border-radius: 48% 52% 46% 54% / 52% 44% 56% 48%;
+  background:
+    radial-gradient(
+      ellipse at 47% 48%,
+      rgba(239, 206, 132, 0.07),
+      rgba(200, 155, 69, 0.025) 52%,
+      transparent 74%
+    );
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+/* Slow, purposeful motion: breathing, settling, coherence. */
+
+@keyframes executive-v2-membrane-settle {
+  0%,
+  100% {
+    border-radius: 48% 52% 45% 55% / 55% 43% 57% 45%;
+    transform: rotate(-0.7deg) scale(0.992);
+  }
+
+  50% {
+    border-radius: 54% 46% 52% 48% / 47% 56% 44% 53%;
+    transform: rotate(0.8deg) scale(1.012);
+  }
+}
+
+@keyframes executive-v2-inner-coherence {
+  0%,
+  100% {
+    border-radius: 55% 45% 51% 49% / 46% 58% 42% 54%;
+    transform: rotate(0.8deg) scale(0.99);
+    opacity: 0.62;
+  }
+
+  50% {
+    border-radius: 47% 53% 44% 56% / 54% 45% 55% 46%;
+    transform: rotate(-0.8deg) scale(1.015);
+    opacity: 0.9;
+  }
+}
+
+@keyframes executive-v2-field-a-settle {
+  0%,
+  100% {
+    border-radius: 46% 54% 51% 49% / 55% 45% 55% 45%;
+    transform: rotate(-7deg) scale(0.992);
+  }
+
+  50% {
+    border-radius: 53% 47% 45% 55% / 47% 56% 44% 53%;
+    transform: rotate(-4deg) scale(1.012);
+  }
+}
+
+@keyframes executive-v2-field-b-settle {
+  0%,
+  100% {
+    border-radius: 52% 48% 55% 45% / 47% 54% 46% 53%;
+    transform: rotate(11deg) scale(1);
+  }
+
+  50% {
+    border-radius: 46% 54% 48% 52% / 55% 45% 55% 45%;
+    transform: rotate(8deg) scale(1.018);
+  }
+}
+
+@keyframes executive-v2-topology-settle {
+  0%,
+  100% {
+    opacity: 0.18;
+    filter: drop-shadow(0 0 4px rgba(226, 187, 102, 0.035));
+  }
+
+  50% {
+    opacity: 0.38;
+    filter: drop-shadow(0 0 6px rgba(226, 187, 102, 0.085));
+  }
+}
+
+@keyframes executive-v2-concentration-settle {
+  0%,
+  100% {
+    opacity: 0.56;
+    translate: 0 0;
+    scale: 0.96;
+  }
+
+  50% {
+    opacity: 0.82;
+    translate: 2px -2px;
+    scale: 1.06;
+  }
+}
+
+@keyframes executive-v2-core-settle {
+  0%,
+  100% {
+    opacity: 0.88;
+    scale: 0.98;
+  }
+
+  50% {
+    opacity: 1;
+    scale: 1.055;
+  }
+}
+
+/* Preserve the canonical canvas footprint at every breakpoint. */
+
+@media (max-width: 1100px) {
+  .executive-v2-understanding-membrane {
+    inset: 54px 60px 48px 56px;
+  }
+}
+
+@media (max-width: 820px) {
+  .executive-v2-understanding-membrane {
+    inset: 50px 58px 46px 54px;
+  }
+}
+
+@media (max-width: 620px) {
+  .executive-v2-understanding-membrane {
+    inset: 48px 56px 44px 52px;
+  }
+}
+
+/* Respect reduced-motion preferences without flattening the organism. */
+
+@media (prefers-reduced-motion: reduce) {
+  .executive-v2-organism-network,
+  .executive-v2-understanding-membrane,
+  .executive-v2-understanding-membrane::before,
+  .executive-v2-field,
+  .executive-v2-network-path,
+  .executive-v2-network-node,
+  .executive-v2-status-dot {
+    animation: none;
+  }
+}
+

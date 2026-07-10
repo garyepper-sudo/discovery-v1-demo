@@ -3,20 +3,21 @@ type UnderstandingStatusProps = {
   confidence: number;
 };
 
-function formatConfidence(confidence: number): string {
-  const normalizedConfidence =
-    confidence <= 1 ? confidence * 100 : confidence;
-
-  return `${Math.round(normalizedConfidence)}% confidence`;
+function normalizeConfidence(confidence: number): number {
+  return Math.round(confidence <= 1 ? confidence * 100 : confidence);
 }
 
 export default function UnderstandingStatus({
   mindStatus,
   confidence,
 }: UnderstandingStatusProps) {
+  const confidencePercent = normalizeConfidence(confidence);
+
   return (
     <div className="executive-v2-status executive-v2-status-quiet">
       <div className="executive-v2-status-item">
+        <span>Mind Status</span>
+
         <strong>
           <i className="executive-v2-status-dot" />
           {mindStatus}
@@ -24,7 +25,9 @@ export default function UnderstandingStatus({
       </div>
 
       <div className="executive-v2-status-item">
-        <strong>{formatConfidence(confidence)}</strong>
+        <span>Confidence</span>
+
+        <strong>{confidencePercent}%</strong>
       </div>
     </div>
   );
