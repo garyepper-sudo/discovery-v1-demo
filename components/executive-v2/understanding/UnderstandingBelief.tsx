@@ -1,8 +1,10 @@
-type HeroBeliefProps = {
+type UnderstandingBeliefProps = {
   belief: string;
 };
 
-export default function HeroBelief({ belief }: HeroBeliefProps) {
+export default function UnderstandingBelief({
+  belief,
+}: UnderstandingBeliefProps) {
   return (
     <div className="executive-v2-belief">
       <p className="executive-v2-belief-prefix">

@@ -1,4 +1,4 @@
-type HeroStatusProps = {
+type UnderstandingStatusProps = {
   mindStatus: string;
   confidence: number;
 };
@@ -10,10 +10,10 @@ function formatConfidence(confidence: number): string {
   return `${Math.round(normalizedConfidence)}% confidence`;
 }
 
-export default function HeroStatus({
+export default function UnderstandingStatus({
   mindStatus,
   confidence,
-}: HeroStatusProps) {
+}: UnderstandingStatusProps) {
   return (
     <div className="executive-v2-status executive-v2-status-quiet">
       <div className="executive-v2-status-item">

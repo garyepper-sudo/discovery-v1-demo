@@ -1,8 +1,8 @@
 "use client";
 
-import Hero from "./hero/Hero";
+import UnderstandingCanvas from "./understanding/UnderstandingCanvas";
 
-const currentUnderstanding = {
+const currentUnderstandingState = {
   belief:
     "Customer onboarding delays are primarily caused by fragmented cross-functional ownership.",
   mindStatus: "Learning",
@@ -20,10 +20,10 @@ export default function ExecutiveExperience() {
           </div>
         </header>
 
-        <Hero
-          belief={currentUnderstanding.belief}
-          mindStatus={currentUnderstanding.mindStatus}
-          confidence={currentUnderstanding.confidence}
+        <UnderstandingCanvas
+          belief={currentUnderstandingState.belief}
+          mindStatus={currentUnderstandingState.mindStatus}
+          confidence={currentUnderstandingState.confidence}
         />
 
         <section className="executive-v2-answer-grid executive-v2-answer-grid-quiet">

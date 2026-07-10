@@ -538,47 +538,6 @@
     0 28px 90px rgba(0, 0, 0, 0.24);
 }
 
-.executive-workspace-content .executive-v2-shell {
-  width: 100%;
-  min-height: auto;
-
-  padding: 0;
-}
-
-.executive-workspace-content .executive-v2-header {
-  display: none;
-}
-
-.executive-workspace-content .executive-v2-hero {
-  min-height: 440px;
-
-  padding: 34px 42px 28px;
-}
-
-.executive-workspace-content .executive-v2-theory {
-  width: 100%;
-}
-
-.executive-workspace-content .executive-v2-mind {
-  width: 100%;
-  min-height: 378px;
-
-  display: grid;
-  grid-template-columns: minmax(250px, 0.72fr) minmax(0, 1.28fr);
-  align-items: center;
-  gap: clamp(42px, 5vw, 88px);
-}
-
-.executive-workspace-content .executive-v2-organism-network {
-  position: relative;
-  inset: auto;
-
-  justify-self: center;
-
-  transform: scale(0.78);
-  transform-origin: center;
-}
-
 .executive-workspace-content .executive-v2-understanding {
   min-width: 0;
 
@@ -587,39 +546,8 @@
   justify-content: center;
 }
 
-.executive-workspace-content .executive-v2-belief {
-  margin: 0;
-}
-
-.executive-workspace-content .executive-v2-belief h1 {
-  max-width: 780px;
-
-  font-size: clamp(34px, 3.5vw, 54px);
-}
-
-.executive-workspace-content .executive-v2-status-quiet {
-  margin-top: clamp(28px, 4vw, 46px);
-}
-
-.executive-workspace-content .executive-v2-answer-grid {
-  min-height: 132px;
-
-  border-top-color: var(--workspace-line);
-}
-
 .executive-workspace-content .executive-v2-answer {
   padding: 22px 25px 19px;
-}
-
-.executive-workspace-content
-  .executive-v2-answer
-  + .executive-v2-answer {
-  border-left-color: var(--workspace-line);
-}
-
-.executive-workspace-content .executive-v2-answer-copy {
-  font-size: 13px;
-  line-height: 1.55;
 }
 
 /* =====================================================
@@ -785,19 +713,6 @@
     padding-inline: 18px;
   }
 
-  .executive-workspace-content .executive-v2-hero {
-    padding-inline: 30px;
-  }
-
-  .executive-workspace-content .executive-v2-mind {
-    grid-template-columns: minmax(210px, 0.65fr) minmax(0, 1.35fr);
-    gap: 34px;
-  }
-
-  .executive-workspace-content .executive-v2-organism-network {
-    transform: scale(0.68);
-  }
-
   .executive-workspace-content
     .executive-v2-investigation {
     align-items: stretch;
@@ -852,25 +767,6 @@
     padding: 16px;
   }
 
-  .executive-workspace-content .executive-v2-hero {
-    min-height: auto;
-
-    padding: 32px 26px 28px;
-  }
-
-  .executive-workspace-content .executive-v2-mind {
-    min-height: auto;
-
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .executive-workspace-content .executive-v2-organism-network {
-    justify-self: center;
-
-    transform: scale(0.7);
-  }
-
   .executive-workspace-content .executive-v2-understanding {
     width: 100%;
   }
@@ -904,38 +800,6 @@
 
   .executive-workspace-live-status > span {
     display: none;
-  }
-
-  .executive-workspace-content
-    .executive-v2-hero {
-    min-height: auto;
-
-    padding: 26px 18px 24px;
-  }
-
-  .executive-workspace-content .executive-v2-organism-network {
-    transform: scale(0.58);
-  }
-
-  .executive-workspace-content .executive-v2-belief h1 {
-    font-size: clamp(29px, 9vw, 39px);
-    line-height: 1.12;
-  }
-
-  .executive-workspace-content .executive-v2-status-quiet {
-    margin-top: 24px;
-  }
-
-  .executive-workspace-content
-    .executive-v2-answer-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .executive-workspace-content
-    .executive-v2-answer
-    + .executive-v2-answer {
-    border-left: 0;
-    border-top: 1px solid var(--workspace-line);
   }
 
   .executive-workspace-timeline-track {

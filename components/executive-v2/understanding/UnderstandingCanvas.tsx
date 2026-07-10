@@ -1,28 +1,28 @@
-import HeroBelief from "./HeroBelief";
-import HeroOrganism from "./HeroOrganism";
-import HeroStatus from "./HeroStatus";
+import UnderstandingBelief from "./UnderstandingBelief";
+import UnderstandingOrganism from "./UnderstandingOrganism";
+import UnderstandingStatus from "./UnderstandingStatus";
 
-type HeroProps = {
+type UnderstandingCanvasProps = {
   belief: string;
   mindStatus: string;
   confidence: number;
 };
 
-export default function Hero({
+export default function UnderstandingCanvas({
   belief,
   mindStatus,
   confidence,
-}: HeroProps) {
+}: UnderstandingCanvasProps) {
   return (
     <section className="executive-v2-hero">
       <div className="executive-v2-theory">
         <div className="executive-v2-mind">
-          <HeroOrganism />
+          <UnderstandingOrganism />
 
           <div className="executive-v2-understanding">
-            <HeroBelief belief={belief} />
+            <UnderstandingBelief belief={belief} />
 
-            <HeroStatus
+            <UnderstandingStatus
               mindStatus={mindStatus}
               confidence={confidence}
             />

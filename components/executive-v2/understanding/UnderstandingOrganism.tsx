@@ -1,4 +1,4 @@
-export default function HeroOrganism() {
+export default function UnderstandingOrganism() {
   return (
     <div
       className="executive-v2-organism executive-v2-organism-network"
