@@ -3,11 +3,10 @@
 import { useState } from "react";
 
 import ExecutiveWorkspace from "../../components/executive-v2/ExecutiveWorkspace";
-import { buildExecutiveProjection } from "../../components/executive-v2/projection/buildExecutiveProjection";
-import type { DiscoveryV3Result } from "../../engine/v3/types";
+import type { ExecutiveProjection } from "../../components/executive-v2/projection/ExecutiveProjection";
 
 type DiscoveryLabResponse = {
-  v3?: DiscoveryV3Result;
+  executiveProjection: ExecutiveProjection;
 };
 
 export default function DiscoveryV1Page() {
@@ -17,7 +16,9 @@ export default function DiscoveryV1Page() {
   const [question, setQuestion] = useState("");
   const [messyInput, setMessyInput] = useState("");
 
-  const [result, setResult] = useState<DiscoveryV3Result | null>(null);
+  const [projection, setProjection] =
+    useState<ExecutiveProjection | null>(null);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,7 +27,7 @@ export default function DiscoveryV1Page() {
     setError(null);
 
     if (!inputOverride) {
-      setResult(null);
+      setProjection(null);
     }
 
     try {
@@ -50,13 +51,13 @@ export default function DiscoveryV1Page() {
 
       const data: DiscoveryLabResponse = await response.json();
 
-      if (!data.v3) {
+      if (!data.executiveProjection) {
         throw new Error(
-          "API response did not include a Discovery V3 result.",
+          "The API did not return an executive projection.",
         );
       }
 
-      setResult(data.v3);
+      setProjection(data.executiveProjection);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Investigation failed.",
@@ -66,9 +67,7 @@ export default function DiscoveryV1Page() {
     }
   }
 
-  if (result) {
-    const projection = buildExecutiveProjection(result);
-
+  if (projection) {
     return <ExecutiveWorkspace projection={projection} />;
   }
 

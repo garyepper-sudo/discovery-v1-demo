@@ -10,6 +10,37 @@ export type ExecutiveAttentionSeverity =
   | "medium"
   | "high";
 
+export type ExecutiveTheoryValidationEvidence = {
+  label: string;
+  rationale: string;
+  confidence?: number;
+};
+
+export type ExecutiveCompetingTheory = {
+  theory: string;
+  reasonItWasConsidered: string;
+  reasonItLost: string;
+  confidence: number;
+};
+
+export type ExecutiveTheoryValidation = {
+  dominantTheory: string | null;
+  whyDiscoveryBelievesIt: string;
+
+  supportingMechanisms: ExecutiveTheoryValidationEvidence[];
+  supportingOrganizationalBeliefs: ExecutiveTheoryValidationEvidence[];
+
+  competingTheoriesConsidered: ExecutiveCompetingTheory[];
+  contradictoryOrWeakeningEvidence: ExecutiveTheoryValidationEvidence[];
+
+  calibratedConfidenceExplanation: string;
+
+  additionalEvidenceThatWouldIncreaseConfidence: string[];
+  evidenceThatWouldFalsifyTheory: string[];
+
+  executiveRecommendation: string;
+};
+
 export type ExecutiveProjection = {
   /**
    * Executive workspace metadata.
@@ -51,6 +82,14 @@ export type ExecutiveProjection = {
     summary: string;
     severity: ExecutiveAttentionSeverity;
   };
+
+  /**
+   * Structured validation of Discovery's current leading theory.
+   *
+   * This is optional so the existing executive experience can continue
+   * rendering when runtime theory validation is not yet available.
+   */
+  theoryValidation?: ExecutiveTheoryValidation;
 
   /**
    * How Discovery arrived at its current understanding.

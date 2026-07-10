@@ -17,13 +17,15 @@ Read them in this order:
 3. `PROJECT_STATE.md`
 4. `NEXT_CHAT.md`
 
-Use these reference documents only when needed:
+Use these reference documents only when needed.
 
 ### Implementation
 
 - `CANONICAL_ARCHITECTURE.md`
 - `COMPONENT_ARCHITECTURE.md`
 - `ARCHITECTURE_MIGRATION_BOARD.md`
+- `COMPONENT_OWNERSHIP.md`
+- `ORGANISM_ARCHITECTURE.md`
 
 ### Product Vision
 
@@ -40,18 +42,28 @@ Use these reference documents only when needed:
 - `COGNITIVE_OBJECT_MODEL.md`
 - `COGNITIVE_ONTOLOGY.md`
 
+### Benchmarks
+
+- `DISCOVERY_COGNITIVE_FITNESS_PROFILE.md`
+- `UNDERSTANDING_SCORECARD_BASELINE.md`
+- Relevant benchmark reports
+- Relevant simulation reports
+
 ---
 
 # Current Milestone
 
-**Discovery Capability Audit**
+**Executive Capability Integration**
 
 ---
 
 # Current Objective
 
-Inventory every significant capability Discovery already possesses and determine whether it is:
+Integrate Discovery's existing runtime cognition into the canonical Executive Projection before beginning simulated organization pressure testing.
 
+Every executive capability should eventually exist throughout the complete product pipeline:
+
+```
 Engine
 
 ↓
@@ -60,7 +72,7 @@ Runtime
 
 ↓
 
-Projection
+Executive Projection
 
 ↓
 
@@ -73,8 +85,9 @@ Simulation
 ↓
 
 Benchmark
+```
 
-The objective is to expose and validate existing intelligence before adding new reasoning engines.
+The objective is to expose, validate, benchmark, integrate, and pressure-test existing intelligence before adding new reasoning engines.
 
 ---
 
@@ -84,11 +97,39 @@ The objective is to expose and validate existing intelligence before adding new 
 
 Completed.
 
-Executive Projection is now the canonical UI contract.
+Executive Projection is now the canonical server-side UI contract.
 
 Executive Workspace consumes only `ExecutiveProjection`.
 
-The UI no longer reaches directly into `DiscoveryV3Result`.
+The browser no longer reconstructs executive understanding from `DiscoveryV3Result`.
+
+Executive Projection is now built after organizational runtime evolution.
+
+---
+
+## Runtime Integration
+
+Completed.
+
+The API now performs the following sequence:
+
+```
+runDiscoveryV3
+
+↓
+
+evolveOrganizationRuntime
+
+↓
+
+buildExecutiveProjection
+
+↓
+
+Executive Workspace
+```
+
+Executive meaning is now created after runtime cognition has accumulated.
 
 ---
 
@@ -98,111 +139,154 @@ Current executive concepts:
 
 - Understanding Canvas
 - Executive Attention
-- Executive Answer Grid
+- Executive Explanation
 - Executive Timeline
 
-Executive Experience is now an orchestration layer instead of a large presentation component.
-
----
-
-## Current Executive Communication
-
-Discovery now communicates in this order:
-
-1. Current Understanding
-
-2. Executive Attention
-
-3. Explanation
-
-4. Formation
-
-Everything else should use progressive disclosure.
+The current Executive Experience is intentionally simple while Executive Projection continues to integrate additional runtime capabilities.
 
 ---
 
 ## Major Discovery
 
-The benchmark suite demonstrated that Discovery already produces significantly more organizational cognition than the current UI exposes.
+The Capability Audit confirmed that Discovery's primary architectural gap is no longer inside the reasoning engine.
 
-Hidden executive capabilities include:
+Discovery already produces significantly more executive cognition than the Executive Experience currently exposes.
 
-- Organizational Conditions
+Confirmed hidden capabilities include:
+
 - Organizational State
-- Organizational Capabilities
-- Organizational Beliefs
+- Organizational Conditions
 - Executive Assessment
 - Theory Validation
 - Investigation Opportunities
 - Organizational Learning Profile
-- Learning Velocity
-- Memory Growth
+- Memory Maturity
+- Organizational Beliefs
+- Organizational Capabilities
 - Knowledge Retention
 - Belief Stability
 - Theory Stability
 
----
+These capabilities already exist inside runtime.
 
-## Capability Audit
-
-We discovered that:
-
-`engine/v3/capabilities/`
-
-models **organizational capabilities**, not software capabilities.
-
-Examples include:
-
-- Decision Making
-- Governance
-- Leadership
-- Coordination
-- Learning
-- Adaptation
-- Organizational Memory
-
-These belong in future executive experiences, not the current briefing.
+The remaining work is integrating them into Executive Projection and the Executive Experience.
 
 ---
 
-## Benchmark Status
+## Repository Status
 
-Benchmark integrity is passing.
+Completed:
 
-Runtime persistence is passing.
+- Canonical Executive Projection established.
+- Executive Projection moved to the server.
+- Executive Workspace consumes only Executive Projection.
+- Runtime cognition preserved behind the projection boundary.
+- Zero TypeScript errors.
+- Validation passing.
+- Benchmark integrity remains 100%.
 
-Longitudinal learning is functioning.
+---
 
-Executive Projection is functioning.
+## Current Executive Communication
 
-Architecture is stable.
+Discovery currently communicates through:
+
+1. Current Understanding
+2. Executive Attention
+3. Explanation
+4. Formation
+
+Future executive concepts should continue using progressive disclosure.
+
+---
+
+## Current Architectural Principle
+
+The architecture should remain:
+
+```
+Engine
+
+↓
+
+Organization Runtime
+
+↓
+
+Executive Projection
+
+↓
+
+Executive Workspace
+
+↓
+
+React
+```
+
+React should never consume runtime cognition directly.
+
+Executive Projection is the canonical contract between organizational cognition and executive communication.
 
 ---
 
 # Next Immediate Step
 
-Continue auditing the executive layer.
+Continue Executive Capability Integration.
 
-Inspect:
+Integrate existing runtime cognition into Executive Projection one capability at a time.
 
+Current priority order:
+
+1. Organizational State
+2. Theory Validation
+3. Executive Assessment
+4. Investigation Opportunities
+5. Organizational Learning
+6. Memory Maturity
+
+For each capability:
+
+- Verify it already exists in the engine.
+- Verify it is persisted in runtime.
+- Add it to Executive Projection.
+- Integrate it into the Executive Experience.
+- Preserve benchmark integrity.
+- Avoid duplicating engine logic.
+
+After each integration:
+
+Run:
+
+```bash
+npm run validate
+npm run sprint:docs
 ```
-engine/v3/executive/
-```
 
-Inventory every executive capability produced by the engine.
+Confirm:
 
-Update:
+- Zero TypeScript errors
+- Benchmark integrity remains 100%
+- Executive experience renders correctly
+- No architectural regressions
 
-`ENGINE_CAPABILITY_AUDIT.md`
+---
 
-Determine:
+# Pressure Testing
 
-- Which capabilities already exist
-- Which are already benchmarked
-- Which are not projected
-- Which deserve first-class executive concepts
+Do **not** begin simulated organizations yet.
 
-Do **not** begin simulation until this audit is complete.
+Instead, continue pressure testing the engine using increasingly realistic organizational inputs.
+
+Focus on:
+
+- messy executive notes
+- contradictory evidence
+- ambiguous organizational situations
+- realistic leadership narratives
+- multiple competing explanations
+
+The goal is to expose weaknesses in reasoning before simulation begins.
 
 ---
 
@@ -211,27 +295,32 @@ Do **not** begin simulation until this audit is complete.
 - Redesign the canonical architecture.
 - Introduce duplicate implementations.
 - Add new reasoning engines.
-- Redesign navigation before the capability audit is complete.
-- Begin the simulated organization before simulation readiness has been verified.
+- Allow React to access runtime directly.
+- Bypass Executive Projection.
+- Redesign navigation before Executive Capability Integration is complete.
+- Begin simulated organizations before simulation readiness has been verified.
+- Assume a capability exists simply because it appears in documentation or types.
 
 ---
 
 # Working Principle
 
-Discovery has entered a new phase.
+Discovery has entered a new development phase.
 
-The goal is no longer to expand the engine.
+The engine is no longer the primary bottleneck.
 
-The goal is to expose, validate, benchmark, and pressure-test the intelligence that already exists inside the engine.
+The Executive Experience is.
 
 Always ask:
 
 - Does Discovery already know this?
-- Is the capability already implemented?
-- Is it stored?
-- Is it benchmarked?
-- Is it projected?
-- Is it visible?
+- Is it already implemented?
+- Is it already persisted?
+- Is it already projected?
+- Is it visible to executives?
+- Which executive question does it answer?
 - Should it become a first-class executive concept?
 
-Prefer exposing existing intelligence before creating new intelligence.
+Prefer exposing existing organizational cognition before creating new cognition.
+
+Every sprint should move Discovery closer to becoming an executive understanding system rather than simply a stronger reasoning engine.

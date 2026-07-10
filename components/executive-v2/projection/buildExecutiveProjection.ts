@@ -1,9 +1,17 @@
 import type { DiscoveryV3Result } from "../../../engine/v3/types";
+import type { OrganizationRuntime } from "../../../engine/v3/runtime/organizationRuntime";
+
 import type {
   ExecutiveAttentionSeverity,
   ExecutiveEvolutionMilestone,
   ExecutiveProjection,
+  ExecutiveTheoryValidation,
 } from "./ExecutiveProjection";
+
+type BuildExecutiveProjectionInput = {
+  result: DiscoveryV3Result;
+  runtime?: OrganizationRuntime;
+};
 
 function toPercentage(value: number | undefined): number {
   if (value === undefined || Number.isNaN(value)) {
@@ -136,9 +144,24 @@ function buildEvolutionMilestones(
   return milestones;
 }
 
-export function buildExecutiveProjection(
-  result: DiscoveryV3Result,
-): ExecutiveProjection {
+function buildTheoryValidationProjection(
+  runtime: OrganizationRuntime | undefined,
+): ExecutiveTheoryValidation | undefined {
+  const runtimeMemory = runtime?.memory as
+    | {
+        executiveAssessment?: {
+          theoryValidation?: ExecutiveTheoryValidation;
+        };
+      }
+    | undefined;
+
+  return runtimeMemory?.executiveAssessment?.theoryValidation;
+}
+
+export function buildExecutiveProjection({
+  result,
+  runtime,
+}: BuildExecutiveProjectionInput): ExecutiveProjection {
   const primaryBelief = result.beliefs[0];
   const primaryUnderstanding = result.understanding[0];
   const executiveUnderstanding = result.executiveUnderstanding;
@@ -195,6 +218,8 @@ export function buildExecutiveProjection(
     },
 
     executiveAttention: buildExecutiveAttention(result),
+
+    theoryValidation: buildTheoryValidationProjection(runtime),
 
     evolution: {
       milestones: buildEvolutionMilestones(

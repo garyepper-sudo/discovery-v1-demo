@@ -1,17 +1,22 @@
 import { NextResponse } from "next/server";
+
 import { runDiscovery } from "../../../engine";
 import { runDiscoveryV2 } from "../../../engine/v2";
 import { runDiscoveryV3 } from "../../../engine/v3";
 import { buildUnderstanding } from "../../../engine/understandingObject";
+
 import {
   evolveOrganizationRuntime,
   loadOrganizationRuntimeState,
   saveOrganizationRuntimeState,
 } from "../../../engine/v3/runtime";
+
 import {
   buildExecutiveDashboard,
   buildExecutiveLearningExperience,
 } from "../../../engine/v3/executive";
+
+import { buildExecutiveProjection } from "../../../components/executive-v2/projection/buildExecutiveProjection";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -45,7 +50,13 @@ export async function POST(req: Request) {
     input,
   });
 
-  const nextOrganizationRuntime = saveOrganizationRuntimeState(evolvedRuntime);
+  const nextOrganizationRuntime =
+    saveOrganizationRuntimeState(evolvedRuntime);
+
+  const executiveProjection = buildExecutiveProjection({
+    result: v3,
+    runtime: nextOrganizationRuntime,
+  });
 
   const executiveLearning = buildExecutiveLearningExperience(
     nextOrganizationRuntime,
@@ -63,5 +74,6 @@ export async function POST(req: Request) {
     organizationRuntime: nextOrganizationRuntime,
     executiveLearning,
     executiveDashboard,
+    executiveProjection,
   });
 }

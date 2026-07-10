@@ -10,13 +10,13 @@ Read this document before making architectural, product, or implementation decis
 
 # Discovery
 
-Version: Sprint 64
+Version: Sprint 65
 
 Status: Active Development
 
 Current Milestone:
 
-**Discovery Capability Audit**
+**Executive Capability Integration**
 
 ---
 
@@ -36,11 +36,11 @@ It is being designed as an **Executive Understanding System**.
 
 Phase:
 
-Executive Capability Audit
+Executive Capability Integration
 
 Current Objective:
 
-Understand, expose, validate, and pressure-test the capabilities that already exist inside Discovery before adding new reasoning engines.
+Expose the executive intelligence that already exists inside Discovery by integrating runtime cognition into the canonical Executive Projection before beginning simulation.
 
 Current Philosophy:
 
@@ -54,12 +54,36 @@ Current Philosophy:
 |-------|--------|
 | Engine Architecture | ✅ Stable |
 | Component Architecture | ✅ Stable |
-| Executive Projection | ✅ Stable |
+| Executive Projection | ✅ Canonical Server Projection |
 | Runtime Persistence | ✅ Stable |
 | Executive Workspace | ✅ Stable |
 | Benchmark Framework | ✅ Stable |
 | Capability Coverage | 🟡 Partial |
 | Simulation Harness | 🟡 Partial |
+
+---
+
+# Executive Projection
+
+Discovery now follows a canonical executive projection pipeline.
+
+```
+Discovery Engine
+        ↓
+Organization Runtime
+        ↓
+Executive Projection
+        ↓
+Executive Workspace
+        ↓
+Executive Experience
+```
+
+Executive meaning is now constructed on the server after organizational runtime evolution.
+
+The Executive Workspace consumes only the canonical `ExecutiveProjection`.
+
+The browser no longer reconstructs executive understanding from engine output.
 
 ---
 
@@ -80,6 +104,8 @@ Current Philosophy:
 ✅ Formation Timeline
 
 ✅ Workspace Metadata
+
+✅ Server-built Executive Projection
 
 ## Executive Communication Canon
 
@@ -114,6 +140,7 @@ Everything else should use progressive disclosure.
 - Executive Attention
 - Understanding Formation
 - Workspace Metadata
+- Canonical Executive Projection
 
 ## Existing Inside Discovery But Not Yet Expressed
 
@@ -149,6 +176,26 @@ Everything else should use progressive disclosure.
 
 ---
 
+# Major Architectural Discovery
+
+The Executive Capability Audit confirmed that Discovery's primary architectural gap is no longer inside the reasoning engine.
+
+Discovery already produces significantly more executive cognition than the Executive Experience currently exposes.
+
+The primary integration point is now:
+
+```
+Organization Runtime
+        ↓
+Executive Projection
+        ↓
+Executive Experience
+```
+
+Future executive work should expose existing runtime intelligence through the canonical Executive Projection rather than introducing new reasoning engines.
+
+---
+
 # Simulation Readiness
 
 | Capability | Status |
@@ -157,6 +204,7 @@ Everything else should use progressive disclosure.
 | Runtime Persistence | ✅ Ready |
 | Longitudinal Memory | ✅ Ready |
 | Executive Experience | ✅ Ready |
+| Executive Projection | ✅ Ready |
 | Benchmark Framework | ✅ Ready |
 | Capability Coverage | 🟡 Partial |
 | Simulated Organization | 🔴 Not Started |
@@ -185,7 +233,7 @@ Everything else should use progressive disclosure.
 - Investigations
 - Evidence
 
-Navigation should evolve only after the Capability Audit is complete.
+Navigation should evolve only after Executive Capability Integration is complete.
 
 ---
 
@@ -206,12 +254,12 @@ Navigation should evolve only after the Capability Audit is complete.
 
 # Current Priorities
 
-1. Complete the Executive Capability Audit.
-2. Determine which existing capabilities should be projected into the Executive Experience.
-3. Prepare Discovery for simulated organizations.
-4. Build a repeatable pressure-testing workflow.
-5. Clean architecture and remove legacy implementations.
-6. Improve engine quality using measured benchmark results.
+1. Integrate hidden runtime capabilities into the Executive Projection.
+2. Expose Organizational State.
+3. Expose Theory Validation.
+4. Expose Executive Assessment.
+5. Expose Organizational Learning.
+6. Prepare Discovery for simulated organizations.
 
 ---
 
@@ -219,12 +267,13 @@ Navigation should evolve only after the Capability Audit is complete.
 
 Milestone:
 
-**Discovery Capability Audit**
+**Executive Capability Integration**
 
 Current Goal:
 
-Map every meaningful capability through:
+Project every meaningful executive capability through the complete product pipeline.
 
+```
 Engine
 
 ↓
@@ -233,7 +282,7 @@ Runtime
 
 ↓
 
-Projection
+Executive Projection
 
 ↓
 
@@ -246,14 +295,21 @@ Simulation
 ↓
 
 Benchmark
+```
 
 Current Question:
 
-**What can Discovery already do that the executive cannot yet see?**
+**How should Discovery communicate the executive intelligence it already possesses?**
 
 Next Immediate Step:
 
-Continue auditing executive-facing capabilities beginning with the Executive layer and determine which should become first-class executive concepts.
+Integrate runtime capabilities into the canonical Executive Projection beginning with:
+
+1. Organizational State
+2. Theory Validation
+3. Executive Assessment
+4. Investigation Opportunities
+5. Organizational Learning
 
 ---
 
@@ -263,16 +319,15 @@ Before adding any new capability, ask:
 
 - Does the engine already produce this?
 - Is it stored in runtime?
-- Is it benchmarked?
 - Is it already projected?
-- Is it already visible somewhere in the product?
+- Is it already visible?
 - Which executive question does it answer?
 - Will it improve executive decision making?
 - Will it improve simulation readiness?
 
 Never build a new reasoning engine if an existing engine already provides the capability.
 
-Prefer exposing, validating, benchmarking, and pressure-testing existing intelligence before expanding Discovery's cognitive architecture.
+Prefer exposing, validating, benchmarking, integrating, and pressure-testing existing intelligence before expanding Discovery's cognitive architecture.
 
 ---
 
@@ -280,12 +335,11 @@ Prefer exposing, validating, benchmarking, and pressure-testing existing intelli
 
 Discovery is currently following this sequence:
 
-1. Executive Capability Audit
-2. Executive Capability Integration
-3. Simulation Readiness
-4. Simulated Organization Baseline
-5. Pressure Testing
-6. Architecture Cleanup
-7. Engine Quality Improvements
+1. Executive Capability Integration
+2. Simulation Readiness
+3. Simulated Organization Baseline
+4. Pressure Testing
+5. Architecture Cleanup
+6. Engine Quality Improvements
 
 This sequence should be considered the canonical development roadmap until explicitly revised.
