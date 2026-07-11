@@ -1,190 +1,122 @@
 # Engine Capability Audit
 
-Status: Active
+**Status:** Active
 
-Purpose
+---
 
-This document tracks every meaningful capability Discovery can produce and verifies that it progresses through the complete product pipeline.
+# Purpose
 
-Every capability should eventually exist in the following stages:
+This document is the canonical inventory of Discovery's executive cognitive capabilities.
 
-Engine
+Its purpose is to ensure Discovery evolves by exposing existing intelligence before creating new intelligence.
 
-↓
+This document answers:
 
-Runtime
+> **What executive intelligence already exists inside Discovery?**
 
-↓
+Semantic ownership is documented separately in:
 
-Executive Projection
+- `CANONICAL_PRODUCER_REGISTRY.md`
+- `SEMANTIC_OWNERSHIP_MAP.md`
 
-↓
+Every executive capability should ultimately have:
 
-Executive Experience
+- one canonical producer,
+- one runtime representation,
+- one Executive Projection representation,
+- one Executive Workspace presentation.
 
-↓
+Atlas is the canonical verification benchmark.
 
-Simulation
-
-↓
-
-Benchmark
-
-The objective is to expose and integrate existing intelligence before adding new reasoning engines.
+If Atlas demonstrates a capability, the Executive Experience should eventually expose it.
 
 ---
 
 # Current Audit Status
 
-The Executive Capability Audit has reached a major architectural milestone.
+## Executive Intelligence Extraction
 
-Confirmed:
+The Capability Audit fundamentally changed Discovery's development strategy.
 
-- Discovery's cognitive engine already produces significantly more executive intelligence than the current Executive Experience exposes.
-- Executive Projection is now the canonical server-side projection layer.
-- Executive Workspace consumes only the Executive Projection.
-- The remaining work is capability integration rather than engine expansion.
+The primary bottleneck is no longer cognition.
 
----
+The primary bottleneck is no longer Executive Projection.
 
-# Capability Matrix
+Sprint 63 established the canonical Executive Projection for the majority of Atlas' executive intelligence.
 
-| Capability | Engine | Runtime | Projection | UI | Simulation | Benchmarked | Status | Notes |
-|------------|:------:|:-------:|:----------:|:--:|:----------:|:-----------:|--------|-------|
-| Executive Understanding | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | Ready | Current executive briefing |
-| Beliefs | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | Ready | Current understanding |
-| Confidence | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | Ready | Belief confidence |
-| Organizational Coherence | ✅ | ✅ | ✅ | ✅ | 🟡 | ✅ | Ready | Executive summary |
-| Executive Attention | ✅ | ✅ | ✅ | ✅ | 🟡 | Partial | Ready | Highest-priority contradiction or uncertainty |
-| Understanding Formation | ✅ | Partial | ✅ | ✅ | 🟡 | Partial | Partial | Current reasoning stages |
+Current development now focuses on refining how executives consume that intelligence.
 
 ---
 
-## Organizational Intelligence
+# Confirmed Executive Intelligence
 
-| Capability | Engine | Runtime | Projection | UI | Simulation | Benchmarked | Status | Notes |
-|------------|:------:|:-------:|:----------:|:--:|:----------:|:-----------:|--------|-------|
-| Organizational Conditions | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | Hidden | Rich organizational condition model |
-| Organizational State | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | Hidden | Highest-priority integration target |
-| Organizational Capabilities | ✅ | ✅ | ❌ | ❌ | ❌ | 🟡 | Hidden | Governance, learning, coordination, adaptation |
-| Organizational Beliefs | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | Hidden | Longitudinal organizational beliefs |
+Atlas currently demonstrates:
 
----
+- synthesized organizational understanding
+- organizational state inference
+- organizational condition generation
+- organizational belief formation
+- executive assessment generation
+- theory validation
+- investigation opportunity generation
+- organizational learning profiling
+- belief revision
+- theory evolution
+- confidence calibration
+- missing evidence identification
+- evidence required to falsify current theories
 
-## Executive Intelligence
-
-| Capability | Engine | Runtime | Projection | UI | Simulation | Benchmarked | Status | Notes |
-|------------|:------:|:-------:|:----------:|:--:|:----------:|:-----------:|--------|-------|
-| Executive Assessment | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | Hidden | Executive narrative and recommendations |
-| Theory Validation | ✅ | ✅ | 🟡 | ❌ | ❌ | ✅ | Integrating | Projection contract exists; UI not yet implemented |
-| Investigation Opportunities | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | Hidden | Executive next investigations |
-
----
-
-## Organizational Learning
-
-| Capability | Engine | Runtime | Projection | UI | Simulation | Benchmarked | Status | Notes |
-|------------|:------:|:-------:|:----------:|:--:|:----------:|:-----------:|--------|-------|
-| Organizational Learning Profile | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | Hidden | Longitudinal learning |
-| Learning Velocity | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | Hidden | Organizational learning speed |
-| Memory Growth | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | Hidden | Organizational memory accumulation |
-| Knowledge Retention | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | Hidden | Longitudinal knowledge reuse |
-| Belief Stability | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | Hidden | Belief evolution |
-| Theory Stability | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | Hidden | Theory evolution |
+No additional reasoning engines should be added until Atlas demonstrates a genuine missing capability.
 
 ---
 
-## Supporting Cognition
+# Capability Integration Classes
 
-| Capability | Engine | Runtime | Projection | UI | Simulation | Benchmarked | Status | Notes |
-|------------|:------:|:-------:|:----------:|:--:|:----------:|:-----------:|--------|-------|
-| Mechanisms | ✅ | ✅ | ❌ | ❌ | ❌ | 🟡 | Hidden | Supporting causal reasoning |
-| Themes | ✅ | Partial | ❌ | ❌ | ❌ | 🟡 | Hidden | Supporting cognition |
-| Evidence | ✅ | Partial | ❌ | Partial | ❌ | 🟡 | Existing | Existing evidence experience |
-| Reasoning Graph | ✅ | Partial | ❌ | Partial | ❌ | 🟡 | Existing | Internal reasoning trace |
-| Emergence Events | ✅ | Partial | Partial | Partial | ❌ | 🟡 | Partial | Currently represented only through formation |
+Discovery capabilities currently fall into four integration classes.
 
----
+## 🟢 Connected
 
-# Executive Communication Mapping
+Capability is produced by the engine, persisted in Runtime, projected, and visible in the Executive Workspace.
 
-Discovery communicates through executive questions rather than engine outputs.
+## 🟡 Executive Experience Refinement
 
-## Current Understanding
+Capability is connected end-to-end, but the executive presentation can still improve.
 
-Answers:
+## 🔴 Hidden
 
-- What do we currently believe?
+Capability exists inside Runtime but is not yet projected or exposed.
 
-Supporting capabilities:
+## 🟠 Legacy
 
-- Executive Understanding
-- Beliefs
-- Confidence
-- Organizational Coherence
+Capability exists in previous executive experiences and should eventually be removed after the canonical Executive Workspace exposes equivalent executive intelligence.
 
 ---
 
-## Executive Attention
+# Executive Intelligence Coverage
 
-Answers:
-
-- What deserves executive attention right now?
-
-Supporting capabilities:
-
-- Executive Attention
-- Organizational Conditions
-- Executive Assessment
-
----
-
-## Explanation
-
-Answers:
-
-- Why do we believe this?
-- What could change this?
-- What should happen next?
-
-Supporting capabilities:
-
-- Evidence
-- Mechanisms
-- Themes
-- Theory Validation
+| Executive Intelligence | Engine | Runtime | Projection | UI | Atlas | Status |
+|-------------------------|:------:|:-------:|:----------:|:--:|:-----:|--------|
+| Current Understanding | ✅ | ✅ | ✅ | ✅ | ✅ | Connected |
+| Executive Attention | ✅ | ✅ | ✅ | ✅ | ✅ | Connected |
+| Organizational State | ✅ | ✅ | ✅ | ✅ | ✅ | Connected |
+| Organizational Conditions | ✅ | ✅ | ✅ | ✅ | ✅ | Connected |
+| Organizational Beliefs | ✅ | ✅ | ✅ | ✅ | ✅ | Connected |
+| Investigation Opportunities | ✅ | ✅ | ✅ | ✅ | ✅ | Connected |
+| Organizational Learning Profile | ✅ | ✅ | ✅ | ✅ | ✅ | Connected |
+| Theory Validation | ✅ | ✅ | ✅ | 🟡 | ✅ | Refinement |
+| Executive Assessment | ✅ | ✅ | 🟡 | 🟡 | ✅ | Refinement |
+| Confidence Calibration | ✅ | ✅ | 🟡 | 🟡 | ✅ | Refinement |
+| Missing Evidence | ✅ | ✅ | 🟡 | 🟡 | ✅ | Refinement |
+| Belief Evolution | ✅ | ✅ | ❌ | ❌ | ✅ | Hidden |
+| Mechanism Network | ✅ | ✅ | ❌ | ❌ | ✅ | Hidden |
 
 ---
 
-## Formation
+# Canonical Capability Flow
 
-Answers:
+Every executive capability follows the canonical product pipeline.
 
-- How did Discovery arrive here?
-
-Supporting capabilities:
-
-- Emergence Events
-- Organizational Runtime
-- Longitudinal Memory
-- Evolution
-
----
-
-# Executive Capability Integration Roadmap
-
-Current integration priority:
-
-1. Organizational State
-2. Theory Validation
-3. Executive Assessment
-4. Investigation Opportunities
-5. Organizational Learning
-6. Memory Maturity
-
-Each capability should move through the complete pipeline:
-
-```
+```text
 Engine
 
 ↓
@@ -197,51 +129,8 @@ Executive Projection
 
 ↓
 
-Executive Experience
+Executive Workspace
 
 ↓
 
-Simulation
-
-↓
-
-Benchmark
-```
-
----
-
-# Audit Rules
-
-Every capability should answer these questions:
-
-1. Does the engine produce it?
-
-2. Is it persisted in runtime?
-
-3. Is it projected?
-
-4. Is it visible?
-
-5. Which executive question does it answer?
-
-6. Should it become a first-class executive concept?
-
-7. Does it improve executive decision making?
-
-8. Should it participate in simulation?
-
----
-
-# Current Goal
-
-Current focus:
-
-**Executive Capability Integration**
-
-Objective:
-
-Expose the executive intelligence that already exists inside Discovery through the canonical Executive Projection before beginning simulated organization pressure testing.
-
-Current philosophy:
-
-**Expose existing intelligence before expanding intelligence.**
+Atlas Verification

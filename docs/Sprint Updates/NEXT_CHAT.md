@@ -17,7 +17,7 @@ Read them in this order:
 3. `PROJECT_STATE.md`
 4. `NEXT_CHAT.md`
 
-Use these reference documents only when needed.
+Use the remaining documentation only when implementation details require it.
 
 ### Implementation
 
@@ -42,28 +42,25 @@ Use these reference documents only when needed.
 - `COGNITIVE_OBJECT_MODEL.md`
 - `COGNITIVE_ONTOLOGY.md`
 
-### Benchmarks
-
-- `DISCOVERY_COGNITIVE_FITNESS_PROFILE.md`
-- `UNDERSTANDING_SCORECARD_BASELINE.md`
-- Relevant benchmark reports
-- Relevant simulation reports
-
 ---
 
 # Current Milestone
 
-**Executive Capability Integration**
+**Executive Experience Refinement**
 
 ---
 
 # Current Objective
 
-Integrate Discovery's existing runtime cognition into the canonical Executive Projection before beginning simulated organization pressure testing.
+Discovery's reasoning engine is no longer the primary bottleneck.
 
-Every executive capability should eventually exist throughout the complete product pipeline:
+Sprint 63 established the canonical Executive Projection for the majority of Atlas' executive intelligence.
 
-```
+The current objective is no longer broad intelligence extraction.
+
+The current objective is to refine how executives consume, understand, and act upon that intelligence through the Executive Workspace.
+
+```text
 Engine
 
 ↓
@@ -76,251 +73,168 @@ Executive Projection
 
 ↓
 
+Executive Workspace
+
+↓
+
 Executive Experience
-
-↓
-
-Simulation
-
-↓
-
-Benchmark
 ```
 
-The objective is to expose, validate, benchmark, integrate, and pressure-test existing intelligence before adding new reasoning engines.
+Do not introduce new reasoning engines unless Atlas demonstrates a genuine missing capability.
 
 ---
 
-# Current Stopping Point
+# Canonical Development Workflow
 
-## Executive Projection
-
-Completed.
-
-Executive Projection is now the canonical server-side UI contract.
-
-Executive Workspace consumes only `ExecutiveProjection`.
-
-The browser no longer reconstructs executive understanding from `DiscoveryV3Result`.
-
-Executive Projection is now built after organizational runtime evolution.
-
----
-
-## Runtime Integration
-
-Completed.
-
-The API now performs the following sequence:
-
-```
-runDiscoveryV3
-
-↓
-
-evolveOrganizationRuntime
-
-↓
-
-buildExecutiveProjection
-
-↓
-
-Executive Workspace
-```
-
-Executive meaning is now created after runtime cognition has accumulated.
-
----
-
-## Executive Experience
-
-Current executive concepts:
-
-- Understanding Canvas
-- Executive Attention
-- Executive Explanation
-- Executive Timeline
-
-The current Executive Experience is intentionally simple while Executive Projection continues to integrate additional runtime capabilities.
-
----
-
-## Major Discovery
-
-The Capability Audit confirmed that Discovery's primary architectural gap is no longer inside the reasoning engine.
-
-Discovery already produces significantly more executive cognition than the Executive Experience currently exposes.
-
-Confirmed hidden capabilities include:
-
-- Organizational State
-- Organizational Conditions
-- Executive Assessment
-- Theory Validation
-- Investigation Opportunities
-- Organizational Learning Profile
-- Memory Maturity
-- Organizational Beliefs
-- Organizational Capabilities
-- Knowledge Retention
-- Belief Stability
-- Theory Stability
-
-These capabilities already exist inside runtime.
-
-The remaining work is integrating them into Executive Projection and the Executive Experience.
-
----
-
-## Repository Status
-
-Completed:
-
-- Canonical Executive Projection established.
-- Executive Projection moved to the server.
-- Executive Workspace consumes only Executive Projection.
-- Runtime cognition preserved behind the projection boundary.
-- Zero TypeScript errors.
-- Validation passing.
-- Benchmark integrity remains 100%.
-
----
-
-## Current Executive Communication
-
-Discovery currently communicates through:
-
-1. Current Understanding
-2. Executive Attention
-3. Explanation
-4. Formation
-
-Future executive concepts should continue using progressive disclosure.
-
----
-
-## Current Architectural Principle
-
-The architecture should remain:
-
-```
-Engine
-
-↓
-
-Organization Runtime
-
-↓
-
-Executive Projection
-
-↓
-
-Executive Workspace
-
-↓
-
-React
-```
-
-React should never consume runtime cognition directly.
-
-Executive Projection is the canonical contract between organizational cognition and executive communication.
-
----
-
-# Next Immediate Step
-
-Continue Executive Capability Integration.
-
-Integrate existing runtime cognition into Executive Projection one capability at a time.
-
-Current priority order:
-
-1. Organizational State
-2. Theory Validation
-3. Executive Assessment
-4. Investigation Opportunities
-5. Organizational Learning
-6. Memory Maturity
-
-For each capability:
-
-- Verify it already exists in the engine.
-- Verify it is persisted in runtime.
-- Add it to Executive Projection.
-- Integrate it into the Executive Experience.
-- Preserve benchmark integrity.
-- Avoid duplicating engine logic.
-
-After each integration:
-
-Run:
+Every sprint begins by running:
 
 ```bash
 npm run validate
-npm run sprint:docs
+npm run simulate:atlas
 ```
 
-Confirm:
+Atlas remains the canonical verification benchmark.
 
-- Zero TypeScript errors
-- Benchmark integrity remains 100%
-- Executive experience renders correctly
-- No architectural regressions
+Every implementation decision begins with one question:
+
+> **What executive intelligence does Atlas already produce, and how should executives experience it?**
+
+If Atlas already produces the capability:
+
+- expose it,
+- verify it,
+- refine how executives consume it,
+
+before expanding cognition.
 
 ---
 
-# Pressure Testing
+# Executive Intelligence Coverage
 
-Do **not** begin simulated organizations yet.
+## Connected
 
-Instead, continue pressure testing the engine using increasingly realistic organizational inputs.
+- Current Understanding
+- Executive Attention
+- Organizational State
+- Organizational Conditions
+- Organizational Beliefs
+- Investigation Opportunities
+- Organizational Learning Profile
+- Executive Projection
+- Executive Workspace
 
-Focus on:
+## Executive Experience Refinement
 
-- messy executive notes
-- contradictory evidence
-- ambiguous organizational situations
-- realistic leadership narratives
-- multiple competing explanations
+- Theory Validation
+- Executive Assessment
+- Confidence Calibration
+- Missing Evidence
 
-The goal is to expose weaknesses in reasoning before simulation begins.
+## Remaining Hidden Intelligence
+
+- Belief Evolution
+- Mechanism Network (executive presentation under evaluation)
+
+---
+
+# Executive Projection
+
+Executive Projection remains the canonical boundary between cognition and presentation.
+
+The browser consumes only `ExecutiveProjection`.
+
+React never reconstructs executive cognition directly from Runtime.
+
+Current work should improve executive communication rather than expand Runtime.
+
+---
+
+# Atlas Rule
+
+Atlas remains Discovery's source of truth.
+
+Every sprint should follow this sequence:
+
+```text
+Run Atlas
+
+↓
+
+Identify executive intelligence produced by Runtime
+
+↓
+
+Compare with Executive Workspace
+
+↓
+
+Anything missing?
+
+↓
+
+Extract it
+
+↓
+
+Otherwise:
+
+Improve the executive experience.
+```
+
+No architectural work should take priority over improving executive understanding unless it directly blocks this workflow.
+
+---
+
+# Current Priorities
+
+1. Refine Theory Validation.
+2. Refine Executive Assessment.
+3. Integrate Confidence Calibration.
+4. Integrate Missing Evidence.
+5. Improve Executive Workspace information architecture.
+6. Begin simulated organization pressure testing.
+7. Legacy cleanup after canonical executive coverage is complete.
 
 ---
 
 # Do Not
 
-- Redesign the canonical architecture.
-- Introduce duplicate implementations.
-- Add new reasoning engines.
-- Allow React to access runtime directly.
+- Build new reasoning engines unless Atlas demonstrates a missing capability.
+- Rebuild cognition already present in Runtime.
 - Bypass Executive Projection.
-- Redesign navigation before Executive Capability Integration is complete.
-- Begin simulated organizations before simulation readiness has been verified.
-- Assume a capability exists simply because it appears in documentation or types.
+- Allow React to consume Runtime directly.
+- Introduce competing executive representations.
+- Refactor architecture unless it improves executive communication.
+- Clean up legacy code unless it blocks the canonical product path.
 
 ---
 
 # Working Principle
 
-Discovery has entered a new development phase.
+The engine is no longer Discovery's primary bottleneck.
 
-The engine is no longer the primary bottleneck.
+Executive Projection is substantially complete.
 
-The Executive Experience is.
+The current bottleneck is the Executive Experience.
 
-Always ask:
+Before making any implementation decision ask:
 
-- Does Discovery already know this?
-- Is it already implemented?
-- Is it already persisted?
-- Is it already projected?
-- Is it visible to executives?
-- Which executive question does it answer?
-- Should it become a first-class executive concept?
+1. Does Atlas already produce this?
+2. Is it persisted in Runtime?
+3. Is it exposed through Executive Projection?
+4. Is it understandable in the Executive Workspace?
+5. Does improving this help executives make better decisions?
 
-Prefer exposing existing organizational cognition before creating new cognition.
+If the answer to (1) is **yes**, improve communication before expanding cognition.
 
-Every sprint should move Discovery closer to becoming an executive understanding system rather than simply a stronger reasoning engine.
+---
+
+# Long-Term Development Principle
+
+> **Expose existing intelligence before expanding intelligence.**
+
+> **If Atlas knows it, the CEO should eventually see it.**
+
+> **Once the CEO can see it, improve how the CEO experiences it.**
+
+> **Every sprint should make the Executive Workspace a more effective expression of Discovery's existing organizational understanding.**

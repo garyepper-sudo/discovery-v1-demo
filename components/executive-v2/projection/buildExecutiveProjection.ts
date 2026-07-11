@@ -4,6 +4,11 @@ import type { OrganizationRuntime } from "../../../engine/v3/runtime/organizatio
 import type {
   ExecutiveAttentionSeverity,
   ExecutiveEvolutionMilestone,
+  ExecutiveInvestigationOpportunity,
+  ExecutiveOrganizationalBelief,
+  ExecutiveOrganizationalCondition,
+  ExecutiveOrganizationalLearningProfile,
+  ExecutiveOrganizationalState,
   ExecutiveProjection,
   ExecutiveTheoryValidation,
 } from "./ExecutiveProjection";
@@ -13,6 +18,102 @@ type BuildExecutiveProjectionInput = {
   runtime?: OrganizationRuntime;
 };
 
+type RuntimeUnderstanding = {
+  id?: string;
+  statement?: string;
+  summary?: string;
+  confidence?: number;
+  explanatoryPower?: number;
+  coverage?: number;
+  stability?: number;
+  supportCount?: number;
+  openQuestions?: string[];
+  recommendations?: string[];
+};
+
+type RuntimeOrganizationalCondition = {
+  id?: string;
+  name?: string;
+  status?: string;
+  confidence?: number;
+  summary?: string;
+  whyItMatters?: string;
+  recommendedExecutiveAction?: string;
+};
+
+type RuntimeOrganizationalBelief = {
+  id?: string;
+  statement?: string;
+  confidence?: number;
+  trend?: string;
+  supportingMechanismIds?: string[];
+  supportingConceptIds?: string[];
+};
+
+type RuntimeInvestigationOpportunity = {
+  id?: string;
+  topic?: string;
+  reason?: string;
+  suggestedExecutiveQuestion?: string;
+  expectedConfidenceGain?: number;
+};
+
+type RuntimeOrganizationalLearningProfile = {
+  understandingGrowth?: number;
+  memoryGrowth?: number;
+  learningVelocity?: string;
+  learningVelocityScore?: number;
+  beliefStability?: number;
+  theoryStability?: number;
+  knowledgeRetention?: number;
+  summary?: string;
+};
+
+type RuntimeExecutiveMemory = {
+  organizationalUnderstandingState?: {
+    executiveSummary?: string;
+    currentUnderstandings?: RuntimeUnderstanding[];
+
+    score?: {
+      overall?: number;
+      confidence?: number;
+      continuity?: number;
+      memoryMaturity?: number;
+    };
+
+    health?: {
+      maturity?: number;
+      coherence?: number;
+      uncertainty?: number;
+      adaptation?: number;
+    };
+  };
+
+  executiveAssessment?: {
+    summary?: string;
+    executiveNarrative?: string;
+    recommendedFocus?: string[];
+    confidence?: number;
+    theoryValidation?: ExecutiveTheoryValidation;
+  };
+
+  organizationalState?: {
+    status?: string;
+    summary?: string;
+    executiveImplication?: string;
+    recommendedFocus?: string[];
+    confidence?: number;
+  };
+
+  organizationalConditions?: RuntimeOrganizationalCondition[];
+
+  organizationalBeliefs?: RuntimeOrganizationalBelief[];
+
+  investigationOpportunities?: RuntimeInvestigationOpportunity[];
+
+  organizationalLearningProfile?: RuntimeOrganizationalLearningProfile;
+};
+
 function toPercentage(value: number | undefined): number {
   if (value === undefined || Number.isNaN(value)) {
     return 0;
@@ -20,11 +121,52 @@ function toPercentage(value: number | undefined): number {
 
   const percentage = value <= 1 ? value * 100 : value;
 
-  return Math.round(Math.max(0, Math.min(100, percentage)));
+  return Math.round(
+    Math.max(0, Math.min(100, percentage)),
+  );
 }
 
-function deriveMindStatus(result: DiscoveryV3Result): string {
-  const maturity = toPercentage(result.organismState?.maturity);
+function getRuntimeExecutiveMemory(
+  runtime: OrganizationRuntime | undefined,
+): RuntimeExecutiveMemory | undefined {
+  return runtime?.memory as RuntimeExecutiveMemory | undefined;
+}
+
+function getStrongestRuntimeUnderstanding(
+  memory: RuntimeExecutiveMemory | undefined,
+): RuntimeUnderstanding | undefined {
+  const understandings =
+    memory?.organizationalUnderstandingState?.currentUnderstandings ?? [];
+
+  return [...understandings]
+    .filter(
+      (understanding) =>
+        typeof understanding.statement === "string" &&
+        understanding.statement.trim().length > 0,
+    )
+    .sort((left, right) => {
+      const leftScore =
+        left.explanatoryPower ??
+        left.confidence ??
+        0;
+
+      const rightScore =
+        right.explanatoryPower ??
+        right.confidence ??
+        0;
+
+      return rightScore - leftScore;
+    })[0];
+}
+
+function deriveMindStatus(
+  result: DiscoveryV3Result,
+  runtimeMemory: RuntimeExecutiveMemory | undefined,
+): string {
+  const maturity = toPercentage(
+    runtimeMemory?.organizationalUnderstandingState?.health?.maturity ??
+      result.organismState?.maturity,
+  );
 
   if (maturity >= 80) {
     return "Established";
@@ -39,6 +181,7 @@ function deriveMindStatus(result: DiscoveryV3Result): string {
 
 function buildExecutiveAttention(
   result: DiscoveryV3Result,
+  runtimeMemory: RuntimeExecutiveMemory | undefined,
 ): ExecutiveProjection["executiveAttention"] {
   const primaryContradiction = [...result.contradictions].sort(
     (left, right) => {
@@ -68,7 +211,35 @@ function buildExecutiveAttention(
     };
   }
 
-  const uncertainty = toPercentage(result.organismState?.uncertainty);
+  const organizationalState =
+    runtimeMemory?.organizationalState;
+
+  if (
+    organizationalState?.status === "critical" ||
+    organizationalState?.status === "strained"
+  ) {
+    return {
+      title:
+        organizationalState.status === "critical"
+          ? "The organization requires executive attention"
+          : "The organization is showing meaningful strain",
+
+      summary:
+        organizationalState.executiveImplication ||
+        organizationalState.summary ||
+        "Discovery has identified a significant organizational condition that deserves executive attention.",
+
+      severity:
+        organizationalState.status === "critical"
+          ? "high"
+          : "medium",
+    };
+  }
+
+  const uncertainty = toPercentage(
+    runtimeMemory?.organizationalUnderstandingState?.health?.uncertainty ??
+      result.organismState?.uncertainty,
+  );
 
   if (uncertainty >= 70) {
     return {
@@ -145,17 +316,191 @@ function buildEvolutionMilestones(
 }
 
 function buildTheoryValidationProjection(
-  runtime: OrganizationRuntime | undefined,
+  runtimeMemory: RuntimeExecutiveMemory | undefined,
 ): ExecutiveTheoryValidation | undefined {
-  const runtimeMemory = runtime?.memory as
-    | {
-        executiveAssessment?: {
-          theoryValidation?: ExecutiveTheoryValidation;
-        };
-      }
-    | undefined;
-
   return runtimeMemory?.executiveAssessment?.theoryValidation;
+}
+
+function buildOrganizationalStateProjection(
+  runtimeMemory: RuntimeExecutiveMemory | undefined,
+): ExecutiveOrganizationalState | undefined {
+  const organizationalState = runtimeMemory?.organizationalState;
+
+  if (!organizationalState) {
+    return undefined;
+  }
+
+  return {
+    status: organizationalState.status || "unknown",
+
+    summary:
+      organizationalState.summary ||
+      "Discovery has not yet formed a complete organizational state.",
+
+    confidence: toPercentage(
+      organizationalState.confidence,
+    ),
+
+    executiveImplication:
+      organizationalState.executiveImplication ||
+      organizationalState.summary ||
+      "Discovery has not yet identified a clear executive implication.",
+
+    recommendedFocus:
+      organizationalState.recommendedFocus ?? [],
+  };
+}
+
+function buildOrganizationalConditionsProjection(
+  runtimeMemory: RuntimeExecutiveMemory | undefined,
+): ExecutiveOrganizationalCondition[] | undefined {
+  const conditions =
+    runtimeMemory?.organizationalConditions;
+
+  if (!conditions || conditions.length === 0) {
+    return undefined;
+  }
+
+  return conditions
+    .filter(
+      (condition) =>
+        typeof condition.name === "string" &&
+        condition.name.trim().length > 0,
+    )
+    .map((condition) => ({
+      name: condition.name as string,
+
+      status:
+        condition.status ||
+        "unknown",
+
+      confidence: toPercentage(
+        condition.confidence,
+      ),
+
+      summary:
+        condition.summary ||
+        "Discovery has identified this organizational condition.",
+
+      whyItMatters:
+        condition.whyItMatters ||
+        "This condition may materially affect organizational performance.",
+
+      recommendedExecutiveAction:
+        condition.recommendedExecutiveAction ||
+        "Continue gathering evidence and monitor this condition.",
+    }));
+}
+
+function buildOrganizationalBeliefsProjection(
+  runtimeMemory: RuntimeExecutiveMemory | undefined,
+): ExecutiveOrganizationalBelief[] | undefined {
+  const beliefs =
+    runtimeMemory?.organizationalBeliefs;
+
+  if (!beliefs || beliefs.length === 0) {
+    return undefined;
+  }
+
+  return beliefs
+    .filter(
+      (belief) =>
+        typeof belief.statement === "string" &&
+        belief.statement.trim().length > 0,
+    )
+    .map((belief) => ({
+      statement: belief.statement as string,
+
+      confidence: toPercentage(
+        belief.confidence,
+      ),
+
+      trend:
+        belief.trend ||
+        "unknown",
+
+      supportingMechanisms:
+        belief.supportingMechanismIds ?? [],
+
+      supportingConcepts:
+        belief.supportingConceptIds ?? [],
+    }));
+}
+
+function buildInvestigationOpportunitiesProjection(
+  runtimeMemory: RuntimeExecutiveMemory | undefined,
+): ExecutiveInvestigationOpportunity[] | undefined {
+  const opportunities =
+    runtimeMemory?.investigationOpportunities;
+
+  if (!opportunities || opportunities.length === 0) {
+    return undefined;
+  }
+
+  return opportunities
+    .filter(
+      (opportunity) =>
+        typeof opportunity.topic === "string" &&
+        opportunity.topic.trim().length > 0,
+    )
+    .map((opportunity) => ({
+      topic: opportunity.topic as string,
+
+      reason:
+        opportunity.reason ||
+        "This investigation could reduce uncertainty in Discovery's current understanding.",
+
+      suggestedExecutiveQuestion:
+        opportunity.suggestedExecutiveQuestion ||
+        "What additional evidence would most improve Discovery's confidence?",
+
+      expectedConfidenceGain: toPercentage(
+        opportunity.expectedConfidenceGain,
+      ),
+    }));
+}
+
+function buildOrganizationalLearningProfileProjection(
+  runtimeMemory: RuntimeExecutiveMemory | undefined,
+): ExecutiveOrganizationalLearningProfile | undefined {
+  const learningProfile =
+    runtimeMemory?.organizationalLearningProfile;
+
+  if (!learningProfile) {
+    return undefined;
+  }
+
+  return {
+    understandingGrowth:
+      learningProfile.understandingGrowth ?? 0,
+
+    memoryGrowth:
+      learningProfile.memoryGrowth ?? 0,
+
+    learningVelocity:
+      learningProfile.learningVelocity ||
+      "unknown",
+
+    learningVelocityScore: toPercentage(
+      learningProfile.learningVelocityScore,
+    ),
+
+    beliefStability: toPercentage(
+      learningProfile.beliefStability,
+    ),
+
+    theoryStability: toPercentage(
+      learningProfile.theoryStability,
+    ),
+
+    knowledgeRetention: toPercentage(
+      learningProfile.knowledgeRetention,
+    ),
+
+    summary:
+      learningProfile.summary ||
+      "Discovery has not yet accumulated enough longitudinal evidence to summarize organizational learning.",
+  };
 }
 
 export function buildExecutiveProjection({
@@ -164,15 +509,57 @@ export function buildExecutiveProjection({
 }: BuildExecutiveProjectionInput): ExecutiveProjection {
   const primaryBelief = result.beliefs[0];
   const primaryUnderstanding = result.understanding[0];
-  const executiveUnderstanding = result.executiveUnderstanding;
+  const earlyExecutiveUnderstanding =
+    result.executiveUnderstanding;
+
+  const runtimeMemory =
+    getRuntimeExecutiveMemory(runtime);
+
+  const synthesizedUnderstanding =
+    getStrongestRuntimeUnderstanding(runtimeMemory);
+
+  const executiveAssessment =
+    runtimeMemory?.executiveAssessment;
+
+  const theoryValidation =
+    buildTheoryValidationProjection(runtimeMemory);
+
+  const organizationalState =
+    buildOrganizationalStateProjection(runtimeMemory);
+
+  const organizationalConditions =
+    buildOrganizationalConditionsProjection(runtimeMemory);
+
+  const organizationalBeliefs =
+    buildOrganizationalBeliefsProjection(runtimeMemory);
+
+  const investigationOpportunities =
+    buildInvestigationOpportunitiesProjection(runtimeMemory);
+
+  const organizationalLearningProfile =
+    buildOrganizationalLearningProfileProjection(runtimeMemory);
+
+  const investigationOpportunity =
+    runtimeMemory?.investigationOpportunities?.[0];
 
   const confidence = toPercentage(
-    executiveUnderstanding.confidence ??
+    synthesizedUnderstanding?.confidence ??
+      executiveAssessment?.confidence ??
+      earlyExecutiveUnderstanding.confidence ??
       primaryBelief?.confidence ??
       primaryUnderstanding?.confidence,
   );
 
-  const mindStatus = deriveMindStatus(result);
+  const mindStatus = deriveMindStatus(
+    result,
+    runtimeMemory,
+  );
+
+  const organizationalCoherence = toPercentage(
+    runtimeMemory?.organizationalUnderstandingState?.health
+      ?.coherence ??
+      result.organismState?.coherence,
+  );
 
   return {
     workspace: {
@@ -183,7 +570,9 @@ export function buildExecutiveProjection({
 
     currentUnderstanding: {
       belief:
-        executiveUnderstanding.headline ||
+        synthesizedUnderstanding?.statement ||
+        theoryValidation?.dominantTheory ||
+        earlyExecutiveUnderstanding.headline ||
         primaryBelief?.headline ||
         primaryUnderstanding?.title ||
         "Discovery is still forming its current understanding.",
@@ -192,34 +581,55 @@ export function buildExecutiveProjection({
 
       confidence,
 
-      organizationalCoherence: toPercentage(
-        result.organismState?.coherence,
-      ),
+      organizationalCoherence,
     },
 
     explanation: {
       why:
-        executiveUnderstanding.explanation ||
+        synthesizedUnderstanding?.summary ||
+        theoryValidation?.whyDiscoveryBelievesIt ||
+        executiveAssessment?.summary ||
+        earlyExecutiveUnderstanding.explanation ||
         primaryBelief?.explanation ||
         primaryUnderstanding?.summary ||
         "Discovery has not yet formed a complete explanation.",
 
       whatCouldChangeThis:
-        executiveUnderstanding.openQuestions[0] ||
-        primaryBelief?.nextQuestions[0] ||
-        primaryBelief?.concerns[0] ||
-        primaryUnderstanding?.unknowns[0] ||
+        synthesizedUnderstanding?.openQuestions?.[0] ||
+        theoryValidation?.evidenceThatWouldFalsifyTheory?.[0] ||
+        theoryValidation?.calibratedConfidenceExplanation ||
+        earlyExecutiveUnderstanding.openQuestions?.[0] ||
+        primaryBelief?.nextQuestions?.[0] ||
+        primaryBelief?.concerns?.[0] ||
+        primaryUnderstanding?.unknowns?.[0] ||
         "Additional evidence could change this understanding.",
 
       nextMove:
-        executiveUnderstanding.nextMoves[0] ||
-        primaryUnderstanding?.recommendations[0] ||
+        investigationOpportunity?.suggestedExecutiveQuestion ||
+        investigationOpportunity?.reason ||
+        theoryValidation?.executiveRecommendation ||
+        synthesizedUnderstanding?.recommendations?.[0] ||
+        earlyExecutiveUnderstanding.nextMoves?.[0] ||
+        primaryUnderstanding?.recommendations?.[0] ||
         "Continue gathering evidence around the leading explanation.",
     },
 
-    executiveAttention: buildExecutiveAttention(result),
+    executiveAttention: buildExecutiveAttention(
+      result,
+      runtimeMemory,
+    ),
 
-    theoryValidation: buildTheoryValidationProjection(runtime),
+    organizationalState,
+
+    organizationalConditions,
+
+    organizationalBeliefs,
+
+    investigationOpportunities,
+
+    organizationalLearningProfile,
+
+    theoryValidation,
 
     evolution: {
       milestones: buildEvolutionMilestones(

@@ -7,6 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "simulate:atlas": "tsx engine/benchmark/runAtlas.ts",
+    "audit:understanding": "tsx engine/benchmark/auditUnderstandingLayers.ts",
+    "audit:capability": "tsx engine/benchmark/auditCapability.ts",
+    "verify:architecture": "tsx engine/benchmark/verifyArchitecture.ts",
 
     "typecheck": "tsc --noEmit",
 

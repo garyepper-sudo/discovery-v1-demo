@@ -10,13 +10,13 @@ Read this document before making architectural, product, or implementation decis
 
 # Discovery
 
-Version: Sprint 65
+**Version:** Sprint 63
 
-Status: Active Development
+**Status:** Active Development
 
-Current Milestone:
+**Current Milestone:**
 
-**Executive Capability Integration**
+**Executive Experience Refinement**
 
 ---
 
@@ -26,25 +26,35 @@ Discovery is an **Organizational Understanding Engine**.
 
 Its purpose is to transform fragmented organizational experience into durable organizational understanding that executives can trust.
 
-Discovery is no longer being designed as a dashboard.
+Discovery is not a dashboard.
 
-It is being designed as an **Executive Understanding System**.
+Discovery is an **Executive Understanding System**.
+
+Discovery now exposes the majority of the executive intelligence already produced by Runtime.
+
+The current objective is to refine how executives consume that intelligence.
 
 ---
 
 # Current Development Phase
 
-Phase:
+## Phase
 
-Executive Capability Integration
+**Executive Experience Refinement**
 
-Current Objective:
+## Current Objective
 
-Expose the executive intelligence that already exists inside Discovery by integrating runtime cognition into the canonical Executive Projection before beginning simulation.
+Refine the Executive Experience around the executive intelligence already exposed through the canonical Executive Projection.
 
-Current Philosophy:
+Discovery should continue expanding executive communication before expanding cognition.
 
-**Expose existing intelligence before expanding intelligence.**
+Atlas remains the canonical verification benchmark.
+
+## Current Philosophy
+
+> **Expose existing intelligence before expanding intelligence.**
+
+> **Once intelligence is exposed, improve how executives experience it.**
 
 ---
 
@@ -53,187 +63,151 @@ Current Philosophy:
 | Area | Status |
 |-------|--------|
 | Engine Architecture | ✅ Stable |
-| Component Architecture | ✅ Stable |
-| Executive Projection | ✅ Canonical Server Projection |
-| Runtime Persistence | ✅ Stable |
+| Runtime Architecture | ✅ Stable |
+| Executive Projection | ✅ Canonical |
 | Executive Workspace | ✅ Stable |
+| Runtime Persistence | ✅ Stable |
 | Benchmark Framework | ✅ Stable |
-| Capability Coverage | 🟡 Partial |
-| Simulation Harness | 🟡 Partial |
+| Atlas Simulation | ✅ Canonical |
+| Capability Audit | ✅ Complete |
+| Executive Intelligence Extraction | ✅ Substantially Complete |
+| Executive Experience | 🟡 Active Refinement |
 
 ---
 
-# Executive Projection
+# Canonical Cognitive Pipeline
+Evidence
 
-Discovery now follows a canonical executive projection pipeline.
+↓
 
-```
-Discovery Engine
-        ↓
+Observations
+
+↓
+
+Signals
+
+↓
+
+Themes
+
+↓
+
+Mechanisms
+
+↓
+
+Beliefs
+
+↓
+
+Concepts
+
+↓
+
+Theories
+
+↓
+
+Organizational Conditions
+
+↓
+
+Organizational State
+
+↓
+
+Executive Assessment
+
+↓
+
 Organization Runtime
-        ↓
+
+↓
+
 Executive Projection
-        ↓
+
+↓
+
 Executive Workspace
-        ↓
-Executive Experience
-```
 
-Executive meaning is now constructed on the server after organizational runtime evolution.
+Reasoning ends at Runtime.
 
-The Executive Workspace consumes only the canonical `ExecutiveProjection`.
-
-The browser no longer reconstructs executive understanding from engine output.
+Executive meaning begins at Executive Projection.
 
 ---
 
-# Executive Experience
+# Current Development Rule
 
-## Currently Implemented
+Discovery development now follows one principle:
 
-✅ Current Understanding
-
-✅ Executive Attention
-
-✅ Executive Explanation
-
-- Why
-- What could change this
-- Next move
-
-✅ Formation Timeline
-
-✅ Workspace Metadata
-
-✅ Server-built Executive Projection
-
-## Executive Communication Canon
-
-Discovery communicates in four stages:
-
-Current Understanding
+Run Atlas
 
 ↓
 
-Executive Attention
+Identify executive intelligence produced by Runtime
 
 ↓
 
-Explanation
+Determine whether Executive Projection exposes it
 
 ↓
 
-Formation
+Determine whether the Executive Workspace communicates it effectively
 
-Everything else should use progressive disclosure.
+↓
 
----
+Refine
 
-# Capability Summary
 
-## Fully Expressed
-
-- Executive Understanding
-- Beliefs
-- Confidence
-- Organizational Coherence
-- Executive Attention
-- Understanding Formation
-- Workspace Metadata
-- Canonical Executive Projection
-
-## Existing Inside Discovery But Not Yet Expressed
-
-### Organizational Intelligence
-
-- Organizational Conditions
-- Organizational State
-- Organizational Capabilities
-- Organizational Beliefs
-
-### Executive Intelligence
-
-- Executive Assessment
-- Theory Validation
-- Investigation Opportunities
-
-### Organizational Learning
-
-- Organizational Learning Profile
-- Learning Velocity
-- Memory Growth
-- Knowledge Retention
-- Belief Stability
-- Theory Stability
-
-### Supporting Cognition
-
-- Mechanisms
-- Themes
-- Evidence
-- Reasoning Graph
-- Emergence Events
+New reasoning engines should only be added when Atlas demonstrates a genuine missing cognitive capability.
 
 ---
 
-# Major Architectural Discovery
+# Atlas
 
-The Executive Capability Audit confirmed that Discovery's primary architectural gap is no longer inside the reasoning engine.
+Atlas is Discovery's canonical verification environment.
 
-Discovery already produces significantly more executive cognition than the Executive Experience currently exposes.
+Atlas determines:
 
-The primary integration point is now:
+- what Discovery already knows,
+- what executives can already see,
+- what executive intelligence remains hidden,
+- what executive experience should improve next.
 
-```
-Organization Runtime
-        ↓
-Executive Projection
-        ↓
-Executive Experience
-```
-
-Future executive work should expose existing runtime intelligence through the canonical Executive Projection rather than introducing new reasoning engines.
+Atlas remains the source of truth for executive capability coverage.
 
 ---
 
-# Simulation Readiness
+# Executive Intelligence Coverage
 
-| Capability | Status |
-|------------|--------|
-| Investigation Execution | ✅ Ready |
-| Runtime Persistence | ✅ Ready |
-| Longitudinal Memory | ✅ Ready |
-| Executive Experience | ✅ Ready |
-| Executive Projection | ✅ Ready |
-| Benchmark Framework | ✅ Ready |
-| Capability Coverage | 🟡 Partial |
-| Simulated Organization | 🔴 Not Started |
-| Pressure Testing | 🔴 Not Started |
+Current extraction status:
+
+| Executive Intelligence | Engine | Projection | UI |
+|-------------------------|:------:|:----------:|:--:|
+| Current Understanding | ✅ | ✅ | ✅ |
+| Executive Attention | ✅ | ✅ | ✅ |
+| Organizational State | ✅ | ✅ | ✅ |
+| Organizational Conditions | ✅ | ✅ | ✅ |
+| Organizational Beliefs | ✅ | ✅ | ✅ |
+| Investigation Opportunities | ✅ | ✅ | ✅ |
+| Organizational Learning Profile | ✅ | ✅ | ✅ |
+| Theory Validation | ✅ | ✅ | 🟡 Partial |
+| Executive Assessment | ✅ | 🟡 Partial | 🟡 Partial |
+| Confidence Calibration | ✅ | 🟡 Partial | 🟡 Partial |
+| Missing Evidence | ✅ | 🟡 Partial | 🟡 Partial |
+| Belief Evolution | ✅ | ❌ | ❌ |
 
 ---
 
-# Current Navigation
+# Current Priority
 
-## Implemented
+The bottleneck is no longer Runtime.
 
-- Briefing
+The bottleneck is the Executive Experience.
 
-## Existing Navigation (Incomplete)
+Discovery now exposes the majority of Atlas' executive intelligence.
 
-- Investigations
-- Evidence
-- Connections
-- Alerts
-
-## Expected Executive Experiences
-
-- Briefing
-- Organization
-- Learning
-- Investigations
-- Evidence
-
-Navigation should evolve only after Executive Capability Integration is complete.
+Current work focuses on refining how executives consume, navigate, prioritize, and understand those executive objects.
 
 ---
 
@@ -248,98 +222,50 @@ Navigation should evolve only after Executive Capability Integration is complete
 | Theory Stabilization | ✅ Passing |
 | Knowledge Retention | ✅ Passing |
 | Executive Projection | ✅ Passing |
-| Architecture Stability | ✅ Passing |
-
----
-
-# Current Priorities
-
-1. Integrate hidden runtime capabilities into the Executive Projection.
-2. Expose Organizational State.
-3. Expose Theory Validation.
-4. Expose Executive Assessment.
-5. Expose Organizational Learning.
-6. Prepare Discovery for simulated organizations.
+| Atlas Simulation | ✅ Passing |
 
 ---
 
 # Current Sprint Focus
 
-Milestone:
+## Goal
 
-**Executive Capability Integration**
+Refine the Executive Experience around the executive intelligence already exposed.
 
-Current Goal:
+Priority order:
 
-Project every meaningful executive capability through the complete product pipeline.
-
-```
-Engine
-
-↓
-
-Runtime
-
-↓
-
-Executive Projection
-
-↓
-
-Executive Experience
-
-↓
-
-Simulation
-
-↓
-
-Benchmark
-```
-
-Current Question:
-
-**How should Discovery communicate the executive intelligence it already possesses?**
-
-Next Immediate Step:
-
-Integrate runtime capabilities into the canonical Executive Projection beginning with:
-
-1. Organizational State
-2. Theory Validation
-3. Executive Assessment
-4. Investigation Opportunities
-5. Organizational Learning
+1. Theory Validation refinement
+2. Executive Assessment refinement
+3. Missing Evidence integration
+4. Confidence Calibration integration
+5. Belief Evolution visualization
+6. Executive workflow refinement
+7. Executive Workspace information architecture
 
 ---
 
 # Sprint Rules
 
-Before adding any new capability, ask:
+Before building new cognition ask:
 
-- Does the engine already produce this?
-- Is it stored in runtime?
-- Is it already projected?
-- Is it already visible?
-- Which executive question does it answer?
-- Will it improve executive decision making?
-- Will it improve simulation readiness?
+1. Does Atlas already produce this?
+2. Is it persisted in Runtime?
+3. Is it projected?
+4. Is it visible?
+5. Is the executive experience sufficient?
 
-Never build a new reasoning engine if an existing engine already provides the capability.
-
-Prefer exposing, validating, benchmarking, integrating, and pressure-testing existing intelligence before expanding Discovery's cognitive architecture.
+If the answer to (1) is yes, improve communication before expanding cognition.
 
 ---
 
-# Current Development Sequence
+# Canonical Development Sequence
 
-Discovery is currently following this sequence:
+Discovery now follows this roadmap:
 
-1. Executive Capability Integration
-2. Simulation Readiness
-3. Simulated Organization Baseline
-4. Pressure Testing
-5. Architecture Cleanup
-6. Engine Quality Improvements
-
-This sequence should be considered the canonical development roadmap until explicitly revised.
+1. Executive Experience refinement
+2. Complete Executive Projection coverage
+3. Simulated organization pressure testing
+4. Legacy cleanup
+5. Architecture consolidation
+6. Engine quality improvements
+7. New cognition only when Atlas demonstrates a genuine missing capability

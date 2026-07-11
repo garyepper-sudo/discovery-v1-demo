@@ -2,7 +2,12 @@
 
 import ExecutiveAnswerGrid from "./answers/ExecutiveAnswerGrid";
 import ExecutiveAttention from "./attention/ExecutiveAttention";
+import ExecutiveBeliefs from "./beliefs/ExecutiveBeliefs";
+import ExecutiveConditions from "./conditions/ExecutiveConditions";
+import ExecutiveInvestigationOpportunities from "./investigations/ExecutiveInvestigationOpportunities";
+import ExecutiveLearningProfile from "./learning/ExecutiveLearningProfile";
 import type { ExecutiveProjection } from "./projection/ExecutiveProjection";
+import OrganizationalStateCard from "./state/OrganizationalStateCard";
 import UnderstandingCanvas from "./understanding/UnderstandingCanvas";
 
 type ExecutiveExperienceProps = {
@@ -16,6 +21,11 @@ export default function ExecutiveExperience({
     currentUnderstanding,
     explanation,
     executiveAttention,
+    organizationalState,
+    organizationalConditions,
+    organizationalBeliefs,
+    investigationOpportunities,
+    organizationalLearningProfile,
   } = projection;
 
   return (
@@ -37,13 +47,38 @@ export default function ExecutiveExperience({
           }
         />
 
-        <ExecutiveAttention
-          attention={executiveAttention}
-        />
+        {organizationalState && (
+          <OrganizationalStateCard state={organizationalState} />
+        )}
 
-        <ExecutiveAnswerGrid
-          explanation={explanation}
-        />
+        {organizationalConditions &&
+          organizationalConditions.length > 0 && (
+            <ExecutiveConditions
+              conditions={organizationalConditions}
+            />
+          )}
+
+        {organizationalBeliefs &&
+          organizationalBeliefs.length > 0 && (
+            <ExecutiveBeliefs beliefs={organizationalBeliefs} />
+          )}
+
+        {investigationOpportunities &&
+          investigationOpportunities.length > 0 && (
+            <ExecutiveInvestigationOpportunities
+              opportunities={investigationOpportunities}
+            />
+          )}
+
+        {organizationalLearningProfile && (
+          <ExecutiveLearningProfile
+            profile={organizationalLearningProfile}
+          />
+        )}
+
+        <ExecutiveAttention attention={executiveAttention} />
+
+        <ExecutiveAnswerGrid explanation={explanation} />
       </div>
     </main>
   );
