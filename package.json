@@ -11,6 +11,10 @@
     "audit:understanding": "tsx engine/benchmark/auditUnderstandingLayers.ts",
     "audit:capability": "tsx engine/benchmark/auditCapability.ts",
     "verify:architecture": "tsx engine/benchmark/verifyArchitecture.ts",
+    "cognition:inventory": "node scripts/cognition/generateCognitiveRegistry.mjs",
+    "cognition:capabilities": "node scripts/cognition/generateCapabilityRegistry.mjs",
+    "cognition:validate": "node scripts/cognition/validateCapabilityRegistry.mjs",
+    "cognition:discover": "node scripts/cognition/discoverCapabilities.mjs",
 
     "typecheck": "tsc --noEmit",
 

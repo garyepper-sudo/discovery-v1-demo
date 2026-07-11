@@ -1,0 +1,832 @@
+{
+  "version": 1,
+  "status": "proposed",
+  "description": "Canonical registry of Discovery cognitive capabilities. Capabilities are permanent architectural concepts. Source files are replaceable implementations of these capabilities.",
+  "domains": [
+    {
+      "code": "PER",
+      "name": "Perception",
+      "question": "Can Discovery perceive meaningful organizational reality?"
+    },
+    {
+      "code": "UND",
+      "name": "Understanding",
+      "question": "Can Discovery explain organizational behavior?"
+    },
+    {
+      "code": "MEM",
+      "name": "Memory",
+      "question": "Can Discovery preserve organizational understanding over time?"
+    },
+    {
+      "code": "LRN",
+      "name": "Learning",
+      "question": "Can Discovery improve its understanding through accumulated experience?"
+    },
+    {
+      "code": "ABS",
+      "name": "Abstraction",
+      "question": "Can Discovery form reusable concepts and general principles?"
+    },
+    {
+      "code": "SYS",
+      "name": "Systems Intelligence",
+      "question": "Can Discovery model interactions between organizational systems?"
+    },
+    {
+      "code": "PRD",
+      "name": "Prediction",
+      "question": "Can Discovery forecast likely organizational futures?"
+    },
+    {
+      "code": "SIM",
+      "name": "Simulation",
+      "question": "Can Discovery evaluate hypothetical organizational interventions?"
+    },
+    {
+      "code": "ADP",
+      "name": "Adaptation",
+      "question": "Can Discovery change its own models and strategies?"
+    },
+    {
+      "code": "SELF",
+      "name": "Self-Awareness",
+      "question": "Can Discovery evaluate the quality and limits of its own understanding?"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "CAP-PER-001",
+      "name": "Evidence Ingestion",
+      "description": "Transforms investigation context and source material into structured V3 evidence that enters Discovery's canonical cognitive pipeline.",
+      "domain": "PER",
+      "status": "proposed",
+      "canonicalProducer": "engine/v3/evidence.ts",
+      "implementationFiles": [
+        "engine/v3/evidence.ts"
+      ],
+      "consumesCapabilities": [],
+      "producesObjects": [
+        "V3Evidence"
+      ],
+      "consumedByCapabilities": [
+        "CAP-PER-002"
+      ],
+      "runtimeDestination": "DiscoveryV3Result.evidence",
+      "executiveDestinations": [],
+      "atlasCoverage": "yes",
+      "benchmarkCoverage": [
+        "Atlas",
+        "Benchmark Investigation"
+      ],
+      "livingOrganizationStage": 1,
+      "reviewStatus": "reviewed",
+      "notes": "The local extractEvidence function in app/api/analyze/route.ts belongs to a separate legacy or noncanonical analysis route and is not the canonical V3 evidence producer.",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/evidence.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-PER-048",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "PER",
+          "exports": [
+            "buildEvidence"
+          ],
+          "imports": [
+            "./types"
+          ]
+        }
+      ],
+      "missingImplementationFiles": []
+    },
+    {
+      "id": "CAP-PER-002",
+      "name": "Organizational Observation Inference",
+      "description": "Infers meaningful organizational observations from available evidence and semantic context.",
+      "domain": "PER",
+      "status": "proposed",
+      "canonicalProducer": "engine/v3/model/observations/inferOrganizationalObservations.ts",
+      "implementationFiles": [
+        "engine/v3/model/observations/inferOrganizationalObservations.ts",
+        "engine/v3/model/observations/organizationalObservations.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-PER-001"
+      ],
+      "producesObjects": [
+        "OrganizationalObservation"
+      ],
+      "consumedByCapabilities": [
+        "CAP-UND-001"
+      ],
+      "runtimeDestination": "OrganizationModel.observations",
+      "executiveDestinations": [],
+      "atlasCoverage": "partial",
+      "benchmarkCoverage": [],
+      "livingOrganizationStage": 1,
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/model/observations/inferOrganizationalObservations.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-PER-069",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "PER",
+          "exports": [
+            "inferOrganizationalObservations"
+          ],
+          "imports": [
+            "./organizationalObservations"
+          ]
+        },
+        {
+          "path": "engine/v3/model/observations/organizationalObservations.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-PER-070",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "PER",
+          "exports": [
+            "OrganizationalObservation",
+            "OrganizationalObservationState",
+            "OrganizationalObservationType",
+            "OrganizationalPattern",
+            "OrganizationalPatternType"
+          ],
+          "imports": []
+        }
+      ],
+      "missingImplementationFiles": []
+    },
+    {
+      "id": "CAP-UND-001",
+      "name": "Organizational Mechanism Inference",
+      "description": "Infers causal or operational mechanisms that explain recurring organizational behavior.",
+      "domain": "UND",
+      "status": "proposed",
+      "canonicalProducer": "engine/v3/model/judgment/inferOrganizationalMechanisms.ts",
+      "implementationFiles": [
+        "engine/v3/model/judgment/inferOrganizationalMechanisms.ts",
+        "engine/v3/model/judgment/organizationalMechanism.ts",
+        "engine/v3/model/judgment/mechanismCandidateBuilder.ts",
+        "engine/v3/model/judgment/mechanismEvidenceAggregation.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-PER-002"
+      ],
+      "producesObjects": [
+        "OrganizationalMechanism"
+      ],
+      "consumedByCapabilities": [
+        "CAP-SELF-001",
+        "CAP-UND-002",
+        "CAP-UND-003",
+        "CAP-UND-004",
+        "CAP-UND-005"
+      ],
+      "runtimeDestination": "OrganizationModel.mechanisms",
+      "executiveDestinations": [
+        "ExecutiveAssessment",
+        "TheoryValidation"
+      ],
+      "atlasCoverage": "yes",
+      "benchmarkCoverage": [
+        "Atlas"
+      ],
+      "livingOrganizationStage": 2,
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/model/judgment/inferOrganizationalMechanisms.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-042",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "inferOrganizationalMechanisms"
+          ],
+          "imports": [
+            "./buildMechanismNetwork",
+            "./consolidateOrganizationalMechanisms",
+            "./mechanismCandidateBuilder",
+            "./mechanismInferenceTypes",
+            "./mechanismInterpreter",
+            "./organizationalMechanism"
+          ]
+        },
+        {
+          "path": "engine/v3/model/judgment/organizationalMechanism.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-PER-066",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "PER",
+          "exports": [
+            "MechanismActionability",
+            "MechanismStability",
+            "OrganizationalMechanism",
+            "OrganizationalMechanismType"
+          ],
+          "imports": [
+            "../../cognition/cognitiveGraph",
+            "../cognition/cognitiveOntology"
+          ]
+        },
+        {
+          "path": "engine/v3/model/judgment/mechanismCandidateBuilder.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-PER-061",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "PER",
+          "exports": [
+            "buildMechanismCandidates"
+          ],
+          "imports": [
+            "./mechanismInferenceTypes",
+            "./mechanismProfiles",
+            "./mechanismSignals",
+            "./mechanismUtils"
+          ]
+        },
+        {
+          "path": "engine/v3/model/judgment/mechanismEvidenceAggregation.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-PER-062",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "PER",
+          "exports": [
+            "MechanismEvidenceAggregate",
+            "MechanismTermSet",
+            "MechanismVocabulary",
+            "aggregateMechanismEvidence"
+          ],
+          "imports": [
+            "./mechanismSignals",
+            "./mechanismUtils"
+          ]
+        }
+      ],
+      "missingImplementationFiles": []
+    },
+    {
+      "id": "CAP-UND-002",
+      "name": "Organizational Belief Formation",
+      "description": "Forms organizational beliefs from mechanisms, patterns, concepts, and accumulated organizational evidence.",
+      "domain": "UND",
+      "status": "proposed",
+      "canonicalProducer": "engine/v3/model/beliefs/inferOrganizationalBeliefs.ts",
+      "implementationFiles": [
+        "engine/v3/model/beliefs/inferOrganizationalBeliefs.ts",
+        "engine/v3/model/beliefs/organizationalBeliefs.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-UND-001"
+      ],
+      "producesObjects": [
+        "OrganizationalBelief"
+      ],
+      "consumedByCapabilities": [
+        "CAP-LRN-001",
+        "CAP-SELF-001",
+        "CAP-UND-003",
+        "CAP-UND-004",
+        "CAP-UND-005"
+      ],
+      "runtimeDestination": "OrganizationModel.beliefs",
+      "executiveDestinations": [
+        "OrganizationalBeliefs",
+        "TheoryValidation",
+        "OrganizationalConditions"
+      ],
+      "atlasCoverage": "yes",
+      "benchmarkCoverage": [
+        "Atlas"
+      ],
+      "livingOrganizationStage": 2,
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/model/beliefs/inferOrganizationalBeliefs.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-PER-055",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "PER",
+          "exports": [
+            "inferOrganizationalBeliefs"
+          ],
+          "imports": [
+            "../../semantic",
+            "../judgment/organizationalMechanism",
+            "./organizationalBeliefs"
+          ]
+        },
+        {
+          "path": "engine/v3/model/beliefs/organizationalBeliefs.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-034",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "OrganizationalBelief",
+            "OrganizationalBeliefInput",
+            "OrganizationalBeliefRevision",
+            "OrganizationalBeliefTrend"
+          ],
+          "imports": []
+        }
+      ],
+      "missingImplementationFiles": []
+    },
+    {
+      "id": "CAP-UND-003",
+      "name": "Organizational Theory Formation",
+      "description": "Forms higher-order organizational theories that explain multiple mechanisms, beliefs, and patterns.",
+      "domain": "UND",
+      "status": "proposed",
+      "canonicalProducer": "engine/v3/model/judgment/formOrganizationalTheories.ts",
+      "implementationFiles": [
+        "engine/v3/model/judgment/formOrganizationalTheories.ts",
+        "engine/v3/model/judgment/organizationalTheory.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-UND-001",
+        "CAP-UND-002"
+      ],
+      "producesObjects": [
+        "OrganizationalTheory"
+      ],
+      "consumedByCapabilities": [
+        "CAP-SELF-001",
+        "CAP-UND-004",
+        "CAP-UND-005"
+      ],
+      "runtimeDestination": "OrganizationalMemory.theories",
+      "executiveDestinations": [
+        "TheoryValidation",
+        "ExecutiveAssessment"
+      ],
+      "atlasCoverage": "yes",
+      "benchmarkCoverage": [
+        "Atlas",
+        "Theory Stabilization"
+      ],
+      "livingOrganizationStage": 2,
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/model/judgment/formOrganizationalTheories.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-041",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "formOrganizationalTheories"
+          ],
+          "imports": [
+            "./organizationalJudgment",
+            "./organizationalTheory"
+          ]
+        },
+        {
+          "path": "engine/v3/model/judgment/organizationalTheory.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-046",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "FormOrganizationalTheoriesInput",
+            "FormOrganizationalTheoriesOutput",
+            "OrganizationalTheory",
+            "OrganizationalTheoryContradiction",
+            "OrganizationalTheoryEvidence",
+            "OrganizationalTheoryPhenomenon",
+            "OrganizationalTheoryStatus"
+          ],
+          "imports": [
+            "../../cognition/cognitiveGraph",
+            "./organizationalJudgment"
+          ]
+        }
+      ],
+      "missingImplementationFiles": []
+    },
+    {
+      "id": "CAP-UND-004",
+      "name": "Organizational Condition Inference",
+      "description": "Infers persistent organizational operating conditions from beliefs, mechanisms, theories, memory, and organizational relationships.",
+      "domain": "UND",
+      "status": "proposed",
+      "canonicalProducer": "engine/v3/model/state/inferOrganizationalConditions.ts",
+      "implementationFiles": [
+        "engine/v3/model/state/inferOrganizationalConditions.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-UND-001",
+        "CAP-UND-002",
+        "CAP-UND-003"
+      ],
+      "producesObjects": [
+        "OrganizationalCondition"
+      ],
+      "consumedByCapabilities": [
+        "CAP-SELF-002",
+        "CAP-UND-005"
+      ],
+      "runtimeDestination": "OrganizationRuntime.organizationalConditions",
+      "executiveDestinations": [
+        "OrganizationalConditions",
+        "OrganizationalState",
+        "ExecutiveAssessment",
+        "InvestigationOpportunities"
+      ],
+      "atlasCoverage": "yes",
+      "benchmarkCoverage": [
+        "Atlas"
+      ],
+      "livingOrganizationStage": 2,
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/model/state/inferOrganizationalConditions.ts",
+          "existsInFileRegistry": true,
+          "fileId": "EXEC-UND-012",
+          "architecturalLayer": "EXEC",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "OrganizationalCondition",
+            "OrganizationalState",
+            "inferOrganizationalConditions"
+          ],
+          "imports": []
+        }
+      ],
+      "missingImplementationFiles": []
+    },
+    {
+      "id": "CAP-UND-005",
+      "name": "Executive Assessment",
+      "description": "Synthesizes organizational state, conditions, mechanisms, theories, beliefs, and investigation opportunities into an executive-level judgment.",
+      "domain": "UND",
+      "status": "proposed",
+      "canonicalProducer": "engine/v3/model/judgment/buildExecutiveAssessment.ts",
+      "implementationFiles": [
+        "engine/v3/model/judgment/buildExecutiveAssessment.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-UND-001",
+        "CAP-UND-002",
+        "CAP-UND-003",
+        "CAP-UND-004"
+      ],
+      "producesObjects": [
+        "ExecutiveAssessment"
+      ],
+      "consumedByCapabilities": [],
+      "runtimeDestination": "OrganizationRuntime.executiveAssessment",
+      "executiveDestinations": [
+        "ExecutiveProjection",
+        "ExecutiveWorkspace"
+      ],
+      "atlasCoverage": "yes",
+      "benchmarkCoverage": [
+        "Atlas"
+      ],
+      "livingOrganizationStage": 2,
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/model/judgment/buildExecutiveAssessment.ts",
+          "existsInFileRegistry": true,
+          "fileId": "EXEC-UND-011",
+          "architecturalLayer": "EXEC",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "buildExecutiveAssessment"
+          ],
+          "imports": [
+            "../../concepts/conceptCandidateTypes",
+            "./buildTheoryReflection",
+            "./organizationalJudgment",
+            "./organizationalMechanism"
+          ]
+        }
+      ],
+      "missingImplementationFiles": []
+    },
+    {
+      "id": "CAP-MEM-001",
+      "name": "Organizational Runtime Persistence",
+      "description": "Persists organizational cognition across investigations so Discovery can maintain longitudinal understanding.",
+      "domain": "MEM",
+      "status": "proposed",
+      "canonicalProducer": "engine/v3/runtime/organizationStateStore.ts",
+      "implementationFiles": [
+        "engine/v3/runtime/organizationStateStore.ts",
+        "engine/v3/runtime/organizationRuntime.ts"
+      ],
+      "consumesCapabilities": [],
+      "producesObjects": [
+        "OrganizationRuntime"
+      ],
+      "consumedByCapabilities": [
+        "CAP-LRN-001",
+        "CAP-LRN-002"
+      ],
+      "runtimeDestination": "OrganizationRuntime",
+      "executiveDestinations": [],
+      "atlasCoverage": "yes",
+      "benchmarkCoverage": [
+        "Runtime Persistence",
+        "Atlas"
+      ],
+      "livingOrganizationStage": 3,
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/runtime/organizationStateStore.ts",
+          "existsInFileRegistry": true,
+          "fileId": "RUN-MEM-002",
+          "architecturalLayer": "RUN",
+          "cognitiveDomain": "MEM",
+          "exports": [
+            "OrganizationId",
+            "loadOrganizationRuntimeState",
+            "resetOrganizationRuntimeState",
+            "saveOrganizationRuntimeState"
+          ],
+          "imports": [
+            "./organizationRuntime",
+            "fs",
+            "path"
+          ]
+        },
+        {
+          "path": "engine/v3/runtime/organizationRuntime.ts",
+          "existsInFileRegistry": true,
+          "fileId": "RUN-PER-002",
+          "architecturalLayer": "RUN",
+          "cognitiveDomain": "PER",
+          "exports": [
+            "OrganizationRuntime",
+            "OrganizationRuntimeMemory",
+            "OrganizationRuntimeMetadata",
+            "OrganizationRuntimeOrganism",
+            "createEmptyOrganizationRuntime"
+          ],
+          "imports": [
+            "../cognition/observationEvolution",
+            "../entities/entityLifecycle",
+            "../executive/executiveState",
+            "../model/createOrganizationModel",
+            "../model/memory/organizationalMemory",
+            "../model/memory/organizationalTheories",
+            "../model/organizationModel",
+            "../understanding/types",
+            "./organizationalUnderstandingState"
+          ]
+        }
+      ],
+      "missingImplementationFiles": []
+    },
+    {
+      "id": "CAP-LRN-001",
+      "name": "Organizational Belief Evolution",
+      "description": "Strengthens, weakens, creates, or revises organizational beliefs as new evidence accumulates.",
+      "domain": "LRN",
+      "status": "proposed",
+      "canonicalProducer": "engine/v3/model/beliefs/updateOrganizationalBeliefs.ts",
+      "implementationFiles": [
+        "engine/v3/model/beliefs/updateOrganizationalBeliefs.ts",
+        "engine/v3/cognition/beliefs/mergeBeliefs.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-UND-002",
+        "CAP-MEM-001"
+      ],
+      "producesObjects": [
+        "OrganizationalBeliefRevision"
+      ],
+      "consumedByCapabilities": [
+        "CAP-LRN-002"
+      ],
+      "runtimeDestination": "OrganizationRuntime.organizationalBeliefRevisions",
+      "executiveDestinations": [
+        "OrganizationalBeliefs",
+        "OrganizationalLearningProfile"
+      ],
+      "atlasCoverage": "yes",
+      "benchmarkCoverage": [
+        "Belief Evolution",
+        "Longitudinal Learning",
+        "Atlas"
+      ],
+      "livingOrganizationStage": 4,
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/model/beliefs/updateOrganizationalBeliefs.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-PER-056",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "PER",
+          "exports": [
+            "updateOrganizationalBeliefs"
+          ],
+          "imports": [
+            "./organizationalBeliefs"
+          ]
+        },
+        {
+          "path": "engine/v3/cognition/beliefs/mergeBeliefs.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-PER-024",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "PER",
+          "exports": [
+            "BeliefMergeResult",
+            "mergeBeliefs"
+          ],
+          "imports": [
+            "../../compression/consolidateMechanismPatterns",
+            "../../understanding/types"
+          ]
+        }
+      ],
+      "missingImplementationFiles": []
+    },
+    {
+      "id": "CAP-LRN-002",
+      "name": "Organizational Learning Profile",
+      "description": "Measures understanding growth, memory growth, belief stability, theory stability, retention, reuse, and learning velocity.",
+      "domain": "LRN",
+      "status": "proposed",
+      "canonicalProducer": "engine/v3/model/learning/computeOrganizationalLearningProfile.ts",
+      "implementationFiles": [
+        "engine/v3/model/learning/computeOrganizationalLearningProfile.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-MEM-001",
+        "CAP-LRN-001"
+      ],
+      "producesObjects": [
+        "OrganizationalLearningProfile"
+      ],
+      "consumedByCapabilities": [],
+      "runtimeDestination": "OrganizationRuntime.organizationalLearningProfile",
+      "executiveDestinations": [
+        "OrganizationalLearningProfile",
+        "ExecutiveProjection"
+      ],
+      "atlasCoverage": "yes",
+      "benchmarkCoverage": [
+        "Organizational Learning",
+        "Atlas"
+      ],
+      "livingOrganizationStage": 4,
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/model/learning/computeOrganizationalLearningProfile.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-PER-068",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "PER",
+          "exports": [
+            "ComputeOrganizationalLearningProfileInput",
+            "LearningEventChangeType",
+            "LearningEventObjectType",
+            "LearningVelocityState",
+            "OrganizationalLearningEvent",
+            "OrganizationalLearningProfile",
+            "UnderstandingSnapshot",
+            "computeOrganizationalLearningProfile"
+          ],
+          "imports": []
+        }
+      ],
+      "missingImplementationFiles": []
+    },
+    {
+      "id": "CAP-SELF-001",
+      "name": "Theory Validation",
+      "description": "Evaluates the dominant theory, competing theories, supporting evidence, contradictory evidence, confidence calibration, and falsification criteria.",
+      "domain": "SELF",
+      "status": "proposed",
+      "canonicalProducer": "engine/v3/model/judgment/buildTheoryReflection.ts",
+      "implementationFiles": [
+        "engine/v3/model/judgment/buildTheoryReflection.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-UND-001",
+        "CAP-UND-002",
+        "CAP-UND-003"
+      ],
+      "producesObjects": [
+        "TheoryValidation"
+      ],
+      "consumedByCapabilities": [
+        "CAP-SELF-002"
+      ],
+      "runtimeDestination": "ExecutiveAssessment.theoryValidation",
+      "executiveDestinations": [
+        "TheoryValidation",
+        "ExecutiveProjection"
+      ],
+      "atlasCoverage": "yes",
+      "benchmarkCoverage": [
+        "Atlas"
+      ],
+      "livingOrganizationStage": 10,
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/model/judgment/buildTheoryReflection.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-039",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "BuildTheoryReflectionInput",
+            "ConceptualUnderstandingLike",
+            "OrganizationalBeliefLike",
+            "buildTheoryReflection"
+          ],
+          "imports": [
+            "../../concepts/conceptCandidateTypes",
+            "./organizationalJudgment",
+            "./organizationalMechanism"
+          ]
+        }
+      ],
+      "missingImplementationFiles": []
+    },
+    {
+      "id": "CAP-SELF-002",
+      "name": "Investigation Opportunity Generation",
+      "description": "Identifies the highest-value evidence gaps and recommends investigations that could improve organizational confidence.",
+      "domain": "SELF",
+      "status": "proposed",
+      "canonicalProducer": "engine/v3/model/investigation/buildInvestigationOpportunities.ts",
+      "implementationFiles": [
+        "engine/v3/model/investigation/buildInvestigationOpportunities.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-UND-004",
+        "CAP-SELF-001"
+      ],
+      "producesObjects": [
+        "InvestigationOpportunity"
+      ],
+      "consumedByCapabilities": [],
+      "runtimeDestination": "OrganizationRuntime.investigationOpportunities",
+      "executiveDestinations": [
+        "InvestigationOpportunities",
+        "ExecutiveProjection"
+      ],
+      "atlasCoverage": "yes",
+      "benchmarkCoverage": [
+        "Atlas"
+      ],
+      "livingOrganizationStage": 10,
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/model/investigation/buildInvestigationOpportunities.ts",
+          "existsInFileRegistry": true,
+          "fileId": "EXEC-SELF-002",
+          "architecturalLayer": "EXEC",
+          "cognitiveDomain": "SELF",
+          "exports": [
+            "InvestigationOpportunity",
+            "buildInvestigationOpportunities"
+          ],
+          "imports": []
+        }
+      ],
+      "missingImplementationFiles": []
+    }
+  ],
+  "generatedAt": "2026-07-11T14:50:52.490Z",
+  "capabilityCount": 12
+}

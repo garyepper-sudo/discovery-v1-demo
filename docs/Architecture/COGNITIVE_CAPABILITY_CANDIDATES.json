@@ -1,0 +1,673 @@
+{
+  "generatedAt": "2026-07-11T15:26:27.537Z",
+  "status": "proposed",
+  "domain": {
+    "code": "PER",
+    "name": "Perception"
+  },
+  "description": "Machine-generated candidates for Perception capabilities. This report is for human review and does not modify the canonical capability registry.",
+  "summary": {
+    "totalCandidates": 24,
+    "producerCandidates": 13,
+    "supportingImplementations": 11,
+    "exportedSymbols": 53
+  },
+  "candidates": [
+    {
+      "proposedName": "Observation Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-026",
+      "path": "engine/v3/cognition/comparison/comparisonEngine.ts",
+      "exports": [
+        "ObservationComparison",
+        "UnderstandingComparison",
+        "compareObservationsToState"
+      ],
+      "imports": [
+        "../../understanding/types",
+        "../semanticSimilarity"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "medium",
+        "alternatives": [
+          "UND",
+          "MEM"
+        ]
+      },
+      "proposedRole": "supporting-implementation",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Observation Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-030",
+      "path": "engine/v3/cognition/observations/evolveObservations.ts",
+      "exports": [
+        "ObservationInput",
+        "evolveObservations"
+      ],
+      "imports": [],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "medium",
+        "alternatives": [
+          "LRN",
+          "SELF"
+        ]
+      },
+      "proposedRole": "supporting-implementation",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Observation Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-031",
+      "path": "engine/v3/cognition/observations/mergeObservations.ts",
+      "exports": [
+        "mergeObservations"
+      ],
+      "imports": [
+        "../../understanding/types"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "medium",
+        "alternatives": [
+          "UND",
+          "MEM"
+        ]
+      },
+      "proposedRole": "supporting-implementation",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Contradiction Detection",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-038",
+      "path": "engine/v3/contradictions.ts",
+      "exports": [
+        "detectContradictions"
+      ],
+      "imports": [
+        "./types"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "medium",
+        "alternatives": [
+          "UND",
+          "MEM"
+        ]
+      },
+      "proposedRole": "producer-candidate",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Entity Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-040",
+      "path": "engine/v3/entities/entityLifecycle.ts",
+      "exports": [
+        "EntityLifecycleStage",
+        "EntityMention"
+      ],
+      "imports": [
+        "./organizationalEntity"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "medium",
+        "alternatives": [
+          "UND",
+          "ABS"
+        ]
+      },
+      "proposedRole": "supporting-implementation",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Entity Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-041",
+      "path": "engine/v3/entities/entityMentionUtils.ts",
+      "exports": [
+        "createEntityMention"
+      ],
+      "imports": [
+        "./entityLifecycle",
+        "./entityUtils",
+        "./organizationalEntity"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "low",
+        "alternatives": [
+          "SELF"
+        ]
+      },
+      "proposedRole": "supporting-implementation",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Entity Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-042",
+      "path": "engine/v3/entities/entityUtils.ts",
+      "exports": [
+        "createEntityId",
+        "createOrganizationalEntity",
+        "entityNamesMatch",
+        "mergeOrganizationalEntities",
+        "normalizeEntityName"
+      ],
+      "imports": [
+        "./organizationalEntity"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "medium",
+        "alternatives": [
+          "UND",
+          "LRN"
+        ]
+      },
+      "proposedRole": "supporting-implementation",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Entity Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-043",
+      "path": "engine/v3/entities/extractEntities.ts",
+      "exports": [
+        "extractEntityMentions"
+      ],
+      "imports": [
+        "./entityLifecycle",
+        "./entityMentionUtils",
+        "./organizationalEntity"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "medium",
+        "alternatives": [
+          "SYS",
+          "SELF"
+        ]
+      },
+      "proposedRole": "producer-candidate",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Entity Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-044",
+      "path": "engine/v3/entities/organizationalEntity.ts",
+      "exports": [
+        "OrganizationalEntity",
+        "OrganizationalEntityRelationship",
+        "OrganizationalEntityRelationshipType",
+        "OrganizationalEntityType"
+      ],
+      "imports": [],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "medium",
+        "alternatives": [
+          "SYS",
+          "UND"
+        ]
+      },
+      "proposedRole": "supporting-implementation",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Entity Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-045",
+      "path": "engine/v3/entities/resolveEntityMentions.ts",
+      "exports": [
+        "resolveEntityMentions"
+      ],
+      "imports": [
+        "../model/organizationModel",
+        "./entityLifecycle",
+        "./entityUtils",
+        "./organizationalEntity"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "medium",
+        "alternatives": [
+          "SYS"
+        ]
+      },
+      "proposedRole": "supporting-implementation",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Evidence Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-048",
+      "path": "engine/v3/evidence.ts",
+      "exports": [
+        "buildEvidence"
+      ],
+      "imports": [
+        "./types"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "medium",
+        "alternatives": [
+          "LRN",
+          "SELF"
+        ]
+      },
+      "proposedRole": "producer-candidate",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Evidence Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-049",
+      "path": "engine/v3/evidenceGraph.ts",
+      "exports": [
+        "V3EvidenceCluster",
+        "V3EvidenceGraph",
+        "V3EvidenceGraphEdge",
+        "V3EvidenceGraphNode",
+        "buildEvidenceGraph"
+      ],
+      "imports": [
+        "./types"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "medium",
+        "alternatives": [
+          "SYS",
+          "UND"
+        ]
+      },
+      "proposedRole": "producer-candidate",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Evidence Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-SYS-006",
+      "path": "engine/v3/evidenceNetwork.ts",
+      "exports": [
+        "V3EvidenceNetwork",
+        "buildEvidenceNetwork"
+      ],
+      "imports": [
+        "./evidenceGraph",
+        "./evidenceRelationships",
+        "./types"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "SYS",
+        "confidence": "medium",
+        "alternatives": [
+          "PER",
+          "ABS"
+        ]
+      },
+      "proposedRole": "producer-candidate",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Evidence Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-050",
+      "path": "engine/v3/evidenceRelationships.ts",
+      "exports": [
+        "buildEvidenceRelationships"
+      ],
+      "imports": [
+        "./types"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "medium",
+        "alternatives": [
+          "UND",
+          "SYS"
+        ]
+      },
+      "proposedRole": "producer-candidate",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Evidence Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-051",
+      "path": "engine/v3/evidenceWeighting.ts",
+      "exports": [
+        "V3EvidenceWeight",
+        "weightEvidence"
+      ],
+      "imports": [
+        "./types"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "medium",
+        "alternatives": [
+          "UND",
+          "SELF"
+        ]
+      },
+      "proposedRole": "supporting-implementation",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Signal Detection",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-053",
+      "path": "engine/v3/meaning/extractMeaning.ts",
+      "exports": [
+        "extractMeaningSignals"
+      ],
+      "imports": [
+        "../functional/functionalInterpretation",
+        "./meaningCatalog",
+        "./types"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "medium",
+        "alternatives": [
+          "UND",
+          "SELF"
+        ]
+      },
+      "proposedRole": "producer-candidate",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Observation Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-069",
+      "path": "engine/v3/model/observations/inferOrganizationalObservations.ts",
+      "exports": [
+        "inferOrganizationalObservations"
+      ],
+      "imports": [
+        "./organizationalObservations"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "high",
+        "alternatives": [
+          "MEM",
+          "SYS"
+        ]
+      },
+      "proposedRole": "producer-candidate",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Observation Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-070",
+      "path": "engine/v3/model/observations/organizationalObservations.ts",
+      "exports": [
+        "OrganizationalObservation",
+        "OrganizationalObservationState",
+        "OrganizationalObservationType",
+        "OrganizationalPattern",
+        "OrganizationalPatternType"
+      ],
+      "imports": [],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "high",
+        "alternatives": [
+          "MEM",
+          "LRN"
+        ]
+      },
+      "proposedRole": "supporting-implementation",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Observation Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-072",
+      "path": "engine/v3/observations.ts",
+      "exports": [
+        "buildObservations"
+      ],
+      "imports": [
+        "./types"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "medium",
+        "alternatives": [
+          "SELF"
+        ]
+      },
+      "proposedRole": "producer-candidate",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Phenomena Detection",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-073",
+      "path": "engine/v3/phenomena/inferOrganizationalPhenomena.ts",
+      "exports": [
+        "inferOrganizationalPhenomena"
+      ],
+      "imports": [
+        "../model/judgment/organizationalMechanism",
+        "../model/observations/organizationalObservations",
+        "./organizationalPhenomena"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "high",
+        "alternatives": [
+          "LRN",
+          "UND"
+        ]
+      },
+      "proposedRole": "producer-candidate",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Phenomena Detection",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-074",
+      "path": "engine/v3/phenomena/organizationalPhenomena.ts",
+      "exports": [
+        "OrganizationalPhenomenaState",
+        "OrganizationalPhenomenon",
+        "OrganizationalPhenomenonSignal",
+        "OrganizationalPhenomenonStatus",
+        "OrganizationalPhenomenonType"
+      ],
+      "imports": [],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "high",
+        "alternatives": [
+          "UND",
+          "MEM"
+        ]
+      },
+      "proposedRole": "supporting-implementation",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Observation Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-MEM-005",
+      "path": "engine/v3/semantic/buildCognitiveObservations.ts",
+      "exports": [
+        "BuildCognitiveObservationsParams",
+        "CognitiveObservation",
+        "buildCognitiveObservations"
+      ],
+      "imports": [
+        "./types"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "MEM",
+        "confidence": "medium",
+        "alternatives": [
+          "PER",
+          "SELF"
+        ]
+      },
+      "proposedRole": "producer-candidate",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Observation Understanding",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-076",
+      "path": "engine/v3/semantic/buildSemanticObservations.ts",
+      "exports": [
+        "BuildSemanticObservationsParams",
+        "SemanticObservationInput",
+        "buildSemanticObservations"
+      ],
+      "imports": [
+        "./types"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "high",
+        "alternatives": [
+          "UND",
+          "MEM"
+        ]
+      },
+      "proposedRole": "producer-candidate",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    },
+    {
+      "proposedName": "Signal Detection",
+      "domain": "PER",
+      "sourceFileId": "COG-PER-079",
+      "path": "engine/v3/signals.ts",
+      "exports": [
+        "detectSignals"
+      ],
+      "imports": [
+        "./types"
+      ],
+      "currentClassification": {
+        "architecturalLayer": "COG",
+        "cognitiveDomain": "PER",
+        "confidence": "medium",
+        "alternatives": [
+          "SELF",
+          "LRN"
+        ]
+      },
+      "proposedRole": "producer-candidate",
+      "reviewStatus": "unreviewed",
+      "proposedCapabilityId": null,
+      "mapsToExistingCapability": null,
+      "notes": ""
+    }
+  ]
+}
