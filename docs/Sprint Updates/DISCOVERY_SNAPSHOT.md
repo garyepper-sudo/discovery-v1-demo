@@ -10,13 +10,13 @@ Read this document before making architectural, product, or implementation decis
 
 # Discovery
 
-**Version:** Sprint 63
+**Version:** Sprint 64
 
 **Status:** Active Development
 
-**Current Milestone:**
+**Current Milestone**
 
-**Executive Experience Refinement**
+**Cognitive Architecture Population**
 
 ---
 
@@ -30,9 +30,9 @@ Discovery is not a dashboard.
 
 Discovery is an **Executive Understanding System**.
 
-Discovery now exposes the majority of the executive intelligence already produced by Runtime.
+Discovery now possesses a formal Cognitive Architecture that describes the system independently of its implementation.
 
-The current objective is to refine how executives consume that intelligence.
+Future development focuses on populating and validating that architecture rather than expanding it.
 
 ---
 
@@ -40,21 +40,34 @@ The current objective is to refine how executives consume that intelligence.
 
 ## Phase
 
-**Executive Experience Refinement**
+**Cognitive Architecture Population**
 
 ## Current Objective
 
-Refine the Executive Experience around the executive intelligence already exposed through the canonical Executive Projection.
+Populate the canonical Cognitive Architecture one Operating System at a time.
 
-Discovery should continue expanding executive communication before expanding cognition.
+Discovery now maintains multiple complementary architectural views:
 
-Atlas remains the canonical verification benchmark.
+- Cognitive Operating System
+- Cognitive Object Model
+- Cognitive Flow Map
+- Capability Registry
+- File Registry
+- Capability Audit
 
-## Current Philosophy
+The current objective is to align the implementation with those architectural models and verify them through Atlas.
+
+---
+
+# Current Philosophy
+
+> **Architecture before implementation.**
+
+> **Capabilities before files.**
+
+> **Objects before code.**
 
 > **Expose existing intelligence before expanding intelligence.**
-
-> **Once intelligence is exposed, improve how executives experience it.**
 
 ---
 
@@ -69,14 +82,59 @@ Atlas remains the canonical verification benchmark.
 | Runtime Persistence | ✅ Stable |
 | Benchmark Framework | ✅ Stable |
 | Atlas Simulation | ✅ Canonical |
-| Capability Audit | ✅ Complete |
-| Executive Intelligence Extraction | ✅ Substantially Complete |
-| Executive Experience | 🟡 Active Refinement |
+| Cognitive Operating System | ✅ Established |
+| Cognitive Flow Map | ✅ Established |
+| Cognitive Object Model | ✅ Established |
+| Capability Registry | 🟡 Initial Population |
+| File Registry | 🟡 Initial Population |
+| Capability Audit | 🟡 Initial Population |
 
 ---
 
-# Canonical Cognitive Pipeline
+# Canonical Cognitive Hierarchy
+
+```text
+Operating System
+
+↓
+
+Subsystem
+
+↓
+
+Capability
+
+↓
+
+Cognitive Object
+
+↓
+
+Implementation
+```
+
+Files are implementation.
+
+Capabilities are architecture.
+
+Objects are organizational knowledge.
+
+Operating Systems own cognition.
+
+---
+
+# Canonical Cognitive Flow
+
+```text
+Source Material
+
+↓
+
 Evidence
+
+↓
+
+Entities
 
 ↓
 
@@ -88,7 +146,11 @@ Signals
 
 ↓
 
-Themes
+Contradictions
+
+↓
+
+Phenomena
 
 ↓
 
@@ -120,94 +182,112 @@ Executive Assessment
 
 ↓
 
-Organization Runtime
-
-↓
-
 Executive Projection
 
 ↓
 
-Executive Workspace
+Executive Experience
+```
 
-Reasoning ends at Runtime.
-
-Executive meaning begins at Executive Projection.
+This flow remains the canonical conceptual model until fully verified against Runtime.
 
 ---
 
 # Current Development Rule
 
-Discovery development now follows one principle:
+Every sprint begins by asking:
 
-Run Atlas
+```text
+Which Operating System is least complete?
+```
 
-↓
+Development then proceeds:
 
-Identify executive intelligence produced by Runtime
-
-↓
-
-Determine whether Executive Projection exposes it
-
-↓
-
-Determine whether the Executive Workspace communicates it effectively
+```text
+Choose Operating System
 
 ↓
 
-Refine
+Identify Subsystems
 
+↓
 
-New reasoning engines should only be added when Atlas demonstrates a genuine missing cognitive capability.
+Identify Capabilities
+
+↓
+
+Identify Cognitive Objects
+
+↓
+
+Verify against Atlas
+
+↓
+
+Update Registry
+
+↓
+
+Repeat
+```
+
+No new cognition should be added unless Atlas demonstrates a genuine missing capability.
 
 ---
 
 # Atlas
 
-Atlas is Discovery's canonical verification environment.
+Atlas remains Discovery's canonical verification environment.
 
-Atlas determines:
+Atlas now verifies:
 
-- what Discovery already knows,
-- what executives can already see,
-- what executive intelligence remains hidden,
-- what executive experience should improve next.
-
-Atlas remains the source of truth for executive capability coverage.
+- cognitive object creation,
+- capability coverage,
+- operating system completeness,
+- executive intelligence coverage,
+- architectural consistency.
 
 ---
 
-# Executive Intelligence Coverage
+# Cognitive Architecture Status
 
-Current extraction status:
+## Completed
 
-| Executive Intelligence | Engine | Projection | UI |
-|-------------------------|:------:|:----------:|:--:|
-| Current Understanding | ✅ | ✅ | ✅ |
-| Executive Attention | ✅ | ✅ | ✅ |
-| Organizational State | ✅ | ✅ | ✅ |
-| Organizational Conditions | ✅ | ✅ | ✅ |
-| Organizational Beliefs | ✅ | ✅ | ✅ |
-| Investigation Opportunities | ✅ | ✅ | ✅ |
-| Organizational Learning Profile | ✅ | ✅ | ✅ |
-| Theory Validation | ✅ | ✅ | 🟡 Partial |
-| Executive Assessment | ✅ | 🟡 Partial | 🟡 Partial |
-| Confidence Calibration | ✅ | 🟡 Partial | 🟡 Partial |
-| Missing Evidence | ✅ | 🟡 Partial | 🟡 Partial |
-| Belief Evolution | ✅ | ❌ | ❌ |
+- Perception Operating System (initial mapping)
+- Cognitive Object Model (initial)
+- Cognitive Flow Map (initial)
+- Cognitive Operating System (initial)
+- Capability Registry (initial)
+- File Registry (initial)
+
+## Current Focus
+
+Understanding Operating System.
+
+Expected subsystems include:
+
+- Mechanisms
+- Beliefs
+- Concepts
+- Theories
+- Organizational Conditions
+- Organizational State
 
 ---
 
 # Current Priority
 
-The bottleneck is no longer Runtime.
+The primary bottleneck is no longer executive intelligence extraction.
 
-The bottleneck is the Executive Experience.
+The primary bottleneck is architectural completeness.
 
-Discovery now exposes the majority of Atlas' executive intelligence.
+Current work focuses on ensuring every capability has:
 
-Current work focuses on refining how executives consume, navigate, prioritize, and understand those executive objects.
+- one owner,
+- one subsystem,
+- one operating system,
+- one canonical producer,
+- one traceable path to executive intelligence.
 
 ---
 
@@ -223,6 +303,7 @@ Current work focuses on refining how executives consume, navigate, prioritize, a
 | Knowledge Retention | ✅ Passing |
 | Executive Projection | ✅ Passing |
 | Atlas Simulation | ✅ Passing |
+| Cognitive Capability Audit | ✅ Passing |
 
 ---
 
@@ -230,31 +311,31 @@ Current work focuses on refining how executives consume, navigate, prioritize, a
 
 ## Goal
 
-Refine the Executive Experience around the executive intelligence already exposed.
+Populate the Understanding Operating System.
 
-Priority order:
+Priority:
 
-1. Theory Validation refinement
-2. Executive Assessment refinement
-3. Missing Evidence integration
-4. Confidence Calibration integration
-5. Belief Evolution visualization
-6. Executive workflow refinement
-7. Executive Workspace information architecture
+1. Mechanism Subsystem
+2. Belief Subsystem
+3. Concept Subsystem
+4. Theory Subsystem
+5. Organizational Condition Subsystem
+6. Organizational State Subsystem
 
 ---
 
 # Sprint Rules
 
-Before building new cognition ask:
+Before implementing any capability ask:
 
-1. Does Atlas already produce this?
-2. Is it persisted in Runtime?
-3. Is it projected?
-4. Is it visible?
-5. Is the executive experience sufficient?
+1. Which Operating System owns it?
+2. Which subsystem owns it?
+3. Which cognitive object does it produce?
+4. Is there already a canonical producer?
+5. Does Atlas validate it?
+6. Does Executive Projection expose it?
 
-If the answer to (1) is yes, improve communication before expanding cognition.
+If a capability has no owner, the architecture is incomplete.
 
 ---
 
@@ -262,10 +343,12 @@ If the answer to (1) is yes, improve communication before expanding cognition.
 
 Discovery now follows this roadmap:
 
-1. Executive Experience refinement
-2. Complete Executive Projection coverage
-3. Simulated organization pressure testing
-4. Legacy cleanup
-5. Architecture consolidation
-6. Engine quality improvements
-7. New cognition only when Atlas demonstrates a genuine missing capability
+1. Populate Cognitive Operating Systems
+2. Complete Capability Registry
+3. Complete Cognitive Object Model
+4. Verify Cognitive Flow
+5. Simulated organization pressure testing
+6. Legacy cleanup
+7. Architecture consolidation
+8. Engine quality improvements
+9. New cognition only when Atlas demonstrates a genuine missing capability

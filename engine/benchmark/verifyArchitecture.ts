@@ -1,51 +1,38 @@
 import fs from "node:fs";
 import path from "node:path";
 
-type VerificationStatus = "pass" | "fail";
+import { runArchitectureChecks } from "./architecture";
 
-type ProducerRule = {
-  capability: string;
-  file: string;
-  producer: string;
-  expectedOccurrences?: number;
+type RegistryCapability = {
+  id: string;
+  name: string;
+  canonicalProducer: string;
+  domain?: string;
+  subsystem?: string;
+  runtimeDestination?: string;
+  executiveDestinations?: unknown;
+  consumesCapabilities?: unknown;
+  consumedByCapabilities?: unknown;
+  resolvedFiles?: Array<{
+    path: string;
+    exports?: string[];
+  }>;
 };
 
-type ProducerVerification = {
-  capability: string;
-  file: string;
-  producer: string;
-  status: VerificationStatus;
-  message: string;
+type CognitiveDomain = {
+  code: string;
+  name: string;
+};
+
+type CapabilityRegistry = {
+  capabilities?: RegistryCapability[];
+  domains?: CognitiveDomain[];
 };
 
 const PROJECT_ROOT = process.cwd();
 
-const CANONICAL_PRODUCERS: ProducerRule[] = [
-  {
-    capability: "Organizational Understanding",
-    file: "engine/v3/understanding/synthesizeUnderstanding.ts",
-    producer: "synthesizeUnderstanding",
-    expectedOccurrences: 1,
-  },
-  {
-    capability: "Organizational Reasoning",
-    file: "engine/v3/model/reasoning/organizationalReasoningEngine.ts",
-    producer: "runOrganizationalReasoningEngine",
-    expectedOccurrences: 1,
-  },
-  {
-    capability: "Organizational Mechanisms",
-    file: "engine/v3/model/judgment/mechanismInterpreter.ts",
-    producer: "interpretMechanismCandidates",
-    expectedOccurrences: 1,
-  },
-  {
-    capability: "Executive Assessment",
-    file: "engine/v3/model/judgment/buildExecutiveAssessment.ts",
-    producer: "buildExecutiveAssessment",
-    expectedOccurrences: 1,
-  },
-];
+const CAPABILITY_REGISTRY_PATH =
+  "docs/Architecture/COGNITIVE_CAPABILITY_REGISTRY.json";
 
 function printDivider(character = "=", width = 57): void {
   console.log(character.repeat(width));
@@ -55,166 +42,103 @@ function resolveProjectPath(relativePath: string): string {
   return path.resolve(PROJECT_ROOT, relativePath);
 }
 
-function readSourceFile(relativePath: string): string | undefined {
-  const absolutePath = resolveProjectPath(relativePath);
-
-  if (!fs.existsSync(absolutePath)) {
-    return undefined;
-  }
-
-  return fs.readFileSync(absolutePath, "utf8");
-}
-
-function escapeRegExp(value: string): string {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function countExportedProducerDefinitions(
-  source: string,
-  producer: string,
-): number {
-  const escapedProducer = escapeRegExp(producer);
-
-  const patterns = [
-    new RegExp(
-      `export\\s+function\\s+${escapedProducer}\\s*\\(`,
-      "g",
-    ),
-    new RegExp(
-      `export\\s+async\\s+function\\s+${escapedProducer}\\s*\\(`,
-      "g",
-    ),
-    new RegExp(
-      `export\\s+const\\s+${escapedProducer}\\s*=`,
-      "g",
-    ),
-  ];
-
-  return patterns.reduce((total, pattern) => {
-    return total + (source.match(pattern)?.length ?? 0);
-  }, 0);
-}
-
-function verifyProducer(rule: ProducerRule): ProducerVerification {
-  const source = readSourceFile(rule.file);
-
-  if (source === undefined) {
-    return {
-      capability: rule.capability,
-      file: rule.file,
-      producer: rule.producer,
-      status: "fail",
-      message: `Source file not found: ${rule.file}`,
-    };
-  }
-
-  const expectedOccurrences = rule.expectedOccurrences ?? 1;
-  const actualOccurrences = countExportedProducerDefinitions(
-    source,
-    rule.producer,
+function loadCapabilityRegistry(): {
+  capabilities: RegistryCapability[];
+  domains: CognitiveDomain[];
+} {
+  const registryPath = resolveProjectPath(
+    CAPABILITY_REGISTRY_PATH,
   );
 
-  if (actualOccurrences === 0) {
-    return {
-      capability: rule.capability,
-      file: rule.file,
-      producer: rule.producer,
-      status: "fail",
-      message: `Canonical producer export not found: ${rule.producer}()`,
-    };
+  if (!fs.existsSync(registryPath)) {
+    throw new Error(
+      `Capability registry not found: ${CAPABILITY_REGISTRY_PATH}`,
+    );
   }
 
-  if (actualOccurrences !== expectedOccurrences) {
-    return {
-      capability: rule.capability,
-      file: rule.file,
-      producer: rule.producer,
-      status: "fail",
-      message:
-        `Expected ${expectedOccurrences} exported definition(s), ` +
-        `but found ${actualOccurrences}.`,
-    };
+  const registry = JSON.parse(
+    fs.readFileSync(registryPath, "utf8"),
+  ) as CapabilityRegistry;
+
+  if (!Array.isArray(registry.capabilities)) {
+    throw new Error(
+      "Capability registry does not contain a capabilities array.",
+    );
+  }
+
+  if (!Array.isArray(registry.domains)) {
+    throw new Error(
+      "Capability registry does not contain a domains array.",
+    );
   }
 
   return {
-    capability: rule.capability,
-    file: rule.file,
-    producer: rule.producer,
-    status: "pass",
-    message: `Canonical producer verified: ${rule.producer}()`,
+    capabilities: registry.capabilities,
+    domains: registry.domains,
   };
 }
 
-function calculateIntegrityScore(
-  results: ProducerVerification[],
-): number {
-  if (results.length === 0) return 0;
+function printArchitectureReport(): void {
+  const registry = loadCapabilityRegistry();
 
-  const passed = results.filter(
-    (result) => result.status === "pass",
-  ).length;
+  const capabilities = registry.capabilities;
+  const domains = registry.domains;
 
-  return Math.round((passed / results.length) * 100);
-}
+  const report = runArchitectureChecks(
+    capabilities,
+    domains,
+  );
 
-function printVerificationResult(
-  result: ProducerVerification,
-): void {
-  console.log(result.capability);
-  printDivider("-", 57);
-
-  if (result.status === "pass") {
-    console.log(`✓ ${result.message}`);
-    console.log(`  File: ${result.file}`);
-  } else {
-    console.log(`✗ ${result.message}`);
-    console.log(`  Expected file: ${result.file}`);
-  }
-
-  console.log("");
-}
-
-function runArchitectureVerification(): void {
   printDivider();
   console.log("DISCOVERY ARCHITECTURE VERIFICATION");
   printDivider();
   console.log("");
 
-  const results = CANONICAL_PRODUCERS.map(verifyProducer);
+  for (const capability of capabilities) {
+    console.log(`${capability.id} — ${capability.name}`);
+    printDivider("-", 57);
 
-  for (const result of results) {
-    printVerificationResult(result);
+    const checks = report.checks.filter(
+      (check) => check.capabilityId === capability.id,
+    );
+
+    for (const check of checks) {
+      console.log(
+        `${check.status === "pass" ? "✓" : "✗"} ${check.message}`,
+      );
+
+      if (check.detail) {
+        console.log(`  ${check.detail}`);
+      }
+    }
+
+    console.log("");
   }
-
-  const verifiedProducers = results.filter(
-    (result) => result.status === "pass",
-  ).length;
-
-  const failedProducers = results.filter(
-    (result) => result.status === "fail",
-  ).length;
-
-  const integrityScore = calculateIntegrityScore(results);
 
   printDivider();
   console.log("ARCHITECTURE INTEGRITY");
   printDivider();
   console.log("");
+
   console.log(
-    `Verified Producers ............ ${verifiedProducers}`,
+    `Registered Capabilities ....... ${capabilities.length}`,
   );
   console.log(
-    `Failed Producer Checks ........ ${failedProducers}`,
+    `Passed Architecture Checks .... ${report.passedChecks}`,
   );
   console.log(
-    `Total Producer Checks ......... ${results.length}`,
+    `Failed Architecture Checks .... ${report.failedChecks}`,
   );
   console.log(
-    `Integrity Score ............... ${integrityScore}%`,
+    `Total Architecture Checks ..... ${report.checks.length}`,
   );
+  console.log(
+    `Integrity Score ............... ${report.integrityScore}%`,
+  );
+
   console.log("");
 
-  if (failedProducers > 0) {
+  if (report.failedChecks > 0) {
     console.log("Architecture Verification ..... FAIL");
     printDivider();
     process.exitCode = 1;
@@ -225,4 +149,4 @@ function runArchitectureVerification(): void {
   printDivider();
 }
 
-runArchitectureVerification();
+printArchitectureReport();

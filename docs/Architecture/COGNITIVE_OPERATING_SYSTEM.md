@@ -1,6 +1,6 @@
 # Discovery Cognitive Operating System
 
-**Status:** Proposed
+**Status:** Active
 
 ---
 
@@ -8,16 +8,16 @@
 
 This document defines the canonical cognitive hierarchy of Discovery.
 
-It establishes a stable organizational model for every cognitive capability implemented by Discovery.
+Discovery is not organized around source files.
 
-Discovery should no longer be viewed as a collection of source files.
+Discovery is organized around a hierarchy of cognitive ownership.
 
-Discovery should instead be viewed as a collection of cognitive operating systems that together produce executive intelligence.
+Every implementation ultimately belongs to a single cognitive capability that contributes to Discovery's understanding of organizations.
 
-The hierarchy is:
+The canonical hierarchy is:
 
 ```text
-Cognitive Operating System
+Operating System
 
 ↓
 
@@ -29,46 +29,134 @@ Capability
 
 ↓
 
-Implementation Files
+Implementation
+
+↓
+
+Runtime Representation
+
+↓
+
+Executive Projection
+
+↓
+
+Atlas Validation
 ```
 
-Files are replaceable.
+Files are implementation.
 
-Capabilities are stable.
+Capabilities are architecture.
 
-Subsystems own capabilities.
+Subsystems organize capabilities.
 
-Operating Systems own subsystems.
+Operating Systems organize subsystems.
 
-This hierarchy is intended to remain stable even as the underlying implementation evolves.
+This hierarchy should remain stable even as implementations evolve.
+
+---
+
+# Canonical Operating System Structure
+
+Every Operating System follows the same architectural pattern.
+
+## Purpose
+
+What cognitive transformation does this Operating System perform?
+
+## Inputs
+
+What cognitive objects does it consume?
+
+## Outputs
+
+What cognitive objects does it produce?
+
+## Subsystems
+
+Which subsystems compose this Operating System?
+
+Each subsystem owns one or more capabilities.
+
+---
+
+## Canonical Subsystem Structure
+
+Every subsystem follows the same pattern.
+
+### Purpose
+
+Describe the responsibility of the subsystem.
+
+### Capabilities
+
+Each capability should define:
+
+- Purpose
+- Inputs
+- Outputs
+- Canonical Producer
+- Runtime Representation
+- Executive Projection
+- Atlas Validation
+- Higher-Order Consumers
+
+Implementation files are attached to capabilities rather than directly to subsystems.
 
 ---
 
 # Canonical Cognitive Operating Systems
 
-## 1. Perception OS
+# 1. Perception Operating System
 
-### Purpose
+## Purpose
 
-Transform raw organizational experience into structured cognitive objects that can be understood by higher-order cognition.
+Transform raw organizational experience into structured cognitive objects suitable for higher-order cognition.
 
 Perception answers:
 
 > What happened?
 
-Perception never attempts to explain.
+Perception never attempts explanation.
 
-It only constructs reliable observations.
+It constructs reliable organizational observations.
 
 ---
+
+## Inputs
+
+- Source Material
+
+---
+
+## Outputs
+
+- Evidence
+- Entities
+- Observations
+- Signals
+- Contradictions
+- Organizational Phenomena
+
+---
+
+## Subsystems
 
 ### Evidence Subsystem
 
 Purpose
 
-Construct canonical evidence from source material.
+Construct canonical organizational evidence.
 
-Current implementation files
+Capabilities include:
+
+- Evidence Construction
+- Evidence Graph Construction
+- Evidence Relationship Modeling
+- Evidence Network Construction
+- Evidence Weighting
+
+Current Canonical Producers
 
 - `engine/v3/evidence.ts`
 - `engine/v3/evidenceGraph.ts`
@@ -93,16 +181,22 @@ Consumed by
 
 Purpose
 
-Identify and maintain organizational entities.
+Construct persistent organizational entities.
 
-Current implementation files
+Capabilities include:
+
+- Entity Extraction
+- Entity Resolution
+- Entity Lifecycle Management
+
+Current Canonical Producers
 
 - `engine/v3/entities/extractEntities.ts`
-- `engine/v3/entities/entityMentionUtils.ts`
+- `engine/v3/entities/resolveEntityMentions.ts`
 - `engine/v3/entities/entityLifecycle.ts`
 - `engine/v3/entities/entityUtils.ts`
+- `engine/v3/entities/entityMentionUtils.ts`
 - `engine/v3/entities/organizationalEntity.ts`
-- `engine/v3/entities/resolveEntityMentions.ts`
 
 Produces
 
@@ -122,16 +216,22 @@ Purpose
 
 Construct meaningful organizational observations.
 
-Current implementation files
+Capabilities include:
 
-- `engine/v3/observations.ts`
+- Observation Inference
+- Observation Evolution
+- Observation Consolidation
+- Observation Comparison
+
+Current Canonical Producers
+
 - `engine/v3/model/observations/inferOrganizationalObservations.ts`
-- `engine/v3/model/observations/organizationalObservations.ts`
+- `engine/v3/cognition/observations/evolveObservations.ts`
+- `engine/v3/cognition/observations/mergeObservations.ts`
+- `engine/v3/cognition/comparison/comparisonEngine.ts`
 - `engine/v3/semantic/buildSemanticObservations.ts`
 - `engine/v3/semantic/buildCognitiveObservations.ts`
-- `engine/v3/cognition/observations/mergeObservations.ts`
-- `engine/v3/cognition/observations/evolveObservations.ts`
-- `engine/v3/cognition/comparison/comparisonEngine.ts`
+- `engine/v3/model/observations/organizationalObservations.ts`
 
 Produces
 
@@ -141,7 +241,7 @@ Produces
 
 Consumed by
 
-- Understanding OS
+- Understanding Operating System
 
 ---
 
@@ -151,19 +251,24 @@ Purpose
 
 Identify meaningful organizational signals.
 
-Current implementation files
+Capabilities include:
 
-- `engine/v3/meaning/extractMeaning.ts`
+- Signal Extraction
+- Meaning Extraction
+
+Current Canonical Producers
+
 - `engine/v3/signals.ts`
+- `engine/v3/meaning/extractMeaning.ts`
 
 Produces
 
-- Meaning Signals
 - Organizational Signals
+- Meaning Signals
 
 Consumed by
 
-- Understanding OS
+- Understanding Operating System
 
 ---
 
@@ -171,9 +276,13 @@ Consumed by
 
 Purpose
 
-Detect conflicting organizational evidence.
+Detect conflicting evidence.
 
-Current implementation files
+Capabilities include:
+
+- Contradiction Detection
+
+Current Canonical Producer
 
 - `engine/v3/contradictions.ts`
 
@@ -183,7 +292,7 @@ Produces
 
 Consumed by
 
-- Understanding OS
+- Understanding Operating System
 
 ---
 
@@ -193,7 +302,11 @@ Purpose
 
 Infer meaningful organizational phenomena.
 
-Current implementation files
+Capabilities include:
+
+- Organizational Phenomena Inference
+
+Current Canonical Producers
 
 - `engine/v3/phenomena/inferOrganizationalPhenomena.ts`
 - `engine/v3/phenomena/organizationalPhenomena.ts`
@@ -204,15 +317,13 @@ Produces
 
 Consumed by
 
-- Understanding OS
+- Understanding Operating System
 
 ---
 
-# 2. Understanding OS
+# 2. Understanding Operating System
 
-**Status:** Pending subsystem mapping.
-
-Purpose
+## Purpose
 
 Transform observations into explanation.
 
@@ -220,7 +331,18 @@ Understanding answers:
 
 > Why is the organization behaving this way?
 
-Expected subsystems include:
+---
+
+## Inputs
+
+- Observations
+- Signals
+- Contradictions
+- Organizational Phenomena
+
+---
+
+## Outputs
 
 - Mechanisms
 - Beliefs
@@ -231,159 +353,232 @@ Expected subsystems include:
 
 ---
 
-# 3. Memory OS
+## Planned Subsystems
 
-**Status:** Pending subsystem mapping.
+### Mechanism Subsystem
+
+Capabilities (planned)
+
+- Mechanism Inference
+- Mechanism Consolidation
+- Mechanism Evolution
+
+---
+
+### Belief Subsystem
+
+Capabilities (planned)
+
+- Belief Formation
+- Belief Revision
+- Belief Consolidation
+
+---
+
+### Concept Subsystem
+
+Capabilities (planned)
+
+- Concept Synthesis
+- Concept Refinement
+
+---
+
+### Theory Subsystem
+
+Capabilities (planned)
+
+- Theory Formation
+- Theory Evolution
+- Competing Theory Evaluation
+
+---
+
+### Organizational Condition Subsystem
+
+Capabilities (planned)
+
+- Condition Inference
+- Condition Monitoring
+
+---
+
+### Organizational State Subsystem
+
+Capabilities (planned)
+
+- State Construction
+- State Evolution
+
+---
+
+# 3. Memory Operating System
 
 Purpose
 
 Maintain persistent organizational understanding across investigations.
 
+Subsystem mapping pending.
+
 ---
 
-# 4. Learning OS
-
-**Status:** Pending subsystem mapping.
+# 4. Learning Operating System
 
 Purpose
 
-Improve organizational understanding through accumulated experience.
+Improve understanding through accumulated organizational experience.
+
+Subsystem mapping pending.
 
 ---
 
-# 5. Abstraction OS
-
-**Status:** Pending subsystem mapping.
+# 5. Abstraction Operating System
 
 Purpose
 
-Compress repeated experience into reusable organizational concepts.
+Compress repeated organizational experience into reusable knowledge.
+
+Subsystem mapping pending.
 
 ---
 
-# 6. Systems Intelligence OS
-
-**Status:** Pending subsystem mapping.
+# 6. Systems Intelligence Operating System
 
 Purpose
 
-Model interactions between organizational systems.
+Model interactions among organizational systems.
+
+Subsystem mapping pending.
 
 ---
 
-# 7. Prediction OS
-
-**Status:** Pending subsystem mapping.
+# 7. Prediction Operating System
 
 Purpose
 
 Forecast likely organizational futures.
 
+Subsystem mapping pending.
+
 ---
 
-# 8. Simulation OS
-
-**Status:** Pending subsystem mapping.
+# 8. Simulation Operating System
 
 Purpose
 
-Evaluate hypothetical interventions.
+Evaluate hypothetical organizational interventions.
+
+Subsystem mapping pending.
 
 ---
 
-# 9. Adaptation OS
-
-**Status:** Pending subsystem mapping.
+# 9. Adaptation Operating System
 
 Purpose
 
-Refine organizational cognition as reality changes.
+Continuously refine cognition as organizational reality changes.
+
+Subsystem mapping pending.
 
 ---
 
-# 10. Self-Awareness OS
-
-**Status:** Pending subsystem mapping.
+# 10. Self-Awareness Operating System
 
 Purpose
 
-Evaluate confidence, uncertainty, missing evidence, and cognitive health.
+Evaluate cognitive health, confidence, uncertainty, and missing evidence.
+
+Subsystem mapping pending.
 
 ---
 
-# 11. Executive Intelligence OS
-
-**Status:** Pending subsystem mapping.
+# 11. Executive Intelligence Operating System
 
 Purpose
 
 Transform organizational understanding into executive intelligence.
 
-Expected responsibilities
+Expected subsystems include:
 
 - Executive Assessment
-- Theory Validation
-- Organizational Learning Profile
-- Investigation Opportunities
+- Executive Attention
 - Confidence Calibration
 - Missing Evidence
-- Executive Attention
+- Investigation Opportunities
+- Organizational Learning Profile
+
+Subsystem mapping pending.
 
 ---
 
-# 12. Executive Projection OS
-
-**Status:** Pending subsystem mapping.
+# 12. Executive Projection Operating System
 
 Purpose
 
 Translate Runtime cognition into canonical executive objects.
 
-This is the only layer permitted to expose cognition to the Executive Workspace.
+Executive Projection is the only architectural boundary permitted to expose Runtime cognition to the Executive Workspace.
+
+Subsystem mapping pending.
 
 ---
 
-# 13. Executive Experience OS
-
-**Status:** Pending subsystem mapping.
+# 13. Executive Experience Operating System
 
 Purpose
 
-Present executive intelligence to users.
+Render Executive Projection for human interaction.
 
-This layer never reconstructs cognition.
+The Executive Experience never reconstructs cognition.
 
-It only renders Executive Projection.
+It presents only Executive Projection.
+
+Subsystem mapping pending.
 
 ---
 
 # Architectural Rules
 
-1. Every capability belongs to exactly one subsystem.
-2. Every subsystem belongs to exactly one Operating System.
-3. Every capability identifies one canonical producer.
-4. Every capability explicitly declares its inputs and outputs.
-5. Every capability must identify higher-order consumers.
-6. Files are implementations, not architecture.
-7. Files may move without changing capability identity.
-8. Operating Systems should remain stable across implementation refactors.
-9. Atlas validates capability coverage.
-10. The Living Organization Benchmark validates cognitive maturity.
+Every capability must belong to exactly one subsystem.
+
+Every subsystem belongs to exactly one Operating System.
+
+Every capability identifies exactly one canonical producer.
+
+Every capability declares:
+
+- Inputs
+- Outputs
+- Runtime Representation
+- Executive Projection
+- Atlas Validation
+- Higher-Order Consumers
+
+Files are implementation.
+
+Capabilities are architecture.
+
+Operating Systems remain stable while implementations evolve.
+
+Atlas validates capability coverage.
+
+The Living Organization Benchmark validates cognitive maturity.
 
 ---
 
 # Long-Term Vision
 
-Discovery should ultimately become a fully traceable Cognitive Operating System.
+Discovery should become a fully traceable Cognitive Architecture.
 
-Every implementation file should answer:
+Every implementation should answer:
 
 - Which capability do I implement?
-- Which subsystem owns me?
+- Which subsystem owns that capability?
 - Which Operating System owns that subsystem?
-- What higher-order cognition depends on me?
-- What executive intelligence ultimately consumes my output?
+- Which Runtime object stores its output?
+- Which Executive Projection exposes it?
+- Which Atlas benchmark validates it?
 
-Nothing in Discovery should exist without an explicit cognitive owner.
+Nothing in Discovery should exist without explicit cognitive ownership.
 
-That ownership model is the primary safeguard against hidden capabilities, duplicate implementations, and architectural drift.
+That ownership hierarchy is the primary safeguard against duplicate implementations, hidden cognition, and architectural drift.
