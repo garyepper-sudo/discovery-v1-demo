@@ -1,5 +1,6 @@
 import type {
   OrganizationalUnderstandingItem,
+  OrganizationalUnderstandingSource,
   OrganizationalUnderstandingState,
 } from "../runtime/organizationalUnderstandingState";
 import {
@@ -10,7 +11,7 @@ import {
   getUnderstandingStatus,
 } from "../runtime/organizationalUnderstandingState";
 
-type UnderstandingCandidate = {
+export type UnderstandingCandidate = {
   id?: string;
   statement: string;
   confidence?: number;
@@ -20,7 +21,7 @@ type UnderstandingCandidate = {
   themeIds?: string[];
   mechanismIds?: string[];
   contradictionIds?: string[];
-  source?: string;
+  source?: OrganizationalUnderstandingSource;
 };
 
 type ConsolidationChange = {
@@ -457,6 +458,8 @@ function completeCanonicalUnderstanding(
   return {
     ...understanding,
 
+    source: understanding.source ?? "legacy",
+
     title: understanding.title || createUnderstandingTitle(statement),
     statement,
     summary: createSummary(statement),
@@ -525,6 +528,15 @@ export function consolidateUnderstanding(
 
     if (bestMatch && bestMatch.similarity >= 0.5) {
       const existing = bestMatch.existing;
+
+      if (
+        candidate.source === "executive-assessment" ||
+        existing.source === "unknown" ||
+        existing.source === "legacy"
+      ) {
+        existing.source = candidate.source ?? existing.source;
+      }
+
       const previousConfidence = existing.confidence;
       const contradictory = isContradictory(
         normalizedStatement,
@@ -666,6 +678,7 @@ export function consolidateUnderstanding(
 
     const newUnderstanding: OrganizationalUnderstandingItem = {
       id: candidate.id ?? createId(normalizedStatement),
+      source: candidate.source ?? "unknown",
 
       title: createUnderstandingTitle(normalizedStatement),
       statement: normalizedStatement,

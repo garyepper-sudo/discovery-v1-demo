@@ -41,6 +41,7 @@ export function updateOrganizationalUnderstandingState(params: {
 
       return {
         id: makeUnderstandingId(index),
+        source: "legacy",
 
         title: createUnderstandingTitle(statement),
         statement,

@@ -554,19 +554,24 @@ function printAtlasInvestigation(params: {
     executiveAssessment.theoryValidation,
   );
 
-  const primaryBelief = result.beliefs[0];
-  const primaryUnderstanding = result.understanding[0];
+  const memoryRecord = asRecord(memory);
+
+  const understandingState = asRecord(
+    memoryRecord.organizationalUnderstandingState,
+  );
 
   const currentUnderstanding =
-    result.executiveUnderstanding?.headline ||
-    primaryBelief?.headline ||
-    primaryUnderstanding?.title ||
+    asString(understandingState.executiveSummary) ??
+    asString(executiveAssessment.summary) ??
     "Discovery has not formed a leading understanding.";
 
+  const understandingScore = asRecord(
+    understandingState.score,
+  );
+
   const confidence =
-    asNumber(result.executiveUnderstanding?.confidence) ??
-    asNumber(primaryBelief?.confidence) ??
-    asNumber(primaryUnderstanding?.confidence);
+    asNumber(understandingScore.confidence) ??
+    asNumber(executiveAssessment.confidence);
 
   console.log("");
   console.log("============================================================");

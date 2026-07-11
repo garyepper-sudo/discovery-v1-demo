@@ -1,36 +1,26 @@
 # Discovery Sprint 24
 
-We have completed the first generation of the Organization Runtime and Cognition Engine.
+Discovery has completed the first generation of the Organization Runtime, Cognition Engine, and Organizational Memory.
 
-Discovery now remembers observations across investigations.
+Subsequent architecture work, capability auditing, and Atlas validation revealed an important insight.
 
-However, we discovered an important architectural limitation.
+Discovery already performs substantially more organizational abstraction than was originally understood.
 
-The system is remembering observations instead of learning organizational patterns.
+It no longer simply remembers observations.
 
-Example:
+It already identifies recurring mechanisms, concepts, theories, organizational conditions, and executive patterns.
 
-Observation 1
-"Hiring delays are slowing execution."
+The remaining architectural challenge is to ensure these abstractions become canonical, persistent, and visible throughout the executive product.
 
-Observation 2
-"Engineering headcount remains below plan."
-
-Observation 3
-"Recruiting continues to constrain delivery."
-
-Humans immediately recognize these as one underlying organizational pattern.
-
-Discovery currently does not.
-
-Sprint 24 introduces a new reasoning layer.
+---
 
 # Goal
 
-Build the Persistent Pattern Engine.
+Strengthen Canonical Organizational Pattern Formation.
 
-Pipeline becomes:
+The canonical cognitive pipeline becomes:
 
+```text
 Evidence
 
 ↓
@@ -39,11 +29,11 @@ Observation
 
 ↓
 
-Repeated Observation
+Organizational Pattern
 
 ↓
 
-Persistent Pattern
+Mechanism
 
 ↓
 
@@ -51,24 +41,66 @@ Belief
 
 ↓
 
+Theory
+
+↓
+
+Organizational Condition
+
+↓
+
+Organizational State
+
+↓
+
 Executive Understanding
+```
 
-The Pattern Engine should:
+Rather than introducing a separate Pattern Engine, Sprint 24 focuses on strengthening Discovery's existing abstraction pipeline.
 
-• cluster similar observations
-• merge semantically related observations
-• create long-lived organizational patterns
-• strengthen patterns as evidence accumulates
-• weaken patterns when conflicting evidence appears
-• maintain trend direction
-• maintain confidence
-• maintain support count
-• record first appearance
-• record last reinforcement
+---
 
-The Cognition Inspector should evolve.
+# Objectives
 
-Instead of showing hundreds of observations, it should summarize:
+Discovery should continuously:
+
+- cluster semantically related observations
+- consolidate recurring organizational signals
+- strengthen persistent organizational patterns
+- weaken patterns as contradictory evidence accumulates
+- maintain confidence evolution
+- maintain longitudinal support counts
+- preserve first appearance
+- preserve latest reinforcement
+- connect patterns to mechanisms
+- connect mechanisms to beliefs
+- connect beliefs to theories
+- connect theories to organizational conditions
+
+Patterns become the canonical bridge between perception and organizational understanding.
+
+---
+
+# Runtime Evolution
+
+Organizational Memory should increasingly preserve:
+
+- Persistent Organizational Patterns
+- Organizational Mechanisms
+- Organizational Beliefs
+- Organizational Theories
+- Organizational Conditions
+- Organizational State
+
+rather than storing isolated observations.
+
+---
+
+# Executive Projection
+
+The Executive Workspace should eventually summarize:
+
+## Organizational Learning
 
 New Patterns
 
@@ -78,16 +110,57 @@ Weakening Patterns
 
 Stable Patterns
 
-The Organization Memory card should eventually display:
+Retired Patterns
 
+Emerging Organizational Dynamics
+
+rather than displaying large collections of individual observations.
+
+---
+
+# Organizational Memory
+
+Instead of presenting:
+
+```text
+214 Observations
+```
+
+Discovery should increasingly present:
+
+```text
 Organization Memory
 
-8 Persistent Patterns
+8 Persistent Organizational Patterns
 
-instead of
+14 Organizational Mechanisms
 
-214 Remembered Observations
+11 Organizational Beliefs
 
-The overall objective is to move Discovery from remembering sentences to remembering organizational truths.
+6 Organizational Theories
 
-This Pattern Engine will become the foundation for later belief evolution, forecasting, executive recommendations, and the Living Organizational Organism.
+5 Active Organizational Conditions
+```
+
+---
+
+# Long-Term Objective
+
+The objective is no longer to remember organizational sentences.
+
+The objective is to preserve and continuously refine organizational understanding.
+
+Persistent organizational patterns become the foundation for:
+
+- mechanism evolution
+- belief evolution
+- theory formation
+- organizational conditions
+- organizational state
+- executive assessment
+- organizational learning
+- forecasting
+- simulation
+- adaptive organizational understanding
+
+Discovery advances when organizational experience is progressively compressed into increasingly stable organizational understanding.

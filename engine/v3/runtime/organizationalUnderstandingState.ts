@@ -10,6 +10,12 @@ export type UnderstandingStateStatus =
 
 export type UnderstandingStateConfidenceBand = "low" | "medium" | "high";
 
+export type OrganizationalUnderstandingSource =
+  | "investigation-understanding"
+  | "executive-assessment"
+  | "legacy"
+  | "unknown";
+
 export type OrganizationalDomainKey =
   | "strategy"
   | "finance"
@@ -62,6 +68,7 @@ export type OrganizationalUnderstandingRecommendation = {
 
 export type OrganizationalUnderstandingItem = {
   id: string;
+  source: OrganizationalUnderstandingSource;
 
   title: string;
   statement: string;
@@ -265,7 +272,9 @@ export function createEmptyDomainUnderstanding(params: {
   };
 }
 
-export function createDefaultDomainUnderstandings(now: string): OrganizationalDomainUnderstanding[] {
+export function createDefaultDomainUnderstandings(
+  now: string
+): OrganizationalDomainUnderstanding[] {
   return [
     createEmptyDomainUnderstanding({
       domain: "strategy",
@@ -333,7 +342,9 @@ export function createUnderstandingTitle(statement: string): string {
     .join(" ");
 }
 
-export function createDefaultUnderstandingMechanism(statement: string): string {
+export function createDefaultUnderstandingMechanism(
+  statement: string
+): string {
   const normalized = statement.toLowerCase();
 
   if (

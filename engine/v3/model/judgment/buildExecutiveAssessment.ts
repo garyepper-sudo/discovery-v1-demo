@@ -1,4 +1,12 @@
 import { buildTheoryReflection } from "./buildTheoryReflection";
+import {
+  buildExecutivePriority,
+  type ConceptualUnderstandingLike,
+  type InvestigationOpportunityLike,
+  type OrganizationalBeliefLike,
+  type OrganizationalConditionLike,
+  type OrganizationalStateLike,
+} from "./buildExecutivePriority";
 import type {
   OrganizationalAssessment,
   OrganizationalJudgment,
@@ -6,73 +14,6 @@ import type {
 } from "./organizationalJudgment";
 import type { OrganizationalMechanism } from "./organizationalMechanism";
 import type { ConceptCandidate } from "../../concepts/conceptCandidateTypes";
-
-type ConceptualUnderstandingLike = {
-  id: string;
-  statement: string;
-  summary?: string;
-  confidence?: number;
-  coverage?: number;
-  stability?: number;
-  explanatoryPower?: number;
-  status?: string;
-  explanation?: string;
-  understandingIds?: string[];
-};
-
-type OrganizationalBeliefLike = {
-  id: string;
-  statement: string;
-  confidence?: number;
-  supportingMechanismIds?: string[];
-  supportingPatternIds?: string[];
-  supportingConceptIds?: string[];
-  supportingEvidenceIds?: string[];
-  contradictoryEvidenceIds?: string[];
-  trend?: string;
-};
-
-type OrganizationalConditionLike = {
-  id: string;
-  name: string;
-  domain: string;
-  status?: string;
-  priority?: string;
-  confidence?: number;
-  strength?: number;
-  trend?: string;
-  summary?: string;
-  whyItMatters?: string;
-  supportingConceptIds?: string[];
-  supportingBeliefIds?: string[];
-  supportingMechanismIds?: string[];
-  supportingTheoryIds?: string[];
-  recommendedExecutiveAction?: string;
-};
-
-type OrganizationalStateLike = {
-  id: string;
-  summary?: string;
-  status?: string;
-  confidence?: number;
-  dominantConditions?: string[];
-  improvingConditions?: string[];
-  deterioratingConditions?: string[];
-  unresolvedTensions?: string[];
-  executiveImplication?: string;
-  recommendedFocus?: string[];
-};
-
-type InvestigationOpportunityLike = {
-  id: string;
-  topic: string;
-  reason: string;
-  expectedConfidenceGain: number;
-  executiveLeverage: "high" | "medium" | "low";
-  affectedConditions: string[];
-  missingEvidence: string[];
-  suggestedExecutiveQuestion: string;
-};
 
 type BuildExecutiveAssessmentInput = {
   judgments: OrganizationalJudgment[];
@@ -85,15 +26,6 @@ type BuildExecutiveAssessmentInput = {
   investigationOpportunities?: InvestigationOpportunityLike[];
 };
 
-const average = (values: number[]): number =>
-  values.length === 0
-    ? 0
-    : values.reduce((sum, value) => sum + value, 0) / values.length;
-
-function clamp01(value: number): number {
-  return Math.max(0, Math.min(1, value));
-}
-
 function normalize(value: string | undefined): string {
   return (value ?? "")
     .toLowerCase()
@@ -103,104 +35,10 @@ function normalize(value: string | undefined): string {
     .trim();
 }
 
-function numericPriority(value: number | string | undefined): number {
-  if (typeof value === "number") return value;
-  if (value === "critical") return 1;
-  if (value === "high") return 0.85;
-  if (value === "medium") return 0.6;
-  if (value === "low") return 0.35;
-  return 0;
-}
-
-function rankMechanism(mechanism: OrganizationalMechanism): number {
-  return (
-    mechanism.confidence * 0.45 +
-    numericPriority(mechanism.executivePriority) * 0.35 +
-    Math.min(0.2, (mechanism.supportCount ?? 0) * 0.04)
-  );
-}
-
-function rankCondition(condition: OrganizationalConditionLike): number {
-  return clamp01(
-    (condition.strength ?? 0.45) * 0.4 +
-      (condition.confidence ?? 0.45) * 0.25 +
-      numericPriority(condition.priority) * 0.25 +
-      (condition.status === "deteriorating"
-        ? 0.08
-        : condition.status === "constrained"
-          ? 0.06
-          : condition.status === "critical"
-            ? 0.1
-            : 0),
-  );
-}
-
-function rankConceptualUnderstanding(
-  concept: ConceptualUnderstandingLike,
-): number {
-  return clamp01(
-    (concept.confidence ?? 0.5) * 0.4 +
-      (concept.explanatoryPower ?? 0.5) * 0.3 +
-      (concept.coverage ?? 0.5) * 0.2 +
-      (concept.stability ?? 0.5) * 0.1,
-  );
-}
-
-function rankConceptCandidate(candidate: ConceptCandidate): number {
-  const strengthScore =
-    candidate.strength === "strong"
-      ? 1
-      : candidate.strength === "moderate"
-        ? 0.65
-        : 0.35;
-
-  const supportScore = clamp01(
-    (candidate.supportingMechanismIds.length +
-      candidate.supportingBeliefIds.length +
-      candidate.supportingPatternIds.length +
-      candidate.supportingDynamicIds.length +
-      candidate.supportingClusterIds.length +
-      candidate.supportingUnderstandingIds.length) /
-      12,
-  );
-
-  return clamp01(
-    candidate.confidence * 0.55 + strengthScore * 0.25 + supportScore * 0.2,
-  );
-}
-
 function summarizeMechanism(mechanism: OrganizationalMechanism): string {
   return `${mechanism.executiveName || mechanism.title}: ${
     mechanism.executiveSummary || mechanism.summary
   }`;
-}
-
-function conceptIdFromUnderstanding(id: string): string {
-  return id.startsWith("concept-")
-    ? id.replace(/^concept-/, "concept-theory-")
-    : id;
-}
-
-function findSupportingCandidate(
-  concept: ConceptualUnderstandingLike | null,
-  candidates: ConceptCandidate[],
-): ConceptCandidate | null {
-  if (!concept) return null;
-
-  const normalizedConceptId = conceptIdFromUnderstanding(concept.id);
-
-  return (
-    candidates.find((candidate) => candidate.id === normalizedConceptId) ??
-    candidates.find((candidate) =>
-      concept.id.includes(candidate.semanticSignature),
-    ) ??
-    candidates.find((candidate) =>
-      candidate.statement
-        .toLowerCase()
-        .includes(concept.statement.toLowerCase().replace(/\.$/, "")),
-    ) ??
-    null
-  );
 }
 
 function mechanismTitleById(
@@ -218,7 +56,9 @@ function supportingMechanismNames(
   candidate: ConceptCandidate | null,
   mechanisms: OrganizationalMechanism[],
 ): string[] {
-  if (!candidate) return [];
+  if (!candidate) {
+    return [];
+  }
 
   const titleById = mechanismTitleById(mechanisms);
 
@@ -228,37 +68,14 @@ function supportingMechanismNames(
     .slice(0, 5);
 }
 
-function conditionById(
-  conditions: OrganizationalConditionLike[],
-): Map<string, OrganizationalConditionLike> {
-  return new Map(conditions.map((condition) => [condition.id, condition]));
-}
-
-function isUsableTheory(concept: ConceptualUnderstandingLike): boolean {
-  const text = `${concept.id} ${concept.statement}`.toLowerCase();
-
-  if (text.includes("concept-emergent-appears")) return false;
-  if (text.includes("concept-emergent-across")) return false;
-  if (text.includes("concept-emergent-organization")) return false;
-  if (text.includes("concept-emergent-organizational")) return false;
-  if (text.includes("concept-emergent-mechanism")) return false;
-  if (text.includes("concept-emergent-recurring")) return false;
-  if (text.includes("concept-emergent-unclassified")) return false;
-  if (text.includes("recurring appears pattern")) return false;
-  if (text.includes("recurring across pattern")) return false;
-  if (text.includes("recurring organization pattern")) return false;
-  if (text.includes("recurring mechanism pattern")) return false;
-  if (text.includes("recurring recurring pattern")) return false;
-
-  return true;
-}
-
 function judgmentSupportsTheory(
   judgment: OrganizationalJudgment,
   concept: ConceptualUnderstandingLike | null,
   candidate: ConceptCandidate | null,
 ): boolean {
-  if (!concept) return true;
+  if (!concept) {
+    return true;
+  }
 
   const judgmentText = normalize(
     `${judgment.title} ${judgment.assessment} ${judgment.executiveRecommendation}`,
@@ -311,7 +128,9 @@ function buildConditionNarrative(params: {
 
   const stateSentence = organizationalState?.summary
     ? organizationalState.summary
-    : `Discovery sees the organization as ${organizationalState?.status ?? "under assessment"}.`;
+    : `Discovery sees the organization as ${
+        organizationalState?.status ?? "under assessment"
+      }.`;
 
   const relationshipSentence =
     relatedNames.length > 0
@@ -354,87 +173,27 @@ function matchingTheoriesForCondition(
     .slice(0, 4);
 }
 
-function matchingMechanismsForCondition(
-  condition: OrganizationalConditionLike,
-  mechanisms: OrganizationalMechanism[],
-): OrganizationalMechanism[] {
-  const supportIds = condition.supportingMechanismIds ?? [];
-
-  return mechanisms
-    .filter((mechanism) => supportIds.includes(mechanism.id))
-    .sort((a, b) => rankMechanism(b) - rankMechanism(a))
-    .slice(0, 5);
-}
-
 export function buildExecutiveAssessment(
   input: BuildExecutiveAssessmentInput,
 ): OrganizationalAssessment {
-  const rankedJudgments = [...input.judgments].sort(
-    (a, b) => b.overallScore - a.overallScore,
-  );
+  const priority = buildExecutivePriority(input);
 
-  const rankedMechanisms = [...(input.mechanisms ?? [])].sort(
-    (a, b) => rankMechanism(b) - rankMechanism(a),
-  );
-
-  const rankedConditions = [...(input.organizationalConditions ?? [])].sort(
-    (a, b) => rankCondition(b) - rankCondition(a),
-  );
-
-  const rankedConceptualUnderstanding = [
-    ...(input.conceptualUnderstanding ?? []),
-  ]
-    .filter(isUsableTheory)
-    .sort(
-      (a, b) =>
-        rankConceptualUnderstanding(b) - rankConceptualUnderstanding(a),
-    );
-
-  const rankedConceptCandidates = [...(input.conceptCandidates ?? [])]
-    .filter((candidate) => !candidate.id.startsWith("concept-emergent-"))
-    .sort((a, b) => rankConceptCandidate(b) - rankConceptCandidate(a));
-
-  const primaryConcept = rankedConceptualUnderstanding[0] ?? null;
-  const alternativeTheories = rankedConceptualUnderstanding.slice(1, 4);
-
-  const primaryConceptCandidate =
-    findSupportingCandidate(primaryConcept, rankedConceptCandidates) ??
-    rankedConceptCandidates[0] ??
-    null;
-
-  const primaryCondition =
-    rankedConditions.find(
-      (condition) =>
-        input.organizationalState?.dominantConditions?.includes(condition.id),
-    ) ??
-    rankedConditions[0] ??
-    null;
-
-  const conditionsById = conditionById(rankedConditions);
-
-  const stateDominantConditions =
-    input.organizationalState?.dominantConditions
-      ?.map((id) => conditionsById.get(id))
-      .filter(
-        (condition): condition is OrganizationalConditionLike =>
-          Boolean(condition),
-      ) ?? [];
-
-  const primaryMechanisms =
-    primaryCondition
-      ? matchingMechanismsForCondition(primaryCondition, rankedMechanisms)
-      : primaryConceptCandidate?.supportingMechanismIds.length
-        ? rankedMechanisms
-            .filter((mechanism) =>
-              primaryConceptCandidate.supportingMechanismIds.includes(
-                mechanism.id,
-              ),
-            )
-            .slice(0, 5)
-        : rankedMechanisms.slice(0, 5);
-
-  const strongestJudgment = rankedJudgments[0] ?? null;
-  const strongestMechanism = primaryMechanisms[0] ?? rankedMechanisms[0] ?? null;
+  const {
+    rankedJudgments,
+    rankedMechanisms,
+    rankedConceptualUnderstanding,
+    primaryCondition,
+    supportingConditions,
+    primaryConcept,
+    alternativeTheories,
+    primaryConceptCandidate,
+    primaryMechanisms,
+    strongestJudgment,
+    strongestMechanism,
+    highestValueInvestigation,
+    recommendedFocus,
+    confidence,
+  } = priority;
 
   const theorySupportingJudgments = primaryConcept
     ? rankedJudgments.filter((judgment) =>
@@ -467,57 +226,11 @@ export function buildExecutiveAssessment(
   );
 
   const supportingTheoriesForPrimaryCondition = primaryCondition
-    ? matchingTheoriesForCondition(primaryCondition, rankedConceptualUnderstanding)
-    : [];
-
-  const recommendedFocus = primaryCondition
-    ? [
-        primaryCondition.name,
-        ...stateDominantConditions
-          .filter((condition) => condition.id !== primaryCondition.id)
-          .map((condition) => condition.name),
-      ].slice(0, 4)
-    : primaryConcept
-      ? [
-          primaryConcept.statement.replace(/\.$/, ""),
-          ...conceptMechanismNames,
-        ].slice(0, 4)
-      : primaryMechanisms.length > 0
-        ? primaryMechanisms.map(
-            (mechanism) => mechanism.executiveName || mechanism.title,
-          )
-        : executiveJudgments
-            .filter(
-              (judgment) =>
-                judgment.status === "accepted" ||
-                judgment.status === "competing",
-            )
-            .slice(0, 3)
-            .map((judgment) => judgment.title);
-
-  const highestValueInvestigation = input.investigationOpportunities?.[0];
-
-  const conditionConfidence = primaryCondition
-    ? clamp01(
-        average(
-          [
-            primaryCondition.confidence ?? 0,
-            primaryCondition.strength ?? 0,
-            input.organizationalState?.confidence ?? 0,
-          ].filter((value) => value > 0),
-        ),
+    ? matchingTheoriesForCondition(
+        primaryCondition,
+        rankedConceptualUnderstanding,
       )
-    : 0;
-
-  const confidence = primaryCondition
-    ? conditionConfidence
-    : primaryConcept
-      ? rankConceptualUnderstanding(primaryConcept)
-      : average(
-          rankedJudgments
-            .filter((judgment) => judgment.status !== "rejected")
-            .map((judgment) => judgment.confidence),
-        );
+    : [];
 
   const theoryValidation = buildTheoryReflection({
     primaryConcept,
@@ -530,7 +243,9 @@ export function buildExecutiveAssessment(
   });
 
   const summary = primaryCondition
-    ? `Discovery judges that the current organizational state is ${input.organizationalState?.status ?? "under assessment"}, led by ${primaryCondition.name}.`
+    ? `Discovery judges that the current organizational state is ${
+        input.organizationalState?.status ?? "under assessment"
+      }, led by ${primaryCondition.name}.`
     : primaryConcept
       ? `Discovery judges that the dominant organizational theory is: ${primaryConcept.statement.replace(
           /\.$/,
@@ -553,9 +268,7 @@ export function buildExecutiveAssessment(
     ? buildConditionNarrative({
         organizationalState: input.organizationalState,
         primaryCondition,
-        relatedConditions: stateDominantConditions.filter(
-          (condition) => condition.id !== primaryCondition.id,
-        ),
+        relatedConditions: supportingConditions,
         supportingTheories: supportingTheoriesForPrimaryCondition.length
           ? supportingTheoriesForPrimaryCondition
           : rankedConceptualUnderstanding.slice(0, 3),
@@ -567,13 +280,23 @@ export function buildExecutiveAssessment(
       ? `${primaryConcept.summary ?? primaryConcept.statement}${supportingMechanismText} ${
           primaryConcept.explanation ??
           "This theory ranked highest because it had the strongest combined conceptual confidence, coverage, stability, and explanatory power."
-        } ${theoryValidation.whyDiscoveryBelievesIt} ${theoryValidation.calibratedConfidenceExplanation} ${theoryValidation.executiveRecommendation}`
+        } ${theoryValidation.whyDiscoveryBelievesIt} ${
+          theoryValidation.calibratedConfidenceExplanation
+        } ${theoryValidation.executiveRecommendation}`
       : strongestJudgment
         ? `${strongestJudgment.assessment} This explanation ranked highest because it had the strongest combined judgment score across evidence, explanatory power, causal plausibility, executive significance, and intervention leverage. ${theoryValidation.calibratedConfidenceExplanation}`
         : "The available reasoning paths did not produce a coherent executive assessment.";
 
   const investigationNarrative = highestValueInvestigation
-    ? ` Discovery's highest-value next investigation is ${highestValueInvestigation.topic}. This investigation is expected to improve confidence by approximately ${highestValueInvestigation.expectedConfidenceGain}% across ${highestValueInvestigation.affectedConditions.join(", ")}. Suggested executive question: ${highestValueInvestigation.suggestedExecutiveQuestion}`
+    ? ` Discovery's highest-value next investigation is ${
+        highestValueInvestigation.topic
+      }. This investigation is expected to improve confidence by approximately ${
+        highestValueInvestigation.expectedConfidenceGain
+      }% across ${highestValueInvestigation.affectedConditions.join(
+        ", ",
+      )}. Suggested executive question: ${
+        highestValueInvestigation.suggestedExecutiveQuestion
+      }`
     : "";
 
   const mechanismCenteredNarrative = primaryCondition
@@ -584,7 +307,11 @@ export function buildExecutiveAssessment(
           "",
         )} appears to be the primary force shaping the organization's behavior. Leadership should treat the supporting mechanisms as symptoms of this deeper organizational theory rather than isolated problems.`
       : strongestMechanism
-        ? `${strongestMechanism.executiveName || strongestMechanism.title} appears to be the primary force shaping the organization's behavior. ${strongestMechanism.executiveImplication}`
+        ? `${
+            strongestMechanism.executiveName || strongestMechanism.title
+          } appears to be the primary force shaping the organization's behavior. ${
+            strongestMechanism.executiveImplication
+          }`
         : undefined;
 
   return {

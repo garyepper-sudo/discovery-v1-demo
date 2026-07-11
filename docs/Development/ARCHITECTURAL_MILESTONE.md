@@ -2,7 +2,7 @@
 
 **Current Version:** Discovery 1.0
 
-**Architectural Milestone:** Organizational Adaptive Understanding
+**Architectural Milestone:** Executive Intelligence Extraction
 
 **Status:** Approved
 
@@ -10,135 +10,200 @@
 
 # Executive Summary
 
-The Cognitive Architecture, Engine Map, and Understanding Scorecard collectively establish that Discovery possesses a strong foundation for organizational reasoning.
+Discovery has completed the foundational Cognitive Architecture, Capability Registry, Architecture Verification Framework, and Executive Projection Audit.
 
-Discovery reliably perceives organizational experience, constructs explainable organizational understanding, preserves organizational memory, and produces executive insight.
+The architecture now demonstrates that Discovery already produces substantially more executive intelligence than is currently exposed through the Executive Workspace.
 
-The Understanding Scorecard also identifies Discovery's primary architectural weakness.
+Architecture verification confirms that Discovery's cognitive systems are coherent, traceable, and self-validating.
 
-Discovery currently preserves organizational understanding more effectively than it improves that understanding through accumulated organizational experience.
+The next stage of Discovery is therefore no longer focused on expanding cognition.
 
-Its next stage of evolution should therefore focus on strengthening **Adaptive Organizational Understanding**.
-
-The objective of this milestone is not to introduce additional engines.
-
-The objective is to improve Discovery's ability to continuously refine organizational understanding as new organizational experience becomes available.
+The next stage focuses on exposing the cognition that already exists.
 
 ---
 
 # Why This Milestone
 
-The Understanding Scorecard identified Adaptation as Discovery's weakest cognitive capability.
+The Executive Projection Audit revealed that Discovery already produces rich executive intelligence including:
 
-Current adaptation remains largely passive.
+- Organizational State
+- Organizational Conditions
+- Organizational Beliefs
+- Organizational Theories
+- Organizational Mechanisms
+- Organizational Learning Profile
+- Theory Validation
+- Investigation Opportunities
 
-Discovery accumulates organizational understanding but performs only limited refinement as new experience is added.
+Most of these capabilities already exist inside Runtime and are validated through Atlas.
 
-As a result, organizational understanding evolves more slowly than the organization's actual experience.
+However, many remain only partially projected into the Executive Workspace.
 
-Improving adaptation produces benefits across multiple dimensions of organizational cognition.
+As a result, Discovery often knows substantially more than executives are currently able to see.
 
-Rather than strengthening a single capability, adaptive understanding improves the quality of nearly every subsequent cognitive transformation.
+The primary objective is therefore intelligence extraction rather than engine expansion.
 
 ---
 
 # Architectural Objective
 
-Enable Discovery to continuously refine organizational understanding through accumulated organizational experience.
+Expose every significant executive capability through the complete canonical product pipeline.
 
-Rather than treating each investigation as an isolated reasoning exercise, Discovery should increasingly behave as a continuously learning organizational cognition system.
+Every capability should eventually progress through:
 
-New organizational experience should be capable of:
+```text
+Engine
 
-- Strengthening existing understanding.
-- Weakening outdated understanding.
-- Increasing or decreasing confidence.
-- Identifying emerging organizational dynamics.
-- Refining organizational memory.
-- Updating executive understanding.
+↓
 
-The result should be a continuously evolving organizational understanding rather than a sequence of independent investigations.
+Runtime
+
+↓
+
+Executive Projection
+
+↓
+
+Executive Workspace
+
+↓
+
+Atlas
+
+↓
+
+Simulation
+```
+
+The Executive Workspace should become a direct projection of Discovery's organizational cognition rather than a manually designed interface.
 
 ---
 
-# Expected Cognitive Fitness Improvements
+# Executive Projection Priorities
+
+## Phase 1
+
+Complete executive visibility for:
+
+- Organizational State
+- Organizational Conditions
+- Executive Assessment
+- Theory Validation
+- Investigation Opportunities
+
+---
+
+## Phase 2
+
+Complete executive visibility for:
+
+- Organizational Beliefs
+- Organizational Mechanisms
+- Organizational Theories
+- Organizational Learning Profile
+
+---
+
+## Phase 3
+
+Complete executive visibility for:
+
+- Organizational Observations
+- Evidence Explorer
+
+---
+
+# Expected Architectural Improvements
 
 Primary improvements:
 
-- Adaptation
-- Continuity
-- Integration
+- Executive Utility
+- Explainability
+- Traceability
 
 Secondary improvements:
 
-- Emergence
-- Executive Utility
+- Continuity
+- Integration
 
-Expected score improvements:
+The objective is not to increase cognitive capability.
 
-| Dimension | Current | Target |
-|------------|--------:|-------:|
-| Adaptation | 3 | 5 |
-| Continuity | 5 | 6 |
-| Integration | 5 | 6 |
-| Emergence | 4 | 5 |
-
-The objective is not numerical improvement alone.
-
-The objective is measurable improvement in Discovery's organizational cognition.
+The objective is to expose existing cognition in a form executives can immediately understand and act upon.
 
 ---
 
 # Success Criteria
 
-This milestone will be considered successful when Discovery demonstrates the ability to:
+This milestone is complete when Discovery demonstrates that every executive capability identified in the Executive Projection Audit is:
 
-- Refine existing organizational understanding using new experience.
-- Increase or decrease confidence in existing beliefs.
-- Update organizational memory without manual intervention.
-- Detect meaningful organizational change across investigations.
-- Explain why organizational understanding evolved.
-- Produce executive understanding that reflects accumulated organizational learning rather than isolated reasoning.
+- Produced by the Engine.
+- Persisted within Runtime.
+- Projected through the Executive Projection.
+- Visible within the Executive Workspace.
+- Validated through Atlas.
+
+The Executive Workspace should expose Discovery's complete organizational understanding rather than a subset of its cognition.
 
 ---
 
 # Architectural Guardrails
 
-This milestone should preserve Discovery's architectural coherence.
-
 Implementation should:
 
-- Strengthen existing cognitive transformations.
-- Avoid introducing unnecessary architectural layers.
-- Preserve explainability.
-- Maintain traceability between experience and understanding.
-- Continue using the Cognitive Fitness Profile as the primary measure of success.
+- Preserve canonical cognitive ownership.
+- Continue using the Capability Registry as the architectural source of truth.
+- Continue validating architecture through the Architecture Verification Framework.
+- Avoid duplicate executive representations.
+- Avoid introducing new reasoning engines unless they measurably improve the Understanding Scorecard.
 
-Discovery should become more adaptive without becoming more complex than necessary.
+Executive Projection should expose cognition—not reconstruct it.
 
 ---
 
 # Long-Term Impact
 
-Adaptive Organizational Understanding establishes the foundation for every future architectural milestone.
+Executive Intelligence Extraction represents the transition from cognitive architecture development to executive product development.
 
-Once Discovery can continuously improve its own organizational understanding, later capabilities naturally become possible, including:
+Once executive projection is complete, future milestones naturally become:
 
-- Rich organizational memory consolidation.
-- Cross-investigation understanding integration.
-- Emergent organizational dynamics.
-- Persistent organizational patterns.
-- Organizational network evolution.
-- Continuously improving executive understanding.
+- Organizational Simulation
+- Organizational Forecasting
+- Organizational Intervention Planning
+- Executive Decision Support
+- Autonomous Organizational Learning
 
-Adaptive understanding therefore represents the transition from an investigation platform to a continuously learning organizational cognition platform.
+Discovery's future evolution will increasingly focus on helping organizations become progressively more self-aware through continuous organizational understanding rather than through additional isolated reasoning capabilities.
 
 ---
 
 # Completion Definition
 
-This architectural milestone is complete when Discovery demonstrates a measurable improvement in adaptive organizational understanding and the Understanding Scorecard reflects corresponding improvements in Discovery's Cognitive Fitness Profile.
+This milestone is complete when the Executive Projection Audit no longer contains Hidden or Partial capabilities.
 
-Progress will be evaluated through architectural outcomes rather than implementation complexity.
+Every significant cognitive capability should be fully connected through:
 
-Discovery advances when organizations become measurably more self-aware—not when additional software components are created.
+```text
+Engine
+
+↓
+
+Runtime
+
+↓
+
+Executive Projection
+
+↓
+
+Executive Workspace
+
+↓
+
+Atlas
+
+↓
+
+Simulation
+```
+
+Discovery advances when executives can fully leverage the organizational understanding Discovery already produces—not when additional reasoning engines are added.

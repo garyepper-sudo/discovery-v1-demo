@@ -1,6 +1,12 @@
 import type { DiscoveryV3Result } from "../../../engine/v3/types";
 import type { OrganizationRuntime } from "../../../engine/v3/runtime/organizationRuntime";
 
+import {
+  choosePrimaryBelief,
+  choosePrimaryUnderstanding,
+  choosePrimaryInvestigationOpportunity,
+} from "../../../engine/v3/projection/ExecutiveProjectionCompiler";
+
 import type {
   ExecutiveAttentionSeverity,
   ExecutiveEvolutionMilestone,
@@ -507,13 +513,20 @@ export function buildExecutiveProjection({
   result,
   runtime,
 }: BuildExecutiveProjectionInput): ExecutiveProjection {
-  const primaryBelief = result.beliefs[0];
-  const primaryUnderstanding = result.understanding[0];
-  const earlyExecutiveUnderstanding =
-    result.executiveUnderstanding;
-
   const runtimeMemory =
     getRuntimeExecutiveMemory(runtime);
+
+  const primaryBelief = choosePrimaryBelief(
+    result.beliefs,
+  );
+
+  const primaryUnderstanding =
+    choosePrimaryUnderstanding(
+      result.understanding,
+    );
+
+  const earlyExecutiveUnderstanding =
+    result.executiveUnderstanding;
 
   const synthesizedUnderstanding =
     getStrongestRuntimeUnderstanding(runtimeMemory);
@@ -540,7 +553,9 @@ export function buildExecutiveProjection({
     buildOrganizationalLearningProfileProjection(runtimeMemory);
 
   const investigationOpportunity =
-    runtimeMemory?.investigationOpportunities?.[0];
+    choosePrimaryInvestigationOpportunity(
+      runtimeMemory?.investigationOpportunities,
+    );
 
   const confidence = toPercentage(
     synthesizedUnderstanding?.confidence ??

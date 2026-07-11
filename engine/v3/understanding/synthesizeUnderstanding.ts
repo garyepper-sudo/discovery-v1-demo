@@ -11,6 +11,9 @@ import {
   createDefaultDomainUnderstandings,
   createEmptyUnderstandingScore,
 } from "../runtime/organizationalUnderstandingState";
+import {
+  choosePrimaryOrganizationalUnderstanding,
+} from "./rankOrganizationalUnderstanding";
 
 const DOMAIN_LABELS: Record<OrganizationalDomainKey, string> = {
   strategy: "Strategy",
@@ -212,9 +215,10 @@ function computeScore(
 function createExecutiveSummary(
   understandings: OrganizationalUnderstandingItem[]
 ): string {
-  const strongest = [...understandings].sort(
-    (a, b) => b.explanatoryPower - a.explanatoryPower
-  )[0];
+  const strongest =
+    choosePrimaryOrganizationalUnderstanding(
+      understandings,
+    );
 
   if (!strongest) {
     return "Discovery has not yet formed enough organizational understanding to produce an executive summary.";
@@ -332,9 +336,10 @@ function buildDomainUnderstanding(params: {
 
   const score = computeScore(domainUnderstandings);
 
-  const strongest = [...domainUnderstandings].sort(
-    (a, b) => b.explanatoryPower - a.explanatoryPower
-  )[0];
+  const strongest =
+    choosePrimaryOrganizationalUnderstanding(
+      domainUnderstandings,
+    );
 
   const relatedRecommendationIds = recommendations
     .filter((recommendation) =>
