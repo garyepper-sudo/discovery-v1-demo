@@ -1,6 +1,6 @@
 # Discovery Cognitive Flow Map
 
-**Status:** Proposed
+**Status:** Canonical (Sprint 65)
 
 ---
 
@@ -24,12 +24,13 @@ Cognitive Transformation
 New Cognitive Object
 ```
 
-This document should answer:
+This document answers:
 
 - What does each capability consume?
 - What does each capability produce?
 - Which higher-order capabilities depend on that output?
-- Can cognition be traced from source evidence to executive intelligence?
+- Which component is the canonical producer?
+- Can cognition be traced from source evidence to executive understanding?
 - Where are there missing, bypassed, duplicated, or orphaned transformations?
 
 ---
@@ -93,6 +94,10 @@ Executive Assessment
 
 ↓
 
+Organizational Understanding
+
+↓
+
 Executive Projection
 
 ↓
@@ -100,9 +105,9 @@ Executive Projection
 Executive Experience
 ```
 
-This is the current conceptual flow.
+This is now Discovery's canonical cognitive pipeline.
 
-It must be verified against the actual canonical implementation before being marked stable.
+Executive Assessment is the canonical producer of persistent Organizational Understanding.
 
 ---
 
@@ -112,12 +117,12 @@ It must be verified against the actual canonical implementation before being mar
 2. Every cognitive transformation must declare its outputs.
 3. Every output must have at least one known consumer or be explicitly terminal.
 4. Every executive object must be traceable back to lower-level cognition.
-5. No React component may reconstruct cognition outside Executive Projection.
-6. Runtime persistence must preserve enough provenance to reconstruct the audit trail.
-7. Lateral intelligence must be represented even when it does not immediately feed a higher-level object.
-8. A capability may consume multiple peer-level objects.
-9. A higher-order object must not erase the lineage of the objects used to create it.
-10. Atlas should verify that all canonical flow paths remain connected.
+5. Every cognitive object should have exactly one canonical producer.
+6. No React component may reconstruct cognition outside Executive Projection.
+7. Runtime persistence must preserve enough provenance to reconstruct the audit trail.
+8. Lateral intelligence should remain available even when it is not promoted into the current executive understanding.
+9. Higher-order synthesis must preserve lineage rather than replace it.
+10. Atlas validates every canonical flow path.
 
 ---
 
@@ -125,7 +130,7 @@ It must be verified against the actual canonical implementation before being mar
 
 ## Source Material → Evidence
 
-Transformation:
+Transformation
 
 - Evidence construction
 - Evidence weighting
@@ -133,11 +138,11 @@ Transformation:
 - Evidence graph construction
 - Evidence network construction
 
-Primary output:
+Produces
 
 - Evidence
 
-Supporting outputs:
+Supporting outputs
 
 - Evidence Graph
 - Evidence Relationships
@@ -148,13 +153,13 @@ Supporting outputs:
 
 ## Evidence → Entities
 
-Transformation:
+Transformation
 
-- Entity mention extraction
+- Entity extraction
 - Entity resolution
 - Entity lifecycle tracking
 
-Primary outputs:
+Produces
 
 - Organizational Entities
 - Entity Mentions
@@ -164,14 +169,13 @@ Primary outputs:
 
 ## Evidence + Entities → Observations
 
-Transformation:
+Transformation
 
-- Raw observation construction
+- Observation construction
 - Semantic observation construction
-- Cognitive observation construction
 - Organizational observation inference
 
-Primary outputs:
+Produces
 
 - Organizational Observations
 - Semantic Observations
@@ -181,28 +185,28 @@ Primary outputs:
 
 ## Observations + Prior State → Observation Evolution
 
-Transformation:
+Transformation
 
 - Observation comparison
 - Observation merging
 - Observation evolution
 
-Primary outputs:
+Produces
 
-- Evolved Organizational Observations
+- Updated Organizational Observations
 - Observation Comparisons
-- Understanding Comparisons
+- Observation History
 
 ---
 
 ## Evidence + Observations → Signals
 
-Transformation:
+Transformation
 
 - Meaning extraction
 - Signal detection
 
-Primary outputs:
+Produces
 
 - Meaning Signals
 - Organizational Signals
@@ -211,23 +215,23 @@ Primary outputs:
 
 ## Evidence + Observations + Signals → Contradictions
 
-Transformation:
+Transformation
 
 - Contradiction detection
 
-Primary output:
+Produces
 
-- Contradictions
+- Organizational Contradictions
 
 ---
 
 ## Observations + Signals + Contradictions → Phenomena
 
-Transformation:
+Transformation
 
 - Organizational phenomenon inference
 
-Primary output:
+Produces
 
 - Organizational Phenomena
 
@@ -235,15 +239,9 @@ Primary output:
 
 # Understanding Flow
 
-**Status:** Pending mapping.
+The Understanding Operating System is now partially canonical.
 
-Expected transformations include:
-
-```text
-Observations
-Signals
-Contradictions
-Phenomena
+## Observations + Signals + Phenomena
 
 ↓
 
@@ -252,28 +250,30 @@ Mechanism Inference
 ↓
 
 Organizational Mechanisms
-```
 
-```text
-Mechanisms
-Patterns
-Evidence
-Prior Beliefs
+Canonical producer
+
+- Mechanism Engine
+
+---
+
+## Mechanisms + Prior Beliefs
 
 ↓
 
-Belief Formation and Revision
+Belief Formation / Belief Revision
 
 ↓
 
 Organizational Beliefs
-```
 
-```text
-Mechanisms
-Beliefs
-Concepts
-Patterns
+Canonical producer
+
+- Belief Engine
+
+---
+
+## Mechanisms + Beliefs + Concepts
 
 ↓
 
@@ -282,13 +282,14 @@ Theory Formation
 ↓
 
 Organizational Theories
-```
 
-```text
-Mechanisms
-Beliefs
-Theories
-Memory
+Canonical producer
+
+- Theory Engine
+
+---
+
+## Mechanisms + Beliefs + Theories + Memory
 
 ↓
 
@@ -297,13 +298,14 @@ Condition Inference
 ↓
 
 Organizational Conditions
-```
 
-```text
-Organizational Conditions
-Mechanisms
-Beliefs
-Theories
+Canonical producer
+
+- Organizational Condition Engine
+
+---
+
+## Organizational Conditions + Mechanisms + Beliefs + Theories
 
 ↓
 
@@ -312,30 +314,56 @@ State Synthesis
 ↓
 
 Organizational State
-```
 
-These paths remain provisional until verified against the canonical producers.
+Canonical producer
+
+- Organizational State Engine
+
+---
+
+## Organizational State + Conditions + Mechanisms + Beliefs + Theories
+
+↓
+
+Executive Assessment
+
+↓
+
+Executive Assessment
+
+Canonical producer
+
+- Executive Assessment Engine
+
+---
+
+## Executive Assessment
+
+↓
+
+Executive Understanding Synthesis
+
+↓
+
+Organizational Understanding
+
+Canonical producer
+
+- Executive Assessment
+
+This is now Discovery's canonical Organizational Understanding pipeline.
+
+Earlier reasoning products support executive understanding but are no longer competing producers of Organizational Understanding.
 
 ---
 
 # Executive Flow
 
-**Status:** Pending mapping.
-
-Expected transformation:
-
-```text
-Organizational State
-Organizational Conditions
-Mechanisms
-Beliefs
-Theories
-Investigation Opportunities
-Learning Profile
+## Executive Assessment
 
 ↓
 
-Executive Assessment
+Organizational Understanding
 
 ↓
 
@@ -344,49 +372,95 @@ Executive Projection
 ↓
 
 Executive Experience
-```
+
+Runtime persists Organizational Understanding.
+
+Executive Projection exposes Organizational Understanding.
+
+Executive Experience renders Executive Projection.
+
+No React component reconstructs cognition.
 
 ---
 
 # Provenance Requirement
 
-Higher-order cognition must retain traceable references to the lower-level objects that produced it.
+Every higher-order cognitive object must retain references to the lower-level cognition that produced it.
 
-Discovery should be able to answer:
+Discovery should always be able to answer:
 
 - Which evidence supports this observation?
 - Which observations support this mechanism?
 - Which mechanisms support this belief?
-- Which beliefs and mechanisms support this theory?
-- Which theories and conditions support this organizational state?
-- Which lower-level objects support this executive assessment?
+- Which beliefs support this theory?
+- Which theories support this organizational condition?
+- Which conditions support this organizational state?
+- Which lower-level cognition supports this executive assessment?
+- Which executive assessment produced this organizational understanding?
 
-Consolidation must not destroy auditability.
+Consolidation must never destroy auditability.
 
 ---
 
-# Lateral Intelligence Requirement
+# Canonical Producer Rule
 
-Some intelligence may exist alongside other objects at the same cognitive level without immediately feeding the dominant hierarchy.
+Every significant cognitive object should have exactly one canonical producer.
 
-Examples may include:
+Current canonical producers include:
 
-- competing theories,
-- rejected explanations,
-- unresolved contradictions,
-- weak signals,
-- dormant patterns,
-- alternative mechanisms,
-- missing evidence,
-- falsification criteria,
-- investigation opportunities.
+| Cognitive Object | Canonical Producer |
+|------------------|--------------------|
+| Evidence | Evidence Engine |
+| Observation | Observation Engine |
+| Mechanism | Mechanism Engine |
+| Belief | Belief Engine |
+| Theory | Theory Engine |
+| Organizational Condition | Organizational Condition Engine |
+| Organizational State | Organizational State Engine |
+| Organizational Understanding | Executive Assessment |
+| Executive Projection | Executive Projection Compiler |
 
-These objects must remain represented in Runtime and the capability graph even when they are not promoted into the current leading understanding.
+If multiple systems produce the same cognitive object, the architecture is incomplete.
+
+---
+
+# Lateral Intelligence
+
+Not every cognitive object becomes the current executive understanding.
+
+Discovery preserves:
+
+- competing theories
+- rejected explanations
+- unresolved contradictions
+- weak signals
+- dormant patterns
+- alternative mechanisms
+- missing evidence
+- falsification criteria
+- investigation opportunities
+
+These remain available inside Runtime and Atlas even when they are not promoted into the canonical executive understanding.
 
 ---
 
 # Current Status
 
-Perception flow has an initial conceptual map.
+## Canonical
 
-Understanding, Memory, Learning, Self-Awareness, Executive Intelligence, Projection, and Experience remain pending verification.
+- Perception Flow
+- Understanding Flow
+- Organizational Understanding Flow
+- Executive Flow
+
+## Current Focus
+
+Continue refining:
+
+- Executive Understanding synthesis
+- Executive Narrative quality
+- Confidence calibration
+- Longitudinal understanding
+- Executive communication
+
+The architecture now emphasizes improving the quality of executive understanding rather than introducing additional parallel reasoning pipelines.

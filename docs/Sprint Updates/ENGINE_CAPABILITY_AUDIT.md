@@ -8,11 +8,15 @@
 
 This document is the canonical inventory of Discovery's cognitive capabilities.
 
-Its purpose is to ensure Discovery evolves by exposing, organizing, and validating existing cognition before expanding it.
+Its purpose is to ensure Discovery evolves by exposing, organizing, validating, and assigning canonical ownership to every cognitive capability before expanding the engine.
 
 This document answers:
 
 > **What cognitive capabilities already exist inside Discovery?**
+
+and
+
+> **Which component is the canonical producer of each cognitive object?**
 
 The Capability Audit now serves as the bridge between Discovery's implementation and its Cognitive Architecture.
 
@@ -33,13 +37,15 @@ Architectural ownership is documented in:
 
 # Current Audit Status
 
-## Cognitive Architecture Population
+## Canonical Cognitive Architecture
 
-Sprint 63 fundamentally changed Discovery's architectural direction.
+Sprint 65 established Discovery's first canonical cognitive pipeline.
+
+Executive Assessment is now the canonical producer of persistent Organizational Understanding.
 
 The Capability Audit is no longer focused solely on exposing executive intelligence.
 
-The current objective is to populate and validate Discovery's Cognitive Architecture.
+The current objective is to ensure every significant cognitive object has exactly one canonical producer.
 
 Current work focuses on ensuring every capability has:
 
@@ -48,6 +54,7 @@ Current work focuses on ensuring every capability has:
 - one subsystem,
 - one Operating System,
 - one runtime representation,
+- one persistent representation,
 - one executive representation,
 - one traceable path through the cognitive hierarchy.
 
@@ -78,12 +85,14 @@ Discovery currently demonstrates capabilities across multiple cognitive layers.
 - Theory formation
 - Organizational condition inference
 - Organizational state inference
+- Executive understanding synthesis
 
 ## Learning
 
 - Belief revision
 - Theory evolution
 - Organizational learning profiling
+- Longitudinal understanding persistence
 
 ## Metacognition
 
@@ -96,11 +105,40 @@ Discovery currently demonstrates capabilities across multiple cognitive layers.
 ## Executive Intelligence
 
 - Executive assessment
+- Executive narrative generation
 - Executive attention
 - Executive projection
 - Executive recommendations
 
 No additional reasoning engines should be added until Atlas demonstrates a genuine missing cognitive capability.
+
+---
+
+# Canonical Producer Milestones
+
+## Completed
+
+✅ Executive Assessment is now the canonical producer of:
+
+- Organizational Understanding
+
+Earlier reasoning products now serve as supporting cognition rather than competing executive conclusions.
+
+This establishes one persistent organizational understanding pipeline across:
+
+Runtime
+
+↓
+
+Organizational Memory
+
+↓
+
+Executive Projection
+
+↓
+
+Atlas
 
 ---
 
@@ -114,8 +152,10 @@ Capability has:
 
 - canonical producer,
 - runtime representation,
+- persistent representation,
 - architectural owner,
-- verified executive path.
+- verified executive path,
+- Atlas verification.
 
 ## 🟡 Population In Progress
 
@@ -139,19 +179,19 @@ Capability belongs to previous architectural generations and should eventually b
 
 | Operating System | Status |
 |------------------|--------|
-| Perception OS | 🟡 Initial Mapping Complete |
-| Understanding OS | ⏳ Pending |
-| Memory OS | ⏳ Pending |
-| Learning OS | ⏳ Pending |
+| Perception OS | 🟢 Canonical |
+| Understanding OS | 🟡 Population |
+| Memory OS | 🟡 Population |
+| Learning OS | 🟡 Population |
 | Abstraction OS | ⏳ Pending |
 | Systems Intelligence OS | ⏳ Pending |
 | Prediction OS | ⏳ Pending |
 | Simulation OS | ⏳ Pending |
 | Adaptation OS | ⏳ Pending |
 | Self-Awareness OS | ⏳ Pending |
-| Executive Intelligence OS | ⏳ Pending |
-| Executive Projection OS | ⏳ Pending |
-| Executive Experience OS | ⏳ Pending |
+| Executive Intelligence OS | 🟢 Canonical Producer Established |
+| Executive Projection OS | 🟢 Canonical |
+| Executive Experience OS | 🟡 Refinement |
 
 ---
 
@@ -165,6 +205,7 @@ Current registries:
 - Cognitive Object Model
 - Cognitive Flow Map
 - Cognitive Operating System
+- Canonical Producer Registry
 
 These documents together describe Discovery independently of implementation.
 
@@ -189,16 +230,18 @@ Cognitive Object
 
 ↓
 
+Canonical Producer
+
+↓
+
 Implementation
 ```
 
-Files are implementation.
+Files implement capabilities.
 
-Capabilities are architecture.
+Capabilities produce cognitive objects.
 
-Objects are organizational knowledge.
-
-Operating Systems own cognition.
+Every cognitive object should have exactly one canonical producer.
 
 ---
 
@@ -261,6 +304,10 @@ Executive Assessment
 
 ↓
 
+Organizational Understanding
+
+↓
+
 Executive Projection
 
 ↓
@@ -268,7 +315,9 @@ Executive Projection
 Executive Experience
 ```
 
-Atlas validates this flow.
+Executive Assessment is now the canonical producer of Organizational Understanding.
+
+Atlas validates this complete flow.
 
 ---
 
@@ -280,11 +329,11 @@ Before implementing anything new ask:
 2. Which subsystem owns it?
 3. Which capability owns it?
 4. Which cognitive object does it produce?
-5. Does a canonical producer already exist?
+5. Is there already a canonical producer?
 6. Does Atlas validate it?
 7. Does Executive Projection expose it?
 
-If a capability has no owner, the architecture is incomplete.
+If multiple systems produce the same cognitive object, the architecture is incomplete.
 
 If Atlas already demonstrates the capability, architecture population takes priority over new cognition.
 
@@ -292,14 +341,15 @@ If Atlas already demonstrates the capability, architecture population takes prio
 
 # Current Priorities
 
-1. Populate the Understanding Operating System.
-2. Complete Capability Registry coverage.
-3. Complete Cognitive Object Model coverage.
-4. Verify Cognitive Flow against Runtime.
-5. Expand Atlas validation.
-6. Simulated organization pressure testing.
-7. Legacy cleanup.
-8. Architecture consolidation.
+1. Complete canonical producer ownership across every cognitive object.
+2. Populate the Understanding Operating System.
+3. Complete Capability Registry coverage.
+4. Complete Cognitive Object Model coverage.
+5. Improve Executive Understanding quality.
+6. Expand Atlas validation.
+7. Simulated organization pressure testing.
+8. Legacy cleanup.
+9. Architecture consolidation.
 
 ---
 
@@ -311,6 +361,8 @@ If Atlas already demonstrates the capability, architecture population takes prio
 
 > **Objects before code.**
 
-> **Every capability must have an owner.**
+> **Every cognitive object should have one canonical producer.**
 
-> **If Atlas demonstrates the capability, populate the architecture before expanding cognition.**
+> **If two systems produce the same cognitive object, simplify the architecture.**
+
+> **If Atlas demonstrates the capability, improve the existing cognition before adding new cognition.**

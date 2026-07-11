@@ -1,7 +1,7 @@
 {
-  "version": 1,
-  "status": "proposed",
-  "description": "Canonical registry of Discovery cognitive capabilities. Capabilities are permanent architectural concepts. Source files are replaceable implementations of these capabilities.",
+  "version": 2,
+  "status": "active",
+  "description": "Canonical registry of Discovery cognitive capabilities. Capabilities are permanent architectural concepts, cognitive objects have one canonical producer, and source files are replaceable implementations of those capabilities.",
   "domains": [
     {
       "code": "PER",
@@ -60,7 +60,7 @@
       "name": "Evidence Ingestion",
       "description": "Transforms investigation context and source material into structured V3 evidence that enters Discovery's canonical cognitive pipeline.",
       "domain": "PER",
-      "status": "proposed",
+      "status": "canonical",
       "canonicalProducer": "engine/v3/evidence.ts",
       "implementationFiles": [
         "engine/v3/evidence.ts"
@@ -106,7 +106,7 @@
       "name": "Organizational Observation Inference",
       "description": "Infers meaningful organizational observations from available evidence and semantic context.",
       "domain": "PER",
-      "status": "proposed",
+      "status": "canonical",
       "canonicalProducer": "engine/v3/model/observations/inferOrganizationalObservations.ts",
       "implementationFiles": [
         "engine/v3/model/observations/inferOrganizationalObservations.ts",
@@ -167,7 +167,7 @@
       "name": "Organizational Mechanism Inference",
       "description": "Infers causal or operational mechanisms that explain recurring organizational behavior.",
       "domain": "UND",
-      "status": "proposed",
+      "status": "canonical",
       "canonicalProducer": "engine/v3/model/judgment/inferOrganizationalMechanisms.ts",
       "implementationFiles": [
         "engine/v3/model/judgment/inferOrganizationalMechanisms.ts",
@@ -279,7 +279,7 @@
       "name": "Organizational Belief Formation",
       "description": "Forms organizational beliefs from mechanisms, patterns, concepts, and accumulated organizational evidence.",
       "domain": "UND",
-      "status": "proposed",
+      "status": "canonical",
       "canonicalProducer": "engine/v3/model/beliefs/inferOrganizationalBeliefs.ts",
       "implementationFiles": [
         "engine/v3/model/beliefs/inferOrganizationalBeliefs.ts",
@@ -351,7 +351,7 @@
       "name": "Organizational Theory Formation",
       "description": "Forms higher-order organizational theories that explain multiple mechanisms, beliefs, and patterns.",
       "domain": "UND",
-      "status": "proposed",
+      "status": "canonical",
       "canonicalProducer": "engine/v3/model/judgment/formOrganizationalTheories.ts",
       "implementationFiles": [
         "engine/v3/model/judgment/formOrganizationalTheories.ts",
@@ -427,7 +427,7 @@
       "name": "Organizational Condition Inference",
       "description": "Infers persistent organizational operating conditions from beliefs, mechanisms, theories, memory, and organizational relationships.",
       "domain": "UND",
-      "status": "proposed",
+      "status": "canonical",
       "canonicalProducer": "engine/v3/model/state/inferOrganizationalConditions.ts",
       "implementationFiles": [
         "engine/v3/model/state/inferOrganizationalConditions.ts"
@@ -456,7 +456,7 @@
         "Atlas"
       ],
       "livingOrganizationStage": 2,
-      "reviewStatus": "unreviewed",
+      "reviewStatus": "reviewed",
       "notes": "",
       "canonicalProducerExists": true,
       "resolvedFiles": [
@@ -480,9 +480,9 @@
     {
       "id": "CAP-UND-005",
       "name": "Executive Assessment",
-      "description": "Synthesizes organizational state, conditions, mechanisms, theories, beliefs, and investigation opportunities into an executive-level judgment.",
+      "description": "Synthesizes organizational state, conditions, mechanisms, theories, beliefs, and investigation opportunities into Discovery's canonical executive-level assessment.",
       "domain": "UND",
-      "status": "proposed",
+      "status": "canonical",
       "canonicalProducer": "engine/v3/model/judgment/buildExecutiveAssessment.ts",
       "implementationFiles": [
         "engine/v3/model/judgment/buildExecutiveAssessment.ts"
@@ -496,9 +496,12 @@
       "producesObjects": [
         "ExecutiveAssessment"
       ],
-      "consumedByCapabilities": [],
+      "consumedByCapabilities": [
+        "CAP-UND-006"
+      ],
       "runtimeDestination": "OrganizationRuntime.executiveAssessment",
       "executiveDestinations": [
+        "OrganizationalUnderstanding",
         "ExecutiveProjection",
         "ExecutiveWorkspace"
       ],
@@ -507,8 +510,8 @@
         "Atlas"
       ],
       "livingOrganizationStage": 2,
-      "reviewStatus": "unreviewed",
-      "notes": "",
+      "reviewStatus": "reviewed",
+      "notes": "Executive Assessment is the authoritative executive synthesis consumed by the canonical Executive Understanding Synthesis capability. Earlier reasoning stages support this assessment but do not independently produce persistent Organizational Understanding.",
       "canonicalProducerExists": true,
       "resolvedFiles": [
         {
@@ -532,11 +535,108 @@
       "subsystem": "Executive Assessment"
     },
     {
+      "id": "CAP-UND-006",
+      "name": "Executive Understanding Synthesis",
+      "description": "Transforms Executive Assessment into Discovery's single canonical persistent Organizational Understanding and consolidates it longitudinally across investigations.",
+      "domain": "UND",
+      "status": "canonical",
+      "canonicalProducer": "engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts",
+      "implementationFiles": [
+        "engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts",
+        "engine/v3/understanding/consolidateUnderstanding.ts",
+        "engine/v3/understanding/synthesizeUnderstanding.ts",
+        "engine/v3/runtime/evolveOrganizationRuntime.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-UND-005",
+        "CAP-MEM-001"
+      ],
+      "producesObjects": [
+        "OrganizationalUnderstanding",
+        "OrganizationalUnderstandingState"
+      ],
+      "consumedByCapabilities": [],
+      "runtimeDestination": "OrganizationRuntime.organizationalUnderstandingState",
+      "executiveDestinations": [
+        "ExecutiveProjection",
+        "ExecutiveWorkspace",
+        "Atlas"
+      ],
+      "atlasCoverage": "yes",
+      "benchmarkCoverage": [
+        "Atlas",
+        "Runtime Persistence",
+        "Longitudinal Learning",
+        "Canonical Understanding Pipeline"
+      ],
+      "livingOrganizationStage": 2,
+      "reviewStatus": "reviewed",
+      "notes": "This is the sole canonical producer of persistent Organizational Understanding. Investigation-level understandings and legacy belief-derived understandings remain available as supporting working cognition but do not compete for canonical executive understanding.",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts",
+          "existsInFileRegistry": false,
+          "fileId": null,
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "buildExecutiveUnderstandingCandidates"
+          ],
+          "imports": []
+        },
+        {
+          "path": "engine/v3/understanding/consolidateUnderstanding.ts",
+          "existsInFileRegistry": true,
+          "fileId": null,
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "UnderstandingCandidate",
+            "consolidateUnderstanding"
+          ],
+          "imports": [
+            "../runtime/organizationalUnderstandingState"
+          ]
+        },
+        {
+          "path": "engine/v3/understanding/synthesizeUnderstanding.ts",
+          "existsInFileRegistry": true,
+          "fileId": null,
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "synthesizeUnderstanding"
+          ],
+          "imports": [
+            "../runtime/organizationalUnderstandingState"
+          ]
+        },
+        {
+          "path": "engine/v3/runtime/evolveOrganizationRuntime.ts",
+          "existsInFileRegistry": true,
+          "fileId": null,
+          "architecturalLayer": "RUN",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "evolveOrganizationRuntime"
+          ],
+          "imports": [
+            "../understanding/buildExecutiveUnderstandingCandidates",
+            "../understanding/consolidateUnderstanding",
+            "../understanding/synthesizeUnderstanding"
+          ]
+        }
+      ],
+      "missingImplementationFiles": [],
+      "subsystem": "Organizational Understanding"
+    },
+    {
       "id": "CAP-MEM-001",
       "name": "Organizational Runtime Persistence",
       "description": "Persists organizational cognition across investigations so Discovery can maintain longitudinal understanding.",
       "domain": "MEM",
-      "status": "proposed",
+      "status": "canonical",
       "canonicalProducer": "engine/v3/runtime/organizationStateStore.ts",
       "implementationFiles": [
         "engine/v3/runtime/organizationStateStore.ts",
@@ -548,7 +648,8 @@
       ],
       "consumedByCapabilities": [
         "CAP-LRN-001",
-        "CAP-LRN-002"
+        "CAP-LRN-002",
+        "CAP-UND-006"
       ],
       "runtimeDestination": "OrganizationRuntime",
       "executiveDestinations": [],
@@ -558,7 +659,7 @@
         "Atlas"
       ],
       "livingOrganizationStage": 3,
-      "reviewStatus": "unreviewed",
+      "reviewStatus": "reviewed",
       "notes": "",
       "canonicalProducerExists": true,
       "resolvedFiles": [
@@ -614,7 +715,7 @@
       "name": "Organizational Belief Evolution",
       "description": "Strengthens, weakens, creates, or revises organizational beliefs as new evidence accumulates.",
       "domain": "LRN",
-      "status": "proposed",
+      "status": "canonical",
       "canonicalProducer": "engine/v3/model/beliefs/updateOrganizationalBeliefs.ts",
       "implementationFiles": [
         "engine/v3/model/beliefs/updateOrganizationalBeliefs.ts",
@@ -642,7 +743,7 @@
         "Atlas"
       ],
       "livingOrganizationStage": 4,
-      "reviewStatus": "unreviewed",
+      "reviewStatus": "reviewed",
       "notes": "",
       "canonicalProducerExists": true,
       "resolvedFiles": [
@@ -683,7 +784,7 @@
       "name": "Organizational Learning Profile",
       "description": "Measures understanding growth, memory growth, belief stability, theory stability, retention, reuse, and learning velocity.",
       "domain": "LRN",
-      "status": "proposed",
+      "status": "canonical",
       "canonicalProducer": "engine/v3/model/learning/computeOrganizationalLearningProfile.ts",
       "implementationFiles": [
         "engine/v3/model/learning/computeOrganizationalLearningProfile.ts"
@@ -707,7 +808,7 @@
         "Atlas"
       ],
       "livingOrganizationStage": 4,
-      "reviewStatus": "unreviewed",
+      "reviewStatus": "reviewed",
       "notes": "",
       "canonicalProducerExists": true,
       "resolvedFiles": [
@@ -738,7 +839,7 @@
       "name": "Theory Validation",
       "description": "Evaluates the dominant theory, competing theories, supporting evidence, contradictory evidence, confidence calibration, and falsification criteria.",
       "domain": "SELF",
-      "status": "proposed",
+      "status": "canonical",
       "canonicalProducer": "engine/v3/model/judgment/buildTheoryReflection.ts",
       "implementationFiles": [
         "engine/v3/model/judgment/buildTheoryReflection.ts"
@@ -764,7 +865,7 @@
         "Atlas"
       ],
       "livingOrganizationStage": 10,
-      "reviewStatus": "unreviewed",
+      "reviewStatus": "reviewed",
       "notes": "",
       "canonicalProducerExists": true,
       "resolvedFiles": [
@@ -795,7 +896,7 @@
       "name": "Investigation Opportunity Generation",
       "description": "Identifies the highest-value evidence gaps and recommends investigations that could improve organizational confidence.",
       "domain": "SELF",
-      "status": "proposed",
+      "status": "canonical",
       "canonicalProducer": "engine/v3/model/investigation/buildInvestigationOpportunities.ts",
       "implementationFiles": [
         "engine/v3/model/investigation/buildInvestigationOpportunities.ts"
@@ -818,7 +919,7 @@
         "Atlas"
       ],
       "livingOrganizationStage": 10,
-      "reviewStatus": "unreviewed",
+      "reviewStatus": "reviewed",
       "notes": "",
       "canonicalProducerExists": true,
       "resolvedFiles": [
@@ -839,6 +940,6 @@
       "subsystem": "Investigation Opportunities"
     }
   ],
-  "generatedAt": "2026-07-11T19:25:26.710Z",
-  "capabilityCount": 12
+  "generatedAt": "2026-07-11T20:51:21.183Z",
+  "capabilityCount": 13
 }

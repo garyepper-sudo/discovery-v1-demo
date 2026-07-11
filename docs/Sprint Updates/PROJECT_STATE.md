@@ -1,18 +1,22 @@
 # Current Milestone
 
-**Cognitive Architecture Population**
+**Canonical Organizational Understanding**
 
 ---
 
 # Current Development Phase
 
-**Cognitive Architecture Population and Architectural Verification**
+**Canonical Cognitive Architecture and Executive Understanding Refinement**
 
 Discovery has completed the initial Capability Audit and established the first version of its formal Cognitive Architecture.
+
+Discovery has also established its first canonical cognitive pipeline.
 
 The primary objective is no longer to rapidly expand Discovery's reasoning engine.
 
 The primary objective is no longer executive intelligence extraction.
+
+The primary objective is no longer determining which understanding should become canonical.
 
 Discovery now possesses a formal architectural model consisting of:
 
@@ -23,15 +27,19 @@ Discovery now possesses a formal architectural model consisting of:
 - Cognitive File Registry
 - Cognitive Capability Audit
 
-Current development focuses on populating, validating, and refining that architecture.
+Discovery now also possesses a canonical Organizational Understanding pipeline.
 
-The remaining work is primarily **architectural population**, not engine expansion.
+Executive Assessment is now the canonical producer of persistent Organizational Understanding.
+
+Current development focuses on improving the quality, clarity, and executive usefulness of that canonical pipeline while continuing to populate and validate the Cognitive Architecture.
+
+The remaining work is primarily **architectural refinement and executive understanding quality**, not engine expansion.
 
 ---
 
 # Current Objective
 
-Populate Discovery's Cognitive Architecture one Operating System at a time.
+Improve Discovery's canonical Organizational Understanding pipeline while continuing to populate the Cognitive Architecture one Operating System at a time.
 
 Every capability should ultimately belong to a complete cognitive hierarchy:
 
@@ -52,6 +60,10 @@ Cognitive Object
 
 ↓
 
+Canonical Producer
+
+↓
+
 Implementation
 ```
 
@@ -61,6 +73,7 @@ Current work focuses on ensuring every capability has:
 - one Subsystem owner,
 - one canonical producer,
 - one runtime representation,
+- one persistent representation,
 - one executive representation,
 - one traceable cognitive flow,
 - one verified Atlas implementation.
@@ -73,24 +86,27 @@ Before introducing any new reasoning capability determine:
 - Does it already belong to an Operating System?
 - Does it already have a Cognitive Object?
 
-If the answer to the first question is yes, architecture population takes priority over engine expansion.
+If Atlas already demonstrates the capability, improve the existing implementation before introducing additional cognition.
 
 ---
 
 # Current Sequence
 
 1. Run Atlas.
-2. Select the least-complete Operating System.
-3. Identify its Subsystems.
-4. Identify its Capabilities.
-5. Identify its Cognitive Objects.
-6. Verify the Cognitive Flow.
-7. Update the Capability Registry.
-8. Validate architectural integrity.
-9. Repeat until every Operating System has been populated.
-10. Begin realistic simulated organization pressure testing.
-11. Improve reasoning quality using measured simulation results.
-12. Perform legacy cleanup after architectural coverage is complete.
+2. Verify Executive Understanding.
+3. Verify Canonical Producers.
+4. Select the least-complete Operating System.
+5. Identify its Subsystems.
+6. Identify its Capabilities.
+7. Identify its Cognitive Objects.
+8. Verify the Cognitive Flow.
+9. Update the Capability Registry.
+10. Validate architectural integrity.
+11. Improve executive understanding quality.
+12. Repeat until every Operating System has been populated.
+13. Begin realistic simulated organization pressure testing.
+14. Improve reasoning quality using measured simulation results.
+15. Perform legacy cleanup after architectural coverage is complete.
 
 ---
 
@@ -102,16 +118,28 @@ The primary bottleneck is no longer reasoning capability.
 
 The primary bottleneck is no longer Executive Projection.
 
-The primary bottleneck is now **architectural completeness**.
+The primary bottleneck is no longer identifying the correct organizational understanding.
+
+Discovery now has a canonical Organizational Understanding pipeline.
+
+The primary bottleneck is now **executive understanding quality and architectural completeness**.
 
 Atlas remains the canonical cognitive verification benchmark.
 
-The Cognitive Architecture becomes the canonical architectural model.
+The Cognitive Architecture remains the canonical architectural model.
 
 Every sprint should begin with:
 
 ```text
 Run Atlas
+
+↓
+
+Verify Executive Understanding
+
+↓
+
+Verify Canonical Producers
 
 ↓
 
@@ -142,6 +170,62 @@ The browser should never reconstruct organizational cognition directly from Runt
 
 ---
 
+# Canonical Organizational Understanding
+
+Discovery now follows a single canonical understanding pipeline:
+
+```text
+Evidence
+
+↓
+
+Mechanisms
+
+↓
+
+Beliefs
+
+↓
+
+Concepts
+
+↓
+
+Theories
+
+↓
+
+Organizational Conditions
+
+↓
+
+Organizational State
+
+↓
+
+Executive Assessment
+
+↓
+
+Organizational Understanding
+
+↓
+
+Executive Projection
+
+↓
+
+Executive Experience
+```
+
+Executive Assessment is the canonical producer of Organizational Understanding.
+
+Earlier reasoning stages exist to support executive cognition rather than compete with it.
+
+Every cognitive object should eventually follow this same architectural principle.
+
+---
+
 # Cognitive Architecture Population
 
 Current status:
@@ -154,6 +238,7 @@ Current status:
 - Capability Registry
 - File Registry
 - Capability Audit
+- Canonical Organizational Understanding Pipeline
 
 ## Initial Operating System Mapping
 
@@ -161,11 +246,19 @@ Current status:
 
 ## Current Priority
 
-Populate:
+Continue populating:
 
 - Understanding Operating System
 
-Expected subsystems include:
+Current areas of refinement include:
+
+- Executive Understanding
+- Executive Narrative
+- Confidence Calibration
+- Longitudinal Understanding
+- Executive Communication
+
+Expected Understanding OS subsystems include:
 
 - Mechanism Subsystem
 - Belief Subsystem
@@ -173,6 +266,8 @@ Expected subsystems include:
 - Theory Subsystem
 - Organizational Condition Subsystem
 - Organizational State Subsystem
+- Executive Assessment Subsystem
+- Organizational Understanding Subsystem
 
 ---
 
@@ -184,10 +279,11 @@ Before implementing anything ask:
 2. Which Subsystem owns it?
 3. Which Capability owns it?
 4. Which Cognitive Object does it produce?
-5. Does Atlas validate it?
-6. Does Executive Projection expose it?
+5. Is there already a canonical producer?
+6. Does Atlas validate it?
+7. Does Executive Projection expose it?
 
-If a capability has no architectural owner, populate the architecture before writing new code.
+If multiple systems produce the same cognitive object, simplify the architecture before expanding the engine.
 
 ---
 
@@ -197,7 +293,9 @@ If a capability has no architectural owner, populate the architecture before wri
 
 > **Capabilities before files.**
 
-> **Every capability must have an owner.**
+> **Every cognitive object should have one canonical producer.**
+
+> **Improve existing cognition before adding new cognition.**
 
 > **Atlas validates cognition.**
 

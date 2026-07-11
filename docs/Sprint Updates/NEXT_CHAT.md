@@ -62,17 +62,19 @@ Use the remaining documentation only when implementation details require it.
 
 # Current Milestone
 
-**Cognitive Architecture Population**
+**Canonical Organizational Understanding**
 
 ---
 
 # Current Objective
 
-Discovery now possesses a formal Cognitive Architecture.
+Discovery now has a canonical Organizational Understanding pipeline.
 
-The primary objective is no longer creating new reasoning engines or expanding executive intelligence.
+Executive Assessment is the sole canonical producer of persistent Organizational Understanding.
 
-The current objective is to populate, verify, and refine the Cognitive Architecture one Operating System at a time.
+The next objective is **not** to add new reasoning engines.
+
+The next objective is to improve the quality, clarity, and executive usefulness of Discovery's understanding while preserving the canonical architecture.
 
 Current architectural hierarchy:
 
@@ -93,15 +95,20 @@ Cognitive Object
 
 ↓
 
+Canonical Producer
+
+↓
+
 Implementation
 ```
 
-Every capability should eventually have:
+Every significant cognitive object should have:
 
 - one Operating System owner,
 - one Subsystem owner,
 - one canonical producer,
 - one runtime representation,
+- one persistent representation,
 - one executive representation,
 - one traceable path through the cognitive hierarchy.
 
@@ -118,41 +125,11 @@ npm run simulate:atlas
 
 Atlas remains the canonical verification benchmark.
 
-Then ask:
+After Atlas completes, ask:
 
-> **Which Operating System is least complete?**
+> **Is Discovery's executive understanding correct, useful, and clearly communicated?**
 
-Development proceeds:
-
-```text
-Choose Operating System
-
-↓
-
-Identify Subsystems
-
-↓
-
-Identify Capabilities
-
-↓
-
-Identify Cognitive Objects
-
-↓
-
-Verify against Atlas
-
-↓
-
-Update Registry
-
-↓
-
-Repeat
-```
-
-Do not introduce new reasoning engines unless Atlas demonstrates a genuine missing cognitive capability.
+Only after verifying the executive understanding should implementation begin.
 
 ---
 
@@ -166,23 +143,24 @@ Do not introduce new reasoning engines unless Atlas demonstrates a genuine missi
 - Capability Registry
 - File Registry
 - Capability Audit
+- Canonical Organizational Understanding Pipeline
 
-## Initial Mapping Complete
+## Canonical Producer Established
 
-- Perception Operating System
+- Executive Assessment → Organizational Understanding
 
-## Next Operating System
+## Current Focus
 
-Understanding OS.
+Improve Executive Understanding quality.
 
-Expected subsystems include:
+Current areas of refinement include:
 
-- Mechanism Subsystem
-- Belief Subsystem
-- Concept Subsystem
-- Theory Subsystem
-- Organizational Condition Subsystem
-- Organizational State Subsystem
+- Executive Narrative
+- Executive Understanding synthesis
+- Confidence calibration
+- Longitudinal understanding
+- Executive communication
+- Atlas validation
 
 ---
 
@@ -191,7 +169,8 @@ Expected subsystems include:
 Atlas is now both:
 
 - the cognitive benchmark,
-- and the architectural verification benchmark.
+- the architectural verification benchmark,
+- and the executive understanding benchmark.
 
 Every sprint should follow this sequence:
 
@@ -200,38 +179,39 @@ Run Atlas
 
 ↓
 
+Verify Executive Understanding
+
+↓
+
 Verify Cognitive Objects
 
 ↓
 
-Verify Capabilities
+Verify Canonical Producers
 
 ↓
 
-Verify Subsystems
-
-↓
-
-Verify Operating System
+Verify Operating Systems
 
 ↓
 
 Update Registry
 ```
 
-If Atlas already demonstrates a capability, architecture population takes priority over engine expansion.
+If Atlas demonstrates that executive understanding is incomplete, improve the existing synthesis before introducing additional reasoning.
 
 ---
 
 # Current Priorities
 
-1. Populate Understanding Operating System.
-2. Complete Capability Registry coverage.
-3. Complete Cognitive Object Model.
-4. Verify Cognitive Flow against Runtime.
-5. Expand Atlas architectural validation.
-6. Populate Memory Operating System.
-7. Populate Learning Operating System.
+1. Improve Executive Understanding synthesis.
+2. Improve Executive Narrative quality.
+3. Improve longitudinal understanding.
+4. Improve confidence calibration.
+5. Continue populating Cognitive Operating Systems.
+6. Expand Atlas architectural validation.
+7. Populate Memory Operating System.
+8. Populate Learning Operating System.
 
 ---
 
@@ -239,6 +219,7 @@ If Atlas already demonstrates a capability, architecture population takes priori
 
 - Build new reasoning engines unless Atlas demonstrates a missing capability.
 - Create duplicate canonical producers.
+- Allow multiple systems to produce the same cognitive object.
 - Allow a capability to exist without an Operating System owner.
 - Allow a subsystem to exist without an Operating System.
 - Allow a cognitive object without provenance.
@@ -258,10 +239,11 @@ Before implementing anything ask:
 2. Which subsystem owns it?
 3. Which capability owns it?
 4. Which cognitive object does it produce?
-5. Does Atlas validate it?
-6. Does Executive Projection expose it?
+5. Is there already a canonical producer?
+6. Does Atlas validate it?
+7. Does Executive Projection expose it?
 
-If the capability has no architectural owner, populate the architecture before writing new code.
+If multiple systems produce the same cognitive object, simplify the architecture before expanding the engine.
 
 ---
 
@@ -273,7 +255,9 @@ If the capability has no architectural owner, populate the architecture before w
 
 > **Capabilities before files.**
 
-> **Every capability must have an owner.**
+> **Every cognitive object should have one canonical producer.**
+
+> **Executive Assessment is the canonical producer of Organizational Understanding.**
 
 > **Atlas validates cognition.**
 
