@@ -672,16 +672,76 @@ function printAtlasInvestigation(params: {
   );
   console.log("");
 
+  const canonicalScore =
+    investigation.organizationalUnderstandingScore;
+
   console.log("BENCHMARK HEALTH");
   console.log("----------------");
+
   console.log(
-    `Understanding score: ${Math.round(
+    `Legacy benchmark ............. ${Math.round(
       investigation.benchmarkScore.score,
     )}%`,
   );
+
   console.log(
-    `Passed: ${investigation.benchmarkScore.passed ? "Yes" : "No"}`,
+    `Legacy passed ................. ${
+      investigation.benchmarkScore.passed
+        ? "Yes"
+        : "No"
+    }`,
   );
+
+  console.log("");
+
+  console.log(
+    `Canonical understanding ...... ${canonicalScore.score}%`,
+  );
+
+  console.log(
+    `Canonical passed .............. ${
+      canonicalScore.passed
+        ? "Yes"
+        : "No"
+    }`,
+  );
+
+  console.log("");
+
+  console.log(
+    `Structural completeness ...... ${canonicalScore.structuralCompletenessScore}%`,
+  );
+
+  console.log(
+    `State integration ............ ${canonicalScore.stateIntegrationScore}%`,
+  );
+
+  console.log(
+    `Causal support ............... ${canonicalScore.causalSupportScore}%`,
+  );
+
+  console.log(
+    `Theory evaluation ............ ${canonicalScore.theoryEvaluationScore}%`,
+  );
+
+  console.log(
+    `Confidence calibration ....... ${canonicalScore.confidenceCalibrationScore}%`,
+  );
+
+  console.log(
+    `Executive actionability ...... ${canonicalScore.executiveActionabilityScore}%`,
+  );
+
+  if (canonicalScore.notes.length > 0) {
+    console.log("");
+    console.log("UNDERSTANDING REVIEW");
+    console.log("--------------------");
+
+    canonicalScore.notes.forEach((note, index) => {
+      console.log(`${index + 1}. ${note}`);
+    });
+  }
+
   console.log("");
 }
 
