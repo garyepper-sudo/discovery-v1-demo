@@ -41,6 +41,33 @@ export type ExecutiveTheoryValidation = {
   executiveRecommendation: string;
 };
 
+export type ExecutiveAssessment = {
+  /**
+   * Concise statement of Discovery's executive assessment.
+   */
+  summary: string;
+
+  /**
+   * Full executive-facing narrative explaining the assessment.
+   */
+  executiveNarrative: string;
+
+  /**
+   * Discovery's confidence in the assessment.
+   */
+  confidence: number;
+
+  /**
+   * Highest-priority areas leadership should focus on.
+   */
+  recommendedFocus: string[];
+
+  /**
+   * Structured validation of the theory supporting the assessment.
+   */
+  theoryValidation?: ExecutiveTheoryValidation;
+};
+
 export type ExecutiveOrganizationalState = {
   /**
    * Discovery's current assessment of the organization's
@@ -131,6 +158,55 @@ export type ExecutiveOrganizationalBelief = {
    * Supporting concepts.
    */
   supportingConcepts: string[];
+};
+
+export type ExecutiveInvestigationStrategy = {
+  /**
+   * Discovery's current approach to directing future learning.
+   */
+  mode:
+    | "explore"
+    | "challenge"
+    | "preserve"
+    | "exploit";
+
+  /**
+   * Why Discovery selected this strategy.
+   */
+  rationale: string[];
+
+  /**
+   * Whether Discovery should actively seek evidence that could
+   * weaken or falsify its current leading explanation.
+   */
+  prioritizeContradictoryEvidence: boolean;
+
+  /**
+   * Whether Discovery should broaden the range of evidence
+   * and investigation topics it considers.
+   */
+  prioritizeEvidenceDiversity: boolean;
+
+  /**
+   * Multiplier applied when reducing the priority of
+   * recently repeated investigation topics.
+   */
+  repeatedTopicPenaltyMultiplier: number;
+
+  /**
+   * Additional priority given to knowledge-preservation evidence.
+   */
+  knowledgePreservationBoost: number;
+
+  /**
+   * Additional priority given to organizational learning-loop evidence.
+   */
+  learningLoopBoost: number;
+
+  /**
+   * Additional priority given to longitudinal condition evidence.
+   */
+  persistenceBoost: number;
 };
 
 export type ExecutiveInvestigationOpportunity = {
@@ -240,6 +316,15 @@ export type ExecutiveProjection = {
   };
 
   /**
+   * Discovery's canonical executive assessment.
+   *
+   * This preserves Executive Assessment as a first-class object
+   * through the Executive Projection instead of decomposing it
+   * exclusively into downstream presentation fields.
+   */
+  executiveAssessment?: ExecutiveAssessment;
+
+  /**
    * Discovery's integrated assessment of the
    * organization's current operating state.
    */
@@ -256,6 +341,11 @@ export type ExecutiveProjection = {
   organizationalBeliefs?: ExecutiveOrganizationalBelief[];
 
   /**
+   * Discovery's current approach to directing future learning.
+   */
+  investigationStrategy?: ExecutiveInvestigationStrategy;
+
+  /**
    * Discovery's recommended investigations.
    */
   investigationOpportunities?: ExecutiveInvestigationOpportunity[];
@@ -268,8 +358,8 @@ export type ExecutiveProjection = {
   /**
    * Structured validation of Discovery's current leading theory.
    *
-   * This is optional so the existing executive experience can continue
-   * rendering when runtime theory validation is not yet available.
+   * This remains available independently because Theory Validation
+   * is also a registered cognitive capability.
    */
   theoryValidation?: ExecutiveTheoryValidation;
 

@@ -82,6 +82,7 @@ export function evolveOrganizationRuntime(params: {
     organizationalLearningProfile?: any;
     organizationalConditions?: any[];
     organizationalState?: any;
+    investigationStrategy?: any;
     investigationOpportunities?: any[];
   };
 
@@ -502,10 +503,22 @@ export function evolveOrganizationRuntime(params: {
   const organizationalState =
     organizationalConditionResult.state;
 
+  const investigationOpportunityResult =
+    buildInvestigationOpportunities({
+      conditions: organizationalConditions,
+
+      previousLearningProfile:
+        memory.organizationalLearningProfile,
+
+      previousInvestigationOpportunities:
+        memory.investigationOpportunities,
+    });
+
+  const investigationStrategy =
+    investigationOpportunityResult.strategy;
+
   const investigationOpportunities =
-    buildInvestigationOpportunities(
-      organizationalConditions,
-    );
+    investigationOpportunityResult.opportunities;
 
   console.log("Semantic Reasoning", semanticReasoning);
   console.log("Concept Candidates", conceptCandidates);
@@ -520,6 +533,10 @@ export function evolveOrganizationRuntime(params: {
   console.log(
     "Organizational State",
     organizationalState,
+  );
+  console.log(
+    "Investigation Strategy",
+    investigationStrategy,
   );
   console.log(
     "Investigation Opportunities",
@@ -767,6 +784,7 @@ export function evolveOrganizationRuntime(params: {
     executiveAssessment,
     organizationalConditions,
     organizationalState,
+    investigationStrategy,
     investigationOpportunities,
 
     functionalInterpretationState:
@@ -819,6 +837,7 @@ export function evolveOrganizationRuntime(params: {
       organizationalLearningProfile,
       organizationalConditions,
       organizationalState,
+      investigationStrategy,
       investigationOpportunities,
     },
 
@@ -1022,6 +1041,9 @@ export function evolveOrganizationRuntime(params: {
 
     organizationalState:
       typeof organizationalState;
+
+    investigationStrategy:
+      typeof investigationStrategy;
 
     investigationOpportunities:
       typeof investigationOpportunities;

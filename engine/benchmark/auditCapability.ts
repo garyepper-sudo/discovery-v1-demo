@@ -272,8 +272,37 @@ function buildSearchTerms(
   }
 
   for (const producedObject of registryCapability?.produces ?? []) {
-    addVariants(producedObject);
-  }
+  addVariants(producedObject);
+}
+
+for (const implementationFile of
+  registryCapability?.implementationFiles ?? []) {
+  const filename = path
+    .basename(implementationFile)
+    .replace(/\.[^.]+$/, "");
+
+  addVariants(filename);
+}
+
+if (registryCapability?.canonicalProducer) {
+  const canonicalProducerName = path
+    .basename(registryCapability.canonicalProducer)
+    .replace(/\.[^.]+$/, "");
+
+  addVariants(canonicalProducerName);
+}
+
+const runtimeDestination =
+  registryCapability?.runtimeDestination;
+
+if (runtimeDestination) {
+  const runtimeProperty =
+    runtimeDestination.split(".").at(-1);
+
+  addVariants(runtimeProperty);
+}
+
+return [...terms];
 
   return [...terms];
 }

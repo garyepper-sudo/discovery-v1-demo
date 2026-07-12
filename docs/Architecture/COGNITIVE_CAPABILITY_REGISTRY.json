@@ -543,15 +543,15 @@
     },
     {
       "id": "CAP-UND-006",
-"name": "Executive Understanding Synthesis",
-"searchTerms": [
-  "buildExecutiveUnderstandingCandidates",
-  "consolidateUnderstanding",
-  "synthesizeUnderstanding",
-  "evolveOrganizationRuntime",
-  "OrganizationalUnderstanding",
-  "OrganizationalUnderstandingState"
-],
+      "name": "Executive Understanding Synthesis",
+      "searchTerms": [
+        "buildExecutiveUnderstandingCandidates",
+        "consolidateUnderstanding",
+        "synthesizeUnderstanding",
+        "evolveOrganizationRuntime",
+        "OrganizationalUnderstanding",
+        "OrganizationalUnderstandingState"
+      ],
       "description": "Transforms Executive Assessment into Discovery's single canonical persistent Organizational Understanding and consolidates it longitudinally across investigations.",
       "domain": "UND",
       "status": "canonical",
@@ -964,6 +964,6 @@
       "terminalCapability": true
     }
   ],
-  "generatedAt": "2026-07-12T03:16:58.779485Z",
+  "generatedAt": "2026-07-12T13:50:21.184Z",
   "capabilityCount": 13
 }

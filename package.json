@@ -7,14 +7,23 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+
     "simulate:atlas": "tsx engine/benchmark/runAtlas.ts",
     "audit:understanding": "tsx engine/benchmark/auditUnderstandingLayers.ts",
     "audit:capability": "tsx engine/benchmark/auditCapability.ts",
+    "audit:executive-capabilities": "npm run audit:capability -- \"Executive Assessment\" && npm run audit:capability -- \"Executive Understanding Synthesis\" && npm run audit:capability -- \"Organizational Learning Profile\" && npm run audit:capability -- \"Theory Validation\" && npm run audit:capability -- \"Investigation Opportunity Generation\"",
     "verify:architecture": "tsx engine/benchmark/verifyArchitecture.ts",
+
     "cognition:inventory": "node scripts/cognition/generateCognitiveRegistry.mjs",
     "cognition:capabilities": "node scripts/cognition/generateCapabilityRegistry.mjs",
     "cognition:validate": "node scripts/cognition/validateCapabilityRegistry.mjs",
     "cognition:discover": "node scripts/cognition/discoverCapabilities.mjs",
+    "review:domain": "node scripts/cognition/reviewCognitiveDomain.mjs",
+
+    "architecture:state": "node scripts/cognition/generateArchitectureState.mjs",
+    "architecture:handoff": "node scripts/cognition/generateArchitectureHandoff.mjs",
+
+    "sprint:brief": "node scripts/cognition/renderSprintStartup.mjs",
 
     "typecheck": "tsc --noEmit",
 
@@ -23,9 +32,11 @@
 
     "validate": "npm run typecheck && npm run evaluate",
 
-    "sprint:start": "echo '' && echo '=== Discovery Sprint Startup ===' && echo '' && echo 'Sprint Update Documents:' && find 'docs/Sprint Updates' -maxdepth 1 -type f | sort && echo '' && echo 'Project Structure:' && find . \\( -path './node_modules' -o -path './.next' -o -path './.git' \\) -prune -o -maxdepth 3 -print | sort && echo '' && echo 'Recommended Startup Workflow:' && echo '  1. npm run validate' && echo '  2. Read docs/Sprint Updates' && echo '  3. Begin capability audit'",
+    "discovery:brief": "npm run cognition:validate && npm run audit:executive-capabilities && npm run architecture:state && npm run architecture:handoff && npm run sprint:brief",
 
-    "sprint:docs": "for f in docs/Sprint\\ Updates/*.md; do echo ''; echo '============================================================'; echo $(basename \"$f\"); echo '============================================================'; cat \"$f\"; done"
+    "sprint:start": "npm run discovery:brief",
+
+    "sprint:architecture": "npm run cognition:validate && npm run audit:executive-capabilities && npm run architecture:state && npm run architecture:handoff && cat \"docs/Sprint Updates/ARCHITECTURE_HANDOFF.md\""
   },
   "dependencies": {
     "@types/node": "22.10.1",

@@ -8,9 +8,11 @@ import {
 } from "../../../engine/v3/projection/ExecutiveProjectionCompiler";
 
 import type {
+  ExecutiveAssessment,
   ExecutiveAttentionSeverity,
   ExecutiveEvolutionMilestone,
   ExecutiveInvestigationOpportunity,
+  ExecutiveInvestigationStrategy,
   ExecutiveOrganizationalBelief,
   ExecutiveOrganizationalCondition,
   ExecutiveOrganizationalLearningProfile,
@@ -64,6 +66,24 @@ type RuntimeInvestigationOpportunity = {
   expectedConfidenceGain?: number;
 };
 
+type RuntimeInvestigationStrategy = {
+  mode?:
+    | "explore"
+    | "challenge"
+    | "preserve"
+    | "exploit";
+
+  rationale?: string[];
+
+  prioritizeContradictoryEvidence?: boolean;
+  prioritizeEvidenceDiversity?: boolean;
+
+  repeatedTopicPenaltyMultiplier?: number;
+  knowledgePreservationBoost?: number;
+  learningLoopBoost?: number;
+  persistenceBoost?: number;
+};
+
 type RuntimeOrganizationalLearningProfile = {
   understandingGrowth?: number;
   memoryGrowth?: number;
@@ -114,6 +134,8 @@ type RuntimeExecutiveMemory = {
   organizationalConditions?: RuntimeOrganizationalCondition[];
 
   organizationalBeliefs?: RuntimeOrganizationalBelief[];
+
+  investigationStrategy?: RuntimeInvestigationStrategy;
 
   investigationOpportunities?: RuntimeInvestigationOpportunity[];
 
@@ -321,6 +343,38 @@ function buildEvolutionMilestones(
   return milestones;
 }
 
+function buildExecutiveAssessmentProjection(
+  runtimeMemory: RuntimeExecutiveMemory | undefined,
+): ExecutiveAssessment | undefined {
+  const executiveAssessment =
+    runtimeMemory?.executiveAssessment;
+
+  if (!executiveAssessment) {
+    return undefined;
+  }
+
+  return {
+    summary:
+      executiveAssessment.summary ||
+      "Discovery has not yet formed a complete executive assessment.",
+
+    executiveNarrative:
+      executiveAssessment.executiveNarrative ||
+      executiveAssessment.summary ||
+      "Discovery has not yet formed a complete executive narrative.",
+
+    confidence: toPercentage(
+      executiveAssessment.confidence,
+    ),
+
+    recommendedFocus:
+      executiveAssessment.recommendedFocus ?? [],
+
+    theoryValidation:
+      executiveAssessment.theoryValidation,
+  };
+}
+
 function buildTheoryValidationProjection(
   runtimeMemory: RuntimeExecutiveMemory | undefined,
 ): ExecutiveTheoryValidation | undefined {
@@ -466,6 +520,47 @@ function buildInvestigationOpportunitiesProjection(
     }));
 }
 
+function buildInvestigationStrategyProjection(
+  runtimeMemory: RuntimeExecutiveMemory | undefined,
+): ExecutiveInvestigationStrategy | undefined {
+  const strategy =
+    runtimeMemory?.investigationStrategy;
+
+  if (!strategy) {
+    return undefined;
+  }
+
+  return {
+    mode: strategy.mode ?? "explore",
+
+    rationale: strategy.rationale ?? [],
+
+    prioritizeContradictoryEvidence:
+      strategy.prioritizeContradictoryEvidence ??
+      false,
+
+    prioritizeEvidenceDiversity:
+      strategy.prioritizeEvidenceDiversity ??
+      false,
+
+    repeatedTopicPenaltyMultiplier:
+      strategy.repeatedTopicPenaltyMultiplier ??
+      1,
+
+    knowledgePreservationBoost:
+      strategy.knowledgePreservationBoost ??
+      0,
+
+    learningLoopBoost:
+      strategy.learningLoopBoost ??
+      0,
+
+    persistenceBoost:
+      strategy.persistenceBoost ??
+      0,
+  };
+}
+
 function buildOrganizationalLearningProfileProjection(
   runtimeMemory: RuntimeExecutiveMemory | undefined,
 ): ExecutiveOrganizationalLearningProfile | undefined {
@@ -531,8 +626,11 @@ export function buildExecutiveProjection({
   const synthesizedUnderstanding =
     getStrongestRuntimeUnderstanding(runtimeMemory);
 
-  const executiveAssessment =
+  const runtimeExecutiveAssessment =
     runtimeMemory?.executiveAssessment;
+
+  const executiveAssessment =
+    buildExecutiveAssessmentProjection(runtimeMemory);
 
   const theoryValidation =
     buildTheoryValidationProjection(runtimeMemory);
@@ -545,6 +643,11 @@ export function buildExecutiveProjection({
 
   const organizationalBeliefs =
     buildOrganizationalBeliefsProjection(runtimeMemory);
+
+  const investigationStrategy =
+    buildInvestigationStrategyProjection(
+      runtimeMemory,
+    );
 
   const investigationOpportunities =
     buildInvestigationOpportunitiesProjection(runtimeMemory);
@@ -559,7 +662,7 @@ export function buildExecutiveProjection({
 
   const confidence = toPercentage(
     synthesizedUnderstanding?.confidence ??
-      executiveAssessment?.confidence ??
+      runtimeExecutiveAssessment?.confidence ??
       earlyExecutiveUnderstanding.confidence ??
       primaryBelief?.confidence ??
       primaryUnderstanding?.confidence,
@@ -603,7 +706,7 @@ export function buildExecutiveProjection({
       why:
         synthesizedUnderstanding?.summary ||
         theoryValidation?.whyDiscoveryBelievesIt ||
-        executiveAssessment?.summary ||
+        runtimeExecutiveAssessment?.summary ||
         earlyExecutiveUnderstanding.explanation ||
         primaryBelief?.explanation ||
         primaryUnderstanding?.summary ||
@@ -634,11 +737,15 @@ export function buildExecutiveProjection({
       runtimeMemory,
     ),
 
+    executiveAssessment,
+
     organizationalState,
 
     organizationalConditions,
 
     organizationalBeliefs,
+
+    investigationStrategy,
 
     investigationOpportunities,
 

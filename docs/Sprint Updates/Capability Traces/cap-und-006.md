@@ -1,6 +1,6 @@
 # Capability Trace — Executive Understanding Synthesis
 
-Generated: 2026-07-12T03:23:40.884Z
+Generated: 2026-07-12T13:50:21.798Z
 
 ## Verified Architecture
 
@@ -83,6 +83,8 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/v3/runtime/updateOrganizationalUnderstandingState.ts`
 - `engine/v3/understanding/canonicalUnderstanding.ts`
 - `engine/v3/understanding/rankOrganizationalUnderstanding.ts`
+- `scripts/cognition/generateArchitectureHandoff.mjs`
+- `scripts/cognition/generateArchitectureState.mjs`
 
 ## Structural Search
 
@@ -136,7 +138,7 @@ This section records source-code references. It supplements, but does not replac
 | API | ✅ Found | 2 |
 | Simulation | ❌ Not found | 0 |
 | Benchmark | ✅ Found | 41 |
-| Other | ❌ Not found | 0 |
+| Other | ✅ Found | 3 |
 
 ### Detailed Matches
 
@@ -547,15 +549,15 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `components/executive-v2/projection/buildExecutiveProjection.ts`
 
-- Line 79 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 80 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState?: {`
-- Line 145 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 146 · **unknown** · matched `OrganizationalUnderstanding`
   - `memory?.organizationalUnderstandingState?.currentUnderstandings ?? [];`
-- Line 173 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 174 · **unknown** · matched `OrganizationalUnderstanding`
   - `runtimeMemory?.organizationalUnderstandingState?.health?.maturity ??`
-- Line 246 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 247 · **unknown** · matched `OrganizationalUnderstanding`
   - `runtimeMemory?.organizationalUnderstandingState?.health?.uncertainty ??`
-- Line 574 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 610 · **unknown** · matched `OrganizationalUnderstanding`
   - `runtimeMemory?.organizationalUnderstandingState?.health`
 
 #### UI
@@ -669,6 +671,20 @@ This section records source-code references. It supplements, but does not replac
   - `organizationalUnderstanding,`
 - Line 539 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingScore,`
+
+#### Other
+
+##### `scripts/cognition/generateArchitectureHandoff.mjs`
+
+- Line 374 · **unknown** · matched `Executive Understanding Synthesis`
+  - `"Executive Understanding Synthesis",`
+
+##### `scripts/cognition/generateArchitectureState.mjs`
+
+- Line 64 · **unknown** · matched `Executive Understanding Synthesis`
+  - `"Executive Understanding Synthesis",`
+- Line 828 · **unknown** · matched `Executive Understanding Synthesis`
+  - `"Executive Understanding Synthesis",`
 
 ## Interpretation
 

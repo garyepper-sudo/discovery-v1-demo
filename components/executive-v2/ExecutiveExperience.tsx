@@ -1,6 +1,7 @@
 "use client";
 
 import ExecutiveAnswerGrid from "./answers/ExecutiveAnswerGrid";
+import ExecutiveAssessmentCard from "./assessment/ExecutiveAssessmentCard";
 import ExecutiveAttention from "./attention/ExecutiveAttention";
 import ExecutiveBeliefs from "./beliefs/ExecutiveBeliefs";
 import ExecutiveConditions from "./conditions/ExecutiveConditions";
@@ -21,6 +22,7 @@ export default function ExecutiveExperience({
     currentUnderstanding,
     explanation,
     executiveAttention,
+    executiveAssessment,
     organizationalState,
     organizationalConditions,
     organizationalBeliefs,
@@ -46,6 +48,12 @@ export default function ExecutiveExperience({
             currentUnderstanding.organizationalCoherence
           }
         />
+
+        {executiveAssessment && (
+          <ExecutiveAssessmentCard
+            assessment={executiveAssessment}
+          />
+        )}
 
         {organizationalState && (
           <OrganizationalStateCard state={organizationalState} />

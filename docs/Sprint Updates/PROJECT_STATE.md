@@ -1,51 +1,45 @@
 # Current Milestone
 
-**Architecture Operating System**
+**Cognitive Operating System**
 
 ---
 
 # Current Development Phase
 
-**Registry-Driven Architecture Verification and Canonical Understanding Refinement**
+**Adaptive Cognition, Longitudinal Learning, and Cognitive Operating System Refinement**
 
-Discovery has completed the initial Capability Audit, established the first version of its formal Cognitive Architecture, and created a canonical Organizational Understanding pipeline.
+Discovery has completed the initial Capability Audit, established its formal Cognitive Architecture, and implemented the first generation of its Cognitive Operating System.
 
-Discovery has also introduced the first registry-aware capability auditing system.
+Discovery now possesses:
 
-The primary objective is no longer to rapidly expand Discovery's reasoning engine.
+* Cognitive Operating System
+* Cognitive Object Model
+* Cognitive Flow Map
+* Cognitive Capability Registry
+* Cognitive File Registry
+* Cognitive Capability Audit
+* Registry-aware Capability Traces
+* Architecture Drift Detection
+* Cognitive Domain Review System
+* Adaptive Investigation Strategy
 
-The primary objective is no longer executive intelligence extraction.
+Discovery also possesses a canonical Organizational Understanding pipeline, a structured Organizational Understanding benchmark, and the first generation of longitudinal adaptive cognition.
 
-The primary objective is no longer determining which understanding should become canonical.
+Executive Assessment continues to produce the canonical Executive Assessment and Organizational Understanding consumed by Runtime, Executive Projection, Atlas, and downstream executive experiences.
 
-Discovery now possesses a formal architectural model consisting of:
+Investigation Opportunity Generation now also produces Discovery's adaptive Investigation Strategy, allowing Discovery to change how it investigates based on accumulated organizational learning.
 
-- Cognitive Operating System
-- Cognitive Object Model
-- Cognitive Flow Map
-- Cognitive Capability Registry
-- Cognitive File Registry
-- Cognitive Capability Audit
-- Registry-aware Capability Traces
-- Architecture Drift Detection
-
-Discovery also possesses a canonical Organizational Understanding pipeline and a structured Organizational Understanding benchmark.
-
-Executive Assessment produces the structured executive assessment and Organizational Understanding used by Runtime, Executive Projection, and Atlas.
-
-Current development focuses on making Discovery's architecture self-describing, self-validating, and navigable before every sprint.
-
-The remaining work is primarily **architecture verification, registry completeness, and executive understanding quality**, not engine expansion.
+The remaining work is primarily **adaptive cognition, executive explainability, and longitudinal validation**, not engine expansion.
 
 ---
 
 # Current Objective
 
-Complete Discovery's Architecture Operating System.
+Complete Discovery's Cognitive Operating System.
 
 Every capability should ultimately belong to a complete cognitive hierarchy:
 
-```text
+```text id="0z4q9j"
 Operating System
 
 ↓
@@ -69,9 +63,9 @@ Canonical Producer
 Implementation
 ```
 
-Every capability should also expose a verified implementation path:
+Every capability should also expose a verified cognitive behavior:
 
-```text
+```text id="m5d0vv"
 Canonical Producer
 
 ↓
@@ -93,95 +87,108 @@ Executive Experience
 ↓
 
 Atlas Validation
+
+↓
+
+Longitudinal Adaptation
 ```
 
 Current work focuses on ensuring every capability has:
 
-- one Operating System owner,
-- one Subsystem owner,
-- one canonical producer,
-- declared input capabilities,
-- declared output cognitive objects,
-- declared implementation files,
-- declared implementation consumers,
-- one Runtime representation,
-- one persistent representation,
-- one Executive or Projection destination,
-- one traceable cognitive flow,
-- one verified Atlas implementation,
-- one registry-backed Capability Trace.
+* one Operating System owner,
+* one Subsystem owner,
+* one canonical producer,
+* declared input capabilities,
+* declared output cognitive objects,
+* declared implementation files,
+* declared implementation consumers,
+* one Runtime representation,
+* one persistent representation,
+* one Executive or Projection destination,
+* one traceable cognitive flow,
+* one verified Atlas implementation,
+* one registry-backed Capability Trace,
+* one verified adaptive behavior where applicable.
 
 Before introducing any new reasoning capability, determine:
 
-- Does Atlas already demonstrate it?
-- Does the Capability Registry already contain it?
-- Does it already have a canonical producer?
-- Does it already belong to an Operating System?
-- Does it already have a Cognitive Object?
-- Does Runtime persist it?
-- Does Executive Projection expose it?
-- Does its Capability Trace confirm the active implementation path?
+* Does Atlas already demonstrate it?
+* Does the Capability Registry already contain it?
+* Does it already have a canonical producer?
+* Does it already belong to an Operating System?
+* Does it already have a Cognitive Object?
+* Does Runtime persist it?
+* Does Executive Projection expose it?
+* Does Domain Review recommend extending an existing capability instead?
+* Does its Capability Trace confirm the active implementation path?
 
-If Atlas already demonstrates the capability, improve the existing architecture or implementation before introducing additional cognition.
+If Domain Review recommends extending an existing capability, no new capability should be introduced.
 
 ---
 
 # Current Sequence
 
-1. Regenerate the Cognitive File Registry.
-2. Enrich the Cognitive Capability Registry.
-3. Validate the Capability Registry.
-4. Regenerate Capability Traces.
-5. Identify architectural drift.
-6. Verify canonical producers.
-7. Verify Runtime destinations.
-8. Verify Executive and Projection destinations.
-9. Verify declared consumers.
-10. Run Atlas.
-11. Verify structured Organizational Understanding.
-12. Update registry metadata.
-13. Repeat until every registered capability is fully connected.
-14. Improve Executive Understanding quality.
-15. Resume realistic simulated organization pressure testing.
-16. Improve reasoning quality using measured simulation results.
-17. Perform legacy cleanup after architectural coverage is complete.
+1. Complete the Cognitive Operating System.
+2. Validate Investigation Strategy persistence.
+3. Build the Longitudinal Adaptation Benchmark.
+4. Validate adaptive strategy transitions.
+5. Expose Cognitive Strategy in the Executive Experience.
+6. Expand Atlas adaptive validation.
+7. Improve Executive Understanding quality.
+8. Resume realistic simulated organization pressure testing.
+9. Improve reasoning quality using measured simulation results.
+10. Perform legacy cleanup after architectural coverage is complete.
+
+---
+
+# Recent Changes
+
+* Completed the Architecture Operating System.
+* Introduced the Cognitive Domain Review System.
+* Verified that Adaptation should extend CAP-SELF-002 rather than become a new capability.
+* Introduced the `InvestigationStrategyRevision` cognitive object.
+* Extended Investigation Opportunity Generation to produce adaptive investigation strategy.
+* Persisted Investigation Strategy in Runtime.
+* Added Investigation Strategy to the Executive Projection.
+* Validated adaptive cognition with 0 TypeScript errors and 100% benchmark integrity.
+* Confirmed benchmark integrity after introducing adaptive cognition.
 
 ---
 
 # Current Development Philosophy
 
-Discovery has entered a new architectural phase.
+Discovery has entered a new cognitive phase.
 
 The primary bottleneck is no longer reasoning capability.
 
-The primary bottleneck is no longer Executive Projection.
+The primary bottleneck is no longer architectural verification.
 
 The primary bottleneck is no longer identifying the correct organizational understanding.
 
-Discovery now has a canonical Organizational Understanding pipeline and a direct structured benchmark for validating it.
+The current bottleneck is:
 
-The primary bottleneck is now:
-
-> **Can Discovery accurately describe and verify its own architecture?**
+> **Can Discovery deliberately change how it investigates as it learns?**
 
 Atlas remains the canonical cognitive verification environment.
 
 The Cognitive Architecture remains the canonical architectural model.
 
-The Capability Registry records architectural ownership.
+The Capability Registry records ownership.
 
-The File Registry records implementation structure.
+The Domain Review System determines whether new capabilities are actually required.
 
-Capability Traces compare the declared architecture against the active codebase.
+Capability Traces verify implementation.
+
+The Cognitive Operating System governs adaptive cognitive behavior.
 
 Every sprint should begin with:
 
-```text
+```text id="thd8v8"
 Validate Registry
 
 ↓
 
-Regenerate Capability Traces
+Review Domain Coverage
 
 ↓
 
@@ -197,7 +204,11 @@ Verify Organizational Understanding
 
 ↓
 
-Implement Only After Architecture Is Clear
+Verify Investigation Strategy
+
+↓
+
+Implement Only After Cognition Is Understood
 ```
 
 Executive Projection remains the canonical boundary between organizational cognition and executive communication.
@@ -214,9 +225,9 @@ The browser should never reconstruct organizational cognition directly from Runt
 
 # Canonical Organizational Understanding
 
-Discovery follows this executive cognition flow:
+Discovery now follows this executive cognition flow:
 
-```text
+```text id="bdx1mu"
 Evidence
 
 ↓
@@ -257,6 +268,14 @@ Persistent Organizational Understanding
 
 ↓
 
+Organizational Learning
+
+↓
+
+Investigation Strategy
+
+↓
+
 Executive Projection
 
 ↓
@@ -264,81 +283,63 @@ Executive Projection
 Executive Experience
 ```
 
-The distinction between the two understanding layers must remain explicit:
+Structured Organizational Understanding remains the canonical executive understanding.
 
-## Structured Organizational Understanding
+Persistent Organizational Understanding preserves understanding across investigations.
 
-Produced as part of Executive Assessment.
+Investigation Strategy now governs future organizational learning.
 
-It contains:
-
-- current organizational state,
-- dominant condition,
-- dominant theory,
-- supporting mechanisms,
-- supporting beliefs,
-- competing theories,
-- contradictory evidence,
-- calibrated confidence,
-- evidence needed,
-- falsification criteria,
-- executive recommendation,
-- next investigation.
-
-It is validated directly by:
-
-```text
-organizationalUnderstandingScorer.ts
-```
-
-## Persistent Organizational Understanding
-
-Produced and consolidated by the Executive Understanding Synthesis capability.
-
-It preserves the leading understanding longitudinally across investigations.
-
-Earlier reasoning stages exist to support executive cognition rather than compete with either canonical layer.
+Earlier reasoning stages exist to support executive cognition rather than compete with it.
 
 ---
 
-# Architecture Operating System
+# Cognitive Operating System
 
-Discovery now maintains three complementary architectural views.
+Discovery now maintains four complementary architectural views.
 
 ## File Registry
 
 Tracks:
 
-- files,
-- imports,
-- exports,
-- architectural layer,
-- cognitive domain,
-- implementation identity.
+* files,
+* imports,
+* exports,
+* architectural layer,
+* cognitive domain,
+* implementation identity.
 
 ## Capability Registry
 
 Tracks:
 
-- capability ownership,
-- canonical producers,
-- input capabilities,
-- output cognitive objects,
-- Runtime destinations,
-- Executive destinations,
-- Atlas coverage.
+* capability ownership,
+* canonical producers,
+* input capabilities,
+* output cognitive objects,
+* Runtime destinations,
+* Executive destinations,
+* Atlas coverage.
 
 ## Capability Traces
 
 Track:
 
-- structural references,
-- registry-backed architecture,
-- implementation coverage,
-- missing consumers,
-- missing destinations,
-- architectural drift,
-- connection status.
+* structural references,
+* registry-backed architecture,
+* implementation coverage,
+* missing consumers,
+* missing destinations,
+* architectural drift,
+* connection status.
+
+## Domain Reviews
+
+Determine:
+
+* whether cognitive responsibilities already exist,
+* whether capabilities should be extended,
+* whether new capabilities are justified,
+* where adaptive cognition belongs.
 
 ---
 
@@ -346,113 +347,65 @@ Track:
 
 ## Established
 
-- Cognitive Operating System
-- Cognitive Object Model
-- Cognitive Flow Map
-- Cognitive Capability Registry
-- Cognitive File Registry
-- Cognitive Capability Audit
-- Canonical Organizational Understanding pipeline
-- Structured Organizational Understanding scorer
-- Registry-aware Capability Auditor
-- Architecture Drift Detection
-
-## Current Incomplete Area
-
-Registry metadata does not yet fully describe every active implementation path.
-
-The immediate example is:
-
-```text
-CAP-UND-005 — Executive Assessment
-```
-
-Its Capability Trace currently identifies missing or incomplete declarations for:
-
-- produced cognitive objects,
-- implementation files,
-- implementation consumers,
-- Executive destination,
-- architectural relationships.
-
-This is registry drift, not an engine failure.
+* Cognitive Operating System
+* Cognitive Object Model
+* Cognitive Flow Map
+* Cognitive Capability Registry
+* Cognitive File Registry
+* Cognitive Capability Audit
+* Canonical Organizational Understanding pipeline
+* Structured Organizational Understanding scorer
+* Registry-aware Capability Auditor
+* Architecture Drift Detection
+* Domain Review System
+* Adaptive Investigation Strategy
 
 ## Current Priority
 
-Complete the Architecture Operating System across all registered capabilities.
+Validate longitudinal adaptive cognition.
 
 Begin with:
 
-- Executive Assessment
-- Executive Understanding Synthesis
-- Theory Validation
-- Organizational Conditions
-- Organizational Runtime Persistence
-- Organizational Learning Profile
+* Investigation Strategy
+* Organizational Learning Profile
+* Investigation Opportunity Generation
+* Executive Projection
+* Executive Experience
+* Longitudinal Adaptation Benchmark
 
 ---
 
-# Sprint 67 Immediate Objective
+# Sprint 68 Immediate Objective
 
-Complete the Executive Assessment architecture record.
+Build the Longitudinal Adaptation Benchmark.
 
-The verified implementation path should include:
+Discovery should demonstrate:
 
-```text
-organizationalJudgment.ts
-        ↓
-buildOrganizationalUnderstanding.ts
-        ↓
-buildExecutiveAssessment.ts
-        ↓
-evolveOrganizationRuntime.ts
-        ↓
-Organization Runtime
-        ↓
-buildExecutiveProjection.ts
-        ↓
-Executive Workspace
+```text id="uhijm2"
+Explore
+
+↓
+
+Preserve
+
+↓
+
+Challenge
+
+↓
+
+Exploit
 ```
 
-Atlas validation should include:
+through accumulated organizational learning rather than configuration changes.
 
-```text
-OrganizationalUnderstanding
-        ↓
-organizationalUnderstandingScorer.ts
-        ↓
-runBenchmarkInvestigation.ts
-        ↓
-runAtlasSimulation.ts
-```
+The benchmark should validate:
 
-After this path is correctly registered and verified, apply the same registry pattern to the remaining capabilities.
-
----
-
-# Planned Pre-Sprint Architecture Command
-
-Create:
-
-```bash
-npm run sprint:architecture
-```
-
-The command should:
-
-1. regenerate the File Registry,
-2. enrich the Capability Registry,
-3. validate the Capability Registry,
-4. regenerate every Capability Trace,
-5. detect missing canonical producers,
-6. detect broken implementation paths,
-7. detect missing Runtime destinations,
-8. detect missing Executive destinations,
-9. detect missing consumers,
-10. report architectural drift,
-11. print a concise pre-sprint architecture briefing.
-
-Eventually, `npm run sprint:start` should run this architecture preflight automatically.
+* adaptive strategy transitions,
+* Runtime persistence,
+* Executive Projection,
+* Executive explainability,
+* benchmark integrity.
 
 ---
 
@@ -470,11 +423,13 @@ Before implementing anything ask:
 8. Does Runtime persist it?
 9. Does Executive Projection expose it?
 10. Does Atlas validate it?
-11. Does its Capability Trace confirm the active implementation path?
+11. Does Domain Review recommend extending an existing capability?
 
 If multiple systems produce the same cognitive object, simplify the architecture before expanding the engine.
 
-If the registry cannot accurately describe the code path, repair the architecture record before continuing.
+If the registry cannot accurately describe the code path, repair the architecture before continuing.
+
+If Domain Review recommends extension, do not create a new capability.
 
 ---
 
@@ -484,9 +439,11 @@ If the registry cannot accurately describe the code path, repair the architectur
 
 > **Capabilities before files.**
 
+> **Strategies before heuristics.**
+
 > **Every cognitive object should have one canonical producer.**
 
-> **Every capability should describe its dependencies, outputs, consumers, and destinations.**
+> **Every capability should describe its dependencies, outputs, consumers, destinations, and adaptive behavior.**
 
 > **Improve existing cognition before adding new cognition.**
 
@@ -494,8 +451,10 @@ If the registry cannot accurately describe the code path, repair the architectur
 
 > **The Capability Registry validates ownership.**
 
+> **The Domain Review System validates expansion.**
+
 > **The File Registry validates implementation.**
 
 > **Capability Traces validate connectivity and drift.**
 
-> **The Cognitive Architecture validates Discovery itself.**
+> **The Cognitive Operating System governs Discovery's adaptive behavior.**

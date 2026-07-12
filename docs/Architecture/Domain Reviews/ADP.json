@@ -1,0 +1,115 @@
+{
+  "generatedAt": "2026-07-12T14:06:22.282Z",
+  "domain": {
+    "id": "ADP",
+    "name": "Adaptation",
+    "purpose": "Change how Discovery learns, prioritizes evidence, calibrates confidence, and directs future reasoning based on accumulated experience.",
+    "reviewQuestion": "Does Discovery change only its conclusions, or does it also change how it learns and investigates?",
+    "relatedDomains": [
+      "MEM",
+      "LRN",
+      "SELF",
+      "UND"
+    ]
+  },
+  "architecture": {
+    "currentlyRegistered": false,
+    "reportedAsUnpopulated": true,
+    "architectureHealth": null
+  },
+  "coverage": {
+    "status": "Partial",
+    "score": 70,
+    "rationale": "Multiple existing capabilities and cognitive objects appear to perform parts of this domain's responsibility, but ownership is distributed."
+  },
+  "directCapabilities": [],
+  "relatedCapabilities": [
+    {
+      "id": "CAP-MEM-001",
+      "name": "Organizational Runtime Persistence",
+      "domain": "MEM",
+      "produces": [
+        "OrganizationRuntime"
+      ],
+      "canonicalProducer": "engine/v3/runtime/organizationStateStore.ts"
+    },
+    {
+      "id": "CAP-LRN-001",
+      "name": "Organizational Belief Evolution",
+      "domain": "LRN",
+      "produces": [
+        "OrganizationalBeliefRevision"
+      ],
+      "canonicalProducer": "engine/v3/model/beliefs/updateOrganizationalBeliefs.ts"
+    },
+    {
+      "id": "CAP-LRN-002",
+      "name": "Organizational Learning Profile",
+      "domain": "LRN",
+      "produces": [
+        "OrganizationalLearningProfile"
+      ],
+      "canonicalProducer": "engine/v3/model/learning/computeOrganizationalLearningProfile.ts"
+    },
+    {
+      "id": "CAP-SELF-001",
+      "name": "Theory Validation",
+      "domain": "SELF",
+      "produces": [
+        "TheoryValidation"
+      ],
+      "canonicalProducer": "engine/v3/model/judgment/buildTheoryReflection.ts"
+    },
+    {
+      "id": "CAP-SELF-002",
+      "name": "Investigation Opportunity Generation",
+      "domain": "SELF",
+      "produces": [
+        "InvestigationOpportunity"
+      ],
+      "canonicalProducer": "engine/v3/model/investigation/buildInvestigationOpportunities.ts"
+    },
+    {
+      "id": "CAP-UND-006",
+      "name": "Executive Understanding Synthesis",
+      "domain": "UND",
+      "produces": [
+        "OrganizationalUnderstanding",
+        "OrganizationalUnderstandingState"
+      ],
+      "canonicalProducer": "engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts"
+    }
+  ],
+  "producedObjects": [
+    "OrganizationRuntime",
+    "OrganizationalBeliefRevision",
+    "OrganizationalLearningProfile",
+    "TheoryValidation",
+    "InvestigationOpportunity",
+    "OrganizationalUnderstanding",
+    "OrganizationalUnderstandingState"
+  ],
+  "consumedObjects": [],
+  "implementationFiles": [
+    "engine/v3/runtime/organizationStateStore.ts",
+    "engine/v3/runtime/organizationRuntime.ts",
+    "engine/v3/model/beliefs/updateOrganizationalBeliefs.ts",
+    "engine/v3/cognition/beliefs/mergeBeliefs.ts",
+    "engine/v3/model/learning/computeOrganizationalLearningProfile.ts",
+    "engine/v3/model/judgment/buildTheoryReflection.ts",
+    "engine/v3/model/investigation/buildInvestigationOpportunities.ts",
+    "engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts",
+    "engine/v3/understanding/consolidateUnderstanding.ts",
+    "engine/v3/understanding/synthesizeUnderstanding.ts",
+    "engine/v3/runtime/evolveOrganizationRuntime.ts"
+  ],
+  "candidateObject": "InvestigationStrategyRevision",
+  "scorecardDimensions": [
+    "Adaptation",
+    "Continuity",
+    "Learning Intelligence",
+    "Emergence"
+  ],
+  "decision": "Extend existing capabilities",
+  "recommendation": "Do not create a standalone Adaptation capability yet. First determine whether existing Learning, Memory, Self-Reflection, and Understanding capabilities change Discovery's future reasoning strategy rather than only updating conclusions."
+}

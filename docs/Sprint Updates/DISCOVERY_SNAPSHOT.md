@@ -10,13 +10,13 @@ Read this document before making architectural, product, or implementation decis
 
 # Discovery
 
-**Version:** Sprint 66
+**Version:** Sprint 67
 
 **Status:** Active Development
 
 ## Current Milestone
 
-**Architecture Operating System**
+**Cognitive Operating System**
 
 ---
 
@@ -32,9 +32,9 @@ Discovery is an **Executive Understanding System**.
 
 Discovery possesses a formal Cognitive Architecture that describes the system independently of its implementation.
 
-Discovery also possesses a canonical Organizational Understanding pipeline and is now beginning to understand and validate its own architecture.
+Discovery also possesses a canonical Organizational Understanding pipeline and now includes the first generation of an adaptive Cognitive Operating System capable of modifying its future investigation strategy based on accumulated organizational learning.
 
-Future development focuses on improving the quality of executive understanding while making Discovery's architecture completely self-describing.
+Future development focuses on improving executive understanding while making Discovery's cognition, architecture, and learning behavior completely self-describing.
 
 ---
 
@@ -42,21 +42,21 @@ Future development focuses on improving the quality of executive understanding w
 
 ## Phase
 
-**Architecture Operating System**
+**Cognitive Operating System**
 
 ## Current Objective
 
-Complete Discovery's Architecture Operating System so every significant capability can answer:
+Complete Discovery's Cognitive Operating System so every significant capability can answer:
 
-- What cognitive object does it produce?
-- Who is the canonical producer?
-- Where is it persisted?
-- Who consumes it?
-- Where is it projected?
-- How is it validated?
-- How does Atlas verify it?
+* What cognitive object does it produce?
+* Who is the canonical producer?
+* Where is it persisted?
+* Who consumes it?
+* Where is it projected?
+* How is Atlas validating it?
+* How does accumulated learning influence future cognition?
 
-Discovery should eventually understand its own architecture as thoroughly as it understands an organization.
+Discovery should eventually understand its own cognitive behavior as thoroughly as it understands an organization.
 
 ---
 
@@ -72,31 +72,35 @@ Discovery should eventually understand its own architecture as thoroughly as it 
 
 > **Architecture should be self-describing.**
 
+> **Cognition should be self-describing.**
+
 > **Executive understanding is the final product of cognition.**
 
 ---
 
 # Architecture Health
 
-| Area | Status |
-|-------|--------|
-| Engine Architecture | ✅ Stable |
-| Runtime Architecture | ✅ Stable |
-| Executive Projection | ✅ Canonical |
-| Executive Workspace | ✅ Stable |
-| Runtime Persistence | ✅ Stable |
-| Benchmark Framework | ✅ Stable |
-| Atlas Simulation | ✅ Canonical |
-| Organizational Understanding | ✅ Canonical |
-| Organizational Understanding Benchmark | ✅ Canonical |
-| Cognitive Operating System | ✅ Established |
-| Cognitive Flow Map | ✅ Established |
-| Cognitive Object Model | ✅ Established |
-| Canonical Understanding Pipeline | ✅ Established |
-| Capability Registry | 🟡 Expanding |
-| File Registry | 🟡 Expanding |
-| Capability Trace System | 🟡 Expanding |
-| Architecture Verification | 🟡 In Progress |
+| Area                                   | Status        |
+| -------------------------------------- | ------------- |
+| Engine Architecture                    | ✅ Stable      |
+| Runtime Architecture                   | ✅ Stable      |
+| Executive Projection                   | ✅ Canonical   |
+| Executive Workspace                    | ✅ Stable      |
+| Runtime Persistence                    | ✅ Stable      |
+| Benchmark Framework                    | ✅ Stable      |
+| Atlas Simulation                       | ✅ Canonical   |
+| Organizational Understanding           | ✅ Canonical   |
+| Organizational Understanding Benchmark | ✅ Canonical   |
+| Cognitive Operating System             | ✅ Active      |
+| Cognitive Flow Map                     | ✅ Established |
+| Cognitive Object Model                 | ✅ Established |
+| Canonical Understanding Pipeline       | ✅ Established |
+| Adaptive Investigation Strategy        | ✅ Established |
+| Capability Registry                    | ✅ Operational |
+| File Registry                          | ✅ Operational |
+| Capability Trace System                | ✅ Operational |
+| Architecture Verification              | ✅ Operational |
+| Domain Review System                   | ✅ Operational |
 
 ---
 
@@ -197,6 +201,18 @@ Organizational Understanding
 
 ↓
 
+Organizational Learning
+
+↓
+
+Investigation Strategy
+
+↓
+
+Future Investigation
+
+↓
+
 Executive Projection
 
 ↓
@@ -206,9 +222,11 @@ Executive Experience
 
 Executive Assessment remains the canonical producer of Executive Assessment.
 
-Organizational Understanding is now a first-class canonical cognitive object that Atlas validates directly.
+Organizational Understanding remains the canonical executive cognitive object.
 
-Earlier reasoning layers exist to support executive cognition rather than compete with it.
+Investigation Strategy is now a first-class cognitive object owned by **CAP-SELF-002 — Investigation Opportunity Generation**.
+
+The executive experience should ultimately explain not only **what Discovery understands**, but **how Discovery is currently thinking**.
 
 ---
 
@@ -216,13 +234,13 @@ Earlier reasoning layers exist to support executive cognition rather than compet
 
 Every significant cognitive object should have:
 
-- one owner
-- one subsystem
-- one operating system
-- one canonical producer
-- one persistent representation
-- one executive projection
-- one validation path
+* one owner
+* one subsystem
+* one operating system
+* one canonical producer
+* one persistent representation
+* one executive projection
+* one validation path
 
 Duplicate producers should be eliminated whenever practical.
 
@@ -234,15 +252,16 @@ Atlas remains Discovery's canonical verification environment.
 
 Atlas now verifies:
 
-- cognitive object creation
-- canonical producer ownership
-- capability coverage
-- executive intelligence coverage
-- architectural consistency
-- structured Organizational Understanding
-- understanding quality
+* cognitive object creation
+* canonical producer ownership
+* capability coverage
+* executive intelligence coverage
+* architectural consistency
+* structured Organizational Understanding
+* understanding quality
+* adaptive investigation strategy integrity
 
-Discovery is transitioning from validating executive narrative to validating canonical cognitive objects.
+Discovery is transitioning from validating executive narrative toward validating complete cognitive behavior.
 
 ---
 
@@ -250,30 +269,31 @@ Discovery is transitioning from validating executive narrative to validating can
 
 ## Completed
 
-- Perception Operating System (initial)
-- Cognitive Object Model (initial)
-- Cognitive Flow Map (initial)
-- Cognitive Operating System (initial)
-- Capability Registry (initial)
-- File Registry (initial)
-- Canonical Organizational Understanding pipeline
-- Canonical Organizational Understanding benchmark
-- Registry-aware Capability Auditor
+* Perception Operating System (initial)
+* Cognitive Object Model (initial)
+* Cognitive Flow Map (initial)
+* Cognitive Operating System (initial)
+* Capability Registry
+* File Registry
+* Capability Trace System
+* Domain Review System
+* Canonical Organizational Understanding pipeline
+* Canonical Organizational Understanding benchmark
+* Registry-aware Capability Auditor
+* Adaptive Investigation Strategy architecture
 
 ## Current Focus
 
-**Architecture Operating System**
+**Adaptive Cognition**
 
 Current objectives:
 
-- enrich Capability Registry
-- enrich File Registry
-- verify capability connectivity
-- verify canonical producers
-- verify Runtime destinations
-- verify Executive destinations
-- verify Atlas coverage
-- eliminate architectural drift
+* expose Investigation Strategy in the Executive Experience
+* benchmark longitudinal strategy transitions
+* validate adaptive cognition across investigations
+* refine strategy evolution
+* improve executive explainability
+* continue architectural governance through Capability and Domain Reviews
 
 ---
 
@@ -281,35 +301,38 @@ Current objectives:
 
 The primary bottleneck is no longer determining canonical understanding.
 
-The primary bottleneck is now ensuring Discovery completely understands its own architecture.
+The primary bottleneck is no longer describing Discovery's architecture.
+
+The current bottleneck is enabling Discovery to deliberately change **how it investigates** based on accumulated organizational learning.
 
 Future work should focus on:
 
-- capability verification
-- registry completeness
-- architectural traceability
-- implementation ownership
-- dependency visibility
-- architecture validation before every sprint
+* adaptive investigation strategy
+* longitudinal cognition
+* strategy explainability
+* executive transparency
+* benchmark-driven cognitive validation
 
 ---
 
 # Benchmark Health
 
-| Benchmark | Status |
-|-----------|--------|
-| Benchmark Integrity | ✅ Passing |
-| Runtime Persistence | ✅ Passing |
-| Longitudinal Learning | ✅ Passing |
-| Belief Evolution | ✅ Passing |
-| Theory Stabilization | ✅ Passing |
-| Knowledge Retention | ✅ Passing |
-| Executive Projection | ✅ Passing |
-| Atlas Simulation | ✅ Passing |
-| Canonical Understanding Pipeline | ✅ Passing |
-| Organizational Understanding Benchmark | ✅ Passing |
-| Cognitive Capability Audit | ✅ Passing |
-| Architecture Auditor | ✅ Operational |
+| Benchmark                              | Status        |
+| -------------------------------------- | ------------- |
+| Benchmark Integrity                    | ✅ Passing     |
+| Runtime Persistence                    | ✅ Passing     |
+| Longitudinal Learning                  | ✅ Passing     |
+| Belief Evolution                       | ✅ Passing     |
+| Theory Stabilization                   | ✅ Passing     |
+| Knowledge Retention                    | ✅ Passing     |
+| Executive Projection                   | ✅ Passing     |
+| Adaptive Investigation Strategy        | ✅ Passing     |
+| Atlas Simulation                       | ✅ Passing     |
+| Canonical Understanding Pipeline       | ✅ Passing     |
+| Organizational Understanding Benchmark | ✅ Passing     |
+| Cognitive Capability Audit             | ✅ Passing     |
+| Domain Review System                   | ✅ Passing     |
+| Architecture Auditor                   | ✅ Operational |
 
 ---
 
@@ -317,15 +340,15 @@ Future work should focus on:
 
 ## Goal
 
-Build Discovery's Architecture Operating System.
+Build Discovery's Cognitive Operating System.
 
 Priority:
 
-1. Capability Registry
-2. Architecture Verification
-3. Capability Trace System
-4. Executive Projection
-5. Atlas Validation
+1. Longitudinal Adaptation Benchmark
+2. Executive Cognitive Strategy Experience
+3. Strategy Evolution Validation
+4. Executive Explainability
+5. Atlas Adaptive Validation
 6. Executive Understanding Quality
 
 ---
@@ -342,10 +365,13 @@ Before implementing any capability ask:
 6. Does Executive Projection expose it?
 7. Does Atlas validate it?
 8. Does the Capability Registry describe it?
+9. Can an existing capability be extended instead?
 
 If two systems produce the same cognitive object, the architecture is incomplete.
 
 If the registry cannot explain a capability, the architecture is incomplete.
+
+If a proposed capability can be implemented as an extension of an existing canonical capability, it should not become a new capability.
 
 ---
 
@@ -353,14 +379,14 @@ If the registry cannot explain a capability, the architecture is incomplete.
 
 Discovery now follows this roadmap:
 
-1. Complete Canonical Producers
-2. Complete Capability Registry
-3. Complete Architecture Operating System
-4. Complete Cognitive Object Model
+1. Complete Cognitive Operating System
+2. Longitudinal Adaptation Benchmark
+3. Executive Cognitive Strategy Experience
+4. Adaptive Strategy Evolution
 5. Improve Executive Understanding Quality
 6. Simulated organization pressure testing
-7. Longitudinal organizational learning
+7. Advanced longitudinal organizational learning
 8. Legacy cleanup
 9. Architecture consolidation
 10. Engine quality improvements
-11. New cognition only when Atlas demonstrates a genuine missing capability
+11. New cognition only when Domain Review, Capability Review, and Atlas jointly demonstrate a genuine missing capability
