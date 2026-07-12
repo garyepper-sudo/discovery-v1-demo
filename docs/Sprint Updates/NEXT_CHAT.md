@@ -23,6 +23,13 @@ Then read the Cognitive Architecture documents in this order:
 2. `COGNITIVE_OPERATING_SYSTEM.md`
 3. `COGNITIVE_OBJECT_MODEL.md`
 4. `COGNITIVE_FLOW_MAP.md`
+5. `COGNITIVE_CAPABILITY_REGISTRY.json`
+6. `COGNITIVE_FILE_REGISTRY.json`
+7. `COGNITIVE_CAPABILITY_AUDIT.json`
+
+Then review the capability traces in:
+
+`docs/Sprint Updates/Capability Traces/`
 
 Use the remaining documentation only when implementation details require it.
 
@@ -43,6 +50,7 @@ Use the remaining documentation only when implementation details require it.
 - `COGNITIVE_CAPABILITY_REGISTRY.json`
 - `COGNITIVE_FILE_REGISTRY.json`
 - `COGNITIVE_CAPABILITY_AUDIT.json`
+- `Capability Traces/`
 
 ### Product Vision
 
@@ -62,19 +70,36 @@ Use the remaining documentation only when implementation details require it.
 
 # Current Milestone
 
-**Canonical Organizational Understanding**
+**Architecture Operating System**
 
 ---
 
 # Current Objective
 
-Discovery now has a canonical Organizational Understanding pipeline.
+Discovery now has:
 
-Executive Assessment is the sole canonical producer of persistent Organizational Understanding.
+- a canonical Organizational Understanding object,
+- a canonical Executive Assessment producer,
+- direct Atlas validation of structured Organizational Understanding,
+- a Cognitive Capability Registry,
+- a Cognitive File Registry,
+- and a registry-aware Capability Auditor.
 
 The next objective is **not** to add new reasoning engines.
 
-The next objective is to improve the quality, clarity, and executive usefulness of Discovery's understanding while preserving the canonical architecture.
+The next objective is to make Discovery’s architecture self-describing, self-validating, and navigable before every sprint.
+
+The Architecture Operating System should be able to answer:
+
+- Which capability owns this behavior?
+- Which cognitive object does it produce?
+- Who is the canonical producer?
+- Which capabilities does it depend on?
+- Where is it persisted?
+- Which files consume it?
+- Where is it projected?
+- How does Atlas validate it?
+- Is the implementation drifting from the registry?
 
 Current architectural hierarchy:
 
@@ -107,10 +132,78 @@ Every significant cognitive object should have:
 - one Operating System owner,
 - one Subsystem owner,
 - one canonical producer,
-- one runtime representation,
+- one Runtime representation,
 - one persistent representation,
 - one executive representation,
+- one Atlas validation path,
 - one traceable path through the cognitive hierarchy.
+
+---
+
+# Sprint 67
+
+## Architecture Operating System
+
+### Primary Objective
+
+Complete the registry-driven architecture verification system.
+
+### Immediate Work
+
+1. Update `CAP-UND-005` — Executive Assessment.
+2. Record its produced cognitive objects.
+3. Record its consumed capabilities and implementation dependencies.
+4. Register `buildOrganizationalUnderstanding.ts`.
+5. Register `organizationalJudgment.ts`.
+6. Record Runtime, Projection, Benchmark, and Atlas consumers.
+7. Resolve the current Executive Assessment capability trace.
+8. Regenerate and validate the capability registry.
+9. Expand the same pattern across the remaining capabilities.
+10. Build an all-capabilities pre-sprint architecture review command.
+
+---
+
+# Canonical Organizational Understanding Path
+
+The verified path established in Sprint 66 is:
+
+```text
+Organizational Judgments
+        ↓
+Theory Validation
+        ↓
+Organizational Conditions
+        ↓
+Organizational State
+        ↓
+buildExecutiveAssessment.ts
+        ↓
+buildOrganizationalUnderstanding.ts
+        ↓
+OrganizationalAssessment
+        ↓
+OrganizationalUnderstanding
+        ↓
+Organization Runtime
+        ↓
+Executive Projection
+        ↓
+Executive Workspace
+```
+
+Atlas validation follows:
+
+```text
+OrganizationalUnderstanding
+        ↓
+organizationalUnderstandingScorer.ts
+        ↓
+runBenchmarkInvestigation.ts
+        ↓
+runAtlasSimulation.ts
+```
+
+The legacy benchmark remains available for historical comparison, but canonical Organizational Understanding validation is now the preferred architectural benchmark.
 
 ---
 
@@ -119,17 +212,60 @@ Every significant cognitive object should have:
 Every sprint begins by running:
 
 ```bash
+npm run sprint:start
 npm run validate
+npm run sprint:docs
+npm run cognition:validate
 npm run simulate:atlas
 ```
 
-Atlas remains the canonical verification benchmark.
+Until the architecture preflight command is complete, also review the relevant capability trace manually:
 
-After Atlas completes, ask:
+```bash
+npm run audit:capability -- "Capability Name"
+```
 
-> **Is Discovery's executive understanding correct, useful, and clearly communicated?**
+For the next sprint, begin with:
 
-Only after verifying the executive understanding should implementation begin.
+```bash
+npm run audit:capability -- "Executive Assessment"
+```
+
+After the architecture preflight completes, ask:
+
+> **Does the registry accurately describe the active implementation path?**
+
+Then ask:
+
+> **Is Discovery’s executive understanding correct, useful, and clearly communicated?**
+
+Only after both questions are answered should implementation begin.
+
+---
+
+# Planned Pre-Sprint Command
+
+Create a reusable command such as:
+
+```bash
+npm run sprint:architecture
+```
+
+It should:
+
+1. regenerate the Cognitive File Registry,
+2. enrich the Cognitive Capability Registry,
+3. validate the Capability Registry,
+4. regenerate every registered Capability Trace,
+5. detect broken implementation paths,
+6. detect missing canonical producers,
+7. detect missing Runtime destinations,
+8. detect missing Executive destinations,
+9. detect missing consumers,
+10. detect architectural drift,
+11. print a concise architecture briefing.
+
+Eventually, `npm run sprint:start` should include this architecture preflight automatically.
 
 ---
 
@@ -140,46 +276,56 @@ Only after verifying the executive understanding should implementation begin.
 - Cognitive Operating System
 - Cognitive Object Model
 - Cognitive Flow Map
-- Capability Registry
-- File Registry
-- Capability Audit
-- Canonical Organizational Understanding Pipeline
+- Cognitive Capability Registry
+- Cognitive File Registry
+- Cognitive Capability Audit
+- Canonical Organizational Understanding pipeline
+- Canonical Organizational Understanding scorer
+- Registry-aware Capability Auditor
+- Structural capability tracing
+- Architecture drift reporting
 
-## Canonical Producer Established
+## Current Incomplete Area
 
-- Executive Assessment → Organizational Understanding
+The architecture tooling is operational, but registry population is incomplete.
 
-## Current Focus
+The Executive Assessment trace currently exposes missing registry metadata, including:
 
-Improve Executive Understanding quality.
+- produced cognitive objects,
+- declared implementation consumers,
+- complete implementation files,
+- Executive destination mapping,
+- detailed architecture relationships.
 
-Current areas of refinement include:
-
-- Executive Narrative
-- Executive Understanding synthesis
-- Confidence calibration
-- Longitudinal understanding
-- Executive communication
-- Atlas validation
+This is documentation and registry drift, not an engine failure.
 
 ---
 
 # Atlas Rule
 
-Atlas is now both:
+Atlas is now:
 
 - the cognitive benchmark,
-- the architectural verification benchmark,
-- and the executive understanding benchmark.
+- the architectural verification environment,
+- the executive understanding benchmark,
+- and the canonical Organizational Understanding benchmark.
 
 Every sprint should follow this sequence:
 
 ```text
+Validate Architecture Registry
+
+↓
+
+Regenerate Capability Traces
+
+↓
+
 Run Atlas
 
 ↓
 
-Verify Executive Understanding
+Verify Organizational Understanding
 
 ↓
 
@@ -191,7 +337,7 @@ Verify Canonical Producers
 
 ↓
 
-Verify Operating Systems
+Verify Runtime and Executive Paths
 
 ↓
 
@@ -200,18 +346,22 @@ Update Registry
 
 If Atlas demonstrates that executive understanding is incomplete, improve the existing synthesis before introducing additional reasoning.
 
+If the capability trace demonstrates that the registry is incomplete, repair the registry before expanding the capability.
+
 ---
 
 # Current Priorities
 
-1. Improve Executive Understanding synthesis.
-2. Improve Executive Narrative quality.
-3. Improve longitudinal understanding.
-4. Improve confidence calibration.
-5. Continue populating Cognitive Operating Systems.
-6. Expand Atlas architectural validation.
-7. Populate Memory Operating System.
-8. Populate Learning Operating System.
+1. Complete the Executive Assessment registry entry.
+2. Complete capability-level implementation consumer mapping.
+3. Complete produced and consumed cognitive object mapping.
+4. Regenerate all capability traces.
+5. Build `sprint:architecture`.
+6. Integrate architecture review into `sprint:start`.
+7. Complete Memory Operating System population.
+8. Complete Learning Operating System population.
+9. Improve Executive Understanding quality.
+10. Resume simulated organization pressure testing after architecture verification is reliable.
 
 ---
 
@@ -223,6 +373,9 @@ If Atlas demonstrates that executive understanding is incomplete, improve the ex
 - Allow a capability to exist without an Operating System owner.
 - Allow a subsystem to exist without an Operating System.
 - Allow a cognitive object without provenance.
+- Allow registry metadata to contradict the active code path.
+- Treat every structural search match as an implementation file.
+- Mix capability dependencies with file-level consumers.
 - Bypass Executive Projection.
 - Reconstruct Runtime cognition inside React.
 - Introduce architecture that conflicts with the Cognitive Operating System.
@@ -239,11 +392,17 @@ Before implementing anything ask:
 2. Which subsystem owns it?
 3. Which capability owns it?
 4. Which cognitive object does it produce?
-5. Is there already a canonical producer?
-6. Does Atlas validate it?
-7. Does Executive Projection expose it?
+5. Which cognitive objects does it consume?
+6. Is there already a canonical producer?
+7. Is the capability registered?
+8. Does Runtime persist it?
+9. Does Executive Projection expose it?
+10. Does Atlas validate it?
+11. Does the capability trace confirm the active path?
 
 If multiple systems produce the same cognitive object, simplify the architecture before expanding the engine.
+
+If the registry cannot describe the implementation accurately, update the architecture record before continuing.
 
 ---
 
@@ -257,8 +416,16 @@ If multiple systems produce the same cognitive object, simplify the architecture
 
 > **Every cognitive object should have one canonical producer.**
 
-> **Executive Assessment is the canonical producer of Organizational Understanding.**
+> **Every capability should describe its dependencies, outputs, consumers, and destinations.**
+
+> **Executive Assessment produces the canonical structured Organizational Understanding used by Atlas and Executive Projection.**
 
 > **Atlas validates cognition.**
+
+> **The Capability Registry validates ownership.**
+
+> **The File Registry validates implementation.**
+
+> **Capability Traces validate connectivity and drift.**
 
 > **The Cognitive Architecture validates Discovery itself.**

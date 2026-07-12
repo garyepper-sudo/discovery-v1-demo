@@ -667,30 +667,33 @@ function dependencyValues(
   capability: CapabilityRegistryEntry,
 ): string[] {
   return unique([
-    ...(capability.dependencies ?? []),
-    ...asStringArray(capability.dependsOn),
-    ...asStringArray(capability.requiredCapabilities),
-  ]);
+  ...(capability.dependencies ?? []),
+  ...asStringArray(capability.consumesCapabilities),
+  ...asStringArray(capability.dependsOn),
+  ...asStringArray(capability.requiredCapabilities),
+]);
 }
 
 function consumerValues(
   capability: CapabilityRegistryEntry,
 ): string[] {
   return unique([
-    ...(capability.consumers ?? []),
-    ...(capability.consumedBy ?? []),
-    ...asStringArray(capability.downstreamConsumers),
-  ]);
+  ...(capability.consumers ?? []),
+  ...(capability.consumedBy ?? []),
+  ...asStringArray(capability.consumedByCapabilities),
+  ...asStringArray(capability.downstreamConsumers),
+]);
 }
 
 function producedValues(
   capability: CapabilityRegistryEntry,
 ): string[] {
   return unique([
-    ...(capability.produces ?? []),
-    ...asStringArray(capability.outputObjects),
-    ...asStringArray(capability.cognitiveObjects),
-  ]);
+  ...(capability.produces ?? []),
+  ...asStringArray(capability.producesObjects),
+  ...asStringArray(capability.outputObjects),
+  ...asStringArray(capability.cognitiveObjects),
+]);
 }
 
 function consumedValues(
@@ -718,26 +721,47 @@ function runtimeDestinationValue(
 function executiveDestinationValue(
   capability: CapabilityRegistryEntry,
 ): string | null {
-  const value =
-    capability.executiveDestination ??
-    capability.projectionDestination ??
-    capability.uiDestination;
+  const values = unique([
+    ...asStringArray(capability.executiveDestinations),
+    ...asStringArray(capability.projectionDestinations),
+    ...asStringArray(capability.uiDestinations),
+    capability.executiveDestination ?? "",
+    capability.projectionDestination ?? "",
+    capability.uiDestination ?? "",
+  ]);
 
-  return typeof value === "string"
-    ? value
+  return values.length > 0
+    ? values.join(", ")
     : null;
 }
 
 function atlasCoverageValue(
   capability: CapabilityRegistryEntry,
 ): string | null {
-  const value =
-    capability.atlasCoverage ??
-    capability.simulationCoverage ??
-    capability.benchmarkCoverage;
+  const atlasCoverage =
+    typeof capability.atlasCoverage === "string"
+      ? capability.atlasCoverage
+      : null;
 
-  return typeof value === "string"
-    ? value
+  const simulationCoverage =
+    typeof capability.simulationCoverage === "string"
+      ? capability.simulationCoverage
+      : null;
+
+  const benchmarkCoverage = asStringArray(
+    capability.benchmarkCoverage,
+  );
+
+  if (atlasCoverage) {
+    return atlasCoverage;
+  }
+
+  if (simulationCoverage) {
+    return simulationCoverage;
+  }
+
+  return benchmarkCoverage.length > 0
+    ? benchmarkCoverage.join(", ")
     : null;
 }
 
@@ -852,13 +876,20 @@ function createVerificationChecks(
         "No Executive, Projection, or UI destination is declared.",
     },
     {
-      label: "Consumers",
-      status: consumers.length > 0 ? "pass" : "fail",
-      detail:
-        consumers.length > 0
-          ? `${consumers.length} declared consumer(s).`
-          : "No downstream consumers are declared.",
-    },
+  label: "Consumers",
+  status:
+    consumers.length > 0
+      ? "pass"
+      : capability.terminalCapability
+        ? "pass"
+        : "fail",
+  detail:
+    consumers.length > 0
+      ? `${consumers.length} declared consumer(s).`
+      : capability.terminalCapability
+        ? "Terminal capability (no downstream cognitive capability expected)."
+        : "No downstream consumers are declared.",
+},
     {
       label: "Atlas coverage",
       status:

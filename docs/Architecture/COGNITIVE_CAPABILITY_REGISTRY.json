@@ -99,7 +99,8 @@
         }
       ],
       "missingImplementationFiles": [],
-      "subsystem": "Evidence"
+      "subsystem": "Evidence",
+      "architecturalLayer": "COG"
     },
     {
       "id": "CAP-PER-002",
@@ -160,7 +161,8 @@
         }
       ],
       "missingImplementationFiles": [],
-      "subsystem": "Observation"
+      "subsystem": "Observation",
+      "architecturalLayer": "COG"
     },
     {
       "id": "CAP-UND-001",
@@ -272,7 +274,8 @@
         }
       ],
       "missingImplementationFiles": [],
-      "subsystem": "Mechanisms"
+      "subsystem": "Mechanisms",
+      "architecturalLayer": "COG"
     },
     {
       "id": "CAP-UND-002",
@@ -344,7 +347,8 @@
         }
       ],
       "missingImplementationFiles": [],
-      "subsystem": "Beliefs"
+      "subsystem": "Beliefs",
+      "architecturalLayer": "COG"
     },
     {
       "id": "CAP-UND-003",
@@ -420,7 +424,8 @@
         }
       ],
       "missingImplementationFiles": [],
-      "subsystem": "Theories"
+      "subsystem": "Theories",
+      "architecturalLayer": "COG"
     },
     {
       "id": "CAP-UND-004",
@@ -475,13 +480,15 @@
         }
       ],
       "missingImplementationFiles": [],
-      "subsystem": "Organizational Conditions"
+      "subsystem": "Organizational Conditions",
+      "architecturalLayer": "EXEC"
     },
     {
       "id": "CAP-UND-005",
       "name": "Executive Assessment",
       "description": "Synthesizes organizational state, conditions, mechanisms, theories, beliefs, and investigation opportunities into Discovery's canonical executive-level assessment.",
       "domain": "UND",
+      "architecturalLayer": "EXEC",
       "status": "canonical",
       "canonicalProducer": "engine/v3/model/judgment/buildExecutiveAssessment.ts",
       "implementationFiles": [
@@ -536,7 +543,15 @@
     },
     {
       "id": "CAP-UND-006",
-      "name": "Executive Understanding Synthesis",
+"name": "Executive Understanding Synthesis",
+"searchTerms": [
+  "buildExecutiveUnderstandingCandidates",
+  "consolidateUnderstanding",
+  "synthesizeUnderstanding",
+  "evolveOrganizationRuntime",
+  "OrganizationalUnderstanding",
+  "OrganizationalUnderstandingState"
+],
       "description": "Transforms Executive Assessment into Discovery's single canonical persistent Organizational Understanding and consolidates it longitudinally across investigations.",
       "domain": "UND",
       "status": "canonical",
@@ -571,7 +586,7 @@
       ],
       "livingOrganizationStage": 2,
       "reviewStatus": "reviewed",
-      "notes": "This is the sole canonical producer of persistent Organizational Understanding. Investigation-level understandings and legacy belief-derived understandings remain available as supporting working cognition but do not compete for canonical executive understanding.",
+      "notes": "This is the sole canonical producer of persistent Organizational Understanding. Investigation-level understandings and legacy belief-derived understandings remain available as supporting working cognition but do not compete for canonical executive understanding. This is a terminal cognitive capability consumed by Executive Projection, Executive Workspace, and Atlas rather than by another registered cognitive capability.",
       "canonicalProducerExists": true,
       "resolvedFiles": [
         {
@@ -629,7 +644,9 @@
         }
       ],
       "missingImplementationFiles": [],
-      "subsystem": "Organizational Understanding"
+      "subsystem": "Organizational Understanding",
+      "architecturalLayer": "COG",
+      "terminalCapability": true
     },
     {
       "id": "CAP-MEM-001",
@@ -708,7 +725,8 @@
         }
       ],
       "missingImplementationFiles": [],
-      "subsystem": "Runtime Persistence"
+      "subsystem": "Runtime Persistence",
+      "architecturalLayer": "RUN"
     },
     {
       "id": "CAP-LRN-001",
@@ -777,7 +795,8 @@
         }
       ],
       "missingImplementationFiles": [],
-      "subsystem": "Belief Evolution"
+      "subsystem": "Belief Evolution",
+      "architecturalLayer": "COG"
     },
     {
       "id": "CAP-LRN-002",
@@ -832,7 +851,9 @@
         }
       ],
       "missingImplementationFiles": [],
-      "subsystem": "Organizational Learning"
+      "subsystem": "Organizational Learning",
+      "architecturalLayer": "COG",
+      "terminalCapability": true
     },
     {
       "id": "CAP-SELF-001",
@@ -889,7 +910,8 @@
         }
       ],
       "missingImplementationFiles": [],
-      "subsystem": "Theory Validation"
+      "subsystem": "Theory Validation",
+      "architecturalLayer": "COG"
     },
     {
       "id": "CAP-SELF-002",
@@ -937,9 +959,11 @@
         }
       ],
       "missingImplementationFiles": [],
-      "subsystem": "Investigation Opportunities"
+      "subsystem": "Investigation Opportunities",
+      "architecturalLayer": "EXEC",
+      "terminalCapability": true
     }
   ],
-  "generatedAt": "2026-07-12T02:31:47.530Z",
+  "generatedAt": "2026-07-12T03:16:58.779485Z",
   "capabilityCount": 13
 }

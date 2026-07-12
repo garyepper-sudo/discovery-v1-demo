@@ -10,13 +10,13 @@ Read this document before making architectural, product, or implementation decis
 
 # Discovery
 
-**Version:** Sprint 65
+**Version:** Sprint 66
 
 **Status:** Active Development
 
-**Current Milestone**
+## Current Milestone
 
-**Canonical Understanding Architecture**
+**Architecture Operating System**
 
 ---
 
@@ -30,11 +30,11 @@ Discovery is not a dashboard.
 
 Discovery is an **Executive Understanding System**.
 
-Discovery now possesses a formal Cognitive Architecture that describes the system independently of its implementation.
+Discovery possesses a formal Cognitive Architecture that describes the system independently of its implementation.
 
-Discovery also now possesses a canonical Organizational Understanding pipeline.
+Discovery also possesses a canonical Organizational Understanding pipeline and is now beginning to understand and validate its own architecture.
 
-Future development focuses on improving the quality of executive understanding rather than expanding duplicate reasoning systems.
+Future development focuses on improving the quality of executive understanding while making Discovery's architecture completely self-describing.
 
 ---
 
@@ -42,17 +42,21 @@ Future development focuses on improving the quality of executive understanding r
 
 ## Phase
 
-**Canonical Understanding Architecture**
+**Architecture Operating System**
 
 ## Current Objective
 
-Establish a single canonical producer for every major cognitive object.
+Complete Discovery's Architecture Operating System so every significant capability can answer:
 
-The first major milestone completed is Organizational Understanding.
+- What cognitive object does it produce?
+- Who is the canonical producer?
+- Where is it persisted?
+- Who consumes it?
+- Where is it projected?
+- How is it validated?
+- How does Atlas verify it?
 
-Discovery no longer treats multiple reasoning layers as competing producers of organizational understanding.
-
-Executive Assessment is now the canonical producer of persistent Organizational Understanding.
+Discovery should eventually understand its own architecture as thoroughly as it understands an organization.
 
 ---
 
@@ -65,6 +69,8 @@ Executive Assessment is now the canonical producer of persistent Organizational 
 > **Objects before code.**
 
 > **One canonical producer for every cognitive object.**
+
+> **Architecture should be self-describing.**
 
 > **Executive understanding is the final product of cognition.**
 
@@ -81,13 +87,16 @@ Executive Assessment is now the canonical producer of persistent Organizational 
 | Runtime Persistence | ✅ Stable |
 | Benchmark Framework | ✅ Stable |
 | Atlas Simulation | ✅ Canonical |
+| Organizational Understanding | ✅ Canonical |
+| Organizational Understanding Benchmark | ✅ Canonical |
 | Cognitive Operating System | ✅ Established |
 | Cognitive Flow Map | ✅ Established |
 | Cognitive Object Model | ✅ Established |
 | Canonical Understanding Pipeline | ✅ Established |
-| Capability Registry | 🟡 Population |
-| File Registry | 🟡 Population |
-| Capability Audit | 🟡 Population |
+| Capability Registry | 🟡 Expanding |
+| File Registry | 🟡 Expanding |
+| Capability Trace System | 🟡 Expanding |
+| Architecture Verification | 🟡 In Progress |
 
 ---
 
@@ -195,7 +204,9 @@ Executive Projection
 Executive Experience
 ```
 
-Executive Assessment is now the canonical producer of Organizational Understanding.
+Executive Assessment remains the canonical producer of Executive Assessment.
+
+Organizational Understanding is now a first-class canonical cognitive object that Atlas validates directly.
 
 Earlier reasoning layers exist to support executive cognition rather than compete with it.
 
@@ -211,6 +222,7 @@ Every significant cognitive object should have:
 - one canonical producer
 - one persistent representation
 - one executive projection
+- one validation path
 
 Duplicate producers should be eliminated whenever practical.
 
@@ -227,7 +239,10 @@ Atlas now verifies:
 - capability coverage
 - executive intelligence coverage
 - architectural consistency
+- structured Organizational Understanding
 - understanding quality
+
+Discovery is transitioning from validating executive narrative to validating canonical cognitive objects.
 
 ---
 
@@ -242,39 +257,40 @@ Atlas now verifies:
 - Capability Registry (initial)
 - File Registry (initial)
 - Canonical Organizational Understanding pipeline
+- Canonical Organizational Understanding benchmark
+- Registry-aware Capability Auditor
 
 ## Current Focus
 
-Understanding Operating System
+**Architecture Operating System**
 
-Current subsystems:
+Current objectives:
 
-- Mechanisms
-- Beliefs
-- Concepts
-- Theories
-- Organizational Conditions
-- Organizational State
-- Executive Assessment
-- Organizational Understanding
+- enrich Capability Registry
+- enrich File Registry
+- verify capability connectivity
+- verify canonical producers
+- verify Runtime destinations
+- verify Executive destinations
+- verify Atlas coverage
+- eliminate architectural drift
 
 ---
 
 # Current Priority
 
-The primary bottleneck is no longer determining which understanding should become canonical.
+The primary bottleneck is no longer determining canonical understanding.
 
-That architecture has been established.
-
-The primary bottleneck is now improving the quality of executive understanding.
+The primary bottleneck is now ensuring Discovery completely understands its own architecture.
 
 Future work should focus on:
 
-- executive synthesis quality
-- executive narrative generation
-- confidence calibration
-- longitudinal learning
-- natural executive communication
+- capability verification
+- registry completeness
+- architectural traceability
+- implementation ownership
+- dependency visibility
+- architecture validation before every sprint
 
 ---
 
@@ -291,7 +307,9 @@ Future work should focus on:
 | Executive Projection | ✅ Passing |
 | Atlas Simulation | ✅ Passing |
 | Canonical Understanding Pipeline | ✅ Passing |
+| Organizational Understanding Benchmark | ✅ Passing |
 | Cognitive Capability Audit | ✅ Passing |
+| Architecture Auditor | ✅ Operational |
 
 ---
 
@@ -299,16 +317,16 @@ Future work should focus on:
 
 ## Goal
 
-Improve the quality of Executive Understanding.
+Build Discovery's Architecture Operating System.
 
 Priority:
 
-1. Executive Narrative
-2. Executive Understanding
-3. Executive Projection
-4. Longitudinal Understanding
-5. Executive Learning
-6. Atlas validation
+1. Capability Registry
+2. Architecture Verification
+3. Capability Trace System
+4. Executive Projection
+5. Atlas Validation
+6. Executive Understanding Quality
 
 ---
 
@@ -320,10 +338,14 @@ Before implementing any capability ask:
 2. Which subsystem owns it?
 3. Which cognitive object does it produce?
 4. Is there already a canonical producer?
-5. Does Atlas validate it?
+5. Does Runtime persist it?
 6. Does Executive Projection expose it?
+7. Does Atlas validate it?
+8. Does the Capability Registry describe it?
 
 If two systems produce the same cognitive object, the architecture is incomplete.
+
+If the registry cannot explain a capability, the architecture is incomplete.
 
 ---
 
@@ -333,11 +355,12 @@ Discovery now follows this roadmap:
 
 1. Complete Canonical Producers
 2. Complete Capability Registry
-3. Complete Cognitive Object Model
-4. Improve Executive Understanding Quality
-5. Simulated organization pressure testing
-6. Longitudinal organizational learning
-7. Legacy cleanup
-8. Architecture consolidation
-9. Engine quality improvements
-10. New cognition only when Atlas demonstrates a genuine missing capability
+3. Complete Architecture Operating System
+4. Complete Cognitive Object Model
+5. Improve Executive Understanding Quality
+6. Simulated organization pressure testing
+7. Longitudinal organizational learning
+8. Legacy cleanup
+9. Architecture consolidation
+10. Engine quality improvements
+11. New cognition only when Atlas demonstrates a genuine missing capability

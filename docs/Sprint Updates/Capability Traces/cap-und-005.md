@@ -1,26 +1,26 @@
 # Capability Trace — Executive Assessment
 
-Generated: 2026-07-12T02:46:56.468Z
+Generated: 2026-07-12T03:14:35.986Z
 
 ## Verified Architecture
 
-**Connection status:** ❌ Incomplete
+**Connection status:** ✅ Connected
 
 | Property | Value |
 |---|---|
 | Capability ID | `CAP-UND-005` |
 | Capability name | Executive Assessment |
 | Cognitive domain | UND |
-| Architectural layer | Not declared |
+| Architectural layer | EXEC |
 | Canonical producer | `engine/v3/model/judgment/buildExecutiveAssessment.ts` |
 | Runtime destination | `OrganizationRuntime.executiveAssessment` |
-| Executive destination | Not declared |
+| Executive destination | `ExecutiveProjection, ExecutiveWorkspace, OrganizationalUnderstanding` |
 | Atlas coverage | yes |
 | Registry status | canonical |
 
 ### Produced Cognitive Objects
 
-None declared.
+- `ExecutiveAssessment`
 
 ### Consumed Cognitive Objects
 
@@ -32,11 +32,14 @@ None declared.
 
 ### Capability Dependencies
 
-None declared.
+- `CAP-UND-001`
+- `CAP-UND-002`
+- `CAP-UND-003`
+- `CAP-UND-004`
 
 ### Declared Consumers
 
-None declared.
+- `CAP-UND-006`
 
 ## Architecture Verification
 
@@ -47,8 +50,8 @@ None declared.
 | Canonical producer exists | ✅ | engine/v3/model/judgment/buildExecutiveAssessment.ts |
 | Implementation files | ✅ | 1 declared file(s) exist. |
 | Runtime destination | ✅ | OrganizationRuntime.executiveAssessment |
-| Executive destination | ⚠️ | No Executive, Projection, or UI destination is declared. |
-| Consumers | ❌ | No downstream consumers are declared. |
+| Executive destination | ✅ | ExecutiveProjection, ExecutiveWorkspace, OrganizationalUnderstanding |
+| Consumers | ✅ | 1 declared consumer(s). |
 | Atlas coverage | ✅ | yes |
 | Structural implementation coverage | ✅ | All declared implementation files appeared in the structural trace. |
 
@@ -259,7 +262,7 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/benchmark/auditCapability.ts`
 
-- Line 1329 · **unknown** · matched `Executive Assessment`
+- Line 1353 · **unknown** · matched `Executive Assessment`
   - `'Usage: npm run audit:capability -- "Executive Assessment"',`
 
 ##### `engine/benchmark/auditUnderstandingLayers.ts`
