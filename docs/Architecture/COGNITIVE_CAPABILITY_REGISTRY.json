@@ -184,6 +184,7 @@
         "OrganizationalMechanism"
       ],
       "consumedByCapabilities": [
+        "CAP-ABS-001",
         "CAP-SELF-001",
         "CAP-UND-002",
         "CAP-UND-003",
@@ -295,8 +296,10 @@
         "OrganizationalBelief"
       ],
       "consumedByCapabilities": [
+        "CAP-ABS-001",
         "CAP-LRN-001",
         "CAP-SELF-001",
+        "CAP-SIM-001",
         "CAP-UND-003",
         "CAP-UND-004",
         "CAP-UND-005"
@@ -353,7 +356,7 @@
     {
       "id": "CAP-UND-003",
       "name": "Organizational Theory Formation",
-      "description": "Forms higher-order organizational theories that explain multiple mechanisms, beliefs, and patterns.",
+      "description": "Forms higher-order organizational theories by integrating reusable organizational concepts with supporting organizational beliefs into coherent explanations of organizational behavior.",
       "domain": "UND",
       "status": "canonical",
       "canonicalProducer": "engine/v3/model/judgment/formOrganizationalTheories.ts",
@@ -362,7 +365,7 @@
         "engine/v3/model/judgment/organizationalTheory.ts"
       ],
       "consumesCapabilities": [
-        "CAP-UND-001",
+        "CAP-ABS-001",
         "CAP-UND-002"
       ],
       "producesObjects": [
@@ -446,7 +449,10 @@
         "OrganizationalCondition"
       ],
       "consumedByCapabilities": [
+        "CAP-ADP-001",
+        "CAP-PRD-001",
         "CAP-SELF-002",
+        "CAP-SIM-001",
         "CAP-UND-005"
       ],
       "runtimeDestination": "OrganizationRuntime.organizationalConditions",
@@ -476,7 +482,9 @@
             "OrganizationalState",
             "inferOrganizationalConditions"
           ],
-          "imports": []
+          "imports": [
+            "./rankOrganizationalCondition"
+          ]
         }
       ],
       "missingImplementationFiles": [],
@@ -486,7 +494,7 @@
     {
       "id": "CAP-UND-005",
       "name": "Executive Assessment",
-      "description": "Synthesizes organizational state, conditions, mechanisms, theories, beliefs, and investigation opportunities into Discovery's canonical executive-level assessment.",
+      "description": "Synthesizes organizational state, conditions, mechanisms, theories, beliefs, prediction reflection, and investigation opportunities into Discovery's canonical executive-level assessment.",
       "domain": "UND",
       "architecturalLayer": "EXEC",
       "status": "canonical",
@@ -498,7 +506,8 @@
         "CAP-UND-001",
         "CAP-UND-002",
         "CAP-UND-003",
-        "CAP-UND-004"
+        "CAP-UND-004",
+        "CAP-PRD-002"
       ],
       "producesObjects": [
         "ExecutiveAssessment"
@@ -518,7 +527,7 @@
       ],
       "livingOrganizationStage": 2,
       "reviewStatus": "reviewed",
-      "notes": "Executive Assessment is the authoritative executive synthesis consumed by the canonical Executive Understanding Synthesis capability. Earlier reasoning stages support this assessment but do not independently produce persistent Organizational Understanding.",
+      "notes": "Executive Assessment is the authoritative executive synthesis consumed by the canonical Executive Understanding Synthesis capability. It integrates Prediction Reflection but does not recreate prediction reasoning.",
       "canonicalProducerExists": true,
       "resolvedFiles": [
         {
@@ -532,6 +541,9 @@
           ],
           "imports": [
             "../../concepts/conceptCandidateTypes",
+            "../predictions/buildPredictionReflection",
+            "./buildExecutivePriority",
+            "./buildOrganizationalUnderstanding",
             "./buildTheoryReflection",
             "./organizationalJudgment",
             "./organizationalMechanism"
@@ -591,21 +603,24 @@
       "resolvedFiles": [
         {
           "path": "engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts",
-          "existsInFileRegistry": false,
-          "fileId": null,
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-068",
           "architecturalLayer": "COG",
           "cognitiveDomain": "UND",
           "exports": [
+            "BuildExecutiveUnderstandingCandidatesInput",
             "buildExecutiveUnderstandingCandidates"
           ],
-          "imports": []
+          "imports": [
+            "./consolidateUnderstanding"
+          ]
         },
         {
           "path": "engine/v3/understanding/consolidateUnderstanding.ts",
           "existsInFileRegistry": true,
-          "fileId": null,
+          "fileId": "COG-PER-084",
           "architecturalLayer": "COG",
-          "cognitiveDomain": "UND",
+          "cognitiveDomain": "PER",
           "exports": [
             "UnderstandingCandidate",
             "consolidateUnderstanding"
@@ -617,29 +632,68 @@
         {
           "path": "engine/v3/understanding/synthesizeUnderstanding.ts",
           "existsInFileRegistry": true,
-          "fileId": null,
+          "fileId": "COG-MEM-006",
           "architecturalLayer": "COG",
-          "cognitiveDomain": "UND",
+          "cognitiveDomain": "MEM",
           "exports": [
             "synthesizeUnderstanding"
           ],
           "imports": [
-            "../runtime/organizationalUnderstandingState"
+            "../runtime/organizationalUnderstandingState",
+            "./rankOrganizationalUnderstanding"
           ]
         },
         {
           "path": "engine/v3/runtime/evolveOrganizationRuntime.ts",
           "existsInFileRegistry": true,
-          "fileId": null,
+          "fileId": "RUN-UND-001",
           "architecturalLayer": "RUN",
           "cognitiveDomain": "UND",
           "exports": [
             "evolveOrganizationRuntime"
           ],
           "imports": [
+            "../capabilities/inferOrganizationalCapabilities",
+            "../capabilities/updateOrganizationalCapabilities",
+            "../cognition/cognitionEngine",
+            "../compression/semanticCompression",
+            "../concepts/buildConceptCandidates",
+            "../concepts/compressConceptCandidates",
+            "../concepts/synthesizeOrganizationalConcepts",
+            "../functional/inferFunctionalInterpretations",
+            "../meaning/extractMeaning",
+            "../model/beliefs/inferOrganizationalBeliefs",
+            "../model/beliefs/updateOrganizationalBeliefs",
+            "../model/buildOrganizationReasoningGraph",
+            "../model/inferOrganizationRelationships",
+            "../model/inferReasoningRelationships",
+            "../model/investigation/buildInvestigationOpportunities",
+            "../model/judgment/buildExecutiveAssessment",
+            "../model/judgment/detectJudgmentContradictions",
+            "../model/judgment/evaluateExplanations",
+            "../model/judgment/inferOrganizationalMechanisms",
+            "../model/judgment/synthesizeExplanations",
+            "../model/learning/computeOrganizationalLearningProfile",
+            "../model/memory/buildUnderstandingEvolution",
+            "../model/memory/calculateMemoryMaturity",
+            "../model/memory/consolidateOrganizationalTheories",
+            "../model/observations/inferOrganizationalObservations",
+            "../model/predictions/buildPredictionReflection",
+            "../model/predictions/evaluatePredictionOutcomes",
+            "../model/predictions/inferOrganizationalPredictions",
+            "../model/reasoning",
+            "../model/simulate/simulateOrganization",
+            "../model/state/inferOrganizationalConditions",
+            "../model/synchronizeOrganizationModel",
+            "../phenomena/inferOrganizationalPhenomena",
+            "../types",
             "../understanding/buildExecutiveUnderstandingCandidates",
             "../understanding/consolidateUnderstanding",
-            "../understanding/synthesizeUnderstanding"
+            "../understanding/synthesizeUnderstanding",
+            "../understanding/understandingClusters",
+            "./organizationRuntime",
+            "./organizationalUnderstandingState",
+            "./updateOrganizationalUnderstandingState"
           ]
         }
       ],
@@ -666,6 +720,7 @@
       "consumedByCapabilities": [
         "CAP-LRN-001",
         "CAP-LRN-002",
+        "CAP-SYS-001",
         "CAP-UND-006"
       ],
       "runtimeDestination": "OrganizationRuntime",
@@ -719,6 +774,8 @@
             "../model/memory/organizationalMemory",
             "../model/memory/organizationalTheories",
             "../model/organizationModel",
+            "../model/predictions/evaluatePredictionOutcomes",
+            "../model/simulate/simulateOrganization",
             "../understanding/types",
             "./organizationalUnderstandingState"
           ]
@@ -815,7 +872,10 @@
       "producesObjects": [
         "OrganizationalLearningProfile"
       ],
-      "consumedByCapabilities": [],
+      "consumedByCapabilities": [
+        "CAP-PRD-001",
+        "CAP-SIM-001"
+      ],
       "runtimeDestination": "OrganizationRuntime.organizationalLearningProfile",
       "executiveDestinations": [
         "OrganizationalLearningProfile",
@@ -856,6 +916,118 @@
       "terminalCapability": true
     },
     {
+      "id": "CAP-ABS-001",
+      "name": "Organizational Concept Formation",
+      "description": "Forms reusable organizational concepts by abstracting recurring organizational mechanisms, beliefs, and phenomena across one or more investigations. Concepts become the semantic building blocks from which organizational theories are constructed.",
+      "domain": "ABS",
+      "status": "canonical",
+      "canonicalProducer": "engine/v3/concepts/synthesizeOrganizationalConcepts.ts",
+      "implementationFiles": [
+        "engine/v3/concepts/buildConceptCandidates.ts",
+        "engine/v3/concepts/compressConceptCandidates.ts",
+        "engine/v3/concepts/conceptCandidateTypes.ts",
+        "engine/v3/concepts/synthesizeOrganizationalConcepts.ts",
+        "engine/v3/compression/types.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-UND-001",
+        "CAP-UND-002"
+      ],
+      "producesObjects": [
+        "OrganizationalConcept"
+      ],
+      "consumedByCapabilities": [
+        "CAP-UND-003"
+      ],
+      "runtimeDestination": "OrganizationModel.concepts",
+      "executiveDestinations": [
+        "ExecutiveAssessment",
+        "ExecutiveProjection"
+      ],
+      "atlasCoverage": "yes",
+      "benchmarkCoverage": [
+        "Atlas",
+        "Concept Formation"
+      ],
+      "livingOrganizationStage": 2,
+      "reviewStatus": "reviewed",
+      "notes": "",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/concepts/buildConceptCandidates.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-025",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "BuildConceptCandidatesParams",
+            "buildConceptCandidates"
+          ],
+          "imports": [
+            "../semantic",
+            "./conceptCandidateTypes"
+          ]
+        },
+        {
+          "path": "engine/v3/concepts/compressConceptCandidates.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-026",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "compressConceptCandidates"
+          ],
+          "imports": [
+            "../compression/types",
+            "./conceptCandidateTypes"
+          ]
+        },
+        {
+          "path": "engine/v3/concepts/conceptCandidateTypes.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-027",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "ConceptCandidate",
+            "ConceptCandidateSourceType",
+            "ConceptCandidateStrength"
+          ],
+          "imports": []
+        },
+        {
+          "path": "engine/v3/concepts/synthesizeOrganizationalConcepts.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-ABS-002",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "ABS",
+          "exports": [
+            "OrganizationalConcept",
+            "synthesizeOrganizationalConcepts"
+          ],
+          "imports": [
+            "../meaning/types"
+          ]
+        },
+        {
+          "path": "engine/v3/compression/types.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-024",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "OrganizationalConcept",
+            "OrganizationalConceptStatus"
+          ],
+          "imports": []
+        }
+      ],
+      "missingImplementationFiles": [],
+      "subsystem": "Concepts",
+      "architecturalLayer": "COG"
+    },
+    {
       "id": "CAP-SELF-001",
       "name": "Theory Validation",
       "description": "Evaluates the dominant theory, competing theories, supporting evidence, contradictory evidence, confidence calibration, and falsification criteria.",
@@ -874,7 +1046,8 @@
         "TheoryValidation"
       ],
       "consumedByCapabilities": [
-        "CAP-SELF-002"
+        "CAP-SELF-002",
+        "CAP-SYS-001"
       ],
       "runtimeDestination": "ExecutiveAssessment.theoryValidation",
       "executiveDestinations": [
@@ -930,7 +1103,9 @@
       "producesObjects": [
         "InvestigationOpportunity"
       ],
-      "consumedByCapabilities": [],
+      "consumedByCapabilities": [
+        "CAP-SYS-001"
+      ],
       "runtimeDestination": "OrganizationRuntime.investigationOpportunities",
       "executiveDestinations": [
         "InvestigationOpportunities",
@@ -953,6 +1128,8 @@
           "cognitiveDomain": "SELF",
           "exports": [
             "InvestigationOpportunity",
+            "InvestigationOpportunityResult",
+            "InvestigationStrategyRevision",
             "buildInvestigationOpportunities"
           ],
           "imports": []
@@ -962,8 +1139,398 @@
       "subsystem": "Investigation Opportunities",
       "architecturalLayer": "EXEC",
       "terminalCapability": true
+    },
+    {
+      "id": "CAP-PRD-001",
+      "name": "Organizational Prediction",
+      "description": "Infers explicit future-state organizational predictions from organizational conditions, organizational state, longitudinal learning, previous predictions, and modeled organizational relationships.",
+      "domain": "PRD",
+      "status": "canonical",
+      "canonicalProducer": "engine/v3/model/predictions/inferOrganizationalPredictions.ts",
+      "implementationFiles": [
+        "engine/v3/model/predictions/inferOrganizationalPredictions.ts",
+        "engine/v3/model/predictions/organizationalPrediction.ts",
+        "engine/v3/model/predictions/predictionRules.ts",
+        "engine/v3/model/predictions/predictionTypes.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-UND-004",
+        "CAP-LRN-002"
+      ],
+      "producesObjects": [
+        "OrganizationalPrediction"
+      ],
+      "consumedByCapabilities": [
+        "CAP-ADP-001",
+        "CAP-PRD-002",
+        "CAP-SIM-001"
+      ],
+      "runtimeDestination": "OrganizationRuntime.organizationalPredictions",
+      "executiveDestinations": [
+        "PredictionReflection"
+      ],
+      "atlasCoverage": "yes",
+      "benchmarkCoverage": [
+        "Atlas"
+      ],
+      "livingOrganizationStage": 5,
+      "reviewStatus": "reviewed",
+      "notes": "Version 1 supports continuation, deterioration, improvement, and propagation predictions. Predictions preserve confidence, likelihood, causal paths, assumptions, confidence limiters, and falsifying evidence.",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/model/predictions/inferOrganizationalPredictions.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-056",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "inferOrganizationalPredictions"
+          ],
+          "imports": [
+            "./organizationalPrediction",
+            "./predictionTypes"
+          ]
+        },
+        {
+          "path": "engine/v3/model/predictions/organizationalPrediction.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-057",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "OrganizationalPrediction",
+            "OrganizationalPredictionConditionChange",
+            "OrganizationalPredictionSeverity",
+            "OrganizationalPredictionStatus",
+            "OrganizationalPredictionTimeHorizon",
+            "OrganizationalPredictionType"
+          ],
+          "imports": []
+        },
+        {
+          "path": "engine/v3/model/predictions/predictionRules.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-SYS-010",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "SYS",
+          "exports": [
+            "PREDICTION_RULES",
+            "PredictionRule"
+          ],
+          "imports": [
+            "./organizationalPrediction"
+          ]
+        },
+        {
+          "path": "engine/v3/model/predictions/predictionTypes.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-058",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "PredictionCandidate",
+            "PredictionCondition",
+            "PredictionConditionStatus",
+            "PredictionConditionTrend",
+            "PredictionContext",
+            "PredictionInferenceResult",
+            "PredictionLearningProfile",
+            "PredictionOrganizationalState"
+          ],
+          "imports": [
+            "./organizationalPrediction"
+          ]
+        }
+      ],
+      "missingImplementationFiles": [],
+      "subsystem": "Organizational Prediction",
+      "architecturalLayer": "COG"
+    },
+    {
+      "id": "CAP-PRD-002",
+      "name": "Prediction Reflection",
+      "description": "Transforms organizational predictions into explainable executive future reasoning by selecting a primary prediction and preserving supporting cognition, competing predictions, assumptions, confidence calibration, falsifying evidence, and executive recommendations.",
+      "domain": "PRD",
+      "status": "canonical",
+      "canonicalProducer": "engine/v3/model/predictions/buildPredictionReflection.ts",
+      "implementationFiles": [
+        "engine/v3/model/predictions/buildPredictionReflection.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-PRD-001"
+      ],
+      "producesObjects": [
+        "PredictionReflection"
+      ],
+      "consumedByCapabilities": [
+        "CAP-ADP-001",
+        "CAP-UND-005"
+      ],
+      "runtimeDestination": "OrganizationRuntime.predictionReflection",
+      "executiveDestinations": [
+        "ExecutiveAssessment",
+        "OrganizationalUnderstanding",
+        "Atlas"
+      ],
+      "atlasCoverage": "yes",
+      "benchmarkCoverage": [
+        "Atlas"
+      ],
+      "livingOrganizationStage": 5,
+      "reviewStatus": "reviewed",
+      "notes": "Prediction Reflection is the canonical producer of executive future reasoning. Executive Assessment consumes this object and should not reconstruct prediction logic.",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/model/predictions/buildPredictionReflection.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-055",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "BuildPredictionReflectionInput",
+            "CompetingPrediction",
+            "PredictionReflection",
+            "PredictionReflectionEvidence",
+            "PredictionReflectionLabelMaps",
+            "buildPredictionReflection"
+          ],
+          "imports": [
+            "./organizationalPrediction"
+          ]
+        }
+      ],
+      "missingImplementationFiles": [],
+      "subsystem": "Prediction Reflection",
+      "architecturalLayer": "COG"
+    },
+    {
+      "id": "CAP-ADP-001",
+      "name": "Prediction Outcome Evaluation",
+      "description": "Evaluates previous organizational predictions against observed organizational outcomes, measures prediction accuracy, calibrates confidence, and produces learning signals that improve future prediction quality.",
+      "domain": "ADP",
+      "status": "proposed",
+      "canonicalProducer": "engine/v3/model/predictions/evaluatePredictionOutcomes.ts",
+      "implementationFiles": [
+        "engine/v3/model/predictions/evaluatePredictionOutcomes.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-PRD-001",
+        "CAP-PRD-002",
+        "CAP-UND-004"
+      ],
+      "producesObjects": [
+        "PredictionEvaluation"
+      ],
+      "consumedByCapabilities": [
+        "CAP-LRN-002",
+        "CAP-SIM-001"
+      ],
+      "runtimeDestination": "OrganizationRuntime.predictionEvaluations",
+      "executiveDestinations": [
+        "ExecutiveAssessment",
+        "ExecutiveProjection",
+        "ExecutiveWorkspace",
+        "Atlas"
+      ],
+      "atlasCoverage": "planned",
+      "benchmarkCoverage": [
+        "Atlas"
+      ],
+      "livingOrganizationStage": 6,
+      "reviewStatus": "proposed",
+      "notes": "Evaluates whether previous predictions proved correct after new organizational evidence is observed. Produces prediction calibration and longitudinal learning signals without recreating prediction generation or prediction reflection.",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/model/predictions/evaluatePredictionOutcomes.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-PER-071",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "PER",
+          "exports": [
+            "EvaluatePredictionOutcomesInput",
+            "PredictionEvaluation",
+            "PredictionOutcomeStatus",
+            "evaluatePredictionOutcomes"
+          ],
+          "imports": [
+            "../state/inferOrganizationalConditions",
+            "./buildPredictionReflection",
+            "./comparePredictionOutcome",
+            "./organizationalPrediction"
+          ]
+        }
+      ],
+      "missingImplementationFiles": [],
+      "subsystem": "Prediction Outcome Evaluation",
+      "architecturalLayer": "COG"
+    },
+    {
+      "id": "CAP-SYS-001",
+      "name": "Architectural Planning",
+      "description": "Analyzes Discovery's current cognitive architecture and recommends the highest-value architectural work while respecting capability dependencies, implementation maturity, overlap analysis, benchmark readiness, and product sequencing.",
+      "domain": "SYS",
+      "status": "proposed",
+      "canonicalProducer": "scripts/cognition/planArchitecture.mjs",
+      "implementationFiles": [
+        "scripts/cognition/planArchitecture.mjs"
+      ],
+      "consumesCapabilities": [
+        "CAP-MEM-001",
+        "CAP-SELF-001",
+        "CAP-SELF-002"
+      ],
+      "producesObjects": [
+        "ArchitectureRecommendation"
+      ],
+      "consumedByCapabilities": [
+        "CAP-SYS-002"
+      ],
+      "runtimeDestination": "DiscoveryArchitectureState.architectureRecommendations",
+      "executiveDestinations": [
+        "SprintBrief",
+        "ArchitectureHandoff"
+      ],
+      "atlasCoverage": "not-applicable",
+      "benchmarkCoverage": [
+        "Architecture Validation"
+      ],
+      "livingOrganizationStage": 7,
+      "reviewStatus": "proposed",
+      "notes": "Ranks architectural opportunities, explains expected value and sequencing, identifies prerequisites and blockers, and recommends the highest-value next development step. It replaces hard-coded recommendation branches with explicit system-level planning while preserving duplicate-work safeguards.",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "scripts/cognition/planArchitecture.mjs",
+          "existsInFileRegistry": true,
+          "fileId": "INFRA-009",
+          "architecturalLayer": "INFRA",
+          "cognitiveDomain": null,
+          "exports": [],
+          "imports": [
+            "node:fs",
+            "node:path"
+          ]
+        }
+      ],
+      "missingImplementationFiles": [],
+      "subsystem": "Architectural Planning",
+      "architecturalLayer": "SYS"
+    },
+    {
+      "id": "CAP-SYS-002",
+      "name": "Architecture Recommendation Projection",
+      "description": "Transforms canonical architecture recommendations into presentation-ready system planning intelligence for Sprint Startup, Architecture Handoff, and future architecture experiences without recreating architectural planning logic.",
+      "domain": "SYS",
+      "status": "proposed",
+      "canonicalProducer": "scripts/cognition/projectArchitectureRecommendation.mjs",
+      "implementationFiles": [
+        "scripts/cognition/projectArchitectureRecommendation.mjs"
+      ],
+      "consumesCapabilities": [
+        "CAP-SYS-001"
+      ],
+      "producesObjects": [
+        "ArchitectureRecommendationProjection"
+      ],
+      "consumedByCapabilities": [],
+      "runtimeDestination": "DiscoveryArchitectureState.architectureRecommendationProjection",
+      "executiveDestinations": [
+        "SprintBrief",
+        "ArchitectureHandoff"
+      ],
+      "atlasCoverage": "not-applicable",
+      "benchmarkCoverage": [
+        "Architecture Validation"
+      ],
+      "livingOrganizationStage": 7,
+      "reviewStatus": "proposed",
+      "notes": "Projects ArchitectureRecommendation into presentation-ready planning content. It must not rank opportunities, calculate architecture health, or recreate Architectural Planning. Sprint Startup and Architecture Handoff consume this projected object.",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "scripts/cognition/projectArchitectureRecommendation.mjs",
+          "existsInFileRegistry": true,
+          "fileId": "INFRA-010",
+          "architecturalLayer": "INFRA",
+          "cognitiveDomain": null,
+          "exports": [],
+          "imports": [
+            "node:fs",
+            "node:path"
+          ]
+        }
+      ],
+      "missingImplementationFiles": [],
+      "subsystem": "Architecture Recommendation Projection",
+      "architecturalLayer": "SYS"
+    },
+    {
+      "id": "CAP-SIM-001",
+      "name": "Organizational Simulation",
+      "description": "Projects Discovery's current organizational understanding into a plausible future organizational state by evolving current conditions, beliefs, predictions, and calibrated prediction performance forward in simulated time.",
+      "domain": "SIM",
+      "status": "proposed",
+      "canonicalProducer": "engine/v3/model/simulate/simulateOrganization.ts",
+      "implementationFiles": [
+        "engine/v3/model/simulate/simulateOrganization.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-UND-004",
+        "CAP-UND-002",
+        "CAP-PRD-001",
+        "CAP-ADP-001",
+        "CAP-LRN-002"
+      ],
+      "producesObjects": [
+        "SimulatedOrganizationState"
+      ],
+      "consumedByCapabilities": [
+        "CAP-SYS-001"
+      ],
+      "runtimeDestination": "OrganizationRuntime.simulatedOrganizationStates",
+      "executiveDestinations": [
+        "ExecutiveProjection",
+        "ExecutiveWorkspace",
+        "Atlas"
+      ],
+      "atlasCoverage": "planned",
+      "benchmarkCoverage": [
+        "Atlas",
+        "Simulation Benchmark"
+      ],
+      "livingOrganizationStage": 8,
+      "reviewStatus": "proposed",
+      "notes": "Version 1 preserves the current organizational state while calibrating simulation confidence using historical prediction accuracy. Later versions will evolve conditions, beliefs, and predictions across simulated time.",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/model/simulate/simulateOrganization.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-064",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "SimulateOrganizationInput",
+            "SimulatedOrganizationState",
+            "simulateOrganization"
+          ],
+          "imports": [
+            "../beliefs/organizationalBeliefs",
+            "../learning/computeOrganizationalLearningProfile",
+            "../predictions/evaluatePredictionOutcomes",
+            "../predictions/organizationalPrediction",
+            "../state/inferOrganizationalConditions"
+          ]
+        }
+      ],
+      "missingImplementationFiles": [],
+      "subsystem": "Organizational Simulation",
+      "architecturalLayer": "COG"
     }
   ],
-  "generatedAt": "2026-07-12T13:50:21.184Z",
-  "capabilityCount": 13
+  "generatedAt": "2026-07-13T16:22:30.416Z",
+  "capabilityCount": 20
 }

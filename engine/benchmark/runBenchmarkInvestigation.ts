@@ -2,6 +2,7 @@ import { runDiscoveryV3 } from "../v3";
 import {
   evolveOrganizationRuntime,
   loadOrganizationRuntimeState,
+  saveOrganizationRuntimeState,
 } from "../v3/runtime";
 
 import type { OrganizationalUnderstanding } from "../v3/model/judgment/organizationalJudgment";
@@ -333,8 +334,21 @@ export function runBenchmarkInvestigation(
       input,
     });
 
+  /**
+   * Persist the evolved runtime before constructing the
+   * benchmark result.
+   *
+   * This allows later longitudinal investigations to load
+   * predictions, conditions, beliefs, theories, learning
+   * history, and other cognition produced by earlier runs.
+   */
+  const persistedRuntime =
+    saveOrganizationRuntimeState(
+      evolvedRuntime,
+    );
+
   const memory =
-    evolvedRuntime.memory as typeof evolvedRuntime.memory &
+    persistedRuntime.memory as typeof persistedRuntime.memory &
       BenchmarkRuntimeMemory;
 
   const mechanisms =
@@ -531,7 +545,14 @@ export function runBenchmarkInvestigation(
   return {
     result,
     runtime,
-    evolvedRuntime,
+
+    /**
+     * Preserve the existing result field while returning
+     * the canonical persisted version of the evolved runtime.
+     */
+    evolvedRuntime:
+      persistedRuntime,
+
     memory,
 
     benchmarkScore,

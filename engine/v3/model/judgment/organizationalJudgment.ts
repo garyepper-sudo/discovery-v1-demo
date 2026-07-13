@@ -1,4 +1,5 @@
 import type { KnowledgeReference } from "../../cognition/cognitiveGraph";
+import type { PredictionReflection } from "../predictions/buildPredictionReflection";
 
 export type OrganizationalExplanationType =
   | "causal"
@@ -253,6 +254,15 @@ export type OrganizationalAssessment = {
    * cognitive products.
    */
   organizationalUnderstanding: OrganizationalUnderstanding;
+
+  /**
+   * Structured reflection on Discovery's most important
+   * predicted future organizational state.
+   *
+   * Executive Assessment consumes this object but does not
+   * recreate prediction reasoning.
+   */
+  predictionReflection?: PredictionReflection;
 
   /**
    * Legacy executive narrative fields.

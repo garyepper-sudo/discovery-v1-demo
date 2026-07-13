@@ -14,9 +14,11 @@ import type {
   ExecutiveInvestigationOpportunity,
   ExecutiveInvestigationStrategy,
   ExecutiveOrganizationalBelief,
+  ExecutiveOrganizationalConcept,
   ExecutiveOrganizationalCondition,
   ExecutiveOrganizationalLearningProfile,
   ExecutiveOrganizationalState,
+  ExecutivePredictionEvaluation,
   ExecutiveProjection,
   ExecutiveTheoryValidation,
 } from "./ExecutiveProjection";
@@ -47,6 +49,7 @@ type RuntimeOrganizationalCondition = {
   summary?: string;
   whyItMatters?: string;
   recommendedExecutiveAction?: string;
+  supportingConceptIds?: string[];
 };
 
 type RuntimeOrganizationalBelief = {
@@ -56,6 +59,18 @@ type RuntimeOrganizationalBelief = {
   trend?: string;
   supportingMechanismIds?: string[];
   supportingConceptIds?: string[];
+};
+
+type RuntimeOrganizationalConcept = {
+  id?: string;
+  label?: string;
+  statement?: string;
+  explanation?: string;
+  confidence?: number;
+  strength?: number;
+  emergenceScore?: number;
+  status?: "candidate" | "emerging" | "stable";
+  evidenceCount?: number;
 };
 
 type RuntimeInvestigationOpportunity = {
@@ -93,6 +108,28 @@ type RuntimeOrganizationalLearningProfile = {
   theoryStability?: number;
   knowledgeRetention?: number;
   summary?: string;
+};
+
+type RuntimePredictionEvaluation = {
+  predictionId?: string;
+  evaluatedAt?: string;
+
+  outcomeStatus?:
+    | "confirmed"
+    | "partially-confirmed"
+    | "not-confirmed"
+    | "inconclusive";
+
+  accuracyScore?: number;
+  calibrationDelta?: number;
+  confidenceAdjustment?: number;
+  recommendedConfidence?: number;
+
+  outcomeSummary?: string;
+  evaluationExplanation?: string;
+  learningSignal?: string;
+
+  supportingEvidenceIds?: string[];
 };
 
 type RuntimeExecutiveMemory = {
@@ -135,11 +172,15 @@ type RuntimeExecutiveMemory = {
 
   organizationalBeliefs?: RuntimeOrganizationalBelief[];
 
+  organizationalConcepts?: RuntimeOrganizationalConcept[];
+
   investigationStrategy?: RuntimeInvestigationStrategy;
 
   investigationOpportunities?: RuntimeInvestigationOpportunity[];
 
   organizationalLearningProfile?: RuntimeOrganizationalLearningProfile;
+
+  predictionEvaluations?: RuntimePredictionEvaluation[];
 };
 
 function toPercentage(value: number | undefined): number {
@@ -487,6 +528,87 @@ function buildOrganizationalBeliefsProjection(
     }));
 }
 
+function buildOrganizationalConceptsProjection(
+  runtimeMemory: RuntimeExecutiveMemory | undefined,
+): ExecutiveOrganizationalConcept[] | undefined {
+  const concepts =
+    runtimeMemory?.organizationalConcepts;
+
+  if (!concepts || concepts.length === 0) {
+    return undefined;
+  }
+
+  const conditions =
+    runtimeMemory?.organizationalConditions ?? [];
+
+  return concepts
+    .filter(
+      (concept) =>
+        typeof concept.id === "string" &&
+        concept.id.trim().length > 0 &&
+        typeof concept.label === "string" &&
+        concept.label.trim().length > 0 &&
+        typeof concept.statement === "string" &&
+        concept.statement.trim().length > 0,
+    )
+    .map((concept) => {
+      const conceptId = concept.id as string;
+
+      const supportingConditions = conditions
+        .filter((condition) =>
+          condition.supportingConceptIds?.includes(conceptId),
+        )
+        .map((condition) => condition.name)
+        .filter(
+          (name): name is string =>
+            typeof name === "string" &&
+            name.trim().length > 0,
+        );
+
+      return {
+        id: conceptId,
+
+        label: concept.label as string,
+
+        statement: concept.statement as string,
+
+        explanation:
+          concept.explanation ||
+          "Discovery formed this concept from recurring organizational meaning signals.",
+
+        confidence: toPercentage(
+          concept.confidence,
+        ),
+
+        strength: toPercentage(
+          concept.strength,
+        ),
+
+        emergenceScore: toPercentage(
+          concept.emergenceScore,
+        ),
+
+        status:
+          concept.status ??
+          "candidate",
+
+        evidenceCount:
+          concept.evidenceCount ?? 0,
+
+        supportingConditions: Array.from(
+          new Set(supportingConditions),
+        ),
+      };
+    })
+    .sort((left, right) => {
+      if (left.emergenceScore !== right.emergenceScore) {
+        return right.emergenceScore - left.emergenceScore;
+      }
+
+      return right.confidence - left.confidence;
+    });
+}
+
 function buildInvestigationOpportunitiesProjection(
   runtimeMemory: RuntimeExecutiveMemory | undefined,
 ): ExecutiveInvestigationOpportunity[] | undefined {
@@ -604,6 +726,64 @@ function buildOrganizationalLearningProfileProjection(
   };
 }
 
+function buildPredictionEvaluationProjection(
+  runtimeMemory: RuntimeExecutiveMemory | undefined,
+): ExecutivePredictionEvaluation[] | undefined {
+  const evaluations =
+    runtimeMemory?.predictionEvaluations;
+
+  if (!evaluations || evaluations.length === 0) {
+    return undefined;
+  }
+
+  return evaluations
+    .filter(
+      (evaluation) =>
+        typeof evaluation.predictionId === "string" &&
+        evaluation.predictionId.trim().length > 0,
+    )
+    .map((evaluation) => ({
+      predictionId: evaluation.predictionId as string,
+
+      evaluatedAt:
+        evaluation.evaluatedAt ?? "",
+
+      outcomeStatus:
+        evaluation.outcomeStatus ?? "inconclusive",
+
+      accuracyScore: toPercentage(
+        evaluation.accuracyScore,
+      ),
+
+      calibrationDelta: toPercentage(
+        evaluation.calibrationDelta,
+      ),
+
+      confidenceAdjustment: toPercentage(
+        evaluation.confidenceAdjustment,
+      ),
+
+      recommendedConfidence: toPercentage(
+        evaluation.recommendedConfidence,
+      ),
+
+      outcomeSummary:
+        evaluation.outcomeSummary ??
+        "Outcome has not yet been evaluated.",
+
+      evaluationExplanation:
+        evaluation.evaluationExplanation ??
+        "Prediction evaluation is pending future organizational evidence.",
+
+      learningSignal:
+        evaluation.learningSignal ??
+        "No longitudinal learning signal is yet available.",
+
+      supportingEvidenceIds:
+        evaluation.supportingEvidenceIds ?? [],
+    }));
+}
+
 export function buildExecutiveProjection({
   result,
   runtime,
@@ -644,6 +824,9 @@ export function buildExecutiveProjection({
   const organizationalBeliefs =
     buildOrganizationalBeliefsProjection(runtimeMemory);
 
+  const organizationalConcepts =
+    buildOrganizationalConceptsProjection(runtimeMemory);
+
   const investigationStrategy =
     buildInvestigationStrategyProjection(
       runtimeMemory,
@@ -654,6 +837,9 @@ export function buildExecutiveProjection({
 
   const organizationalLearningProfile =
     buildOrganizationalLearningProfileProjection(runtimeMemory);
+
+  const predictionEvaluations =
+    buildPredictionEvaluationProjection(runtimeMemory);
 
   const investigationOpportunity =
     choosePrimaryInvestigationOpportunity(
@@ -745,11 +931,15 @@ export function buildExecutiveProjection({
 
     organizationalBeliefs,
 
+    organizationalConcepts,
+
     investigationStrategy,
 
     investigationOpportunities,
 
     organizationalLearningProfile,
+
+    predictionEvaluations,
 
     theoryValidation,
 

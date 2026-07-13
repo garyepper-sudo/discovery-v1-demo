@@ -1,6 +1,6 @@
 # Capability Trace — Theory Validation
 
-Generated: 2026-07-12T13:50:22.235Z
+Generated: 2026-07-12T20:04:18.878Z
 
 ## Verified Architecture
 
@@ -74,6 +74,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/v3/model/judgment/organizationalJudgment.ts`
 - `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
 - `scripts/cognition/generateCognitiveRegistry.mjs`
+- `scripts/cognition/reviewCognitiveDomain.mjs`
 
 ## Structural Search
 
@@ -108,7 +109,7 @@ This section records source-code references. It supplements, but does not replac
 | API | ❌ Not found | 0 |
 | Simulation | ❌ Not found | 0 |
 | Benchmark | ✅ Found | 111 |
-| Other | ✅ Found | 1 |
+| Other | ✅ Found | 6 |
 
 ### Detailed Matches
 
@@ -118,19 +119,19 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 2 · **import** · matched `buildTheoryReflection`
   - `import { buildTheoryReflection } from "./buildTheoryReflection";`
-- Line 261 · **definition** · matched `theoryValidation`
+- Line 292 · **definition** · matched `theoryValidation`
   - `const theoryValidation = buildTheoryReflection({`
-- Line 325 · **unknown** · matched `theoryValidation`
+- Line 356 · **unknown** · matched `theoryValidation`
   - `theoryValidation.whyDiscoveryBelievesIt`
-- Line 327 · **unknown** · matched `theoryValidation`
+- Line 358 · **unknown** · matched `theoryValidation`
   - `theoryValidation.calibratedConfidenceExplanation`
-- Line 328 · **unknown** · matched `theoryValidation`
+- Line 359 · **unknown** · matched `theoryValidation`
   - `} ${theoryValidation.executiveRecommendation}\``
-- Line 330 · **unknown** · matched `theoryValidation`
+- Line 361 · **unknown** · matched `theoryValidation`
   - `? \`${strongestJudgment.assessment} This explanation ranked highest because it had the strongest combined judgment score across evidence, explanatory power, causal plausibility, executive significance, and intervention leverage. ${theoryValidation.calibratedConfidenceExplanation}\``
-- Line 377 · **unknown** · matched `theoryValidation`
+- Line 418 · **unknown** · matched `theoryValidation`
   - `theoryValidation,`
-- Line 422 · **unknown** · matched `theoryValidation`
+- Line 466 · **unknown** · matched `theoryValidation`
   - `theoryValidation,`
 
 ##### `engine/v3/model/judgment/buildOrganizationalUnderstanding.ts`
@@ -201,23 +202,23 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/model/judgment/organizationalJudgment.ts`
 
-- Line 81 · **unknown** · matched `theoryValidation`
+- Line 82 · **unknown** · matched `theoryValidation`
   - `export type TheoryValidationEvidence = {`
-- Line 94 · **unknown** · matched `theoryValidation`
+- Line 95 · **unknown** · matched `theoryValidation`
   - `export type TheoryValidation = {`
-- Line 99 · **unknown** · matched `theoryValidation`
-  - `supportingMechanisms: TheoryValidationEvidence[];`
 - Line 100 · **unknown** · matched `theoryValidation`
-  - `supportingOrganizationalBeliefs: TheoryValidationEvidence[];`
-- Line 104 · **unknown** · matched `theoryValidation`
-  - `contradictoryOrWeakeningEvidence: TheoryValidationEvidence[];`
-- Line 175 · **unknown** · matched `theoryValidation`
   - `supportingMechanisms: TheoryValidationEvidence[];`
-- Line 180 · **unknown** · matched `theoryValidation`
+- Line 101 · **unknown** · matched `theoryValidation`
   - `supportingOrganizationalBeliefs: TheoryValidationEvidence[];`
-- Line 190 · **unknown** · matched `theoryValidation`
+- Line 105 · **unknown** · matched `theoryValidation`
   - `contradictoryOrWeakeningEvidence: TheoryValidationEvidence[];`
-- Line 270 · **type** · matched `theoryValidation`
+- Line 176 · **unknown** · matched `theoryValidation`
+  - `supportingMechanisms: TheoryValidationEvidence[];`
+- Line 181 · **unknown** · matched `theoryValidation`
+  - `supportingOrganizationalBeliefs: TheoryValidationEvidence[];`
+- Line 191 · **unknown** · matched `theoryValidation`
+  - `contradictoryOrWeakeningEvidence: TheoryValidationEvidence[];`
+- Line 280 · **type** · matched `theoryValidation`
   - `theoryValidation?: TheoryValidation;`
 
 ##### `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
@@ -241,44 +242,44 @@ This section records source-code references. It supplements, but does not replac
   - `supportingOrganizationalBeliefs: ExecutiveTheoryValidationEvidence[];`
 - Line 34 · **unknown** · matched `theoryValidation`
   - `contradictoryOrWeakeningEvidence: ExecutiveTheoryValidationEvidence[];`
-- Line 68 · **type** · matched `theoryValidation`
+- Line 73 · **type** · matched `theoryValidation`
   - `theoryValidation?: ExecutiveTheoryValidation;`
-- Line 307 · **unknown** · matched `Theory Validation`
+- Line 486 · **unknown** · matched `Theory Validation`
   - `* This remains available independently because Theory Validation`
-- Line 310 · **type** · matched `theoryValidation`
+- Line 489 · **type** · matched `theoryValidation`
   - `theoryValidation?: ExecutiveTheoryValidation;`
 
 ##### `components/executive-v2/projection/buildExecutiveProjection.ts`
 
-- Line 20 · **unknown** · matched `theoryValidation`
+- Line 22 · **unknown** · matched `theoryValidation`
   - `ExecutiveTheoryValidation,`
-- Line 104 · **type** · matched `theoryValidation`
+- Line 137 · **type** · matched `theoryValidation`
   - `theoryValidation?: ExecutiveTheoryValidation;`
-- Line 352 · **type** · matched `theoryValidation`
+- Line 389 · **type** · matched `theoryValidation`
   - `theoryValidation:`
-- Line 353 · **read** · matched `theoryValidation`
+- Line 390 · **read** · matched `theoryValidation`
   - `executiveAssessment.theoryValidation,`
-- Line 357 · **unknown** · matched `theoryValidation`
+- Line 394 · **unknown** · matched `theoryValidation`
   - `function buildTheoryValidationProjection(`
-- Line 359 · **unknown** · matched `theoryValidation`
+- Line 396 · **unknown** · matched `theoryValidation`
   - `): ExecutiveTheoryValidation \| undefined {`
-- Line 360 · **read** · matched `theoryValidation`
+- Line 397 · **read** · matched `theoryValidation`
   - `return runtimeMemory?.executiveAssessment?.theoryValidation;`
-- Line 573 · **definition** · matched `theoryValidation`
+- Line 732 · **definition** · matched `theoryValidation`
   - `const theoryValidation =`
-- Line 574 · **unknown** · matched `theoryValidation`
+- Line 733 · **unknown** · matched `theoryValidation`
   - `buildTheoryValidationProjection(runtimeMemory);`
-- Line 625 · **unknown** · matched `theoryValidation`
+- Line 792 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.dominantTheory \|\|`
-- Line 641 · **unknown** · matched `theoryValidation`
+- Line 808 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.whyDiscoveryBelievesIt \|\|`
-- Line 650 · **unknown** · matched `theoryValidation`
+- Line 817 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.evidenceThatWouldFalsifyTheory?.[0] \|\|`
-- Line 651 · **unknown** · matched `theoryValidation`
+- Line 818 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.calibratedConfidenceExplanation \|\|`
-- Line 661 · **unknown** · matched `theoryValidation`
+- Line 828 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.executiveRecommendation \|\|`
-- Line 685 · **unknown** · matched `theoryValidation`
+- Line 856 · **unknown** · matched `theoryValidation`
   - `theoryValidation,`
 
 #### UI
@@ -554,6 +555,19 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 87 · **unknown** · matched `theoryValidation`
   - `/theoryValidation/i,`
+
+##### `scripts/cognition/reviewCognitiveDomain.mjs`
+
+- Line 117 · **unknown** · matched `CAP-SELF-001`
+  - `"CAP-SELF-001",`
+- Line 213 · **unknown** · matched `CAP-SELF-001`
+  - `"CAP-SELF-001",`
+- Line 220 · **unknown** · matched `theoryValidation`
+  - `"TheoryValidation",`
+- Line 241 · **unknown** · matched `CAP-SELF-001`
+  - `"CAP-SELF-001",`
+- Line 251 · **unknown** · matched `theoryValidation`
+  - `"TheoryValidation",`
 
 ## Interpretation
 

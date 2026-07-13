@@ -1,0 +1,303 @@
+{
+  "generatedAt": "2026-07-13T16:11:06.952Z",
+  "capabilityId": "CAP-SYS-001",
+  "objectType": "ArchitectureRecommendation",
+  "version": "2.0",
+  "reasoning": {
+    "observations": [
+      {
+        "id": "architecture-observation-health",
+        "type": "architecture-health",
+        "statement": "Discovery's registered cognitive architecture currently has no capability-integrity failures.",
+        "confidence": 1,
+        "evidence": {
+          "integrityFailureCount": 0,
+          "auditHealth": {
+            "duplicateIdCount": 0,
+            "missingDependencyCount": 0,
+            "missingCanonicalProducerCount": 0,
+            "capabilitiesWithoutProducerCount": 0,
+            "capabilitiesWithoutConsumersCount": 0,
+            "capabilitiesWithoutRuntimeDestinationCount": 0,
+            "multiCapabilityFileCount": 0
+          }
+        }
+      },
+      {
+        "id": "architecture-observation-integration",
+        "type": "integration-coverage",
+        "statement": "1 projected capability(s) remain structurally hidden.",
+        "confidence": 1,
+        "evidence": {
+          "hiddenCapabilityIds": [
+            "CAP-SIM-001"
+          ],
+          "projectedCapabilityCount": 8,
+          "structurallyVisibleCapabilityCount": 7
+        }
+      },
+      {
+        "id": "architecture-observation-implementation",
+        "type": "implementation-coverage",
+        "statement": "Every registered capability has a recognized canonical implementation.",
+        "confidence": 1,
+        "evidence": {
+          "capabilityIds": []
+        }
+      },
+      {
+        "id": "architecture-observation-prediction-maturity",
+        "type": "capability-maturity",
+        "statement": "Prediction Outcome Evaluation is implemented and structurally available, but its semantic outcome-comparison logic remains incomplete.",
+        "confidence": 0.95,
+        "evidence": {
+          "capabilityId": "CAP-ADP-001",
+          "implemented": true,
+          "knownLimitation": "Current evaluations may remain inconclusive because semantic comparison against later organizational outcomes is not yet complete."
+        }
+      },
+      {
+        "id": "architecture-observation-system-planning",
+        "type": "system-capability-maturity",
+        "statement": "The System Operating System now includes both Architectural Planning and Architecture Recommendation Projection.",
+        "confidence": 1,
+        "evidence": {
+          "architecturalPlanningImplemented": true,
+          "architectureProjectionImplemented": true
+        }
+      },
+      {
+        "id": "architecture-observation-domain-coverage",
+        "type": "domain-coverage",
+        "statement": "Every expected cognitive domain has at least one registered capability.",
+        "confidence": 1,
+        "evidence": {
+          "unpopulatedDomains": []
+        }
+      },
+      {
+        "id": "architecture-observation-trace-coverage",
+        "type": "trace-coverage",
+        "statement": "9 of 10 generated capability traces are currently connected.",
+        "confidence": 1,
+        "evidence": {
+          "connectedCapabilityTraceCount": 9,
+          "capabilityTraceCount": 10
+        }
+      }
+    ],
+    "mechanisms": [
+      {
+        "id": "architecture-mechanism-incomplete-integration",
+        "type": "integration-bottleneck",
+        "name": "Incomplete Integration Bottleneck",
+        "explanation": "Capabilities that exist but remain structurally hidden create more immediate product risk than missing future capabilities.",
+        "confidence": 0.95,
+        "supportingObservationIds": [
+          "architecture-observation-integration"
+        ]
+      },
+      {
+        "id": "architecture-mechanism-maturity-before-expansion",
+        "type": "capability-maturity-bottleneck",
+        "name": "Capability Maturity Before Domain Expansion",
+        "explanation": "Prediction Outcome Evaluation is already implemented across the architecture, but incomplete semantic evaluation limits calibration, longitudinal learning, and trustworthy simulation readiness.",
+        "confidence": 0.96,
+        "supportingObservationIds": [
+          "architecture-observation-prediction-maturity",
+          "architecture-observation-domain-coverage"
+        ]
+      },
+      {
+        "id": "architecture-mechanism-system-loop-formation",
+        "type": "system-feedback-loop",
+        "name": "Architecture Planning Feedback Loop",
+        "explanation": "Architectural Planning now produces recommendations that are projected into Sprint Startup, allowing Discovery's own architecture state to influence development sequencing.",
+        "confidence": 0.92,
+        "supportingObservationIds": [
+          "architecture-observation-system-planning"
+        ]
+      },
+      {
+        "id": "architecture-mechanism-trace-completion",
+        "type": "trace-coverage-gap",
+        "name": "Incomplete Capability Trace Coverage",
+        "explanation": "Capabilities without connected traces reduce confidence that declared consumers and destinations are structurally exercised.",
+        "confidence": 0.85,
+        "supportingObservationIds": [
+          "architecture-observation-trace-coverage"
+        ]
+      }
+    ],
+    "beliefs": [
+      {
+        "id": "architecture-belief-integrate-before-inventing",
+        "statement": "Discovery should complete existing integration pathways before inventing new capabilities.",
+        "confidence": 0.97,
+        "supportingMechanismIds": [
+          "architecture-mechanism-incomplete-integration"
+        ]
+      },
+      {
+        "id": "architecture-belief-mature-prediction-evaluation",
+        "statement": "Completing longitudinal prediction outcome evaluation will create more immediate value than opening the Simulation domain.",
+        "confidence": 0.95,
+        "supportingMechanismIds": [
+          "architecture-mechanism-maturity-before-expansion"
+        ]
+      },
+      {
+        "id": "architecture-belief-system-loop-established",
+        "statement": "Discovery now has the beginnings of a canonical system-planning feedback loop.",
+        "confidence": 0.9,
+        "supportingMechanismIds": [
+          "architecture-mechanism-system-loop-formation"
+        ]
+      },
+      {
+        "id": "architecture-belief-complete-traces",
+        "statement": "Incomplete capability traces should be resolved before treating the architecture as fully operational.",
+        "confidence": 0.82,
+        "supportingMechanismIds": [
+          "architecture-mechanism-trace-completion"
+        ]
+      }
+    ],
+    "theory": {
+      "id": "architecture-theory-current-development-phase",
+      "statement": "Discovery is currently constrained by incomplete capability integration.",
+      "explanation": "Existing intelligence should be structurally connected before new cognition is introduced.",
+      "confidence": 0.97,
+      "supportingObservationIds": [
+        "architecture-observation-health",
+        "architecture-observation-integration",
+        "architecture-observation-implementation",
+        "architecture-observation-prediction-maturity",
+        "architecture-observation-system-planning",
+        "architecture-observation-domain-coverage",
+        "architecture-observation-trace-coverage"
+      ],
+      "supportingMechanismIds": [
+        "architecture-mechanism-incomplete-integration",
+        "architecture-mechanism-maturity-before-expansion",
+        "architecture-mechanism-system-loop-formation",
+        "architecture-mechanism-trace-completion"
+      ],
+      "supportingBeliefIds": [
+        "architecture-belief-integrate-before-inventing",
+        "architecture-belief-mature-prediction-evaluation",
+        "architecture-belief-system-loop-established",
+        "architecture-belief-complete-traces"
+      ],
+      "falsifyingEvidence": [
+        "A higher-value unresolved architecture integrity failure is detected.",
+        "A projected capability becomes structurally hidden.",
+        "A registered capability lacks a canonical implementation.",
+        "Simulation becomes independently valuable without requiring calibrated longitudinal prediction.",
+        "Prediction Outcome Evaluation is shown to already perform semantic cross-investigation outcome comparison and confidence calibration."
+      ]
+    }
+  },
+  "highestPriority": {
+    "id": "architecture-opportunity-complete-integration",
+    "title": "Complete partially integrated capabilities",
+    "score": 118,
+    "category": "integration",
+    "reason": "1 registered capability is not yet structurally connected through the full declared architecture.",
+    "capabilityIds": [
+      "CAP-SIM-001"
+    ],
+    "prerequisites": [
+      "Confirm the canonical Runtime destination.",
+      "Confirm projection or system-output pathways where applicable.",
+      "Confirm structural trace coverage."
+    ],
+    "blockers": [],
+    "supportingTheoryId": "architecture-theory-current-development-phase"
+  },
+  "rankedOpportunities": [
+    {
+      "id": "architecture-opportunity-complete-integration",
+      "title": "Complete partially integrated capabilities",
+      "score": 118,
+      "category": "integration",
+      "reason": "1 registered capability is not yet structurally connected through the full declared architecture.",
+      "capabilityIds": [
+        "CAP-SIM-001"
+      ],
+      "prerequisites": [
+        "Confirm the canonical Runtime destination.",
+        "Confirm projection or system-output pathways where applicable.",
+        "Confirm structural trace coverage."
+      ],
+      "blockers": [],
+      "supportingTheoryId": "architecture-theory-current-development-phase"
+    },
+    {
+      "id": "architecture-opportunity-mature-prediction-evaluation",
+      "title": "Complete longitudinal prediction outcome evaluation",
+      "score": 98,
+      "category": "capability-maturity",
+      "reason": "Prediction Outcome Evaluation is structurally implemented, but its current scaffold still records inconclusive outcomes rather than comparing prior predictions with later organizational reality. Completing it unlocks calibration, adaptive learning, and trustworthy simulation readiness.",
+      "capabilityIds": [
+        "CAP-ADP-001",
+        "CAP-LRN-002"
+      ],
+      "prerequisites": [
+        "Load predictions created during earlier investigations.",
+        "Compare them with later observations, conditions, understanding, and evidence.",
+        "Define semantic outcome-classification rules.",
+        "Calculate accuracy, calibration delta, confidence adjustment, and recommended confidence.",
+        "Feed completed evaluations into the Organizational Learning Profile."
+      ],
+      "blockers": [
+        "Semantic cross-investigation outcome comparison is not yet implemented.",
+        "Prediction calibration does not yet influence future prediction confidence."
+      ],
+      "supportingTheoryId": "architecture-theory-current-development-phase"
+    },
+    {
+      "id": "architecture-opportunity-complete-trace-coverage",
+      "title": "Complete remaining capability traces",
+      "score": 72,
+      "category": "architecture-verification",
+      "reason": "9 of 10 capability traces are connected. Remaining incomplete traces should be reviewed so declared consumers and destinations are structurally verified.",
+      "capabilityIds": [],
+      "prerequisites": [
+        "Audit capabilities whose traces are incomplete.",
+        "Declare legitimate downstream consumers.",
+        "Regenerate affected capability traces."
+      ],
+      "blockers": [],
+      "supportingTheoryId": "architecture-theory-current-development-phase"
+    }
+  ],
+  "safeguards": [
+    "Do not create a capability solely because a cognitive domain is empty.",
+    "Resolve architecture integrity failures before expansion.",
+    "Complete partially integrated capabilities before opening new domains.",
+    "Complete registered implementations before proposing replacement capabilities.",
+    "Prefer maturing structurally complete capabilities when they unlock dependent domains.",
+    "Extend existing capabilities when they already own the responsibility, object, producer, or destination.",
+    "Require a distinct responsibility, cognitive object, canonical producer, consumers, and destination before registering a new capability."
+  ],
+  "inputs": {
+    "capabilityCount": 20,
+    "architectureHealthScore": 100,
+    "integrityFailureCount": 0,
+    "potentiallyHiddenCapabilityCount": 1,
+    "unpopulatedDomains": [],
+    "connectedCapabilityTraceCount": 9,
+    "capabilityTraceCount": 10,
+    "overlapCount": 1,
+    "auditHealth": {
+      "duplicateIdCount": 0,
+      "missingDependencyCount": 0,
+      "missingCanonicalProducerCount": 0,
+      "capabilitiesWithoutProducerCount": 0,
+      "capabilitiesWithoutConsumersCount": 0,
+      "capabilitiesWithoutRuntimeDestinationCount": 0,
+      "multiCapabilityFileCount": 0
+    }
+  }
+}

@@ -5,6 +5,7 @@ import ExecutiveAssessmentCard from "./assessment/ExecutiveAssessmentCard";
 import ExecutiveAttention from "./attention/ExecutiveAttention";
 import ExecutiveBeliefs from "./beliefs/ExecutiveBeliefs";
 import ExecutiveConditions from "./conditions/ExecutiveConditions";
+import ExecutiveConcepts from "./concepts/ExecutiveConcepts";
 import ExecutiveInvestigationOpportunities from "./investigations/ExecutiveInvestigationOpportunities";
 import ExecutiveLearningProfile from "./learning/ExecutiveLearningProfile";
 import type { ExecutiveProjection } from "./projection/ExecutiveProjection";
@@ -25,6 +26,7 @@ export default function ExecutiveExperience({
     executiveAssessment,
     organizationalState,
     organizationalConditions,
+    organizationalConcepts,
     organizationalBeliefs,
     investigationOpportunities,
     organizationalLearningProfile,
@@ -50,9 +52,7 @@ export default function ExecutiveExperience({
         />
 
         {executiveAssessment && (
-          <ExecutiveAssessmentCard
-            assessment={executiveAssessment}
-          />
+          <ExecutiveAssessmentCard assessment={executiveAssessment} />
         )}
 
         {organizationalState && (
@@ -64,6 +64,11 @@ export default function ExecutiveExperience({
             <ExecutiveConditions
               conditions={organizationalConditions}
             />
+          )}
+
+        {organizationalConcepts &&
+          organizationalConcepts.length > 0 && (
+            <ExecutiveConcepts concepts={organizationalConcepts} />
           )}
 
         {organizationalBeliefs &&

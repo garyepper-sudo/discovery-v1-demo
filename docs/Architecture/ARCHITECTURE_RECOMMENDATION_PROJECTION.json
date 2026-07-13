@@ -1,0 +1,177 @@
+{
+  "generatedAt": "2026-07-13T16:11:16.718Z",
+  "capabilityId": "CAP-SYS-002",
+  "objectType": "ArchitectureRecommendationProjection",
+  "sourceCapabilityId": "CAP-SYS-001",
+  "sourceObjectType": "ArchitectureRecommendation",
+  "sourceGeneratedAt": "2026-07-13T16:11:06.952Z",
+  "headline": "Complete partially integrated capabilities",
+  "summary": "1 registered capability is not yet structurally connected through the full declared architecture.",
+  "score": 118,
+  "category": "integration",
+  "highestPriority": {
+    "id": "architecture-opportunity-complete-integration",
+    "title": "Complete partially integrated capabilities",
+    "score": 118,
+    "category": "integration",
+    "reason": "1 registered capability is not yet structurally connected through the full declared architecture.",
+    "capabilityIds": [
+      "CAP-SIM-001"
+    ],
+    "prerequisites": [
+      "Confirm the canonical Runtime destination.",
+      "Confirm projection or system-output pathways where applicable.",
+      "Confirm structural trace coverage."
+    ],
+    "blockers": []
+  },
+  "rankedOpportunities": [
+    {
+      "id": "architecture-opportunity-complete-integration",
+      "title": "Complete partially integrated capabilities",
+      "score": 118,
+      "category": "integration",
+      "reason": "1 registered capability is not yet structurally connected through the full declared architecture.",
+      "capabilityIds": [
+        "CAP-SIM-001"
+      ],
+      "prerequisites": [
+        "Confirm the canonical Runtime destination.",
+        "Confirm projection or system-output pathways where applicable.",
+        "Confirm structural trace coverage."
+      ],
+      "blockers": []
+    },
+    {
+      "id": "architecture-opportunity-mature-prediction-evaluation",
+      "title": "Complete longitudinal prediction outcome evaluation",
+      "score": 98,
+      "category": "capability-maturity",
+      "reason": "Prediction Outcome Evaluation is structurally implemented, but its current scaffold still records inconclusive outcomes rather than comparing prior predictions with later organizational reality. Completing it unlocks calibration, adaptive learning, and trustworthy simulation readiness.",
+      "capabilityIds": [
+        "CAP-ADP-001",
+        "CAP-LRN-002"
+      ],
+      "prerequisites": [
+        "Load predictions created during earlier investigations.",
+        "Compare them with later observations, conditions, understanding, and evidence.",
+        "Define semantic outcome-classification rules.",
+        "Calculate accuracy, calibration delta, confidence adjustment, and recommended confidence.",
+        "Feed completed evaluations into the Organizational Learning Profile."
+      ],
+      "blockers": [
+        "Semantic cross-investigation outcome comparison is not yet implemented.",
+        "Prediction calibration does not yet influence future prediction confidence."
+      ]
+    },
+    {
+      "id": "architecture-opportunity-complete-trace-coverage",
+      "title": "Complete remaining capability traces",
+      "score": 72,
+      "category": "architecture-verification",
+      "reason": "9 of 10 capability traces are connected. Remaining incomplete traces should be reviewed so declared consumers and destinations are structurally verified.",
+      "capabilityIds": [],
+      "prerequisites": [
+        "Audit capabilities whose traces are incomplete.",
+        "Declare legitimate downstream consumers.",
+        "Regenerate affected capability traces."
+      ],
+      "blockers": []
+    }
+  ],
+  "nextActions": [
+    "Confirm the canonical Runtime destination.",
+    "Confirm projection or system-output pathways where applicable.",
+    "Confirm structural trace coverage."
+  ],
+  "currentBlockers": [],
+  "safeguards": [
+    "Do not create a capability solely because a cognitive domain is empty.",
+    "Resolve architecture integrity failures before expansion.",
+    "Complete partially integrated capabilities before opening new domains.",
+    "Complete registered implementations before proposing replacement capabilities.",
+    "Prefer maturing structurally complete capabilities when they unlock dependent domains.",
+    "Extend existing capabilities when they already own the responsibility, object, producer, or destination.",
+    "Require a distinct responsibility, cognitive object, canonical producer, consumers, and destination before registering a new capability."
+  ],
+  "sprintBrief": {
+    "heading": "Highest-ROI Next Work",
+    "recommendation": "Complete partially integrated capabilities",
+    "reason": "1 registered capability is not yet structurally connected through the full declared architecture.",
+    "score": 118,
+    "prerequisites": [
+      "Confirm the canonical Runtime destination.",
+      "Confirm projection or system-output pathways where applicable.",
+      "Confirm structural trace coverage."
+    ],
+    "blockers": []
+  },
+  "architectureHandoff": {
+    "currentRecommendation": "Complete partially integrated capabilities",
+    "rationale": "1 registered capability is not yet structurally connected through the full declared architecture.",
+    "rankedOpportunityCount": 3,
+    "rankedOpportunities": [
+      {
+        "id": "architecture-opportunity-complete-integration",
+        "title": "Complete partially integrated capabilities",
+        "score": 118,
+        "category": "integration",
+        "reason": "1 registered capability is not yet structurally connected through the full declared architecture.",
+        "capabilityIds": [
+          "CAP-SIM-001"
+        ],
+        "prerequisites": [
+          "Confirm the canonical Runtime destination.",
+          "Confirm projection or system-output pathways where applicable.",
+          "Confirm structural trace coverage."
+        ],
+        "blockers": []
+      },
+      {
+        "id": "architecture-opportunity-mature-prediction-evaluation",
+        "title": "Complete longitudinal prediction outcome evaluation",
+        "score": 98,
+        "category": "capability-maturity",
+        "reason": "Prediction Outcome Evaluation is structurally implemented, but its current scaffold still records inconclusive outcomes rather than comparing prior predictions with later organizational reality. Completing it unlocks calibration, adaptive learning, and trustworthy simulation readiness.",
+        "capabilityIds": [
+          "CAP-ADP-001",
+          "CAP-LRN-002"
+        ],
+        "prerequisites": [
+          "Load predictions created during earlier investigations.",
+          "Compare them with later observations, conditions, understanding, and evidence.",
+          "Define semantic outcome-classification rules.",
+          "Calculate accuracy, calibration delta, confidence adjustment, and recommended confidence.",
+          "Feed completed evaluations into the Organizational Learning Profile."
+        ],
+        "blockers": [
+          "Semantic cross-investigation outcome comparison is not yet implemented.",
+          "Prediction calibration does not yet influence future prediction confidence."
+        ]
+      },
+      {
+        "id": "architecture-opportunity-complete-trace-coverage",
+        "title": "Complete remaining capability traces",
+        "score": 72,
+        "category": "architecture-verification",
+        "reason": "9 of 10 capability traces are connected. Remaining incomplete traces should be reviewed so declared consumers and destinations are structurally verified.",
+        "capabilityIds": [],
+        "prerequisites": [
+          "Audit capabilities whose traces are incomplete.",
+          "Declare legitimate downstream consumers.",
+          "Regenerate affected capability traces."
+        ],
+        "blockers": []
+      }
+    ],
+    "safeguards": [
+      "Do not create a capability solely because a cognitive domain is empty.",
+      "Resolve architecture integrity failures before expansion.",
+      "Complete partially integrated capabilities before opening new domains.",
+      "Complete registered implementations before proposing replacement capabilities.",
+      "Prefer maturing structurally complete capabilities when they unlock dependent domains.",
+      "Extend existing capabilities when they already own the responsibility, object, producer, or destination.",
+      "Require a distinct responsibility, cognitive object, canonical producer, consumers, and destination before registering a new capability."
+    ]
+  }
+}

@@ -1,15 +1,15 @@
 {
   "metadata": {
     "organizationId": "atlas-manufacturing-simulation",
-    "createdAt": "2026-07-12T13:56:15.513Z",
-    "updatedAt": "2026-07-12T13:56:15.513Z",
+    "createdAt": "2026-07-12T19:32:30.518Z",
+    "updatedAt": "2026-07-12T19:32:30.518Z",
     "investigationCount": 0
   },
   "organizationModel": {
     "organizationId": "atlas-manufacturing-simulation",
     "version": 1,
-    "createdAt": "2026-07-12T13:56:15.514Z",
-    "updatedAt": "2026-07-12T13:56:15.514Z",
+    "createdAt": "2026-07-12T19:32:30.518Z",
+    "updatedAt": "2026-07-12T19:32:30.518Z",
     "entities": [],
     "entityRelationships": [],
     "nodes": [],
@@ -28,7 +28,7 @@
     "understandingState": null,
     "organizationalUnderstandingState": {
       "organizationId": "atlas-manufacturing-simulation",
-      "lastUpdatedAt": "2026-07-12T13:56:15.513Z",
+      "lastUpdatedAt": "2026-07-12T19:32:30.518Z",
       "score": {
         "overall": 0,
         "coverage": 0,
@@ -71,7 +71,7 @@
           "missingInformation": [],
           "openQuestions": [],
           "relatedUnderstandingIds": [],
-          "lastUpdatedAt": "2026-07-12T13:56:15.513Z"
+          "lastUpdatedAt": "2026-07-12T19:32:30.518Z"
         },
         {
           "domain": "finance",
@@ -99,7 +99,7 @@
           "missingInformation": [],
           "openQuestions": [],
           "relatedUnderstandingIds": [],
-          "lastUpdatedAt": "2026-07-12T13:56:15.513Z"
+          "lastUpdatedAt": "2026-07-12T19:32:30.518Z"
         },
         {
           "domain": "operations",
@@ -127,7 +127,7 @@
           "missingInformation": [],
           "openQuestions": [],
           "relatedUnderstandingIds": [],
-          "lastUpdatedAt": "2026-07-12T13:56:15.513Z"
+          "lastUpdatedAt": "2026-07-12T19:32:30.518Z"
         },
         {
           "domain": "customers",
@@ -155,7 +155,7 @@
           "missingInformation": [],
           "openQuestions": [],
           "relatedUnderstandingIds": [],
-          "lastUpdatedAt": "2026-07-12T13:56:15.513Z"
+          "lastUpdatedAt": "2026-07-12T19:32:30.518Z"
         },
         {
           "domain": "employees",
@@ -183,7 +183,7 @@
           "missingInformation": [],
           "openQuestions": [],
           "relatedUnderstandingIds": [],
-          "lastUpdatedAt": "2026-07-12T13:56:15.513Z"
+          "lastUpdatedAt": "2026-07-12T19:32:30.518Z"
         },
         {
           "domain": "products",
@@ -211,7 +211,7 @@
           "missingInformation": [],
           "openQuestions": [],
           "relatedUnderstandingIds": [],
-          "lastUpdatedAt": "2026-07-12T13:56:15.513Z"
+          "lastUpdatedAt": "2026-07-12T19:32:30.518Z"
         }
       ],
       "recommendations": [],

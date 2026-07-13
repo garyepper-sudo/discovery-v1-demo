@@ -105,10 +105,10 @@ export type ExecutiveOrganizationalCondition = {
   /**
    * Current operating status.
    *
-   * Example:
-   * constrained
-   * deteriorating
-   * improving
+   * Examples:
+   * - constrained
+   * - deteriorating
+   * - improving
    */
   status: string;
 
@@ -158,6 +158,58 @@ export type ExecutiveOrganizationalBelief = {
    * Supporting concepts.
    */
   supportingConcepts: string[];
+};
+
+export type ExecutiveOrganizationalConcept = {
+  /**
+   * Stable identity for the projected concept.
+   */
+  id: string;
+
+  /**
+   * Human-readable concept name.
+   */
+  label: string;
+
+  /**
+   * Concise statement of the organizational abstraction.
+   */
+  statement: string;
+
+  /**
+   * Why Discovery formed this concept.
+   */
+  explanation: string;
+
+  /**
+   * Discovery's confidence in the concept.
+   */
+  confidence: number;
+
+  /**
+   * Strength of the underlying concept signal.
+   */
+  strength: number;
+
+  /**
+   * Degree to which the concept has emerged from accumulated cognition.
+   */
+  emergenceScore: number;
+
+  /**
+   * Current concept maturity.
+   */
+  status: "candidate" | "emerging" | "stable";
+
+  /**
+   * Number of supporting understandings.
+   */
+  evidenceCount: number;
+
+  /**
+   * Organizational conditions this concept helps explain.
+   */
+  supportingConditions: string[];
 };
 
 export type ExecutiveInvestigationStrategy = {
@@ -273,6 +325,71 @@ export type ExecutiveOrganizationalLearningProfile = {
   summary: string;
 };
 
+export type ExecutivePredictionEvaluation = {
+  /**
+   * Stable identity of the original prediction being evaluated.
+   */
+  predictionId: string;
+
+  /**
+   * When Discovery evaluated the prediction.
+   */
+  evaluatedAt: string;
+
+  /**
+   * Discovery's current classification of the observed outcome.
+   *
+   * Inconclusive means later organizational evidence is not yet
+   * sufficient to determine prediction performance.
+   */
+  outcomeStatus:
+    | "confirmed"
+    | "partially-confirmed"
+    | "not-confirmed"
+    | "inconclusive";
+
+  /**
+   * Normalized prediction accuracy expressed as a percentage.
+   */
+  accuracyScore: number;
+
+  /**
+   * Recommended confidence calibration adjustment expressed
+   * as percentage points.
+   */
+  calibrationDelta: number;
+
+  /**
+   * Immediate confidence adjustment expressed as percentage points.
+   */
+  confidenceAdjustment: number;
+
+  /**
+   * Recommended confidence after evaluation, expressed as a percentage.
+   */
+  recommendedConfidence: number;
+
+  /**
+   * Executive summary of what was observed.
+   */
+  outcomeSummary: string;
+
+  /**
+   * Explanation of why Discovery assigned the outcome classification.
+   */
+  evaluationExplanation: string;
+
+  /**
+   * Learning generated from prediction performance.
+   */
+  learningSignal: string;
+
+  /**
+   * Evidence supporting the evaluation.
+   */
+  supportingEvidenceIds: string[];
+};
+
 export type ExecutiveProjection = {
   /**
    * Executive workspace metadata.
@@ -341,6 +458,15 @@ export type ExecutiveProjection = {
   organizationalBeliefs?: ExecutiveOrganizationalBelief[];
 
   /**
+   * Discovery's reusable organizational abstractions.
+   *
+   * These are formed by the canonical Organizational Concept
+   * Formation capability and projected without reconstructing
+   * cognition in the presentation layer.
+   */
+  organizationalConcepts?: ExecutiveOrganizationalConcept[];
+
+  /**
    * Discovery's current approach to directing future learning.
    */
   investigationStrategy?: ExecutiveInvestigationStrategy;
@@ -354,6 +480,18 @@ export type ExecutiveProjection = {
    * Longitudinal organizational learning metrics.
    */
   organizationalLearningProfile?: ExecutiveOrganizationalLearningProfile;
+
+  /**
+   * Longitudinal evaluations of previously generated
+   * organizational predictions.
+   *
+   * Produced by CAP-ADP-001 — Prediction Outcome Evaluation.
+   *
+   * These evaluations are projected from Runtime without
+   * recreating outcome classification or calibration logic
+   * in the presentation layer.
+   */
+  predictionEvaluations?: ExecutivePredictionEvaluation[];
 
   /**
    * Structured validation of Discovery's current leading theory.

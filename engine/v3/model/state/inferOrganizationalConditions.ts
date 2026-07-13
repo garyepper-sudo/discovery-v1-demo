@@ -59,6 +59,17 @@ export type OrganizationalCondition = {
   supportingBeliefIds: string[];
   supportingMechanismIds: string[];
   supportingTheoryIds: string[];
+
+  /**
+   * Conditions that currently influence this condition.
+   */
+  upstreamConditionIds: string[];
+
+  /**
+   * Conditions this condition may influence.
+   */
+  downstreamConditionIds: string[];
+
   recommendedExecutiveAction: string;
   uncertaintySummary: string;
   confidenceLimiters: string[];
@@ -1009,6 +1020,8 @@ function scoreDomain(params: {
     supportingBeliefIds: unique(matchingBeliefs.map((belief) => belief.id)),
     supportingMechanismIds: unique(matchingMechanisms.map((mechanism) => mechanism.id)),
     supportingTheoryIds: unique(matchingTheories.map((theory) => theory.id)),
+    upstreamConditionIds: [],
+    downstreamConditionIds: [],
     recommendedExecutiveAction: assessment.recommendedExecutiveAction,
     uncertaintySummary: assessment.uncertaintySummary,
     confidenceLimiters: assessment.confidenceLimiters,
@@ -1175,8 +1188,31 @@ export function inferOrganizationalConditions(
       lastUpdatedAt: input.now,
     }));
 
+  const conditionIdByDomain = new Map(
+    scoredConditions.map((condition) => [
+      condition.domain,
+      condition.id,
+    ]),
+  );
+
   const conditions = scoredConditions
     .map((condition) => {
+      const definition = CONDITION_DEFINITIONS.find(
+        (item) => item.domain === condition.domain,
+      );
+
+      const upstreamConditionIds = unique(
+        (definition?.upstreamDomains ?? [])
+          .map((domain) => conditionIdByDomain.get(domain))
+          .filter((id): id is string => Boolean(id)),
+      );
+
+      const downstreamConditionIds = unique(
+        (definition?.downstreamDomains ?? [])
+          .map((domain) => conditionIdByDomain.get(domain))
+          .filter((id): id is string => Boolean(id)),
+      );
+
       const relationship = inferConditionSystemRelationship(
         condition,
         scoredConditions,
@@ -1184,6 +1220,8 @@ export function inferOrganizationalConditions(
 
       return {
         ...condition,
+        upstreamConditionIds,
+        downstreamConditionIds,
         summary: relationship
           ? `${condition.summary} ${relationship}`
           : condition.summary,

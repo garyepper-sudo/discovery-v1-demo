@@ -10,6 +10,13 @@ const ARCHITECTURE_STATE_PATH = path.join(
   "DISCOVERY_ARCHITECTURE_STATE.json",
 );
 
+const ARCHITECTURE_RECOMMENDATION_PROJECTION_PATH = path.join(
+  PROJECT_ROOT,
+  "docs",
+  "Architecture",
+  "ARCHITECTURE_RECOMMENDATION_PROJECTION.json",
+);
+
 function loadArchitectureState() {
   if (!fs.existsSync(ARCHITECTURE_STATE_PATH)) {
     throw new Error(
@@ -24,6 +31,31 @@ function loadArchitectureState() {
   } catch (error) {
     throw new Error(
       `Could not parse architecture state: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    );
+  }
+}
+
+function loadArchitectureRecommendationProjection() {
+  if (
+    !fs.existsSync(
+      ARCHITECTURE_RECOMMENDATION_PROJECTION_PATH,
+    )
+  ) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(
+      fs.readFileSync(
+        ARCHITECTURE_RECOMMENDATION_PROJECTION_PATH,
+        "utf8",
+      ),
+    );
+  } catch (error) {
+    throw new Error(
+      `Could not parse architecture recommendation projection: ${
         error instanceof Error ? error.message : String(error)
       }`,
     );
@@ -75,15 +107,69 @@ function printMetric(label, value) {
   console.log(`${normalizedLabel} ${dots} ${value}`);
 }
 
-
-
-// ADD THESE TWO FUNCTIONS HERE
 function printSprintReadiness(state) {
-  /* use helper from previous message */
+  const health =
+    state.architecture?.healthScore ?? 0;
+
+  const registryHealthy =
+    (state.architecture?.health?.duplicateIdCount ?? 0) === 0 &&
+    (state.architecture?.health?.missingDependencyCount ?? 0) === 0 &&
+    (state.architecture?.health?.missingCanonicalProducerCount ?? 0) === 0 &&
+    (state.architecture?.health?.capabilitiesWithoutProducerCount ?? 0) === 0 &&
+    (state.architecture?.health?.capabilitiesWithoutConsumersCount ?? 0) === 0 &&
+    (state.architecture?.health
+      ?.capabilitiesWithoutRuntimeDestinationCount ?? 0) === 0;
+
+  const ready =
+    health === 100 &&
+    registryHealthy;
+
+  console.log("SPRINT READINESS");
+  console.log("");
+
+  console.log(
+    ready
+      ? "Status ............... READY"
+      : "Status ............... REVIEW REQUIRED",
+  );
+
+  console.log("");
+
+  if (ready) {
+    console.log(
+      "Discovery is ready for implementation.",
+    );
+  } else {
+    console.log(
+      "Resolve architectural validation before beginning implementation.",
+    );
+  }
+
+  console.log("");
+
+  return ready;
 }
 
 function printExecutiveSummary(state, ready) {
-  /* use helper from previous message */
+  const project = state.project ?? {};
+
+  console.log("EXECUTIVE SUMMARY");
+  console.log("");
+
+  console.log(
+    ready
+      ? "Discovery's architecture is healthy and ready for the next implementation step."
+      : "Discovery requires architecture review before implementation continues.",
+  );
+
+  if (project.nextPriority) {
+    console.log("");
+    console.log(
+      truncate(project.nextPriority, 320),
+    );
+  }
+
+  console.log("");
 }
 
 function capabilityNamesById(state, capabilityIds) {
@@ -424,28 +510,78 @@ function printArchitectureGaps(state) {
   console.log("");
 }
 
-function printRecommendation(state) {
+function printRecommendation(
+  state,
+  recommendationProjection,
+) {
+  const sprintBrief =
+    recommendationProjection?.sprintBrief;
+
   const recommendations =
     state.recommendations ?? {};
+
+  const recommendation =
+    sprintBrief?.recommendation ??
+    recommendations.highestROI;
+
+  const reason =
+    sprintBrief?.reason ??
+    recommendations.reason;
 
   console.log("HIGHEST-ROI NEXT WORK");
   console.log("");
 
   console.log(
     compactText(
-      recommendations.highestROI,
+      recommendation,
       "Continue refining existing capabilities.",
     ),
   );
+
+  if (
+    typeof sprintBrief?.score === "number"
+  ) {
+    console.log("");
+    printMetric(
+      "Priority score",
+      sprintBrief.score,
+    );
+  }
 
   console.log("");
   console.log("Reason");
   console.log(
     compactText(
-      recommendations.reason,
+      reason,
       "The architecture should be extended before new capability creation.",
     ),
   );
+
+  const prerequisites = asArray(
+    sprintBrief?.prerequisites,
+  );
+
+  if (prerequisites.length > 0) {
+    console.log("");
+    console.log("Prerequisites");
+
+    for (const prerequisite of prerequisites) {
+      console.log(`- ${prerequisite}`);
+    }
+  }
+
+  const blockers = asArray(
+    sprintBrief?.blockers,
+  );
+
+  if (blockers.length > 0) {
+    console.log("");
+    console.log("Current Blockers");
+
+    for (const blocker of blockers) {
+      console.log(`- ${blocker}`);
+    }
+  }
 
   console.log("");
 }
@@ -492,6 +628,9 @@ function printStartupDocuments(state) {
 function renderSprintStartup() {
   const state = loadArchitectureState();
 
+  const architectureRecommendationProjection =
+    loadArchitectureRecommendationProjection();
+
   console.log("");
   printRule("=");
   console.log("DISCOVERY SPRINT STARTUP");
@@ -506,44 +645,21 @@ function renderSprintStartup() {
 
   console.log("");
 
-printRule();
+  printRule();
+  console.log("");
 
-console.log("");
+  const ready =
+    printSprintReadiness(state);
 
-console.log("SPRINT READINESS");
-console.log("");
+  printRule();
+  console.log("");
 
-const health =
-  state.architecture?.healthScore ?? 0;
-
-const registryHealthy =
-  (state.architecture?.health?.duplicateIdCount ?? 0) === 0 &&
-  (state.architecture?.health?.missingDependencyCount ?? 0) === 0 &&
-  (state.architecture?.health?.missingCanonicalProducerCount ?? 0) === 0 &&
-  (state.architecture?.health?.capabilitiesWithoutProducerCount ?? 0) === 0 &&
-  (state.architecture?.health?.capabilitiesWithoutConsumersCount ?? 0) === 0 &&
-  (state.architecture?.health?.capabilitiesWithoutRuntimeDestinationCount ?? 0) === 0;
-
-const ready =
-  health === 100 &&
-  registryHealthy;
-
-console.log(
-  ready
-    ? "Status ............... READY"
-    : "Status ............... REVIEW REQUIRED",
-);
-
-console.log("");
-
-if (ready) {
-  console.log("Discovery is ready for implementation.");
-} else {
-  console.log(
-    "Resolve architectural validation before beginning implementation.",
+  printExecutiveSummary(
+    state,
+    ready,
   );
-}
 
+  printRule();
   console.log("");
 
   printProjectState(state);
@@ -581,7 +697,10 @@ if (ready) {
   printRule();
   console.log("");
 
-  printRecommendation(state);
+  printRecommendation(
+    state,
+    architectureRecommendationProjection,
+  );
 
   printRule();
   console.log("");

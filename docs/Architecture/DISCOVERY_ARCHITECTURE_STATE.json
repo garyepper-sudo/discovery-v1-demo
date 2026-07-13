@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-12T13:50:22.560Z",
+    "generatedAt": "2026-07-13T16:11:01.211Z",
     "generator": "scripts/cognition/generateArchitectureState.mjs",
     "sourceOfTruthOrder": [
       "Verified source code",
@@ -13,9 +13,9 @@
     ]
   },
   "project": {
-    "currentMilestone": "Architecture Operating System\n\n---",
-    "currentPhase": "Registry-Driven Architecture Verification and Canonical Understanding Refinement\n\nDiscovery has completed the initial Capability Audit, established the first version of its formal Cognitive Architecture, and created a canonical Organizational Understanding pipeline.\n\nDiscovery has also introduced the first registry-aware capability auditing system.\n\nThe primary objective is no longer to rapidly expand Discovery's reasoning engine.\n\nThe primary objective is no longer executive intelligence extraction.\n\nThe primary objective is no longer determining which understanding should become canonical.\n\nDiscovery now possesses a formal architectural model consisting of:\n\n- Cognitive Operating System\n- Cognitive Object Model\n- Cognitive Flow Map\n- Cognitive Capability Registry\n- Cognitive File Registry\n- Cognitive Capability Audit\n- Registry-aware Capability Traces\n- Architecture Drift Detection\n\nDiscovery also possesses a canonical Organizational Understanding pipeline and a structured Organizational Understanding benchmark.\n\nExecutive Assessment produces the structured executive assessment and Organizational Understanding used by Runtime, Executive Projection, and Atlas.\n\nCurrent development focuses on making Discovery's architecture self-describing, self-validating, and navigable before every sprint.\n\nThe remaining work is primarily architecture verification, registry completeness, and executive understanding quality, not engine expansion.\n\n---",
-    "currentObjective": "Complete Discovery's Architecture Operating System so every significant capability can answer:\n\n- What cognitive object does it produce?\n- Who is the canonical producer?\n- Where is it persisted?\n- Who consumes it?\n- Where is it projected?\n- How is it validated?\n- How does Atlas verify it?\n\nDiscovery should eventually understand its own architecture as thoroughly as it understands an organization.\n\n---",
+    "currentMilestone": "Executive Future Understanding\n\n---",
+    "currentPhase": "Executive Future Understanding and Longitudinal Organizational Intelligence\n\nDiscovery has completed the initial Capability Audit, established its formal Cognitive Architecture, and implemented the first generation of its Cognitive Operating System.\n\nDiscovery now possesses a complete executive cognition pipeline capable of transforming organizational evidence into current understanding, future organizational predictions, and longitudinal organizational learning.\n\nDiscovery now possesses:\n\n- Cognitive Operating System\n- Cognitive Object Model\n- Cognitive Flow Map\n- Cognitive Capability Registry\n- Cognitive File Registry\n- Cognitive Capability Audit\n- Registry-aware Capability Traces\n- Architecture Drift Detection\n- Cognitive Domain Review System\n- Organizational Learning\n- Organizational Concepts\n- Organizational Conditions\n- Organizational State\n- Organizational Prediction\n- Prediction Reflection\n- Executive Assessment\n- Executive Projection\n\nExecutive Assessment now synthesizes multiple cognitive operating systems rather than serving as a standalone reasoning engine.\n\nPrediction has become a first-class cognitive capability.\n\nDiscovery now reasons about both:\n\n- the organization's current state,\n- and its most likely future organizational behavior.\n\nThe remaining work is primarily executive reasoning quality, longitudinal validation, prediction refinement, and executive experience, not engine expansion.\n\n---",
+    "currentObjective": "Refine Discovery's executive reasoning.\n\nDiscovery should continuously improve its ability to answer:\n\n- What is happening?\n- Why is it happening?\n- What is likely to happen next?\n- Why does Discovery believe that future?\n- What evidence would change Discovery's mind?\n- What executive action should occur before that future arrives?\n\nEvery capability should continue to answer:\n\n- Which Operating System owns it?\n- Which capability owns it?\n- Which cognitive object does it produce?\n- Where is it persisted?\n- Where is it projected?\n- How does Atlas validate it?\n- How does accumulated experience improve it?\n\n---",
     "currentSprint": null,
     "nextPriority": null,
     "sourceDocuments": [
@@ -29,13 +29,13 @@
   "architecture": {
     "status": "healthy",
     "healthScore": 100,
-    "capabilityCount": 13,
-    "canonicalProducerCount": 13,
-    "registeredFileCount": 384,
-    "cognitiveObjectCount": 84,
+    "capabilityCount": 20,
+    "canonicalProducerCount": 20,
+    "registeredFileCount": 454,
+    "cognitiveObjectCount": 60,
     "terminalCapabilityCount": 3,
-    "capabilityTraceCount": 5,
-    "connectedCapabilityTraceCount": 5,
+    "capabilityTraceCount": 10,
+    "connectedCapabilityTraceCount": 9,
     "health": {
       "duplicateIdCount": 0,
       "missingDependencyCount": 0,
@@ -196,6 +196,7 @@
           "CAP-PER-002"
         ],
         "consumedByCapabilities": [
+          "CAP-ABS-001",
           "CAP-SELF-001",
           "CAP-UND-002",
           "CAP-UND-003",
@@ -253,8 +254,10 @@
           "CAP-UND-001"
         ],
         "consumedByCapabilities": [
+          "CAP-ABS-001",
           "CAP-LRN-001",
           "CAP-SELF-001",
+          "CAP-SIM-001",
           "CAP-UND-003",
           "CAP-UND-004",
           "CAP-UND-005"
@@ -289,7 +292,7 @@
     {
       "id": "CAP-UND-003",
       "name": "Organizational Theory Formation",
-      "description": "Forms higher-order organizational theories that explain multiple mechanisms, beliefs, and patterns.",
+      "description": "Forms higher-order organizational theories by integrating reusable organizational concepts with supporting organizational beliefs into coherent explanations of organizational behavior.",
       "domain": "UND",
       "architecturalLayer": "COG",
       "subsystem": "Theories",
@@ -308,7 +311,7 @@
       },
       "relationships": {
         "consumesCapabilities": [
-          "CAP-UND-001",
+          "CAP-ABS-001",
           "CAP-UND-002"
         ],
         "consumedByCapabilities": [
@@ -369,7 +372,10 @@
           "CAP-UND-003"
         ],
         "consumedByCapabilities": [
+          "CAP-ADP-001",
+          "CAP-PRD-001",
           "CAP-SELF-002",
+          "CAP-SIM-001",
           "CAP-UND-005"
         ],
         "terminalCapability": false
@@ -403,7 +409,7 @@
     {
       "id": "CAP-UND-005",
       "name": "Executive Assessment",
-      "description": "Synthesizes organizational state, conditions, mechanisms, theories, beliefs, and investigation opportunities into Discovery's canonical executive-level assessment.",
+      "description": "Synthesizes organizational state, conditions, mechanisms, theories, beliefs, prediction reflection, and investigation opportunities into Discovery's canonical executive-level assessment.",
       "domain": "UND",
       "architecturalLayer": "EXEC",
       "subsystem": "Executive Assessment",
@@ -424,7 +430,8 @@
           "CAP-UND-001",
           "CAP-UND-002",
           "CAP-UND-003",
-          "CAP-UND-004"
+          "CAP-UND-004",
+          "CAP-PRD-002"
         ],
         "consumedByCapabilities": [
           "CAP-UND-006"
@@ -463,7 +470,7 @@
         }
       },
       "searchTerms": [],
-      "notes": "Executive Assessment is the authoritative executive synthesis consumed by the canonical Executive Understanding Synthesis capability. Earlier reasoning stages support this assessment but do not independently produce persistent Organizational Understanding."
+      "notes": "Executive Assessment is the authoritative executive synthesis consumed by the canonical Executive Understanding Synthesis capability. It integrates Prediction Reflection but does not recreate prediction reasoning."
     },
     {
       "id": "CAP-UND-006",
@@ -565,6 +572,7 @@
         "consumedByCapabilities": [
           "CAP-LRN-001",
           "CAP-LRN-002",
+          "CAP-SYS-001",
           "CAP-UND-006"
         ],
         "terminalCapability": false
@@ -671,7 +679,10 @@
           "CAP-MEM-001",
           "CAP-LRN-001"
         ],
-        "consumedByCapabilities": [],
+        "consumedByCapabilities": [
+          "CAP-PRD-001",
+          "CAP-SIM-001"
+        ],
         "terminalCapability": true
       },
       "destinations": {
@@ -709,6 +720,73 @@
       "notes": ""
     },
     {
+      "id": "CAP-ABS-001",
+      "name": "Organizational Concept Formation",
+      "description": "Forms reusable organizational concepts by abstracting recurring organizational mechanisms, beliefs, and phenomena across one or more investigations. Concepts become the semantic building blocks from which organizational theories are constructed.",
+      "domain": "ABS",
+      "architecturalLayer": "COG",
+      "subsystem": "Concepts",
+      "status": "canonical",
+      "reviewStatus": "reviewed",
+      "ownership": {
+        "ownsObjects": [
+          "OrganizationalConcept"
+        ],
+        "ownsCanonicalProducer": "engine/v3/concepts/synthesizeOrganizationalConcepts.ts",
+        "implementationFiles": [
+          "engine/v3/concepts/buildConceptCandidates.ts",
+          "engine/v3/concepts/compressConceptCandidates.ts",
+          "engine/v3/concepts/conceptCandidateTypes.ts",
+          "engine/v3/concepts/synthesizeOrganizationalConcepts.ts",
+          "engine/v3/compression/types.ts"
+        ],
+        "doesNotOwn": []
+      },
+      "relationships": {
+        "consumesCapabilities": [
+          "CAP-UND-001",
+          "CAP-UND-002"
+        ],
+        "consumedByCapabilities": [
+          "CAP-UND-003"
+        ],
+        "terminalCapability": false
+      },
+      "destinations": {
+        "runtime": "OrganizationModel.concepts",
+        "executive": [
+          "ExecutiveAssessment",
+          "ExecutiveProjection"
+        ]
+      },
+      "validation": {
+        "atlasCoverage": "yes",
+        "benchmarkCoverage": [
+          "Atlas",
+          "Concept Formation"
+        ],
+        "canonicalProducerExists": true,
+        "missingImplementationFiles": [],
+        "capabilityTrace": {
+          "exists": true,
+          "connected": true,
+          "pipelineCoverage": {
+            "engine": true,
+            "runtime": true,
+            "executive": true,
+            "projection": true,
+            "ui": true,
+            "api": false,
+            "simulation": false,
+            "benchmark": true
+          },
+          "tracePath": "docs/Sprint Updates/Capability Traces/cap-abs-001.md"
+        }
+      },
+      "searchTerms": [],
+      "notes": ""
+    },
+    {
       "id": "CAP-SELF-001",
       "name": "Theory Validation",
       "description": "Evaluates the dominant theory, competing theories, supporting evidence, contradictory evidence, confidence calibration, and falsification criteria.",
@@ -734,7 +812,8 @@
           "CAP-UND-003"
         ],
         "consumedByCapabilities": [
-          "CAP-SELF-002"
+          "CAP-SELF-002",
+          "CAP-SYS-001"
         ],
         "terminalCapability": false
       },
@@ -795,7 +874,9 @@
           "CAP-UND-004",
           "CAP-SELF-001"
         ],
-        "consumedByCapabilities": [],
+        "consumedByCapabilities": [
+          "CAP-SYS-001"
+        ],
         "terminalCapability": true
       },
       "destinations": {
@@ -830,6 +911,372 @@
       },
       "searchTerms": [],
       "notes": ""
+    },
+    {
+      "id": "CAP-PRD-001",
+      "name": "Organizational Prediction",
+      "description": "Infers explicit future-state organizational predictions from organizational conditions, organizational state, longitudinal learning, previous predictions, and modeled organizational relationships.",
+      "domain": "PRD",
+      "architecturalLayer": "COG",
+      "subsystem": "Organizational Prediction",
+      "status": "canonical",
+      "reviewStatus": "reviewed",
+      "ownership": {
+        "ownsObjects": [
+          "OrganizationalPrediction"
+        ],
+        "ownsCanonicalProducer": "engine/v3/model/predictions/inferOrganizationalPredictions.ts",
+        "implementationFiles": [
+          "engine/v3/model/predictions/inferOrganizationalPredictions.ts",
+          "engine/v3/model/predictions/organizationalPrediction.ts",
+          "engine/v3/model/predictions/predictionRules.ts",
+          "engine/v3/model/predictions/predictionTypes.ts"
+        ],
+        "doesNotOwn": []
+      },
+      "relationships": {
+        "consumesCapabilities": [
+          "CAP-UND-004",
+          "CAP-LRN-002"
+        ],
+        "consumedByCapabilities": [
+          "CAP-ADP-001",
+          "CAP-PRD-002",
+          "CAP-SIM-001"
+        ],
+        "terminalCapability": false
+      },
+      "destinations": {
+        "runtime": "OrganizationRuntime.organizationalPredictions",
+        "executive": [
+          "PredictionReflection"
+        ]
+      },
+      "validation": {
+        "atlasCoverage": "yes",
+        "benchmarkCoverage": [
+          "Atlas"
+        ],
+        "canonicalProducerExists": true,
+        "missingImplementationFiles": [],
+        "capabilityTrace": {
+          "exists": true,
+          "connected": true,
+          "pipelineCoverage": {
+            "engine": true,
+            "runtime": true,
+            "executive": false,
+            "projection": false,
+            "ui": false,
+            "api": false,
+            "simulation": false,
+            "benchmark": false
+          },
+          "tracePath": "docs/Sprint Updates/Capability Traces/cap-prd-001.md"
+        }
+      },
+      "searchTerms": [],
+      "notes": "Version 1 supports continuation, deterioration, improvement, and propagation predictions. Predictions preserve confidence, likelihood, causal paths, assumptions, confidence limiters, and falsifying evidence."
+    },
+    {
+      "id": "CAP-PRD-002",
+      "name": "Prediction Reflection",
+      "description": "Transforms organizational predictions into explainable executive future reasoning by selecting a primary prediction and preserving supporting cognition, competing predictions, assumptions, confidence calibration, falsifying evidence, and executive recommendations.",
+      "domain": "PRD",
+      "architecturalLayer": "COG",
+      "subsystem": "Prediction Reflection",
+      "status": "canonical",
+      "reviewStatus": "reviewed",
+      "ownership": {
+        "ownsObjects": [
+          "PredictionReflection"
+        ],
+        "ownsCanonicalProducer": "engine/v3/model/predictions/buildPredictionReflection.ts",
+        "implementationFiles": [
+          "engine/v3/model/predictions/buildPredictionReflection.ts"
+        ],
+        "doesNotOwn": []
+      },
+      "relationships": {
+        "consumesCapabilities": [
+          "CAP-PRD-001"
+        ],
+        "consumedByCapabilities": [
+          "CAP-ADP-001",
+          "CAP-UND-005"
+        ],
+        "terminalCapability": false
+      },
+      "destinations": {
+        "runtime": "OrganizationRuntime.predictionReflection",
+        "executive": [
+          "ExecutiveAssessment",
+          "OrganizationalUnderstanding",
+          "Atlas"
+        ]
+      },
+      "validation": {
+        "atlasCoverage": "yes",
+        "benchmarkCoverage": [
+          "Atlas"
+        ],
+        "canonicalProducerExists": true,
+        "missingImplementationFiles": [],
+        "capabilityTrace": {
+          "exists": true,
+          "connected": true,
+          "pipelineCoverage": {
+            "engine": true,
+            "runtime": true,
+            "executive": false,
+            "projection": false,
+            "ui": false,
+            "api": false,
+            "simulation": false,
+            "benchmark": false
+          },
+          "tracePath": "docs/Sprint Updates/Capability Traces/cap-prd-002.md"
+        }
+      },
+      "searchTerms": [],
+      "notes": "Prediction Reflection is the canonical producer of executive future reasoning. Executive Assessment consumes this object and should not reconstruct prediction logic."
+    },
+    {
+      "id": "CAP-ADP-001",
+      "name": "Prediction Outcome Evaluation",
+      "description": "Evaluates previous organizational predictions against observed organizational outcomes, measures prediction accuracy, calibrates confidence, and produces learning signals that improve future prediction quality.",
+      "domain": "ADP",
+      "architecturalLayer": "COG",
+      "subsystem": "Prediction Outcome Evaluation",
+      "status": "proposed",
+      "reviewStatus": "proposed",
+      "ownership": {
+        "ownsObjects": [
+          "PredictionEvaluation"
+        ],
+        "ownsCanonicalProducer": "engine/v3/model/predictions/evaluatePredictionOutcomes.ts",
+        "implementationFiles": [
+          "engine/v3/model/predictions/evaluatePredictionOutcomes.ts"
+        ],
+        "doesNotOwn": []
+      },
+      "relationships": {
+        "consumesCapabilities": [
+          "CAP-PRD-001",
+          "CAP-PRD-002",
+          "CAP-UND-004"
+        ],
+        "consumedByCapabilities": [
+          "CAP-LRN-002",
+          "CAP-SIM-001"
+        ],
+        "terminalCapability": false
+      },
+      "destinations": {
+        "runtime": "OrganizationRuntime.predictionEvaluations",
+        "executive": [
+          "ExecutiveAssessment",
+          "ExecutiveProjection",
+          "ExecutiveWorkspace",
+          "Atlas"
+        ]
+      },
+      "validation": {
+        "atlasCoverage": "planned",
+        "benchmarkCoverage": [
+          "Atlas"
+        ],
+        "canonicalProducerExists": true,
+        "missingImplementationFiles": [],
+        "capabilityTrace": {
+          "exists": true,
+          "connected": true,
+          "pipelineCoverage": {
+            "engine": true,
+            "runtime": true,
+            "executive": false,
+            "projection": true,
+            "ui": false,
+            "api": false,
+            "simulation": false,
+            "benchmark": false
+          },
+          "tracePath": "docs/Sprint Updates/Capability Traces/cap-adp-001.md"
+        }
+      },
+      "searchTerms": [],
+      "notes": "Evaluates whether previous predictions proved correct after new organizational evidence is observed. Produces prediction calibration and longitudinal learning signals without recreating prediction generation or prediction reflection."
+    },
+    {
+      "id": "CAP-SYS-001",
+      "name": "Architectural Planning",
+      "description": "Analyzes Discovery's current cognitive architecture and recommends the highest-value architectural work while respecting capability dependencies, implementation maturity, overlap analysis, benchmark readiness, and product sequencing.",
+      "domain": "SYS",
+      "architecturalLayer": "SYS",
+      "subsystem": "Architectural Planning",
+      "status": "proposed",
+      "reviewStatus": "proposed",
+      "ownership": {
+        "ownsObjects": [
+          "ArchitectureRecommendation"
+        ],
+        "ownsCanonicalProducer": "scripts/cognition/planArchitecture.mjs",
+        "implementationFiles": [
+          "scripts/cognition/planArchitecture.mjs"
+        ],
+        "doesNotOwn": []
+      },
+      "relationships": {
+        "consumesCapabilities": [
+          "CAP-MEM-001",
+          "CAP-SELF-001",
+          "CAP-SELF-002"
+        ],
+        "consumedByCapabilities": [
+          "CAP-SYS-002"
+        ],
+        "terminalCapability": false
+      },
+      "destinations": {
+        "runtime": "DiscoveryArchitectureState.architectureRecommendations",
+        "executive": [
+          "SprintBrief",
+          "ArchitectureHandoff"
+        ]
+      },
+      "validation": {
+        "atlasCoverage": "not-applicable",
+        "benchmarkCoverage": [
+          "Architecture Validation"
+        ],
+        "canonicalProducerExists": true,
+        "missingImplementationFiles": [],
+        "capabilityTrace": {
+          "exists": true,
+          "connected": false,
+          "pipelineCoverage": {
+            "engine": false,
+            "runtime": false,
+            "executive": false,
+            "projection": false,
+            "ui": false,
+            "api": false,
+            "simulation": false,
+            "benchmark": false
+          },
+          "tracePath": "docs/Sprint Updates/Capability Traces/cap-sys-001.md"
+        }
+      },
+      "searchTerms": [],
+      "notes": "Ranks architectural opportunities, explains expected value and sequencing, identifies prerequisites and blockers, and recommends the highest-value next development step. It replaces hard-coded recommendation branches with explicit system-level planning while preserving duplicate-work safeguards."
+    },
+    {
+      "id": "CAP-SYS-002",
+      "name": "Architecture Recommendation Projection",
+      "description": "Transforms canonical architecture recommendations into presentation-ready system planning intelligence for Sprint Startup, Architecture Handoff, and future architecture experiences without recreating architectural planning logic.",
+      "domain": "SYS",
+      "architecturalLayer": "SYS",
+      "subsystem": "Architecture Recommendation Projection",
+      "status": "proposed",
+      "reviewStatus": "proposed",
+      "ownership": {
+        "ownsObjects": [
+          "ArchitectureRecommendationProjection"
+        ],
+        "ownsCanonicalProducer": "scripts/cognition/projectArchitectureRecommendation.mjs",
+        "implementationFiles": [
+          "scripts/cognition/projectArchitectureRecommendation.mjs"
+        ],
+        "doesNotOwn": []
+      },
+      "relationships": {
+        "consumesCapabilities": [
+          "CAP-SYS-001"
+        ],
+        "consumedByCapabilities": [],
+        "terminalCapability": false
+      },
+      "destinations": {
+        "runtime": "DiscoveryArchitectureState.architectureRecommendationProjection",
+        "executive": [
+          "SprintBrief",
+          "ArchitectureHandoff"
+        ]
+      },
+      "validation": {
+        "atlasCoverage": "not-applicable",
+        "benchmarkCoverage": [
+          "Architecture Validation"
+        ],
+        "canonicalProducerExists": true,
+        "missingImplementationFiles": [],
+        "capabilityTrace": {
+          "exists": false,
+          "connected": null,
+          "pipelineCoverage": null,
+          "tracePath": "docs/Sprint Updates/Capability Traces/cap-sys-002.md"
+        }
+      },
+      "searchTerms": [],
+      "notes": "Projects ArchitectureRecommendation into presentation-ready planning content. It must not rank opportunities, calculate architecture health, or recreate Architectural Planning. Sprint Startup and Architecture Handoff consume this projected object."
+    },
+    {
+      "id": "CAP-SIM-001",
+      "name": "Organizational Simulation",
+      "description": "Projects Discovery's current organizational understanding into a plausible future organizational state by evolving current conditions, beliefs, predictions, and calibrated prediction performance forward in simulated time.",
+      "domain": "SIM",
+      "architecturalLayer": "COG",
+      "subsystem": "Organizational Simulation",
+      "status": "proposed",
+      "reviewStatus": "proposed",
+      "ownership": {
+        "ownsObjects": [
+          "SimulatedOrganizationState"
+        ],
+        "ownsCanonicalProducer": "engine/v3/model/simulate/simulateOrganization.ts",
+        "implementationFiles": [
+          "engine/v3/model/simulate/simulateOrganization.ts"
+        ],
+        "doesNotOwn": []
+      },
+      "relationships": {
+        "consumesCapabilities": [
+          "CAP-UND-004",
+          "CAP-UND-002",
+          "CAP-PRD-001",
+          "CAP-ADP-001",
+          "CAP-LRN-002"
+        ],
+        "consumedByCapabilities": [
+          "CAP-SYS-001"
+        ],
+        "terminalCapability": false
+      },
+      "destinations": {
+        "runtime": "OrganizationRuntime.simulatedOrganizationStates",
+        "executive": [
+          "ExecutiveProjection",
+          "ExecutiveWorkspace",
+          "Atlas"
+        ]
+      },
+      "validation": {
+        "atlasCoverage": "planned",
+        "benchmarkCoverage": [
+          "Atlas",
+          "Simulation Benchmark"
+        ],
+        "canonicalProducerExists": true,
+        "missingImplementationFiles": [],
+        "capabilityTrace": {
+          "exists": false,
+          "connected": null,
+          "pipelineCoverage": null,
+          "tracePath": "docs/Sprint Updates/Capability Traces/cap-sim-001.md"
+        }
+      },
+      "searchTerms": [],
+      "notes": "Version 1 preserves the current organizational state while calibrating simulation confidence using historical prediction accuracy. Later versions will evolve conditions, beliefs, and predictions across simulated time."
     }
   ],
   "capabilityIndex": {
@@ -962,6 +1409,18 @@
         "ExecutiveProjection"
       ]
     },
+    "CAP-ABS-001": {
+      "name": "Organizational Concept Formation",
+      "ownsObjects": [
+        "OrganizationalConcept"
+      ],
+      "canonicalProducer": "engine/v3/concepts/synthesizeOrganizationalConcepts.ts",
+      "runtimeDestination": "OrganizationModel.concepts",
+      "executiveDestinations": [
+        "ExecutiveAssessment",
+        "ExecutiveProjection"
+      ]
+    },
     "CAP-SELF-001": {
       "name": "Theory Validation",
       "ownsObjects": [
@@ -985,10 +1444,85 @@
         "InvestigationOpportunities",
         "ExecutiveProjection"
       ]
+    },
+    "CAP-PRD-001": {
+      "name": "Organizational Prediction",
+      "ownsObjects": [
+        "OrganizationalPrediction"
+      ],
+      "canonicalProducer": "engine/v3/model/predictions/inferOrganizationalPredictions.ts",
+      "runtimeDestination": "OrganizationRuntime.organizationalPredictions",
+      "executiveDestinations": [
+        "PredictionReflection"
+      ]
+    },
+    "CAP-PRD-002": {
+      "name": "Prediction Reflection",
+      "ownsObjects": [
+        "PredictionReflection"
+      ],
+      "canonicalProducer": "engine/v3/model/predictions/buildPredictionReflection.ts",
+      "runtimeDestination": "OrganizationRuntime.predictionReflection",
+      "executiveDestinations": [
+        "ExecutiveAssessment",
+        "OrganizationalUnderstanding",
+        "Atlas"
+      ]
+    },
+    "CAP-ADP-001": {
+      "name": "Prediction Outcome Evaluation",
+      "ownsObjects": [
+        "PredictionEvaluation"
+      ],
+      "canonicalProducer": "engine/v3/model/predictions/evaluatePredictionOutcomes.ts",
+      "runtimeDestination": "OrganizationRuntime.predictionEvaluations",
+      "executiveDestinations": [
+        "ExecutiveAssessment",
+        "ExecutiveProjection",
+        "ExecutiveWorkspace",
+        "Atlas"
+      ]
+    },
+    "CAP-SYS-001": {
+      "name": "Architectural Planning",
+      "ownsObjects": [
+        "ArchitectureRecommendation"
+      ],
+      "canonicalProducer": "scripts/cognition/planArchitecture.mjs",
+      "runtimeDestination": "DiscoveryArchitectureState.architectureRecommendations",
+      "executiveDestinations": [
+        "SprintBrief",
+        "ArchitectureHandoff"
+      ]
+    },
+    "CAP-SYS-002": {
+      "name": "Architecture Recommendation Projection",
+      "ownsObjects": [
+        "ArchitectureRecommendationProjection"
+      ],
+      "canonicalProducer": "scripts/cognition/projectArchitectureRecommendation.mjs",
+      "runtimeDestination": "DiscoveryArchitectureState.architectureRecommendationProjection",
+      "executiveDestinations": [
+        "SprintBrief",
+        "ArchitectureHandoff"
+      ]
+    },
+    "CAP-SIM-001": {
+      "name": "Organizational Simulation",
+      "ownsObjects": [
+        "SimulatedOrganizationState"
+      ],
+      "canonicalProducer": "engine/v3/model/simulate/simulateOrganization.ts",
+      "runtimeDestination": "OrganizationRuntime.simulatedOrganizationStates",
+      "executiveDestinations": [
+        "ExecutiveProjection",
+        "ExecutiveWorkspace",
+        "Atlas"
+      ]
     }
   },
   "intelligence": {
-    "producedObjectCount": 14,
+    "producedObjectCount": 21,
     "producedObjects": [
       "V3Evidence",
       "OrganizationalObservation",
@@ -1002,10 +1536,17 @@
       "OrganizationRuntime",
       "OrganizationalBeliefRevision",
       "OrganizationalLearningProfile",
+      "OrganizationalConcept",
       "TheoryValidation",
-      "InvestigationOpportunity"
+      "InvestigationOpportunity",
+      "OrganizationalPrediction",
+      "PredictionReflection",
+      "PredictionEvaluation",
+      "ArchitectureRecommendation",
+      "ArchitectureRecommendationProjection",
+      "SimulatedOrganizationState"
     ],
-    "executiveCapabilityCount": 10,
+    "executiveCapabilityCount": 17,
     "executiveCapabilityIds": [
       "CAP-UND-001",
       "CAP-UND-002",
@@ -1015,42 +1556,75 @@
       "CAP-UND-006",
       "CAP-LRN-001",
       "CAP-LRN-002",
+      "CAP-ABS-001",
       "CAP-SELF-001",
-      "CAP-SELF-002"
+      "CAP-SELF-002",
+      "CAP-PRD-001",
+      "CAP-PRD-002",
+      "CAP-ADP-001",
+      "CAP-SYS-001",
+      "CAP-SYS-002",
+      "CAP-SIM-001"
     ],
-    "projectedCapabilityCount": 5,
+    "projectedCapabilityCount": 8,
     "projectedCapabilityIds": [
       "CAP-UND-005",
       "CAP-UND-006",
       "CAP-LRN-002",
+      "CAP-ABS-001",
       "CAP-SELF-001",
-      "CAP-SELF-002"
+      "CAP-SELF-002",
+      "CAP-ADP-001",
+      "CAP-SIM-001"
     ],
-    "workspaceDeclaredCapabilityCount": 2,
+    "workspaceDeclaredCapabilityCount": 4,
     "workspaceDeclaredCapabilityIds": [
       "CAP-UND-005",
-      "CAP-UND-006"
+      "CAP-UND-006",
+      "CAP-ADP-001",
+      "CAP-SIM-001"
     ],
-    "structurallyVisibleCapabilityCount": 5,
+    "structurallyVisibleCapabilityCount": 7,
     "structurallyVisibleCapabilityIds": [
       "CAP-UND-005",
       "CAP-UND-006",
       "CAP-LRN-002",
+      "CAP-ABS-001",
+      "CAP-SELF-001",
+      "CAP-SELF-002",
+      "CAP-ADP-001"
+    ],
+    "structurallyConnectedCapabilityCount": 7,
+    "structurallyConnectedCapabilityIds": [
+      "CAP-UND-005",
+      "CAP-UND-006",
+      "CAP-LRN-002",
+      "CAP-ABS-001",
+      "CAP-SELF-001",
+      "CAP-SELF-002",
+      "CAP-ADP-001"
+    ],
+    "uiVisibleCapabilityCount": 6,
+    "uiVisibleCapabilityIds": [
+      "CAP-UND-005",
+      "CAP-UND-006",
+      "CAP-LRN-002",
+      "CAP-ABS-001",
       "CAP-SELF-001",
       "CAP-SELF-002"
     ],
-    "potentiallyHiddenCapabilityCount": 0,
-    "potentiallyHiddenCapabilityIds": [],
-    "interpretation": "Visibility is inferred from generated capability traces. A capability declared for Executive Workspace but lacking a UI structural match is treated as potentially hidden and should be reviewed before building new cognition."
+    "projectedButNotDisplayedCapabilityCount": 1,
+    "projectedButNotDisplayedCapabilityIds": [
+      "CAP-ADP-001"
+    ],
+    "potentiallyHiddenCapabilityCount": 1,
+    "potentiallyHiddenCapabilityIds": [
+      "CAP-SIM-001"
+    ],
+    "interpretation": "Structural connection is inferred from generated capability traces. A capability is considered connected when its Runtime-to-Executive-Projection pathway exists, even when its current runtime collection is empty. Direct UI presentation is tracked separately and does not determine whether the capability is architecturally hidden."
   },
   "gaps": {
-    "unpopulatedDomains": [
-      "ABS",
-      "SYS",
-      "PRD",
-      "SIM",
-      "ADP"
-    ],
+    "unpopulatedDomains": [],
     "missingCapabilityIds": [],
     "registryFailures": {
       "duplicateIds": 0,
@@ -1070,19 +1644,7 @@
         "leftCapabilityName": "Organizational Condition Inference",
         "rightCapabilityId": "CAP-UND-005",
         "rightCapabilityName": "Executive Assessment",
-        "semanticSimilarity": 0.364,
-        "sharedProducedObjects": [],
-        "sameCanonicalProducer": false,
-        "status": "review-required",
-        "duplicate": null,
-        "interpretation": "Potential similarity requires architectural review. Similarity alone does not prove duplication."
-      },
-      {
-        "leftCapabilityId": "CAP-UND-002",
-        "leftCapabilityName": "Organizational Belief Formation",
-        "rightCapabilityId": "CAP-UND-003",
-        "rightCapabilityName": "Organizational Theory Formation",
-        "semanticSimilarity": 0.35,
+        "semanticSimilarity": 0.333,
         "sharedProducedObjects": [],
         "sameCanonicalProducer": false,
         "status": "review-required",
@@ -1096,14 +1658,16 @@
     "permanentRule": "Extend existing capabilities before creating new ones. A new capability requires a distinct responsibility, distinct produced object, distinct canonical producer, and justified position in the pipeline."
   },
   "recommendations": {
-    "highestROI": "Review unpopulated cognitive domains only after existing intelligence extraction is complete.",
-    "reason": "The following domains have no registered capabilities: ABS, SYS, PRD, SIM, ADP.",
+    "highestROI": "Expose intelligence already produced but not structurally visible in the Executive Workspace.",
+    "reason": "1 projected capability appears potentially hidden from the UI.",
+    "recommendedCapability": null,
     "requiredPreBuildChecks": [
       "Search the Cognitive Capability Registry.",
       "Search produced cognitive objects.",
       "Search canonical producers and implementation files.",
       "Review semantic overlap candidates.",
       "Determine whether the intelligence is already produced but hidden.",
+      "Confirm the proposed responsibility is distinct from existing capabilities.",
       "Extend an existing capability unless a distinct responsibility is proven."
     ],
     "avoid": [
@@ -1118,10 +1682,17 @@
       "Do not recreate Organizational Runtime Persistence; extend CAP-MEM-001 unless a distinct responsibility is proven.",
       "Do not recreate Organizational Belief Evolution; extend CAP-LRN-001 unless a distinct responsibility is proven.",
       "Do not recreate Organizational Learning Profile; extend CAP-LRN-002 unless a distinct responsibility is proven.",
+      "Do not recreate Organizational Concept Formation; extend CAP-ABS-001 unless a distinct responsibility is proven.",
       "Do not recreate Theory Validation; extend CAP-SELF-001 unless a distinct responsibility is proven.",
-      "Do not recreate Investigation Opportunity Generation; extend CAP-SELF-002 unless a distinct responsibility is proven."
+      "Do not recreate Investigation Opportunity Generation; extend CAP-SELF-002 unless a distinct responsibility is proven.",
+      "Do not recreate Organizational Prediction; extend CAP-PRD-001 unless a distinct responsibility is proven.",
+      "Do not recreate Prediction Reflection; extend CAP-PRD-002 unless a distinct responsibility is proven.",
+      "Do not recreate Prediction Outcome Evaluation; extend CAP-ADP-001 unless a distinct responsibility is proven.",
+      "Do not recreate Architectural Planning; extend CAP-SYS-001 unless a distinct responsibility is proven.",
+      "Do not recreate Architecture Recommendation Projection; extend CAP-SYS-002 unless a distinct responsibility is proven.",
+      "Do not recreate Organizational Simulation; extend CAP-SIM-001 unless a distinct responsibility is proven."
     ],
-    "overlapReviewsRequired": 2,
+    "overlapReviewsRequired": 1,
     "decisionRule": "Do not create a new capability when an existing capability already owns the responsibility, object, producer, or destination. Expose or extend existing intelligence first."
   },
   "handoff": {

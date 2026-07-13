@@ -19,6 +19,8 @@ import type {
 } from "../model/memory/organizationalTheories";
 
 import type { ExecutiveState } from "../executive/executiveState";
+import type { PredictionEvaluation } from "../model/predictions/evaluatePredictionOutcomes";
+import type { SimulatedOrganizationState } from "../model/simulate/simulateOrganization";
 
 export type OrganizationRuntimeMetadata = {
   organizationId: string;
@@ -81,6 +83,19 @@ export type OrganizationRuntimeMemory = {
   semanticConcepts: unknown[];
   meaningSignals: unknown[];
   organizationalConcepts: unknown[];
+
+  /**
+   * Longitudinal evaluations of prior organizational predictions.
+   */
+  predictionEvaluations: PredictionEvaluation[];
+
+  /**
+   * Canonical simulated future organizational states.
+   *
+   * Version 1 stores one-step projected futures produced by
+   * Organizational Simulation.
+   */
+  simulatedOrganizationStates: SimulatedOrganizationState[];
 };
 
 export type OrganizationRuntimeOrganism = {
@@ -166,6 +181,9 @@ export function createEmptyOrganizationRuntime(params: {
       semanticConcepts: [],
       meaningSignals: [],
       organizationalConcepts: [],
+
+      predictionEvaluations: [],
+      simulatedOrganizationStates: [],
     },
 
     organism: {

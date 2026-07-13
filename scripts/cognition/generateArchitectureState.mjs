@@ -521,7 +521,37 @@ function deriveIntelligenceState(capabilities) {
       ),
   );
 
-  const visibleCapabilityIds = capabilities
+  /**
+   * A capability is structurally connected when its generated trace
+   * confirms that the capability reaches the Executive Projection.
+   *
+   * Structural connection does not require the runtime collection to
+   * contain data during the current investigation.
+   *
+   * This distinction is important for longitudinal capabilities such as
+   * Prediction Outcome Evaluation, whose projection pathway can be valid
+   * before a later investigation produces populated evaluation objects.
+   */
+  const structurallyConnectedCapabilityIds =
+    projectedCapabilities
+      .filter((capability) => {
+        const trace = loadCapabilityTrace(capability.id);
+
+        return (
+          trace.pipelineCoverage?.projection === true ||
+          trace.pipelineCoverage?.ui === true
+        );
+      })
+      .map((capability) => capability.id);
+
+  /**
+   * UI visibility remains separately observable.
+   *
+   * This reports whether the trace found a direct presentation-layer
+   * structural match. It does not determine whether the capability is
+   * architecturally hidden.
+   */
+  const uiVisibleCapabilityIds = projectedCapabilities
     .filter((capability) => {
       const trace = loadCapabilityTrace(capability.id);
 
@@ -529,12 +559,30 @@ function deriveIntelligenceState(capabilities) {
     })
     .map((capability) => capability.id);
 
+  /**
+   * A capability is potentially hidden only when it declares an
+   * Executive Projection destination but has neither:
+   *
+   * - a verified projection pathway, nor
+   * - a verified UI pathway.
+   *
+   * Empty runtime data must not cause a connected capability to be
+   * classified as hidden.
+   */
   const hiddenCapabilityIds = projectedCapabilities
     .filter(
       (capability) =>
-        !visibleCapabilityIds.includes(capability.id),
+        !structurallyConnectedCapabilityIds.includes(
+          capability.id,
+        ),
     )
     .map((capability) => capability.id);
+
+  const projectedButNotDisplayedCapabilityIds =
+    structurallyConnectedCapabilityIds.filter(
+      (capabilityId) =>
+        !uiVisibleCapabilityIds.includes(capabilityId),
+    );
 
   return {
     producedObjectCount: producedObjects.length,
@@ -542,6 +590,7 @@ function deriveIntelligenceState(capabilities) {
 
     executiveCapabilityCount:
       executiveCapabilities.length,
+
     executiveCapabilityIds:
       executiveCapabilities.map(
         (capability) => capability.id,
@@ -549,6 +598,7 @@ function deriveIntelligenceState(capabilities) {
 
     projectedCapabilityCount:
       projectedCapabilities.length,
+
     projectedCapabilityIds:
       projectedCapabilities.map(
         (capability) => capability.id,
@@ -556,23 +606,48 @@ function deriveIntelligenceState(capabilities) {
 
     workspaceDeclaredCapabilityCount:
       workspaceCapabilities.length,
+
     workspaceDeclaredCapabilityIds:
       workspaceCapabilities.map(
         (capability) => capability.id,
       ),
 
+    /**
+     * Retained for compatibility with the sprint-startup renderer.
+     *
+     * "Structurally visible" now means the capability has a verified
+     * Executive Projection or UI pathway. It does not mean the current
+     * runtime contains populated objects.
+     */
     structurallyVisibleCapabilityCount:
-      visibleCapabilityIds.length,
+      structurallyConnectedCapabilityIds.length,
+
     structurallyVisibleCapabilityIds:
-      visibleCapabilityIds,
+      structurallyConnectedCapabilityIds,
+
+    structurallyConnectedCapabilityCount:
+      structurallyConnectedCapabilityIds.length,
+
+    structurallyConnectedCapabilityIds,
+
+    uiVisibleCapabilityCount:
+      uiVisibleCapabilityIds.length,
+
+    uiVisibleCapabilityIds,
+
+    projectedButNotDisplayedCapabilityCount:
+      projectedButNotDisplayedCapabilityIds.length,
+
+    projectedButNotDisplayedCapabilityIds,
 
     potentiallyHiddenCapabilityCount:
       hiddenCapabilityIds.length,
+
     potentiallyHiddenCapabilityIds:
       hiddenCapabilityIds,
 
     interpretation:
-      "Visibility is inferred from generated capability traces. A capability declared for Executive Workspace but lacking a UI structural match is treated as potentially hidden and should be reviewed before building new cognition.",
+      "Structural connection is inferred from generated capability traces. A capability is considered connected when its Runtime-to-Executive-Projection pathway exists, even when its current runtime collection is empty. Direct UI presentation is tracked separately and does not determine whether the capability is architecturally hidden.",
   };
 }
 
@@ -632,11 +707,30 @@ function deriveRecommendations({
       `Do not recreate ${capability.name}; extend ${capability.id} unless a distinct responsibility is proven.`,
   );
 
+  const capabilityIds = new Set(
+    capabilities.map((capability) => capability.id),
+  );
+
+  const registeredDomains = new Set(
+    capabilities.map((capability) => capability.domain),
+  );
+
+  const hasPredictionCapability =
+    capabilityIds.has("CAP-PRD-001");
+
+  const hasPredictionReflection =
+    capabilityIds.has("CAP-PRD-002");
+
+  const hasAdaptiveCapability =
+    registeredDomains.has("ADP");
+
   let highestROI =
     "Continue validating and refining existing canonical capabilities.";
 
   let reason =
     "The registered architecture is healthy and should be extended before new capability creation.";
+
+  let recommendedCapability = null;
 
   if (intelligence.potentiallyHiddenCapabilityCount > 0) {
     highestROI =
@@ -649,19 +743,69 @@ function deriveRecommendations({
           ? "appears"
           : "appear"
       } potentially hidden from the UI.`;
+  } else if (
+    hasPredictionCapability &&
+    hasPredictionReflection &&
+    !hasAdaptiveCapability
+  ) {
+    highestROI =
+      "Evaluate Adaptive Prediction Evaluation as the next capability.";
+
+    reason =
+      "Discovery can produce and reflect on organizational predictions, but it does not yet have a registered adaptive capability that compares predictions with observed outcomes, measures calibration, and learns from prediction accuracy.";
+
+    recommendedCapability = {
+      proposedName: "Adaptive Prediction Evaluation",
+      proposedDomain: "ADP",
+      proposedCapabilityId: "CAP-ADP-001",
+      status: "proposal-requires-review",
+
+      responsibility:
+        "Evaluate prior organizational predictions against later observed outcomes and convert prediction performance into confidence calibration and longitudinal learning.",
+
+      proposedProducedObject:
+        "PredictionEvaluation",
+
+      extendsCapabilities: [
+        "CAP-PRD-001",
+        "CAP-PRD-002",
+      ],
+
+      requiredInputs: [
+        "OrganizationalPrediction",
+        "PredictionReflection",
+        "Later organizational evidence or observed outcome",
+      ],
+
+      expectedOutputs: [
+        "Prediction accuracy assessment",
+        "Calibration adjustment",
+        "Explanation of prediction success or failure",
+        "Learning signal for future predictions",
+      ],
+
+      safeguards: [
+        "Do not duplicate prediction generation.",
+        "Do not duplicate prediction reflection.",
+        "Confirm that outcome comparison is a distinct responsibility before registration.",
+        "Define a distinct canonical producer and produced cognitive object.",
+        "Connect the capability to Runtime, Executive Projection, Atlas, and longitudinal simulation where appropriate.",
+      ],
+    };
   } else if (gaps.unpopulatedDomains.length > 0) {
     highestROI =
-      "Review unpopulated cognitive domains only after existing intelligence extraction is complete.";
+      "Review remaining unpopulated cognitive domains only after validating a concrete product need.";
 
     reason =
       `The following domains have no registered capabilities: ${gaps.unpopulatedDomains.join(
         ", ",
-      )}.`;
+      )}. Empty domains are structural review areas, not automatic implementation priorities.`;
   }
 
   return {
     highestROI,
     reason,
+    recommendedCapability,
 
     requiredPreBuildChecks: [
       "Search the Cognitive Capability Registry.",
@@ -669,6 +813,7 @@ function deriveRecommendations({
       "Search canonical producers and implementation files.",
       "Review semantic overlap candidates.",
       "Determine whether the intelligence is already produced but hidden.",
+      "Confirm the proposed responsibility is distinct from existing capabilities.",
       "Extend an existing capability unless a distinct responsibility is proven.",
     ],
 

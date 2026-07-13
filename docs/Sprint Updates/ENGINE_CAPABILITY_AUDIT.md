@@ -12,28 +12,23 @@ Its purpose is to ensure Discovery evolves by exposing, organizing, validating, 
 
 This document answers:
 
-> **What cognitive capabilities already exist inside Discovery?**
+> **What cognitive capabilities currently exist inside Discovery?**
 
 and
 
-> **Which component is the canonical producer of each cognitive object?**
+> **Which component is the canonical producer of every cognitive object?**
 
-The Capability Audit now serves as the bridge between Discovery's implementation, Cognitive Architecture, Domain Review System, and Cognitive Operating System.
+The Capability Audit serves as the architectural contract between:
 
-Semantic ownership is documented separately in:
+- Cognitive Operating System
+- Capability Registry
+- Cognitive Object Model
+- Runtime
+- Executive Projection
+- Atlas
+- Executive Experience
 
-* `CANONICAL_PRODUCER_REGISTRY.md`
-* `SEMANTIC_OWNERSHIP_MAP.md`
-
-Architectural ownership is documented in:
-
-* `COGNITIVE_OPERATING_SYSTEM.md`
-* `COGNITIVE_OBJECT_MODEL.md`
-* `COGNITIVE_FLOW_MAP.md`
-* `COGNITIVE_DOMAIN_REGISTRY.md`
-* `COGNITIVE_CAPABILITY_REGISTRY.json`
-* `COGNITIVE_FILE_REGISTRY.json`
-* `Capability Traces/`
+Every capability must be traceable from implementation to executive cognition.
 
 ---
 
@@ -41,275 +36,376 @@ Architectural ownership is documented in:
 
 ## Cognitive Operating System
 
-Sprint 67 established Discovery's first generation of adaptive cognition.
+Discovery has completed Version 1 of its Cognitive Operating System.
 
-The Architecture Operating System is now operational.
+All ten Cognitive Operating Systems are now represented by registered canonical capabilities.
 
-The Capability Audit has evolved beyond architecture verification.
+The Capability Audit has moved beyond discovering hidden cognition.
 
-Its current objective is to verify that every capability is:
+Its primary purpose is now to verify that every capability is:
 
-* architecturally owned,
-* registry-backed,
-* traceable,
-* connected,
-* validated,
-* behaviorally understood,
-* and capable of evolving through accumulated organizational learning.
+- architecturally owned,
+- registry-backed,
+- traceable,
+- runtime-persistent,
+- executive-visible,
+- benchmark validated,
+- longitudinally evolvable.
 
-Every significant capability should ultimately answer:
+Every capability should answer:
 
-* What does it produce?
-* What does it consume?
-* Who owns it?
-* Where is it persisted?
-* Where is it projected?
-* Who consumes it?
-* How does Atlas validate it?
-* How does accumulated learning change its future behavior?
+- What cognitive object does it produce?
+- Which capability consumes it?
+- Which Runtime object persists it?
+- Which Executive component exposes it?
+- Which benchmark validates it?
+- How does the capability improve through accumulated organizational experience?
+
+---
+
+# Canonical Capability Status
+
+Discovery currently contains **20 registered canonical capabilities**.
+
+All registered capabilities currently possess:
+
+- canonical producer
+- runtime destination
+- downstream consumer
+- registry ownership
+- architecture validation
+
+Current architecture validation:
+
+- Duplicate IDs ............. 0
+- Missing dependencies ...... 0
+- Missing producers ......... 0
+- Missing Runtime destinations 0
+- Missing consumers ......... 0
+
+Architecture Health:
+
+> **100%**
 
 ---
 
 # Confirmed Cognitive Capabilities
 
-Discovery currently demonstrates capabilities across multiple cognitive layers.
-
 ## Perception
 
-* Evidence construction
-* Evidence graph construction
-* Evidence relationship modeling
-* Evidence weighting
-* Entity extraction
-* Entity resolution
-* Observation inference
-* Signal detection
-* Contradiction detection
-* Organizational phenomenon inference
+- Evidence Ingestion
+- Organizational Observation Inference
+- Organizational Phenomenon Inference
+
+---
 
 ## Understanding
 
-* Mechanism inference
-* Belief formation
-* Concept synthesis
-* Theory formation
-* Organizational condition inference
-* Organizational state inference
-* Executive assessment
-* Organizational Understanding
+- Organizational Mechanism Inference
+- Organizational Belief Formation
+- Organizational Theory Formation
+- Organizational Condition Inference
+- Executive Assessment
+- Executive Understanding Synthesis
+
+---
+
+## Memory
+
+- Organizational Runtime Persistence
+
+---
 
 ## Learning
 
-* Belief revision
-* Theory evolution
-* Organizational learning profiling
-* Longitudinal understanding persistence
+- Organizational Belief Evolution
+- Organizational Learning Profile
 
-## Self-Reflection
+---
 
-* Theory validation
-* Confidence calibration
-* Missing evidence identification
-* Investigation opportunity generation
-* Competing theory evaluation
-* Adaptive investigation strategy
+## Abstraction
 
-## Executive Intelligence
+- Organizational Concept Formation
 
-* Executive narrative generation
-* Executive recommendations
-* Executive projection
-* Executive workspace
-* Executive cognitive strategy projection
+---
 
-No additional reasoning capabilities should be added until Domain Review, Capability Review, and Atlas collectively demonstrate a genuine missing cognitive responsibility.
+## Self Reflection
+
+- Theory Validation
+- Investigation Opportunity Generation
+
+---
+
+## Prediction
+
+- Organizational Prediction
+- Prediction Reflection
+
+---
+
+## Adaptive Learning
+
+- Prediction Outcome Evaluation
+
+Prediction evaluation now performs:
+
+- longitudinal prediction comparison
+- structured condition comparison
+- prediction accuracy measurement
+- confidence calibration
+- confidence adjustment
+- adaptive learning signals
+
+Discovery can now determine whether previous organizational predictions became reality.
+
+---
+
+## Systems
+
+### Architecture Planning
+
+Canonical producer:
+
+```text
+planArchitecture.mjs
+```
+
+Produces:
+
+- ArchitectureRecommendation
+
+Discovery now performs architectural reasoning using:
+
+- architecture observations
+- architecture mechanisms
+- architecture beliefs
+- architecture theory
+- architecture recommendations
+
+rather than rule-based planning.
+
+---
+
+### Architecture Recommendation Projection
+
+Canonical producer:
+
+```text
+projectArchitectureRecommendation.mjs
+```
+
+Produces:
+
+- ArchitectureRecommendationProjection
+
+This projects architectural planning into:
+
+- Sprint Startup
+- Architecture Handoff
+- future architecture experiences
+
+without recreating planning logic.
+
+---
+
+## Simulation
+
+### Organizational Simulation
+
+Canonical producer:
+
+```text
+simulateOrganization.ts
+```
+
+Produces:
+
+- SimulatedOrganizationState
+
+Version 1 currently:
+
+- projects current organizational conditions,
+- projects current beliefs,
+- projects current predictions,
+- calibrates simulation confidence using historical prediction accuracy,
+- persists simulated organizational states into Runtime.
+
+Future versions will:
+
+- evolve simulated conditions,
+- evolve simulated beliefs,
+- evolve simulated predictions,
+- support multi-step simulated time,
+- model executive interventions,
+- support branching future states.
 
 ---
 
 # Canonical Producer Milestones
 
-## Completed
+## Executive Assessment
 
-✅ Executive Assessment is the canonical producer of:
+Canonical producer of:
 
-* Executive Assessment
-* Organizational Understanding
+- ExecutiveAssessment
+- OrganizationalUnderstanding
 
-✅ Investigation Opportunity Generation is now the canonical producer of:
+---
 
-* Investigation Opportunity
-* Investigation Strategy Revision
+## Organizational Prediction
 
-Executive Assessment remains the canonical producer of executive understanding.
+Canonical producer:
 
-Investigation Opportunity Generation now owns Discovery's adaptive investigation behavior.
+```text
+inferOrganizationalPredictions.ts
+```
 
-Adaptation has been implemented by extending an existing canonical capability rather than introducing a new capability.
+Produces:
+
+- OrganizationalPrediction
+
+---
+
+## Prediction Reflection
+
+Canonical producer:
+
+```text
+buildPredictionReflection.ts
+```
+
+Produces:
+
+- PredictionReflection
+
+---
+
+## Prediction Outcome Evaluation
+
+Canonical producer:
+
+```text
+evaluatePredictionOutcomes.ts
+```
+
+Produces:
+
+- PredictionEvaluation
+
+Consumes:
+
+- OrganizationalPrediction
+- OrganizationalCondition
+
+Produces:
+
+- prediction accuracy
+- calibration delta
+- confidence adjustment
+- recommended confidence
+- learning signal
+
+---
+
+## Organizational Simulation
+
+Canonical producer:
+
+```text
+simulateOrganization.ts
+```
+
+Produces:
+
+- SimulatedOrganizationState
+
+Consumes:
+
+- Organizational Conditions
+- Organizational Beliefs
+- Organizational Predictions
+- Prediction Evaluations
+- Organizational Learning Profile
 
 ---
 
 # Capability Integration Classes
 
-Discovery capabilities currently fall into five architectural classes.
-
 ## 🟢 Canonical
 
 Capability has:
 
-* canonical producer,
-* runtime representation,
-* persistent representation,
-* architectural owner,
-* verified executive path,
-* Atlas verification,
-* registry verification.
+- canonical producer
+- Runtime persistence
+- persistent representation
+- downstream consumer
+- benchmark validation
+- registry ownership
 
-## 🟡 Population In Progress
+Current examples:
 
-Capability exists but has not yet been fully described inside the Cognitive Operating System.
-
-## 🟠 Needs Verification
-
-Capability appears to exist but requires registry verification, behavioral verification, or architectural trace completion.
-
-## 🔴 Hidden
-
-Capability exists in implementation but has not yet been connected into the canonical architecture.
-
-## ⚫ Legacy
-
-Capability belongs to previous architectural generations and should eventually be retired after the canonical implementation is verified.
+- Executive Assessment
+- Organizational Prediction
+- Prediction Reflection
+- Prediction Outcome Evaluation
+- Organizational Simulation
+- Architecture Planning
+- Architecture Recommendation Projection
+- Theory Validation
 
 ---
 
-# Cognitive Architecture Status
+## 🟡 Maturing
 
-| Operating System           | Status                         |
-| -------------------------- | ------------------------------ |
-| Perception OS              | 🟢 Canonical                   |
-| Understanding OS           | 🟢 Canonical                   |
-| Memory OS                  | 🟢 Canonical                   |
-| Learning OS                | 🟢 Canonical                   |
-| Self-Reflection OS         | 🟢 Canonical                   |
-| Executive Intelligence OS  | 🟢 Canonical                   |
-| Executive Projection OS    | 🟢 Canonical                   |
-| Executive Experience OS    | 🟡 Refinement                  |
-| Cognitive Operating System | 🟢 Operational                 |
-| Domain Review System       | 🟢 Operational                 |
-| Abstraction OS             | 🔍 Domain Review               |
-| Systems Intelligence OS    | 🔍 Domain Review               |
-| Prediction OS              | 🔍 Domain Review               |
-| Simulation OS              | 🔍 Domain Review               |
-| Adaptation OS              | ✅ Covered through CAP-SELF-002 |
+Capability is architecturally complete but continues improving through longitudinal learning.
+
+Examples:
+
+- Organizational Prediction
+- Organizational Simulation
+- Executive Projection
+- Executive Experience
 
 ---
 
-# Cognitive Operating System
+## 🔵 Future Evolution
 
-Discovery now maintains four complementary architectural views.
+Capabilities that already exist but will become more intelligent.
 
-## 1. File Registry
+Examples:
 
-Answers:
-
-* What files exist?
-* What do they import?
-* What do they export?
-
----
-
-## 2. Capability Registry
-
-Answers:
-
-* Which capability owns each implementation?
-* Which cognitive object is produced?
-* Who is the canonical producer?
-* Which Runtime destination exists?
-* Which Executive destination exists?
+- multi-step simulation
+- branching simulation
+- adaptive simulation evolution
+- executive intervention modeling
 
 ---
 
-## 3. Capability Trace
+# Cognitive Operating System Status
 
-Answers:
-
-* How does this capability actually flow through Discovery?
-* Is the capability fully connected?
-* What architectural drift exists?
-* How does Atlas validate it?
-
----
-
-## 4. Domain Review
-
-Answers:
-
-* Does this cognitive responsibility already exist?
-* Should an existing capability be extended?
-* Does a new cognitive object actually justify a new capability?
-* Is the domain covered, partial, missing, or unnecessary?
+| Operating System | Status |
+|------------------|--------|
+| Perception | 🟢 Canonical |
+| Understanding | 🟢 Canonical |
+| Memory | 🟢 Canonical |
+| Learning | 🟢 Canonical |
+| Abstraction | 🟢 Canonical |
+| Self Reflection | 🟢 Canonical |
+| Prediction | 🟢 Canonical |
+| Adaptive Learning | 🟢 Canonical |
+| Systems | 🟢 Canonical |
+| Simulation | 🟢 Canonical (Version 1) |
 
 ---
 
-# Canonical Capability Hierarchy
+# Canonical Cognitive Flow
 
 ```text
-Operating System
-
-↓
-
-Subsystem
-
-↓
-
-Capability
-
-↓
-
-Cognitive Object
-
-↓
-
-Canonical Producer
-
-↓
-
-Implementation
-```
-
-Files implement capabilities.
-
-Capabilities produce cognitive objects.
-
-Every cognitive object should have exactly one canonical producer.
-
----
-
-# Canonical Capability Flow
-
-```text
-Source Material
-
-↓
-
 Evidence
 
 ↓
 
-Entities
-
-↓
-
 Observations
-
-↓
-
-Signals
-
-↓
-
-Contradictions
 
 ↓
 
@@ -341,6 +437,26 @@ Organizational State
 
 ↓
 
+Organizational Predictions
+
+↓
+
+Prediction Reflection
+
+↓
+
+Prediction Outcome Evaluation
+
+↓
+
+Organizational Learning
+
+↓
+
+Organizational Simulation
+
+↓
+
 Executive Assessment
 
 ↓
@@ -349,15 +465,7 @@ Organizational Understanding
 
 ↓
 
-Organizational Learning
-
-↓
-
 Investigation Strategy
-
-↓
-
-Investigation Opportunities
 
 ↓
 
@@ -368,90 +476,57 @@ Executive Projection
 Executive Experience
 ```
 
-Executive Assessment remains the canonical producer of Organizational Understanding.
+Organizational Understanding explains the present.
 
-Investigation Opportunity Generation now owns Investigation Strategy.
+Prediction explains the future.
 
-Atlas validates both executive understanding and adaptive investigation behavior.
+Prediction Evaluation measures reality.
+
+Simulation projects plausible futures.
+
+Executive Assessment integrates the complete cognitive pipeline.
 
 ---
 
 # Architecture Verification
 
-Capability verification now occurs in three stages.
+Capability verification now occurs in four stages.
 
 ## Structural Verification
 
-Searches the codebase for:
-
-* definitions
-* imports
-* reads
-* assignments
-* references
+Confirms implementation exists.
 
 ## Architectural Verification
 
-Confirms:
+Confirms canonical ownership.
 
-* canonical producer
-* implementation ownership
-* Runtime destination
-* Executive destination
-* declared consumers
-* Atlas coverage
-* architectural drift
+## Runtime Verification
+
+Confirms persistence, downstream consumers, and canonical projection.
 
 ## Behavioral Verification
 
 Confirms:
 
-* longitudinal behavior
-* adaptive strategy generation
-* runtime persistence
-* executive projection
-* benchmark integrity
-
-Capability Traces now include structural, architectural, and behavioral verification.
-
----
-
-# Audit Rules
-
-Before implementing anything new ask:
-
-1. Which Operating System owns it?
-2. Which subsystem owns it?
-3. Which capability owns it?
-4. Which cognitive object does it produce?
-5. Is there already a canonical producer?
-6. Is it registered?
-7. Does Runtime persist it?
-8. Does Executive Projection expose it?
-9. Does Atlas validate it?
-10. Has Domain Review determined that a new capability is actually required?
-
-If multiple systems produce the same cognitive object, the architecture is incomplete.
-
-If the registry cannot explain a capability, the architecture is incomplete.
-
-If Domain Review recommends extending an existing capability, no new capability should be created.
-
-If Atlas already demonstrates the capability, improve the existing architecture before expanding cognition.
+- benchmark validation,
+- executive usefulness,
+- longitudinal evolution,
+- prediction calibration,
+- simulation quality.
 
 ---
 
 # Current Priorities
 
-1. Longitudinal Adaptation Benchmark
-2. Executive Cognitive Strategy projection
-3. Strategy evolution validation
-4. Executive explainability
-5. Atlas adaptive validation
-6. Executive understanding quality
-7. Simulated organization pressure testing
-8. Legacy cleanup
-9. Architecture consolidation
+1. Evolve simulated organizational conditions.
+2. Evolve simulated organizational beliefs.
+3. Evolve simulated organizational predictions.
+4. Introduce multi-step simulation.
+5. Improve Executive Projection.
+6. Improve Executive Experience.
+7. Expand simulation benchmarking.
+8. Pressure-test Discovery using realistic organizations.
+9. Legacy cleanup.
 
 ---
 
@@ -459,18 +534,24 @@ If Atlas already demonstrates the capability, improve the existing architecture 
 
 > **Architecture before implementation.**
 
-> **Capabilities before files.**
-
 > **Objects before code.**
 
-> **Strategies before heuristics.**
+> **Capabilities before files.**
 
-> **Every cognitive object should have one canonical producer.**
+> **Longitudinal learning before heuristics.**
 
-> **Every capability should fully describe itself.**
+> **Prediction should improve through measured reality.**
 
-> **Every adaptive behavior should belong to an existing canonical capability unless Domain Review proves otherwise.**
+> **Simulation should improve through accumulated learning.**
 
-> **Discovery should understand its own cognition before expanding its cognition.**
+> **Executive Assessment integrates cognition rather than recreating it.**
 
-> **If Atlas demonstrates the capability, refine the architecture before adding new reasoning.**
+> **Every cognitive object has one canonical producer.**
+
+> **Every capability declares its inputs, outputs, Runtime destination, Executive destination, and benchmark validation.**
+
+> **Improve existing cognition before adding new cognition.**
+
+> **The Capability Registry validates ownership.**
+
+> **The Cognitive Operating System governs Discovery's cognition.**

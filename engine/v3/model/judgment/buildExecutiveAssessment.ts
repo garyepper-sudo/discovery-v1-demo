@@ -15,6 +15,7 @@ import type {
 } from "./organizationalJudgment";
 import type { OrganizationalMechanism } from "./organizationalMechanism";
 import type { ConceptCandidate } from "../../concepts/conceptCandidateTypes";
+import type { PredictionReflection } from "../predictions/buildPredictionReflection";
 
 type BuildExecutiveAssessmentInput = {
   judgments: OrganizationalJudgment[];
@@ -25,6 +26,7 @@ type BuildExecutiveAssessmentInput = {
   organizationalConditions?: OrganizationalConditionLike[];
   organizationalState?: OrganizationalStateLike;
   investigationOpportunities?: InvestigationOpportunityLike[];
+  predictionReflection?: PredictionReflection;
 };
 
 function normalize(value: string | undefined): string {
@@ -193,6 +195,35 @@ function matchingTheoriesForCondition(
     .slice(0, 4);
 }
 
+function buildPredictionNarrative(
+  predictionReflection?: PredictionReflection,
+): string {
+  if (
+    !predictionReflection ||
+    !predictionReflection.primaryPrediction
+  ) {
+    return "";
+  }
+
+  const confidencePercent = Math.round(
+    predictionReflection.confidence * 100,
+  );
+
+  const likelihoodPercent = Math.round(
+    predictionReflection.likelihood * 100,
+  );
+
+  return [
+    `Discovery's current future-state prediction is: ${predictionReflection.primaryPrediction}`,
+    `Discovery assigns ${confidencePercent}% confidence to the reasoning and estimates the outcome at ${likelihoodPercent}% likelihood.`,
+    predictionReflection.whyDiscoveryPredictsThis,
+    predictionReflection.calibratedConfidenceExplanation,
+    predictionReflection.executiveRecommendation,
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
+
 export function buildExecutiveAssessment(
   input: BuildExecutiveAssessmentInput,
 ): OrganizationalAssessment {
@@ -343,8 +374,18 @@ export function buildExecutiveAssessment(
         }`
       : "";
 
-  const completeExecutiveNarrative =
-    executiveNarrative + investigationNarrative;
+  const predictionNarrative =
+    buildPredictionNarrative(
+      input.predictionReflection,
+    );
+
+  const completeExecutiveNarrative = [
+    executiveNarrative,
+    predictionNarrative,
+    investigationNarrative,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   const mechanismCenteredNarrative =
     primaryCondition
@@ -402,6 +443,9 @@ export function buildExecutiveAssessment(
     rejectedExplanations,
 
     organizationalUnderstanding,
+
+    predictionReflection:
+      input.predictionReflection,
 
     executiveNarrative:
       completeExecutiveNarrative,

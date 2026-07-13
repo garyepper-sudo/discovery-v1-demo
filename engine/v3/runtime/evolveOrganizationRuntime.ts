@@ -39,6 +39,11 @@ import { synchronizeOrganizationModel } from "../model/synchronizeOrganizationMo
 import { inferOrganizationRelationships } from "../model/inferOrganizationRelationships";
 import { inferOrganizationalConditions } from "../model/state/inferOrganizationalConditions";
 import { buildInvestigationOpportunities } from "../model/investigation/buildInvestigationOpportunities";
+import { inferOrganizationalPredictions } from "../model/predictions/inferOrganizationalPredictions";
+import { buildPredictionReflection } from "../model/predictions/buildPredictionReflection";
+import { evaluatePredictionOutcomes } from "../model/predictions/evaluatePredictionOutcomes";
+import { simulateOrganization } from "../model/simulate/simulateOrganization";
+
 
 export function evolveOrganizationRuntime(params: {
   runtime: OrganizationRuntime;
@@ -84,6 +89,10 @@ export function evolveOrganizationRuntime(params: {
     organizationalState?: any;
     investigationStrategy?: any;
     investigationOpportunities?: any[];
+    organizationalPredictions?: any[];
+    predictionReflection?: any;
+    predictionEvaluations?: any[];
+    simulatedOrganizationStates?: any[];
   };
 
   const now = new Date().toISOString();
@@ -503,6 +512,146 @@ export function evolveOrganizationRuntime(params: {
   const organizationalState =
     organizationalConditionResult.state;
 
+  const organizationalPredictionResult =
+    inferOrganizationalPredictions({
+      conditions: organizationalConditions.map(
+        (condition) => ({
+          id: condition.id,
+          name: condition.name,
+          domain: condition.domain,
+
+          status: condition.status,
+          trend: condition.trend,
+          priority: condition.priority,
+
+          confidence: condition.confidence,
+          strength: condition.strength,
+
+          supportingConceptIds:
+            condition.supportingConceptIds,
+          supportingBeliefIds:
+            condition.supportingBeliefIds,
+          supportingTheoryIds:
+            condition.supportingTheoryIds,
+
+          upstreamConditionIds:
+            condition.upstreamConditionIds,
+
+          downstreamConditionIds:
+            condition.downstreamConditionIds,
+
+          missingEvidence:
+            condition.missingEvidence,
+          confidenceLimiters:
+            condition.confidenceLimiters,
+        }),
+      ),
+
+      organizationalState: {
+        id: organizationalState.id,
+        status: organizationalState.status,
+        confidence: organizationalState.confidence,
+
+        dominantConditionIds:
+          organizationalState.dominantConditions,
+        improvingConditionIds:
+          organizationalState.improvingConditions,
+        deterioratingConditionIds:
+          organizationalState.deterioratingConditions,
+        unresolvedConditionIds:
+          organizationalState.unresolvedTensions,
+      },
+
+      learningProfile:
+        memory.organizationalLearningProfile,
+
+      previousPredictions:
+        memory.organizationalPredictions,
+
+      now,
+    });
+
+  const organizationalPredictions =
+    organizationalPredictionResult.predictions;
+
+  const predictionReflection =
+    buildPredictionReflection({
+      predictions: organizationalPredictions,
+
+      priorityConditionIds:
+        organizationalState.dominantConditions,
+
+      labels: {
+        conditionLabels: Object.fromEntries(
+          organizationalConditions.map(
+            (condition) => [
+              condition.id,
+              condition.name,
+            ],
+          ),
+        ),
+      },
+    });
+
+  /**
+   * CAP-ADP-001 — Prediction Outcome Evaluation
+   *
+   * Prediction evaluation is explicitly longitudinal.
+   *
+   * The predictions created during this investigation cannot yet be
+   * evaluated because their outcomes have not had time to occur.
+   * Instead, this stage registers evaluations for predictions persisted
+   * by a previous investigation and supplies the current investigation's
+   * evidence as the later context.
+   *
+   * Current scaffold behavior:
+   * - loads predictions from the previous runtime
+   * - preserves their original identity and confidence
+   * - attaches current evidence provenance
+   * - records the evaluation as inconclusive
+   *
+   * Deferred implementation:
+   * - semantically compare prior predictions with current observations,
+   *   conditions, understanding, and evidence
+   * - classify outcomes as confirmed, partially-confirmed,
+   *   not-confirmed, or inconclusive
+   * - calculate prediction accuracy and calibration deltas
+   * - generate durable confidence adjustments and learning signals
+   * - feed prediction performance into the Organizational Learning Profile
+   * - expose prediction performance through Executive Projection and Atlas
+   */
+  const previousOrganizationalPredictions =
+    Array.isArray(memory.organizationalPredictions)
+      ? memory.organizationalPredictions
+      : [];
+
+  const previousPredictionReflection =
+    memory.predictionReflection;
+
+  const currentSupportingEvidenceIds = (
+    result.evidence ?? []
+  )
+    .map((evidence) => evidence.id)
+    .filter(Boolean);
+
+  const predictionEvaluations =
+  evaluatePredictionOutcomes({
+    predictions:
+      previousOrganizationalPredictions,
+
+    observedConditions:
+      organizationalConditions,
+
+    predictionReflection:
+      previousPredictionReflection,
+
+    supportingEvidenceIds:
+      currentSupportingEvidenceIds,
+
+    evaluatedAt:
+      now,
+  });
+
   const investigationOpportunityResult =
     buildInvestigationOpportunities({
       conditions: organizationalConditions,
@@ -535,6 +684,18 @@ export function evolveOrganizationRuntime(params: {
     organizationalState,
   );
   console.log(
+    "Organizational Predictions",
+    organizationalPredictions,
+  );
+  console.log(
+    "Prediction Reflection",
+    predictionReflection,
+  );
+  console.log(
+    "Prediction Evaluations",
+    predictionEvaluations,
+  );
+  console.log(
     "Investigation Strategy",
     investigationStrategy,
   );
@@ -562,6 +723,7 @@ export function evolveOrganizationRuntime(params: {
     organizationalConditions,
     organizationalState,
     investigationOpportunities,
+    predictionReflection,
   });
 
   const executiveUnderstandingCandidates =
@@ -768,11 +930,53 @@ export function evolveOrganizationRuntime(params: {
     });
 
   console.log(
-    "Organizational Learning Profile",
-    organizationalLearningProfile,
-  );
+  "Organizational Learning Profile",
+  organizationalLearningProfile,
+);
 
-  const updatedMemory = {
+/**
+ * CAP-SIM-001 — Organizational Simulation
+ *
+ * Version 1 preserves the current cognitive state and calibrates
+ * simulation confidence using longitudinal prediction accuracy.
+ */
+const simulatedOrganizationState =
+  simulateOrganization({
+    organizationId:
+      runtime.metadata.organizationId,
+
+    conditions:
+      organizationalConditions,
+
+    beliefs:
+      organizationalBeliefState.beliefs,
+
+    predictions:
+      organizationalPredictions,
+
+    predictionEvaluations,
+
+    learningProfile:
+      organizationalLearningProfile,
+
+    simulatedAt:
+      now,
+
+    timeHorizon:
+      "near-term",
+  });
+
+const simulatedOrganizationStates = [
+  ...(memory.simulatedOrganizationStates ?? []),
+  simulatedOrganizationState,
+];
+
+console.log(
+  "Simulated Organization State",
+  simulatedOrganizationState,
+);
+
+const updatedMemory = {
     ...cognitivelyUpdatedRuntime.memory,
 
     organizationReasoningGraph,
@@ -784,6 +988,10 @@ export function evolveOrganizationRuntime(params: {
     executiveAssessment,
     organizationalConditions,
     organizationalState,
+    organizationalPredictions,
+    predictionReflection,
+    predictionEvaluations,
+    simulatedOrganizationStates,
     investigationStrategy,
     investigationOpportunities,
 
@@ -837,6 +1045,10 @@ export function evolveOrganizationRuntime(params: {
       organizationalLearningProfile,
       organizationalConditions,
       organizationalState,
+      organizationalPredictions,
+      predictionReflection,
+      simulatedOrganizationStates,
+      predictionEvaluations,
       investigationStrategy,
       investigationOpportunities,
     },
@@ -976,6 +1188,9 @@ export function evolveOrganizationRuntime(params: {
 
         memoryGrowth:
           organizationalLearningProfile.memoryGrowth,
+
+        predictionEvaluationCount:
+          predictionEvaluations.length,
       },
     ],
   } as unknown as typeof cognitivelyUpdatedRuntime.memory & {
@@ -1041,6 +1256,18 @@ export function evolveOrganizationRuntime(params: {
 
     organizationalState:
       typeof organizationalState;
+
+    organizationalPredictions:
+      typeof organizationalPredictions;
+
+    predictionReflection:
+      typeof predictionReflection;
+
+    predictionEvaluations:
+      typeof predictionEvaluations;
+
+    simulatedOrganizationStates:
+      typeof simulatedOrganizationStates;
 
     investigationStrategy:
       typeof investigationStrategy;

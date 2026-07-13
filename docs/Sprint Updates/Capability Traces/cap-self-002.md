@@ -1,6 +1,6 @@
 # Capability Trace — Investigation Opportunity Generation
 
-Generated: 2026-07-12T13:50:22.457Z
+Generated: 2026-07-12T20:04:19.108Z
 
 ## Verified Architecture
 
@@ -66,6 +66,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/v3/model/judgment/buildExecutiveAssessment.ts`
 - `engine/v3/model/judgment/buildExecutivePriority.ts`
 - `engine/v3/runtime/evolveOrganizationRuntime.ts`
+- `scripts/cognition/reviewCognitiveDomain.mjs`
 
 ## Structural Search
 
@@ -95,15 +96,15 @@ This section records source-code references. It supplements, but does not replac
 
 | Layer | Status | Matches |
 |---|:---:|---:|
-| Engine | ✅ Found | 4 |
-| Runtime | ✅ Found | 10 |
+| Engine | ✅ Found | 12 |
+| Runtime | ✅ Found | 12 |
 | Executive | ❌ Not found | 0 |
 | Projection | ✅ Found | 8 |
 | UI | ✅ Found | 9 |
 | API | ❌ Not found | 0 |
 | Simulation | ❌ Not found | 0 |
 | Benchmark | ❌ Not found | 0 |
-| Other | ❌ Not found | 0 |
+| Other | ✅ Found | 3 |
 
 ### Detailed Matches
 
@@ -111,12 +112,28 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/model/investigation/buildInvestigationOpportunities.ts`
 
-- Line 184 · **definition** · matched `buildInvestigationOpportunities`
-  - `export function buildInvestigationOpportunities(`
+- Line 68 · **type** · matched `buildInvestigationOpportunities`
+  - `type BuildInvestigationOpportunitiesInput = {`
+- Line 71 · **unknown** · matched `investigationOpportunities`
+  - `previousInvestigationOpportunities?: PreviousInvestigationOpportunityLike[];`
+- Line 324 · **unknown** · matched `investigationOpportunities`
+  - `previousInvestigationOpportunities:`
+- Line 329 · **unknown** · matched `investigationOpportunities`
+  - `if (!previousInvestigationOpportunities?.length) {`
+- Line 336 · **unknown** · matched `investigationOpportunities`
+  - `previousInvestigationOpportunities.filter(`
+- Line 378 · **definition** · matched `buildInvestigationOpportunities`
+  - `export function buildInvestigationOpportunities({`
+- Line 381 · **unknown** · matched `investigationOpportunities`
+  - `previousInvestigationOpportunities,`
+- Line 382 · **unknown** · matched `buildInvestigationOpportunities`
+  - `}: BuildInvestigationOpportunitiesInput): InvestigationOpportunityResult {`
+- Line 459 · **unknown** · matched `investigationOpportunities`
+  - `previousInvestigationOpportunities,`
 
 ##### `engine/v3/model/judgment/buildExecutiveAssessment.ts`
 
-- Line 27 · **type** · matched `investigationOpportunities`
+- Line 28 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities?: InvestigationOpportunityLike[];`
 
 ##### `engine/v3/model/judgment/buildExecutivePriority.ts`
@@ -132,64 +149,68 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 41 · **import** · matched `buildInvestigationOpportunities`
   - `import { buildInvestigationOpportunities } from "../model/investigation/buildInvestigationOpportunities";`
-- Line 85 · **type** · matched `investigationOpportunities`
+- Line 88 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities?: any[];`
-- Line 505 · **definition** · matched `investigationOpportunities`
+- Line 592 · **unknown** · matched `buildInvestigationOpportunities`
+  - `buildInvestigationOpportunities({`
+- Line 598 · **unknown** · matched `investigationOpportunities`
+  - `previousInvestigationOpportunities:`
+- Line 599 · **read** · matched `investigationOpportunities`
+  - `memory.investigationOpportunities,`
+- Line 605 · **definition** · matched `investigationOpportunities`
   - `const investigationOpportunities =`
-- Line 506 · **unknown** · matched `buildInvestigationOpportunities`
-  - `buildInvestigationOpportunities(`
-- Line 526 · **unknown** · matched `investigationOpportunities`
+- Line 636 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 547 · **unknown** · matched `investigationOpportunities`
+- Line 657 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 770 · **unknown** · matched `investigationOpportunities`
+- Line 884 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 822 · **unknown** · matched `investigationOpportunities`
+- Line 939 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1026 · **type** · matched `investigationOpportunities`
+- Line 1152 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities:`
-- Line 1027 · **unknown** · matched `investigationOpportunities`
+- Line 1153 · **unknown** · matched `investigationOpportunities`
   - `typeof investigationOpportunities;`
 
 #### Projection
 
 ##### `components/executive-v2/projection/ExecutiveProjection.ts`
 
-- Line 297 · **type** · matched `investigationOpportunities`
+- Line 474 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities?: ExecutiveInvestigationOpportunity[];`
 
 ##### `components/executive-v2/projection/buildExecutiveProjection.ts`
 
-- Line 119 · **type** · matched `investigationOpportunities`
+- Line 156 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities?: RuntimeInvestigationOpportunity[];`
-- Line 469 · **definition** · matched `buildInvestigationOpportunities`
+- Line 587 · **definition** · matched `buildInvestigationOpportunities`
   - `function buildInvestigationOpportunitiesProjection(`
-- Line 473 · **read** · matched `investigationOpportunities`
+- Line 591 · **read** · matched `investigationOpportunities`
   - `runtimeMemory?.investigationOpportunities;`
-- Line 585 · **definition** · matched `investigationOpportunities`
+- Line 752 · **definition** · matched `investigationOpportunities`
   - `const investigationOpportunities =`
-- Line 586 · **unknown** · matched `buildInvestigationOpportunities`
+- Line 753 · **unknown** · matched `buildInvestigationOpportunities`
   - `buildInvestigationOpportunitiesProjection(runtimeMemory);`
-- Line 593 · **read** · matched `investigationOpportunities`
+- Line 760 · **read** · matched `investigationOpportunities`
   - `runtimeMemory?.investigationOpportunities,`
-- Line 681 · **unknown** · matched `investigationOpportunities`
+- Line 852 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
 
 #### UI
 
 ##### `components/executive-v2/ExecutiveExperience.tsx`
 
-- Line 8 · **import** · matched `investigationOpportunities`
+- Line 9 · **import** · matched `investigationOpportunities`
   - `import ExecutiveInvestigationOpportunities from "./investigations/ExecutiveInvestigationOpportunities";`
-- Line 29 · **unknown** · matched `investigationOpportunities`
+- Line 31 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 74 · **unknown** · matched `investigationOpportunities`
+- Line 79 · **unknown** · matched `investigationOpportunities`
   - `{investigationOpportunities &&`
-- Line 75 · **unknown** · matched `investigationOpportunities`
+- Line 80 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities.length > 0 && (`
-- Line 76 · **unknown** · matched `investigationOpportunities`
+- Line 81 · **unknown** · matched `investigationOpportunities`
   - `<ExecutiveInvestigationOpportunities`
-- Line 77 · **unknown** · matched `investigationOpportunities`
+- Line 82 · **unknown** · matched `investigationOpportunities`
   - `opportunities={investigationOpportunities}`
 
 ##### `components/executive-v2/investigations/ExecutiveInvestigationOpportunities.tsx`
@@ -200,6 +221,17 @@ This section records source-code references. It supplements, but does not replac
   - `export default function ExecutiveInvestigationOpportunities({`
 - Line 9 · **unknown** · matched `investigationOpportunities`
   - `}: ExecutiveInvestigationOpportunitiesProps) {`
+
+#### Other
+
+##### `scripts/cognition/reviewCognitiveDomain.mjs`
+
+- Line 118 · **unknown** · matched `CAP-SELF-002`
+  - `"CAP-SELF-002",`
+- Line 214 · **unknown** · matched `CAP-SELF-002`
+  - `"CAP-SELF-002",`
+- Line 242 · **unknown** · matched `CAP-SELF-002`
+  - `"CAP-SELF-002",`
 
 ## Interpretation
 
