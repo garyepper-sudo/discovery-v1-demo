@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-13T16:11:01.211Z",
+    "generatedAt": "2026-07-13T20:27:25.134Z",
     "generator": "scripts/cognition/generateArchitectureState.mjs",
     "sourceOfTruthOrder": [
       "Verified source code",
@@ -13,9 +13,9 @@
     ]
   },
   "project": {
-    "currentMilestone": "Executive Future Understanding\n\n---",
-    "currentPhase": "Executive Future Understanding and Longitudinal Organizational Intelligence\n\nDiscovery has completed the initial Capability Audit, established its formal Cognitive Architecture, and implemented the first generation of its Cognitive Operating System.\n\nDiscovery now possesses a complete executive cognition pipeline capable of transforming organizational evidence into current understanding, future organizational predictions, and longitudinal organizational learning.\n\nDiscovery now possesses:\n\n- Cognitive Operating System\n- Cognitive Object Model\n- Cognitive Flow Map\n- Cognitive Capability Registry\n- Cognitive File Registry\n- Cognitive Capability Audit\n- Registry-aware Capability Traces\n- Architecture Drift Detection\n- Cognitive Domain Review System\n- Organizational Learning\n- Organizational Concepts\n- Organizational Conditions\n- Organizational State\n- Organizational Prediction\n- Prediction Reflection\n- Executive Assessment\n- Executive Projection\n\nExecutive Assessment now synthesizes multiple cognitive operating systems rather than serving as a standalone reasoning engine.\n\nPrediction has become a first-class cognitive capability.\n\nDiscovery now reasons about both:\n\n- the organization's current state,\n- and its most likely future organizational behavior.\n\nThe remaining work is primarily executive reasoning quality, longitudinal validation, prediction refinement, and executive experience, not engine expansion.\n\n---",
-    "currentObjective": "Refine Discovery's executive reasoning.\n\nDiscovery should continuously improve its ability to answer:\n\n- What is happening?\n- Why is it happening?\n- What is likely to happen next?\n- Why does Discovery believe that future?\n- What evidence would change Discovery's mind?\n- What executive action should occur before that future arrives?\n\nEvery capability should continue to answer:\n\n- Which Operating System owns it?\n- Which capability owns it?\n- Which cognitive object does it produce?\n- Where is it persisted?\n- Where is it projected?\n- How does Atlas validate it?\n- How does accumulated experience improve it?\n\n---",
+    "currentMilestone": "Adaptive Organizational Intelligence and Organizational Simulation\n\n---",
+    "currentPhase": "Adaptive Organizational Intelligence, Longitudinal Learning, and Organizational Simulation\n\nDiscovery has completed the initial Capability Audit, established its formal Cognitive Architecture, and implemented the first complete version of its Cognitive Operating System.\n\nDiscovery now possesses a complete cognitive pipeline capable of transforming organizational evidence into:\n\n* current organizational understanding,\n* executive assessment,\n* future organizational predictions,\n* longitudinal prediction evaluation,\n* adaptive organizational learning,\n* prediction learning summaries,\n* architectural self-planning,\n* and simulated future organizational states.\n\nDiscovery now possesses:\n\n* Cognitive Operating System\n* Cognitive Object Model\n* Cognitive Flow Map\n* Cognitive Capability Registry\n* Cognitive File Registry\n* Cognitive Capability Audit\n* Registry-aware Capability Traces\n* Architecture Drift Detection\n* Cognitive Domain Review System\n* Atlas Simulation Architecture\n* Atlas Evaluation Loop\n* Organizational Learning\n* Organizational Concepts\n* Organizational Conditions\n* Organizational State\n* Organizational Prediction\n* Prediction Reflection\n* Prediction Outcome Evaluation\n* Prediction Learning Events\n* Prediction Learning Summary\n* Organizational Simulation\n* Architecture Planning\n* Architecture Recommendation Projection\n* Executive Assessment\n* Executive Projection\n\nExecutive Assessment integrates cognition produced across every Operating System rather than recreating reasoning itself.\n\nPrediction has become a longitudinal adaptive learning capability.\n\nDiscovery now possesses its first closed adaptive learning loop.\n\nSimulation has become the final Operating System within Discovery's Cognitive Architecture.\n\nDiscovery now reasons about:\n\n* the organization's current state,\n* the organization's future,\n* the accuracy of its previous predictions,\n* its own prediction performance,\n* and plausible future organizational states.\n\nThe remaining work is primarily capability maturation, adaptive learning visibility, simulation evolution, executive reasoning quality, and organizational forecasting, not architecture expansion.\n\n---",
+    "currentObjective": "Improve Organizational Simulation and expose Adaptive Learning.\n\nDiscovery should continuously improve its ability to answer:\n\n* What is happening?\n* Why is it happening?\n* What is likely to happen next?\n* Was Discovery correct?\n* What did Discovery learn?\n* How should Discovery adjust its confidence?\n* Is Discovery becoming more accurate over time?\n* What future organizational state is most plausible?\n* What executive action should occur before that future arrives?\n\nEvery capability should continue to answer:\n\n* Which Operating System owns it?\n* Which capability owns it?\n* Which cognitive object does it produce?\n* Where is it persisted?\n* Where is it projected?\n* How does Atlas validate it?\n* How does accumulated organizational experience improve it?\n* How does its output contribute to Discovery's adaptive learning loop?\n\n---",
     "currentSprint": null,
     "nextPriority": null,
     "sourceDocuments": [
@@ -29,13 +29,13 @@
   "architecture": {
     "status": "healthy",
     "healthScore": 100,
-    "capabilityCount": 20,
-    "canonicalProducerCount": 20,
-    "registeredFileCount": 454,
+    "capabilityCount": 21,
+    "canonicalProducerCount": 21,
+    "registeredFileCount": 465,
     "cognitiveObjectCount": 60,
     "terminalCapabilityCount": 3,
-    "capabilityTraceCount": 10,
-    "connectedCapabilityTraceCount": 9,
+    "capabilityTraceCount": 12,
+    "connectedCapabilityTraceCount": 11,
     "health": {
       "duplicateIdCount": 0,
       "missingDependencyCount": 0,
@@ -1223,7 +1223,7 @@
     {
       "id": "CAP-SIM-001",
       "name": "Organizational Simulation",
-      "description": "Projects Discovery's current organizational understanding into a plausible future organizational state by evolving current conditions, beliefs, predictions, and calibrated prediction performance forward in simulated time.",
+      "description": "Projects Discovery's current organizational understanding into a plausible future organizational state by applying an intentional organizational intervention and evolving current conditions, beliefs, predictions, and calibrated prediction performance forward in simulated time.",
       "domain": "SIM",
       "architecturalLayer": "COG",
       "subsystem": "Organizational Simulation",
@@ -1241,6 +1241,7 @@
       },
       "relationships": {
         "consumesCapabilities": [
+          "CAP-SIM-002",
           "CAP-UND-004",
           "CAP-UND-002",
           "CAP-PRD-001",
@@ -1269,14 +1270,82 @@
         "canonicalProducerExists": true,
         "missingImplementationFiles": [],
         "capabilityTrace": {
-          "exists": false,
-          "connected": null,
-          "pipelineCoverage": null,
+          "exists": true,
+          "connected": true,
+          "pipelineCoverage": {
+            "engine": true,
+            "runtime": true,
+            "executive": false,
+            "projection": true,
+            "ui": false,
+            "api": false,
+            "simulation": true,
+            "benchmark": false
+          },
           "tracePath": "docs/Sprint Updates/Capability Traces/cap-sim-001.md"
         }
       },
       "searchTerms": [],
-      "notes": "Version 1 preserves the current organizational state while calibrating simulation confidence using historical prediction accuracy. Later versions will evolve conditions, beliefs, and predictions across simulated time."
+      "notes": "Version 1 preserves the current organizational state while calibrating simulation confidence using historical prediction accuracy. Organizational interventions now provide the canonical input for future causal propagation and scenario comparison."
+    },
+    {
+      "id": "CAP-SIM-002",
+      "name": "Organizational Intervention Modeling",
+      "description": "Creates a canonical representation of an intentional organizational change that Discovery can apply to the current organizational state when forecasting, simulating, comparing, and later evaluating executive decisions.",
+      "domain": "SIM",
+      "architecturalLayer": "COG",
+      "subsystem": "Organizational Intervention Modeling",
+      "status": "proposed",
+      "reviewStatus": "proposed",
+      "ownership": {
+        "ownsObjects": [
+          "OrganizationalIntervention"
+        ],
+        "ownsCanonicalProducer": "engine/v3/model/simulate/buildOrganizationalIntervention.ts",
+        "implementationFiles": [
+          "engine/v3/model/simulate/organizationalIntervention.ts",
+          "engine/v3/model/simulate/buildOrganizationalIntervention.ts"
+        ],
+        "doesNotOwn": []
+      },
+      "relationships": {
+        "consumesCapabilities": [],
+        "consumedByCapabilities": [
+          "CAP-SIM-001"
+        ],
+        "terminalCapability": false
+      },
+      "destinations": {
+        "runtime": "OrganizationRuntime.organizationalInterventions",
+        "executive": [
+          "Simulation"
+        ]
+      },
+      "validation": {
+        "atlasCoverage": "planned",
+        "benchmarkCoverage": [
+          "Simulation Benchmark"
+        ],
+        "canonicalProducerExists": true,
+        "missingImplementationFiles": [],
+        "capabilityTrace": {
+          "exists": true,
+          "connected": true,
+          "pipelineCoverage": {
+            "engine": true,
+            "runtime": true,
+            "executive": false,
+            "projection": false,
+            "ui": false,
+            "api": false,
+            "simulation": false,
+            "benchmark": false
+          },
+          "tracePath": "docs/Sprint Updates/Capability Traces/cap-sim-002.md"
+        }
+      },
+      "searchTerms": [],
+      "notes": "Version 1 represents intentional executive actions as canonical cognitive objects. Later versions will infer affected conditions, mechanisms, beliefs, assumptions, evidence requirements, and causal propagation pathways."
     }
   ],
   "capabilityIndex": {
@@ -1519,10 +1588,21 @@
         "ExecutiveWorkspace",
         "Atlas"
       ]
+    },
+    "CAP-SIM-002": {
+      "name": "Organizational Intervention Modeling",
+      "ownsObjects": [
+        "OrganizationalIntervention"
+      ],
+      "canonicalProducer": "engine/v3/model/simulate/buildOrganizationalIntervention.ts",
+      "runtimeDestination": "OrganizationRuntime.organizationalInterventions",
+      "executiveDestinations": [
+        "Simulation"
+      ]
     }
   },
   "intelligence": {
-    "producedObjectCount": 21,
+    "producedObjectCount": 22,
     "producedObjects": [
       "V3Evidence",
       "OrganizationalObservation",
@@ -1544,9 +1624,10 @@
       "PredictionEvaluation",
       "ArchitectureRecommendation",
       "ArchitectureRecommendationProjection",
-      "SimulatedOrganizationState"
+      "SimulatedOrganizationState",
+      "OrganizationalIntervention"
     ],
-    "executiveCapabilityCount": 17,
+    "executiveCapabilityCount": 18,
     "executiveCapabilityIds": [
       "CAP-UND-001",
       "CAP-UND-002",
@@ -1564,7 +1645,8 @@
       "CAP-ADP-001",
       "CAP-SYS-001",
       "CAP-SYS-002",
-      "CAP-SIM-001"
+      "CAP-SIM-001",
+      "CAP-SIM-002"
     ],
     "projectedCapabilityCount": 8,
     "projectedCapabilityIds": [
@@ -1584,7 +1666,7 @@
       "CAP-ADP-001",
       "CAP-SIM-001"
     ],
-    "structurallyVisibleCapabilityCount": 7,
+    "structurallyVisibleCapabilityCount": 8,
     "structurallyVisibleCapabilityIds": [
       "CAP-UND-005",
       "CAP-UND-006",
@@ -1592,9 +1674,10 @@
       "CAP-ABS-001",
       "CAP-SELF-001",
       "CAP-SELF-002",
-      "CAP-ADP-001"
+      "CAP-ADP-001",
+      "CAP-SIM-001"
     ],
-    "structurallyConnectedCapabilityCount": 7,
+    "structurallyConnectedCapabilityCount": 8,
     "structurallyConnectedCapabilityIds": [
       "CAP-UND-005",
       "CAP-UND-006",
@@ -1602,7 +1685,8 @@
       "CAP-ABS-001",
       "CAP-SELF-001",
       "CAP-SELF-002",
-      "CAP-ADP-001"
+      "CAP-ADP-001",
+      "CAP-SIM-001"
     ],
     "uiVisibleCapabilityCount": 6,
     "uiVisibleCapabilityIds": [
@@ -1613,14 +1697,13 @@
       "CAP-SELF-001",
       "CAP-SELF-002"
     ],
-    "projectedButNotDisplayedCapabilityCount": 1,
+    "projectedButNotDisplayedCapabilityCount": 2,
     "projectedButNotDisplayedCapabilityIds": [
-      "CAP-ADP-001"
-    ],
-    "potentiallyHiddenCapabilityCount": 1,
-    "potentiallyHiddenCapabilityIds": [
+      "CAP-ADP-001",
       "CAP-SIM-001"
     ],
+    "potentiallyHiddenCapabilityCount": 0,
+    "potentiallyHiddenCapabilityIds": [],
     "interpretation": "Structural connection is inferred from generated capability traces. A capability is considered connected when its Runtime-to-Executive-Projection pathway exists, even when its current runtime collection is empty. Direct UI presentation is tracked separately and does not determine whether the capability is architecturally hidden."
   },
   "gaps": {
@@ -1658,8 +1741,8 @@
     "permanentRule": "Extend existing capabilities before creating new ones. A new capability requires a distinct responsibility, distinct produced object, distinct canonical producer, and justified position in the pipeline."
   },
   "recommendations": {
-    "highestROI": "Expose intelligence already produced but not structurally visible in the Executive Workspace.",
-    "reason": "1 projected capability appears potentially hidden from the UI.",
+    "highestROI": "Continue validating and refining existing canonical capabilities.",
+    "reason": "The registered architecture is healthy and should be extended before new capability creation.",
     "recommendedCapability": null,
     "requiredPreBuildChecks": [
       "Search the Cognitive Capability Registry.",
@@ -1690,7 +1773,8 @@
       "Do not recreate Prediction Outcome Evaluation; extend CAP-ADP-001 unless a distinct responsibility is proven.",
       "Do not recreate Architectural Planning; extend CAP-SYS-001 unless a distinct responsibility is proven.",
       "Do not recreate Architecture Recommendation Projection; extend CAP-SYS-002 unless a distinct responsibility is proven.",
-      "Do not recreate Organizational Simulation; extend CAP-SIM-001 unless a distinct responsibility is proven."
+      "Do not recreate Organizational Simulation; extend CAP-SIM-001 unless a distinct responsibility is proven.",
+      "Do not recreate Organizational Intervention Modeling; extend CAP-SIM-002 unless a distinct responsibility is proven."
     ],
     "overlapReviewsRequired": 1,
     "decisionRule": "Do not create a new capability when an existing capability already owns the responsibility, object, producer, or destination. Expose or extend existing intelligence first."

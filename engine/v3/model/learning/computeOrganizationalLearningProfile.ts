@@ -1,3 +1,8 @@
+import {
+  buildPredictionLearningSummary,
+  type PredictionLearningSummary,
+} from "./buildPredictionLearningSummary";
+
 export type LearningVelocityState =
   | "increasing"
   | "stable"
@@ -108,6 +113,8 @@ export type OrganizationalLearningProfile = {
   strongestLearningAreas: string[];
   weakeningAreas: string[];
   recommendedEvidenceAreas: string[];
+
+  predictionLearning: PredictionLearningSummary;
 
   summary: string;
 };
@@ -488,6 +495,11 @@ export function computeOrganizationalLearningProfile(
     conceptReuse,
   });
 
+  const predictionLearning =
+    buildPredictionLearningSummary({
+      learningEvents: currentEvents,
+    });
+
   return {
     investigationId: currentSnapshot.investigationId,
     timestamp: currentSnapshot.timestamp,
@@ -523,6 +535,8 @@ export function computeOrganizationalLearningProfile(
     strongestLearningAreas: topObjectIds(currentEvents),
     weakeningAreas: weakeningObjectIds(currentEvents),
     recommendedEvidenceAreas: recommendations,
+
+    predictionLearning,
 
     summary: buildSummary({
       currentSnapshot,

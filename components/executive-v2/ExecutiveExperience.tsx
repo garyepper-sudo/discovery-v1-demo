@@ -1,15 +1,9 @@
 "use client";
 
 import ExecutiveAnswerGrid from "./answers/ExecutiveAnswerGrid";
-import ExecutiveAssessmentCard from "./assessment/ExecutiveAssessmentCard";
 import ExecutiveAttention from "./attention/ExecutiveAttention";
-import ExecutiveBeliefs from "./beliefs/ExecutiveBeliefs";
-import ExecutiveConditions from "./conditions/ExecutiveConditions";
-import ExecutiveConcepts from "./concepts/ExecutiveConcepts";
-import ExecutiveInvestigationOpportunities from "./investigations/ExecutiveInvestigationOpportunities";
-import ExecutiveLearningProfile from "./learning/ExecutiveLearningProfile";
+import { getVisibleExecutiveCapabilities } from "./capabilities/ExecutiveCapabilityRegistry";
 import type { ExecutiveProjection } from "./projection/ExecutiveProjection";
-import OrganizationalStateCard from "./state/OrganizationalStateCard";
 import UnderstandingCanvas from "./understanding/UnderstandingCanvas";
 
 type ExecutiveExperienceProps = {
@@ -23,14 +17,10 @@ export default function ExecutiveExperience({
     currentUnderstanding,
     explanation,
     executiveAttention,
-    executiveAssessment,
-    organizationalState,
-    organizationalConditions,
-    organizationalConcepts,
-    organizationalBeliefs,
-    investigationOpportunities,
-    organizationalLearningProfile,
   } = projection;
+
+  const visibleCapabilities =
+    getVisibleExecutiveCapabilities(projection);
 
   return (
     <main className="executive-v2-experience">
@@ -51,43 +41,17 @@ export default function ExecutiveExperience({
           }
         />
 
-        {executiveAssessment && (
-          <ExecutiveAssessmentCard assessment={executiveAssessment} />
-        )}
-
-        {organizationalState && (
-          <OrganizationalStateCard state={organizationalState} />
-        )}
-
-        {organizationalConditions &&
-          organizationalConditions.length > 0 && (
-            <ExecutiveConditions
-              conditions={organizationalConditions}
-            />
-          )}
-
-        {organizationalConcepts &&
-          organizationalConcepts.length > 0 && (
-            <ExecutiveConcepts concepts={organizationalConcepts} />
-          )}
-
-        {organizationalBeliefs &&
-          organizationalBeliefs.length > 0 && (
-            <ExecutiveBeliefs beliefs={organizationalBeliefs} />
-          )}
-
-        {investigationOpportunities &&
-          investigationOpportunities.length > 0 && (
-            <ExecutiveInvestigationOpportunities
-              opportunities={investigationOpportunities}
-            />
-          )}
-
-        {organizationalLearningProfile && (
-          <ExecutiveLearningProfile
-            profile={organizationalLearningProfile}
-          />
-        )}
+        {visibleCapabilities.map((capability) => (
+          <div
+            key={
+              capability.capabilityId +
+              "-" +
+              String(capability.projectionKey)
+            }
+          >
+            {capability.render(projection)}
+          </div>
+        ))}
 
         <ExecutiveAttention attention={executiveAttention} />
 

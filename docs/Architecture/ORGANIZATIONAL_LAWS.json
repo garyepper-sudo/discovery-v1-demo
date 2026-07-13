@@ -1,0 +1,258 @@
+{
+  "version": 1,
+  "generatedAt": "2026-07-13T00:00:00.000Z",
+  "status": "proposed",
+  "description": "Canonical machine-readable organizational laws executed by Discovery's Organizational Causal Reasoning, Planning, Prediction, Simulation, and Decision Intelligence operating systems.",
+  "laws": [
+    {
+      "id": "LAW-001",
+      "name": "Decision Flow Improves Coordination",
+      "category": "operational",
+      "source": {
+        "entityType": "condition",
+        "entityId": "condition-decisionflow"
+      },
+      "target": {
+        "entityType": "condition",
+        "entityId": "condition-coordination"
+      },
+      "direction": "positive",
+      "strength": 0.82,
+      "confidence": 0.78,
+      "explanation": "Faster, clearer decisions reduce waiting, ambiguity, duplicated work, and coordination overhead.",
+      "supportingMechanisms": [
+        "decisionLatency",
+        "governanceFriction"
+      ],
+      "supportingBeliefs": [],
+      "supportingTheories": [
+        "Centralized Governance Bottleneck"
+      ],
+      "supportingEvidence": [],
+      "expectedEffects": [
+        "Reduce coordination delay",
+        "Reduce ambiguity",
+        "Improve execution throughput"
+      ],
+      "validation": {
+        "simulationCount": 0,
+        "confirmedCount": 0,
+        "contradictedCount": 0,
+        "lastValidatedAt": null
+      }
+    },
+    {
+      "id": "LAW-002",
+      "name": "Coordination Improves Execution Capacity",
+      "category": "operational",
+      "source": {
+        "entityType": "condition",
+        "entityId": "condition-coordination"
+      },
+      "target": {
+        "entityType": "condition",
+        "entityId": "condition-executioncapacity"
+      },
+      "direction": "positive",
+      "strength": 0.85,
+      "confidence": 0.81,
+      "explanation": "Better coordination reduces rework and increases organizational execution throughput.",
+      "supportingMechanisms": [
+        "coordinationBreakdown",
+        "executionDrag"
+      ],
+      "supportingBeliefs": [],
+      "supportingTheories": [],
+      "supportingEvidence": [],
+      "expectedEffects": [
+        "Higher execution reliability",
+        "Lower rework",
+        "Improved delivery"
+      ],
+      "validation": {
+        "simulationCount": 0,
+        "confirmedCount": 0,
+        "contradictedCount": 0,
+        "lastValidatedAt": null
+      }
+    },
+    {
+      "id": "LAW-003",
+      "name": "Knowledge Continuity Improves Execution",
+      "category": "knowledge",
+      "source": {
+        "entityType": "condition",
+        "entityId": "condition-knowledgecontinuity"
+      },
+      "target": {
+        "entityType": "condition",
+        "entityId": "condition-executioncapacity"
+      },
+      "direction": "positive",
+      "strength": 0.76,
+      "confidence": 0.73,
+      "explanation": "Organizations that preserve institutional knowledge execute more consistently and rediscover less work.",
+      "supportingMechanisms": [
+        "knowledgeFragmentation",
+        "institutionalMemoryLoss"
+      ],
+      "supportingBeliefs": [],
+      "supportingTheories": [],
+      "supportingEvidence": [],
+      "expectedEffects": [
+        "Improve onboarding",
+        "Reduce duplicated work",
+        "Increase execution consistency"
+      ],
+      "validation": {
+        "simulationCount": 0,
+        "confirmedCount": 0,
+        "contradictedCount": 0,
+        "lastValidatedAt": null
+      }
+    },
+    {
+      "id": "LAW-004",
+      "name": "Leadership Dependency Reduces Decision Flow",
+      "category": "leadership",
+      "source": {
+        "entityType": "condition",
+        "entityId": "condition-leadershipdependency"
+      },
+      "target": {
+        "entityType": "condition",
+        "entityId": "condition-decisionflow"
+      },
+      "direction": "negative",
+      "strength": 0.79,
+      "confidence": 0.75,
+      "explanation": "Organizations dependent upon too few leaders experience slower decision throughput and increased approval latency.",
+      "supportingMechanisms": [
+        "governanceFriction",
+        "decisionLatency"
+      ],
+      "supportingBeliefs": [],
+      "supportingTheories": [
+        "Centralized Governance Bottleneck"
+      ],
+      "supportingEvidence": [],
+      "expectedEffects": [
+        "Increase decision throughput",
+        "Reduce approval dependency",
+        "Improve organizational scalability"
+      ],
+      "validation": {
+        "simulationCount": 0,
+        "confirmedCount": 0,
+        "contradictedCount": 0,
+        "lastValidatedAt": null
+      }
+    },
+    {
+      "id": "LAW-005",
+      "name": "Strategic Alignment Improves Execution",
+      "category": "strategy",
+      "source": {
+        "entityType": "condition",
+        "entityId": "condition-strategicalignment"
+      },
+      "target": {
+        "entityType": "condition",
+        "entityId": "condition-executioncapacity"
+      },
+      "direction": "positive",
+      "strength": 0.84,
+      "confidence": 0.80,
+      "explanation": "Organizations with shared priorities make more consistent decisions and execute with less organizational friction.",
+      "supportingMechanisms": [
+        "priorityConflict"
+      ],
+      "supportingBeliefs": [
+        "Leadership Alignment"
+      ],
+      "supportingTheories": [],
+      "supportingEvidence": [],
+      "expectedEffects": [
+        "Improve prioritization",
+        "Reduce execution friction",
+        "Increase delivery reliability"
+      ],
+      "validation": {
+        "simulationCount": 0,
+        "confirmedCount": 0,
+        "contradictedCount": 0,
+        "lastValidatedAt": null
+      }
+    },
+    {
+      "id": "LAW-006",
+      "name": "Operating Model Improves Coordination",
+      "category": "operational",
+      "source": {
+        "entityType": "condition",
+        "entityId": "condition-operatingmodel"
+      },
+      "target": {
+        "entityType": "condition",
+        "entityId": "condition-coordination"
+      },
+      "direction": "positive",
+      "strength": 0.78,
+      "confidence": 0.74,
+      "explanation": "Clear roles, workflows, and decision rights reduce organizational ambiguity and improve coordination.",
+      "supportingMechanisms": [
+        "governanceFriction",
+        "coordinationBreakdown"
+      ],
+      "supportingBeliefs": [],
+      "supportingTheories": [],
+      "supportingEvidence": [],
+      "expectedEffects": [
+        "Reduce ambiguity",
+        "Improve cross-functional work",
+        "Increase execution consistency"
+      ],
+      "validation": {
+        "simulationCount": 0,
+        "confirmedCount": 0,
+        "contradictedCount": 0,
+        "lastValidatedAt": null
+      }
+    },
+    {
+      "id": "LAW-007",
+      "name": "Learning Improves Future Understanding",
+      "category": "learning",
+      "source": {
+        "entityType": "condition",
+        "entityId": "condition-learning"
+      },
+      "target": {
+        "entityType": "belief",
+        "entityId": "organizational-beliefs"
+      },
+      "direction": "positive",
+      "strength": 0.88,
+      "confidence": 0.82,
+      "explanation": "Organizations that consistently learn improve future beliefs, theories, predictions, and decision quality.",
+      "supportingMechanisms": [
+        "organizationalLearningFailure"
+      ],
+      "supportingBeliefs": [],
+      "supportingTheories": [],
+      "supportingEvidence": [],
+      "expectedEffects": [
+        "Improve belief quality",
+        "Improve prediction quality",
+        "Improve simulation quality",
+        "Improve recommendations"
+      ],
+      "validation": {
+        "simulationCount": 0,
+        "confirmedCount": 0,
+        "contradictedCount": 0,
+        "lastValidatedAt": null
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Capability Trace — Executive Understanding Synthesis
 
-Generated: 2026-07-12T20:04:18.448Z
+Generated: 2026-07-13T17:05:58.790Z
 
 ## Verified Architecture
 
@@ -190,17 +190,17 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/model/learning/computeOrganizationalLearningProfile.ts`
 
-- Line 38 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 43 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingScore: number;`
-- Line 279 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 286 · **unknown** · matched `OrganizationalUnderstanding`
   - `return \`Discovery created its first longitudinal learning snapshot for this organization. Memory maturity is ${params.currentSnapshot.memoryMaturityScore} and organizational understanding is ${params.currentSnapshot.organizationalUnderstandingScore}%.\`;`
-- Line 401 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 408 · **unknown** · matched `OrganizationalUnderstanding`
   - `? currentSnapshot.organizationalUnderstandingScore -`
-- Line 402 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 409 · **unknown** · matched `OrganizationalUnderstanding`
   - `previousSnapshot.organizationalUnderstandingScore`
-- Line 465 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 472 · **unknown** · matched `OrganizationalUnderstanding`
   - `currentSnapshot.organizationalUnderstandingScore,`
-- Line 466 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 473 · **unknown** · matched `OrganizationalUnderstanding`
   - `previousSnapshot?.organizationalUnderstandingScore,`
 
 ##### `engine/v3/model/memory/organizationalMemory.ts`
@@ -341,105 +341,105 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 3 · **import** · matched `OrganizationalUnderstanding`
   - `import type { OrganizationalUnderstandingState } from "./organizationalUnderstandingState";`
-- Line 20 · **import** · matched `OrganizationalUnderstanding`
+- Line 21 · **import** · matched `OrganizationalUnderstanding`
   - `import { updateOrganizationalUnderstandingState } from "./updateOrganizationalUnderstandingState";`
-- Line 22 · **unknown** · matched `consolidateUnderstanding`
+- Line 23 · **unknown** · matched `consolidateUnderstanding`
   - `consolidateUnderstanding,`
-- Line 24 · **import** · matched `consolidateUnderstanding`
+- Line 25 · **import** · matched `consolidateUnderstanding`
   - `} from "../understanding/consolidateUnderstanding";`
-- Line 25 · **import** · matched `synthesizeUnderstanding`
+- Line 26 · **import** · matched `synthesizeUnderstanding`
   - `import { synthesizeUnderstanding } from "../understanding/synthesizeUnderstanding";`
-- Line 26 · **import** · matched `buildExecutiveUnderstandingCandidates`
+- Line 27 · **import** · matched `buildExecutiveUnderstandingCandidates`
   - `import { buildExecutiveUnderstandingCandidates } from "../understanding/buildExecutiveUnderstandingCandidates";`
-- Line 37 · **import** · matched `OrganizationalUnderstanding`
+- Line 38 · **import** · matched `OrganizationalUnderstanding`
   - `import { createEmptyOrganizationalUnderstandingState } from "./organizationalUnderstandingState";`
-- Line 45 · **definition** · matched `evolveOrganizationRuntime`
+- Line 49 · **definition** · matched `evolveOrganizationRuntime`
   - `export function evolveOrganizationRuntime(params: {`
-- Line 96 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 102 · **unknown** · matched `OrganizationalUnderstanding`
   - `const existingOrganizationalUnderstandingState:`
-- Line 97 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 103 · **unknown** · matched `OrganizationalUnderstanding`
   - `OrganizationalUnderstandingState =`
-- Line 98 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 104 · **unknown** · matched `OrganizationalUnderstanding`
   - `memory.organizationalUnderstandingState ??`
-- Line 99 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 105 · **unknown** · matched `OrganizationalUnderstanding`
   - `createEmptyOrganizationalUnderstandingState({`
-- Line 125 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 131 · **unknown** · matched `OrganizationalUnderstanding`
   - `const baseOrganizationalUnderstandingState =`
-- Line 126 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 132 · **unknown** · matched `OrganizationalUnderstanding`
   - `updateOrganizationalUnderstandingState({`
-- Line 127 · **unknown** · matched `OrganizationalUnderstanding`
-  - `state: existingOrganizationalUnderstandingState,`
-- Line 132 · **unknown** · matched `consolidateUnderstanding`
-  - `const consolidationResult = consolidateUnderstanding(`
 - Line 133 · **unknown** · matched `OrganizationalUnderstanding`
-  - `baseOrganizationalUnderstandingState,`
-- Line 137 · **unknown** · matched `OrganizationalUnderstanding`
-  - `const updatedOrganizationalUnderstandingState:`
-- Line 138 · **unknown** · matched `OrganizationalUnderstanding`
-  - `OrganizationalUnderstandingState = {`
+  - `state: existingOrganizationalUnderstandingState,`
+- Line 138 · **unknown** · matched `consolidateUnderstanding`
+  - `const consolidationResult = consolidateUnderstanding(`
 - Line 139 · **unknown** · matched `OrganizationalUnderstanding`
-  - `...baseOrganizationalUnderstandingState,`
+  - `baseOrganizationalUnderstandingState,`
 - Line 143 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const updatedOrganizationalUnderstandingState:`
+- Line 144 · **unknown** · matched `OrganizationalUnderstanding`
+  - `OrganizationalUnderstandingState = {`
+- Line 145 · **unknown** · matched `OrganizationalUnderstanding`
+  - `...baseOrganizationalUnderstandingState,`
+- Line 149 · **unknown** · matched `OrganizationalUnderstanding`
   - `...baseOrganizationalUnderstandingState.evolutionHistory,`
-- Line 172 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 178 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 173 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 179 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState,`
-- Line 221 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 227 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 230 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 236 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 379 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 385 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 395 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 401 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.organizationalBeliefs,`
-- Line 446 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 452 · **unknown** · matched `OrganizationalUnderstanding`
   - `const beliefUpdatedOrganizationalUnderstandingState:`
-- Line 447 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 453 · **unknown** · matched `OrganizationalUnderstanding`
   - `OrganizationalUnderstandingState = {`
-- Line 448 · **unknown** · matched `OrganizationalUnderstanding`
-  - `...updatedOrganizationalUnderstandingState,`
 - Line 454 · **unknown** · matched `OrganizationalUnderstanding`
+  - `...updatedOrganizationalUnderstandingState,`
+- Line 460 · **unknown** · matched `OrganizationalUnderstanding`
   - `const synthesizedOrganizationalUnderstandingState =`
-- Line 455 · **unknown** · matched `synthesizeUnderstanding`
+- Line 461 · **unknown** · matched `synthesizeUnderstanding`
   - `synthesizeUnderstanding({`
-- Line 456 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 462 · **unknown** · matched `OrganizationalUnderstanding`
   - `state: beliefUpdatedOrganizationalUnderstandingState,`
-- Line 463 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 469 · **unknown** · matched `OrganizationalUnderstanding`
   - `synthesizedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 662 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
+- Line 738 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
   - `buildExecutiveUnderstandingCandidates({`
-- Line 673 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 749 · **unknown** · matched `OrganizationalUnderstanding`
   - `OrganizationalUnderstandingState = {`
-- Line 674 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 750 · **unknown** · matched `OrganizationalUnderstanding`
   - `...existingOrganizationalUnderstandingState,`
-- Line 677 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 753 · **unknown** · matched `OrganizationalUnderstanding`
   - `existingOrganizationalUnderstandingState.currentUnderstandings.filter(`
-- Line 689 · **unknown** · matched `consolidateUnderstanding`
+- Line 765 · **unknown** · matched `consolidateUnderstanding`
   - `consolidateUnderstanding(`
-- Line 694 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 770 · **unknown** · matched `OrganizationalUnderstanding`
   - `const finalOrganizationalUnderstandingState =`
-- Line 695 · **unknown** · matched `synthesizeUnderstanding`
+- Line 771 · **unknown** · matched `synthesizeUnderstanding`
   - `synthesizeUnderstanding({`
-- Line 731 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 807 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState.currentUnderstandings.map(`
-- Line 757 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 833 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingScore:`
-- Line 758 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 834 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState.score.overall,`
-- Line 892 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1015 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 893 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1016 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState,`
-- Line 927 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1050 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState,`
-- Line 1054 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1179 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingScore:`
-- Line 1055 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1180 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState.score.overall,`
-- Line 1101 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1229 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 1102 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1230 · **unknown** · matched `OrganizationalUnderstanding`
   - `typeof finalOrganizationalUnderstandingState;`
 
 ##### `engine/v3/runtime/index.ts`
@@ -453,11 +453,11 @@ This section records source-code references. It supplements, but does not replac
   - `import type { OrganizationalUnderstandingState } from "./organizationalUnderstandingState";`
 - Line 2 · **import** · matched `OrganizationalUnderstanding`
   - `import { createEmptyOrganizationalUnderstandingState } from "./organizationalUnderstandingState";`
-- Line 61 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 63 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState: OrganizationalUnderstandingState;`
-- Line 138 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 153 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 139 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 154 · **unknown** · matched `OrganizationalUnderstanding`
   - `createEmptyOrganizationalUnderstandingState({`
 
 ##### `engine/v3/runtime/organizationalUnderstandingState.ts`
@@ -550,15 +550,15 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `components/executive-v2/projection/buildExecutiveProjection.ts`
 
-- Line 113 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 136 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState?: {`
-- Line 183 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 208 · **unknown** · matched `OrganizationalUnderstanding`
   - `memory?.organizationalUnderstandingState?.currentUnderstandings ?? [];`
-- Line 211 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 236 · **unknown** · matched `OrganizationalUnderstanding`
   - `runtimeMemory?.organizationalUnderstandingState?.health?.maturity ??`
-- Line 284 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 309 · **unknown** · matched `OrganizationalUnderstanding`
   - `runtimeMemory?.organizationalUnderstandingState?.health?.uncertainty ??`
-- Line 777 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 863 · **unknown** · matched `OrganizationalUnderstanding`
   - `runtimeMemory?.organizationalUnderstandingState?.health`
 
 #### UI
@@ -620,57 +620,57 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 3 · **unknown** · matched `evolveOrganizationRuntime`
   - `evolveOrganizationRuntime,`
-- Line 7 · **import** · matched `OrganizationalUnderstanding`
+- Line 8 · **import** · matched `OrganizationalUnderstanding`
   - `import type { OrganizationalUnderstanding } from "../v3/model/judgment/organizationalJudgment";`
-- Line 12 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 13 · **unknown** · matched `OrganizationalUnderstanding`
   - `scoreOrganizationalUnderstanding,`
-- Line 13 · **import** · matched `OrganizationalUnderstanding`
+- Line 14 · **import** · matched `OrganizationalUnderstanding`
   - `} from "./organizationalUnderstandingScorer";`
-- Line 131 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 132 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstanding?: OrganizationalUnderstanding;`
-- Line 177 · **unknown** · matched `evolveOrganizationRuntime`
+- Line 178 · **unknown** · matched `evolveOrganizationRuntime`
   - `typeof evolveOrganizationRuntime`
-- Line 186 · **unknown** · matched `OrganizationalUnderstanding`
-  - `organizationalUnderstandingScore: ReturnType<`
 - Line 187 · **unknown** · matched `OrganizationalUnderstanding`
+  - `organizationalUnderstandingScore: ReturnType<`
+- Line 188 · **unknown** · matched `OrganizationalUnderstanding`
   - `typeof scoreOrganizationalUnderstanding`
-- Line 330 · **unknown** · matched `evolveOrganizationRuntime`
+- Line 331 · **unknown** · matched `evolveOrganizationRuntime`
   - `evolveOrganizationRuntime({`
-- Line 394 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 408 · **unknown** · matched `OrganizationalUnderstanding`
   - `const organizationalUnderstanding =`
-- Line 396 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 410 · **unknown** · matched `OrganizationalUnderstanding`
   - `?.organizationalUnderstanding;`
-- Line 399 · **unknown** · matched `OrganizationalUnderstanding`
-  - `organizationalUnderstanding?.statement,`
-- Line 400 · **unknown** · matched `OrganizationalUnderstanding`
-  - `organizationalUnderstanding?.summary,`
-- Line 401 · **unknown** · matched `OrganizationalUnderstanding`
-  - `organizationalUnderstanding`
-- Line 403 · **unknown** · matched `OrganizationalUnderstanding`
-  - `organizationalUnderstanding`
-- Line 405 · **unknown** · matched `OrganizationalUnderstanding`
-  - `organizationalUnderstanding`
-- Line 407 · **unknown** · matched `OrganizationalUnderstanding`
-  - `organizationalUnderstanding`
-- Line 409 · **unknown** · matched `OrganizationalUnderstanding`
-  - `organizationalUnderstanding`
-- Line 411 · **unknown** · matched `OrganizationalUnderstanding`
-  - `organizationalUnderstanding`
 - Line 413 · **unknown** · matched `OrganizationalUnderstanding`
-  - `organizationalUnderstanding`
+  - `organizationalUnderstanding?.statement,`
+- Line 414 · **unknown** · matched `OrganizationalUnderstanding`
+  - `organizationalUnderstanding?.summary,`
 - Line 415 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstanding`
 - Line 417 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstanding`
-- Line 420 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 419 · **unknown** · matched `OrganizationalUnderstanding`
+  - `organizationalUnderstanding`
+- Line 421 · **unknown** · matched `OrganizationalUnderstanding`
+  - `organizationalUnderstanding`
+- Line 423 · **unknown** · matched `OrganizationalUnderstanding`
+  - `organizationalUnderstanding`
+- Line 425 · **unknown** · matched `OrganizationalUnderstanding`
+  - `organizationalUnderstanding`
+- Line 427 · **unknown** · matched `OrganizationalUnderstanding`
+  - `organizationalUnderstanding`
+- Line 429 · **unknown** · matched `OrganizationalUnderstanding`
+  - `organizationalUnderstanding`
+- Line 431 · **unknown** · matched `OrganizationalUnderstanding`
+  - `organizationalUnderstanding`
+- Line 434 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstanding?.narrative,`
-- Line 497 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 511 · **unknown** · matched `OrganizationalUnderstanding`
   - `const organizationalUnderstandingScore =`
-- Line 498 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 512 · **unknown** · matched `OrganizationalUnderstanding`
   - `scoreOrganizationalUnderstanding(`
-- Line 499 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 513 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstanding,`
-- Line 539 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 560 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingScore,`
 
 #### Other
@@ -684,7 +684,7 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 64 · **unknown** · matched `Executive Understanding Synthesis`
   - `"Executive Understanding Synthesis",`
-- Line 828 · **unknown** · matched `Executive Understanding Synthesis`
+- Line 973 · **unknown** · matched `Executive Understanding Synthesis`
   - `"Executive Understanding Synthesis",`
 
 ##### `scripts/cognition/reviewCognitiveDomain.mjs`

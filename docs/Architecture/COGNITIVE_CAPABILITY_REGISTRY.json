@@ -1470,7 +1470,7 @@
     {
       "id": "CAP-SIM-001",
       "name": "Organizational Simulation",
-      "description": "Projects Discovery's current organizational understanding into a plausible future organizational state by evolving current conditions, beliefs, predictions, and calibrated prediction performance forward in simulated time.",
+      "description": "Projects Discovery's current organizational understanding into a plausible future organizational state by applying an intentional organizational intervention and evolving current conditions, beliefs, predictions, and calibrated prediction performance forward in simulated time.",
       "domain": "SIM",
       "status": "proposed",
       "canonicalProducer": "engine/v3/model/simulate/simulateOrganization.ts",
@@ -1478,6 +1478,7 @@
         "engine/v3/model/simulate/simulateOrganization.ts"
       ],
       "consumesCapabilities": [
+        "CAP-SIM-002",
         "CAP-UND-004",
         "CAP-UND-002",
         "CAP-PRD-001",
@@ -1503,7 +1504,7 @@
       ],
       "livingOrganizationStage": 8,
       "reviewStatus": "proposed",
-      "notes": "Version 1 preserves the current organizational state while calibrating simulation confidence using historical prediction accuracy. Later versions will evolve conditions, beliefs, and predictions across simulated time.",
+      "notes": "Version 1 preserves the current organizational state while calibrating simulation confidence using historical prediction accuracy. Organizational interventions now provide the canonical input for future causal propagation and scenario comparison.",
       "canonicalProducerExists": true,
       "resolvedFiles": [
         {
@@ -1522,15 +1523,51 @@
             "../learning/computeOrganizationalLearningProfile",
             "../predictions/evaluatePredictionOutcomes",
             "../predictions/organizationalPrediction",
-            "../state/inferOrganizationalConditions"
+            "../state/inferOrganizationalConditions",
+            "./organizationalIntervention"
           ]
         }
       ],
       "missingImplementationFiles": [],
       "subsystem": "Organizational Simulation",
       "architecturalLayer": "COG"
+    },
+    {
+      "id": "CAP-SIM-002",
+      "name": "Organizational Intervention Modeling",
+      "description": "Creates a canonical representation of an intentional organizational change that Discovery can apply to the current organizational state when forecasting, simulating, comparing, and later evaluating executive decisions.",
+      "domain": "SIM",
+      "status": "proposed",
+      "canonicalProducer": "engine/v3/model/simulate/buildOrganizationalIntervention.ts",
+      "implementationFiles": [
+        "engine/v3/model/simulate/organizationalIntervention.ts",
+        "engine/v3/model/simulate/buildOrganizationalIntervention.ts"
+      ],
+      "consumesCapabilities": [],
+      "producesObjects": [
+        "OrganizationalIntervention"
+      ],
+      "consumedByCapabilities": [
+        "CAP-SIM-001"
+      ],
+      "runtimeDestination": "OrganizationRuntime.organizationalInterventions",
+      "executiveDestinations": [
+        "Simulation"
+      ],
+      "atlasCoverage": "planned",
+      "benchmarkCoverage": [
+        "Simulation Benchmark"
+      ],
+      "livingOrganizationStage": 8,
+      "reviewStatus": "proposed",
+      "notes": "Version 1 represents intentional executive actions as canonical cognitive objects. Later versions will infer affected conditions, mechanisms, beliefs, assumptions, evidence requirements, and causal propagation pathways.",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [],
+      "missingImplementationFiles": [],
+      "subsystem": "Organizational Intervention Modeling",
+      "architecturalLayer": "COG"
     }
   ],
-  "generatedAt": "2026-07-13T16:22:30.416Z",
-  "capabilityCount": 20
+  "generatedAt": "2026-07-13T22:08:33.264Z",
+  "capabilityCount": 21
 }

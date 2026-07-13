@@ -1,79 +1,109 @@
 # Current Milestone
 
-**Adaptive Organizational Intelligence and Simulation**
+**Decision Intelligence and Organizational Causal Reasoning**
 
 ---
 
 # Current Development Phase
 
-**Adaptive Organizational Intelligence, Longitudinal Learning, and Organizational Simulation**
+**Decision Intelligence, Organizational Causal Reasoning, and Simulation Intelligence**
 
 Discovery has completed the initial Capability Audit, established its formal Cognitive Architecture, and implemented the first complete version of its Cognitive Operating System.
 
+Discovery has now crossed from an Organizational Understanding Engine into the first version of an **Organizational Decision Intelligence Platform**.
+
 Discovery now possesses a complete cognitive pipeline capable of transforming organizational evidence into:
 
-- current organizational understanding,
-- executive assessment,
-- future organizational predictions,
-- longitudinal prediction evaluation,
-- adaptive organizational learning,
-- architectural self-planning,
-- and simulated future organizational states.
+* current organizational understanding,
+* executive assessment,
+* future organizational predictions,
+* longitudinal prediction evaluation,
+* adaptive organizational learning,
+* prediction learning summaries,
+* executive decisions,
+* intervention generation,
+* organizational causal reasoning,
+* explainable causal propagation,
+* influence aggregation,
+* architectural self-planning,
+* and simulated future organizational states.
 
 Discovery now possesses:
 
-- Cognitive Operating System
-- Cognitive Object Model
-- Cognitive Flow Map
-- Cognitive Capability Registry
-- Cognitive File Registry
-- Cognitive Capability Audit
-- Registry-aware Capability Traces
-- Architecture Drift Detection
-- Cognitive Domain Review System
-- Organizational Learning
-- Organizational Concepts
-- Organizational Conditions
-- Organizational State
-- Organizational Prediction
-- Prediction Reflection
-- Prediction Outcome Evaluation
-- Organizational Simulation
-- Architecture Planning
-- Architecture Recommendation Projection
-- Executive Assessment
-- Executive Projection
+* Cognitive Operating System
+* Cognitive Object Model
+* Cognitive Flow Map
+* Cognitive Capability Registry
+* Cognitive File Registry
+* Cognitive Capability Audit
+* Registry-aware Capability Traces
+* Architecture Drift Detection
+* Cognitive Domain Review System
+* Atlas Simulation Architecture
+* Atlas Evaluation Loop
+* Organizational Learning
+* Organizational Concepts
+* Organizational Conditions
+* Organizational State
+* Organizational Prediction
+* Prediction Reflection
+* Prediction Outcome Evaluation
+* Prediction Learning Events
+* Prediction Learning Summary
+* Executive Decision
+* Intervention Option Generation
+* Organizational Intervention
+* Organizational Causal Model
+* Organizational Influence Propagation
+* Organizational Influence Aggregation
+* Decision Reasoning Pipeline
+* Decision Intelligence Benchmarking
+* Organizational Simulation
+* Architecture Planning
+* Architecture Recommendation Projection
+* Executive Assessment
+* Executive Projection
 
-Executive Assessment now integrates cognition produced across every Operating System rather than recreating reasoning itself.
+Executive Assessment integrates cognition produced across every Operating System rather than recreating reasoning itself.
 
-Prediction has become a longitudinal learning capability.
+Prediction has become a longitudinal adaptive learning capability.
 
-Simulation has become the final Operating System within Discovery's Cognitive Architecture.
+Discovery now possesses its first **closed adaptive learning loop**.
+
+Simulation has evolved from simply projecting organizational state into applying intentional organizational change through executable causal reasoning.
 
 Discovery now reasons about:
 
-- the organization's current state,
-- the organization's future,
-- the accuracy of its previous predictions,
-- and plausible future organizational states.
+* the organization's current state,
+* the organization's future,
+* the accuracy of previous predictions,
+* executive intent,
+* plausible organizational interventions,
+* organizational cause-and-effect,
+* direct and indirect organizational consequences,
+* and explainable future organizational states.
 
-The remaining work is primarily **capability maturation, simulation evolution, executive reasoning quality, and organizational forecasting**, not architecture expansion.
+The remaining work is primarily **reasoning quality, causal-model maturation, simulation realism, executive decision intelligence, and organizational forecasting**, not architecture expansion.
 
 ---
 
 # Current Objective
 
-Evolve Adaptive Organizational Intelligence.
+Evolve Decision Intelligence.
 
 Discovery should continuously improve its ability to answer:
 
-- What is happening?
-- Why is it happening?
-- What is likely to happen next?
-- Was Discovery correct?
-- How should Discovery adjust its confidence?
-- What future organizational state is most likely?
-- What executive action should occur before that future arrives?
+* What is happening?
+* Why is it happening?
+* What is likely to happen next?
+* Was Discovery correct?
+* What did Discovery learn?
+* Which executive objective is leadership trying to achieve?
+* Which interventions could achieve that objective?
+* Which organizational systems would those interventions affect?
+* How would those effects propagate?
+* What future organizational state would result?
+* Which intervention should leadership prefer?
 
 Every capability should continue to belong to exactly one:
 
@@ -128,45 +158,55 @@ Atlas Validation
 
 ↓
 
+Decision Intelligence Benchmark
+
+↓
+
 Longitudinal Evolution
 ```
+
+Adaptive learning should always occur through canonical cognitive objects rather than capability-specific implementation details.
 
 ---
 
 # Current Sequence
 
-1. Evolve Organizational Simulation.
-2. Evolve simulated organizational conditions.
-3. Evolve simulated organizational beliefs.
-4. Evolve simulated organizational predictions.
-5. Introduce multi-step simulation.
-6. Improve Executive Projection.
-7. Improve Executive Experience.
-8. Expand Atlas simulation validation.
-9. Pressure-test Discovery using realistic organizations.
-10. Perform legacy cleanup after architectural stabilization.
+1. Apply aggregated organizational influence to projected organizational conditions.
+2. Produce a modified simulated organizational state.
+3. Compare current and projected organizational states.
+4. Generate executive explanations for future-state changes.
+5. Rank intervention options using simulated outcomes.
+6. Compare multiple intervention scenarios.
+7. Generate executive recommendations.
+8. Produce board-ready scenario reports.
+9. Validate organizational laws through observed outcomes.
+10. Introduce multi-step organizational simulation.
+11. Improve Executive Projection.
+12. Improve Executive Experience.
+13. Pressure-test Discovery using realistic organizations.
+14. Perform legacy cleanup after architectural stabilization.
 
 ---
 
 # Recent Changes
 
-- Completed the Cognitive Operating System.
-- Populated all ten Cognitive Operating Systems.
-- Registered 20 canonical capabilities.
-- Achieved 100% architecture validation.
-- Implemented Organizational Prediction.
-- Implemented Prediction Reflection.
-- Implemented Prediction Outcome Evaluation.
-- Implemented calibrated confidence adjustment.
-- Implemented longitudinal prediction evaluation.
-- Implemented adaptive prediction learning.
-- Implemented Architecture Planning.
-- Implemented Architecture Recommendation Projection.
-- Implemented Organizational Simulation Version 1.
-- Persisted simulated organizational states.
-- Established the first closed cognitive learning loop.
-- Maintained 0 TypeScript errors.
-- Maintained benchmark integrity.
+* Implemented Executive Decision.
+* Implemented Intervention Option Generation.
+* Implemented Organizational Intervention.
+* Implemented Organizational Causal Model.
+* Persisted Organizational Causal Model in Runtime.
+* Implemented Organizational Influence Propagation.
+* Implemented Organizational Influence Aggregation.
+* Implemented Decision Reasoning Pipeline.
+* Implemented Decision Intelligence Experiment 001.
+* Verified end-to-end executive reasoning.
+* Verified intervention generation.
+* Verified intervention mapping.
+* Verified multi-stage causal propagation.
+* Verified safe aggregation of direct and indirect organizational effects.
+* Achieved 15/15 Decision Intelligence benchmark checks.
+* Maintained 0 TypeScript errors.
+* Maintained 100% benchmark integrity.
 
 ---
 
@@ -176,29 +216,52 @@ Discovery has entered a new phase.
 
 The primary bottleneck is no longer:
 
-- reasoning capability,
-- architecture discovery,
-- capability ownership,
-- operating system expansion.
+* reasoning capability,
+* architecture discovery,
+* capability ownership,
+* operating system expansion,
+* prediction generation,
+* prediction evaluation,
+* or intervention modeling.
 
 The primary bottleneck is now:
 
-> **How accurately can Discovery project future organizational behavior, learn from prediction accuracy, and continuously improve simulated organizational futures through accumulated organizational experience?**
+> **Can Discovery reason correctly about executive interventions, organizational causality, and future organizational states while continuously improving through accumulated organizational experience?**
 
-Atlas remains the canonical cognitive verification environment.
+Atlas remains the canonical Organizational Validation and Simulation Engine.
+
+Decision Intelligence Experiments now become the canonical reasoning validation layer.
 
 The Cognitive Operating System remains the canonical architectural model.
 
 Executive Assessment integrates:
 
-- Organizational Understanding
-- Theory Validation
-- Organizational Learning
-- Prediction Reflection
-- Prediction Outcome Evaluation
-- Investigation Strategy
+* Organizational Understanding
+* Theory Validation
+* Organizational Learning
+* Organizational Prediction
+* Prediction Reflection
+* Prediction Outcome Evaluation
+* Investigation Strategy
+* Organizational Simulation
 
-Simulation should evolve through accumulated organizational learning rather than handcrafted heuristics.
+Decision Intelligence integrates:
+
+* Executive Decision
+* Intervention Generation
+* Organizational Intervention
+* Organizational Causal Model
+* Causal Propagation
+* Influence Aggregation
+* Organizational Simulation
+
+Adaptive Learning integrates:
+
+* Belief Revision
+* Theory Evolution
+* Prediction Learning
+
+Future Decision Intelligence should improve through validated Organizational Laws rather than handcrafted heuristics.
 
 ---
 
@@ -233,6 +296,10 @@ Organizational State
 
 ↓
 
+Organizational Causal Model
+
+↓
+
 Organizational Predictions
 
 ↓
@@ -245,7 +312,39 @@ Prediction Outcome Evaluation
 
 ↓
 
-Organizational Learning
+Prediction Learning Events
+
+↓
+
+Prediction Learning Summary
+
+↓
+
+Organizational Learning Profile
+
+↓
+
+Executive Decision
+
+↓
+
+Intervention Options
+
+↓
+
+Selected Intervention
+
+↓
+
+Intervention Mapping
+
+↓
+
+Causal Propagation
+
+↓
+
+Influence Aggregation
 
 ↓
 
@@ -280,9 +379,11 @@ Organizational Understanding explains the present.
 
 Prediction explains the future.
 
-Prediction Evaluation measures reality.
+The Organizational Causal Model explains why organizational systems influence one another.
 
-Simulation projects plausible futures.
+Decision Intelligence determines how intentional executive actions affect the organization.
+
+Simulation applies those effects to future organizational states.
 
 Executive Assessment integrates the complete cognitive pipeline.
 
@@ -290,17 +391,20 @@ Executive Assessment integrates the complete cognitive pipeline.
 
 # Current Priority
 
-Strengthen Organizational Simulation.
+Strengthen Decision Intelligence and Organizational Simulation.
 
 Priority areas include:
 
-- simulated condition evolution,
-- simulated belief evolution,
-- simulated prediction evolution,
-- adaptive simulation confidence,
-- multi-step organizational simulation,
-- simulation benchmarking,
-- executive future reasoning.
+* applying aggregated influence to projected organizational conditions,
+* evolving future organizational state,
+* comparing current and future organizational conditions,
+* executive explanation of simulated outcomes,
+* ranking intervention options,
+* scenario comparison,
+* executive recommendations,
+* organizational law validation,
+* longitudinal causal confidence calibration,
+* multi-step organizational simulation.
 
 ---
 
@@ -315,9 +419,11 @@ Before implementing anything ask:
 5. Does Runtime persist it?
 6. Does Executive Projection expose it?
 7. Does Atlas validate it?
-8. Does it improve Organizational Understanding?
-9. Does it improve Organizational Simulation?
-10. Does it improve through longitudinal learning?
+8. Does a Decision Intelligence Experiment validate it?
+9. Does it improve Organizational Understanding?
+10. Does it improve Decision Intelligence?
+11. Does it improve Organizational Simulation?
+12. Can it enter shared cognitive systems through an existing canonical object?
 
 If the answer is no, improve existing cognition before expanding the architecture.
 
@@ -329,18 +435,26 @@ If the answer is no, improve existing cognition before expanding the architectur
 
 > **Capabilities before files.**
 
+> **Reasoning before interface.**
+
 > **Longitudinal learning before heuristics.**
 
 > **Prediction should improve through measured reality.**
 
+> **Prediction performance should become canonical organizational learning.**
+
 > **Simulation should evolve through accumulated learning.**
+
+> **Decision Intelligence should reason through canonical organizational models rather than hardcoded heuristics.**
 
 > **Executive Assessment integrates cognition rather than recreating it.**
 
 > **Every cognitive object has one canonical producer.**
 
-> **Atlas validates cognition.**
+> **Atlas validates adaptive cognition.**
+
+> **Decision Intelligence Experiments validate organizational reasoning.**
 
 > **The Cognitive Operating System governs Discovery.**
 
-> **Adaptive Organizational Intelligence is now Discovery's primary product.**
+> **Decision Intelligence is Discovery's next major capability.**

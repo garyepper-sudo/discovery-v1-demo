@@ -1,6 +1,6 @@
 # Capability Trace — Investigation Opportunity Generation
 
-Generated: 2026-07-12T20:04:19.108Z
+Generated: 2026-07-13T17:05:59.470Z
 
 ## Verified Architecture
 
@@ -37,7 +37,7 @@ None declared.
 
 ### Declared Consumers
 
-None declared.
+- `CAP-SYS-001`
 
 ## Architecture Verification
 
@@ -49,7 +49,7 @@ None declared.
 | Implementation files | ✅ | 1 declared file(s) exist. |
 | Runtime destination | ✅ | OrganizationRuntime.investigationOpportunities |
 | Executive destination | ✅ | ExecutiveProjection, InvestigationOpportunities |
-| Consumers | ✅ | Terminal capability (no downstream cognitive capability expected). |
+| Consumers | ✅ | 1 declared consumer(s). |
 | Atlas coverage | ✅ | yes |
 | Structural implementation coverage | ✅ | All declared implementation files appeared in the structural trace. |
 
@@ -147,53 +147,53 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/runtime/evolveOrganizationRuntime.ts`
 
-- Line 41 · **import** · matched `buildInvestigationOpportunities`
+- Line 42 · **import** · matched `buildInvestigationOpportunities`
   - `import { buildInvestigationOpportunities } from "../model/investigation/buildInvestigationOpportunities";`
-- Line 88 · **type** · matched `investigationOpportunities`
+- Line 92 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities?: any[];`
-- Line 592 · **unknown** · matched `buildInvestigationOpportunities`
+- Line 664 · **unknown** · matched `buildInvestigationOpportunities`
   - `buildInvestigationOpportunities({`
-- Line 598 · **unknown** · matched `investigationOpportunities`
+- Line 670 · **unknown** · matched `investigationOpportunities`
   - `previousInvestigationOpportunities:`
-- Line 599 · **read** · matched `investigationOpportunities`
+- Line 671 · **read** · matched `investigationOpportunities`
   - `memory.investigationOpportunities,`
-- Line 605 · **definition** · matched `investigationOpportunities`
+- Line 677 · **definition** · matched `investigationOpportunities`
   - `const investigationOpportunities =`
-- Line 636 · **unknown** · matched `investigationOpportunities`
+- Line 712 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 657 · **unknown** · matched `investigationOpportunities`
+- Line 733 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 884 · **unknown** · matched `investigationOpportunities`
+- Line 1007 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 939 · **unknown** · matched `investigationOpportunities`
+- Line 1064 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1152 · **type** · matched `investigationOpportunities`
+- Line 1286 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities:`
-- Line 1153 · **unknown** · matched `investigationOpportunities`
+- Line 1287 · **unknown** · matched `investigationOpportunities`
   - `typeof investigationOpportunities;`
 
 #### Projection
 
 ##### `components/executive-v2/projection/ExecutiveProjection.ts`
 
-- Line 474 · **type** · matched `investigationOpportunities`
+- Line 477 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities?: ExecutiveInvestigationOpportunity[];`
 
 ##### `components/executive-v2/projection/buildExecutiveProjection.ts`
 
-- Line 156 · **type** · matched `investigationOpportunities`
+- Line 179 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities?: RuntimeInvestigationOpportunity[];`
-- Line 587 · **definition** · matched `buildInvestigationOpportunities`
+- Line 612 · **definition** · matched `buildInvestigationOpportunities`
   - `function buildInvestigationOpportunitiesProjection(`
-- Line 591 · **read** · matched `investigationOpportunities`
+- Line 616 · **read** · matched `investigationOpportunities`
   - `runtimeMemory?.investigationOpportunities;`
-- Line 752 · **definition** · matched `investigationOpportunities`
+- Line 835 · **definition** · matched `investigationOpportunities`
   - `const investigationOpportunities =`
-- Line 753 · **unknown** · matched `buildInvestigationOpportunities`
+- Line 836 · **unknown** · matched `buildInvestigationOpportunities`
   - `buildInvestigationOpportunitiesProjection(runtimeMemory);`
-- Line 760 · **read** · matched `investigationOpportunities`
+- Line 846 · **read** · matched `investigationOpportunities`
   - `runtimeMemory?.investigationOpportunities,`
-- Line 852 · **unknown** · matched `investigationOpportunities`
+- Line 938 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
 
 #### UI

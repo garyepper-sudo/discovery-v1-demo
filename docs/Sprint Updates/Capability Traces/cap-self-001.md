@@ -1,6 +1,6 @@
 # Capability Trace — Theory Validation
 
-Generated: 2026-07-12T20:04:18.878Z
+Generated: 2026-07-13T17:05:59.237Z
 
 ## Verified Architecture
 
@@ -39,6 +39,7 @@ None declared.
 ### Declared Consumers
 
 - `CAP-SELF-002`
+- `CAP-SYS-001`
 
 ## Architecture Verification
 
@@ -50,7 +51,7 @@ None declared.
 | Implementation files | ✅ | 1 declared file(s) exist. |
 | Runtime destination | ✅ | ExecutiveAssessment.theoryValidation |
 | Executive destination | ✅ | ExecutiveProjection, TheoryValidation |
-| Consumers | ✅ | 1 declared consumer(s). |
+| Consumers | ✅ | 2 declared consumer(s). |
 | Atlas coverage | ✅ | yes |
 | Structural implementation coverage | ✅ | All declared implementation files appeared in the structural trace. |
 
@@ -242,44 +243,44 @@ This section records source-code references. It supplements, but does not replac
   - `supportingOrganizationalBeliefs: ExecutiveTheoryValidationEvidence[];`
 - Line 34 · **unknown** · matched `theoryValidation`
   - `contradictoryOrWeakeningEvidence: ExecutiveTheoryValidationEvidence[];`
-- Line 73 · **type** · matched `theoryValidation`
+- Line 68 · **type** · matched `theoryValidation`
   - `theoryValidation?: ExecutiveTheoryValidation;`
-- Line 486 · **unknown** · matched `Theory Validation`
+- Line 499 · **unknown** · matched `Theory Validation`
   - `* This remains available independently because Theory Validation`
-- Line 489 · **type** · matched `theoryValidation`
+- Line 502 · **type** · matched `theoryValidation`
   - `theoryValidation?: ExecutiveTheoryValidation;`
 
 ##### `components/executive-v2/projection/buildExecutiveProjection.ts`
 
-- Line 22 · **unknown** · matched `theoryValidation`
+- Line 23 · **unknown** · matched `theoryValidation`
   - `ExecutiveTheoryValidation,`
-- Line 137 · **type** · matched `theoryValidation`
+- Line 160 · **type** · matched `theoryValidation`
   - `theoryValidation?: ExecutiveTheoryValidation;`
-- Line 389 · **type** · matched `theoryValidation`
+- Line 414 · **type** · matched `theoryValidation`
   - `theoryValidation:`
-- Line 390 · **read** · matched `theoryValidation`
+- Line 415 · **read** · matched `theoryValidation`
   - `executiveAssessment.theoryValidation,`
-- Line 394 · **unknown** · matched `theoryValidation`
+- Line 419 · **unknown** · matched `theoryValidation`
   - `function buildTheoryValidationProjection(`
-- Line 396 · **unknown** · matched `theoryValidation`
+- Line 421 · **unknown** · matched `theoryValidation`
   - `): ExecutiveTheoryValidation \| undefined {`
-- Line 397 · **read** · matched `theoryValidation`
+- Line 422 · **read** · matched `theoryValidation`
   - `return runtimeMemory?.executiveAssessment?.theoryValidation;`
-- Line 732 · **definition** · matched `theoryValidation`
+- Line 815 · **definition** · matched `theoryValidation`
   - `const theoryValidation =`
-- Line 733 · **unknown** · matched `theoryValidation`
+- Line 816 · **unknown** · matched `theoryValidation`
   - `buildTheoryValidationProjection(runtimeMemory);`
-- Line 792 · **unknown** · matched `theoryValidation`
+- Line 878 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.dominantTheory \|\|`
-- Line 808 · **unknown** · matched `theoryValidation`
+- Line 894 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.whyDiscoveryBelievesIt \|\|`
-- Line 817 · **unknown** · matched `theoryValidation`
+- Line 903 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.evidenceThatWouldFalsifyTheory?.[0] \|\|`
-- Line 818 · **unknown** · matched `theoryValidation`
+- Line 904 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.calibratedConfidenceExplanation \|\|`
-- Line 828 · **unknown** · matched `theoryValidation`
+- Line 914 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.executiveRecommendation \|\|`
-- Line 856 · **unknown** · matched `theoryValidation`
+- Line 944 · **unknown** · matched `theoryValidation`
   - `theoryValidation,`
 
 #### UI
@@ -463,47 +464,47 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/benchmark/runBenchmarkInvestigation.ts`
 
-- Line 133 · **type** · matched `theoryValidation`
+- Line 134 · **type** · matched `theoryValidation`
   - `theoryValidation?: {`
-- Line 236 · **definition** · matched `theoryValidation`
+- Line 237 · **definition** · matched `theoryValidation`
   - `function theoryValidationText(`
-- Line 237 · **type** · matched `theoryValidation`
+- Line 238 · **type** · matched `theoryValidation`
   - `theoryValidation:`
-- Line 240 · **read** · matched `theoryValidation`
+- Line 241 · **read** · matched `theoryValidation`
   - `>["theoryValidation"]`
-- Line 243 · **unknown** · matched `theoryValidation`
+- Line 244 · **unknown** · matched `theoryValidation`
   - `if (!theoryValidation) {`
-- Line 248 · **unknown** · matched `theoryValidation`
+- Line 249 · **unknown** · matched `theoryValidation`
   - `theoryValidation.dominantTheory ??`
-- Line 251 · **unknown** · matched `theoryValidation`
+- Line 252 · **unknown** · matched `theoryValidation`
   - `theoryValidation.whyDiscoveryBelievesIt,`
-- Line 253 · **unknown** · matched `theoryValidation`
+- Line 254 · **unknown** · matched `theoryValidation`
   - `...(theoryValidation.supportingMechanisms?.flatMap(`
-- Line 260 · **unknown** · matched `theoryValidation`
+- Line 261 · **unknown** · matched `theoryValidation`
   - `...(theoryValidation.supportingOrganizationalBeliefs?.flatMap(`
-- Line 267 · **unknown** · matched `theoryValidation`
+- Line 268 · **unknown** · matched `theoryValidation`
   - `...(theoryValidation.competingTheoriesConsidered?.flatMap(`
-- Line 275 · **unknown** · matched `theoryValidation`
+- Line 276 · **unknown** · matched `theoryValidation`
   - `...(theoryValidation.contradictoryOrWeakeningEvidence?.flatMap(`
-- Line 282 · **unknown** · matched `theoryValidation`
+- Line 283 · **unknown** · matched `theoryValidation`
   - `theoryValidation.calibratedConfidenceExplanation,`
-- Line 284 · **unknown** · matched `theoryValidation`
+- Line 285 · **unknown** · matched `theoryValidation`
   - `...(theoryValidation.additionalEvidenceThatWouldIncreaseConfidence ??`
-- Line 287 · **unknown** · matched `theoryValidation`
+- Line 288 · **unknown** · matched `theoryValidation`
   - `...(theoryValidation.evidenceThatWouldFalsifyTheory ??`
-- Line 290 · **unknown** · matched `theoryValidation`
+- Line 291 · **unknown** · matched `theoryValidation`
   - `theoryValidation.executiveRecommendation,`
-- Line 452 · **unknown** · matched `theoryValidation`
+- Line 466 · **unknown** · matched `theoryValidation`
   - `theoryValidationText(`
-- Line 454 · **read** · matched `theoryValidation`
+- Line 468 · **read** · matched `theoryValidation`
   - `?.theoryValidation,`
-- Line 484 · **type** · matched `theoryValidation`
+- Line 498 · **type** · matched `theoryValidation`
   - `theoryValidation:`
-- Line 486 · **read** · matched `theoryValidation`
+- Line 500 · **read** · matched `theoryValidation`
   - `?.theoryValidation,`
-- Line 526 · **type** · matched `theoryValidation`
+- Line 540 · **type** · matched `theoryValidation`
   - `theoryValidation:`
-- Line 528 · **read** · matched `theoryValidation`
+- Line 542 · **read** · matched `theoryValidation`
   - `?.theoryValidation,`
 
 ##### `engine/benchmark/understandingFitnessScorer.ts`

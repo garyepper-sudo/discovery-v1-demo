@@ -1,9 +1,9 @@
 {
   "version": 1,
   "status": "proposed",
-  "generatedAt": "2026-07-13T16:10:43.116Z",
+  "generatedAt": "2026-07-13T22:13:19.570Z",
   "repositoryRoot": "/Users/garyepper/Desktop/Alpha-Sprint-14-main",
-  "entryCount": 454,
+  "entryCount": 482,
   "entries": [
     {
       "id": "REVIEW-001",
@@ -672,6 +672,133 @@
     {
       "id": "EXP-013",
       "idStatus": "proposed",
+      "path": "components/executive-v2/capabilities/ExecutiveCapabilityDefinition.tsx",
+      "capabilityName": "ExecutiveCapabilityDefinition",
+      "architecturalLayer": "EXP",
+      "cognitiveDomain": null,
+      "cognitiveDomainName": null,
+      "classificationConfidence": "not-applicable",
+      "alternativeDomains": [],
+      "imports": [
+        "../projection/ExecutiveProjection",
+        "react"
+      ],
+      "exports": [
+        "ExecutiveCapabilityCategory",
+        "ExecutiveCapabilityDefinition",
+        "ExecutiveCapabilityId"
+      ],
+      "consumes": [],
+      "produces": [
+        "ExecutiveCapabilityCategory",
+        "ExecutiveCapabilityDefinition",
+        "ExecutiveCapabilityId"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 1272
+    },
+    {
+      "id": "EXP-014",
+      "idStatus": "proposed",
+      "path": "components/executive-v2/capabilities/ExecutiveCapabilityRegistry.tsx",
+      "capabilityName": "ExecutiveCapabilityRegistry",
+      "architecturalLayer": "EXP",
+      "cognitiveDomain": null,
+      "cognitiveDomainName": null,
+      "classificationConfidence": "not-applicable",
+      "alternativeDomains": [],
+      "imports": [
+        "../assessment/ExecutiveAssessmentCard",
+        "../beliefs/ExecutiveBeliefs",
+        "../concepts/ExecutiveConcepts",
+        "../conditions/ExecutiveConditions",
+        "../investigations/ExecutiveInvestigationOpportunities",
+        "../learning/ExecutiveLearningProfile",
+        "../projection/ExecutiveProjection",
+        "../simulation/ExecutiveSimulation",
+        "../state/OrganizationalStateCard",
+        "react"
+      ],
+      "exports": [
+        "ExecutiveCapabilityId",
+        "ExecutiveCapabilitySurface",
+        "executiveCapabilityRegistry",
+        "getVisibleExecutiveCapabilities"
+      ],
+      "consumes": [],
+      "produces": [
+        "ExecutiveCapabilityId",
+        "ExecutiveCapabilitySurface",
+        "executiveCapabilityRegistry",
+        "getVisibleExecutiveCapabilities"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 5529
+    },
+    {
+      "id": "EXP-015",
+      "idStatus": "proposed",
+      "path": "components/executive-v2/capabilities/ExecutiveCapabilityRendererRegistry.tsx",
+      "capabilityName": "ExecutiveCapabilityRendererRegistry",
+      "architecturalLayer": "EXP",
+      "cognitiveDomain": null,
+      "cognitiveDomainName": null,
+      "classificationConfidence": "not-applicable",
+      "alternativeDomains": [],
+      "imports": [
+        "../assessment/ExecutiveAssessmentCard",
+        "../beliefs/ExecutiveBeliefs",
+        "../concepts/ExecutiveConcepts",
+        "../conditions/ExecutiveConditions",
+        "../investigations/ExecutiveInvestigationOpportunities",
+        "../learning/ExecutiveLearningProfile",
+        "../projection/ExecutiveProjection",
+        "../simulation/ExecutiveSimulation",
+        "../state/OrganizationalStateCard",
+        "./ExecutiveCapabilityRegistry",
+        "react"
+      ],
+      "exports": [
+        "ExecutiveCapabilityRenderer",
+        "executiveCapabilityRendererRegistry",
+        "getExecutiveCapabilityRenderer"
+      ],
+      "consumes": [],
+      "produces": [
+        "ExecutiveCapabilityRenderer",
+        "executiveCapabilityRendererRegistry",
+        "getExecutiveCapabilityRenderer"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 3986
+    },
+    {
+      "id": "EXP-013",
+      "idStatus": "proposed",
       "path": "components/executive-v2/concepts/ExecutiveConcepts.tsx",
       "capabilityName": "ExecutiveConcepts",
       "architecturalLayer": "EXP",
@@ -743,15 +870,9 @@
       "alternativeDomains": [],
       "imports": [
         "./answers/ExecutiveAnswerGrid",
-        "./assessment/ExecutiveAssessmentCard",
         "./attention/ExecutiveAttention",
-        "./beliefs/ExecutiveBeliefs",
-        "./concepts/ExecutiveConcepts",
-        "./conditions/ExecutiveConditions",
-        "./investigations/ExecutiveInvestigationOpportunities",
-        "./learning/ExecutiveLearningProfile",
+        "./capabilities/ExecutiveCapabilityRegistry",
         "./projection/ExecutiveProjection",
-        "./state/OrganizationalStateCard",
         "./understanding/UnderstandingCanvas"
       ],
       "exports": [
@@ -770,7 +891,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 3193
+      "sizeBytes": 1798
     },
     {
       "id": "EXP-014",
@@ -900,7 +1021,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 23969
+      "sizeBytes": 26177
     },
     {
       "id": "PROJ-002",
@@ -927,6 +1048,7 @@
         "ExecutiveOrganizationalState",
         "ExecutivePredictionEvaluation",
         "ExecutiveProjection",
+        "ExecutiveSimulation",
         "ExecutiveTheoryValidation",
         "ExecutiveTheoryValidationEvidence"
       ],
@@ -953,7 +1075,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 10585
+      "sizeBytes": 11573
     },
     {
       "id": "EXP-017",
@@ -983,6 +1105,37 @@
       "reviewStatus": "unreviewed",
       "notes": "",
       "sizeBytes": 3444
+    },
+    {
+      "id": "EXP-023",
+      "idStatus": "proposed",
+      "path": "components/executive-v2/simulation/ExecutiveSimulation.tsx",
+      "capabilityName": "ExecutiveSimulation",
+      "architecturalLayer": "EXP",
+      "cognitiveDomain": null,
+      "cognitiveDomainName": null,
+      "classificationConfidence": "not-applicable",
+      "alternativeDomains": [],
+      "imports": [
+        "../projection/ExecutiveProjection"
+      ],
+      "exports": [
+        "ExecutiveSimulation"
+      ],
+      "consumes": [],
+      "produces": [
+        "ExecutiveSimulation"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 2087
     },
     {
       "id": "EXP-018",
@@ -3279,6 +3432,58 @@
       "sizeBytes": 12949
     },
     {
+      "id": "BENCH-001",
+      "idStatus": "proposed",
+      "path": "docs/Architecture/ATLAS_EVALUATION_LOOP.md",
+      "capabilityName": "ATLAS_EVALUATION_LOOP",
+      "architecturalLayer": "BENCH",
+      "cognitiveDomain": null,
+      "cognitiveDomainName": null,
+      "classificationConfidence": "not-applicable",
+      "alternativeDomains": [],
+      "imports": [
+        "The organization changed because leadership intervened."
+      ],
+      "exports": [],
+      "consumes": [],
+      "produces": [],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 7847
+    },
+    {
+      "id": "BENCH-002",
+      "idStatus": "proposed",
+      "path": "docs/Architecture/ATLAS_SIMULATION_ARCHITECTURE.md",
+      "capabilityName": "ATLAS_SIMULATION_ARCHITECTURE",
+      "architecturalLayer": "BENCH",
+      "cognitiveDomain": null,
+      "cognitiveDomainName": null,
+      "classificationConfidence": "not-applicable",
+      "alternativeDomains": [],
+      "imports": [],
+      "exports": [],
+      "consumes": [],
+      "produces": [],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 8893
+    },
+    {
       "id": "DOC-001",
       "idStatus": "proposed",
       "path": "docs/Architecture/Cognitive Operating Systems/ABSTRACTION_OPERATING_SYSTEM.md",
@@ -3676,7 +3881,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 53788
+      "sizeBytes": 55518
     },
     {
       "id": "DOC-016",
@@ -3726,7 +3931,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 455704
+      "sizeBytes": 487156
     },
     {
       "id": "DOC-018",
@@ -3779,6 +3984,31 @@
       "sizeBytes": 11079
     },
     {
+      "id": "DOC-021",
+      "idStatus": "proposed",
+      "path": "docs/Architecture/DECISION_INTELLIGENCE_ARCHITECTURE.md",
+      "capabilityName": "DECISION_INTELLIGENCE_ARCHITECTURE",
+      "architecturalLayer": "DOC",
+      "cognitiveDomain": null,
+      "cognitiveDomainName": null,
+      "classificationConfidence": "not-applicable",
+      "alternativeDomains": [],
+      "imports": [],
+      "exports": [],
+      "consumes": [],
+      "produces": [],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 8358
+    },
+    {
       "id": "DOC-020",
       "idStatus": "proposed",
       "path": "docs/Architecture/DISCOVERY_ARCHITECTURE_STATE.json",
@@ -3801,7 +4031,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 61149
+      "sizeBytes": 65333
     },
     {
       "id": "DOC-021",
@@ -3877,6 +4107,56 @@
       "reviewStatus": "unreviewed",
       "notes": "",
       "sizeBytes": 2820
+    },
+    {
+      "id": "DOC-025",
+      "idStatus": "proposed",
+      "path": "docs/Architecture/ORGANIZATIONAL_LAWS.json",
+      "capabilityName": "ORGANIZATIONAL_LAWS",
+      "architecturalLayer": "DOC",
+      "cognitiveDomain": null,
+      "cognitiveDomainName": null,
+      "classificationConfidence": "not-applicable",
+      "alternativeDomains": [],
+      "imports": [],
+      "exports": [],
+      "consumes": [],
+      "produces": [],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 7736
+    },
+    {
+      "id": "DOC-026",
+      "idStatus": "proposed",
+      "path": "docs/Architecture/ORGANIZATIONAL_PHYSICS.md",
+      "capabilityName": "ORGANIZATIONAL_PHYSICS",
+      "architecturalLayer": "DOC",
+      "cognitiveDomain": null,
+      "cognitiveDomainName": null,
+      "classificationConfidence": "not-applicable",
+      "alternativeDomains": [],
+      "imports": [],
+      "exports": [],
+      "consumes": [],
+      "produces": [],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 7495
     },
     {
       "id": "DOC-002",
@@ -4008,6 +4288,31 @@
       "sizeBytes": 8624
     },
     {
+      "id": "DOC-032",
+      "idStatus": "proposed",
+      "path": "docs/Cognitive Theory/ORGANIZATIONAL_LAWS.md",
+      "capabilityName": "ORGANIZATIONAL_LAWS",
+      "architecturalLayer": "DOC",
+      "cognitiveDomain": null,
+      "cognitiveDomainName": null,
+      "classificationConfidence": "not-applicable",
+      "alternativeDomains": [],
+      "imports": [],
+      "exports": [],
+      "consumes": [],
+      "produces": [],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 8740
+    },
+    {
       "id": "DOC-007",
       "idStatus": "proposed",
       "path": "docs/Cognitive Theory/ORGANIZATIONAL_THEORY.md",
@@ -4031,6 +4336,31 @@
       "reviewStatus": "unreviewed",
       "notes": "",
       "sizeBytes": 5903
+    },
+    {
+      "id": "DOC-034",
+      "idStatus": "proposed",
+      "path": "docs/Cognitive Theory/REASONING_INSPECTOR.md",
+      "capabilityName": "REASONING_INSPECTOR",
+      "architecturalLayer": "DOC",
+      "cognitiveDomain": null,
+      "cognitiveDomainName": null,
+      "classificationConfidence": "not-applicable",
+      "alternativeDomains": [],
+      "imports": [],
+      "exports": [],
+      "consumes": [],
+      "produces": [],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 7013
     },
     {
       "id": "DOC-008",
@@ -4480,7 +4810,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 15112
+      "sizeBytes": 18448
     },
     {
       "id": "DOC-046",
@@ -4599,8 +4929,10 @@
       "classificationConfidence": "not-applicable",
       "alternativeDomains": [],
       "imports": [
+        "../learning/computeOrganizationalLearningProfile",
         "../model/learning/computeOrganizationalLearningProfile",
-        "../projection/ExecutiveProjection"
+        "../projection/ExecutiveProjection",
+        "./computeOrganizationalLearningProfile"
       ],
       "exports": [
         "ComputeOrganizationalLearningProfileInput",
@@ -4624,7 +4956,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 14129
+      "sizeBytes": 15725
     },
     {
       "id": "DOC-048",
@@ -4752,7 +5084,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 26517
+      "sizeBytes": 26533
     },
     {
       "id": "DOC-051",
@@ -4786,7 +5118,84 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 9837
+      "sizeBytes": 9797
+    },
+    {
+      "id": "DOC-054",
+      "idStatus": "proposed",
+      "path": "docs/Sprint Updates/Capability Traces/cap-sim-001.md",
+      "capabilityName": "cap-sim-001",
+      "architecturalLayer": "DOC",
+      "cognitiveDomain": null,
+      "cognitiveDomainName": null,
+      "classificationConfidence": "not-applicable",
+      "alternativeDomains": [],
+      "imports": [
+        "../model/simulate/simulateOrganization"
+      ],
+      "exports": [
+        "SimulateOrganizationInput",
+        "simulateOrganization"
+      ],
+      "consumes": [],
+      "produces": [
+        "SimulateOrganizationInput",
+        "simulateOrganization"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 6760
+    },
+    {
+      "id": "DOC-060",
+      "idStatus": "proposed",
+      "path": "docs/Sprint Updates/Capability Traces/cap-sim-002.md",
+      "capabilityName": "cap-sim-002",
+      "architecturalLayer": "DOC",
+      "cognitiveDomain": null,
+      "cognitiveDomainName": null,
+      "classificationConfidence": "not-applicable",
+      "alternativeDomains": [],
+      "imports": [
+        "../model/simulate/organizationalIntervention",
+        "./organizationalIntervention"
+      ],
+      "exports": [
+        "BuildOrganizationalInterventionInput",
+        "OrganizationalIntervention",
+        "OrganizationalInterventionScope",
+        "OrganizationalInterventionStatus",
+        "OrganizationalInterventionTimeHorizon",
+        "OrganizationalInterventionType",
+        "buildOrganizationalIntervention"
+      ],
+      "consumes": [],
+      "produces": [
+        "BuildOrganizationalInterventionInput",
+        "OrganizationalIntervention",
+        "OrganizationalInterventionScope",
+        "OrganizationalInterventionStatus",
+        "OrganizationalInterventionTimeHorizon",
+        "OrganizationalInterventionType",
+        "buildOrganizationalIntervention"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 8046
     },
     {
       "id": "DOC-054",
@@ -4935,7 +5344,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 35321
+      "sizeBytes": 35328
     },
     {
       "id": "DOC-024",
@@ -5328,7 +5737,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 7101
+      "sizeBytes": 24343
     },
     {
       "id": "BENCH-002",
@@ -5353,7 +5762,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 6807
+      "sizeBytes": 9530
     },
     {
       "id": "DOC-036",
@@ -5453,7 +5862,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 4137
+      "sizeBytes": 6730
     },
     {
       "id": "DOC-040",
@@ -5478,7 +5887,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 6314
+      "sizeBytes": 10485
     },
     {
       "id": "DOC-041",
@@ -6765,6 +7174,36 @@
       "reviewStatus": "unreviewed",
       "notes": "",
       "sizeBytes": 4163
+    },
+    {
+      "id": "BENCH-024",
+      "idStatus": "proposed",
+      "path": "engine/benchmark/decision-intelligence/001-improve-execution.ts",
+      "capabilityName": "001-improve-execution",
+      "architecturalLayer": "BENCH",
+      "cognitiveDomain": null,
+      "cognitiveDomainName": null,
+      "classificationConfidence": "not-applicable",
+      "alternativeDomains": [],
+      "imports": [
+        "../../v3/model/causal/organizationalCausalModel",
+        "../../v3/model/simulate/executiveDecision",
+        "../../v3/model/state/inferOrganizationalConditions",
+        "../../v3/reasoning/runDecisionReasoningExperiment"
+      ],
+      "exports": [],
+      "consumes": [],
+      "produces": [],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 14776
     },
     {
       "id": "BENCH-012",
@@ -11391,6 +11830,207 @@
       "sizeBytes": 8315
     },
     {
+      "id": "COG-SYS-009",
+      "idStatus": "proposed",
+      "path": "engine/v3/model/causal/aggregateOrganizationalInfluence.ts",
+      "capabilityName": "aggregateOrganizationalInfluence",
+      "architecturalLayer": "COG",
+      "cognitiveDomain": "SYS",
+      "cognitiveDomainName": "Systems Intelligence",
+      "classificationConfidence": "medium",
+      "alternativeDomains": [
+        "PER",
+        "UND"
+      ],
+      "imports": [
+        "./propagateOrganizationalInfluence"
+      ],
+      "exports": [
+        "AggregateOrganizationalInfluenceInput",
+        "AggregatedInfluenceSource",
+        "AggregatedOrganizationalInfluence",
+        "aggregateOrganizationalInfluence"
+      ],
+      "consumes": [],
+      "produces": [
+        "AggregateOrganizationalInfluenceInput",
+        "AggregatedInfluenceSource",
+        "AggregatedOrganizationalInfluence",
+        "aggregateOrganizationalInfluence"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [
+        "Systems Intelligence"
+      ],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 4696
+    },
+    {
+      "id": "COG-UND-036",
+      "idStatus": "proposed",
+      "path": "engine/v3/model/causal/buildOrganizationalCausalModel.ts",
+      "capabilityName": "buildOrganizationalCausalModel",
+      "architecturalLayer": "COG",
+      "cognitiveDomain": "UND",
+      "cognitiveDomainName": "Understanding",
+      "classificationConfidence": "high",
+      "alternativeDomains": [
+        "PER",
+        "SYS"
+      ],
+      "imports": [
+        "../beliefs/organizationalBeliefs",
+        "../judgment/organizationalMechanism",
+        "../memory/organizationalTheories",
+        "../state/inferOrganizationalConditions",
+        "./organizationalCausalModel"
+      ],
+      "exports": [
+        "BuildOrganizationalCausalModelInput",
+        "buildOrganizationalCausalModel"
+      ],
+      "consumes": [],
+      "produces": [
+        "BuildOrganizationalCausalModelInput",
+        "buildOrganizationalCausalModel"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [
+        "Understanding"
+      ],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 4956
+    },
+    {
+      "id": "COG-UND-037",
+      "idStatus": "proposed",
+      "path": "engine/v3/model/causal/organizationalCausalModel.ts",
+      "capabilityName": "organizationalCausalModel",
+      "architecturalLayer": "COG",
+      "cognitiveDomain": "UND",
+      "cognitiveDomainName": "Understanding",
+      "classificationConfidence": "high",
+      "alternativeDomains": [
+        "PER",
+        "SYS"
+      ],
+      "imports": [],
+      "exports": [
+        "OrganizationalCausalEntity",
+        "OrganizationalCausalModel",
+        "OrganizationalCausalRelationship",
+        "OrganizationalEntityType",
+        "OrganizationalInfluenceDirection"
+      ],
+      "consumes": [],
+      "produces": [
+        "OrganizationalCausalEntity",
+        "OrganizationalCausalModel",
+        "OrganizationalCausalRelationship",
+        "OrganizationalEntityType",
+        "OrganizationalInfluenceDirection"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [
+        "Understanding"
+      ],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 2561
+    },
+    {
+      "id": "COG-SYS-010",
+      "idStatus": "proposed",
+      "path": "engine/v3/model/causal/propagateOrganizationalInfluence.ts",
+      "capabilityName": "propagateOrganizationalInfluence",
+      "architecturalLayer": "COG",
+      "cognitiveDomain": "SYS",
+      "cognitiveDomainName": "Systems Intelligence",
+      "classificationConfidence": "medium",
+      "alternativeDomains": [
+        "SIM",
+        "PER"
+      ],
+      "imports": [
+        "./organizationalCausalModel"
+      ],
+      "exports": [
+        "OrganizationalInfluenceChange",
+        "OrganizationalInfluencePropagationResult",
+        "PropagateOrganizationalInfluenceInput",
+        "propagateOrganizationalInfluence"
+      ],
+      "consumes": [],
+      "produces": [
+        "OrganizationalInfluenceChange",
+        "OrganizationalInfluencePropagationResult",
+        "PropagateOrganizationalInfluenceInput",
+        "propagateOrganizationalInfluence"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [
+        "Systems Intelligence"
+      ],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 5324
+    },
+    {
+      "id": "COG-UND-038",
+      "idStatus": "proposed",
+      "path": "engine/v3/model/causal/testPropagateOrganizationalInfluence.ts",
+      "capabilityName": "testPropagateOrganizationalInfluence",
+      "architecturalLayer": "COG",
+      "cognitiveDomain": "UND",
+      "cognitiveDomainName": "Understanding",
+      "classificationConfidence": "high",
+      "alternativeDomains": [
+        "PER",
+        "SYS"
+      ],
+      "imports": [
+        "./organizationalCausalModel",
+        "./propagateOrganizationalInfluence"
+      ],
+      "exports": [],
+      "consumes": [],
+      "produces": [],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [
+        "Understanding"
+      ],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 2145
+    },
+    {
       "id": "COG-PER-057",
       "idStatus": "proposed",
       "path": "engine/v3/model/cognition/cognitiveOntology.ts",
@@ -12520,6 +13160,87 @@
     {
       "id": "COG-PER-068",
       "idStatus": "proposed",
+      "path": "engine/v3/model/learning/buildPredictionLearningEvents.ts",
+      "capabilityName": "buildPredictionLearningEvents",
+      "architecturalLayer": "COG",
+      "cognitiveDomain": "PER",
+      "cognitiveDomainName": "Perception",
+      "classificationConfidence": "low",
+      "alternativeDomains": [
+        "UND",
+        "LRN"
+      ],
+      "imports": [
+        "../predictions/evaluatePredictionOutcomes",
+        "./computeOrganizationalLearningProfile"
+      ],
+      "exports": [
+        "BuildPredictionLearningEventsInput",
+        "buildPredictionLearningEvents"
+      ],
+      "consumes": [],
+      "produces": [
+        "BuildPredictionLearningEventsInput",
+        "buildPredictionLearningEvents"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [
+        "Perception"
+      ],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 1916
+    },
+    {
+      "id": "COG-PRD-001",
+      "idStatus": "proposed",
+      "path": "engine/v3/model/learning/buildPredictionLearningSummary.ts",
+      "capabilityName": "buildPredictionLearningSummary",
+      "architecturalLayer": "COG",
+      "cognitiveDomain": "PRD",
+      "cognitiveDomainName": "Prediction",
+      "classificationConfidence": "medium",
+      "alternativeDomains": [
+        "SELF",
+        "LRN"
+      ],
+      "imports": [
+        "./computeOrganizationalLearningProfile"
+      ],
+      "exports": [
+        "BuildPredictionLearningSummaryInput",
+        "ConfidenceCalibrationTrend",
+        "PredictionLearningSummary",
+        "buildPredictionLearningSummary"
+      ],
+      "consumes": [],
+      "produces": [
+        "BuildPredictionLearningSummaryInput",
+        "ConfidenceCalibrationTrend",
+        "PredictionLearningSummary",
+        "buildPredictionLearningSummary"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [
+        "Prediction"
+      ],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 6160
+    },
+    {
+      "id": "COG-PER-068",
+      "idStatus": "proposed",
       "path": "engine/v3/model/learning/computeOrganizationalLearningProfile.ts",
       "capabilityName": "computeOrganizationalLearningProfile",
       "architecturalLayer": "COG",
@@ -12530,7 +13251,9 @@
         "UND",
         "LRN"
       ],
-      "imports": [],
+      "imports": [
+        "./buildPredictionLearningSummary"
+      ],
       "exports": [
         "ComputeOrganizationalLearningProfileInput",
         "LearningEventChangeType",
@@ -12563,7 +13286,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 14673
+      "sizeBytes": 14982
     },
     {
       "id": "COG-UND-047",
@@ -13559,6 +14282,210 @@
     {
       "id": "COG-UND-064",
       "idStatus": "proposed",
+      "path": "engine/v3/model/simulate/buildOrganizationalIntervention.ts",
+      "capabilityName": "buildOrganizationalIntervention",
+      "architecturalLayer": "COG",
+      "cognitiveDomain": "UND",
+      "cognitiveDomainName": "Understanding",
+      "classificationConfidence": "medium",
+      "alternativeDomains": [
+        "SIM",
+        "SELF"
+      ],
+      "imports": [
+        "./organizationalIntervention"
+      ],
+      "exports": [
+        "BuildOrganizationalInterventionInput",
+        "buildOrganizationalIntervention"
+      ],
+      "consumes": [],
+      "produces": [
+        "BuildOrganizationalInterventionInput",
+        "buildOrganizationalIntervention"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [
+        "Understanding"
+      ],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 2250
+    },
+    {
+      "id": "COG-SIM-001",
+      "idStatus": "proposed",
+      "path": "engine/v3/model/simulate/executiveDecision.ts",
+      "capabilityName": "executiveDecision",
+      "architecturalLayer": "COG",
+      "cognitiveDomain": "SIM",
+      "cognitiveDomainName": "Simulation",
+      "classificationConfidence": "medium",
+      "alternativeDomains": [
+        "PER",
+        "UND"
+      ],
+      "imports": [
+        "./organizationalIntervention"
+      ],
+      "exports": [
+        "ExecutiveDecision",
+        "ExecutiveDecisionConstraint",
+        "ExecutiveDecisionStatus",
+        "ExecutiveDecisionSuccessMetric",
+        "ExecutiveDecisionTimeHorizon",
+        "ExecutiveDecisionType"
+      ],
+      "consumes": [],
+      "produces": [
+        "ExecutiveDecision",
+        "ExecutiveDecisionConstraint",
+        "ExecutiveDecisionStatus",
+        "ExecutiveDecisionSuccessMetric",
+        "ExecutiveDecisionTimeHorizon",
+        "ExecutiveDecisionType"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [
+        "Simulation"
+      ],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 3042
+    },
+    {
+      "id": "COG-PER-073",
+      "idStatus": "proposed",
+      "path": "engine/v3/model/simulate/interventionOption.ts",
+      "capabilityName": "InterventionOption",
+      "architecturalLayer": "COG",
+      "cognitiveDomain": "PER",
+      "cognitiveDomainName": "Perception",
+      "classificationConfidence": "medium",
+      "alternativeDomains": [
+        "UND",
+        "SIM"
+      ],
+      "imports": [
+        "./organizationalIntervention"
+      ],
+      "exports": [
+        "InterventionOption"
+      ],
+      "consumes": [],
+      "produces": [
+        "InterventionOption"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [
+        "Perception"
+      ],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 2155
+    },
+    {
+      "id": "COG-UND-068",
+      "idStatus": "proposed",
+      "path": "engine/v3/model/simulate/mapInterventionToCausalChanges.ts",
+      "capabilityName": "mapInterventionToCausalChanges",
+      "architecturalLayer": "COG",
+      "cognitiveDomain": "UND",
+      "cognitiveDomainName": "Understanding",
+      "classificationConfidence": "medium",
+      "alternativeDomains": [
+        "SYS",
+        "SIM"
+      ],
+      "imports": [
+        "../causal/organizationalCausalModel",
+        "../state/inferOrganizationalConditions",
+        "./organizationalIntervention"
+      ],
+      "exports": [
+        "InterventionCausalChange",
+        "MapInterventionToCausalChangesInput",
+        "mapInterventionToCausalChanges"
+      ],
+      "consumes": [],
+      "produces": [
+        "InterventionCausalChange",
+        "MapInterventionToCausalChangesInput",
+        "mapInterventionToCausalChanges"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [
+        "Understanding"
+      ],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 7288
+    },
+    {
+      "id": "COG-UND-065",
+      "idStatus": "proposed",
+      "path": "engine/v3/model/simulate/organizationalIntervention.ts",
+      "capabilityName": "organizationalIntervention",
+      "architecturalLayer": "COG",
+      "cognitiveDomain": "UND",
+      "cognitiveDomainName": "Understanding",
+      "classificationConfidence": "medium",
+      "alternativeDomains": [
+        "SIM",
+        "PER"
+      ],
+      "imports": [],
+      "exports": [
+        "OrganizationalIntervention",
+        "OrganizationalInterventionScope",
+        "OrganizationalInterventionStatus",
+        "OrganizationalInterventionTimeHorizon",
+        "OrganizationalInterventionType"
+      ],
+      "consumes": [],
+      "produces": [
+        "OrganizationalIntervention",
+        "OrganizationalInterventionScope",
+        "OrganizationalInterventionStatus",
+        "OrganizationalInterventionTimeHorizon",
+        "OrganizationalInterventionType"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [
+        "Understanding"
+      ],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 2257
+    },
+    {
+      "id": "COG-UND-064",
+      "idStatus": "proposed",
       "path": "engine/v3/model/simulate/simulateOrganization.ts",
       "capabilityName": "simulateOrganization",
       "architecturalLayer": "COG",
@@ -13571,10 +14498,13 @@
       ],
       "imports": [
         "../beliefs/organizationalBeliefs",
+        "../causal/organizationalCausalModel",
+        "../causal/propagateOrganizationalInfluence",
         "../learning/computeOrganizationalLearningProfile",
         "../predictions/evaluatePredictionOutcomes",
         "../predictions/organizationalPrediction",
-        "../state/inferOrganizationalConditions"
+        "../state/inferOrganizationalConditions",
+        "./organizationalIntervention"
       ],
       "exports": [
         "SimulateOrganizationInput",
@@ -13598,7 +14528,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 3314
+      "sizeBytes": 5970
     },
     {
       "id": "EXEC-UND-012",
@@ -13980,6 +14910,94 @@
       "sizeBytes": 4070
     },
     {
+      "id": "COG-UND-072",
+      "idStatus": "proposed",
+      "path": "engine/v3/reasoning/generateInterventionOptions.ts",
+      "capabilityName": "generateInterventionOptions",
+      "architecturalLayer": "COG",
+      "cognitiveDomain": "UND",
+      "cognitiveDomainName": "Understanding",
+      "classificationConfidence": "medium",
+      "alternativeDomains": [
+        "SIM",
+        "SELF"
+      ],
+      "imports": [
+        "../model/simulate/executiveDecision",
+        "../model/simulate/interventionOption"
+      ],
+      "exports": [
+        "GenerateInterventionOptionsInput",
+        "generateInterventionOptions"
+      ],
+      "consumes": [],
+      "produces": [
+        "GenerateInterventionOptionsInput",
+        "generateInterventionOptions"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [
+        "Understanding"
+      ],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 5353
+    },
+    {
+      "id": "COG-UND-073",
+      "idStatus": "proposed",
+      "path": "engine/v3/reasoning/runDecisionReasoningExperiment.ts",
+      "capabilityName": "runDecisionReasoningExperiment",
+      "architecturalLayer": "COG",
+      "cognitiveDomain": "UND",
+      "cognitiveDomainName": "Understanding",
+      "classificationConfidence": "medium",
+      "alternativeDomains": [
+        "SIM",
+        "PER"
+      ],
+      "imports": [
+        "../model/causal/aggregateOrganizationalInfluence",
+        "../model/causal/organizationalCausalModel",
+        "../model/causal/propagateOrganizationalInfluence",
+        "../model/simulate/buildOrganizationalIntervention",
+        "../model/simulate/executiveDecision",
+        "../model/simulate/interventionOption",
+        "../model/simulate/mapInterventionToCausalChanges",
+        "../model/simulate/organizationalIntervention",
+        "../model/state/inferOrganizationalConditions",
+        "./generateInterventionOptions"
+      ],
+      "exports": [
+        "DecisionReasoningResult",
+        "RunDecisionReasoningExperimentInput",
+        "runDecisionReasoningExperiment"
+      ],
+      "consumes": [],
+      "produces": [
+        "DecisionReasoningResult",
+        "RunDecisionReasoningExperimentInput",
+        "runDecisionReasoningExperiment"
+      ],
+      "consumedBy": [],
+      "canonicalProducer": false,
+      "runtimeDestination": null,
+      "executiveDestination": null,
+      "atlasCoverage": "unknown",
+      "livingOrganizationDomains": [
+        "Understanding"
+      ],
+      "orphanRisk": "unknown",
+      "reviewStatus": "unreviewed",
+      "notes": "",
+      "sizeBytes": 4149
+    },
+    {
       "id": "COG-UND-057",
       "idStatus": "proposed",
       "path": "engine/v3/reasoningGraph.ts",
@@ -14041,6 +15059,7 @@
         "../model/beliefs/inferOrganizationalBeliefs",
         "../model/beliefs/updateOrganizationalBeliefs",
         "../model/buildOrganizationReasoningGraph",
+        "../model/causal/buildOrganizationalCausalModel",
         "../model/inferOrganizationRelationships",
         "../model/inferReasoningRelationships",
         "../model/investigation/buildInvestigationOpportunities",
@@ -14049,6 +15068,7 @@
         "../model/judgment/evaluateExplanations",
         "../model/judgment/inferOrganizationalMechanisms",
         "../model/judgment/synthesizeExplanations",
+        "../model/learning/buildPredictionLearningEvents",
         "../model/learning/computeOrganizationalLearningProfile",
         "../model/memory/buildUnderstandingEvolution",
         "../model/memory/calculateMemoryMaturity",
@@ -14089,7 +15109,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 38115
+      "sizeBytes": 39576
     },
     {
       "id": "RUN-MEM-001",
@@ -14233,11 +15253,13 @@
         "../cognition/observationEvolution",
         "../entities/entityLifecycle",
         "../executive/executiveState",
+        "../model/causal/organizationalCausalModel",
         "../model/createOrganizationModel",
         "../model/memory/organizationalMemory",
         "../model/memory/organizationalTheories",
         "../model/organizationModel",
         "../model/predictions/evaluatePredictionOutcomes",
+        "../model/simulate/organizationalIntervention",
         "../model/simulate/simulateOrganization",
         "../understanding/types",
         "./organizationalUnderstandingState"
@@ -14268,7 +15290,7 @@
       "orphanRisk": "unknown",
       "reviewStatus": "unreviewed",
       "notes": "",
-      "sizeBytes": 5384
+      "sizeBytes": 5988
     },
     {
       "id": "RUN-MEM-002",

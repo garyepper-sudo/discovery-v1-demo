@@ -1,26 +1,29 @@
-import type { OrganizationalUnderstandingState } from "./organizationalUnderstandingState";
-import { createEmptyOrganizationalUnderstandingState } from "./organizationalUnderstandingState";
-import type {
-  PersistentBelief,
-  UnderstandingCluster,
-} from "../understanding/types";
 import type { EvolvedObservation } from "../cognition/observationEvolution";
-import { createOrganizationModel } from "../model/createOrganizationModel";
-import type { OrganizationModel } from "../model/organizationModel";
 import type { EntityMention } from "../entities/entityLifecycle";
-
+import type { ExecutiveState } from "../executive/executiveState";
+import type { OrganizationalCausalModel } from "../model/causal/organizationalCausalModel";
+import { createOrganizationModel } from "../model/createOrganizationModel";
 import type { OrganizationalMemory } from "../model/memory/organizationalMemory";
-
 import type {
   OrganizationalMemoryMaturity,
   OrganizationalTheory,
   OrganizationalTheoryEvolution,
   UnderstandingEvolution,
 } from "../model/memory/organizationalTheories";
-
-import type { ExecutiveState } from "../executive/executiveState";
+import type { OrganizationModel } from "../model/organizationModel";
 import type { PredictionEvaluation } from "../model/predictions/evaluatePredictionOutcomes";
+import type { OrganizationalIntervention } from "../model/simulate/organizationalIntervention";
 import type { SimulatedOrganizationState } from "../model/simulate/simulateOrganization";
+import type {
+  PersistentBelief,
+  UnderstandingCluster,
+} from "../understanding/types";
+import {
+  createEmptyOrganizationalUnderstandingState,
+} from "./organizationalUnderstandingState";
+import type {
+  OrganizationalUnderstandingState,
+} from "./organizationalUnderstandingState";
 
 export type OrganizationRuntimeMetadata = {
   organizationId: string;
@@ -85,9 +88,21 @@ export type OrganizationRuntimeMemory = {
   organizationalConcepts: unknown[];
 
   /**
+   * Canonical model of how organizational entities
+   * influence one another.
+   */
+  organizationalCausalModel: OrganizationalCausalModel | null;
+
+  /**
    * Longitudinal evaluations of prior organizational predictions.
    */
   predictionEvaluations: PredictionEvaluation[];
+
+  /**
+   * Intentional organizational changes created for
+   * forecasts, scenarios, and decision evaluation.
+   */
+  organizationalInterventions: OrganizationalIntervention[];
 
   /**
    * Canonical simulated future organizational states.
@@ -182,7 +197,10 @@ export function createEmptyOrganizationRuntime(params: {
       meaningSignals: [],
       organizationalConcepts: [],
 
+      organizationalCausalModel: null,
+
       predictionEvaluations: [],
+      organizationalInterventions: [],
       simulatedOrganizationStates: [],
     },
 

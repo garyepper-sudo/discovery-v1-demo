@@ -1,454 +1,477 @@
 # Discovery Architecture Handoff
 
-Generated: 2026-07-13
+Generated: 2026-07-13T17:05:59.688Z
 
 ## Purpose
 
-This document is the canonical architectural handoff for beginning a new Discovery sprint or chat.
+This document is the canonical architecture handoff for beginning a new Discovery sprint or chat.
 
-Before proposing any implementation:
+Before proposing a new capability, use this document to verify whether the responsibility, cognitive object, canonical producer, Runtime destination, or executive destination already exists.
 
-- verify capability ownership,
-- verify cognitive object ownership,
-- verify canonical producer ownership,
-- verify Runtime destination,
-- verify Executive destination,
-- verify benchmark coverage.
+## Permanent Development Rule
 
-Discovery should always extend existing cognition before introducing new cognition.
+Before adding any new cognitive capability:
 
----
-
-# Current Architecture Status
+1. Search the Cognitive Capability Registry.
+2. Search existing produced cognitive objects.
+3. Search canonical producers and implementation files.
+4. Review potential semantic overlaps.
+5. Extend an existing capability unless a distinct architectural responsibility is proven.
 
 ## Architecture Health
 
-**100%**
+- Registered capabilities: 20
+- Canonical producers: 20
+- Registered files: 454
+- Terminal capabilities: 3
+- Duplicate capability IDs: 0
+- Missing dependencies: 0
+- Missing canonical producers: 0
+- Capabilities without producer: 0
+- Capabilities without consumers: 0
+- Capabilities without Runtime destination: 0
+- Files implementing multiple capabilities: 0
 
-Current validation:
+## Canonical Capability Registry
 
-- Registered capabilities: **20**
-- Canonical producers: **20**
-- Duplicate capability IDs: **0**
-- Missing dependencies: **0**
-- Missing canonical producers: **0**
-- Missing Runtime destinations: **0**
-- Missing consumers: **0**
+| ID | Capability | Layer | Produces | Runtime Destination | Consumers |
+|---|---|---|---|---|---|
+| CAP-PER-001 | Evidence Ingestion | COG | V3Evidence | DiscoveryV3Result.evidence | CAP-PER-002 |
+| CAP-PER-002 | Organizational Observation Inference | COG | OrganizationalObservation | OrganizationModel.observations | CAP-UND-001 |
+| CAP-UND-001 | Organizational Mechanism Inference | COG | OrganizationalMechanism | OrganizationModel.mechanisms | CAP-ABS-001, CAP-SELF-001, CAP-UND-002, CAP-UND-003, CAP-UND-004, CAP-UND-005 |
+| CAP-UND-002 | Organizational Belief Formation | COG | OrganizationalBelief | OrganizationModel.beliefs | CAP-ABS-001, CAP-LRN-001, CAP-SELF-001, CAP-SIM-001, CAP-UND-003, CAP-UND-004, CAP-UND-005 |
+| CAP-UND-003 | Organizational Theory Formation | COG | OrganizationalTheory | OrganizationalMemory.theories | CAP-SELF-001, CAP-UND-004, CAP-UND-005 |
+| CAP-UND-004 | Organizational Condition Inference | EXEC | OrganizationalCondition | OrganizationRuntime.organizationalConditions | CAP-ADP-001, CAP-PRD-001, CAP-SELF-002, CAP-SIM-001, CAP-UND-005 |
+| CAP-UND-005 | Executive Assessment | EXEC | ExecutiveAssessment | OrganizationRuntime.executiveAssessment | CAP-UND-006 |
+| CAP-UND-006 | Executive Understanding Synthesis | COG | OrganizationalUnderstanding, OrganizationalUnderstandingState | OrganizationRuntime.organizationalUnderstandingState | Terminal capability |
+| CAP-MEM-001 | Organizational Runtime Persistence | RUN | OrganizationRuntime | OrganizationRuntime | CAP-LRN-001, CAP-LRN-002, CAP-SYS-001, CAP-UND-006 |
+| CAP-LRN-001 | Organizational Belief Evolution | COG | OrganizationalBeliefRevision | OrganizationRuntime.organizationalBeliefRevisions | CAP-LRN-002 |
+| CAP-LRN-002 | Organizational Learning Profile | COG | OrganizationalLearningProfile | OrganizationRuntime.organizationalLearningProfile | CAP-PRD-001, CAP-SIM-001 |
+| CAP-ABS-001 | Organizational Concept Formation | COG | OrganizationalConcept | OrganizationModel.concepts | CAP-UND-003 |
+| CAP-SELF-001 | Theory Validation | COG | TheoryValidation | ExecutiveAssessment.theoryValidation | CAP-SELF-002, CAP-SYS-001 |
+| CAP-SELF-002 | Investigation Opportunity Generation | EXEC | InvestigationOpportunity | OrganizationRuntime.investigationOpportunities | CAP-SYS-001 |
+| CAP-PRD-001 | Organizational Prediction | COG | OrganizationalPrediction | OrganizationRuntime.organizationalPredictions | CAP-ADP-001, CAP-PRD-002, CAP-SIM-001 |
+| CAP-PRD-002 | Prediction Reflection | COG | PredictionReflection | OrganizationRuntime.predictionReflection | CAP-ADP-001, CAP-UND-005 |
+| CAP-ADP-001 | Prediction Outcome Evaluation | COG | PredictionEvaluation | OrganizationRuntime.predictionEvaluations | CAP-LRN-002, CAP-SIM-001 |
+| CAP-SYS-001 | Architectural Planning | SYS | ArchitectureRecommendation | DiscoveryArchitectureState.architectureRecommendations | CAP-SYS-002 |
+| CAP-SYS-002 | Architecture Recommendation Projection | SYS | ArchitectureRecommendationProjection | DiscoveryArchitectureState.architectureRecommendationProjection | None |
+| CAP-SIM-001 | Organizational Simulation | COG | SimulatedOrganizationState | OrganizationRuntime.simulatedOrganizationStates | CAP-SYS-001 |
 
-The Cognitive Architecture is structurally complete.
+## Capability Dependency Map
 
-Current work focuses on increasing cognitive quality rather than expanding architecture.
+### CAP-PER-001 — Evidence Ingestion
 
----
+**Depends on:** No registered capability dependencies
 
-# Current Cognitive Operating Systems
+**Produces:** V3Evidence
 
-Discovery now contains all ten Operating Systems.
+**Canonical producer:** `engine/v3/evidence.ts`
 
-| Operating System | Status |
-|------------------|--------|
-| Perception | 🟢 Canonical |
-| Understanding | 🟢 Canonical |
-| Memory | 🟢 Canonical |
-| Learning | 🟢 Canonical |
-| Abstraction | 🟢 Canonical |
-| Self Reflection | 🟢 Canonical |
-| Prediction | 🟢 Canonical |
-| Adaptive Learning | 🟢 Canonical |
-| Systems | 🟢 Canonical |
-| Simulation | 🟢 Version 1 |
+**Runtime destination:** `DiscoveryV3Result.evidence`
 
----
+**Executive destinations:** None declared
 
-# Canonical Capability Pipeline
+### CAP-PER-002 — Organizational Observation Inference
+
+**Depends on:** CAP-PER-001
+
+**Produces:** OrganizationalObservation
+
+**Canonical producer:** `engine/v3/model/observations/inferOrganizationalObservations.ts`
+
+**Runtime destination:** `OrganizationModel.observations`
+
+**Executive destinations:** None declared
+
+### CAP-UND-001 — Organizational Mechanism Inference
+
+**Depends on:** CAP-PER-002
+
+**Produces:** OrganizationalMechanism
+
+**Canonical producer:** `engine/v3/model/judgment/inferOrganizationalMechanisms.ts`
+
+**Runtime destination:** `OrganizationModel.mechanisms`
+
+**Executive destinations:** ExecutiveAssessment, TheoryValidation
+
+### CAP-UND-002 — Organizational Belief Formation
+
+**Depends on:** CAP-UND-001
+
+**Produces:** OrganizationalBelief
+
+**Canonical producer:** `engine/v3/model/beliefs/inferOrganizationalBeliefs.ts`
+
+**Runtime destination:** `OrganizationModel.beliefs`
+
+**Executive destinations:** OrganizationalBeliefs, TheoryValidation, OrganizationalConditions
+
+### CAP-UND-003 — Organizational Theory Formation
+
+**Depends on:** CAP-ABS-001, CAP-UND-002
+
+**Produces:** OrganizationalTheory
+
+**Canonical producer:** `engine/v3/model/judgment/formOrganizationalTheories.ts`
+
+**Runtime destination:** `OrganizationalMemory.theories`
+
+**Executive destinations:** TheoryValidation, ExecutiveAssessment
+
+### CAP-UND-004 — Organizational Condition Inference
+
+**Depends on:** CAP-UND-001, CAP-UND-002, CAP-UND-003
+
+**Produces:** OrganizationalCondition
+
+**Canonical producer:** `engine/v3/model/state/inferOrganizationalConditions.ts`
+
+**Runtime destination:** `OrganizationRuntime.organizationalConditions`
+
+**Executive destinations:** OrganizationalConditions, OrganizationalState, ExecutiveAssessment, InvestigationOpportunities
+
+### CAP-UND-005 — Executive Assessment
+
+**Depends on:** CAP-UND-001, CAP-UND-002, CAP-UND-003, CAP-UND-004, CAP-PRD-002
+
+**Produces:** ExecutiveAssessment
+
+**Canonical producer:** `engine/v3/model/judgment/buildExecutiveAssessment.ts`
+
+**Runtime destination:** `OrganizationRuntime.executiveAssessment`
+
+**Executive destinations:** OrganizationalUnderstanding, ExecutiveProjection, ExecutiveWorkspace
+
+### CAP-UND-006 — Executive Understanding Synthesis
+
+**Depends on:** CAP-UND-005, CAP-MEM-001
+
+**Produces:** OrganizationalUnderstanding, OrganizationalUnderstandingState
+
+**Canonical producer:** `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
+
+**Runtime destination:** `OrganizationRuntime.organizationalUnderstandingState`
+
+**Executive destinations:** ExecutiveProjection, ExecutiveWorkspace, Atlas
+
+### CAP-MEM-001 — Organizational Runtime Persistence
+
+**Depends on:** No registered capability dependencies
+
+**Produces:** OrganizationRuntime
+
+**Canonical producer:** `engine/v3/runtime/organizationStateStore.ts`
+
+**Runtime destination:** `OrganizationRuntime`
+
+**Executive destinations:** None declared
+
+### CAP-LRN-001 — Organizational Belief Evolution
+
+**Depends on:** CAP-UND-002, CAP-MEM-001
+
+**Produces:** OrganizationalBeliefRevision
+
+**Canonical producer:** `engine/v3/model/beliefs/updateOrganizationalBeliefs.ts`
+
+**Runtime destination:** `OrganizationRuntime.organizationalBeliefRevisions`
+
+**Executive destinations:** OrganizationalBeliefs, OrganizationalLearningProfile
+
+### CAP-LRN-002 — Organizational Learning Profile
+
+**Depends on:** CAP-MEM-001, CAP-LRN-001
+
+**Produces:** OrganizationalLearningProfile
+
+**Canonical producer:** `engine/v3/model/learning/computeOrganizationalLearningProfile.ts`
+
+**Runtime destination:** `OrganizationRuntime.organizationalLearningProfile`
+
+**Executive destinations:** OrganizationalLearningProfile, ExecutiveProjection
+
+### CAP-ABS-001 — Organizational Concept Formation
+
+**Depends on:** CAP-UND-001, CAP-UND-002
+
+**Produces:** OrganizationalConcept
+
+**Canonical producer:** `engine/v3/concepts/synthesizeOrganizationalConcepts.ts`
+
+**Runtime destination:** `OrganizationModel.concepts`
+
+**Executive destinations:** ExecutiveAssessment, ExecutiveProjection
+
+### CAP-SELF-001 — Theory Validation
+
+**Depends on:** CAP-UND-001, CAP-UND-002, CAP-UND-003
+
+**Produces:** TheoryValidation
+
+**Canonical producer:** `engine/v3/model/judgment/buildTheoryReflection.ts`
+
+**Runtime destination:** `ExecutiveAssessment.theoryValidation`
+
+**Executive destinations:** TheoryValidation, ExecutiveProjection
+
+### CAP-SELF-002 — Investigation Opportunity Generation
+
+**Depends on:** CAP-UND-004, CAP-SELF-001
+
+**Produces:** InvestigationOpportunity
+
+**Canonical producer:** `engine/v3/model/investigation/buildInvestigationOpportunities.ts`
+
+**Runtime destination:** `OrganizationRuntime.investigationOpportunities`
+
+**Executive destinations:** InvestigationOpportunities, ExecutiveProjection
+
+### CAP-PRD-001 — Organizational Prediction
+
+**Depends on:** CAP-UND-004, CAP-LRN-002
+
+**Produces:** OrganizationalPrediction
+
+**Canonical producer:** `engine/v3/model/predictions/inferOrganizationalPredictions.ts`
+
+**Runtime destination:** `OrganizationRuntime.organizationalPredictions`
+
+**Executive destinations:** PredictionReflection
+
+### CAP-PRD-002 — Prediction Reflection
+
+**Depends on:** CAP-PRD-001
+
+**Produces:** PredictionReflection
+
+**Canonical producer:** `engine/v3/model/predictions/buildPredictionReflection.ts`
+
+**Runtime destination:** `OrganizationRuntime.predictionReflection`
+
+**Executive destinations:** ExecutiveAssessment, OrganizationalUnderstanding, Atlas
+
+### CAP-ADP-001 — Prediction Outcome Evaluation
+
+**Depends on:** CAP-PRD-001, CAP-PRD-002, CAP-UND-004
+
+**Produces:** PredictionEvaluation
+
+**Canonical producer:** `engine/v3/model/predictions/evaluatePredictionOutcomes.ts`
+
+**Runtime destination:** `OrganizationRuntime.predictionEvaluations`
+
+**Executive destinations:** ExecutiveAssessment, ExecutiveProjection, ExecutiveWorkspace, Atlas
+
+### CAP-SYS-001 — Architectural Planning
+
+**Depends on:** CAP-MEM-001, CAP-SELF-001, CAP-SELF-002
+
+**Produces:** ArchitectureRecommendation
+
+**Canonical producer:** `scripts/cognition/planArchitecture.mjs`
+
+**Runtime destination:** `DiscoveryArchitectureState.architectureRecommendations`
+
+**Executive destinations:** SprintBrief, ArchitectureHandoff
+
+### CAP-SYS-002 — Architecture Recommendation Projection
+
+**Depends on:** CAP-SYS-001
+
+**Produces:** ArchitectureRecommendationProjection
+
+**Canonical producer:** `scripts/cognition/projectArchitectureRecommendation.mjs`
+
+**Runtime destination:** `DiscoveryArchitectureState.architectureRecommendationProjection`
+
+**Executive destinations:** SprintBrief, ArchitectureHandoff
+
+### CAP-SIM-001 — Organizational Simulation
+
+**Depends on:** CAP-UND-004, CAP-UND-002, CAP-PRD-001, CAP-ADP-001, CAP-LRN-002
+
+**Produces:** SimulatedOrganizationState
+
+**Canonical producer:** `engine/v3/model/simulate/simulateOrganization.ts`
+
+**Runtime destination:** `OrganizationRuntime.simulatedOrganizationStates`
+
+**Executive destinations:** ExecutiveProjection, ExecutiveWorkspace, Atlas
+
+## Potential Capability Overlap
+
+### CAP-UND-004 — Organizational Condition Inference
+
+Possible overlap with **CAP-UND-005 — Executive Assessment**.
+
+Reason: semantic similarity 36%.
+
+Review before creating a new capability. Similarity does not automatically mean duplication; one capability may legitimately depend on or transform another.
+
+### CAP-UND-005 — Executive Assessment
+
+Possible overlap with **CAP-SIM-001 — Organizational Simulation**.
+
+Reason: semantic similarity 32%.
+
+Review before creating a new capability. Similarity does not automatically mean duplication; one capability may legitimately depend on or transform another.
+
+## Canonical Pipeline
 
 ```text
 Evidence Ingestion
 ↓
-
 Organizational Observation Inference
 ↓
-
 Organizational Mechanism Inference
 ↓
-
 Organizational Belief Formation
 ↓
-
 Organizational Theory Formation
 ↓
-
 Organizational Condition Inference
 ↓
-
 Executive Assessment
 ↓
-
-Executive Understanding
-
+Executive Understanding Synthesis
 ↓
-
 Organization Runtime
-
 ↓
-
-Organizational Prediction
-
-↓
-
-Prediction Reflection
-
-↓
-
-Prediction Outcome Evaluation
-
-↓
-
-Organizational Learning
-
-↓
-
-Organizational Simulation
-
-↓
-
 Executive Projection
-
 ↓
-
 Executive Workspace
-
-↓
-
-Atlas
 ```
 
----
+## Canonical Source Files
 
-# Major Milestones Completed
+### CAP-PER-001 — Evidence Ingestion
 
-## Prediction
+- Canonical producer: `engine/v3/evidence.ts`
+- Implementation: `engine/v3/evidence.ts`
 
-Discovery now performs:
+### CAP-PER-002 — Organizational Observation Inference
 
-- organizational prediction
-- continuation prediction
-- deterioration prediction
-- improvement prediction
-- propagation prediction
+- Canonical producer: `engine/v3/model/observations/inferOrganizationalObservations.ts`
+- Implementation: `engine/v3/model/observations/inferOrganizationalObservations.ts`
+- Implementation: `engine/v3/model/observations/organizationalObservations.ts`
 
----
+### CAP-UND-001 — Organizational Mechanism Inference
 
-## Adaptive Learning
+- Canonical producer: `engine/v3/model/judgment/inferOrganizationalMechanisms.ts`
+- Implementation: `engine/v3/model/judgment/inferOrganizationalMechanisms.ts`
+- Implementation: `engine/v3/model/judgment/organizationalMechanism.ts`
+- Implementation: `engine/v3/model/judgment/mechanismCandidateBuilder.ts`
+- Implementation: `engine/v3/model/judgment/mechanismEvidenceAggregation.ts`
 
-Discovery now evaluates previous predictions against later organizational reality.
+### CAP-UND-002 — Organizational Belief Formation
 
-Prediction Outcome Evaluation now performs:
+- Canonical producer: `engine/v3/model/beliefs/inferOrganizationalBeliefs.ts`
+- Implementation: `engine/v3/model/beliefs/inferOrganizationalBeliefs.ts`
+- Implementation: `engine/v3/model/beliefs/organizationalBeliefs.ts`
 
-- semantic condition comparison
-- prediction confirmation
-- prediction contradiction
-- prediction accuracy measurement
-- confidence calibration
-- confidence adjustment
-- adaptive learning signals
+### CAP-UND-003 — Organizational Theory Formation
 
-Discovery now answers:
+- Canonical producer: `engine/v3/model/judgment/formOrganizationalTheories.ts`
+- Implementation: `engine/v3/model/judgment/formOrganizationalTheories.ts`
+- Implementation: `engine/v3/model/judgment/organizationalTheory.ts`
 
-> **Was I correct?**
+### CAP-UND-004 — Organizational Condition Inference
 
----
+- Canonical producer: `engine/v3/model/state/inferOrganizationalConditions.ts`
+- Implementation: `engine/v3/model/state/inferOrganizationalConditions.ts`
 
-## Architecture Planning
+### CAP-UND-005 — Executive Assessment
 
-Discovery now reasons about its own architecture using the same cognitive pipeline it applies to organizations.
+- Canonical producer: `engine/v3/model/judgment/buildExecutiveAssessment.ts`
+- Implementation: `engine/v3/model/judgment/buildExecutiveAssessment.ts`
 
-Architecture Planning performs:
+### CAP-UND-006 — Executive Understanding Synthesis
 
-```text
-Architecture State
+- Canonical producer: `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
+- Implementation: `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
+- Implementation: `engine/v3/understanding/consolidateUnderstanding.ts`
+- Implementation: `engine/v3/understanding/synthesizeUnderstanding.ts`
+- Implementation: `engine/v3/runtime/evolveOrganizationRuntime.ts`
 
-↓
+### CAP-MEM-001 — Organizational Runtime Persistence
 
-Architecture Observations
+- Canonical producer: `engine/v3/runtime/organizationStateStore.ts`
+- Implementation: `engine/v3/runtime/organizationStateStore.ts`
+- Implementation: `engine/v3/runtime/organizationRuntime.ts`
 
-↓
+### CAP-LRN-001 — Organizational Belief Evolution
 
-Architecture Mechanisms
+- Canonical producer: `engine/v3/model/beliefs/updateOrganizationalBeliefs.ts`
+- Implementation: `engine/v3/model/beliefs/updateOrganizationalBeliefs.ts`
+- Implementation: `engine/v3/cognition/beliefs/mergeBeliefs.ts`
 
-↓
+### CAP-LRN-002 — Organizational Learning Profile
 
-Architecture Beliefs
+- Canonical producer: `engine/v3/model/learning/computeOrganizationalLearningProfile.ts`
+- Implementation: `engine/v3/model/learning/computeOrganizationalLearningProfile.ts`
 
-↓
+### CAP-ABS-001 — Organizational Concept Formation
 
-Architecture Theory
+- Canonical producer: `engine/v3/concepts/synthesizeOrganizationalConcepts.ts`
+- Implementation: `engine/v3/concepts/buildConceptCandidates.ts`
+- Implementation: `engine/v3/concepts/compressConceptCandidates.ts`
+- Implementation: `engine/v3/concepts/conceptCandidateTypes.ts`
+- Implementation: `engine/v3/concepts/synthesizeOrganizationalConcepts.ts`
+- Implementation: `engine/v3/compression/types.ts`
 
-↓
+### CAP-SELF-001 — Theory Validation
 
-Architecture Recommendation
-```
+- Canonical producer: `engine/v3/model/judgment/buildTheoryReflection.ts`
+- Implementation: `engine/v3/model/judgment/buildTheoryReflection.ts`
 
-Architecture Recommendation Projection exposes this reasoning through Sprint Startup.
+### CAP-SELF-002 — Investigation Opportunity Generation
 
----
+- Canonical producer: `engine/v3/model/investigation/buildInvestigationOpportunities.ts`
+- Implementation: `engine/v3/model/investigation/buildInvestigationOpportunities.ts`
 
-## Organizational Simulation
+### CAP-PRD-001 — Organizational Prediction
 
-Discovery now performs Version 1 Organizational Simulation.
+- Canonical producer: `engine/v3/model/predictions/inferOrganizationalPredictions.ts`
+- Implementation: `engine/v3/model/predictions/inferOrganizationalPredictions.ts`
+- Implementation: `engine/v3/model/predictions/organizationalPrediction.ts`
+- Implementation: `engine/v3/model/predictions/predictionRules.ts`
+- Implementation: `engine/v3/model/predictions/predictionTypes.ts`
 
-Simulation currently projects:
+### CAP-PRD-002 — Prediction Reflection
 
-- organizational conditions
-- organizational beliefs
-- organizational predictions
+- Canonical producer: `engine/v3/model/predictions/buildPredictionReflection.ts`
+- Implementation: `engine/v3/model/predictions/buildPredictionReflection.ts`
 
-Simulation confidence is calibrated using historical prediction accuracy.
+### CAP-ADP-001 — Prediction Outcome Evaluation
 
-Simulation outputs are persisted in:
+- Canonical producer: `engine/v3/model/predictions/evaluatePredictionOutcomes.ts`
+- Implementation: `engine/v3/model/predictions/evaluatePredictionOutcomes.ts`
 
-```text
-OrganizationRuntime.memory.simulatedOrganizationStates
-```
+### CAP-SYS-001 — Architectural Planning
 
----
+- Canonical producer: `scripts/cognition/planArchitecture.mjs`
+- Implementation: `scripts/cognition/planArchitecture.mjs`
 
-# Current Runtime Flow
+### CAP-SYS-002 — Architecture Recommendation Projection
 
-```text
-Investigation
+- Canonical producer: `scripts/cognition/projectArchitectureRecommendation.mjs`
+- Implementation: `scripts/cognition/projectArchitectureRecommendation.mjs`
 
-↓
+### CAP-SIM-001 — Organizational Simulation
 
-Runtime
+- Canonical producer: `engine/v3/model/simulate/simulateOrganization.ts`
+- Implementation: `engine/v3/model/simulate/simulateOrganization.ts`
 
-↓
+## Sprint Handoff Guidance
 
-Understanding
+Treat the following files as canonical architectural sources:
 
-↓
+- `docs/Architecture/COGNITIVE_CAPABILITY_REGISTRY.json`
+- `docs/Architecture/COGNITIVE_FILE_REGISTRY.json`
+- `docs/Architecture/COGNITIVE_CAPABILITY_AUDIT.json`
+- `docs/Architecture/COGNITIVE_OBJECT_MODEL.md`
+- `docs/Sprint Updates/ARCHITECTURE_HANDOFF.md`
 
-Prediction
+When architectural evidence conflicts, prefer the current registry and verified source-code trace over older sprint prose.
 
-↓
-
-Prediction Evaluation
-
-↓
-
-Learning
-
-↓
-
-Simulation
-
-↓
-
-Persistence
-```
-
-Discovery now possesses its first complete cognitive feedback loop.
-
----
-
-# Current Development Philosophy
-
-Discovery has entered a different development phase.
-
-The architecture is complete.
-
-The primary objective is no longer adding Operating Systems.
-
-The primary objective is increasing the intelligence of existing Operating Systems.
-
-Future work should make Discovery progressively better at:
-
-- prediction
-- adaptive learning
-- simulation
-- executive reasoning
-
-without introducing unnecessary architectural expansion.
-
----
-
-# Current Development Priorities
-
-## Priority 1
-
-Simulation Version 2
-
-Introduce true simulated organizational evolution.
-
-Simulation should evolve:
-
-- projected organizational conditions
-- projected organizational beliefs
-- projected organizational predictions
-
-rather than copying current state.
-
----
-
-## Priority 2
-
-Multi-step simulation.
-
-Current:
-
-```text
-Current State
-
-↓
-
-Near-Term Future
-```
-
-Future:
-
-```text
-Current
-
-↓
-
-Month 1
-
-↓
-
-Quarter
-
-↓
-
-Year
-```
-
----
-
-## Priority 3
-
-Simulation Benchmarking.
-
-Measure:
-
-- simulation stability
-- simulation accuracy
-- prediction consistency
-- calibration quality
-- executive usefulness
-
----
-
-# Permanent Development Rules
-
-Before implementing anything:
-
-1. Search the Capability Registry.
-2. Search produced cognitive objects.
-3. Search canonical producers.
-4. Search Runtime destinations.
-5. Search Executive destinations.
-6. Search benchmark ownership.
-7. Extend existing cognition whenever possible.
-
-Do **not** create another capability when an existing capability already owns:
-
-- the responsibility,
-- the cognitive object,
-- the Runtime destination,
-- the Executive destination,
-- or the canonical producer.
-
----
-
-# Current Canonical Cognitive Loop
-
-```text
-Evidence
-
-↓
-
-Understanding
-
-↓
-
-Prediction
-
-↓
-
-Reality
-
-↓
-
-Prediction Evaluation
-
-↓
-
-Learning
-
-↓
-
-Simulation
-
-↓
-
-Executive Assessment
-
-↓
-
-Executive Projection
-```
-
-Discovery now continuously improves through accumulated organizational experience.
-
----
-
-# Current Sprint Outcome
-
-Discovery now possesses:
-
-- Complete Cognitive Operating System
-- 20 canonical capabilities
-- Closed adaptive learning loop
-- Longitudinal prediction evaluation
-- Architecture self-planning
-- Architecture recommendation projection
-- Organizational Simulation Version 1
-- Persisted simulated organizational states
-- 100% architecture validation
-- 100% benchmark integrity
-
----
-
-# Next Sprint
-
-Do **not** create another Operating System.
-
-Improve Simulation.
-
-Specifically:
-
-1. evolve simulated conditions,
-2. evolve simulated beliefs,
-3. evolve simulated predictions,
-4. introduce multi-step simulated time,
-5. benchmark simulation quality.
-
-Simulation should evolve organizations rather than simply projecting them.
-
----
-
-> **Architecture before implementation.**
-
-> **Objects before code.**
-
-> **Capabilities before files.**
-
-> **Longitudinal learning before heuristics.**
-
-> **Prediction should improve through measured reality.**
-
-> **Simulation should improve through accumulated learning.**
-
-> **Every cognitive object has one canonical producer.**
-
-> **The Cognitive Operating System governs Discovery.**

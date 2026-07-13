@@ -20,6 +20,7 @@ import type {
   ExecutiveOrganizationalState,
   ExecutivePredictionEvaluation,
   ExecutiveProjection,
+  ExecutiveSimulation,
   ExecutiveTheoryValidation,
 } from "./ExecutiveProjection";
 
@@ -131,6 +132,33 @@ type RuntimePredictionEvaluation = {
 
   supportingEvidenceIds?: string[];
 };
+type RuntimeSimulation = {
+  simulatedAt?: string;
+
+  timeHorizon?:
+    | "immediate"
+    | "near-term"
+    | "medium-term"
+    | "long-term";
+
+  confidence?: number;
+
+  explanation?: string;
+
+  projectedConditions?: {
+    name?: string;
+  }[];
+
+  projectedBeliefs?: {
+    statement?: string;
+  }[];
+
+  projectedPredictions?: {
+    prediction?: string;
+    statement?: string;
+    headline?: string;
+  }[];
+};
 
 type RuntimeExecutiveMemory = {
   organizationalUnderstandingState?: {
@@ -181,6 +209,8 @@ type RuntimeExecutiveMemory = {
   organizationalLearningProfile?: RuntimeOrganizationalLearningProfile;
 
   predictionEvaluations?: RuntimePredictionEvaluation[];
+
+  simulatedOrganizationStates?: RuntimeSimulation[];
 };
 
 function toPercentage(value: number | undefined): number {
@@ -783,6 +813,67 @@ function buildPredictionEvaluationProjection(
         evaluation.supportingEvidenceIds ?? [],
     }));
 }
+function buildSimulationProjection(
+  runtimeMemory: RuntimeExecutiveMemory | undefined,
+): ExecutiveSimulation | undefined {
+  const simulations =
+    runtimeMemory?.simulatedOrganizationStates;
+
+  if (!simulations || simulations.length === 0) {
+    return undefined;
+  }
+
+  const latestSimulation =
+    simulations[simulations.length - 1];
+
+  return {
+    simulatedAt:
+      latestSimulation.simulatedAt ?? "",
+
+    timeHorizon:
+      latestSimulation.timeHorizon ?? "near-term",
+
+    confidence: toPercentage(
+      latestSimulation.confidence,
+    ),
+
+    explanation:
+      latestSimulation.explanation ??
+      "Discovery has projected the organization's current state into a plausible future.",
+
+    projectedConditions:
+      latestSimulation.projectedConditions
+        ?.map((condition) => condition.name)
+        .filter(
+          (name): name is string =>
+            typeof name === "string" &&
+            name.trim().length > 0,
+        ) ?? [],
+
+    projectedBeliefs:
+      latestSimulation.projectedBeliefs
+        ?.map((belief) => belief.statement)
+        .filter(
+          (statement): statement is string =>
+            typeof statement === "string" &&
+            statement.trim().length > 0,
+        ) ?? [],
+
+    projectedPredictions:
+      latestSimulation.projectedPredictions
+        ?.map(
+          (prediction) =>
+            prediction.prediction ??
+            prediction.statement ??
+            prediction.headline,
+        )
+        .filter(
+          (statement): statement is string =>
+            typeof statement === "string" &&
+            statement.trim().length > 0,
+        ) ?? [],
+  };
+}
 
 export function buildExecutiveProjection({
   result,
@@ -840,6 +931,9 @@ export function buildExecutiveProjection({
 
   const predictionEvaluations =
     buildPredictionEvaluationProjection(runtimeMemory);
+
+  const simulation =
+    buildSimulationProjection(runtimeMemory);
 
   const investigationOpportunity =
     choosePrimaryInvestigationOpportunity(
@@ -940,6 +1034,8 @@ export function buildExecutiveProjection({
     organizationalLearningProfile,
 
     predictionEvaluations,
+
+    simulation,
 
     theoryValidation,
 

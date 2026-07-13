@@ -15,6 +15,7 @@ import { inferOrganizationalMechanisms } from "../model/judgment/inferOrganizati
 import { inferOrganizationalBeliefs } from "../model/beliefs/inferOrganizationalBeliefs";
 import { updateOrganizationalBeliefs } from "../model/beliefs/updateOrganizationalBeliefs";
 import { consolidateOrganizationalTheories } from "../model/memory/consolidateOrganizationalTheories";
+import { buildPredictionLearningEvents } from "../model/learning/buildPredictionLearningEvents";
 import { computeOrganizationalLearningProfile } from "../model/learning/computeOrganizationalLearningProfile";
 import { runOrganizationCognition } from "../cognition/cognitionEngine";
 import { updateOrganizationalUnderstandingState } from "./updateOrganizationalUnderstandingState";
@@ -43,6 +44,7 @@ import { inferOrganizationalPredictions } from "../model/predictions/inferOrgani
 import { buildPredictionReflection } from "../model/predictions/buildPredictionReflection";
 import { evaluatePredictionOutcomes } from "../model/predictions/evaluatePredictionOutcomes";
 import { simulateOrganization } from "../model/simulate/simulateOrganization";
+import { buildOrganizationalCausalModel } from "../model/causal/buildOrganizationalCausalModel";
 
 
 export function evolveOrganizationRuntime(params: {
@@ -85,6 +87,7 @@ export function evolveOrganizationRuntime(params: {
     understandingSnapshots?: any[];
     learningEvents?: any[];
     organizationalLearningProfile?: any;
+    organizationalCausalModel?: any;
     organizationalConditions?: any[];
     organizationalState?: any;
     investigationStrategy?: any;
@@ -92,6 +95,7 @@ export function evolveOrganizationRuntime(params: {
     organizationalPredictions?: any[];
     predictionReflection?: any;
     predictionEvaluations?: any[];
+    organizationalInterventions?: any[];
     simulatedOrganizationStates?: any[];
   };
 
@@ -652,6 +656,13 @@ export function evolveOrganizationRuntime(params: {
       now,
   });
 
+  const predictionLearningEvents =
+  buildPredictionLearningEvents({
+    predictionEvaluations,
+    investigationId: eventId,
+    timestamp: now,
+  });
+
   const investigationOpportunityResult =
     buildInvestigationOpportunities({
       conditions: organizationalConditions,
@@ -868,50 +879,53 @@ export function evolveOrganizationRuntime(params: {
   };
 
   const learningEvents = [
-    ...organizationalBeliefState.revisions.map(
-      (revision) => ({
-        id: `learning-${eventId}-${revision.beliefId}`,
-        investigationId: eventId,
-        timestamp: now,
+  ...organizationalBeliefState.revisions.map(
+    (revision) => ({
+      id: `learning-${eventId}-${revision.beliefId}`,
+      investigationId: eventId,
+      timestamp: now,
 
-        objectType: "belief",
-        objectId: revision.beliefId,
+      objectType: "belief",
+      objectId: revision.beliefId,
 
-        changeType: revision.trend,
+      changeType: revision.trend,
 
-        previousConfidence:
-          revision.previousConfidence,
-        currentConfidence:
-          revision.revisedConfidence,
-        confidenceDelta:
-          revision.revisedConfidence -
-          revision.previousConfidence,
+      previousConfidence:
+        revision.previousConfidence,
+      currentConfidence:
+        revision.revisedConfidence,
+      confidenceDelta:
+        revision.revisedConfidence -
+        revision.previousConfidence,
 
-        reason: revision.reason,
-      }),
-    ),
+      reason: revision.reason,
+    }),
+  ),
 
-    ...organizationalTheoryState.theoryEvolution.map(
-      (evolution) => ({
-        id: `learning-${eventId}-${evolution.theoryId}`,
-        investigationId: eventId,
-        timestamp: now,
+  ...organizationalTheoryState.theoryEvolution.map(
+    (evolution) => ({
+      id: `learning-${eventId}-${evolution.theoryId}`,
+      investigationId: eventId,
+      timestamp: now,
 
-        objectType: "theory",
-        objectId: evolution.theoryId,
+      objectType: "theory",
+      objectId: evolution.theoryId,
 
-        changeType: evolution.status,
+      changeType: evolution.status,
 
-        previousConfidence:
-          evolution.previousConfidence,
-        currentConfidence:
-          evolution.currentConfidence,
-        confidenceDelta: evolution.delta,
+      previousConfidence:
+        evolution.previousConfidence,
+      currentConfidence:
+        evolution.currentConfidence,
+      confidenceDelta: evolution.delta,
 
-        reason: evolution.reason,
-      }),
-    ),
-  ];
+      reason: evolution.reason,
+    }),
+  ),
+
+  ...predictionLearningEvents,
+];
+
 
   const understandingSnapshots = [
     ...(memory.understandingSnapshots ?? []),
@@ -930,9 +944,41 @@ export function evolveOrganizationRuntime(params: {
     });
 
   console.log(
-  "Organizational Learning Profile",
-  organizationalLearningProfile,
-);
+    "Organizational Learning Profile",
+    organizationalLearningProfile,
+  );
+
+  /**
+   * CAP-UND-007 — Organizational Causal Reasoning
+   *
+   * Version 1 builds a canonical causal model from the
+   * current conditions, beliefs, mechanisms, and theories.
+   */
+  const organizationalCausalModel =
+    buildOrganizationalCausalModel({
+      organizationId:
+        runtime.metadata.organizationId,
+
+      conditions:
+        organizationalConditions,
+
+      beliefs:
+        organizationalBeliefState.beliefs,
+
+      mechanisms:
+        safeMechanismNetwork.mechanisms,
+
+      theories:
+        organizationalTheoryState.theories,
+
+      generatedAt:
+        now,
+    });
+
+  console.log(
+    "Organizational Causal Model",
+    organizationalCausalModel,
+  );
 
 /**
  * CAP-SIM-001 — Organizational Simulation
@@ -944,6 +990,11 @@ const simulatedOrganizationState =
   simulateOrganization({
     organizationId:
       runtime.metadata.organizationId,
+
+    intervention: undefined,
+
+    causalModel:
+      organizationalCausalModel,
 
     conditions:
       organizationalConditions,
@@ -988,9 +1039,12 @@ const updatedMemory = {
     executiveAssessment,
     organizationalConditions,
     organizationalState,
+    organizationalCausalModel,
     organizationalPredictions,
     predictionReflection,
     predictionEvaluations,
+    organizationalInterventions:
+      memory.organizationalInterventions ?? [],
     simulatedOrganizationStates,
     investigationStrategy,
     investigationOpportunities,
@@ -1045,8 +1099,11 @@ const updatedMemory = {
       organizationalLearningProfile,
       organizationalConditions,
       organizationalState,
+      organizationalCausalModel,
       organizationalPredictions,
       predictionReflection,
+      organizationalInterventions:
+        memory.organizationalInterventions ?? [],
       simulatedOrganizationStates,
       predictionEvaluations,
       investigationStrategy,
@@ -1256,6 +1313,9 @@ const updatedMemory = {
 
     organizationalState:
       typeof organizationalState;
+
+    organizationalCausalModel:
+      typeof organizationalCausalModel;
 
     organizationalPredictions:
       typeof organizationalPredictions;

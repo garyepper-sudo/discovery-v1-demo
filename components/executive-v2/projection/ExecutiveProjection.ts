@@ -390,6 +390,47 @@ export type ExecutivePredictionEvaluation = {
   supportingEvidenceIds: string[];
 };
 
+export type ExecutiveSimulation = {
+  /**
+   * When Discovery generated this simulated future.
+   */
+  simulatedAt: string;
+
+  /**
+   * Relative future horizon represented by the simulation.
+   */
+  timeHorizon:
+    | "immediate"
+    | "near-term"
+    | "medium-term"
+    | "long-term";
+
+  /**
+   * Discovery's confidence in this simulated future.
+   */
+  confidence: number;
+
+  /**
+   * Executive explanation of how Discovery formed the simulation.
+   */
+  explanation: string;
+
+  /**
+   * Organizational conditions projected into the simulated future.
+   */
+  projectedConditions: string[];
+
+  /**
+   * Organizational beliefs projected into the simulated future.
+   */
+  projectedBeliefs: string[];
+
+  /**
+   * Organizational predictions active in the simulated future.
+   */
+  projectedPredictions: string[];
+};
+
 export type ExecutiveProjection = {
   /**
    * Executive workspace metadata.
@@ -504,6 +545,14 @@ export type ExecutiveProjection = {
   /**
    * How Discovery arrived at its current understanding.
    */
+
+  /**
+ * Discovery's latest simulated future organizational state.
+ *
+ * Produced by CAP-SIM-001 — Organizational Simulation.
+ */
+  simulation?: ExecutiveSimulation;
+  
   evolution: {
     milestones: ExecutiveEvolutionMilestone[];
   };

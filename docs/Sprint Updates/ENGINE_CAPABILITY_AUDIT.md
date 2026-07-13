@@ -27,6 +27,7 @@ The Capability Audit serves as the architectural contract between:
 - Executive Projection
 - Atlas
 - Executive Experience
+- Decision Intelligence
 
 Every capability must be traceable from implementation to executive cognition.
 
@@ -38,7 +39,9 @@ Every capability must be traceable from implementation to executive cognition.
 
 Discovery has completed Version 1 of its Cognitive Operating System.
 
-All ten Cognitive Operating Systems are now represented by registered canonical capabilities.
+The Cognitive Operating System is no longer Discovery's primary bottleneck.
+
+Discovery has now entered the **Decision Intelligence** phase.
 
 The Capability Audit has moved beyond discovering hidden cognition.
 
@@ -48,9 +51,9 @@ Its primary purpose is now to verify that every capability is:
 - registry-backed,
 - traceable,
 - runtime-persistent,
-- executive-visible,
 - benchmark validated,
-- longitudinally evolvable.
+- longitudinally evolvable,
+- connected into the Decision Intelligence pipeline.
 
 Every capability should answer:
 
@@ -65,15 +68,9 @@ Every capability should answer:
 
 # Canonical Capability Status
 
-Discovery currently contains **20 registered canonical capabilities**.
+Discovery currently contains **21 registered canonical capabilities**.
 
-All registered capabilities currently possess:
-
-- canonical producer
-- runtime destination
-- downstream consumer
-- registry ownership
-- architecture validation
+In addition, Discovery now possesses several Decision Intelligence capabilities that have been implemented and benchmarked but are awaiting full registry integration.
 
 Current architecture validation:
 
@@ -83,9 +80,13 @@ Current architecture validation:
 - Missing Runtime destinations 0
 - Missing consumers ......... 0
 
-Architecture Health:
+Architecture Health
 
 > **100%**
+
+Decision Intelligence Benchmark
+
+> **15 / 15 Passing**
 
 ---
 
@@ -108,11 +109,23 @@ Architecture Health:
 - Executive Assessment
 - Executive Understanding Synthesis
 
+### Newly Implemented
+
+- Organizational Causal Model Construction
+- Organizational Influence Propagation
+- Organizational Influence Aggregation
+
 ---
 
 ## Memory
 
 - Organizational Runtime Persistence
+
+Runtime now persists:
+
+- Organizational Causal Model
+- Organizational Interventions
+- Simulated Organizational States
 
 ---
 
@@ -120,6 +133,11 @@ Architecture Health:
 
 - Organizational Belief Evolution
 - Organizational Learning Profile
+
+Future learning additions:
+
+- Organizational Law Validation
+- Intervention Outcome Learning
 
 ---
 
@@ -156,55 +174,35 @@ Prediction evaluation now performs:
 - confidence adjustment
 - adaptive learning signals
 
-Discovery can now determine whether previous organizational predictions became reality.
-
 ---
 
 ## Systems
 
 ### Architecture Planning
 
-Canonical producer:
+Canonical producer
 
 ```text
 planArchitecture.mjs
 ```
 
-Produces:
+Produces
 
 - ArchitectureRecommendation
-
-Discovery now performs architectural reasoning using:
-
-- architecture observations
-- architecture mechanisms
-- architecture beliefs
-- architecture theory
-- architecture recommendations
-
-rather than rule-based planning.
 
 ---
 
 ### Architecture Recommendation Projection
 
-Canonical producer:
+Canonical producer
 
 ```text
 projectArchitectureRecommendation.mjs
 ```
 
-Produces:
+Produces
 
 - ArchitectureRecommendationProjection
-
-This projects architectural planning into:
-
-- Sprint Startup
-- Architecture Handoff
-- future architecture experiences
-
-without recreating planning logic.
 
 ---
 
@@ -212,120 +210,148 @@ without recreating planning logic.
 
 ### Organizational Simulation
 
-Canonical producer:
+Canonical producer
 
 ```text
 simulateOrganization.ts
 ```
 
-Produces:
+Produces
 
 - SimulatedOrganizationState
 
-Version 1 currently:
+Version 2 now supports:
 
-- projects current organizational conditions,
-- projects current beliefs,
-- projects current predictions,
-- calibrates simulation confidence using historical prediction accuracy,
-- persists simulated organizational states into Runtime.
+- executive interventions
+- organizational causal models
+- intervention mapping
+- influence propagation
+- influence aggregation
 
-Future versions will:
-
-- evolve simulated conditions,
-- evolve simulated beliefs,
-- evolve simulated predictions,
-- support multi-step simulated time,
-- model executive interventions,
-- support branching future states.
+The remaining work is applying aggregated influence to evolve projected organizational conditions.
 
 ---
 
-# Canonical Producer Milestones
+# Decision Intelligence Capabilities
 
-## Executive Assessment
+The following capabilities now exist and are operational.
 
-Canonical producer of:
+## Executive Decision Modeling
 
-- ExecutiveAssessment
-- OrganizationalUnderstanding
+Produces
+
+- ExecutiveDecision
+
+Status
+
+✅ Implemented
 
 ---
 
-## Organizational Prediction
+## Intervention Option Generation
 
-Canonical producer:
+Produces
+
+- InterventionOption
+
+Status
+
+✅ Implemented
+
+Benchmark
+
+Decision Intelligence Experiment 001
+
+---
+
+## Organizational Intervention Modeling
+
+Produces
+
+- OrganizationalIntervention
+
+Status
+
+✅ Implemented
+
+Runtime
+
+Persisted
+
+---
+
+## Organizational Causal Model
+
+Produces
+
+- OrganizationalCausalModel
+
+Status
+
+✅ Implemented
+
+Runtime
+
+Persisted
+
+---
+
+## Organizational Influence Propagation
+
+Produces
+
+- OrganizationalInfluencePropagationResult
+
+Status
+
+✅ Implemented
+
+Benchmark
+
+Decision Intelligence Experiment 001
+
+---
+
+## Organizational Influence Aggregation
+
+Produces
+
+- AggregatedOrganizationalInfluence
+
+Status
+
+✅ Implemented
+
+Benchmark
+
+Decision Intelligence Experiment 001
+
+---
+
+## Decision Reasoning Pipeline
+
+Canonical producer
 
 ```text
-inferOrganizationalPredictions.ts
+runDecisionReasoningExperiment.ts
 ```
 
-Produces:
+Current stages
 
-- OrganizationalPrediction
+- Executive Decision
+- Intervention Generation
+- Intervention Selection
+- Organizational Intervention
+- Intervention Mapping
+- Causal Propagation
+- Influence Aggregation
 
----
+Future stages
 
-## Prediction Reflection
-
-Canonical producer:
-
-```text
-buildPredictionReflection.ts
-```
-
-Produces:
-
-- PredictionReflection
-
----
-
-## Prediction Outcome Evaluation
-
-Canonical producer:
-
-```text
-evaluatePredictionOutcomes.ts
-```
-
-Produces:
-
-- PredictionEvaluation
-
-Consumes:
-
-- OrganizationalPrediction
-- OrganizationalCondition
-
-Produces:
-
-- prediction accuracy
-- calibration delta
-- confidence adjustment
-- recommended confidence
-- learning signal
-
----
-
-## Organizational Simulation
-
-Canonical producer:
-
-```text
-simulateOrganization.ts
-```
-
-Produces:
-
-- SimulatedOrganizationState
-
-Consumes:
-
-- Organizational Conditions
-- Organizational Beliefs
-- Organizational Predictions
-- Prediction Evaluations
-- Organizational Learning Profile
+- Simulation
+- Scenario Comparison
+- Executive Recommendation
+- Board Report Generation
 
 ---
 
@@ -337,12 +363,11 @@ Capability has:
 
 - canonical producer
 - Runtime persistence
-- persistent representation
-- downstream consumer
+- downstream consumers
 - benchmark validation
 - registry ownership
 
-Current examples:
+Examples
 
 - Executive Assessment
 - Organizational Prediction
@@ -351,33 +376,37 @@ Current examples:
 - Organizational Simulation
 - Architecture Planning
 - Architecture Recommendation Projection
-- Theory Validation
 
 ---
 
-## 🟡 Maturing
+## 🟡 Connected
 
-Capability is architecturally complete but continues improving through longitudinal learning.
+Capability is implemented, benchmarked, and connected into production reasoning but continues to mature.
 
-Examples:
+Examples
 
-- Organizational Prediction
-- Organizational Simulation
-- Executive Projection
-- Executive Experience
+- Executive Decision
+- Intervention Generation
+- Organizational Causal Model
+- Influence Propagation
+- Influence Aggregation
+- Decision Reasoning Pipeline
 
 ---
 
 ## 🔵 Future Evolution
 
-Capabilities that already exist but will become more intelligent.
+Capabilities that already exist but will become significantly more intelligent.
 
-Examples:
+Examples
 
-- multi-step simulation
-- branching simulation
-- adaptive simulation evolution
-- executive intervention modeling
+- Organizational Law Validation
+- Organizational Law Discovery
+- Scenario Comparison
+- Executive Recommendation
+- Board Reporting
+- Multi-step Simulation
+- Intervention Ranking
 
 ---
 
@@ -394,139 +423,114 @@ Examples:
 | Prediction | 🟢 Canonical |
 | Adaptive Learning | 🟢 Canonical |
 | Systems | 🟢 Canonical |
-| Simulation | 🟢 Canonical (Version 1) |
+| Simulation | 🟢 Canonical (Version 2) |
 
 ---
 
-# Canonical Cognitive Flow
+# Canonical Decision Intelligence Flow
 
 ```text
-Evidence
+Executive Decision
 
 ↓
 
-Observations
+Intervention Generation
 
 ↓
 
-Phenomena
+Intervention Selection
 
 ↓
 
-Mechanisms
+Organizational Intervention
 
 ↓
 
-Beliefs
+Intervention Mapping
 
 ↓
 
-Concepts
+Organizational Causal Model
 
 ↓
 
-Theories
+Causal Propagation
 
 ↓
 
-Organizational Conditions
+Influence Aggregation
 
 ↓
 
-Organizational State
+Simulation
 
 ↓
 
-Organizational Predictions
+Scenario Comparison
 
 ↓
 
-Prediction Reflection
-
-↓
-
-Prediction Outcome Evaluation
-
-↓
-
-Organizational Learning
-
-↓
-
-Organizational Simulation
-
-↓
-
-Executive Assessment
-
-↓
-
-Organizational Understanding
-
-↓
-
-Investigation Strategy
-
-↓
-
-Executive Projection
-
-↓
-
-Executive Experience
+Executive Recommendation
 ```
 
-Organizational Understanding explains the present.
+Current implementation reaches:
 
-Prediction explains the future.
+```text
+↓
 
-Prediction Evaluation measures reality.
+Influence Aggregation
+```
 
-Simulation projects plausible futures.
-
-Executive Assessment integrates the complete cognitive pipeline.
+Simulation evolution is the next milestone.
 
 ---
 
 # Architecture Verification
 
-Capability verification now occurs in four stages.
+Capability verification now occurs in five stages.
 
 ## Structural Verification
 
-Confirms implementation exists.
+Implementation exists.
 
 ## Architectural Verification
 
-Confirms canonical ownership.
+Canonical ownership exists.
 
 ## Runtime Verification
 
-Confirms persistence, downstream consumers, and canonical projection.
+Persistence exists.
 
 ## Behavioral Verification
 
-Confirms:
+Benchmark validation exists.
 
-- benchmark validation,
-- executive usefulness,
-- longitudinal evolution,
-- prediction calibration,
-- simulation quality.
+## Decision Verification
+
+Discovery reasons correctly through:
+
+- executive objective
+- intervention generation
+- intervention mapping
+- causal propagation
+- influence aggregation
+
+Decision Intelligence Experiment 001 currently validates all five.
 
 ---
 
 # Current Priorities
 
-1. Evolve simulated organizational conditions.
-2. Evolve simulated organizational beliefs.
-3. Evolve simulated organizational predictions.
-4. Introduce multi-step simulation.
-5. Improve Executive Projection.
-6. Improve Executive Experience.
-7. Expand simulation benchmarking.
-8. Pressure-test Discovery using realistic organizations.
-9. Legacy cleanup.
+1. Apply aggregated influence to projected organizational conditions.
+2. Produce a modified future organizational state.
+3. Compare current and future organizational states.
+4. Rank intervention options.
+5. Generate executive recommendations.
+6. Add Decision Intelligence Experiment 002.
+7. Validate Organizational Laws.
+8. Discover Organizational Laws.
+9. Pressure-test Discovery using realistic organizations.
+10. Legacy cleanup.
 
 ---
 
@@ -538,17 +542,23 @@ Confirms:
 
 > **Capabilities before files.**
 
+> **Reasoning before interface.**
+
 > **Longitudinal learning before heuristics.**
 
 > **Prediction should improve through measured reality.**
 
-> **Simulation should improve through accumulated learning.**
+> **Simulation should evolve through accumulated learning.**
+
+> **Decision Intelligence should reason through canonical organizational models.**
 
 > **Executive Assessment integrates cognition rather than recreating it.**
 
 > **Every cognitive object has one canonical producer.**
 
 > **Every capability declares its inputs, outputs, Runtime destination, Executive destination, and benchmark validation.**
+
+> **Decision Intelligence Experiments validate reasoning rather than implementation.**
 
 > **Improve existing cognition before adding new cognition.**
 
