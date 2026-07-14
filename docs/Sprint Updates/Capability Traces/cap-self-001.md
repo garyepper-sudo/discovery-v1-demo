@@ -1,6 +1,6 @@
 # Capability Trace — Theory Validation
 
-Generated: 2026-07-14T03:36:23.252Z
+Generated: 2026-07-14T19:23:38.014Z
 
 ## Verified Architecture
 
@@ -62,16 +62,22 @@ None declared.
 Review these files to determine whether they should be registered as consumers, validators, projections, simulations, or supporting implementations.
 
 - `components/executive-v2/answers/ExecutiveAnswerGrid.tsx`
+- `components/executive-v2/briefing/ExecutiveBriefing.tsx`
 - `components/executive-v2/capabilities/ExecutiveCapabilityDefinition.tsx`
 - `components/executive-v2/capabilities/ExecutiveCapabilityRegistry.tsx`
 - `components/executive-v2/projection/ExecutiveProjection.ts`
 - `components/executive-v2/projection/buildExecutiveProjection.ts`
+- `components/executive-v3/ExecutiveWorkspaceV3.tsx`
+- `components/executive-v3/projection/buildExecutiveBriefingProjection.ts`
+- `components/executive-v3/projection/buildExecutiveNarrative.ts`
 - `engine/benchmark/benchmarkReporter.ts`
 - `engine/benchmark/benchmarkScorer.ts`
 - `engine/benchmark/benchmarkTypes.ts`
+- `engine/benchmark/executive-communication/executiveCommunicationExperiment001.ts`
 - `engine/benchmark/runAtlasSimulation.ts`
 - `engine/benchmark/runBenchmarkInvestigation.ts`
 - `engine/benchmark/understandingFitnessScorer.ts`
+- `engine/v3/communication/synthesizeExecutiveNarrative.ts`
 - `engine/v3/model/judgment/buildExecutiveAssessment.ts`
 - `engine/v3/model/judgment/buildOrganizationalUnderstanding.ts`
 - `engine/v3/model/judgment/organizationalJudgment.ts`
@@ -104,19 +110,24 @@ This section records source-code references. It supplements, but does not replac
 
 | Layer | Status | Matches |
 |---|:---:|---:|
-| Engine | ✅ Found | 49 |
+| Engine | ✅ Found | 50 |
 | Runtime | ❌ Not found | 0 |
 | Executive | ❌ Not found | 0 |
-| Projection | ✅ Found | 23 |
-| UI | ✅ Found | 12 |
+| Projection | ✅ Found | 29 |
+| UI | ✅ Found | 16 |
 | API | ❌ Not found | 0 |
 | Simulation | ❌ Not found | 0 |
-| Benchmark | ✅ Found | 111 |
+| Benchmark | ✅ Found | 112 |
 | Other | ✅ Found | 6 |
 
 ### Detailed Matches
 
 #### Engine
+
+##### `engine/v3/communication/synthesizeExecutiveNarrative.ts`
+
+- Line 316 · **read** · matched `theoryValidation`
+  - `?.theoryValidation`
 
 ##### `engine/v3/model/judgment/buildExecutiveAssessment.ts`
 
@@ -285,6 +296,24 @@ This section records source-code references. It supplements, but does not replac
 - Line 1040 · **unknown** · matched `theoryValidation`
   - `theoryValidation,`
 
+##### `components/executive-v3/projection/buildExecutiveBriefingProjection.ts`
+
+- Line 102 · **read** · matched `theoryValidation`
+  - `?.theoryValidation`
+- Line 458 · **read** · matched `theoryValidation`
+  - `?.theoryValidation`
+- Line 527 · **read** · matched `theoryValidation`
+  - `?.theoryValidation`
+
+##### `components/executive-v3/projection/buildExecutiveNarrative.ts`
+
+- Line 248 · **read** · matched `theoryValidation`
+  - `?.theoryValidation`
+- Line 693 · **read** · matched `theoryValidation`
+  - `?.theoryValidation`
+- Line 767 · **read** · matched `theoryValidation`
+  - `?.theoryValidation`
+
 #### UI
 
 ##### `components/executive-v2/answers/ExecutiveAnswerGrid.tsx`
@@ -310,6 +339,13 @@ This section records source-code references. It supplements, but does not replac
 - Line 63 · **unknown** · matched `theoryValidation`
   - `{theoryValidation.evidenceThatWouldFalsifyTheory`
 
+##### `components/executive-v2/briefing/ExecutiveBriefing.tsx`
+
+- Line 207 · **read** · matched `theoryValidation`
+  - `?.theoryValidation`
+- Line 318 · **read** · matched `theoryValidation`
+  - `?.theoryValidation`
+
 ##### `components/executive-v2/capabilities/ExecutiveCapabilityDefinition.tsx`
 
 - Line 12 · **unknown** · matched `CAP-SELF-001`
@@ -319,6 +355,13 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 20 · **unknown** · matched `CAP-SELF-001`
   - `\| "CAP-SELF-001"`
+
+##### `components/executive-v3/ExecutiveWorkspaceV3.tsx`
+
+- Line 184 · **read** · matched `theoryValidation`
+  - `?.theoryValidation`
+- Line 292 · **read** · matched `theoryValidation`
+  - `?.theoryValidation`
 
 #### Benchmark
 
@@ -450,6 +493,11 @@ This section records source-code references. It supplements, but does not replac
   - `export type BenchmarkTheoryValidation = {`
 - Line 124 · **unknown** · matched `theoryValidation`
   - `theoryValidationScore: number;`
+
+##### `engine/benchmark/executive-communication/executiveCommunicationExperiment001.ts`
+
+- Line 179 · **type** · matched `theoryValidation`
+  - `theoryValidation: {`
 
 ##### `engine/benchmark/runAtlasSimulation.ts`
 

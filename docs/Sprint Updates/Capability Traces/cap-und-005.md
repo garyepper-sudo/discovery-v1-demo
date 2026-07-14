@@ -1,6 +1,6 @@
 # Capability Trace — Executive Assessment
 
-Generated: 2026-07-14T03:36:22.480Z
+Generated: 2026-07-14T19:23:37.204Z
 
 ## Verified Architecture
 
@@ -40,6 +40,9 @@ None declared.
 
 ### Declared Consumers
 
+- `CAP-COM-001`
+- `CAP-DEC-001`
+- `CAP-DEC-002`
 - `CAP-UND-006`
 
 ## Architecture Verification
@@ -52,7 +55,7 @@ None declared.
 | Implementation files | ✅ | 1 declared file(s) exist. |
 | Runtime destination | ✅ | OrganizationRuntime.executiveAssessment |
 | Executive destination | ✅ | ExecutiveProjection, ExecutiveWorkspace, OrganizationalUnderstanding |
-| Consumers | ✅ | 1 declared consumer(s). |
+| Consumers | ✅ | 4 declared consumer(s). |
 | Atlas coverage | ✅ | yes |
 | Structural implementation coverage | ✅ | All declared implementation files appeared in the structural trace. |
 
@@ -63,17 +66,27 @@ None declared.
 Review these files to determine whether they should be registered as consumers, validators, projections, simulations, or supporting implementations.
 
 - `components/executive-v2/assessment/ExecutiveAssessmentCard.tsx`
+- `components/executive-v2/briefing/ExecutiveBriefing.tsx`
 - `components/executive-v2/capabilities/ExecutiveCapabilityDefinition.tsx`
 - `components/executive-v2/capabilities/ExecutiveCapabilityRegistry.tsx`
 - `components/executive-v2/capabilities/ExecutiveCapabilityRendererRegistry.tsx`
 - `components/executive-v2/projection/ExecutiveProjection.ts`
+- `components/executive-v2/projection/ExecutiveScenarioProjection.ts`
 - `components/executive-v2/projection/buildExecutiveProjection.ts`
+- `components/executive-v2/projection/buildExecutiveScenarioProjection.ts`
+- `components/executive-v3/ExecutiveWorkspaceV3.tsx`
+- `components/executive-v3/projection/buildExecutiveBriefingProjection.ts`
+- `components/executive-v3/projection/buildExecutiveNarrative.ts`
 - `engine/benchmark/auditCapability.ts`
 - `engine/benchmark/auditUnderstandingLayers.ts`
 - `engine/benchmark/benchmarkReporter.ts`
 - `engine/benchmark/benchmarkScorer.ts`
+- `engine/benchmark/decision-intelligence/runDecisionCalibration.ts`
+- `engine/benchmark/decision-intelligence/scenarioIntegrationExperiment001.ts`
+- `engine/benchmark/executive-communication/executiveCommunicationExperiment001.ts`
 - `engine/benchmark/runAtlasSimulation.ts`
 - `engine/benchmark/runBenchmarkInvestigation.ts`
+- `engine/v3/communication/synthesizeExecutiveNarrative.ts`
 - `engine/v3/executive/buildExecutiveChangeSummary.ts`
 - `engine/v3/executive/executiveLearningSummary.ts`
 - `engine/v3/model/judgment/organizationalJudgment.ts`
@@ -82,6 +95,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/v3/model/simulate/compareSimulationScenario.ts`
 - `engine/v3/runtime/evolveOrganizationRuntime.ts`
 - `engine/v3/runtime/organizationalUnderstandingState.ts`
+- `engine/v3/scenarios/buildExecutiveDecisionContext.ts`
 - `engine/v3/scenarios/runExecutiveScenario.ts`
 - `engine/v3/semantic/types.ts`
 - `engine/v3/types.ts`
@@ -118,19 +132,28 @@ This section records source-code references. It supplements, but does not replac
 
 | Layer | Status | Matches |
 |---|:---:|---:|
-| Engine | ✅ Found | 24 |
+| Engine | ✅ Found | 33 |
 | Runtime | ✅ Found | 15 |
 | Executive | ✅ Found | 9 |
-| Projection | ✅ Found | 27 |
-| UI | ✅ Found | 22 |
+| Projection | ✅ Found | 42 |
+| UI | ✅ Found | 32 |
 | API | ❌ Not found | 0 |
 | Simulation | ✅ Found | 21 |
-| Benchmark | ✅ Found | 44 |
+| Benchmark | ✅ Found | 56 |
 | Other | ✅ Found | 11 |
 
 ### Detailed Matches
 
 #### Engine
+
+##### `engine/v3/communication/synthesizeExecutiveNarrative.ts`
+
+- Line 180 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 315 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 653 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
 
 ##### `engine/v3/model/judgment/buildExecutiveAssessment.ts`
 
@@ -159,15 +182,30 @@ This section records source-code references. It supplements, but does not replac
 - Line 252 · **read** · matched `executiveAssessment`
   - `if ((params.currentSnapshot.executiveAssessmentConfidence ?? 0) < 0.7) {`
 
+##### `engine/v3/scenarios/buildExecutiveDecisionContext.ts`
+
+- Line 11 · **type** · matched `executiveAssessment`
+  - `executiveAssessment?:`
+- Line 12 · **unknown** · matched `executiveAssessment`
+  - `RunExecutiveScenarioInput["currentExecutiveAssessment"];`
+- Line 96 · **unknown** · matched `Executive Assessment`
+  - `* simulation and executive assessment.`
+- Line 171 · **unknown** · matched `executiveAssessment`
+  - `currentExecutiveAssessment:`
+- Line 173 · **read** · matched `executiveAssessment`
+  - `memory.executiveAssessment,`
+- Line 174 · **unknown** · matched `executiveAssessment`
+  - `"executiveAssessment",`
+
 ##### `engine/v3/scenarios/runExecutiveScenario.ts`
 
-- Line 74 · **unknown** · matched `Executive Assessment`
+- Line 107 · **unknown** · matched `Executive Assessment`
   - `* Current canonical Executive Assessment used as the comparison baseline.`
-- Line 76 · **unknown** · matched `executiveAssessment`
-  - `currentExecutiveAssessment: OrganizationalAssessment;`
-- Line 123 · **unknown** · matched `executiveAssessment`
+- Line 109 · **unknown** · matched `executiveAssessment`
+  - `currentExecutiveAssessment:`
+- Line 166 · **unknown** · matched `executiveAssessment`
   - `currentExecutiveAssessment,`
-- Line 178 · **unknown** · matched `executiveAssessment`
+- Line 240 · **unknown** · matched `executiveAssessment`
   - `currentExecutiveAssessment,`
 
 ##### `engine/v3/semantic/types.ts`
@@ -286,6 +324,11 @@ This section records source-code references. It supplements, but does not replac
 - Line 483 · **type** · matched `executiveAssessment`
   - `executiveAssessment?: ExecutiveAssessment;`
 
+##### `components/executive-v2/projection/ExecutiveScenarioProjection.ts`
+
+- Line 47 · **type** · matched `executiveAssessment`
+  - `executiveAssessment:`
+
 ##### `components/executive-v2/projection/buildExecutiveProjection.ts`
 
 - Line 11 · **unknown** · matched `executiveAssessment`
@@ -333,6 +376,43 @@ This section records source-code references. It supplements, but does not replac
 - Line 1020 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
 
+##### `components/executive-v2/projection/buildExecutiveScenarioProjection.ts`
+
+- Line 55 · **type** · matched `executiveAssessment`
+  - `executiveAssessment:`
+- Line 57 · **unknown** · matched `executiveAssessment`
+  - `.projectedExecutiveAssessment,`
+
+##### `components/executive-v3/projection/buildExecutiveBriefingProjection.ts`
+
+- Line 81 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 101 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 232 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 457 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 526 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+
+##### `components/executive-v3/projection/buildExecutiveNarrative.ts`
+
+- Line 188 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 225 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 247 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 388 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 472 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 692 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 766 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+
 #### UI
 
 ##### `components/executive-v2/assessment/ExecutiveAssessmentCard.tsx`
@@ -349,6 +429,19 @@ This section records source-code references. It supplements, but does not replac
   - `}: ExecutiveAssessmentCardProps) {`
 - Line 14 · **unknown** · matched `Executive Assessment`
   - `Executive Assessment`
+
+##### `components/executive-v2/briefing/ExecutiveBriefing.tsx`
+
+- Line 188 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 206 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 265 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment,`
+- Line 317 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 607 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
 
 ##### `components/executive-v2/capabilities/ExecutiveCapabilityDefinition.tsx`
 
@@ -390,6 +483,19 @@ This section records source-code references. It supplements, but does not replac
   - `<ExecutiveAssessmentCard`
 - Line 29 · **read** · matched `executiveAssessment`
   - `assessment={projection.executiveAssessment}`
+
+##### `components/executive-v3/ExecutiveWorkspaceV3.tsx`
+
+- Line 165 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 183 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 241 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment,`
+- Line 291 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
+- Line 580 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment`
 
 #### Simulation
 
@@ -494,6 +600,39 @@ This section records source-code references. It supplements, but does not replac
   - `"Pattern coherence is weak: mechanisms, concepts, conditions, and executive assessment are not yet converging cleanly.",`
 - Line 943 · **unknown** · matched `Executive Assessment`
   - `"Executive assessment did not clearly synthesize organizational conditions into a coherent organizational state.",`
+
+##### `engine/benchmark/decision-intelligence/runDecisionCalibration.ts`
+
+- Line 152 · **unknown** · matched `Executive Assessment`
+  - `"Projected Executive Assessment",`
+- Line 157 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment,`
+- Line 161 · **unknown** · matched `Executive Assessment`
+  - `"Projected future must include a canonical Executive Assessment.",`
+
+##### `engine/benchmark/decision-intelligence/scenarioIntegrationExperiment001.ts`
+
+- Line 41 · **type** · matched `executiveAssessment`
+  - `executiveAssessment?: unknown;`
+- Line 212 · **unknown** · matched `executiveAssessment`
+  - `.projectedExecutiveAssessment;`
+- Line 239 · **read** · matched `executiveAssessment`
+  - `memory.executiveAssessment &&`
+- Line 246 · **unknown** · matched `Executive Assessment`
+  - `"Executive Assessment, Organizational State, Causal Model, and Learning Profile are required.",`
+- Line 255 · **unknown** · matched `executiveAssessment`
+  - `decisionContext.currentExecutiveAssessment &&`
+- Line 336 · **unknown** · matched `Executive Assessment`
+  - `"Executive Assessment regenerated",`
+- Line 344 · **unknown** · matched `executiveAssessment`
+  - `"The projected future was routed through buildExecutiveAssessment().",`
+- Line 381 · **read** · matched `executiveAssessment`
+  - `.executiveAssessment &&`
+
+##### `engine/benchmark/executive-communication/executiveCommunicationExperiment001.ts`
+
+- Line 163 · **type** · matched `executiveAssessment`
+  - `executiveAssessment: {`
 
 ##### `engine/benchmark/runAtlasSimulation.ts`
 

@@ -1,6 +1,6 @@
 # Capability Trace — Executive Understanding Synthesis
 
-Generated: 2026-07-14T03:36:22.789Z
+Generated: 2026-07-14T19:23:37.536Z
 
 ## Verified Architecture
 
@@ -41,7 +41,8 @@ None declared.
 
 ### Declared Consumers
 
-None declared.
+- `CAP-COM-001`
+- `CAP-DEC-001`
 
 ## Architecture Verification
 
@@ -53,7 +54,7 @@ None declared.
 | Implementation files | ✅ | 4 declared file(s) exist. |
 | Runtime destination | ✅ | OrganizationRuntime.organizationalUnderstandingState |
 | Executive destination | ✅ | Atlas, ExecutiveProjection, ExecutiveWorkspace |
-| Consumers | ✅ | Terminal capability (no downstream cognitive capability expected). |
+| Consumers | ✅ | 2 declared consumer(s). |
 | Atlas coverage | ✅ | yes |
 | Structural implementation coverage | ✅ | All declared implementation files appeared in the structural trace. |
 
@@ -66,6 +67,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `app/api/discovery-lab/route.ts`
 - `components/executive-v2/capabilities/ExecutiveCapabilityDefinition.tsx`
 - `components/executive-v2/capabilities/ExecutiveCapabilityRegistry.tsx`
+- `components/executive-v2/projection/ExecutiveScenarioProjection.ts`
 - `components/executive-v2/projection/buildExecutiveProjection.ts`
 - `components/results/SemanticConceptInspector.tsx`
 - `engine/benchmark/auditUnderstandingLayers.ts`
@@ -85,6 +87,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/v3/runtime/organizationRuntime.ts`
 - `engine/v3/runtime/organizationalUnderstandingState.ts`
 - `engine/v3/runtime/updateOrganizationalUnderstandingState.ts`
+- `engine/v3/scenarios/buildExecutiveDecisionContext.ts`
 - `engine/v3/understanding/canonicalUnderstanding.ts`
 - `engine/v3/understanding/rankOrganizationalUnderstanding.ts`
 - `scripts/cognition/generateArchitectureHandoff.mjs`
@@ -135,10 +138,10 @@ This section records source-code references. It supplements, but does not replac
 
 | Layer | Status | Matches |
 |---|:---:|---:|
-| Engine | ✅ Found | 80 |
+| Engine | ✅ Found | 82 |
 | Runtime | ✅ Found | 83 |
 | Executive | ✅ Found | 12 |
-| Projection | ✅ Found | 5 |
+| Projection | ✅ Found | 6 |
 | UI | ✅ Found | 3 |
 | API | ✅ Found | 2 |
 | Simulation | ✅ Found | 7 |
@@ -213,6 +216,13 @@ This section records source-code references. It supplements, but does not replac
   - `import type { OrganizationalUnderstandingState } from "../../runtime/organizationalUnderstandingState";`
 - Line 16 · **unknown** · matched `OrganizationalUnderstanding`
   - `understandingState: OrganizationalUnderstandingState;`
+
+##### `engine/v3/scenarios/buildExecutiveDecisionContext.ts`
+
+- Line 92 · **unknown** · matched `organizational-understanding`
+  - `* organizational-understanding pipeline.`
+- Line 99 · **unknown** · matched `OrganizationalUnderstanding`
+  - `memory.organizationalUnderstandingState`
 
 ##### `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
 
@@ -555,6 +565,11 @@ This section records source-code references. It supplements, but does not replac
   - `beliefs: memory.organizationalUnderstandingState?.organizationalBeliefs,`
 
 #### Projection
+
+##### `components/executive-v2/projection/ExecutiveScenarioProjection.ts`
+
+- Line 23 · **import** · matched `consolidateUnderstanding`
+  - `} from "../../../engine/v3/understanding/consolidateUnderstanding";`
 
 ##### `components/executive-v2/projection/buildExecutiveProjection.ts`
 

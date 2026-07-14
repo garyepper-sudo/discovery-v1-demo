@@ -1,6 +1,6 @@
 # Capability Trace — Investigation Opportunity Generation
 
-Generated: 2026-07-14T03:36:23.493Z
+Generated: 2026-07-14T19:23:38.283Z
 
 ## Verified Architecture
 
@@ -37,6 +37,7 @@ None declared.
 
 ### Declared Consumers
 
+- `CAP-COM-001`
 - `CAP-SYS-001`
 
 ## Architecture Verification
@@ -49,7 +50,7 @@ None declared.
 | Implementation files | ✅ | 1 declared file(s) exist. |
 | Runtime destination | ✅ | OrganizationRuntime.investigationOpportunities |
 | Executive destination | ✅ | ExecutiveProjection, InvestigationOpportunities |
-| Consumers | ✅ | 1 declared consumer(s). |
+| Consumers | ✅ | 2 declared consumer(s). |
 | Atlas coverage | ✅ | yes |
 | Structural implementation coverage | ✅ | All declared implementation files appeared in the structural trace. |
 
@@ -59,16 +60,24 @@ None declared.
 
 Review these files to determine whether they should be registered as consumers, validators, projections, simulations, or supporting implementations.
 
+- `components/executive-v2/briefing/ExecutiveBriefing.tsx`
 - `components/executive-v2/capabilities/ExecutiveCapabilityDefinition.tsx`
 - `components/executive-v2/capabilities/ExecutiveCapabilityRegistry.tsx`
 - `components/executive-v2/capabilities/ExecutiveCapabilityRendererRegistry.tsx`
 - `components/executive-v2/investigations/ExecutiveInvestigationOpportunities.tsx`
 - `components/executive-v2/projection/ExecutiveProjection.ts`
 - `components/executive-v2/projection/buildExecutiveProjection.ts`
+- `components/executive-v3/ExecutiveWorkspaceV3.tsx`
+- `components/executive-v3/projection/buildExecutiveBriefingProjection.ts`
+- `components/executive-v3/projection/buildExecutiveNarrative.ts`
+- `engine/benchmark/executive-communication/executiveCommunicationExperiment001.ts`
+- `engine/v3/communication/synthesizeExecutiveCommunication.ts`
+- `engine/v3/communication/synthesizeExecutiveNarrative.ts`
 - `engine/v3/model/judgment/buildExecutiveAssessment.ts`
 - `engine/v3/model/judgment/buildExecutivePriority.ts`
 - `engine/v3/model/simulate/buildSimulationScenario.ts`
 - `engine/v3/runtime/evolveOrganizationRuntime.ts`
+- `engine/v3/scenarios/buildExecutiveDecisionContext.ts`
 - `engine/v3/scenarios/runExecutiveScenario.ts`
 - `scripts/cognition/reviewCognitiveDomain.mjs`
 
@@ -100,19 +109,31 @@ This section records source-code references. It supplements, but does not replac
 
 | Layer | Status | Matches |
 |---|:---:|---:|
-| Engine | ✅ Found | 16 |
+| Engine | ✅ Found | 23 |
 | Runtime | ✅ Found | 12 |
 | Executive | ❌ Not found | 0 |
-| Projection | ✅ Found | 8 |
-| UI | ✅ Found | 20 |
+| Projection | ✅ Found | 10 |
+| UI | ✅ Found | 22 |
 | API | ❌ Not found | 0 |
 | Simulation | ✅ Found | 4 |
-| Benchmark | ❌ Not found | 0 |
+| Benchmark | ✅ Found | 1 |
 | Other | ✅ Found | 3 |
 
 ### Detailed Matches
 
 #### Engine
+
+##### `engine/v3/communication/synthesizeExecutiveCommunication.ts`
+
+- Line 84 · **read** · matched `investigationOpportunities`
+  - `.investigationOpportunities?.[0];`
+- Line 114 · **read** · matched `investigationOpportunities`
+  - `.investigationOpportunities`
+
+##### `engine/v3/communication/synthesizeExecutiveNarrative.ts`
+
+- Line 930 · **read** · matched `investigationOpportunities`
+  - `.investigationOpportunities?.[0]`
 
 ##### `engine/v3/model/investigation/buildInvestigationOpportunities.ts`
 
@@ -147,15 +168,26 @@ This section records source-code references. It supplements, but does not replac
 - Line 352 · **read** · matched `investigationOpportunities`
   - `[...(input.investigationOpportunities ?? [])].sort(`
 
+##### `engine/v3/scenarios/buildExecutiveDecisionContext.ts`
+
+- Line 46 · **type** · matched `investigationOpportunities`
+  - `investigationOpportunities?:`
+- Line 47 · **read** · matched `investigationOpportunities`
+  - `RunExecutiveScenarioInput["investigationOpportunities"];`
+- Line 204 · **type** · matched `investigationOpportunities`
+  - `investigationOpportunities:`
+- Line 206 · **read** · matched `investigationOpportunities`
+  - `memory.investigationOpportunities,`
+
 ##### `engine/v3/scenarios/runExecutiveScenario.ts`
 
-- Line 100 · **type** · matched `investigationOpportunities`
+- Line 138 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities?:`
-- Line 101 · **read** · matched `investigationOpportunities`
+- Line 139 · **read** · matched `investigationOpportunities`
   - `BuildSimulationScenarioInput["investigationOpportunities"];`
-- Line 130 · **assignment** · matched `investigationOpportunities`
+- Line 173 · **assignment** · matched `investigationOpportunities`
   - `investigationOpportunities = [],`
-- Line 166 · **unknown** · matched `investigationOpportunities`
+- Line 227 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
 
 #### Runtime
@@ -211,7 +243,22 @@ This section records source-code references. It supplements, but does not replac
 - Line 1032 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
 
+##### `components/executive-v3/projection/buildExecutiveBriefingProjection.ts`
+
+- Line 470 · **read** · matched `investigationOpportunities`
+  - `.investigationOpportunities?.[0]`
+
+##### `components/executive-v3/projection/buildExecutiveNarrative.ts`
+
+- Line 778 · **read** · matched `investigationOpportunities`
+  - `.investigationOpportunities?.[0]`
+
 #### UI
+
+##### `components/executive-v2/briefing/ExecutiveBriefing.tsx`
+
+- Line 170 · **read** · matched `investigationOpportunities`
+  - `.investigationOpportunities?.[0];`
 
 ##### `components/executive-v2/capabilities/ExecutiveCapabilityDefinition.tsx`
 
@@ -265,6 +312,11 @@ This section records source-code references. It supplements, but does not replac
 - Line 9 · **unknown** · matched `investigationOpportunities`
   - `}: ExecutiveInvestigationOpportunitiesProps) {`
 
+##### `components/executive-v3/ExecutiveWorkspaceV3.tsx`
+
+- Line 152 · **read** · matched `investigationOpportunities`
+  - `.investigationOpportunities?.[0];`
+
 #### Simulation
 
 ##### `engine/v3/model/simulate/buildSimulationScenario.ts`
@@ -277,6 +329,13 @@ This section records source-code references. It supplements, but does not replac
   - `investigationOpportunities = [],`
 - Line 156 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
+
+#### Benchmark
+
+##### `engine/benchmark/executive-communication/executiveCommunicationExperiment001.ts`
+
+- Line 348 · **type** · matched `investigationOpportunities`
+  - `investigationOpportunities: [`
 
 #### Other
 

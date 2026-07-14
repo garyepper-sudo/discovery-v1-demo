@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-14T19:12:33.888Z",
+    "generatedAt": "2026-07-14T19:23:38.398Z",
     "generator": "scripts/cognition/generateArchitectureState.mjs",
     "sourceOfTruthOrder": [
       "Verified source code",
@@ -13,11 +13,11 @@
     ]
   },
   "project": {
-    "currentMilestone": "Executive Decision Intelligence and Executive Experience\n\n---",
-    "currentPhase": "Executive Decision Intelligence, Scenario Orchestration, and Executive Experience\n\nDiscovery has completed the first generation of its Cognitive Operating System and established a stable canonical cognitive architecture.\n\nThe primary architectural work is complete.\n\nDiscovery now possesses a complete reasoning pipeline capable of transforming organizational evidence into:\n\n- organizational understanding,\n- executive assessment,\n- organizational prediction,\n- prediction reflection,\n- adaptive learning,\n- executive decision modeling,\n- intervention generation,\n- organizational causal reasoning,\n- organizational simulation,\n- simulation scenario construction,\n- scenario comparison,\n- and executive recommendations.\n\nDiscovery now possesses canonical implementations for:\n\n- Cognitive Operating System\n- Cognitive Object Model\n- Cognitive Flow Map\n- Capability Registry\n- Capability Trace System\n- Runtime Persistence\n- Organizational Understanding\n- Organizational Prediction\n- Prediction Reflection\n- Prediction Outcome Evaluation\n- Organizational Learning Profile\n- Organizational Causal Model\n- Executive Decision\n- Intervention Option Generation\n- Organizational Intervention\n- Intervention Mapping\n- Organizational Influence Propagation\n- Organizational Influence Aggregation\n- Condition Evolution\n- Organizational State Synthesis\n- Organizational Simulation\n- Simulation Scenario\n- Scenario Comparison\n- Executive Scenario Orchestrator\n- Executive Assessment\n- Executive Projection\n\nSimulation is no longer a separate reasoning engine.\n\nSimulation modifies organizational state.\n\nCanonical cognition interprets both the current organization and projected future organizations through the same Executive Assessment and Organizational Understanding pipeline.\n\nThe remaining work is primarily executive experience, recommendation quality, intervention ranking, scenario evaluation, and longitudinal learning, not architecture expansion.\n\n---",
-    "currentObjective": "Complete the Executive Decision Experience.\n\nDiscovery should become progressively better at answering:\n\n- What is happening?\n- Why is it happening?\n- What is likely to happen?\n- Which intervention should leadership choose?\n- How would each intervention change the organization?\n- How do multiple futures compare?\n- What executive recommendation should Discovery make?\n- How should Discovery improve after observing real outcomes?\n\nEvery capability should continue to belong to exactly one:\n\n\n\nEvery cognitive object should continue to follow the canonical lifecycle:\n\n\n\nCanonical cognition should always be reused rather than recreated.\n\n---",
+    "currentMilestone": "Executive Intelligence and Executive Communication\n\n---",
+    "currentPhase": "Discovery's cognitive architecture is considered stable.\n\nFuture work should primarily improve:\n\n- executive communication quality\n- executive experience\n- decision experience\n- simulation quality\n- recommendation quality\n\nPrefer improving canonical cognition over introducing new architectural layers.\n\n------------------------------------------------------------------------",
+    "currentObjective": "Complete the Executive Experience.\n\nDiscovery should become progressively better at answering:\n\n- What is happening?\n- Why is it happening?\n- Why does it matter?\n- What is likely to happen?\n- Which intervention should leadership choose?\n- How would each intervention change the organization?\n- How do multiple futures compare?\n- What executive recommendation should Discovery make?\n- What uncertainty remains?\n- What evidence could change Discovery's recommendation?\n\nEvery capability should continue to belong to exactly one:\n\n\n\nEvery cognitive object should continue to follow the canonical lifecycle:\n\n\n\nCanonical cognition should always be reused rather than recreated.\n\n---",
     "currentSprint": null,
-    "nextPriority": "Primary objective:\n\nExecutive Decision Experience\n\nTasks:\n\n1.  Wire `runExecutiveScenario()` into the API.\n2.  Extend Executive Projection with decision scenarios.\n3.  Build Executive Decision Workspace.\n4.  Validate multiple intervention scenarios.\n5.  Improve recommendation quality.\n\n------------------------------------------------------------------------",
+    "nextPriority": "Primary Objective\n\nExecutive Experience V3\n\nTasks\n\n1. Replace remaining V2 presentation with V3.\n2. Consume Executive Communication throughout the Executive Workspace.\n3. Surface Executive Decision capabilities inside the Executive Experience.\n4. Improve executive narrative quality.\n5. Continue benchmarking Executive Communication.\n\n------------------------------------------------------------------------",
     "sourceDocuments": [
       "DISCOVERY_SNAPSHOT.md",
       "ENGINE_CAPABILITY_AUDIT.md",
@@ -913,7 +913,7 @@
             "ui": true,
             "api": false,
             "simulation": true,
-            "benchmark": false
+            "benchmark": true
           },
           "tracePath": "docs/Sprint Updates/Capability Traces/cap-self-002.md"
         }

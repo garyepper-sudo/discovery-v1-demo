@@ -1,6 +1,6 @@
 # Discovery Architecture Handoff
 
-Generated: 2026-07-14T03:36:23.699Z
+Generated: 2026-07-14T19:23:38.501Z
 
 ## Purpose
 
@@ -20,10 +20,10 @@ Before adding any new cognitive capability:
 
 ## Architecture Health
 
-- Registered capabilities: 21
-- Canonical producers: 21
+- Registered capabilities: 26
+- Canonical producers: 26
 - Registered files: 482
-- Terminal capabilities: 3
+- Terminal capabilities: 5
 - Duplicate capability IDs: 0
 - Missing dependencies: 0
 - Missing canonical producers: 0
@@ -41,22 +41,27 @@ Before adding any new cognitive capability:
 | CAP-UND-001 | Organizational Mechanism Inference | COG | OrganizationalMechanism | OrganizationModel.mechanisms | CAP-ABS-001, CAP-SELF-001, CAP-UND-002, CAP-UND-003, CAP-UND-004, CAP-UND-005 |
 | CAP-UND-002 | Organizational Belief Formation | COG | OrganizationalBelief | OrganizationModel.beliefs | CAP-ABS-001, CAP-LRN-001, CAP-SELF-001, CAP-SIM-001, CAP-UND-003, CAP-UND-004, CAP-UND-005 |
 | CAP-UND-003 | Organizational Theory Formation | COG | OrganizationalTheory | OrganizationalMemory.theories | CAP-SELF-001, CAP-UND-004, CAP-UND-005 |
-| CAP-UND-004 | Organizational Condition Inference | EXEC | OrganizationalCondition | OrganizationRuntime.organizationalConditions | CAP-ADP-001, CAP-PRD-001, CAP-SELF-002, CAP-SIM-001, CAP-UND-005 |
-| CAP-UND-005 | Executive Assessment | EXEC | ExecutiveAssessment | OrganizationRuntime.executiveAssessment | CAP-UND-006 |
-| CAP-UND-006 | Executive Understanding Synthesis | COG | OrganizationalUnderstanding, OrganizationalUnderstandingState | OrganizationRuntime.organizationalUnderstandingState | Terminal capability |
+| CAP-UND-004 | Organizational Condition Inference | EXEC | OrganizationalCondition | OrganizationRuntime.organizationalConditions | CAP-ADP-001, CAP-COM-001, CAP-PRD-001, CAP-SELF-002, CAP-SIM-001, CAP-UND-005 |
+| CAP-UND-005 | Executive Assessment | EXEC | ExecutiveAssessment | OrganizationRuntime.executiveAssessment | CAP-COM-001, CAP-DEC-001, CAP-DEC-002, CAP-UND-006 |
+| CAP-UND-006 | Executive Understanding Synthesis | COG | OrganizationalUnderstanding, OrganizationalUnderstandingState | OrganizationRuntime.organizationalUnderstandingState | CAP-COM-001, CAP-DEC-001 |
 | CAP-MEM-001 | Organizational Runtime Persistence | RUN | OrganizationRuntime | OrganizationRuntime | CAP-LRN-001, CAP-LRN-002, CAP-SYS-001, CAP-UND-006 |
 | CAP-LRN-001 | Organizational Belief Evolution | COG | OrganizationalBeliefRevision | OrganizationRuntime.organizationalBeliefRevisions | CAP-LRN-002 |
-| CAP-LRN-002 | Organizational Learning Profile | COG | OrganizationalLearningProfile | OrganizationRuntime.organizationalLearningProfile | CAP-PRD-001, CAP-SIM-001 |
+| CAP-LRN-002 | Organizational Learning Profile | COG | OrganizationalLearningProfile | OrganizationRuntime.organizationalLearningProfile | CAP-COM-001, CAP-PRD-001, CAP-SIM-001 |
 | CAP-ABS-001 | Organizational Concept Formation | COG | OrganizationalConcept | OrganizationModel.concepts | CAP-UND-003 |
 | CAP-SELF-001 | Theory Validation | COG | TheoryValidation | ExecutiveAssessment.theoryValidation | CAP-SELF-002, CAP-SYS-001 |
-| CAP-SELF-002 | Investigation Opportunity Generation | EXEC | InvestigationOpportunity | OrganizationRuntime.investigationOpportunities | CAP-SYS-001 |
+| CAP-SELF-002 | Investigation Opportunity Generation | EXEC | InvestigationOpportunity | OrganizationRuntime.investigationOpportunities | CAP-COM-001, CAP-SYS-001 |
 | CAP-PRD-001 | Organizational Prediction | COG | OrganizationalPrediction | OrganizationRuntime.organizationalPredictions | CAP-ADP-001, CAP-PRD-002, CAP-SIM-001 |
-| CAP-PRD-002 | Prediction Reflection | COG | PredictionReflection | OrganizationRuntime.predictionReflection | CAP-ADP-001, CAP-UND-005 |
+| CAP-PRD-002 | Prediction Reflection | COG | PredictionReflection | OrganizationRuntime.predictionReflection | CAP-ADP-001, CAP-COM-001, CAP-DEC-001, CAP-DEC-002, CAP-UND-005 |
 | CAP-ADP-001 | Prediction Outcome Evaluation | COG | PredictionEvaluation | OrganizationRuntime.predictionEvaluations | CAP-LRN-002, CAP-SIM-001 |
 | CAP-SYS-001 | Architectural Planning | SYS | ArchitectureRecommendation | DiscoveryArchitectureState.architectureRecommendations | CAP-SYS-002 |
 | CAP-SYS-002 | Architecture Recommendation Projection | SYS | ArchitectureRecommendationProjection | DiscoveryArchitectureState.architectureRecommendationProjection | None |
-| CAP-SIM-001 | Organizational Simulation | COG | SimulatedOrganizationState | OrganizationRuntime.simulatedOrganizationStates | CAP-SYS-001 |
-| CAP-SIM-002 | Organizational Intervention Modeling | COG | OrganizationalIntervention | OrganizationRuntime.organizationalInterventions | CAP-SIM-001 |
+| CAP-SIM-001 | Organizational Simulation | COG | SimulatedOrganizationState | OrganizationRuntime.simulatedOrganizationStates | CAP-COM-001, CAP-DEC-001, CAP-DEC-002, CAP-SYS-001 |
+| CAP-SIM-002 | Organizational Intervention Modeling | COG | OrganizationalIntervention | OrganizationRuntime.organizationalInterventions | CAP-DEC-001, CAP-SIM-001 |
+| CAP-DEC-001 | Executive Decision Orchestration | EXEC | InterventionOption, EvaluatedInterventionOption, ExecutiveScenarioResult, ExecutiveDecisionCycle | ExecutiveDecisionCycle | Terminal capability |
+| CAP-DEC-002 | Cross-Scenario Comparison | EXEC | ExecutiveScenarioComparisonEntry, ExecutiveScenarioComparisonSet | ExecutiveDecisionCycle.comparisonSet | CAP-DEC-001, CAP-DEC-003, CAP-DEC-004 |
+| CAP-DEC-003 | Executive Decision Ranking | EXEC | RankedExecutiveScenario | ExecutiveDecisionCycle.rankedScenarios | CAP-DEC-001, CAP-DEC-004 |
+| CAP-DEC-004 | Executive Recommendation Synthesis | EXEC | ExecutiveDecisionRecommendation | ExecutiveDecisionCycle.recommendation | CAP-DEC-001 |
+| CAP-COM-001 | Executive Communication Synthesis | EXEC | ExecutiveNarrative, ExecutiveCommunication | ExecutiveCommunication | Terminal capability |
 
 ## Capability Dependency Map
 
@@ -312,6 +317,66 @@ Before adding any new cognitive capability:
 
 **Executive destinations:** Simulation
 
+### CAP-DEC-001 — Executive Decision Orchestration
+
+**Depends on:** CAP-SIM-001, CAP-SIM-002, CAP-UND-005, CAP-UND-006, CAP-PRD-002, CAP-DEC-002, CAP-DEC-003, CAP-DEC-004
+
+**Produces:** InterventionOption, EvaluatedInterventionOption, ExecutiveScenarioResult, ExecutiveDecisionCycle
+
+**Canonical producer:** `engine/v3/decisions/runExecutiveDecisionCycle.ts`
+
+**Runtime destination:** `ExecutiveDecisionCycle`
+
+**Executive destinations:** ExecutiveDecisionProjection, ExecutiveDecisionWorkspace, Atlas
+
+### CAP-DEC-002 — Cross-Scenario Comparison
+
+**Depends on:** CAP-SIM-001, CAP-UND-005, CAP-PRD-002
+
+**Produces:** ExecutiveScenarioComparisonEntry, ExecutiveScenarioComparisonSet
+
+**Canonical producer:** `engine/v3/decisions/compareExecutiveScenarios.ts`
+
+**Runtime destination:** `ExecutiveDecisionCycle.comparisonSet`
+
+**Executive destinations:** ExecutiveDecisionProjection, ExecutiveDecisionWorkspace, Atlas
+
+### CAP-DEC-003 — Executive Decision Ranking
+
+**Depends on:** CAP-DEC-002
+
+**Produces:** RankedExecutiveScenario
+
+**Canonical producer:** `engine/v3/decisions/rankExecutiveScenarios.ts`
+
+**Runtime destination:** `ExecutiveDecisionCycle.rankedScenarios`
+
+**Executive destinations:** ExecutiveDecisionProjection, ExecutiveDecisionWorkspace, Atlas
+
+### CAP-DEC-004 — Executive Recommendation Synthesis
+
+**Depends on:** CAP-DEC-002, CAP-DEC-003
+
+**Produces:** ExecutiveDecisionRecommendation
+
+**Canonical producer:** `engine/v3/decisions/buildExecutiveDecisionRecommendation.ts`
+
+**Runtime destination:** `ExecutiveDecisionCycle.recommendation`
+
+**Executive destinations:** ExecutiveDecisionProjection, ExecutiveDecisionWorkspace, Atlas
+
+### CAP-COM-001 — Executive Communication Synthesis
+
+**Depends on:** CAP-UND-004, CAP-UND-005, CAP-UND-006, CAP-LRN-002, CAP-PRD-002, CAP-SIM-001, CAP-SELF-002
+
+**Produces:** ExecutiveNarrative, ExecutiveCommunication
+
+**Canonical producer:** `engine/v3/communication/synthesizeExecutiveCommunication.ts`
+
+**Runtime destination:** `ExecutiveCommunication`
+
+**Executive destinations:** ExecutiveWorkspaceV3
+
 ## Potential Capability Overlap
 
 ### CAP-UND-004 — Organizational Condition Inference
@@ -319,6 +384,14 @@ Before adding any new cognitive capability:
 Possible overlap with **CAP-UND-005 — Executive Assessment**.
 
 Reason: semantic similarity 36%.
+
+Review before creating a new capability. Similarity does not automatically mean duplication; one capability may legitimately depend on or transform another.
+
+### CAP-DEC-002 — Cross-Scenario Comparison
+
+Possible overlap with **CAP-DEC-003 — Executive Decision Ranking**.
+
+Reason: semantic similarity 30%.
 
 Review before creating a new capability. Similarity does not automatically mean duplication; one capability may legitimately depend on or transform another.
 
@@ -473,6 +546,39 @@ Executive Workspace
 - Canonical producer: `engine/v3/model/simulate/buildOrganizationalIntervention.ts`
 - Implementation: `engine/v3/model/simulate/organizationalIntervention.ts`
 - Implementation: `engine/v3/model/simulate/buildOrganizationalIntervention.ts`
+
+### CAP-DEC-001 — Executive Decision Orchestration
+
+- Canonical producer: `engine/v3/decisions/runExecutiveDecisionCycle.ts`
+- Implementation: `engine/v3/decisions/runExecutiveDecisionCycle.ts`
+- Implementation: `engine/v3/reasoning/generateInterventionOptions.ts`
+- Implementation: `engine/v3/reasoning/convertInterventionOptionToIntervention.ts`
+- Implementation: `engine/v3/reasoning/evaluateInterventionOption.ts`
+- Implementation: `engine/v3/scenarios/buildExecutiveDecisionContext.ts`
+- Implementation: `engine/v3/scenarios/runExecutiveScenario.ts`
+
+### CAP-DEC-002 — Cross-Scenario Comparison
+
+- Canonical producer: `engine/v3/decisions/compareExecutiveScenarios.ts`
+- Implementation: `engine/v3/decisions/compareExecutiveScenarios.ts`
+
+### CAP-DEC-003 — Executive Decision Ranking
+
+- Canonical producer: `engine/v3/decisions/rankExecutiveScenarios.ts`
+- Implementation: `engine/v3/decisions/rankExecutiveScenarios.ts`
+
+### CAP-DEC-004 — Executive Recommendation Synthesis
+
+- Canonical producer: `engine/v3/decisions/buildExecutiveDecisionRecommendation.ts`
+- Implementation: `engine/v3/decisions/buildExecutiveDecisionRecommendation.ts`
+
+### CAP-COM-001 — Executive Communication Synthesis
+
+- Canonical producer: `engine/v3/communication/synthesizeExecutiveCommunication.ts`
+- Implementation: `engine/v3/communication/executiveNarrative.ts`
+- Implementation: `engine/v3/communication/synthesizeExecutiveNarrative.ts`
+- Implementation: `engine/v3/communication/executiveCommunication.ts`
+- Implementation: `engine/v3/communication/synthesizeExecutiveCommunication.ts`
 
 ## Sprint Handoff Guidance
 
