@@ -1,107 +1,50 @@
 "use client";
 
-import ExecutiveAnswerGrid from "./answers/ExecutiveAnswerGrid";
-import ExecutiveAttention from "./attention/ExecutiveAttention";
-import { getVisibleExecutiveCapabilities } from "./capabilities/ExecutiveCapabilityRegistry";
-import ExecutiveDecisionWorkspace from "./decision/ExecutiveDecisionWorkspace";
-import type { ExecutiveProjection } from "./projection/ExecutiveProjection";
-import UnderstandingCanvas from "./understanding/UnderstandingCanvas";
+import ExecutiveWorkspace from "../executive-v3/ExecutiveWorkspace";
+
+import {
+  synthesizeExecutiveCommunication,
+} from "../../engine/v3/communication/synthesizeExecutiveCommunication";
+
+import type {
+  ExecutiveProjection,
+} from "./projection/ExecutiveProjection";
 
 type ExecutiveExperienceProps = {
   projection: ExecutiveProjection;
 
   /**
-   * Runtime organization evaluated by executive scenarios.
+   * Stable organization identity used by the canonical
+   * Executive Communication producer.
    */
-  organizationId: string;
+  organizationId?: string;
 
   /**
-   * Optional canonical condition selected when the workspace first loads.
+   * Preserved for compatibility with existing callers.
    */
   defaultDecisionConditionId?: string;
 };
 
+/**
+ * Compatibility boundary between the existing Executive Projection
+ * and the canonical Executive Communication Operating System.
+ *
+ * The V3 workspace receives only the communication product. It does not
+ * interpret the larger Executive Projection or synthesize executive language.
+ */
 export default function ExecutiveExperience({
   projection,
-  organizationId,
-  defaultDecisionConditionId = "",
+  organizationId = "default-organization",
 }: ExecutiveExperienceProps) {
-  const {
-    currentUnderstanding,
-    explanation,
-    executiveAttention,
-  } = projection;
-
-  const visibleCapabilities =
-    getVisibleExecutiveCapabilities(
+  const communication =
+    synthesizeExecutiveCommunication({
       projection,
-    );
+      organizationId,
+    });
 
   return (
-    <main className="executive-v2-experience">
-      <div className="executive-v2-shell">
-        <header className="executive-v2-header">
-          <div className="executive-v2-brand">
-            <span className="executive-v2-brand-dot" />
-            <span>Discovery</span>
-          </div>
-        </header>
-
-        <UnderstandingCanvas
-          belief={
-            currentUnderstanding.belief
-          }
-          mindStatus={
-            currentUnderstanding.mindStatus
-          }
-          confidence={
-            currentUnderstanding.confidence
-          }
-          organizationalCoherence={
-            currentUnderstanding
-              .organizationalCoherence
-          }
-        />
-
-        {visibleCapabilities.map(
-          (capability) => (
-            <div
-              key={
-                capability.capabilityId +
-                "-" +
-                String(
-                  capability.projectionKey,
-                )
-              }
-            >
-              {capability.render(
-                projection,
-              )}
-            </div>
-          ),
-        )}
-
-        <ExecutiveDecisionWorkspace
-          organizationId={
-            organizationId
-          }
-          defaultConditionId={
-            defaultDecisionConditionId
-          }
-        />
-
-        <ExecutiveAttention
-          attention={
-            executiveAttention
-          }
-        />
-
-        <ExecutiveAnswerGrid
-          explanation={
-            explanation
-          }
-        />
-      </div>
-    </main>
+    <ExecutiveWorkspace
+      communication={communication}
+    />
   );
 }

@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-14T03:36:23.601Z",
+    "generatedAt": "2026-07-14T19:12:33.888Z",
     "generator": "scripts/cognition/generateArchitectureState.mjs",
     "sourceOfTruthOrder": [
       "Verified source code",
@@ -29,11 +29,11 @@
   "architecture": {
     "status": "healthy",
     "healthScore": 100,
-    "capabilityCount": 21,
-    "canonicalProducerCount": 21,
+    "capabilityCount": 26,
+    "canonicalProducerCount": 26,
     "registeredFileCount": 482,
     "cognitiveObjectCount": 60,
-    "terminalCapabilityCount": 3,
+    "terminalCapabilityCount": 5,
     "capabilityTraceCount": 12,
     "connectedCapabilityTraceCount": 11,
     "health": {
@@ -373,6 +373,7 @@
         ],
         "consumedByCapabilities": [
           "CAP-ADP-001",
+          "CAP-COM-001",
           "CAP-PRD-001",
           "CAP-SELF-002",
           "CAP-SIM-001",
@@ -434,6 +435,9 @@
           "CAP-PRD-002"
         ],
         "consumedByCapabilities": [
+          "CAP-COM-001",
+          "CAP-DEC-001",
+          "CAP-DEC-002",
           "CAP-UND-006"
         ],
         "terminalCapability": false
@@ -500,7 +504,10 @@
           "CAP-UND-005",
           "CAP-MEM-001"
         ],
-        "consumedByCapabilities": [],
+        "consumedByCapabilities": [
+          "CAP-COM-001",
+          "CAP-DEC-001"
+        ],
         "terminalCapability": true
       },
       "destinations": {
@@ -680,6 +687,7 @@
           "CAP-LRN-001"
         ],
         "consumedByCapabilities": [
+          "CAP-COM-001",
           "CAP-PRD-001",
           "CAP-SIM-001"
         ],
@@ -875,6 +883,7 @@
           "CAP-SELF-001"
         ],
         "consumedByCapabilities": [
+          "CAP-COM-001",
           "CAP-SYS-001"
         ],
         "terminalCapability": true
@@ -1003,6 +1012,9 @@
         ],
         "consumedByCapabilities": [
           "CAP-ADP-001",
+          "CAP-COM-001",
+          "CAP-DEC-001",
+          "CAP-DEC-002",
           "CAP-UND-005"
         ],
         "terminalCapability": false
@@ -1249,6 +1261,9 @@
           "CAP-LRN-002"
         ],
         "consumedByCapabilities": [
+          "CAP-COM-001",
+          "CAP-DEC-001",
+          "CAP-DEC-002",
           "CAP-SYS-001"
         ],
         "terminalCapability": false
@@ -1311,6 +1326,7 @@
       "relationships": {
         "consumesCapabilities": [],
         "consumedByCapabilities": [
+          "CAP-DEC-001",
           "CAP-SIM-001"
         ],
         "terminalCapability": false
@@ -1346,6 +1362,301 @@
       },
       "searchTerms": [],
       "notes": "Version 1 represents intentional executive actions as canonical cognitive objects. Later versions will infer affected conditions, mechanisms, beliefs, assumptions, evidence requirements, and causal propagation pathways."
+    },
+    {
+      "id": "CAP-DEC-001",
+      "name": "Executive Decision Orchestration",
+      "description": "Coordinates Discovery's complete multi-option executive decision cycle by generating intervention options, normalizing and evaluating each option, simulating every viable organizational future from the same baseline, comparing and ranking the scenarios, and synthesizing the final executive recommendation without mutating the live Organization Runtime.",
+      "domain": "DEC",
+      "architecturalLayer": "EXEC",
+      "subsystem": "Executive Decision Orchestration",
+      "status": "canonical",
+      "reviewStatus": "reviewed",
+      "ownership": {
+        "ownsObjects": [
+          "InterventionOption",
+          "EvaluatedInterventionOption",
+          "ExecutiveScenarioResult",
+          "ExecutiveDecisionCycle"
+        ],
+        "ownsCanonicalProducer": "engine/v3/decisions/runExecutiveDecisionCycle.ts",
+        "implementationFiles": [
+          "engine/v3/decisions/runExecutiveDecisionCycle.ts",
+          "engine/v3/reasoning/generateInterventionOptions.ts",
+          "engine/v3/reasoning/convertInterventionOptionToIntervention.ts",
+          "engine/v3/reasoning/evaluateInterventionOption.ts",
+          "engine/v3/scenarios/buildExecutiveDecisionContext.ts",
+          "engine/v3/scenarios/runExecutiveScenario.ts"
+        ],
+        "doesNotOwn": []
+      },
+      "relationships": {
+        "consumesCapabilities": [
+          "CAP-SIM-001",
+          "CAP-SIM-002",
+          "CAP-UND-005",
+          "CAP-UND-006",
+          "CAP-PRD-002",
+          "CAP-DEC-002",
+          "CAP-DEC-003",
+          "CAP-DEC-004"
+        ],
+        "consumedByCapabilities": [],
+        "terminalCapability": true
+      },
+      "destinations": {
+        "runtime": "ExecutiveDecisionCycle",
+        "executive": [
+          "ExecutiveDecisionProjection",
+          "ExecutiveDecisionWorkspace",
+          "Atlas"
+        ]
+      },
+      "validation": {
+        "atlasCoverage": "partial",
+        "benchmarkCoverage": [
+          "Scenario Integration",
+          "Executive Decision Cycle",
+          "Decision Calibration"
+        ],
+        "canonicalProducerExists": true,
+        "missingImplementationFiles": [],
+        "capabilityTrace": {
+          "exists": false,
+          "connected": null,
+          "pipelineCoverage": null,
+          "tracePath": "docs/Sprint Updates/Capability Traces/cap-dec-001.md"
+        }
+      },
+      "searchTerms": [],
+      "notes": "Canonical non-mutating orchestrator for multi-option executive decision analysis. It composes existing producers and must not recreate simulation, comparison, ranking, or recommendation logic."
+    },
+    {
+      "id": "CAP-DEC-002",
+      "name": "Cross-Scenario Comparison",
+      "description": "Compares completed executive scenarios from the same organizational baseline, preserving each intervention's condition changes, prediction changes, confidence, assumptions, and recommendation while identifying shared and differentiating organizational outcomes.",
+      "domain": "DEC",
+      "architecturalLayer": "EXEC",
+      "subsystem": "Executive Scenario Comparison",
+      "status": "canonical",
+      "reviewStatus": "reviewed",
+      "ownership": {
+        "ownsObjects": [
+          "ExecutiveScenarioComparisonEntry",
+          "ExecutiveScenarioComparisonSet"
+        ],
+        "ownsCanonicalProducer": "engine/v3/decisions/compareExecutiveScenarios.ts",
+        "implementationFiles": [
+          "engine/v3/decisions/compareExecutiveScenarios.ts"
+        ],
+        "doesNotOwn": []
+      },
+      "relationships": {
+        "consumesCapabilities": [
+          "CAP-SIM-001",
+          "CAP-UND-005",
+          "CAP-PRD-002"
+        ],
+        "consumedByCapabilities": [
+          "CAP-DEC-001",
+          "CAP-DEC-003",
+          "CAP-DEC-004"
+        ],
+        "terminalCapability": false
+      },
+      "destinations": {
+        "runtime": "ExecutiveDecisionCycle.comparisonSet",
+        "executive": [
+          "ExecutiveDecisionProjection",
+          "ExecutiveDecisionWorkspace",
+          "Atlas"
+        ]
+      },
+      "validation": {
+        "atlasCoverage": "partial",
+        "benchmarkCoverage": [
+          "Decision Ranking",
+          "Executive Decision Cycle"
+        ],
+        "canonicalProducerExists": true,
+        "missingImplementationFiles": [],
+        "capabilityTrace": {
+          "exists": false,
+          "connected": null,
+          "pipelineCoverage": null,
+          "tracePath": "docs/Sprint Updates/Capability Traces/cap-dec-002.md"
+        }
+      },
+      "searchTerms": [],
+      "notes": "Compares scenarios but does not score, rank, or recommend an intervention."
+    },
+    {
+      "id": "CAP-DEC-003",
+      "name": "Executive Decision Ranking",
+      "description": "Deterministically scores and orders executive scenarios using organizational benefit, organizational risk, confidence, and scenario-level recommendation while preserving the reasons that produced each rank.",
+      "domain": "DEC",
+      "architecturalLayer": "EXEC",
+      "subsystem": "Executive Decision Ranking",
+      "status": "canonical",
+      "reviewStatus": "reviewed",
+      "ownership": {
+        "ownsObjects": [
+          "RankedExecutiveScenario"
+        ],
+        "ownsCanonicalProducer": "engine/v3/decisions/rankExecutiveScenarios.ts",
+        "implementationFiles": [
+          "engine/v3/decisions/rankExecutiveScenarios.ts"
+        ],
+        "doesNotOwn": []
+      },
+      "relationships": {
+        "consumesCapabilities": [
+          "CAP-DEC-002"
+        ],
+        "consumedByCapabilities": [
+          "CAP-DEC-001",
+          "CAP-DEC-004"
+        ],
+        "terminalCapability": false
+      },
+      "destinations": {
+        "runtime": "ExecutiveDecisionCycle.rankedScenarios",
+        "executive": [
+          "ExecutiveDecisionProjection",
+          "ExecutiveDecisionWorkspace",
+          "Atlas"
+        ]
+      },
+      "validation": {
+        "atlasCoverage": "partial",
+        "benchmarkCoverage": [
+          "Decision Ranking",
+          "Executive Decision Cycle"
+        ],
+        "canonicalProducerExists": true,
+        "missingImplementationFiles": [],
+        "capabilityTrace": {
+          "exists": false,
+          "connected": null,
+          "pipelineCoverage": null,
+          "tracePath": "docs/Sprint Updates/Capability Traces/cap-dec-003.md"
+        }
+      },
+      "searchTerms": [],
+      "notes": "Ranking remains separate from recommendation synthesis. Given fixed inputs and timestamps, the ordering must remain deterministic."
+    },
+    {
+      "id": "CAP-DEC-004",
+      "name": "Executive Recommendation Synthesis",
+      "description": "Synthesizes the final executive recommendation from the ranked scenario set, preserving the recommended intervention, recommendation status, confidence, expected benefits, trade-offs, risks, assumptions, next-best alternative, and evidence that could change Discovery's conclusion.",
+      "domain": "DEC",
+      "architecturalLayer": "EXEC",
+      "subsystem": "Executive Recommendation",
+      "status": "canonical",
+      "reviewStatus": "reviewed",
+      "ownership": {
+        "ownsObjects": [
+          "ExecutiveDecisionRecommendation"
+        ],
+        "ownsCanonicalProducer": "engine/v3/decisions/buildExecutiveDecisionRecommendation.ts",
+        "implementationFiles": [
+          "engine/v3/decisions/buildExecutiveDecisionRecommendation.ts"
+        ],
+        "doesNotOwn": []
+      },
+      "relationships": {
+        "consumesCapabilities": [
+          "CAP-DEC-002",
+          "CAP-DEC-003"
+        ],
+        "consumedByCapabilities": [
+          "CAP-DEC-001"
+        ],
+        "terminalCapability": false
+      },
+      "destinations": {
+        "runtime": "ExecutiveDecisionCycle.recommendation",
+        "executive": [
+          "ExecutiveDecisionProjection",
+          "ExecutiveDecisionWorkspace",
+          "Atlas"
+        ]
+      },
+      "validation": {
+        "atlasCoverage": "partial",
+        "benchmarkCoverage": [
+          "Executive Decision Cycle"
+        ],
+        "canonicalProducerExists": true,
+        "missingImplementationFiles": [],
+        "capabilityTrace": {
+          "exists": false,
+          "connected": null,
+          "pipelineCoverage": null,
+          "tracePath": "docs/Sprint Updates/Capability Traces/cap-dec-004.md"
+        }
+      },
+      "searchTerms": [],
+      "notes": "Recommendation synthesis remains separate from ranking and preserves what evidence or constraints could change the recommendation."
+    },
+    {
+      "id": "CAP-COM-001",
+      "name": "Executive Communication Synthesis",
+      "description": "Synthesizes canonical organizational cognition into concise, actionable executive communication by producing an executive headline, summary, supporting signals, meaningful changes, forecast, recommendation, uncertainty, and progressive-disclosure evidence without exposing internal reasoning mechanics.",
+      "domain": "COM",
+      "architecturalLayer": "EXEC",
+      "subsystem": "Executive Communication",
+      "status": "canonical",
+      "reviewStatus": "reviewed",
+      "ownership": {
+        "ownsObjects": [
+          "ExecutiveNarrative",
+          "ExecutiveCommunication"
+        ],
+        "ownsCanonicalProducer": "engine/v3/communication/synthesizeExecutiveCommunication.ts",
+        "implementationFiles": [
+          "engine/v3/communication/executiveNarrative.ts",
+          "engine/v3/communication/synthesizeExecutiveNarrative.ts",
+          "engine/v3/communication/executiveCommunication.ts",
+          "engine/v3/communication/synthesizeExecutiveCommunication.ts"
+        ],
+        "doesNotOwn": []
+      },
+      "relationships": {
+        "consumesCapabilities": [
+          "CAP-UND-004",
+          "CAP-UND-005",
+          "CAP-UND-006",
+          "CAP-LRN-002",
+          "CAP-PRD-002",
+          "CAP-SIM-001",
+          "CAP-SELF-002"
+        ],
+        "consumedByCapabilities": [],
+        "terminalCapability": true
+      },
+      "destinations": {
+        "runtime": "ExecutiveCommunication",
+        "executive": [
+          "ExecutiveWorkspaceV3"
+        ]
+      },
+      "validation": {
+        "atlasCoverage": "partial",
+        "benchmarkCoverage": [
+          "Executive Communication Experiment 001"
+        ],
+        "canonicalProducerExists": true,
+        "missingImplementationFiles": [],
+        "capabilityTrace": {
+          "exists": false,
+          "connected": null,
+          "pipelineCoverage": null,
+          "tracePath": "docs/Sprint Updates/Capability Traces/cap-com-001.md"
+        }
+      },
+      "searchTerms": [],
+      "notes": "Canonical communication producer for transforming Executive Projection cognition into executive-ready language. It suppresses implementation details and engine terminology, preserves confidence, uncertainty, supporting signals, meaningful changes, forecast, recommendation, and evidence, remains deterministic when generatedAt is supplied, and does not mutate its input projection."
     }
   ],
   "capabilityIndex": {
@@ -1599,10 +1910,78 @@
       "executiveDestinations": [
         "Simulation"
       ]
+    },
+    "CAP-DEC-001": {
+      "name": "Executive Decision Orchestration",
+      "ownsObjects": [
+        "InterventionOption",
+        "EvaluatedInterventionOption",
+        "ExecutiveScenarioResult",
+        "ExecutiveDecisionCycle"
+      ],
+      "canonicalProducer": "engine/v3/decisions/runExecutiveDecisionCycle.ts",
+      "runtimeDestination": "ExecutiveDecisionCycle",
+      "executiveDestinations": [
+        "ExecutiveDecisionProjection",
+        "ExecutiveDecisionWorkspace",
+        "Atlas"
+      ]
+    },
+    "CAP-DEC-002": {
+      "name": "Cross-Scenario Comparison",
+      "ownsObjects": [
+        "ExecutiveScenarioComparisonEntry",
+        "ExecutiveScenarioComparisonSet"
+      ],
+      "canonicalProducer": "engine/v3/decisions/compareExecutiveScenarios.ts",
+      "runtimeDestination": "ExecutiveDecisionCycle.comparisonSet",
+      "executiveDestinations": [
+        "ExecutiveDecisionProjection",
+        "ExecutiveDecisionWorkspace",
+        "Atlas"
+      ]
+    },
+    "CAP-DEC-003": {
+      "name": "Executive Decision Ranking",
+      "ownsObjects": [
+        "RankedExecutiveScenario"
+      ],
+      "canonicalProducer": "engine/v3/decisions/rankExecutiveScenarios.ts",
+      "runtimeDestination": "ExecutiveDecisionCycle.rankedScenarios",
+      "executiveDestinations": [
+        "ExecutiveDecisionProjection",
+        "ExecutiveDecisionWorkspace",
+        "Atlas"
+      ]
+    },
+    "CAP-DEC-004": {
+      "name": "Executive Recommendation Synthesis",
+      "ownsObjects": [
+        "ExecutiveDecisionRecommendation"
+      ],
+      "canonicalProducer": "engine/v3/decisions/buildExecutiveDecisionRecommendation.ts",
+      "runtimeDestination": "ExecutiveDecisionCycle.recommendation",
+      "executiveDestinations": [
+        "ExecutiveDecisionProjection",
+        "ExecutiveDecisionWorkspace",
+        "Atlas"
+      ]
+    },
+    "CAP-COM-001": {
+      "name": "Executive Communication Synthesis",
+      "ownsObjects": [
+        "ExecutiveNarrative",
+        "ExecutiveCommunication"
+      ],
+      "canonicalProducer": "engine/v3/communication/synthesizeExecutiveCommunication.ts",
+      "runtimeDestination": "ExecutiveCommunication",
+      "executiveDestinations": [
+        "ExecutiveWorkspaceV3"
+      ]
     }
   },
   "intelligence": {
-    "producedObjectCount": 22,
+    "producedObjectCount": 32,
     "producedObjects": [
       "V3Evidence",
       "OrganizationalObservation",
@@ -1625,9 +2004,19 @@
       "ArchitectureRecommendation",
       "ArchitectureRecommendationProjection",
       "SimulatedOrganizationState",
-      "OrganizationalIntervention"
+      "OrganizationalIntervention",
+      "InterventionOption",
+      "EvaluatedInterventionOption",
+      "ExecutiveScenarioResult",
+      "ExecutiveDecisionCycle",
+      "ExecutiveScenarioComparisonEntry",
+      "ExecutiveScenarioComparisonSet",
+      "RankedExecutiveScenario",
+      "ExecutiveDecisionRecommendation",
+      "ExecutiveNarrative",
+      "ExecutiveCommunication"
     ],
-    "executiveCapabilityCount": 18,
+    "executiveCapabilityCount": 23,
     "executiveCapabilityIds": [
       "CAP-UND-001",
       "CAP-UND-002",
@@ -1646,9 +2035,14 @@
       "CAP-SYS-001",
       "CAP-SYS-002",
       "CAP-SIM-001",
-      "CAP-SIM-002"
+      "CAP-SIM-002",
+      "CAP-DEC-001",
+      "CAP-DEC-002",
+      "CAP-DEC-003",
+      "CAP-DEC-004",
+      "CAP-COM-001"
     ],
-    "projectedCapabilityCount": 8,
+    "projectedCapabilityCount": 12,
     "projectedCapabilityIds": [
       "CAP-UND-005",
       "CAP-UND-006",
@@ -1657,14 +2051,23 @@
       "CAP-SELF-001",
       "CAP-SELF-002",
       "CAP-ADP-001",
-      "CAP-SIM-001"
+      "CAP-SIM-001",
+      "CAP-DEC-001",
+      "CAP-DEC-002",
+      "CAP-DEC-003",
+      "CAP-DEC-004"
     ],
-    "workspaceDeclaredCapabilityCount": 4,
+    "workspaceDeclaredCapabilityCount": 9,
     "workspaceDeclaredCapabilityIds": [
       "CAP-UND-005",
       "CAP-UND-006",
       "CAP-ADP-001",
-      "CAP-SIM-001"
+      "CAP-SIM-001",
+      "CAP-DEC-001",
+      "CAP-DEC-002",
+      "CAP-DEC-003",
+      "CAP-DEC-004",
+      "CAP-COM-001"
     ],
     "structurallyVisibleCapabilityCount": 8,
     "structurallyVisibleCapabilityIds": [
@@ -1702,8 +2105,13 @@
       "CAP-ADP-001",
       "CAP-SIM-001"
     ],
-    "potentiallyHiddenCapabilityCount": 0,
-    "potentiallyHiddenCapabilityIds": [],
+    "potentiallyHiddenCapabilityCount": 4,
+    "potentiallyHiddenCapabilityIds": [
+      "CAP-DEC-001",
+      "CAP-DEC-002",
+      "CAP-DEC-003",
+      "CAP-DEC-004"
+    ],
     "interpretation": "Structural connection is inferred from generated capability traces. A capability is considered connected when its Runtime-to-Executive-Projection pathway exists, even when its current runtime collection is empty. Direct UI presentation is tracked separately and does not determine whether the capability is architecturally hidden."
   },
   "gaps": {
@@ -1741,8 +2149,8 @@
     "permanentRule": "Extend existing capabilities before creating new ones. A new capability requires a distinct responsibility, distinct produced object, distinct canonical producer, and justified position in the pipeline."
   },
   "recommendations": {
-    "highestROI": "Continue validating and refining existing canonical capabilities.",
-    "reason": "The registered architecture is healthy and should be extended before new capability creation.",
+    "highestROI": "Expose intelligence already produced but not structurally visible in the Executive Workspace.",
+    "reason": "4 projected capability appear potentially hidden from the UI.",
     "recommendedCapability": null,
     "requiredPreBuildChecks": [
       "Search the Cognitive Capability Registry.",
@@ -1774,7 +2182,12 @@
       "Do not recreate Architectural Planning; extend CAP-SYS-001 unless a distinct responsibility is proven.",
       "Do not recreate Architecture Recommendation Projection; extend CAP-SYS-002 unless a distinct responsibility is proven.",
       "Do not recreate Organizational Simulation; extend CAP-SIM-001 unless a distinct responsibility is proven.",
-      "Do not recreate Organizational Intervention Modeling; extend CAP-SIM-002 unless a distinct responsibility is proven."
+      "Do not recreate Organizational Intervention Modeling; extend CAP-SIM-002 unless a distinct responsibility is proven.",
+      "Do not recreate Executive Decision Orchestration; extend CAP-DEC-001 unless a distinct responsibility is proven.",
+      "Do not recreate Cross-Scenario Comparison; extend CAP-DEC-002 unless a distinct responsibility is proven.",
+      "Do not recreate Executive Decision Ranking; extend CAP-DEC-003 unless a distinct responsibility is proven.",
+      "Do not recreate Executive Recommendation Synthesis; extend CAP-DEC-004 unless a distinct responsibility is proven.",
+      "Do not recreate Executive Communication Synthesis; extend CAP-COM-001 unless a distinct responsibility is proven."
     ],
     "overlapReviewsRequired": 1,
     "decisionRule": "Do not create a new capability when an existing capability already owns the responsibility, object, producer, or destination. Expose or extend existing intelligence first."

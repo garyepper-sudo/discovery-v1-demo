@@ -12,14 +12,14 @@ Its purpose is to verify that every capability:
 
 - has a Cognitive Operating System owner,
 - has a Capability Registry owner,
-- has a single canonical producer,
+- has one canonical producer,
 - produces one canonical cognitive object,
 - is connected into Runtime,
 - is consumed by downstream cognition,
-- is exposed through Executive Projection when appropriate,
-- and is validated through Atlas or Decision Intelligence experiments.
+- is exposed through Executive Projection or Executive Communication when appropriate,
+- and is validated through Atlas or canonical benchmark experiments.
 
-This document is an architectural summary.
+This document summarizes Discovery's architecture.
 
 The Capability Registry remains the authoritative inventory of individual capabilities.
 
@@ -31,13 +31,17 @@ Discovery's cognitive architecture is considered **stable**.
 
 Current focus is no longer discovering new capabilities.
 
-Current focus is:
+Current focus is improving the quality of Discovery's existing cognition and executive communication.
 
-- improving reasoning quality,
-- improving executive recommendations,
-- improving intervention quality,
-- improving scenario evaluation,
-- exposing existing cognition through the Executive Experience.
+Primary areas of investment are:
+
+- reasoning quality,
+- executive communication quality,
+- executive recommendations,
+- intervention quality,
+- simulation quality,
+- decision quality,
+- executive experience.
 
 ---
 
@@ -55,11 +59,19 @@ Architecture Health
 
 **100%**
 
+Canonical Capabilities
+
+**26**
+
+Canonical Producers
+
+**26**
+
 ---
 
 # Cognitive Operating Systems
 
-Discovery currently contains ten canonical operating systems.
+Discovery currently contains twelve canonical Operating Systems.
 
 | Operating System | Status |
 |------------------|--------|
@@ -73,6 +85,8 @@ Discovery currently contains ten canonical operating systems.
 | Adaptive Learning | ✅ Canonical |
 | Systems | ✅ Canonical |
 | Simulation | ✅ Canonical |
+| Executive Decision | ✅ Canonical |
+| Executive Communication | ✅ Canonical |
 
 ---
 
@@ -111,6 +125,7 @@ Persists:
 - Organizational Memory
 - Runtime
 - Organizational State
+- Organizational Understanding
 - Causal Model
 - Simulations
 - Prediction Evaluations
@@ -190,6 +205,33 @@ Produces:
 
 ---
 
+## Executive Decision
+
+Produces:
+
+- Executive Decision Cycle
+- Intervention Options
+- Evaluated Intervention Options
+- Ranked Executive Scenarios
+- Executive Recommendation
+
+---
+
+## Executive Communication
+
+Produces:
+
+- Executive Narrative
+- Executive Communication
+
+Transforms canonical cognition into executive-ready communication while suppressing internal reasoning mechanics.
+
+Validated by:
+
+- Executive Communication Experiment 001 (13 / 13)
+
+---
+
 # Canonical Decision Intelligence Pipeline
 
 ```text
@@ -262,6 +304,30 @@ Executive Recommendation
 
 ---
 
+# Canonical Executive Communication Pipeline
+
+```text
+Executive Projection
+
+↓
+
+Executive Narrative
+
+↓
+
+Executive Communication
+
+↓
+
+Executive Experience
+```
+
+Executive Communication is responsible for translating canonical cognition into executive language.
+
+Presentation layers should consume Executive Communication rather than interpreting cognitive objects directly.
+
+---
+
 # Canonical Producer Principles
 
 Every cognitive object must have:
@@ -270,14 +336,16 @@ Every cognitive object must have:
 - one Capability Registry owner,
 - one canonical producer,
 - one Runtime representation (when persisted),
-- one Executive Projection destination,
+- one Executive destination,
 - one benchmark validation path.
 
-Simulation should **never** duplicate cognition.
+Simulation never recreates cognition.
 
 Simulation modifies organizational state.
 
 Canonical cognition interprets organizational state.
+
+Executive Communication communicates canonical cognition.
 
 ---
 
@@ -285,16 +353,16 @@ Canonical cognition interprets organizational state.
 
 ## Primary
 
-Complete the Executive Decision Experience.
+Executive Experience V3
 
 Specifically:
 
-1. Integrate `runExecutiveScenario()` into the API.
-2. Extend Executive Projection with decision scenarios.
-3. Build the Executive Decision Workspace.
-4. Compare multiple intervention scenarios.
-5. Rank intervention alternatives.
-6. Improve executive recommendations.
+1. Consume Executive Communication throughout the Executive Workspace.
+2. Surface Executive Decision capabilities.
+3. Improve executive narrative quality.
+4. Improve executive recommendation quality.
+5. Improve executive communication quality.
+6. Continue benchmarking communication and decision intelligence.
 
 ---
 
@@ -303,6 +371,7 @@ Specifically:
 Future work should emphasize:
 
 - reasoning quality,
+- executive communication,
 - recommendation quality,
 - intervention ranking,
 - longitudinal learning,
@@ -320,13 +389,17 @@ rather than introducing additional cognitive layers.
 
 > Objects before code.
 
-> Reasoning before interface.
+> Reasoning before communication.
+
+> Communication before presentation.
 
 > Improve canonical producers before creating new reasoning.
 
 > Runtime stores canonical cognition.
 
-> Executive Projection exposes canonical cognition.
+> Executive Projection organizes canonical cognition.
+
+> Executive Communication communicates canonical cognition.
 
 > Every cognitive object has one canonical producer.
 
@@ -334,4 +407,4 @@ rather than introducing additional cognitive layers.
 
 > Benchmark reasoning, not implementation.
 
-> Prefer improving understanding over expanding architecture.
+> Prefer improving understanding and communication over expanding architecture.

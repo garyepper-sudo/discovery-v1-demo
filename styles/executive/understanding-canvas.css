@@ -2201,3 +2201,958 @@
   }
 }
 
+/* =====================================================
+   Executive Briefing
+   Distilled executive information hierarchy
+   ===================================================== */
+
+.executive-v2-experience:has(.executive-briefing) {
+  overflow: hidden;
+}
+
+.executive-v2-experience:has(.executive-briefing) .executive-v2-shell {
+  min-width: 0;
+}
+
+.executive-briefing {
+  width: 100%;
+  min-width: 0;
+
+  color: rgba(247, 244, 236, 0.96);
+}
+
+.executive-briefing *,
+.executive-briefing *::before,
+.executive-briefing *::after {
+  box-sizing: border-box;
+}
+
+.executive-briefing button,
+.executive-briefing a {
+  font: inherit;
+}
+
+/* =====================================================
+   Hero
+   ===================================================== */
+
+.executive-briefing-hero {
+  min-height: 520px;
+
+  display: grid;
+  grid-template-columns:
+    minmax(300px, 0.82fr)
+    minmax(0, 1.18fr);
+  align-items: center;
+  gap: clamp(46px, 6vw, 104px);
+
+  padding:
+    clamp(46px, 5vw, 76px)
+    clamp(36px, 5vw, 76px);
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.075);
+
+  background:
+    radial-gradient(
+      circle at 24% 52%,
+      rgba(220, 183, 95, 0.115),
+      transparent 31%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.018),
+      transparent 48%
+    );
+}
+
+.executive-briefing-hero-visual {
+  min-width: 0;
+
+  display: grid;
+  place-items: center;
+}
+
+.executive-briefing-hero-copy {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.executive-briefing-eyebrow {
+  margin: 0 0 22px;
+
+  color: #e4bd5b;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.executive-briefing-hero h1 {
+  max-width: 900px;
+
+  margin: 0;
+
+  color: rgba(249, 246, 239, 0.98);
+
+  font-size:
+    clamp(
+      42px,
+      4.5vw,
+      72px
+    );
+
+  font-weight: 450;
+  letter-spacing: -0.055em;
+  line-height: 1.04;
+
+  overflow-wrap: anywhere;
+}
+
+.executive-briefing-confidence {
+  margin-top: 34px;
+
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.executive-briefing-confidence strong {
+  color: #e6bd59;
+
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.executive-briefing-confidence span {
+  color: rgba(255, 255, 255, 0.52);
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+/* =====================================================
+   Organism
+   ===================================================== */
+
+.executive-briefing-organism {
+  position: relative;
+
+  width:
+    clamp(
+      260px,
+      28vw,
+      410px
+    );
+
+  aspect-ratio: 1;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(232, 190, 92, 0.14),
+      rgba(203, 160, 68, 0.035) 34%,
+      transparent 68%
+    );
+}
+
+.executive-briefing-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  background:
+    radial-gradient(
+      circle at 42% 38%,
+      #fff4b7 0,
+      #e5b84c 25%,
+      #87631c 60%,
+      rgba(73, 50, 8, 0.18) 100%
+    );
+
+  box-shadow:
+    0 0 22px rgba(231, 188, 86, 0.62),
+    0 0 70px rgba(203, 158, 60, 0.32);
+}
+
+.executive-briefing-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  border:
+    1px solid rgba(226, 185, 84, 0.2);
+  border-radius: 50%;
+
+  transform-origin: center;
+}
+
+.executive-briefing-orbit-one {
+  width: 68%;
+  height: 45%;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(16deg);
+}
+
+.executive-briefing-orbit-two {
+  width: 76%;
+  height: 52%;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(72deg);
+}
+
+.executive-briefing-orbit-three {
+  width: 58%;
+  height: 78%;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(-38deg);
+}
+
+.executive-briefing-node {
+  position: absolute;
+
+  width: 9px;
+  height: 9px;
+
+  border-radius: 50%;
+
+  background: #dfb249;
+
+  box-shadow:
+    0 0 8px rgba(230, 185, 77, 0.72);
+}
+
+.executive-briefing-node-one {
+  top: 28%;
+  left: 68%;
+}
+
+.executive-briefing-node-two {
+  top: 66%;
+  left: 72%;
+}
+
+.executive-briefing-node-three {
+  top: 72%;
+  left: 34%;
+}
+
+.executive-briefing-node-four {
+  top: 35%;
+  left: 27%;
+}
+
+/* =====================================================
+   Four-card executive summary
+   ===================================================== */
+
+.executive-briefing-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      4,
+      minmax(0, 1fr)
+    );
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.075);
+}
+
+.executive-briefing-card {
+  min-width: 0;
+  min-height: 330px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding:
+    28px
+    26px
+    24px;
+
+  border-right:
+    1px solid rgba(255, 255, 255, 0.075);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.018),
+      rgba(255, 255, 255, 0.004)
+    );
+}
+
+.executive-briefing-card:last-child {
+  border-right: 0;
+}
+
+.executive-briefing-card-recommendation {
+  background:
+    radial-gradient(
+      circle at 18% 15%,
+      rgba(220, 179, 75, 0.09),
+      transparent 42%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.018),
+      rgba(255, 255, 255, 0.004)
+    );
+}
+
+.executive-briefing-card-number {
+  margin: 0 0 25px;
+
+  color: #e0b64f;
+
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.095em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.executive-briefing-card h2 {
+  margin:
+    0
+    0
+    18px;
+
+  color: rgba(247, 244, 237, 0.96);
+
+  font-size:
+    clamp(
+      20px,
+      1.55vw,
+      28px
+    );
+
+  font-weight: 520;
+  letter-spacing: -0.03em;
+  line-height: 1.18;
+
+  overflow-wrap: anywhere;
+}
+
+.executive-briefing-card p {
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 14px;
+  line-height: 1.62;
+}
+
+.executive-briefing-list {
+  margin: 0;
+  padding: 0;
+
+  display: grid;
+  gap: 17px;
+
+  list-style: none;
+}
+
+.executive-briefing-list li {
+  position: relative;
+
+  padding-left: 21px;
+
+  color: rgba(255, 255, 255, 0.75);
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.executive-briefing-list li::before {
+  content: "";
+
+  position: absolute;
+  top: 0.52em;
+  left: 0;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #dcb34f;
+
+  box-shadow:
+    0 0 9px rgba(220, 179, 79, 0.34);
+}
+
+.executive-briefing-card-link {
+  width: 100%;
+
+  margin-top: auto;
+  padding: 22px 0 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  border: 0;
+  border-top:
+    1px solid rgba(255, 255, 255, 0.065);
+
+  background: transparent;
+
+  color: #e0b64f;
+
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.4;
+  text-align: left;
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.executive-briefing-card-link:hover {
+  color: #f0ce7d;
+}
+
+.executive-briefing-card-link span {
+  font-size: 16px;
+}
+
+/* =====================================================
+   Change list
+   ===================================================== */
+
+.executive-briefing-change-list {
+  display: grid;
+  gap: 18px;
+}
+
+.executive-briefing-change {
+  min-width: 0;
+
+  display: grid;
+  grid-template-columns:
+    22px
+    minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+}
+
+.executive-briefing-change-indicator {
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.executive-briefing-change-indicator.is-up {
+  color: #70d67a;
+}
+
+.executive-briefing-change-indicator.is-down {
+  color: #ef665e;
+}
+
+.executive-briefing-change-indicator.is-steady {
+  color: #d7af52;
+}
+
+.executive-briefing-change strong,
+.executive-briefing-change small {
+  display: block;
+}
+
+.executive-briefing-change strong {
+  color: rgba(250, 247, 240, 0.9);
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.executive-briefing-change small {
+  margin-top: 3px;
+
+  color: rgba(255, 255, 255, 0.46);
+
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+/* =====================================================
+   Forecast and recommendation
+   ===================================================== */
+
+.executive-briefing-forecast {
+  margin-top: 5px;
+
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+}
+
+.executive-briefing-forecast strong {
+  color: #e2b850;
+
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.executive-briefing-forecast span {
+  color: rgba(255, 255, 255, 0.43);
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.executive-briefing-investigation {
+  margin-top: 20px;
+  padding: 16px;
+
+  display: grid;
+  gap: 7px;
+
+  border:
+    1px solid rgba(222, 181, 78, 0.15);
+  border-radius: 12px;
+
+  background:
+    rgba(222, 181, 78, 0.035);
+}
+
+.executive-briefing-investigation span {
+  color: rgba(255, 255, 255, 0.42);
+
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.executive-briefing-investigation strong {
+  color: rgba(255, 255, 255, 0.76);
+
+  font-size: 12px;
+  font-weight: 520;
+  line-height: 1.5;
+}
+
+/* =====================================================
+   Progressive disclosure
+   ===================================================== */
+
+.executive-briefing-detail {
+  padding:
+    30px
+    clamp(28px, 4vw, 58px)
+    38px;
+
+  background:
+    rgba(0, 0, 0, 0.08);
+}
+
+.executive-briefing-detail-label {
+  margin: 0 0 18px;
+
+  color: rgba(255, 255, 255, 0.39);
+
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+}
+
+.executive-briefing-accordion {
+  border-top:
+    1px solid rgba(255, 255, 255, 0.075);
+}
+
+.executive-briefing-accordion:last-child {
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.075);
+}
+
+.executive-briefing-accordion-trigger {
+  width: 100%;
+
+  padding: 19px 2px;
+
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto;
+  align-items: center;
+  gap: 20px;
+
+  border: 0;
+
+  background: transparent;
+
+  color: inherit;
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.executive-briefing-accordion-trigger:hover {
+  background:
+    rgba(255, 255, 255, 0.012);
+}
+
+.executive-briefing-accordion-copy {
+  min-width: 0;
+
+  display: grid;
+  grid-template-columns:
+    minmax(190px, 0.38fr)
+    minmax(0, 1fr);
+  align-items: baseline;
+  gap: 28px;
+}
+
+.executive-briefing-accordion-copy strong {
+  color: rgba(249, 246, 239, 0.92);
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.executive-briefing-accordion-copy small {
+  min-width: 0;
+
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 12px;
+  line-height: 1.45;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.executive-briefing-accordion-icon {
+  width: 26px;
+  height: 26px;
+
+  display: grid;
+  place-items: center;
+
+  border:
+    1px solid rgba(224, 182, 79, 0.25);
+  border-radius: 50%;
+
+  color: #dfb54d;
+
+  font-size: 15px;
+}
+
+.executive-briefing-accordion-content {
+  padding:
+    2px
+    32px
+    26px
+    0;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 14px;
+  line-height: 1.72;
+}
+
+.executive-briefing-accordion-content h3 {
+  margin:
+    0
+    0
+    10px;
+
+  color: rgba(249, 246, 239, 0.94);
+
+  font-size: 22px;
+  font-weight: 520;
+  letter-spacing: -0.025em;
+}
+
+.executive-briefing-accordion-content p {
+  max-width: 1050px;
+
+  margin:
+    0
+    0
+    14px;
+}
+
+/* =====================================================
+   Detailed conditions and learning
+   ===================================================== */
+
+.executive-briefing-condition-list {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+  gap: 12px;
+}
+
+.executive-briefing-condition-list article {
+  min-width: 0;
+
+  padding: 17px 18px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.065);
+  border-radius: 12px;
+
+  background:
+    rgba(255, 255, 255, 0.012);
+}
+
+.executive-briefing-condition-list article > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.executive-briefing-condition-list h3 {
+  margin: 0;
+
+  font-size: 15px;
+}
+
+.executive-briefing-condition-list span {
+  color: rgba(255, 255, 255, 0.4);
+
+  font-size: 10px;
+  text-align: right;
+}
+
+.executive-briefing-condition-list p {
+  margin: 10px 0 0;
+
+  color: rgba(255, 255, 255, 0.55);
+
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.executive-briefing-learning-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(0, 1fr)
+    );
+  gap: 12px;
+}
+
+.executive-briefing-learning-grid > div {
+  min-width: 0;
+
+  padding: 18px;
+
+  display: grid;
+  gap: 8px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.065);
+  border-radius: 12px;
+
+  background:
+    rgba(255, 255, 255, 0.012);
+}
+
+.executive-briefing-learning-grid span {
+  color: rgba(255, 255, 255, 0.42);
+
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.executive-briefing-learning-grid strong {
+  color: rgba(249, 246, 239, 0.91);
+
+  font-size: 18px;
+  font-weight: 520;
+}
+
+/* =====================================================
+   Tablet
+   ===================================================== */
+
+@media (max-width: 1280px) {
+  .executive-briefing-hero {
+    grid-template-columns:
+      minmax(250px, 0.7fr)
+      minmax(0, 1.3fr);
+
+    gap: 42px;
+  }
+
+  .executive-briefing-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+
+  .executive-briefing-card:nth-child(2) {
+    border-right: 0;
+  }
+
+  .executive-briefing-card:nth-child(-n + 2) {
+    border-bottom:
+      1px solid rgba(255, 255, 255, 0.075);
+  }
+}
+
+/* =====================================================
+   Small tablet
+   ===================================================== */
+
+@media (max-width: 900px) {
+  .executive-briefing-hero {
+    min-height: auto;
+
+    grid-template-columns: 1fr;
+    gap: 20px;
+
+    padding:
+      42px
+      28px;
+  }
+
+  .executive-briefing-hero-visual {
+    order: 2;
+  }
+
+  .executive-briefing-hero-copy {
+    order: 1;
+  }
+
+  .executive-briefing-organism {
+    width: min(330px, 78vw);
+  }
+
+  .executive-briefing-hero h1 {
+    max-width: 720px;
+  }
+
+  .executive-briefing-condition-list,
+  .executive-briefing-learning-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================================
+   Mobile
+   ===================================================== */
+
+@media (max-width: 620px) {
+  .executive-v2-experience:has(.executive-briefing) {
+    border-radius: 14px;
+  }
+
+  .executive-briefing-hero {
+    padding:
+      34px
+      20px;
+  }
+
+  .executive-briefing-eyebrow {
+    margin-bottom: 16px;
+
+    font-size: 9px;
+  }
+
+  .executive-briefing-hero h1 {
+    font-size:
+      clamp(
+        33px,
+        10vw,
+        47px
+      );
+  }
+
+  .executive-briefing-confidence {
+    margin-top: 24px;
+  }
+
+  .executive-briefing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .executive-briefing-card {
+    min-height: auto;
+
+    padding:
+      25px
+      20px;
+
+    border-right: 0;
+    border-bottom:
+      1px solid rgba(255, 255, 255, 0.075);
+  }
+
+  .executive-briefing-card:last-child {
+    border-bottom: 0;
+  }
+
+  .executive-briefing-card-number {
+    margin-bottom: 20px;
+  }
+
+  .executive-briefing-card-link {
+    margin-top: 26px;
+  }
+
+  .executive-briefing-detail {
+    padding:
+      26px
+      20px
+      32px;
+  }
+
+  .executive-briefing-accordion-copy {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .executive-briefing-accordion-copy small {
+    white-space: normal;
+  }
+
+  .executive-briefing-accordion-content {
+    padding-right: 0;
+  }
+}

@@ -13,6 +13,7 @@
     "decision:calibrate": "tsx engine/benchmark/decision-intelligence/runDecisionCalibration.ts",
     "decision:rank:001": "tsx engine/benchmark/decision-intelligence/decisionRankingExperiment001.ts",
     "decision:cycle:001": "tsx engine/benchmark/decision-intelligence/decisionCycleExperiment001.ts",
+    "communication:001": "tsx engine/benchmark/executive-communication/executiveCommunicationExperiment001.ts",
 
     "audit:understanding": "tsx engine/benchmark/auditUnderstandingLayers.ts",
     "audit:capability": "tsx engine/benchmark/auditCapability.ts",
