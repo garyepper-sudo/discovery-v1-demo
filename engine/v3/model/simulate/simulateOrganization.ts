@@ -7,9 +7,11 @@ import {
   type OrganizationalInfluencePropagationResult,
 } from "../causal/propagateOrganizationalInfluence";
 import type { OrganizationalLearningProfile } from "../learning/computeOrganizationalLearningProfile";
+import { inferOrganizationalPredictions } from "../predictions/inferOrganizationalPredictions";
 import type { PredictionEvaluation } from "../predictions/evaluatePredictionOutcomes";
 import type { OrganizationalPrediction } from "../predictions/organizationalPrediction";
 import type { OrganizationalCondition } from "../state/inferOrganizationalConditions";
+import { evolveConditions } from "./evolveConditions";
 import type { OrganizationalIntervention } from "./organizationalIntervention";
 
 export type SimulatedOrganizationState = {
@@ -31,9 +33,6 @@ export type SimulatedOrganizationState = {
   /**
    * Explainable causal effects produced by applying the
    * intervention to the current organizational causal model.
-   *
-   * Version 2 preserves these effects without yet mutating the
-   * projected condition, belief, or prediction objects.
    */
   influencePropagation?: OrganizationalInfluencePropagationResult;
 
@@ -165,20 +164,76 @@ export function simulateOrganization(
     input.timeHorizon ??
     "near-term";
 
-  /**
-   * Version 2:
+    /**
+   * Version 4:
    *
-   * Preserve the current organizational state while:
+   * - calibrate confidence using historical prediction performance,
+   * - apply an optional intervention to the causal model,
+   * - preserve the resulting direct and indirect effects,
+   * - evolve projected organizational conditions from those effects,
+   * - and regenerate projected predictions through the canonical
+   *   Organizational Prediction producer.
    *
-   * - calibrating confidence using historical prediction performance,
-   * - applying an optional intervention to the causal model,
-   * - and preserving the resulting direct and indirect effects.
-   *
-   * A later version will use those propagated effects to evolve
-   * conditions, beliefs, and predictions into a changed future state.
+   * Beliefs remain preserved until the canonical belief producer can
+   * consume simulated future inputs without recreating belief logic.
    */
+
   const influencePropagation =
     buildInfluencePropagation(input);
+
+  const projectedConditions =
+    evolveConditions(
+      input.conditions,
+      influencePropagation,
+      simulatedAt,
+    );
+
+    const projectedPredictionResult =
+  inferOrganizationalPredictions({
+    conditions: projectedConditions.map(
+      (condition) => ({
+        id: condition.id,
+        name: condition.name,
+        domain: condition.domain,
+
+        status: condition.status,
+        trend: condition.trend,
+        priority: condition.priority,
+
+        confidence: condition.confidence,
+        strength: condition.strength,
+
+        supportingConceptIds:
+          condition.supportingConceptIds,
+        supportingBeliefIds:
+          condition.supportingBeliefIds,
+        supportingTheoryIds:
+          condition.supportingTheoryIds,
+
+        upstreamConditionIds:
+          condition.upstreamConditionIds,
+        downstreamConditionIds:
+          condition.downstreamConditionIds,
+
+        missingEvidence:
+          condition.missingEvidence,
+        confidenceLimiters:
+          condition.confidenceLimiters,
+      }),
+    ),
+
+    learningProfile:
+      input.learningProfile ?? undefined,
+
+    previousPredictions:
+      input.predictions,
+
+    now:
+      simulatedAt,
+  });
+
+const projectedPredictions =
+  projectedPredictionResult.predictions;
 
   const simulationConfidence =
     clamp01(
@@ -203,21 +258,19 @@ export function simulateOrganization(
 
     timeHorizon,
 
-    projectedConditions:
-      input.conditions,
+    projectedConditions,
 
     projectedBeliefs:
       input.beliefs,
 
-    projectedPredictions:
-      input.predictions,
+    projectedPredictions,
 
     confidence:
       simulationConfidence,
 
     explanation:
       influencePropagation
-        ? `Discovery simulated a direct change to "${input.changedEntityId}" and propagated its effects across ${influencePropagation.traversedRelationshipIds.length} causal relationship${influencePropagation.traversedRelationshipIds.length === 1 ? "" : "s"}. Version 2 preserves those effects without yet mutating the projected organizational state.`
+        ? `Discovery simulated a direct change to "${input.changedEntityId}" and propagated its effects across ${influencePropagation.traversedRelationshipIds.length} causal relationship${influencePropagation.traversedRelationshipIds.length === 1 ? "" : "s"}. The propagated effects were applied to the projected organizational conditions.`
         : input.intervention
           ? `Discovery simulated the intervention "${input.intervention.title}" against the current organizational state. No causal propagation was performed because a target entity, intervention delta, or causal model was not supplied.`
           : "Discovery projected the current organizational state forward while calibrating confidence using historical prediction accuracy. No intervention was applied.",

@@ -1,6 +1,6 @@
 # Capability Trace — Theory Validation
 
-Generated: 2026-07-13T17:05:59.237Z
+Generated: 2026-07-13T22:15:53.936Z
 
 ## Verified Architecture
 
@@ -62,6 +62,8 @@ None declared.
 Review these files to determine whether they should be registered as consumers, validators, projections, simulations, or supporting implementations.
 
 - `components/executive-v2/answers/ExecutiveAnswerGrid.tsx`
+- `components/executive-v2/capabilities/ExecutiveCapabilityDefinition.tsx`
+- `components/executive-v2/capabilities/ExecutiveCapabilityRegistry.tsx`
 - `components/executive-v2/projection/ExecutiveProjection.ts`
 - `components/executive-v2/projection/buildExecutiveProjection.ts`
 - `engine/benchmark/benchmarkReporter.ts`
@@ -106,7 +108,7 @@ This section records source-code references. It supplements, but does not replac
 | Runtime | ❌ Not found | 0 |
 | Executive | ❌ Not found | 0 |
 | Projection | ✅ Found | 23 |
-| UI | ✅ Found | 10 |
+| UI | ✅ Found | 12 |
 | API | ❌ Not found | 0 |
 | Simulation | ❌ Not found | 0 |
 | Benchmark | ✅ Found | 111 |
@@ -245,42 +247,42 @@ This section records source-code references. It supplements, but does not replac
   - `contradictoryOrWeakeningEvidence: ExecutiveTheoryValidationEvidence[];`
 - Line 68 · **type** · matched `theoryValidation`
   - `theoryValidation?: ExecutiveTheoryValidation;`
-- Line 499 · **unknown** · matched `Theory Validation`
+- Line 540 · **unknown** · matched `Theory Validation`
   - `* This remains available independently because Theory Validation`
-- Line 502 · **type** · matched `theoryValidation`
+- Line 543 · **type** · matched `theoryValidation`
   - `theoryValidation?: ExecutiveTheoryValidation;`
 
 ##### `components/executive-v2/projection/buildExecutiveProjection.ts`
 
-- Line 23 · **unknown** · matched `theoryValidation`
+- Line 24 · **unknown** · matched `theoryValidation`
   - `ExecutiveTheoryValidation,`
-- Line 160 · **type** · matched `theoryValidation`
+- Line 188 · **type** · matched `theoryValidation`
   - `theoryValidation?: ExecutiveTheoryValidation;`
-- Line 414 · **type** · matched `theoryValidation`
+- Line 444 · **type** · matched `theoryValidation`
   - `theoryValidation:`
-- Line 415 · **read** · matched `theoryValidation`
+- Line 445 · **read** · matched `theoryValidation`
   - `executiveAssessment.theoryValidation,`
-- Line 419 · **unknown** · matched `theoryValidation`
+- Line 449 · **unknown** · matched `theoryValidation`
   - `function buildTheoryValidationProjection(`
-- Line 421 · **unknown** · matched `theoryValidation`
+- Line 451 · **unknown** · matched `theoryValidation`
   - `): ExecutiveTheoryValidation \| undefined {`
-- Line 422 · **read** · matched `theoryValidation`
+- Line 452 · **read** · matched `theoryValidation`
   - `return runtimeMemory?.executiveAssessment?.theoryValidation;`
-- Line 815 · **definition** · matched `theoryValidation`
+- Line 906 · **definition** · matched `theoryValidation`
   - `const theoryValidation =`
-- Line 816 · **unknown** · matched `theoryValidation`
+- Line 907 · **unknown** · matched `theoryValidation`
   - `buildTheoryValidationProjection(runtimeMemory);`
-- Line 878 · **unknown** · matched `theoryValidation`
+- Line 972 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.dominantTheory \|\|`
-- Line 894 · **unknown** · matched `theoryValidation`
+- Line 988 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.whyDiscoveryBelievesIt \|\|`
-- Line 903 · **unknown** · matched `theoryValidation`
+- Line 997 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.evidenceThatWouldFalsifyTheory?.[0] \|\|`
-- Line 904 · **unknown** · matched `theoryValidation`
+- Line 998 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.calibratedConfidenceExplanation \|\|`
-- Line 914 · **unknown** · matched `theoryValidation`
+- Line 1008 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.executiveRecommendation \|\|`
-- Line 944 · **unknown** · matched `theoryValidation`
+- Line 1040 · **unknown** · matched `theoryValidation`
   - `theoryValidation,`
 
 #### UI
@@ -307,6 +309,16 @@ This section records source-code references. It supplements, but does not replac
   - `{theoryValidation?.evidenceThatWouldFalsifyTheory`
 - Line 63 · **unknown** · matched `theoryValidation`
   - `{theoryValidation.evidenceThatWouldFalsifyTheory`
+
+##### `components/executive-v2/capabilities/ExecutiveCapabilityDefinition.tsx`
+
+- Line 12 · **unknown** · matched `CAP-SELF-001`
+  - `\| "CAP-SELF-001"`
+
+##### `components/executive-v2/capabilities/ExecutiveCapabilityRegistry.tsx`
+
+- Line 20 · **unknown** · matched `CAP-SELF-001`
+  - `\| "CAP-SELF-001"`
 
 #### Benchmark
 

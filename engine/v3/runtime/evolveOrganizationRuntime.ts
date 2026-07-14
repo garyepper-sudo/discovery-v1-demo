@@ -44,6 +44,7 @@ import { inferOrganizationalPredictions } from "../model/predictions/inferOrgani
 import { buildPredictionReflection } from "../model/predictions/buildPredictionReflection";
 import { evaluatePredictionOutcomes } from "../model/predictions/evaluatePredictionOutcomes";
 import { simulateOrganization } from "../model/simulate/simulateOrganization";
+import { buildOrganizationalIntervention } from "../model/simulate/buildOrganizationalIntervention";
 import { buildOrganizationalCausalModel } from "../model/causal/buildOrganizationalCausalModel";
 
 
@@ -981,20 +982,87 @@ export function evolveOrganizationRuntime(params: {
   );
 
 /**
+ * CAP-SIM-002 — Organizational Intervention Modeling
+ *
+ * Version 1 creates a deterministic governance intervention so the
+ * runtime can exercise the complete intervention-to-simulation path.
+ *
+ * This remains an explicit test scenario. A later version should consume
+ * selected intervention options from canonical executive decision reasoning.
+ */
+const organizationalIntervention =
+  buildOrganizationalIntervention({
+    organizationId:
+      runtime.metadata.organizationId,
+
+    type:
+      "governance",
+
+    title:
+      "Clarify Decision Rights",
+
+    description:
+      "Reduce approval bottlenecks by clarifying decision authority.",
+
+    rationale:
+      "Evaluate whether reducing governance friction improves organizational execution.",
+
+    scope:
+      "organization",
+
+    timeHorizon:
+      "near-term",
+
+    status:
+      "hypothetical",
+
+    affectedConditionIds: [
+      "condition-decisionflow",
+    ],
+
+    expectedMechanismIds: [
+      "governance-friction",
+    ],
+
+    assumptions: [
+      "Leadership can clarify decision authority without creating additional coordination overhead.",
+      "Teams will use the clarified decision rights consistently.",
+    ],
+
+    confidence:
+      0.8,
+
+    createdAt:
+      now,
+  });
+
+const organizationalInterventions = [
+  ...(memory.organizationalInterventions ?? []),
+  organizationalIntervention,
+];
+
+/**
  * CAP-SIM-001 — Organizational Simulation
  *
- * Version 1 preserves the current cognitive state and calibrates
- * simulation confidence using longitudinal prediction accuracy.
+ * Version 3 applies the intervention to the canonical causal model,
+ * propagates its effects, and evolves projected organizational conditions.
  */
 const simulatedOrganizationState =
   simulateOrganization({
     organizationId:
       runtime.metadata.organizationId,
 
-    intervention: undefined,
+    intervention:
+      organizationalIntervention,
 
     causalModel:
       organizationalCausalModel,
+
+    changedEntityId:
+      "condition-decisionflow",
+
+    interventionDelta:
+      0.35,
 
     conditions:
       organizationalConditions,
@@ -1043,8 +1111,7 @@ const updatedMemory = {
     organizationalPredictions,
     predictionReflection,
     predictionEvaluations,
-    organizationalInterventions:
-      memory.organizationalInterventions ?? [],
+    organizationalInterventions,
     simulatedOrganizationStates,
     investigationStrategy,
     investigationOpportunities,
@@ -1102,8 +1169,7 @@ const updatedMemory = {
       organizationalCausalModel,
       organizationalPredictions,
       predictionReflection,
-      organizationalInterventions:
-        memory.organizationalInterventions ?? [],
+      organizationalInterventions,
       simulatedOrganizationStates,
       predictionEvaluations,
       investigationStrategy,
@@ -1325,6 +1391,9 @@ const updatedMemory = {
 
     predictionEvaluations:
       typeof predictionEvaluations;
+
+    organizationalInterventions:
+      typeof organizationalInterventions;
 
     simulatedOrganizationStates:
       typeof simulatedOrganizationStates;

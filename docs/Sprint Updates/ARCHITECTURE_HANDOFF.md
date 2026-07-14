@@ -1,6 +1,6 @@
 # Discovery Architecture Handoff
 
-Generated: 2026-07-13T17:05:59.688Z
+Generated: 2026-07-13T22:15:54.392Z
 
 ## Purpose
 
@@ -20,9 +20,9 @@ Before adding any new cognitive capability:
 
 ## Architecture Health
 
-- Registered capabilities: 20
-- Canonical producers: 20
-- Registered files: 454
+- Registered capabilities: 21
+- Canonical producers: 21
+- Registered files: 482
 - Terminal capabilities: 3
 - Duplicate capability IDs: 0
 - Missing dependencies: 0
@@ -56,6 +56,7 @@ Before adding any new cognitive capability:
 | CAP-SYS-001 | Architectural Planning | SYS | ArchitectureRecommendation | DiscoveryArchitectureState.architectureRecommendations | CAP-SYS-002 |
 | CAP-SYS-002 | Architecture Recommendation Projection | SYS | ArchitectureRecommendationProjection | DiscoveryArchitectureState.architectureRecommendationProjection | None |
 | CAP-SIM-001 | Organizational Simulation | COG | SimulatedOrganizationState | OrganizationRuntime.simulatedOrganizationStates | CAP-SYS-001 |
+| CAP-SIM-002 | Organizational Intervention Modeling | COG | OrganizationalIntervention | OrganizationRuntime.organizationalInterventions | CAP-SIM-001 |
 
 ## Capability Dependency Map
 
@@ -289,7 +290,7 @@ Before adding any new cognitive capability:
 
 ### CAP-SIM-001 — Organizational Simulation
 
-**Depends on:** CAP-UND-004, CAP-UND-002, CAP-PRD-001, CAP-ADP-001, CAP-LRN-002
+**Depends on:** CAP-SIM-002, CAP-UND-004, CAP-UND-002, CAP-PRD-001, CAP-ADP-001, CAP-LRN-002
 
 **Produces:** SimulatedOrganizationState
 
@@ -299,6 +300,18 @@ Before adding any new cognitive capability:
 
 **Executive destinations:** ExecutiveProjection, ExecutiveWorkspace, Atlas
 
+### CAP-SIM-002 — Organizational Intervention Modeling
+
+**Depends on:** No registered capability dependencies
+
+**Produces:** OrganizationalIntervention
+
+**Canonical producer:** `engine/v3/model/simulate/buildOrganizationalIntervention.ts`
+
+**Runtime destination:** `OrganizationRuntime.organizationalInterventions`
+
+**Executive destinations:** Simulation
+
 ## Potential Capability Overlap
 
 ### CAP-UND-004 — Organizational Condition Inference
@@ -306,14 +319,6 @@ Before adding any new cognitive capability:
 Possible overlap with **CAP-UND-005 — Executive Assessment**.
 
 Reason: semantic similarity 36%.
-
-Review before creating a new capability. Similarity does not automatically mean duplication; one capability may legitimately depend on or transform another.
-
-### CAP-UND-005 — Executive Assessment
-
-Possible overlap with **CAP-SIM-001 — Organizational Simulation**.
-
-Reason: semantic similarity 32%.
 
 Review before creating a new capability. Similarity does not automatically mean duplication; one capability may legitimately depend on or transform another.
 
@@ -462,6 +467,12 @@ Executive Workspace
 
 - Canonical producer: `engine/v3/model/simulate/simulateOrganization.ts`
 - Implementation: `engine/v3/model/simulate/simulateOrganization.ts`
+
+### CAP-SIM-002 — Organizational Intervention Modeling
+
+- Canonical producer: `engine/v3/model/simulate/buildOrganizationalIntervention.ts`
+- Implementation: `engine/v3/model/simulate/organizationalIntervention.ts`
+- Implementation: `engine/v3/model/simulate/buildOrganizationalIntervention.ts`
 
 ## Sprint Handoff Guidance
 

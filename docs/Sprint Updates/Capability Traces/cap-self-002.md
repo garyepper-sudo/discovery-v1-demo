@@ -1,6 +1,6 @@
 # Capability Trace — Investigation Opportunity Generation
 
-Generated: 2026-07-13T17:05:59.470Z
+Generated: 2026-07-13T22:15:54.176Z
 
 ## Verified Architecture
 
@@ -59,7 +59,9 @@ None declared.
 
 Review these files to determine whether they should be registered as consumers, validators, projections, simulations, or supporting implementations.
 
-- `components/executive-v2/ExecutiveExperience.tsx`
+- `components/executive-v2/capabilities/ExecutiveCapabilityDefinition.tsx`
+- `components/executive-v2/capabilities/ExecutiveCapabilityRegistry.tsx`
+- `components/executive-v2/capabilities/ExecutiveCapabilityRendererRegistry.tsx`
 - `components/executive-v2/investigations/ExecutiveInvestigationOpportunities.tsx`
 - `components/executive-v2/projection/ExecutiveProjection.ts`
 - `components/executive-v2/projection/buildExecutiveProjection.ts`
@@ -100,7 +102,7 @@ This section records source-code references. It supplements, but does not replac
 | Runtime | ✅ Found | 12 |
 | Executive | ❌ Not found | 0 |
 | Projection | ✅ Found | 8 |
-| UI | ✅ Found | 9 |
+| UI | ✅ Found | 20 |
 | API | ❌ Not found | 0 |
 | Simulation | ❌ Not found | 0 |
 | Benchmark | ❌ Not found | 0 |
@@ -149,69 +151,97 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 42 · **import** · matched `buildInvestigationOpportunities`
   - `import { buildInvestigationOpportunities } from "../model/investigation/buildInvestigationOpportunities";`
-- Line 92 · **type** · matched `investigationOpportunities`
+- Line 94 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities?: any[];`
-- Line 664 · **unknown** · matched `buildInvestigationOpportunities`
+- Line 667 · **unknown** · matched `buildInvestigationOpportunities`
   - `buildInvestigationOpportunities({`
-- Line 670 · **unknown** · matched `investigationOpportunities`
+- Line 673 · **unknown** · matched `investigationOpportunities`
   - `previousInvestigationOpportunities:`
-- Line 671 · **read** · matched `investigationOpportunities`
+- Line 674 · **read** · matched `investigationOpportunities`
   - `memory.investigationOpportunities,`
-- Line 677 · **definition** · matched `investigationOpportunities`
+- Line 680 · **definition** · matched `investigationOpportunities`
   - `const investigationOpportunities =`
-- Line 712 · **unknown** · matched `investigationOpportunities`
+- Line 715 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 733 · **unknown** · matched `investigationOpportunities`
+- Line 736 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1007 · **unknown** · matched `investigationOpportunities`
+- Line 1050 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1064 · **unknown** · matched `investigationOpportunities`
+- Line 1110 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1286 · **type** · matched `investigationOpportunities`
+- Line 1335 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities:`
-- Line 1287 · **unknown** · matched `investigationOpportunities`
+- Line 1336 · **unknown** · matched `investigationOpportunities`
   - `typeof investigationOpportunities;`
 
 #### Projection
 
 ##### `components/executive-v2/projection/ExecutiveProjection.ts`
 
-- Line 477 · **type** · matched `investigationOpportunities`
+- Line 518 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities?: ExecutiveInvestigationOpportunity[];`
 
 ##### `components/executive-v2/projection/buildExecutiveProjection.ts`
 
-- Line 179 · **type** · matched `investigationOpportunities`
+- Line 207 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities?: RuntimeInvestigationOpportunity[];`
-- Line 612 · **definition** · matched `buildInvestigationOpportunities`
+- Line 642 · **definition** · matched `buildInvestigationOpportunities`
   - `function buildInvestigationOpportunitiesProjection(`
-- Line 616 · **read** · matched `investigationOpportunities`
+- Line 646 · **read** · matched `investigationOpportunities`
   - `runtimeMemory?.investigationOpportunities;`
-- Line 835 · **definition** · matched `investigationOpportunities`
+- Line 926 · **definition** · matched `investigationOpportunities`
   - `const investigationOpportunities =`
-- Line 836 · **unknown** · matched `buildInvestigationOpportunities`
+- Line 927 · **unknown** · matched `buildInvestigationOpportunities`
   - `buildInvestigationOpportunitiesProjection(runtimeMemory);`
-- Line 846 · **read** · matched `investigationOpportunities`
+- Line 940 · **read** · matched `investigationOpportunities`
   - `runtimeMemory?.investigationOpportunities,`
-- Line 938 · **unknown** · matched `investigationOpportunities`
+- Line 1032 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
 
 #### UI
 
-##### `components/executive-v2/ExecutiveExperience.tsx`
+##### `components/executive-v2/capabilities/ExecutiveCapabilityDefinition.tsx`
 
-- Line 9 · **import** · matched `investigationOpportunities`
-  - `import ExecutiveInvestigationOpportunities from "./investigations/ExecutiveInvestigationOpportunities";`
-- Line 31 · **unknown** · matched `investigationOpportunities`
-  - `investigationOpportunities,`
-- Line 79 · **unknown** · matched `investigationOpportunities`
-  - `{investigationOpportunities &&`
-- Line 80 · **unknown** · matched `investigationOpportunities`
-  - `investigationOpportunities.length > 0 && (`
-- Line 81 · **unknown** · matched `investigationOpportunities`
+- Line 13 · **unknown** · matched `CAP-SELF-002`
+  - `\| "CAP-SELF-002"`
+
+##### `components/executive-v2/capabilities/ExecutiveCapabilityRegistry.tsx`
+
+- Line 7 · **import** · matched `investigationOpportunities`
+  - `import ExecutiveInvestigationOpportunities from "../investigations/ExecutiveInvestigationOpportunities";`
+- Line 21 · **unknown** · matched `CAP-SELF-002`
+  - `\| "CAP-SELF-002"`
+- Line 139 · **unknown** · matched `CAP-SELF-002`
+  - `capabilityId: "CAP-SELF-002",`
+- Line 142 · **unknown** · matched `investigationOpportunities`
+  - `projectionKey: "investigationOpportunities",`
+- Line 144 · **read** · matched `investigationOpportunities`
+  - `(projection.investigationOpportunities?.length ?? 0) > 0,`
+- Line 146 · **read** · matched `investigationOpportunities`
+  - `projection.investigationOpportunities &&`
+- Line 147 · **read** · matched `investigationOpportunities`
+  - `projection.investigationOpportunities.length > 0 ? (`
+- Line 148 · **unknown** · matched `investigationOpportunities`
   - `<ExecutiveInvestigationOpportunities`
-- Line 82 · **unknown** · matched `investigationOpportunities`
-  - `opportunities={investigationOpportunities}`
+- Line 149 · **read** · matched `investigationOpportunities`
+  - `opportunities={projection.investigationOpportunities}`
+
+##### `components/executive-v2/capabilities/ExecutiveCapabilityRendererRegistry.tsx`
+
+- Line 7 · **import** · matched `investigationOpportunities`
+  - `import ExecutiveInvestigationOpportunities from "../investigations/ExecutiveInvestigationOpportunities";`
+- Line 82 · **unknown** · matched `CAP-SELF-002`
+  - `capabilityId: "CAP-SELF-002",`
+- Line 83 · **unknown** · matched `investigationOpportunities`
+  - `projectionKey: "investigationOpportunities",`
+- Line 85 · **read** · matched `investigationOpportunities`
+  - `projection.investigationOpportunities &&`
+- Line 86 · **read** · matched `investigationOpportunities`
+  - `projection.investigationOpportunities.length > 0 ? (`
+- Line 87 · **unknown** · matched `investigationOpportunities`
+  - `<ExecutiveInvestigationOpportunities`
+- Line 88 · **read** · matched `investigationOpportunities`
+  - `opportunities={projection.investigationOpportunities}`
 
 ##### `components/executive-v2/investigations/ExecutiveInvestigationOpportunities.tsx`
 

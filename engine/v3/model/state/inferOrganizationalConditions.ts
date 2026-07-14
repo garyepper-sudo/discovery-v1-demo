@@ -1046,7 +1046,7 @@ function inferConditionSystemRelationship(
   });
 }
 
-function synthesizeState(params: {
+ export function synthesizeOrganizationalState(params: {
   conditions: OrganizationalCondition[];
   memoryMaturity?: any;
   previousState?: OrganizationalState;
@@ -1229,7 +1229,7 @@ export function inferOrganizationalConditions(
     })
     .sort((a, b) => rankOrganizationalCondition(b) - rankOrganizationalCondition(a));
 
-  const state = synthesizeState({
+  const state = synthesizeOrganizationalState({
     conditions,
     memoryMaturity: input.memoryMaturity,
     previousState: input.previousState,
