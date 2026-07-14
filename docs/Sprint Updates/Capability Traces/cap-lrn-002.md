@@ -1,6 +1,6 @@
 # Capability Trace — Organizational Learning Profile
 
-Generated: 2026-07-13T22:15:53.704Z
+Generated: 2026-07-14T03:36:23.018Z
 
 ## Verified Architecture
 
@@ -159,7 +159,7 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 9 · **import** · matched `organizationalLearningProfile`
   - `import type { OrganizationalLearningProfile } from "../learning/computeOrganizationalLearningProfile";`
-- Line 111 · **unknown** · matched `organizationalLearningProfile`
+- Line 110 · **unknown** · matched `organizationalLearningProfile`
   - `learningProfile?: OrganizationalLearningProfile \| null;`
 
 #### Runtime
@@ -168,39 +168,39 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 19 · **import** · matched `organizationalLearningProfile`
   - `import { computeOrganizationalLearningProfile } from "../model/learning/computeOrganizationalLearningProfile";`
-- Line 89 · **type** · matched `organizationalLearningProfile`
+- Line 90 · **type** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile?: any;`
-- Line 570 · **read** · matched `organizationalLearningProfile`
+- Line 571 · **read** · matched `organizationalLearningProfile`
   - `memory.organizationalLearningProfile,`
-- Line 624 · **unknown** · matched `Organizational Learning Profile`
+- Line 625 · **unknown** · matched `Organizational Learning Profile`
   - `* - feed prediction performance into the Organizational Learning Profile`
-- Line 671 · **read** · matched `organizationalLearningProfile`
+- Line 672 · **read** · matched `organizationalLearningProfile`
   - `memory.organizationalLearningProfile,`
-- Line 940 · **definition** · matched `organizationalLearningProfile`
+- Line 941 · **definition** · matched `organizationalLearningProfile`
   - `const organizationalLearningProfile =`
-- Line 941 · **unknown** · matched `organizationalLearningProfile`
+- Line 942 · **unknown** · matched `organizationalLearningProfile`
   - `computeOrganizationalLearningProfile({`
-- Line 947 · **unknown** · matched `Organizational Learning Profile`
+- Line 948 · **unknown** · matched `Organizational Learning Profile`
   - `"Organizational Learning Profile",`
-- Line 948 · **unknown** · matched `organizationalLearningProfile`
+- Line 949 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1011 · **unknown** · matched `organizationalLearningProfile`
+- Line 1079 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1078 · **unknown** · matched `organizationalLearningProfile`
+- Line 1145 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1099 · **unknown** · matched `organizationalLearningProfile`
+- Line 1166 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1238 · **unknown** · matched `organizationalLearningProfile`
+- Line 1304 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile.learningVelocity,`
-- Line 1241 · **unknown** · matched `organizationalLearningProfile`
+- Line 1307 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile.learningVelocityScore,`
-- Line 1244 · **unknown** · matched `organizationalLearningProfile`
+- Line 1310 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile.understandingGrowth,`
-- Line 1247 · **unknown** · matched `organizationalLearningProfile`
+- Line 1313 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile.memoryGrowth,`
-- Line 1308 · **type** · matched `organizationalLearningProfile`
+- Line 1374 · **type** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile:`
-- Line 1309 · **unknown** · matched `organizationalLearningProfile`
+- Line 1375 · **unknown** · matched `organizationalLearningProfile`
   - `typeof organizationalLearningProfile;`
 
 #### Executive

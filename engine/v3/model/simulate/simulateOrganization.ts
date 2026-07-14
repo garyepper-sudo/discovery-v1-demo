@@ -1,18 +1,52 @@
-import type { OrganizationalBelief } from "../beliefs/organizationalBeliefs";
+import type {
+  OrganizationalBelief,
+} from "../beliefs/organizationalBeliefs";
+
+import {
+  aggregateOrganizationalInfluence,
+  type AggregatedOrganizationalInfluence,
+} from "../causal/aggregateOrganizationalInfluence";
+
 import type {
   OrganizationalCausalModel,
 } from "../causal/organizationalCausalModel";
+
 import {
   propagateOrganizationalInfluence,
   type OrganizationalInfluencePropagationResult,
 } from "../causal/propagateOrganizationalInfluence";
-import type { OrganizationalLearningProfile } from "../learning/computeOrganizationalLearningProfile";
-import { inferOrganizationalPredictions } from "../predictions/inferOrganizationalPredictions";
-import type { PredictionEvaluation } from "../predictions/evaluatePredictionOutcomes";
-import type { OrganizationalPrediction } from "../predictions/organizationalPrediction";
-import type { OrganizationalCondition } from "../state/inferOrganizationalConditions";
-import { evolveConditions } from "./evolveConditions";
-import type { OrganizationalIntervention } from "./organizationalIntervention";
+
+import type {
+  OrganizationalLearningProfile,
+} from "../learning/computeOrganizationalLearningProfile";
+
+import type {
+  PredictionEvaluation,
+} from "../predictions/evaluatePredictionOutcomes";
+
+import {
+  inferOrganizationalPredictions,
+} from "../predictions/inferOrganizationalPredictions";
+
+import type {
+  OrganizationalPrediction,
+} from "../predictions/organizationalPrediction";
+
+import type {
+  OrganizationalCondition,
+} from "../state/inferOrganizationalConditions";
+
+import {
+  evolveConditions,
+} from "./evolveConditions";
+
+import type {
+  InterventionCausalChange,
+} from "./mapInterventionToCausalChanges";
+
+import type {
+  OrganizationalIntervention,
+} from "./organizationalIntervention";
 
 export type SimulatedOrganizationState = {
   /**
@@ -31,10 +65,35 @@ export type SimulatedOrganizationState = {
   intervention?: OrganizationalIntervention;
 
   /**
-   * Explainable causal effects produced by applying the
-   * intervention to the current organizational causal model.
+   * Backward-compatible single-source causal propagation.
+   *
+   * This is populated when the simulation is initiated through
+   * changedEntityId and interventionDelta.
    */
-  influencePropagation?: OrganizationalInfluencePropagationResult;
+  influencePropagation?:
+    OrganizationalInfluencePropagationResult;
+
+  /**
+   * Every direct causal change applied by the intervention.
+   *
+   * Multi-target interventions may directly affect several organizational
+   * conditions before their effects propagate through the causal model.
+   */
+  directChanges?: InterventionCausalChange[];
+
+  /**
+   * Individual propagation result produced for each direct causal change.
+   */
+  influencePropagationResults?:
+    OrganizationalInfluencePropagationResult[];
+
+  /**
+   * Canonically aggregated direct and indirect organizational influence.
+   *
+   * This is populated for multi-source intervention simulations.
+   */
+  aggregatedInfluence?:
+    AggregatedOrganizationalInfluence[];
 
   /**
    * Simulation timestamp.
@@ -53,17 +112,20 @@ export type SimulatedOrganizationState = {
   /**
    * Projected organizational conditions.
    */
-  projectedConditions: OrganizationalCondition[];
+  projectedConditions:
+    OrganizationalCondition[];
 
   /**
    * Projected organizational beliefs.
    */
-  projectedBeliefs: OrganizationalBelief[];
+  projectedBeliefs:
+    OrganizationalBelief[];
 
   /**
    * Predictions that remain active in this future.
    */
-  projectedPredictions: OrganizationalPrediction[];
+  projectedPredictions:
+    OrganizationalPrediction[];
 
   /**
    * Confidence Discovery assigns to the simulated future.
@@ -84,38 +146,93 @@ export type SimulateOrganizationInput = {
   /**
    * Current causal model used to propagate an intervention.
    */
-  causalModel?: OrganizationalCausalModel | null;
+  causalModel?:
+    | OrganizationalCausalModel
+    | null;
 
   /**
-   * Organizational entity directly changed by the intervention.
+   * Canonical direct causal changes produced by
+   * mapInterventionToCausalChanges().
+   *
+   * When supplied, all changes are propagated and aggregated before
+   * organizational conditions evolve.
+   */
+  directChanges?:
+    InterventionCausalChange[];
+
+  /**
+   * Backward-compatible organizational entity directly changed by the
+   * intervention.
+   *
+   * Use directChanges for multi-target intervention simulation.
    */
   changedEntityId?: string;
 
   /**
-   * Signed normalized change between -1 and 1.
+   * Backward-compatible signed normalized change between -1 and 1.
    *
    * Positive means improvement or increase.
    * Negative means deterioration or decrease.
+   *
+   * Use directChanges for multi-target intervention simulation.
    */
   interventionDelta?: number;
 
-  conditions: OrganizationalCondition[];
+  conditions:
+    OrganizationalCondition[];
 
-  beliefs: OrganizationalBelief[];
+  beliefs:
+    OrganizationalBelief[];
 
-  predictions: OrganizationalPrediction[];
+  predictions:
+    OrganizationalPrediction[];
 
-  predictionEvaluations: PredictionEvaluation[];
+  predictionEvaluations:
+    PredictionEvaluation[];
 
-  learningProfile?: OrganizationalLearningProfile | null;
+  learningProfile?:
+    | OrganizationalLearningProfile
+    | null;
 
   simulatedAt?: string;
 
-  timeHorizon?: SimulatedOrganizationState["timeHorizon"];
+  timeHorizon?:
+    SimulatedOrganizationState["timeHorizon"];
 };
 
-function clamp01(value: number): number {
-  return Math.max(0, Math.min(1, value));
+type BuiltSimulationInfluence = {
+  /**
+   * Backward-compatible single-source propagation result.
+   */
+  influencePropagation?:
+    OrganizationalInfluencePropagationResult;
+
+  /**
+   * Direct intervention changes used by a multi-source simulation.
+   */
+  directChanges?:
+    InterventionCausalChange[];
+
+  /**
+   * All propagation results generated by a multi-source simulation.
+   */
+  influencePropagationResults?:
+    OrganizationalInfluencePropagationResult[];
+
+  /**
+   * Safely combined influence produced by the canonical aggregator.
+   */
+  aggregatedInfluence?:
+    AggregatedOrganizationalInfluence[];
+};
+
+function clamp01(
+  value: number,
+): number {
+  return Math.max(
+    0,
+    Math.min(1, value),
+  );
 }
 
 function averagePredictionAccuracy(
@@ -128,28 +245,146 @@ function averagePredictionAccuracy(
   return (
     evaluations.reduce(
       (sum, evaluation) =>
-        sum + evaluation.accuracyScore,
+        sum +
+        evaluation.accuracyScore,
       0,
-    ) / evaluations.length
+    ) /
+    evaluations.length
   );
 }
 
-function buildInfluencePropagation(
+function buildSimulationInfluence(
   input: SimulateOrganizationInput,
-): OrganizationalInfluencePropagationResult | undefined {
-  if (
-    !input.causalModel ||
-    !input.changedEntityId ||
-    input.interventionDelta === undefined
-  ) {
-    return undefined;
+): BuiltSimulationInfluence {
+  if (!input.causalModel) {
+    return {};
   }
 
-  return propagateOrganizationalInfluence({
-    causalModel: input.causalModel,
-    changedEntityId: input.changedEntityId,
-    delta: input.interventionDelta,
-  });
+  /**
+   * Multi-source simulation is canonical when direct causal changes have
+   * already been mapped from the intervention.
+   */
+  if (
+    input.directChanges &&
+    input.directChanges.length > 0
+  ) {
+    const influencePropagationResults =
+      input.directChanges.map(
+        (change) =>
+          propagateOrganizationalInfluence({
+            causalModel:
+              input.causalModel!,
+
+            changedEntityId:
+              change.entityId,
+
+            delta:
+              change.delta,
+          }),
+      );
+
+    const aggregatedInfluence =
+      aggregateOrganizationalInfluence({
+        propagationResults:
+          influencePropagationResults,
+      });
+
+    return {
+      directChanges:
+        input.directChanges,
+
+      influencePropagationResults,
+
+      aggregatedInfluence,
+    };
+  }
+
+  /**
+   * Preserve the original single-source simulation contract.
+   */
+  if (
+    !input.changedEntityId ||
+    input.interventionDelta ===
+      undefined
+  ) {
+    return {};
+  }
+
+  const influencePropagation =
+    propagateOrganizationalInfluence({
+      causalModel:
+        input.causalModel,
+
+      changedEntityId:
+        input.changedEntityId,
+
+      delta:
+        input.interventionDelta,
+    });
+
+  return {
+    influencePropagation,
+  };
+}
+
+function buildSimulationExplanation(
+  input:
+    SimulateOrganizationInput,
+
+  influence:
+    BuiltSimulationInfluence,
+): string {
+  if (
+    influence.aggregatedInfluence &&
+    influence.influencePropagationResults &&
+    influence.directChanges
+  ) {
+    const relationshipIds =
+      new Set(
+        influence
+          .influencePropagationResults
+          .flatMap(
+            (result) =>
+              result
+                .traversedRelationshipIds,
+          ),
+      );
+
+    return (
+      `Discovery simulated ${influence.directChanges.length} direct organizational change` +
+      `${influence.directChanges.length === 1 ? "" : "s"} and propagated their combined effects across ` +
+      `${relationshipIds.size} causal relationship${relationshipIds.size === 1 ? "" : "s"}. ` +
+      "Direct and indirect effects were safely aggregated before being applied to the projected organizational conditions."
+    );
+  }
+
+  if (
+    influence.influencePropagation
+  ) {
+    const relationshipCount =
+      influence
+        .influencePropagation
+        .traversedRelationshipIds
+        .length;
+
+    return (
+      `Discovery simulated a direct change to "${input.changedEntityId}" and propagated its effects across ` +
+      `${relationshipCount} causal relationship${relationshipCount === 1 ? "" : "s"}. ` +
+      "The propagated effects were applied to the projected organizational conditions."
+    );
+  }
+
+  if (input.intervention) {
+    return (
+      `Discovery simulated the intervention "${input.intervention.title}" against the current organizational state. ` +
+      "No causal propagation was performed because a causal model or usable direct organizational change was not supplied."
+    );
+  }
+
+  return (
+    "Discovery projected the current organizational state forward while calibrating confidence using historical prediction accuracy. " +
+    "No intervention was applied."
+  );
 }
 
 export function simulateOrganization(
@@ -160,80 +395,114 @@ export function simulateOrganization(
     new Date().toISOString();
 
   const timeHorizon =
-    input.intervention?.timeHorizon ??
+    input.intervention
+      ?.timeHorizon ??
     input.timeHorizon ??
     "near-term";
 
-    /**
-   * Version 4:
+  /**
+   * Version 5:
    *
    * - calibrate confidence using historical prediction performance,
-   * - apply an optional intervention to the causal model,
-   * - preserve the resulting direct and indirect effects,
-   * - evolve projected organizational conditions from those effects,
+   * - accept either one backward-compatible source change or multiple
+   *   canonical direct causal changes,
+   * - propagate each direct change through the causal model,
+   * - safely aggregate multi-source direct and indirect influence,
+   * - evolve projected organizational conditions,
    * - and regenerate projected predictions through the canonical
    *   Organizational Prediction producer.
    *
-   * Beliefs remain preserved until the canonical belief producer can
-   * consume simulated future inputs without recreating belief logic.
+   * Beliefs remain preserved until the canonical belief producer can consume
+   * simulated future inputs without recreating belief logic.
    */
 
-  const influencePropagation =
-    buildInfluencePropagation(input);
+  const influence =
+    buildSimulationInfluence(
+      input,
+    );
+
+  const conditionInfluence =
+    influence.aggregatedInfluence ??
+    influence.influencePropagation;
 
   const projectedConditions =
     evolveConditions(
       input.conditions,
-      influencePropagation,
+      conditionInfluence,
       simulatedAt,
     );
 
-    const projectedPredictionResult =
-  inferOrganizationalPredictions({
-    conditions: projectedConditions.map(
-      (condition) => ({
-        id: condition.id,
-        name: condition.name,
-        domain: condition.domain,
+  const projectedPredictionResult =
+    inferOrganizationalPredictions({
+      conditions:
+        projectedConditions.map(
+          (condition) => ({
+            id:
+              condition.id,
 
-        status: condition.status,
-        trend: condition.trend,
-        priority: condition.priority,
+            name:
+              condition.name,
 
-        confidence: condition.confidence,
-        strength: condition.strength,
+            domain:
+              condition.domain,
 
-        supportingConceptIds:
-          condition.supportingConceptIds,
-        supportingBeliefIds:
-          condition.supportingBeliefIds,
-        supportingTheoryIds:
-          condition.supportingTheoryIds,
+            status:
+              condition.status,
 
-        upstreamConditionIds:
-          condition.upstreamConditionIds,
-        downstreamConditionIds:
-          condition.downstreamConditionIds,
+            trend:
+              condition.trend,
 
-        missingEvidence:
-          condition.missingEvidence,
-        confidenceLimiters:
-          condition.confidenceLimiters,
-      }),
-    ),
+            priority:
+              condition.priority,
 
-    learningProfile:
-      input.learningProfile ?? undefined,
+            confidence:
+              condition.confidence,
 
-    previousPredictions:
-      input.predictions,
+            strength:
+              condition.strength,
 
-    now:
-      simulatedAt,
-  });
+            supportingConceptIds:
+              condition
+                .supportingConceptIds,
 
-const projectedPredictions =
-  projectedPredictionResult.predictions;
+            supportingBeliefIds:
+              condition
+                .supportingBeliefIds,
+
+            supportingTheoryIds:
+              condition
+                .supportingTheoryIds,
+
+            upstreamConditionIds:
+              condition
+                .upstreamConditionIds,
+
+            downstreamConditionIds:
+              condition
+                .downstreamConditionIds,
+
+            missingEvidence:
+              condition.missingEvidence,
+
+            confidenceLimiters:
+              condition
+                .confidenceLimiters,
+          }),
+        ),
+
+      learningProfile:
+        input.learningProfile ??
+        undefined,
+
+      previousPredictions:
+        input.predictions,
+
+      now:
+        simulatedAt,
+    });
+
+  const projectedPredictions =
+    projectedPredictionResult.predictions;
 
   const simulationConfidence =
     clamp01(
@@ -252,7 +521,18 @@ const projectedPredictions =
     intervention:
       input.intervention,
 
-    influencePropagation,
+    influencePropagation:
+      influence.influencePropagation,
+
+    directChanges:
+      influence.directChanges,
+
+    influencePropagationResults:
+      influence
+        .influencePropagationResults,
+
+    aggregatedInfluence:
+      influence.aggregatedInfluence,
 
     simulatedAt,
 
@@ -269,10 +549,9 @@ const projectedPredictions =
       simulationConfidence,
 
     explanation:
-      influencePropagation
-        ? `Discovery simulated a direct change to "${input.changedEntityId}" and propagated its effects across ${influencePropagation.traversedRelationshipIds.length} causal relationship${influencePropagation.traversedRelationshipIds.length === 1 ? "" : "s"}. The propagated effects were applied to the projected organizational conditions.`
-        : input.intervention
-          ? `Discovery simulated the intervention "${input.intervention.title}" against the current organizational state. No causal propagation was performed because a target entity, intervention delta, or causal model was not supplied.`
-          : "Discovery projected the current organizational state forward while calibrating confidence using historical prediction accuracy. No intervention was applied.",
+      buildSimulationExplanation(
+        input,
+        influence,
+      ),
   };
 }

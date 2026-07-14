@@ -110,34 +110,47 @@ function buildConditionRelationships(
         targetEntityId:
           downstreamConditionId,
 
+        /**
+         * Conditions are modeled as organizational constraints.
+         *
+         * A positive simulation delta means the source constraint weakens.
+         * Weakening an upstream constraint should generally improve the
+         * connected downstream condition.
+         *
+         * Relationship direction therefore describes the stable structural
+         * relationship between conditions and must not change based on the
+         * source condition's current status.
+         */
         direction:
-          condition.status === "improving"
-            ? "enables"
-            : condition.status === "deteriorating"
-              ? "destabilizes"
-              : "constrains",
+          "enables",
 
-        strength: clamp01(
-          condition.strength,
-        ),
+        strength:
+          clamp01(
+            condition.strength,
+          ),
 
-        confidence: clamp01(
-          condition.confidence,
-        ),
+        confidence:
+          clamp01(
+            condition.confidence,
+          ),
 
         explanation:
-          `${condition.name} may influence a connected downstream organizational condition because Discovery has explicitly modeled that relationship in the current organizational state.`,
+          `Improvement in ${condition.name} is expected to improve the connected downstream organizational condition because Discovery has explicitly modeled it as an upstream influence.`,
 
         supportingMechanismIds:
-          condition.supportingMechanismIds ?? [],
+          condition.supportingMechanismIds ??
+          [],
 
         supportingTheoryIds:
-          condition.supportingTheoryIds ?? [],
+          condition.supportingTheoryIds ??
+          [],
 
         supportingBeliefIds:
-          condition.supportingBeliefIds ?? [],
+          condition.supportingBeliefIds ??
+          [],
 
-        supportingEvidenceIds: [],
+        supportingEvidenceIds:
+          [],
       });
     }
   }

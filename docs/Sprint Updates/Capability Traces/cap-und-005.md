@@ -1,6 +1,6 @@
 # Capability Trace — Executive Assessment
 
-Generated: 2026-07-13T22:15:53.170Z
+Generated: 2026-07-14T03:36:22.480Z
 
 ## Verified Architecture
 
@@ -78,8 +78,11 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/v3/executive/executiveLearningSummary.ts`
 - `engine/v3/model/judgment/organizationalJudgment.ts`
 - `engine/v3/model/learning/computeOrganizationalLearningProfile.ts`
+- `engine/v3/model/simulate/buildSimulationScenario.ts`
+- `engine/v3/model/simulate/compareSimulationScenario.ts`
 - `engine/v3/runtime/evolveOrganizationRuntime.ts`
 - `engine/v3/runtime/organizationalUnderstandingState.ts`
+- `engine/v3/scenarios/runExecutiveScenario.ts`
 - `engine/v3/semantic/types.ts`
 - `engine/v3/types.ts`
 - `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
@@ -115,13 +118,13 @@ This section records source-code references. It supplements, but does not replac
 
 | Layer | Status | Matches |
 |---|:---:|---:|
-| Engine | ✅ Found | 20 |
+| Engine | ✅ Found | 24 |
 | Runtime | ✅ Found | 15 |
 | Executive | ✅ Found | 9 |
 | Projection | ✅ Found | 27 |
 | UI | ✅ Found | 22 |
 | API | ❌ Not found | 0 |
-| Simulation | ❌ Not found | 0 |
+| Simulation | ✅ Found | 21 |
 | Benchmark | ✅ Found | 44 |
 | Other | ✅ Found | 11 |
 
@@ -155,6 +158,17 @@ This section records source-code references. It supplements, but does not replac
   - `executiveAssessmentConfidence?: number;`
 - Line 252 · **read** · matched `executiveAssessment`
   - `if ((params.currentSnapshot.executiveAssessmentConfidence ?? 0) < 0.7) {`
+
+##### `engine/v3/scenarios/runExecutiveScenario.ts`
+
+- Line 74 · **unknown** · matched `Executive Assessment`
+  - `* Current canonical Executive Assessment used as the comparison baseline.`
+- Line 76 · **unknown** · matched `executiveAssessment`
+  - `currentExecutiveAssessment: OrganizationalAssessment;`
+- Line 123 · **unknown** · matched `executiveAssessment`
+  - `currentExecutiveAssessment,`
+- Line 178 · **unknown** · matched `executiveAssessment`
+  - `currentExecutiveAssessment,`
 
 ##### `engine/v3/semantic/types.ts`
 
@@ -199,31 +213,31 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 13 · **import** · matched `executiveAssessment`
   - `import { buildExecutiveAssessment } from "../model/judgment/buildExecutiveAssessment";`
-- Line 73 · **type** · matched `executiveAssessment`
+- Line 74 · **type** · matched `executiveAssessment`
   - `executiveAssessment?: any;`
-- Line 727 · **definition** · matched `executiveAssessment`
+- Line 728 · **definition** · matched `executiveAssessment`
   - `const executiveAssessment = buildExecutiveAssessment({`
-- Line 742 · **unknown** · matched `executiveAssessment`
+- Line 743 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 758 · **unknown** · matched `executive-assessment`
+- Line 759 · **unknown** · matched `executive-assessment`
   - `understanding.source === "executive-assessment",`
-- Line 823 · **unknown** · matched `Executive Assessment`
+- Line 824 · **unknown** · matched `Executive Assessment`
   - `"Executive Assessment",`
-- Line 824 · **unknown** · matched `executiveAssessment`
+- Line 825 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 877 · **unknown** · matched `executiveAssessment`
-  - `executiveAssessmentConfidence:`
 - Line 878 · **unknown** · matched `executiveAssessment`
-  - `executiveAssessment.confidence,`
-- Line 1039 · **unknown** · matched `executiveAssessment`
-  - `executiveAssessment,`
-- Line 1222 · **unknown** · matched `executiveAssessment`
   - `executiveAssessmentConfidence:`
-- Line 1223 · **unknown** · matched `executiveAssessment`
+- Line 879 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment.confidence,`
-- Line 1269 · **type** · matched `executiveAssessment`
+- Line 1107 · **unknown** · matched `executiveAssessment`
+  - `executiveAssessment,`
+- Line 1288 · **unknown** · matched `executiveAssessment`
+  - `executiveAssessmentConfidence:`
+- Line 1289 · **unknown** · matched `executiveAssessment`
+  - `executiveAssessment.confidence,`
+- Line 1335 · **type** · matched `executiveAssessment`
   - `executiveAssessment:`
-- Line 1270 · **unknown** · matched `executiveAssessment`
+- Line 1336 · **unknown** · matched `executiveAssessment`
   - `typeof executiveAssessment;`
 
 ##### `engine/v3/runtime/organizationalUnderstandingState.ts`
@@ -376,6 +390,56 @@ This section records source-code references. It supplements, but does not replac
   - `<ExecutiveAssessmentCard`
 - Line 29 · **read** · matched `executiveAssessment`
   - `assessment={projection.executiveAssessment}`
+
+#### Simulation
+
+##### `engine/v3/model/simulate/buildSimulationScenario.ts`
+
+- Line 1 · **import** · matched `executiveAssessment`
+  - `import { buildExecutiveAssessment } from "../judgment/buildExecutiveAssessment";`
+- Line 23 · **type** · matched `executiveAssessment`
+  - `type ExecutiveAssessmentInput =`
+- Line 24 · **unknown** · matched `executiveAssessment`
+  - `Parameters<typeof buildExecutiveAssessment>[0];`
+- Line 46 · **unknown** · matched `Executive Assessment`
+  - `* Canonical Executive Assessment of the simulated future.`
+- Line 48 · **unknown** · matched `executiveAssessment`
+  - `projectedExecutiveAssessment: OrganizationalAssessment;`
+- Line 68 · **unknown** · matched `executiveAssessment`
+  - `NonNullable<ExecutiveAssessmentInput["organizationalState"]>;`
+- Line 77 · **unknown** · matched `executiveAssessment`
+  - `ExecutiveAssessmentInput["conceptualUnderstanding"];`
+- Line 83 · **unknown** · matched `executiveAssessment`
+  - `ExecutiveAssessmentInput["organizationalBeliefs"];`
+- Line 86 · **unknown** · matched `executiveAssessment`
+  - `ExecutiveAssessmentInput["investigationOpportunities"];`
+- Line 112 · **unknown** · matched `Executive Assessment`
+  - `* canonical producers for Prediction Reflection, Executive Assessment, and`
+- Line 145 · **unknown** · matched `executiveAssessment`
+  - `const projectedExecutiveAssessment =`
+- Line 146 · **unknown** · matched `executiveAssessment`
+  - `buildExecutiveAssessment({`
+- Line 163 · **type** · matched `executiveAssessment`
+  - `executiveAssessment:`
+- Line 164 · **unknown** · matched `executiveAssessment`
+  - `projectedExecutiveAssessment,`
+- Line 184 · **unknown** · matched `executiveAssessment`
+  - `projectedExecutiveAssessment,`
+
+##### `engine/v3/model/simulate/compareSimulationScenario.ts`
+
+- Line 97 · **unknown** · matched `executiveAssessment`
+  - `currentExecutiveAssessment: OrganizationalAssessment;`
+- Line 526 · **unknown** · matched `executiveAssessment`
+  - `.projectedExecutiveAssessment`
+- Line 545 · **unknown** · matched `executiveAssessment`
+  - `currentExecutiveAssessment,`
+- Line 569 · **unknown** · matched `executiveAssessment`
+  - `currentExecutiveAssessment,`
+- Line 572 · **unknown** · matched `executiveAssessment`
+  - `.projectedExecutiveAssessment,`
+- Line 591 · **unknown** · matched `executiveAssessment`
+  - `currentExecutiveAssessment,`
 
 #### Benchmark
 

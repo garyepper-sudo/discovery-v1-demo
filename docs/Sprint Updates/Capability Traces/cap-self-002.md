@@ -1,6 +1,6 @@
 # Capability Trace — Investigation Opportunity Generation
 
-Generated: 2026-07-13T22:15:54.176Z
+Generated: 2026-07-14T03:36:23.493Z
 
 ## Verified Architecture
 
@@ -67,7 +67,9 @@ Review these files to determine whether they should be registered as consumers, 
 - `components/executive-v2/projection/buildExecutiveProjection.ts`
 - `engine/v3/model/judgment/buildExecutiveAssessment.ts`
 - `engine/v3/model/judgment/buildExecutivePriority.ts`
+- `engine/v3/model/simulate/buildSimulationScenario.ts`
 - `engine/v3/runtime/evolveOrganizationRuntime.ts`
+- `engine/v3/scenarios/runExecutiveScenario.ts`
 - `scripts/cognition/reviewCognitiveDomain.mjs`
 
 ## Structural Search
@@ -98,13 +100,13 @@ This section records source-code references. It supplements, but does not replac
 
 | Layer | Status | Matches |
 |---|:---:|---:|
-| Engine | ✅ Found | 12 |
+| Engine | ✅ Found | 16 |
 | Runtime | ✅ Found | 12 |
 | Executive | ❌ Not found | 0 |
 | Projection | ✅ Found | 8 |
 | UI | ✅ Found | 20 |
 | API | ❌ Not found | 0 |
-| Simulation | ❌ Not found | 0 |
+| Simulation | ✅ Found | 4 |
 | Benchmark | ❌ Not found | 0 |
 | Other | ✅ Found | 3 |
 
@@ -145,33 +147,44 @@ This section records source-code references. It supplements, but does not replac
 - Line 352 · **read** · matched `investigationOpportunities`
   - `[...(input.investigationOpportunities ?? [])].sort(`
 
+##### `engine/v3/scenarios/runExecutiveScenario.ts`
+
+- Line 100 · **type** · matched `investigationOpportunities`
+  - `investigationOpportunities?:`
+- Line 101 · **read** · matched `investigationOpportunities`
+  - `BuildSimulationScenarioInput["investigationOpportunities"];`
+- Line 130 · **assignment** · matched `investigationOpportunities`
+  - `investigationOpportunities = [],`
+- Line 166 · **unknown** · matched `investigationOpportunities`
+  - `investigationOpportunities,`
+
 #### Runtime
 
 ##### `engine/v3/runtime/evolveOrganizationRuntime.ts`
 
 - Line 42 · **import** · matched `buildInvestigationOpportunities`
   - `import { buildInvestigationOpportunities } from "../model/investigation/buildInvestigationOpportunities";`
-- Line 94 · **type** · matched `investigationOpportunities`
+- Line 95 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities?: any[];`
-- Line 667 · **unknown** · matched `buildInvestigationOpportunities`
+- Line 668 · **unknown** · matched `buildInvestigationOpportunities`
   - `buildInvestigationOpportunities({`
-- Line 673 · **unknown** · matched `investigationOpportunities`
+- Line 674 · **unknown** · matched `investigationOpportunities`
   - `previousInvestigationOpportunities:`
-- Line 674 · **read** · matched `investigationOpportunities`
+- Line 675 · **read** · matched `investigationOpportunities`
   - `memory.investigationOpportunities,`
-- Line 680 · **definition** · matched `investigationOpportunities`
+- Line 681 · **definition** · matched `investigationOpportunities`
   - `const investigationOpportunities =`
-- Line 715 · **unknown** · matched `investigationOpportunities`
+- Line 716 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 736 · **unknown** · matched `investigationOpportunities`
+- Line 737 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1050 · **unknown** · matched `investigationOpportunities`
+- Line 1117 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1110 · **unknown** · matched `investigationOpportunities`
+- Line 1176 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1335 · **type** · matched `investigationOpportunities`
+- Line 1404 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities:`
-- Line 1336 · **unknown** · matched `investigationOpportunities`
+- Line 1405 · **unknown** · matched `investigationOpportunities`
   - `typeof investigationOpportunities;`
 
 #### Projection
@@ -251,6 +264,19 @@ This section records source-code references. It supplements, but does not replac
   - `export default function ExecutiveInvestigationOpportunities({`
 - Line 9 · **unknown** · matched `investigationOpportunities`
   - `}: ExecutiveInvestigationOpportunitiesProps) {`
+
+#### Simulation
+
+##### `engine/v3/model/simulate/buildSimulationScenario.ts`
+
+- Line 85 · **type** · matched `investigationOpportunities`
+  - `investigationOpportunities?:`
+- Line 86 · **read** · matched `investigationOpportunities`
+  - `ExecutiveAssessmentInput["investigationOpportunities"];`
+- Line 126 · **assignment** · matched `investigationOpportunities`
+  - `investigationOpportunities = [],`
+- Line 156 · **unknown** · matched `investigationOpportunities`
+  - `investigationOpportunities,`
 
 #### Other
 

@@ -2,168 +2,178 @@
 
 ## Current Development Phase
 
-**Decision Intelligence, Organizational Causal Reasoning, and Simulation Intelligence**
+**Executive Decision Intelligence and Executive Experience**
 
-Discovery has completed the first generation of its Cognitive Operating System and now possesses the first complete version of its Decision Intelligence architecture.
+Discovery's core cognitive architecture is now considered stable.
 
-The engine now performs a complete reasoning cycle through:
+The engine now possesses a complete canonical reasoning pipeline capable of:
 
-* Organizational Understanding
-* Organizational Prediction
-* Organizational Learning
-* Executive Decision
-* Intervention Option Generation
-* Organizational Intervention
-* Organizational Causal Model
-* Intervention Mapping
-* Organizational Influence Propagation
-* Organizational Influence Aggregation
-* Organizational Simulation
+- understanding organizations,
+- predicting future organizational behavior,
+- learning from observed outcomes,
+- modeling executive decisions,
+- generating intervention options,
+- simulating organizational change,
+- comparing projected futures,
+- and producing executive decision intelligence.
 
-Discovery now reasons about intentional executive action rather than simply projecting organizational futures.
+Discovery no longer treats simulation as a separate reasoning engine.
 
-It can:
+Simulation now modifies organizational state and routes the projected future back through the same canonical cognition pipeline used to understand the present.
 
-* represent executive objectives,
-* generate intervention options,
-* select a canonical intervention,
-* determine affected organizational systems,
-* propagate organizational effects through an executable causal model,
-* safely aggregate direct and indirect effects,
-* and benchmark its own reasoning pipeline.
+Current architecture now includes:
 
-Decision Intelligence Experiment 001 validates the complete reasoning chain.
+- Organizational Understanding
+- Organizational Prediction
+- Prediction Reflection
+- Executive Assessment
+- Organizational Understanding
+- Executive Decision
+- Intervention Option Generation
+- Organizational Intervention
+- Organizational Causal Model
+- Intervention Mapping
+- Organizational Influence Propagation
+- Organizational Influence Aggregation
+- Condition Evolution
+- Organizational State Synthesis
+- Organizational Simulation
+- Simulation Scenario
+- Scenario Comparison
+- Executive Scenario Orchestration
+
+Future development should focus on exposing and improving these canonical capabilities rather than expanding architecture.
 
 ---
 
 ## Current Objective
 
-Convert aggregated organizational influence into genuinely evolved future organizational states.
+Expose Discovery's completed Decision Intelligence pipeline through the Executive Experience.
 
-Discovery should become progressively better at answering:
+Discovery should answer:
 
-* What is happening?
-* Why is it happening?
-* What is likely to happen next?
-* What executive objective is leadership trying to achieve?
-* Which interventions could achieve that objective?
-* Which organizational systems would those interventions affect?
-* How would those effects propagate?
-* What future organizational state would result?
-* Which intervention should leadership choose?
+- What is happening?
+- Why is it happening?
+- What is likely to happen?
+- Which intervention should leadership choose?
+- How would each intervention change the organization?
+- How does the projected future differ from the current organization?
+- What executive recommendation should Discovery make?
 
 ---
 
 ## Highest ROI Work
 
-Convert aggregated causal influence into simulated organizational evolution.
+Complete the Executive Decision Experience.
 
-The current pipeline successfully reasons through:
+The core reasoning engine is complete.
 
-* Executive Decision
-* Intervention Generation
-* Intervention Selection
-* Organizational Intervention
-* Intervention Mapping
-* Causal Propagation
-* Influence Aggregation
+The highest ROI work is now connecting:
 
-The highest ROI work is now applying those aggregated effects to produce a modified future organizational state.
+```text
+Executive Scenario
 
-Simulation should evolve:
+↓
 
-* organizational conditions,
-* organizational beliefs,
-* organizational predictions,
-* confidence,
-* and executive explanations,
+Executive Projection
 
-rather than preserving the current organizational state.
+↓
 
-Future simulation should become an executable application of Discovery's Organizational Laws.
+Executive Workspace
+
+↓
+
+Executive Decision Experience
+```
+
+This work includes:
+
+- integrating `runExecutiveScenario()` into the API,
+- extending Executive Projection with scenario comparison,
+- exposing executive recommendations,
+- comparing multiple intervention scenarios,
+- and validating the complete end-to-end executive workflow.
 
 ---
 
 ## What Changed Last Sprint
 
-* Implemented Executive Decision.
-* Implemented Intervention Option Generation.
-* Implemented Organizational Intervention.
-* Implemented Organizational Causal Model.
-* Persisted Organizational Causal Model.
-* Implemented Organizational Influence Propagation.
-* Implemented Organizational Influence Aggregation.
-* Implemented Decision Reasoning Pipeline.
-* Implemented Organizational Physics.
-* Defined Organizational Laws.
-* Added machine-readable Organizational Laws.
-* Implemented Decision Intelligence Experiment 001.
-* Validated end-to-end executive reasoning.
-* Validated intervention generation.
-* Validated intervention mapping.
-* Validated multi-stage causal propagation.
-* Validated safe aggregation of direct and indirect organizational effects.
-* Achieved 15/15 Decision Intelligence benchmark checks.
-* Maintained 0 TypeScript errors.
-* Maintained 100% benchmark integrity.
+- Completed canonical Organizational Simulation.
+- Implemented canonical Condition Evolution.
+- Implemented canonical Organizational State Synthesis.
+- Regenerated predictions from simulated organizational state.
+- Built Simulation Scenario.
+- Built Scenario Comparison.
+- Built Executive Scenario Orchestrator.
+- Eliminated duplicated simulation reasoning.
+- Reused canonical Executive Assessment for simulated futures.
+- Reused canonical Organizational Understanding for simulated futures.
+- Stabilized the Executive Decision Intelligence architecture.
+- Maintained 0 TypeScript errors.
+- Preserved benchmark integrity.
 
 ---
 
 ## What Exists — Do Not Rebuild
 
-* Executive Assessment
-* Organizational Understanding
-* Organizational Conditions
-* Organizational State
-* Organizational Learning Profile
-* Organizational Prediction
-* Organizational Causal Model
-* Executive Decision
-* Intervention Option Generation
-* Organizational Intervention
-* Intervention Mapping
-* Organizational Influence Propagation
-* Organizational Influence Aggregation
-* Organizational Simulation Version 2
-* Decision Reasoning Pipeline
-* Decision Intelligence Experiment Framework
-* Organizational Physics
-* Organizational Laws
-* Runtime Persistence
-* Capability Registry
-* Cognitive Operating System
-* Atlas Simulation Architecture
+The following capabilities are now considered canonical:
 
-Extend these canonical capabilities rather than introducing parallel implementations.
+- Executive Assessment
+- Organizational Understanding
+- Organizational Conditions
+- Organizational State
+- Organizational Learning Profile
+- Organizational Prediction
+- Prediction Reflection
+- Organizational Causal Model
+- Executive Decision
+- Intervention Option Generation
+- Organizational Intervention
+- Intervention Mapping
+- Organizational Influence Propagation
+- Organizational Influence Aggregation
+- Condition Evolution
+- Organizational State Synthesis
+- Organizational Simulation
+- Simulation Scenario
+- Scenario Comparison
+- Executive Scenario Orchestrator
+- Runtime Persistence
+- Executive Projection
+- Capability Registry
+- Cognitive Operating System
+- Atlas
+
+Improve these canonical producers rather than introducing parallel implementations.
 
 ---
 
 ## Current Risks
 
-* Simulation still preserves current organizational conditions after reasoning.
-* Aggregated organizational influence is not yet applied to projected conditions.
-* Future organizational state is not yet materially different from the current state.
-* Organizational Laws are currently human-authored rather than validated through observed outcomes.
-* Organizational Laws are not yet loaded dynamically from the canonical JSON representation.
-* Intervention selection is deterministic rather than evidence-ranked.
-* Executive recommendations have not yet been generated from simulation outcomes.
-* Decision Intelligence currently contains a single benchmark scenario.
-* Board-ready scenario reporting has not yet been implemented.
+The primary risks are no longer architectural.
+
+Current risks are:
+
+- Executive Scenario has not yet been integrated into the API.
+- Executive Projection does not yet expose scenario comparison.
+- Executive Workspace does not yet display executive decision scenarios.
+- Multiple intervention comparison has not yet been implemented.
+- Intervention ranking is not yet evidence-driven.
+- Executive recommendations have not yet been validated across multiple scenarios.
+- Organizational Laws remain human-authored and are not yet calibrated through observed intervention outcomes.
 
 ---
 
 ## Questions To Answer Next
 
-1. How should aggregated influence modify projected organizational conditions?
-2. How should confidence evolve when multiple causal effects converge?
-3. How should current and future organizational states be compared?
-4. How should Discovery explain every simulated organizational change?
-5. How should intervention options be ranked using simulated outcomes?
-6. How should Discovery compare multiple intervention scenarios?
-7. How should executive recommendations be generated?
-8. How should Organizational Laws strengthen or weaken through observed outcomes?
-9. How should Discovery discover new Organizational Laws?
-10. How should Decision Intelligence be benchmarked across many executive scenarios?
+1. How should Executive Scenario integrate into the Executive Projection?
+2. How should multiple intervention scenarios be compared?
+3. How should interventions be ranked?
+4. How should executive recommendations be generated from scenario comparison?
+5. How should intervention outcomes become learning events?
+6. How should Organizational Laws be calibrated from repeated intervention outcomes?
+7. How should Discovery discover new Organizational Laws?
+8. How should Decision Intelligence be benchmarked across many executive scenarios?
 
 ---
 
@@ -171,17 +181,13 @@ Extend these canonical capabilities rather than introducing parallel implementat
 
 By the end of the next sprint Discovery should:
 
-* Apply aggregated organizational influence to projected conditions.
-* Produce a genuinely modified simulated organizational state.
-* Compare current and future organizational conditions.
-* Explain every simulated organizational change.
-* Preserve complete causal provenance.
-* Generate the first executive recommendation from simulation.
-* Maintain canonical architectural ownership.
-* Maintain 0 TypeScript errors.
-* Maintain 100% benchmark integrity.
-* Extend Decision Intelligence Benchmark 001 through simulation.
+- Integrate Executive Scenario into the API.
+- Extend Executive Projection with executive decision scenarios.
+- Build the Executive Decision Workspace.
+- Compare multiple intervention scenarios.
+- Produce executive recommendations from scenario comparison.
+- Maintain canonical architectural ownership.
+- Maintain 0 TypeScript errors.
+- Maintain benchmark integrity.
 
-If simulation evolution is completed early, Discovery should begin ranking intervention options using simulated outcomes.
-
-The next sprint should demonstrate that Discovery no longer simply predicts the future—it should reason through intentional executive action, explain organizational consequences, and produce believable future organizational states that executives can use for decision-making.
+The next sprint should demonstrate that Discovery has moved beyond organizational understanding into a complete Executive Decision Intelligence experience capable of helping leadership compare alternative futures and choose among competing interventions.

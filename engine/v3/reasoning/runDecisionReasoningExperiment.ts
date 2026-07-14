@@ -2,21 +2,44 @@ import {
   aggregateOrganizationalInfluence,
   type AggregatedOrganizationalInfluence,
 } from "../model/causal/aggregateOrganizationalInfluence";
-import type { OrganizationalCausalModel } from "../model/causal/organizationalCausalModel";
+
+import type {
+  OrganizationalCausalModel,
+} from "../model/causal/organizationalCausalModel";
+
 import {
   propagateOrganizationalInfluence,
   type OrganizationalInfluencePropagationResult,
 } from "../model/causal/propagateOrganizationalInfluence";
-import type { OrganizationalCondition } from "../model/state/inferOrganizationalConditions";
-import { buildOrganizationalIntervention } from "../model/simulate/buildOrganizationalIntervention";
-import type { ExecutiveDecision } from "../model/simulate/executiveDecision";
-import type { InterventionOption } from "../model/simulate/interventionOption";
+
+import type {
+  OrganizationalCondition,
+} from "../model/state/inferOrganizationalConditions";
+
+import type {
+  ExecutiveDecision,
+} from "../model/simulate/executiveDecision";
+
+import type {
+  InterventionOption,
+} from "../model/simulate/interventionOption";
+
 import {
   mapInterventionToCausalChanges,
   type InterventionCausalChange,
 } from "../model/simulate/mapInterventionToCausalChanges";
-import type { OrganizationalIntervention } from "../model/simulate/organizationalIntervention";
-import { generateInterventionOptions } from "./generateInterventionOptions";
+
+import type {
+  OrganizationalIntervention,
+} from "../model/simulate/organizationalIntervention";
+
+import {
+  convertInterventionOptionToIntervention,
+} from "./convertInterventionOptionToIntervention";
+
+import {
+  generateInterventionOptions,
+} from "./generateInterventionOptions";
 
 export type RunDecisionReasoningExperimentInput = {
   executiveDecision: ExecutiveDecision;
@@ -37,9 +60,11 @@ export type DecisionReasoningResult = {
 
   mappedChanges: InterventionCausalChange[];
 
-  propagationResults: OrganizationalInfluencePropagationResult[];
+  propagationResults:
+    OrganizationalInfluencePropagationResult[];
 
-  aggregatedInfluence: AggregatedOrganizationalInfluence[];
+  aggregatedInfluence:
+    AggregatedOrganizationalInfluence[];
 
   reasoningStages: string[];
 };
@@ -49,53 +74,9 @@ function selectInterventionOption(
 ): InterventionOption | undefined {
   return interventionOptions.find(
     (option) =>
-      option.title === "Remove one approval layer",
+      option.title ===
+      "Remove one approval layer",
   );
-}
-
-function convertOptionToIntervention(
-  option: InterventionOption,
-): OrganizationalIntervention {
-  return buildOrganizationalIntervention({
-    organizationId:
-      option.organizationId,
-
-    type:
-      option.type,
-
-    title:
-      option.title,
-
-    description:
-      option.description,
-
-    rationale:
-      option.rationale,
-
-    scope:
-      option.scope,
-
-    timeHorizon:
-      option.timeHorizon,
-
-    status:
-      "hypothetical",
-
-    affectedConditionIds:
-      option.targetConditionIds,
-
-    expectedMechanismIds:
-      option.expectedMechanismIds,
-
-    assumptions:
-      option.assumptions,
-
-    confidence:
-      option.confidence,
-
-    createdAt:
-      option.createdAt,
-  });
 }
 
 export function runDecisionReasoningExperiment({
@@ -115,7 +96,7 @@ export function runDecisionReasoningExperiment({
 
   const selectedIntervention =
     selectedInterventionOption
-      ? convertOptionToIntervention(
+      ? convertInterventionOptionToIntervention(
           selectedInterventionOption,
         )
       : undefined;

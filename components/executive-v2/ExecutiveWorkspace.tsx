@@ -42,7 +42,10 @@ export default function ExecutiveWorkspace({
         </header>
 
         <div className="executive-workspace-content">
-          <ExecutiveExperience projection={projection} />
+          <ExecutiveExperience
+  projection={projection}
+  organizationId="default-organization"
+/>
 
           <ExecutiveTimeline evolution={projection.evolution} />
         </div>

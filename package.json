@@ -9,6 +9,11 @@
     "lint": "next lint",
 
     "simulate:atlas": "tsx engine/benchmark/runAtlas.ts",
+    "decision:scenario:001": "tsx engine/benchmark/decision-intelligence/scenarioIntegrationExperiment001.ts",
+    "decision:calibrate": "tsx engine/benchmark/decision-intelligence/runDecisionCalibration.ts",
+    "decision:rank:001": "tsx engine/benchmark/decision-intelligence/decisionRankingExperiment001.ts",
+    "decision:cycle:001": "tsx engine/benchmark/decision-intelligence/decisionCycleExperiment001.ts",
+
     "audit:understanding": "tsx engine/benchmark/auditUnderstandingLayers.ts",
     "audit:capability": "tsx engine/benchmark/auditCapability.ts",
     "audit:executive-capabilities": "npm run audit:capability -- \"Executive Assessment\" && npm run audit:capability -- \"Executive Understanding Synthesis\" && npm run audit:capability -- \"Organizational Learning Profile\" && npm run audit:capability -- \"Theory Validation\" && npm run audit:capability -- \"Investigation Opportunity Generation\"",
