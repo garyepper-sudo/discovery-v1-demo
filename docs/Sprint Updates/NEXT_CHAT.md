@@ -2,11 +2,11 @@
 
 ## Current Development Phase
 
-**Executive Communication and Executive Experience**
+**Executive Decision Workspace and Product Validation**
 
 Discovery's core cognitive architecture is now considered stable.
 
-The engine now possesses a complete canonical reasoning pipeline capable of:
+The reasoning engine now possesses a complete canonical pipeline capable of:
 
 - understanding organizations,
 - explaining organizational behavior,
@@ -17,36 +17,29 @@ The engine now possesses a complete canonical reasoning pipeline capable of:
 - simulating organizational change,
 - comparing projected futures,
 - synthesizing executive narratives,
-- and communicating executive intelligence.
+- communicating executive intelligence,
+- and supporting executive decision making.
 
-Simulation is no longer treated as a separate reasoning engine.
+Executive Communication is now considered complete as a canonical Operating System.
 
-Simulation modifies organizational state and routes the projected future back through the same canonical cognition pipeline used to understand the present.
+The current focus is no longer expanding cognition.
 
-Executive Communication has now become a canonical Operating System.
+The current focus is transforming completed cognition into a product that executive teams naturally use to improve important decisions.
 
-Current architecture now includes:
+Current architecture includes canonical implementations for:
 
 - Organizational Understanding
 - Organizational Prediction
 - Prediction Reflection
+- Organizational Learning
 - Executive Assessment
-- Organizational Understanding
 - Executive Decision
-- Intervention Option Generation
-- Organizational Intervention
-- Organizational Causal Model
-- Intervention Mapping
-- Organizational Influence Propagation
-- Organizational Influence Aggregation
-- Condition Evolution
-- Organizational State Synthesis
 - Organizational Simulation
-- Simulation Scenario
-- Scenario Comparison
-- Executive Scenario Orchestration
 - Executive Narrative
 - Executive Communication
+- Executive Projection
+- Runtime Persistence
+- Cognitive Operating Systems
 
 Current Architecture Health
 
@@ -57,33 +50,67 @@ Current Architecture Health
 - Decision Ranking benchmarked (9 / 9)
 - Executive Decision Cycle benchmarked (9 / 9)
 
-Future development should focus on improving canonical cognition and executive communication rather than expanding architecture.
+Future development should strengthen the executive product experience rather than expand the reasoning architecture.
 
 ---
 
 ## Current Objective
 
-Build Discovery's Executive Experience on top of the canonical Executive Communication Operating System.
+Validate one complete executive decision workflow.
 
-Discovery should answer:
+Discovery should help executive teams:
 
-- What is happening?
-- Why is it happening?
-- Why does it matter?
-- What is likely to happen next?
-- What should leadership do?
-- What uncertainty remains?
-- What evidence could change Discovery's recommendation?
+- understand complex situations,
+- explain why Discovery believes something,
+- challenge assumptions,
+- explore alternatives,
+- improve decision confidence,
+- make better decisions,
+- and continuously improve organizational judgment.
+
+Current MVP workflow:
+
+```text
+Question
+
+↓
+
+Current Understanding
+
+↓
+
+Recommendation
+
+↓
+
+Challenge
+
+↓
+
+Simulation
+
+↓
+
+Improve Confidence
+
+↓
+
+Executive Decision
+
+↓
+
+Decision Report
+```
+
+Everything else is secondary until this workflow has been validated.
 
 ---
 
 ## Highest ROI Work
 
-Complete Executive Experience V3.
+Complete the Executive Decision Workspace.
 
-The core reasoning engine is now complete.
-
-The highest ROI work is now connecting:
+Current work includes:
 
 ```text
 Executive Projection
@@ -98,33 +125,38 @@ Executive Communication
 
 ↓
 
-Executive Experience
+Executive Decision Workspace
 ```
 
-This work includes:
+Priority implementation includes:
 
-- replacing remaining V2 presentation,
-- consuming Executive Communication throughout the Executive Workspace,
-- surfacing Executive Decision capabilities,
-- improving executive narrative quality,
-- improving executive recommendation quality,
-- and validating the complete executive communication experience.
+- completing the Decision Workspace,
+- connecting Executive Communication throughout the workspace,
+- implementing the canonical Decision object,
+- implementing Decision Confidence,
+- implementing collaborative simulation,
+- implementing Executive Decision capture,
+- producing board-ready Decision Reports.
+
+The objective is validating one complete executive workflow rather than building additional pages.
 
 ---
 
 ## What Changed Last Sprint
 
 - Completed Executive Communication Operating System.
-- Implemented Executive Narrative synthesis.
-- Implemented Executive Communication synthesis.
-- Established the canonical Executive Communication pipeline.
-- Separated reasoning from communication.
-- Benchmarked Executive Communication (13 / 13).
-- Registered CAP-COM-001 Executive Communication Synthesis.
-- Expanded the Capability Registry to 26 canonical capabilities.
-- Maintained 100% Architecture Health.
-- Maintained 0 TypeScript errors.
-- Preserved benchmark integrity.
+- Completed Executive Narrative synthesis.
+- Completed Executive Communication synthesis.
+- Achieved 100% Architecture Health.
+- Introduced the Product Canon.
+- Defined the Executive Decision Workspace.
+- Defined the canonical Decision object.
+- Defined Product Principles.
+- Defined the Trust Framework.
+- Defined the Decision Confidence model.
+- Defined the Product Flywheel.
+- Defined the onboarding strategy.
+- Shifted Discovery's product philosophy from Organizational Understanding to Executive Decision Improvement.
 
 ---
 
@@ -132,35 +164,31 @@ This work includes:
 
 The following capabilities are now considered canonical:
 
-- Executive Assessment
 - Organizational Understanding
-- Organizational Conditions
-- Organizational State
-- Organizational Learning Profile
 - Organizational Prediction
-- Prediction Reflection
-- Organizational Causal Model
+- Organizational Learning
+- Executive Assessment
 - Executive Decision
-- Intervention Option Generation
-- Organizational Intervention
-- Intervention Mapping
-- Organizational Influence Propagation
-- Organizational Influence Aggregation
-- Condition Evolution
-- Organizational State Synthesis
 - Organizational Simulation
-- Simulation Scenario
-- Scenario Comparison
-- Executive Scenario Orchestration
 - Executive Narrative
 - Executive Communication
-- Runtime Persistence
 - Executive Projection
+- Runtime Persistence
 - Capability Registry
 - Cognitive Operating Systems
 - Atlas
 
-Improve these canonical producers rather than introducing parallel implementations.
+The following product concepts are now considered canonical:
+
+- Executive Decision Workspace
+- Decision Object
+- Decision Confidence
+- Product Flywheel
+- Trust Framework
+- Product Principles
+- Executive Workflow
+
+Extend canonical implementations rather than introducing parallel workflows.
 
 ---
 
@@ -168,26 +196,26 @@ Improve these canonical producers rather than introducing parallel implementatio
 
 The primary risks are no longer architectural.
 
-Current risks are:
+Current risks include:
 
-- Executive Experience still exposes only a subset of completed executive cognition.
-- Executive Decision capabilities remain structurally hidden from the Executive Workspace.
-- Executive Communication quality should continue improving toward board-level communication.
-- Decision scenarios have not yet been fully integrated into the Executive Experience.
-- Organizational Laws remain human-authored and are not yet calibrated through observed intervention outcomes.
+- The Executive Decision Workspace has not yet been fully connected to the engine.
+- Decision Confidence remains conceptual rather than implemented.
+- Discovery has not yet validated its executive workflow with real users.
+- The product has not yet demonstrated that executives will trust Discovery enough to work through an important decision.
+- Customer validation has not yet begun.
 
 ---
 
 ## Questions To Answer Next
 
-1. How should Executive Communication drive every Discovery experience?
-2. How should Executive Decision capabilities appear inside the Executive Experience?
-3. How should Discovery communicate uncertainty to executives?
-4. How should executive recommendations evolve from observed intervention outcomes?
-5. How should intervention outcomes become longitudinal learning events?
-6. How should Organizational Laws be calibrated from repeated intervention outcomes?
-7. How should Discovery discover new Organizational Laws?
-8. How should Executive Communication quality be benchmarked over time?
+1. Can Discovery consistently produce one valuable executive insight?
+2. Does Discovery improve executive thinking?
+3. Does simulation materially improve executive decisions?
+4. Does Decision Confidence naturally encourage additional organizational context?
+5. Will executives commit important decisions inside Discovery?
+6. How should Discovery begin learning immediately from executive interaction?
+7. How should Discovery review previous decisions and improve future judgment?
+8. What executive behaviors indicate product-market fit?
 
 ---
 
@@ -195,14 +223,18 @@ Current risks are:
 
 By the end of the next sprint Discovery should:
 
-- Complete Executive Experience V3.
-- Consume Executive Communication throughout the Executive Workspace.
-- Surface Executive Decision capabilities.
-- Improve executive narrative quality.
-- Improve executive recommendation quality.
+- Complete the Executive Decision Workspace.
+- Connect Executive Communication throughout the workspace.
+- Implement the canonical Decision object.
+- Implement Decision Confidence.
+- Produce board-ready Decision Reports.
 - Maintain canonical architectural ownership.
 - Maintain 0 TypeScript errors.
 - Maintain benchmark integrity.
 - Maintain 100% Architecture Health.
 
-The next sprint should demonstrate that Discovery has evolved from an Organizational Decision Intelligence Platform into an Executive Intelligence Platform capable of understanding organizations, evaluating alternative futures, communicating executive insight, and advising leadership through clear, benchmarked executive communication.
+Most importantly, the product should demonstrate a complete executive decision workflow that is ready for customer validation.
+
+The objective is no longer proving Discovery can reason.
+
+The objective is proving Discovery can help executive teams make better decisions.

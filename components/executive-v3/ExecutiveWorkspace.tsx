@@ -1,32 +1,29 @@
 "use client";
 
+import styles from "./ExecutiveWorkspace.module.css";
+
+import AskDiscovery from "./components/AskDiscovery/AskDiscovery";
+import Header from "./components/Header/Header";
+import LivingUnderstanding from "./components/LivingUnderstanding/LivingUnderstanding";
+import OrganizationPulse from "./components/OrganizationPulse/OrganizationPulse";
+import RecommendedDecision from "./components/RecommendedDecision/RecommendedDecision";
+import TodaysStory from "./components/TodaysStory/TodaysStory";
+import WhatChanged from "./components/WhatChanged/WhatChanged";
+
 import type {
   ExecutiveCommunication,
 } from "../../engine/v3/communication/executiveCommunication";
 
+import type {
+  ExecutiveWorkspaceMode,
+} from "./ExecutiveWorkspaceMode";
+
 type ExecutiveWorkspaceProps = {
   communication: ExecutiveCommunication;
+  mode: ExecutiveWorkspaceMode;
 };
 
-function directionSymbol(
-  direction:
-    ExecutiveCommunication["meaningfulChanges"][number]["direction"],
-): string {
-  switch (direction) {
-    case "improving":
-      return "↑";
-
-    case "worsening":
-      return "↓";
-
-    case "stable":
-      return "—";
-  }
-}
-
-function toPercentage(
-  value: number,
-): number {
+function toPercentage(value: number): number {
   const percentage =
     value <= 1
       ? value * 100
@@ -35,228 +32,115 @@ function toPercentage(
   return Math.round(
     Math.max(
       0,
-      Math.min(
-        100,
-        percentage,
-      ),
+      Math.min(100, percentage),
     ),
   );
 }
 
+function getModeTitle(
+  mode: Exclude<
+    ExecutiveWorkspaceMode,
+    "briefing"
+  >,
+): string {
+  switch (mode) {
+    case "understand":
+      return "Understand";
+
+    case "recommend":
+      return "Recommend";
+
+    case "simulate":
+      return "Simulate";
+
+    case "timeline":
+      return "Timeline";
+
+    case "ask":
+      return "Ask Discovery";
+  }
+}
+
 export default function ExecutiveWorkspace({
   communication,
+  mode,
 }: ExecutiveWorkspaceProps) {
+  const confidence = toPercentage(
+    communication.confidence.value,
+  );
+
+  if (mode !== "briefing") {
+    return (
+      <main className={styles.workspace}>
+        <section className={styles.placeholder}>
+          <p className={styles.placeholderEyebrow}>
+            Discovery
+          </p>
+
+          <h1>{getModeTitle(mode)}</h1>
+
+          <p>
+            This workspace mode is ready for its engine-backed experience.
+          </p>
+        </section>
+      </main>
+    );
+  }
+
   return (
-    <main className="executive-v3">
-      <section className="executive-v3-hero">
-        <div className="executive-v3-organism-panel">
-          <div
-            className="executive-v3-organism"
-            aria-hidden="true"
-          >
-            <span className="executive-v3-orbit executive-v3-orbit-one" />
-            <span className="executive-v3-orbit executive-v3-orbit-two" />
-            <span className="executive-v3-orbit executive-v3-orbit-three" />
+    <main className={styles.workspace}>
+      <div className={styles.shell}>
+        <section className={styles.main}>
+          <Header
+            userName="Gary"
+            meaningfulChangeCount={
+              communication.meaningfulChanges.length
+            }
+          />
 
-            <span className="executive-v3-core" />
+          <TodaysStory
+            headline={communication.headline}
+            summary={communication.executiveSummary}
+            confidence={confidence}
+          />
 
-            <span className="executive-v3-node executive-v3-node-one" />
-            <span className="executive-v3-node executive-v3-node-two" />
-            <span className="executive-v3-node executive-v3-node-three" />
-            <span className="executive-v3-node executive-v3-node-four" />
-          </div>
+          <RecommendedDecision
+            headline={
+              communication.recommendation.headline
+            }
+            rationale={
+              communication.recommendation.rationale
+            }
+            actionCount={
+              communication.recommendation.actions.length
+            }
+            decisionHref={
+              communication.recommendation.decisionHref
+            }
+          />
+        </section>
+
+        <aside className={styles.rail}>
+          <OrganizationPulse
+            confidence={confidence}
+            meaningfulChangeCount={
+              communication.meaningfulChanges.length
+            }
+          />
+
+          <LivingUnderstanding />
+
+          <AskDiscovery />
+        </aside>
+
+        <div className={styles.fullWidth}>
+          <WhatChanged
+            changes={
+              communication.meaningfulChanges
+            }
+          />
         </div>
-
-        <div className="executive-v3-conclusion">
-          <p className="executive-v3-eyebrow">
-            Discovery currently believes
-          </p>
-
-          <h1>
-            {communication.headline}
-          </h1>
-
-          <p className="executive-v3-summary">
-            {communication.executiveSummary}
-          </p>
-
-          <div className="executive-v3-confidence">
-            <strong>
-              {toPercentage(
-                communication.confidence.value,
-              )}
-              %
-            </strong>
-
-            <span>
-              Confidence
-            </span>
-          </div>
-        </div>
-      </section>
-
-      <section className="executive-v3-summary-grid">
-        <article className="executive-v3-summary-card">
-          <p className="executive-v3-card-label">
-            1. Why Discovery believes this
-          </p>
-
-          <ul className="executive-v3-reason-list">
-            {communication.supportingSignals.length > 0 ? (
-              communication.supportingSignals.map(
-                (signal) => (
-                  <li key={signal.id}>
-                    <strong>
-                      {signal.statement}
-                    </strong>
-
-                    {signal.implication ? (
-                      <span>
-                        {signal.implication}
-                      </span>
-                    ) : null}
-                  </li>
-                ),
-              )
-            ) : (
-              <li>
-                Discovery is still forming the supporting explanation.
-              </li>
-            )}
-          </ul>
-        </article>
-
-        <article className="executive-v3-summary-card">
-          <p className="executive-v3-card-label">
-            2. What changed
-          </p>
-
-          <div className="executive-v3-change-list">
-            {communication.meaningfulChanges.length > 0 ? (
-              communication.meaningfulChanges.map(
-                (change) => (
-                  <div
-                    key={change.entityId}
-                    className={`executive-v3-change is-${change.direction}`}
-                  >
-                    <span
-                      className="executive-v3-change-symbol"
-                      aria-hidden="true"
-                    >
-                      {directionSymbol(
-                        change.direction,
-                      )}
-                    </span>
-
-                    <span>
-                      <strong>
-                        {change.label}
-                      </strong>
-
-                      <small>
-                        {change.statement}
-                      </small>
-                    </span>
-                  </div>
-                ),
-              )
-            ) : (
-              <p>
-                No material change detected.
-              </p>
-            )}
-          </div>
-        </article>
-
-        <article className="executive-v3-summary-card">
-          <p className="executive-v3-card-label">
-            3. What happens next
-          </p>
-
-          <h2>
-            {communication.forecast.headline}
-          </h2>
-
-          <div className="executive-v3-forecast-confidence">
-            <strong>
-              {toPercentage(
-                communication.forecast.confidence,
-              )}
-              %
-            </strong>
-
-            <span>
-              Forecast confidence
-            </span>
-          </div>
-
-          {communication.forecast.explanation ? (
-            <p>
-              {communication.forecast.explanation}
-            </p>
-          ) : null}
-        </article>
-
-        <article className="executive-v3-summary-card executive-v3-recommendation-card">
-          <p className="executive-v3-card-label">
-            4. What should we do?
-          </p>
-
-          <h2>
-            {communication.recommendation.headline}
-          </h2>
-
-          {communication.recommendation.actions.length > 0 ? (
-            <ul className="executive-v3-action-list">
-              {communication.recommendation.actions.map(
-                (action) => (
-                  <li key={action}>
-                    {action}
-                  </li>
-                ),
-              )}
-            </ul>
-          ) : null}
-
-          {communication.recommendation.rationale ? (
-            <p>
-              {communication.recommendation.rationale}
-            </p>
-          ) : null}
-
-          {communication.uncertainty?.recommendedInvestigation ? (
-            <div className="executive-v3-investigation">
-              <span>
-                Recommended investigation
-              </span>
-
-              <strong>
-                {
-                  communication
-                    .uncertainty
-                    .recommendedInvestigation
-                }
-              </strong>
-            </div>
-          ) : null}
-
-          {communication.recommendation.decisionHref ? (
-            <a
-              className="executive-v3-decision-link"
-              href={
-                communication
-                  .recommendation
-                  .decisionHref
-              }
-            >
-              Evaluate recommended actions
-              <span aria-hidden="true">
-                →
-              </span>
-            </a>
-          ) : null}
-        </article>
-      </section>
+      </div>
     </main>
   );
 }

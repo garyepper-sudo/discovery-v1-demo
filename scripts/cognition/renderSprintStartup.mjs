@@ -3,6 +3,13 @@ import path from "path";
 
 const PROJECT_ROOT = process.cwd();
 
+const PRODUCT_STATE_PATH = path.join(
+  PROJECT_ROOT,
+  "docs",
+  "Product",
+  "PRODUCT_STATE.md",
+);
+
 const ARCHITECTURE_STATE_PATH = path.join(
   PROJECT_ROOT,
   "docs",
@@ -16,6 +23,21 @@ const ARCHITECTURE_RECOMMENDATION_PROJECTION_PATH = path.join(
   "Architecture",
   "ARCHITECTURE_RECOMMENDATION_PROJECTION.json",
 );
+
+function loadRequiredMarkdown(
+  filePath,
+  label,
+) {
+  if (!fs.existsSync(filePath)) {
+    throw new Error(
+      `${label} not found: ${filePath}`,
+    );
+  }
+
+  return fs
+    .readFileSync(filePath, "utf8")
+    .trim();
+}
 
 function loadArchitectureState() {
   if (!fs.existsSync(ARCHITECTURE_STATE_PATH)) {
@@ -107,6 +129,102 @@ function printMetric(label, value) {
   console.log(`${normalizedLabel} ${dots} ${value}`);
 }
 
+function extractMarkdownSection(
+  markdown,
+  heading,
+) {
+  const pattern = new RegExp(
+    `^# ${heading}\\s*$([\\s\\S]*?)(?=^# |\\Z)`,
+    "m",
+  );
+
+  const match = markdown.match(pattern);
+
+  return match?.[1]?.trim() ?? "";
+}
+
+function stripMarkdown(value) {
+  return value
+    .replace(/\*\*/g, "")
+    .replace(/^[-*]\s+/gm, "• ")
+    .replace(/^```(?:text)?\s*$/gm, "")
+    .replace(/^```\s*$/gm, "")
+    .replace(/^---$/gm, "")
+    .trim();
+}
+
+function printProductState(
+  productState,
+) {
+  const identity = stripMarkdown(
+    extractMarkdownSection(
+      productState,
+      "Product Identity",
+    ),
+  );
+
+  const currentMvp = stripMarkdown(
+    extractMarkdownSection(
+      productState,
+      "Current MVP",
+    ),
+  );
+
+  const currentFocus = stripMarkdown(
+    extractMarkdownSection(
+      productState,
+      "Current Product Focus",
+    ),
+  );
+
+  const validationGoal = stripMarkdown(
+    extractMarkdownSection(
+      productState,
+      "Current Validation Goal",
+    ),
+  );
+
+  const principles = stripMarkdown(
+    extractMarkdownSection(
+      productState,
+      "Current Product Principles",
+    ),
+  );
+
+  console.log("DISCOVERY PRODUCT");
+  console.log("");
+
+  console.log("Identity");
+  console.log(
+    truncate(identity, 420),
+  );
+  console.log("");
+
+  console.log("Current MVP");
+  console.log(
+    truncate(currentMvp, 700),
+  );
+  console.log("");
+
+  console.log("Current Focus");
+  console.log(
+    truncate(currentFocus, 500),
+  );
+  console.log("");
+
+  console.log("Validation Objective");
+  console.log(
+    truncate(validationGoal, 500),
+  );
+  console.log("");
+
+  console.log("Product Principles");
+  console.log(
+    truncate(principles, 420),
+  );
+  console.log("");
+}
+
 function printSprintReadiness(state) {
   const health =
     state.architecture?.healthScore ?? 0;
@@ -150,22 +268,38 @@ function printSprintReadiness(state) {
   return ready;
 }
 
-function printExecutiveSummary(state, ready) {
+function printExecutiveSummary(
+  state,
+  ready,
+) {
   const project = state.project ?? {};
 
   console.log("EXECUTIVE SUMMARY");
   console.log("");
 
   console.log(
-    ready
-      ? "Discovery's architecture is healthy and ready for the next implementation step."
-      : "Discovery requires architecture review before implementation continues.",
+    "Discovery is currently validating the Executive Decision Workspace.",
   );
 
+  console.log("");
+
+  console.log(
+    "Architecture is stable.",
+  );
+
+  console.log(
+    "The current objective is validating one complete executive decision workflow before expanding the platform.",
+  );
+
+  console.log("");
+
   if (project.nextPriority) {
-    console.log("");
+    console.log("Highest Priority");
     console.log(
-      truncate(project.nextPriority, 320),
+      truncate(
+        project.nextPriority,
+        280,
+      ),
     );
   }
 
@@ -189,7 +323,7 @@ function capabilityNamesById(state, capabilityIds) {
 function printProjectState(state) {
   const project = state.project ?? {};
 
-  console.log("CURRENT PROJECT STATE");
+  console.log("CURRENT IMPLEMENTATION");
   console.log("");
 
   console.log("Milestone");
@@ -528,7 +662,7 @@ function printRecommendation(
     sprintBrief?.reason ??
     recommendations.reason;
 
-  console.log("HIGHEST-ROI NEXT WORK");
+  console.log("ARCHITECTURAL RECOMMENDATION");
   console.log("");
 
   console.log(
@@ -626,7 +760,14 @@ function printStartupDocuments(state) {
 }
 
 function renderSprintStartup() {
-  const state = loadArchitectureState();
+  const productState =
+  loadRequiredMarkdown(
+    PRODUCT_STATE_PATH,
+    "Product state",
+  );
+
+  const state =
+    loadArchitectureState();
 
   const architectureRecommendationProjection =
     loadArchitectureRecommendationProjection();
@@ -646,10 +787,15 @@ function renderSprintStartup() {
   console.log("");
 
   printRule();
-  console.log("");
+console.log("");
 
-  const ready =
-    printSprintReadiness(state);
+printProductState(productState);
+
+printRule();
+console.log("");
+
+const ready =
+  printSprintReadiness(state);
 
   printRule();
   console.log("");

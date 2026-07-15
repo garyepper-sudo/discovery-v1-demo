@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-14T19:23:38.398Z",
+    "generatedAt": "2026-07-15T16:46:24.098Z",
     "generator": "scripts/cognition/generateArchitectureState.mjs",
     "sourceOfTruthOrder": [
       "Verified source code",
@@ -13,11 +13,11 @@
     ]
   },
   "project": {
-    "currentMilestone": "Executive Intelligence and Executive Communication\n\n---",
-    "currentPhase": "Discovery's cognitive architecture is considered stable.\n\nFuture work should primarily improve:\n\n- executive communication quality\n- executive experience\n- decision experience\n- simulation quality\n- recommendation quality\n\nPrefer improving canonical cognition over introducing new architectural layers.\n\n------------------------------------------------------------------------",
-    "currentObjective": "Complete the Executive Experience.\n\nDiscovery should become progressively better at answering:\n\n- What is happening?\n- Why is it happening?\n- Why does it matter?\n- What is likely to happen?\n- Which intervention should leadership choose?\n- How would each intervention change the organization?\n- How do multiple futures compare?\n- What executive recommendation should Discovery make?\n- What uncertainty remains?\n- What evidence could change Discovery's recommendation?\n\nEvery capability should continue to belong to exactly one:\n\n\n\nEvery cognitive object should continue to follow the canonical lifecycle:\n\n\n\nCanonical cognition should always be reused rather than recreated.\n\n---",
+    "currentMilestone": "Executive Decision Workspace and Decision Intelligence\n\n---",
+    "currentPhase": "Discovery has completed its first-generation reasoning architecture.\n\nThe current bottleneck is no longer cognition.\n\nThe bottleneck is product.\n\nCurrent priorities are:\n\n- Executive Decision Workspace\n- Decision Confidence\n- Collaborative Simulation\n- Executive Decision Object\n- Board-ready Decision Reports\n- Customer Validation\n\nFuture work should improve executive decision quality rather than expand architecture.\n\n---",
+    "currentObjective": "Validate one complete executive decision workflow.\n\nDiscovery should become progressively better at helping executives:\n\n- understand complex situations,\n- challenge assumptions,\n- explore alternatives,\n- improve decision confidence,\n- make better decisions,\n- and continuously improve organizational judgment.\n\nCurrent development focuses on one complete workflow:\n\n\n\nEverything else is secondary until this workflow has been validated.\n\n---",
     "currentSprint": null,
-    "nextPriority": "Primary Objective\n\nExecutive Experience V3\n\nTasks\n\n1. Replace remaining V2 presentation with V3.\n2. Consume Executive Communication throughout the Executive Workspace.\n3. Surface Executive Decision capabilities inside the Executive Experience.\n4. Improve executive narrative quality.\n5. Continue benchmarking Executive Communication.\n\n------------------------------------------------------------------------",
+    "nextPriority": null,
     "sourceDocuments": [
       "DISCOVERY_SNAPSHOT.md",
       "ENGINE_CAPABILITY_AUDIT.md",

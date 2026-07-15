@@ -10,6 +10,10 @@ import type {
   ExecutiveProjection,
 } from "./projection/ExecutiveProjection";
 
+import type {
+  ExecutiveWorkspaceMode,
+} from "../executive-v3/ExecutiveWorkspaceMode";
+
 type ExecutiveExperienceProps = {
   projection: ExecutiveProjection;
 
@@ -18,6 +22,11 @@ type ExecutiveExperienceProps = {
    * Executive Communication producer.
    */
   organizationId?: string;
+
+  /**
+   * Active V3 workspace perspective.
+   */
+  mode: ExecutiveWorkspaceMode;
 
   /**
    * Preserved for compatibility with existing callers.
@@ -35,6 +44,7 @@ type ExecutiveExperienceProps = {
 export default function ExecutiveExperience({
   projection,
   organizationId = "default-organization",
+  mode,
 }: ExecutiveExperienceProps) {
   const communication =
     synthesizeExecutiveCommunication({
@@ -45,6 +55,7 @@ export default function ExecutiveExperience({
   return (
     <ExecutiveWorkspace
       communication={communication}
+      mode={mode}
     />
   );
 }

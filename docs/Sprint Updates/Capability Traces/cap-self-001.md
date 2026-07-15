@@ -1,6 +1,6 @@
 # Capability Trace — Theory Validation
 
-Generated: 2026-07-14T19:23:38.014Z
+Generated: 2026-07-15T16:46:23.743Z
 
 ## Verified Architecture
 
@@ -67,7 +67,6 @@ Review these files to determine whether they should be registered as consumers, 
 - `components/executive-v2/capabilities/ExecutiveCapabilityRegistry.tsx`
 - `components/executive-v2/projection/ExecutiveProjection.ts`
 - `components/executive-v2/projection/buildExecutiveProjection.ts`
-- `components/executive-v3/ExecutiveWorkspaceV3.tsx`
 - `components/executive-v3/projection/buildExecutiveBriefingProjection.ts`
 - `components/executive-v3/projection/buildExecutiveNarrative.ts`
 - `engine/benchmark/benchmarkReporter.ts`
@@ -114,7 +113,7 @@ This section records source-code references. It supplements, but does not replac
 | Runtime | ❌ Not found | 0 |
 | Executive | ❌ Not found | 0 |
 | Projection | ✅ Found | 29 |
-| UI | ✅ Found | 16 |
+| UI | ✅ Found | 14 |
 | API | ❌ Not found | 0 |
 | Simulation | ❌ Not found | 0 |
 | Benchmark | ✅ Found | 112 |
@@ -355,13 +354,6 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 20 · **unknown** · matched `CAP-SELF-001`
   - `\| "CAP-SELF-001"`
-
-##### `components/executive-v3/ExecutiveWorkspaceV3.tsx`
-
-- Line 184 · **read** · matched `theoryValidation`
-  - `?.theoryValidation`
-- Line 292 · **read** · matched `theoryValidation`
-  - `?.theoryValidation`
 
 #### Benchmark
 

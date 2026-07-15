@@ -1,0 +1,64 @@
+.ask {
+  padding: 24px;
+  border: 1px solid var(--ds-border);
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-surface);
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  color: var(--ds-gold);
+  font-size: 0.7rem;
+  font-weight: 750;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.ask h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.input {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.input input {
+  min-width: 0;
+  border: 1px solid var(--ds-border);
+  border-radius: 10px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.22);
+  color: var(--ds-text);
+}
+
+.input button {
+  border: 0;
+  border-radius: 10px;
+  padding-inline: 16px;
+  background: var(--ds-gold);
+  color: #080806;
+  font-weight: 700;
+}
+
+.suggestions {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.suggestions button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: rgba(245, 245, 245, 0.46);
+  font-size: 0.76rem;
+  text-align: left;
+}

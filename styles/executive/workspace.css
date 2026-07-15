@@ -433,7 +433,7 @@
   justify-content: space-between;
   gap: 24px;
 
-  padding: 0 34px;
+  padding: 0 32px;
 
   border-bottom: 1px solid var(--workspace-line);
 
@@ -501,11 +501,9 @@
 }
 
 .executive-workspace-content {
-  width: min(1500px, 100%);
-
-  margin: 0 auto;
-
-  padding: 24px 28px 34px;
+  width: 100%;
+  min-width: 0;
+  padding: 24px 32px 40px;
 }
 
 /* =====================================================

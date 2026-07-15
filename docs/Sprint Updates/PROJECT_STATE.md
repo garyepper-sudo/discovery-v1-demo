@@ -1,33 +1,32 @@
 # Current Milestone
 
-**Executive Intelligence and Executive Communication**
+**Executive Decision Workspace and Decision Intelligence**
 
 ---
 
 # Current Development Phase
 
-**Executive Intelligence, Executive Communication, and Executive Experience**
+**Executive Decision Intelligence, Executive Experience, and Product Validation**
 
 Discovery has completed the first generation of its Cognitive Operating System and established a stable canonical cognitive architecture.
 
-The primary architectural work is complete.
+The core reasoning architecture is complete.
 
-Discovery now possesses a complete reasoning pipeline capable of transforming organizational evidence into:
+Discovery now possesses a complete cognitive pipeline capable of transforming organizational evidence into:
 
 - organizational understanding,
 - executive assessment,
 - organizational prediction,
-- prediction reflection,
-- adaptive learning,
+- adaptive organizational learning,
 - executive decision modeling,
 - intervention generation,
 - organizational causal reasoning,
 - organizational simulation,
-- simulation scenario construction,
 - scenario comparison,
 - executive recommendations,
 - executive narrative,
-- and executive communication.
+- executive communication,
+- and executive decision support.
 
 Discovery now possesses canonical implementations for:
 
@@ -35,26 +34,13 @@ Discovery now possesses canonical implementations for:
 - Cognitive Object Model
 - Cognitive Flow Map
 - Capability Registry
-- Capability Trace System
 - Runtime Persistence
 - Organizational Understanding
 - Organizational Prediction
-- Prediction Reflection
-- Prediction Outcome Evaluation
-- Organizational Learning Profile
+- Organizational Learning
 - Organizational Causal Model
 - Executive Decision
-- Intervention Option Generation
-- Organizational Intervention
-- Intervention Mapping
-- Organizational Influence Propagation
-- Organizational Influence Aggregation
-- Condition Evolution
-- Organizational State Synthesis
 - Organizational Simulation
-- Simulation Scenario
-- Scenario Comparison
-- Executive Scenario Orchestrator
 - Executive Assessment
 - Executive Projection
 - Executive Narrative
@@ -69,129 +55,110 @@ Architecture Health
 - **Decision Ranking benchmark (9 / 9)**
 - **Executive Decision Cycle benchmark (9 / 9)**
 
-Simulation is no longer a separate reasoning engine.
+The architecture is no longer the primary constraint.
 
-Simulation modifies organizational state.
+The primary challenge has shifted from producing executive intelligence to creating an executive product that organizations naturally use to improve important decisions.
 
-Canonical cognition interprets both the current organization and projected future organizations through the same Executive Assessment and Organizational Understanding pipeline.
-
-Executive Communication is now a canonical Operating System responsible for translating canonical cognition into executive-ready communication.
-
-The remaining work is primarily **executive experience, communication quality, recommendation quality, intervention ranking, scenario evaluation, and longitudinal learning**, not architecture expansion.
+Discovery has entered product validation.
 
 ---
 
 # Current Objective
 
-Complete the Executive Experience.
+Validate one complete executive decision workflow.
 
-Discovery should become progressively better at answering:
+Discovery should become progressively better at helping executives:
 
-- What is happening?
-- Why is it happening?
-- Why does it matter?
-- What is likely to happen?
-- Which intervention should leadership choose?
-- How would each intervention change the organization?
-- How do multiple futures compare?
-- What executive recommendation should Discovery make?
-- What uncertainty remains?
-- What evidence could change Discovery's recommendation?
+- understand complex situations,
+- challenge assumptions,
+- explore alternatives,
+- improve decision confidence,
+- make better decisions,
+- and continuously improve organizational judgment.
 
-Every capability should continue to belong to exactly one:
+Current development focuses on one complete workflow:
 
 ```text
-Operating System
+Question
 
 ↓
 
-Subsystem
+Current Understanding
 
 ↓
 
-Capability
+Recommendation
 
 ↓
 
-Cognitive Object
+Challenge
 
 ↓
 
-Canonical Producer
+Simulation
 
 ↓
 
-Implementation
+Improve Confidence
+
+↓
+
+Executive Decision
+
+↓
+
+Decision Report
 ```
 
-Every cognitive object should continue to follow the canonical lifecycle:
+Everything else is secondary until this workflow has been validated.
 
-```text
-Canonical Producer
+---
 
-↓
+# Current Product Direction
 
-Runtime
+Discovery is no longer being optimized as an Executive Dashboard.
 
-↓
+Discovery is becoming an Executive Decision Workspace.
 
-Persistent Memory
+Discovery does not replace executive judgment.
 
-↓
+Discovery improves it.
 
-Executive Projection
-
-↓
-
-Executive Narrative
-
-↓
-
-Executive Communication
-
-↓
-
-Executive Experience
-
-↓
-
-Atlas Validation
-
-↓
-
-Longitudinal Learning
-```
-
-Canonical cognition should always be reused rather than recreated.
+The current objective is to create a product that executive teams naturally use before making important decisions.
 
 ---
 
 # Current Sequence
 
-1. Complete Executive Experience V3.
-2. Consume Executive Communication throughout the Executive Workspace.
-3. Surface Executive Decision capabilities.
-4. Improve executive narrative quality.
-5. Improve executive recommendation quality.
-6. Produce board-ready executive communication.
-7. Validate intervention outcomes longitudinally.
-8. Learn Organizational Laws from repeated intervention outcomes.
-9. Improve reasoning quality rather than expanding architecture.
+1. Complete Executive Decision Workspace V3.
+2. Connect Executive Communication throughout the Decision Workspace.
+3. Implement the canonical Decision object.
+4. Implement Decision Confidence.
+5. Implement collaborative simulation.
+6. Implement Executive Decision capture.
+7. Produce board-ready decision reports.
+8. Implement Decision Reviews.
+9. Begin longitudinal organizational learning.
+
+Future capabilities should strengthen this workflow rather than expand the architecture.
 
 ---
 
 # Recent Changes
 
 - Completed Executive Communication Operating System.
-- Implemented Executive Narrative synthesis.
-- Implemented Executive Communication synthesis.
+- Completed Executive Narrative synthesis.
 - Established the canonical Executive Communication pipeline.
-- Registered CAP-COM-001 Executive Communication Synthesis.
-- Expanded the Capability Registry to 26 canonical capabilities.
-- Benchmarked Executive Communication (13 / 13).
-- Maintained 100% Architecture Health.
-- Maintained 0 TypeScript errors.
-- Preserved benchmark integrity.
+- Achieved 100% Architecture Health.
+- Introduced the Product Canon.
+- Established the Executive Decision Workspace vision.
+- Defined the canonical Decision object.
+- Defined Discovery's Product Principles.
+- Defined the Product Flywheel.
+- Defined the Trust Framework.
+- Defined the Decision Confidence model.
+- Defined the onboarding strategy.
+- Shifted product philosophy from Organizational Understanding to Executive Decision Improvement.
 
 ---
 
@@ -201,201 +168,87 @@ Discovery has entered a new phase.
 
 The primary bottleneck is no longer:
 
-- architecture discovery,
-- operating system expansion,
+- architecture,
+- cognition,
+- simulation,
 - capability ownership,
-- prediction generation,
-- intervention modeling,
-- simulation architecture,
-- or canonical reasoning.
+- reasoning,
+- or executive communication.
 
 The primary bottleneck is now:
 
-> **Can Discovery communicate its completed Executive Intelligence through a compelling executive experience while continuously improving recommendation quality and communication quality through accumulated organizational learning?**
+> **Can Discovery consistently improve the quality of important executive decisions while earning executive trust?**
 
-Atlas remains the canonical validation engine.
+Architecture should now evolve in service of the product.
 
-Executive Projection remains the canonical organizational projection layer.
+Product validation should drive future architecture expansion.
 
-Executive Narrative synthesizes executive understanding.
-
-Executive Communication communicates canonical cognition.
-
-Executive Experience presents Executive Communication.
-
-Simulation modifies organizational state.
-
-Canonical cognition interprets organizational state.
-
-Future improvements should strengthen existing canonical producers rather than introducing parallel reasoning systems.
+Customer behavior—not internal brainstorming—should determine future product evolution.
 
 ---
 
-# Canonical Cognitive Flow
+# Canonical Product Flow
 
 ```text
-Evidence
+Question
 
 ↓
 
-Observations
+Understanding
 
 ↓
 
-Mechanisms
+Recommendation
 
 ↓
 
-Beliefs
+Challenge
 
 ↓
 
-Concepts
+Simulation
 
 ↓
 
-Theories
+Improve Confidence
 
 ↓
 
-Organizational Conditions
-
-↓
-
-Organizational State
-
-↓
-
-Organizational Predictions
-
-↓
-
-Prediction Reflection
-
-↓
-
-Executive Assessment
-
-↓
-
-Organizational Understanding
-```
-
-Executive Decision Intelligence
-
-```text
 Executive Decision
 
 ↓
 
-Intervention Options
+Review
 
 ↓
 
-Selected Intervention
-
-↓
-
-Intervention Mapping
-
-↓
-
-Organizational Causal Model
-
-↓
-
-Causal Propagation
-
-↓
-
-Influence Aggregation
-
-↓
-
-Condition Evolution
-
-↓
-
-Future Organizational Conditions
-
-↓
-
-Canonical Organizational State
-
-↓
-
-Canonical Prediction Engine
-
-↓
-
-Prediction Reflection
-
-↓
-
-Executive Assessment
-
-↓
-
-Organizational Understanding
-
-↓
-
-Simulation Scenario
-
-↓
-
-Scenario Comparison
-
-↓
-
-Executive Recommendation
+Learning
 ```
 
-Executive Communication
+Discovery should organize itself around Decisions rather than pages.
 
-```text
-Executive Projection
-
-↓
-
-Executive Narrative
-
-↓
-
-Executive Communication
-
-↓
-
-Executive Experience
-```
-
-Organizational Understanding explains the present.
-
-Prediction explains the future.
-
-Simulation modifies the future.
-
-Executive Communication communicates canonical cognition.
+Every page should become another perspective on the current Decision.
 
 ---
 
 # Current Priority
 
-Complete Executive Experience V3.
+Complete the Executive Decision Workspace.
 
-Priority work now includes:
+Priority work includes:
 
-- Executive Communication integration.
-- Executive Workspace V3.
-- Executive Decision Workspace.
-- Decision scenario presentation.
-- Executive recommendation quality.
-- Executive communication quality.
-- Board-ready communication.
-- Intervention outcome learning.
-- Organizational Law validation.
+- Decision Workspace V3
+- Executive Communication integration
+- Decision Confidence
+- Collaborative Simulation
+- Executive Decision object
+- Board-ready Decision Reports
+- Decision Reviews
+- Organizational Learning
 
-Architecture expansion is no longer a priority.
+The objective is no longer building additional reasoning systems.
+
+The objective is validating a complete executive decision workflow.
 
 ---
 
@@ -403,50 +256,44 @@ Architecture expansion is no longer a priority.
 
 Before implementing anything ask:
 
-1. Which Operating System owns it?
-2. Which capability owns it?
-3. Which cognitive object does it produce?
-4. Is there already a canonical producer?
-5. Does Runtime persist it?
-6. Does Executive Projection organize it?
-7. Does Executive Communication communicate it?
-8. Is it benchmarked?
-9. Does it improve reasoning quality?
-10. Does it improve executive communication quality?
-11. Can an existing canonical producer be extended?
+1. Does this improve executive understanding?
+2. Does this improve decision confidence?
+3. Does this improve decision quality?
+4. Does this improve future decisions?
+5. Does this strengthen the canonical Decision workflow?
+6. Does an existing canonical producer already support this?
+7. Can an existing capability be extended?
+8. Does this strengthen executive trust?
+9. Does this improve organizational learning?
 
-If the answer is yes, extend the canonical producer.
+If the answer is yes, extend the existing canonical architecture.
 
-If not, justify creating a new capability.
+If not, justify why a new capability is required.
 
 ---
 
-> **Architecture before implementation.**
+> **Product before implementation.**
 
-> **Objects before code.**
+> **Architecture serves the product.**
 
-> **Capabilities before files.**
+> **Discovery improves executive thinking before executive decisions.**
 
-> **Reasoning before communication.**
+> **Executives own decisions. Discovery improves judgment.**
 
-> **Communication before presentation.**
+> **Trust is Discovery's most valuable product feature.**
 
-> **Improve canonical producers before introducing new reasoning.**
+> **Every completed decision should improve the next decision.**
 
-> **Runtime persists canonical cognition.**
+> **Discovery earns additional information. It never demands it.**
 
-> **Executive Projection organizes canonical cognition.**
+> **Every recommendation should explain itself.**
 
-> **Executive Communication communicates canonical cognition.**
+> **Every uncertainty should recommend its highest-value validation.**
 
-> **Simulation changes organizational state, not reasoning.**
+> **Measure executive behavior—not feature completion.**
 
-> **Executive Assessment integrates cognition rather than recreating it.**
+> **Validate product hypotheses before expanding architecture.**
 
-> **Every cognitive object has one canonical producer.**
+> **The Decision is the canonical product object.**
 
-> **Atlas validates reasoning quality.**
-
-> **Benchmark reasoning and communication—not implementation.**
-
-> **Executive Intelligence should improve through longitudinal learning rather than handcrafted heuristics.**
+> **Every interaction should improve organizational judgment.**

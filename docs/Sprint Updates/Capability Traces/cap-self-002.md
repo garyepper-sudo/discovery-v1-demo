@@ -1,6 +1,6 @@
 # Capability Trace — Investigation Opportunity Generation
 
-Generated: 2026-07-14T19:23:38.283Z
+Generated: 2026-07-15T16:46:23.986Z
 
 ## Verified Architecture
 
@@ -67,7 +67,6 @@ Review these files to determine whether they should be registered as consumers, 
 - `components/executive-v2/investigations/ExecutiveInvestigationOpportunities.tsx`
 - `components/executive-v2/projection/ExecutiveProjection.ts`
 - `components/executive-v2/projection/buildExecutiveProjection.ts`
-- `components/executive-v3/ExecutiveWorkspaceV3.tsx`
 - `components/executive-v3/projection/buildExecutiveBriefingProjection.ts`
 - `components/executive-v3/projection/buildExecutiveNarrative.ts`
 - `engine/benchmark/executive-communication/executiveCommunicationExperiment001.ts`
@@ -113,7 +112,7 @@ This section records source-code references. It supplements, but does not replac
 | Runtime | ✅ Found | 12 |
 | Executive | ❌ Not found | 0 |
 | Projection | ✅ Found | 10 |
-| UI | ✅ Found | 22 |
+| UI | ✅ Found | 21 |
 | API | ❌ Not found | 0 |
 | Simulation | ✅ Found | 4 |
 | Benchmark | ✅ Found | 1 |
@@ -311,11 +310,6 @@ This section records source-code references. It supplements, but does not replac
   - `export default function ExecutiveInvestigationOpportunities({`
 - Line 9 · **unknown** · matched `investigationOpportunities`
   - `}: ExecutiveInvestigationOpportunitiesProps) {`
-
-##### `components/executive-v3/ExecutiveWorkspaceV3.tsx`
-
-- Line 152 · **read** · matched `investigationOpportunities`
-  - `.investigationOpportunities?.[0];`
 
 #### Simulation
 

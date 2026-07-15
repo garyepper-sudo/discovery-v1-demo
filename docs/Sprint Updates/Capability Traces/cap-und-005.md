@@ -1,6 +1,6 @@
 # Capability Trace — Executive Assessment
 
-Generated: 2026-07-14T19:23:37.204Z
+Generated: 2026-07-15T16:46:22.935Z
 
 ## Verified Architecture
 
@@ -74,7 +74,6 @@ Review these files to determine whether they should be registered as consumers, 
 - `components/executive-v2/projection/ExecutiveScenarioProjection.ts`
 - `components/executive-v2/projection/buildExecutiveProjection.ts`
 - `components/executive-v2/projection/buildExecutiveScenarioProjection.ts`
-- `components/executive-v3/ExecutiveWorkspaceV3.tsx`
 - `components/executive-v3/projection/buildExecutiveBriefingProjection.ts`
 - `components/executive-v3/projection/buildExecutiveNarrative.ts`
 - `engine/benchmark/auditCapability.ts`
@@ -136,7 +135,7 @@ This section records source-code references. It supplements, but does not replac
 | Runtime | ✅ Found | 15 |
 | Executive | ✅ Found | 9 |
 | Projection | ✅ Found | 42 |
-| UI | ✅ Found | 32 |
+| UI | ✅ Found | 27 |
 | API | ❌ Not found | 0 |
 | Simulation | ✅ Found | 21 |
 | Benchmark | ✅ Found | 56 |
@@ -483,19 +482,6 @@ This section records source-code references. It supplements, but does not replac
   - `<ExecutiveAssessmentCard`
 - Line 29 · **read** · matched `executiveAssessment`
   - `assessment={projection.executiveAssessment}`
-
-##### `components/executive-v3/ExecutiveWorkspaceV3.tsx`
-
-- Line 165 · **read** · matched `executiveAssessment`
-  - `.executiveAssessment`
-- Line 183 · **read** · matched `executiveAssessment`
-  - `.executiveAssessment`
-- Line 241 · **read** · matched `executiveAssessment`
-  - `.executiveAssessment,`
-- Line 291 · **read** · matched `executiveAssessment`
-  - `.executiveAssessment`
-- Line 580 · **read** · matched `executiveAssessment`
-  - `.executiveAssessment`
 
 #### Simulation
 
