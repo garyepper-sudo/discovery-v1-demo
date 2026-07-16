@@ -1,11 +1,29 @@
-import type { ExecutiveDecision } from "../model/simulate/executiveDecision";
-import type { InterventionOption } from "../model/simulate/interventionOption";
+import {
+  evaluateInterventionConstraints,
+} from "../decisions/evaluateInterventionConstraints";
+
+import type {
+  ExecutiveDecision,
+} from "../model/simulate/executiveDecision";
+
+import type {
+  InterventionOption,
+} from "../model/simulate/interventionOption";
 
 export type GenerateInterventionOptionsInput = {
   executiveDecision: ExecutiveDecision;
 
   generatedAt?: string;
 };
+
+type InterventionOptionInput =
+  Omit<
+    InterventionOption,
+    | "executiveDecisionId"
+    | "organizationId"
+    | "constraintEvaluations"
+    | "createdAt"
+  >;
 
 function createOptionId(
   executiveDecisionId: string,
@@ -20,231 +38,266 @@ function createOptionId(
 
 function allows(
   executiveDecision: ExecutiveDecision,
-  interventionType: InterventionOption["type"],
+  interventionType:
+    InterventionOption["type"],
 ): boolean {
-  return executiveDecision.allowedInterventionTypes.includes(
-    interventionType,
-  );
+  return executiveDecision
+    .allowedInterventionTypes
+    .includes(
+      interventionType,
+    );
+}
+
+function createOption(
+  executiveDecision:
+    ExecutiveDecision,
+
+  input:
+    InterventionOptionInput,
+
+  createdAt:
+    string,
+): InterventionOption {
+  const option:
+    InterventionOption = {
+      ...input,
+
+      executiveDecisionId:
+        executiveDecision.id,
+
+      organizationId:
+        executiveDecision.organizationId,
+
+      constraintEvaluations: [],
+
+      createdAt,
+    };
+
+  option.constraintEvaluations =
+    evaluateInterventionConstraints({
+      executiveDecision,
+      option,
+    });
+
+  return option;
 }
 
 export function generateInterventionOptions({
   executiveDecision,
-  generatedAt = new Date().toISOString(),
+  generatedAt =
+    new Date().toISOString(),
 }: GenerateInterventionOptionsInput): InterventionOption[] {
-  const options: InterventionOption[] = [];
+  const options:
+    InterventionOption[] = [];
 
   const targetsExecution =
-    executiveDecision.targetConditionIds.includes(
-      "condition-executioncapacity",
-    );
+    executiveDecision
+      .targetConditionIds
+      .includes(
+        "condition-executioncapacity",
+      );
 
   if (!targetsExecution) {
     return options;
   }
 
-  if (allows(executiveDecision, "governance")) {
-    options.push({
-      id: createOptionId(
-        executiveDecision.id,
-        "remove-approval-layer",
-      ),
+  if (
+    allows(
+      executiveDecision,
+      "governance",
+    )
+  ) {
+    options.push(
+      createOption(
+        executiveDecision,
+        {
+          id:
+            createOptionId(
+              executiveDecision.id,
+              "remove-approval-layer",
+            ),
 
-      executiveDecisionId:
-        executiveDecision.id,
+          type:
+            "governance",
 
-      organizationId:
-        executiveDecision.organizationId,
+          title:
+            "Remove one approval layer",
 
-      type:
-        "governance",
+          description:
+            "Allow routine operating decisions to proceed without an additional leadership approval.",
 
-      title:
-        "Remove one approval layer",
+          rationale:
+            "Reducing avoidable approval dependency may improve decision flow, coordination, and execution throughput.",
 
-      description:
-        "Allow routine operating decisions to proceed without an additional leadership approval.",
+          scope:
+            "organization",
 
-      rationale:
-        "Reducing avoidable approval dependency may improve decision flow, coordination, and execution throughput.",
+          timeHorizon:
+            executiveDecision
+              .timeHorizon,
 
-      scope:
-        "organization",
+          targetConditionIds: [
+            "condition-decisionflow",
+            "condition-executioncapacity",
+          ],
 
-      timeHorizon:
-        executiveDecision.timeHorizon,
+          expectedMechanismIds: [
+            "decisionLatency",
+            "governanceFriction",
+          ],
 
-      targetConditionIds: [
-        "condition-decisionflow",
-        "condition-executioncapacity",
-      ],
+          assumptions: [
+            "Decision rights can be clarified.",
+            "Control requirements remain intact.",
+          ],
 
-      expectedMechanismIds: [
-        "decisionLatency",
-        "governanceFriction",
-      ],
+          risks: [
+            "Poorly defined authority could create inconsistent decisions.",
+          ],
 
-      satisfiedConstraintIndexes: [
-        0,
-      ],
+          missingEvidence: [
+            "Current approval workflow",
+            "Decision latency by approval stage",
+          ],
 
-      unresolvedConstraintIndexes: [],
-
-      assumptions: [
-        "Decision rights can be clarified.",
-        "Control requirements remain intact.",
-      ],
-
-      risks: [
-        "Poorly defined authority could create inconsistent decisions.",
-      ],
-
-      missingEvidence: [
-        "Current approval workflow",
-        "Decision latency by approval stage",
-      ],
-
-      confidence:
-        0.82,
-
-      createdAt:
+          confidence:
+            0.82,
+        },
         generatedAt,
-    });
+      ),
+    );
   }
 
-  if (allows(executiveDecision, "policy")) {
-    options.push({
-      id: createOptionId(
-        executiveDecision.id,
-        "clarify-decision-ownership",
-      ),
+  if (
+    allows(
+      executiveDecision,
+      "policy",
+    )
+  ) {
+    options.push(
+      createOption(
+        executiveDecision,
+        {
+          id:
+            createOptionId(
+              executiveDecision.id,
+              "clarify-decision-ownership",
+            ),
 
-      executiveDecisionId:
-        executiveDecision.id,
+          type:
+            "policy",
 
-      organizationId:
-        executiveDecision.organizationId,
+          title:
+            "Clarify decision ownership",
 
-      type:
-        "policy",
+          description:
+            "Define which roles own recurring operating decisions and when escalation is required.",
 
-      title:
-        "Clarify decision ownership",
+          rationale:
+            "Clear decision ownership may reduce ambiguity, waiting, and repeated escalation.",
 
-      description:
-        "Define which roles own recurring operating decisions and when escalation is required.",
+          scope:
+            "organization",
 
-      rationale:
-        "Clear decision ownership may reduce ambiguity, waiting, and repeated escalation.",
+          timeHorizon:
+            executiveDecision
+              .timeHorizon,
 
-      scope:
-        "organization",
+          targetConditionIds: [
+            "condition-decisionflow",
+            "condition-operatingmodel",
+          ],
 
-      timeHorizon:
-        executiveDecision.timeHorizon,
+          expectedMechanismIds: [
+            "accountabilityGap",
+            "decisionLatency",
+          ],
 
-      targetConditionIds: [
-        "condition-decisionflow",
-        "condition-operatingmodel",
-      ],
+          assumptions: [
+            "Leaders can agree on decision boundaries.",
+          ],
 
-      expectedMechanismIds: [
-        "accountabilityGap",
-        "decisionLatency",
-      ],
+          risks: [
+            "Ownership definitions may be ignored without reinforcement.",
+          ],
 
-      satisfiedConstraintIndexes: [
-        0,
-      ],
+          missingEvidence: [
+            "Current role definitions",
+            "Examples of repeated escalation",
+          ],
 
-      unresolvedConstraintIndexes: [],
-
-      assumptions: [
-        "Leaders can agree on decision boundaries.",
-      ],
-
-      risks: [
-        "Ownership definitions may be ignored without reinforcement.",
-      ],
-
-      missingEvidence: [
-        "Current role definitions",
-        "Examples of repeated escalation",
-      ],
-
-      confidence:
-        0.79,
-
-      createdAt:
+          confidence:
+            0.79,
+        },
         generatedAt,
-    });
+      ),
+    );
   }
 
-  if (allows(executiveDecision, "strategy")) {
-    options.push({
-      id: createOptionId(
-        executiveDecision.id,
-        "reduce-concurrent-work",
-      ),
+  if (
+    allows(
+      executiveDecision,
+      "strategy",
+    )
+  ) {
+    options.push(
+      createOption(
+        executiveDecision,
+        {
+          id:
+            createOptionId(
+              executiveDecision.id,
+              "reduce-concurrent-work",
+            ),
 
-      executiveDecisionId:
-        executiveDecision.id,
+          type:
+            "strategy",
 
-      organizationId:
-        executiveDecision.organizationId,
+          title:
+            "Reduce concurrent work",
 
-      type:
-        "strategy",
+          description:
+            "Reduce the number of active priorities so execution capacity is concentrated on fewer outcomes.",
 
-      title:
-        "Reduce concurrent work",
+          rationale:
+            "Lower work-in-progress may reduce priority conflict and protect execution capacity without increasing headcount.",
 
-      description:
-        "Reduce the number of active priorities so execution capacity is concentrated on fewer outcomes.",
+          scope:
+            "organization",
 
-      rationale:
-        "Lower work-in-progress may reduce priority conflict and protect execution capacity without increasing headcount.",
+          timeHorizon:
+            executiveDecision
+              .timeHorizon,
 
-      scope:
-        "organization",
+          targetConditionIds: [
+            "condition-executioncapacity",
+            "condition-strategicalignment",
+          ],
 
-      timeHorizon:
-        executiveDecision.timeHorizon,
+          expectedMechanismIds: [
+            "priorityConflict",
+            "resourceConstraint",
+          ],
 
-      targetConditionIds: [
-        "condition-executioncapacity",
-        "condition-strategicalignment",
-      ],
+          assumptions: [
+            "Leadership is willing to stop or defer lower-priority work.",
+          ],
 
-      expectedMechanismIds: [
-        "priorityConflict",
-        "resourceConstraint",
-      ],
+          risks: [
+            "Deferred initiatives may create stakeholder resistance.",
+          ],
 
-      satisfiedConstraintIndexes: [
-        0,
-      ],
+          missingEvidence: [
+            "Current initiative portfolio",
+            "Resource allocation by initiative",
+          ],
 
-      unresolvedConstraintIndexes: [],
-
-      assumptions: [
-        "Leadership is willing to stop or defer lower-priority work.",
-      ],
-
-      risks: [
-        "Deferred initiatives may create stakeholder resistance.",
-      ],
-
-      missingEvidence: [
-        "Current initiative portfolio",
-        "Resource allocation by initiative",
-      ],
-
-      confidence:
-        0.85,
-
-      createdAt:
+          confidence:
+            0.85,
+        },
         generatedAt,
-    });
+      ),
+    );
   }
 
   return options;

@@ -10,6 +10,18 @@ import type {
   InterventionOption,
 } from "../model/simulate/interventionOption";
 
+import type {
+  OrganizationalCondition,
+} from "../model/state/inferOrganizationalConditions";
+
+import {
+  synthesizeExecutiveOptimizationObjective,
+} from "../optimization/synthesizeExecutiveOptimizationObjective";
+
+import type {
+  ExecutiveOptimizationObjective,
+} from "../optimization/executiveOptimizationObjective";
+
 import {
   generateInterventionOptions,
 } from "../reasoning/generateInterventionOptions";
@@ -50,6 +62,13 @@ export type ExecutiveDecisionCycle = {
    */
   executiveDecision:
     ExecutiveDecision;
+
+  /**
+   * Canonical machine-readable optimization problem synthesized from
+   * the Executive Decision and current organizational conditions.
+   */
+  optimizationObjective:
+    ExecutiveOptimizationObjective;
 
   /**
    * Candidate interventions generated for the executive objective.
@@ -107,11 +126,17 @@ export type RunExecutiveDecisionCycleInput = {
     OrganizationRuntime;
 
   /**
-   * Optional deterministic timestamp used across option generation,
-   * simulation, comparison, ranking, and recommendation.
+   * Optional deterministic timestamp used across objective synthesis,
+   * option generation, simulation, comparison, ranking, and recommendation.
    */
   completedAt?: string;
 };
+
+type DecisionRuntimeMemory =
+  OrganizationRuntime["memory"] & {
+    organizationalConditions?:
+      OrganizationalCondition[];
+  };
 
 function requireMatchingOrganization(
   executiveDecision:
@@ -130,32 +155,13 @@ function requireMatchingOrganization(
   }
 }
 
-function evaluateOptions(
-  options:
-    InterventionOption[],
-
+function requireOrganizationalConditions(
   runtime:
     OrganizationRuntime,
-): EvaluatedInterventionOption[] {
-  const causalModel =
-    runtime.memory
-      .organizationalCausalModel;
-
-  if (!causalModel) {
-    throw new Error(
-      "Executive Decision Cycle requires a persisted Organizational Causal Model.",
-    );
-  }
-
-  type DecisionRuntimeMemory =
-    OrganizationRuntime["memory"] & {
-      organizationalConditions?: Parameters<
-        typeof evaluateInterventionOption
-      >[0]["conditions"];
-    };
-
+): OrganizationalCondition[] {
   const memory =
-    runtime.memory as DecisionRuntimeMemory;
+    runtime.memory as
+      DecisionRuntimeMemory;
 
   const conditions =
     memory.organizationalConditions;
@@ -166,6 +172,29 @@ function evaluateOptions(
   ) {
     throw new Error(
       "Executive Decision Cycle requires persisted organizational conditions.",
+    );
+  }
+
+  return conditions;
+}
+
+function evaluateOptions(
+  options:
+    InterventionOption[],
+
+  runtime:
+    OrganizationRuntime,
+
+  conditions:
+    OrganizationalCondition[],
+): EvaluatedInterventionOption[] {
+  const causalModel =
+    runtime.memory
+      .organizationalCausalModel;
+
+  if (!causalModel) {
+    throw new Error(
+      "Executive Decision Cycle requires a persisted Organizational Causal Model.",
     );
   }
 
@@ -250,13 +279,15 @@ function runOptionScenarios(
  * The cycle:
  *
  * 1. validates that the decision and runtime refer to the same organization,
- * 2. generates viable intervention options,
- * 3. evaluates each option through canonical causal reasoning,
- * 4. simulates every option from the same organizational baseline,
- * 5. compares all projected futures,
- * 6. ranks the scenarios deterministically,
- * 7. synthesizes the final executive recommendation,
- * 8. and returns the complete non-mutating decision cycle.
+ * 2. resolves the persisted organizational conditions,
+ * 3. synthesizes the canonical Executive Optimization Objective,
+ * 4. generates viable intervention options,
+ * 5. evaluates each option through canonical causal reasoning,
+ * 6. simulates every option from the same organizational baseline,
+ * 7. compares all projected futures,
+ * 8. ranks the scenarios deterministically,
+ * 9. synthesizes the final executive recommendation,
+ * 10. and returns the complete non-mutating decision cycle.
  *
  * This orchestrator performs no independent organizational reasoning.
  */
@@ -270,6 +301,19 @@ export function runExecutiveDecisionCycle({
     executiveDecision,
     runtime,
   );
+
+  const conditions =
+    requireOrganizationalConditions(
+      runtime,
+    );
+
+  const optimizationObjective =
+    synthesizeExecutiveOptimizationObjective({
+      executiveDecision,
+      conditions,
+      generatedAt:
+        completedAt,
+    });
 
   const generatedOptions =
     generateInterventionOptions({
@@ -288,6 +332,7 @@ export function runExecutiveDecisionCycle({
     evaluateOptions(
       generatedOptions,
       runtime,
+      conditions,
     );
 
   const scenarios =
@@ -304,8 +349,15 @@ export function runExecutiveDecisionCycle({
         completedAt,
     });
 
+  /**
+   * Ranking still consumes ExecutiveDecision during the current migration.
+   * The canonical Optimization Objective is now produced and returned by
+   * the cycle; the next optimization increment will make ranking consume
+   * optimizationObjective directly.
+   */
   const rankedScenarios =
     rankExecutiveScenarios({
+      executiveDecision,
       comparisonSet,
     });
 
@@ -319,6 +371,7 @@ export function runExecutiveDecisionCycle({
 
   return {
     executiveDecision,
+    optimizationObjective,
     generatedOptions,
     evaluatedOptions,
     scenarios,

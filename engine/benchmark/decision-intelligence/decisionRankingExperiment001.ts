@@ -23,6 +23,10 @@ import {
   rankExecutiveScenarios,
 } from "../../v3/decisions/rankExecutiveScenarios";
 
+import type {
+  ExecutiveDecision,
+} from "../../v3/model/simulate/executiveDecision";
+
 const ORGANIZATION_ID =
   "atlas-manufacturing-simulation";
 
@@ -33,6 +37,78 @@ type ExperimentCheck = {
   name: string;
   passed: boolean;
   detail: string;
+};
+
+const executiveDecision: ExecutiveDecision = {
+  id:
+    "executive-decision-ranking-experiment-001",
+
+  organizationId:
+    ORGANIZATION_ID,
+
+  type:
+    "execution",
+
+  title:
+    "Improve Organizational Execution",
+
+  objective:
+    "Improve execution capacity by reducing avoidable decision friction.",
+
+  rationale:
+    "Leadership wants the organization to execute faster without accepting unnecessary organizational deterioration.",
+
+  status:
+    "ready",
+
+  timeHorizon:
+    "near-term",
+
+  targetConditionIds: [
+    "condition-decisionflow",
+  ],
+
+  successMetrics: [
+    {
+      name:
+        "Decision Flow",
+
+      rationale:
+        "Decision flow must improve for the intervention to produce the intended execution benefit.",
+    },
+  ],
+
+  constraints: [
+    {
+      type:
+        "risk",
+
+      description:
+        "Do not create more organizational deterioration than improvement.",
+
+      required:
+        true,
+    },
+  ],
+
+  allowedInterventionTypes: [
+    "governance",
+  ],
+
+  assumptions: [
+    "The current organizational baseline is sufficiently accurate for scenario comparison.",
+  ],
+
+  openQuestions: [],
+
+  confidence:
+    0.8,
+
+  createdAt:
+    SIMULATED_AT,
+
+  updatedAt:
+    SIMULATED_AT,
 };
 
 function buildScenario(params: {
@@ -67,7 +143,7 @@ function buildScenario(params: {
         "organization",
 
       timeHorizon:
-        "near-term",
+        executiveDecision.timeHorizon,
 
       status:
         "hypothetical",
@@ -129,6 +205,7 @@ function rankingSnapshot(
 
   const ranking =
     rankExecutiveScenarios({
+      executiveDecision,
       comparisonSet,
     });
 
@@ -142,6 +219,9 @@ function rankingSnapshot(
 
       score:
         entry.score,
+
+      objectiveAlignmentScore:
+        entry.objectiveAlignmentScore,
 
       organizationalBenefitScore:
         entry.organizationalBenefitScore,
@@ -209,6 +289,7 @@ const comparisonSet =
 
 const ranking =
   rankExecutiveScenarios({
+    executiveDecision,
     comparisonSet,
   });
 
@@ -306,6 +387,27 @@ const checks: ExperimentCheck[] = [
 
   {
     name:
+      "Beneficial option aligns better with the executive objective",
+
+    passed:
+      Boolean(
+        firstRanked &&
+        secondRanked &&
+        firstRanked
+          .objectiveAlignmentScore >
+          secondRanked
+            .objectiveAlignmentScore,
+      ),
+
+    detail:
+      firstRanked &&
+      secondRanked
+        ? `${Math.round(firstRanked.objectiveAlignmentScore * 100)}% versus ${Math.round(secondRanked.objectiveAlignmentScore * 100)}% objective alignment`
+        : "Objective alignment scores unavailable.",
+  },
+
+  {
+    name:
       "Harmful option does not rank first",
 
     passed:
@@ -372,6 +474,13 @@ const failedChecks =
   checks.length -
   passedChecks;
 
+console.log("Executive Objective");
+console.log("------------------------------");
+console.log(
+  executiveDecision.objective,
+);
+console.log("");
+
 console.log("Ranked Scenarios");
 console.log("------------------------------");
 
@@ -389,6 +498,10 @@ for (const rankedScenario of ranking) {
 
   console.log(
     `   Score: ${Math.round(rankedScenario.score * 100)}%`,
+  );
+
+  console.log(
+    `   Objective alignment: ${Math.round(rankedScenario.objectiveAlignmentScore * 100)}%`,
   );
 
   console.log(

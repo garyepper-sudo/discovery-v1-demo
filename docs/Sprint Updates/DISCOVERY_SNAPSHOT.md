@@ -18,13 +18,13 @@ Discovery improves it.
 
 Discovery helps executive teams:
 
-- understand organizations,
-- explain organizational behavior,
-- challenge assumptions,
-- explore alternative futures,
-- improve decision confidence,
-- make better decisions,
-- continuously improve organizational judgment.
+- build organizational understanding,
+- identify executive decisions,
+- evaluate alternative strategies,
+- optimize organizational outcomes,
+- simulate organizational futures,
+- communicate executive recommendations,
+- continuously improve organizational judgment through learning.
 
 Discovery is **not**:
 
@@ -33,7 +33,7 @@ Discovery is **not**:
 - a document repository,
 - a reporting platform.
 
-Discovery organizes itself around **Decisions**.
+Discovery organizes itself around **Executive Decisions**.
 
 ---
 
@@ -41,9 +41,9 @@ Discovery organizes itself around **Decisions**.
 
 Discovery has entered **Product Validation**.
 
-The architecture is considered stable.
+The reasoning architecture is considered stable.
 
-The current objective is validating one complete executive decision workflow.
+The current objective is validating one complete executive decision flywheel.
 
 Current MVP:
 
@@ -64,11 +64,11 @@ Challenge
 
 ↓
 
-Simulation
+Optimization
 
 ↓
 
-Improve Confidence
+Simulation
 
 ↓
 
@@ -76,7 +76,15 @@ Executive Decision
 
 ↓
 
-Decision Report
+Implementation
+
+↓
+
+Learning
+
+↓
+
+Better Recommendation
 ```
 
 Everything else is secondary until this workflow has been validated.
@@ -85,24 +93,27 @@ Everything else is secondary until this workflow has been validated.
 
 # Current Architecture
 
-The reasoning architecture is considered **stable**.
+Discovery now possesses a complete first-generation Decision Intelligence architecture.
 
 Current Operating Systems include:
 
 - Understanding
-- Learning
 - Prediction
+- Decision
+- Optimization
 - Simulation
-- Executive Decision
-- Executive Communication
+- Communication
+- Learning
 
-Do not add new architectural layers unless an existing canonical producer cannot be extended.
+Do not introduce new Operating Systems unless an existing canonical producer cannot reasonably be extended.
 
-Prefer improving executive value over expanding architecture.
+Future work should strengthen existing cognition rather than introduce parallel reasoning.
 
 ---
 
 # Canonical Cognitive Pipeline
+
+## Organizational Understanding
 
 ```text
 Evidence
@@ -137,14 +148,6 @@ Organizational State
 
 ↓
 
-Predictions
-
-↓
-
-Prediction Reflection
-
-↓
-
 Executive Assessment
 
 ↓
@@ -152,58 +155,40 @@ Executive Assessment
 Organizational Understanding
 ```
 
-Executive Decision Intelligence
+---
+
+## Decision Intelligence
 
 ```text
-Executive Decision
-
-↓
-
-Intervention Options
-
-↓
-
-Selected Intervention
-
-↓
-
-Intervention Mapping
-
-↓
-
-Causal Propagation
-
-↓
-
-Influence Aggregation
-
-↓
-
-Condition Evolution
-
-↓
-
-Future Organizational State
-
-↓
-
-Canonical Prediction Engine
-
-↓
-
-Prediction Reflection
-
-↓
-
-Executive Assessment
-
-↓
-
 Organizational Understanding
 
 ↓
 
-Simulation Scenario
+Prediction
+
+↓
+
+Executive Decision
+
+↓
+
+Optimization Variable Selection
+
+↓
+
+Executive Optimization Objective
+
+↓
+
+Intervention Generation
+
+↓
+
+Constraint Evaluation
+
+↓
+
+Organizational Simulation
 
 ↓
 
@@ -211,17 +196,19 @@ Scenario Comparison
 
 ↓
 
-Executive Recommendation
-```
-
-Executive Communication
-
-```text
-Executive Projection
+Executive Decision Ranking
 
 ↓
 
-Executive Narrative
+Executive Recommendation
+```
+
+---
+
+## Executive Communication
+
+```text
+Executive Recommendation
 
 ↓
 
@@ -236,39 +223,44 @@ Executive Experience
 
 # Canonical Producers
 
+Current canonical producers include:
+
 - Organizational Understanding
 - Organizational Prediction
 - Prediction Reflection
-- Organizational State Synthesis
+- Executive Decision
+- Optimization Variable Selection
+- Executive Optimization Objective
 - Organizational Simulation
-- Condition Evolution
-- Simulation Scenario
 - Scenario Comparison
-- Executive Scenario Orchestration
-- Executive Narrative Synthesis
-- Executive Communication Synthesis
+- Executive Decision Ranking
+- Executive Recommendation
+- Executive Communication
 
-Never duplicate reasoning already provided by these producers.
+Never duplicate reasoning already produced by these canonical capabilities.
 
 ---
 
 # Product Principles
 
-Every feature should improve at least one of the following:
+Every feature should improve at least one of:
 
-- Understanding
-- Confidence
+- Organizational Understanding
 - Decision Quality
+- Optimization Quality
+- Executive Confidence
 - Organizational Learning
 
 Discovery should:
 
-- surprise before advising,
+- surface understanding before advice,
 - explain every recommendation,
+- expose tradeoffs,
 - expose uncertainty,
+- identify missing evidence,
 - earn additional organizational context,
 - strengthen executive thinking,
-- continuously learn.
+- continuously improve future decisions.
 
 Executives own decisions.
 
@@ -280,18 +272,20 @@ Discovery improves judgment.
 
 Completed:
 
-- Canonical organizational simulation
-- Canonical condition evolution
-- Canonical organizational state synthesis
-- Canonical prediction regeneration
-- Simulation scenario builder
-- Scenario comparison engine
-- Executive scenario orchestrator
-- Executive projection
-- Executive narrative synthesis
-- Executive communication synthesis
-- Executive Communication benchmark (13 / 13)
+- Canonical Organizational Understanding
+- Canonical Prediction
+- Canonical Executive Decision
+- Optimization Variable Selection
+- Executive Optimization Objective
+- Organizational Simulation
+- Scenario Comparison
+- Executive Decision Ranking
+- Executive Recommendation
+- Executive Communication
+- Decision Cycle benchmark
+- Optimization benchmark
 - Runtime persistence
+- Longitudinal learning
 
 Architecture Health:
 
@@ -299,28 +293,27 @@ Architecture Health:
 
 Canonical Capabilities:
 
-**26**
+**28**
 
-Executive Communication is now a canonical Operating System.
-
-The Product Canon has now been established.
+Discovery now possesses canonical Decision and Optimization Operating Systems.
 
 ---
 
 # Current Development Phase
 
-Discovery has completed its first-generation reasoning architecture.
+Discovery has completed its first-generation Decision Intelligence architecture.
 
-The current bottleneck is no longer cognition.
+The primary bottleneck is no longer cognition.
 
-The bottleneck is product.
+The primary bottleneck is product experience.
 
 Current priorities are:
 
 - Executive Decision Workspace
-- Decision Confidence
+- Decision Flywheel
+- Recommendation Explainability
+- Constraint Reasoning
 - Collaborative Simulation
-- Executive Decision Object
 - Board-ready Decision Reports
 - Customer Validation
 
@@ -332,18 +325,18 @@ Future work should improve executive decision quality rather than expand archite
 
 ## Primary Objective
 
-**Complete the Executive Decision Workspace**
+**Validate the Executive Decision Flywheel**
 
 Tasks
 
-1. Complete the Decision Workspace.
-2. Connect Executive Communication throughout the workspace.
-3. Implement the canonical Decision object.
-4. Implement Decision Confidence.
-5. Improve collaborative simulation.
-6. Produce board-ready Decision Reports.
+1. Complete the Executive Decision Workspace.
+2. Surface the Executive Optimization Objective in the UI.
+3. Improve optimization-aware scenario comparison.
+4. Strengthen constraint evaluation.
+5. Produce board-ready decision reports.
+6. Validate the complete executive decision workflow with users.
 
-Do not expand into secondary workflows until the MVP has been validated.
+Do not introduce secondary workflows until the Decision Flywheel has been validated.
 
 ---
 
@@ -352,8 +345,8 @@ Do not expand into secondary workflows until the MVP has been validated.
 Before implementing anything ask:
 
 1. Does this improve executive understanding?
-2. Does this improve decision confidence?
-3. Does this improve decision quality?
+2. Does this improve decision quality?
+3. Does this improve optimization quality?
 4. Does this improve organizational learning?
 5. Which Operating System owns it?
 6. Which capability owns it?
@@ -383,4 +376,4 @@ npm run discovery:brief
 
 Paste the outputs into a new chat together with this snapshot.
 
-This provides both the canonical architectural state and the canonical product state required to continue Discovery without relying on previous conversation history.
+This provides the complete canonical architectural state, product state, and cognitive pipeline required to continue Discovery without relying on previous conversation history.

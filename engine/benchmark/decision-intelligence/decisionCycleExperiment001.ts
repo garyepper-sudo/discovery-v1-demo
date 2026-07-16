@@ -64,24 +64,69 @@ const executiveDecision: ExecutiveDecision = {
   ],
 
   successMetrics: [
-    {
-      name:
-        "Execution Capacity",
-    },
-  ],
+  {
+    name:
+      "Execution Capacity",
 
-  constraints: [
-    {
-      type:
-        "risk",
+    baseline:
+      0.48,
 
-      description:
-        "Avoid increasing organizational risk.",
+    target:
+      0.63,
 
-      required:
-        true,
-    },
-  ],
+    unit:
+      "score",
+
+    rationale:
+      "Execution capacity must improve enough to produce a material operating benefit.",
+  },
+],
+
+constraints: [
+  {
+    type:
+      "risk",
+
+    description:
+      "Do not increase organizational risk.",
+
+    required:
+      true,
+  },
+
+  {
+    type:
+      "people",
+
+    description:
+      "Do not increase headcount.",
+
+    required:
+      true,
+  },
+
+  {
+    type:
+      "budget",
+
+    description:
+      "Remain budget neutral.",
+
+    required:
+      true,
+  },
+
+  {
+    type:
+      "time",
+
+    description:
+      "Produce measurable improvement within the near term.",
+
+    required:
+      true,
+  },
+],
 
   allowedInterventionTypes: [
     "governance",

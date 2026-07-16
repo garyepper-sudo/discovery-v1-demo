@@ -1,4 +1,6 @@
-import type { OrganizationalInterventionType } from "./organizationalIntervention";
+import type {
+  OrganizationalInterventionType,
+} from "./organizationalIntervention";
 
 export type ExecutiveDecisionType =
   | "growth"
@@ -34,6 +36,15 @@ export type ExecutiveDecisionSuccessMetric = {
    * the decision produced the desired outcome.
    */
   name: string;
+
+  /**
+   * Canonical organizational condition measured by this
+   * success criterion.
+   *
+   * This creates a stable machine-readable link between
+   * the executive metric and simulated condition movement.
+   */
+  targetConditionId?: string;
 
   /**
    * Optional current or baseline value.
@@ -131,17 +142,20 @@ export type ExecutiveDecision = {
   /**
    * Criteria used to determine whether the decision succeeds.
    */
-  successMetrics: ExecutiveDecisionSuccessMetric[];
+  successMetrics:
+    ExecutiveDecisionSuccessMetric[];
 
   /**
    * Constraints that candidate interventions must respect.
    */
-  constraints: ExecutiveDecisionConstraint[];
+  constraints:
+    ExecutiveDecisionConstraint[];
 
   /**
    * Intervention categories Discovery should consider.
    */
-  allowedInterventionTypes: OrganizationalInterventionType[];
+  allowedInterventionTypes:
+    OrganizationalInterventionType[];
 
   /**
    * Assumptions underlying the decision.

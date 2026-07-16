@@ -46,7 +46,12 @@
     {
       "code": "DEC",
       "name": "Executive Decision",
-      "question": "Can Discovery compare organizational interventions and recommend the strongest executive action?"
+      "question": "Can Discovery frame and orchestrate consequential executive decisions?"
+    },
+    {
+      "code": "OPT",
+      "name": "Optimization",
+      "question": "Can Discovery determine the strongest organizational strategy for achieving executive objectives while respecting organizational constraints?"
     },
     {
       "code": "COM",
@@ -461,6 +466,8 @@
       "consumedByCapabilities": [
         "CAP-ADP-001",
         "CAP-COM-001",
+        "CAP-OPT-001",
+        "CAP-OPT-002",
         "CAP-PRD-001",
         "CAP-SELF-002",
         "CAP-SIM-001",
@@ -1596,7 +1603,7 @@
     {
       "id": "CAP-DEC-001",
       "name": "Executive Decision Orchestration",
-      "description": "Coordinates Discovery's complete multi-option executive decision cycle by generating intervention options, normalizing and evaluating each option, simulating every viable organizational future from the same baseline, comparing and ranking the scenarios, and synthesizing the final executive recommendation without mutating the live Organization Runtime.",
+      "description": "Coordinates Discovery's complete non-mutating executive decision cycle by synthesizing the canonical Executive Optimization Objective, generating and evaluating intervention options, simulating candidate organizational futures from the same baseline, invoking comparison and ranking capabilities, and assembling the final executive recommendation.",
       "domain": "DEC",
       "status": "canonical",
       "canonicalProducer": "engine/v3/decisions/runExecutiveDecisionCycle.ts",
@@ -1614,14 +1621,12 @@
         "CAP-UND-005",
         "CAP-UND-006",
         "CAP-PRD-002",
+        "CAP-OPT-002",
         "CAP-DEC-002",
         "CAP-DEC-003",
         "CAP-DEC-004"
       ],
       "producesObjects": [
-        "InterventionOption",
-        "EvaluatedInterventionOption",
-        "ExecutiveScenarioResult",
         "ExecutiveDecisionCycle"
       ],
       "consumedByCapabilities": [],
@@ -1639,7 +1644,7 @@
       ],
       "livingOrganizationStage": 9,
       "reviewStatus": "reviewed",
-      "notes": "Canonical non-mutating orchestrator for multi-option executive decision analysis. It composes existing producers and must not recreate simulation, comparison, ranking, or recommendation logic.",
+      "notes": "Canonical non-mutating orchestrator for the complete executive decision workflow. It composes Optimization Objective Synthesis, intervention generation, causal evaluation, simulation, scenario comparison, ranking, and recommendation synthesis. It must not recreate the reasoning owned by those capabilities.",
       "canonicalProducerExists": true,
       "resolvedFiles": [],
       "missingImplementationFiles": [],
@@ -1771,6 +1776,87 @@
       "architecturalLayer": "EXEC"
     },
     {
+      "id": "CAP-OPT-001",
+      "name": "Optimization Variable Selection",
+      "description": "Selects and weights the canonical organizational variables relevant to an Executive Decision by combining explicit executive intent, organizational condition priority, causal-network influence, and condition confidence.",
+      "domain": "OPT",
+      "status": "canonical",
+      "canonicalProducer": "engine/v3/optimization/selectOptimizationVariables.ts",
+      "implementationFiles": [
+        "engine/v3/optimization/optimizationVariable.ts",
+        "engine/v3/optimization/selectOptimizationVariables.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-UND-004"
+      ],
+      "producesObjects": [
+        "OptimizationVariable"
+      ],
+      "consumedByCapabilities": [
+        "CAP-OPT-002"
+      ],
+      "runtimeDestination": "ExecutiveDecisionCycle.optimizationObjective.variables",
+      "executiveDestinations": [
+        "ExecutiveOptimizationObjective",
+        "ExecutiveDecisionProjection",
+        "ExecutiveDecisionWorkspace",
+        "Atlas"
+      ],
+      "atlasCoverage": "partial",
+      "benchmarkCoverage": [
+        "Optimization Objective Experiment 001"
+      ],
+      "livingOrganizationStage": 9,
+      "reviewStatus": "reviewed",
+      "notes": "Version 1 deterministically classifies variables as primary, secondary, or protected and assigns explainable weights using executive priority, organizational priority, and network influence. It performs no simulation, ranking, or recommendation synthesis.",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [],
+      "missingImplementationFiles": [],
+      "subsystem": "Optimization Variable Selection",
+      "architecturalLayer": "EXEC"
+    },
+    {
+      "id": "CAP-OPT-002",
+      "name": "Executive Optimization Objective Synthesis",
+      "description": "Transforms an Executive Decision and current Organizational Conditions into Discovery's canonical machine-readable optimization problem, including optimization variables, variable weights, success targets, translated constraints, preferences, tradeoff strategy, confidence, and confidence limiters.",
+      "domain": "OPT",
+      "status": "canonical",
+      "canonicalProducer": "engine/v3/optimization/synthesizeExecutiveOptimizationObjective.ts",
+      "implementationFiles": [
+        "engine/v3/optimization/executiveOptimizationObjective.ts",
+        "engine/v3/optimization/synthesizeExecutiveOptimizationObjective.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-OPT-001",
+        "CAP-UND-004"
+      ],
+      "producesObjects": [
+        "ExecutiveOptimizationObjective"
+      ],
+      "consumedByCapabilities": [
+        "CAP-DEC-001"
+      ],
+      "runtimeDestination": "ExecutiveDecisionCycle.optimizationObjective",
+      "executiveDestinations": [
+        "ExecutiveDecisionProjection",
+        "ExecutiveDecisionWorkspace",
+        "Atlas"
+      ],
+      "atlasCoverage": "partial",
+      "benchmarkCoverage": [
+        "Optimization Objective Experiment 001",
+        "Executive Decision Cycle"
+      ],
+      "livingOrganizationStage": 9,
+      "reviewStatus": "reviewed",
+      "notes": "Canonical producer of the machine-readable optimization problem. Version 1 translates success metrics and constraints conservatively, exposes interpretation limits, remains deterministic when generatedAt is supplied, and does not mutate the Executive Decision or Organizational Conditions.",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [],
+      "missingImplementationFiles": [],
+      "subsystem": "Optimization Objective Synthesis",
+      "architecturalLayer": "EXEC"
+    },
+    {
       "id": "CAP-COM-001",
       "name": "Executive Communication Synthesis",
       "description": "Synthesizes canonical organizational cognition into concise, actionable executive communication by producing an executive headline, summary, supporting signals, meaningful changes, forecast, recommendation, uncertainty, and progressive-disclosure evidence without exposing internal reasoning mechanics.",
@@ -1816,6 +1902,6 @@
       "terminalCapability": true
     }
   ],
-  "generatedAt": "2026-07-15T16:46:22.562Z",
-  "capabilityCount": 26
+  "generatedAt": "2026-07-16T01:19:08.508Z",
+  "capabilityCount": 28
 }

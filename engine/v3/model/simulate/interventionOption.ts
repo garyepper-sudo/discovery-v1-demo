@@ -4,6 +4,28 @@ import type {
   OrganizationalInterventionType,
 } from "./organizationalIntervention";
 
+export type InterventionConstraintEvaluation = {
+  /**
+   * Zero-based index of the corresponding constraint on
+   * the Executive Decision.
+   */
+  constraintIndex: number;
+
+  /**
+   * Current evaluation state for this option.
+   */
+  status:
+    | "satisfied"
+    | "violated"
+    | "requires-simulation"
+    | "insufficient-evidence";
+
+  /**
+   * Human-readable explanation of why this status was assigned.
+   */
+  explanation: string;
+};
+
 export type InterventionOption = {
   /**
    * Stable identity for this intervention option.
@@ -63,15 +85,14 @@ export type InterventionOption = {
   expectedMechanismIds: string[];
 
   /**
-   * Executive decision constraints this option satisfies.
+   * Explicit evaluation of every Executive Decision constraint.
+   *
+   * This replaces the earlier satisfied/unresolved index collections so
+   * Discovery can distinguish definite violations, simulation-dependent
+   * constraints, and constraints that lack sufficient evidence.
    */
-  satisfiedConstraintIndexes: number[];
-
-  /**
-   * Executive decision constraints this option may violate
-   * or require further evidence to evaluate.
-   */
-  unresolvedConstraintIndexes: number[];
+  constraintEvaluations:
+    InterventionConstraintEvaluation[];
 
   /**
    * Assumptions required for this intervention option

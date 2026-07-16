@@ -1,6 +1,6 @@
 # Discovery Architecture Handoff
 
-Generated: 2026-07-15T16:46:24.198Z
+Generated: 2026-07-16T01:19:10.191Z
 
 ## Purpose
 
@@ -20,8 +20,8 @@ Before adding any new cognitive capability:
 
 ## Architecture Health
 
-- Registered capabilities: 26
-- Canonical producers: 26
+- Registered capabilities: 28
+- Canonical producers: 28
 - Registered files: 482
 - Terminal capabilities: 5
 - Duplicate capability IDs: 0
@@ -41,7 +41,7 @@ Before adding any new cognitive capability:
 | CAP-UND-001 | Organizational Mechanism Inference | COG | OrganizationalMechanism | OrganizationModel.mechanisms | CAP-ABS-001, CAP-SELF-001, CAP-UND-002, CAP-UND-003, CAP-UND-004, CAP-UND-005 |
 | CAP-UND-002 | Organizational Belief Formation | COG | OrganizationalBelief | OrganizationModel.beliefs | CAP-ABS-001, CAP-LRN-001, CAP-SELF-001, CAP-SIM-001, CAP-UND-003, CAP-UND-004, CAP-UND-005 |
 | CAP-UND-003 | Organizational Theory Formation | COG | OrganizationalTheory | OrganizationalMemory.theories | CAP-SELF-001, CAP-UND-004, CAP-UND-005 |
-| CAP-UND-004 | Organizational Condition Inference | EXEC | OrganizationalCondition | OrganizationRuntime.organizationalConditions | CAP-ADP-001, CAP-COM-001, CAP-PRD-001, CAP-SELF-002, CAP-SIM-001, CAP-UND-005 |
+| CAP-UND-004 | Organizational Condition Inference | EXEC | OrganizationalCondition | OrganizationRuntime.organizationalConditions | CAP-ADP-001, CAP-COM-001, CAP-OPT-001, CAP-OPT-002, CAP-PRD-001, CAP-SELF-002, CAP-SIM-001, CAP-UND-005 |
 | CAP-UND-005 | Executive Assessment | EXEC | ExecutiveAssessment | OrganizationRuntime.executiveAssessment | CAP-COM-001, CAP-DEC-001, CAP-DEC-002, CAP-UND-006 |
 | CAP-UND-006 | Executive Understanding Synthesis | COG | OrganizationalUnderstanding, OrganizationalUnderstandingState | OrganizationRuntime.organizationalUnderstandingState | CAP-COM-001, CAP-DEC-001 |
 | CAP-MEM-001 | Organizational Runtime Persistence | RUN | OrganizationRuntime | OrganizationRuntime | CAP-LRN-001, CAP-LRN-002, CAP-SYS-001, CAP-UND-006 |
@@ -57,10 +57,12 @@ Before adding any new cognitive capability:
 | CAP-SYS-002 | Architecture Recommendation Projection | SYS | ArchitectureRecommendationProjection | DiscoveryArchitectureState.architectureRecommendationProjection | None |
 | CAP-SIM-001 | Organizational Simulation | COG | SimulatedOrganizationState | OrganizationRuntime.simulatedOrganizationStates | CAP-COM-001, CAP-DEC-001, CAP-DEC-002, CAP-SYS-001 |
 | CAP-SIM-002 | Organizational Intervention Modeling | COG | OrganizationalIntervention | OrganizationRuntime.organizationalInterventions | CAP-DEC-001, CAP-SIM-001 |
-| CAP-DEC-001 | Executive Decision Orchestration | EXEC | InterventionOption, EvaluatedInterventionOption, ExecutiveScenarioResult, ExecutiveDecisionCycle | ExecutiveDecisionCycle | Terminal capability |
+| CAP-DEC-001 | Executive Decision Orchestration | EXEC | ExecutiveDecisionCycle | ExecutiveDecisionCycle | Terminal capability |
 | CAP-DEC-002 | Cross-Scenario Comparison | EXEC | ExecutiveScenarioComparisonEntry, ExecutiveScenarioComparisonSet | ExecutiveDecisionCycle.comparisonSet | CAP-DEC-001, CAP-DEC-003, CAP-DEC-004 |
 | CAP-DEC-003 | Executive Decision Ranking | EXEC | RankedExecutiveScenario | ExecutiveDecisionCycle.rankedScenarios | CAP-DEC-001, CAP-DEC-004 |
 | CAP-DEC-004 | Executive Recommendation Synthesis | EXEC | ExecutiveDecisionRecommendation | ExecutiveDecisionCycle.recommendation | CAP-DEC-001 |
+| CAP-OPT-001 | Optimization Variable Selection | EXEC | OptimizationVariable | ExecutiveDecisionCycle.optimizationObjective.variables | CAP-OPT-002 |
+| CAP-OPT-002 | Executive Optimization Objective Synthesis | EXEC | ExecutiveOptimizationObjective | ExecutiveDecisionCycle.optimizationObjective | CAP-DEC-001 |
 | CAP-COM-001 | Executive Communication Synthesis | EXEC | ExecutiveNarrative, ExecutiveCommunication | ExecutiveCommunication | Terminal capability |
 
 ## Capability Dependency Map
@@ -319,9 +321,9 @@ Before adding any new cognitive capability:
 
 ### CAP-DEC-001 — Executive Decision Orchestration
 
-**Depends on:** CAP-SIM-001, CAP-SIM-002, CAP-UND-005, CAP-UND-006, CAP-PRD-002, CAP-DEC-002, CAP-DEC-003, CAP-DEC-004
+**Depends on:** CAP-SIM-001, CAP-SIM-002, CAP-UND-005, CAP-UND-006, CAP-PRD-002, CAP-OPT-002, CAP-DEC-002, CAP-DEC-003, CAP-DEC-004
 
-**Produces:** InterventionOption, EvaluatedInterventionOption, ExecutiveScenarioResult, ExecutiveDecisionCycle
+**Produces:** ExecutiveDecisionCycle
 
 **Canonical producer:** `engine/v3/decisions/runExecutiveDecisionCycle.ts`
 
@@ -365,6 +367,30 @@ Before adding any new cognitive capability:
 
 **Executive destinations:** ExecutiveDecisionProjection, ExecutiveDecisionWorkspace, Atlas
 
+### CAP-OPT-001 — Optimization Variable Selection
+
+**Depends on:** CAP-UND-004
+
+**Produces:** OptimizationVariable
+
+**Canonical producer:** `engine/v3/optimization/selectOptimizationVariables.ts`
+
+**Runtime destination:** `ExecutiveDecisionCycle.optimizationObjective.variables`
+
+**Executive destinations:** ExecutiveOptimizationObjective, ExecutiveDecisionProjection, ExecutiveDecisionWorkspace, Atlas
+
+### CAP-OPT-002 — Executive Optimization Objective Synthesis
+
+**Depends on:** CAP-OPT-001, CAP-UND-004
+
+**Produces:** ExecutiveOptimizationObjective
+
+**Canonical producer:** `engine/v3/optimization/synthesizeExecutiveOptimizationObjective.ts`
+
+**Runtime destination:** `ExecutiveDecisionCycle.optimizationObjective`
+
+**Executive destinations:** ExecutiveDecisionProjection, ExecutiveDecisionWorkspace, Atlas
+
 ### CAP-COM-001 — Executive Communication Synthesis
 
 **Depends on:** CAP-UND-004, CAP-UND-005, CAP-UND-006, CAP-LRN-002, CAP-PRD-002, CAP-SIM-001, CAP-SELF-002
@@ -387,6 +413,14 @@ Reason: semantic similarity 36%.
 
 Review before creating a new capability. Similarity does not automatically mean duplication; one capability may legitimately depend on or transform another.
 
+### CAP-OPT-001 — Optimization Variable Selection
+
+Possible overlap with **CAP-OPT-002 — Executive Optimization Objective Synthesis**.
+
+Reason: semantic similarity 31%.
+
+Review before creating a new capability. Similarity does not automatically mean duplication; one capability may legitimately depend on or transform another.
+
 ### CAP-DEC-002 — Cross-Scenario Comparison
 
 Possible overlap with **CAP-DEC-003 — Executive Decision Ranking**.
@@ -394,6 +428,8 @@ Possible overlap with **CAP-DEC-003 — Executive Decision Ranking**.
 Reason: semantic similarity 30%.
 
 Review before creating a new capability. Similarity does not automatically mean duplication; one capability may legitimately depend on or transform another.
+
+## Canonical Pipeline
 
 ## Canonical Pipeline
 
@@ -414,11 +450,27 @@ Executive Assessment
 ↓
 Executive Understanding Synthesis
 ↓
-Organization Runtime
+Organizational Prediction
 ↓
-Executive Projection
+Executive Decision
 ↓
-Executive Workspace
+Optimization Variable Selection
+↓
+Executive Optimization Objective
+↓
+Intervention Generation
+↓
+Constraint Evaluation
+↓
+Organizational Simulation
+↓
+Scenario Comparison
+↓
+Executive Decision Ranking
+↓
+Executive Recommendation
+↓
+Executive Communication
 ```
 
 ## Canonical Source Files
@@ -572,6 +624,18 @@ Executive Workspace
 - Canonical producer: `engine/v3/decisions/buildExecutiveDecisionRecommendation.ts`
 - Implementation: `engine/v3/decisions/buildExecutiveDecisionRecommendation.ts`
 
+### CAP-OPT-001 — Optimization Variable Selection
+
+- Canonical producer: `engine/v3/optimization/selectOptimizationVariables.ts`
+- Implementation: `engine/v3/optimization/optimizationVariable.ts`
+- Implementation: `engine/v3/optimization/selectOptimizationVariables.ts`
+
+### CAP-OPT-002 — Executive Optimization Objective Synthesis
+
+- Canonical producer: `engine/v3/optimization/synthesizeExecutiveOptimizationObjective.ts`
+- Implementation: `engine/v3/optimization/executiveOptimizationObjective.ts`
+- Implementation: `engine/v3/optimization/synthesizeExecutiveOptimizationObjective.ts`
+
 ### CAP-COM-001 — Executive Communication Synthesis
 
 - Canonical producer: `engine/v3/communication/synthesizeExecutiveCommunication.ts`
@@ -579,6 +643,34 @@ Executive Workspace
 - Implementation: `engine/v3/communication/synthesizeExecutiveNarrative.ts`
 - Implementation: `engine/v3/communication/executiveCommunication.ts`
 - Implementation: `engine/v3/communication/synthesizeExecutiveCommunication.ts`
+
+## Sprint 72 Architectural Milestone
+
+Discovery now possesses the first complete implementation of its Executive Decision and Optimization Operating Systems.
+
+Executive decisions are translated into machine-readable Executive Optimization Objectives before intervention generation, simulation, comparison, ranking, and recommendation.
+
+The canonical executive decision pipeline is now:
+
+```text
+Executive Understanding
+↓
+Prediction
+↓
+Executive Decision
+↓
+Optimization
+↓
+Simulation
+↓
+Recommendation
+↓
+Communication
+↓
+Learning
+```
+
+Future development should strengthen optimization quality, constraint reasoning, executive decision quality, and the organizational learning flywheel rather than introduce additional parallel reasoning systems.
 
 ## Sprint Handoff Guidance
 

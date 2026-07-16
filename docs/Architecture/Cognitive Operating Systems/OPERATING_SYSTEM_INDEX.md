@@ -1,6 +1,6 @@
 # Discovery Cognitive Operating Systems
 
-**Status:** Canonical (Sprint 68)
+**Status:** Canonical (Sprint 72)
 
 ---
 
@@ -8,13 +8,13 @@
 
 This document is the canonical index of Discovery's Cognitive Operating Systems.
 
-Each Operating System defines a distinct cognitive responsibility within Discovery.
+Each Operating System owns a distinct stage of Discovery's cognition.
 
-Operating Systems are **not** implementation layers.
+Operating Systems are **not implementation layers**.
 
 They are persistent cognitive domains responsible for transforming one class of cognition into another.
 
-Together they form Discovery's Cognitive Operating System.
+Together they define Discovery's Cognitive Architecture.
 
 ---
 
@@ -53,7 +53,19 @@ Prediction
 
 ↓
 
+Decision
+
+↓
+
+Optimization
+
+↓
+
 Simulation
+
+↓
+
+Communication
 
          ↑
 
@@ -66,15 +78,18 @@ Simulation
 
 | Operating System | Status | Primary Responsibility | Canonical Object |
 |------------------|--------|------------------------|------------------|
-| Perception | Canonical | Transform organizational reality into structured cognition | Observation |
-| Understanding | Canonical | Transform organizational cognition into executive understanding | Organizational Understanding |
+| Perception | Canonical | Transform organizational reality into structured evidence | Observation |
+| Understanding | Canonical | Transform evidence into organizational understanding | Organizational Understanding |
 | Memory | Canonical | Preserve cognition across investigations | Organizational Memory |
-| Learning | Canonical | Measure cognitive evolution through time | Organizational Learning Profile |
+| Learning | Canonical | Improve future reasoning through longitudinal evaluation | Organizational Learning Profile |
 | Abstraction | Canonical | Form reusable organizational concepts | Organizational Concept |
-| Systems | Emerging Canonical | Model organizational relationships and dependencies | Organizational System *(proposed)* |
-| Adaptation | Emerging Canonical | Improve future reasoning behavior | Adaptive State *(proposed)* |
-| Prediction | Proposed | Infer likely future organizational states | Organizational Prediction *(proposed)* |
-| Simulation | Planned | Evaluate alternative organizational futures | Organizational Scenario *(proposed)* |
+| Systems | Canonical | Model organizational relationships and dependencies | Organizational System |
+| Prediction | Canonical | Infer likely future organizational states | Organizational Prediction |
+| Decision | Canonical | Translate understanding into executive decisions | Executive Decision |
+| Optimization | Canonical | Determine the best strategy for achieving executive objectives | Executive Optimization Objective |
+| Simulation | Canonical | Evaluate projected organizational futures | Organizational Scenario |
+| Communication | Canonical | Transform cognition into executive-facing communication | Executive Communication |
+| Adaptation | Canonical | Improve future reasoning behavior across every Operating System | Adaptive State |
 
 ---
 
@@ -82,9 +97,11 @@ Simulation
 
 Discovery transforms cognition through a sequence of Operating Systems.
 
-## 1. Perception
+---
 
-Question:
+# 1. Perception
+
+Question
 
 > What exists?
 
@@ -97,9 +114,9 @@ Produces:
 
 ---
 
-## 2. Understanding
+# 2. Understanding
 
-Question:
+Question
 
 > What does it mean?
 
@@ -108,102 +125,181 @@ Produces:
 - Mechanisms
 - Beliefs
 - Theories
-- Conditions
+- Organizational Conditions
 - Organizational State
 - Organizational Understanding
 
 ---
 
-## 3. Memory
+# 3. Memory
 
-Question:
+Question
 
 > What should Discovery remember?
 
 Produces:
 
 - Organizational Memory
-- Organizational Understanding State
-- Longitudinal Continuity
+- Longitudinal Organizational State
+- Organizational Continuity
 
 ---
 
-## 4. Learning
+# 4. Learning
 
-Question:
+Question
 
 > What changed?
 
 Produces:
 
-- Learning Profile
+- Organizational Learning
+- Prediction Evaluation
 - Learning Velocity
 - Understanding Growth
 - Knowledge Retention
 
 ---
 
-## 5. Abstraction
+# 5. Abstraction
 
-Question:
+Question
 
 > What organizational concepts explain repeated behavior?
 
 Produces:
 
 - Organizational Concepts
+- Organizational Theories
 
 ---
 
-## 6. Systems
+# 6. Systems
 
-Question:
+Question
 
 > How are organizational concepts and conditions connected?
 
 Produces:
 
-- Organizational Systems *(proposed)*
+- Organizational Systems
+- Organizational Relationships
+- Organizational Influence Graphs
+- Organizational Causal Structure
 
 ---
 
-## 7. Prediction
+# 7. Prediction
 
-Question:
+Question
 
-> What is likely to happen next?
+> What is likely to happen?
 
 Produces:
 
-- Organizational Predictions *(proposed)*
+- Organizational Predictions
+- Future Organizational State
+- Prediction Confidence
+
+Prediction estimates the most likely future if nothing materially changes.
 
 ---
 
-## 8. Simulation
+# 8. Decision
 
-Question:
+Question
 
-> What happens if something changes?
+> What decision should leadership make?
 
 Produces:
 
-- Organizational Scenarios *(planned)*
+- Executive Decision
+- Executive Objective
+- Success Metrics
+- Constraints
+- Decision Confidence
+
+Decision identifies the executive problem.
+
+It does not optimize the solution.
 
 ---
 
-## Adaptation
+# 9. Optimization
 
-Question:
+Question
+
+> Given the objectives and constraints, what is the best organizational strategy?
+
+Produces:
+
+- Optimization Variables
+- Executive Optimization Objective
+- Candidate Strategies
+- Optimization Scores
+- Executive Recommendation
+
+Optimization evaluates multiple organizational futures and determines which strategy best satisfies executive objectives.
+
+Simulation supports Optimization.
+
+Optimization selects among simulations.
+
+---
+
+# 10. Simulation
+
+Question
+
+> What happens if this strategy is implemented?
+
+Produces:
+
+- Organizational Scenarios
+- Projected Organizational Conditions
+- Projected Organizational State
+- Projected Executive Assessment
+- Projected Understanding
+
+Simulation evaluates futures.
+
+It does not determine which future is preferable.
+
+---
+
+# 11. Communication
+
+Question
+
+> How should Discovery communicate this cognition to executives?
+
+Produces:
+
+- Executive Communication
+- Executive Summary
+- Executive Recommendation
+- Executive Narrative
+- Board-ready Explanation
+
+Communication transforms cognition into executive understanding.
+
+---
+
+# Adaptation
+
+Question
 
 > How should Discovery think differently because of what it learned?
 
 Produces:
 
-- Adaptive State *(proposed)*
+- Adaptive State
+- Reasoning Improvements
+- Cognitive Calibration
 
 Adaptation operates across every Operating System.
 
-It modifies future cognition rather than producing standalone organizational understanding.
+It improves cognition rather than producing executive artifacts.
 
 ---
 
@@ -238,16 +334,62 @@ Prediction
 
 ↓
 
+Decision
+
+↓
+
+Optimization
+
+↓
+
 Simulation
+
+↓
+
+Communication
 
 ↑
 
 Adaptation
 ```
 
-Each Operating System consumes cognition produced by earlier Operating Systems.
+Each Operating System consumes cognition produced by previous Operating Systems.
 
-No Operating System should duplicate the responsibility of another.
+No Operating System should duplicate another's responsibility.
+
+---
+
+# Responsibility Boundaries
+
+## Prediction
+
+Predicts the most likely future.
+
+---
+
+## Decision
+
+Determines what leadership needs to decide.
+
+---
+
+## Optimization
+
+Determines the best strategy for achieving executive objectives.
+
+---
+
+## Simulation
+
+Evaluates candidate organizational futures.
+
+---
+
+## Communication
+
+Explains Discovery's reasoning to executives.
+
+These responsibilities are intentionally separate.
 
 ---
 
@@ -257,14 +399,14 @@ Before implementing any new cognitive capability:
 
 1. Determine which Operating System owns it.
 2. Determine whether Discovery already performs that cognition.
-3. Determine the canonical cognitive object.
-4. Determine the canonical producer.
-5. Determine runtime persistence.
-6. Determine executive projection.
-7. Determine Atlas validation.
-8. Only then implement new cognition if required.
+3. Identify the canonical cognitive object.
+4. Identify the canonical producer.
+5. Define runtime persistence.
+6. Define executive projection.
+7. Define benchmark validation.
+8. Implement only after architectural ownership is clear.
 
-Discovery should prefer **extracting existing cognition** over introducing duplicate reasoning engines.
+Discovery should always prefer extracting existing cognition over introducing duplicate reasoning.
 
 ---
 
@@ -277,42 +419,34 @@ Discovery should prefer **extracting existing cognition** over introducing dupli
 - Memory
 - Learning
 - Abstraction
-
-## Emerging Canonical
-
 - Systems
-- Adaptation
-
-## Proposed
-
 - Prediction
-
-## Planned
-
+- Decision
+- Optimization
 - Simulation
+- Communication
+- Adaptation
 
 ---
 
 # Long-Term Vision
 
-The Cognitive Operating Systems collectively define how Discovery transforms organizational experience into enduring organizational intelligence.
+The Cognitive Operating Systems collectively define how Discovery transforms organizational reality into progressively better executive decisions.
 
-Every future capability should belong to exactly one Operating System.
+Each Operating System owns exactly one cognitive responsibility.
 
-Every Operating System should have:
+Every Operating System possesses:
 
-- a canonical purpose,
+- canonical purpose,
 - canonical cognitive objects,
 - canonical capabilities,
 - canonical producers,
 - runtime persistence,
 - executive projection,
-- Atlas validation,
-- and measurable architectural ownership.
+- benchmark validation,
+- architectural ownership.
 
 Together these Operating Systems form Discovery's Cognitive Operating System.
-
-They are the highest-level architectural model of Discovery's cognition.
 
 ---
 
@@ -323,8 +457,9 @@ The Cognitive Operating System is complete when:
 - every major cognitive responsibility belongs to exactly one Operating System,
 - every cognitive object has a canonical producer,
 - every capability has architectural ownership,
-- every Operating System is validated through Atlas,
+- every Operating System is benchmark validated,
 - every Operating System contributes measurable executive value,
-- and Discovery continuously transforms organizational experience into progressively deeper organizational understanding.
+- every executive decision improves Discovery's future reasoning,
+- and Discovery continuously transforms organizational experience into progressively better organizational decisions.
 
-The Cognitive Operating System is the canonical architectural model of Discovery.
+The Cognitive Operating System is the highest-level architectural model of Discovery.

@@ -1,23 +1,23 @@
 # Discovery Cognitive Object Model
 
-**Status:** Canonical (Sprint 67)
+**Status:** Canonical (Sprint 72)
 
 ---
 
 # Purpose
 
-This document defines the canonical cognitive objects used by Discovery.
+This document defines Discovery's canonical cognitive objects.
 
-Cognitive objects are the durable units of organizational knowledge that move through Discovery's cognitive architecture.
+Cognitive objects are the durable units of organizational cognition that move through Discovery's Cognitive Operating Systems.
 
 They are distinct from:
 
 - source files,
 - implementation functions,
 - capabilities,
-- subsystems,
 - operating systems,
-- UI components.
+- UI components,
+- runtime projections.
 
 The canonical relationship is:
 
@@ -35,7 +35,7 @@ New Cognitive Object
 
 Discovery evolves by transforming one cognitive object into another.
 
-Every cognitive capability owns exactly one canonical cognitive object.
+Every cognitive capability owns exactly one primary cognitive object.
 
 ---
 
@@ -70,6 +70,10 @@ Organizational Condition
 
 ↓
 
+Organizational State
+
+↓
+
 Executive Assessment
 
 ↓
@@ -82,7 +86,43 @@ Organizational Prediction
 
 ↓
 
-Prediction Reflection
+Executive Decision
+
+↓
+
+Optimization Variable
+
+↓
+
+Executive Optimization Objective
+
+↓
+
+Candidate Strategy
+
+↓
+
+Constraint Evaluation
+
+↓
+
+Organizational Scenario
+
+↓
+
+Scenario Comparison
+
+↓
+
+Executive Recommendation
+
+↓
+
+Executive Communication
+
+↓
+
+Decision Record
 
 ↓
 
@@ -90,10 +130,14 @@ Prediction Evaluation
 
 ↓
 
+Optimization Evaluation
+
+↓
+
 Organizational Learning
 ```
 
-Prediction Evaluation closes Discovery's learning loop.
+Discovery now possesses a complete cognitive pipeline from organizational evidence through executive decision-making and longitudinal learning.
 
 ---
 
@@ -101,7 +145,6 @@ Prediction Evaluation closes Discovery's learning loop.
 
 Every cognitive object defines:
 
-- name
 - canonical definition
 - purpose
 - canonical producer
@@ -109,22 +152,24 @@ Every cognitive object defines:
 - primary consumers
 - runtime representation
 - executive representation
-- provenance requirements
+- provenance
 - lifecycle
 - confidence ownership
-- Atlas verification
+- benchmark validation
 
 ---
 
-# Core Object Classes
+# Core Cognitive Object Classes
 
-Discovery currently contains seven major cognitive object classes.
+Discovery currently contains nine major cognitive object classes.
 
-## 1. Perceptual Objects
+---
+
+# 1. Perceptual Objects
 
 Represent structured organizational reality.
 
-Examples:
+Examples
 
 - Evidence
 - Entity
@@ -135,22 +180,16 @@ Examples:
 
 ---
 
-## 2. Interpretive Objects
+# 2. Interpretive Objects
 
 Explain organizational behavior.
 
-### Interpretation
+Objects include:
 
 - Organizational Mechanism
 - Organizational Belief
-
-### Abstraction
-
 - Organizational Concept
 - Organizational Theory
-
-### Assessment
-
 - Organizational Condition
 - Organizational State
 - Executive Assessment
@@ -158,9 +197,11 @@ Explain organizational behavior.
 
 ---
 
-## 3. Predictive Objects
+# 3. Predictive Objects
 
-Reason about organizational futures.
+Reason about future organizational states.
+
+Objects include:
 
 - Organizational Prediction
 - Prediction Reflection
@@ -168,49 +209,97 @@ Reason about organizational futures.
 
 ---
 
-## 4. Longitudinal Objects
+# 4. Decision Objects
 
-Persist organizational cognition through time.
+Represent executive intent.
 
-- Organizational Understanding State
-- Organizational Memory
-- Belief Revision
-- Theory Evolution
-- Learning Profile
+Objects include:
+
+- Executive Decision
+- Executive Success Metric
+- Executive Constraint
+
+Decision defines the business problem.
+
+It does not define the solution.
 
 ---
 
-## 5. Metacognitive Objects
+# 5. Optimization Objects
+
+Represent Discovery's optimization problem.
+
+Objects include:
+
+- Optimization Variable
+- Executive Optimization Objective
+- Candidate Strategy
+- Constraint Evaluation
+- Strategy Ranking
+
+Optimization determines the strongest organizational future.
+
+---
+
+# 6. Simulation Objects
+
+Represent projected organizational futures.
+
+Objects include:
+
+- Organizational Scenario
+- Simulated Organizational State
+- Scenario Comparison
+- Variable Movement
+
+Simulation evaluates futures.
+
+Optimization selects among them.
+
+---
+
+# 7. Longitudinal Objects
+
+Persist cognition across time.
+
+Objects include:
+
+- Organizational Memory
+- Organizational Understanding State
+- Learning Profile
+- Theory Evolution
+- Belief Revision
+- Decision Record
+
+---
+
+# 8. Metacognitive Objects
 
 Evaluate Discovery's own reasoning.
 
-- Theory Validation
+Objects include:
+
 - Confidence Assessment
-- Competing Theory
 - Missing Evidence
 - Investigation Opportunity
+- Competing Theory
+- Prediction Evaluation
+- Optimization Evaluation
 - Confidence Calibration
 
 ---
 
-## 6. Executive Objects
-
-Support executive decision making.
-
-- Executive Assessment
-- Executive Recommendation
-- Executive Projection
-
----
-
-## 7. Projection Objects
+# 9. Executive Objects
 
 Expose cognition outside the engine.
 
+Objects include:
+
+- Executive Recommendation
+- Executive Communication
 - Executive Projection
-- Executive Workspace
 - Executive Experience
-- Atlas
+- Board Report
 
 ---
 
@@ -218,21 +307,15 @@ Expose cognition outside the engine.
 
 ## Evidence
 
-### Definition
-
 Structured representation of organizational source material.
 
-### Canonical Producer
+Canonical Producer
 
 Evidence Engine
 
-### Primary Consumers
+Primary Consumers
 
-- Organizational Observation
-
-### Runtime
-
-DiscoveryV3Result.evidence
+- Observation Engine
 
 ---
 
@@ -240,7 +323,7 @@ DiscoveryV3Result.evidence
 
 Persistent organizational actor, team, process, system, or concept.
 
-Canonical Producer:
+Canonical Producer
 
 Entity Resolution Engine
 
@@ -250,14 +333,13 @@ Entity Resolution Engine
 
 Meaningful organizational statement inferred from evidence.
 
-Canonical Producer:
+Canonical Producer
 
 Observation Engine
 
-Primary Consumers:
+Primary Consumers
 
-- Organizational Mechanism
-- Organizational Learning
+- Mechanism Engine
 
 ---
 
@@ -265,27 +347,17 @@ Primary Consumers:
 
 Indicator that meaningful organizational behavior exists.
 
-Canonical Producer:
+Canonical Producer
 
 Signal Engine
 
 ---
 
-## Contradiction
-
-Conflict between organizational evidence or reasoning.
-
-Canonical Producer:
-
-Contradiction Engine
-
----
-
 ## Organizational Phenomenon
 
-Recurring organizational behavior emerging across observations.
+Recurring organizational behavior.
 
-Canonical Producer:
+Canonical Producer
 
 Phenomenon Engine
 
@@ -295,103 +367,77 @@ Phenomenon Engine
 
 ## Organizational Mechanism
 
-Discovery's explanation of **how** organizational behavior occurs.
+Explains how organizational behavior occurs.
 
-Canonical Producer:
+Canonical Producer
 
 Mechanism Engine
-
-Primary Consumers:
-
-- Organizational Belief
-- Organizational Concept
-- Organizational Condition
-- Executive Assessment
 
 ---
 
 ## Organizational Belief
 
-Discovery's current organizational conclusion supported by mechanisms.
+Current organizational conclusion supported by mechanisms.
 
-Canonical Producer:
+Canonical Producer
 
 Belief Engine
-
-Primary Consumers:
-
-- Organizational Concept
-- Organizational Theory
-- Organizational Condition
-- Executive Assessment
 
 ---
 
 ## Organizational Concept
 
-Reusable organizational abstraction distilled from recurring mechanisms, beliefs, and phenomena.
+Reusable organizational abstraction.
 
-Canonical Producer:
+Canonical Producer
 
 Concept Engine
-
-Consumes:
-
-- Organizational Mechanisms
-- Organizational Beliefs
-- Organizational Phenomena
-
-Primary Consumers:
-
-- Organizational Theory
-- Organizational Condition
-- Executive Assessment
-- Organizational Learning
 
 ---
 
 ## Organizational Theory
 
-Discovery's explanation of **why** organizational behavior exists.
+Explains why organizational behavior exists.
 
-Canonical Producer:
+Canonical Producer
 
 Theory Engine
-
-Consumes:
-
-- Organizational Concepts
-- Organizational Beliefs
-
-Primary Consumers:
-
-- Organizational Condition
-- Executive Assessment
 
 ---
 
 ## Organizational Condition
 
-Persistent organizational operating constraint or characteristic.
+Canonical organizational operating variable.
 
-Canonical Producer:
+Canonical Producer
 
 Condition Engine
 
-Primary Consumers:
+Primary Consumers
 
-- Executive Assessment
-- Organizational Prediction
+- Organizational State
+- Executive Decision
+- Optimization Variable Selection
 
 ---
 
 ## Organizational State
 
-Integrated assessment of the organization's operating condition.
+Integrated assessment of organizational health.
 
-Canonical Producer:
+Canonical Producer
 
 State Engine
+
+---
+
+## Executive Assessment
+
+Integrated executive reasoning.
+
+Canonical Producer
+
+Executive Assessment Engine
 
 ---
 
@@ -399,32 +445,14 @@ State Engine
 
 Discovery's canonical executive understanding.
 
-Canonical Producer:
+Canonical Producer
 
 Executive Assessment
 
-Consumes:
+Primary Consumers
 
-- Organizational Conditions
-- Organizational Theories
-- Organizational Concepts
-- Organizational Beliefs
-- Organizational Mechanisms
-
-Primary Consumers:
-
-- Organizational Prediction
-- Executive Projection
-- Organizational Memory
-- Atlas
-
-Runtime Representation:
-
-OrganizationalUnderstandingState
-
-Executive Representation:
-
-Executive Projection
+- Prediction
+- Executive Decision
 
 ---
 
@@ -432,249 +460,269 @@ Executive Projection
 
 ## Organizational Prediction
 
-### Definition
+Most likely future organizational state.
 
-Discovery's best estimate of a future organizational outcome.
-
-### Canonical Producer
+Canonical Producer
 
 Prediction Engine
-
-### Consumes
-
-- Organizational Conditions
-- Organizational Learning Profile
-
-### Primary Consumers
-
-- Prediction Reflection
-
-### Runtime Representation
-
-OrganizationRuntime.organizationalPredictions
 
 ---
 
 ## Prediction Reflection
 
-### Definition
+Explains why Discovery produced a prediction.
 
-Executive explanation describing why Discovery believes a prediction.
-
-### Canonical Producer
+Canonical Producer
 
 Prediction Reflection Engine
-
-### Consumes
-
-- Organizational Prediction
-
-### Primary Consumers
-
-- Executive Assessment
-
-### Runtime Representation
-
-OrganizationRuntime.predictionReflection
 
 ---
 
 ## Prediction Evaluation
 
-### Definition
+Evaluates prediction quality against reality.
 
-Discovery's canonical evaluation of how accurately a previous organizational prediction matched later organizational reality.
+Canonical Producer
 
-Prediction Evaluation closes Discovery's longitudinal prediction loop.
+Prediction Evaluation Engine
 
-Prediction Reflection explains **why Discovery made a prediction**.
+Primary Consumers
 
-Prediction Evaluation explains **whether Discovery was correct** and **what Discovery learned from the outcome**.
-
-### Purpose
-
-Convert historical prediction performance into organizational learning.
-
-### Canonical Producer
-
-Prediction Outcome Evaluation Engine
-
-### Consumes
-
-- Organizational Prediction
-- Prediction Reflection
-- Organizational Conditions
-- Organizational Understanding
-- Later Organizational Observations
-
-### Primary Consumers
-
-- Organizational Learning Profile
-- Executive Assessment
-- Future Organizational Prediction
-- Atlas
-
-### Runtime Representation
-
-OrganizationRuntime.predictionEvaluations
-
-### Executive Representation
-
-Executive Projection
-
-Executive Projection exposes:
-
-- Prediction Accuracy
-- Prediction Calibration
-- Prediction Track Record
-- Learning Signals
-
-### Provenance
-
-Every Prediction Evaluation preserves references back to:
-
-- Organizational Prediction
-- Prediction Reflection
-- Organizational Conditions
-- Organizational Understanding
-- Organizational Evidence
-- Observed Organizational Outcome
-
-### Produced Learning
-
-Prediction Evaluation generates:
-
-- Prediction Accuracy
-- Confidence Calibration
-- Confidence Adjustment
-- Outcome Classification
-- Explanation of Success or Failure
-- Learning Signal
-- Recommended Confidence
+- Organizational Learning
 
 ---
 
-# Longitudinal Objects
+# Decision Objects
 
-## Organizational Understanding State
+## Executive Decision
 
-Persistent executive understanding.
+Defines the executive business problem.
 
-Canonical Producer:
+Canonical Producer
 
-Executive Assessment
+Decision Operating System
 
----
+Contains
 
-## Organizational Memory
+- objective
+- rationale
+- target conditions
+- success metrics
+- constraints
+- assumptions
+- confidence
 
-Persistent organizational cognition.
+Primary Consumers
 
-Canonical Producer:
-
-Runtime
-
----
-
-## Belief Revision
-
-Tracks belief evolution.
-
-Canonical Producer:
-
-Belief Engine
+- Optimization Operating System
 
 ---
 
-## Theory Evolution
+# Optimization Objects
 
-Tracks theory evolution.
+## Optimization Variable
 
-Canonical Producer:
+Canonical organizational variable selected for optimization.
 
-Theory Engine
+Canonical Producer
+
+CAP-OPT-001
+
+Contains
+
+- condition
+- role
+- weight
+- objective
+- network influence
+- executive priority
+- rationale
+
+Primary Consumers
+
+- Executive Optimization Objective
 
 ---
 
-## Learning Profile
+## Executive Optimization Objective
 
-Summarizes accumulated organizational learning.
+Machine-readable optimization problem.
 
-Canonical Producer:
+Canonical Producer
 
-Learning Engine
+CAP-OPT-002
 
-Consumes:
+Contains
 
-- Belief Revision
-- Prediction Evaluation
+- optimization variables
+- success targets
+- optimization constraints
+- preferences
+- tradeoff strategy
+
+Primary Consumers
+
+- Candidate Strategy Generation
 
 ---
 
-# Metacognitive Objects
+## Candidate Strategy
 
-Current canonical objects include:
+Potential organizational intervention.
 
-- Theory Validation
-- Confidence Assessment
-- Missing Evidence
-- Competing Theory
-- Investigation Opportunity
-- Confidence Calibration
+Canonical Producer
+
+CAP-OPT-003
+
+Primary Consumers
+
+- Constraint Evaluation
+- Simulation
+
+---
+
+## Constraint Evaluation
+
+Evaluation of strategy feasibility.
+
+Canonical Producer
+
+CAP-OPT-004
+
+Constraint States
+
+- Satisfied
+- Violated
+- Requires Simulation
+- Insufficient Evidence
+
+Primary Consumers
+
+- Optimization
+
+---
+
+## Strategy Ranking
+
+Optimization score assigned to a simulated strategy.
+
+Canonical Producer
+
+Optimization Engine
+
+Primary Consumers
+
+- Executive Recommendation
+
+---
+
+# Simulation Objects
+
+## Organizational Scenario
+
+Projected organizational future.
+
+Canonical Producer
+
+Simulation Operating System
+
+Primary Consumers
+
+- Scenario Comparison
+
+---
+
+## Scenario Comparison
+
+Comparison across simulated futures.
+
+Canonical Producer
+
+compareExecutiveScenarios()
+
+Primary Consumers
+
+- Optimization Engine
 
 ---
 
 # Executive Objects
 
-## Executive Assessment
-
-Integrated executive reasoning.
-
-Canonical Producer:
-
-Executive Assessment Engine
-
-Primary Consumers:
-
-- Organizational Understanding
-
----
-
 ## Executive Recommendation
 
-Highest-value organizational action.
+Highest-ranked organizational strategy.
 
-Canonical Producer:
+Canonical Producer
 
-Executive Assessment
+Optimization Operating System
 
 ---
 
-# Projection Objects
+## Executive Communication
+
+Executive explanation of Discovery's reasoning.
+
+Canonical Producer
+
+Executive Communication Engine
+
+---
 
 ## Executive Projection
 
-Transforms cognition into presentation-ready executive intelligence.
+Presentation-ready executive cognition.
 
-Canonical Producer:
+Canonical Producer
 
 Executive Projection Compiler
-
-Primary Consumers:
-
-- Executive Workspace
-- Executive Experience
-- Atlas
 
 ---
 
 ## Executive Experience
 
-Presentation layer only.
+Presentation layer.
 
 Consumes Executive Projection.
 
 Never recreates cognition.
+
+---
+
+# Longitudinal Objects
+
+## Decision Record
+
+Persistent executive decision history.
+
+Canonical Producer
+
+Decision Operating System
+
+Contains
+
+- decision
+- recommendation
+- optimization objective
+- simulation
+- implementation
+- outcome
+- learning
+
+---
+
+## Organizational Learning
+
+Persistent improvement in Discovery's reasoning.
+
+Canonical Producer
+
+Learning Operating System
+
+Consumes
+
+- Prediction Evaluation
+- Optimization Evaluation
+- Decision Outcomes
 
 ---
 
@@ -683,13 +731,13 @@ Never recreates cognition.
 1. Every cognitive object has exactly one canonical producer.
 2. Every capability owns one primary cognitive object.
 3. Every object declares its consumers.
-4. Higher-order cognition preserves provenance.
+4. Every higher-order object preserves provenance.
 5. Runtime persistence preserves identity.
 6. Confidence belongs to the producing transformation.
 7. Executive Projection never recreates cognition.
 8. Executive Experience never bypasses Executive Projection.
-9. Atlas verifies object creation, persistence, evolution, executive reach, and longitudinal learning.
-10. Multiple producers for the same cognitive object indicate an architectural defect.
+9. Every executive recommendation remains traceable to evidence.
+10. Atlas validates every cognitive object.
 
 ---
 
@@ -700,20 +748,39 @@ Never recreates cognition.
 - Perceptual Objects
 - Interpretive Objects
 - Predictive Objects
-- Organizational Concept
-- Organizational Understanding
-- Executive Assessment
-- Executive Projection
+- Decision Objects
+- Optimization Objects
+- Simulation Objects
+- Longitudinal Objects
+- Executive Objects
+- Metacognitive Objects
 
-## Current Focus
+---
 
-Continue refining:
+# Current Architectural Focus
 
-- Organizational Concept Formation
-- Prediction Outcome Evaluation
-- Executive Understanding
-- Confidence Calibration
-- Longitudinal Understanding
-- Organizational Memory
+Discovery's architecture has evolved from an Organizational Understanding Engine into a complete Decision Intelligence Platform.
 
-Discovery now possesses a complete cognitive pipeline from organizational evidence through executive understanding, prediction, prediction reflection, and prediction evaluation. The next phase of development focuses on enabling Discovery to learn continuously from the outcomes of its own predictions, improving confidence calibration and long-term organizational intelligence.
+Current development focuses on:
+
+- Optimization refinement
+- Constraint reasoning
+- Strategy generation
+- Decision recording
+- Learning flywheel
+- Executive experience
+
+Future work should strengthen existing cognitive transformations rather than introduce parallel reasoning systems.
+
+---
+
+# Definition of Success
+
+The Cognitive Object Model is complete when:
+
+- every major cognitive transformation produces a canonical object,
+- every object has one canonical producer,
+- every recommendation remains traceable to organizational evidence,
+- every decision becomes organizational memory,
+- every completed decision improves future optimization,
+- and Discovery continuously transforms organizational evidence into progressively better executive decisions.

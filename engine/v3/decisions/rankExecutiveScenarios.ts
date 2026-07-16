@@ -1,4 +1,8 @@
 import type {
+  ExecutiveDecision,
+} from "../model/simulate/executiveDecision";
+
+import type {
   ExecutiveScenarioComparisonEntry,
   ExecutiveScenarioComparisonSet,
 } from "./compareExecutiveScenarios";
@@ -12,6 +16,8 @@ export type RankedExecutiveScenario = {
 
   score: number;
 
+  objectiveAlignmentScore: number;
+
   organizationalBenefitScore: number;
 
   organizationalRiskScore: number;
@@ -24,6 +30,9 @@ export type RankedExecutiveScenario = {
 };
 
 export type RankExecutiveScenariosInput = {
+  executiveDecision:
+    ExecutiveDecision;
+
   comparisonSet:
     ExecutiveScenarioComparisonSet;
 };
@@ -53,18 +62,134 @@ function recommendationScore(
   }
 }
 
-function buildReasons(
+function conditionOutcomeScore(
+  change:
+    ExecutiveScenarioComparisonEntry["targetConditionChanges"][number],
+): number {
+  switch (change.change) {
+    case "improved":
+      return 1;
+
+    case "unchanged":
+      return 0.5;
+
+    case "worsened":
+      return 0;
+  }
+}
+
+function objectiveAlignmentScore(
+  executiveDecision:
+    ExecutiveDecision,
+
   entry:
     ExecutiveScenarioComparisonEntry,
+): number {
+  if (
+    executiveDecision.targetConditionIds
+      .length === 0
+  ) {
+    return 0.5;
+  }
+
+  const changesByConditionId =
+    new Map(
+      entry.targetConditionChanges.map(
+        (change) => [
+          change.conditionId,
+          change,
+        ],
+      ),
+    );
+
+  const targetScores =
+    executiveDecision.targetConditionIds.map(
+      (conditionId) => {
+        const change =
+          changesByConditionId.get(
+            conditionId,
+          );
+
+        return change
+          ? conditionOutcomeScore(
+              change,
+            )
+          : 0.5;
+      },
+    );
+
+  return clamp01(
+    targetScores.reduce(
+      (sum, score) =>
+        sum + score,
+      0,
+    ) /
+      targetScores.length,
+  );
+}
+
+function buildReasons(
+  executiveDecision:
+    ExecutiveDecision,
+
+  entry:
+    ExecutiveScenarioComparisonEntry,
+
+  targetScore:
+    number,
 ): string[] {
   const reasons: string[] = [];
+
+  const improvedTargets =
+    entry.targetConditionChanges
+      .filter(
+        (change) =>
+          executiveDecision
+            .targetConditionIds
+            .includes(
+              change.conditionId,
+            ) &&
+          change.change ===
+            "improved",
+      );
+
+  const worsenedTargets =
+    entry.targetConditionChanges
+      .filter(
+        (change) =>
+          executiveDecision
+            .targetConditionIds
+            .includes(
+              change.conditionId,
+            ) &&
+          change.change ===
+            "worsened",
+      );
+
+  if (improvedTargets.length > 0) {
+    reasons.push(
+      `${improvedTargets.length} executive target condition(s) improve.`,
+    );
+  }
+
+  if (worsenedTargets.length > 0) {
+    reasons.push(
+      `${worsenedTargets.length} executive target condition(s) worsen.`,
+    );
+  }
+
+  reasons.push(
+    `Objective alignment is ${Math.round(
+      targetScore * 100,
+    )}%.`,
+  );
 
   if (
     entry.improvedConditionIds.length >
     0
   ) {
     reasons.push(
-      `${entry.improvedConditionIds.length} organizational condition(s) improve.`,
+      `${entry.improvedConditionIds.length} organizational condition(s) improve overall.`,
     );
   }
 
@@ -73,7 +198,7 @@ function buildReasons(
     0
   ) {
     reasons.push(
-      `${entry.worsenedConditionIds.length} organizational condition(s) worsen.`,
+      `${entry.worsenedConditionIds.length} organizational condition(s) worsen overall.`,
     );
   }
 
@@ -114,6 +239,9 @@ function buildReasons(
 }
 
 function scoreScenario(
+  executiveDecision:
+    ExecutiveDecision,
+
   entry:
     ExecutiveScenarioComparisonEntry,
 ): Omit<
@@ -123,6 +251,12 @@ function scoreScenario(
   const changedConditionCount =
     entry.improvedConditionIds.length +
     entry.worsenedConditionIds.length;
+
+  const targetScore =
+    objectiveAlignmentScore(
+      executiveDecision,
+      entry,
+    );
 
   const organizationalBenefitScore =
     changedConditionCount === 0
@@ -157,15 +291,17 @@ function scoreScenario(
 
   const score =
     clamp01(
-      organizationalBenefitScore *
-        0.4 +
+      targetScore *
+        0.45 +
+        organizationalBenefitScore *
+          0.2 +
         confidenceScore *
-          0.25 +
+          0.15 +
         normalizedRecommendationScore *
-          0.25 +
+          0.15 +
         (1 -
           organizationalRiskScore) *
-          0.1,
+          0.05,
     );
 
   return {
@@ -177,6 +313,9 @@ function scoreScenario(
 
     score,
 
+    objectiveAlignmentScore:
+      targetScore,
+
     organizationalBenefitScore,
 
     organizationalRiskScore,
@@ -187,24 +326,26 @@ function scoreScenario(
       normalizedRecommendationScore,
 
     reasonsForRank:
-      buildReasons(entry),
+      buildReasons(
+        executiveDecision,
+        entry,
+        targetScore,
+      ),
   };
 }
 
-/**
- * Ranks completed executive scenarios without synthesizing a final
- * recommendation.
- *
- * Version 1 uses deterministic scoring across organizational benefit,
- * organizational risk, confidence, and the existing scenario-level
- * recommendation.
- */
 export function rankExecutiveScenarios({
+  executiveDecision,
   comparisonSet,
 }: RankExecutiveScenariosInput): RankedExecutiveScenario[] {
   return comparisonSet
     .scenarioComparisons
-    .map(scoreScenario)
+    .map((entry) =>
+      scoreScenario(
+        executiveDecision,
+        entry,
+      ),
+    )
     .sort((left, right) => {
       if (
         right.score !== left.score
@@ -212,6 +353,26 @@ export function rankExecutiveScenarios({
         return (
           right.score -
           left.score
+        );
+      }
+
+      if (
+        right.objectiveAlignmentScore !==
+        left.objectiveAlignmentScore
+      ) {
+        return (
+          right.objectiveAlignmentScore -
+          left.objectiveAlignmentScore
+        );
+      }
+
+      if (
+        right.confidenceScore !==
+        left.confidenceScore
+      ) {
+        return (
+          right.confidenceScore -
+          left.confidenceScore
         );
       }
 

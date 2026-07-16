@@ -294,8 +294,20 @@ console.dir(
       targetConditionIds:
         option.targetConditionIds,
 
+      constraintEvaluations:
+        option.constraintEvaluations,
+
       satisfiedConstraintIndexes:
-        option.satisfiedConstraintIndexes,
+        option.constraintEvaluations
+          .filter(
+            (evaluation) =>
+              evaluation.status ===
+              "satisfied",
+          )
+          .map(
+            (evaluation) =>
+              evaluation.constraintIndex,
+          ),
 
       risks:
         option.risks,
@@ -444,7 +456,9 @@ const checks: ExperimentCheck[] = [
   },
 
   {
-    name: "Required constraints respected",
+    name:
+      "Required constraints explicitly evaluated",
+
     passed:
       reasoningResult.interventionOptions.every(
         (option) =>
@@ -456,13 +470,65 @@ const checks: ExperimentCheck[] = [
                   ?.required,
             )
             .every((index) =>
-              option.satisfiedConstraintIndexes.includes(
-                index,
+              option.constraintEvaluations.some(
+                (evaluation) =>
+                  evaluation.constraintIndex ===
+                  index,
               ),
             ),
       ),
+
     detail:
-      "Every generated option satisfies all required decision constraints.",
+      "Every generated option contains an explicit evaluation for every required decision constraint.",
+  },
+
+  {
+    name:
+      "Unverified people constraint is not falsely satisfied",
+
+    passed:
+      reasoningResult.interventionOptions.every(
+        (option) =>
+          option.constraintEvaluations
+            .filter(
+              (evaluation) =>
+                evaluation.constraintIndex ===
+                0,
+            )
+            .every(
+              (evaluation) =>
+                evaluation.status !==
+                "satisfied",
+            ),
+      ),
+
+    detail:
+      "The no-headcount constraint remains unresolved until structured implementation evidence is available.",
+  },
+
+  {
+    name:
+      "No generated option has a known required-constraint violation",
+
+    passed:
+      reasoningResult.interventionOptions.every(
+        (option) =>
+          option.constraintEvaluations
+            .filter(
+              (evaluation) =>
+                executiveDecision.constraints[
+                  evaluation.constraintIndex
+                ]?.required,
+            )
+            .every(
+              (evaluation) =>
+                evaluation.status !==
+                "violated",
+            ),
+      ),
+
+    detail:
+      "Generated options may require evidence, but none is currently known to violate the required constraint.",
   },
 
   {

@@ -18,6 +18,18 @@ export type ExecutiveScenarioComparisonEntry = {
 
   scenarioId: string;
 
+  /**
+   * Complete before-and-after movement for every organizational
+   * condition included in the scenario comparison.
+   *
+   * This is the canonical source for magnitude-aware ranking,
+   * success-metric evaluation, and executive variable reporting.
+   */
+  conditionChanges: ConditionChange[];
+
+  /**
+   * Condition changes directly targeted by the intervention.
+   */
   targetConditionChanges: ConditionChange[];
 
   improvedConditionIds: string[];
@@ -112,6 +124,8 @@ function buildComparisonEntry(
 
     scenarioId:
       scenario.simulatedOrganizationState.id,
+
+    conditionChanges,
 
     targetConditionChanges:
       conditionChanges.filter((change) =>
@@ -218,9 +232,11 @@ function buildComparisonEntry(
 /**
  * Compares completed executive scenarios without ranking them.
  *
- * This producer preserves the result of each scenario, identifies shared
- * outcomes, and surfaces the factors that differentiate the available
- * interventions.
+ * This producer preserves the complete result of each scenario,
+ * identifies shared outcomes, and surfaces the factors that
+ * differentiate the available interventions.
+ *
+ * It performs no independent organizational reasoning.
  */
 export function compareExecutiveScenarios({
   scenarios,
