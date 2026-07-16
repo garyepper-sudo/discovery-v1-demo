@@ -8,30 +8,30 @@ Read this document before making architectural, product, UX, or implementation d
 
 # Discovery Identity
 
-Discovery is an **Executive Decision Workspace**.
+Discovery is an **Executive Cognitive Operating System**.
 
-Its purpose is to help organizations continuously improve the quality of their decisions.
+Its purpose is to continuously improve the quality of executive judgment.
 
-Discovery does not replace executive judgment.
+Discovery does not replace executive decision-making.
 
-Discovery improves it.
+Discovery improves it through structured organizational cognition.
 
 Discovery helps executive teams:
 
-- build organizational understanding,
-- identify executive decisions,
-- evaluate alternative strategies,
-- optimize organizational outcomes,
-- simulate organizational futures,
-- communicate executive recommendations,
-- continuously improve organizational judgment through learning.
+* understand organizational reality,
+* identify the highest-leverage decisions,
+* evaluate alternative interventions,
+* optimize organizational objectives,
+* simulate organizational futures,
+* communicate executive reasoning,
+* continuously improve organizational judgment through learning.
 
 Discovery is **not**:
 
-- a dashboard,
-- a chatbot,
-- a document repository,
-- a reporting platform.
+* a dashboard,
+* a chatbot,
+* a document repository,
+* a reporting platform.
 
 Discovery organizes itself around **Executive Decisions**.
 
@@ -39,11 +39,11 @@ Discovery organizes itself around **Executive Decisions**.
 
 # Current Product Focus
 
-Discovery has entered **Product Validation**.
+Discovery has entered **Executive Experience and Product Validation**.
 
-The reasoning architecture is considered stable.
+The Cognitive Operating System is considered architecturally stable.
 
-The current objective is validating one complete executive decision flywheel.
+Current development focuses on exposing existing cognition through an executive experience that supports one complete decision flywheel.
 
 Current MVP:
 
@@ -53,6 +53,10 @@ Question
 ↓
 
 Current Understanding
+
+↓
+
+Executive Explanation
 
 ↓
 
@@ -87,25 +91,29 @@ Learning
 Better Recommendation
 ```
 
-Everything else is secondary until this workflow has been validated.
+Everything else is secondary until this workflow has been validated with real users.
 
 ---
 
 # Current Architecture
 
-Discovery now possesses a complete first-generation Decision Intelligence architecture.
+Discovery is organized as cooperating **Cognitive Operating Systems**.
 
-Current Operating Systems include:
+Current Operating Systems:
 
-- Understanding
-- Prediction
-- Decision
-- Optimization
-- Simulation
-- Communication
-- Learning
+* Organizational Understanding
+* Organizational Learning
+* Organizational Epistemics
+* Executive Decision
+* Executive Optimization
+* Organizational Simulation
+* Executive Communication
 
-Do not introduce new Operating Systems unless an existing canonical producer cannot reasonably be extended.
+Every Operating System owns a distinct cognitive responsibility.
+
+Consumers reuse canonical cognitive objects rather than recreating reasoning.
+
+Do not introduce new Operating Systems unless an existing responsibility cannot reasonably be extended.
 
 Future work should strengthen existing cognition rather than introduce parallel reasoning.
 
@@ -117,42 +125,56 @@ Future work should strengthen existing cognition rather than introduce parallel 
 
 ```text
 Evidence
-
 ↓
-
 Observations
-
 ↓
-
 Mechanisms
-
 ↓
-
 Beliefs
-
 ↓
-
 Concepts
-
 ↓
-
 Theories
-
 ↓
-
 Organizational Conditions
-
 ↓
-
 Organizational State
-
 ↓
-
 Executive Assessment
-
 ↓
-
 Organizational Understanding
+```
+
+---
+
+## Organizational Learning
+
+```text
+Organizational Understanding
+↓
+Belief Evolution
+↓
+Theory Evolution
+↓
+Prediction Evaluation
+↓
+Learning Profile
+```
+
+---
+
+## Organizational Epistemics
+
+```text
+Evidence
++
+Learning
++
+Prediction Evaluation
+↓
+Organizational Uncertainty
+↓
+Investigation Opportunity Refinement
 ```
 
 ---
@@ -161,45 +183,25 @@ Organizational Understanding
 
 ```text
 Organizational Understanding
-
 ↓
-
 Prediction
-
 ↓
-
 Executive Decision
-
 ↓
-
 Optimization Variable Selection
-
 ↓
-
 Executive Optimization Objective
-
 ↓
-
 Intervention Generation
-
 ↓
-
 Constraint Evaluation
-
 ↓
-
 Organizational Simulation
-
 ↓
-
 Scenario Comparison
-
 ↓
-
 Executive Decision Ranking
-
 ↓
-
 Executive Recommendation
 ```
 
@@ -208,15 +210,19 @@ Executive Recommendation
 ## Executive Communication
 
 ```text
-Executive Recommendation
-
+Executive Assessment
++
+Organizational Uncertainty
++
+Refined Investigation Opportunities
 ↓
-
-Executive Communication
-
+Executive Explanation
 ↓
-
-Executive Experience
+Executive Projection
+↓
+Executive Narrative
+↓
+Executive Workspace
 ```
 
 ---
@@ -225,19 +231,28 @@ Executive Experience
 
 Current canonical producers include:
 
-- Organizational Understanding
-- Organizational Prediction
-- Prediction Reflection
-- Executive Decision
-- Optimization Variable Selection
-- Executive Optimization Objective
-- Organizational Simulation
-- Scenario Comparison
-- Executive Decision Ranking
-- Executive Recommendation
-- Executive Communication
+* Organizational Understanding
+* Organizational Learning Profile
+* Organizational Prediction
+* Prediction Reflection
+* Organizational Uncertainty
+* Investigation Opportunity Refinement
+* Executive Decision
+* Executive Optimization Objective
+* Organizational Simulation
+* Scenario Comparison
+* Executive Decision Ranking
+* Executive Recommendation
+* Executive Explanation
+* Executive Narrative
 
 Never duplicate reasoning already produced by these canonical capabilities.
+
+Projection transports cognition.
+
+Narrative communicates cognition.
+
+The UI presents cognition.
 
 ---
 
@@ -245,22 +260,22 @@ Never duplicate reasoning already produced by these canonical capabilities.
 
 Every feature should improve at least one of:
 
-- Organizational Understanding
-- Decision Quality
-- Optimization Quality
-- Executive Confidence
-- Organizational Learning
+* Organizational Understanding
+* Executive Judgment
+* Decision Quality
+* Executive Confidence
+* Organizational Learning
 
 Discovery should:
 
-- surface understanding before advice,
-- explain every recommendation,
-- expose tradeoffs,
-- expose uncertainty,
-- identify missing evidence,
-- earn additional organizational context,
-- strengthen executive thinking,
-- continuously improve future decisions.
+* surface understanding before recommendations,
+* explain every recommendation,
+* expose uncertainty,
+* expose tradeoffs,
+* identify missing evidence,
+* recommend the highest-value investigations,
+* strengthen executive thinking,
+* continuously improve future decisions.
 
 Executives own decisions.
 
@@ -272,52 +287,47 @@ Discovery improves judgment.
 
 Completed:
 
-- Canonical Organizational Understanding
-- Canonical Prediction
-- Canonical Executive Decision
-- Optimization Variable Selection
-- Executive Optimization Objective
-- Organizational Simulation
-- Scenario Comparison
-- Executive Decision Ranking
-- Executive Recommendation
-- Executive Communication
-- Decision Cycle benchmark
-- Optimization benchmark
-- Runtime persistence
-- Longitudinal learning
+* Canonical Organizational Understanding
+* Canonical Organizational Learning
+* Canonical Organizational Epistemics
+* Canonical Prediction
+* Canonical Executive Decision
+* Executive Optimization
+* Organizational Simulation
+* Scenario Comparison
+* Executive Decision Ranking
+* Executive Recommendation
+* Executive Explanation
+* Executive Narrative
+* Stress Testing Framework
+* Constraint Viability Testing
+* Runtime Persistence
+* Longitudinal Learning
 
 Architecture Health:
 
 **100%**
 
-Canonical Capabilities:
-
-**28**
-
-Discovery now possesses canonical Decision and Optimization Operating Systems.
+Discovery now possesses a complete first-generation Executive Cognitive Operating System.
 
 ---
 
 # Current Development Phase
 
-Discovery has completed its first-generation Decision Intelligence architecture.
-
 The primary bottleneck is no longer cognition.
 
-The primary bottleneck is product experience.
+The primary bottleneck is **Executive Experience**.
 
-Current priorities are:
+Current priorities:
 
-- Executive Decision Workspace
-- Decision Flywheel
-- Recommendation Explainability
-- Constraint Reasoning
-- Collaborative Simulation
-- Board-ready Decision Reports
-- Customer Validation
+* Executive Workspace
+* Executive Explanation
+* Executive Narrative
+* Board-ready Executive Reports
+* Executive Decision Flywheel
+* Customer Validation
 
-Future work should improve executive decision quality rather than expand architecture.
+Future work should expose existing cognition rather than introduce new reasoning.
 
 ---
 
@@ -325,18 +335,18 @@ Future work should improve executive decision quality rather than expand archite
 
 ## Primary Objective
 
-**Validate the Executive Decision Flywheel**
+**Complete the Executive Experience**
 
 Tasks
 
-1. Complete the Executive Decision Workspace.
-2. Surface the Executive Optimization Objective in the UI.
-3. Improve optimization-aware scenario comparison.
-4. Strengthen constraint evaluation.
-5. Produce board-ready decision reports.
-6. Validate the complete executive decision workflow with users.
+1. Complete Executive Workspace integration.
+2. Surface Executive Explanation throughout the UI.
+3. Improve Executive Narrative quality.
+4. Improve board-ready reporting.
+5. Validate executive workflows with users.
+6. Continue behavioral stress testing.
 
-Do not introduce secondary workflows until the Decision Flywheel has been validated.
+Do not introduce additional reasoning layers until existing cognition is fully exposed.
 
 ---
 
@@ -345,17 +355,25 @@ Do not introduce secondary workflows until the Decision Flywheel has been valida
 Before implementing anything ask:
 
 1. Does this improve executive understanding?
-2. Does this improve decision quality?
-3. Does this improve optimization quality?
+2. Does this improve executive judgment?
+3. Does this improve decision quality?
 4. Does this improve organizational learning?
 5. Which Operating System owns it?
 6. Which capability owns it?
-7. Is there already a canonical producer?
-8. Can the canonical producer be extended?
+7. Does a canonical producer already exist?
+8. Can an existing producer be extended?
+
+Reasoning belongs in producers.
+
+Projection transports cognition.
+
+Narrative communicates cognition.
+
+UI presents cognition.
 
 Architecture serves the product.
 
-Product serves executive decisions.
+The product serves executive decisions.
 
 Every completed decision should improve the next one.
 
@@ -376,4 +394,4 @@ npm run discovery:brief
 
 Paste the outputs into a new chat together with this snapshot.
 
-This provides the complete canonical architectural state, product state, and cognitive pipeline required to continue Discovery without relying on previous conversation history.
+This provides the complete canonical architectural state, cognitive state, product state, and Executive Cognitive Operating System required to continue Discovery without relying on previous conversation history.

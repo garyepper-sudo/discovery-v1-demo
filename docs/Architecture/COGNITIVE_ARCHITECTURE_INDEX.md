@@ -1,16 +1,33 @@
 # Discovery Cognitive Architecture Index
 
-**Status:** Proposed
+**Status:** Canonical (Sprint 73)
 
 ---
 
 # Purpose
 
-This document is the entry point for Discovery's cognitive architecture.
+This document is the entry point for Discovery's Executive Cognitive Operating System.
 
-It explains how the architectural documents relate to one another and which document answers which architectural question.
+It explains how Discovery's architectural documents relate to one another and which document answers which architectural question.
 
-Discovery's architecture is described through several complementary views rather than a single document.
+Discovery's architecture is intentionally described through several complementary views rather than a single document.
+
+Each document describes one aspect of the same cognitive system.
+
+---
+
+# Architectural Philosophy
+
+Discovery is organized around **canonical cognition**.
+
+Every architectural document should answer one of four questions:
+
+1. **What does Discovery know?**
+2. **How does Discovery think?**
+3. **Who owns each responsibility?**
+4. **Where is each capability implemented?**
+
+Together these documents define Discovery's Executive Cognitive Operating System.
 
 ---
 
@@ -18,127 +35,221 @@ Discovery's architecture is described through several complementary views rather
 
 ## 1. Cognitive Object Model
 
-Document
+**Document**
 
-```
+```text
 COGNITIVE_OBJECT_MODEL.md
 ```
 
 Answers
 
-- What cognitive objects exist?
-- What does each object mean?
-- Who produces it?
-- Who consumes it?
-- How is it represented?
+* What cognitive objects exist?
+* What does each object represent?
+* Who produces it?
+* Who consumes it?
+* Where is it persisted?
+* How does it evolve?
 
-Primary focus
+Primary Focus
 
-**Knowledge**
+**Canonical Knowledge**
 
 ---
 
 ## 2. Cognitive Flow Map
 
-Document
+**Document**
 
-```
+```text
 COGNITIVE_FLOW_MAP.md
 ```
 
 Answers
 
-- How does cognition move?
-- What transforms into what?
-- Where does executive understanding originate?
-- Where are missing transformations?
+* How does cognition move?
+* Which object transforms into which?
+* Which Operating System owns each transformation?
+* Where does executive reasoning originate?
+* Where does organizational learning occur?
 
-Primary focus
+Primary Focus
 
-**Transformation**
+**Cognitive Transformation**
 
 ---
 
-## 3. Cognitive Operating System
+## 3. Cognitive Operating Systems
 
-Document
+**Document**
 
-```
-COGNITIVE_OPERATING_SYSTEM.md
+```text
+Cognitive Operating Systems/
 ```
 
 Answers
 
-- Which operating systems exist?
-- Which subsystems belong to each operating system?
-- Which subsystem owns each capability?
+* Which Operating Systems exist?
+* What responsibility does each Operating System own?
+* Which cognitive objects belong to each Operating System?
+* Which capabilities belong to each Operating System?
 
-Primary focus
+Primary Focus
 
-**Ownership**
+**Cognitive Responsibility**
 
 ---
 
-## 4. Cognitive Capability Registry
+## 4. Decision Intelligence Architecture
 
-Document
+**Document**
 
+```text
+DECISION_INTELLIGENCE_ARCHITECTURE.md
 ```
+
+Answers
+
+* How does executive decision-making occur?
+* How do optimization and simulation interact?
+* How are recommendations produced?
+* How does executive judgment improve over time?
+
+Primary Focus
+
+**Executive Decision Intelligence**
+
+---
+
+## 5. Cognitive Capability Registry
+
+**Document**
+
+```text
 COGNITIVE_CAPABILITY_REGISTRY.json
 ```
 
 Answers
 
-- Which capabilities exist?
-- What are their canonical producers?
-- What do they consume?
-- What do they produce?
-- What higher-order cognition depends on them?
+* Which capabilities exist?
+* Which capability owns each producer?
+* What does each capability consume?
+* What does each capability produce?
+* Which downstream cognition depends upon it?
 
-Primary focus
+Primary Focus
 
-**Capability**
+**Canonical Capabilities**
 
 ---
 
-## 5. Cognitive File Registry
+## 6. Cognitive File Registry
 
-Document
+**Document**
 
-```
+```text
 COGNITIVE_FILE_REGISTRY.json
 ```
 
 Answers
 
-- Which source files implement which capabilities?
-- Which files are canonical?
-- Which files require review?
+* Which source files implement each capability?
+* Which implementation is canonical?
+* Which files require review?
 
-Primary focus
+Primary Focus
 
 **Implementation**
 
 ---
 
-## 6. Cognitive Capability Audit
+## 7. Cognitive Capability Audit
 
-Document
+**Document**
 
-```
+```text
 COGNITIVE_CAPABILITY_AUDIT.json
 ```
 
 Answers
 
-- Are there orphaned capabilities?
-- Are canonical producers missing?
-- Are dependencies broken?
-- Is the architecture internally consistent?
+* Are canonical producers missing?
+* Are dependencies complete?
+* Are Runtime destinations present?
+* Are consumers connected?
+* Does the architecture remain internally consistent?
 
-Primary focus
+Primary Focus
 
-**Integrity**
+**Architectural Integrity**
+
+---
+
+## 8. Architecture State
+
+**Document**
+
+```text
+DISCOVERY_ARCHITECTURE_STATE.json
+```
+
+Answers
+
+* What is the current architecture?
+* Which Operating Systems are complete?
+* Which capabilities remain active?
+* What is the current architectural milestone?
+
+Primary Focus
+
+**Current State**
+
+---
+
+# Executive Cognitive Operating System
+
+Discovery currently consists of cooperating Cognitive Operating Systems.
+
+```text
+Perception
+
+↓
+
+Understanding
+
+↓
+
+Learning
+
+↓
+
+Epistemics
+
+↓
+
+Decision
+
+↓
+
+Optimization
+
+↓
+
+Simulation
+
+↓
+
+Executive Communication
+
+↓
+
+Executive Experience
+```
+
+Every Operating System owns one cognitive responsibility.
+
+Consumers reuse canonical cognition.
+
+Presentation never recreates reasoning.
 
 ---
 
@@ -149,11 +260,11 @@ Operating System
 
 ↓
 
-Subsystem
+Capability
 
 ↓
 
-Capability
+Canonical Producer
 
 ↓
 
@@ -161,8 +272,24 @@ Cognitive Object
 
 ↓
 
-Implementation
+Runtime Object
+
+↓
+
+Projection
+
+↓
+
+Narrative
+
+↓
+
+Executive Experience
 ```
+
+Ownership always flows downward.
+
+Reasoning never flows upward.
 
 ---
 
@@ -177,19 +304,7 @@ Evidence
 
 ↓
 
-Entities
-
-↓
-
 Observations
-
-↓
-
-Signals
-
-↓
-
-Phenomena
 
 ↓
 
@@ -221,12 +336,88 @@ Executive Assessment
 
 ↓
 
+Organizational Understanding
+
+↓
+
+Organizational Learning
+
+↓
+
+Organizational Uncertainty
+
+↓
+
+Executive Decision
+
+↓
+
+Executive Recommendation
+
+↓
+
+Executive Explanation
+
+↓
+
 Executive Projection
+
+↓
+
+Executive Narrative
+
+↓
+
+Executive Workspace
+
+↓
+
+Executive Decision
+
+↓
+
+Observed Outcome
+
+↓
+
+Learning
+```
+
+This lifecycle represents Discovery's canonical executive cognition.
+
+---
+
+# Producer → Consumer Architecture
+
+Discovery evolves through canonical producer → consumer migrations.
+
+```text
+Capability
+
+↓
+
+Canonical Producer
+
+↓
+
+Runtime Object
+
+↓
+
+Projection
+
+↓
+
+Narrative
 
 ↓
 
 Executive Experience
 ```
+
+Every new architectural increment should strengthen this chain.
+
+Consumer migration is preferred over introducing duplicate reasoning.
 
 ---
 
@@ -234,25 +425,41 @@ Executive Experience
 
 Discovery is:
 
-- object-oriented cognitively,
-- capability-oriented architecturally,
-- subsystem-oriented organizationally,
-- operating-system-oriented strategically.
+* cognitively object-oriented,
+* capability-oriented architecturally,
+* Operating-System-oriented organizationally,
+* producer-oriented computationally,
+* consumer-oriented evolutionarily.
 
-Files are implementation.
+Files implement capabilities.
 
-Capabilities are architecture.
+Capabilities produce cognition.
 
-Objects are knowledge.
+Objects represent cognition.
 
-Operating Systems are ownership.
+Operating Systems own cognition.
+
+Projection transports cognition.
+
+Narrative communicates cognition.
+
+Executive Experience presents cognition.
 
 ---
 
 # Current Status
 
-The Perception Operating System has been initially mapped.
+Discovery's first-generation Executive Cognitive Operating System is considered architecturally stable.
 
-The remaining operating systems will be mapped incrementally using the same process.
+Current development focuses on:
 
-The architecture should evolve from the cognitive model outward rather than from the implementation inward.
+* Executive Experience
+* Executive Explanation
+* Executive Narrative
+* Executive Trust
+* Behavioral Stress Testing
+* Customer Validation
+
+Future work should evolve existing Operating Systems through consumer migration rather than introducing parallel reasoning.
+
+Architecture now evolves primarily by exposing existing cognition rather than expanding the reasoning engine.

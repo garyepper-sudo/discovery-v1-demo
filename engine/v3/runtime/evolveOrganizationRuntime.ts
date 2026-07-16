@@ -11,6 +11,7 @@ import { synthesizeExplanations } from "../model/judgment/synthesizeExplanations
 import { evaluateExplanations } from "../model/judgment/evaluateExplanations";
 import { detectJudgmentContradictions } from "../model/judgment/detectJudgmentContradictions";
 import { buildExecutiveAssessment } from "../model/judgment/buildExecutiveAssessment";
+import { buildExecutiveExplanation } from "../model/judgment/buildExecutiveExplanation";
 import { inferOrganizationalMechanisms } from "../model/judgment/inferOrganizationalMechanisms";
 import { inferOrganizationalBeliefs } from "../model/beliefs/inferOrganizationalBeliefs";
 import { updateOrganizationalBeliefs } from "../model/beliefs/updateOrganizationalBeliefs";
@@ -74,6 +75,7 @@ export function evolveOrganizationRuntime(params: {
     organizationalExplanations?: any[];
     organizationalJudgments?: any[];
     executiveAssessment?: any;
+    executiveExplanation?: any;
     meaningSignals?: any[];
     organizationalConcepts?: any[];
     semanticConcepts?: any[];
@@ -981,6 +983,18 @@ export function evolveOrganizationRuntime(params: {
       organizationalUncertainty,
     });
 
+  const executiveExplanation =
+    buildExecutiveExplanation({
+      executiveAssessment,
+
+      organizationalUncertainty,
+
+      investigationOpportunities,
+
+      generatedAt:
+        now,
+    });
+
   console.log(
     "Organizational Learning Profile",
     organizationalLearningProfile,
@@ -994,6 +1008,11 @@ export function evolveOrganizationRuntime(params: {
   console.log(
     "Refined Investigation Opportunities",
     investigationOpportunities,
+  );
+
+  console.log(
+    "Executive Explanation",
+    executiveExplanation,
   );
 
   /**
@@ -1152,6 +1171,7 @@ const updatedMemory = {
     organizationalExplanations,
     organizationalJudgments,
     executiveAssessment,
+    executiveExplanation,
     organizationalConditions,
     organizationalState,
     organizationalCausalModel,
@@ -1223,6 +1243,7 @@ const updatedMemory = {
       investigationStrategy,
       investigationOpportunities,
       organizationalUncertainty,
+      executiveExplanation,
     },
 
     understandingClusters,
@@ -1383,6 +1404,9 @@ const updatedMemory = {
 
     executiveAssessment:
       typeof executiveAssessment;
+
+    executiveExplanation:
+      typeof executiveExplanation;
 
     mechanismNetwork:
       typeof safeMechanismNetwork;

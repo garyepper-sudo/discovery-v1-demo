@@ -160,6 +160,26 @@ type RuntimeSimulation = {
   }[];
 };
 
+type RuntimeExecutiveExplanation = {
+  executiveSummary?: string;
+
+  assessmentNarrative?: string;
+
+  confidenceNarrative?: string;
+
+  uncertaintyNarrative?: string;
+
+  investigationNarrative?: string;
+
+  uncertaintyStatus?: string;
+
+  overallUncertainty?: number;
+
+  confidenceLimiters?: string[];
+
+  recommendedEvidenceAreas?: string[];
+};
+
 type RuntimeExecutiveMemory = {
   organizationalUnderstandingState?: {
     executiveSummary?: string;
@@ -187,6 +207,9 @@ type RuntimeExecutiveMemory = {
     confidence?: number;
     theoryValidation?: ExecutiveTheoryValidation;
   };
+
+    executiveExplanation?:
+    RuntimeExecutiveExplanation;
 
   organizationalState?: {
     status?: string;
@@ -1018,6 +1041,72 @@ export function buildExecutiveProjection({
     ),
 
     executiveAssessment,
+
+    executiveExplanation:
+    runtimeMemory
+      ?.executiveExplanation
+        ? {
+            executiveSummary:
+              runtimeMemory
+                .executiveExplanation
+                .executiveSummary ??
+              "", 
+
+            assessmentNarrative:
+              runtimeMemory
+                .executiveExplanation
+                .assessmentNarrative ??
+              "",
+
+            confidenceNarrative:
+              runtimeMemory
+                .executiveExplanation
+                .confidenceNarrative ??
+              "",
+
+            uncertaintyNarrative:
+              runtimeMemory
+                .executiveExplanation
+                .uncertaintyNarrative ??
+              "",
+
+            investigationNarrative:
+              runtimeMemory
+                .executiveExplanation
+                .investigationNarrative ??
+              "",
+
+            uncertaintyStatus:
+              runtimeMemory
+                .executiveExplanation
+                .uncertaintyStatus ??
+              "unknown",
+
+            overallUncertainty:
+              runtimeMemory
+                .executiveExplanation
+                .overallUncertainty ??
+              0,
+
+          confidenceLimiters: [
+            ...(
+              runtimeMemory
+                .executiveExplanation
+                .confidenceLimiters ??
+              []
+            ),
+          ],
+
+          recommendedEvidenceAreas: [
+            ...(
+              runtimeMemory
+                .executiveExplanation
+                .recommendedEvidenceAreas ??
+              []
+            ),
+          ],
+        }
+      : undefined,
 
     organizationalState,
 

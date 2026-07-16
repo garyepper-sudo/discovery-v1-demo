@@ -1,6 +1,6 @@
 # Capability Trace — Theory Validation
 
-Generated: 2026-07-16T01:32:05.085Z
+Generated: 2026-07-16T15:05:50.655Z
 
 ## Verified Architecture
 
@@ -257,42 +257,42 @@ This section records source-code references. It supplements, but does not replac
   - `contradictoryOrWeakeningEvidence: ExecutiveTheoryValidationEvidence[];`
 - Line 68 · **type** · matched `theoryValidation`
   - `theoryValidation?: ExecutiveTheoryValidation;`
-- Line 540 · **unknown** · matched `Theory Validation`
+- Line 590 · **unknown** · matched `Theory Validation`
   - `* This remains available independently because Theory Validation`
-- Line 543 · **type** · matched `theoryValidation`
+- Line 593 · **type** · matched `theoryValidation`
   - `theoryValidation?: ExecutiveTheoryValidation;`
 
 ##### `components/executive-v2/projection/buildExecutiveProjection.ts`
 
 - Line 24 · **unknown** · matched `theoryValidation`
   - `ExecutiveTheoryValidation,`
-- Line 188 · **type** · matched `theoryValidation`
+- Line 208 · **type** · matched `theoryValidation`
   - `theoryValidation?: ExecutiveTheoryValidation;`
-- Line 444 · **type** · matched `theoryValidation`
+- Line 467 · **type** · matched `theoryValidation`
   - `theoryValidation:`
-- Line 445 · **read** · matched `theoryValidation`
+- Line 468 · **read** · matched `theoryValidation`
   - `executiveAssessment.theoryValidation,`
-- Line 449 · **unknown** · matched `theoryValidation`
+- Line 472 · **unknown** · matched `theoryValidation`
   - `function buildTheoryValidationProjection(`
-- Line 451 · **unknown** · matched `theoryValidation`
+- Line 474 · **unknown** · matched `theoryValidation`
   - `): ExecutiveTheoryValidation \| undefined {`
-- Line 452 · **read** · matched `theoryValidation`
+- Line 475 · **read** · matched `theoryValidation`
   - `return runtimeMemory?.executiveAssessment?.theoryValidation;`
-- Line 906 · **definition** · matched `theoryValidation`
+- Line 929 · **definition** · matched `theoryValidation`
   - `const theoryValidation =`
-- Line 907 · **unknown** · matched `theoryValidation`
+- Line 930 · **unknown** · matched `theoryValidation`
   - `buildTheoryValidationProjection(runtimeMemory);`
-- Line 972 · **unknown** · matched `theoryValidation`
+- Line 995 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.dominantTheory \|\|`
-- Line 988 · **unknown** · matched `theoryValidation`
+- Line 1011 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.whyDiscoveryBelievesIt \|\|`
-- Line 997 · **unknown** · matched `theoryValidation`
+- Line 1020 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.evidenceThatWouldFalsifyTheory?.[0] \|\|`
-- Line 998 · **unknown** · matched `theoryValidation`
+- Line 1021 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.calibratedConfidenceExplanation \|\|`
-- Line 1008 · **unknown** · matched `theoryValidation`
+- Line 1031 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.executiveRecommendation \|\|`
-- Line 1040 · **unknown** · matched `theoryValidation`
+- Line 1129 · **unknown** · matched `theoryValidation`
   - `theoryValidation,`
 
 ##### `components/executive-v3/projection/buildExecutiveBriefingProjection.ts`
@@ -306,11 +306,11 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `components/executive-v3/projection/buildExecutiveNarrative.ts`
 
-- Line 248 · **read** · matched `theoryValidation`
+- Line 253 · **read** · matched `theoryValidation`
   - `?.theoryValidation`
-- Line 693 · **read** · matched `theoryValidation`
+- Line 706 · **read** · matched `theoryValidation`
   - `?.theoryValidation`
-- Line 767 · **read** · matched `theoryValidation`
+- Line 780 · **read** · matched `theoryValidation`
   - `?.theoryValidation`
 
 #### UI

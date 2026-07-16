@@ -1,6 +1,6 @@
 # Discovery Cognitive Flow Map
 
-**Status:** Canonical (Sprint 72)
+**Status:** Canonical (Sprint 73)
 
 ---
 
@@ -8,11 +8,11 @@
 
 This document defines how cognition flows through Discovery.
 
-It describes transformations between canonical cognitive objects rather than source-code implementations.
+It describes transformations between canonical cognitive objects rather than implementation files.
 
-Every cognitive capability should answer:
+Every cognitive capability answers:
 
-```
+```text
 Input Cognitive Object
 
 ↓
@@ -24,14 +24,62 @@ Transformation
 Output Cognitive Object
 ```
 
-This document answers:
+Every transformation has:
 
-- What does each capability consume?
-- What does each capability produce?
-- Which Operating System owns the transformation?
-- Which capability is the canonical producer?
-- Can every executive recommendation be traced back to evidence?
-- Where does organizational learning occur?
+* one Operating System owner,
+* one canonical producer,
+* one canonical cognitive object,
+* one Runtime destination (when persisted),
+* downstream consumers,
+* complete evidence provenance.
+
+---
+
+# Executive Cognitive Operating System
+
+Discovery is organized as cooperating Cognitive Operating Systems.
+
+```text
+Perception
+
+↓
+
+Understanding
+
+↓
+
+Learning
+
+↓
+
+Epistemics
+
+↓
+
+Decision
+
+↓
+
+Optimization
+
+↓
+
+Simulation
+
+↓
+
+Executive Communication
+
+↓
+
+Executive Experience
+```
+
+Every Operating System owns a distinct cognitive responsibility.
+
+Consumers reuse canonical cognition.
+
+Presentation never recreates reasoning.
 
 ---
 
@@ -98,7 +146,15 @@ Organizational Understanding
 
 ↓
 
-Prediction
+Organizational Learning
+
+↓
+
+Organizational Uncertainty
+
+↓
+
+Refined Investigation Opportunities
 
 ↓
 
@@ -114,473 +170,11 @@ Executive Optimization Objective
 
 ↓
 
-Candidate Strategies
+Intervention Generation
 
 ↓
 
 Constraint Evaluation
-
-↓
-
-Simulation
-
-↓
-
-Scenario Comparison
-
-↓
-
-Optimization
-
-↓
-
-Executive Recommendation
-
-↓
-
-Executive Communication
-
-↓
-
-Executive Decision
-
-↓
-
-Implementation
-
-↓
-
-Organizational Outcome
-
-↓
-
-Prediction Evaluation
-
-↓
-
-Optimization Evaluation
-
-↓
-
-Learning
-```
-
-This is Discovery's canonical cognitive pipeline.
-
-Every executive recommendation should be traceable back to source evidence.
-
----
-
-# Flow Rules
-
-1. Every cognitive transformation declares its inputs.
-2. Every cognitive transformation declares its outputs.
-3. Every output has at least one canonical consumer.
-4. Every executive recommendation remains traceable to evidence.
-5. Every cognitive object has exactly one canonical producer.
-6. React components never reconstruct cognition.
-7. Runtime preserves provenance.
-8. Atlas validates every canonical transformation.
-9. Organizational learning feeds future reasoning.
-10. Optimization never duplicates organizational understanding.
-
----
-
-# Perception Flow
-
-## Source Material
-
-↓
-
-Evidence Construction
-
-↓
-
-Evidence
-
-Produces
-
-- Evidence
-- Evidence Relationships
-- Evidence Graph
-- Evidence Network
-
----
-
-## Evidence
-
-↓
-
-Entity Extraction
-
-↓
-
-Organizational Entities
-
-Produces
-
-- Entities
-- Mentions
-- References
-
----
-
-## Evidence + Entities
-
-↓
-
-Observation Construction
-
-↓
-
-Observations
-
-Produces
-
-- Organizational Observations
-- Semantic Observations
-
----
-
-## Observations
-
-↓
-
-Observation Evolution
-
-↓
-
-Updated Observations
-
-Produces
-
-- Observation History
-- Observation Comparisons
-
----
-
-## Evidence + Observations
-
-↓
-
-Signal Detection
-
-↓
-
-Signals
-
-Produces
-
-- Organizational Signals
-
----
-
-## Signals
-
-↓
-
-Contradiction Detection
-
-↓
-
-Contradictions
-
-Produces
-
-- Organizational Contradictions
-
----
-
-## Observations + Signals + Contradictions
-
-↓
-
-Phenomenon Inference
-
-↓
-
-Phenomena
-
-Produces
-
-- Organizational Phenomena
-
----
-
-# Understanding Flow
-
-## Observations + Signals + Phenomena
-
-↓
-
-Mechanism Inference
-
-↓
-
-Mechanisms
-
-Canonical Producer
-
-- Mechanism Engine
-
----
-
-## Mechanisms
-
-↓
-
-Belief Formation
-
-↓
-
-Beliefs
-
-Canonical Producer
-
-- Belief Engine
-
----
-
-## Mechanisms + Beliefs
-
-↓
-
-Concept Formation
-
-↓
-
-Concepts
-
-Canonical Producer
-
-- Concept Engine
-
----
-
-## Mechanisms + Beliefs + Concepts
-
-↓
-
-Theory Formation
-
-↓
-
-Theories
-
-Canonical Producer
-
-- Theory Engine
-
----
-
-## Mechanisms + Beliefs + Theories + Memory
-
-↓
-
-Condition Inference
-
-↓
-
-Organizational Conditions
-
-Canonical Producer
-
-- Organizational Condition Engine
-
----
-
-## Organizational Conditions
-
-↓
-
-State Synthesis
-
-↓
-
-Organizational State
-
-Canonical Producer
-
-- Organizational State Engine
-
----
-
-## Organizational State
-
-↓
-
-Executive Assessment
-
-↓
-
-Executive Assessment
-
-Canonical Producer
-
-- Executive Assessment Engine
-
----
-
-## Executive Assessment
-
-↓
-
-Understanding Synthesis
-
-↓
-
-Organizational Understanding
-
-Canonical Producer
-
-- Executive Assessment
-
----
-
-# Prediction Flow
-
-## Organizational Understanding
-
-↓
-
-Prediction
-
-↓
-
-Organizational Prediction
-
-Canonical Producer
-
-- Prediction Engine
-
-Prediction estimates the most likely organizational future if leadership changes nothing.
-
----
-
-# Decision Flow
-
-## Organizational Understanding
-+
-Organizational State
-+
-Predictions
-
-↓
-
-Executive Opportunity Detection
-
-↓
-
-Executive Decision
-
-Canonical Producer
-
-- Decision Operating System
-
-Produces
-
-- Executive Objective
-- Success Metrics
-- Constraints
-- Decision Confidence
-
-Decision identifies the executive problem.
-
-It does not determine the optimal strategy.
-
----
-
-# Optimization Flow
-
-Optimization transforms executive intent into an optimization problem.
-
-## Executive Decision
-+
-Organizational Conditions
-
-↓
-
-Optimization Variable Selection
-
-↓
-
-Optimization Variables
-
-Canonical Producer
-
-- CAP-OPT-001
-
----
-
-## Executive Decision
-+
-Optimization Variables
-
-↓
-
-Optimization Objective Synthesis
-
-↓
-
-Executive Optimization Objective
-
-Canonical Producer
-
-- CAP-OPT-002
-
-Produces
-
-- Variables
-- Variable Weights
-- Success Targets
-- Constraints
-- Preferences
-- Tradeoff Strategy
-
----
-
-## Executive Optimization Objective
-
-↓
-
-Candidate Strategy Generation
-
-↓
-
-Candidate Strategies
-
-Canonical Producer
-
-- CAP-OPT-003
-
----
-
-## Candidate Strategies
-
-↓
-
-Constraint Evaluation
-
-↓
-
-Evaluated Strategies
-
-Canonical Producer
-
-- CAP-OPT-004
-
-Produces
-
-Constraint States
-
-- Satisfied
-- Violated
-- Requires Simulation
-- Insufficient Evidence
-
----
-
-## Evaluated Strategies
 
 ↓
 
@@ -588,79 +182,15 @@ Organizational Simulation
 
 ↓
 
-Organizational Scenarios
-
-Canonical Producer
-
-- Simulation Operating System
-
-Simulation evaluates futures.
-
----
-
-## Organizational Scenarios
-
-↓
-
 Scenario Comparison
-
-↓
-
-Scenario Comparison Set
-
-Canonical Producer
-
-- compareExecutiveScenarios()
-
----
-
-## Scenario Comparison
-
-↓
-
-Optimization
-
-↓
-
-Ranked Scenarios
-
-Canonical Producer
-
-- rankExecutiveScenarios()
-
-Optimization selects the strongest future.
-
-Simulation evaluates futures.
-
----
-
-## Ranked Scenarios
-
-↓
-
-Recommendation Synthesis
 
 ↓
 
 Executive Recommendation
 
-Canonical Producer
-
-- buildExecutiveDecisionRecommendation()
-
-Recommendations are produced by optimization.
-
-Not by simulation.
-
----
-
-# Communication Flow
-
-## Executive Recommendation
-
 ↓
 
-Executive Communication
+Executive Explanation
 
 ↓
 
@@ -668,21 +198,11 @@ Executive Projection
 
 ↓
 
-Executive Experience
+Executive Narrative
 
-Canonical Producer
+↓
 
-- Executive Communication Engine
-
-Communication explains cognition.
-
-It never recreates it.
-
----
-
-# Learning Flow
-
-## Executive Recommendation
+Executive Workspace
 
 ↓
 
@@ -702,26 +222,257 @@ Prediction Evaluation
 
 ↓
 
-Optimization Evaluation
+Learning
 
 ↓
 
-Organizational Learning
+Better Understanding
+```
+
+Every executive recommendation remains traceable back to evidence.
+
+---
+
+# Perception Operating System
+
+Produces
+
+* Evidence
+* Entities
+* Observations
+* Signals
+* Contradictions
+* Organizational Phenomena
+
+Output:
+
+```text
+Evidence
+↓
+Observations
+↓
+Signals
+↓
+Contradictions
+↓
+Phenomena
+```
+
+---
+
+# Understanding Operating System
+
+Produces
+
+* Mechanisms
+* Beliefs
+* Concepts
+* Theories
+* Organizational Conditions
+* Organizational State
+* Executive Assessment
+* Organizational Understanding
+
+Output:
+
+```text
+Phenomena
+↓
+Mechanisms
+↓
+Beliefs
+↓
+Concepts
+↓
+Theories
+↓
+Conditions
+↓
+Organizational State
+↓
+Executive Assessment
+↓
+Organizational Understanding
+```
+
+---
+
+# Learning Operating System
+
+Produces
+
+* Belief Evolution
+* Theory Evolution
+* Prediction Evaluation
+* Organizational Learning Profile
+
+Output:
+
+```text
+Understanding
+↓
+Belief Evolution
+↓
+Theory Evolution
+↓
+Prediction Evaluation
+↓
+Learning Profile
+```
+
+---
+
+# Epistemic Operating System
+
+Produces
+
+* Organizational Uncertainty
+* Refined Investigation Opportunities
+
+Consumes
+
+* Evidence
+* Contradictions
+* Learning Profile
+* Prediction Evaluation
+* Initial Investigation Opportunities
+
+Output:
+
+```text
+Evidence
++
+Learning
++
+Prediction Evaluation
 
 ↓
 
-Adaptive State
+Organizational Uncertainty
 
 ↓
 
-Future Understanding
+Refined Investigation Opportunities
+```
 
-Learning continuously improves:
+Purpose
 
-- predictions
-- optimization
-- confidence
-- recommendations
+Determines:
+
+* how certain Discovery is,
+* why confidence is limited,
+* what evidence should be collected,
+* how investigations should be reprioritized.
+
+---
+
+# Decision Operating System
+
+Produces
+
+* Executive Decision
+* Executive Decision Cycle
+
+Decision identifies the executive problem.
+
+It does not determine the strongest solution.
+
+---
+
+# Optimization Operating System
+
+Produces
+
+* Optimization Variables
+* Executive Optimization Objective
+* Candidate Interventions
+* Constraint Evaluation
+* Ranked Scenarios
+* Executive Recommendation
+
+Optimization selects among futures.
+
+Simulation evaluates them.
+
+---
+
+# Simulation Operating System
+
+Produces
+
+* Organizational Intervention
+* Simulated Organization
+* Scenario Comparison
+
+Simulation evaluates organizational futures.
+
+Simulation never determines recommendations.
+
+---
+
+# Executive Communication Operating System
+
+Produces
+
+* Executive Explanation
+* Executive Projection
+* Executive Narrative
+
+Consumes
+
+* Executive Assessment
+* Organizational Uncertainty
+* Refined Investigation Opportunities
+
+Flow
+
+```text
+Executive Assessment
++
+Organizational Uncertainty
++
+Investigation Opportunities
+
+↓
+
+Executive Explanation
+
+↓
+
+Executive Projection
+
+↓
+
+Executive Narrative
+
+↓
+
+Executive Workspace
+```
+
+Executive Communication performs no organizational reasoning.
+
+It communicates canonical cognition.
+
+---
+
+# Canonical Producer Rules
+
+Every cognitive object has:
+
+* one producer,
+* one owner,
+* one Runtime destination,
+* downstream consumers,
+* benchmark or stress validation.
+
+Reasoning belongs in producers.
+
+Projection transports cognition.
+
+Narrative communicates cognition.
+
+Presentation consumes cognition.
 
 ---
 
@@ -729,7 +480,7 @@ Learning continuously improves:
 
 Every recommendation should answer:
 
-```
+```text
 Recommendation
 
 ↓
@@ -777,67 +528,25 @@ Mechanisms
 Evidence
 ```
 
-No executive recommendation should lose provenance.
+No recommendation should lose provenance.
 
 ---
 
-# Canonical Producer Summary
+# Current Architecture Focus
 
-| Cognitive Object | Canonical Producer |
-|------------------|--------------------|
-| Evidence | Evidence Engine |
-| Observation | Observation Engine |
-| Mechanism | Mechanism Engine |
-| Belief | Belief Engine |
-| Concept | Concept Engine |
-| Theory | Theory Engine |
-| Organizational Condition | Organizational Condition Engine |
-| Organizational State | Organizational State Engine |
-| Executive Assessment | Executive Assessment Engine |
-| Organizational Understanding | Executive Assessment |
-| Organizational Prediction | Prediction Engine |
-| Executive Decision | Decision Operating System |
-| Optimization Variables | CAP-OPT-001 |
-| Executive Optimization Objective | CAP-OPT-002 |
-| Candidate Strategies | CAP-OPT-003 |
-| Constraint Evaluation | CAP-OPT-004 |
-| Organizational Scenario | Simulation Operating System |
-| Scenario Comparison | compareExecutiveScenarios() |
-| Ranked Scenarios | rankExecutiveScenarios() |
-| Executive Recommendation | buildExecutiveDecisionRecommendation() |
-| Executive Communication | Executive Communication Engine |
-| Organizational Learning | Learning Operating System |
+Discovery's architecture is considered stable.
 
----
+Future work should prioritize:
 
-# Current Status
+* Executive Experience
+* Executive Explanation
+* Executive Narrative
+* Executive Trust
+* Behavioral Stress Testing
+* Customer Validation
 
-## Canonical
+Future evolution should strengthen existing Operating Systems through consumer migration rather than introducing parallel reasoning.
 
-- Perception
-- Understanding
-- Prediction
-- Decision
-- Optimization
-- Simulation
-- Communication
-- Learning
+The objective is no longer expanding cognition.
 
----
-
-# Current Architectural Focus
-
-The primary objective is no longer building additional reasoning engines.
-
-The objective is integrating the canonical Operating Systems into one continuous executive decision pipeline.
-
-Current priorities are:
-
-- Optimization refinement
-- Constraint reasoning
-- Strategy selection
-- Decision recording
-- Learning flywheel
-- Executive product experience
-
-Every new capability should strengthen this canonical cognitive flow rather than introduce parallel reasoning paths.
+The objective is exposing cognition through an executive experience that consistently improves executive judgment.

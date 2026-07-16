@@ -1,6 +1,6 @@
 # Engine Capability Audit
 
-**Status:** Canonical (Sprint 72)
+**Status:** Canonical (Sprint 73)
 
 ---
 
@@ -10,17 +10,17 @@ This document is the canonical operational audit of Discovery's cognitive capabi
 
 Its purpose is to verify that every capability:
 
-- belongs to exactly one Cognitive Operating System,
-- belongs to exactly one Capability Registry entry,
-- has one canonical producer,
-- produces one canonical cognitive object,
-- participates in the canonical cognitive pipeline,
-- is connected into Runtime when appropriate,
-- is consumed by downstream cognition,
-- is exposed through Executive Communication when appropriate,
-- and is validated through Atlas or canonical benchmark experiments.
+* belongs to exactly one Cognitive Operating System,
+* belongs to exactly one Capability Registry entry,
+* has one canonical producer,
+* produces one canonical cognitive object,
+* participates in the canonical cognitive pipeline,
+* is connected into Runtime when appropriate,
+* is consumed by downstream cognition,
+* is exposed through Executive Communication when appropriate,
+* is validated through Atlas, stress testing, or canonical benchmark experiments.
 
-This document summarizes Discovery's implemented architecture.
+This document summarizes Discovery's implemented cognitive architecture.
 
 The Capability Registry remains the authoritative inventory of individual capabilities.
 
@@ -28,21 +28,24 @@ The Capability Registry remains the authoritative inventory of individual capabi
 
 # Current Architecture Status
 
-Discovery's first-generation Decision Intelligence architecture is considered **stable**.
+Discovery's first-generation **Executive Cognitive Operating System** is considered architecturally stable.
 
-Current work is no longer discovering major cognitive capabilities.
+Current work is no longer discovering major reasoning capabilities.
 
-Current work is improving the quality of executive decision-making.
+Current work is exposing existing cognition through a complete executive product experience.
 
 Primary areas of investment are:
 
-- optimization quality,
-- recommendation quality,
-- constraint reasoning,
-- executive communication,
-- executive decision quality,
-- organizational learning,
-- executive product experience.
+* executive understanding quality,
+* executive explanation quality,
+* decision quality,
+* optimization quality,
+* constraint reasoning,
+* simulation quality,
+* executive communication,
+* executive experience,
+* organizational learning,
+* behavioral stress validation.
 
 ---
 
@@ -50,45 +53,51 @@ Primary areas of investment are:
 
 Architecture validation
 
-- Duplicate IDs .................... 0
-- Missing dependencies ............. 0
-- Missing producers ................ 0
-- Missing runtime destinations ..... 0
-- Missing consumers ................ 0
+* Duplicate IDs .................... 0
+* Missing dependencies ............. 0
+* Missing producers ................ 0
+* Missing runtime destinations ..... 0
+* Missing consumers ................ 0
 
 Architecture Health
 
 **100%**
 
-Canonical Capabilities
+Canonical capabilities continue to expand through the Capability Registry.
 
-**28**
+All implemented capabilities possess:
 
-Canonical Producers
-
-**28**
+* a canonical producer,
+* a canonical runtime destination,
+* downstream consumers,
+* benchmark or stress validation.
 
 ---
 
 # Cognitive Operating Systems
 
-Discovery currently contains twelve canonical Operating Systems.
+Discovery is organized as cooperating Cognitive Operating Systems.
 
-| Operating System | Status |
-|------------------|--------|
-| Perception | ✅ Canonical |
-| Understanding | ✅ Canonical |
-| Memory | ✅ Canonical |
-| Learning | ✅ Canonical |
-| Abstraction | ✅ Canonical |
-| Self Reflection | ✅ Canonical |
-| Prediction | ✅ Canonical |
-| Adaptive Learning | ✅ Canonical |
-| Systems | ✅ Canonical |
-| Executive Decision | ✅ Canonical |
-| Optimization | ✅ Canonical |
-| Simulation | ✅ Canonical |
+| Operating System        | Status      |
+| ----------------------- | ----------- |
+| Perception              | ✅ Canonical |
+| Understanding           | ✅ Canonical |
+| Memory                  | ✅ Canonical |
+| Learning                | ✅ Canonical |
+| Abstraction             | ✅ Canonical |
+| Self Reflection         | ✅ Canonical |
+| Prediction              | ✅ Canonical |
+| Adaptive Learning       | ✅ Canonical |
+| Epistemics              | ✅ Canonical |
+| Systems                 | ✅ Canonical |
+| Executive Decision      | ✅ Canonical |
+| Optimization            | ✅ Canonical |
+| Simulation              | ✅ Canonical |
 | Executive Communication | ✅ Canonical |
+
+Every Operating System owns one cognitive responsibility.
+
+Consumers reuse canonical cognitive objects rather than recreating reasoning.
 
 ---
 
@@ -98,9 +107,9 @@ Discovery currently contains twelve canonical Operating Systems.
 
 Produces:
 
-- Evidence
-- Observations
-- Organizational Phenomena
+* Evidence
+* Observations
+* Organizational Phenomena
 
 ---
 
@@ -108,14 +117,14 @@ Produces:
 
 Produces:
 
-- Mechanisms
-- Beliefs
-- Concepts
-- Theories
-- Organizational Conditions
-- Organizational State
-- Executive Assessment
-- Organizational Understanding
+* Mechanisms
+* Beliefs
+* Concepts
+* Theories
+* Organizational Conditions
+* Organizational State
+* Executive Assessment
+* Organizational Understanding
 
 ---
 
@@ -123,13 +132,16 @@ Produces:
 
 Persists:
 
-- Organizational Memory
-- Runtime
-- Organizational State
-- Organizational Understanding
-- Organizational Predictions
-- Organizational Simulations
-- Prediction Evaluations
+* Organizational Runtime
+* Organizational Memory
+* Organizational Understanding
+* Organizational State
+* Organizational Conditions
+* Organizational Predictions
+* Organizational Simulations
+* Organizational Uncertainty
+* Executive Explanation
+* Prediction Evaluations
 
 ---
 
@@ -137,15 +149,16 @@ Persists:
 
 Produces:
 
-- Belief Evolution
-- Theory Evolution
-- Organizational Learning Profile
+* Belief Evolution
+* Theory Evolution
+* Learning Events
+* Organizational Learning Profile
 
 Future:
 
-- Decision Outcome Learning
-- Optimization Learning
-- Organizational Law Validation
+* Decision Outcome Learning
+* Optimization Learning
+* Organizational Law Validation
 
 ---
 
@@ -153,7 +166,7 @@ Future:
 
 Produces:
 
-- Organizational Concepts
+* Organizational Concepts
 
 ---
 
@@ -161,8 +174,8 @@ Produces:
 
 Produces:
 
-- Theory Validation
-- Investigation Opportunities
+* Theory Validation
+* Initial Investigation Opportunities
 
 ---
 
@@ -170,10 +183,10 @@ Produces:
 
 Produces:
 
-- Organizational Predictions
-- Prediction Reflection
+* Organizational Predictions
+* Prediction Reflection
 
-Prediction estimates the most likely future.
+Prediction estimates the organization's most likely future.
 
 ---
 
@@ -181,9 +194,25 @@ Prediction estimates the most likely future.
 
 Produces:
 
-- Prediction Outcome Evaluation
-- Learning Events
-- Confidence Calibration
+* Prediction Outcome Evaluation
+* Longitudinal Learning
+* Confidence Calibration
+
+---
+
+## Epistemics
+
+Produces:
+
+* Organizational Uncertainty
+* Refined Investigation Opportunities
+
+The Epistemic Operating System determines:
+
+* how certain Discovery is,
+* why confidence is limited,
+* which evidence should be collected next,
+* how investigation priorities should change as organizational knowledge evolves.
 
 ---
 
@@ -191,8 +220,8 @@ Produces:
 
 Produces:
 
-- Architecture Planning
-- Architecture Recommendation Projection
+* Architecture Planning
+* Architecture Recommendation Projection
 
 ---
 
@@ -200,15 +229,19 @@ Produces:
 
 Produces:
 
-- Executive Decision
-- Executive Objective
-- Success Metrics
-- Executive Constraints
-- Executive Decision Cycle
+* Executive Decision
+* Executive Objective
+* Success Metrics
+* Executive Constraints
+* Executive Decision Cycle
 
-Decision defines the business problem.
+Decision defines the executive problem.
 
-It does not determine the optimal strategy.
+Optimization determines candidate solutions.
+
+Simulation evaluates organizational futures.
+
+Recommendation selects among alternatives.
 
 ---
 
@@ -216,12 +249,12 @@ It does not determine the optimal strategy.
 
 Produces:
 
-- Optimization Variables
-- Executive Optimization Objective
-- Candidate Strategies
-- Constraint Evaluation
-- Ranked Executive Scenarios
-- Executive Recommendation
+* Optimization Variables
+* Executive Optimization Objective
+* Candidate Interventions
+* Constraint Evaluation
+* Ranked Executive Scenarios
+* Executive Recommendation
 
 Optimization determines the strongest organizational future.
 
@@ -229,20 +262,15 @@ Simulation evaluates futures.
 
 Optimization selects among them.
 
-Validated by:
-
-- Optimization Objective Experiment 001 (15 / 15)
-- Executive Decision Cycle (9 / 9)
-
 ---
 
 ## Simulation
 
 Produces:
 
-- Organizational Intervention
-- Simulated Organizational State
-- Scenario Comparison
+* Organizational Intervention
+* Simulated Organizational State
+* Scenario Comparison
 
 Simulation evaluates projected organizational futures.
 
@@ -254,94 +282,65 @@ Simulation does not determine recommendations.
 
 Produces:
 
-- Executive Narrative
-- Executive Communication
+* Executive Explanation
+* Executive Narrative
+* Executive Communication
 
 Transforms canonical cognition into executive-ready communication while suppressing internal reasoning mechanics.
 
-Validated by:
+Executive Communication performs no independent reasoning.
 
-- Executive Communication Experiment 001 (13 / 13)
+It communicates canonical cognition produced elsewhere.
 
 ---
 
-# Canonical Decision Intelligence Pipeline
+# Canonical Executive Cognitive Pipeline
 
 ```text
-Executive Understanding
-
+Evidence
 ↓
-
-Organizational Prediction
-
+Observations
 ↓
-
+Mechanisms
+↓
+Beliefs
+↓
+Concepts
+↓
+Theories
+↓
+Organizational Conditions
+↓
+Organizational State
+↓
+Executive Assessment
+↓
+Organizational Understanding
+↓
+Organizational Learning
+↓
+Organizational Uncertainty
+↓
+Refined Investigation Opportunities
+↓
 Executive Decision
-
 ↓
-
-Optimization Variable Selection
-
+Executive Optimization
 ↓
-
-Executive Optimization Objective
-
-↓
-
-Candidate Strategies
-
-↓
-
-Constraint Evaluation
-
-↓
-
 Organizational Simulation
-
 ↓
-
-Scenario Comparison
-
-↓
-
-Executive Decision Ranking
-
-↓
-
 Executive Recommendation
-
 ↓
-
-Executive Communication
-
+Executive Explanation
 ↓
-
-Executive Experience
+Executive Projection
+↓
+Executive Narrative
+↓
+Executive Workspace
 ```
 
-This is now Discovery's canonical executive reasoning pipeline.
-
----
-
-# Canonical Executive Communication Pipeline
-
-```text
-Executive Recommendation
-
-↓
-
-Executive Communication
-
-↓
-
-Executive Experience
-```
-
-Executive Communication translates canonical cognition into executive language.
-
-Presentation layers consume Executive Communication.
-
-They never recreate reasoning.
+This is Discovery's canonical executive cognition pipeline.
 
 ---
 
@@ -349,20 +348,20 @@ They never recreate reasoning.
 
 Every cognitive object must have:
 
-- one Operating System owner,
-- one Capability Registry owner,
-- one canonical producer,
-- one Runtime representation (when persisted),
-- one Executive destination,
-- one benchmark validation path.
+* one Operating System owner,
+* one Capability Registry owner,
+* one canonical producer,
+* one Runtime representation (when persisted),
+* one Executive destination,
+* one benchmark or stress validation path.
 
-Decision identifies the executive problem.
+Reasoning belongs in canonical producers.
 
-Optimization determines the strongest strategy.
+Projection transports cognition.
 
-Simulation evaluates organizational futures.
+Narrative communicates cognition.
 
-Executive Communication explains canonical cognition.
+Presentation layers never recreate reasoning.
 
 ---
 
@@ -370,16 +369,17 @@ Executive Communication explains canonical cognition.
 
 ## Primary
 
-Executive Decision Workspace
+Executive Experience
 
 Specifically:
 
-1. Surface the Executive Optimization Objective.
-2. Improve recommendation explainability.
-3. Strengthen optimization-aware scenario comparison.
-4. Improve constraint reasoning.
-5. Produce board-ready decision reports.
-6. Continue benchmarking decision intelligence.
+1. Complete the Executive Workspace.
+2. Surface Executive Explanation throughout the product.
+3. Improve Executive Narrative quality.
+4. Improve recommendation explainability.
+5. Strengthen optimization-aware scenario comparison.
+6. Continue behavioral stress testing.
+7. Produce board-ready executive reports.
 
 ---
 
@@ -387,14 +387,18 @@ Specifically:
 
 Future work should emphasize:
 
-- optimization quality,
-- recommendation quality,
-- decision quality,
-- constraint reasoning,
-- longitudinal learning,
-- organizational law validation,
+* executive experience,
+* decision quality,
+* optimization quality,
+* recommendation quality,
+* behavioral realism,
+* organizational learning,
+* longitudinal validation,
+* organizational law validation,
 
-rather than introducing additional cognitive layers.
+rather than introducing additional reasoning layers.
+
+The architecture should evolve primarily through **consumer migration** rather than new cognition.
 
 ---
 
@@ -416,14 +420,22 @@ rather than introducing additional cognitive layers.
 
 > Improve canonical producers before introducing new reasoning.
 
+> Prefer consumer migration over duplicate reasoning.
+
 > Runtime stores canonical cognition.
 
 > Executive Communication communicates canonical cognition.
 
+> Projection transports canonical cognition.
+
+> Narrative communicates canonical cognition.
+
+> Presentation layers consume canonical cognition.
+
 > Every cognitive object has one canonical producer.
 
-> Decision Intelligence builds on existing cognition rather than replacing it.
+> Benchmark behavior, not implementation.
 
-> Benchmark reasoning, not implementation.
+> Stress-test cognition before exposing it to executives.
 
 > Strengthen the Executive Decision Flywheel before expanding Discovery into additional workflows.

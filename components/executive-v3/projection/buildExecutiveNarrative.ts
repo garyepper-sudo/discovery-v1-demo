@@ -212,6 +212,11 @@ function buildExecutiveSummary(
 
   return (
     compactText(
+      projection
+        .executiveExplanation
+        ?.executiveSummary,
+    ) ??
+    compactText(
       primaryCondition
         ?.whyItMatters,
     ) ??
@@ -469,6 +474,9 @@ function buildEvidenceSections(
 
       content:
         projection
+          .executiveExplanation
+          ?.assessmentNarrative ??
+        projection
           .executiveAssessment
           ?.executiveNarrative ??
         projection
@@ -682,6 +690,11 @@ export function buildExecutiveNarrative(
     "The current organizational constraint is likely to persist without intervention.";
 
   const primaryRecommendation =
+    compactText(
+      projection
+        .executiveExplanation
+        ?.investigationNarrative,
+    ) ??
     compactText(
       projection
         .organizationalConditions?.[0]

@@ -1,20 +1,28 @@
-# Discovery Decision Intelligence Architecture
+# Discovery Executive Cognitive Operating System
 
-**Status:** Canonical (Sprint 72)
+**Status:** Canonical (Sprint 73)
 
 ---
 
 # Purpose
 
-This document defines Discovery's canonical architecture as an **Organizational Decision Intelligence Platform**.
+This document defines Discovery's canonical architecture as an **Executive Cognitive Operating System**.
 
-Discovery does not exist to analyze organizations.
+Discovery does not exist simply to analyze organizations.
 
-Discovery exists to help executives make better decisions.
+Discovery exists to continuously improve executive judgment.
 
-Understanding is no longer Discovery's final product.
+Organizational understanding is no longer Discovery's final product.
 
-Understanding becomes the foundation upon which executive decisions are identified, optimized, simulated, implemented, and continuously improved.
+Understanding becomes the foundation upon which executives:
+
+* understand reality,
+* evaluate uncertainty,
+* optimize decisions,
+* simulate alternatives,
+* explain recommendations,
+* learn from outcomes,
+* continuously improve future decisions.
 
 ---
 
@@ -24,7 +32,7 @@ Organizations do not purchase software because they want analysis.
 
 Organizations purchase software because they want to consistently make better decisions.
 
-Discovery exists to continuously improve organizational decision quality.
+Discovery exists to continuously improve executive judgment through reusable cognitive operating systems.
 
 ---
 
@@ -36,16 +44,12 @@ Discovery has evolved through successive architectural phases.
 
 ### Organizational Understanding
 
-```
+```text id="m09lrl"
 Evidence
 
 ↓
 
 Observations
-
-↓
-
-Signals
 
 ↓
 
@@ -62,7 +66,7 @@ Primary Question
 
 ### Organizational Reasoning
 
-```
+```text id="l62sgb"
 Understanding
 
 ↓
@@ -100,7 +104,7 @@ Primary Question
 
 ### Prediction & Learning
 
-```
+```text id="91g98c"
 Understanding
 
 ↓
@@ -130,7 +134,7 @@ Primary Question
 
 ### Executive Decision Intelligence
 
-```
+```text id="1mbu3z"
 Understanding
 
 ↓
@@ -148,18 +152,6 @@ Simulation
 ↓
 
 Recommendation
-
-↓
-
-Decision
-
-↓
-
-Outcome
-
-↓
-
-Learning
 ```
 
 Primary Question
@@ -168,11 +160,53 @@ Primary Question
 
 ---
 
-# Decision Intelligence Loop
+## Phase 5
 
-Discovery continuously executes a closed executive decision loop.
+### Executive Cognitive Operating System
 
+```text id="2cm0ut"
+Understanding
+
+↓
+
+Learning
+
+↓
+
+Epistemics
+
+↓
+
+Decision
+
+↓
+
+Optimization
+
+↓
+
+Simulation
+
+↓
+
+Executive Explanation
+
+↓
+
+Executive Experience
 ```
+
+Primary Question
+
+> How can Discovery continuously improve executive judgment?
+
+---
+
+# Executive Cognitive Loop
+
+Discovery continuously executes a closed executive cognition loop.
+
+```text id="btlbvc"
 Evidence
 
 ↓
@@ -181,7 +215,11 @@ Understanding
 
 ↓
 
-Prediction
+Learning
+
+↓
+
+Organizational Uncertainty
 
 ↓
 
@@ -197,7 +235,11 @@ Simulation
 
 ↓
 
-Recommendation
+Executive Recommendation
+
+↓
+
+Executive Explanation
 
 ↓
 
@@ -209,11 +251,11 @@ Implementation
 
 ↓
 
-Outcome
+Observed Outcome
 
 ↓
 
-Evaluation
+Prediction Evaluation
 
 ↓
 
@@ -230,11 +272,11 @@ Every completed decision improves Discovery's future recommendations.
 
 # Cognitive Operating Systems
 
-Discovery now consists of seven primary decision-oriented operating systems.
+Discovery consists of cooperating Cognitive Operating Systems.
 
 ---
 
-# 1. Understanding
+## Understanding
 
 Purpose
 
@@ -242,34 +284,51 @@ Explain organizational reality.
 
 Answers
 
-- What is happening?
-- Why is it happening?
+* What is happening?
+* Why is it happening?
 
 Produces
 
-- Organizational Understanding
-- Organizational State
-- Organizational Conditions
+* Organizational Understanding
+* Organizational State
+* Executive Assessment
 
 ---
 
-# 2. Prediction
+## Learning
 
 Purpose
 
-Estimate the organization's most likely future if nothing materially changes.
-
-Answers
-
-- What happens next?
+Continuously improve organizational cognition.
 
 Produces
 
-- Organizational Predictions
+* Belief Evolution
+* Theory Evolution
+* Organizational Learning Profile
 
 ---
 
-# 3. Decision
+## Epistemics
+
+Purpose
+
+Evaluate Discovery's own certainty.
+
+Answers
+
+* How certain are we?
+* Why is confidence limited?
+* What evidence should be collected next?
+
+Produces
+
+* Organizational Uncertainty
+* Refined Investigation Opportunities
+
+---
+
+## Decision
 
 Purpose
 
@@ -277,46 +336,41 @@ Determine the executive decision that matters most.
 
 Answers
 
-- What should leadership decide?
-- What outcome is desired?
-- How should success be measured?
-- What constraints exist?
+* What decision matters most?
+* What outcome is desired?
+* What constraints exist?
 
 Produces
 
-- Executive Decision
+* Executive Decision
+* Executive Decision Cycle
 
 ---
 
-# 4. Optimization
+## Optimization
 
 Purpose
 
-Determine the best organizational strategy.
+Determine the strongest organizational strategy.
 
-Optimization translates executive intent into a machine-solvable optimization problem.
-
-Answers
-
-- What variables matter?
-- Which objectives matter most?
-- Which constraints must be respected?
-- Which strategy produces the strongest future?
+Optimization transforms executive intent into a machine-solvable optimization problem.
 
 Produces
 
-- Optimization Variables
-- Executive Optimization Objective
-- Strategy Rankings
-- Executive Recommendation
+* Optimization Variables
+* Executive Optimization Objective
+* Intervention Options
+* Constraint Evaluation
+* Ranked Scenarios
+* Executive Recommendation
 
 Optimization consumes simulation.
 
-Simulation does not replace optimization.
+Simulation never replaces optimization.
 
 ---
 
-# 5. Simulation
+## Simulation
 
 Purpose
 
@@ -324,16 +378,15 @@ Evaluate organizational futures.
 
 Answers
 
-- What happens if this strategy is implemented?
-- Which organizational variables improve?
-- Which variables deteriorate?
-- How confident is Discovery?
+* What happens if this strategy is implemented?
+* Which variables improve?
+* Which variables deteriorate?
+* Which assumptions matter?
 
 Produces
 
-- Organizational Scenarios
-- Projected Organizational State
-- Projected Organizational Conditions
+* Simulated Organizational State
+* Scenario Comparison
 
 Simulation evaluates futures.
 
@@ -341,55 +394,49 @@ Optimization selects among them.
 
 ---
 
-# 6. Communication
+## Executive Communication
 
 Purpose
 
-Transform organizational cognition into executive communication.
+Communicate canonical cognition.
 
 Answers
 
-- What should executives understand?
-- Why should they believe it?
-- Why was this strategy selected?
+* What should executives understand?
+* Why should they believe it?
+* How certain is Discovery?
+* What should be investigated next?
 
 Produces
 
-- Executive Communication
-- Executive Recommendation
-- Executive Brief
-- Board Report
+* Executive Explanation
+* Executive Projection
+* Executive Narrative
+
+Executive Communication performs no independent reasoning.
+
+It communicates canonical cognition.
 
 ---
 
-# 7. Learning
-
-Purpose
-
-Continuously improve Discovery's future reasoning.
-
-Answers
-
-- Was Discovery correct?
-- Which strategies succeeded?
-- Which assumptions failed?
-- Which constraints mattered?
-
-Produces
-
-- Prediction Evaluation
-- Optimization Evaluation
-- Organizational Learning
-- Confidence Calibration
-
----
-
-# Canonical Decision Pipeline
+# Canonical Executive Pipeline
 
 Every executive decision follows the same architecture.
 
-```
-Current Organization
+```text id="m6pnqr"
+Evidence
+
+↓
+
+Understanding
+
+↓
+
+Learning
+
+↓
+
+Organizational Uncertainty
 
 ↓
 
@@ -397,19 +444,7 @@ Executive Decision
 
 ↓
 
-Optimization Variables
-
-↓
-
-Optimization Objective
-
-↓
-
-Candidate Strategies
-
-↓
-
-Constraint Evaluation
+Optimization
 
 ↓
 
@@ -417,15 +452,23 @@ Simulation
 
 ↓
 
-Scenario Comparison
-
-↓
-
-Optimization
-
-↓
-
 Executive Recommendation
+
+↓
+
+Executive Explanation
+
+↓
+
+Executive Projection
+
+↓
+
+Executive Narrative
+
+↓
+
+Executive Workspace
 
 ↓
 
@@ -437,7 +480,11 @@ Implementation
 
 ↓
 
-Outcome Evaluation
+Observed Outcome
+
+↓
+
+Prediction Evaluation
 
 ↓
 
@@ -450,130 +497,28 @@ Every executive capability projects from it.
 
 ---
 
-# Executive Decision
-
-The Executive Decision defines the business problem.
-
-It contains:
-
-- executive objective
-- rationale
-- target organizational conditions
-- success metrics
-- constraints
-- assumptions
-- confidence
-
-The Executive Decision does not determine the solution.
-
-It defines the optimization problem.
-
----
-
-# Executive Optimization Objective
-
-Optimization transforms an Executive Decision into a machine-readable optimization problem.
-
-It contains:
-
-- optimization variables
-- variable weights
-- success targets
-- optimization constraints
-- optimization preferences
-- tradeoff strategy
-- optimization confidence
-
-Optimization evaluates organizational futures.
-
----
-
-# Organizational Variables
-
-Optimization operates over canonical organizational variables.
-
-Examples include:
-
-- Decision Flow
-- Execution Capacity
-- Coordination
-- Strategic Alignment
-- Learning
-- Knowledge Continuity
-- Leadership Dependency
-- Operating Model
-
-Variables possess:
-
-- strength
-- confidence
-- trend
-- priority
-- causal relationships
-
-Discovery optimizes variables rather than recommendations.
-
----
-
-# Constraints
-
-Constraints define unacceptable organizational futures.
-
-Examples
-
-- Budget
-- Time
-- People
-- Capacity
-- Regulatory
-- Technology
-- Strategic
-
-Constraint states include:
-
-- Satisfied
-- Violated
-- Requires Simulation
-- Insufficient Evidence
-
-Discovery never assumes constraint satisfaction without evidence.
-
----
-
 # Recommendation Philosophy
 
-Recommendations are not generated directly.
+Recommendations are never produced directly.
 
-Recommendations emerge from optimization.
+Recommendations emerge from:
 
-The highest-ranked organizational future becomes the executive recommendation.
+* executive understanding,
+* optimization,
+* simulation,
+* constraint reasoning,
+* organizational uncertainty.
 
-Every recommendation must explain:
+Every recommendation should explain:
 
-- why it won,
-- what improved,
-- what deteriorated,
-- which constraints were satisfied,
-- which assumptions remain,
-- what evidence could change the recommendation.
+* why it won,
+* what improved,
+* what deteriorated,
+* which constraints matter,
+* why Discovery trusts the recommendation,
+* what evidence could change it.
 
-Recommendations are fully explainable.
-
----
-
-# Progressive Context
-
-Discovery should continuously earn additional organizational context.
-
-Rather than requesting arbitrary integrations, Discovery identifies the specific evidence that would improve optimization.
-
-Examples
-
-> Upload your engineering roadmap to improve execution forecasting.
-
-> Upload approval workflow data to improve decision-flow optimization.
-
-Every request for additional context should directly improve executive decision quality.
+Recommendations remain fully explainable.
 
 ---
 
@@ -583,18 +528,22 @@ Executives think in decisions.
 
 They do not think in cognitive capabilities.
 
-Discovery's experience should naturally guide executives through the Decision Flywheel.
+Discovery's experience should naturally guide executives through:
 
-```
+```text id="8wjlwm"
 Current Understanding
 
 ↓
 
-Recommended Strategy
+Executive Explanation
 
 ↓
 
-Challenge Recommendation
+Recommendation
+
+↓
+
+Challenge
 
 ↓
 
@@ -606,7 +555,7 @@ Simulation
 
 ↓
 
-Decision
+Executive Decision
 
 ↓
 
@@ -614,39 +563,34 @@ Implementation
 
 ↓
 
-Outcome
-
-↓
-
 Learning
 ```
 
-Discovery's cognitive architecture remains largely invisible.
+The Cognitive Operating System remains largely invisible.
 
-Executives experience decisions.
+Executives experience decisions—not architecture.
 
 ---
 
 # Board Reports
 
-Every recommendation should naturally produce a board-ready decision report.
+Every recommendation should naturally produce a board-ready executive report.
 
 Reports include:
 
-- Executive Summary
-- Decision Objective
-- Recommended Strategy
-- Optimization Summary
-- Organizational Variable Movement
-- Constraints
-- Risks
-- Assumptions
-- Confidence
-- Alternative Strategies
-- Evidence Gaps
-- Recommended Next Steps
+* Executive Summary
+* Executive Explanation
+* Organizational Uncertainty
+* Executive Decision
+* Optimization Summary
+* Scenario Comparison
+* Risks
+* Assumptions
+* Confidence Limiters
+* Recommended Investigations
+* Next Steps
 
-Reports become artifacts supporting executive and board decision-making.
+Board reports become artifacts supporting executive judgment rather than merely documenting decisions.
 
 ---
 
@@ -654,12 +598,8 @@ Reports become artifacts supporting executive and board decision-making.
 
 Discovery continuously improves through completed decisions.
 
-```
+```text id="8e4lbw"
 Executive Decision
-
-↓
-
-Optimization
 
 ↓
 
@@ -667,11 +607,11 @@ Simulation
 
 ↓
 
-Reality
+Observed Outcome
 
 ↓
 
-Evaluation
+Prediction Evaluation
 
 ↓
 
@@ -679,10 +619,10 @@ Learning
 
 ↓
 
-Improved Optimization
+Improved Executive Judgment
 ```
 
-Optimization quality compounds over time.
+Executive judgment compounds over time.
 
 ---
 
@@ -690,30 +630,25 @@ Optimization quality compounds over time.
 
 Discovery is no longer an Organizational Understanding Engine.
 
-Discovery is an **Organizational Decision Intelligence Platform.**
+Discovery is no longer merely a Decision Intelligence Platform.
 
-Its purpose is not simply to explain organizations.
+Discovery is an **Executive Cognitive Operating System**.
 
-Its purpose is to continuously improve executive decision-making through organizational understanding, optimization, simulation, and learning.
+Its purpose is to continuously improve executive judgment through reusable organizational cognition.
 
 ---
 
 # Canonical Principle
 
-Discovery should continuously answer seven executive questions.
+Discovery should continuously answer eight executive questions.
 
 1. What is happening?
-
 2. Why is it happening?
+3. How certain are we?
+4. What decision matters most?
+5. What is the strongest strategy?
+6. What happens if we implement it?
+7. Why should leadership trust this recommendation?
+8. What did Discovery learn?
 
-3. What decision matters most?
-
-4. What is the best strategy?
-
-5. What happens if we implement it?
-
-6. Should leadership act?
-
-7. What did Discovery learn?
-
-When Discovery can continuously answer these questions with transparent reasoning, calibrated confidence, and measurable learning, it fulfills its purpose as an Organizational Decision Intelligence Platform.
+When Discovery can continuously answer these questions with transparent reasoning, calibrated confidence, explainable recommendations, and measurable learning, it fulfills its purpose as an Executive Cognitive Operating System.
