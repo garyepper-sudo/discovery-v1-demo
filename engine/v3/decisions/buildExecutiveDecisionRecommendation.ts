@@ -42,6 +42,9 @@ export type BuildExecutiveDecisionRecommendationInput = {
   rankedScenarios:
     RankedExecutiveScenario[];
 
+  calibratedConfidence:
+    number;
+
   generatedAt?: string;
 };
 
@@ -57,6 +60,7 @@ function clamp01(
 export function buildExecutiveDecisionRecommendation({
   comparisonSet,
   rankedScenarios,
+  calibratedConfidence,
   generatedAt =
     new Date().toISOString(),
 }: BuildExecutiveDecisionRecommendationInput): ExecutiveDecisionRecommendation {
@@ -84,14 +88,6 @@ export function buildExecutiveDecisionRecommendation({
       "Winning scenario comparison could not be found.",
     );
   }
-
-  const confidence =
-    clamp01(
-      (
-        winner.score +
-        winner.confidenceScore
-      ) / 2,
-    );
 
   const expectedBenefits =
     comparison.improvedConditionIds.map(
@@ -135,7 +131,10 @@ export function buildExecutiveDecisionRecommendation({
     status:
       comparison.executiveRecommendation,
 
-    confidence,
+    confidence:
+      clamp01(
+        calibratedConfidence,
+      ),
 
     summary,
 

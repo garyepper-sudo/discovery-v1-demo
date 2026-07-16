@@ -40,12 +40,14 @@ import { synchronizeOrganizationModel } from "../model/synchronizeOrganizationMo
 import { inferOrganizationRelationships } from "../model/inferOrganizationRelationships";
 import { inferOrganizationalConditions } from "../model/state/inferOrganizationalConditions";
 import { buildInvestigationOpportunities } from "../model/investigation/buildInvestigationOpportunities";
+import { refineInvestigationOpportunities } from "../model/investigation/refineInvestigationOpportunities";
 import { inferOrganizationalPredictions } from "../model/predictions/inferOrganizationalPredictions";
 import { buildPredictionReflection } from "../model/predictions/buildPredictionReflection";
 import { evaluatePredictionOutcomes } from "../model/predictions/evaluatePredictionOutcomes";
 import { simulateOrganization } from "../model/simulate/simulateOrganization";
 import { buildOrganizationalIntervention } from "../model/simulate/buildOrganizationalIntervention";
 import { buildOrganizationalCausalModel } from "../model/causal/buildOrganizationalCausalModel";
+import { assessOrganizationalUncertainty } from "../model/epistemic/assessOrganizationalUncertainty";
 
 
 export function evolveOrganizationRuntime(params: {
@@ -93,6 +95,7 @@ export function evolveOrganizationRuntime(params: {
     organizationalState?: any;
     investigationStrategy?: any;
     investigationOpportunities?: any[];
+    organizationalUncertainty?: any;
     organizationalPredictions?: any[];
     predictionReflection?: any;
     predictionEvaluations?: any[];
@@ -678,8 +681,11 @@ export function evolveOrganizationRuntime(params: {
   const investigationStrategy =
     investigationOpportunityResult.strategy;
 
-  const investigationOpportunities =
+  const initialInvestigationOpportunities =
     investigationOpportunityResult.opportunities;
+
+  let investigationOpportunities =
+    initialInvestigationOpportunities;
 
   console.log("Semantic Reasoning", semanticReasoning);
   console.log("Concept Candidates", conceptCandidates);
@@ -944,9 +950,50 @@ export function evolveOrganizationRuntime(params: {
       learningEvents: allLearningEvents,
     });
 
+  const organizationalUncertainty =
+    assessOrganizationalUncertainty({
+      organizationId:
+        runtime.metadata.organizationId,
+
+      evidence:
+        result.evidence ?? [],
+
+      contradictions:
+        result.contradictions ?? [],
+
+      learningProfile:
+        organizationalLearningProfile,
+
+      predictionEvaluations,
+
+      investigationOpportunities:
+        initialInvestigationOpportunities,
+
+      assessedAt:
+        now,
+    });
+
+  investigationOpportunities =
+    refineInvestigationOpportunities({
+      opportunities:
+        initialInvestigationOpportunities,
+
+      organizationalUncertainty,
+    });
+
   console.log(
     "Organizational Learning Profile",
     organizationalLearningProfile,
+  );
+
+  console.log(
+    "Organizational Uncertainty",
+    organizationalUncertainty,
+  );
+
+  console.log(
+    "Refined Investigation Opportunities",
+    investigationOpportunities,
   );
 
   /**
@@ -1115,6 +1162,7 @@ const updatedMemory = {
     simulatedOrganizationStates,
     investigationStrategy,
     investigationOpportunities,
+    organizationalUncertainty,
 
     functionalInterpretationState:
       organizationalDynamicsState,
@@ -1174,6 +1222,7 @@ const updatedMemory = {
       predictionEvaluations,
       investigationStrategy,
       investigationOpportunities,
+      organizationalUncertainty,
     },
 
     understandingClusters,
@@ -1403,6 +1452,9 @@ const updatedMemory = {
 
     investigationOpportunities:
       typeof investigationOpportunities;
+
+    organizationalUncertainty:
+      typeof organizationalUncertainty;
   };
 
   return {

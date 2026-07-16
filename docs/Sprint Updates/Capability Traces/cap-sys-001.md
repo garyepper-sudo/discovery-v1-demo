@@ -1,10 +1,10 @@
 # Capability Trace — Architectural Planning
 
-Generated: 2026-07-13T02:49:00.162Z
+Generated: 2026-07-16T03:44:04.239Z
 
 ## Verified Architecture
 
-**Connection status:** ❌ Incomplete
+**Connection status:** ✅ Connected
 
 | Property | Value |
 |---|---|
@@ -38,7 +38,7 @@ None declared.
 
 ### Declared Consumers
 
-None declared.
+- `CAP-SYS-002`
 
 ## Architecture Verification
 
@@ -50,13 +50,17 @@ None declared.
 | Implementation files | ✅ | 1 declared file(s) exist. |
 | Runtime destination | ✅ | DiscoveryArchitectureState.architectureRecommendations |
 | Executive destination | ✅ | ArchitectureHandoff, SprintBrief |
-| Consumers | ❌ | No downstream consumers are declared. |
+| Consumers | ✅ | 1 declared consumer(s). |
 | Atlas coverage | ✅ | not-applicable |
 | Structural implementation coverage | ✅ | All declared implementation files appeared in the structural trace. |
 
 ## Architecture Drift
 
-✅ No structural drift was detected between the declared implementation files and the capability trace.
+### Structural Matches Not Declared as Implementation Files
+
+Review these files to determine whether they should be registered as consumers, validators, projections, simulations, or supporting implementations.
+
+- `scripts/cognition/projectArchitectureRecommendation.mjs`
 
 ## Structural Search
 
@@ -94,7 +98,7 @@ This section records source-code references. It supplements, but does not replac
 | API | ❌ Not found | 0 |
 | Simulation | ❌ Not found | 0 |
 | Benchmark | ❌ Not found | 0 |
-| Other | ✅ Found | 1 |
+| Other | ✅ Found | 6 |
 
 ### Detailed Matches
 
@@ -102,7 +106,20 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `scripts/cognition/planArchitecture.mjs`
 
-- Line 365 · **unknown** · matched `CAP-SYS-001`
+- Line 175 · **unknown** · matched `CAP-SYS-001`
+  - `"CAP-SYS-001",`
+- Line 379 · **unknown** · matched `Architectural Planning`
+  - `? "The System Operating System now includes both Architectural Planning and Architecture Recommendation Projection."`
+- Line 385 · **unknown** · matched `architecturalPlanning`
+  - `architecturalPlanningImplemented:`
+- Line 565 · **unknown** · matched `Architectural Planning`
+  - `"Architectural Planning now produces recommendations that are projected into Sprint Startup, allowing Discovery's own architecture state to influence development sequencing.",`
+- Line 1246 · **unknown** · matched `CAP-SYS-001`
+  - `"CAP-SYS-001",`
+
+##### `scripts/cognition/projectArchitectureRecommendation.mjs`
+
+- Line 125 · **unknown** · matched `CAP-SYS-001`
   - `"CAP-SYS-001",`
 
 ## Interpretation

@@ -55,6 +55,16 @@ import {
   type ExecutiveDecisionRecommendation,
 } from "./buildExecutiveDecisionRecommendation";
 
+import {
+  evaluateInterventionViability,
+  type InterventionViabilityEvaluation,
+} from "./evaluateInterventionViability";
+
+import {
+  calibrateDecisionConfidence,
+  type DecisionConfidenceCalibration,
+} from "./calibrateDecisionConfidence";
+
 export type ExecutiveDecisionCycle = {
   /**
    * Executive objective, metrics, constraints, assumptions, and questions
@@ -77,7 +87,14 @@ export type ExecutiveDecisionCycle = {
     InterventionOption[];
 
   /**
-   * Causal evaluation of every generated intervention option.
+   * Constraint-based viability evaluation for every generated option.
+   */
+  viabilityEvaluations:
+    InterventionViabilityEvaluation[];
+
+  /**
+   * Causal evaluation of every generated intervention option that was not
+   * disqualified by a required executive constraint.
    */
   evaluatedOptions:
     EvaluatedInterventionOption[];
@@ -99,6 +116,13 @@ export type ExecutiveDecisionCycle = {
    */
   rankedScenarios:
     RankedExecutiveScenario[];
+
+  /**
+   * Epistemic calibration explaining how much Discovery should trust
+   * the winning recommendation.
+   */
+  confidenceCalibration:
+    DecisionConfidenceCalibration;
 
   /**
    * Final executive recommendation synthesized from the ranking.
@@ -176,6 +200,21 @@ function requireOrganizationalConditions(
   }
 
   return conditions;
+}
+
+function evaluateOptionViability(
+  options:
+    InterventionOption[],
+
+  executiveDecision:
+    ExecutiveDecision,
+): InterventionViabilityEvaluation[] {
+  return options.map((option) =>
+    evaluateInterventionViability({
+      executiveDecision,
+      option,
+    }),
+  );
 }
 
 function evaluateOptions(
@@ -281,13 +320,15 @@ function runOptionScenarios(
  * 1. validates that the decision and runtime refer to the same organization,
  * 2. resolves the persisted organizational conditions,
  * 3. synthesizes the canonical Executive Optimization Objective,
- * 4. generates viable intervention options,
- * 5. evaluates each option through canonical causal reasoning,
- * 6. simulates every option from the same organizational baseline,
- * 7. compares all projected futures,
- * 8. ranks the scenarios deterministically,
- * 9. synthesizes the final executive recommendation,
- * 10. and returns the complete non-mutating decision cycle.
+ * 4. generates intervention options,
+ * 5. evaluates every option against executive constraints,
+ * 6. removes options that violate required constraints,
+ * 7. evaluates remaining options through canonical causal reasoning,
+ * 8. simulates every remaining option from the same organizational baseline,
+ * 9. compares all projected futures,
+ * 10. ranks the scenarios deterministically,
+ * 11. synthesizes the final executive recommendation,
+ * 12. and returns the complete non-mutating decision cycle.
  *
  * This orchestrator performs no independent organizational reasoning.
  */
@@ -324,13 +365,34 @@ export function runExecutiveDecisionCycle({
 
   if (generatedOptions.length === 0) {
     throw new Error(
-      "Executive Decision Cycle did not generate any viable intervention options.",
+      "Executive Decision Cycle did not generate any intervention options.",
+    );
+  }
+
+  const viabilityEvaluations =
+    evaluateOptionViability(
+      generatedOptions,
+      executiveDecision,
+    );
+
+  const viableOptions =
+    generatedOptions.filter(
+      (option) =>
+        viabilityEvaluations.find(
+          (evaluation) =>
+            evaluation.optionId === option.id,
+        )?.status !== "disqualified",
+    );
+
+  if (viableOptions.length === 0) {
+    throw new Error(
+      "Executive Decision Cycle found no intervention options that satisfy the required executive constraints.",
     );
   }
 
   const evaluatedOptions =
     evaluateOptions(
-      generatedOptions,
+      viableOptions,
       runtime,
       conditions,
     );
@@ -361,10 +423,29 @@ export function runExecutiveDecisionCycle({
       comparisonSet,
     });
 
+  const winner =
+    rankedScenarios[0];
+
+  if (!winner) {
+    throw new Error(
+      "Executive Decision Cycle could not identify a winning scenario.",
+    );
+  }
+
+  const confidenceCalibration =
+    calibrateDecisionConfidence({
+      winner,
+      runtime,
+      viabilityEvaluations,
+    });
+
   const recommendation =
     buildExecutiveDecisionRecommendation({
       comparisonSet,
       rankedScenarios,
+      calibratedConfidence:
+        confidenceCalibration
+          .calibratedConfidence,
       generatedAt:
         completedAt,
     });
@@ -373,10 +454,12 @@ export function runExecutiveDecisionCycle({
     executiveDecision,
     optimizationObjective,
     generatedOptions,
+    viabilityEvaluations,
     evaluatedOptions,
     scenarios,
     comparisonSet,
     rankedScenarios,
+    confidenceCalibration,
     recommendation,
     completedAt,
   };
