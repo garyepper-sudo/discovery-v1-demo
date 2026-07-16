@@ -1,6 +1,6 @@
 # Discovery Architecture Handoff
 
-Generated: 2026-07-16T15:09:05.805Z
+Generated: 2026-07-16T19:26:28.126Z
 
 ## Purpose
 
@@ -22,7 +22,7 @@ Before adding any new cognitive capability:
 
 - Registered capabilities: 28
 - Canonical producers: 28
-- Registered files: 482
+- Registered files: 585
 - Terminal capabilities: 5
 - Duplicate capability IDs: 0
 - Missing dependencies: 0

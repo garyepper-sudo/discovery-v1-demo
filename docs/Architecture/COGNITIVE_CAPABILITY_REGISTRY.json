@@ -498,7 +498,8 @@
           "exports": [
             "OrganizationalCondition",
             "OrganizationalState",
-            "inferOrganizationalConditions"
+            "inferOrganizationalConditions",
+            "synthesizeOrganizationalState"
           ],
           "imports": [
             "./rankOrganizationalCondition"
@@ -689,14 +690,19 @@
             "../model/beliefs/inferOrganizationalBeliefs",
             "../model/beliefs/updateOrganizationalBeliefs",
             "../model/buildOrganizationReasoningGraph",
+            "../model/causal/buildOrganizationalCausalModel",
+            "../model/epistemic/assessOrganizationalUncertainty",
             "../model/inferOrganizationRelationships",
             "../model/inferReasoningRelationships",
             "../model/investigation/buildInvestigationOpportunities",
+            "../model/investigation/refineInvestigationOpportunities",
             "../model/judgment/buildExecutiveAssessment",
+            "../model/judgment/buildExecutiveExplanation",
             "../model/judgment/detectJudgmentContradictions",
             "../model/judgment/evaluateExplanations",
             "../model/judgment/inferOrganizationalMechanisms",
             "../model/judgment/synthesizeExplanations",
+            "../model/learning/buildPredictionLearningEvents",
             "../model/learning/computeOrganizationalLearningProfile",
             "../model/memory/buildUnderstandingEvolution",
             "../model/memory/calculateMemoryMaturity",
@@ -706,6 +712,7 @@
             "../model/predictions/evaluatePredictionOutcomes",
             "../model/predictions/inferOrganizationalPredictions",
             "../model/reasoning",
+            "../model/simulate/buildOrganizationalIntervention",
             "../model/simulate/simulateOrganization",
             "../model/state/inferOrganizationalConditions",
             "../model/synchronizeOrganizationModel",
@@ -794,11 +801,13 @@
             "../cognition/observationEvolution",
             "../entities/entityLifecycle",
             "../executive/executiveState",
+            "../model/causal/organizationalCausalModel",
             "../model/createOrganizationModel",
             "../model/memory/organizationalMemory",
             "../model/memory/organizationalTheories",
             "../model/organizationModel",
             "../model/predictions/evaluatePredictionOutcomes",
+            "../model/simulate/organizationalIntervention",
             "../model/simulate/simulateOrganization",
             "../understanding/types",
             "./organizationalUnderstandingState"
@@ -932,7 +941,9 @@
             "UnderstandingSnapshot",
             "computeOrganizationalLearningProfile"
           ],
-          "imports": []
+          "imports": [
+            "./buildPredictionLearningSummary"
+          ]
         }
       ],
       "missingImplementationFiles": [],
@@ -1552,10 +1563,16 @@
           ],
           "imports": [
             "../beliefs/organizationalBeliefs",
+            "../causal/aggregateOrganizationalInfluence",
+            "../causal/organizationalCausalModel",
+            "../causal/propagateOrganizationalInfluence",
             "../learning/computeOrganizationalLearningProfile",
             "../predictions/evaluatePredictionOutcomes",
+            "../predictions/inferOrganizationalPredictions",
             "../predictions/organizationalPrediction",
             "../state/inferOrganizationalConditions",
+            "./evolveConditions",
+            "./mapInterventionToCausalChanges",
             "./organizationalIntervention"
           ]
         }
@@ -1595,7 +1612,37 @@
       "reviewStatus": "proposed",
       "notes": "Version 1 represents intentional executive actions as canonical cognitive objects. Later versions will infer affected conditions, mechanisms, beliefs, assumptions, evidence requirements, and causal propagation pathways.",
       "canonicalProducerExists": true,
-      "resolvedFiles": [],
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/model/simulate/organizationalIntervention.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-065",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "OrganizationalIntervention",
+            "OrganizationalInterventionScope",
+            "OrganizationalInterventionStatus",
+            "OrganizationalInterventionTimeHorizon",
+            "OrganizationalInterventionType"
+          ],
+          "imports": []
+        },
+        {
+          "path": "engine/v3/model/simulate/buildOrganizationalIntervention.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-064",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "BuildOrganizationalInterventionInput",
+            "buildOrganizationalIntervention"
+          ],
+          "imports": [
+            "./organizationalIntervention"
+          ]
+        }
+      ],
       "missingImplementationFiles": [],
       "subsystem": "Organizational Intervention Modeling",
       "architecturalLayer": "COG"
@@ -1646,7 +1693,127 @@
       "reviewStatus": "reviewed",
       "notes": "Canonical non-mutating orchestrator for the complete executive decision workflow. It composes Optimization Objective Synthesis, intervention generation, causal evaluation, simulation, scenario comparison, ranking, and recommendation synthesis. It must not recreate the reasoning owned by those capabilities.",
       "canonicalProducerExists": true,
-      "resolvedFiles": [],
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/decisions/runExecutiveDecisionCycle.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-MEM-002",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "MEM",
+          "exports": [
+            "ExecutiveDecisionCycle",
+            "RunExecutiveDecisionCycleInput",
+            "runExecutiveDecisionCycle"
+          ],
+          "imports": [
+            "../model/simulate/executiveDecision",
+            "../model/simulate/interventionOption",
+            "../model/state/inferOrganizationalConditions",
+            "../optimization/executiveOptimizationObjective",
+            "../optimization/synthesizeExecutiveOptimizationObjective",
+            "../reasoning/evaluateInterventionOption",
+            "../reasoning/generateInterventionOptions",
+            "../runtime/organizationRuntime",
+            "../scenarios/buildExecutiveDecisionContext",
+            "../scenarios/runExecutiveScenario",
+            "./buildExecutiveDecisionRecommendation",
+            "./calibrateDecisionConfidence",
+            "./compareExecutiveScenarios",
+            "./evaluateInterventionViability",
+            "./rankExecutiveScenarios"
+          ]
+        },
+        {
+          "path": "engine/v3/reasoning/generateInterventionOptions.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-072",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "GenerateInterventionOptionsInput",
+            "generateInterventionOptions"
+          ],
+          "imports": [
+            "../decisions/evaluateInterventionConstraints",
+            "../model/simulate/executiveDecision",
+            "../model/simulate/interventionOption"
+          ]
+        },
+        {
+          "path": "engine/v3/reasoning/convertInterventionOptionToIntervention.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-092",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "convertInterventionOptionToIntervention"
+          ],
+          "imports": [
+            "../model/simulate/buildOrganizationalIntervention",
+            "../model/simulate/interventionOption",
+            "../model/simulate/organizationalIntervention"
+          ]
+        },
+        {
+          "path": "engine/v3/reasoning/evaluateInterventionOption.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-093",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "EvaluateInterventionOptionInput",
+            "EvaluatedInterventionOption",
+            "evaluateInterventionOption"
+          ],
+          "imports": [
+            "../model/causal/aggregateOrganizationalInfluence",
+            "../model/causal/organizationalCausalModel",
+            "../model/causal/propagateOrganizationalInfluence",
+            "../model/simulate/interventionOption",
+            "../model/simulate/mapInterventionToCausalChanges",
+            "../model/simulate/organizationalIntervention",
+            "../model/state/inferOrganizationalConditions",
+            "./convertInterventionOptionToIntervention"
+          ]
+        },
+        {
+          "path": "engine/v3/scenarios/buildExecutiveDecisionContext.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-097",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "ExecutiveDecisionContext",
+            "buildExecutiveDecisionContext"
+          ],
+          "imports": [
+            "../runtime/organizationRuntime",
+            "./runExecutiveScenario"
+          ]
+        },
+        {
+          "path": "engine/v3/scenarios/runExecutiveScenario.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-098",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "ExecutiveScenarioResult",
+            "RunExecutiveScenarioInput",
+            "runExecutiveScenario"
+          ],
+          "imports": [
+            "../concepts/conceptCandidateTypes",
+            "../model/judgment/organizationalJudgment",
+            "../model/judgment/organizationalMechanism",
+            "../model/simulate/buildSimulationScenario",
+            "../model/simulate/compareSimulationScenario",
+            "../model/simulate/organizationalIntervention",
+            "../model/simulate/simulateOrganization",
+            "../model/state/inferOrganizationalConditions"
+          ]
+        }
+      ],
       "missingImplementationFiles": [],
       "subsystem": "Executive Decision Orchestration",
       "architecturalLayer": "EXEC",
@@ -1691,7 +1858,24 @@
       "reviewStatus": "reviewed",
       "notes": "Compares scenarios but does not score, rank, or recommend an intervention.",
       "canonicalProducerExists": true,
-      "resolvedFiles": [],
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/decisions/compareExecutiveScenarios.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-SIM-001",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "SIM",
+          "exports": [
+            "CompareExecutiveScenariosInput",
+            "ExecutiveScenarioComparisonEntry",
+            "ExecutiveScenarioComparisonSet",
+            "compareExecutiveScenarios"
+          ],
+          "imports": [
+            "../scenarios/runExecutiveScenario"
+          ]
+        }
+      ],
       "missingImplementationFiles": [],
       "subsystem": "Executive Scenario Comparison",
       "architecturalLayer": "EXEC"
@@ -1731,7 +1915,24 @@
       "reviewStatus": "reviewed",
       "notes": "Ranking remains separate from recommendation synthesis. Given fixed inputs and timestamps, the ordering must remain deterministic.",
       "canonicalProducerExists": true,
-      "resolvedFiles": [],
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/decisions/rankExecutiveScenarios.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-SIM-003",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "SIM",
+          "exports": [
+            "RankExecutiveScenariosInput",
+            "RankedExecutiveScenario",
+            "rankExecutiveScenarios"
+          ],
+          "imports": [
+            "../model/simulate/executiveDecision",
+            "./compareExecutiveScenarios"
+          ]
+        }
+      ],
       "missingImplementationFiles": [],
       "subsystem": "Executive Decision Ranking",
       "architecturalLayer": "EXEC"
@@ -1770,7 +1971,26 @@
       "reviewStatus": "reviewed",
       "notes": "Recommendation synthesis remains separate from ranking and preserves what evidence or constraints could change the recommendation.",
       "canonicalProducerExists": true,
-      "resolvedFiles": [],
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/decisions/buildExecutiveDecisionRecommendation.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-035",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "BuildExecutiveDecisionRecommendationInput",
+            "ExecutiveDecisionRecommendation",
+            "buildExecutiveDecisionRecommendation"
+          ],
+          "imports": [
+            "./calibrateDecisionConfidence",
+            "./compareExecutiveScenarios",
+            "./evaluateInterventionViability",
+            "./rankExecutiveScenarios"
+          ]
+        }
+      ],
       "missingImplementationFiles": [],
       "subsystem": "Executive Recommendation",
       "architecturalLayer": "EXEC"
@@ -1810,7 +2030,37 @@
       "reviewStatus": "reviewed",
       "notes": "Version 1 deterministically classifies variables as primary, secondary, or protected and assigns explainable weights using executive priority, organizational priority, and network influence. It performs no simulation, ranking, or recommendation synthesis.",
       "canonicalProducerExists": true,
-      "resolvedFiles": [],
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/optimization/optimizationVariable.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-SYS-018",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "SYS",
+          "exports": [
+            "OptimizationVariable",
+            "OptimizationVariableObjective",
+            "OptimizationVariableRole"
+          ],
+          "imports": []
+        },
+        {
+          "path": "engine/v3/optimization/selectOptimizationVariables.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-089",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "SelectOptimizationVariablesInput",
+            "selectOptimizationVariables"
+          ],
+          "imports": [
+            "../model/simulate/executiveDecision",
+            "../model/state/inferOrganizationalConditions",
+            "./optimizationVariable"
+          ]
+        }
+      ],
       "missingImplementationFiles": [],
       "subsystem": "Optimization Variable Selection",
       "architecturalLayer": "EXEC"
@@ -1851,7 +2101,43 @@
       "reviewStatus": "reviewed",
       "notes": "Canonical producer of the machine-readable optimization problem. Version 1 translates success metrics and constraints conservatively, exposes interpretation limits, remains deterministic when generatedAt is supplied, and does not mutate the Executive Decision or Organizational Conditions.",
       "canonicalProducerExists": true,
-      "resolvedFiles": [],
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/optimization/executiveOptimizationObjective.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-088",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "ExecutiveOptimizationConstraint",
+            "ExecutiveOptimizationObjective",
+            "ExecutiveOptimizationPreference",
+            "ExecutiveOptimizationSuccessTarget",
+            "ExecutiveOptimizationTradeoffStrategy"
+          ],
+          "imports": [
+            "../model/simulate/executiveDecision",
+            "./optimizationVariable"
+          ]
+        },
+        {
+          "path": "engine/v3/optimization/synthesizeExecutiveOptimizationObjective.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-090",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "SynthesizeExecutiveOptimizationObjectiveInput",
+            "synthesizeExecutiveOptimizationObjective"
+          ],
+          "imports": [
+            "../model/simulate/executiveDecision",
+            "../model/state/inferOrganizationalConditions",
+            "./executiveOptimizationObjective",
+            "./selectOptimizationVariables"
+          ]
+        }
+      ],
       "missingImplementationFiles": [],
       "subsystem": "Optimization Objective Synthesis",
       "architecturalLayer": "EXEC"
@@ -1895,13 +2181,78 @@
       "reviewStatus": "reviewed",
       "notes": "Canonical communication producer for transforming Executive Projection cognition into executive-ready language. It suppresses implementation details and engine terminology, preserves confidence, uncertainty, supporting signals, meaningful changes, forecast, recommendation, and evidence, remains deterministic when generatedAt is supplied, and does not mutate its input projection.",
       "canonicalProducerExists": true,
-      "resolvedFiles": [],
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/communication/executiveNarrative.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-PER-036",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "PER",
+          "exports": [
+            "ExecutiveNarrative",
+            "ExecutiveNarrativeChange",
+            "ExecutiveNarrativeEvidenceSection",
+            "ExecutiveNarrativeForecast",
+            "ExecutiveNarrativeRecommendation",
+            "ExecutiveNarrativeSignal"
+          ],
+          "imports": []
+        },
+        {
+          "path": "engine/v3/communication/synthesizeExecutiveNarrative.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-023",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "synthesizeExecutiveNarrative"
+          ],
+          "imports": [
+            "../../../components/executive-v2/projection/ExecutiveProjection",
+            "./executiveNarrative"
+          ]
+        },
+        {
+          "path": "engine/v3/communication/executiveCommunication.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-021",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "ExecutiveCommunication",
+            "ExecutiveCommunicationChange",
+            "ExecutiveCommunicationConfidence",
+            "ExecutiveCommunicationEvidenceSection",
+            "ExecutiveCommunicationForecast",
+            "ExecutiveCommunicationRecommendation",
+            "ExecutiveCommunicationSignal",
+            "ExecutiveCommunicationUncertainty"
+          ],
+          "imports": []
+        },
+        {
+          "path": "engine/v3/communication/synthesizeExecutiveCommunication.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-022",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "SynthesizeExecutiveCommunicationInput",
+            "synthesizeExecutiveCommunication"
+          ],
+          "imports": [
+            "../../../components/executive-v2/projection/ExecutiveProjection",
+            "./executiveCommunication",
+            "./synthesizeExecutiveNarrative"
+          ]
+        }
+      ],
       "missingImplementationFiles": [],
       "subsystem": "Executive Communication",
       "architecturalLayer": "EXEC",
       "terminalCapability": true
     }
   ],
-  "generatedAt": "2026-07-16T15:09:04.094Z",
+  "generatedAt": "2026-07-16T19:25:38.762Z",
   "capabilityCount": 28
 }

@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-16T15:09:05.670Z",
+    "generatedAt": "2026-07-16T19:26:28.015Z",
     "generator": "scripts/cognition/generateArchitectureState.mjs",
     "sourceOfTruthOrder": [
       "Verified source code",
@@ -31,7 +31,7 @@
     "healthScore": 100,
     "capabilityCount": 28,
     "canonicalProducerCount": 28,
-    "registeredFileCount": 482,
+    "registeredFileCount": 585,
     "cognitiveObjectCount": 0,
     "terminalCapabilityCount": 5,
     "capabilityTraceCount": 12,
