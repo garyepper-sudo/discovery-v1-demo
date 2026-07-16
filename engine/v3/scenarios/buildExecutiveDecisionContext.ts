@@ -3,8 +3,10 @@ import type {
   RunExecutiveScenarioInput,
 } from "./runExecutiveScenario";
 
-export type ExecutiveDecisionContext =
-  Omit<RunExecutiveScenarioInput, "intervention">;
+export type ExecutiveDecisionContext = Omit<
+  RunExecutiveScenarioInput,
+  "intervention" | "optionId"
+>;
 
 type ScenarioRuntimeMemory =
   OrganizationRuntime["memory"] & {

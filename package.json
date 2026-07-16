@@ -7,41 +7,31 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-
     "simulate:atlas": "tsx engine/benchmark/runAtlas.ts",
     "decision:scenario:001": "tsx engine/benchmark/decision-intelligence/scenarioIntegrationExperiment001.ts",
     "decision:calibrate": "tsx engine/benchmark/decision-intelligence/runDecisionCalibration.ts",
     "decision:rank:001": "tsx engine/benchmark/decision-intelligence/decisionRankingExperiment001.ts",
     "decision:cycle:001": "tsx engine/benchmark/decision-intelligence/decisionCycleExperiment001.ts",
+    "decision:quality:001": "tsx engine/benchmark/decision-intelligence/decisionQualityExperiment001.ts",
     "communication:001": "tsx engine/benchmark/executive-communication/executiveCommunicationExperiment001.ts",
-
     "audit:understanding": "tsx engine/benchmark/auditUnderstandingLayers.ts",
     "audit:capability": "tsx engine/benchmark/auditCapability.ts",
     "audit:executive-capabilities": "npm run audit:capability -- \"Executive Assessment\" && npm run audit:capability -- \"Executive Understanding Synthesis\" && npm run audit:capability -- \"Organizational Learning Profile\" && npm run audit:capability -- \"Theory Validation\" && npm run audit:capability -- \"Investigation Opportunity Generation\"",
     "verify:architecture": "tsx engine/benchmark/verifyArchitecture.ts",
-
     "cognition:inventory": "node scripts/cognition/generateCognitiveRegistry.mjs",
     "cognition:capabilities": "node scripts/cognition/generateCapabilityRegistry.mjs",
     "cognition:validate": "node scripts/cognition/validateCapabilityRegistry.mjs",
     "cognition:discover": "node scripts/cognition/discoverCapabilities.mjs",
     "review:domain": "node scripts/cognition/reviewCognitiveDomain.mjs",
-
     "architecture:state": "node scripts/cognition/generateArchitectureState.mjs",
     "architecture:handoff": "node scripts/cognition/generateArchitectureHandoff.mjs",
-
     "sprint:brief": "node scripts/cognition/renderSprintStartup.mjs",
-
     "typecheck": "tsc --noEmit",
-
     "benchmark": "tsx engine/benchmark/runBenchmarks.ts",
     "evaluate": "tsx engine/benchmark/runBenchmarks.ts",
-
     "validate": "npm run typecheck && npm run evaluate",
-
     "discovery:brief": "npm run cognition:validate && npm run audit:executive-capabilities && npm run architecture:state && npm run architecture:handoff && npm run sprint:brief",
-
     "sprint:start": "npm run discovery:brief",
-
     "sprint:architecture": "npm run cognition:validate && npm run audit:executive-capabilities && npm run architecture:state && npm run architecture:handoff && cat \"docs/Sprint Updates/ARCHITECTURE_HANDOFF.md\""
   },
   "dependencies": {

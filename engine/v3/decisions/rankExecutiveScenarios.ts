@@ -10,6 +10,11 @@ import type {
 export type RankedExecutiveScenario = {
   rank: number;
 
+  /**
+   * Originating Intervention Option identity.
+   */
+  optionId: string;
+
   interventionId: string;
 
   scenarioId: string;
@@ -305,6 +310,9 @@ function scoreScenario(
     );
 
   return {
+    optionId:
+      entry.optionId,
+
     interventionId:
       entry.interventionId,
 

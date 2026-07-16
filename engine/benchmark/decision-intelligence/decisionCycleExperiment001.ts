@@ -10,6 +10,10 @@ import type {
   ExecutiveDecision,
 } from "../../v3/model/simulate/executiveDecision";
 
+import type {
+  OrganizationalUncertainty,
+} from "../../v3/model/epistemic/organizationalUncertainty";
+
 const ORGANIZATION_ID =
   "atlas-manufacturing-simulation";
 
@@ -33,6 +37,90 @@ const runtime =
   loadOrganizationRuntimeState(
     ORGANIZATION_ID,
   );
+
+const organizationalUncertainty:
+  OrganizationalUncertainty = {
+    organizationId:
+      ORGANIZATION_ID,
+
+    evidenceCompleteness:
+      0.84,
+
+    evidenceAgreement:
+      0.82,
+
+    contradictionDensity:
+      0.08,
+
+    contradictionConfidence:
+      0.72,
+
+    ambiguityScore:
+      0.18,
+
+    learningCertainty:
+      0.76,
+
+    predictionCertainty:
+      0.74,
+
+    investigationUrgency:
+      0.24,
+
+    unresolvedContradictionCount:
+      1,
+
+    unresolvedQuestionCount:
+      1,
+
+    competingExplanationCount:
+      1,
+
+    overallUncertainty:
+      0.2,
+
+    status:
+      "moderate",
+
+    drivers: [
+      {
+        type:
+          "unresolved-question",
+
+        description:
+          "One executive assumption remains insufficiently validated.",
+
+        weight:
+          0.2,
+
+        sourceObjectIds: [],
+      },
+    ],
+
+    recommendedEvidenceAreas: [
+      "Evidence confirming whether structural interventions can improve execution capacity without increasing risk.",
+    ],
+
+    confidenceLimiters: [
+      "One executive assumption remains insufficiently validated.",
+    ],
+
+    summary:
+      "Discovery has strong but incomplete evidence for the current organizational assessment.",
+
+    assessedAt:
+      NOW,
+  };
+
+const benchmarkRuntime = {
+  ...runtime,
+
+  memory: {
+    ...runtime.memory,
+
+    organizationalUncertainty,
+  },
+};
 
 const executiveDecision: ExecutiveDecision = {
   id:
@@ -64,69 +152,69 @@ const executiveDecision: ExecutiveDecision = {
   ],
 
   successMetrics: [
-  {
-    name:
-      "Execution Capacity",
+    {
+      name:
+        "Execution Capacity",
 
-    baseline:
-      0.48,
+      baseline:
+        0.48,
 
-    target:
-      0.63,
+      target:
+        0.63,
 
-    unit:
-      "score",
+      unit:
+        "score",
 
-    rationale:
-      "Execution capacity must improve enough to produce a material operating benefit.",
-  },
-],
+      rationale:
+        "Execution capacity must improve enough to produce a material operating benefit.",
+    },
+  ],
 
-constraints: [
-  {
-    type:
-      "risk",
+  constraints: [
+    {
+      type:
+        "risk",
 
-    description:
-      "Do not increase organizational risk.",
+      description:
+        "Do not increase organizational risk.",
 
-    required:
-      true,
-  },
+      required:
+        true,
+    },
 
-  {
-    type:
-      "people",
+    {
+      type:
+        "people",
 
-    description:
-      "Do not increase headcount.",
+      description:
+        "Do not increase headcount.",
 
-    required:
-      true,
-  },
+      required:
+        true,
+    },
 
-  {
-    type:
-      "budget",
+    {
+      type:
+        "budget",
 
-    description:
-      "Remain budget neutral.",
+      description:
+        "Remain budget neutral.",
 
-    required:
-      true,
-  },
+      required:
+        true,
+    },
 
-  {
-    type:
-      "time",
+    {
+      type:
+        "time",
 
-    description:
-      "Produce measurable improvement within the near term.",
+      description:
+        "Produce measurable improvement within the near term.",
 
-    required:
-      true,
-  },
-],
+      required:
+        true,
+    },
+  ],
 
   allowedInterventionTypes: [
     "governance",
@@ -151,18 +239,32 @@ constraints: [
 };
 
 const runtimeSnapshotBefore =
-  JSON.stringify(runtime);
+  JSON.stringify(
+    benchmarkRuntime,
+  );
 
 const cycle =
   runExecutiveDecisionCycle({
     executiveDecision,
-    runtime,
+
+    runtime:
+      benchmarkRuntime,
+
     completedAt:
       NOW,
   });
 
 const runtimeSnapshotAfter =
-  JSON.stringify(runtime);
+  JSON.stringify(
+    benchmarkRuntime,
+  );
+
+const viableOptionCount =
+  cycle.viabilityEvaluations.filter(
+    (evaluation) =>
+      evaluation.status !==
+      "disqualified",
+  ).length;
 
 const checks: Check[] = [
   {
@@ -191,26 +293,38 @@ const checks: Check[] = [
 
   {
     name:
-      "Every option evaluated",
+      "Every generated option received a viability evaluation",
 
     passed:
       cycle.generatedOptions.length ===
-      cycle.evaluatedOptions.length,
+      cycle.viabilityEvaluations.length,
 
     detail:
-      `${cycle.evaluatedOptions.length}/${cycle.generatedOptions.length}`,
+      `${cycle.viabilityEvaluations.length}/${cycle.generatedOptions.length}`,
   },
 
   {
     name:
-      "Every option simulated",
+      "Every viable option evaluated",
 
     passed:
-      cycle.generatedOptions.length ===
+      viableOptionCount ===
+      cycle.evaluatedOptions.length,
+
+    detail:
+      `${cycle.evaluatedOptions.length}/${viableOptionCount}`,
+  },
+
+  {
+    name:
+      "Every evaluated option simulated",
+
+    passed:
+      cycle.evaluatedOptions.length ===
       cycle.scenarios.length,
 
     detail:
-      `${cycle.scenarios.length}/${cycle.generatedOptions.length}`,
+      `${cycle.scenarios.length}/${cycle.evaluatedOptions.length}`,
   },
 
   {
@@ -236,6 +350,24 @@ const checks: Check[] = [
 
     detail:
       `${cycle.rankedScenarios.length} ranked scenario(s)`,
+  },
+
+  {
+    name:
+      "Decision confidence calibrated",
+
+    passed:
+      cycle.confidenceCalibration
+        .calibratedConfidence >= 0 &&
+      cycle.confidenceCalibration
+        .calibratedConfidence <= 1,
+
+    detail:
+      `${Math.round(
+        cycle.confidenceCalibration
+          .calibratedConfidence *
+          100,
+      )}% calibrated confidence`,
   },
 
   {

@@ -47,6 +47,18 @@ type BuildSimulationScenarioInput =
 
 export type ExecutiveScenarioResult = {
   /**
+   * Originating intervention option evaluated by this scenario.
+   *
+   * This identity is preserved separately from the converted
+   * Organizational Intervention so viability, simulation, ranking,
+   * and recommendation remain canonically traceable.
+   *
+   * Standalone scenario callers that do not originate from an
+   * Intervention Option use the intervention identity as the fallback.
+   */
+  optionId: string;
+
+  /**
    * Intervention evaluated by this scenario.
    */
   intervention:
@@ -78,6 +90,14 @@ export type ExecutiveScenarioResult = {
 };
 
 export type RunExecutiveScenarioInput = {
+  /**
+   * Stable identity of the originating Intervention Option.
+   *
+   * Optional for standalone scenarios that begin directly from an
+   * Organizational Intervention.
+   */
+  optionId?: string;
+
   /**
    * Current organization and simulation inputs.
    *
@@ -161,6 +181,7 @@ export type RunExecutiveScenarioInput = {
  * The live Organization Runtime is not mutated.
  */
 export function runExecutiveScenario({
+  optionId,
   simulation,
   intervention,
   currentExecutiveAssessment,
@@ -244,6 +265,10 @@ export function runExecutiveScenario({
     });
 
   return {
+    optionId:
+      optionId ??
+      intervention.id,
+
     intervention,
     simulatedOrganizationState,
     scenario,

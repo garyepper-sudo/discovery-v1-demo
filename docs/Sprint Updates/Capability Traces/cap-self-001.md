@@ -1,6 +1,6 @@
 # Capability Trace — Theory Validation
 
-Generated: 2026-07-16T15:05:50.655Z
+Generated: 2026-07-16T15:09:05.298Z
 
 ## Verified Architecture
 

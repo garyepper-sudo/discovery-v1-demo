@@ -295,19 +295,22 @@ function runOptionScenarios(
         );
 
       return runExecutiveScenario({
-        ...decisionContext,
+  optionId:
+    evaluatedOption.option.id,
 
-        simulation: {
-          ...decisionContext.simulation,
+  ...decisionContext,
 
-          directChanges:
-            evaluatedOption
-              .mappedChanges,
-        },
+  simulation: {
+    ...decisionContext.simulation,
 
-        intervention:
-          evaluatedOption.intervention,
-      });
+    directChanges:
+      evaluatedOption
+        .mappedChanges,
+  },
+
+  intervention:
+    evaluatedOption.intervention,
+});
     },
   );
 }
@@ -443,9 +446,8 @@ export function runExecutiveDecisionCycle({
     buildExecutiveDecisionRecommendation({
       comparisonSet,
       rankedScenarios,
-      calibratedConfidence:
-        confidenceCalibration
-          .calibratedConfidence,
+      confidenceCalibration,
+      viabilityEvaluations,
       generatedAt:
         completedAt,
     });

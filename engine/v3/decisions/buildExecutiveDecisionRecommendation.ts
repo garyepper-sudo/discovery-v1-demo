@@ -6,6 +6,14 @@ import type {
   RankedExecutiveScenario,
 } from "./rankExecutiveScenarios";
 
+import type {
+  DecisionConfidenceCalibration,
+} from "./calibrateDecisionConfidence";
+
+import type {
+  InterventionViabilityEvaluation,
+} from "./evaluateInterventionViability";
+
 export type ExecutiveDecisionRecommendation = {
   recommendedInterventionId?: string;
 
@@ -42,8 +50,11 @@ export type BuildExecutiveDecisionRecommendationInput = {
   rankedScenarios:
     RankedExecutiveScenario[];
 
-  calibratedConfidence:
-    number;
+  confidenceCalibration:
+    DecisionConfidenceCalibration;
+
+  viabilityEvaluations:
+    InterventionViabilityEvaluation[];
 
   generatedAt?: string;
 };
@@ -57,10 +68,24 @@ function clamp01(
   );
 }
 
+function unique(
+  values: string[],
+): string[] {
+  return Array.from(
+    new Set(
+      values.filter(
+        (value) =>
+          value.trim().length > 0,
+      ),
+    ),
+  );
+}
+
 export function buildExecutiveDecisionRecommendation({
   comparisonSet,
   rankedScenarios,
-  calibratedConfidence,
+  confidenceCalibration,
+  viabilityEvaluations,
   generatedAt =
     new Date().toISOString(),
 }: BuildExecutiveDecisionRecommendationInput): ExecutiveDecisionRecommendation {
@@ -89,37 +114,130 @@ export function buildExecutiveDecisionRecommendation({
     );
   }
 
+const viability =
+  viabilityEvaluations.find(
+    (evaluation) =>
+      evaluation.optionId ===
+      winner.optionId,
+  );
+
+  if (!viability) {
+    throw new Error(
+      "Winning intervention viability evaluation could not be found.",
+    );
+  }
+
+  if (
+    viability.status ===
+    "disqualified"
+  ) {
+    throw new Error(
+      "A disqualified intervention cannot become the executive recommendation.",
+    );
+  }
+
+  const hasUnresolvedRequiredConstraints =
+    viability
+      .unresolvedRequiredConstraints
+      .length > 0;
+
   const expectedBenefits =
     comparison.improvedConditionIds.map(
       (conditionId) =>
         `Expected improvement: ${conditionId}`,
     );
 
-  const tradeOffs =
+  const conditionTradeOffs =
     comparison.worsenedConditionIds.map(
       (conditionId) =>
         `Potential deterioration: ${conditionId}`,
     );
 
-  const risks =
+  const unresolvedConstraintTradeOffs =
+    viability
+      .unresolvedRequiredConstraints
+      .map(
+        (issue) =>
+          `Required ${issue.constraintType} constraint remains unresolved: ${issue.description}`,
+      );
+
+  const optionalConstraintTradeOffs =
+    viability.optionalIssues.map(
+      (issue) =>
+        `Optional ${issue.constraintType} constraint requires attention: ${issue.description}`,
+    );
+
+  const tradeOffs =
+    unique([
+      ...conditionTradeOffs,
+      ...unresolvedConstraintTradeOffs,
+      ...optionalConstraintTradeOffs,
+    ]);
+
+  const confidenceRisks =
+    confidenceCalibration
+      .confidenceLimiters
+      .map(
+        (limiter) =>
+          `Confidence limitation: ${limiter}`,
+      );
+
+  const conditionRisks =
     comparison.worsenedConditionIds.length >
     0
       ? comparison.worsenedConditionIds.map(
           (conditionId) =>
             `Monitor ${conditionId} during implementation.`,
         )
-      : [
-          "No major organizational deterioration is currently projected.",
-        ];
+      : [];
+
+  const constraintRisks =
+    viability
+      .unresolvedRequiredConstraints
+      .map(
+        (issue) =>
+          `Resolve the ${issue.constraintType} constraint before full commitment: ${issue.explanation}`,
+      );
+
+  const risks =
+    unique([
+      ...conditionRisks,
+      ...constraintRisks,
+      ...confidenceRisks,
+    ]);
+
+  const status =
+    comparison.executiveRecommendation ===
+      "proceed" &&
+    hasUnresolvedRequiredConstraints
+      ? "investigate-further"
+      : comparison.executiveRecommendation;
 
   const summary =
-    comparison.executiveRecommendation ===
+    status ===
     "proceed"
-      ? "Discovery recommends proceeding with the highest-ranked intervention because projected organizational benefits outweigh identified risks."
-      : comparison.executiveRecommendation ===
+      ? "Discovery recommends proceeding with the highest-ranked intervention because projected organizational benefits outweigh identified risks and required constraints are sufficiently resolved."
+      : status ===
           "do-not-proceed"
         ? "Discovery recommends not proceeding because projected organizational deterioration outweighs expected benefits."
-        : "Discovery recommends further investigation before committing to an intervention.";
+        : hasUnresolvedRequiredConstraints
+          ? "Discovery recommends resolving the remaining required executive constraints before committing to the highest-ranked intervention."
+          : "Discovery recommends further investigation before committing to an intervention.";
+
+  const evidenceThatCouldChangeRecommendation =
+    unique([
+      "New organizational evidence that materially changes projected condition evolution.",
+      "Observed outcomes inconsistent with the current causal model.",
+      "New executive constraints or strategic priorities.",
+      ...viability
+        .unresolvedRequiredConstraints
+        .map(
+          (issue) =>
+            `Evidence resolving the ${issue.constraintType} constraint: ${issue.description}`,
+        ),
+      ...confidenceCalibration
+        .confidenceLimiters,
+    ]);
 
   return {
     recommendedInterventionId:
@@ -128,12 +246,12 @@ export function buildExecutiveDecisionRecommendation({
     nextBestInterventionId:
       runnerUp?.interventionId,
 
-    status:
-      comparison.executiveRecommendation,
+    status,
 
     confidence:
       clamp01(
-        calibratedConfidence,
+        confidenceCalibration
+          .calibratedConfidence,
       ),
 
     summary,
@@ -145,17 +263,17 @@ export function buildExecutiveDecisionRecommendation({
 
     tradeOffs,
 
-    risks,
+    risks:
+      risks.length > 0
+        ? risks
+        : [
+            "No major organizational deterioration or unresolved constraint risk is currently projected.",
+          ],
 
     assumptions:
       comparison.assumptions,
 
-    evidenceThatCouldChangeRecommendation:
-      [
-        "New organizational evidence that materially changes projected condition evolution.",
-        "Observed outcomes inconsistent with the current causal model.",
-        "New executive constraints or strategic priorities.",
-      ],
+    evidenceThatCouldChangeRecommendation,
 
     generatedAt,
   };

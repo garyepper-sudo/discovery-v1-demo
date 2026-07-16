@@ -4,11 +4,11 @@ import {
   useState,
 } from "react";
 
-import ExecutiveDecisionExperience from "../../components/executive-v2/decision/ExecutiveDecisionExperience";
+import DecisionAnalysisWorkspace from "../../components/executive-v3/workspaces/DecisionAnalysisWorkspace";
 
 import type {
   ExecutiveDecisionProjection,
-} from "../../components/executive-v2/projection/ExecutiveDecisionProjection";
+} from "../../components/executive-v3/projection/buildExecutiveDecisionProjection";
 
 type ExecutiveDecisionResponse = {
   executiveDecisionProjection:
@@ -197,10 +197,8 @@ export default function ExecutiveDecisionPage() {
 
   if (projection) {
     return (
-      <ExecutiveDecisionExperience
-        projection={
-          projection
-        }
+      <DecisionAnalysisWorkspace
+        projection={projection}
       />
     );
   }

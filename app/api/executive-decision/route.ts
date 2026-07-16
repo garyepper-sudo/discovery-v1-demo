@@ -14,7 +14,7 @@ import {
 
 import {
   buildExecutiveDecisionProjection,
-} from "../../../components/executive-v2/projection/buildExecutiveDecisionProjection";
+} from "../../../components/executive-v3/projection/buildExecutiveDecisionProjection";
 
 type ExecutiveDecisionRequest = {
   organizationId?: string;

@@ -12,6 +12,11 @@ type PredictionChange =
   ExecutiveScenarioResult["comparison"]["predictionChanges"][number];
 
 export type ExecutiveScenarioComparisonEntry = {
+  /**
+   * Originating Intervention Option identity.
+   */
+  optionId: string;
+
   interventionId: string;
 
   interventionTitle: string;
@@ -116,6 +121,9 @@ function buildComparisonEntry(
     scenario.comparison.predictionChanges;
 
   return {
+    optionId:
+      scenario.optionId,
+
     interventionId:
       scenario.intervention.id,
 

@@ -69,7 +69,19 @@ export type SimulationPredictionChange = {
 
 export type SimulationUnderstandingChange = {
   previous: string;
+
   projected: string;
+
+  previousConfidence: number;
+
+  projectedConfidence: number;
+
+  dominantConditionChanged: boolean;
+
+  dominantTheoryChanged: boolean;
+
+  confidenceChanged: boolean;
+
   changed: boolean;
 };
 
@@ -356,24 +368,80 @@ function comparePredictions(params: {
 }
 
 function compareUnderstanding(params: {
-  currentAssessment: OrganizationalAssessment;
-  projectedAssessment: OrganizationalAssessment;
+  currentAssessment:
+    OrganizationalAssessment;
+
+  projectedAssessment:
+    OrganizationalAssessment;
 }): SimulationUnderstandingChange {
-  const previous =
+  const previousUnderstanding =
     params.currentAssessment
-      .organizationalUnderstanding
-      .statement;
+      .organizationalUnderstanding;
+
+  const projectedUnderstanding =
+    params.projectedAssessment
+      .organizationalUnderstanding;
+
+  const previous =
+    previousUnderstanding.statement;
 
   const projected =
-    params.projectedAssessment
-      .organizationalUnderstanding
-      .statement;
+    projectedUnderstanding.statement;
+
+  const previousDominantConditionId =
+  previousUnderstanding
+    .dominantCondition
+    ?.id ??
+  null;
+
+const projectedDominantConditionId =
+  projectedUnderstanding
+    .dominantCondition
+    ?.id ??
+  null;
+
+const dominantConditionChanged =
+  previousDominantConditionId !==
+  projectedDominantConditionId;
+
+  const dominantTheoryChanged =
+    previousUnderstanding
+      .dominantTheory !==
+    projectedUnderstanding
+      .dominantTheory;
+
+  const confidenceChanged =
+    Math.abs(
+      previousUnderstanding.confidence -
+      projectedUnderstanding.confidence,
+    ) >= 0.02;
+
+  const statementChanged =
+    previous.trim() !==
+    projected.trim();
 
   return {
     previous,
+
     projected,
+
+    previousConfidence:
+      previousUnderstanding.confidence,
+
+    projectedConfidence:
+      projectedUnderstanding.confidence,
+
+    dominantConditionChanged,
+
+    dominantTheoryChanged,
+
+    confidenceChanged,
+
     changed:
-      previous.trim() !== projected.trim(),
+      statementChanged ||
+      dominantConditionChanged ||
+      dominantTheoryChanged ||
+      confidenceChanged,
   };
 }
 
