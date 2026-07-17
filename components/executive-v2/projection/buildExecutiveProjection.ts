@@ -1,5 +1,8 @@
 import type { DiscoveryV3Result } from "../../../engine/v3/types";
 import type { OrganizationRuntime } from "../../../engine/v3/runtime/organizationRuntime";
+import type {
+  ExecutiveSimulation as RuntimeExecutiveSimulation,
+} from "../../../engine/v3/simulation/executiveSimulation";
 
 import {
   choosePrimaryBelief,
@@ -20,7 +23,7 @@ import type {
   ExecutiveOrganizationalState,
   ExecutivePredictionEvaluation,
   ExecutiveProjection,
-  ExecutiveSimulation,
+  ExecutiveSimulationSummary,
   ExecutiveTheoryValidation,
 } from "./ExecutiveProjection";
 
@@ -233,6 +236,18 @@ type RuntimeExecutiveMemory = {
 
   predictionEvaluations?: RuntimePredictionEvaluation[];
 
+  /**
+   * Canonical executive-facing synthesis produced by CAP-SIM-003.
+   *
+   * Projection consumes this object directly and does not recreate
+   * comparison, ranking, optimization, or recommendation reasoning.
+   */
+  executiveSimulation?: RuntimeExecutiveSimulation;
+
+  /**
+   * Legacy organizational simulation collection retained as a fallback
+   * for runtimes created before Executive Simulation Synthesis existed.
+   */
   simulatedOrganizationStates?: RuntimeSimulation[];
 };
 
@@ -838,23 +853,118 @@ function buildPredictionEvaluationProjection(
 }
 function buildSimulationProjection(
   runtimeMemory: RuntimeExecutiveMemory | undefined,
-): ExecutiveSimulation | undefined {
-  const simulations =
-    runtimeMemory?.simulatedOrganizationStates;
+): ExecutiveSimulationSummary | undefined {
+  const executiveSimulation =
+    runtimeMemory?.executiveSimulation;
 
-  if (!simulations || simulations.length === 0) {
+  /**
+   * Canonical projection path.
+   *
+   * Executive Projection exposes the completed ExecutiveSimulation
+   * produced by CAP-SIM-003. It does not recompute recommendation,
+   * ranking, comparison, confidence, or organizational simulation.
+   */
+  if (executiveSimulation) {
+    const recommendedSimulation =
+      executiveSimulation
+        .recommendedScenario
+        .scenario
+        .simulatedOrganizationState;
+
+    return {
+      simulatedAt:
+        recommendedSimulation.simulatedAt,
+
+      timeHorizon:
+        recommendedSimulation.timeHorizon,
+
+      confidence: toPercentage(
+        executiveSimulation
+          .executiveConfidence,
+      ),
+
+      explanation:
+        executiveSimulation
+          .executiveSummary ||
+        recommendedSimulation
+          .explanation ||
+        "Discovery synthesized the strongest simulated executive strategy.",
+
+      projectedConditions:
+        recommendedSimulation
+          .projectedConditions
+          .map(
+            (condition) =>
+              condition.name,
+          )
+          .filter(
+            (name): name is string =>
+              typeof name === "string" &&
+              name.trim().length > 0,
+          ),
+
+      projectedBeliefs:
+        recommendedSimulation
+          .projectedBeliefs
+          .map(
+            (belief) =>
+              belief.statement,
+          )
+          .filter(
+            (
+              statement,
+            ): statement is string =>
+              typeof statement ===
+                "string" &&
+              statement.trim().length > 0,
+          ),
+
+      projectedPredictions:
+  recommendedSimulation
+    .projectedPredictions
+    .map(
+      (prediction) =>
+        prediction.statement,
+    )
+    .filter(
+      (
+        statement,
+      ): statement is string =>
+        typeof statement ===
+          "string" &&
+        statement.trim().length > 0,
+    ),
+    };
+  }
+
+  /**
+   * Backward-compatible projection path for runtimes that contain only
+   * raw Organizational Simulation output.
+   */
+  const simulations =
+    runtimeMemory
+      ?.simulatedOrganizationStates;
+
+  if (
+    !simulations ||
+    simulations.length === 0
+  ) {
     return undefined;
   }
 
   const latestSimulation =
-    simulations[simulations.length - 1];
+    simulations[
+      simulations.length - 1
+    ];
 
   return {
     simulatedAt:
-      latestSimulation.simulatedAt ?? "",
+      latestSimulation.simulatedAt ??
+      "",
 
     timeHorizon:
-      latestSimulation.timeHorizon ?? "near-term",
+      latestSimulation.timeHorizon ??
+      "near-term",
 
     confidence: toPercentage(
       latestSimulation.confidence,
@@ -865,8 +975,12 @@ function buildSimulationProjection(
       "Discovery has projected the organization's current state into a plausible future.",
 
     projectedConditions:
-      latestSimulation.projectedConditions
-        ?.map((condition) => condition.name)
+      latestSimulation
+        .projectedConditions
+        ?.map(
+          (condition) =>
+            condition.name,
+        )
         .filter(
           (name): name is string =>
             typeof name === "string" &&
@@ -874,16 +988,25 @@ function buildSimulationProjection(
         ) ?? [],
 
     projectedBeliefs:
-      latestSimulation.projectedBeliefs
-        ?.map((belief) => belief.statement)
+      latestSimulation
+        .projectedBeliefs
+        ?.map(
+          (belief) =>
+            belief.statement,
+        )
         .filter(
-          (statement): statement is string =>
-            typeof statement === "string" &&
-            statement.trim().length > 0,
+          (
+            statement,
+          ): statement is string =>
+            typeof statement ===
+              "string" &&
+            statement.trim().length >
+              0,
         ) ?? [],
 
     projectedPredictions:
-      latestSimulation.projectedPredictions
+      latestSimulation
+        .projectedPredictions
         ?.map(
           (prediction) =>
             prediction.prediction ??
@@ -891,9 +1014,13 @@ function buildSimulationProjection(
             prediction.headline,
         )
         .filter(
-          (statement): statement is string =>
-            typeof statement === "string" &&
-            statement.trim().length > 0,
+          (
+            statement,
+          ): statement is string =>
+            typeof statement ===
+              "string" &&
+            statement.trim().length >
+              0,
         ) ?? [],
   };
 }
@@ -1125,6 +1252,9 @@ export function buildExecutiveProjection({
     predictionEvaluations,
 
     simulation,
+
+    executiveSimulation:
+      runtimeMemory?.executiveSimulation,
 
     theoryValidation,
 

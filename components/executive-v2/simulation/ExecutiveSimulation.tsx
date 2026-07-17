@@ -1,4 +1,6 @@
-import type { ExecutiveSimulation as ExecutiveSimulationData } from "../projection/ExecutiveProjection";
+import type {
+  ExecutiveSimulationSummary as ExecutiveSimulationData,
+} from "../projection/ExecutiveProjection";
 
 type ExecutiveSimulationProps = {
   simulation: ExecutiveSimulationData;

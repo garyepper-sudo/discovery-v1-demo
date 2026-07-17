@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-17T22:33:01.695Z",
+    "generatedAt": "2026-07-17T22:54:34.101Z",
     "generator": "scripts/cognition/generateArchitectureState.mjs",
     "sourceOfTruthOrder": [
       "Verified source code",
@@ -29,13 +29,13 @@
   "architecture": {
     "status": "healthy",
     "healthScore": 100,
-    "capabilityCount": 29,
-    "canonicalProducerCount": 29,
+    "capabilityCount": 30,
+    "canonicalProducerCount": 30,
     "registeredFileCount": 585,
     "cognitiveObjectCount": 0,
     "terminalCapabilityCount": 6,
-    "capabilityTraceCount": 13,
-    "connectedCapabilityTraceCount": 13,
+    "capabilityTraceCount": 14,
+    "connectedCapabilityTraceCount": 14,
     "health": {
       "duplicateIdCount": 0,
       "missingDependencyCount": 0,
@@ -1267,7 +1267,8 @@
           "CAP-COM-001",
           "CAP-DEC-001",
           "CAP-DEC-002",
-          "CAP-SYS-001"
+          "CAP-SYS-001",
+          "CAP-SIM-003"
         ],
         "terminalCapability": false
       },
@@ -1367,6 +1368,75 @@
       "notes": "Version 1 represents intentional executive actions as canonical cognitive objects. Later versions will infer affected conditions, mechanisms, beliefs, assumptions, evidence requirements, and causal propagation pathways."
     },
     {
+      "id": "CAP-SIM-003",
+      "name": "Executive Simulation Synthesis",
+      "description": "Synthesizes completed organizational simulations, cross-scenario comparisons, executive scenario rankings, the canonical Executive Optimization Objective, and the final Executive Decision Recommendation into one canonical ExecutiveSimulation object for Runtime, Executive Projection, Executive Workspace, Executive Decision, and longitudinal learning.",
+      "domain": "SIM",
+      "architecturalLayer": "EXEC",
+      "subsystem": "Executive Simulation",
+      "status": "canonical",
+      "reviewStatus": "reviewed",
+      "ownership": {
+        "ownsObjects": [
+          "ExecutiveSimulation"
+        ],
+        "ownsCanonicalProducer": "engine/v3/simulation/buildExecutiveSimulation.ts",
+        "implementationFiles": [
+          "engine/v3/simulation/executiveSimulation.ts",
+          "engine/v3/simulation/buildExecutiveSimulation.ts"
+        ],
+        "doesNotOwn": []
+      },
+      "relationships": {
+        "consumesCapabilities": [
+          "CAP-SIM-001",
+          "CAP-DEC-002",
+          "CAP-DEC-003",
+          "CAP-DEC-004",
+          "CAP-OPT-002"
+        ],
+        "consumedByCapabilities": [
+          "CAP-DEC-001",
+          "CAP-DEC-005"
+        ],
+        "terminalCapability": false
+      },
+      "destinations": {
+        "runtime": "OrganizationRuntime.executiveSimulation",
+        "executive": [
+          "ExecutiveProjection.executiveSimulation",
+          "ExecutiveSimulationWorkspace",
+          "ExecutiveDecisionWorkspace",
+          "Atlas"
+        ]
+      },
+      "validation": {
+        "atlasCoverage": "partial",
+        "benchmarkCoverage": [
+          "Executive Simulation Synthesis 001"
+        ],
+        "canonicalProducerExists": true,
+        "missingImplementationFiles": [],
+        "capabilityTrace": {
+          "exists": true,
+          "connected": true,
+          "pipelineCoverage": {
+            "engine": false,
+            "runtime": false,
+            "executive": false,
+            "projection": true,
+            "ui": true,
+            "api": false,
+            "simulation": true,
+            "benchmark": true
+          },
+          "tracePath": "docs/Sprint Updates/Capability Traces/cap-sim-003.md"
+        }
+      },
+      "searchTerms": [],
+      "notes": "Canonical synthesis capability for assembling existing simulation, comparison, ranking, optimization, and recommendation cognition into a stable executive-facing simulation object. It performs no independent organizational simulation, scenario comparison, ranking, optimization, recommendation generation, confidence calibration, or constraint reasoning. The producer is deterministic when generatedAt is supplied."
+    },
+    {
       "id": "CAP-DEC-001",
       "name": "Executive Decision Orchestration",
       "description": "Coordinates Discovery's complete non-mutating executive decision cycle by synthesizing the canonical Executive Optimization Objective, generating and evaluating intervention options, simulating candidate organizational futures from the same baseline, invoking comparison and ranking capabilities, and assembling the final executive recommendation.",
@@ -1400,7 +1470,8 @@
           "CAP-OPT-002",
           "CAP-DEC-002",
           "CAP-DEC-003",
-          "CAP-DEC-004"
+          "CAP-DEC-004",
+          "CAP-SIM-003"
         ],
         "consumedByCapabilities": [
           "CAP-DEC-005"
@@ -1463,7 +1534,8 @@
         "consumedByCapabilities": [
           "CAP-DEC-001",
           "CAP-DEC-003",
-          "CAP-DEC-004"
+          "CAP-DEC-004",
+          "CAP-SIM-003"
         ],
         "terminalCapability": false
       },
@@ -1518,7 +1590,8 @@
         ],
         "consumedByCapabilities": [
           "CAP-DEC-001",
-          "CAP-DEC-004"
+          "CAP-DEC-004",
+          "CAP-SIM-003"
         ],
         "terminalCapability": false
       },
@@ -1574,7 +1647,8 @@
         ],
         "consumedByCapabilities": [
           "CAP-DEC-001",
-          "CAP-DEC-005"
+          "CAP-DEC-005",
+          "CAP-SIM-003"
         ],
         "terminalCapability": false
       },
@@ -1628,7 +1702,8 @@
         "consumesCapabilities": [
           "CAP-DEC-001",
           "CAP-DEC-004",
-          "CAP-MEM-001"
+          "CAP-MEM-001",
+          "CAP-SIM-003"
         ],
         "consumedByCapabilities": [],
         "terminalCapability": true
@@ -1747,7 +1822,8 @@
           "CAP-UND-004"
         ],
         "consumedByCapabilities": [
-          "CAP-DEC-001"
+          "CAP-DEC-001",
+          "CAP-SIM-003"
         ],
         "terminalCapability": false
       },
@@ -2089,6 +2165,20 @@
         "Simulation"
       ]
     },
+    "CAP-SIM-003": {
+      "name": "Executive Simulation Synthesis",
+      "ownsObjects": [
+        "ExecutiveSimulation"
+      ],
+      "canonicalProducer": "engine/v3/simulation/buildExecutiveSimulation.ts",
+      "runtimeDestination": "OrganizationRuntime.executiveSimulation",
+      "executiveDestinations": [
+        "ExecutiveProjection.executiveSimulation",
+        "ExecutiveSimulationWorkspace",
+        "ExecutiveDecisionWorkspace",
+        "Atlas"
+      ]
+    },
     "CAP-DEC-001": {
       "name": "Executive Decision Orchestration",
       "ownsObjects": [
@@ -2195,7 +2285,7 @@
     }
   },
   "intelligence": {
-    "producedObjectCount": 32,
+    "producedObjectCount": 33,
     "producedObjects": [
       "V3Evidence",
       "OrganizationalObservation",
@@ -2219,6 +2309,7 @@
       "ArchitectureRecommendationProjection",
       "SimulatedOrganizationState",
       "OrganizationalIntervention",
+      "ExecutiveSimulation",
       "ExecutiveDecisionCycle",
       "ExecutiveScenarioComparisonEntry",
       "ExecutiveScenarioComparisonSet",
@@ -2230,7 +2321,7 @@
       "ExecutiveNarrative",
       "ExecutiveCommunication"
     ],
-    "executiveCapabilityCount": 26,
+    "executiveCapabilityCount": 27,
     "executiveCapabilityIds": [
       "CAP-UND-001",
       "CAP-UND-002",
@@ -2250,6 +2341,7 @@
       "CAP-SYS-002",
       "CAP-SIM-001",
       "CAP-SIM-002",
+      "CAP-SIM-003",
       "CAP-DEC-001",
       "CAP-DEC-002",
       "CAP-DEC-003",
@@ -2259,7 +2351,7 @@
       "CAP-OPT-002",
       "CAP-COM-001"
     ],
-    "projectedCapabilityCount": 14,
+    "projectedCapabilityCount": 15,
     "projectedCapabilityIds": [
       "CAP-UND-005",
       "CAP-UND-006",
@@ -2269,6 +2361,7 @@
       "CAP-SELF-002",
       "CAP-ADP-001",
       "CAP-SIM-001",
+      "CAP-SIM-003",
       "CAP-DEC-001",
       "CAP-DEC-002",
       "CAP-DEC-003",
@@ -2276,12 +2369,13 @@
       "CAP-OPT-001",
       "CAP-OPT-002"
     ],
-    "workspaceDeclaredCapabilityCount": 12,
+    "workspaceDeclaredCapabilityCount": 13,
     "workspaceDeclaredCapabilityIds": [
       "CAP-UND-005",
       "CAP-UND-006",
       "CAP-ADP-001",
       "CAP-SIM-001",
+      "CAP-SIM-003",
       "CAP-DEC-001",
       "CAP-DEC-002",
       "CAP-DEC-003",
@@ -2291,7 +2385,7 @@
       "CAP-OPT-002",
       "CAP-COM-001"
     ],
-    "structurallyVisibleCapabilityCount": 8,
+    "structurallyVisibleCapabilityCount": 9,
     "structurallyVisibleCapabilityIds": [
       "CAP-UND-005",
       "CAP-UND-006",
@@ -2300,9 +2394,10 @@
       "CAP-SELF-001",
       "CAP-SELF-002",
       "CAP-ADP-001",
-      "CAP-SIM-001"
+      "CAP-SIM-001",
+      "CAP-SIM-003"
     ],
-    "structurallyConnectedCapabilityCount": 8,
+    "structurallyConnectedCapabilityCount": 9,
     "structurallyConnectedCapabilityIds": [
       "CAP-UND-005",
       "CAP-UND-006",
@@ -2311,16 +2406,18 @@
       "CAP-SELF-001",
       "CAP-SELF-002",
       "CAP-ADP-001",
-      "CAP-SIM-001"
+      "CAP-SIM-001",
+      "CAP-SIM-003"
     ],
-    "uiVisibleCapabilityCount": 6,
+    "uiVisibleCapabilityCount": 7,
     "uiVisibleCapabilityIds": [
       "CAP-UND-005",
       "CAP-UND-006",
       "CAP-LRN-002",
       "CAP-ABS-001",
       "CAP-SELF-001",
-      "CAP-SELF-002"
+      "CAP-SELF-002",
+      "CAP-SIM-003"
     ],
     "projectedButNotDisplayedCapabilityCount": 2,
     "projectedButNotDisplayedCapabilityIds": [
@@ -2407,6 +2504,7 @@
       "Do not recreate Architecture Recommendation Projection; extend CAP-SYS-002 unless a distinct responsibility is proven.",
       "Do not recreate Organizational Simulation; extend CAP-SIM-001 unless a distinct responsibility is proven.",
       "Do not recreate Organizational Intervention Modeling; extend CAP-SIM-002 unless a distinct responsibility is proven.",
+      "Do not recreate Executive Simulation Synthesis; extend CAP-SIM-003 unless a distinct responsibility is proven.",
       "Do not recreate Executive Decision Orchestration; extend CAP-DEC-001 unless a distinct responsibility is proven.",
       "Do not recreate Cross-Scenario Comparison; extend CAP-DEC-002 unless a distinct responsibility is proven.",
       "Do not recreate Executive Decision Ranking; extend CAP-DEC-003 unless a distinct responsibility is proven.",

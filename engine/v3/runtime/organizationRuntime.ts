@@ -27,6 +27,9 @@ import type {
 import type { OrganizationalIntervention } from "../model/simulate/organizationalIntervention";
 import type { SimulatedOrganizationState } from "../model/simulate/simulateOrganization";
 import type {
+  ExecutiveSimulation,
+} from "../simulation/executiveSimulation";
+import type {
   PersistentBelief,
   UnderstandingCluster,
 } from "../understanding/types";
@@ -152,6 +155,16 @@ export type OrganizationRuntimeMemory = {
   optimizedExecutiveRecommendation?: OptimizedExecutiveRecommendation;
 
   /**
+   * Canonical evaluated executive simulation produced after
+   * organizational simulation, cross-scenario comparison, ranking,
+   * optimization, and recommendation synthesis.
+   *
+   * Executive Decision consumes this object rather than rebuilding
+   * scenario evaluation or recommendation cognition.
+   */
+  executiveSimulation?: ExecutiveSimulation;
+
+  /**
    * Durable records of decisions actually made by executives.
    *
    * These records preserve the relationship between Discovery's
@@ -270,6 +283,12 @@ export function createEmptyOrganizationRuntime(params: {
        * Executive Optimization Operating System has run.
        */
       optimizedExecutiveRecommendation: undefined,
+
+      /**
+       * No canonical Executive Simulation exists until the complete
+       * executive scenario pipeline has been synthesized.
+       */
+      executiveSimulation: undefined,
 
       executiveDecisionRecords: [],
     },

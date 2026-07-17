@@ -65,6 +65,14 @@ import {
   type DecisionConfidenceCalibration,
 } from "./calibrateDecisionConfidence";
 
+import {
+  buildExecutiveSimulation,
+} from "../simulation/buildExecutiveSimulation";
+
+import type {
+  ExecutiveSimulation,
+} from "../simulation/executiveSimulation";
+
 export type ExecutiveDecisionCycle = {
   /**
    * Executive objective, metrics, constraints, assumptions, and questions
@@ -129,6 +137,17 @@ export type ExecutiveDecisionCycle = {
    */
   recommendation:
     ExecutiveDecisionRecommendation;
+
+  /**
+   * Canonical executive-facing synthesis of the optimization objective,
+   * completed scenarios, cross-scenario comparison, ranking, and final
+   * recommendation.
+   *
+   * This object is ready for Runtime persistence, Executive Projection,
+   * Executive Workspace, Executive Decision, and longitudinal learning.
+   */
+  executiveSimulation:
+    ExecutiveSimulation;
 
   /**
    * Stable completion timestamp for the cycle.
@@ -331,7 +350,8 @@ function runOptionScenarios(
  * 9. compares all projected futures,
  * 10. ranks the scenarios deterministically,
  * 11. synthesizes the final executive recommendation,
- * 12. and returns the complete non-mutating decision cycle.
+ * 12. synthesizes the canonical Executive Simulation,
+ * 13. and returns the complete non-mutating decision cycle.
  *
  * This orchestrator performs no independent organizational reasoning.
  */
@@ -452,6 +472,17 @@ export function runExecutiveDecisionCycle({
         completedAt,
     });
 
+  const executiveSimulation =
+    buildExecutiveSimulation({
+      optimizationObjective,
+      recommendation,
+      comparisonSet,
+      rankedScenarios,
+      scenarios,
+      generatedAt:
+        completedAt,
+    });
+
   return {
     executiveDecision,
     optimizationObjective,
@@ -463,6 +494,7 @@ export function runExecutiveDecisionCycle({
     rankedScenarios,
     confidenceCalibration,
     recommendation,
+    executiveSimulation,
     completedAt,
   };
 }

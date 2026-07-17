@@ -1533,7 +1533,8 @@
         "CAP-COM-001",
         "CAP-DEC-001",
         "CAP-DEC-002",
-        "CAP-SYS-001"
+        "CAP-SYS-001",
+        "CAP-SIM-003"
       ],
       "runtimeDestination": "OrganizationRuntime.simulatedOrganizationStates",
       "executiveDestinations": [
@@ -1649,6 +1650,51 @@
       "architecturalLayer": "COG"
     },
     {
+      "id": "CAP-SIM-003",
+      "name": "Executive Simulation Synthesis",
+      "description": "Synthesizes completed organizational simulations, cross-scenario comparisons, executive scenario rankings, the canonical Executive Optimization Objective, and the final Executive Decision Recommendation into one canonical ExecutiveSimulation object for Runtime, Executive Projection, Executive Workspace, Executive Decision, and longitudinal learning.",
+      "domain": "SIM",
+      "status": "canonical",
+      "canonicalProducer": "engine/v3/simulation/buildExecutiveSimulation.ts",
+      "implementationFiles": [
+        "engine/v3/simulation/executiveSimulation.ts",
+        "engine/v3/simulation/buildExecutiveSimulation.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-SIM-001",
+        "CAP-DEC-002",
+        "CAP-DEC-003",
+        "CAP-DEC-004",
+        "CAP-OPT-002"
+      ],
+      "producesObjects": [
+        "ExecutiveSimulation"
+      ],
+      "consumedByCapabilities": [
+        "CAP-DEC-001",
+        "CAP-DEC-005"
+      ],
+      "runtimeDestination": "OrganizationRuntime.memory.executiveSimulation",
+      "executiveDestinations": [
+        "ExecutiveProjection.executiveSimulation",
+        "ExecutiveSimulationWorkspace",
+        "ExecutiveDecisionWorkspace",
+        "Atlas"
+      ],
+      "atlasCoverage": "partial",
+      "benchmarkCoverage": [
+        "Executive Simulation Synthesis 001"
+      ],
+      "livingOrganizationStage": 9,
+      "reviewStatus": "reviewed",
+      "notes": "Canonical synthesis capability for assembling existing simulation, comparison, ranking, optimization, and recommendation cognition into a stable executive-facing simulation object. It performs no independent organizational simulation, scenario comparison, ranking, optimization, recommendation generation, confidence calibration, or constraint reasoning. The producer is deterministic when generatedAt is supplied.",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [],
+      "missingImplementationFiles": [],
+      "subsystem": "Executive Simulation",
+      "architecturalLayer": "EXEC"
+    },
+    {
       "id": "CAP-DEC-001",
       "name": "Executive Decision Orchestration",
       "description": "Coordinates Discovery's complete non-mutating executive decision cycle by synthesizing the canonical Executive Optimization Objective, generating and evaluating intervention options, simulating candidate organizational futures from the same baseline, invoking comparison and ranking capabilities, and assembling the final executive recommendation.",
@@ -1672,7 +1718,8 @@
         "CAP-OPT-002",
         "CAP-DEC-002",
         "CAP-DEC-003",
-        "CAP-DEC-004"
+        "CAP-DEC-004",
+        "CAP-SIM-003"
       ],
       "producesObjects": [
         "ExecutiveDecisionCycle"
@@ -1844,7 +1891,8 @@
       "consumedByCapabilities": [
         "CAP-DEC-001",
         "CAP-DEC-003",
-        "CAP-DEC-004"
+        "CAP-DEC-004",
+        "CAP-SIM-003"
       ],
       "runtimeDestination": "ExecutiveDecisionCycle.comparisonSet",
       "executiveDestinations": [
@@ -1901,7 +1949,8 @@
       ],
       "consumedByCapabilities": [
         "CAP-DEC-001",
-        "CAP-DEC-004"
+        "CAP-DEC-004",
+        "CAP-SIM-003"
       ],
       "runtimeDestination": "ExecutiveDecisionCycle.rankedScenarios",
       "executiveDestinations": [
@@ -1959,7 +2008,8 @@
       ],
       "consumedByCapabilities": [
         "CAP-DEC-001",
-        "CAP-DEC-005"
+        "CAP-DEC-005",
+        "CAP-SIM-003"
       ],
       "runtimeDestination": "ExecutiveDecisionCycle.recommendation",
       "executiveDestinations": [
@@ -2014,7 +2064,8 @@
       "consumesCapabilities": [
         "CAP-DEC-001",
         "CAP-DEC-004",
-        "CAP-MEM-001"
+        "CAP-MEM-001",
+        "CAP-SIM-003"
       ],
       "producesObjects": [
         "ExecutiveDecisionRecord"
@@ -2128,7 +2179,8 @@
         "ExecutiveOptimizationObjective"
       ],
       "consumedByCapabilities": [
-        "CAP-DEC-001"
+        "CAP-DEC-001",
+        "CAP-SIM-003"
       ],
       "runtimeDestination": "ExecutiveDecisionCycle.optimizationObjective",
       "executiveDestinations": [
@@ -2297,6 +2349,6 @@
       "terminalCapability": true
     }
   ],
-  "generatedAt": "2026-07-17T22:18:31.931Z",
-  "capabilityCount": 29
+  "generatedAt": "2026-07-17T22:54:01.607Z",
+  "capabilityCount": 30
 }

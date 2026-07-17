@@ -1,6 +1,6 @@
 # Discovery Architecture Handoff
 
-Generated: 2026-07-17T22:33:01.804Z
+Generated: 2026-07-17T22:54:34.214Z
 
 ## Purpose
 
@@ -20,8 +20,8 @@ Before adding any new cognitive capability:
 
 ## Architecture Health
 
-- Registered capabilities: 29
-- Canonical producers: 29
+- Registered capabilities: 30
+- Canonical producers: 30
 - Registered files: 585
 - Terminal capabilities: 6
 - Duplicate capability IDs: 0
@@ -55,15 +55,16 @@ Before adding any new cognitive capability:
 | CAP-ADP-001 | Prediction Outcome Evaluation | COG | PredictionEvaluation | OrganizationRuntime.predictionEvaluations | CAP-LRN-002, CAP-SIM-001 |
 | CAP-SYS-001 | Architectural Planning | SYS | ArchitectureRecommendation | DiscoveryArchitectureState.architectureRecommendations | CAP-SYS-002 |
 | CAP-SYS-002 | Architecture Recommendation Projection | SYS | ArchitectureRecommendationProjection | DiscoveryArchitectureState.architectureRecommendationProjection | None |
-| CAP-SIM-001 | Organizational Simulation | COG | SimulatedOrganizationState | OrganizationRuntime.simulatedOrganizationStates | CAP-COM-001, CAP-DEC-001, CAP-DEC-002, CAP-SYS-001 |
+| CAP-SIM-001 | Organizational Simulation | COG | SimulatedOrganizationState | OrganizationRuntime.simulatedOrganizationStates | CAP-COM-001, CAP-DEC-001, CAP-DEC-002, CAP-SYS-001, CAP-SIM-003 |
 | CAP-SIM-002 | Organizational Intervention Modeling | COG | OrganizationalIntervention | OrganizationRuntime.organizationalInterventions | CAP-DEC-001, CAP-SIM-001 |
+| CAP-SIM-003 | Executive Simulation Synthesis | EXEC | ExecutiveSimulation | OrganizationRuntime.executiveSimulation | CAP-DEC-001, CAP-DEC-005 |
 | CAP-DEC-001 | Executive Decision Orchestration | EXEC | ExecutiveDecisionCycle | ExecutiveDecisionCycle | CAP-DEC-005 |
-| CAP-DEC-002 | Cross-Scenario Comparison | EXEC | ExecutiveScenarioComparisonEntry, ExecutiveScenarioComparisonSet | ExecutiveDecisionCycle.comparisonSet | CAP-DEC-001, CAP-DEC-003, CAP-DEC-004 |
-| CAP-DEC-003 | Executive Decision Ranking | EXEC | RankedExecutiveScenario | ExecutiveDecisionCycle.rankedScenarios | CAP-DEC-001, CAP-DEC-004 |
-| CAP-DEC-004 | Executive Recommendation Synthesis | EXEC | ExecutiveDecisionRecommendation | ExecutiveDecisionCycle.recommendation | CAP-DEC-001, CAP-DEC-005 |
+| CAP-DEC-002 | Cross-Scenario Comparison | EXEC | ExecutiveScenarioComparisonEntry, ExecutiveScenarioComparisonSet | ExecutiveDecisionCycle.comparisonSet | CAP-DEC-001, CAP-DEC-003, CAP-DEC-004, CAP-SIM-003 |
+| CAP-DEC-003 | Executive Decision Ranking | EXEC | RankedExecutiveScenario | ExecutiveDecisionCycle.rankedScenarios | CAP-DEC-001, CAP-DEC-004, CAP-SIM-003 |
+| CAP-DEC-004 | Executive Recommendation Synthesis | EXEC | ExecutiveDecisionRecommendation | ExecutiveDecisionCycle.recommendation | CAP-DEC-001, CAP-DEC-005, CAP-SIM-003 |
 | CAP-DEC-005 | Executive Decision Recording | EXEC | ExecutiveDecisionRecord | OrganizationRuntime.memory.executiveDecisionRecords | Terminal capability |
 | CAP-OPT-001 | Optimization Variable Selection | EXEC | OptimizationVariable | ExecutiveDecisionCycle.optimizationObjective.variables | CAP-OPT-002 |
-| CAP-OPT-002 | Executive Optimization Objective Synthesis | EXEC | ExecutiveOptimizationObjective | ExecutiveDecisionCycle.optimizationObjective | CAP-DEC-001 |
+| CAP-OPT-002 | Executive Optimization Objective Synthesis | EXEC | ExecutiveOptimizationObjective | ExecutiveDecisionCycle.optimizationObjective | CAP-DEC-001, CAP-SIM-003 |
 | CAP-COM-001 | Executive Communication Synthesis | EXEC | ExecutiveNarrative, ExecutiveCommunication | ExecutiveCommunication | Terminal capability |
 
 ## Capability Dependency Map
@@ -320,9 +321,21 @@ Before adding any new cognitive capability:
 
 **Executive destinations:** Simulation
 
+### CAP-SIM-003 — Executive Simulation Synthesis
+
+**Depends on:** CAP-SIM-001, CAP-DEC-002, CAP-DEC-003, CAP-DEC-004, CAP-OPT-002
+
+**Produces:** ExecutiveSimulation
+
+**Canonical producer:** `engine/v3/simulation/buildExecutiveSimulation.ts`
+
+**Runtime destination:** `OrganizationRuntime.executiveSimulation`
+
+**Executive destinations:** ExecutiveProjection.executiveSimulation, ExecutiveSimulationWorkspace, ExecutiveDecisionWorkspace, Atlas
+
 ### CAP-DEC-001 — Executive Decision Orchestration
 
-**Depends on:** CAP-SIM-001, CAP-SIM-002, CAP-UND-005, CAP-UND-006, CAP-PRD-002, CAP-OPT-002, CAP-DEC-002, CAP-DEC-003, CAP-DEC-004
+**Depends on:** CAP-SIM-001, CAP-SIM-002, CAP-UND-005, CAP-UND-006, CAP-PRD-002, CAP-OPT-002, CAP-DEC-002, CAP-DEC-003, CAP-DEC-004, CAP-SIM-003
 
 **Produces:** ExecutiveDecisionCycle
 
@@ -370,7 +383,7 @@ Before adding any new cognitive capability:
 
 ### CAP-DEC-005 — Executive Decision Recording
 
-**Depends on:** CAP-DEC-001, CAP-DEC-004, CAP-MEM-001
+**Depends on:** CAP-DEC-001, CAP-DEC-004, CAP-MEM-001, CAP-SIM-003
 
 **Produces:** ExecutiveDecisionRecord
 
@@ -593,6 +606,12 @@ Executive Workspace
 - Canonical producer: `engine/v3/model/simulate/buildOrganizationalIntervention.ts`
 - Implementation: `engine/v3/model/simulate/organizationalIntervention.ts`
 - Implementation: `engine/v3/model/simulate/buildOrganizationalIntervention.ts`
+
+### CAP-SIM-003 — Executive Simulation Synthesis
+
+- Canonical producer: `engine/v3/simulation/buildExecutiveSimulation.ts`
+- Implementation: `engine/v3/simulation/executiveSimulation.ts`
+- Implementation: `engine/v3/simulation/buildExecutiveSimulation.ts`
 
 ### CAP-DEC-001 — Executive Decision Orchestration
 

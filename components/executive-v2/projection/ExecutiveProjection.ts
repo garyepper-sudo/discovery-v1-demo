@@ -1,3 +1,7 @@
+import type {
+  ExecutiveSimulation,
+} from "../../../engine/v3/simulation/executiveSimulation";
+
 export type ExecutiveEvolutionMilestone = {
   id: string;
   label: string;
@@ -390,7 +394,7 @@ export type ExecutivePredictionEvaluation = {
   supportingEvidenceIds: string[];
 };
 
-export type ExecutiveSimulation = {
+export type ExecutiveSimulationSummary = {
   /**
    * When Discovery generated this simulated future.
    */
@@ -597,12 +601,28 @@ export type ExecutiveProjection = {
    */
 
   /**
- * Discovery's latest simulated future organizational state.
- *
- * Produced by CAP-SIM-001 — Organizational Simulation.
- */
-  simulation?: ExecutiveSimulation;
-  
+   * Backward-compatible flattened summary of Discovery's latest
+   * simulated future organizational state.
+   *
+   * Produced from CAP-SIM-001 — Organizational Simulation.
+   *
+   * New executive experiences should prefer executiveSimulation,
+   * which exposes the canonical CAP-SIM-003 cognitive object.
+   */
+  simulation?: ExecutiveSimulationSummary;
+
+  /**
+   * Canonical executive-facing simulation synthesis.
+   *
+   * Produced by CAP-SIM-003 — Executive Simulation Synthesis.
+   *
+   * This preserves the complete optimization objective, recommendation,
+   * recommended scenario, alternative scenarios, comparison set, ranking,
+   * confidence, risks, tradeoffs, assumptions, and decision drivers without
+   * reconstructing cognition in the presentation layer.
+   */
+  executiveSimulation?: ExecutiveSimulation;
+
   evolution: {
     milestones: ExecutiveEvolutionMilestone[];
   };
