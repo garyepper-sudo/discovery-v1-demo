@@ -31,12 +31,32 @@ The benchmark suite verifies that the implementation faithfully executes that ar
 
 # Current Architecture Status
 
-Discovery's first-generation **Executive Cognitive Operating System** is considered functionally complete.
+Discovery's first-generation **Executive Cognitive Operating System** is complete through **Executive Optimization**.
 
-Current work is no longer centered on expanding reasoning capability.
+The following executive reasoning systems are now considered architecturally stable:
+
+* Executive Assessment
+* Executive Recommendation
+* Executive Optimization
+
+Each system now possesses:
+
+* canonical cognitive objects,
+* deterministic producers,
+* explicit producer → consumer relationships,
+* runtime integration,
+* runtime persistence where appropriate,
+* standalone capability benchmarks,
+* integrated operating-system benchmarks,
+* and Northstar validation.
+
+Executive Simulation is the final major Cognitive Operating System requiring completion and canonical integration.
+
+Current work is no longer centered on expanding Assessment, Recommendation, or Optimization capability.
 
 Current work focuses on:
 
+* Executive Simulation,
 * reasoning correctness,
 * architectural integrity,
 * benchmark validation,
@@ -47,14 +67,16 @@ Current work focuses on:
 Primary engineering investment now includes:
 
 * executive understanding quality,
+* executive assessment quality,
 * executive explanation quality,
 * recommendation quality,
 * optimization quality,
 * simulation quality,
 * executive communication,
+* runtime integrity,
 * reasoning validation,
 * benchmark-driven refinement,
-* behavioral stress validation.
+* and behavioral stress validation.
 
 ---
 
@@ -74,43 +96,64 @@ Primary engineering investment now includes:
 
 ## Validation Health
 
-Current benchmark suite:
+Current validation suite:
 
-* Executive Decision Validation ............... ✅
-* Executive Decision Learning Validation ...... ✅
-* Executive Decision Quality .................. ✅
-* High-Volume Northstar ....................... ✅
-* Ground Truth Evaluation ..................... ✅
-* Cognitive Trace ............................. ✅
-* Cognitive Layer Validation ................. ⚠️
+* Architecture Validation ........................ ✅
+* Capability Validation .......................... ✅
+* Producer → Consumer Validation ................. ✅
+* Runtime Persistence Validation ................. ✅
+* Executive Assessment Validation ................ ✅
+* Executive Recommendation Validation ............ ✅
+* Executive Optimization Validation .............. ✅
+* Executive Decision Validation .................. ✅
+* Executive Decision Learning Validation ......... ✅
+* High-Volume Northstar .......................... ✅
+* Executive Ground Truth ......................... ✅
+* Cognitive Trace ................................ ✅
+* Cognitive Layer Validation ..................... ✅
 
-Ground Truth baseline:
+Current benchmark baselines:
 
 ```text
-85 / 100
+Executive Ground Truth .............. 84 / 100
+Executive Explanation Ground Truth .. 71.33 / 100
+Legacy Object-Level Ground Truth .... 54.22 / 100
 ```
 
-Current architectural validation identified one active inconsistency:
+The **84 / 100 Executive Ground Truth benchmark** is the primary benchmark for Executive Assessment quality.
+
+The legacy benchmarks remain useful for longitudinal comparison but are not the primary measure of current executive reasoning performance.
+
+---
+
+# Runtime Validation Health
+
+Canonical runtime persistence has been validated for:
+
+* Executive Recommendation
+* Optimized Executive Recommendation
+* Objective ancestry
+* Strategy ancestry
+* Intervention ancestry
+* Assessment ancestry
+* Ranking ancestry
+* Confidence
+* Uncertainty
+* Architectural boundaries
+
+Canonical runtime objects now include:
 
 ```text
-Signals
+runtime.memory.organizationalState
 
-↓
+runtime.memory.executiveAssessment
 
-Phenomena
+runtime.memory.executiveRecommendation
 
-↓
-
-Mechanisms
+runtime.memory.optimizedExecutiveRecommendation
 ```
 
-Mechanisms are present while the Phenomena layer is not observable through the current investigation contract.
-
-Current status:
-
-**Investigation Required**
-
-This is treated as architectural evidence rather than an implementation bug until verified.
+Runtime persistence does not independently advance the investigation count.
 
 ---
 
@@ -118,24 +161,26 @@ This is treated as architectural evidence rather than an implementation bug unti
 
 Discovery is organized as cooperating Cognitive Operating Systems.
 
-| Operating System | Status |
-|-----------------|--------|
-| Perception | ✅ Canonical |
-| Understanding | ✅ Canonical |
-| Memory | ✅ Canonical |
-| Learning | ✅ Canonical |
-| Abstraction | ✅ Canonical |
-| Self Reflection | ✅ Canonical |
-| Prediction | ✅ Canonical |
-| Adaptive Learning | ✅ Canonical |
-| Epistemics | ✅ Canonical |
-| Systems | ✅ Canonical |
-| Executive Decision | ✅ Canonical |
-| Optimization | ✅ Canonical |
-| Simulation | ✅ Canonical |
-| Executive Communication | ✅ Canonical |
+| Operating System            | Status                |
+| --------------------------- | --------------------- |
+| Perception                  | ✅ Canonical           |
+| Understanding               | ✅ Canonical           |
+| Memory                      | ✅ Canonical           |
+| Learning                    | ✅ Canonical           |
+| Abstraction                 | ✅ Canonical           |
+| Self Reflection             | ✅ Canonical           |
+| Prediction                  | ✅ Canonical           |
+| Adaptive Learning           | ✅ Canonical           |
+| Epistemics                  | ✅ Canonical           |
+| Systems                     | ✅ Canonical           |
+| Executive Assessment        | ✅ Canonical           |
+| Executive Recommendation    | ✅ Canonical           |
+| Executive Optimization      | ✅ Canonical           |
+| Executive Simulation        | 🚧 Active Development |
+| Executive Communication     | ✅ Canonical           |
+| Executive Decision Learning | ✅ Canonical           |
 
-Each Operating System owns one cognitive responsibility.
+Each Operating System owns one primary cognitive responsibility.
 
 Consumers reuse canonical cognition rather than recreating reasoning.
 
@@ -153,6 +198,28 @@ Produces:
 * Contradictions
 * Organizational Phenomena
 
+Canonical flow:
+
+```text
+Evidence
+
+↓
+
+Observations
+
+↓
+
+Signals
+
+↓
+
+Contradictions
+
+↓
+
+Organizational Phenomena
+```
+
 ---
 
 ## Understanding
@@ -165,8 +232,37 @@ Produces:
 * Theories
 * Organizational Conditions
 * Organizational State
-* Executive Assessment
 * Organizational Understanding
+
+Canonical flow:
+
+```text
+Phenomena
+
+↓
+
+Mechanisms
+
+↓
+
+Beliefs
+
+↓
+
+Concepts
+
+↓
+
+Theories
+
+↓
+
+Organizational Conditions
+
+↓
+
+Organizational State
+```
 
 ---
 
@@ -183,7 +279,13 @@ Persists:
 * Organizational Simulations
 * Organizational Learning
 * Executive Assessment
+* Executive Recommendation
+* Optimized Executive Recommendation
 * Executive Projection
+
+Runtime stores canonical cognition.
+
+Runtime does not recreate cognition.
 
 ---
 
@@ -194,12 +296,15 @@ Produces:
 * Belief Evolution
 * Theory Evolution
 * Organizational Learning Profile
+* Learning Events
+* Understanding Snapshots
 
 Current focus:
 
-* longitudinal refinement
-* benchmark-guided learning
-* reasoning calibration
+* longitudinal refinement,
+* benchmark-guided learning,
+* reasoning calibration,
+* and decision-outcome learning.
 
 ---
 
@@ -207,7 +312,10 @@ Current focus:
 
 Produces:
 
+* Meaning Signals
 * Organizational Concepts
+* Concept Candidates
+* Conceptual Understanding
 
 ---
 
@@ -216,7 +324,9 @@ Produces:
 Produces:
 
 * Theory Validation
+* Investigation Strategy
 * Investigation Opportunities
+* Prediction Reflection
 
 ---
 
@@ -225,6 +335,9 @@ Produces:
 Produces:
 
 * Organizational Predictions
+* Continuation Predictions
+* Improvement Predictions
+* Propagation Predictions
 * Prediction Reflection
 
 ---
@@ -234,6 +347,7 @@ Produces:
 Produces:
 
 * Prediction Evaluation
+* Prediction Learning Events
 * Confidence Calibration
 * Longitudinal Learning
 
@@ -244,14 +358,18 @@ Produces:
 Produces:
 
 * Organizational Uncertainty
+* Confidence Limiters
+* Missing Evidence
 * Investigation Prioritization
 
 Determines:
 
 * confidence,
 * uncertainty,
+* ambiguity,
+* contradiction load,
 * missing evidence,
-* investigation priorities.
+* and investigation priorities.
 
 ---
 
@@ -261,67 +379,286 @@ Produces:
 
 * Architecture Planning
 * Architecture Recommendation Projection
+* Architecture Validation
+* Capability Validation
 
 ---
 
-## Executive Decision
+# Executive Assessment
+
+The Executive Assessment Operating System is canonical and validated.
 
 Produces:
 
-* Executive Decision
-* Executive Constraints
-* Executive Decision Cycle
+* Primary Judgment
+* Dominant Causal Chain
+* Executive Focus
+* Executive Risks
+* Executive Assessment
 
-Decision identifies the executive problem.
+Canonical flow:
 
-Optimization determines candidate futures.
+```text
+Organizational State
 
-Simulation evaluates futures.
+↓
 
-Recommendation selects among alternatives.
+Primary Judgment
+
+↓
+
+Dominant Causal Chain
+
+↓
+
+Executive Focus
+
+↓
+
+Executive Risks
+
+↓
+
+Executive Assessment
+```
+
+Executive Assessment determines:
+
+> **What is happening, why it matters, and where executive attention belongs.**
+
+Executive Assessment does not recommend an intervention.
 
 ---
 
-## Optimization
+# Executive Recommendation
+
+The Executive Recommendation Operating System is canonical and validated.
 
 Produces:
 
-* Optimization Variables
-* Executive Optimization Objective
-* Candidate Interventions
-* Constraint Evaluation
-* Ranked Executive Scenarios
+* Recommended Executive Objective
+* Recommended Executive Strategy
+* Recommended Executive Intervention
 * Executive Recommendation
 
-Optimization selects the strongest organizational future.
+Canonical flow:
+
+```text
+Executive Assessment
+
+↓
+
+Recommended Executive Objective
+
+↓
+
+Recommended Executive Strategy
+
+↓
+
+Recommended Executive Intervention
+
+↓
+
+Executive Recommendation
+```
+
+The canonical runtime destination is:
+
+```text
+runtime.memory.executiveRecommendation
+```
+
+Executive Recommendation determines:
+
+> **What should leadership attempt to accomplish?**
+
+Recommendation does not:
+
+* optimize the intervention,
+* simulate its effects,
+* select the final executive decision,
+* or produce a detailed implementation plan.
 
 ---
 
-## Simulation
+# Executive Optimization
+
+The Executive Optimization Operating System is canonical and validated.
 
 Produces:
 
-* Organizational Intervention
-* Simulated Organizational State
-* Scenario Comparison
+* Executive Optimization Problem
+* Optimization Variables
+* Executive Constraints
+* Executive Preferences
+* Optimization Options
+* Constraint Evaluations
+* Feasibility Assessments
+* Transparent Option Scores
+* Option Ranking
+* Preferred Optimized Option
+* Optimized Executive Recommendation
 
-Simulation evaluates futures.
+Canonical flow:
 
-Simulation never determines recommendations.
+```text
+Executive Recommendation
+
+↓
+
+Executive Optimization Problem
+
+↓
+
+Optimization Options
+
+↓
+
+Constraint Evaluation
+
+↓
+
+Option Scoring
+
+↓
+
+Option Ranking
+
+↓
+
+Optimized Executive Recommendation
+```
+
+The canonical runtime destination is:
+
+```text
+runtime.memory.optimizedExecutiveRecommendation
+```
+
+Optimization determines:
+
+> **What is the strongest feasible version of the recommendation under current constraints, preferences, confidence, and uncertainty?**
+
+Optimization currently evaluates:
+
+* expected organizational value,
+* time to impact,
+* organizational capacity,
+* implementation risk,
+* decision authority,
+* implementation complexity,
+* reversibility,
+* confidence,
+* and uncertainty.
+
+Optimization does not:
+
+* replace the original recommendation,
+* record the executive decision,
+* execute the intervention,
+* or simulate organizational outcomes.
 
 ---
 
-## Executive Communication
+# Executive Simulation
+
+Executive Simulation is the active architectural target.
+
+Existing canonical simulation capabilities include:
+
+* Organizational Intervention
+* Organizational Causal Model
+* Influence Propagation
+* Influence Aggregation
+* Simulated Organizational State
+* Projected Organizational Conditions
+* Projected Organizational Beliefs
+* Projected Organizational Predictions
+* Scenario Comparison
+
+Current integration requirement:
+
+```text
+runtime.memory.optimizedExecutiveRecommendation
+
+↓
+
+Canonical Simulation Scenario
+
+↓
+
+Organizational Intervention
+
+↓
+
+Organizational Simulation
+
+↓
+
+Projected Organizational Future
+```
+
+Simulation should determine:
+
+> **What is likely to happen if leadership executes the optimized recommendation?**
+
+Simulation must not:
+
+* recreate Executive Assessment,
+* recreate Executive Recommendation,
+* recreate Executive Optimization,
+* or independently select the preferred intervention.
+
+Existing deterministic test interventions should be migrated away from the canonical executive simulation path.
+
+---
+
+# Executive Communication
 
 Produces:
 
 * Executive Explanation
+* Executive Projection
 * Executive Narrative
 * Executive Communication
+* Board-Ready Executive Reports
+* Executive Workspace representations
 
 Executive Communication never performs independent reasoning.
 
 It communicates canonical cognition.
+
+Canonical principle:
+
+```text
+Reasoning produces cognition.
+
+Projection transports cognition.
+
+Narrative communicates cognition.
+
+Presentation renders cognition.
+```
+
+---
+
+# Executive Decision Learning
+
+Produces:
+
+* Executive Decision Record
+* Executive Decision Outcome
+* Executive Decision Reflection
+* Executive Decision Learning
+* Executive Decision Memory
+* Executive Decision Playbook
+
+Executive Decision Learning determines:
+
+> **What should Discovery learn from the outcome of an executive decision?**
+
+Every completed decision should improve future assessment, recommendation, optimization, and simulation.
 
 ---
 
@@ -376,23 +713,7 @@ Executive Assessment
 
 ↓
 
-Executive Understanding
-
-↓
-
-Organizational Learning
-
-↓
-
-Organizational Uncertainty
-
-↓
-
-Investigation Opportunities
-
-↓
-
-Executive Decision
+Executive Recommendation
 
 ↓
 
@@ -400,33 +721,77 @@ Executive Optimization
 
 ↓
 
-Organizational Simulation
+Optimized Executive Recommendation
 
 ↓
 
-Executive Recommendation
+Executive Simulation
 
 ↓
 
-Executive Explanation
+Executive Decision
 
 ↓
 
-Executive Projection
+Implementation
 
 ↓
 
-Executive Narrative
+Outcome
 
 ↓
 
-Executive Workspace
+Reflection
+
+↓
+
+Learning
+
+↓
+
+Memory
+
+↓
+
+Better Recommendation
 ```
+
+Executive Explanation, Projection, Narrative, and Workspace consume cognition from this pipeline.
+
+They do not recreate it.
 
 This pipeline is both:
 
 * the canonical architecture,
 * and the benchmark validation target.
+
+---
+
+# Canonical Executive Responsibility Boundaries
+
+```text
+Assessment
+Determines what is happening.
+
+Recommendation
+Determines what should be done.
+
+Optimization
+Determines the strongest feasible version.
+
+Simulation
+Determines what is likely to happen.
+
+Executive Decision
+Determines what leadership chooses.
+
+Decision Learning
+Determines what Discovery should learn.
+```
+
+These boundaries must remain explicit.
+
+No downstream system should reconstruct cognition owned by an upstream system.
 
 ---
 
@@ -443,15 +808,31 @@ Capability Validation
 
 ↓
 
-Decision Validation
+Architecture Validation
 
 ↓
 
-Northstar Ingestion
+Producer → Consumer Validation
 
 ↓
 
-Ground Truth Evaluation
+Runtime Persistence Validation
+
+↓
+
+Capability Benchmark
+
+↓
+
+Operating System Benchmark
+
+↓
+
+Northstar Validation
+
+↓
+
+Executive Ground Truth
 
 ↓
 
@@ -470,6 +851,135 @@ Reasoning improvements should improve benchmark performance without reducing arc
 
 ---
 
+# Executive Assessment Validation
+
+Validated capabilities:
+
+* Primary Judgment
+* Dominant Causal Chain
+* Executive Focus
+* Executive Risks
+* Executive Assessment Orchestration
+
+Current Northstar Executive Ground Truth result:
+
+```text
+84 / 100
+```
+
+Remaining specificity gaps include:
+
+* stronger Coordination System risk expression,
+* clearer customer-consequence reasoning,
+* and more explicit distinction between capacity constraints and staffing constraints.
+
+---
+
+# Executive Recommendation Validation
+
+Validated capabilities:
+
+* Recommended Executive Objective
+* Recommended Executive Strategy
+* Recommended Executive Intervention
+* Executive Recommendation Orchestration
+* Northstar Executive Recommendation
+* Recommendation Runtime Persistence
+
+Current Northstar recommendation:
+
+```text
+Objective
+Increase Execution Capacity.
+
+Strategy
+Reduce competing work.
+Clarify decision rights.
+Strengthen cross-functional coordination.
+
+Intervention
+Reduce active work in progress.
+```
+
+Recommendation validation confirms:
+
+* assessment ancestry,
+* condition ancestry,
+* objective ancestry,
+* strategy ancestry,
+* intervention ancestry,
+* bounded confidence,
+* explicit uncertainty,
+* no unsupported headcount recommendation,
+* no unsupported technology replacement,
+* no unsupported reorganization,
+* no Optimization leakage,
+* and no Simulation leakage.
+
+---
+
+# Executive Optimization Validation
+
+Validated capabilities:
+
+* Executive Optimization Problem Definition
+* Optimization Option Generation
+* Constraint Evaluation
+* Option Scoring
+* Option Ranking
+* Optimized Executive Recommendation
+* Executive Optimization Operating System
+* Optimization Runtime Persistence
+
+Current Northstar optimization options:
+
+```text
+Focus Reset
+
+Sequenced Governance
+
+Controlled Pilot
+```
+
+Current Northstar ranking:
+
+```text
+1. Controlled Pilot
+2. Sequenced Governance
+3. Focus Reset
+```
+
+Current preferred optimized profile:
+
+```text
+Controlled Pilot
+```
+
+The preferred profile prioritizes:
+
+* feasibility,
+* lower execution risk,
+* reversibility,
+* bounded scope,
+* explicit decision rights,
+* evidence generation,
+* and controlled organizational disruption.
+
+Optimization validation confirms:
+
+* complete recommendation ancestry,
+* complete optimization-problem ancestry,
+* explicit constraint evaluation,
+* bounded scoring,
+* feasible-first ranking,
+* transparent tradeoffs,
+* deterministic ranking,
+* no executive decision recording,
+* no intervention execution,
+* and no Simulation leakage.
+
+---
+
 # Canonical Producer Principles
 
 Every cognitive object must have:
@@ -477,10 +987,11 @@ Every cognitive object must have:
 * one Operating System owner,
 * one Capability Registry owner,
 * one canonical producer,
-* one Runtime representation (when persisted),
+* one Runtime representation when persisted,
 * one executive destination,
 * benchmark validation,
-* architectural validation.
+* architectural validation,
+* and explicit ancestry.
 
 Reasoning belongs in canonical producers.
 
@@ -490,25 +1001,70 @@ Narrative communicates cognition.
 
 Presentation layers never recreate reasoning.
 
+Optimization never recreates Recommendation.
+
+Simulation never recreates Optimization.
+
 ---
 
 # Current Priorities
 
 ## Primary
 
-Improve reasoning quality through benchmark-driven refinement.
+Complete the Executive Simulation Operating System.
 
 Specifically:
 
-1. Resolve the Phenomena-layer architectural inconsistency.
-2. Improve Ground Truth benchmark performance.
-3. Complete the Executive Workspace.
-4. Improve Executive Explanation.
-5. Improve Executive Narrative.
-6. Improve recommendation explainability.
-7. Improve uncertainty communication.
-8. Continue behavioral stress testing.
-9. Produce board-ready executive reports.
+1. Validate Optimization runtime persistence.
+2. Translate the Optimized Executive Recommendation into a canonical Simulation Scenario.
+3. Translate the preferred optimized plan into a canonical Organizational Intervention.
+4. Make Simulation consume `runtime.memory.optimizedExecutiveRecommendation`.
+5. Remove deterministic test interventions from the canonical executive path.
+6. Produce projected Organizational Conditions.
+7. Produce projected Organizational State.
+8. Produce projected Organizational Beliefs.
+9. Produce projected Organizational Predictions.
+10. Evaluate the projected future.
+11. Preserve ancestry from Assessment through Simulation.
+12. Benchmark the complete Recommendation → Optimization → Simulation pipeline.
+
+---
+
+## Secondary
+
+Improve executive product readiness.
+
+Specifically:
+
+1. Improve Executive Ground Truth performance.
+2. Complete the Executive Workspace.
+3. Improve Executive Explanation.
+4. Improve Executive Narrative.
+5. Improve recommendation explainability.
+6. Improve optimization explainability.
+7. Improve constraint and tradeoff communication.
+8. Improve uncertainty communication.
+9. Continue behavioral stress testing.
+10. Produce board-ready executive reports.
+11. Begin executive customer validation.
+
+---
+
+# Current Risks
+
+Current risks include:
+
+* Executive Simulation is not yet a complete first-class Operating System.
+* Existing simulation may still rely on deterministic test interventions.
+* Simulation may not yet consume the canonical Optimized Executive Recommendation.
+* Simulation must preserve upstream recommendation and optimization ancestry.
+* Simulation confidence and uncertainty require explicit calibration.
+* Executive Experience exposes only part of Discovery's canonical cognition.
+* Executive Explanation should become the primary communication layer.
+* Executive Narrative migration remains incomplete.
+* Executive Ground Truth remains at **84 / 100**.
+* Customer validation has not yet begun.
+* Product-market fit remains unvalidated.
 
 ---
 
@@ -517,18 +1073,20 @@ Specifically:
 Future work should prioritize:
 
 * reasoning correctness,
+* simulation fidelity,
 * executive trust,
 * benchmark quality,
 * executive experience,
 * decision quality,
-* optimization quality,
+* optimization calibration,
 * recommendation quality,
 * longitudinal learning,
 * behavioral realism,
+* and executive product validation,
 
 rather than expanding reasoning architecture.
 
-Architecture should evolve only when benchmark evidence demonstrates a genuine gap.
+Architecture should evolve only when benchmark evidence demonstrates a genuine cognitive gap.
 
 ---
 
@@ -542,11 +1100,17 @@ Architecture should evolve only when benchmark evidence demonstrates a genuine g
 
 > Benchmarks before expansion.
 
-> Decisions before recommendations.
+> Assessment before recommendation.
+
+> Recommendation before optimization.
 
 > Optimization before simulation.
 
-> Simulation before communication.
+> Simulation before executive decision.
+
+> Decision before outcome evaluation.
+
+> Learning after observed outcomes.
 
 > Communication before presentation.
 
@@ -566,10 +1130,26 @@ Architecture should evolve only when benchmark evidence demonstrates a genuine g
 
 > Every cognitive object has one canonical producer.
 
+> Every persisted cognitive object has one canonical runtime destination.
+
+> Every downstream object preserves upstream ancestry.
+
 > Validate reasoning before expanding capability.
 
 > Stress-test cognition before exposing it to executives.
 
 > Measure reasoning quality—not feature count.
+
+> Assessment determines what is happening.
+
+> Recommendation determines what should be done.
+
+> Optimization determines the strongest feasible version.
+
+> Simulation determines what is likely to happen.
+
+> The executive determines what is chosen.
+
+> Decision Learning determines what Discovery should learn.
 
 > The benchmark suite is the canonical validation layer for Discovery's architecture.
