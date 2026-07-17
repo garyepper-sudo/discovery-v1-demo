@@ -1,364 +1,660 @@
 # Discovery Architecture Handoff
 
-Generated: 2026-07-17
+Generated: 2026-07-17T22:33:01.804Z
 
 ## Purpose
 
 This document is the canonical architecture handoff for beginning a new Discovery sprint or chat.
 
-Before proposing a new capability, verify whether the responsibility, cognitive object, canonical producer, runtime destination, benchmark, or executive destination already exists.
+Before proposing a new capability, use this document to verify whether the responsibility, cognitive object, canonical producer, Runtime destination, or executive destination already exists.
 
-Discovery's architecture is now considered functionally complete.
+## Permanent Development Rule
 
-Future development should prioritize:
-
-* reasoning correctness,
-* architectural integrity,
-* benchmark validation,
-* executive trust,
-* and product validation
-
-before introducing additional cognitive capability.
-
----
-
-# Permanent Development Rules
-
-Before adding any new capability:
+Before adding any new cognitive capability:
 
 1. Search the Cognitive Capability Registry.
 2. Search existing produced cognitive objects.
-3. Search canonical producers.
-4. Search runtime destinations.
-5. Search benchmark coverage.
-6. Review semantic overlap.
-7. Extend an existing capability unless a distinct architectural responsibility is proven.
+3. Search canonical producers and implementation files.
+4. Review potential semantic overlaps.
+5. Extend an existing capability unless a distinct architectural responsibility is proven.
 
-Before changing reasoning:
+## Architecture Health
 
-1. Run the benchmark suite.
-2. Verify Ground Truth performance.
-3. Verify Cognitive Layer Validation.
-4. Verify Cognitive Trace.
-5. Verify High-Volume Northstar.
-6. Improve reasoning before expanding architecture.
+- Registered capabilities: 29
+- Canonical producers: 29
+- Registered files: 585
+- Terminal capabilities: 6
+- Duplicate capability IDs: 0
+- Missing dependencies: 0
+- Missing canonical producers: 0
+- Capabilities without producer: 0
+- Capabilities without consumers: 0
+- Capabilities without Runtime destination: 0
+- Files implementing multiple capabilities: 0
 
----
+## Canonical Capability Registry
 
-# Architecture Health
+| ID | Capability | Layer | Produces | Runtime Destination | Consumers |
+|---|---|---|---|---|---|
+| CAP-PER-001 | Evidence Ingestion | COG | V3Evidence | DiscoveryV3Result.evidence | CAP-PER-002 |
+| CAP-PER-002 | Organizational Observation Inference | COG | OrganizationalObservation | OrganizationModel.observations | CAP-UND-001 |
+| CAP-UND-001 | Organizational Mechanism Inference | COG | OrganizationalMechanism | OrganizationModel.mechanisms | CAP-ABS-001, CAP-SELF-001, CAP-UND-002, CAP-UND-003, CAP-UND-004, CAP-UND-005 |
+| CAP-UND-002 | Organizational Belief Formation | COG | OrganizationalBelief | OrganizationModel.beliefs | CAP-ABS-001, CAP-LRN-001, CAP-SELF-001, CAP-SIM-001, CAP-UND-003, CAP-UND-004, CAP-UND-005 |
+| CAP-UND-003 | Organizational Theory Formation | COG | OrganizationalTheory | OrganizationalMemory.theories | CAP-SELF-001, CAP-UND-004, CAP-UND-005 |
+| CAP-UND-004 | Organizational Condition Inference | EXEC | OrganizationalCondition | OrganizationRuntime.organizationalConditions | CAP-ADP-001, CAP-COM-001, CAP-OPT-001, CAP-OPT-002, CAP-PRD-001, CAP-SELF-002, CAP-SIM-001, CAP-UND-005 |
+| CAP-UND-005 | Executive Assessment | EXEC | ExecutiveAssessment | OrganizationRuntime.executiveAssessment | CAP-COM-001, CAP-DEC-001, CAP-DEC-002, CAP-UND-006 |
+| CAP-UND-006 | Executive Understanding Synthesis | COG | OrganizationalUnderstanding, OrganizationalUnderstandingState | OrganizationRuntime.organizationalUnderstandingState | CAP-COM-001, CAP-DEC-001 |
+| CAP-MEM-001 | Organizational Runtime Persistence | RUN | OrganizationRuntime | OrganizationRuntime | CAP-DEC-005, CAP-LRN-001, CAP-LRN-002, CAP-SYS-001, CAP-UND-006 |
+| CAP-LRN-001 | Organizational Belief Evolution | COG | OrganizationalBeliefRevision | OrganizationRuntime.organizationalBeliefRevisions | CAP-LRN-002 |
+| CAP-LRN-002 | Organizational Learning Profile | COG | OrganizationalLearningProfile | OrganizationRuntime.organizationalLearningProfile | CAP-COM-001, CAP-PRD-001, CAP-SIM-001 |
+| CAP-ABS-001 | Organizational Concept Formation | COG | OrganizationalConcept | OrganizationModel.concepts | CAP-UND-003 |
+| CAP-SELF-001 | Theory Validation | COG | TheoryValidation | ExecutiveAssessment.theoryValidation | CAP-SELF-002, CAP-SYS-001 |
+| CAP-SELF-002 | Investigation Opportunity Generation | EXEC | InvestigationOpportunity | OrganizationRuntime.investigationOpportunities | CAP-COM-001, CAP-SYS-001 |
+| CAP-PRD-001 | Organizational Prediction | COG | OrganizationalPrediction | OrganizationRuntime.organizationalPredictions | CAP-ADP-001, CAP-PRD-002, CAP-SIM-001 |
+| CAP-PRD-002 | Prediction Reflection | COG | PredictionReflection | OrganizationRuntime.predictionReflection | CAP-ADP-001, CAP-COM-001, CAP-DEC-001, CAP-DEC-002, CAP-UND-005 |
+| CAP-ADP-001 | Prediction Outcome Evaluation | COG | PredictionEvaluation | OrganizationRuntime.predictionEvaluations | CAP-LRN-002, CAP-SIM-001 |
+| CAP-SYS-001 | Architectural Planning | SYS | ArchitectureRecommendation | DiscoveryArchitectureState.architectureRecommendations | CAP-SYS-002 |
+| CAP-SYS-002 | Architecture Recommendation Projection | SYS | ArchitectureRecommendationProjection | DiscoveryArchitectureState.architectureRecommendationProjection | None |
+| CAP-SIM-001 | Organizational Simulation | COG | SimulatedOrganizationState | OrganizationRuntime.simulatedOrganizationStates | CAP-COM-001, CAP-DEC-001, CAP-DEC-002, CAP-SYS-001 |
+| CAP-SIM-002 | Organizational Intervention Modeling | COG | OrganizationalIntervention | OrganizationRuntime.organizationalInterventions | CAP-DEC-001, CAP-SIM-001 |
+| CAP-DEC-001 | Executive Decision Orchestration | EXEC | ExecutiveDecisionCycle | ExecutiveDecisionCycle | CAP-DEC-005 |
+| CAP-DEC-002 | Cross-Scenario Comparison | EXEC | ExecutiveScenarioComparisonEntry, ExecutiveScenarioComparisonSet | ExecutiveDecisionCycle.comparisonSet | CAP-DEC-001, CAP-DEC-003, CAP-DEC-004 |
+| CAP-DEC-003 | Executive Decision Ranking | EXEC | RankedExecutiveScenario | ExecutiveDecisionCycle.rankedScenarios | CAP-DEC-001, CAP-DEC-004 |
+| CAP-DEC-004 | Executive Recommendation Synthesis | EXEC | ExecutiveDecisionRecommendation | ExecutiveDecisionCycle.recommendation | CAP-DEC-001, CAP-DEC-005 |
+| CAP-DEC-005 | Executive Decision Recording | EXEC | ExecutiveDecisionRecord | OrganizationRuntime.memory.executiveDecisionRecords | Terminal capability |
+| CAP-OPT-001 | Optimization Variable Selection | EXEC | OptimizationVariable | ExecutiveDecisionCycle.optimizationObjective.variables | CAP-OPT-002 |
+| CAP-OPT-002 | Executive Optimization Objective Synthesis | EXEC | ExecutiveOptimizationObjective | ExecutiveDecisionCycle.optimizationObjective | CAP-DEC-001 |
+| CAP-COM-001 | Executive Communication Synthesis | EXEC | ExecutiveNarrative, ExecutiveCommunication | ExecutiveCommunication | Terminal capability |
 
-* **100% Capability Registry Health**
-* Zero duplicate capability ownership
-* Zero missing producers
-* Zero missing runtime destinations
-* Zero missing consumers
-* Decision Intelligence validation suite passing
-* Decision Learning validation suite passing
-* Executive Decision Quality benchmark passing
-* High-Volume Northstar benchmark passing
-* Ground Truth benchmark operational
-* Cognitive Trace benchmark operational
-* Cognitive Layer Validation benchmark operational
+## Capability Dependency Map
 
-Architecture correctness is now continuously testable.
+### CAP-PER-001 — Evidence Ingestion
 
----
+**Depends on:** No registered capability dependencies
 
-# Validation Framework
+**Produces:** V3Evidence
 
-Discovery now possesses a canonical validation framework.
+**Canonical producer:** `engine/v3/evidence.ts`
 
-## Reasoning Validation
+**Runtime destination:** `DiscoveryV3Result.evidence`
 
-* Executive Decision Validation
-* Executive Decision Learning Validation
-* Executive Decision Quality Benchmark
+**Executive destinations:** None declared
 
-## Organizational Validation
+### CAP-PER-002 — Organizational Observation Inference
 
-* High-Volume Northstar Ingestion Benchmark
-* Ground Truth Evaluation Benchmark
+**Depends on:** CAP-PER-001
 
-Current Ground Truth baseline:
+**Produces:** OrganizationalObservation
 
-```text
-85 / 100
-```
+**Canonical producer:** `engine/v3/model/observations/inferOrganizationalObservations.ts`
 
-Future reasoning improvements should improve this score without increasing false positives.
+**Runtime destination:** `OrganizationModel.observations`
 
-## Architectural Validation
+**Executive destinations:** None declared
 
-* Cognitive Trace Benchmark
-* Cognitive Layer Validation Benchmark
+### CAP-UND-001 — Organizational Mechanism Inference
 
-The Cognitive Layer Validation benchmark now validates:
+**Depends on:** CAP-PER-002
 
-```text
-Evidence
-↓
+**Produces:** OrganizationalMechanism
 
-Observations
-↓
+**Canonical producer:** `engine/v3/model/judgment/inferOrganizationalMechanisms.ts`
 
-Signals
-↓
+**Runtime destination:** `OrganizationModel.mechanisms`
 
-Contradictions
-↓
+**Executive destinations:** ExecutiveAssessment, TheoryValidation
 
-Phenomena
-↓
+### CAP-UND-002 — Organizational Belief Formation
 
-Mechanisms
-↓
+**Depends on:** CAP-UND-001
 
-Beliefs
-↓
+**Produces:** OrganizationalBelief
 
-Concepts
-↓
+**Canonical producer:** `engine/v3/model/beliefs/inferOrganizationalBeliefs.ts`
 
-Theories
-↓
+**Runtime destination:** `OrganizationModel.beliefs`
 
-Conditions
-↓
+**Executive destinations:** OrganizationalBeliefs, TheoryValidation, OrganizationalConditions
 
-Executive Assessment
-↓
+### CAP-UND-003 — Organizational Theory Formation
 
-Executive Projection
-```
+**Depends on:** CAP-ABS-001, CAP-UND-002
 
-Architectural drift should fail validation.
+**Produces:** OrganizationalTheory
 
----
+**Canonical producer:** `engine/v3/model/judgment/formOrganizationalTheories.ts`
 
-# Current Architectural Finding
+**Runtime destination:** `OrganizationalMemory.theories`
 
-Current validation identified an architectural inconsistency.
+**Executive destinations:** TheoryValidation, ExecutiveAssessment
 
-Current benchmark status:
+### CAP-UND-004 — Organizational Condition Inference
 
-```text
-PASS  Evidence
+**Depends on:** CAP-UND-001, CAP-UND-002, CAP-UND-003
 
-PASS  Observations
+**Produces:** OrganizationalCondition
 
-PASS  Signals
+**Canonical producer:** `engine/v3/model/state/inferOrganizationalConditions.ts`
 
-PASS  Contradictions
+**Runtime destination:** `OrganizationRuntime.organizationalConditions`
 
-FAIL  Phenomena
+**Executive destinations:** OrganizationalConditions, OrganizationalState, ExecutiveAssessment, InvestigationOpportunities
 
-PASS  Mechanisms
+### CAP-UND-005 — Executive Assessment
 
-PASS  Beliefs
+**Depends on:** CAP-UND-001, CAP-UND-002, CAP-UND-003, CAP-UND-004, CAP-PRD-002
 
-PASS  Concepts
+**Produces:** ExecutiveAssessment
 
-PASS  Theories
+**Canonical producer:** `engine/v3/model/judgment/buildExecutiveAssessment.ts`
 
-PASS  Organizational Conditions
+**Runtime destination:** `OrganizationRuntime.executiveAssessment`
 
-PASS  Executive Assessment
+**Executive destinations:** OrganizationalUnderstanding, ExecutiveProjection, ExecutiveWorkspace
 
-PASS  Executive Projection
-```
+### CAP-UND-006 — Executive Understanding Synthesis
 
-Current hypothesis:
+**Depends on:** CAP-UND-005, CAP-MEM-001
 
-Phenomena are either:
+**Produces:** OrganizationalUnderstanding, OrganizationalUnderstandingState
 
-* not returned,
-* not persisted,
-* or bypassed.
+**Canonical producer:** `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
 
-Do not modify production architecture until this inconsistency has been fully investigated.
+**Runtime destination:** `OrganizationRuntime.organizationalUnderstandingState`
 
----
+**Executive destinations:** ExecutiveProjection, ExecutiveWorkspace, Atlas
 
-# Canonical Development Priority
+### CAP-MEM-001 — Organizational Runtime Persistence
 
-Discovery has shifted from capability expansion to reasoning validation.
+**Depends on:** No registered capability dependencies
 
-Future development priorities:
+**Produces:** OrganizationRuntime
 
-1. Improve reasoning correctness.
-2. Improve benchmark performance.
-3. Eliminate architectural inconsistencies.
-4. Complete Executive Experience.
-5. Validate executive behavior with customers.
+**Canonical producer:** `engine/v3/runtime/organizationStateStore.ts`
 
-Reasoning quality—not capability count—is now Discovery's primary engineering metric.
+**Runtime destination:** `OrganizationRuntime`
 
----
+**Executive destinations:** None declared
 
-# Canonical Capability Registry
+### CAP-LRN-001 — Organizational Belief Evolution
 
-**Use the Capability Registry as the canonical architectural source.**
+**Depends on:** CAP-UND-002, CAP-MEM-001
 
-Do not recreate capability ownership inside this document.
+**Produces:** OrganizationalBeliefRevision
 
-Capability ownership is defined by:
+**Canonical producer:** `engine/v3/model/beliefs/updateOrganizationalBeliefs.ts`
 
-```text
-docs/Architecture/COGNITIVE_CAPABILITY_REGISTRY.json
-```
+**Runtime destination:** `OrganizationRuntime.organizationalBeliefRevisions`
 
-The registry remains authoritative.
+**Executive destinations:** OrganizationalBeliefs, OrganizationalLearningProfile
 
----
+### CAP-LRN-002 — Organizational Learning Profile
 
-# Canonical Pipeline
+**Depends on:** CAP-MEM-001, CAP-LRN-001
+
+**Produces:** OrganizationalLearningProfile
+
+**Canonical producer:** `engine/v3/model/learning/computeOrganizationalLearningProfile.ts`
+
+**Runtime destination:** `OrganizationRuntime.organizationalLearningProfile`
+
+**Executive destinations:** OrganizationalLearningProfile, ExecutiveProjection
+
+### CAP-ABS-001 — Organizational Concept Formation
+
+**Depends on:** CAP-UND-001, CAP-UND-002
+
+**Produces:** OrganizationalConcept
+
+**Canonical producer:** `engine/v3/concepts/synthesizeOrganizationalConcepts.ts`
+
+**Runtime destination:** `OrganizationModel.concepts`
+
+**Executive destinations:** ExecutiveAssessment, ExecutiveProjection
+
+### CAP-SELF-001 — Theory Validation
+
+**Depends on:** CAP-UND-001, CAP-UND-002, CAP-UND-003
+
+**Produces:** TheoryValidation
+
+**Canonical producer:** `engine/v3/model/judgment/buildTheoryReflection.ts`
+
+**Runtime destination:** `ExecutiveAssessment.theoryValidation`
+
+**Executive destinations:** TheoryValidation, ExecutiveProjection
+
+### CAP-SELF-002 — Investigation Opportunity Generation
+
+**Depends on:** CAP-UND-004, CAP-SELF-001
+
+**Produces:** InvestigationOpportunity
+
+**Canonical producer:** `engine/v3/model/investigation/buildInvestigationOpportunities.ts`
+
+**Runtime destination:** `OrganizationRuntime.investigationOpportunities`
+
+**Executive destinations:** InvestigationOpportunities, ExecutiveProjection
+
+### CAP-PRD-001 — Organizational Prediction
+
+**Depends on:** CAP-UND-004, CAP-LRN-002
+
+**Produces:** OrganizationalPrediction
+
+**Canonical producer:** `engine/v3/model/predictions/inferOrganizationalPredictions.ts`
+
+**Runtime destination:** `OrganizationRuntime.organizationalPredictions`
+
+**Executive destinations:** PredictionReflection
+
+### CAP-PRD-002 — Prediction Reflection
+
+**Depends on:** CAP-PRD-001
+
+**Produces:** PredictionReflection
+
+**Canonical producer:** `engine/v3/model/predictions/buildPredictionReflection.ts`
+
+**Runtime destination:** `OrganizationRuntime.predictionReflection`
+
+**Executive destinations:** ExecutiveAssessment, OrganizationalUnderstanding, Atlas
+
+### CAP-ADP-001 — Prediction Outcome Evaluation
+
+**Depends on:** CAP-PRD-001, CAP-PRD-002, CAP-UND-004
+
+**Produces:** PredictionEvaluation
+
+**Canonical producer:** `engine/v3/model/predictions/evaluatePredictionOutcomes.ts`
+
+**Runtime destination:** `OrganizationRuntime.predictionEvaluations`
+
+**Executive destinations:** ExecutiveAssessment, ExecutiveProjection, ExecutiveWorkspace, Atlas
+
+### CAP-SYS-001 — Architectural Planning
+
+**Depends on:** CAP-MEM-001, CAP-SELF-001, CAP-SELF-002
+
+**Produces:** ArchitectureRecommendation
+
+**Canonical producer:** `scripts/cognition/planArchitecture.mjs`
+
+**Runtime destination:** `DiscoveryArchitectureState.architectureRecommendations`
+
+**Executive destinations:** SprintBrief, ArchitectureHandoff
+
+### CAP-SYS-002 — Architecture Recommendation Projection
+
+**Depends on:** CAP-SYS-001
+
+**Produces:** ArchitectureRecommendationProjection
+
+**Canonical producer:** `scripts/cognition/projectArchitectureRecommendation.mjs`
+
+**Runtime destination:** `DiscoveryArchitectureState.architectureRecommendationProjection`
+
+**Executive destinations:** SprintBrief, ArchitectureHandoff
+
+### CAP-SIM-001 — Organizational Simulation
+
+**Depends on:** CAP-SIM-002, CAP-UND-004, CAP-UND-002, CAP-PRD-001, CAP-ADP-001, CAP-LRN-002
+
+**Produces:** SimulatedOrganizationState
+
+**Canonical producer:** `engine/v3/model/simulate/simulateOrganization.ts`
+
+**Runtime destination:** `OrganizationRuntime.simulatedOrganizationStates`
+
+**Executive destinations:** ExecutiveProjection, ExecutiveWorkspace, Atlas
+
+### CAP-SIM-002 — Organizational Intervention Modeling
+
+**Depends on:** No registered capability dependencies
+
+**Produces:** OrganizationalIntervention
+
+**Canonical producer:** `engine/v3/model/simulate/buildOrganizationalIntervention.ts`
+
+**Runtime destination:** `OrganizationRuntime.organizationalInterventions`
+
+**Executive destinations:** Simulation
+
+### CAP-DEC-001 — Executive Decision Orchestration
+
+**Depends on:** CAP-SIM-001, CAP-SIM-002, CAP-UND-005, CAP-UND-006, CAP-PRD-002, CAP-OPT-002, CAP-DEC-002, CAP-DEC-003, CAP-DEC-004
+
+**Produces:** ExecutiveDecisionCycle
+
+**Canonical producer:** `engine/v3/decisions/runExecutiveDecisionCycle.ts`
+
+**Runtime destination:** `ExecutiveDecisionCycle`
+
+**Executive destinations:** ExecutiveDecisionProjection, ExecutiveDecisionWorkspace, Atlas
+
+### CAP-DEC-002 — Cross-Scenario Comparison
+
+**Depends on:** CAP-SIM-001, CAP-UND-005, CAP-PRD-002
+
+**Produces:** ExecutiveScenarioComparisonEntry, ExecutiveScenarioComparisonSet
+
+**Canonical producer:** `engine/v3/decisions/compareExecutiveScenarios.ts`
+
+**Runtime destination:** `ExecutiveDecisionCycle.comparisonSet`
+
+**Executive destinations:** ExecutiveDecisionProjection, ExecutiveDecisionWorkspace, Atlas
+
+### CAP-DEC-003 — Executive Decision Ranking
+
+**Depends on:** CAP-DEC-002
+
+**Produces:** RankedExecutiveScenario
+
+**Canonical producer:** `engine/v3/decisions/rankExecutiveScenarios.ts`
+
+**Runtime destination:** `ExecutiveDecisionCycle.rankedScenarios`
+
+**Executive destinations:** ExecutiveDecisionProjection, ExecutiveDecisionWorkspace, Atlas
+
+### CAP-DEC-004 — Executive Recommendation Synthesis
+
+**Depends on:** CAP-DEC-002, CAP-DEC-003
+
+**Produces:** ExecutiveDecisionRecommendation
+
+**Canonical producer:** `engine/v3/decisions/buildExecutiveDecisionRecommendation.ts`
+
+**Runtime destination:** `ExecutiveDecisionCycle.recommendation`
+
+**Executive destinations:** ExecutiveDecisionProjection, ExecutiveDecisionWorkspace, Atlas
+
+### CAP-DEC-005 — Executive Decision Recording
+
+**Depends on:** CAP-DEC-001, CAP-DEC-004, CAP-MEM-001
+
+**Produces:** ExecutiveDecisionRecord
+
+**Canonical producer:** `engine/v3/decisions/recordExecutiveDecision.ts`
+
+**Runtime destination:** `OrganizationRuntime.memory.executiveDecisionRecords`
+
+**Executive destinations:** ExecutiveDecisionWorkspace, DecisionReview
+
+### CAP-OPT-001 — Optimization Variable Selection
+
+**Depends on:** CAP-UND-004
+
+**Produces:** OptimizationVariable
+
+**Canonical producer:** `engine/v3/optimization/selectOptimizationVariables.ts`
+
+**Runtime destination:** `ExecutiveDecisionCycle.optimizationObjective.variables`
+
+**Executive destinations:** ExecutiveOptimizationObjective, ExecutiveDecisionProjection, ExecutiveDecisionWorkspace, Atlas
+
+### CAP-OPT-002 — Executive Optimization Objective Synthesis
+
+**Depends on:** CAP-OPT-001, CAP-UND-004
+
+**Produces:** ExecutiveOptimizationObjective
+
+**Canonical producer:** `engine/v3/optimization/synthesizeExecutiveOptimizationObjective.ts`
+
+**Runtime destination:** `ExecutiveDecisionCycle.optimizationObjective`
+
+**Executive destinations:** ExecutiveDecisionProjection, ExecutiveDecisionWorkspace, Atlas
+
+### CAP-COM-001 — Executive Communication Synthesis
+
+**Depends on:** CAP-UND-004, CAP-UND-005, CAP-UND-006, CAP-LRN-002, CAP-PRD-002, CAP-SIM-001, CAP-SELF-002
+
+**Produces:** ExecutiveNarrative, ExecutiveCommunication
+
+**Canonical producer:** `engine/v3/communication/synthesizeExecutiveCommunication.ts`
+
+**Runtime destination:** `ExecutiveCommunication`
+
+**Executive destinations:** ExecutiveWorkspaceV3
+
+## Potential Capability Overlap
+
+### CAP-UND-004 — Organizational Condition Inference
+
+Possible overlap with **CAP-UND-005 — Executive Assessment**.
+
+Reason: semantic similarity 36%.
+
+Review before creating a new capability. Similarity does not automatically mean duplication; one capability may legitimately depend on or transform another.
+
+### CAP-OPT-001 — Optimization Variable Selection
+
+Possible overlap with **CAP-OPT-002 — Executive Optimization Objective Synthesis**.
+
+Reason: semantic similarity 31%.
+
+Review before creating a new capability. Similarity does not automatically mean duplication; one capability may legitimately depend on or transform another.
+
+### CAP-DEC-002 — Cross-Scenario Comparison
+
+Possible overlap with **CAP-DEC-003 — Executive Decision Ranking**.
+
+Reason: semantic similarity 30%.
+
+Review before creating a new capability. Similarity does not automatically mean duplication; one capability may legitimately depend on or transform another.
+
+## Canonical Pipeline
 
 ```text
 Evidence Ingestion
-
 ↓
-
-Organizational Observation
-
+Organizational Observation Inference
 ↓
-
-Signals
-
+Organizational Mechanism Inference
 ↓
-
-Contradictions
-
+Organizational Belief Formation
 ↓
-
-Phenomena
-
+Organizational Theory Formation
 ↓
-
-Mechanisms
-
+Organizational Condition Inference
 ↓
-
-Beliefs
-
-↓
-
-Concepts
-
-↓
-
-Theories
-
-↓
-
-Organizational Conditions
-
-↓
-
 Executive Assessment
-
 ↓
-
-Executive Understanding
-
+Executive Understanding Synthesis
 ↓
-
-Runtime Evolution
-
+Organization Runtime
 ↓
-
 Executive Projection
-
 ↓
-
 Executive Workspace
 ```
 
-Every benchmark should validate this pipeline.
+## Canonical Source Files
 
----
+### CAP-PER-001 — Evidence Ingestion
 
-# Canonical Validation Pipeline
+- Canonical producer: `engine/v3/evidence.ts`
+- Implementation: `engine/v3/evidence.ts`
 
-Every major reasoning change should successfully complete:
+### CAP-PER-002 — Organizational Observation Inference
 
-```text
-Typecheck
+- Canonical producer: `engine/v3/model/observations/inferOrganizationalObservations.ts`
+- Implementation: `engine/v3/model/observations/inferOrganizationalObservations.ts`
+- Implementation: `engine/v3/model/observations/organizationalObservations.ts`
 
-↓
+### CAP-UND-001 — Organizational Mechanism Inference
 
-Capability Validation
+- Canonical producer: `engine/v3/model/judgment/inferOrganizationalMechanisms.ts`
+- Implementation: `engine/v3/model/judgment/inferOrganizationalMechanisms.ts`
+- Implementation: `engine/v3/model/judgment/organizationalMechanism.ts`
+- Implementation: `engine/v3/model/judgment/mechanismCandidateBuilder.ts`
+- Implementation: `engine/v3/model/judgment/mechanismEvidenceAggregation.ts`
 
-↓
+### CAP-UND-002 — Organizational Belief Formation
 
-Decision Validation
+- Canonical producer: `engine/v3/model/beliefs/inferOrganizationalBeliefs.ts`
+- Implementation: `engine/v3/model/beliefs/inferOrganizationalBeliefs.ts`
+- Implementation: `engine/v3/model/beliefs/organizationalBeliefs.ts`
 
-↓
+### CAP-UND-003 — Organizational Theory Formation
 
-Northstar Ingestion
+- Canonical producer: `engine/v3/model/judgment/formOrganizationalTheories.ts`
+- Implementation: `engine/v3/model/judgment/formOrganizationalTheories.ts`
+- Implementation: `engine/v3/model/judgment/organizationalTheory.ts`
 
-↓
+### CAP-UND-004 — Organizational Condition Inference
 
-Ground Truth Evaluation
+- Canonical producer: `engine/v3/model/state/inferOrganizationalConditions.ts`
+- Implementation: `engine/v3/model/state/inferOrganizationalConditions.ts`
 
-↓
+### CAP-UND-005 — Executive Assessment
 
-Cognitive Trace
+- Canonical producer: `engine/v3/model/judgment/buildExecutiveAssessment.ts`
+- Implementation: `engine/v3/model/judgment/buildExecutiveAssessment.ts`
 
-↓
+### CAP-UND-006 — Executive Understanding Synthesis
 
-Cognitive Layer Validation
+- Canonical producer: `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
+- Implementation: `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
+- Implementation: `engine/v3/understanding/consolidateUnderstanding.ts`
+- Implementation: `engine/v3/understanding/synthesizeUnderstanding.ts`
+- Implementation: `engine/v3/runtime/evolveOrganizationRuntime.ts`
 
-↓
+### CAP-MEM-001 — Organizational Runtime Persistence
 
-Executive Experience
-```
+- Canonical producer: `engine/v3/runtime/organizationStateStore.ts`
+- Implementation: `engine/v3/runtime/organizationStateStore.ts`
+- Implementation: `engine/v3/runtime/organizationRuntime.ts`
 
-Reasoning improvements should increase benchmark performance without reducing architectural integrity.
+### CAP-LRN-001 — Organizational Belief Evolution
 
----
+- Canonical producer: `engine/v3/model/beliefs/updateOrganizationalBeliefs.ts`
+- Implementation: `engine/v3/model/beliefs/updateOrganizationalBeliefs.ts`
+- Implementation: `engine/v3/cognition/beliefs/mergeBeliefs.ts`
 
-# Canonical Source Files
+### CAP-LRN-002 — Organizational Learning Profile
 
-Treat the following as canonical:
+- Canonical producer: `engine/v3/model/learning/computeOrganizationalLearningProfile.ts`
+- Implementation: `engine/v3/model/learning/computeOrganizationalLearningProfile.ts`
 
-* `docs/Architecture/COGNITIVE_CAPABILITY_REGISTRY.json`
-* `docs/Architecture/COGNITIVE_FILE_REGISTRY.json`
-* `docs/Architecture/COGNITIVE_CAPABILITY_AUDIT.json`
-* `docs/Architecture/COGNITIVE_OBJECT_MODEL.md`
-* `docs/Architecture/COGNITIVE_FLOW_MAP.md`
-* `docs/Architecture/EXECUTIVE_COGNITIVE_OPERATING_SYSTEM.md`
+### CAP-ABS-001 — Organizational Concept Formation
 
-These documents define the architecture.
+- Canonical producer: `engine/v3/concepts/synthesizeOrganizationalConcepts.ts`
+- Implementation: `engine/v3/concepts/buildConceptCandidates.ts`
+- Implementation: `engine/v3/concepts/compressConceptCandidates.ts`
+- Implementation: `engine/v3/concepts/conceptCandidateTypes.ts`
+- Implementation: `engine/v3/concepts/synthesizeOrganizationalConcepts.ts`
+- Implementation: `engine/v3/compression/types.ts`
 
-Benchmarks validate that the implementation matches the architecture.
+### CAP-SELF-001 — Theory Validation
 
----
+- Canonical producer: `engine/v3/model/judgment/buildTheoryReflection.ts`
+- Implementation: `engine/v3/model/judgment/buildTheoryReflection.ts`
 
-# Canonical Benchmark Files
+### CAP-SELF-002 — Investigation Opportunity Generation
 
-Treat these benchmarks as architectural validation:
+- Canonical producer: `engine/v3/model/investigation/buildInvestigationOpportunities.ts`
+- Implementation: `engine/v3/model/investigation/buildInvestigationOpportunities.ts`
 
-* High-Volume Northstar Ingestion
-* Ground Truth Evaluation
-* Cognitive Trace
-* Cognitive Layer Validation
-* Executive Decision Validation
-* Executive Decision Learning Validation
+### CAP-PRD-001 — Organizational Prediction
 
-Benchmark failures should be treated as architectural evidence rather than implementation bugs until proven otherwise.
+- Canonical producer: `engine/v3/model/predictions/inferOrganizationalPredictions.ts`
+- Implementation: `engine/v3/model/predictions/inferOrganizationalPredictions.ts`
+- Implementation: `engine/v3/model/predictions/organizationalPrediction.ts`
+- Implementation: `engine/v3/model/predictions/predictionRules.ts`
+- Implementation: `engine/v3/model/predictions/predictionTypes.ts`
 
----
+### CAP-PRD-002 — Prediction Reflection
 
-# Sprint Handoff Guidance
+- Canonical producer: `engine/v3/model/predictions/buildPredictionReflection.ts`
+- Implementation: `engine/v3/model/predictions/buildPredictionReflection.ts`
 
-Future work should follow this order:
+### CAP-ADP-001 — Prediction Outcome Evaluation
 
-1. Validate architecture.
-2. Validate reasoning.
-3. Validate executive experience.
-4. Validate customer behavior.
-5. Expand architecture only when benchmark evidence demonstrates a genuine gap.
+- Canonical producer: `engine/v3/model/predictions/evaluatePredictionOutcomes.ts`
+- Implementation: `engine/v3/model/predictions/evaluatePredictionOutcomes.ts`
 
-The objective is no longer proving Discovery can reason.
+### CAP-SYS-001 — Architectural Planning
 
-The objective is proving Discovery reasons correctly, explains itself clearly, continuously improves, and earns executive trust through measurable validation.
+- Canonical producer: `scripts/cognition/planArchitecture.mjs`
+- Implementation: `scripts/cognition/planArchitecture.mjs`
+
+### CAP-SYS-002 — Architecture Recommendation Projection
+
+- Canonical producer: `scripts/cognition/projectArchitectureRecommendation.mjs`
+- Implementation: `scripts/cognition/projectArchitectureRecommendation.mjs`
+
+### CAP-SIM-001 — Organizational Simulation
+
+- Canonical producer: `engine/v3/model/simulate/simulateOrganization.ts`
+- Implementation: `engine/v3/model/simulate/simulateOrganization.ts`
+
+### CAP-SIM-002 — Organizational Intervention Modeling
+
+- Canonical producer: `engine/v3/model/simulate/buildOrganizationalIntervention.ts`
+- Implementation: `engine/v3/model/simulate/organizationalIntervention.ts`
+- Implementation: `engine/v3/model/simulate/buildOrganizationalIntervention.ts`
+
+### CAP-DEC-001 — Executive Decision Orchestration
+
+- Canonical producer: `engine/v3/decisions/runExecutiveDecisionCycle.ts`
+- Implementation: `engine/v3/decisions/runExecutiveDecisionCycle.ts`
+- Implementation: `engine/v3/reasoning/generateInterventionOptions.ts`
+- Implementation: `engine/v3/reasoning/convertInterventionOptionToIntervention.ts`
+- Implementation: `engine/v3/reasoning/evaluateInterventionOption.ts`
+- Implementation: `engine/v3/scenarios/buildExecutiveDecisionContext.ts`
+- Implementation: `engine/v3/scenarios/runExecutiveScenario.ts`
+
+### CAP-DEC-002 — Cross-Scenario Comparison
+
+- Canonical producer: `engine/v3/decisions/compareExecutiveScenarios.ts`
+- Implementation: `engine/v3/decisions/compareExecutiveScenarios.ts`
+
+### CAP-DEC-003 — Executive Decision Ranking
+
+- Canonical producer: `engine/v3/decisions/rankExecutiveScenarios.ts`
+- Implementation: `engine/v3/decisions/rankExecutiveScenarios.ts`
+
+### CAP-DEC-004 — Executive Recommendation Synthesis
+
+- Canonical producer: `engine/v3/decisions/buildExecutiveDecisionRecommendation.ts`
+- Implementation: `engine/v3/decisions/buildExecutiveDecisionRecommendation.ts`
+
+### CAP-DEC-005 — Executive Decision Recording
+
+- Canonical producer: `engine/v3/decisions/recordExecutiveDecision.ts`
+- Implementation: `engine/v3/decisions/executiveDecisionRecord.ts`
+- Implementation: `engine/v3/decisions/recordExecutiveDecision.ts`
+- Implementation: `engine/v3/decisions/saveExecutiveDecisionRecord.ts`
+
+### CAP-OPT-001 — Optimization Variable Selection
+
+- Canonical producer: `engine/v3/optimization/selectOptimizationVariables.ts`
+- Implementation: `engine/v3/optimization/optimizationVariable.ts`
+- Implementation: `engine/v3/optimization/selectOptimizationVariables.ts`
+
+### CAP-OPT-002 — Executive Optimization Objective Synthesis
+
+- Canonical producer: `engine/v3/optimization/synthesizeExecutiveOptimizationObjective.ts`
+- Implementation: `engine/v3/optimization/executiveOptimizationObjective.ts`
+- Implementation: `engine/v3/optimization/synthesizeExecutiveOptimizationObjective.ts`
+
+### CAP-COM-001 — Executive Communication Synthesis
+
+- Canonical producer: `engine/v3/communication/synthesizeExecutiveCommunication.ts`
+- Implementation: `engine/v3/communication/executiveNarrative.ts`
+- Implementation: `engine/v3/communication/synthesizeExecutiveNarrative.ts`
+- Implementation: `engine/v3/communication/executiveCommunication.ts`
+- Implementation: `engine/v3/communication/synthesizeExecutiveCommunication.ts`
+
+## Sprint Handoff Guidance
+
+Treat the following files as canonical architectural sources:
+
+- `docs/Architecture/COGNITIVE_CAPABILITY_REGISTRY.json`
+- `docs/Architecture/COGNITIVE_FILE_REGISTRY.json`
+- `docs/Architecture/COGNITIVE_CAPABILITY_AUDIT.json`
+- `docs/Architecture/COGNITIVE_OBJECT_MODEL.md`
+- `docs/Sprint Updates/ARCHITECTURE_HANDOFF.md`
+
+When architectural evidence conflicts, prefer the current registry and verified source-code trace over older sprint prose.
+

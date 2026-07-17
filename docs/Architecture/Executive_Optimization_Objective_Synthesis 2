@@ -1,0 +1,286 @@
+# Executive Optimization Objective Synthesis
+
+**Capability ID:** CAP-OPT-001
+
+**Status:** Canonical
+
+---
+
+# Purpose
+
+This capability transforms an Executive Decision into a canonical Optimization Objective.
+
+An Executive Decision describes the business problem.
+
+An Optimization Objective describes the mathematical problem Discovery will solve.
+
+This capability performs no simulation.
+
+This capability performs no ranking.
+
+It prepares Discovery's Optimization Operating System.
+
+---
+
+# Executive Question
+
+> Given this executive decision, what should Discovery optimize?
+
+---
+
+# Inputs
+
+- Executive Decision
+- Organizational State
+- Organizational Conditions
+- Organizational Beliefs
+- Organizational Concepts
+- Organizational Theories
+
+---
+
+# Outputs
+
+Executive Optimization Objective
+
+---
+
+# Responsibilities
+
+CAP-OPT-001 is responsible for:
+
+- identifying optimization targets,
+- identifying optimization variables,
+- assigning optimization weights,
+- translating executive constraints,
+- translating success metrics,
+- identifying optimization preferences,
+- preparing optimization context.
+
+---
+
+# It is NOT responsible for
+
+- generating strategies,
+- evaluating constraints,
+- simulation,
+- ranking,
+- recommendations.
+
+Those belong to later Optimization capabilities.
+
+---
+
+# Translation
+
+Executive Decision
+
+↓
+
+Optimization Objective
+
+Example
+
+Executive Decision
+
+```
+Improve execution without increasing headcount.
+```
+
+Optimization Objective
+
+```
+Optimize
+
+Execution Capacity
+
+Decision Flow
+
+Coordination
+
+Subject to
+
+No headcount increase
+
+Near-term impact
+
+Budget neutral
+```
+
+---
+
+# Organizational Variables
+
+Optimization occurs over organizational variables.
+
+Variables originate from Organizational Conditions.
+
+Example
+
+- Decision Flow
+- Execution Capacity
+- Coordination
+- Leadership Dependency
+- Strategic Alignment
+- Learning
+- Knowledge Continuity
+- Operating Model
+
+---
+
+# Variable Selection
+
+Only variables relevant to the Executive Decision become optimization targets.
+
+Primary variables originate from:
+
+- target conditions
+- success metrics
+
+Secondary variables originate from:
+
+- causal propagation
+- organizational concepts
+- executive priorities
+
+---
+
+# Variable Weights
+
+Optimization weights represent executive importance.
+
+Version 1
+
+Primary target conditions
+
+Weight
+
+10
+
+Secondary propagated conditions
+
+Weight
+
+5
+
+Future versions may synthesize weights dynamically.
+
+---
+
+# Success Metrics
+
+Every Success Metric becomes an Optimization Target.
+
+Success Metrics define:
+
+- baseline
+- desired future value
+- attainment criteria
+
+---
+
+# Constraints
+
+Executive Constraints become Optimization Constraints.
+
+Constraint evaluation does not occur here.
+
+Only translation occurs.
+
+Example
+
+Executive Constraint
+
+```
+Do not increase headcount.
+```
+
+Optimization Constraint
+
+```
+People
+
+Must Remain Neutral
+```
+
+---
+
+# Preferences
+
+Preferences influence optimization without eliminating strategies.
+
+Examples
+
+- fastest improvement
+- lowest disruption
+- highest confidence
+- lowest implementation effort
+
+Preferences are distinct from constraints.
+
+---
+
+# Tradeoff Strategy
+
+Optimization may require tradeoffs.
+
+Future versions may support:
+
+- maximize value
+- minimize risk
+- balanced optimization
+
+---
+
+# Produced Object
+
+Executive Optimization Objective contains
+
+- objective
+- optimization variables
+- variable weights
+- success metrics
+- constraints
+- preferences
+- tradeoff strategy
+- optimization explanation
+
+---
+
+# Product Role
+
+CAP-OPT-001 begins the Optimization Operating System.
+
+```
+Executive Decision
+
+↓
+
+Optimization Objective
+
+↓
+
+Candidate Strategies
+
+↓
+
+Constraint Evaluation
+
+↓
+
+Simulation
+
+↓
+
+Optimization
+
+↓
+
+Recommendation
+```
+
+---
+
+# Definition of Success
+
+This capability succeeds when Discovery converts an executive business problem into a complete optimization problem without performing simulation or selecting a strategy.

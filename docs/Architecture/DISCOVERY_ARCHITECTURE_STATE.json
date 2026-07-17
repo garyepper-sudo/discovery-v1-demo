@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-17T03:35:49.050Z",
+    "generatedAt": "2026-07-17T22:33:01.695Z",
     "generator": "scripts/cognition/generateArchitectureState.mjs",
     "sourceOfTruthOrder": [
       "Verified source code",
@@ -13,9 +13,9 @@
     ]
   },
   "project": {
-    "currentMilestone": "Adaptive Executive Intelligence and Executive Decision Learning\n\n---",
-    "currentPhase": "The primary bottleneck is no longer cognition.\n\nThe primary bottleneck is Adaptive Executive Experience.\n\nCurrent priorities:\n\n* Executive Workspace\n* Executive Explanation\n* Executive Narrative\n* Decision Playbook integration\n* Executive Decision Memory persistence\n* Board-ready Executive Reports\n* Executive Decision Flywheel\n* Customer Validation\n\nFuture work should expose and reuse existing cognition rather than introduce new reasoning.\n\n---",
-    "currentObjective": "Validate one complete adaptive executive decision flywheel.\n\nDiscovery should become progressively better at helping executives:\n\n* understand complex organizational situations,\n* understand why Discovery reached its conclusions,\n* understand how certain Discovery is,\n* identify the highest-leverage executive decision,\n* challenge assumptions,\n* explore alternative futures,\n* improve executive confidence,\n* make better decisions,\n* learn from completed decisions,\n* and continuously improve future recommendations through accumulated executive experience.\n\nCurrent development focuses on one complete adaptive workflow:\n\n\n\nEverything else is secondary until this workflow has been validated with real executive users.\n\n---",
+    "currentMilestone": "Validated Executive Optimization and Executive Simulation Readiness\n\n---",
+    "currentPhase": "The primary bottleneck is no longer Assessment, Recommendation, or Optimization cognition.\n\nThe primary bottleneck is:\n\n> Executive Simulation and the Adaptive Executive Experience\n\nCurrent priorities:\n\n* Executive Simulation Operating System\n* Optimized Recommendation → Simulation translation\n* Canonical Simulation Scenario\n* Optimized Recommendation → Organizational Intervention\n* Projected Organizational Conditions\n* Projected Organizational State\n* Projected Beliefs\n* Projected Predictions\n* Simulation Evaluation\n* Scenario Comparison\n* Executive Workspace\n* Executive Explanation\n* Executive Narrative\n* Recommendation and Optimization Explainability\n* Constraint and Tradeoff Communication\n* Board-ready Executive Reports\n* Executive Decision Flywheel\n* Customer Validation\n\nFuture work should expose, integrate, test, and reuse existing cognition rather than introduce duplicate reasoning.\n\n---",
+    "currentObjective": "Complete the Executive Simulation Operating System and validate one complete executive decision workflow.\n\nDiscovery should become progressively better at helping executives:\n\n* understand complex organizational situations,\n* understand why Discovery reached its conclusions,\n* understand how certain Discovery is,\n* identify the highest-leverage executive objective,\n* understand the recommended strategy,\n* evaluate the recommended intervention,\n* challenge assumptions,\n* compare bounded alternatives,\n* understand binding constraints,\n* evaluate explicit tradeoffs,\n* identify the preferred optimized option,\n* explore projected organizational futures,\n* improve executive confidence,\n* make better decisions,\n* learn from completed decisions,\n* and continuously improve future recommendations through accumulated executive experience.\n\nCurrent development focuses on completing this workflow:\n\n\n\nEverything else remains secondary until this workflow has been validated with real executive users.\n\n---",
     "currentSprint": null,
     "nextPriority": null,
     "sourceDocuments": [
@@ -539,7 +539,7 @@
             "executive": true,
             "projection": true,
             "ui": true,
-            "api": true,
+            "api": false,
             "simulation": true,
             "benchmark": true
           },
