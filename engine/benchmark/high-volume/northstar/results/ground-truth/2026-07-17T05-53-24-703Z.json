@@ -1,0 +1,118 @@
+{
+  "organizationId": "northstar-industrial-systems",
+  "scoredAt": "2026-07-17T05:53:24.703Z",
+  "dimensionScore": 85,
+  "falsePositivePenalty": 0,
+  "calibrationPenalty": 0,
+  "finalScore": 85,
+  "executiveConfidence": 0.7928932038895403,
+  "dimensions": [
+    {
+      "id": "concurrent-work",
+      "label": "Excessive concurrent work",
+      "weight": 30,
+      "score": 20,
+      "matchedGroups": [
+        "priority conflict / priority overload / competing priorities / focus fragmentation / execution demand exceeds",
+        "sequence work / reduce active work / reduce concurrent / protect highest-leverage work"
+      ],
+      "missingGroups": [
+        "concurrent work / too many projects / too much work in progress / work in progress / wip"
+      ],
+      "contradictoryMatches": [],
+      "passed": true,
+      "rationale": "The primary operating constraint is excessive concurrent work, which fragments focus and exceeds organizational execution capacity."
+    },
+    {
+      "id": "decision-rights",
+      "label": "Weak decision rights",
+      "weight": 25,
+      "score": 25,
+      "matchedGroups": [
+        "decision rights / decision authority / unclear governance / governance friction",
+        "approval bottleneck / approval dependency / centralized authority / leadership dependency",
+        "clarify decision / distribute authority / reduce approval"
+      ],
+      "missingGroups": [],
+      "contradictoryMatches": [],
+      "passed": true,
+      "rationale": "Unclear decision rights and approval dependency slow execution and push routine decisions upward."
+    },
+    {
+      "id": "acquisition-fragmentation",
+      "label": "Acquisition fragmentation",
+      "weight": 20,
+      "score": 20,
+      "matchedGroups": [
+        "vector / acquisition / integration / post-merger",
+        "fragmentation / incompatible process / systems integration / operating model ambiguity / knowledge continuity",
+        "integration failure / organizational continuity failure / continuity failure"
+      ],
+      "missingGroups": [],
+      "contradictoryMatches": [],
+      "passed": true,
+      "rationale": "The Vector acquisition amplified fragmentation across systems, operating practices, knowledge, and leadership."
+    },
+    {
+      "id": "staffing-not-root-cause",
+      "label": "Staffing is not the root cause",
+      "weight": 15,
+      "score": 10,
+      "matchedGroups": [
+        "capacity constraint / execution capacity / resource constraint",
+        "governance friction / priority conflict / coordination breakdown / decision latency"
+      ],
+      "missingGroups": [
+        "without adding headcount / avoid additional headcount / staffing is not / not a staffing / hiring will not"
+      ],
+      "contradictoryMatches": [],
+      "passed": true,
+      "rationale": "The apparent capacity problem is driven primarily by prioritization, governance, coordination, and concurrency rather than insufficient staffing."
+    },
+    {
+      "id": "customer-escalation-symptom",
+      "label": "Customer escalation is downstream",
+      "weight": 10,
+      "score": 10,
+      "matchedGroups": [
+        "customer friction / customer escalation / strategic account risk / delivery failure",
+        "downstream / propagate / caused by / reinforced by / execution capacity / coordination system"
+      ],
+      "missingGroups": [],
+      "contradictoryMatches": [],
+      "passed": true,
+      "rationale": "Customer escalations are an important consequence of operating-system failures, but not the primary root cause."
+    }
+  ],
+  "falsePositives": [
+    {
+      "id": "headcount-primary",
+      "label": "Recommends headcount as the primary intervention",
+      "penalty": 0,
+      "triggered": false,
+      "matchedGroups": []
+    },
+    {
+      "id": "technology-replacement",
+      "label": "Recommends major technology replacement without causal support",
+      "penalty": 0,
+      "triggered": false,
+      "matchedGroups": []
+    },
+    {
+      "id": "leadership-removal",
+      "label": "Recommends leadership removal without causal support",
+      "penalty": 0,
+      "triggered": false,
+      "matchedGroups": []
+    },
+    {
+      "id": "reorganization-primary",
+      "label": "Recommends broad reorganization as the primary intervention",
+      "penalty": 0,
+      "triggered": false,
+      "matchedGroups": []
+    }
+  ],
+  "conclusion": "Discovery identified most of the true organizational explanation, with material gaps remaining."
+}
