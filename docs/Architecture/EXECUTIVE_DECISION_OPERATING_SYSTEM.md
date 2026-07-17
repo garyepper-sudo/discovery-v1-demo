@@ -1,37 +1,41 @@
 # Executive Decision Operating System
 
-**Status:** Proposed
+**Status:** Canonical
 
 ---
 
 # Purpose
 
-The Executive Decision Operating System defines Discovery’s canonical process for transforming an executive objective into a ranked, explainable, and recommended organizational intervention.
+The Executive Decision Operating System is Discovery's canonical system for transforming an executive objective into an informed executive decision and preserving that decision for future organizational learning.
 
-Its purpose is to coordinate existing Decision Intelligence, Simulation, Prediction, Executive Assessment, and Executive Understanding capabilities without recreating their reasoning.
+It coordinates Discovery's existing Decision Intelligence capabilities without duplicating organizational reasoning.
 
 The Executive Decision Operating System answers:
 
-> Given an executive objective, which intervention should leadership choose, why, and what future organizational state is expected to result?
+> Given an executive objective, what should leadership do, why, how confident is Discovery, what decision did leadership ultimately make, and how should that decision be evaluated over time?
 
 ---
 
-# Operating Principle
+# Philosophy
 
-The Executive Decision Operating System does not introduce an independent reasoning model.
+Discovery does not replace executive judgment.
 
-It composes existing canonical producers.
+Discovery improves executive judgment.
 
-Each stage must remain:
+The Executive Decision Operating System therefore consists of two distinct phases:
 
-- independently inspectable,
-- independently benchmarkable,
-- deterministic when inputs are fixed,
-- explainable,
-- reusable outside the final orchestration layer,
-- and non-mutating until leadership explicitly accepts an intervention.
+1. **Decision Intelligence**
+   - Discovery reasons.
+   - Discovery evaluates.
+   - Discovery recommends.
 
-The system must not select an intervention before evaluating all viable options through the same canonical pipeline.
+2. **Executive Decision**
+   - Leadership decides.
+   - Discovery records.
+   - Discovery later evaluates outcomes.
+   - Discovery learns.
+
+This separation ensures that hypothetical reasoning never becomes organizational truth until leadership explicitly commits to a decision.
 
 ---
 
@@ -39,31 +43,51 @@ The system must not select an intervention before evaluating all viable options 
 
 ```text
 Executive Objective
-↓
+        ↓
 Executive Decision Definition
-↓
+        ↓
+Executive Optimization Objective
+        ↓
 Intervention Option Generation
-↓
-Intervention Option Normalization
-↓
+        ↓
+Constraint & Viability Evaluation
+        ↓
 Intervention Evaluation
-↓
+        ↓
 Scenario Execution
-↓
-Scenario Projection
-↓
+        ↓
 Cross-Scenario Comparison
-↓
-Decision Ranking
-↓
+        ↓
+Scenario Ranking
+        ↓
+Confidence Calibration
+        ↓
 Executive Recommendation
+        ↓
+Executive Decision Projection
+        ↓
+Executive Decision Record
+        ↓
+Decision Review
+        ↓
+Decision Learning
 ```
 
 ---
 
-# Current Architecture
+# Design Principles
 
-Discovery already possesses the following parts of this pipeline.
+Every stage must remain:
+
+- deterministic,
+- independently benchmarkable,
+- independently explainable,
+- independently reusable,
+- non-mutating until leadership explicitly commits,
+- architecturally composable,
+- and capable of being evaluated independently.
+
+No producer should duplicate reasoning owned by another producer.
 
 ---
 
@@ -75,19 +99,42 @@ Discovery already possesses the following parts of this pipeline.
 ExecutiveDecision
 ```
 
-## Current Responsibilities
+## Canonical Responsibility
 
-- represent the executive objective,
-- define success metrics,
-- preserve decision constraints,
-- define the decision time horizon,
-- define allowed intervention types,
-- record assumptions,
-- identify target organizational conditions,
-- identify open questions,
-- and preserve decision confidence.
+Represents executive intent.
 
-The Executive Decision object establishes the executive intent against which all intervention options should ultimately be evaluated.
+It defines:
+
+- objective,
+- rationale,
+- success metrics,
+- constraints,
+- assumptions,
+- target organizational conditions,
+- time horizon,
+- intervention scope,
+- confidence,
+- and open executive questions.
+
+---
+
+# Executive Optimization Objective
+
+## Canonical Producer
+
+```text
+engine/v3/optimization/synthesizeExecutiveOptimizationObjective.ts
+```
+
+## Canonical Object
+
+```text
+ExecutiveOptimizationObjective
+```
+
+## Responsibility
+
+Transforms executive intent into an executable optimization problem.
 
 ---
 
@@ -105,51 +152,33 @@ engine/v3/reasoning/generateInterventionOptions.ts
 InterventionOption
 ```
 
-## Current Responsibilities
+## Responsibility
 
-- generate candidate interventions,
-- connect options to target conditions,
-- preserve executive constraints,
-- identify expected mechanisms,
-- identify risks,
-- identify missing evidence,
-- preserve assumptions,
-- and assign option confidence.
+Generate multiple candidate executive interventions.
 
-Intervention Option Generation proposes possible leadership actions.
-
-It does not evaluate simulated organizational futures and must not determine the final recommendation.
+Generation never determines the recommendation.
 
 ---
 
-# Intervention Option Normalization
+# Constraint & Viability Evaluation
 
 ## Canonical Producer
 
 ```text
-engine/v3/reasoning/convertInterventionOptionToIntervention.ts
+engine/v3/decisions/evaluateInterventionViability.ts
 ```
 
 ## Canonical Object
 
 ```text
-OrganizationalIntervention
+InterventionViabilityEvaluation
 ```
 
-## Current Responsibilities
+## Responsibility
 
-- convert a generated option into the canonical simulation object,
-- preserve intervention identity,
-- preserve intervention type,
-- preserve scope,
-- preserve time horizon,
-- preserve target conditions,
-- preserve assumptions,
-- preserve expected mechanisms,
-- preserve confidence,
-- and ensure every scenario consumes the same intervention format.
+Evaluate every generated option against executive constraints before simulation.
 
-This stage creates the stable bridge between generated Decision Intelligence options and Organizational Simulation.
+Required constraint violations remove an option from downstream evaluation.
 
 ---
 
@@ -161,67 +190,23 @@ This stage creates the stable bridge between generated Decision Intelligence opt
 engine/v3/reasoning/evaluateInterventionOption.ts
 ```
 
-## Canonical Output
+## Canonical Object
 
 ```text
 EvaluatedInterventionOption
 ```
 
-## Current Responsibilities
+## Responsibility
 
-- convert an intervention option into a canonical intervention,
-- map the intervention to direct causal changes,
-- propagate direct organizational effects,
-- propagate indirect organizational effects,
-- aggregate organizational influence safely,
-- preserve causal explanations,
-- and return one evaluated intervention option.
+Map each intervention into executable organizational change.
 
-Intervention Evaluation does not:
+This stage owns:
 
-- generate options,
-- compare options,
-- rank outcomes,
-- execute full future-state cognition,
-- or synthesize the final executive recommendation.
-
----
-
-# Scenario Context
-
-## Canonical Producer
-
-```text
-engine/v3/scenarios/buildExecutiveDecisionContext.ts
-```
-
-## Canonical Output
-
-```text
-ExecutiveDecisionContext
-```
-
-## Current Responsibilities
-
-- adapt the persisted Organization Runtime into scenario inputs,
-- preserve the current Executive Assessment,
-- preserve the current Organizational State,
-- preserve current organizational conditions,
-- preserve current organizational predictions,
-- preserve the causal model,
-- preserve organizational judgments,
-- preserve organizational mechanisms,
-- preserve concept candidates,
-- preserve conceptual understanding,
-- preserve organizational beliefs,
-- preserve investigation opportunities,
-- preserve theories,
-- preserve the organizational learning profile,
-- and prevent API or UI layers from depending on runtime storage details.
-
-The Scenario Context is a non-reasoning adapter.
-
-It must not create new cognition or mutate the runtime.
+- causal mapping,
+- organizational influence propagation,
+- influence aggregation,
+- explanation generation,
+- intervention normalization.
 
 ---
 
@@ -233,366 +218,126 @@ It must not create new cognition or mutate the runtime.
 engine/v3/scenarios/runExecutiveScenario.ts
 ```
 
-## Canonical Output
+## Canonical Object
 
 ```text
 ExecutiveScenarioResult
 ```
 
-## Current Responsibilities
+## Responsibility
 
-- apply one canonical intervention,
-- simulate the organizational future,
-- synthesize the projected Organizational State,
-- regenerate Prediction Reflection,
-- regenerate Executive Assessment,
-- regenerate Executive Understanding candidates,
-- compare current and projected cognition,
-- and return one complete executive scenario result.
+Evaluate one intervention against one organizational baseline.
 
-Scenario Execution is the canonical one-option orchestrator.
+Produces:
 
-Multi-option orchestration must call this producer rather than recreate its logic.
+- projected conditions,
+- projected predictions,
+- projected executive assessment,
+- projected understanding,
+- projected comparison.
 
 ---
 
-# Scenario Projection
+# Cross-Scenario Comparison
 
 ## Canonical Producer
 
 ```text
-components/executive-v2/projection/buildExecutiveScenarioProjection.ts
+engine/v3/decisions/compareExecutiveScenarios.ts
 ```
 
-## Canonical Output
-
-```text
-ExecutiveScenarioProjection
-```
-
-## Current Responsibilities
-
-- convert scenario cognition into a stable executive-facing contract,
-- expose the intervention,
-- expose the projected organizational future,
-- expose regenerated Prediction Reflection,
-- expose regenerated Executive Assessment,
-- expose regenerated Executive Understanding,
-- expose current-versus-projected comparison,
-- and prevent presentation layers from consuming raw engine objects.
-
-Scenario Projection performs no new organizational reasoning.
-
----
-
-# Current Product Surface
-
-## Executive Decision Workspace
-
-Current component:
-
-```text
-components/executive-v2/decision/ExecutiveDecisionWorkspace.tsx
-```
-
-Current responsibilities:
-
-- accept one executive intervention,
-- accept an affected organizational condition,
-- accept intervention strength,
-- call the Executive Scenario API,
-- display the simulated intervention,
-- display projected Executive Understanding,
-- and expose current-versus-projected comparison.
-
-The current workspace validates the one-scenario product path.
-
-It does not yet compare multiple intervention options or recommend the strongest option.
-
----
-
-# Current API Surface
-
-## Executive Scenario API
-
-Current route:
-
-```text
-app/api/executive-scenario/route.ts
-```
-
-Current responsibilities:
-
-- load the persisted Organization Runtime,
-- build a hypothetical Organizational Intervention,
-- build the Executive Decision Context,
-- run one Executive Scenario,
-- build the Executive Scenario Projection,
-- and return the projected future.
-
-The route must not call:
-
-```text
-saveOrganizationRuntimeState()
-```
-
-Scenario execution remains hypothetical and non-mutating.
-
----
-
-# Missing Capabilities
-
-The Executive Decision Operating System is not complete until Discovery can compare and rank multiple simulated options.
-
-The following canonical capabilities remain to be implemented.
-
----
-
-# CAP-DEC-001 — Executive Decision Orchestration
-
-## Responsibility
-
-Coordinate the complete multi-option executive decision cycle.
-
-## Proposed Canonical Producer
-
-```text
-engine/v3/decision/runExecutiveDecisionCycle.ts
-```
-
-## Consumes
-
-- `ExecutiveDecision`
-- `ExecutiveDecisionContext`
-- `InterventionOption[]`
-
-## Produces
-
-```text
-ExecutiveDecisionCycle
-```
-
-## Required Behavior
-
-1. Accept one canonical Executive Decision.
-2. Generate viable Intervention Options.
-3. Preserve every generated option.
-4. Convert each option into a canonical Organizational Intervention.
-5. Evaluate each option through canonical causal reasoning.
-6. Execute each intervention through `runExecutiveScenario()`.
-7. Preserve every scenario result.
-8. Pass all completed scenarios to cross-scenario comparison.
-9. Pass the comparison set to Decision Ranking.
-10. Pass ranked scenarios to Executive Recommendation Synthesis.
-11. Return the complete decision cycle.
-12. Preserve the live Organization Runtime as an unchanged baseline.
-
-## Non-Responsibilities
-
-CAP-DEC-001 must not:
-
-- invent independent intervention logic,
-- duplicate option generation,
-- duplicate causal mapping,
-- duplicate causal propagation,
-- duplicate influence aggregation,
-- duplicate organizational simulation,
-- duplicate Prediction Reflection,
-- duplicate Executive Assessment,
-- duplicate Executive Understanding,
-- assign rankings itself,
-- or synthesize the final recommendation itself.
-
-Its responsibility is orchestration.
-
----
-
-# CAP-DEC-002 — Cross-Scenario Comparison
-
-## Responsibility
-
-Compare multiple completed executive scenarios using one consistent decision framework.
-
-## Proposed Canonical Producer
-
-```text
-engine/v3/decision/compareExecutiveScenarios.ts
-```
-
-## Consumes
-
-```text
-ExecutiveScenarioResult[]
-```
-
-## Produces
+## Canonical Object
 
 ```text
 ExecutiveScenarioComparisonSet
 ```
 
-## Minimum Comparison Dimensions
+## Responsibility
 
-- target-condition improvement,
-- downstream organizational benefit,
-- downstream organizational deterioration,
-- breadth of positive influence,
-- breadth of negative influence,
-- prediction improvement,
-- prediction deterioration,
-- executive-assessment confidence,
-- understanding change,
-- intervention confidence,
-- intervention assumptions,
-- identified risks,
-- evidence gaps,
-- implementation complexity,
-- reversibility,
-- and time horizon.
+Determine how every viable intervention differs from every other intervention.
 
-## Required Behavior
-
-Comparison must preserve:
-
-- the current-state baseline,
-- every evaluated intervention,
-- every projected future,
-- every condition change,
-- every prediction change,
-- every recommendation,
-- every causal explanation,
-- every assumption,
-- every risk,
-- and every reason one option differs from another.
-
-Cross-Scenario Comparison must not rank options.
-
-It produces the structured evidence required for ranking.
+Comparison never ranks.
 
 ---
 
-# CAP-DEC-003 — Decision Ranking
+# Scenario Ranking
+
+## Canonical Producer
+
+```text
+engine/v3/decisions/rankExecutiveScenarios.ts
+```
+
+## Canonical Object
+
+```text
+RankedExecutiveScenario
+```
 
 ## Responsibility
 
-Rank evaluated scenarios according to executive objectives, constraints, and projected organizational outcomes.
+Rank interventions against:
 
-## Proposed Canonical Producer
-
-```text
-engine/v3/decision/rankExecutiveScenarios.ts
-```
-
-## Consumes
-
-- `ExecutiveDecision`
-- `ExecutiveScenarioComparisonSet`
-
-## Produces
-
-```text
-RankedExecutiveScenario[]
-```
-
-## Ranking Dimensions
-
-Potential ranking dimensions include:
-
-- objective attainment,
-- success metric improvement,
-- target-condition improvement,
-- breadth of positive organizational effect,
-- severity of negative organizational effect,
-- executive confidence,
-- intervention confidence,
-- required-constraint satisfaction,
-- optional-constraint satisfaction,
-- implementation risk,
-- reversibility,
-- time to effect,
-- evidence sufficiency,
+- executive objectives,
+- executive constraints,
+- projected organizational outcomes,
+- confidence,
 - uncertainty,
-- and missing evidence.
+- implementation burden,
+- organizational benefit.
 
-## Ranking Principle
-
-A scenario must not rank first merely because it produces the largest positive delta.
-
-Ranking must balance:
-
-```text
-Expected Benefit
-− Organizational Risk
-− Constraint Violations
-− Uncertainty
-− Evidence Gaps
-− Implementation Burden
-```
-
-Ranking must also preserve the executive objective.
-
-A scenario that produces broad improvement but fails the defined objective should not automatically rank first.
-
-## Determinism
-
-Given the same:
-
-- Executive Decision,
-- baseline Organization Runtime,
-- options,
-- timestamps,
-- and scenario results,
-
-the ranking must remain deterministic.
+Ranking never synthesizes recommendations.
 
 ---
 
-# CAP-DEC-004 — Executive Recommendation Synthesis
+# Confidence Calibration
+
+## Canonical Producer
+
+```text
+engine/v3/decisions/calibrateDecisionConfidence.ts
+```
+
+## Canonical Object
+
+```text
+DecisionConfidenceCalibration
+```
 
 ## Responsibility
 
-Produce the final executive recommendation after all viable scenarios have been compared and ranked.
+Determine how much Discovery should trust its recommendation.
 
-## Proposed Canonical Producer
+Confidence reflects:
+
+- evidence quality,
+- agreement,
+- uncertainty,
+- learning certainty,
+- recommendation quality,
+- constraint confidence.
+
+---
+
+# Executive Recommendation
+
+## Canonical Producer
 
 ```text
-engine/v3/decision/buildExecutiveDecisionRecommendation.ts
+engine/v3/decisions/buildExecutiveDecisionRecommendation.ts
 ```
 
-## Consumes
-
-- `ExecutiveDecision`
-- `RankedExecutiveScenario[]`
-- `ExecutiveScenarioComparisonSet`
-
-## Produces
+## Canonical Object
 
 ```text
 ExecutiveDecisionRecommendation
 ```
 
-## Required Output
+## Responsibility
 
-The recommendation should include:
+Produce Discovery's recommendation after all viable interventions have been evaluated.
 
-- recommended intervention,
-- recommendation status,
-- recommendation confidence,
-- executive summary,
-- why the intervention ranked first,
-- expected benefits,
-- expected trade-offs,
-- major risks,
-- assumptions,
-- missing evidence,
-- conditions under which leadership should not proceed,
-- evidence that would change the recommendation,
-- next-best alternative,
-- and reasons the other options ranked lower.
-
-## Canonical Recommendation Status
-
-Recommendation statuses must remain aligned with the existing scenario comparison contract:
+Possible recommendations:
 
 ```text
 proceed
@@ -600,635 +345,235 @@ do-not-proceed
 investigate-further
 ```
 
-## Recommendation Principle
+Recommendation generation remains hypothetical.
 
-The strongest recommendation is not always to proceed.
+---
 
-Discovery must be able to conclude:
+# Executive Decision Projection
+
+## Canonical Producer
 
 ```text
-proceed
+components/executive-v3/projection/buildExecutiveDecisionProjection.ts
 ```
 
-when the expected organizational benefits outweigh identified risk.
-
-Discovery must be able to conclude:
-
-```text
-do-not-proceed
-```
-
-when deterioration or constraint violations outweigh expected benefits.
-
-Discovery must be able to conclude:
-
-```text
-investigate-further
-```
-
-when uncertainty, evidence gaps, or mixed effects prevent a reliable choice.
-
----
-
-# Proposed Cognitive Objects
-
-## ExecutiveDecisionCycle
-
-```ts
-type ExecutiveDecisionCycle = {
-  executiveDecision: ExecutiveDecision;
-  generatedOptions: InterventionOption[];
-  evaluatedOptions: EvaluatedInterventionOption[];
-  scenarios: ExecutiveScenarioResult[];
-  comparisonSet: ExecutiveScenarioComparisonSet;
-  rankedScenarios: RankedExecutiveScenario[];
-  recommendation: ExecutiveDecisionRecommendation;
-  completedAt: string;
-};
-```
-
-## Meaning
-
-`ExecutiveDecisionCycle` is the complete record of one hypothetical executive decision process.
-
-It preserves:
-
-- what leadership wanted,
-- which options Discovery considered,
-- how each option affected the causal model,
-- what future each option produced,
-- how those futures differed,
-- how the options ranked,
-- and why Discovery made its recommendation.
-
----
-
-# ExecutiveScenarioComparisonEntry
-
-```ts
-type ExecutiveScenarioComparisonEntry = {
-  interventionId: string;
-  scenarioId: string;
-
-  targetConditionChanges: Array<{
-    conditionId: string;
-    change:
-      | "improved"
-      | "worsened"
-      | "unchanged";
-    strengthDelta: number;
-    confidenceDelta: number;
-  }>;
-
-  improvedConditionIds: string[];
-  worsenedConditionIds: string[];
-  addedPredictionIds: string[];
-  removedPredictionIds: string[];
-
-  executiveRecommendation:
-    | "proceed"
-    | "do-not-proceed"
-    | "investigate-further";
-
-  scenarioConfidence: number;
-  risks: string[];
-  assumptions: string[];
-  missingEvidence: string[];
-};
-```
-
----
-
-# ExecutiveScenarioComparisonSet
-
-```ts
-type ExecutiveScenarioComparisonSet = {
-  baselineOrganizationId: string;
-  scenarioComparisons:
-    ExecutiveScenarioComparisonEntry[];
-  sharedBenefits: string[];
-  sharedRisks: string[];
-  sharedUnknowns: string[];
-  differentiatingFactors: string[];
-  generatedAt: string;
-};
-```
-
-## Meaning
-
-The comparison set captures what all scenarios share and what distinguishes them.
-
-It creates a stable input for deterministic ranking.
-
----
-
-# RankedExecutiveScenario
-
-```ts
-type RankedExecutiveScenario = {
-  rank: number;
-  interventionId: string;
-  scenarioId: string;
-  score: number;
-  objectiveAttainmentScore: number;
-  organizationalBenefitScore: number;
-  organizationalRiskScore: number;
-  confidenceScore: number;
-  constraintSatisfactionScore: number;
-  evidenceSufficiencyScore: number;
-  uncertaintyScore: number;
-  implementationBurdenScore: number;
-  reasonsForRank: string[];
-};
-```
-
-## Meaning
-
-A ranked scenario preserves both the overall score and the individual dimensions that produced it.
-
-Discovery must never return an unexplained rank.
-
----
-
-# ExecutiveDecisionRecommendation
-
-```ts
-type ExecutiveDecisionRecommendation = {
-  executiveDecisionId: string;
-  recommendedInterventionId?: string;
-
-  status:
-    | "proceed"
-    | "do-not-proceed"
-    | "investigate-further";
-
-  confidence: number;
-  summary: string;
-  whyRecommended: string[];
-  expectedBenefits: string[];
-  tradeOffs: string[];
-  risks: string[];
-  assumptions: string[];
-  missingEvidence: string[];
-  evidenceThatWouldChangeRecommendation: string[];
-  nextBestInterventionId?: string;
-  generatedAt: string;
-};
-```
-
----
-
-# Runtime and Persistence
-
-Version 1 of the Executive Decision Operating System must remain non-mutating.
-
-Decision cycles are hypothetical until explicitly accepted by leadership.
-
-The system must not automatically:
-
-- alter current organizational conditions,
-- replace current organizational beliefs,
-- replace the current Organizational State,
-- replace the current Executive Assessment,
-- replace current predictions,
-- treat simulated outcomes as observed evidence,
-- treat scenario confidence as learned confidence,
-- or save projected futures into organizational truth.
-
-A later capability may persist decision records separately from organizational truth.
-
-## Proposed Future Runtime Destinations
-
-```text
-OrganizationRuntime.memory.executiveDecisions
-OrganizationRuntime.memory.executiveDecisionCycles
-OrganizationRuntime.memory.acceptedInterventions
-OrganizationRuntime.memory.decisionOutcomes
-```
-
-These destinations should not be added until persistence, governance, and outcome-observation requirements are explicitly defined.
-
----
-
-# Accepted Intervention Lifecycle
-
-A future accepted-intervention workflow may follow:
-
-```text
-Hypothetical Intervention
-↓
-Executive Recommendation
-↓
-Leadership Acceptance
-↓
-Accepted Intervention Record
-↓
-Observed Organizational Change
-↓
-Decision Outcome Evaluation
-↓
-Organizational Learning
-```
-
-A simulated outcome must remain separate from an observed outcome.
-
-Discovery must not learn that a recommendation was correct until later organizational evidence supports that conclusion.
-
----
-
-# Executive Projection
-
-The Executive Decision Experience should eventually expose:
-
-```text
-Executive Objective
-↓
-Options Considered
-↓
-Projected Outcomes
-↓
-Trade-Off Comparison
-↓
-Recommended Option
-↓
-Why Discovery Recommends It
-↓
-What Could Change the Recommendation
-```
-
-The UI must not expose raw engine objects.
-
-## Proposed Canonical Projection
+## Canonical Object
 
 ```text
 ExecutiveDecisionProjection
 ```
 
-## Proposed Producer
+## Responsibility
 
-```text
-components/executive-v2/projection/buildExecutiveDecisionProjection.ts
-```
+Translate Decision Intelligence into executive-facing communication.
 
-## Proposed Projection Contents
+Projection performs no reasoning.
 
-- executive objective,
-- decision constraints,
-- options considered,
-- projected outcome summary for each option,
-- target-condition changes,
-- major downstream effects,
-- major risks,
-- evidence gaps,
-- ranked options,
-- recommended option,
-- recommendation confidence,
-- next-best alternative,
-- and evidence that would change the recommendation.
+It exposes:
+
+- objective,
+- optimization,
+- candidate strategies,
+- viability,
+- simulated futures,
+- comparison,
+- rankings,
+- confidence,
+- recommendation.
 
 ---
 
-# Executive Experience
+# Executive Decision Recording
 
-The future product flow should become:
+## Canonical Producer
 
 ```text
-What is the objective?
-↓
-What constraints must be respected?
-↓
-Which options did Discovery consider?
-↓
-What future does each option produce?
-↓
-What are the trade-offs?
-↓
-Which option ranks first?
-↓
-Why does Discovery recommend it?
-↓
-What could change Discovery’s mind?
+engine/v3/decisions/recordExecutiveDecision.ts
 ```
 
-The experience should emphasize decision clarity rather than raw simulation detail.
+## Canonical Object
+
+```text
+ExecutiveDecisionRecord
+```
+
+## Responsibility
+
+Capture the executive's actual decision.
+
+Records:
+
+- selected strategy,
+- Discovery recommendation,
+- executive rationale,
+- accepted assumptions,
+- accepted risks,
+- expected outcomes,
+- success criteria,
+- executive confidence,
+- Discovery confidence,
+- owner,
+- decision maker,
+- review date.
+
+Decision Recording begins after executive judgment.
+
+It never changes organizational truth.
 
 ---
 
-# Benchmark Strategy
+# Runtime Persistence
 
-The Executive Decision Operating System requires four benchmark layers.
-
-## 1. Capability Tests
-
-Validate each producer independently:
-
-- option generation,
-- option normalization,
-- option evaluation,
-- scenario execution,
-- scenario projection,
-- cross-scenario comparison,
-- scenario ranking,
-- and recommendation synthesis.
-
-Each producer should be testable without requiring the full Executive Decision Cycle.
-
-## 2. Scenario Integration
-
-Validate:
+## Canonical Runtime Destination
 
 ```text
-Runtime
-→ Decision Context
-→ Scenario
-→ Scenario Projection
+OrganizationRuntime.memory.executiveDecisionRecords
 ```
 
-Current benchmark:
+## Canonical Producers
 
 ```text
-engine/benchmark/decision-intelligence/scenarioIntegrationExperiment001.ts
+saveExecutiveDecisionRecord()
+persistOrganizationRuntimeState()
 ```
 
-Current validation responsibilities include:
+## Responsibility
 
-- runtime loading,
-- baseline cognition availability,
-- decision-context creation,
-- intervention preservation,
-- simulation completion,
-- projected-condition creation,
-- projected-prediction creation,
-- Prediction Reflection regeneration,
-- Executive Assessment regeneration,
-- Executive Understanding regeneration,
-- scenario comparison,
-- scenario projection,
-- organization identity preservation,
-- and runtime non-mutation.
+Persist durable executive decisions.
 
-## 3. Decision Calibration
+Decision persistence must not:
 
-Validate that known interventions produce expected directional outcomes and executive recommendations.
+- alter organizational beliefs,
+- alter organizational conditions,
+- alter organizational understanding,
+- alter organizational predictions,
+- increment investigation count,
+- overwrite simulated futures.
 
-Current command:
+Only executive decisions become durable memory.
 
-```bash
-npm run decision:calibrate
-```
+---
 
-Current validated cases:
+# Decision Review
 
-1. Clarify Decision Rights
-2. Increase Approval Layers
-3. Standardize Knowledge Transfer
-4. Clarify Strategic Priorities
+**Status:** Planned
 
-Current status:
+Future producer:
 
 ```text
-Cases ............. 4
-Checks ............ 24
-Passed ............ 24
-Failed ............ 0
-Score ............. 100%
+reviewExecutiveDecision()
 ```
 
-## Current Validated Organizational Laws
+Responsibility:
+
+Compare:
+
+- expected outcomes,
+- observed outcomes,
+- prediction accuracy,
+- simulation quality,
+- recommendation quality,
+- executive assumptions,
+- organizational change.
+
+---
+
+# Decision Learning
+
+**Status:** Planned
+
+Future producer:
 
 ```text
-Clarify Decision Rights
-→ Decision Flow improves
-→ Coordination improves
-→ Execution Capacity improves
-→ Proceed
+learnFromExecutiveDecision()
 ```
+
+Responsibility:
+
+Improve future decision quality using observed organizational outcomes.
+
+Discovery should learn:
+
+- which recommendations succeeded,
+- which assumptions were incorrect,
+- where confidence was miscalibrated,
+- which simulations accurately predicted reality.
+
+---
+
+# Runtime Flow
 
 ```text
-Increase Approval Layers
-→ Decision Flow worsens
-→ Coordination worsens
-→ Execution Capacity worsens
-→ Do Not Proceed
+ExecutiveDecision
+        ↓
+runExecutiveDecisionCycle()
+
+        ↓
+
+ExecutiveDecisionProjection
+
+        ↓
+
+ExecutiveDecisionRecord
+
+        ↓
+
+saveExecutiveDecisionRecord()
+
+        ↓
+
+persistOrganizationRuntimeState()
+
+        ↓
+
+OrganizationRuntime.memory.executiveDecisionRecords
 ```
-
-```text
-Standardize Knowledge Transfer
-→ Knowledge Continuity improves
-→ Coordination improves
-→ Execution Capacity improves
-→ Proceed
-```
-
-```text
-Clarify Strategic Priorities
-→ Strategic Alignment improves
-→ Decision Flow improves
-→ Coordination improves
-→ Proceed
-```
-
-## 4. Multi-Option Decision Benchmark
-
-Future benchmark:
-
-```text
-Executive Objective
-→ Generate Multiple Options
-→ Evaluate Every Option
-→ Simulate Every Option
-→ Compare Every Future
-→ Rank Every Option
-→ Recommend the Best Option
-```
-
-The benchmark must verify:
-
-- every viable option is evaluated,
-- all options use the same baseline,
-- all options use the same canonical scenario pipeline,
-- rankings are deterministic,
-- constraint violations reduce rank,
-- harmful interventions do not rank first,
-- weak evidence reduces recommendation confidence,
-- uncertainty affects recommendation status,
-- the recommended option matches the expected executive choice,
-- and the live runtime remains unchanged.
 
 ---
 
 # Architectural Rules
 
-1. `generateInterventionOptions()` remains the canonical option generator.
-2. `convertInterventionOptionToIntervention()` remains the canonical option normalization producer.
-3. `evaluateInterventionOption()` remains responsible only for causal option evaluation.
-4. `runExecutiveScenario()` remains the canonical one-scenario orchestrator.
-5. Multi-option orchestration must call `runExecutiveScenario()` rather than duplicate its logic.
-6. Cross-scenario comparison must remain separate from scenario execution.
-7. Decision Ranking must remain separate from cross-scenario comparison.
-8. Executive Recommendation Synthesis must remain separate from Decision Ranking.
-9. The live Organization Runtime must not be mutated by hypothetical decision cycles.
-10. Every evaluated option must preserve its causal explanation.
-11. Every scenario must preserve its baseline comparison.
-12. Every rank must preserve the reasons that produced it.
-13. Every recommendation must state what could change Discovery’s conclusion.
-14. A new Decision Intelligence capability must not be created when an existing producer already owns the responsibility.
-15. Decision Intelligence must be benchmarked against expected organizational behavior, not merely object completeness.
-16. Simulated outcomes must remain separate from observed outcomes.
-17. Leadership acceptance must remain separate from recommendation generation.
-18. Discovery must evaluate all viable options through the same canonical pipeline before ranking them.
-19. An option must not rank first solely because it has the largest projected positive delta.
-20. Recommendation confidence must reflect uncertainty, evidence quality, and scenario differentiation.
+1. Executive Decision Cycle remains non-mutating.
+2. Recommendations remain hypothetical.
+3. Organizational truth cannot be modified by simulation.
+4. Executive decisions are recorded separately from organizational cognition.
+5. Decision recording never alters organizational understanding.
+6. Decision persistence never increments investigation count.
+7. Executive Decision Records become the canonical input to future Decision Review.
+8. Decision Review becomes the canonical input to Decision Learning.
+9. Every recommendation must remain explainable.
+10. Every recorded decision must remain auditable.
 
 ---
 
-# Current Implementation Status
+# Current Implementation
 
 ## Complete
 
-- Executive Decision object
+- Executive Decision
+- Executive Optimization Objective
 - Intervention Option Generation
-- Intervention Option Normalization
+- Constraint Evaluation
 - Intervention Evaluation
-- Organizational Intervention Modeling
-- Organizational Causal Mapping
-- Organizational Influence Propagation
-- Organizational Influence Aggregation
 - Organizational Simulation
-- Projected Organizational State synthesis
-- Projected Prediction Reflection
-- Projected Executive Assessment
-- Projected Executive Understanding
-- Current-versus-projected Scenario Comparison
-- Executive Scenario Projection
-- Executive Scenario API
-- Executive Decision Workspace
-- Scenario Integration Experiment
-- Executive Decision Calibration Suite
-
-## In Progress
-
-- reusable multi-option Executive Decision architecture
-- extraction of experiment-specific reasoning into canonical producers
-
-## Not Yet Implemented
-
+- Cross-Scenario Comparison
+- Scenario Ranking
+- Confidence Calibration
+- Executive Recommendation
 - Executive Decision Cycle
-- Cross-Scenario Comparison Set
-- Decision Ranking
-- Executive Recommendation Synthesis
 - Executive Decision Projection
-- multi-option Executive Decision Workspace
-- accepted-intervention persistence
-- decision-outcome evaluation
-- decision-learning feedback loop
+- Executive Decision Recording
+- Executive Decision Persistence
+- Executive Decision Recording Benchmark
+- Decision Cycle Benchmark
 
----
+## Planned
 
-# Recommended Implementation Sequence
-
-## Step 1 — Complete Reusable Option Evaluation
-
-Use:
-
-```text
-evaluateInterventionOption()
-```
-
-inside the existing Decision Intelligence experiment so the experiment consumes the same canonical producer as future orchestration.
-
-## Step 2 — Multi-Option Scenario Execution
-
-Create a producer that accepts:
-
-```text
-InterventionOption[]
-```
-
-and returns:
-
-```text
-ExecutiveScenarioResult[]
-```
-
-Every option must use the same Executive Decision Context.
-
-## Step 3 — Cross-Scenario Comparison
-
-Create:
-
-```text
-compareExecutiveScenarios()
-```
-
-and produce:
-
-```text
-ExecutiveScenarioComparisonSet
-```
-
-## Step 4 — Decision Ranking
-
-Create:
-
-```text
-rankExecutiveScenarios()
-```
-
-and produce:
-
-```text
-RankedExecutiveScenario[]
-```
-
-## Step 5 — Executive Recommendation Synthesis
-
-Create:
-
-```text
-buildExecutiveDecisionRecommendation()
-```
-
-and produce:
-
-```text
-ExecutiveDecisionRecommendation
-```
-
-## Step 6 — Executive Decision Cycle
-
-Create:
-
-```text
-runExecutiveDecisionCycle()
-```
-
-and compose the existing canonical producers.
-
-## Step 7 — Executive Decision Projection
-
-Create:
-
-```text
-buildExecutiveDecisionProjection()
-```
-
-for the product layer.
-
-## Step 8 — Multi-Option Executive Experience
-
-Allow leadership to:
-
-- define an objective,
-- review considered options,
-- compare projected futures,
-- inspect rankings,
-- review the recommendation,
-- and understand what could change Discovery’s conclusion.
-
-## Step 9 — Multi-Option Benchmark
-
-Validate the complete cycle against canonical executive decision cases.
+- Executive Decision Record API
+- Decision Workspace recording workflow
+- Decision Review
+- Decision Outcome Evaluation
+- Decision Learning
 
 ---
 
@@ -1237,30 +582,22 @@ Validate the complete cycle against canonical executive decision cases.
 The Executive Decision Operating System is complete when Discovery can:
 
 1. accept an executive objective,
-2. preserve success metrics,
-3. preserve constraints,
-4. generate multiple viable intervention options,
-5. normalize every option into a canonical intervention,
-6. evaluate every option through the canonical causal model,
-7. simulate every resulting organizational future,
-8. regenerate predictions for every future,
-9. regenerate Executive Assessment for every future,
-10. regenerate Executive Understanding for every future,
-11. compare all futures consistently,
-12. rank all options against the executive objective and constraints,
-13. recommend one option or recommend further investigation,
-14. explain why the option ranked first,
-15. explain why other options ranked lower,
-16. explain major trade-offs and risks,
-17. state what evidence could change the recommendation,
-18. preserve the next-best alternative,
-19. preserve the current organization as an unchanged baseline,
-20. and remain benchmarked against expected organizational behavior.
+2. generate multiple viable interventions,
+3. evaluate every intervention through the same canonical pipeline,
+4. compare projected organizational futures,
+5. rank every viable option,
+6. calibrate recommendation confidence,
+7. synthesize an executive recommendation,
+8. explain every recommendation,
+9. record the executive's final decision,
+10. persist that decision as durable organizational memory,
+11. review actual organizational outcomes,
+12. learn from every completed executive decision.
 
-At that point, Discovery will move from:
+At that point Discovery will no longer answer only:
 
-> What happens if leadership chooses this intervention?
+> **"What should leadership do?"**
 
-to:
+It will answer:
 
-> Which intervention should leadership choose, and why?
+> **"What did leadership decide, did it work, and how should Discovery improve future executive decisions?"**

@@ -2,6 +2,10 @@ import type {
 ExecutiveDecisionCycle,
 } from "../../../engine/v3/decisions/runExecutiveDecisionCycle";
 
+import {
+buildExecutiveDecisionCycleIntegrityKey,
+} from "../../../engine/v3/decisions/buildExecutiveDecisionCycleIntegrityKey";
+
 export type ExecutiveDecisionProjection = {
 objective: {
 id: string;
@@ -190,10 +194,17 @@ limiters: string[];
 };
 
 recommendation: {
-headline: string;
-rationale: string;
-nextStep: string;
+  status:
+    | "proceed"
+    | "do-not-proceed"
+    | "investigate-further";
+
+  headline: string;
+  rationale: string;
+  nextStep: string;
 };
+
+integrityKey: string;
 
 completedAt: string;
 };
@@ -207,6 +218,21 @@ return count === 1
 ? singular
 : plural;
 }
+
+function findOptionByInterventionId(
+decisionCycle: ExecutiveDecisionCycle,
+interventionId: string,
+) {
+return decisionCycle
+.evaluatedOptions
+.find(
+(evaluation) =>
+evaluation.intervention.id ===
+interventionId,
+)
+?.option;
+}
+
 
 function buildObjective(
 decisionCycle: ExecutiveDecisionCycle,
@@ -525,9 +551,8 @@ decisionCycle: ExecutiveDecisionCycle,
 return decisionCycle.scenarios.map(
 (scenarioResult) => {
 const option =
-decisionCycle.generatedOptions.find(
-(candidate) =>
-candidate.id ===
+findOptionByInterventionId(
+decisionCycle,
 scenarioResult.intervention.id,
 );
 
@@ -778,9 +803,8 @@ decisionCycle: ExecutiveDecisionCycle,
 return decisionCycle.rankedScenarios.map(
 (rankedScenario) => {
 const option =
-decisionCycle.generatedOptions.find(
-(candidate) =>
-candidate.id ===
+findOptionByInterventionId(
+decisionCycle,
 rankedScenario.interventionId,
 );
 
@@ -789,6 +813,7 @@ rankedScenario.interventionId,
       rankedScenario.scenarioId,
 
     optionId:
+      option?.id ??
       rankedScenario.interventionId,
 
     rank:
@@ -870,12 +895,14 @@ const recommendation =
 decisionCycle.recommendation;
 
 const recommendedOption =
-decisionCycle.generatedOptions.find(
-(option) =>
-option.id ===
 recommendation
-.recommendedInterventionId,
-);
+.recommendedInterventionId
+? findOptionByInterventionId(
+    decisionCycle,
+    recommendation
+      .recommendedInterventionId,
+  )
+: undefined;
 
 const headline =
 recommendation.status ===
@@ -922,6 +949,9 @@ case "investigate-further":
 }
 
 return {
+status:
+  recommendation.status,
+
 headline,
 
 rationale:
@@ -978,6 +1008,11 @@ confidence:
 
 recommendation:
   buildRecommendation(
+    decisionCycle,
+  ),
+
+integrityKey:
+  buildExecutiveDecisionCycleIntegrityKey(
     decisionCycle,
   ),
 

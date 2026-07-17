@@ -1,6 +1,6 @@
 # Discovery Architecture Handoff
 
-Generated: 2026-07-16T19:26:28.126Z
+Generated: 2026-07-16T19:32:59.603Z
 
 ## Purpose
 

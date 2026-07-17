@@ -1,0 +1,17 @@
+SALES AND OPERATIONS ESCALATION THREAD
+
+Organization: Northstar Industrial Systems
+Function: Sales and Operations
+Effective date: 2026-07-13
+
+[09:02] Regional Sales and Delivery Leaders: Thread shows sales committing a delivery date, operations rejecting feasibility, and senior executives overriding the normal process.
+[09:11] Operations Lead: We need to distinguish the immediate escalation from the operating mechanism creating it.
+[09:18] Finance Partner: The financial impact is not isolated. Rework, delay, and exception handling are recurring across multiple projects.
+[09:27] Commercial Leader: The commercial team needs flexibility, but ownership and feasibility decisions are not consistently made before commitments.
+[09:35] Regional Sales and Delivery Leaders: No function agrees on a single definition of success, and decisions are repeatedly escalated instead of resolved at the operating level.
+
+Follow-up observations:
+- Create direct evidence of ownership conflict and priority override.
+
+Potential contradictions:
+- Review against ns-artifact-008.

@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "artifactId": "ns-artifact-007",
+    "organizationId": "northstar-industrial-systems",
+    "title": "Vector Controls Synergy Tracker",
+    "function": "Corporate Development",
+    "owner": "Integration Management Office",
+    "effectiveDate": "2026-06-30",
+    "createdAt": "2026-07-06T11:00:00.000Z",
+    "reliability": "moderate",
+    "bias": "optimistic",
+    "stale": false
+  },
+  "executiveSummary": "Tracker reports 72% of planned synergies on track, driven mainly by pipeline attribution and procurement estimates.",
+  "reportedStatus": "on-track",
+  "indicators": [
+    {
+      "period": "2026-01",
+      "function": "Corporate Development",
+      "metric": "Vector Controls Synergy Tracker",
+      "actual": 47,
+      "target": 70,
+      "variance": -21,
+      "confidence": 0.66,
+      "note": "Tracker reports 72% of planned synergies on track, driven mainly by pipeline attribution and procurement estimates."
+    },
+    {
+      "period": "2026-02",
+      "function": "Corporate Development",
+      "metric": "Vector Controls Synergy Tracker",
+      "actual": 58,
+      "target": 75,
+      "variance": -14,
+      "confidence": 0.66,
+      "note": "Tracker reports 72% of planned synergies on track, driven mainly by pipeline attribution and procurement estimates."
+    },
+    {
+      "period": "2026-03",
+      "function": "Corporate Development",
+      "metric": "Vector Controls Synergy Tracker",
+      "actual": 69,
+      "target": 80,
+      "variance": -7,
+      "confidence": 0.66,
+      "note": "Tracker reports 72% of planned synergies on track, driven mainly by pipeline attribution and procurement estimates."
+    },
+    {
+      "period": "2026-04",
+      "function": "Corporate Development",
+      "metric": "Vector Controls Synergy Tracker",
+      "actual": 80,
+      "target": 85,
+      "variance": 0,
+      "confidence": 0.66,
+      "note": "Tracker reports 72% of planned synergies on track, driven mainly by pipeline attribution and procurement estimates."
+    },
+    {
+      "period": "2026-05",
+      "function": "Corporate Development",
+      "metric": "Vector Controls Synergy Tracker",
+      "actual": 91,
+      "target": 90,
+      "variance": -24,
+      "confidence": 0.66,
+      "note": "Tracker reports 72% of planned synergies on track, driven mainly by pipeline attribution and procurement estimates."
+    }
+  ],
+  "statedAssumptions": [
+    "The acquisition integration is broadly on track."
+  ],
+  "supportedInterpretations": [
+    "Commercial integration is ahead of operating integration."
+  ],
+  "knownContradictions": [
+    "ns-artifact-036",
+    "ns-artifact-037",
+    "ns-artifact-038"
+  ],
+  "expectedCognitiveEffects": [
+    "Create initial belief that synergy progress is positive.",
+    "Leave unresolved evidence around technical and operating integration."
+  ]
+}

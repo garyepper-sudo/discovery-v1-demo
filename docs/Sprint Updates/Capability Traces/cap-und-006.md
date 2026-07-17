@@ -1,6 +1,6 @@
 # Capability Trace — Executive Understanding Synthesis
 
-Generated: 2026-07-16T15:09:04.825Z
+Generated: 2026-07-16T19:32:58.613Z
 
 ## Verified Architecture
 
@@ -220,9 +220,9 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/scenarios/buildExecutiveDecisionContext.ts`
 
-- Line 92 · **unknown** · matched `organizational-understanding`
+- Line 94 · **unknown** · matched `organizational-understanding`
   - `* organizational-understanding pipeline.`
-- Line 99 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 101 · **unknown** · matched `OrganizationalUnderstanding`
   - `memory.organizationalUnderstandingState`
 
 ##### `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
@@ -628,10 +628,10 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/model/simulate/compareSimulationScenario.ts`
 
-- Line 364 · **unknown** · matched `OrganizationalUnderstanding`
-  - `.organizationalUnderstanding`
-- Line 369 · **unknown** · matched `OrganizationalUnderstanding`
-  - `.organizationalUnderstanding`
+- Line 379 · **unknown** · matched `OrganizationalUnderstanding`
+  - `.organizationalUnderstanding;`
+- Line 383 · **unknown** · matched `OrganizationalUnderstanding`
+  - `.organizationalUnderstanding;`
 
 #### Benchmark
 

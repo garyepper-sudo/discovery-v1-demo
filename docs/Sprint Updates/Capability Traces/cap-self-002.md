@@ -1,6 +1,6 @@
 # Capability Trace — Investigation Opportunity Generation
 
-Generated: 2026-07-16T15:09:05.555Z
+Generated: 2026-07-16T19:32:59.377Z
 
 ## Verified Architecture
 
@@ -218,24 +218,24 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/scenarios/buildExecutiveDecisionContext.ts`
 
-- Line 46 · **type** · matched `investigationOpportunities`
+- Line 48 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities?:`
-- Line 47 · **read** · matched `investigationOpportunities`
+- Line 49 · **read** · matched `investigationOpportunities`
   - `RunExecutiveScenarioInput["investigationOpportunities"];`
-- Line 204 · **type** · matched `investigationOpportunities`
+- Line 206 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities:`
-- Line 206 · **read** · matched `investigationOpportunities`
+- Line 208 · **read** · matched `investigationOpportunities`
   - `memory.investigationOpportunities,`
 
 ##### `engine/v3/scenarios/runExecutiveScenario.ts`
 
-- Line 138 · **type** · matched `investigationOpportunities`
+- Line 158 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities?:`
-- Line 139 · **read** · matched `investigationOpportunities`
+- Line 159 · **read** · matched `investigationOpportunities`
   - `BuildSimulationScenarioInput["investigationOpportunities"];`
-- Line 173 · **assignment** · matched `investigationOpportunities`
+- Line 194 · **assignment** · matched `investigationOpportunities`
   - `investigationOpportunities = [],`
-- Line 227 · **unknown** · matched `investigationOpportunities`
+- Line 248 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
 
 #### Runtime

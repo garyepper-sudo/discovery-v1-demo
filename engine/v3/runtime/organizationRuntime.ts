@@ -1,8 +1,14 @@
 import type { EvolvedObservation } from "../cognition/observationEvolution";
+import type {
+  ExecutiveDecisionRecord,
+} from "../decisions/executiveDecisionRecord";
 import type { EntityMention } from "../entities/entityLifecycle";
 import type { ExecutiveState } from "../executive/executiveState";
 import type { OrganizationalCausalModel } from "../model/causal/organizationalCausalModel";
 import { createOrganizationModel } from "../model/createOrganizationModel";
+import type {
+  OrganizationalUncertainty,
+} from "../model/epistemic/organizationalUncertainty";
 import type { OrganizationalMemory } from "../model/memory/organizationalMemory";
 import type {
   OrganizationalMemoryMaturity,
@@ -94,6 +100,16 @@ export type OrganizationRuntimeMemory = {
   organizationalCausalModel: OrganizationalCausalModel | null;
 
   /**
+   * Canonical epistemic assessment of the organization's current
+   * evidence quality, contradiction load, ambiguity, and confidence
+   * limitations.
+   *
+   * This is optional because newly created runtimes have not yet
+   * completed an uncertainty assessment.
+   */
+  organizationalUncertainty?: OrganizationalUncertainty;
+
+  /**
    * Longitudinal evaluations of prior organizational predictions.
    */
   predictionEvaluations: PredictionEvaluation[];
@@ -111,6 +127,15 @@ export type OrganizationRuntimeMemory = {
    * Organizational Simulation.
    */
   simulatedOrganizationStates: SimulatedOrganizationState[];
+
+  /**
+   * Durable records of decisions actually made by executives.
+   *
+   * These records preserve the relationship between Discovery's
+   * recommendation, the strategy selected by the executive, expected
+   * outcomes, success criteria, and the future review lifecycle.
+   */
+  executiveDecisionRecords: ExecutiveDecisionRecord[];
 };
 
 export type OrganizationRuntimeOrganism = {
@@ -144,7 +169,9 @@ export function createEmptyOrganizationRuntime(params: {
       investigationCount: 0,
     },
 
-    organizationModel: createOrganizationModel(params.organizationId),
+    organizationModel: createOrganizationModel(
+      params.organizationId,
+    ),
 
     memory: {
       /**
@@ -199,9 +226,16 @@ export function createEmptyOrganizationRuntime(params: {
 
       organizationalCausalModel: null,
 
+      /**
+       * No uncertainty assessment exists until the cognitive pipeline
+       * has evaluated current evidence and organizational ambiguity.
+       */
+      organizationalUncertainty: undefined,
+
       predictionEvaluations: [],
       organizationalInterventions: [],
       simulatedOrganizationStates: [],
+      executiveDecisionRecords: [],
     },
 
     organism: {

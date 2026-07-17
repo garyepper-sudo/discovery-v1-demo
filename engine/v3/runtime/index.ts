@@ -1,12 +1,17 @@
 export {
   loadOrganizationRuntimeState,
+  persistOrganizationRuntimeState,
   saveOrganizationRuntimeState,
   resetOrganizationRuntimeState,
 } from "./organizationStateStore";
 
-export type { OrganizationId } from "./organizationStateStore";
+export type {
+  OrganizationId,
+} from "./organizationStateStore";
 
-export { createEmptyOrganizationRuntime } from "./organizationRuntime";
+export {
+  createEmptyOrganizationRuntime,
+} from "./organizationRuntime";
 
 export type {
   OrganizationRuntime,
@@ -15,4 +20,6 @@ export type {
   OrganizationRuntimeOrganism,
 } from "./organizationRuntime";
 
-export { evolveOrganizationRuntime } from "./evolveOrganizationRuntime";
+export {
+  evolveOrganizationRuntime,
+} from "./evolveOrganizationRuntime";

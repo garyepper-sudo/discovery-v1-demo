@@ -1,6 +1,6 @@
 # Capability Trace — Organizational Learning Profile
 
-Generated: 2026-07-16T15:09:05.062Z
+Generated: 2026-07-16T19:32:58.864Z
 
 ## Verified Architecture
 
@@ -201,13 +201,13 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/scenarios/buildExecutiveDecisionContext.ts`
 
-- Line 26 · **type** · matched `organizationalLearningProfile`
+- Line 28 · **type** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile?:`
-- Line 113 · **unknown** · matched `organizationalLearningProfile`
+- Line 115 · **unknown** · matched `organizationalLearningProfile`
   - `* Simulation requires the complete OrganizationalLearningProfile.`
-- Line 119 · **read** · matched `organizationalLearningProfile`
+- Line 121 · **read** · matched `organizationalLearningProfile`
   - `memory.organizationalLearningProfile;`
-- Line 159 · **unknown** · matched `organizationalLearningProfile`
+- Line 161 · **unknown** · matched `organizationalLearningProfile`
   - `"organizationalLearningProfile",`
 
 #### Runtime

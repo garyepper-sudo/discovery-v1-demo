@@ -1,9 +1,14 @@
-import { runDiscoveryV3 } from "../v3";
 import {
-  evolveOrganizationRuntime,
-  loadOrganizationRuntimeState,
-  saveOrganizationRuntimeState,
-} from "../v3/runtime";
+  runOrganizationInvestigation,
+} from "../v3/investigation";
+
+import type {
+  DiscoveryV3Result,
+} from "../v3/types";
+
+import type {
+  OrganizationRuntime,
+} from "../v3/runtime/organizationRuntime";
 
 import type { OrganizationalUnderstanding } from "../v3/model/judgment/organizationalJudgment";
 import type { DiscoveryBenchmarkCase } from "./benchmarkTypes";
@@ -168,15 +173,11 @@ export type BenchmarkRuntimeMemory = {
 };
 
 export type BenchmarkInvestigationResult = {
-  result: ReturnType<typeof runDiscoveryV3>;
+  result: DiscoveryV3Result;
 
-  runtime: ReturnType<
-    typeof loadOrganizationRuntimeState
-  >;
+  runtime: OrganizationRuntime;
 
-  evolvedRuntime: ReturnType<
-    typeof evolveOrganizationRuntime
-  >;
+  evolvedRuntime: OrganizationRuntime;
 
   memory: BenchmarkRuntimeMemory;
 
@@ -305,47 +306,34 @@ export function runBenchmarkInvestigation(
     organizationId,
   } = params;
 
-  const runtime =
-    loadOrganizationRuntimeState(
+  const investigation =
+    runOrganizationInvestigation({
       organizationId,
-    );
 
-  const input = {
-    company: benchmark.company,
-    website: "",
-    industry: benchmark.industry,
-    question: benchmark.question,
+      company:
+        benchmark.company,
 
-    context: `${
-      benchmark.context ?? ""
-    }\n\n${evidenceToContext(benchmark)}`,
+      website:
+        "",
 
-    priorUnderstandingState:
-      runtime.memory.understandingState,
-  };
+      industry:
+        benchmark.industry,
 
-  const result =
-    runDiscoveryV3(input);
+      question:
+        benchmark.question,
 
-  const evolvedRuntime =
-    evolveOrganizationRuntime({
-      runtime,
-      result,
-      input,
+      context: `${
+        benchmark.context ?? ""
+      }\n\n${evidenceToContext(
+        benchmark,
+      )}`,
     });
 
-  /**
-   * Persist the evolved runtime before constructing the
-   * benchmark result.
-   *
-   * This allows later longitudinal investigations to load
-   * predictions, conditions, beliefs, theories, learning
-   * history, and other cognition produced by earlier runs.
-   */
+  const result =
+    investigation.result;
+
   const persistedRuntime =
-    saveOrganizationRuntimeState(
-      evolvedRuntime,
-    );
+    investigation.runtime;
 
   const memory =
     persistedRuntime.memory as typeof persistedRuntime.memory &
@@ -544,12 +532,15 @@ export function runBenchmarkInvestigation(
 
   return {
     result,
-    runtime,
 
     /**
-     * Preserve the existing result field while returning
-     * the canonical persisted version of the evolved runtime.
+     * The canonical orchestrator owns loading, evolution,
+     * and persistence. Both runtime fields now expose the
+     * persisted post-investigation organizational state.
      */
+    runtime:
+      persistedRuntime,
+
     evolvedRuntime:
       persistedRuntime,
 

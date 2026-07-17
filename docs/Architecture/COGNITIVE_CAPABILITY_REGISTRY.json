@@ -749,6 +749,7 @@
         "OrganizationRuntime"
       ],
       "consumedByCapabilities": [
+        "CAP-DEC-005",
         "CAP-LRN-001",
         "CAP-LRN-002",
         "CAP-SYS-001",
@@ -1676,7 +1677,9 @@
       "producesObjects": [
         "ExecutiveDecisionCycle"
       ],
-      "consumedByCapabilities": [],
+      "consumedByCapabilities": [
+        "CAP-DEC-005"
+      ],
       "runtimeDestination": "ExecutiveDecisionCycle",
       "executiveDestinations": [
         "ExecutiveDecisionProjection",
@@ -1955,7 +1958,8 @@
         "ExecutiveDecisionRecommendation"
       ],
       "consumedByCapabilities": [
-        "CAP-DEC-001"
+        "CAP-DEC-001",
+        "CAP-DEC-005"
       ],
       "runtimeDestination": "ExecutiveDecisionCycle.recommendation",
       "executiveDestinations": [
@@ -1994,6 +1998,46 @@
       "missingImplementationFiles": [],
       "subsystem": "Executive Recommendation",
       "architecturalLayer": "EXEC"
+    },
+    {
+      "id": "CAP-DEC-005",
+      "name": "Executive Decision Recording",
+      "description": "Records the executive's actual decision after Discovery completes recommendation synthesis, preserving the selected strategy, its relationship to Discovery's recommendation, executive rationale, accepted assumptions and risks, confidence at decision time, expected outcomes, success criteria, ownership, and review timing as durable organizational memory.",
+      "domain": "DEC",
+      "status": "canonical",
+      "canonicalProducer": "engine/v3/decisions/recordExecutiveDecision.ts",
+      "implementationFiles": [
+        "engine/v3/decisions/executiveDecisionRecord.ts",
+        "engine/v3/decisions/recordExecutiveDecision.ts",
+        "engine/v3/decisions/saveExecutiveDecisionRecord.ts"
+      ],
+      "consumesCapabilities": [
+        "CAP-DEC-001",
+        "CAP-DEC-004",
+        "CAP-MEM-001"
+      ],
+      "producesObjects": [
+        "ExecutiveDecisionRecord"
+      ],
+      "consumedByCapabilities": [],
+      "runtimeDestination": "OrganizationRuntime.memory.executiveDecisionRecords",
+      "executiveDestinations": [
+        "ExecutiveDecisionWorkspace",
+        "DecisionReview"
+      ],
+      "atlasCoverage": "partial",
+      "benchmarkCoverage": [
+        "Executive Decision Recording Experiment 001"
+      ],
+      "livingOrganizationStage": 9,
+      "reviewStatus": "reviewed",
+      "notes": "Canonical producer for converting a completed non-mutating Executive Decision Cycle and an explicit leadership response into a durable Executive Decision Record. It preserves generated Intervention Option identity separately from executable Organizational Intervention identity, records accepted, modified, alternative, deferred, or rejected dispositions, and does not alter organizational cognition. Persistence is performed through saveExecutiveDecisionRecord() and persistOrganizationRuntimeState() without incrementing investigation count.",
+      "canonicalProducerExists": true,
+      "resolvedFiles": [],
+      "missingImplementationFiles": [],
+      "subsystem": "Executive Decision Recording",
+      "architecturalLayer": "EXEC",
+      "terminalCapability": true
     },
     {
       "id": "CAP-OPT-001",
@@ -2253,6 +2297,6 @@
       "terminalCapability": true
     }
   ],
-  "generatedAt": "2026-07-16T19:25:38.762Z",
-  "capabilityCount": 28
+  "generatedAt": "2026-07-17T03:35:48.252Z",
+  "capabilityCount": 29
 }

@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-16T19:26:28.015Z",
+    "generatedAt": "2026-07-17T03:35:49.050Z",
     "generator": "scripts/cognition/generateArchitectureState.mjs",
     "sourceOfTruthOrder": [
       "Verified source code",
@@ -13,9 +13,9 @@
     ]
   },
   "project": {
-    "currentMilestone": "Executive Cognitive Operating System and Executive Experience\n\n---",
-    "currentPhase": "The primary bottleneck is no longer cognition.\n\nThe primary bottleneck is Executive Experience.\n\nCurrent priorities:\n\n* Executive Workspace\n* Executive Explanation\n* Executive Narrative\n* Board-ready Executive Reports\n* Executive Decision Flywheel\n* Customer Validation\n\nFuture work should expose existing cognition rather than introduce new reasoning.\n\n---",
-    "currentObjective": "Validate one complete executive decision flywheel.\n\nDiscovery should become progressively better at helping executives:\n\n* understand complex organizational situations,\n* understand why Discovery reached its conclusions,\n* understand how certain Discovery is,\n* identify the highest-leverage executive decision,\n* challenge assumptions,\n* explore alternative futures,\n* improve executive confidence,\n* make better decisions,\n* and continuously improve organizational judgment through learning.\n\nCurrent development focuses on one complete workflow:\n\n\n\nEverything else is secondary until this workflow has been validated with real executive users.\n\n---",
+    "currentMilestone": "Adaptive Executive Intelligence and Executive Decision Learning\n\n---",
+    "currentPhase": "The primary bottleneck is no longer cognition.\n\nThe primary bottleneck is Adaptive Executive Experience.\n\nCurrent priorities:\n\n* Executive Workspace\n* Executive Explanation\n* Executive Narrative\n* Decision Playbook integration\n* Executive Decision Memory persistence\n* Board-ready Executive Reports\n* Executive Decision Flywheel\n* Customer Validation\n\nFuture work should expose and reuse existing cognition rather than introduce new reasoning.\n\n---",
+    "currentObjective": "Validate one complete adaptive executive decision flywheel.\n\nDiscovery should become progressively better at helping executives:\n\n* understand complex organizational situations,\n* understand why Discovery reached its conclusions,\n* understand how certain Discovery is,\n* identify the highest-leverage executive decision,\n* challenge assumptions,\n* explore alternative futures,\n* improve executive confidence,\n* make better decisions,\n* learn from completed decisions,\n* and continuously improve future recommendations through accumulated executive experience.\n\nCurrent development focuses on one complete adaptive workflow:\n\n\n\nEverything else is secondary until this workflow has been validated with real executive users.\n\n---",
     "currentSprint": null,
     "nextPriority": null,
     "sourceDocuments": [
@@ -29,13 +29,13 @@
   "architecture": {
     "status": "healthy",
     "healthScore": 100,
-    "capabilityCount": 28,
-    "canonicalProducerCount": 28,
+    "capabilityCount": 29,
+    "canonicalProducerCount": 29,
     "registeredFileCount": 585,
     "cognitiveObjectCount": 0,
-    "terminalCapabilityCount": 5,
-    "capabilityTraceCount": 12,
-    "connectedCapabilityTraceCount": 12,
+    "terminalCapabilityCount": 6,
+    "capabilityTraceCount": 13,
+    "connectedCapabilityTraceCount": 13,
     "health": {
       "duplicateIdCount": 0,
       "missingDependencyCount": 0,
@@ -579,6 +579,7 @@
       "relationships": {
         "consumesCapabilities": [],
         "consumedByCapabilities": [
+          "CAP-DEC-005",
           "CAP-LRN-001",
           "CAP-LRN-002",
           "CAP-SYS-001",
@@ -1401,7 +1402,9 @@
           "CAP-DEC-003",
           "CAP-DEC-004"
         ],
-        "consumedByCapabilities": [],
+        "consumedByCapabilities": [
+          "CAP-DEC-005"
+        ],
         "terminalCapability": true
       },
       "destinations": {
@@ -1570,7 +1573,8 @@
           "CAP-DEC-003"
         ],
         "consumedByCapabilities": [
-          "CAP-DEC-001"
+          "CAP-DEC-001",
+          "CAP-DEC-005"
         ],
         "terminalCapability": false
       },
@@ -1598,6 +1602,69 @@
       },
       "searchTerms": [],
       "notes": "Recommendation synthesis remains separate from ranking and preserves what evidence or constraints could change the recommendation."
+    },
+    {
+      "id": "CAP-DEC-005",
+      "name": "Executive Decision Recording",
+      "description": "Records the executive's actual decision after Discovery completes recommendation synthesis, preserving the selected strategy, its relationship to Discovery's recommendation, executive rationale, accepted assumptions and risks, confidence at decision time, expected outcomes, success criteria, ownership, and review timing as durable organizational memory.",
+      "domain": "DEC",
+      "architecturalLayer": "EXEC",
+      "subsystem": "Executive Decision Recording",
+      "status": "canonical",
+      "reviewStatus": "reviewed",
+      "ownership": {
+        "ownsObjects": [
+          "ExecutiveDecisionRecord"
+        ],
+        "ownsCanonicalProducer": "engine/v3/decisions/recordExecutiveDecision.ts",
+        "implementationFiles": [
+          "engine/v3/decisions/executiveDecisionRecord.ts",
+          "engine/v3/decisions/recordExecutiveDecision.ts",
+          "engine/v3/decisions/saveExecutiveDecisionRecord.ts"
+        ],
+        "doesNotOwn": []
+      },
+      "relationships": {
+        "consumesCapabilities": [
+          "CAP-DEC-001",
+          "CAP-DEC-004",
+          "CAP-MEM-001"
+        ],
+        "consumedByCapabilities": [],
+        "terminalCapability": true
+      },
+      "destinations": {
+        "runtime": "OrganizationRuntime.memory.executiveDecisionRecords",
+        "executive": [
+          "ExecutiveDecisionWorkspace",
+          "DecisionReview"
+        ]
+      },
+      "validation": {
+        "atlasCoverage": "partial",
+        "benchmarkCoverage": [
+          "Executive Decision Recording Experiment 001"
+        ],
+        "canonicalProducerExists": true,
+        "missingImplementationFiles": [],
+        "capabilityTrace": {
+          "exists": true,
+          "connected": true,
+          "pipelineCoverage": {
+            "engine": true,
+            "runtime": true,
+            "executive": false,
+            "projection": false,
+            "ui": false,
+            "api": false,
+            "simulation": false,
+            "benchmark": true
+          },
+          "tracePath": "docs/Sprint Updates/Capability Traces/cap-dec-005.md"
+        }
+      },
+      "searchTerms": [],
+      "notes": "Canonical producer for converting a completed non-mutating Executive Decision Cycle and an explicit leadership response into a durable Executive Decision Record. It preserves generated Intervention Option identity separately from executable Organizational Intervention identity, records accepted, modified, alternative, deferred, or rejected dispositions, and does not alter organizational cognition. Persistence is performed through saveExecutiveDecisionRecord() and persistOrganizationRuntimeState() without incrementing investigation count."
     },
     {
       "id": "CAP-OPT-001",
@@ -2075,6 +2142,18 @@
         "Atlas"
       ]
     },
+    "CAP-DEC-005": {
+      "name": "Executive Decision Recording",
+      "ownsObjects": [
+        "ExecutiveDecisionRecord"
+      ],
+      "canonicalProducer": "engine/v3/decisions/recordExecutiveDecision.ts",
+      "runtimeDestination": "OrganizationRuntime.memory.executiveDecisionRecords",
+      "executiveDestinations": [
+        "ExecutiveDecisionWorkspace",
+        "DecisionReview"
+      ]
+    },
     "CAP-OPT-001": {
       "name": "Optimization Variable Selection",
       "ownsObjects": [
@@ -2116,7 +2195,7 @@
     }
   },
   "intelligence": {
-    "producedObjectCount": 31,
+    "producedObjectCount": 32,
     "producedObjects": [
       "V3Evidence",
       "OrganizationalObservation",
@@ -2145,12 +2224,13 @@
       "ExecutiveScenarioComparisonSet",
       "RankedExecutiveScenario",
       "ExecutiveDecisionRecommendation",
+      "ExecutiveDecisionRecord",
       "OptimizationVariable",
       "ExecutiveOptimizationObjective",
       "ExecutiveNarrative",
       "ExecutiveCommunication"
     ],
-    "executiveCapabilityCount": 25,
+    "executiveCapabilityCount": 26,
     "executiveCapabilityIds": [
       "CAP-UND-001",
       "CAP-UND-002",
@@ -2174,6 +2254,7 @@
       "CAP-DEC-002",
       "CAP-DEC-003",
       "CAP-DEC-004",
+      "CAP-DEC-005",
       "CAP-OPT-001",
       "CAP-OPT-002",
       "CAP-COM-001"
@@ -2195,7 +2276,7 @@
       "CAP-OPT-001",
       "CAP-OPT-002"
     ],
-    "workspaceDeclaredCapabilityCount": 11,
+    "workspaceDeclaredCapabilityCount": 12,
     "workspaceDeclaredCapabilityIds": [
       "CAP-UND-005",
       "CAP-UND-006",
@@ -2205,6 +2286,7 @@
       "CAP-DEC-002",
       "CAP-DEC-003",
       "CAP-DEC-004",
+      "CAP-DEC-005",
       "CAP-OPT-001",
       "CAP-OPT-002",
       "CAP-COM-001"
@@ -2329,6 +2411,7 @@
       "Do not recreate Cross-Scenario Comparison; extend CAP-DEC-002 unless a distinct responsibility is proven.",
       "Do not recreate Executive Decision Ranking; extend CAP-DEC-003 unless a distinct responsibility is proven.",
       "Do not recreate Executive Recommendation Synthesis; extend CAP-DEC-004 unless a distinct responsibility is proven.",
+      "Do not recreate Executive Decision Recording; extend CAP-DEC-005 unless a distinct responsibility is proven.",
       "Do not recreate Optimization Variable Selection; extend CAP-OPT-001 unless a distinct responsibility is proven.",
       "Do not recreate Executive Optimization Objective Synthesis; extend CAP-OPT-002 unless a distinct responsibility is proven.",
       "Do not recreate Executive Communication Synthesis; extend CAP-COM-001 unless a distinct responsibility is proven."

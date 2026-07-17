@@ -1,66 +1,73 @@
-import { NextResponse } from "next/server";
-
-import { runDiscoveryV3 } from "../../../engine/v3";
+import {
+  NextResponse,
+} from "next/server";
 
 import {
-  evolveOrganizationRuntime,
-  loadOrganizationRuntimeState,
-  saveOrganizationRuntimeState,
-} from "../../../engine/v3/runtime";
+  runOrganizationInvestigation,
+} from "../../../engine/v3/investigation/runOrganizationInvestigation";
 
-import { buildExecutiveProjection } from "../../../components/executive-v2/projection/buildExecutiveProjection";
-
-export async function POST(req: Request) {
+export async function POST(
+  req: Request,
+) {
   try {
-    const body = await req.json();
+    const body =
+      await req.json();
 
     const organizationId =
-      body.organizationId || body.company || "default-organization";
+      body.organizationId ||
+      body.company ||
+      "default-organization";
 
-    const organizationRuntime =
-      loadOrganizationRuntimeState(organizationId);
+    const investigation =
+      runOrganizationInvestigation({
+        organizationId,
 
-    const input = {
-      company: body.company || "",
-      website: body.website || "",
-      industry: body.industry || "",
-      question: body.question || "",
-      context: body.messyInput || body.context || "",
-      priorUnderstandingState:
-        organizationRuntime.memory.understandingState,
-    };
+        company:
+          body.company ||
+          "",
 
-    const result = runDiscoveryV3(input);
+        website:
+          body.website ||
+          "",
 
-    const evolvedRuntime = evolveOrganizationRuntime({
-      runtime: organizationRuntime,
-      result,
-      input,
-    });
+        industry:
+          body.industry ||
+          "",
 
-    const nextOrganizationRuntime =
-      saveOrganizationRuntimeState(evolvedRuntime);
+        question:
+          body.question ||
+          "",
 
-    const executiveProjection = buildExecutiveProjection({
-      result,
-      runtime: nextOrganizationRuntime,
-    });
+        context:
+          body.messyInput ||
+          body.context ||
+          "",
+      });
 
     return NextResponse.json({
-      executiveProjection,
+      executiveProjection:
+        investigation
+          .executiveProjection,
     });
-  } catch (error) {
-    console.error("Discovery investigation failed:", error);
+  } catch (
+    error
+  ) {
+    console.error(
+      "Discovery investigation failed:",
+      error,
+    );
 
     return NextResponse.json(
       {
         error:
-          error instanceof Error
+          error instanceof
+            Error
             ? error.message
             : "Discovery investigation failed.",
       },
       {
-        status: 500,
+        status:
+          500,
       },
     );
   }

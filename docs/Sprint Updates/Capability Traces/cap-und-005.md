@@ -1,6 +1,6 @@
 # Capability Trace — Executive Assessment
 
-Generated: 2026-07-16T15:09:04.483Z
+Generated: 2026-07-16T19:32:58.279Z
 
 ## Verified Architecture
 
@@ -86,8 +86,10 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/benchmark/runAtlasSimulation.ts`
 - `engine/benchmark/runBenchmarkInvestigation.ts`
 - `engine/v3/communication/synthesizeExecutiveNarrative.ts`
+- `engine/v3/decision-learning/buildExecutiveDecisionOutcome.ts`
 - `engine/v3/executive/buildExecutiveChangeSummary.ts`
 - `engine/v3/executive/executiveLearningSummary.ts`
+- `engine/v3/model/decision-learning/executiveDecisionOutcome.ts`
 - `engine/v3/model/judgment/buildExecutiveExplanation.ts`
 - `engine/v3/model/judgment/organizationalJudgment.ts`
 - `engine/v3/model/learning/computeOrganizationalLearningProfile.ts`
@@ -132,7 +134,7 @@ This section records source-code references. It supplements, but does not replac
 
 | Layer | Status | Matches |
 |---|:---:|---:|
-| Engine | ✅ Found | 38 |
+| Engine | ✅ Found | 40 |
 | Runtime | ✅ Found | 16 |
 | Executive | ✅ Found | 9 |
 | Projection | ✅ Found | 42 |
@@ -154,6 +156,16 @@ This section records source-code references. It supplements, but does not replac
   - `.executiveAssessment`
 - Line 653 · **read** · matched `executiveAssessment`
   - `.executiveAssessment`
+
+##### `engine/v3/decision-learning/buildExecutiveDecisionOutcome.ts`
+
+- Line 844 · **unknown** · matched `Executive Assessment`
+  - `* executive assessment synthesis, or new prediction generation.`
+
+##### `engine/v3/model/decision-learning/executiveDecisionOutcome.ts`
+
+- Line 37 · **unknown** · matched `Executive Assessment`
+  - `* Overall executive assessment.`
 
 ##### `engine/v3/model/judgment/buildExecutiveAssessment.ts`
 
@@ -197,28 +209,28 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/scenarios/buildExecutiveDecisionContext.ts`
 
-- Line 11 · **type** · matched `executiveAssessment`
+- Line 13 · **type** · matched `executiveAssessment`
   - `executiveAssessment?:`
-- Line 12 · **unknown** · matched `executiveAssessment`
+- Line 14 · **unknown** · matched `executiveAssessment`
   - `RunExecutiveScenarioInput["currentExecutiveAssessment"];`
-- Line 96 · **unknown** · matched `Executive Assessment`
+- Line 98 · **unknown** · matched `Executive Assessment`
   - `* simulation and executive assessment.`
-- Line 171 · **unknown** · matched `executiveAssessment`
+- Line 173 · **unknown** · matched `executiveAssessment`
   - `currentExecutiveAssessment:`
-- Line 173 · **read** · matched `executiveAssessment`
+- Line 175 · **read** · matched `executiveAssessment`
   - `memory.executiveAssessment,`
-- Line 174 · **unknown** · matched `executiveAssessment`
+- Line 176 · **unknown** · matched `executiveAssessment`
   - `"executiveAssessment",`
 
 ##### `engine/v3/scenarios/runExecutiveScenario.ts`
 
-- Line 107 · **unknown** · matched `Executive Assessment`
+- Line 127 · **unknown** · matched `Executive Assessment`
   - `* Current canonical Executive Assessment used as the comparison baseline.`
-- Line 109 · **unknown** · matched `executiveAssessment`
+- Line 129 · **unknown** · matched `executiveAssessment`
   - `currentExecutiveAssessment:`
-- Line 166 · **unknown** · matched `executiveAssessment`
+- Line 187 · **unknown** · matched `executiveAssessment`
   - `currentExecutiveAssessment,`
-- Line 240 · **unknown** · matched `executiveAssessment`
+- Line 261 · **unknown** · matched `executiveAssessment`
   - `currentExecutiveAssessment,`
 
 ##### `engine/v3/semantic/types.ts`
@@ -536,17 +548,17 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/model/simulate/compareSimulationScenario.ts`
 
-- Line 97 · **unknown** · matched `executiveAssessment`
+- Line 109 · **unknown** · matched `executiveAssessment`
   - `currentExecutiveAssessment: OrganizationalAssessment;`
-- Line 526 · **unknown** · matched `executiveAssessment`
+- Line 594 · **unknown** · matched `executiveAssessment`
   - `.projectedExecutiveAssessment`
-- Line 545 · **unknown** · matched `executiveAssessment`
+- Line 613 · **unknown** · matched `executiveAssessment`
   - `currentExecutiveAssessment,`
-- Line 569 · **unknown** · matched `executiveAssessment`
+- Line 637 · **unknown** · matched `executiveAssessment`
   - `currentExecutiveAssessment,`
-- Line 572 · **unknown** · matched `executiveAssessment`
+- Line 640 · **unknown** · matched `executiveAssessment`
   - `.projectedExecutiveAssessment,`
-- Line 591 · **unknown** · matched `executiveAssessment`
+- Line 659 · **unknown** · matched `executiveAssessment`
   - `currentExecutiveAssessment,`
 
 #### Benchmark
