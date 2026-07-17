@@ -68,6 +68,8 @@ export function evolveOrganizationRuntime(params: {
     functionalInterpretationState?: any;
     organizationalCapabilitiesState?: any;
     organizationalPhenomenaState?: any;
+    organizationalPhenomena?: any[];
+    phenomena?: any[];
     mechanismNetwork?: any;
     organizationReasoningGraph?: any;
     organizationReasoningRelationships?: any[];
@@ -1188,6 +1190,13 @@ const updatedMemory = {
       organizationalDynamicsState,
     organizationalCapabilitiesState,
     organizationalPhenomenaState,
+
+    organizationalPhenomena:
+      organizationalPhenomenaState.phenomena,
+
+    phenomena:
+      organizationalPhenomenaState.phenomena,
+
     mechanismNetwork: safeMechanismNetwork,
 
     organizationalUnderstandingState:
@@ -1421,6 +1430,15 @@ const updatedMemory = {
 
     executiveExplanation:
       typeof executiveExplanation;
+
+    organizationalPhenomenaState:
+      typeof organizationalPhenomenaState;
+
+    organizationalPhenomena:
+      typeof organizationalPhenomenaState.phenomena;
+
+    phenomena:
+      typeof organizationalPhenomenaState.phenomena;
 
     mechanismNetwork:
       typeof safeMechanismNetwork;

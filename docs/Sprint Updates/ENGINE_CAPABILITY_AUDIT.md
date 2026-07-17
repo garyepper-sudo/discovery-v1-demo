@@ -1,6 +1,6 @@
 # Engine Capability Audit
 
-**Status:** Canonical (Sprint 73)
+**Status:** Canonical (Sprint 74)
 
 ---
 
@@ -18,40 +18,49 @@ Its purpose is to verify that every capability:
 * is connected into Runtime when appropriate,
 * is consumed by downstream cognition,
 * is exposed through Executive Communication when appropriate,
-* is validated through Atlas, stress testing, or canonical benchmark experiments.
+* is validated through canonical benchmarks,
+* and remains architecturally consistent with the documented Cognitive Operating System.
 
 This document summarizes Discovery's implemented cognitive architecture.
 
-The Capability Registry remains the authoritative inventory of individual capabilities.
+The Capability Registry remains the authoritative inventory of capabilities.
+
+The benchmark suite verifies that the implementation faithfully executes that architecture.
 
 ---
 
 # Current Architecture Status
 
-Discovery's first-generation **Executive Cognitive Operating System** is considered architecturally stable.
+Discovery's first-generation **Executive Cognitive Operating System** is considered functionally complete.
 
-Current work is no longer discovering major reasoning capabilities.
+Current work is no longer centered on expanding reasoning capability.
 
-Current work is exposing existing cognition through a complete executive product experience.
+Current work focuses on:
 
-Primary areas of investment are:
+* reasoning correctness,
+* architectural integrity,
+* benchmark validation,
+* executive trust,
+* executive experience,
+* and product validation.
+
+Primary engineering investment now includes:
 
 * executive understanding quality,
 * executive explanation quality,
-* decision quality,
+* recommendation quality,
 * optimization quality,
-* constraint reasoning,
 * simulation quality,
 * executive communication,
-* executive experience,
-* organizational learning,
+* reasoning validation,
+* benchmark-driven refinement,
 * behavioral stress validation.
 
 ---
 
 # Capability Health
 
-Architecture validation
+## Capability Registry
 
 * Duplicate IDs .................... 0
 * Missing dependencies ............. 0
@@ -59,18 +68,49 @@ Architecture validation
 * Missing runtime destinations ..... 0
 * Missing consumers ................ 0
 
-Architecture Health
+**Capability Registry Health: 100%**
 
-**100%**
+---
 
-Canonical capabilities continue to expand through the Capability Registry.
+## Validation Health
 
-All implemented capabilities possess:
+Current benchmark suite:
 
-* a canonical producer,
-* a canonical runtime destination,
-* downstream consumers,
-* benchmark or stress validation.
+* Executive Decision Validation ............... ✅
+* Executive Decision Learning Validation ...... ✅
+* Executive Decision Quality .................. ✅
+* High-Volume Northstar ....................... ✅
+* Ground Truth Evaluation ..................... ✅
+* Cognitive Trace ............................. ✅
+* Cognitive Layer Validation ................. ⚠️
+
+Ground Truth baseline:
+
+```text
+85 / 100
+```
+
+Current architectural validation identified one active inconsistency:
+
+```text
+Signals
+
+↓
+
+Phenomena
+
+↓
+
+Mechanisms
+```
+
+Mechanisms are present while the Phenomena layer is not observable through the current investigation contract.
+
+Current status:
+
+**Investigation Required**
+
+This is treated as architectural evidence rather than an implementation bug until verified.
 
 ---
 
@@ -78,26 +118,26 @@ All implemented capabilities possess:
 
 Discovery is organized as cooperating Cognitive Operating Systems.
 
-| Operating System        | Status      |
-| ----------------------- | ----------- |
-| Perception              | ✅ Canonical |
-| Understanding           | ✅ Canonical |
-| Memory                  | ✅ Canonical |
-| Learning                | ✅ Canonical |
-| Abstraction             | ✅ Canonical |
-| Self Reflection         | ✅ Canonical |
-| Prediction              | ✅ Canonical |
-| Adaptive Learning       | ✅ Canonical |
-| Epistemics              | ✅ Canonical |
-| Systems                 | ✅ Canonical |
-| Executive Decision      | ✅ Canonical |
-| Optimization            | ✅ Canonical |
-| Simulation              | ✅ Canonical |
+| Operating System | Status |
+|-----------------|--------|
+| Perception | ✅ Canonical |
+| Understanding | ✅ Canonical |
+| Memory | ✅ Canonical |
+| Learning | ✅ Canonical |
+| Abstraction | ✅ Canonical |
+| Self Reflection | ✅ Canonical |
+| Prediction | ✅ Canonical |
+| Adaptive Learning | ✅ Canonical |
+| Epistemics | ✅ Canonical |
+| Systems | ✅ Canonical |
+| Executive Decision | ✅ Canonical |
+| Optimization | ✅ Canonical |
+| Simulation | ✅ Canonical |
 | Executive Communication | ✅ Canonical |
 
-Every Operating System owns one cognitive responsibility.
+Each Operating System owns one cognitive responsibility.
 
-Consumers reuse canonical cognitive objects rather than recreating reasoning.
+Consumers reuse canonical cognition rather than recreating reasoning.
 
 ---
 
@@ -109,6 +149,8 @@ Produces:
 
 * Evidence
 * Observations
+* Signals
+* Contradictions
 * Organizational Phenomena
 
 ---
@@ -139,9 +181,9 @@ Persists:
 * Organizational Conditions
 * Organizational Predictions
 * Organizational Simulations
-* Organizational Uncertainty
-* Executive Explanation
-* Prediction Evaluations
+* Organizational Learning
+* Executive Assessment
+* Executive Projection
 
 ---
 
@@ -151,14 +193,13 @@ Produces:
 
 * Belief Evolution
 * Theory Evolution
-* Learning Events
 * Organizational Learning Profile
 
-Future:
+Current focus:
 
-* Decision Outcome Learning
-* Optimization Learning
-* Organizational Law Validation
+* longitudinal refinement
+* benchmark-guided learning
+* reasoning calibration
 
 ---
 
@@ -175,7 +216,7 @@ Produces:
 Produces:
 
 * Theory Validation
-* Initial Investigation Opportunities
+* Investigation Opportunities
 
 ---
 
@@ -186,17 +227,15 @@ Produces:
 * Organizational Predictions
 * Prediction Reflection
 
-Prediction estimates the organization's most likely future.
-
 ---
 
 ## Adaptive Learning
 
 Produces:
 
-* Prediction Outcome Evaluation
-* Longitudinal Learning
+* Prediction Evaluation
 * Confidence Calibration
+* Longitudinal Learning
 
 ---
 
@@ -205,14 +244,14 @@ Produces:
 Produces:
 
 * Organizational Uncertainty
-* Refined Investigation Opportunities
+* Investigation Prioritization
 
-The Epistemic Operating System determines:
+Determines:
 
-* how certain Discovery is,
-* why confidence is limited,
-* which evidence should be collected next,
-* how investigation priorities should change as organizational knowledge evolves.
+* confidence,
+* uncertainty,
+* missing evidence,
+* investigation priorities.
 
 ---
 
@@ -230,16 +269,14 @@ Produces:
 Produces:
 
 * Executive Decision
-* Executive Objective
-* Success Metrics
 * Executive Constraints
 * Executive Decision Cycle
 
-Decision defines the executive problem.
+Decision identifies the executive problem.
 
-Optimization determines candidate solutions.
+Optimization determines candidate futures.
 
-Simulation evaluates organizational futures.
+Simulation evaluates futures.
 
 Recommendation selects among alternatives.
 
@@ -256,11 +293,7 @@ Produces:
 * Ranked Executive Scenarios
 * Executive Recommendation
 
-Optimization determines the strongest organizational future.
-
-Simulation evaluates futures.
-
-Optimization selects among them.
+Optimization selects the strongest organizational future.
 
 ---
 
@@ -272,9 +305,9 @@ Produces:
 * Simulated Organizational State
 * Scenario Comparison
 
-Simulation evaluates projected organizational futures.
+Simulation evaluates futures.
 
-Simulation does not determine recommendations.
+Simulation never determines recommendations.
 
 ---
 
@@ -286,11 +319,9 @@ Produces:
 * Executive Narrative
 * Executive Communication
 
-Transforms canonical cognition into executive-ready communication while suppressing internal reasoning mechanics.
+Executive Communication never performs independent reasoning.
 
-Executive Communication performs no independent reasoning.
-
-It communicates canonical cognition produced elsewhere.
+It communicates canonical cognition.
 
 ---
 
@@ -298,49 +329,144 @@ It communicates canonical cognition produced elsewhere.
 
 ```text
 Evidence
+
 ↓
+
 Observations
+
 ↓
+
+Signals
+
+↓
+
+Contradictions
+
+↓
+
+Phenomena
+
+↓
+
 Mechanisms
+
 ↓
+
 Beliefs
+
 ↓
+
 Concepts
+
 ↓
+
 Theories
+
 ↓
+
 Organizational Conditions
+
 ↓
+
 Organizational State
+
 ↓
+
 Executive Assessment
+
 ↓
-Organizational Understanding
+
+Executive Understanding
+
 ↓
+
 Organizational Learning
+
 ↓
+
 Organizational Uncertainty
+
 ↓
-Refined Investigation Opportunities
+
+Investigation Opportunities
+
 ↓
+
 Executive Decision
+
 ↓
+
 Executive Optimization
+
 ↓
+
 Organizational Simulation
+
 ↓
+
 Executive Recommendation
+
 ↓
+
 Executive Explanation
+
 ↓
+
 Executive Projection
+
 ↓
+
 Executive Narrative
+
 ↓
+
 Executive Workspace
 ```
 
-This is Discovery's canonical executive cognition pipeline.
+This pipeline is both:
+
+* the canonical architecture,
+* and the benchmark validation target.
+
+---
+
+# Canonical Validation Framework
+
+Every reasoning improvement should successfully complete:
+
+```text
+Typecheck
+
+↓
+
+Capability Validation
+
+↓
+
+Decision Validation
+
+↓
+
+Northstar Ingestion
+
+↓
+
+Ground Truth Evaluation
+
+↓
+
+Cognitive Trace
+
+↓
+
+Cognitive Layer Validation
+
+↓
+
+Executive Experience
+```
+
+Reasoning improvements should improve benchmark performance without reducing architectural integrity.
 
 ---
 
@@ -352,8 +478,9 @@ Every cognitive object must have:
 * one Capability Registry owner,
 * one canonical producer,
 * one Runtime representation (when persisted),
-* one Executive destination,
-* one benchmark or stress validation path.
+* one executive destination,
+* benchmark validation,
+* architectural validation.
 
 Reasoning belongs in canonical producers.
 
@@ -369,36 +496,39 @@ Presentation layers never recreate reasoning.
 
 ## Primary
 
-Executive Experience
+Improve reasoning quality through benchmark-driven refinement.
 
 Specifically:
 
-1. Complete the Executive Workspace.
-2. Surface Executive Explanation throughout the product.
-3. Improve Executive Narrative quality.
-4. Improve recommendation explainability.
-5. Strengthen optimization-aware scenario comparison.
-6. Continue behavioral stress testing.
-7. Produce board-ready executive reports.
+1. Resolve the Phenomena-layer architectural inconsistency.
+2. Improve Ground Truth benchmark performance.
+3. Complete the Executive Workspace.
+4. Improve Executive Explanation.
+5. Improve Executive Narrative.
+6. Improve recommendation explainability.
+7. Improve uncertainty communication.
+8. Continue behavioral stress testing.
+9. Produce board-ready executive reports.
 
 ---
 
 # Future Evolution
 
-Future work should emphasize:
+Future work should prioritize:
 
+* reasoning correctness,
+* executive trust,
+* benchmark quality,
 * executive experience,
 * decision quality,
 * optimization quality,
 * recommendation quality,
+* longitudinal learning,
 * behavioral realism,
-* organizational learning,
-* longitudinal validation,
-* organizational law validation,
 
-rather than introducing additional reasoning layers.
+rather than expanding reasoning architecture.
 
-The architecture should evolve primarily through **consumer migration** rather than new cognition.
+Architecture should evolve only when benchmark evidence demonstrates a genuine gap.
 
 ---
 
@@ -409,6 +539,8 @@ The architecture should evolve primarily through **consumer migration** rather t
 > Capabilities before files.
 
 > Objects before code.
+
+> Benchmarks before expansion.
 
 > Decisions before recommendations.
 
@@ -430,12 +562,14 @@ The architecture should evolve primarily through **consumer migration** rather t
 
 > Narrative communicates canonical cognition.
 
-> Presentation layers consume canonical cognition.
+> Presentation consumes canonical cognition.
 
 > Every cognitive object has one canonical producer.
 
-> Benchmark behavior, not implementation.
+> Validate reasoning before expanding capability.
 
 > Stress-test cognition before exposing it to executives.
 
-> Strengthen the Executive Decision Flywheel before expanding Discovery into additional workflows.
+> Measure reasoning quality—not feature count.
+
+> The benchmark suite is the canonical validation layer for Discovery's architecture.

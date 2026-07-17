@@ -8,6 +8,24 @@ import type {
 import type { OrganizationalPattern } from "../model/observations/organizationalObservations";
 import type { OrganizationalMechanismType } from "../model/judgment/organizationalMechanism";
 
+type UnderstandingLike = {
+  id?: string;
+  type?: string;
+  label?: string;
+  name?: string;
+  title?: string;
+  statement?: string;
+  summary?: string;
+  description?: string;
+  explanation?: string;
+  interpretation?: string;
+  organizationalBehavior?: string;
+  executiveMeaning?: string;
+  themes?: string[];
+  keywords?: string[];
+  relatedEntityIds?: string[];
+};
+
 type UnderstandingClusterLike = {
   id: string;
   label?: string;
@@ -15,6 +33,8 @@ type UnderstandingClusterLike = {
   description?: string;
   understandingIds?: string[];
   memberUnderstandingIds?: string[];
+  sharedThemes?: string[];
+  sharedMechanisms?: string[];
   confidence?: number;
   strength?: number;
   cohesion?: number;
@@ -42,15 +62,376 @@ function clamp01(value: number): number {
   return Math.min(1, Math.max(0, value));
 }
 
-function getClusterText(cluster: UnderstandingClusterLike): string {
-  return [cluster.label, cluster.summary, cluster.description]
+function getClusterUnderstandingIds(cluster: UnderstandingClusterLike): string[] {
+  return cluster.memberUnderstandingIds ?? cluster.understandingIds ?? [];
+}
+
+function collectUnderstandingText(
+  understanding: UnderstandingLike,
+): string {
+  return [
+    understanding.type,
+    understanding.label,
+    understanding.name,
+    understanding.title,
+    understanding.statement,
+    understanding.summary,
+    understanding.description,
+    understanding.explanation,
+    understanding.interpretation,
+    understanding.organizationalBehavior,
+    understanding.executiveMeaning,
+    ...(understanding.themes ?? []),
+    ...(understanding.keywords ?? []),
+  ]
     .map(normalizeText)
     .filter(Boolean)
     .join(" ");
 }
 
-function getClusterUnderstandingIds(cluster: UnderstandingClusterLike): string[] {
-  return cluster.memberUnderstandingIds ?? cluster.understandingIds ?? [];
+function getClusterMemberUnderstandings(params: {
+  cluster: UnderstandingClusterLike;
+  understandings: UnderstandingLike[];
+}): UnderstandingLike[] {
+  const memberIds =
+    new Set(
+      getClusterUnderstandingIds(
+        params.cluster,
+      ),
+    );
+
+  if (memberIds.size === 0) {
+    return [];
+  }
+
+  return params.understandings.filter(
+    (understanding) =>
+      typeof understanding.id === "string" &&
+      memberIds.has(understanding.id),
+  );
+}
+
+function getClusterText(params: {
+  cluster: UnderstandingClusterLike;
+  understandings: UnderstandingLike[];
+}): string {
+  const members =
+    getClusterMemberUnderstandings(
+      params,
+    );
+
+  return [
+    params.cluster.label,
+    params.cluster.summary,
+    params.cluster.description,
+    ...(params.cluster.sharedThemes ?? []),
+    ...(params.cluster.sharedMechanisms ?? []),
+    ...members.map(
+      collectUnderstandingText,
+    ),
+  ]
+    .map(normalizeText)
+    .filter(Boolean)
+    .join(" ");
+}
+
+type SemanticSignature = {
+  type: OrganizationalPhenomenonType;
+  label: string;
+  description: string;
+  executiveMeaning: string;
+  possibleMechanismTypes: OrganizationalMechanismType[];
+  evidenceGroups: string[][];
+  minimumMatchedGroups?: number;
+};
+
+const CLUSTER_SEMANTIC_SIGNATURES: SemanticSignature[] = [
+  {
+    type: "approval_bottleneck",
+    label: "Approval Bottleneck",
+    description:
+      "Work appears to accumulate while decisions wait for approval, review, escalation, or centralized authority.",
+    executiveMeaning:
+      "This matters because approval dependency reduces decision throughput and slows execution.",
+    possibleMechanismTypes: [
+      "decisionLatency",
+      "governanceFriction",
+      "accountabilityGap",
+    ],
+    evidenceGroups: [
+      [
+        "approval",
+        "review",
+        "escalation",
+        "centralized authority",
+        "decision authority",
+      ],
+      [
+        "waiting",
+        "delay",
+        "slow",
+        "bottleneck",
+        "latency",
+      ],
+    ],
+  },
+  {
+    type: "coordination_breakdown",
+    label: "Coordination Breakdown",
+    description:
+      "Cross-functional work appears to depend on unclear ownership, fragile handoffs, or repeated manual coordination.",
+    executiveMeaning:
+      "This matters because coordination breakdown converts ordinary complexity into execution delay and rework.",
+    possibleMechanismTypes: [
+      "coordinationBreakdown",
+      "executionDrag",
+      "accountabilityGap",
+    ],
+    evidenceGroups: [
+      [
+        "coordination",
+        "cross functional",
+        "handoff",
+        "ownership",
+        "interface",
+      ],
+      [
+        "breakdown",
+        "unclear",
+        "manual",
+        "fragmented",
+        "misaligned",
+        "rework",
+      ],
+    ],
+  },
+  {
+    type: "execution_capacity",
+    label: "Execution Capacity",
+    description:
+      "Execution demand appears to exceed the organization's available focus, throughput, coordination bandwidth, or delivery capacity.",
+    executiveMeaning:
+      "This matters because excessive demand and fragmented attention reduce execution reliability.",
+    possibleMechanismTypes: [
+      "capabilityConstraint",
+      "resourceConstraint",
+      "executionDrag",
+      "priorityConflict",
+    ],
+    evidenceGroups: [
+      [
+        "execution",
+        "delivery",
+        "throughput",
+        "implementation",
+        "capacity",
+      ],
+      [
+        "demand exceeds",
+        "overload",
+        "too many",
+        "concurrent",
+        "work in progress",
+        "capacity mismatch",
+        "resource constraint",
+      ],
+    ],
+  },
+  {
+    type: "ownership_ambiguity",
+    label: "Ownership Ambiguity",
+    description:
+      "Responsibility for work, decisions, or follow-through appears unclear across people or teams.",
+    executiveMeaning:
+      "This matters because unclear ownership weakens accountability and slows coordinated action.",
+    possibleMechanismTypes: [
+      "accountabilityGap",
+      "coordinationBreakdown",
+      "decisionLatency",
+    ],
+    evidenceGroups: [
+      [
+        "ownership",
+        "accountability",
+        "responsibility",
+        "decision rights",
+      ],
+      [
+        "unclear",
+        "ambiguous",
+        "unowned",
+        "depends on",
+        "escalation",
+      ],
+    ],
+  },
+  {
+    type: "knowledge_fragmentation",
+    label: "Knowledge Fragmentation",
+    description:
+      "Important knowledge appears distributed across people, teams, systems, or documents in ways that make reuse difficult.",
+    executiveMeaning:
+      "This matters because fragmented knowledge increases repeated work and dependency on individual memory.",
+    possibleMechanismTypes: [
+      "knowledgeFragmentation",
+      "institutionalMemoryLoss",
+      "weakKnowledgeTransfer",
+      "documentationBreakdown",
+      "organizationalLearningFailure",
+    ],
+    evidenceGroups: [
+      [
+        "knowledge",
+        "documentation",
+        "institutional memory",
+        "tribal knowledge",
+      ],
+      [
+        "fragmented",
+        "distributed",
+        "scattered",
+        "localized",
+        "silo",
+        "hard to find",
+      ],
+    ],
+  },
+  {
+    type: "organizational_learning_failure",
+    label: "Organizational Learning Failure",
+    description:
+      "The organization appears to repeat issues without reliably converting experience into durable operating improvement.",
+    executiveMeaning:
+      "This matters because learning that does not compound reduces speed, resilience, and institutional memory.",
+    possibleMechanismTypes: [
+      "organizationalLearningFailure",
+      "institutionalMemoryLoss",
+      "weakKnowledgeTransfer",
+      "feedbackFailure",
+    ],
+    evidenceGroups: [
+      [
+        "learning",
+        "lesson",
+        "feedback",
+        "experience",
+        "repeated issue",
+      ],
+      [
+        "not compounding",
+        "not captured",
+        "repeated",
+        "rediscovery",
+        "same problem",
+        "not reused",
+      ],
+    ],
+  },
+  {
+    type: "leadership_alignment",
+    label: "Leadership Alignment",
+    description:
+      "Leadership appears to be operating from inconsistent priorities, interpretations, or definitions of success.",
+    executiveMeaning:
+      "This matters because leadership misalignment increases priority conflict and weakens organizational coherence.",
+    possibleMechanismTypes: [
+      "priorityConflict",
+      "coordinationBreakdown",
+      "decisionLatency",
+      "governanceFriction",
+    ],
+    evidenceGroups: [
+      [
+        "leadership",
+        "executive",
+        "management",
+      ],
+      [
+        "misaligned",
+        "different priorities",
+        "inconsistent",
+        "disagreement",
+        "fragmented alignment",
+      ],
+    ],
+  },
+  {
+    type: "customer_concentration",
+    label: "Customer Concentration",
+    description:
+      "The organization appears materially dependent on a narrow set of customers, accounts, or revenue sources.",
+    executiveMeaning:
+      "This matters because customer concentration can distort prioritization and increase strategic risk.",
+    possibleMechanismTypes: [
+      "resourceConstraint",
+      "priorityConflict",
+      "capabilityConstraint",
+    ],
+    evidenceGroups: [
+      [
+        "customer",
+        "client",
+        "account",
+        "revenue",
+      ],
+      [
+        "concentration",
+        "dependency",
+        "single customer",
+        "strategic account",
+      ],
+    ],
+  },
+];
+
+function scoreSemanticSignature(
+  text: string,
+  signature: SemanticSignature,
+): number {
+  const matchedGroups =
+    signature.evidenceGroups.filter(
+      (group) =>
+        includesAny(
+          text,
+          group,
+        ),
+    ).length;
+
+  return matchedGroups /
+    signature.evidenceGroups.length;
+}
+
+function inferSemanticSignature(
+  text: string,
+): SemanticSignature | undefined {
+  const ranked =
+    CLUSTER_SEMANTIC_SIGNATURES
+      .map(
+        (signature) => ({
+          signature,
+          score:
+            scoreSemanticSignature(
+              text,
+              signature,
+            ),
+        }),
+      )
+      .filter(
+        ({ signature, score }) =>
+          score >=
+          (
+            signature.minimumMatchedGroups ??
+            signature.evidenceGroups.length
+          ) /
+          signature.evidenceGroups.length,
+      )
+      .sort(
+        (left, right) =>
+          right.score -
+          left.score,
+      );
+
+  return ranked[0]?.signature;
 }
 
 function inferPhenomenonFromPattern(
@@ -172,10 +553,37 @@ function inferPhenomenonFromPattern(
   }
 }
 
-function inferPhenomenonFromCluster(
-  cluster: UnderstandingClusterLike,
-): PhenomenonDefinition {
-  const text = getClusterText(cluster);
+function inferPhenomenonFromCluster(params: {
+  cluster: UnderstandingClusterLike;
+  understandings: UnderstandingLike[];
+}): PhenomenonDefinition {
+  const { cluster, understandings } = params;
+
+  const text =
+    getClusterText({
+      cluster,
+      understandings,
+    });
+
+  const semanticSignature =
+    inferSemanticSignature(
+      text,
+    );
+
+  if (semanticSignature) {
+    return {
+      type:
+        semanticSignature.type,
+      label:
+        semanticSignature.label,
+      description:
+        semanticSignature.description,
+      executiveMeaning:
+        semanticSignature.executiveMeaning,
+      possibleMechanismTypes:
+        semanticSignature.possibleMechanismTypes,
+    };
+  }
 
   if (
     includesAny(text, [
@@ -497,13 +905,24 @@ function buildPhenomenonFromPattern(params: {
 
 function buildPhenomenonFromCluster(params: {
   cluster: UnderstandingClusterLike;
+  understandings: UnderstandingLike[];
   previousPhenomena: OrganizationalPhenomenon[];
   now: string;
   index: number;
 }): OrganizationalPhenomenon {
-  const { cluster, previousPhenomena, now, index } = params;
+  const {
+    cluster,
+    understandings,
+    previousPhenomena,
+    now,
+    index,
+  } = params;
 
-  const definition = inferPhenomenonFromCluster(cluster);
+  const definition =
+    inferPhenomenonFromCluster({
+      cluster,
+      understandings,
+    });
 
   const existing = previousPhenomena.find(
     (phenomenon) =>
@@ -558,29 +977,182 @@ function buildPhenomenonFromCluster(params: {
   };
 }
 
+function buildPhenomenonIdentityKey(
+  phenomenon: OrganizationalPhenomenon,
+): string {
+  const entityScope = [...(phenomenon.relatedEntityIds ?? [])]
+    .sort()
+    .join("|");
+
+  if (entityScope.length > 0) {
+    return [
+      phenomenon.type,
+      entityScope,
+    ].join("::");
+  }
+
+  const patternScope = [...(phenomenon.patternIds ?? [])]
+    .sort()
+    .join("|");
+
+  if (patternScope.length > 0) {
+    return [
+      phenomenon.type,
+      patternScope,
+    ].join("::");
+  }
+
+  const clusterScope = [...phenomenon.clusterIds]
+    .sort()
+    .join("|");
+
+  if (clusterScope.length > 0) {
+    return [
+      phenomenon.type,
+      clusterScope,
+    ].join("::");
+  }
+
+  return [
+    phenomenon.type,
+    normalizeText(
+      phenomenon.description,
+    ),
+  ].join("::");
+}
+
+function mergeStringValues(
+  left: string[] | undefined,
+  right: string[] | undefined,
+): string[] {
+  return [
+    ...new Set([
+      ...(left ?? []),
+      ...(right ?? []),
+    ]),
+  ];
+}
+
+function mergeEquivalentPhenomena(
+  existing: OrganizationalPhenomenon,
+  incoming: OrganizationalPhenomenon,
+): OrganizationalPhenomenon {
+  const preferred =
+    incoming.confidence >
+    existing.confidence
+      ? incoming
+      : existing;
+
+  return {
+    ...preferred,
+
+    id:
+      existing.id,
+
+    clusterIds:
+      mergeStringValues(
+        existing.clusterIds,
+        incoming.clusterIds,
+      ),
+
+    understandingIds:
+      mergeStringValues(
+        existing.understandingIds,
+        incoming.understandingIds,
+      ),
+
+    patternIds:
+      mergeStringValues(
+        existing.patternIds,
+        incoming.patternIds,
+      ),
+
+    relatedEntityIds:
+      mergeStringValues(
+        existing.relatedEntityIds,
+        incoming.relatedEntityIds,
+      ),
+
+    possibleMechanismTypes:
+      mergeStringValues(
+        existing.possibleMechanismTypes,
+        incoming.possibleMechanismTypes,
+      ),
+
+    signals: [
+      ...existing.signals,
+      ...incoming.signals,
+    ],
+
+    firstDetectedAt:
+      existing.firstDetectedAt <
+      incoming.firstDetectedAt
+        ? existing.firstDetectedAt
+        : incoming.firstDetectedAt,
+
+    lastUpdatedAt:
+      existing.lastUpdatedAt >
+      incoming.lastUpdatedAt
+        ? existing.lastUpdatedAt
+        : incoming.lastUpdatedAt,
+  };
+}
+
 function dedupePhenomena(
   phenomena: OrganizationalPhenomenon[],
 ): OrganizationalPhenomenon[] {
-  const byType = new Map<OrganizationalPhenomenonType, OrganizationalPhenomenon>();
+  const byIdentity =
+    new Map<
+      string,
+      OrganizationalPhenomenon
+    >();
 
   for (const phenomenon of phenomena) {
-    const existing = byType.get(phenomenon.type);
+    const identityKey =
+      buildPhenomenonIdentityKey(
+        phenomenon,
+      );
 
-    if (!existing || phenomenon.confidence > existing.confidence) {
-      byType.set(phenomenon.type, phenomenon);
+    const existing =
+      byIdentity.get(
+        identityKey,
+      );
+
+    if (!existing) {
+      byIdentity.set(
+        identityKey,
+        phenomenon,
+      );
+
+      continue;
     }
+
+    byIdentity.set(
+      identityKey,
+      mergeEquivalentPhenomena(
+        existing,
+        phenomenon,
+      ),
+    );
   }
 
-  return [...byType.values()];
+  return [
+    ...byIdentity.values(),
+  ];
 }
 
 export function inferOrganizationalPhenomena(params: {
   patterns?: OrganizationalPattern[];
   clusters: UnderstandingClusterLike[];
+  understandings?: UnderstandingLike[];
   previousState?: OrganizationalPhenomenaState;
   now?: string;
 }): OrganizationalPhenomenaState {
-  const { clusters, previousState } = params;
+  const {
+    clusters,
+    previousState,
+    understandings = [],
+  } = params;
   const now = params.now ?? new Date().toISOString();
 
   const previousPhenomena = previousState?.phenomena ?? [];
@@ -607,6 +1179,7 @@ export function inferOrganizationalPhenomena(params: {
   const clusterDrivenPhenomena = clusters.map((cluster, index) =>
     buildPhenomenonFromCluster({
       cluster,
+      understandings,
       previousPhenomena,
       now,
       index,

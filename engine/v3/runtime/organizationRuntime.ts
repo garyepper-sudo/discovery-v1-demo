@@ -16,8 +16,14 @@ import type {
   OrganizationalTheoryEvolution,
   UnderstandingEvolution,
 } from "../model/memory/organizationalTheories";
+import type {
+  OptimizedExecutiveRecommendation,
+} from "../model/optimization/optimizedExecutiveRecommendationTypes";
 import type { OrganizationModel } from "../model/organizationModel";
 import type { PredictionEvaluation } from "../model/predictions/evaluatePredictionOutcomes";
+import type {
+  ExecutiveRecommendation,
+} from "../model/recommendation/executiveRecommendationTypes";
 import type { OrganizationalIntervention } from "../model/simulate/organizationalIntervention";
 import type { SimulatedOrganizationState } from "../model/simulate/simulateOrganization";
 import type {
@@ -129,6 +135,23 @@ export type OrganizationRuntimeMemory = {
   simulatedOrganizationStates: SimulatedOrganizationState[];
 
   /**
+   * Canonical executive recommendation produced from the current
+   * Executive Assessment.
+   *
+   * Downstream Optimization and Simulation consume this object rather
+   * than rebuilding recommendation cognition.
+   */
+  executiveRecommendation?: ExecutiveRecommendation;
+
+  /**
+   * Canonical optimized recommendation produced by the
+   * Executive Optimization Operating System.
+   *
+   * Simulation consumes this object rather than rebuilding optimization.
+   */
+  optimizedExecutiveRecommendation?: OptimizedExecutiveRecommendation;
+
+  /**
    * Durable records of decisions actually made by executives.
    *
    * These records preserve the relationship between Discovery's
@@ -235,6 +258,19 @@ export function createEmptyOrganizationRuntime(params: {
       predictionEvaluations: [],
       organizationalInterventions: [],
       simulatedOrganizationStates: [],
+
+      /**
+       * No canonical recommendation exists until Executive Assessment
+       * and the Executive Recommendation Operating System have run.
+       */
+      executiveRecommendation: undefined,
+
+      /**
+       * No canonical optimized recommendation exists until the
+       * Executive Optimization Operating System has run.
+       */
+      optimizedExecutiveRecommendation: undefined,
+
       executiveDecisionRecords: [],
     },
 

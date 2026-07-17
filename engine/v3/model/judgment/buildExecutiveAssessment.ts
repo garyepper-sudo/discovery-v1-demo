@@ -1,5 +1,16 @@
 import { buildOrganizationalUnderstanding } from "./buildOrganizationalUnderstanding";
 import { buildTheoryReflection } from "./buildTheoryReflection";
+import { buildPrimaryExecutiveJudgment } from "./buildPrimaryExecutiveJudgment";
+import { buildDominantCausalChain } from "./buildDominantCausalChain";
+import { buildExecutiveFocus } from "./buildExecutiveFocus";
+import { buildExecutiveRisks } from "./buildExecutiveRisks";
+import type { ExecutiveDominantCausalChain } from "./executiveDominantCausalChainTypes";
+import type { ExecutiveFocus } from "./executiveFocusTypes";
+import type { ExecutiveRisks } from "./executiveRiskTypes";
+import type {
+  BuildPrimaryExecutiveJudgmentInput,
+  ExecutivePrimaryJudgment,
+} from "./executivePrimaryJudgmentTypes";
 import {
   buildExecutivePriority,
   type ConceptualUnderstandingLike,
@@ -28,6 +39,14 @@ type BuildExecutiveAssessmentInput = {
   investigationOpportunities?: InvestigationOpportunityLike[];
   predictionReflection?: PredictionReflection;
 };
+
+export type ExecutiveAssessmentWithPrimaryJudgment =
+  OrganizationalAssessment & {
+    primaryJudgment?: ExecutivePrimaryJudgment;
+    dominantCausalChain?: ExecutiveDominantCausalChain;
+    executiveFocus?: ExecutiveFocus;
+    executiveRisks?: ExecutiveRisks;
+  };
 
 function normalize(value: string | undefined): string {
   return (value ?? "")
@@ -226,7 +245,7 @@ function buildPredictionNarrative(
 
 export function buildExecutiveAssessment(
   input: BuildExecutiveAssessmentInput,
-): OrganizationalAssessment {
+): ExecutiveAssessmentWithPrimaryJudgment {
   const priority = buildExecutivePriority(input);
 
   const {
@@ -245,6 +264,52 @@ export function buildExecutiveAssessment(
     recommendedFocus,
     confidence,
   } = priority;
+
+  const primaryJudgment =
+    input.organizationalState &&
+    (input.organizationalConditions?.length ?? 0) > 0
+      ? buildPrimaryExecutiveJudgment({
+          organizationalState:
+            input.organizationalState as BuildPrimaryExecutiveJudgmentInput["organizationalState"],
+
+          organizationalConditions:
+            input.organizationalConditions as BuildPrimaryExecutiveJudgmentInput["organizationalConditions"],
+
+          now:
+            undefined,
+        })
+      : undefined;
+
+  const dominantCausalChain =
+    primaryCondition &&
+    input.organizationalConditions
+      ? buildDominantCausalChain({
+          dominantConditionId: primaryCondition.id,
+          conditions: input.organizationalConditions as any,
+          mechanisms: rankedMechanisms,
+          organizationalState: input.organizationalState as any,
+        })
+      : undefined;
+
+  const executiveFocus =
+    primaryCondition &&
+    input.organizationalConditions
+      ? buildExecutiveFocus({
+          primaryConditionId: primaryCondition.id,
+          conditions: input.organizationalConditions as any,
+          dominantCausalChain: dominantCausalChain as any,
+        })
+      : undefined;
+
+  const executiveRisks =
+    primaryCondition &&
+    input.organizationalConditions
+      ? buildExecutiveRisks({
+          primaryConditionId: primaryCondition.id,
+          conditions: input.organizationalConditions as any,
+          dominantCausalChain: dominantCausalChain as any,
+        })
+      : undefined;
 
   const theorySupportingJudgments = primaryConcept
     ? rankedJudgments.filter((judgment) =>
@@ -300,24 +365,26 @@ export function buildExecutiveAssessment(
     confidence,
   });
 
-  const summary = primaryCondition
-    ? `Discovery judges that the current organizational state is ${
-        input.organizationalState?.status ??
-        "under assessment"
-      }, led by ${primaryCondition.name}.`
-    : primaryConcept
-      ? `Discovery judges that the dominant organizational theory is: ${primaryConcept.statement.replace(
+  const summary = primaryJudgment
+    ? primaryJudgment.headline
+    : primaryCondition
+      ? `Discovery judges that the current organizational state is ${
+          input.organizationalState?.status ??
+          "under assessment"
+        }, led by ${primaryCondition.name}.`
+      : primaryConcept
+        ? `Discovery judges that the dominant organizational theory is: ${primaryConcept.statement.replace(
           /\.$/,
           "",
         )}.`
-      : strongestMechanism
-        ? `Discovery judges that the strongest organizational mechanism is: ${
+        : strongestMechanism
+          ? `Discovery judges that the strongest organizational mechanism is: ${
             strongestMechanism.executiveName ||
             strongestMechanism.title
           }.`
-        : strongestJudgment
-          ? `Discovery judges that the strongest explanation is: ${strongestJudgment.title}.`
-          : "Discovery did not identify a sufficiently strong organizational explanation.";
+          : strongestJudgment
+            ? `Discovery judges that the strongest explanation is: ${strongestJudgment.title}.`
+            : "Discovery did not identify a sufficiently strong organizational explanation.";
 
   const supportingMechanismText =
     conceptMechanismNames.length > 0
@@ -380,6 +447,11 @@ export function buildExecutiveAssessment(
     );
 
   const completeExecutiveNarrative = [
+    primaryJudgment?.executiveJudgment,
+    primaryJudgment?.rationale,
+    dominantCausalChain?.executiveExplanation,
+    executiveFocus?.executiveDirection,
+    executiveRisks?.executiveRiskSummary,
     executiveNarrative,
     predictionNarrative,
     investigationNarrative,
@@ -427,6 +499,11 @@ export function buildExecutiveAssessment(
 
   return {
     summary,
+
+    primaryJudgment,
+    dominantCausalChain,
+    executiveFocus,
+    executiveRisks,
 
     strongestJudgmentId:
       executiveJudgments[0]?.id ??
