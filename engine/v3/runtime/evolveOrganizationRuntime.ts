@@ -1193,6 +1193,20 @@ const updatedMemory = {
     organizationalUnderstandingState:
       finalOrganizationalUnderstandingState,
 
+    /**
+     * Persist canonical organizational beliefs at the runtime-memory level.
+     *
+     * These beliefs were already inferred, revised, and stored inside
+     * organizationalMemory, but were not previously exposed through the
+     * canonical runtime belief collections used by longitudinal cognition,
+     * benchmarks, and runtime snapshots.
+     */
+    beliefs:
+      organizationalBeliefState.beliefs,
+
+    organizationalBeliefs:
+      organizationalBeliefState.beliefs,
+
     organizationalBeliefRevisions: [
       ...(memory.organizationalBeliefRevisions ?? []),
       ...organizationalBeliefState.revisions,
@@ -1413,6 +1427,12 @@ const updatedMemory = {
 
     organizationalUnderstandingState:
       typeof finalOrganizationalUnderstandingState;
+
+    beliefs:
+      typeof organizationalBeliefState.beliefs;
+
+    organizationalBeliefs:
+      typeof organizationalBeliefState.beliefs;
 
     organizationalBeliefRevisions:
       typeof organizationalBeliefState.revisions;

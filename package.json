@@ -12,6 +12,8 @@
     "benchmark": "tsx engine/benchmark/runBenchmarks.ts",
     "evaluate": "tsx engine/benchmark/runBenchmarks.ts",
     "validate": "npm run typecheck && npm run evaluate",
+    "northstar:belief-audit:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarBeliefAudit001.ts",
+    "northstar:ingestion:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarIngestionExperiment001.ts",
     "northstar:evidence:validate": "tsx engine/benchmark/high-volume/northstar/runNorthstarEvidenceValidation.ts",
     "stress:executive-decision": "tsx engine/benchmark/stress/runExecutiveDecisionStressTest.ts",
     "northstar:evidence:generate": "tsx engine/benchmark/high-volume/northstar/generateNorthstarEvidence.ts",
