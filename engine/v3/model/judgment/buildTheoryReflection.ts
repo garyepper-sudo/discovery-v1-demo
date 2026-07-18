@@ -308,22 +308,34 @@ function executiveRecommendation(
   supportingMechanisms: TheoryValidationEvidence[],
 ): string {
   if (!primaryConcept) {
-    return "Do not overcommit to an executive conclusion until Discovery identifies a stable dominant organizational theory.";
+    return "Discovery should not overcommit to an executive conclusion until it identifies a stable dominant organizational theory.";
   }
 
-  const focus =
+  const theoryStatement =
+    primaryConcept.statement.replace(
+      /\.$/,
+      "",
+    );
+
+  const supportSummary =
     supportingMechanisms.length > 0
       ? supportingMechanisms
-          .slice(0, 3)
-          .map((item) => item.label)
-          .join(", ")
-      : "the strongest supporting mechanisms";
+          .slice(
+            0,
+            3,
+          )
+          .map(
+            (item) =>
+              item.label,
+          )
+          .join(
+            ", ",
+          )
+      : "the strongest available organizational mechanisms";
 
-  return `Treat ${primaryConcept.statement.replace(
-    /\.$/,
-    "",
-  )} as the current working theory. Focus intervention on ${focus}, while collecting evidence that could confirm, weaken, or falsify this explanation.`;
+  return `The current working theory is ${theoryStatement}. It is primarily supported by ${supportSummary}. Discovery should continue collecting evidence that could confirm, weaken, or falsify this explanation.`;
 }
+
 
 export function buildTheoryReflection(
   input: BuildTheoryReflectionInput,

@@ -1,5 +1,8 @@
 import type { EvolvedObservation } from "../cognition/observationEvolution";
 import type {
+  ExecutiveCommunication,
+} from "../communication/executiveCommunication";
+import type {
   ExecutiveDecisionRecord,
 } from "../decisions/executiveDecisionRecord";
 import type { EntityMention } from "../entities/entityLifecycle";
@@ -147,6 +150,16 @@ export type OrganizationRuntimeMemory = {
   executiveRecommendation?: ExecutiveRecommendation;
 
   /**
+   * Canonical executive communication product synthesized from the current
+   * Executive Assessment, Executive Recommendation, organizational state,
+   * conditions, learning, uncertainty, and forecast cognition.
+   *
+   * Executive Projection and downstream product surfaces consume this
+   * object rather than recreating executive wording.
+   */
+  executiveCommunication?: ExecutiveCommunication;
+
+  /**
    * Canonical optimized recommendation produced by the
    * Executive Optimization Operating System.
    *
@@ -277,6 +290,12 @@ export function createEmptyOrganizationRuntime(params: {
        * and the Executive Recommendation Operating System have run.
        */
       executiveRecommendation: undefined,
+
+      /**
+       * No canonical executive communication exists until the
+       * Executive Communication Operating System has run.
+       */
+      executiveCommunication: undefined,
 
       /**
        * No canonical optimized recommendation exists until the

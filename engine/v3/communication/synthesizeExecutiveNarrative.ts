@@ -1,6 +1,6 @@
 import type {
-  ExecutiveProjection,
-} from "../../../components/executive-v2/projection/ExecutiveProjection";
+  ExecutiveCommunicationSource,
+} from "./executiveCommunicationSource";
 
 import type {
   ExecutiveNarrative,
@@ -8,6 +8,86 @@ import type {
   ExecutiveNarrativeEvidenceSection,
   ExecutiveNarrativeSignal,
 } from "./executiveNarrative";
+
+/**
+ * Temporary structural compatibility contract for callers that still supply
+ * the legacy ExecutiveProjection shape.
+ *
+ * This contract intentionally lives in the engine and imports no component
+ * types. It should be removed after Projection consumes ExecutiveCommunication.
+ */
+export type LegacyExecutiveCommunicationProjection = {
+  currentUnderstanding?: {
+    belief?: string;
+    confidence?: number;
+  };
+
+  explanation?: {
+    why?: string;
+    nextMove?: string;
+  };
+
+  executiveAssessment?: {
+    summary?: string;
+    executiveNarrative?: string;
+    confidence?: number;
+    theoryValidation?: {
+      supportingMechanisms?: Array<{
+        label: string;
+        rationale?: string;
+      }>;
+    };
+  };
+
+  organizationalState?: {
+    status?: string;
+    summary?: string;
+    confidence?: number;
+    executiveImplication?: string;
+  };
+
+  organizationalConditions?: Array<{
+    id?: string;
+    name: string;
+    status: string;
+    confidence: number;
+    summary?: string;
+    whyItMatters?: string;
+    recommendedExecutiveAction?: string;
+  }>;
+
+  investigationOpportunities?: Array<{
+    suggestedExecutiveQuestion: string;
+    expectedConfidenceGain?: number;
+  }>;
+
+  organizationalLearningProfile?: {
+    summary?: string;
+    learningVelocity?: string;
+    knowledgeRetention?: number;
+    beliefStability?: number;
+  };
+
+  simulation?: {
+    confidence?: number;
+    timeHorizon?: string;
+    explanation?: string;
+    projectedPredictions?: string[];
+  };
+};
+
+export type ExecutiveNarrativeSource =
+  | ExecutiveCommunicationSource
+  | LegacyExecutiveCommunicationProjection;
+
+function isCanonicalSource(
+  source: ExecutiveNarrativeSource,
+): source is ExecutiveCommunicationSource {
+  return (
+    "executiveRecommendation" in source &&
+    "organizationId" in source
+  );
+}
 
 function firstSentence(
   value: string | undefined,
@@ -32,10 +112,7 @@ function formatLabel(
   value: string,
 ): string {
   return value
-    .replace(
-      /([a-z])([A-Z])/g,
-      "$1 $2",
-    )
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
     .replace(/[_:-]+/g, " ")
     .replace(/\s+/g, " ")
     .trim()
@@ -52,10 +129,6 @@ function formatStatus(
   return formatLabel(value);
 }
 
-/**
- * Removes phrases that describe Discovery's internal reasoning machinery
- * rather than the organization itself.
- */
 function removeEngineLanguage(
   value: string | undefined,
 ): string | undefined {
@@ -91,17 +164,152 @@ function removeEngineLanguage(
       /\bthe propagated effects were applied to the projected organizational conditions\.?/gi,
       "",
     )
-    .replace(
-      /\s+/g,
-      " ",
-    )
-    .replace(
-      /\s+([,.!?])/g,
-      "$1",
-    )
+    .replace(/\s+/g, " ")
+    .replace(/\s+([,.!?])/g, "$1")
     .trim();
 
   return cleaned || undefined;
+}
+
+function asRecord(
+  value: unknown,
+): Record<string, unknown> | undefined {
+  return (
+    typeof value === "object" &&
+    value !== null
+  )
+    ? value as Record<string, unknown>
+    : undefined;
+}
+
+function stringValue(
+  value: unknown,
+): string | undefined {
+  return typeof value === "string"
+    ? value
+    : undefined;
+}
+
+function numberValue(
+  value: unknown,
+): number | undefined {
+  return (
+    typeof value === "number" &&
+    Number.isFinite(value)
+  )
+    ? value
+    : undefined;
+}
+
+function percentage(
+  value: number | undefined,
+): number {
+  if (value === undefined) {
+    return 50;
+  }
+
+  return value <= 1
+    ? value * 100
+    : value;
+}
+
+type ConditionView = {
+  id?: string;
+  name: string;
+  status: string;
+  confidence: number;
+  summary?: string;
+  whyItMatters?: string;
+  recommendedExecutiveAction?: string;
+};
+
+function conditionsFrom(
+  source: ExecutiveNarrativeSource,
+): ConditionView[] {
+  const conditions =
+    source.organizationalConditions ?? [];
+
+  return conditions.map(
+    (condition) => {
+      const record =
+        asRecord(condition) ?? {};
+
+      return {
+        id:
+          stringValue(record.id),
+
+        name:
+          stringValue(record.name) ??
+          "Organizational Condition",
+
+        status:
+          stringValue(record.status) ??
+          stringValue(record.trend) ??
+          "stable",
+
+        confidence:
+          percentage(
+            numberValue(record.confidence),
+          ),
+
+        summary:
+          stringValue(record.summary) ??
+          stringValue(record.description),
+
+        whyItMatters:
+          stringValue(record.whyItMatters) ??
+          stringValue(record.executiveImplication),
+
+        recommendedExecutiveAction:
+          stringValue(
+            record.recommendedExecutiveAction,
+          ),
+      };
+    },
+  );
+}
+
+function assessmentRecord(
+  source: ExecutiveNarrativeSource,
+): Record<string, unknown> {
+  return (
+    asRecord(
+      source.executiveAssessment,
+    ) ?? {}
+  );
+}
+
+function stateRecord(
+  source: ExecutiveNarrativeSource,
+): Record<string, unknown> {
+  return (
+    asRecord(
+      source.organizationalState,
+    ) ?? {}
+  );
+}
+
+function confidenceFrom(
+  source: ExecutiveNarrativeSource,
+): number {
+  const assessment =
+    assessmentRecord(source);
+
+  const legacyCurrent =
+    "currentUnderstanding" in source
+      ? asRecord(
+          source.currentUnderstanding,
+        )
+      : undefined;
+
+  return percentage(
+    numberValue(
+      assessment.confidence,
+    ) ??
+    numberValue(
+      legacyCurrent?.confidence,
+    ),
+  );
 }
 
 function directionFromStatus(
@@ -130,11 +338,10 @@ function directionFromStatus(
 }
 
 function buildHeadline(
-  projection: ExecutiveProjection,
+  source: ExecutiveNarrativeSource,
 ): string {
   const primaryCondition =
-    projection
-      .organizationalConditions?.[0];
+    conditionsFrom(source)[0];
 
   const name =
     primaryCondition?.name
@@ -147,92 +354,88 @@ function buildHeadline(
     return "Execution is slowing because cross-functional coordination and decision ownership remain unclear.";
   }
 
-  if (
-    name.includes("knowledge")
-  ) {
+  if (name.includes("knowledge")) {
     return "Execution is becoming more dependent on individuals because critical knowledge is not being preserved or reused.";
   }
 
-  if (
-    name.includes("learning")
-  ) {
+  if (name.includes("learning")) {
     return "Recurring problems are persisting because experience is not consistently becoming operating improvement.";
   }
 
-  if (
-    name.includes("strategic")
-  ) {
+  if (name.includes("strategic")) {
     return "Execution is fragmenting because teams are operating without sufficiently clear shared priorities.";
   }
 
-  if (
-    name.includes("execution capacity")
-  ) {
+  if (name.includes("execution capacity")) {
     return "Execution capacity is under pressure because the organization is carrying more work than its operating system can reliably support.";
   }
+
+  const assessment =
+    assessmentRecord(source);
 
   return (
     removeEngineLanguage(
       primaryCondition?.summary,
     ) ??
     removeEngineLanguage(
-      projection
-        .executiveAssessment
-        ?.summary,
+      stringValue(
+        assessment.summary,
+      ),
     ) ??
-    removeEngineLanguage(
-      projection
-        .currentUnderstanding
-        .belief,
+    (
+      "currentUnderstanding" in source
+        ? removeEngineLanguage(
+            source.currentUnderstanding
+              ?.belief,
+          )
+        : undefined
     ) ??
     "A material organizational constraint is limiting execution."
   );
 }
 
 function buildExecutiveSummary(
-  projection: ExecutiveProjection,
+  source: ExecutiveNarrativeSource,
 ): string {
   const primaryCondition =
-    projection
-      .organizationalConditions?.[0];
+    conditionsFrom(source)[0];
 
   const name =
     primaryCondition?.name
       .toLowerCase() ?? "";
 
-  if (
-    name.includes("coordination")
-  ) {
+  if (name.includes("coordination")) {
     return "Teams are relying too heavily on informal handoffs, repeated escalation, and unclear ownership to coordinate important work.";
   }
 
-  if (
-    name.includes("decision")
-  ) {
+  if (name.includes("decision")) {
     return "Routine operating decisions continue to depend on a small number of leaders or approval points, increasing delay and reducing execution throughput.";
   }
 
-  if (
-    name.includes("knowledge")
-  ) {
+  if (name.includes("knowledge")) {
     return "Important context remains concentrated in people and one-off conversations, forcing teams to rediscover prior learning and repeat avoidable work.";
   }
 
-  if (
-    name.includes("learning")
-  ) {
+  if (name.includes("learning")) {
     return "The organization is identifying recurring problems but is not reliably converting them into reusable process, policy, or operating improvements.";
   }
 
+  const state =
+    stateRecord(source);
+
   return (
     removeEngineLanguage(
-      primaryCondition
-        ?.whyItMatters,
+      primaryCondition?.whyItMatters,
     ) ??
     removeEngineLanguage(
-      projection
-        .organizationalState
-        ?.executiveImplication,
+      stringValue(
+        state.executiveImplication,
+      ),
+    ) ??
+    removeEngineLanguage(
+      stringValue(
+        state.summary,
+      ),
     ) ??
     "The current pattern has broad organizational leverage and deserves executive attention."
   );
@@ -245,59 +448,31 @@ function signalStatement(
     formatLabel(label)
       .toLowerCase();
 
-  if (
-    normalized.includes(
-      "governance friction",
-    )
-  ) {
+  if (normalized.includes("governance friction")) {
     return "Approval and governance requirements are creating avoidable operating delay.";
   }
 
-  if (
-    normalized.includes(
-      "decision latency",
-    )
-  ) {
+  if (normalized.includes("decision latency")) {
     return "Important decisions are taking longer to resolve.";
   }
 
-  if (
-    normalized.includes(
-      "accountability gap",
-    )
-  ) {
+  if (normalized.includes("accountability gap")) {
     return "Ownership for cross-functional outcomes remains unclear.";
   }
 
-  if (
-    normalized.includes(
-      "coordination breakdown",
-    )
-  ) {
+  if (normalized.includes("coordination breakdown")) {
     return "Teams are repeatedly re-coordinating work instead of following reliable handoffs.";
   }
 
-  if (
-    normalized.includes(
-      "knowledge fragmentation",
-    )
-  ) {
+  if (normalized.includes("knowledge fragmentation")) {
     return "Critical context is distributed across people and disconnected sources.";
   }
 
-  if (
-    normalized.includes(
-      "institutional memory",
-    )
-  ) {
+  if (normalized.includes("institutional memory")) {
     return "Prior learning is not consistently available when teams make new decisions.";
   }
 
-  if (
-    normalized.includes(
-      "priority conflict",
-    )
-  ) {
+  if (normalized.includes("priority conflict")) {
     return "Competing priorities are diluting focus and execution capacity.";
   }
 
@@ -305,48 +480,65 @@ function signalStatement(
 }
 
 function buildSignals(
-  projection: ExecutiveProjection,
+  source: ExecutiveNarrativeSource,
 ): ExecutiveNarrativeSignal[] {
   const signals:
     ExecutiveNarrativeSignal[] = [];
 
+  const assessment =
+    assessmentRecord(source);
+
+  const theoryValidation =
+    asRecord(
+      assessment.theoryValidation,
+    );
+
   const mechanisms =
-    projection
-      .executiveAssessment
-      ?.theoryValidation
-      ?.supportingMechanisms ?? [];
+    Array.isArray(
+      theoryValidation
+        ?.supportingMechanisms,
+    )
+      ? theoryValidation
+          .supportingMechanisms
+      : [];
 
   for (
     const mechanism of
     mechanisms.slice(0, 3)
   ) {
+    const record =
+      asRecord(mechanism) ?? {};
+
+    const label =
+      stringValue(record.label) ??
+      stringValue(record.name);
+
+    if (!label) {
+      continue;
+    }
+
     signals.push({
       id:
-        `mechanism-${mechanism.label}`,
+        `mechanism-${label}`,
 
       statement:
-        signalStatement(
-          mechanism.label,
-        ),
+        signalStatement(label),
 
       explanation:
         removeEngineLanguage(
-          mechanism.rationale,
+          stringValue(record.rationale),
         ),
     });
   }
 
   if (signals.length < 3) {
-    const conditions =
-      projection
-        .organizationalConditions ?? [];
-
     for (
       const condition of
-      conditions.slice(
-        0,
-        3 - signals.length,
-      )
+      conditionsFrom(source)
+        .slice(
+          0,
+          3 - signals.length,
+        )
     ) {
       const statement =
         removeEngineLanguage(
@@ -356,7 +548,7 @@ function buildSignals(
       if (statement) {
         signals.push({
           id:
-            `condition-${condition.name}`,
+            `condition-${condition.id ?? condition.name}`,
 
           statement,
 
@@ -383,51 +575,31 @@ function changeSummary(
     directionFromStatus(status) ===
     "worsening";
 
-  if (
-    normalizedName.includes(
-      "coordination",
-    )
-  ) {
+  if (normalizedName.includes("coordination")) {
     return worsening
       ? "Cross-functional work is becoming harder to coordinate."
       : "Cross-functional coordination is becoming more reliable.";
   }
 
-  if (
-    normalizedName.includes(
-      "knowledge",
-    )
-  ) {
+  if (normalizedName.includes("knowledge")) {
     return worsening
       ? "Critical knowledge is becoming less reusable across teams."
       : "Organizational knowledge is becoming easier to preserve and reuse.";
   }
 
-  if (
-    normalizedName.includes(
-      "learning",
-    )
-  ) {
+  if (normalizedName.includes("learning")) {
     return worsening
       ? "The organization is learning more slowly from repeated problems."
       : "Repeated experience is translating into improvement more reliably.";
   }
 
-  if (
-    normalizedName.includes(
-      "decision",
-    )
-  ) {
+  if (normalizedName.includes("decision")) {
     return worsening
       ? "Decision delay and escalation pressure are increasing."
       : "Routine decisions are moving with less delay.";
   }
 
-  if (
-    normalizedName.includes(
-      "execution",
-    )
-  ) {
+  if (normalizedName.includes("execution")) {
     return worsening
       ? "Available execution capacity is becoming more constrained."
       : "Execution capacity is becoming more reliable.";
@@ -437,12 +609,9 @@ function changeSummary(
 }
 
 function buildChanges(
-  projection: ExecutiveProjection,
+  source: ExecutiveNarrativeSource,
 ): ExecutiveNarrativeChange[] {
-  return (
-    projection
-      .organizationalConditions ?? []
-  )
+  return conditionsFrom(source)
     .filter(
       (condition) =>
         condition.status
@@ -453,7 +622,7 @@ function buildChanges(
     .map(
       (condition, index) => ({
         id:
-          `change-${index}-${condition.name}`,
+          `change-${index}-${condition.id ?? condition.name}`,
 
         label:
           condition.name,
@@ -472,17 +641,52 @@ function buildChanges(
     );
 }
 
-function buildForecastHeadline(
-  projection: ExecutiveProjection,
-): string {
-  const prediction =
-    projection
-      .simulation
-      ?.projectedPredictions?.[0];
+function firstPredictionStatement(
+  source: ExecutiveNarrativeSource,
+): string | undefined {
+  if (isCanonicalSource(source)) {
+    const prediction =
+      source
+        .organizationalPredictions
+        ?.[0];
 
+    const record =
+      asRecord(prediction);
+
+    return (
+      stringValue(
+        record?.statement,
+      ) ??
+      stringValue(
+        record?.summary,
+      )
+    );
+  }
+
+  return source
+    .simulation
+    ?.projectedPredictions
+    ?.[0];
+}
+
+function simulationRecord(
+  source: ExecutiveNarrativeSource,
+): Record<string, unknown> | undefined {
+  return isCanonicalSource(source)
+    ? asRecord(
+        source.executiveSimulation,
+      )
+    : asRecord(
+        source.simulation,
+      );
+}
+
+function buildForecastHeadline(
+  source: ExecutiveNarrativeSource,
+): string {
   const cleanedPrediction =
     removeEngineLanguage(
-      prediction,
+      firstPredictionStatement(source),
     );
 
   if (cleanedPrediction) {
@@ -490,31 +694,18 @@ function buildForecastHeadline(
   }
 
   const primaryCondition =
-    projection
-      .organizationalConditions?.[0]
+    conditionsFrom(source)[0]
       ?.name.toLowerCase() ?? "";
 
-  if (
-    primaryCondition.includes(
-      "coordination",
-    )
-  ) {
+  if (primaryCondition.includes("coordination")) {
     return "Execution capacity is likely to deteriorate if coordination and decision ownership remain unchanged.";
   }
 
-  if (
-    primaryCondition.includes(
-      "knowledge",
-    )
-  ) {
+  if (primaryCondition.includes("knowledge")) {
     return "Teams are likely to repeat prior work and become more dependent on individual knowledge holders.";
   }
 
-  if (
-    primaryCondition.includes(
-      "learning",
-    )
-  ) {
+  if (primaryCondition.includes("learning")) {
     return "Recurring operating problems are likely to persist without stronger learning loops.";
   }
 
@@ -522,40 +713,23 @@ function buildForecastHeadline(
 }
 
 function buildRecommendationHeadline(
-  projection: ExecutiveProjection,
+  source: ExecutiveNarrativeSource,
 ): string {
+  if (isCanonicalSource(source)) {
+    return (
+      removeEngineLanguage(
+        source
+          .executiveRecommendation
+          .headline,
+      ) ??
+      source
+        .executiveRecommendation
+        .headline
+    );
+  }
+
   const primaryCondition =
-    projection
-      .organizationalConditions?.[0];
-
-  const name =
-    primaryCondition?.name
-      .toLowerCase() ?? "";
-
-  if (
-    name.includes("coordination") ||
-    name.includes("decision")
-  ) {
-    return "Clarify decision ownership and standardize cross-functional handoffs.";
-  }
-
-  if (
-    name.includes("knowledge")
-  ) {
-    return "Create a repeatable system for preserving and transferring critical operating knowledge.";
-  }
-
-  if (
-    name.includes("learning")
-  ) {
-    return "Turn recurring operating failures into explicit process and policy improvements.";
-  }
-
-  if (
-    name.includes("strategic")
-  ) {
-    return "Reduce competing priorities and establish a smaller set of shared operating outcomes.";
-  }
+    conditionsFrom(source)[0];
 
   return (
     removeEngineLanguage(
@@ -563,59 +737,36 @@ function buildRecommendationHeadline(
         ?.recommendedExecutiveAction,
     ) ??
     removeEngineLanguage(
-      projection
-        .explanation
-        .nextMove,
+      source.explanation
+        ?.nextMove,
     ) ??
     "Address the highest-leverage organizational constraint before scaling additional work."
   );
 }
 
 function buildRecommendationActions(
-  projection: ExecutiveProjection,
+  source: ExecutiveNarrativeSource,
 ): string[] {
-  const primaryCondition =
-    projection
-      .organizationalConditions?.[0];
-
-  const name =
-    primaryCondition?.name
-      .toLowerCase() ?? "";
-
-  if (
-    name.includes("coordination") ||
-    name.includes("decision")
-  ) {
+  if (isCanonicalSource(source)) {
     return [
-      "Define clear owners for recurring cross-functional decisions.",
-      "Remove approval steps that do not materially reduce risk.",
-      "Standardize handoffs between the teams responsible for shared outcomes.",
-    ];
-  }
+      source
+        .executiveRecommendation
+        .intervention
+        .executiveIntervention,
 
-  if (
-    name.includes("knowledge")
-  ) {
-    return [
-      "Identify the knowledge most vulnerable to individual dependency.",
-      "Create reusable operating records for important decisions and handoffs.",
-      "Make knowledge transfer part of normal delivery rather than a separate activity.",
-    ];
-  }
-
-  if (
-    name.includes("learning")
-  ) {
-    return [
-      "Select the recurring problems with the greatest operating cost.",
-      "Assign owners to convert lessons into process changes.",
-      "Track whether those changes prevent the problem from returning.",
-    ];
+      ...source
+        .executiveRecommendation
+        .intervention
+        .supportingActions,
+    ].filter(
+      (value) =>
+        value.trim().length > 0,
+    );
   }
 
   const directAction =
     removeEngineLanguage(
-      primaryCondition
+      conditionsFrom(source)[0]
         ?.recommendedExecutiveAction,
     );
 
@@ -624,12 +775,86 @@ function buildRecommendationActions(
     : [];
 }
 
+function recommendationRationale(
+  source: ExecutiveNarrativeSource,
+): string {
+  return isCanonicalSource(source)
+    ? source
+        .executiveRecommendation
+        .rationale
+    : "This course of action targets the operating mechanisms most directly connected to the current constraint while avoiding unnecessary organizational expansion.";
+}
+
+function primaryInvestigation(
+  source: ExecutiveNarrativeSource,
+): {
+  question?: string;
+  expectedConfidenceGain?: number;
+} {
+  const opportunity =
+    source
+      .investigationOpportunities
+      ?.[0];
+
+  const record =
+    asRecord(opportunity);
+
+  return {
+    question:
+      stringValue(
+        record?.suggestedExecutiveQuestion,
+      ) ??
+      stringValue(
+        record?.question,
+      ) ??
+      stringValue(
+        record?.topic,
+      ),
+
+    expectedConfidenceGain:
+      numberValue(
+        record?.expectedConfidenceGain,
+      ),
+  };
+}
+
+function learningRecord(
+  source: ExecutiveNarrativeSource,
+): Record<string, unknown> | undefined {
+  return asRecord(
+    source.organizationalLearningProfile,
+  );
+}
+
 function buildEvidenceSections(
-  projection: ExecutiveProjection,
+  source: ExecutiveNarrativeSource,
 ): ExecutiveNarrativeEvidenceSection[] {
   const conditions =
-    projection
-      .organizationalConditions ?? [];
+    conditionsFrom(source);
+
+  const assessment =
+    assessmentRecord(source);
+
+  const state =
+    stateRecord(source);
+
+  const learning =
+    learningRecord(source);
+
+  const simulation =
+    simulationRecord(source);
+
+  const explanation =
+    isCanonicalSource(source)
+      ? asRecord(
+          source.executiveExplanation,
+        )
+      : asRecord(
+          source.explanation,
+        );
+
+  const forecast =
+    buildForecastHeadline(source);
 
   return [
     {
@@ -641,22 +866,23 @@ function buildEvidenceSections(
 
       summary:
         removeEngineLanguage(
-          projection
-            .explanation
-            .why,
+          stringValue(
+            explanation?.why,
+          ) ??
+          stringValue(
+            explanation?.assessmentNarrative,
+          ),
         ) ??
         "The evidence supporting Discovery's current judgment.",
 
       content:
         removeEngineLanguage(
-          projection
-            .executiveAssessment
-            ?.executiveNarrative,
-        ) ??
-        removeEngineLanguage(
-          projection
-            .explanation
-            .why,
+          stringValue(
+            assessment.executiveNarrative,
+          ) ??
+          stringValue(
+            assessment.summary,
+          ),
         ) ??
         "The current organizational evidence supports Discovery's executive judgment.",
     },
@@ -670,28 +896,25 @@ function buildEvidenceSections(
 
       summary:
         removeEngineLanguage(
-          projection
-            .organizationalState
-            ?.summary,
+          stringValue(
+            state.summary,
+          ),
         ) ??
         "Discovery's integrated view of the organization today.",
 
       content:
         removeEngineLanguage(
-          projection
-            .organizationalState
-            ?.executiveImplication,
-        ) ??
-        removeEngineLanguage(
-          projection
-            .organizationalState
-            ?.summary,
+          stringValue(
+            state.executiveImplication,
+          ) ??
+          stringValue(
+            state.summary,
+          ),
         ) ??
         "Discovery is still forming the current organizational state.",
 
       metrics:
-        projection
-          .organizationalState
+        Object.keys(state).length > 0
           ? [
               {
                 label:
@@ -699,9 +922,10 @@ function buildEvidenceSections(
 
                 value:
                   formatStatus(
-                    projection
-                      .organizationalState
-                      .status,
+                    stringValue(
+                      state.status,
+                    ) ??
+                    "unknown",
                   ),
               },
               {
@@ -709,7 +933,7 @@ function buildEvidenceSections(
                   "Confidence",
 
                 value:
-                  `${projection.organizationalState.confidence}%`,
+                  `${percentage(numberValue(state.confidence))}%`,
               },
             ]
           : undefined,
@@ -751,7 +975,7 @@ function buildEvidenceSections(
                 condition.name,
 
               value:
-                `${formatStatus(condition.status)} · ${condition.confidence}%`,
+                `${formatStatus(condition.status)} · ${Math.round(condition.confidence)}%`,
             }),
           ),
     },
@@ -765,46 +989,46 @@ function buildEvidenceSections(
 
       summary:
         removeEngineLanguage(
-          projection
-            .organizationalLearningProfile
-            ?.summary,
+          stringValue(
+            learning?.summary,
+          ),
         ) ??
         "How Discovery's confidence and understanding are evolving.",
 
       content:
         removeEngineLanguage(
-          projection
-            .organizationalLearningProfile
-            ?.summary,
+          stringValue(
+            learning?.summary,
+          ),
         ) ??
         "Longitudinal learning data is not yet available.",
 
       metrics:
-        projection
-          .organizationalLearningProfile
+        learning
           ? [
               {
                 label:
                   "Learning velocity",
 
                 value:
-                  projection
-                    .organizationalLearningProfile
-                    .learningVelocity,
+                  stringValue(
+                    learning.learningVelocity,
+                  ) ??
+                  "Unknown",
               },
               {
                 label:
                   "Knowledge retention",
 
                 value:
-                  `${projection.organizationalLearningProfile.knowledgeRetention}%`,
+                  `${percentage(numberValue(learning.knowledgeRetention))}%`,
               },
               {
                 label:
                   "Belief stability",
 
                 value:
-                  `${projection.organizationalLearningProfile.beliefStability}%`,
+                  `${percentage(numberValue(learning.beliefStability))}%`,
               },
             ]
           : undefined,
@@ -818,29 +1042,25 @@ function buildEvidenceSections(
         "Future outlook",
 
       summary:
-        buildForecastHeadline(
-          projection,
-        ),
+        forecast,
 
       content:
         removeEngineLanguage(
-          projection
-            .simulation
-            ?.explanation,
+          stringValue(
+            simulation?.explanation,
+          ),
         ) ??
-        buildForecastHeadline(
-          projection,
-        ),
+        forecast,
 
       metrics:
-        projection.simulation
+        simulation
           ? [
               {
                 label:
                   "Confidence",
 
                 value:
-                  `${projection.simulation.confidence}%`,
+                  `${percentage(numberValue(simulation.confidence))}%`,
               },
               {
                 label:
@@ -848,9 +1068,10 @@ function buildEvidenceSections(
 
                 value:
                   formatStatus(
-                    projection
-                      .simulation
-                      .timeHorizon,
+                    stringValue(
+                      simulation.timeHorizon,
+                    ) ??
+                    "near-term",
                   ),
               },
             ]
@@ -860,52 +1081,46 @@ function buildEvidenceSections(
 }
 
 export function synthesizeExecutiveNarrative(
-  projection: ExecutiveProjection,
+  source: ExecutiveNarrativeSource,
 ): ExecutiveNarrative {
+  const simulation =
+    simulationRecord(source);
+
+  const investigation =
+    primaryInvestigation(source);
+
   return {
     headline:
-      buildHeadline(
-        projection,
-      ),
+      buildHeadline(source),
 
     executiveSummary:
-      buildExecutiveSummary(
-        projection,
-      ),
+      buildExecutiveSummary(source),
 
     confidence:
-      projection
-        .currentUnderstanding
-        .confidence,
+      confidenceFrom(source),
 
     why:
-      buildSignals(
-        projection,
-      ),
+      buildSignals(source),
 
     changes:
-      buildChanges(
-        projection,
-      ),
+      buildChanges(source),
 
     forecast: {
       headline:
-        buildForecastHeadline(
-          projection,
-        ),
+        buildForecastHeadline(source),
 
       confidence:
-        projection
-          .simulation
-          ?.confidence ??
-        projection
-          .currentUnderstanding
-          .confidence,
+        percentage(
+          numberValue(
+            simulation?.confidence,
+          ),
+        ) ||
+        confidenceFrom(source),
 
       timeHorizon:
-        projection
-          .simulation
-          ?.timeHorizon,
+        stringValue(
+          simulation?.timeHorizon,
+        ),
 
       explanation:
         "The forecast reflects the continuation of current organizational conditions if leadership does not materially change the operating pattern.",
@@ -913,30 +1128,22 @@ export function synthesizeExecutiveNarrative(
 
     recommendation: {
       headline:
-        buildRecommendationHeadline(
-          projection,
-        ),
+        buildRecommendationHeadline(source),
 
       actions:
-        buildRecommendationActions(
-          projection,
-        ),
+        buildRecommendationActions(source),
 
       rationale:
-        "This course of action targets the operating mechanisms most directly connected to the current constraint while avoiding unnecessary organizational expansion.",
+        recommendationRationale(source),
 
       recommendedInvestigation:
-        projection
-          .investigationOpportunities?.[0]
-          ?.suggestedExecutiveQuestion,
+        investigation.question,
 
       decisionHref:
         "/executive-decision",
     },
 
     evidenceSections:
-      buildEvidenceSections(
-        projection,
-      ),
+      buildEvidenceSections(source),
   };
 }

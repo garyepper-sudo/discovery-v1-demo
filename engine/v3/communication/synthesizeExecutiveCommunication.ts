@@ -1,9 +1,6 @@
-import type {
-  ExecutiveProjection,
-} from "../../../components/executive-v2/projection/ExecutiveProjection";
-
 import {
   synthesizeExecutiveNarrative,
+  type LegacyExecutiveCommunicationProjection,
 } from "./synthesizeExecutiveNarrative";
 
 import type {
@@ -12,13 +9,33 @@ import type {
   ExecutiveCommunicationForecast,
 } from "./executiveCommunication";
 
-export type SynthesizeExecutiveCommunicationInput = {
-  projection: ExecutiveProjection;
+import type {
+  ExecutiveCommunicationSource,
+} from "./executiveCommunicationSource";
 
-  organizationId: string;
+export type SynthesizeExecutiveCommunicationInput =
+  | {
+      source:
+        ExecutiveCommunicationSource;
 
-  generatedAt?: string;
-};
+      generatedAt?:
+        string;
+    }
+  | {
+      /**
+       * Transitional compatibility input.
+       *
+       * Remove after all callers provide ExecutiveCommunicationSource.
+       */
+      projection:
+        LegacyExecutiveCommunicationProjection;
+
+      organizationId:
+        string;
+
+      generatedAt?:
+        string;
+    };
 
 function normalizeTimeHorizon(
   value: string | undefined,
@@ -62,26 +79,125 @@ function buildEvidenceSections(
   );
 }
 
+function asRecord(
+  value: unknown,
+): Record<string, unknown> | undefined {
+  return (
+    typeof value === "object" &&
+    value !== null
+  )
+    ? value as Record<string, unknown>
+    : undefined;
+}
+
+function stringValue(
+  value: unknown,
+): string | undefined {
+  return typeof value === "string"
+    ? value
+    : undefined;
+}
+
+function numberValue(
+  value: unknown,
+): number | undefined {
+  return (
+    typeof value === "number" &&
+    Number.isFinite(value)
+  )
+    ? value
+    : undefined;
+}
+
+function investigationFrom(
+  value: unknown,
+): {
+  question?: string;
+  expectedConfidenceGain?: number;
+} {
+  const record =
+    asRecord(value);
+
+  return {
+    question:
+      stringValue(
+        record?.suggestedExecutiveQuestion,
+      ) ??
+      stringValue(
+        record?.question,
+      ) ??
+      stringValue(
+        record?.topic,
+      ),
+
+    expectedConfidenceGain:
+      numberValue(
+        record?.expectedConfidenceGain,
+      ),
+  };
+}
+
+function confidenceFraction(
+  value: number,
+): number {
+  return value > 1
+    ? value / 100
+    : value;
+}
+
 /**
  * Canonical Executive Communication producer.
  *
  * This Operating System does not perform new organizational reasoning.
  * It synthesizes canonical cognition into language appropriate for
  * executive decision-making.
+ *
+ * Canonical callers must supply ExecutiveCommunicationSource.
+ * The projection branch is a temporary compatibility adapter.
  */
-export function synthesizeExecutiveCommunication({
-  projection,
-  organizationId,
-  generatedAt = new Date().toISOString(),
-}: SynthesizeExecutiveCommunicationInput): ExecutiveCommunication {
+export function synthesizeExecutiveCommunication(
+  input:
+    SynthesizeExecutiveCommunicationInput,
+): ExecutiveCommunication {
+  const canonical =
+    "source" in input;
+
+  const source =
+    canonical
+      ? input.source
+      : input.projection;
+
+  const organizationId =
+    canonical
+      ? input.source.organizationId
+      : input.organizationId;
+
+  const generatedAt =
+    input.generatedAt ??
+    (
+      canonical
+        ? input.source.generatedAt
+        : undefined
+    ) ??
+    new Date().toISOString();
+
   const narrative =
     synthesizeExecutiveNarrative(
-      projection,
+      source,
     );
 
   const primaryInvestigation =
-    projection
-      .investigationOpportunities?.[0];
+    investigationFrom(
+      source
+        .investigationOpportunities
+        ?.[0],
+    );
+
+  const canonicalRecommendation =
+    canonical
+      ? input.source
+          .executiveRecommendation
+      : undefined;
 
   return {
     id:
@@ -97,8 +213,9 @@ export function synthesizeExecutiveCommunication({
 
     confidence: {
       value:
-        narrative.confidence /
-        100,
+        confidenceFraction(
+          narrative.confidence,
+        ),
 
       label:
         narrative.confidence >= 85
@@ -110,13 +227,20 @@ export function synthesizeExecutiveCommunication({
               : "low",
 
       limiters:
-        projection
+        source
           .investigationOpportunities
           ?.slice(0, 3)
           .map(
             (opportunity) =>
-              opportunity
-                .suggestedExecutiveQuestion,
+              investigationFrom(
+                opportunity,
+              ).question,
+          )
+          .filter(
+            (
+              value,
+            ): value is string =>
+              Boolean(value),
           ) ?? [],
     },
 
@@ -165,8 +289,9 @@ export function synthesizeExecutiveCommunication({
             change.summary,
 
           confidence:
-            narrative.confidence /
-            100,
+            confidenceFraction(
+              narrative.confidence,
+            ),
         }),
       ),
 
@@ -180,9 +305,10 @@ export function synthesizeExecutiveCommunication({
           .explanation ?? "",
 
       confidence:
-        narrative.forecast
-          .confidence /
-        100,
+        confidenceFraction(
+          narrative.forecast
+            .confidence,
+        ),
 
       timeHorizon:
         normalizeTimeHorizon(
@@ -191,7 +317,15 @@ export function synthesizeExecutiveCommunication({
         ),
 
       affectedConditionIds:
-        [],
+        canonical
+          ? input.source
+              .organizationalConditions
+              .slice(0, 3)
+              .map(
+                (condition) =>
+                  condition.id,
+              )
+          : [],
 
       falsifyingSignals:
         [],
@@ -199,19 +333,38 @@ export function synthesizeExecutiveCommunication({
 
     recommendation: {
       headline:
+        canonicalRecommendation
+          ?.headline ??
         narrative
           .recommendation
           .headline,
 
       actions:
-        narrative
-          .recommendation
-          .actions,
+        canonicalRecommendation
+          ? [
+              canonicalRecommendation
+                .intervention
+                .executiveIntervention,
+
+              ...canonicalRecommendation
+                .intervention
+                .supportingActions,
+            ].filter(
+              (value) =>
+                value.trim().length >
+                0,
+            )
+          : narrative
+              .recommendation
+              .actions,
 
       rationale:
+        canonicalRecommendation
+          ?.rationale ??
         narrative
           .recommendation
-          .rationale ?? "",
+          .rationale ??
+        "",
 
       tradeOffs:
         [],
@@ -221,9 +374,10 @@ export function synthesizeExecutiveCommunication({
 
       evidenceThatCouldChangeRecommendation:
         primaryInvestigation
+          .question
           ? [
               primaryInvestigation
-                .suggestedExecutiveQuestion,
+                .question,
             ]
           : [],
 
@@ -235,22 +389,28 @@ export function synthesizeExecutiveCommunication({
 
     uncertainty:
       primaryInvestigation
+        .question
         ? {
             question:
               primaryInvestigation
-                .suggestedExecutiveQuestion,
+                .question,
 
             implication:
               "Resolving this question would determine whether the current organizational pattern is persistent or primarily situational.",
 
             recommendedInvestigation:
               primaryInvestigation
-                .suggestedExecutiveQuestion,
+                .question,
 
             expectedConfidenceGain:
               primaryInvestigation
-                .expectedConfidenceGain /
-              100,
+                .expectedConfidenceGain ===
+                undefined
+                ? undefined
+                : confidenceFraction(
+                    primaryInvestigation
+                      .expectedConfidenceGain,
+                  ),
           }
         : undefined,
 

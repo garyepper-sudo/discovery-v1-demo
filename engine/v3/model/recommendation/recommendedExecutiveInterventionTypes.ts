@@ -19,7 +19,18 @@ export type RecommendedExecutiveIntervention = {
 
   headline: string;
 
+  /**
+   * The primary executive action selected from the primary strategy.
+   */
   executiveIntervention: string;
+
+  /**
+   * Coordinated actions derived from supporting strategy items.
+   *
+   * These actions complement the primary intervention without creating
+   * separate competing recommendations.
+   */
+  supportingActions: string[];
 
   interventionType:
     RecommendedExecutiveInterventionType;

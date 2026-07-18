@@ -38,8 +38,7 @@ type BuildExecutiveRecommendationInput = {
 };
 
 function clamp01(
-  value:
-    number,
+  value: number,
 ): number {
   return Math.max(
     0,
@@ -51,8 +50,7 @@ function clamp01(
 }
 
 function unique(
-  values:
-    string[],
+  values: string[],
 ): string[] {
   return Array.from(
     new Set(
@@ -66,8 +64,7 @@ function unique(
 }
 
 export function buildExecutiveRecommendation(
-  input:
-    BuildExecutiveRecommendationInput,
+  input: BuildExecutiveRecommendationInput,
 ): ExecutiveRecommendation {
   const now =
     input.now ??
@@ -117,22 +114,20 @@ export function buildExecutiveRecommendation(
     });
 
   const supportingConditionIds =
-    unique(
-      [
-        ...objective
-          .supportingConditionIds,
+    unique([
+      ...objective
+        .supportingConditionIds,
 
-        ...intervention
-          .supportingConditionIds,
+      ...intervention
+        .supportingConditionIds,
 
-        ...strategy
-          .strategies
-          .flatMap(
-            (item) =>
-              item.supportingConditionIds,
-          ),
-      ],
-    );
+      ...strategy
+        .strategies
+        .flatMap(
+          (item) =>
+            item.supportingConditionIds,
+        ),
+    ]);
 
   const confidence =
     clamp01(
@@ -140,21 +135,18 @@ export function buildExecutiveRecommendation(
         objective.confidence +
         strategy.confidence +
         intervention.confidence
-      ) /
-        3,
+      ) / 3,
     );
 
   const rationale = [
-    objective.rationale,
-    strategy.strategies
-      .map(
-        (item) =>
-          `${item.headline} ${item.rationale}`,
-      )
-      .join(
-        " ",
-      ),
     intervention.rationale,
+
+    ...strategy.strategies.map(
+      (item) =>
+        item.rationale,
+    ),
+
+    objective.rationale,
   ]
     .filter(
       (
@@ -169,6 +161,23 @@ export function buildExecutiveRecommendation(
       " ",
     );
 
+  const executiveRecommendation =
+    [
+      intervention
+        .executiveIntervention,
+
+      ...intervention
+        .supportingActions,
+    ]
+      .filter(
+        (value) =>
+          value.trim().length >
+          0,
+      )
+      .join(
+        " ",
+      );
+
   return {
     id:
       `executive-recommendation-${intervention.id}`,
@@ -176,8 +185,7 @@ export function buildExecutiveRecommendation(
     headline:
       intervention.headline,
 
-    executiveRecommendation:
-      `${objective.headline} ${strategy.executiveStrategy} ${intervention.executiveIntervention}`,
+    executiveRecommendation,
 
     objective,
 

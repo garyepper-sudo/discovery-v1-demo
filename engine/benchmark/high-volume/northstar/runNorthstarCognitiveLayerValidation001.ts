@@ -217,6 +217,28 @@ const LAYER_DEFINITIONS:
     ],
   },
   {
+    id: "executive-recommendation",
+    label: "Executive Recommendation",
+    required: true,
+    minimumCount: 1,
+    paths: [
+      ["result", "executiveRecommendation"],
+      ["executiveRecommendation"],
+      ["runtime", "memory", "executiveRecommendation"],
+    ],
+  },
+  {
+    id: "executive-communication",
+    label: "Executive Communication",
+    required: true,
+    minimumCount: 1,
+    paths: [
+      ["result", "executiveCommunication"],
+      ["executiveCommunication"],
+      ["runtime", "memory", "executiveCommunication"],
+    ],
+  },
+  {
     id: "executive-projection",
     label: "Executive Projection",
     required: true,
@@ -536,6 +558,18 @@ function auditHandoffs(
       "executive-assessment",
     );
 
+  const recommendation =
+    findLayer(
+      layers,
+      "executive-recommendation",
+    );
+
+  const communication =
+    findLayer(
+      layers,
+      "executive-communication",
+    );
+
   const projection =
     findLayer(
       layers,
@@ -769,15 +803,15 @@ function auditHandoffs(
 
   results.push({
     id:
-      "assessment-to-projection",
+      "assessment-to-recommendation",
 
     label:
-      "Executive Assessment → Executive Projection",
+      "Executive Assessment → Executive Recommendation",
 
     status:
       assessment.count >
         0 &&
-      projection.count >
+      recommendation.count >
         0
         ? "pass"
         : "fail",
@@ -785,10 +819,58 @@ function auditHandoffs(
     message:
       assessment.count >
         0 &&
+      recommendation.count >
+        0
+        ? "Executive assessment produced an executive recommendation."
+        : "Executive assessment did not produce an executive recommendation.",
+  });
+
+  results.push({
+    id:
+      "recommendation-to-communication",
+
+    label:
+      "Executive Recommendation → Executive Communication",
+
+    status:
+      recommendation.count >
+        0 &&
+      communication.count >
+        0
+        ? "pass"
+        : "fail",
+
+    message:
+      recommendation.count >
+        0 &&
+      communication.count >
+        0
+        ? "Executive recommendation produced canonical executive communication."
+        : "Executive recommendation did not produce canonical executive communication.",
+  });
+
+  results.push({
+    id:
+      "communication-to-projection",
+
+    label:
+      "Executive Communication → Executive Projection",
+
+    status:
+      communication.count >
+        0 &&
       projection.count >
         0
-        ? "Executive assessment produced an executive projection."
-        : "Executive assessment did not produce an executive projection.",
+        ? "pass"
+        : "fail",
+
+    message:
+      communication.count >
+        0 &&
+      projection.count >
+        0
+        ? "Executive communication produced an executive projection."
+        : "Executive communication did not produce an executive projection.",
   });
 
   return results;

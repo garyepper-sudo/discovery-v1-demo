@@ -38,8 +38,7 @@ type BuildRecommendedExecutiveInterventionInput = {
 };
 
 function clamp01(
-  value:
-    number,
+  value: number,
 ): number {
   return Math.max(
     0,
@@ -51,48 +50,36 @@ function clamp01(
 }
 
 function normalizeConfidence(
-  value:
-    unknown,
+  value: unknown,
 ): number {
   if (
-    typeof value !==
-      "number" ||
-    !Number.isFinite(
-      value,
-    )
+    typeof value !== "number" ||
+    !Number.isFinite(value)
   ) {
     return 0.5;
   }
 
   return clamp01(
-    value >
-      1
-      ? value /
-        100
+    value > 1
+      ? value / 100
       : value,
   );
 }
 
 function findCondition(
-  conditions:
-    OrganizationalCondition[],
-
-  conditionId:
-    string,
+  conditions: OrganizationalCondition[],
+  conditionId: string,
 ): OrganizationalCondition | null {
   return (
     conditions.find(
       (condition) =>
-        condition.id ===
-        conditionId,
-    ) ??
-    null
+        condition.id === conditionId,
+    ) ?? null
   );
 }
 
 function selectPrimaryStrategyItem(
-  strategy:
-    RecommendedExecutiveStrategy,
+  strategy: RecommendedExecutiveStrategy,
 ): RecommendedExecutiveStrategyItem {
   const primary =
     strategy.strategies.find(
@@ -101,20 +88,14 @@ function selectPrimaryStrategyItem(
         "primary",
     );
 
-  if (
-    primary
-  ) {
+  if (primary) {
     return primary;
   }
 
   const first =
-    strategy.strategies[
-      0
-    ];
+    strategy.strategies[0];
 
-  if (
-    !first
-  ) {
+  if (!first) {
     throw new Error(
       "Recommended Executive Intervention requires at least one strategy item.",
     );
@@ -124,12 +105,9 @@ function selectPrimaryStrategyItem(
 }
 
 function inferInterventionType(
-  strategyItem:
-    RecommendedExecutiveStrategyItem,
+  strategyItem: RecommendedExecutiveStrategyItem,
 ): RecommendedExecutiveInterventionType {
-  switch (
-    strategyItem.theme
-  ) {
+  switch (strategyItem.theme) {
     case "reduce_competing_work":
       return "work_portfolio_reduction";
 
@@ -154,24 +132,14 @@ function inferInterventionType(
 }
 
 function buildInterventionLanguage(
-  interventionType:
-    RecommendedExecutiveInterventionType,
-
-  targetConditionName:
-    string,
+  interventionType: RecommendedExecutiveInterventionType,
+  targetConditionName: string,
 ): {
-  headline:
-    string;
-
-  executiveIntervention:
-    string;
-
-  rationale:
-    string;
+  headline: string;
+  executiveIntervention: string;
+  rationale: string;
 } {
-  switch (
-    interventionType
-  ) {
+  switch (interventionType) {
     case "work_portfolio_reduction":
       return {
         headline:
@@ -246,9 +214,35 @@ function buildInterventionLanguage(
   }
 }
 
+function buildSupportingAction(
+  strategyItem: RecommendedExecutiveStrategyItem,
+): string {
+  switch (strategyItem.theme) {
+    case "reduce_competing_work":
+      return "Reduce competing work and sequence active priorities so execution demand remains within available capacity.";
+
+    case "clarify_decision_rights":
+      return "Assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.";
+
+    case "strengthen_coordination":
+      return "Establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.";
+
+    case "preserve_knowledge":
+      return "Capture and maintain critical operating knowledge so execution does not depend on informal context transfer.";
+
+    case "align_priorities":
+      return "Establish one current priority hierarchy and make the required tradeoffs explicit across teams.";
+
+    case "stabilize_operating_model":
+      return "Clarify the roles, workflows, decision rights, and escalation expectations required for consistent execution.";
+
+    case "protect_execution_focus":
+      return "Protect the highest-leverage work from avoidable interruption, priority churn, and coordination drag.";
+  }
+}
+
 function unique(
-  values:
-    string[],
+  values: string[],
 ): string[] {
   return Array.from(
     new Set(
@@ -262,12 +256,26 @@ function unique(
 }
 
 export function buildRecommendedExecutiveIntervention(
-  input:
-    BuildRecommendedExecutiveInterventionInput,
+  input: BuildRecommendedExecutiveInterventionInput,
 ): RecommendedExecutiveIntervention {
   const primaryStrategyItem =
     selectPrimaryStrategyItem(
       input.strategy,
+    );
+
+  const supportingStrategyItems =
+    input.strategy.strategies.filter(
+      (item) =>
+        item.id !==
+        primaryStrategyItem.id,
+    );
+
+  const supportingActions =
+    unique(
+      supportingStrategyItems.map(
+        (item) =>
+          buildSupportingAction(item),
+      ),
     );
 
   const targetCondition =
@@ -277,9 +285,7 @@ export function buildRecommendedExecutiveIntervention(
         .targetConditionId,
     );
 
-  if (
-    !targetCondition
-  ) {
+  if (!targetCondition) {
     throw new Error(
       "Recommended Executive Intervention requires the objective's target condition.",
     );
@@ -299,24 +305,22 @@ export function buildRecommendedExecutiveIntervention(
 
   const supportingStrategyItemIds =
     unique(
-      input.strategy
-        .strategies
-        .map(
-          (item) =>
-            item.id,
-        ),
+      input.strategy.strategies.map(
+        (item) =>
+          item.id,
+      ),
     );
 
   const supportingConditionIds =
-    unique(
-      [
-        targetCondition.id,
-        ...primaryStrategyItem
-          .supportingConditionIds,
-        ...input.objective
-          .supportingConditionIds,
-      ],
-    );
+    unique([
+      targetCondition.id,
+      ...input.strategy.strategies.flatMap(
+        (item) =>
+          item.supportingConditionIds,
+      ),
+      ...input.objective
+        .supportingConditionIds,
+    ]);
 
   const confidence =
     clamp01(
@@ -337,8 +341,7 @@ export function buildRecommendedExecutiveIntervention(
           targetCondition
             .confidence,
         )
-      ) /
-        4,
+      ) / 4,
     );
 
   const uncertaintySummary =
@@ -357,6 +360,8 @@ export function buildRecommendedExecutiveIntervention(
 
     executiveIntervention:
       language.executiveIntervention,
+
+    supportingActions,
 
     interventionType,
 
@@ -384,14 +389,9 @@ export function buildRecommendedExecutiveIntervention(
     uncertaintySummary,
 
     boundaries: {
-      doesNotOptimize:
-        true,
-
-      doesNotSimulate:
-        true,
-
-      doesNotSpecifyDetailedImplementationPlan:
-        true,
+      doesNotOptimize: true,
+      doesNotSimulate: true,
+      doesNotSpecifyDetailedImplementationPlan: true,
     },
 
     objective:
@@ -402,8 +402,7 @@ export function buildRecommendedExecutiveIntervention(
 
     createdAt:
       input.now ??
-      new Date()
-        .toISOString(),
+      new Date().toISOString(),
   };
 }
 

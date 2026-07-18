@@ -3,12 +3,19 @@ import type { OrganizationRuntime } from "../../../engine/v3/runtime/organizatio
 import type {
   ExecutiveSimulation as RuntimeExecutiveSimulation,
 } from "../../../engine/v3/simulation/executiveSimulation";
+import type {
+  ExecutiveCommunication,
+} from "../../../engine/v3/communication/executiveCommunication";
 
 import {
   choosePrimaryBelief,
   choosePrimaryUnderstanding,
   choosePrimaryInvestigationOpportunity,
 } from "../../../engine/v3/projection/ExecutiveProjectionCompiler";
+
+import {
+  buildProjectionFromExecutiveCommunication,
+} from "./buildProjectionFromExecutiveCommunication";
 
 import type {
   ExecutiveAssessment,
@@ -211,7 +218,10 @@ type RuntimeExecutiveMemory = {
     theoryValidation?: ExecutiveTheoryValidation;
   };
 
-    executiveExplanation?:
+  executiveCommunication?:
+    ExecutiveCommunication;
+
+  executiveExplanation?:
     RuntimeExecutiveExplanation;
 
   organizationalState?: {
@@ -1032,6 +1042,15 @@ export function buildExecutiveProjection({
   const runtimeMemory =
     getRuntimeExecutiveMemory(runtime);
 
+  const communicationProjection =
+    runtimeMemory
+      ?.executiveCommunication
+      ? buildProjectionFromExecutiveCommunication(
+          runtimeMemory
+            .executiveCommunication,
+        )
+      : undefined;
+
   const primaryBelief = choosePrimaryBelief(
     result.beliefs,
   );
@@ -1116,56 +1135,63 @@ export function buildExecutiveProjection({
       updatedLabel: null,
     },
 
-    currentUnderstanding: {
-      belief:
-        synthesizedUnderstanding?.statement ||
-        theoryValidation?.dominantTheory ||
-        earlyExecutiveUnderstanding.headline ||
-        primaryBelief?.headline ||
-        primaryUnderstanding?.title ||
-        "Discovery is still forming its current understanding.",
+    currentUnderstanding:
+      communicationProjection
+        ?.currentUnderstanding ?? {
+        belief:
+          synthesizedUnderstanding?.statement ||
+          theoryValidation?.dominantTheory ||
+          earlyExecutiveUnderstanding.headline ||
+          primaryBelief?.headline ||
+          primaryUnderstanding?.title ||
+          "Discovery is still forming its current understanding.",
 
-      mindStatus,
+        mindStatus,
 
-      confidence,
+        confidence,
 
-      organizationalCoherence,
-    },
+        organizationalCoherence,
+      },
 
-    explanation: {
-      why:
-        synthesizedUnderstanding?.summary ||
-        theoryValidation?.whyDiscoveryBelievesIt ||
-        runtimeExecutiveAssessment?.summary ||
-        earlyExecutiveUnderstanding.explanation ||
-        primaryBelief?.explanation ||
-        primaryUnderstanding?.summary ||
-        "Discovery has not yet formed a complete explanation.",
+    explanation:
+      communicationProjection
+        ?.explanation ?? {
+        why:
+          synthesizedUnderstanding?.summary ||
+          theoryValidation?.whyDiscoveryBelievesIt ||
+          runtimeExecutiveAssessment?.summary ||
+          earlyExecutiveUnderstanding.explanation ||
+          primaryBelief?.explanation ||
+          primaryUnderstanding?.summary ||
+          "Discovery has not yet formed a complete explanation.",
 
-      whatCouldChangeThis:
-        synthesizedUnderstanding?.openQuestions?.[0] ||
-        theoryValidation?.evidenceThatWouldFalsifyTheory?.[0] ||
-        theoryValidation?.calibratedConfidenceExplanation ||
-        earlyExecutiveUnderstanding.openQuestions?.[0] ||
-        primaryBelief?.nextQuestions?.[0] ||
-        primaryBelief?.concerns?.[0] ||
-        primaryUnderstanding?.unknowns?.[0] ||
-        "Additional evidence could change this understanding.",
+        whatCouldChangeThis:
+          synthesizedUnderstanding?.openQuestions?.[0] ||
+          theoryValidation?.evidenceThatWouldFalsifyTheory?.[0] ||
+          theoryValidation?.calibratedConfidenceExplanation ||
+          earlyExecutiveUnderstanding.openQuestions?.[0] ||
+          primaryBelief?.nextQuestions?.[0] ||
+          primaryBelief?.concerns?.[0] ||
+          primaryUnderstanding?.unknowns?.[0] ||
+          "Additional evidence could change this understanding.",
 
-      nextMove:
-        investigationOpportunity?.suggestedExecutiveQuestion ||
-        investigationOpportunity?.reason ||
-        theoryValidation?.executiveRecommendation ||
-        synthesizedUnderstanding?.recommendations?.[0] ||
-        earlyExecutiveUnderstanding.nextMoves?.[0] ||
-        primaryUnderstanding?.recommendations?.[0] ||
-        "Continue gathering evidence around the leading explanation.",
-    },
+        nextMove:
+          investigationOpportunity?.suggestedExecutiveQuestion ||
+          investigationOpportunity?.reason ||
+          theoryValidation?.executiveRecommendation ||
+          synthesizedUnderstanding?.recommendations?.[0] ||
+          earlyExecutiveUnderstanding.nextMoves?.[0] ||
+          primaryUnderstanding?.recommendations?.[0] ||
+          "Continue gathering evidence around the leading explanation.",
+      },
 
-    executiveAttention: buildExecutiveAttention(
-      result,
-      runtimeMemory,
-    ),
+    executiveAttention:
+      communicationProjection
+        ?.executiveAttention ??
+      buildExecutiveAttention(
+        result,
+        runtimeMemory,
+      ),
 
     executiveAssessment,
 

@@ -49,6 +49,12 @@ import { simulateOrganization } from "../model/simulate/simulateOrganization";
 import { buildOrganizationalIntervention } from "../model/simulate/buildOrganizationalIntervention";
 import { buildOrganizationalCausalModel } from "../model/causal/buildOrganizationalCausalModel";
 import { assessOrganizationalUncertainty } from "../model/epistemic/assessOrganizationalUncertainty";
+import {
+  runExecutiveRecommendationOperatingSystem,
+} from "../operating-systems/recommendation/runExecutiveRecommendationOperatingSystem";
+import {
+  runExecutiveCommunicationOperatingSystem,
+} from "../operating-systems/communication/runExecutiveCommunicationOperatingSystem";
 
 
 export function evolveOrganizationRuntime(params: {
@@ -77,6 +83,8 @@ export function evolveOrganizationRuntime(params: {
     organizationalExplanations?: any[];
     organizationalJudgments?: any[];
     executiveAssessment?: any;
+    executiveRecommendation?: any;
+    executiveCommunication?: any;
     executiveExplanation?: any;
     meaningSignals?: any[];
     organizationalConcepts?: any[];
@@ -748,6 +756,31 @@ export function evolveOrganizationRuntime(params: {
     predictionReflection,
   });
 
+  const runtimeWithExecutiveAssessment:
+    OrganizationRuntime = {
+    ...cognitivelyUpdatedRuntime,
+
+    memory: {
+      ...cognitivelyUpdatedRuntime.memory,
+      executiveAssessment,
+      organizationalConditions,
+      organizationalState,
+    } as OrganizationRuntime["memory"],
+  };
+
+  const {
+    runtime:
+      runtimeWithExecutiveRecommendation,
+
+    executiveRecommendation,
+  } =
+    runExecutiveRecommendationOperatingSystem({
+      runtime:
+        runtimeWithExecutiveAssessment,
+
+      now,
+    });
+
   const executiveUnderstandingCandidates =
     buildExecutiveUnderstandingCandidates({
       executiveAssessment,
@@ -1163,8 +1196,74 @@ console.log(
   simulatedOrganizationState,
 );
 
+/**
+ * Executive Communication Operating System
+ *
+ * Build a complete runtime source containing the canonical assessment,
+ * recommendation, explanation, organizational state, uncertainty,
+ * predictions, learning, investigation, and simulation context before
+ * synthesizing executive-facing communication.
+ */
+const runtimeForExecutiveCommunication:
+  OrganizationRuntime = {
+  ...runtimeWithExecutiveRecommendation,
+
+  organizationModel,
+
+  memory: {
+    ...runtimeWithExecutiveRecommendation.memory,
+
+    executiveAssessment,
+    executiveRecommendation,
+    executiveExplanation,
+
+    organizationalUnderstandingState:
+      finalOrganizationalUnderstandingState,
+
+    organizationalConditions,
+    organizationalState,
+    organizationalPredictions,
+    predictionReflection,
+    predictionEvaluations,
+
+    organizationalLearningProfile,
+    organizationalUncertainty,
+
+    investigationStrategy,
+    investigationOpportunities,
+
+    organizationalCausalModel,
+    organizationalInterventions,
+    simulatedOrganizationStates,
+
+    organizationalBeliefs:
+      organizationalBeliefState.beliefs,
+
+    organizationalConcepts,
+
+    theories:
+      organizationalTheoryState.theories,
+
+    mechanismNetwork:
+      safeMechanismNetwork,
+  } as OrganizationRuntime["memory"],
+};
+
+const {
+  runtime:
+    runtimeWithExecutiveCommunication,
+
+  executiveCommunication,
+} =
+  runExecutiveCommunicationOperatingSystem({
+    runtime:
+      runtimeForExecutiveCommunication,
+
+    now,
+  });
+
 const updatedMemory = {
-    ...cognitivelyUpdatedRuntime.memory,
+    ...runtimeWithExecutiveCommunication.memory,
 
     organizationReasoningGraph,
     organizationReasoningRelationships,
@@ -1173,6 +1272,8 @@ const updatedMemory = {
     organizationalExplanations,
     organizationalJudgments,
     executiveAssessment,
+    executiveRecommendation,
+    executiveCommunication,
     executiveExplanation,
     organizationalConditions,
     organizationalState,
@@ -1266,6 +1367,8 @@ const updatedMemory = {
       investigationStrategy,
       investigationOpportunities,
       organizationalUncertainty,
+      executiveRecommendation,
+      executiveCommunication,
       executiveExplanation,
     },
 
@@ -1428,6 +1531,12 @@ const updatedMemory = {
     executiveAssessment:
       typeof executiveAssessment;
 
+    executiveRecommendation:
+      typeof executiveRecommendation;
+
+    executiveCommunication:
+      typeof executiveCommunication;
+
     executiveExplanation:
       typeof executiveExplanation;
 
@@ -1520,7 +1629,7 @@ const updatedMemory = {
   };
 
   return {
-    ...cognitivelyUpdatedRuntime,
+    ...runtimeWithExecutiveCommunication,
     organizationModel,
     memory: updatedMemory,
   };

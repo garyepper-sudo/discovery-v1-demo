@@ -121,8 +121,8 @@ export function buildOrganizationalUnderstanding({
     falsifyingEvidence:
       theoryValidation.evidenceThatWouldFalsifyTheory,
 
-    executiveRecommendation:
-      theoryValidation.executiveRecommendation,
+        executiveRecommendation:
+      "See the canonical Executive Recommendation for action guidance. This organizational understanding retains theory validation only.",
 
     nextInvestigation: highestValueInvestigation
       ? {

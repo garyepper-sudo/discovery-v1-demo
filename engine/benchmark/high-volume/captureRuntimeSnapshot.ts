@@ -133,6 +133,13 @@ type ExtendedRuntimeMemory =
       };
     };
 
+    executiveRecommendation?: {
+      headline?: string;
+      executiveRecommendation?: string;
+      rationale?: string;
+      confidence?: number;
+    };
+
     memoryMaturity?: {
       score?: number;
     } | null;
@@ -437,6 +444,10 @@ export function captureRuntimeSnapshot(
 
       recommendation:
         firstText(
+          memory.executiveRecommendation
+            ?.executiveRecommendation,
+          memory.executiveRecommendation
+            ?.headline,
           organizationalUnderstanding
             ?.executiveRecommendation,
           theoryValidation
