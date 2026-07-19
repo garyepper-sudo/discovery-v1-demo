@@ -22,6 +22,14 @@ import {
   saveExecutiveWork,
 } from "../../v3/work/saveExecutiveWork";
 
+import {
+  createExecutiveReview,
+} from "../../v3/work/createExecutiveReview";
+
+import {
+  saveExecutiveReview,
+} from "../../v3/work/saveExecutiveReview";
+
 import type {
   ExecutiveDecision,
 } from "../../v3/model/simulate/executiveDecision";
@@ -302,6 +310,11 @@ const benchmarkRuntime = {
     executiveWork:
       runtime.memory
         .executiveWork ??
+      [],
+
+    executiveReviews:
+      runtime.memory
+        .executiveReviews ??
       [],
   },
 };
@@ -592,6 +605,120 @@ const persistedExecutiveWork =
         executiveWork.id,
     );
 
+const completedExecutiveWork = {
+  ...executiveWork,
+
+  status:
+    "completed" as const,
+
+  health:
+    "on-track" as const,
+
+  progress:
+    1,
+
+  updatedAt:
+    REVIEW_AT,
+};
+
+const observedOutcomes =
+  completedExecutiveWork
+    .expectedOutcomes
+    .map(
+      (outcome, index) => ({
+        expectedOutcomeId:
+          outcome.id,
+
+        observation:
+          index === 0
+            ? "Execution capacity improved materially after concurrent work was reduced."
+            : `Observed evidence was collected for ${outcome.description}.`,
+
+        achieved:
+          index ===
+          completedExecutiveWork
+            .expectedOutcomes
+            .length -
+            1
+            ? false
+            : true,
+
+        confidence:
+          index === 0
+            ? 0.92
+            : 0.84,
+      }),
+    );
+
+const executiveReview =
+  createExecutiveReview({
+    work:
+      completedExecutiveWork,
+
+    observedOutcomes,
+
+    reviewedAt:
+      REVIEW_AT,
+  });
+
+const deterministicExecutiveReview =
+  createExecutiveReview({
+    work:
+      completedExecutiveWork,
+
+    observedOutcomes,
+
+    reviewedAt:
+      REVIEW_AT,
+  });
+
+const reviewRuntimeInput = {
+  ...workRuntime,
+
+  memory: {
+    ...workRuntime.memory,
+
+    executiveWork:
+      workRuntime.memory
+        .executiveWork
+        .map(
+          (candidate) =>
+            candidate.id ===
+            completedExecutiveWork.id
+              ? completedExecutiveWork
+              : candidate,
+        ),
+  },
+};
+
+const runtimeSnapshotBeforeReviewSave =
+  JSON.stringify(
+    reviewRuntimeInput,
+  );
+
+const reviewRuntime =
+  saveExecutiveReview({
+    runtime:
+      reviewRuntimeInput,
+
+    review:
+      executiveReview,
+  });
+
+const runtimeSnapshotAfterReviewSave =
+  JSON.stringify(
+    reviewRuntimeInput,
+  );
+
+const persistedExecutiveReview =
+  reviewRuntime.memory
+    .executiveReviews
+    .find(
+      (candidate) =>
+        candidate.id ===
+        executiveReview.id,
+    );
+
 const hasUnderstanding =
   benchmarkRuntime.memory
     .organizationalConditions
@@ -658,30 +785,37 @@ const hasActiveExecutionTracking =
 
 const hasReviewFoundation =
   Boolean(record.reviewAt) &&
-  record.outcomeStatus ===
-    "not-reviewed";
+  completedExecutiveWork.status ===
+    "completed" &&
+  observedOutcomes.length > 0;
 
 const hasCompletedReview =
-  record.outcomeStatus !==
-    "not-reviewed";
+  Boolean(
+    persistedExecutiveReview,
+  ) &&
+  executiveReview.observedOutcomes
+    .length > 0 &&
+  executiveReview.status !==
+    "inconclusive";
 
 const hasLearningFoundation =
-  workRuntime.memory
+  reviewRuntime.memory
     .predictionEvaluations
     .length > 0 ||
-  workRuntime.memory
+  reviewRuntime.memory
     .organizationalUnderstandingState !==
     undefined;
 
+const reviewProducedLearning =
+  false;
+
 const hasDecisionOutcomeLearning =
   hasCompletedReview &&
-  workRuntime.memory
-    .predictionEvaluations
-    .length > 0;
+  reviewProducedLearning;
 
 const operatingModelChanged =
   JSON.stringify(
-    workRuntime.organizationModel,
+    reviewRuntime.organizationModel,
   ) !==
   JSON.stringify(
     benchmarkRuntime.organizationModel,
@@ -689,7 +823,7 @@ const operatingModelChanged =
 
 const organizationalMemoryChanged =
   JSON.stringify(
-    workRuntime.memory
+    reviewRuntime.memory
       .organizationalMemory,
   ) !==
   JSON.stringify(
@@ -879,14 +1013,18 @@ const lifecycleChecks:
 
       detail:
         hasCompletedReview
-          ? "Observed outcomes were reviewed against the original decision."
+          ? "Observed outcomes were evaluated against completed Executive Work and persisted as a canonical Executive Review."
           : hasReviewFoundation
-            ? "A review is scheduled, but no observed outcome evaluation has occurred."
+            ? "Completed Executive Work and observed outcomes exist, but the canonical review was not persisted."
             : "No review lifecycle is available.",
 
       evidence: [
-        `Review date: ${record.reviewAt ?? "none"}`,
-        `Outcome status: ${record.outcomeStatus}`,
+        `Review: ${persistedExecutiveReview?.id ?? "not found"}`,
+        `Review status: ${executiveReview.status}`,
+        `${executiveReview.observedOutcomes.length} observed outcome(s)`,
+        `Executive Work: ${executiveReview.executiveWorkId}`,
+        `Decision ancestry: ${executiveReview.decisionRecordId}`,
+        `Reviewed at: ${executiveReview.reviewedAt}`,
       ],
     },
 
@@ -903,20 +1041,19 @@ const lifecycleChecks:
 
       detail:
         hasDecisionOutcomeLearning
-          ? "Observed outcomes produced explicit learning that can influence future judgment."
+          ? "The Executive Review produced explicit learning that can influence future judgment."
           : hasLearningFoundation
-            ? "Discovery has organizational learning infrastructure, but this decision has not yet produced outcome-based learning."
+            ? "Discovery has organizational learning infrastructure, but this Executive Review has not yet produced review-specific learning."
             : "No usable organizational learning pathway was detected.",
 
       evidence: [
-        `${workRuntime.memory.predictionEvaluations.length} prediction evaluation(s)`,
+        `${reviewRuntime.memory.predictionEvaluations.length} pre-existing prediction evaluation(s)`,
         hasCompletedReview
-          ? "Decision review completed"
-          : "Decision review not completed",
-        workRuntime.memory
-          .organizationalUnderstandingState
-          ? "Persistent organizational understanding available"
-          : "Persistent organizational understanding missing",
+          ? "Executive Review completed"
+          : "Executive Review not completed",
+        reviewProducedLearning
+          ? "Review-specific learning produced"
+          : "No review-specific learning object was produced",
       ],
     },
 
@@ -1140,6 +1277,126 @@ const assertions:
 
     {
       name:
+        "Executive Review is deterministic",
+
+      passed:
+        JSON.stringify(
+          executiveReview,
+        ) ===
+        JSON.stringify(
+          deterministicExecutiveReview,
+        ),
+
+      detail:
+        JSON.stringify(
+          executiveReview,
+        ) ===
+        JSON.stringify(
+          deterministicExecutiveReview,
+        )
+          ? "Repeated review creation produced identical results."
+          : "Repeated review creation produced different results.",
+    },
+
+    {
+      name:
+        "Executive Review save does not mutate review Runtime",
+
+      passed:
+        runtimeSnapshotBeforeReviewSave ===
+        runtimeSnapshotAfterReviewSave,
+
+      detail:
+        runtimeSnapshotBeforeReviewSave ===
+        runtimeSnapshotAfterReviewSave
+          ? "Review Runtime remained unchanged."
+          : "Review Runtime changed during Executive Review persistence.",
+    },
+
+    {
+      name:
+        "Executive Review save returns a new Runtime",
+
+      passed:
+        reviewRuntime !==
+        reviewRuntimeInput,
+
+      detail:
+        reviewRuntime !==
+        reviewRuntimeInput
+          ? "A new Runtime object was returned."
+          : "The review Runtime object was reused.",
+    },
+
+    {
+      name:
+        "Executive Review persisted exactly once",
+
+      passed:
+        reviewRuntime.memory
+          .executiveReviews
+          .length ===
+        reviewRuntimeInput.memory
+          .executiveReviews
+          .length +
+          1,
+
+      detail:
+        `${reviewRuntimeInput.memory.executiveReviews.length} → ${reviewRuntime.memory.executiveReviews.length}`,
+    },
+
+    {
+      name:
+        "Persisted Executive Review matches produced review",
+
+      passed:
+        JSON.stringify(
+          persistedExecutiveReview,
+        ) ===
+        JSON.stringify(
+          executiveReview,
+        ),
+
+      detail:
+        persistedExecutiveReview?.id ??
+        "Executive Review not found.",
+    },
+
+    {
+      name:
+        "Executive Review preserves work and decision ancestry",
+
+      passed:
+        executiveReview.executiveWorkId ===
+          completedExecutiveWork.id &&
+        executiveReview.decisionRecordId ===
+          record.id &&
+        executiveReview.organizationId ===
+          ORGANIZATION_ID,
+
+      detail:
+        `${record.id} → ${completedExecutiveWork.id} → ${executiveReview.id}`,
+    },
+
+    {
+      name:
+        "Executive Review evaluates observed outcomes",
+
+      passed:
+        executiveReview.observedOutcomes
+          .length ===
+        completedExecutiveWork
+          .expectedOutcomes
+          .length &&
+        executiveReview.status !==
+          "inconclusive",
+
+      detail:
+        `${executiveReview.observedOutcomes.length} observed outcome(s), status ${executiveReview.status}`,
+    },
+
+    {
+      name:
         "Lifecycle preserves organization identity",
 
       passed:
@@ -1150,7 +1407,9 @@ const assertions:
           ORGANIZATION_ID &&
         executiveWork.organizationId ===
           ORGANIZATION_ID &&
-        workRuntime.metadata
+        executiveReview.organizationId ===
+          ORGANIZATION_ID &&
+        reviewRuntime.metadata
           .organizationId ===
           ORGANIZATION_ID,
 
@@ -1385,11 +1644,11 @@ console.log(
 );
 
 console.log(
-  "3. Compare expected outcomes with observed outcomes during Executive Review.",
+  "3. Preserve the new Executive Review foundation.",
 );
 
 console.log(
-  "4. Convert reviewed outcomes into explicit organizational learning.",
+  "4. Create and persist review-specific Executive Learning.",
 );
 
 console.log(
