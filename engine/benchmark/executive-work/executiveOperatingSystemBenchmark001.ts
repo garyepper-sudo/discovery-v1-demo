@@ -14,6 +14,14 @@ import {
   saveExecutiveDecisionRecord,
 } from "../../v3/decisions/saveExecutiveDecisionRecord";
 
+import {
+  createExecutiveWork,
+} from "../../v3/work/createExecutiveWork";
+
+import {
+  saveExecutiveWork,
+} from "../../v3/work/saveExecutiveWork";
+
 import type {
   ExecutiveDecision,
 } from "../../v3/model/simulate/executiveDecision";
@@ -290,6 +298,11 @@ const benchmarkRuntime = {
       runtime.memory
         .executiveDecisionRecords ??
       [],
+
+    executiveWork:
+      runtime.memory
+        .executiveWork ??
+      [],
   },
 };
 
@@ -542,6 +555,43 @@ const persistedRecord =
         record.id,
     );
 
+const executiveWork =
+  createExecutiveWork({
+    decisionRecord:
+      record,
+
+    createdAt:
+      NOW,
+  });
+
+const runtimeSnapshotBeforeWorkSave =
+  JSON.stringify(
+    updatedRuntime,
+  );
+
+const workRuntime =
+  saveExecutiveWork({
+    runtime:
+      updatedRuntime,
+
+    work:
+      executiveWork,
+  });
+
+const runtimeSnapshotAfterWorkSave =
+  JSON.stringify(
+    updatedRuntime,
+  );
+
+const persistedExecutiveWork =
+  workRuntime.memory
+    .executiveWork
+    .find(
+      (candidate) =>
+        candidate.id ===
+        executiveWork.id,
+    );
+
 const hasUnderstanding =
   benchmarkRuntime.memory
     .organizationalConditions
@@ -585,18 +635,26 @@ const hasCommitment =
   Boolean(persistedRecord);
 
 const hasTrackingFoundation =
-  record.expectedOutcomes.length >
+  Boolean(
+    persistedExecutiveWork,
+  ) &&
+  executiveWork.decisionRecordId ===
+    record.id &&
+  executiveWork.expectedOutcomes.length >
     0 &&
-  record.successCriteria.length >
+  executiveWork.successCriteria.length >
     0 &&
-  Boolean(record.owner) &&
-  Boolean(record.reviewAt);
+  Boolean(executiveWork.owner) &&
+  Boolean(executiveWork.reviewAt);
 
 const hasActiveExecutionTracking =
-  record.status ===
-    "in-progress" ||
-  record.status ===
-    "completed";
+  hasTrackingFoundation &&
+  executiveWork.status ===
+    "not-started" &&
+  executiveWork.health ===
+    "unknown" &&
+  executiveWork.progress ===
+    0;
 
 const hasReviewFoundation =
   Boolean(record.reviewAt) &&
@@ -608,22 +666,22 @@ const hasCompletedReview =
     "not-reviewed";
 
 const hasLearningFoundation =
-  updatedRuntime.memory
+  workRuntime.memory
     .predictionEvaluations
     .length > 0 ||
-  updatedRuntime.memory
+  workRuntime.memory
     .organizationalUnderstandingState !==
     undefined;
 
 const hasDecisionOutcomeLearning =
   hasCompletedReview &&
-  updatedRuntime.memory
+  workRuntime.memory
     .predictionEvaluations
     .length > 0;
 
 const operatingModelChanged =
   JSON.stringify(
-    updatedRuntime.organizationModel,
+    workRuntime.organizationModel,
   ) !==
   JSON.stringify(
     benchmarkRuntime.organizationModel,
@@ -631,7 +689,7 @@ const operatingModelChanged =
 
 const organizationalMemoryChanged =
   JSON.stringify(
-    updatedRuntime.memory
+    workRuntime.memory
       .organizationalMemory,
   ) !==
   JSON.stringify(
@@ -791,16 +849,20 @@ const lifecycleChecks:
 
       detail:
         hasActiveExecutionTracking
-          ? "The committed Executive Work item is actively tracking execution."
+          ? "The committed decision was converted into a persisted Executive Work item with a canonical initial execution state."
           : hasTrackingFoundation
-            ? "The decision record contains expected outcomes, success criteria, ownership, and review timing, but no active execution-tracking update occurred."
-            : "The decision record lacks the minimum data required for execution tracking.",
+            ? "Executive Work exists, but its initial execution state does not satisfy the canonical tracking contract."
+            : "The committed decision was not converted into persistent Executive Work.",
 
       evidence: [
-        `${record.expectedOutcomes.length} expected outcome(s)`,
-        `${record.successCriteria.length} success criterion or criteria`,
-        `Lifecycle status: ${record.status}`,
-        `Review date: ${record.reviewAt ?? "none"}`,
+        `Work item: ${persistedExecutiveWork?.id ?? "not found"}`,
+        `Decision ancestry: ${executiveWork.decisionRecordId}`,
+        `Status: ${executiveWork.status}`,
+        `Health: ${executiveWork.health}`,
+        `Progress: ${executiveWork.progress}`,
+        `${executiveWork.expectedOutcomes.length} expected outcome(s)`,
+        `${executiveWork.successCriteria.length} success criterion or criteria`,
+        `Review date: ${executiveWork.reviewAt}`,
       ],
     },
 
@@ -847,11 +909,11 @@ const lifecycleChecks:
             : "No usable organizational learning pathway was detected.",
 
       evidence: [
-        `${updatedRuntime.memory.predictionEvaluations.length} prediction evaluation(s)`,
+        `${workRuntime.memory.predictionEvaluations.length} prediction evaluation(s)`,
         hasCompletedReview
           ? "Decision review completed"
           : "Decision review not completed",
-        updatedRuntime.memory
+        workRuntime.memory
           .organizationalUnderstandingState
           ? "Persistent organizational understanding available"
           : "Persistent organizational understanding missing",
@@ -984,6 +1046,100 @@ const assertions:
 
     {
       name:
+        "Executive Work save does not mutate decision Runtime",
+
+      passed:
+        runtimeSnapshotBeforeWorkSave ===
+        runtimeSnapshotAfterWorkSave,
+
+      detail:
+        runtimeSnapshotBeforeWorkSave ===
+        runtimeSnapshotAfterWorkSave
+          ? "Decision Runtime remained unchanged."
+          : "Decision Runtime changed during Executive Work persistence.",
+    },
+
+    {
+      name:
+        "Executive Work save returns a new Runtime",
+
+      passed:
+        workRuntime !==
+        updatedRuntime,
+
+      detail:
+        workRuntime !==
+        updatedRuntime
+          ? "A new Runtime object was returned."
+          : "The decision Runtime object was reused.",
+    },
+
+    {
+      name:
+        "Executive Work persisted exactly once",
+
+      passed:
+        workRuntime.memory
+          .executiveWork
+          .length ===
+        updatedRuntime.memory
+          .executiveWork
+          .length +
+          1,
+
+      detail:
+        `${updatedRuntime.memory.executiveWork.length} → ${workRuntime.memory.executiveWork.length}`,
+    },
+
+    {
+      name:
+        "Persisted Executive Work matches produced work",
+
+      passed:
+        JSON.stringify(
+          persistedExecutiveWork,
+        ) ===
+        JSON.stringify(
+          executiveWork,
+        ),
+
+      detail:
+        persistedExecutiveWork?.id ??
+        "Executive Work not found.",
+    },
+
+    {
+      name:
+        "Executive Work preserves decision ancestry",
+
+      passed:
+        executiveWork.decisionRecordId ===
+          record.id &&
+        executiveWork.organizationId ===
+          record.organizationId,
+
+      detail:
+        `${record.id} → ${executiveWork.id}`,
+    },
+
+    {
+      name:
+        "Executive Work begins in canonical tracking state",
+
+      passed:
+        executiveWork.status ===
+          "not-started" &&
+        executiveWork.health ===
+          "unknown" &&
+        executiveWork.progress ===
+          0,
+
+      detail:
+        `${executiveWork.status}, ${executiveWork.health}, progress ${executiveWork.progress}`,
+    },
+
+    {
+      name:
         "Lifecycle preserves organization identity",
 
       passed:
@@ -992,7 +1148,9 @@ const assertions:
             .organizationId &&
         record.organizationId ===
           ORGANIZATION_ID &&
-        updatedRuntime.metadata
+        executiveWork.organizationId ===
+          ORGANIZATION_ID &&
+        workRuntime.metadata
           .organizationId ===
           ORGANIZATION_ID,
 
@@ -1223,11 +1381,11 @@ console.log(
 );
 
 console.log(
-  "2. Extend the persisted Executive Decision Record into active execution tracking.",
+  "2. Preserve the new Executive Work tracking foundation.",
 );
 
 console.log(
-  "3. Compare expected outcomes with observed outcomes during executive review.",
+  "3. Compare expected outcomes with observed outcomes during Executive Review.",
 );
 
 console.log(

@@ -5,6 +5,9 @@ import type {
 import type {
   ExecutiveDecisionRecord,
 } from "../decisions/executiveDecisionRecord";
+import type {
+  ExecutiveWork,
+} from "../work/executiveWork";
 import type { EntityMention } from "../entities/entityLifecycle";
 import type { ExecutiveState } from "../executive/executiveState";
 import type { OrganizationalCausalModel } from "../model/causal/organizationalCausalModel";
@@ -205,6 +208,14 @@ export type OrganizationRuntimeMemory = {
    * outcomes, success criteria, and the future review lifecycle.
    */
   executiveDecisionRecords: ExecutiveDecisionRecord[];
+
+  /**
+   * Active Executive Work items created from committed decisions.
+   *
+   * These represent the living execution state of approved work and
+   * evolve throughout Track, Review, and Learning.
+   */
+  executiveWork: ExecutiveWork[];
 };
 
 export type OrganizationRuntimeOrganism = {
@@ -337,6 +348,8 @@ export function createEmptyOrganizationRuntime(params: {
       executiveSimulation: undefined,
 
       executiveDecisionRecords: [],
+
+      executiveWork: [],
     },
 
     organism: {
