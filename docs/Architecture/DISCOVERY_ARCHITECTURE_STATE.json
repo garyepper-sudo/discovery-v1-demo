@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-19T16:53:21.454Z",
+    "generatedAt": "2026-07-19T21:57:09.498Z",
     "generator": "scripts/cognition/generateArchitectureState.mjs",
     "sourceOfTruthOrder": [
       "Verified source code",
@@ -27,10 +27,10 @@
     ]
   },
   "architecture": {
-    "status": "healthy",
-    "healthScore": 100,
-    "capabilityCount": 30,
-    "canonicalProducerCount": 30,
+    "status": "review-required",
+    "healthScore": 80,
+    "capabilityCount": 32,
+    "canonicalProducerCount": 32,
     "registeredFileCount": 585,
     "cognitiveObjectCount": 33,
     "terminalCapabilityCount": 6,
@@ -41,7 +41,7 @@
       "missingDependencyCount": 0,
       "missingCanonicalProducerCount": 0,
       "capabilitiesWithoutProducerCount": 0,
-      "capabilitiesWithoutConsumersCount": 0,
+      "capabilitiesWithoutConsumersCount": 2,
       "capabilitiesWithoutRuntimeDestinationCount": 0,
       "multiCapabilityFileCount": 0
     }
@@ -1439,7 +1439,7 @@
     {
       "id": "CAP-DEC-001",
       "name": "Executive Decision Orchestration",
-      "description": "Coordinates Discovery's complete non-mutating executive decision cycle by synthesizing the canonical Executive Optimization Objective, generating and evaluating intervention options, simulating candidate organizational futures from the same baseline, invoking comparison and ranking capabilities, and assembling the final executive recommendation.",
+      "description": "Coordinates Discovery's complete non-mutating executive decision cycle by synthesizing the canonical Executive Optimization Objective, generating and evaluating intervention options, simulating candidate organizational futures from the same baseline, invoking comparison and ranking capabilities, and assembling the final executive recommendation.  The Executive Decision Cycle now consumes deterministic longitudinal confidence calibration derived from reviewed executive outcomes while preserving recommendation ranking independence.",
       "domain": "DEC",
       "architecturalLayer": "EXEC",
       "subsystem": "Executive Decision Orchestration",
@@ -1624,7 +1624,7 @@
     {
       "id": "CAP-DEC-004",
       "name": "Executive Recommendation Synthesis",
-      "description": "Synthesizes the final executive recommendation from the ranked scenario set, preserving the recommended intervention, recommendation status, confidence, expected benefits, trade-offs, risks, assumptions, next-best alternative, and evidence that could change Discovery's conclusion.",
+      "description": "Synthesizes the final executive recommendation from the ranked scenario set, preserving the recommended intervention, recommendation status, confidence, expected benefits, trade-offs, risks, assumptions, next-best alternative, and evidence that could change Discovery's conclusion. Recommendation confidence is produced through canonical confidence calibration, including Organizational Uncertainty, constraint completeness, and longitudinal executive learning.",
       "domain": "DEC",
       "architecturalLayer": "EXEC",
       "subsystem": "Executive Recommendation",
@@ -1740,6 +1740,89 @@
       },
       "searchTerms": [],
       "notes": "Canonical producer for converting a completed non-mutating Executive Decision Cycle and an explicit leadership response into a durable Executive Decision Record. It preserves generated Intervention Option identity separately from executable Organizational Intervention identity, records accepted, modified, alternative, deferred, or rejected dispositions, and does not alter organizational cognition. Persistence is performed through saveExecutiveDecisionRecord() and persistOrganizationRuntimeState() without incrementing investigation count."
+    },
+    {
+      "id": "CAP-DEC-006",
+      "name": "Executive Work Lifecycle",
+      "description": "Transforms a recorded Executive Decision into executable Executive Work, evaluates observed outcomes through Executive Review, synthesizes Executive Learning, and proposes Operating Model Improvements while preserving complete executive lifecycle ancestry.",
+      "domain": "DEC",
+      "architecturalLayer": null,
+      "subsystem": null,
+      "status": "canonical",
+      "reviewStatus": null,
+      "ownership": {
+        "ownsObjects": [],
+        "ownsCanonicalProducer": "engine/v3/work/createExecutiveWork.ts",
+        "implementationFiles": [],
+        "doesNotOwn": []
+      },
+      "relationships": {
+        "consumesCapabilities": [],
+        "consumedByCapabilities": [],
+        "terminalCapability": false
+      },
+      "destinations": {
+        "runtime": null,
+        "executive": []
+      },
+      "validation": {
+        "atlasCoverage": null,
+        "benchmarkCoverage": [
+          "Executive Operating System Benchmark 001",
+          "Executive Learning Calibration Benchmark 001"
+        ],
+        "canonicalProducerExists": false,
+        "missingImplementationFiles": [],
+        "capabilityTrace": {
+          "exists": false,
+          "connected": null,
+          "pipelineCoverage": null,
+          "tracePath": "docs/Sprint Updates/Capability Traces/cap-dec-006.md"
+        }
+      },
+      "searchTerms": [],
+      "notes": ""
+    },
+    {
+      "id": "CAP-DEC-007",
+      "name": "Longitudinal Executive Judgment",
+      "description": "Improves future executive confidence by consuming reviewed organizational experience preserved as typed PersistentBeliefs while maintaining deterministic recommendation behavior.",
+      "domain": "DEC",
+      "architecturalLayer": null,
+      "subsystem": null,
+      "status": "canonical",
+      "reviewStatus": null,
+      "ownership": {
+        "ownsObjects": [],
+        "ownsCanonicalProducer": "engine/v3/decisions/calibrateDecisionConfidence.ts",
+        "implementationFiles": [],
+        "doesNotOwn": []
+      },
+      "relationships": {
+        "consumesCapabilities": [],
+        "consumedByCapabilities": [],
+        "terminalCapability": false
+      },
+      "destinations": {
+        "runtime": null,
+        "executive": []
+      },
+      "validation": {
+        "atlasCoverage": null,
+        "benchmarkCoverage": [
+          "Executive Judgment Longitudinal Benchmark 001"
+        ],
+        "canonicalProducerExists": false,
+        "missingImplementationFiles": [],
+        "capabilityTrace": {
+          "exists": false,
+          "connected": null,
+          "pipelineCoverage": null,
+          "tracePath": "docs/Sprint Updates/Capability Traces/cap-dec-007.md"
+        }
+      },
+      "searchTerms": [],
+      "notes": ""
     },
     {
       "id": "CAP-OPT-001",
@@ -2244,6 +2327,20 @@
         "DecisionReview"
       ]
     },
+    "CAP-DEC-006": {
+      "name": "Executive Work Lifecycle",
+      "ownsObjects": [],
+      "canonicalProducer": "engine/v3/work/createExecutiveWork.ts",
+      "runtimeDestination": null,
+      "executiveDestinations": []
+    },
+    "CAP-DEC-007": {
+      "name": "Longitudinal Executive Judgment",
+      "ownsObjects": [],
+      "canonicalProducer": "engine/v3/decisions/calibrateDecisionConfidence.ts",
+      "runtimeDestination": null,
+      "executiveDestinations": []
+    },
     "CAP-OPT-001": {
       "name": "Optimization Variable Selection",
       "ownsObjects": [
@@ -2443,7 +2540,7 @@
       "missingDependencies": 0,
       "missingCanonicalProducers": 0,
       "capabilitiesWithoutProducer": 0,
-      "capabilitiesWithoutConsumers": 0,
+      "capabilitiesWithoutConsumers": 2,
       "capabilitiesWithoutRuntimeDestination": 0,
       "filesImplementingMultipleCapabilities": 0
     },
@@ -2510,6 +2607,8 @@
       "Do not recreate Executive Decision Ranking; extend CAP-DEC-003 unless a distinct responsibility is proven.",
       "Do not recreate Executive Recommendation Synthesis; extend CAP-DEC-004 unless a distinct responsibility is proven.",
       "Do not recreate Executive Decision Recording; extend CAP-DEC-005 unless a distinct responsibility is proven.",
+      "Do not recreate Executive Work Lifecycle; extend CAP-DEC-006 unless a distinct responsibility is proven.",
+      "Do not recreate Longitudinal Executive Judgment; extend CAP-DEC-007 unless a distinct responsibility is proven.",
       "Do not recreate Optimization Variable Selection; extend CAP-OPT-001 unless a distinct responsibility is proven.",
       "Do not recreate Executive Optimization Objective Synthesis; extend CAP-OPT-002 unless a distinct responsibility is proven.",
       "Do not recreate Executive Communication Synthesis; extend CAP-COM-001 unless a distinct responsibility is proven."

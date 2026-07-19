@@ -1,6 +1,6 @@
 # Capability Trace — Organizational Learning Profile
 
-Generated: 2026-07-19T16:53:20.757Z
+Generated: 2026-07-19T21:57:08.782Z
 
 ## Verified Architecture
 

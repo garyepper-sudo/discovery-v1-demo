@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-07-19T16:53:19.615Z",
-  "capabilityCount": 30,
+  "generatedAt": "2026-07-19T21:57:07.541Z",
+  "capabilityCount": 32,
   "health": {
     "duplicateIdCount": 0,
     "missingDependencyCount": 0,
     "missingCanonicalProducerCount": 0,
     "capabilitiesWithoutProducerCount": 0,
-    "capabilitiesWithoutConsumersCount": 0,
+    "capabilitiesWithoutConsumersCount": 2,
     "capabilitiesWithoutRuntimeDestinationCount": 0,
     "multiCapabilityFileCount": 0
   },
@@ -14,7 +14,10 @@
   "missingDependencies": [],
   "missingCanonicalProducers": [],
   "capabilitiesWithoutProducer": [],
-  "capabilitiesWithoutConsumers": [],
+  "capabilitiesWithoutConsumers": [
+    "CAP-DEC-006",
+    "CAP-DEC-007"
+  ],
   "capabilitiesWithoutRuntimeDestination": [],
   "filesImplementingMultipleCapabilities": []
 }

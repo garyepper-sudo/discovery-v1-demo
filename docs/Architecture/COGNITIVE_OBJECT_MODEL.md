@@ -1,6 +1,6 @@
 # Discovery Cognitive Object Model
 
-**Status:** Canonical (Sprint 73)
+**Status:** Canonical (Sprint 74)
 
 ---
 
@@ -21,7 +21,7 @@ They are distinct from:
 
 The canonical relationship is:
 
-```text id="gyjjh0"
+```text
 Cognitive Object
 
 ↓
@@ -41,7 +41,7 @@ Every cognitive capability owns one primary cognitive object.
 
 # Canonical Cognitive Pipeline
 
-```text id="m1vnyr"
+```text
 Evidence
 
 ↓
@@ -126,6 +126,30 @@ Executive Recommendation
 
 ↓
 
+Executive Work
+
+↓
+
+Executive Review
+
+↓
+
+Executive Learning
+
+↓
+
+Operating Model Improvement
+
+↓
+
+Persistent Organizational Belief
+
+↓
+
+Future Executive Judgment
+
+↓
+
 Executive Explanation
 
 ↓
@@ -139,25 +163,13 @@ Executive Narrative
 ↓
 
 Executive Workspace
-
-↓
-
-Executive Decision
-
-↓
-
-Observed Outcome
-
-↓
-
-Prediction Evaluation
-
-↓
-
-Organizational Learning
 ```
 
-Discovery now possesses a complete executive cognition pipeline from organizational evidence through executive decision-making and longitudinal learning.
+Discovery now possesses a complete executive cognition pipeline from organizational evidence through adaptive executive judgment.
+
+Executive cognition is now longitudinal.
+
+Reviewed executive outcomes become persistent organizational knowledge that influences future executive decisions.
 
 ---
 
@@ -181,7 +193,7 @@ Every cognitive object defines:
 
 # Core Cognitive Object Classes
 
-Discovery currently contains ten major cognitive object classes.
+Discovery currently contains eleven major cognitive object classes.
 
 ---
 
@@ -189,7 +201,7 @@ Discovery currently contains ten major cognitive object classes.
 
 Represent structured organizational reality.
 
-Examples
+Objects include:
 
 * Evidence
 * Entity
@@ -219,14 +231,19 @@ Objects include:
 
 # 3. Learning Objects
 
-Represent longitudinal organizational cognition.
+Represent executive experience and longitudinal organizational learning.
 
 Objects include:
 
+* Executive Review
+* Executive Learning
 * Belief Revision
 * Theory Evolution
-* Learning Event
+* Prediction Evaluation
 * Organizational Learning Profile
+* Operating Model Improvement
+
+Learning now produces durable organizational cognition rather than temporary analytical artifacts.
 
 ---
 
@@ -264,7 +281,7 @@ Objects include:
 
 # 6. Decision Objects
 
-Represent executive intent.
+Represent executive intent and adaptive executive reasoning.
 
 Objects include:
 
@@ -272,10 +289,11 @@ Objects include:
 * Executive Constraint
 * Executive Success Metric
 * Executive Decision Cycle
+* Executive Work
 
 Decision defines the executive problem.
 
-It does not define the solution.
+Executive Work represents intentional executive action.
 
 ---
 
@@ -293,6 +311,10 @@ Objects include:
 
 Optimization determines the strongest organizational future.
 
+Simulation evaluates alternatives.
+
+Optimization selects among them.
+
 ---
 
 # 8. Simulation Objects
@@ -305,9 +327,9 @@ Objects include:
 * Simulated Organizational State
 * Scenario Comparison
 
-Simulation evaluates futures.
+Simulation evaluates organizational futures.
 
-Optimization selects among them.
+Optimization selects the preferred future.
 
 ---
 
@@ -317,10 +339,10 @@ Communicate canonical cognition.
 
 Objects include:
 
+* Executive Recommendation
 * Executive Explanation
 * Executive Projection
 * Executive Narrative
-* Executive Recommendation
 
 Executive Communication performs no independent reasoning.
 
@@ -330,7 +352,7 @@ It communicates canonical cognition.
 
 # 10. Runtime Objects
 
-Persist cognition across investigations.
+Persist cognition across executive decisions.
 
 Objects include:
 
@@ -340,6 +362,33 @@ Objects include:
 * Organizational Learning Profile
 * Organizational Uncertainty
 * Executive Explanation
+* Operating Model Improvement
+
+Runtime stores cognition.
+
+It never stores presentation.
+
+---
+
+# 11. Longitudinal Memory Objects
+
+Represent reusable executive experience.
+
+Objects include:
+
+* Persistent Organizational Belief
+* Strategy Learning
+* Executive Outcome History
+
+Persistent organizational beliefs now preserve:
+
+* strategy ancestry,
+* executive lifecycle ancestry,
+* observed outcome confidence,
+* organizational learning,
+* executive decision provenance.
+
+These objects enable Discovery to improve future executive judgment through deterministic longitudinal learning.
 
 ---
 
@@ -361,16 +410,20 @@ Narrative communicates cognition.
 
 Presentation consumes cognition.
 
+No consumer recreates cognition already produced elsewhere.
+
 ---
 
 # Executive Communication Pipeline
 
-```text id="4dkg9e"
+```text
 Executive Assessment
 +
 Organizational Uncertainty
 +
-Refined Investigation Opportunities
+Executive Recommendation
++
+Longitudinal Executive Judgment
 
 ↓
 
@@ -389,13 +442,57 @@ Executive Narrative
 Executive Workspace
 ```
 
+Executive Communication now communicates both current organizational understanding and accumulated executive experience.
+
+---
+
+# Executive Learning Pipeline
+
+```text
+Executive Recommendation
+
+↓
+
+Executive Work
+
+↓
+
+Observed Outcomes
+
+↓
+
+Executive Review
+
+↓
+
+Executive Learning
+
+↓
+
+Operating Model Improvement
+
+↓
+
+Persistent Organizational Belief
+
+↓
+
+Future Executive Judgment
+```
+
+This pipeline closes Discovery's executive learning loop.
+
+Executive learning is no longer passive.
+
+Every completed executive decision becomes reusable organizational cognition.
+
 ---
 
 # Provenance
 
 Every recommendation should answer:
 
-```text id="z7v7d8"
+```text
 Recommendation
 
 ↓
@@ -404,11 +501,23 @@ Winning Strategy
 
 ↓
 
-Optimization Objective
+Executive Decision
 
 ↓
 
-Executive Decision
+Executive Work
+
+↓
+
+Executive Review
+
+↓
+
+Executive Learning
+
+↓
+
+Persistent Organizational Belief
 
 ↓
 
@@ -461,23 +570,25 @@ Canonical Object Domains
 * Simulation Objects
 * Executive Communication Objects
 * Runtime Objects
+* Longitudinal Memory Objects
 
 ---
 
 # Current Architectural Focus
 
-Discovery has evolved from an Organizational Understanding Engine into an Executive Cognitive Operating System.
+Discovery has evolved from an Organizational Understanding Engine into an adaptive Executive Cognitive Operating System.
 
 Current development focuses on:
 
-* Executive Experience
-* Executive Explanation
-* Executive Narrative
+* Executive Judgment Quality
+* Longitudinal Executive Learning
 * Executive Trust
+* Decision Optimization
+* Executive Experience
 * Behavioral Stress Testing
 * Customer Validation
 
-Future work should strengthen existing cognitive transformations through producer → consumer migration rather than introducing parallel reasoning.
+Future work should improve existing producer → consumer transformations rather than introducing parallel reasoning systems.
 
 ---
 
@@ -489,5 +600,6 @@ The Cognitive Object Model is complete when:
 * every object has exactly one canonical producer,
 * every recommendation remains traceable to organizational evidence,
 * every executive explanation remains traceable to canonical cognition,
-* every completed decision improves future organizational understanding,
-* and Discovery continuously transforms organizational evidence into progressively better executive judgment.
+* every completed executive decision becomes reusable organizational cognition,
+* every future executive decision benefits from prior reviewed outcomes,
+* and Discovery continuously improves executive judgment through longitudinal organizational learning.

@@ -1,6 +1,6 @@
 # Executive Cognitive Operating System
 
-**Status:** Canonical (Sprint 73)
+**Status:** Canonical (Sprint 74)
 
 ---
 
@@ -48,7 +48,7 @@ Every downstream capability consumes canonical cognition rather than rebuilding 
 
 # Executive Cognitive Loop
 
-Discovery continuously executes the following executive cognition loop.
+Discovery continuously executes the following adaptive executive cognition loop.
 
 ```text
 Evidence
@@ -79,30 +79,46 @@ Simulation
 
 ↓
 
-Executive Explanation
+Executive Recommendation
+
+↓
+
+Executive Work
+
+↓
+
+Executive Review
+
+↓
+
+Executive Learning
+
+↓
+
+Operating Model Improvement
+
+↓
+
+Persistent Organizational Memory
+
+↓
+
+Future Executive Judgment
+
+↓
+
+Executive Communication
 
 ↓
 
 Executive Experience
-
-↓
-
-Executive Decision
-
-↓
-
-Observed Outcome
-
-↓
-
-Learning
-
-↓
-
-Improved Understanding
 ```
 
-Every completed executive decision improves Discovery's future cognition.
+Unlike traditional decision support systems, Discovery does not simply remember previous work.
+
+Every completed executive decision produces structured organizational learning that becomes reusable cognition for future executive judgment.
+
+Executive experience therefore improves over time through deterministic longitudinal learning.
 
 ---
 
@@ -174,9 +190,9 @@ Improve organizational cognition over time.
 - Prediction Evaluation
 - Organizational Learning Profile
 
-Learning never directly changes recommendations.
+Learning improves organizational understanding.
 
-Learning changes future understanding.
+It does not directly modify executive recommendations.
 
 ---
 
@@ -209,22 +225,28 @@ No other Operating System independently determines certainty.
 
 ### Responsibility
 
-Define the executive problem.
+Determine the highest-value executive decision and continuously improve executive judgment through reviewed organizational experience.
 
 ### Answers
 
 - Which decision matters most?
 - What outcome is desired?
 - Which constraints exist?
+- What has Discovery previously learned about similar strategies?
 
 ### Produces
 
 - Executive Decision
 - Executive Decision Cycle
+- Executive Work
+- Executive Review
+- Executive Learning
+- Operating Model Improvement
+- Longitudinal Executive Judgment
 
-Decision identifies the problem.
+The Executive Decision Operating System is now a closed adaptive feedback loop.
 
-Decision does not determine the solution.
+Reviewed executive outcomes become persistent organizational knowledge that influences future executive confidence through deterministic longitudinal learning.
 
 ---
 
@@ -251,7 +273,9 @@ Determine the strongest organizational future.
 
 Optimization consumes simulation.
 
-Simulation never replaces optimization.
+Simulation evaluates alternatives.
+
+Optimization selects among them.
 
 ---
 
@@ -271,9 +295,11 @@ Evaluate organizational futures.
 - Simulated Organizational State
 - Scenario Comparison
 
-Simulation evaluates futures.
+Simulation predicts organizational futures.
 
-Optimization selects among them.
+Optimization evaluates those futures.
+
+Executive Decision selects the preferred intervention.
 
 ---
 
@@ -302,6 +328,29 @@ It communicates cognition produced elsewhere.
 
 ---
 
+# Longitudinal Executive Judgment
+
+Executive judgment is now adaptive.
+
+Discovery no longer evaluates every executive strategy as if it has never been attempted before.
+
+Instead, reviewed executive outcomes become typed organizational beliefs that preserve:
+
+- strategy ancestry,
+- executive lifecycle ancestry,
+- observed outcome confidence,
+- organizational learning.
+
+Future executive decisions consume those persistent beliefs during confidence calibration.
+
+Longitudinal learning therefore changes executive confidence while preserving deterministic reasoning.
+
+Strategy ranking remains independent.
+
+Confidence becomes experience-aware.
+
+---
+
 # Canonical Producer Architecture
 
 Every Operating System follows the same architecture.
@@ -323,6 +372,14 @@ Runtime
 
 ↓
 
+Persistent Organizational Memory
+
+↓
+
+Consumer
+
+↓
+
 Projection
 
 ↓
@@ -336,7 +393,7 @@ Executive Experience
 
 Only canonical producers perform reasoning.
 
-Everything downstream communicates existing cognition.
+Everything downstream communicates or reuses existing cognition.
 
 ---
 
@@ -354,10 +411,14 @@ Runtime persists:
 - Executive Assessment
 - Executive Explanation
 - Executive Decision
+- Executive Work
+- Executive Review
+- Executive Learning
+- Operating Model Improvement
 - Organizational Simulation
 - Organizational Memory
 
-These become reusable cognitive objects.
+Persistent Organizational Memory becomes reusable cognition for future executive decisions.
 
 ---
 
@@ -371,17 +432,18 @@ Executives should experience:
 - uncertainty,
 - recommendations,
 - simulations,
-- learning.
+- learning,
+- continuously improving executive judgment.
 
 The architecture should become invisible.
 
-Discovery should feel like thinking with another executive rather than operating software.
+Discovery should feel like thinking with another executive that learns from every completed decision.
 
 ---
 
 # Architectural Evolution
 
-Discovery evolves through one preferred mechanism:
+Discovery evolves through one preferred mechanism.
 
 ```text
 Canonical Producer
@@ -389,6 +451,10 @@ Canonical Producer
 ↓
 
 Canonical Runtime Object
+
+↓
+
+Persistent Organizational Memory
 
 ↓
 
@@ -403,6 +469,7 @@ This allows:
 
 - reasoning to remain centralized,
 - cognition to remain reusable,
+- executive judgment to improve longitudinally,
 - products to evolve without duplicating intelligence.
 
 ---
@@ -425,13 +492,19 @@ Discovery follows these architectural principles.
 
 > Runtime stores cognition.
 
+> Organizational Memory preserves cognition.
+
 > Learning improves future cognition.
+
+> Reviewed executive outcomes improve future executive judgment.
+
+> Executive confidence becomes experience-aware.
 
 > Every recommendation remains traceable to evidence.
 
 > Every uncertainty recommends its highest-value investigation.
 
-> Every completed executive decision improves future executive judgment.
+> Every completed executive decision leaves the organization cognitively stronger than before.
 
 ---
 
@@ -445,4 +518,6 @@ Its purpose is to continuously improve executive judgment through reusable organ
 
 Every Operating System exists to answer one executive question.
 
-Together they create an executive thinking system that becomes progressively more capable with every completed decision.
+Together they create an adaptive executive thinking system that becomes progressively more capable with every completed decision.
+
+Discovery now possesses a complete longitudinal executive judgment loop in which reviewed executive outcomes become persistent organizational knowledge that measurably improves future executive decisions.

@@ -1,6 +1,6 @@
 # Capability Trace — Executive Understanding Synthesis
 
-Generated: 2026-07-19T16:53:20.478Z
+Generated: 2026-07-19T21:57:08.492Z
 
 ## Verified Architecture
 
@@ -70,6 +70,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `components/executive-v2/projection/buildExecutiveProjection.ts`
 - `components/results/SemanticConceptInspector.tsx`
 - `engine/benchmark/auditUnderstandingLayers.ts`
+- `engine/benchmark/executive-work/executiveOperatingSystemBenchmark001.ts`
 - `engine/benchmark/high-volume/captureRuntimeSnapshot.ts`
 - `engine/benchmark/high-volume/northstar/runNorthstarPrecisionGap001.ts`
 - `engine/benchmark/high-volume/northstar/scoreNorthstarGroundTruth.ts`
@@ -149,7 +150,7 @@ This section records source-code references. It supplements, but does not replac
 | UI | ✅ Found | 3 |
 | API | ❌ Not found | 0 |
 | Simulation | ✅ Found | 7 |
-| Benchmark | ✅ Found | 52 |
+| Benchmark | ✅ Found | 53 |
 | Other | ✅ Found | 8 |
 
 ### Detailed Matches
@@ -171,11 +172,11 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 1 · **import** · matched `OrganizationalUnderstanding`
   - `import { buildOrganizationalUnderstanding } from "./buildOrganizationalUnderstanding";`
-- Line 479 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 486 · **unknown** · matched `OrganizationalUnderstanding`
   - `const organizationalUnderstanding =`
-- Line 480 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 487 · **unknown** · matched `OrganizationalUnderstanding`
   - `buildOrganizationalUnderstanding({`
-- Line 522 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 529 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstanding,`
 
 ##### `engine/v3/model/judgment/buildOrganizationalUnderstanding.ts`
@@ -484,19 +485,19 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/runtime/organizationRuntime.ts`
 
-- Line 44 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 56 · **unknown** · matched `OrganizationalUnderstanding`
   - `createEmptyOrganizationalUnderstandingState,`
-- Line 45 · **import** · matched `OrganizationalUnderstanding`
+- Line 57 · **import** · matched `OrganizationalUnderstanding`
   - `} from "./organizationalUnderstandingState";`
-- Line 47 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 59 · **unknown** · matched `OrganizationalUnderstanding`
   - `OrganizationalUnderstandingState,`
-- Line 48 · **import** · matched `OrganizationalUnderstanding`
+- Line 60 · **import** · matched `OrganizationalUnderstanding`
   - `} from "./organizationalUnderstandingState";`
-- Line 88 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 100 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState: OrganizationalUnderstandingState;`
-- Line 264 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 301 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 265 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 302 · **unknown** · matched `OrganizationalUnderstanding`
   - `createEmptyOrganizationalUnderstandingState({`
 
 ##### `engine/v3/runtime/organizationalUnderstandingState.ts`
@@ -634,7 +635,7 @@ This section records source-code references. It supplements, but does not replac
   - `} from "../../understanding/consolidateUnderstanding";`
 - Line 27 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
   - `Parameters<typeof buildExecutiveUnderstandingCandidates>[0];`
-- Line 162 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
+- Line 164 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
   - `buildExecutiveUnderstandingCandidates({`
 
 ##### `engine/v3/model/simulate/compareSimulationScenario.ts`
@@ -650,6 +651,11 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 11 · **unknown** · matched `consolidateUnderstanding`
   - `"consolidateUnderstanding",`
+
+##### `engine/benchmark/executive-work/executiveOperatingSystemBenchmark001.ts`
+
+- Line 959 · **unknown** · matched `OrganizationalUnderstanding`
+  - `.organizationalUnderstandingState !==`
 
 ##### `engine/benchmark/high-volume/captureRuntimeSnapshot.ts`
 

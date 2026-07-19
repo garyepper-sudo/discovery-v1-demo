@@ -1,6 +1,6 @@
 # Capability Trace — Executive Assessment
 
-Generated: 2026-07-19T16:53:20.047Z
+Generated: 2026-07-19T21:57:08.032Z
 
 ## Verified Architecture
 
@@ -126,6 +126,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
 - `engine/v3/understanding/consolidateUnderstanding.ts`
 - `engine/v3/understanding/rankOrganizationalUnderstanding.ts`
+- `engine/v3/work/executiveWork.ts`
 - `scripts/cognition/generateArchitectureHandoff.mjs`
 - `scripts/cognition/generateArchitectureState.mjs`
 - `scripts/cognition/generateCognitiveRegistry.mjs`
@@ -156,7 +157,7 @@ This section records source-code references. It supplements, but does not replac
 
 | Layer | Status | Matches |
 |---|:---:|---:|
-| Engine | ✅ Found | 99 |
+| Engine | ✅ Found | 100 |
 | Runtime | ✅ Found | 23 |
 | Executive | ✅ Found | 9 |
 | Projection | ✅ Found | 42 |
@@ -202,15 +203,15 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 31 · **type** · matched `executiveAssessment`
   - `type BuildExecutiveAssessmentInput = {`
-- Line 43 · **unknown** · matched `executiveAssessment`
+- Line 44 · **unknown** · matched `executiveAssessment`
   - `export type ExecutiveAssessmentWithPrimaryJudgment =`
-- Line 246 · **unknown** · matched `executiveAssessment`
-  - `export function buildExecutiveAssessment(`
 - Line 247 · **unknown** · matched `executiveAssessment`
-  - `input: BuildExecutiveAssessmentInput,`
+  - `export function buildExecutiveAssessment(`
 - Line 248 · **unknown** · matched `executiveAssessment`
+  - `input: BuildExecutiveAssessmentInput,`
+- Line 249 · **unknown** · matched `executiveAssessment`
   - `): ExecutiveAssessmentWithPrimaryJudgment {`
-- Line 429 · **unknown** · matched `Executive Assessment`
+- Line 436 · **unknown** · matched `Executive Assessment`
   - `: "The available reasoning paths did not produce a coherent executive assessment.";`
 
 ##### `engine/v3/model/judgment/buildExecutiveExplanation.ts`
@@ -431,6 +432,11 @@ This section records source-code references. It supplements, but does not replac
 - Line 48 · **unknown** · matched `executive-assessment`
   - `if (source === "executive-assessment") {`
 
+##### `engine/v3/work/executiveWork.ts`
+
+- Line 66 · **unknown** · matched `Executive Assessment`
+  - `* Executive assessment of execution health.`
+
 #### Runtime
 
 ##### `engine/v3/runtime/evolveOrganizationRuntime.ts`
@@ -476,11 +482,11 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/runtime/organizationRuntime.ts`
 
-- Line 165 · **unknown** · matched `Executive Assessment`
+- Line 177 · **unknown** · matched `Executive Assessment`
   - `* Executive Assessment.`
-- Line 174 · **unknown** · matched `Executive Assessment`
+- Line 186 · **unknown** · matched `Executive Assessment`
   - `* Executive Assessment, Executive Recommendation, organizational state,`
-- Line 316 · **unknown** · matched `Executive Assessment`
+- Line 353 · **unknown** · matched `Executive Assessment`
   - `* No canonical recommendation exists until Executive Assessment`
 
 ##### `engine/v3/runtime/organizationalUnderstandingState.ts`
@@ -717,11 +723,11 @@ This section records source-code references. It supplements, but does not replac
   - `const projectedExecutiveAssessment =`
 - Line 146 · **unknown** · matched `executiveAssessment`
   - `buildExecutiveAssessment({`
-- Line 163 · **type** · matched `executiveAssessment`
+- Line 165 · **type** · matched `executiveAssessment`
   - `executiveAssessment:`
-- Line 164 · **unknown** · matched `executiveAssessment`
+- Line 166 · **unknown** · matched `executiveAssessment`
   - `projectedExecutiveAssessment,`
-- Line 184 · **unknown** · matched `executiveAssessment`
+- Line 186 · **unknown** · matched `executiveAssessment`
   - `projectedExecutiveAssessment,`
 
 ##### `engine/v3/model/simulate/compareSimulationScenario.ts`

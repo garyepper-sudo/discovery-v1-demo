@@ -1,6 +1,6 @@
 # Discovery Architecture Handoff
 
-Generated: 2026-07-19T16:53:21.559Z
+Generated: 2026-07-19T21:57:09.602Z
 
 ## Purpose
 
@@ -20,15 +20,15 @@ Before adding any new cognitive capability:
 
 ## Architecture Health
 
-- Registered capabilities: 30
-- Canonical producers: 30
+- Registered capabilities: 32
+- Canonical producers: 32
 - Registered files: 585
 - Terminal capabilities: 6
 - Duplicate capability IDs: 0
 - Missing dependencies: 0
 - Missing canonical producers: 0
 - Capabilities without producer: 0
-- Capabilities without consumers: 0
+- Capabilities without consumers: 2
 - Capabilities without Runtime destination: 0
 - Files implementing multiple capabilities: 0
 
@@ -63,6 +63,8 @@ Before adding any new cognitive capability:
 | CAP-DEC-003 | Executive Decision Ranking | EXEC | RankedExecutiveScenario | ExecutiveDecisionCycle.rankedScenarios | CAP-DEC-001, CAP-DEC-004, CAP-SIM-003 |
 | CAP-DEC-004 | Executive Recommendation Synthesis | EXEC | ExecutiveDecisionRecommendation | ExecutiveDecisionCycle.recommendation | CAP-DEC-001, CAP-DEC-005, CAP-SIM-003 |
 | CAP-DEC-005 | Executive Decision Recording | EXEC | ExecutiveDecisionRecord | OrganizationRuntime.memory.executiveDecisionRecords | Terminal capability |
+| CAP-DEC-006 | Executive Work Lifecycle | Not declared | None | Not declared | None |
+| CAP-DEC-007 | Longitudinal Executive Judgment | Not declared | None | Not declared | None |
 | CAP-OPT-001 | Optimization Variable Selection | EXEC | OptimizationVariable | ExecutiveDecisionCycle.optimizationObjective.variables | CAP-OPT-002 |
 | CAP-OPT-002 | Executive Optimization Objective Synthesis | EXEC | ExecutiveOptimizationObjective | ExecutiveDecisionCycle.optimizationObjective | CAP-DEC-001, CAP-SIM-003 |
 | CAP-COM-001 | Executive Communication Synthesis | EXEC | ExecutiveNarrative, ExecutiveCommunication | ExecutiveCommunication | Terminal capability |
@@ -393,6 +395,30 @@ Before adding any new cognitive capability:
 
 **Executive destinations:** ExecutiveDecisionWorkspace, DecisionReview
 
+### CAP-DEC-006 — Executive Work Lifecycle
+
+**Depends on:** No registered capability dependencies
+
+**Produces:** None declared
+
+**Canonical producer:** `engine/v3/work/createExecutiveWork.ts`
+
+**Runtime destination:** `Not declared`
+
+**Executive destinations:** None declared
+
+### CAP-DEC-007 — Longitudinal Executive Judgment
+
+**Depends on:** No registered capability dependencies
+
+**Produces:** None declared
+
+**Canonical producer:** `engine/v3/decisions/calibrateDecisionConfidence.ts`
+
+**Runtime destination:** `Not declared`
+
+**Executive destinations:** None declared
+
 ### CAP-OPT-001 — Optimization Variable Selection
 
 **Depends on:** CAP-UND-004
@@ -644,6 +670,14 @@ Executive Workspace
 - Implementation: `engine/v3/decisions/executiveDecisionRecord.ts`
 - Implementation: `engine/v3/decisions/recordExecutiveDecision.ts`
 - Implementation: `engine/v3/decisions/saveExecutiveDecisionRecord.ts`
+
+### CAP-DEC-006 — Executive Work Lifecycle
+
+- Canonical producer: `engine/v3/work/createExecutiveWork.ts`
+
+### CAP-DEC-007 — Longitudinal Executive Judgment
+
+- Canonical producer: `engine/v3/decisions/calibrateDecisionConfidence.ts`
 
 ### CAP-OPT-001 — Optimization Variable Selection
 

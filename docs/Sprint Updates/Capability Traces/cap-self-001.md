@@ -1,6 +1,6 @@
 # Capability Trace — Theory Validation
 
-Generated: 2026-07-19T16:53:21.039Z
+Generated: 2026-07-19T21:57:09.071Z
 
 ## Verified Architecture
 
@@ -144,19 +144,19 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 2 · **import** · matched `buildTheoryReflection`
   - `import { buildTheoryReflection } from "./buildTheoryReflection";`
-- Line 357 · **definition** · matched `theoryValidation`
+- Line 364 · **definition** · matched `theoryValidation`
   - `const theoryValidation = buildTheoryReflection({`
-- Line 423 · **unknown** · matched `theoryValidation`
+- Line 430 · **unknown** · matched `theoryValidation`
   - `theoryValidation.whyDiscoveryBelievesIt`
-- Line 425 · **unknown** · matched `theoryValidation`
+- Line 432 · **unknown** · matched `theoryValidation`
   - `theoryValidation.calibratedConfidenceExplanation`
-- Line 426 · **unknown** · matched `theoryValidation`
+- Line 433 · **unknown** · matched `theoryValidation`
   - `} ${theoryValidation.executiveRecommendation}\``
-- Line 428 · **unknown** · matched `theoryValidation`
+- Line 435 · **unknown** · matched `theoryValidation`
   - `? \`${strongestJudgment.assessment} This explanation ranked highest because it had the strongest combined judgment score across evidence, explanatory power, causal plausibility, executive significance, and intervention leverage. ${theoryValidation.calibratedConfidenceExplanation}\``
-- Line 490 · **unknown** · matched `theoryValidation`
+- Line 497 · **unknown** · matched `theoryValidation`
   - `theoryValidation,`
-- Line 543 · **unknown** · matched `theoryValidation`
+- Line 550 · **unknown** · matched `theoryValidation`
   - `theoryValidation,`
 
 ##### `engine/v3/model/judgment/buildOrganizationalUnderstanding.ts`

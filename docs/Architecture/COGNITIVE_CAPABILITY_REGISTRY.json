@@ -1697,7 +1697,7 @@
     {
       "id": "CAP-DEC-001",
       "name": "Executive Decision Orchestration",
-      "description": "Coordinates Discovery's complete non-mutating executive decision cycle by synthesizing the canonical Executive Optimization Objective, generating and evaluating intervention options, simulating candidate organizational futures from the same baseline, invoking comparison and ranking capabilities, and assembling the final executive recommendation.",
+      "description": "Coordinates Discovery's complete non-mutating executive decision cycle by synthesizing the canonical Executive Optimization Objective, generating and evaluating intervention options, simulating candidate organizational futures from the same baseline, invoking comparison and ranking capabilities, and assembling the final executive recommendation.  The Executive Decision Cycle now consumes deterministic longitudinal confidence calibration derived from reviewed executive outcomes while preserving recommendation ranking independence.",
       "domain": "DEC",
       "status": "canonical",
       "canonicalProducer": "engine/v3/decisions/runExecutiveDecisionCycle.ts",
@@ -1992,7 +1992,7 @@
     {
       "id": "CAP-DEC-004",
       "name": "Executive Recommendation Synthesis",
-      "description": "Synthesizes the final executive recommendation from the ranked scenario set, preserving the recommended intervention, recommendation status, confidence, expected benefits, trade-offs, risks, assumptions, next-best alternative, and evidence that could change Discovery's conclusion.",
+      "description": "Synthesizes the final executive recommendation from the ranked scenario set, preserving the recommended intervention, recommendation status, confidence, expected benefits, trade-offs, risks, assumptions, next-best alternative, and evidence that could change Discovery's conclusion. Recommendation confidence is produced through canonical confidence calibration, including Organizational Uncertainty, constraint completeness, and longitudinal executive learning.",
       "domain": "DEC",
       "status": "canonical",
       "canonicalProducer": "engine/v3/decisions/buildExecutiveDecisionRecommendation.ts",
@@ -2089,6 +2089,31 @@
       "subsystem": "Executive Decision Recording",
       "architecturalLayer": "EXEC",
       "terminalCapability": true
+    },
+    {
+      "id": "CAP-DEC-006",
+      "name": "Executive Work Lifecycle",
+      "description": "Transforms a recorded Executive Decision into executable Executive Work, evaluates observed outcomes through Executive Review, synthesizes Executive Learning, and proposes Operating Model Improvements while preserving complete executive lifecycle ancestry.",
+      "domain": "DEC",
+      "status": "canonical",
+      "canonicalProducer": "engine/v3/work/createExecutiveWork.ts",
+      "benchmarkCoverage": [
+        "Executive Operating System Benchmark 001",
+        "Executive Learning Calibration Benchmark 001"
+      ],
+      "consumedByCapabilities": []
+    },
+    {
+      "id": "CAP-DEC-007",
+      "name": "Longitudinal Executive Judgment",
+      "description": "Improves future executive confidence by consuming reviewed organizational experience preserved as typed PersistentBeliefs while maintaining deterministic recommendation behavior.",
+      "domain": "DEC",
+      "status": "canonical",
+      "canonicalProducer": "engine/v3/decisions/calibrateDecisionConfidence.ts",
+      "benchmarkCoverage": [
+        "Executive Judgment Longitudinal Benchmark 001"
+      ],
+      "consumedByCapabilities": []
     },
     {
       "id": "CAP-OPT-001",
@@ -2349,6 +2374,6 @@
       "terminalCapability": true
     }
   ],
-  "generatedAt": "2026-07-19T16:53:19.615Z",
-  "capabilityCount": 30
+  "generatedAt": "2026-07-19T21:57:07.541Z",
+  "capabilityCount": 32
 }

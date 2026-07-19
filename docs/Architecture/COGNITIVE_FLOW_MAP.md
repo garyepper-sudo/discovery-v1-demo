@@ -1,6 +1,6 @@
 # Discovery Cognitive Flow Map
 
-**Status:** Canonical (Sprint 73)
+**Status:** Canonical (Sprint 74)
 
 ---
 
@@ -56,7 +56,7 @@ Epistemics
 
 ↓
 
-Decision
+Executive Decision
 
 ↓
 
@@ -68,6 +68,18 @@ Simulation
 
 ↓
 
+Executive Work
+
+↓
+
+Executive Learning
+
+↓
+
+Longitudinal Judgment
+
+↓
+
 Executive Communication
 
 ↓
@@ -75,11 +87,13 @@ Executive Communication
 Executive Experience
 ```
 
-Every Operating System owns a distinct cognitive responsibility.
+Every Operating System owns one cognitive responsibility.
 
 Consumers reuse canonical cognition.
 
 Presentation never recreates reasoning.
+
+Executive judgment continuously improves through reviewed organizational experience.
 
 ---
 
@@ -190,6 +204,34 @@ Executive Recommendation
 
 ↓
 
+Executive Work
+
+↓
+
+Observed Outcomes
+
+↓
+
+Executive Review
+
+↓
+
+Executive Learning
+
+↓
+
+Operating Model Improvement
+
+↓
+
+Persistent Organizational Beliefs
+
+↓
+
+Longitudinal Executive Judgment
+
+↓
+
 Executive Explanation
 
 ↓
@@ -206,30 +248,14 @@ Executive Workspace
 
 ↓
 
-Executive Decision
-
-↓
-
-Implementation
-
-↓
-
-Observed Outcome
-
-↓
-
-Prediction Evaluation
-
-↓
-
-Learning
-
-↓
-
-Better Understanding
+Future Executive Decision
 ```
 
-Every executive recommendation remains traceable back to evidence.
+Discovery now possesses a complete adaptive executive cognition loop.
+
+Every executive recommendation remains traceable to evidence.
+
+Every completed executive decision becomes reusable organizational cognition.
 
 ---
 
@@ -244,17 +270,25 @@ Produces
 * Contradictions
 * Organizational Phenomena
 
-Output:
+Output
 
 ```text
 Evidence
+
 ↓
+
 Observations
+
 ↓
+
 Signals
+
 ↓
+
 Contradictions
+
 ↓
+
 Phenomena
 ```
 
@@ -264,34 +298,50 @@ Phenomena
 
 Produces
 
-* Mechanisms
-* Beliefs
-* Concepts
-* Theories
+* Organizational Mechanisms
+* Organizational Beliefs
+* Organizational Concepts
+* Organizational Theories
 * Organizational Conditions
 * Organizational State
 * Executive Assessment
 * Organizational Understanding
 
-Output:
+Output
 
 ```text
 Phenomena
+
 ↓
+
 Mechanisms
+
 ↓
+
 Beliefs
+
 ↓
+
 Concepts
+
 ↓
+
 Theories
+
 ↓
-Conditions
+
+Organizational Conditions
+
 ↓
+
 Organizational State
+
 ↓
+
 Executive Assessment
+
 ↓
+
 Organizational Understanding
 ```
 
@@ -306,19 +356,31 @@ Produces
 * Prediction Evaluation
 * Organizational Learning Profile
 
-Output:
+Output
 
 ```text
-Understanding
+Organizational Understanding
+
 ↓
+
 Belief Evolution
+
 ↓
+
 Theory Evolution
+
 ↓
+
 Prediction Evaluation
+
 ↓
-Learning Profile
+
+Organizational Learning Profile
 ```
+
+Learning strengthens organizational cognition.
+
+It does not directly determine executive recommendations.
 
 ---
 
@@ -327,17 +389,18 @@ Learning Profile
 Produces
 
 * Organizational Uncertainty
+* Confidence Limiters
 * Refined Investigation Opportunities
 
 Consumes
 
 * Evidence
 * Contradictions
-* Learning Profile
+* Organizational Learning
 * Prediction Evaluation
-* Initial Investigation Opportunities
+* Investigation Opportunities
 
-Output:
+Output
 
 ```text
 Evidence
@@ -366,20 +429,56 @@ Determines:
 
 ---
 
-# Decision Operating System
+# Executive Decision Operating System
 
 Produces
 
 * Executive Decision
 * Executive Decision Cycle
+* Executive Work
+* Executive Review
+* Executive Learning
+* Operating Model Improvement
 
-Decision identifies the executive problem.
+Output
 
-It does not determine the strongest solution.
+```text
+Executive Decision
+
+↓
+
+Executive Work
+
+↓
+
+Observed Outcomes
+
+↓
+
+Executive Review
+
+↓
+
+Executive Learning
+
+↓
+
+Operating Model Improvement
+```
+
+Executive Decision defines the executive problem.
+
+Executive Work represents intentional executive action.
+
+Executive Review evaluates observed outcomes.
+
+Executive Learning converts reviewed outcomes into durable organizational cognition.
+
+Operating Model Improvement proposes canonical changes to future organizational reasoning.
 
 ---
 
-# Optimization Operating System
+# Executive Optimization Operating System
 
 Produces
 
@@ -387,26 +486,128 @@ Produces
 * Executive Optimization Objective
 * Candidate Interventions
 * Constraint Evaluation
-* Ranked Scenarios
+* Ranked Executive Scenarios
 * Executive Recommendation
 
-Optimization selects among futures.
+Output
 
-Simulation evaluates them.
+```text
+Executive Decision
+
+↓
+
+Optimization Variables
+
+↓
+
+Optimization Objective
+
+↓
+
+Intervention Options
+
+↓
+
+Constraint Evaluation
+
+↓
+
+Ranked Scenarios
+
+↓
+
+Executive Recommendation
+```
+
+Optimization selects among organizational futures.
+
+Simulation evaluates those futures.
 
 ---
 
-# Simulation Operating System
+# Organizational Simulation Operating System
 
 Produces
 
 * Organizational Intervention
-* Simulated Organization
+* Simulated Organizational State
 * Scenario Comparison
 
-Simulation evaluates organizational futures.
+Output
+
+```text
+Intervention
+
+↓
+
+Organizational Simulation
+
+↓
+
+Scenario Comparison
+```
+
+Simulation predicts organizational futures.
 
 Simulation never determines recommendations.
+
+---
+
+# Longitudinal Executive Judgment
+
+Produces
+
+* Persistent Organizational Beliefs
+* Strategy Experience
+* Experience-Aware Executive Confidence
+
+Consumes
+
+* Executive Learning
+* Operating Model Improvement
+* Organizational Memory
+* Executive Recommendation
+
+Output
+
+```text
+Executive Learning
+
+↓
+
+Operating Model Improvement
+
+↓
+
+Persistent Organizational Beliefs
+
+↓
+
+Organizational Memory
+
+↓
+
+Future Executive Decision Confidence
+```
+
+Longitudinal Executive Judgment is Discovery's adaptive feedback loop.
+
+Rather than treating every executive strategy as new, Discovery preserves reviewed strategy outcomes as typed organizational beliefs.
+
+Future executive decisions consume those beliefs during confidence calibration.
+
+The current implementation:
+
+* preserves complete executive lifecycle ancestry,
+* preserves selected strategy ancestry,
+* deduplicates multiple beliefs from one learning event,
+* averages multiple learning events deterministically,
+* bounds longitudinal confidence adjustment,
+* explains negative historical outcomes through confidence limiters.
+
+Strategy ranking remains independent.
+
+Experience influences confidence rather than optimization.
 
 ---
 
@@ -422,7 +623,8 @@ Consumes
 
 * Executive Assessment
 * Organizational Uncertainty
-* Refined Investigation Opportunities
+* Executive Recommendation
+* Longitudinal Executive Judgment
 
 Flow
 
@@ -431,7 +633,9 @@ Executive Assessment
 +
 Organizational Uncertainty
 +
-Investigation Opportunities
+Executive Recommendation
++
+Longitudinal Executive Judgment
 
 ↓
 
@@ -474,6 +678,8 @@ Narrative communicates cognition.
 
 Presentation consumes cognition.
 
+No consumer recreates cognition already produced elsewhere.
+
 ---
 
 # Provenance
@@ -489,11 +695,27 @@ Winning Strategy
 
 ↓
 
-Optimization Objective
+Executive Decision
 
 ↓
 
-Executive Decision
+Executive Work
+
+↓
+
+Executive Review
+
+↓
+
+Executive Learning
+
+↓
+
+Persistent Organizational Belief
+
+↓
+
+Operating Model Improvement
 
 ↓
 
@@ -530,23 +752,27 @@ Evidence
 
 No recommendation should lose provenance.
 
+Every confidence adjustment should remain traceable to reviewed organizational experience.
+
 ---
 
 # Current Architecture Focus
 
-Discovery's architecture is considered stable.
+Discovery's first-generation Executive Cognitive Operating System is now architecturally complete.
 
-Future work should prioritize:
+Current priorities are:
 
+* Executive Judgment Quality
+* Longitudinal Executive Learning
+* Executive Confidence Calibration
 * Executive Experience
 * Executive Explanation
-* Executive Narrative
 * Executive Trust
 * Behavioral Stress Testing
 * Customer Validation
 
-Future evolution should strengthen existing Operating Systems through consumer migration rather than introducing parallel reasoning.
+Future evolution should continue strengthening existing producer → consumer transformations rather than introducing parallel reasoning systems.
 
 The objective is no longer expanding cognition.
 
-The objective is exposing cognition through an executive experience that consistently improves executive judgment.
+The objective is continuously improving executive judgment through reusable organizational cognition.
