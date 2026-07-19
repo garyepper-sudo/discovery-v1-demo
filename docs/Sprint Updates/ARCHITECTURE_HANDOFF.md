@@ -1,6 +1,6 @@
 # Discovery Architecture Handoff
 
-Generated: 2026-07-19T21:57:09.602Z
+Generated: 2026-07-19T22:31:57.775Z
 
 ## Purpose
 
@@ -23,12 +23,12 @@ Before adding any new cognitive capability:
 - Registered capabilities: 32
 - Canonical producers: 32
 - Registered files: 585
-- Terminal capabilities: 6
+- Terminal capabilities: 5
 - Duplicate capability IDs: 0
 - Missing dependencies: 0
 - Missing canonical producers: 0
 - Capabilities without producer: 0
-- Capabilities without consumers: 2
+- Capabilities without consumers: 0
 - Capabilities without Runtime destination: 0
 - Files implementing multiple capabilities: 0
 
@@ -44,7 +44,7 @@ Before adding any new cognitive capability:
 | CAP-UND-004 | Organizational Condition Inference | EXEC | OrganizationalCondition | OrganizationRuntime.organizationalConditions | CAP-ADP-001, CAP-COM-001, CAP-OPT-001, CAP-OPT-002, CAP-PRD-001, CAP-SELF-002, CAP-SIM-001, CAP-UND-005 |
 | CAP-UND-005 | Executive Assessment | EXEC | ExecutiveAssessment | OrganizationRuntime.executiveAssessment | CAP-COM-001, CAP-DEC-001, CAP-DEC-002, CAP-UND-006 |
 | CAP-UND-006 | Executive Understanding Synthesis | COG | OrganizationalUnderstanding, OrganizationalUnderstandingState | OrganizationRuntime.organizationalUnderstandingState | CAP-COM-001, CAP-DEC-001 |
-| CAP-MEM-001 | Organizational Runtime Persistence | RUN | OrganizationRuntime | OrganizationRuntime | CAP-DEC-005, CAP-LRN-001, CAP-LRN-002, CAP-SYS-001, CAP-UND-006 |
+| CAP-MEM-001 | Organizational Runtime Persistence | RUN | OrganizationRuntime | OrganizationRuntime | CAP-DEC-005, CAP-DEC-006, CAP-DEC-007, CAP-LRN-001, CAP-LRN-002, CAP-SYS-001, CAP-UND-006 |
 | CAP-LRN-001 | Organizational Belief Evolution | COG | OrganizationalBeliefRevision | OrganizationRuntime.organizationalBeliefRevisions | CAP-LRN-002 |
 | CAP-LRN-002 | Organizational Learning Profile | COG | OrganizationalLearningProfile | OrganizationRuntime.organizationalLearningProfile | CAP-COM-001, CAP-PRD-001, CAP-SIM-001 |
 | CAP-ABS-001 | Organizational Concept Formation | COG | OrganizationalConcept | OrganizationModel.concepts | CAP-UND-003 |
@@ -54,7 +54,7 @@ Before adding any new cognitive capability:
 | CAP-PRD-002 | Prediction Reflection | COG | PredictionReflection | OrganizationRuntime.predictionReflection | CAP-ADP-001, CAP-COM-001, CAP-DEC-001, CAP-DEC-002, CAP-UND-005 |
 | CAP-ADP-001 | Prediction Outcome Evaluation | COG | PredictionEvaluation | OrganizationRuntime.predictionEvaluations | CAP-LRN-002, CAP-SIM-001 |
 | CAP-SYS-001 | Architectural Planning | SYS | ArchitectureRecommendation | DiscoveryArchitectureState.architectureRecommendations | CAP-SYS-002 |
-| CAP-SYS-002 | Architecture Recommendation Projection | SYS | ArchitectureRecommendationProjection | DiscoveryArchitectureState.architectureRecommendationProjection | None |
+| CAP-SYS-002 | Architecture Recommendation Projection | SYS | ArchitectureRecommendationProjection | DiscoveryArchitectureState.architectureRecommendationProjection | Terminal capability |
 | CAP-SIM-001 | Organizational Simulation | COG | SimulatedOrganizationState | OrganizationRuntime.simulatedOrganizationStates | CAP-COM-001, CAP-DEC-001, CAP-DEC-002, CAP-SIM-003, CAP-SYS-001 |
 | CAP-SIM-002 | Organizational Intervention Modeling | COG | OrganizationalIntervention | OrganizationRuntime.organizationalInterventions | CAP-DEC-001, CAP-SIM-001 |
 | CAP-SIM-003 | Executive Simulation Synthesis | EXEC | ExecutiveSimulation | OrganizationRuntime.memory.executiveSimulation | CAP-DEC-001, CAP-DEC-005 |
@@ -62,9 +62,9 @@ Before adding any new cognitive capability:
 | CAP-DEC-002 | Cross-Scenario Comparison | EXEC | ExecutiveScenarioComparisonEntry, ExecutiveScenarioComparisonSet | ExecutiveDecisionCycle.comparisonSet | CAP-DEC-001, CAP-DEC-003, CAP-DEC-004, CAP-SIM-003 |
 | CAP-DEC-003 | Executive Decision Ranking | EXEC | RankedExecutiveScenario | ExecutiveDecisionCycle.rankedScenarios | CAP-DEC-001, CAP-DEC-004, CAP-SIM-003 |
 | CAP-DEC-004 | Executive Recommendation Synthesis | EXEC | ExecutiveDecisionRecommendation | ExecutiveDecisionCycle.recommendation | CAP-DEC-001, CAP-DEC-005, CAP-SIM-003 |
-| CAP-DEC-005 | Executive Decision Recording | EXEC | ExecutiveDecisionRecord | OrganizationRuntime.memory.executiveDecisionRecords | Terminal capability |
-| CAP-DEC-006 | Executive Work Lifecycle | Not declared | None | Not declared | None |
-| CAP-DEC-007 | Longitudinal Executive Judgment | Not declared | None | Not declared | None |
+| CAP-DEC-005 | Executive Decision Recording | EXEC | ExecutiveDecisionRecord | OrganizationRuntime.memory.executiveDecisionRecords | CAP-DEC-006 |
+| CAP-DEC-006 | Executive Work Lifecycle | EXEC | ExecutiveWork, ExecutiveReview, ExecutiveLearning, OperatingModelImprovement | OrganizationRuntime.memory.executiveWork | CAP-DEC-007 |
+| CAP-DEC-007 | Longitudinal Executive Judgment | EXEC | DecisionConfidenceCalibration | ExecutiveDecisionCycle.confidenceCalibration | CAP-DEC-001 |
 | CAP-OPT-001 | Optimization Variable Selection | EXEC | OptimizationVariable | ExecutiveDecisionCycle.optimizationObjective.variables | CAP-OPT-002 |
 | CAP-OPT-002 | Executive Optimization Objective Synthesis | EXEC | ExecutiveOptimizationObjective | ExecutiveDecisionCycle.optimizationObjective | CAP-DEC-001, CAP-SIM-003 |
 | CAP-COM-001 | Executive Communication Synthesis | EXEC | ExecutiveNarrative, ExecutiveCommunication | ExecutiveCommunication | Terminal capability |
@@ -337,7 +337,7 @@ Before adding any new cognitive capability:
 
 ### CAP-DEC-001 — Executive Decision Orchestration
 
-**Depends on:** CAP-SIM-001, CAP-SIM-002, CAP-UND-005, CAP-UND-006, CAP-PRD-002, CAP-OPT-002, CAP-DEC-002, CAP-DEC-003, CAP-DEC-004, CAP-SIM-003
+**Depends on:** CAP-SIM-001, CAP-SIM-002, CAP-UND-005, CAP-UND-006, CAP-PRD-002, CAP-OPT-002, CAP-DEC-002, CAP-DEC-003, CAP-DEC-004, CAP-SIM-003, CAP-DEC-007
 
 **Produces:** ExecutiveDecisionCycle
 
@@ -397,27 +397,27 @@ Before adding any new cognitive capability:
 
 ### CAP-DEC-006 — Executive Work Lifecycle
 
-**Depends on:** No registered capability dependencies
+**Depends on:** CAP-DEC-005, CAP-MEM-001
 
-**Produces:** None declared
+**Produces:** ExecutiveWork, ExecutiveReview, ExecutiveLearning, OperatingModelImprovement
 
 **Canonical producer:** `engine/v3/work/createExecutiveWork.ts`
 
-**Runtime destination:** `Not declared`
+**Runtime destination:** `OrganizationRuntime.memory.executiveWork`
 
-**Executive destinations:** None declared
+**Executive destinations:** ExecutiveWorkWorkspace, ExecutiveReview, OrganizationalLearning
 
 ### CAP-DEC-007 — Longitudinal Executive Judgment
 
-**Depends on:** No registered capability dependencies
+**Depends on:** CAP-DEC-006, CAP-MEM-001
 
-**Produces:** None declared
+**Produces:** DecisionConfidenceCalibration
 
 **Canonical producer:** `engine/v3/decisions/calibrateDecisionConfidence.ts`
 
-**Runtime destination:** `Not declared`
+**Runtime destination:** `ExecutiveDecisionCycle.confidenceCalibration`
 
-**Executive destinations:** None declared
+**Executive destinations:** ExecutiveDecisionRecommendation, ExecutiveDecisionProjection, ExecutiveDecisionWorkspace
 
 ### CAP-OPT-001 — Optimization Variable Selection
 
@@ -674,10 +674,19 @@ Executive Workspace
 ### CAP-DEC-006 — Executive Work Lifecycle
 
 - Canonical producer: `engine/v3/work/createExecutiveWork.ts`
+- Implementation: `engine/v3/work/executiveWork.ts`
+- Implementation: `engine/v3/work/createExecutiveWork.ts`
+- Implementation: `engine/v3/work/createExecutiveReview.ts`
+- Implementation: `engine/v3/work/createExecutiveLearning.ts`
+- Implementation: `engine/v3/work/createOperatingModelImprovement.ts`
+- Implementation: `engine/v3/work/applyOperatingModelImprovement.ts`
+- Implementation: `engine/v3/work/saveExecutiveLearning.ts`
+- Implementation: `engine/v3/work/saveOperatingModelImprovement.ts`
 
 ### CAP-DEC-007 — Longitudinal Executive Judgment
 
 - Canonical producer: `engine/v3/decisions/calibrateDecisionConfidence.ts`
+- Implementation: `engine/v3/decisions/calibrateDecisionConfidence.ts`
 
 ### CAP-OPT-001 — Optimization Variable Selection
 

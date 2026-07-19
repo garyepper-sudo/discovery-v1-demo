@@ -39,7 +39,7 @@ Very few organizations systematically improve how they perform that work.
 Discovery becomes the Executive Operating System organizations naturally use to:
 
 - understand their organization,
-- evaluate important work,
+- evaluate important Executive Work,
 - simulate alternatives,
 - commit decisions,
 - track execution,
@@ -49,6 +49,8 @@ Discovery becomes the Executive Operating System organizations naturally use to:
 Every completed Executive Work item should improve the Operating Model.
 
 Every improvement to the Operating Model should improve future Executive Work.
+
+Over time, Discovery becomes progressively better at helping organizations make important decisions because its Operating Model continuously learns from organizational reality.
 
 ---
 
@@ -65,7 +67,7 @@ Discovery is not:
 
 Discovery is an **Executive Operating System**.
 
-Its purpose is to continuously improve organizational judgment through a living Operating Model.
+Its purpose is to continuously improve executive judgment through a living Operating Model.
 
 ---
 
@@ -85,12 +87,14 @@ Including:
 - confidence,
 - initiatives,
 - executive decisions,
-- tracking,
+- execution tracking,
 - organizational learning.
 
 The Operating Model is Discovery's competitive advantage.
 
 The product should continuously reinforce its value.
+
+Every improvement to the Operating Model should improve every future recommendation, simulation, explanation, and executive decision.
 
 ---
 
@@ -111,53 +115,37 @@ Origin becomes irrelevant once work enters Discovery.
 
 ---
 
-# Unified Executive Work Lifecycle
+# Executive Learning Cycle
 
-Every Executive Work item follows the same lifecycle.
+Every Executive Work item contributes to a continuous organizational learning cycle.
 
 ```text
-Idea
+Executive Work
 
 ↓
 
-Understand
+Executive Review
 
 ↓
 
-Recommend
+Executive Learning
 
 ↓
 
-Challenge
+Operating Model Improvement
 
 ↓
 
-Simulate
+Persistent Organizational Memory
 
 ↓
 
-Commit
-
-↓
-
-Track
-
-↓
-
-Review
-
-↓
-
-Learn
-
-↓
-
-Operating Model Improves
+Longitudinal Executive Judgment
 ```
 
-This lifecycle defines the executive experience.
+This cycle defines Discovery's long-term value.
 
-Every feature should strengthen one or more stages of this lifecycle.
+Every feature should strengthen one or more stages of this cycle.
 
 ---
 
@@ -231,6 +219,8 @@ Compare expectations with reality.
 ## 7. What did we learn?
 
 Improve the Operating Model.
+
+Strengthen Persistent Organizational Memory.
 
 Improve future executive judgment.
 
@@ -329,7 +319,7 @@ Not persuade executives to agree.
 
 Discovery should never pretend to think.
 
-Instead Discovery should expose authentic cognition occurring inside the Operating Model.
+Instead, Discovery should expose authentic cognition occurring inside the Operating Model.
 
 Examples include:
 
@@ -338,8 +328,10 @@ Examples include:
 - strengthening theories,
 - evaluating interventions,
 - propagating organizational effects,
-- ranking strategies,
-- calibrating confidence.
+- comparing strategies,
+- optimizing recommendations,
+- calibrating confidence,
+- learning from executive outcomes.
 
 Executives should observe real reasoning.
 
@@ -360,7 +352,8 @@ Whenever the Operating Model improves, Discovery should explain:
 - what improved,
 - why it improved,
 - how recommendations become stronger,
-- how confidence increases.
+- how confidence increases,
+- how future executive judgment benefits.
 
 Executives should naturally understand the relationship:
 
@@ -381,16 +374,16 @@ Better Recommendations
 
 ↓
 
-Better Decisions
+Better Executive Judgment
 
 ↓
 
-Better Outcomes
+Better Organizational Outcomes
 ```
 
 ---
 
-# Organizational Memory
+# Persistent Organizational Memory
 
 Discovery becomes the organization's long-term memory for Executive Work.
 
@@ -403,6 +396,8 @@ Discovery remembers:
 - what was committed,
 - what actually happened,
 - what the organization learned.
+
+Persistent Organizational Memory allows every future Executive Work item to benefit from previous organizational experience.
 
 Organizations become progressively better decision-makers because Discovery remembers what organizations forget.
 
@@ -417,42 +412,32 @@ Executive Work
 
 ↓
 
-Operating Model
+Executive Review
 
 ↓
 
-Understanding
+Executive Learning
 
 ↓
 
-Recommendations
+Operating Model Improvement
 
 ↓
 
-Executive Decisions
+Persistent Organizational Memory
 
 ↓
 
-Execution
+Longitudinal Executive Judgment
 
 ↓
 
-Tracking
-
-↓
-
-Review
-
-↓
-
-Learning
-
-↓
-
-Operating Model Improves
+Higher-Quality Executive Work
 ```
 
-The product improves through organizational learning rather than manual configuration.
+The product compounds through organizational learning rather than manual configuration.
+
+Every cycle improves the next cycle.
 
 ---
 
@@ -477,7 +462,9 @@ Discovery succeeds when executive teams naturally begin important Executive Work
 
 Discovery succeeds when organizations voluntarily strengthen the Operating Model because they understand its value.
 
-Discovery succeeds when every important initiative and decision improves future executive judgment.
+Discovery succeeds when every Executive Review improves future executive judgment.
+
+Discovery succeeds when Persistent Organizational Memory becomes a strategic organizational asset.
 
 Discovery succeeds when the Operating Model becomes the trusted organizational brain behind every important executive decision.
 

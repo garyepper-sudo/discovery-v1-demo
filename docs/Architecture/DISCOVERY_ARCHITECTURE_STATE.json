@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-19T21:57:09.498Z",
+    "generatedAt": "2026-07-19T22:31:57.670Z",
     "generator": "scripts/cognition/generateArchitectureState.mjs",
     "sourceOfTruthOrder": [
       "Verified source code",
@@ -13,9 +13,9 @@
     ]
   },
   "project": {
-    "currentMilestone": "Executive Product Validation and Operating Model Integration\n\n---",
-    "currentPhase": "Executive Product Validation\n\nDiscovery has completed the first generation of its Executive Cognitive Operating System and established a stable, benchmark-validated cognitive architecture.\n\nThe architecture is no longer the primary bottleneck.\n\nDiscovery now possesses a complete executive reasoning pipeline capable of:\n\n- understanding organizational reality,\n- synthesizing organizational knowledge,\n- identifying organizational constraints,\n- generating executive recommendations,\n- optimizing recommendations under organizational constraints,\n- simulating organizational interventions,\n- communicating executive reasoning,\n- preserving executive memory,\n- learning from Executive Work,\n- and continuously improving future executive judgment.\n\nCurrent development is no longer focused on expanding cognitive architecture.\n\nCurrent development focuses on validating one complete executive product experience built on top of the existing cognition.\n\nThe immediate objective is to prove that Discovery can support one complete Executive Work lifecycle from initial idea through organizational learning.\n\n---",
-    "currentObjective": "Validate one complete Executive Work lifecycle.\n\nThe next benchmark should validate:\n\n\n\nThe benchmark should identify genuine product, orchestration, and reasoning gaps before introducing additional cognitive capabilities.\n\n---",
+    "currentMilestone": "Executive Judgment Optimization and Executive Product Validation\n\n---",
+    "currentPhase": "Executive Judgment Optimization\n\nDiscovery has completed the first generation of its Executive Cognitive Operating System and established a stable, benchmark-validated cognitive architecture.\n\nThe Executive Work lifecycle has now been implemented and benchmark validated.\n\nThe architecture is no longer the primary bottleneck.\n\nDiscovery now possesses an adaptive executive reasoning system capable of:\n\n- understanding organizational reality,\n- synthesizing organizational knowledge,\n- identifying organizational constraints,\n- generating executive recommendations,\n- optimizing recommendations under organizational constraints,\n- simulating organizational interventions,\n- communicating executive reasoning,\n- recording Executive Work,\n- reviewing executive outcomes,\n- learning from completed Executive Work,\n- improving the Operating Model,\n- and continuously improving future executive judgment through longitudinal learning.\n\nCurrent development is no longer focused on expanding cognitive architecture.\n\nCurrent development focuses on improving executive judgment quality by refining:\n\n- recommendation quality,\n- executive communication,\n- confidence calibration,\n- executive narrative,\n- orchestration,\n- executive trust,\n- and executive product experience.\n\nArchitecture should expand only when benchmark evidence demonstrates a genuine missing reasoning capability.\n\n---",
+    "currentObjective": "The Executive Work lifecycle has now been validated.\n\nThe current objective is improving executive judgment quality.\n\nCurrent priorities:\n\n- Produce one clear recommendation.\n- Correctly identify the primary organizational constraint.\n- Improve recommendation confidence.\n- Improve executive narrative quality.\n- Improve executive explainability.\n- Reduce executive reading.\n- Strengthen longitudinal Executive Learning.\n- Increase executive trust.\n\nThe current bottleneck is executive judgment quality.\n\nNot reasoning architecture.\n\n---",
     "currentSprint": null,
     "nextPriority": null,
     "sourceDocuments": [
@@ -27,13 +27,13 @@
     ]
   },
   "architecture": {
-    "status": "review-required",
-    "healthScore": 80,
+    "status": "healthy",
+    "healthScore": 100,
     "capabilityCount": 32,
     "canonicalProducerCount": 32,
     "registeredFileCount": 585,
-    "cognitiveObjectCount": 33,
-    "terminalCapabilityCount": 6,
+    "cognitiveObjectCount": 38,
+    "terminalCapabilityCount": 5,
     "capabilityTraceCount": 14,
     "connectedCapabilityTraceCount": 14,
     "health": {
@@ -41,7 +41,7 @@
       "missingDependencyCount": 0,
       "missingCanonicalProducerCount": 0,
       "capabilitiesWithoutProducerCount": 0,
-      "capabilitiesWithoutConsumersCount": 2,
+      "capabilitiesWithoutConsumersCount": 0,
       "capabilitiesWithoutRuntimeDestinationCount": 0,
       "multiCapabilityFileCount": 0
     }
@@ -559,7 +559,7 @@
     {
       "id": "CAP-MEM-001",
       "name": "Organizational Runtime Persistence",
-      "description": "Persists organizational cognition across investigations so Discovery can maintain longitudinal understanding.",
+      "description": "Persists organizational cognition across investigations so Discovery can maintain longitudinal understanding. Runtime also preserves Executive Work, Executive Review, Executive Learning, Operating Model Improvements, and persistent strategy beliefs.",
       "domain": "MEM",
       "architecturalLayer": "RUN",
       "subsystem": "Runtime Persistence",
@@ -580,6 +580,8 @@
         "consumesCapabilities": [],
         "consumedByCapabilities": [
           "CAP-DEC-005",
+          "CAP-DEC-006",
+          "CAP-DEC-007",
           "CAP-LRN-001",
           "CAP-LRN-002",
           "CAP-SYS-001",
@@ -595,7 +597,10 @@
         "atlasCoverage": "yes",
         "benchmarkCoverage": [
           "Runtime Persistence",
-          "Atlas"
+          "Atlas",
+          "Executive Operating System Benchmark 001",
+          "Executive Learning Calibration Benchmark 001",
+          "Executive Judgment Longitudinal Benchmark 001"
         ],
         "canonicalProducerExists": true,
         "missingImplementationFiles": [],
@@ -1209,7 +1214,7 @@
           "CAP-SYS-001"
         ],
         "consumedByCapabilities": [],
-        "terminalCapability": false
+        "terminalCapability": true
       },
       "destinations": {
         "runtime": "DiscoveryArchitectureState.architectureRecommendationProjection",
@@ -1413,7 +1418,8 @@
       "validation": {
         "atlasCoverage": "partial",
         "benchmarkCoverage": [
-          "Executive Simulation Synthesis 001"
+          "Executive Simulation Synthesis 001",
+          "Executive Operating System Benchmark 001"
         ],
         "canonicalProducerExists": true,
         "missingImplementationFiles": [],
@@ -1471,12 +1477,13 @@
           "CAP-DEC-002",
           "CAP-DEC-003",
           "CAP-DEC-004",
-          "CAP-SIM-003"
+          "CAP-SIM-003",
+          "CAP-DEC-007"
         ],
         "consumedByCapabilities": [
           "CAP-DEC-005"
         ],
-        "terminalCapability": true
+        "terminalCapability": false
       },
       "destinations": {
         "runtime": "ExecutiveDecisionCycle",
@@ -1491,7 +1498,8 @@
         "benchmarkCoverage": [
           "Scenario Integration",
           "Executive Decision Cycle",
-          "Decision Calibration"
+          "Decision Calibration",
+          "Executive Judgment Longitudinal Benchmark 001"
         ],
         "canonicalProducerExists": true,
         "missingImplementationFiles": [],
@@ -1663,7 +1671,8 @@
       "validation": {
         "atlasCoverage": "partial",
         "benchmarkCoverage": [
-          "Executive Decision Cycle"
+          "Executive Decision Cycle",
+          "Executive Judgment Longitudinal Benchmark 001"
         ],
         "canonicalProducerExists": true,
         "missingImplementationFiles": [],
@@ -1705,8 +1714,10 @@
           "CAP-MEM-001",
           "CAP-SIM-003"
         ],
-        "consumedByCapabilities": [],
-        "terminalCapability": true
+        "consumedByCapabilities": [
+          "CAP-DEC-006"
+        ],
+        "terminalCapability": false
       },
       "destinations": {
         "runtime": "OrganizationRuntime.memory.executiveDecisionRecords",
@@ -1718,7 +1729,8 @@
       "validation": {
         "atlasCoverage": "partial",
         "benchmarkCoverage": [
-          "Executive Decision Recording Experiment 001"
+          "Executive Decision Recording Experiment 001",
+          "Executive Operating System Benchmark 001"
         ],
         "canonicalProducerExists": true,
         "missingImplementationFiles": [],
@@ -1744,34 +1756,57 @@
     {
       "id": "CAP-DEC-006",
       "name": "Executive Work Lifecycle",
-      "description": "Transforms a recorded Executive Decision into executable Executive Work, evaluates observed outcomes through Executive Review, synthesizes Executive Learning, and proposes Operating Model Improvements while preserving complete executive lifecycle ancestry.",
+      "description": "Transforms a recorded Executive Decision into executable Executive Work, evaluates observed outcomes through Executive Review, synthesizes Executive Learning, and produces Operating Model Improvements while preserving complete executive lifecycle ancestry.",
       "domain": "DEC",
-      "architecturalLayer": null,
-      "subsystem": null,
+      "architecturalLayer": "EXEC",
+      "subsystem": "Executive Work Lifecycle",
       "status": "canonical",
-      "reviewStatus": null,
+      "reviewStatus": "reviewed",
       "ownership": {
-        "ownsObjects": [],
+        "ownsObjects": [
+          "ExecutiveWork",
+          "ExecutiveReview",
+          "ExecutiveLearning",
+          "OperatingModelImprovement"
+        ],
         "ownsCanonicalProducer": "engine/v3/work/createExecutiveWork.ts",
-        "implementationFiles": [],
+        "implementationFiles": [
+          "engine/v3/work/executiveWork.ts",
+          "engine/v3/work/createExecutiveWork.ts",
+          "engine/v3/work/createExecutiveReview.ts",
+          "engine/v3/work/createExecutiveLearning.ts",
+          "engine/v3/work/createOperatingModelImprovement.ts",
+          "engine/v3/work/applyOperatingModelImprovement.ts",
+          "engine/v3/work/saveExecutiveLearning.ts",
+          "engine/v3/work/saveOperatingModelImprovement.ts"
+        ],
         "doesNotOwn": []
       },
       "relationships": {
-        "consumesCapabilities": [],
-        "consumedByCapabilities": [],
+        "consumesCapabilities": [
+          "CAP-DEC-005",
+          "CAP-MEM-001"
+        ],
+        "consumedByCapabilities": [
+          "CAP-DEC-007"
+        ],
         "terminalCapability": false
       },
       "destinations": {
-        "runtime": null,
-        "executive": []
+        "runtime": "OrganizationRuntime.memory.executiveWork",
+        "executive": [
+          "ExecutiveWorkWorkspace",
+          "ExecutiveReview",
+          "OrganizationalLearning"
+        ]
       },
       "validation": {
-        "atlasCoverage": null,
+        "atlasCoverage": "partial",
         "benchmarkCoverage": [
           "Executive Operating System Benchmark 001",
           "Executive Learning Calibration Benchmark 001"
         ],
-        "canonicalProducerExists": false,
+        "canonicalProducerExists": true,
         "missingImplementationFiles": [],
         "capabilityTrace": {
           "exists": false,
@@ -1781,38 +1816,51 @@
         }
       },
       "searchTerms": [],
-      "notes": ""
+      "notes": "Canonical post-decision lifecycle capability. It preserves Decision Record ancestry through Executive Work, Executive Review, Executive Learning, and Operating Model Improvement."
     },
     {
       "id": "CAP-DEC-007",
       "name": "Longitudinal Executive Judgment",
-      "description": "Improves future executive confidence by consuming reviewed organizational experience preserved as typed PersistentBeliefs while maintaining deterministic recommendation behavior.",
+      "description": "Improves future executive confidence by consuming reviewed organizational experience preserved as typed PersistentBeliefs while maintaining deterministic recommendation ranking.",
       "domain": "DEC",
-      "architecturalLayer": null,
-      "subsystem": null,
+      "architecturalLayer": "EXEC",
+      "subsystem": "Longitudinal Executive Judgment",
       "status": "canonical",
-      "reviewStatus": null,
+      "reviewStatus": "reviewed",
       "ownership": {
-        "ownsObjects": [],
+        "ownsObjects": [
+          "DecisionConfidenceCalibration"
+        ],
         "ownsCanonicalProducer": "engine/v3/decisions/calibrateDecisionConfidence.ts",
-        "implementationFiles": [],
+        "implementationFiles": [
+          "engine/v3/decisions/calibrateDecisionConfidence.ts"
+        ],
         "doesNotOwn": []
       },
       "relationships": {
-        "consumesCapabilities": [],
-        "consumedByCapabilities": [],
+        "consumesCapabilities": [
+          "CAP-DEC-006",
+          "CAP-MEM-001"
+        ],
+        "consumedByCapabilities": [
+          "CAP-DEC-001"
+        ],
         "terminalCapability": false
       },
       "destinations": {
-        "runtime": null,
-        "executive": []
+        "runtime": "ExecutiveDecisionCycle.confidenceCalibration",
+        "executive": [
+          "ExecutiveDecisionRecommendation",
+          "ExecutiveDecisionProjection",
+          "ExecutiveDecisionWorkspace"
+        ]
       },
       "validation": {
-        "atlasCoverage": null,
+        "atlasCoverage": "partial",
         "benchmarkCoverage": [
           "Executive Judgment Longitudinal Benchmark 001"
         ],
-        "canonicalProducerExists": false,
+        "canonicalProducerExists": true,
         "missingImplementationFiles": [],
         "capabilityTrace": {
           "exists": false,
@@ -1822,7 +1870,7 @@
         }
       },
       "searchTerms": [],
-      "notes": ""
+      "notes": "Applies bounded longitudinal confidence adjustment from reviewed Executive Learning. It does not change scenario ranking and counts each Executive Learning event once."
     },
     {
       "id": "CAP-OPT-001",
@@ -2329,17 +2377,32 @@
     },
     "CAP-DEC-006": {
       "name": "Executive Work Lifecycle",
-      "ownsObjects": [],
+      "ownsObjects": [
+        "ExecutiveWork",
+        "ExecutiveReview",
+        "ExecutiveLearning",
+        "OperatingModelImprovement"
+      ],
       "canonicalProducer": "engine/v3/work/createExecutiveWork.ts",
-      "runtimeDestination": null,
-      "executiveDestinations": []
+      "runtimeDestination": "OrganizationRuntime.memory.executiveWork",
+      "executiveDestinations": [
+        "ExecutiveWorkWorkspace",
+        "ExecutiveReview",
+        "OrganizationalLearning"
+      ]
     },
     "CAP-DEC-007": {
       "name": "Longitudinal Executive Judgment",
-      "ownsObjects": [],
+      "ownsObjects": [
+        "DecisionConfidenceCalibration"
+      ],
       "canonicalProducer": "engine/v3/decisions/calibrateDecisionConfidence.ts",
-      "runtimeDestination": null,
-      "executiveDestinations": []
+      "runtimeDestination": "ExecutiveDecisionCycle.confidenceCalibration",
+      "executiveDestinations": [
+        "ExecutiveDecisionRecommendation",
+        "ExecutiveDecisionProjection",
+        "ExecutiveDecisionWorkspace"
+      ]
     },
     "CAP-OPT-001": {
       "name": "Optimization Variable Selection",
@@ -2382,7 +2445,7 @@
     }
   },
   "intelligence": {
-    "producedObjectCount": 33,
+    "producedObjectCount": 38,
     "producedObjects": [
       "V3Evidence",
       "OrganizationalObservation",
@@ -2413,12 +2476,17 @@
       "RankedExecutiveScenario",
       "ExecutiveDecisionRecommendation",
       "ExecutiveDecisionRecord",
+      "ExecutiveWork",
+      "ExecutiveReview",
+      "ExecutiveLearning",
+      "OperatingModelImprovement",
+      "DecisionConfidenceCalibration",
       "OptimizationVariable",
       "ExecutiveOptimizationObjective",
       "ExecutiveNarrative",
       "ExecutiveCommunication"
     ],
-    "executiveCapabilityCount": 27,
+    "executiveCapabilityCount": 29,
     "executiveCapabilityIds": [
       "CAP-UND-001",
       "CAP-UND-002",
@@ -2444,11 +2512,13 @@
       "CAP-DEC-003",
       "CAP-DEC-004",
       "CAP-DEC-005",
+      "CAP-DEC-006",
+      "CAP-DEC-007",
       "CAP-OPT-001",
       "CAP-OPT-002",
       "CAP-COM-001"
     ],
-    "projectedCapabilityCount": 15,
+    "projectedCapabilityCount": 16,
     "projectedCapabilityIds": [
       "CAP-UND-005",
       "CAP-UND-006",
@@ -2463,10 +2533,11 @@
       "CAP-DEC-002",
       "CAP-DEC-003",
       "CAP-DEC-004",
+      "CAP-DEC-007",
       "CAP-OPT-001",
       "CAP-OPT-002"
     ],
-    "workspaceDeclaredCapabilityCount": 13,
+    "workspaceDeclaredCapabilityCount": 15,
     "workspaceDeclaredCapabilityIds": [
       "CAP-UND-005",
       "CAP-UND-006",
@@ -2478,6 +2549,8 @@
       "CAP-DEC-003",
       "CAP-DEC-004",
       "CAP-DEC-005",
+      "CAP-DEC-006",
+      "CAP-DEC-007",
       "CAP-OPT-001",
       "CAP-OPT-002",
       "CAP-COM-001"
@@ -2521,12 +2594,13 @@
       "CAP-ADP-001",
       "CAP-SIM-001"
     ],
-    "potentiallyHiddenCapabilityCount": 6,
+    "potentiallyHiddenCapabilityCount": 7,
     "potentiallyHiddenCapabilityIds": [
       "CAP-DEC-001",
       "CAP-DEC-002",
       "CAP-DEC-003",
       "CAP-DEC-004",
+      "CAP-DEC-007",
       "CAP-OPT-001",
       "CAP-OPT-002"
     ],
@@ -2540,7 +2614,7 @@
       "missingDependencies": 0,
       "missingCanonicalProducers": 0,
       "capabilitiesWithoutProducer": 0,
-      "capabilitiesWithoutConsumers": 2,
+      "capabilitiesWithoutConsumers": 0,
       "capabilitiesWithoutRuntimeDestination": 0,
       "filesImplementingMultipleCapabilities": 0
     },
@@ -2568,7 +2642,7 @@
   },
   "recommendations": {
     "highestROI": "Expose intelligence already produced but not structurally visible in the Executive Workspace.",
-    "reason": "6 projected capability appear potentially hidden from the UI.",
+    "reason": "7 projected capability appear potentially hidden from the UI.",
     "recommendedCapability": null,
     "requiredPreBuildChecks": [
       "Search the Cognitive Capability Registry.",

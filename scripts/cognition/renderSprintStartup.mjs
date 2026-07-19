@@ -24,27 +24,19 @@ const ARCHITECTURE_STATE_PATH = path.join(
   "DISCOVERY_ARCHITECTURE_STATE.json",
 );
 
-const ARCHITECTURE_RECOMMENDATION_PROJECTION_PATH =
-  path.join(
-    PROJECT_ROOT,
-    "docs",
-    "Architecture",
-    "ARCHITECTURE_RECOMMENDATION_PROJECTION.json",
-  );
+const ARCHITECTURE_RECOMMENDATION_PROJECTION_PATH = path.join(
+  PROJECT_ROOT,
+  "docs",
+  "Architecture",
+  "ARCHITECTURE_RECOMMENDATION_PROJECTION.json",
+);
 
-function loadRequiredMarkdown(
-  filePath,
-  label,
-) {
+function loadRequiredMarkdown(filePath, label) {
   if (!fs.existsSync(filePath)) {
-    throw new Error(
-      `${label} not found: ${filePath}`,
-    );
+    throw new Error(`${label} not found: ${filePath}`);
   }
 
-  return fs
-    .readFileSync(filePath, "utf8")
-    .trim();
+  return fs.readFileSync(filePath, "utf8").trim();
 }
 
 function loadArchitectureState() {
@@ -56,17 +48,12 @@ function loadArchitectureState() {
 
   try {
     return JSON.parse(
-      fs.readFileSync(
-        ARCHITECTURE_STATE_PATH,
-        "utf8",
-      ),
+      fs.readFileSync(ARCHITECTURE_STATE_PATH, "utf8"),
     );
   } catch (error) {
     throw new Error(
       `Could not parse architecture state: ${
-        error instanceof Error
-          ? error.message
-          : String(error)
+        error instanceof Error ? error.message : String(error)
       }`,
     );
   }
@@ -91,24 +78,17 @@ function loadArchitectureRecommendationProjection() {
   } catch (error) {
     throw new Error(
       `Could not parse architecture recommendation projection: ${
-        error instanceof Error
-          ? error.message
-          : String(error)
+        error instanceof Error ? error.message : String(error)
       }`,
     );
   }
 }
 
 function asArray(value) {
-  return Array.isArray(value)
-    ? value
-    : [];
+  return Array.isArray(value) ? value : [];
 }
 
-function compactText(
-  value,
-  fallback = "Not declared",
-) {
+function compactText(value, fallback = "Not declared") {
   if (typeof value !== "string") {
     return fallback;
   }
@@ -121,25 +101,15 @@ function compactText(
   return normalized || fallback;
 }
 
-function truncate(
-  value,
-  maximumLength = 220,
-) {
-  const normalized =
-    compactText(value);
+function truncate(value, maximumLength = 220) {
+  const normalized = compactText(value);
 
-  if (
-    normalized.length <=
-    maximumLength
-  ) {
+  if (normalized.length <= maximumLength) {
     return normalized;
   }
 
   return `${normalized
-    .slice(
-      0,
-      maximumLength - 3,
-    )
+    .slice(0, maximumLength - 3)
     .trim()}...`;
 }
 
@@ -147,28 +117,18 @@ function statusIcon(condition) {
   return condition ? "✓" : "✗";
 }
 
-function printRule(
-  character = "-",
-  length = 57,
-) {
-  console.log(
-    character.repeat(length),
-  );
+function printRule(character = "-", length = 57) {
+  console.log(character.repeat(length));
 }
 
-function printMetric(
-  label,
-  value,
-) {
+function printMetric(label, value) {
   const width = 34;
-  const normalizedLabel =
-    String(label);
+  const normalizedLabel = String(label);
 
   const dots = ".".repeat(
     Math.max(
       1,
-      width -
-        normalizedLabel.length,
+      width - normalizedLabel.length,
     ),
   );
 
@@ -177,43 +137,71 @@ function printMetric(
   );
 }
 
+function escapeRegExp(value) {
+  return value.replace(
+    /[.*+?^${}()|[\]\\]/g,
+    "\\$&",
+  );
+}
+
 function extractMarkdownSection(
   markdown,
   heading,
 ) {
   const pattern = new RegExp(
-    `^# ${heading}\\s*$([\\s\\S]*?)(?=^# |\\Z)`,
+    `^# ${escapeRegExp(
+      heading,
+    )}\\s*$([\\s\\S]*?)(?=^# |\\Z)`,
     "m",
   );
 
-  const match =
-    markdown.match(pattern);
+  const match = markdown.match(pattern);
 
-  return (
-    match?.[1]?.trim() ?? ""
-  );
+  return match?.[1]?.trim() ?? "";
+}
+
+function extractFirstMarkdownSection(
+  markdown,
+  headings,
+) {
+  for (const heading of headings) {
+    const section =
+      extractMarkdownSection(
+        markdown,
+        heading,
+      );
+
+    if (section) {
+      return section;
+    }
+  }
+
+  return "";
 }
 
 function stripMarkdown(value) {
   return value
     .replace(/\*\*/g, "")
-    .replace(
-      /^[-*]\s+/gm,
-      "• ",
-    )
+    .replace(/^[-*]\s+/gm, "• ")
     .replace(
       /^```(?:text)?\s*$/gm,
       "",
     )
-    .replace(
-      /^```\s*$/gm,
-      "",
-    )
-    .replace(
-      /^---$/gm,
-      "",
-    )
+    .replace(/^```\s*$/gm, "")
+    .replace(/^---$/gm, "")
     .trim();
+}
+
+function extractAndStripSection(
+  markdown,
+  headings,
+) {
+  return stripMarkdown(
+    extractFirstMarkdownSection(
+      markdown,
+      headings,
+    ),
+  );
 }
 
 function printStartupReadingOrder() {
@@ -262,62 +250,51 @@ function printStartupReadingOrder() {
   console.log("");
 }
 
-function printProductCanon(
-  productCanon,
-) {
-  const mission = stripMarkdown(
-    extractMarkdownSection(
+function printProductCanon(productCanon) {
+  const mission =
+    extractAndStripSection(
       productCanon,
-      "Mission",
-    ),
-  );
+      ["Mission"],
+    );
 
   const productPhilosophy =
-    stripMarkdown(
-      extractMarkdownSection(
-        productCanon,
-        "Product Philosophy",
-      ),
+    extractAndStripSection(
+      productCanon,
+      ["Product Philosophy"],
     );
 
   const operatingModel =
-    stripMarkdown(
-      extractMarkdownSection(
-        productCanon,
-        "The Operating Model",
-      ),
+    extractAndStripSection(
+      productCanon,
+      ["The Operating Model"],
     );
 
   const executiveWork =
-    stripMarkdown(
-      extractMarkdownSection(
-        productCanon,
-        "Executive Work",
-      ),
+    extractAndStripSection(
+      productCanon,
+      ["Executive Work"],
     );
 
-  const lifecycle = stripMarkdown(
-    extractMarkdownSection(
+  const executiveLearningCycle =
+    extractAndStripSection(
       productCanon,
-      "Unified Executive Work Lifecycle",
-    ),
-  );
+      [
+        "Executive Learning Cycle",
+        "Unified Executive Work Lifecycle",
+      ],
+    );
 
   const executiveConversation =
-    stripMarkdown(
-      extractMarkdownSection(
-        productCanon,
-        "The Executive Conversation",
-      ),
+    extractAndStripSection(
+      productCanon,
+      ["The Executive Conversation"],
     );
 
   console.log("PRODUCT CANON");
   console.log("");
 
   console.log("Mission");
-  console.log(
-    truncate(mission, 360),
-  );
+  console.log(truncate(mission, 360));
   console.log("");
 
   console.log("Product Identity");
@@ -348,10 +325,13 @@ function printProductCanon(
   console.log("");
 
   console.log(
-    "Executive Work Lifecycle",
+    "Executive Learning Cycle",
   );
   console.log(
-    truncate(lifecycle, 500),
+    truncate(
+      executiveLearningCycle,
+      500,
+    ),
   );
   console.log("");
 
@@ -367,54 +347,44 @@ function printProductCanon(
   console.log("");
 }
 
-function printProductState(
-  productState,
-) {
-  const identity = stripMarkdown(
-    extractMarkdownSection(
+function printProductState(productState) {
+  const identity =
+    extractAndStripSection(
       productState,
-      "Product Identity",
-    ),
-  );
-
-  const operatingModel =
-    stripMarkdown(
-      extractMarkdownSection(
-        productState,
-        "Operating Model",
-      ),
+      ["Product Identity"],
     );
 
-  const currentMvp =
-    stripMarkdown(
-      extractMarkdownSection(
-        productState,
+  const operatingModel =
+    extractAndStripSection(
+      productState,
+      ["Operating Model"],
+    );
+
+  const currentProductLifecycle =
+    extractAndStripSection(
+      productState,
+      [
+        "Current Product Lifecycle",
         "Current MVP",
-      ),
+      ],
     );
 
   const currentFocus =
-    stripMarkdown(
-      extractMarkdownSection(
-        productState,
-        "Current Product Focus",
-      ),
+    extractAndStripSection(
+      productState,
+      ["Current Product Focus"],
     );
 
   const validationGoal =
-    stripMarkdown(
-      extractMarkdownSection(
-        productState,
-        "Current Validation Goal",
-      ),
+    extractAndStripSection(
+      productState,
+      ["Current Validation Goal"],
     );
 
   const principles =
-    stripMarkdown(
-      extractMarkdownSection(
-        productState,
-        "Current Product Principles",
-      ),
+    extractAndStripSection(
+      productState,
+      ["Current Product Principles"],
     );
 
   console.log(
@@ -437,10 +407,12 @@ function printProductState(
   );
   console.log("");
 
-  console.log("Current MVP");
+  console.log(
+    "Current Product Lifecycle",
+  );
   console.log(
     truncate(
-      currentMvp,
+      currentProductLifecycle,
       700,
     ),
   );
@@ -478,9 +450,7 @@ function printProductState(
   console.log("");
 }
 
-function printSprintReadiness(
-  state,
-) {
+function printSprintReadiness(state) {
   const health =
     state.architecture
       ?.healthScore ?? 0;
@@ -558,8 +528,7 @@ function printExecutiveSummary(
   state,
   ready,
 ) {
-  const project =
-    state.project ?? {};
+  const project = state.project ?? {};
 
   console.log(
     "EXECUTIVE SUMMARY",
@@ -567,13 +536,19 @@ function printExecutiveSummary(
   console.log("");
 
   console.log(
-    "Discovery is currently validating the Executive Operating System and one complete Executive Work lifecycle.",
+    "Discovery has completed the first generation of its Executive Cognitive Operating System.",
   );
 
   console.log("");
 
   console.log(
-    "The Operating Model is the brain behind Executive Work, recommendations, simulations, tracking, and learning.",
+    "The Executive Work lifecycle is implemented, integrated, and benchmark validated.",
+  );
+
+  console.log("");
+
+  console.log(
+    "The Operating Model is the foundation behind understanding, recommendations, simulations, Executive Work, review, learning, and future executive judgment.",
   );
 
   console.log("");
@@ -583,7 +558,7 @@ function printExecutiveSummary(
   );
 
   console.log(
-    "The current objective is validating one complete Executive Work flywheel before expanding the platform.",
+    "The current objective is continuously improving executive judgment quality through recommendation refinement, confidence calibration, executive communication, Executive Learning, and Operating Model improvement.",
   );
 
   console.log("");
@@ -616,17 +591,14 @@ function capabilityNamesById(
   state,
   capabilityIds,
 ) {
-  const capabilityMap =
-    new Map(
-      asArray(
-        state.capabilities,
-      ).map(
-        (capability) => [
-          capability.id,
-          capability.name,
-        ],
-      ),
-    );
+  const capabilityMap = new Map(
+    asArray(state.capabilities).map(
+      (capability) => [
+        capability.id,
+        capability.name,
+      ],
+    ),
+  );
 
   return capabilityIds.map(
     (capabilityId) =>
@@ -636,11 +608,8 @@ function capabilityNamesById(
   );
 }
 
-function printProjectState(
-  state,
-) {
-  const project =
-    state.project ?? {};
+function printProjectState(state) {
+  const project = state.project ?? {};
 
   console.log(
     "CURRENT IMPLEMENTATION",
@@ -709,9 +678,7 @@ function printProjectState(
   }
 }
 
-function printArchitectureHealth(
-  state,
-) {
+function printArchitectureHealth(state) {
   const architecture =
     state.architecture ?? {};
 
@@ -882,9 +849,7 @@ function printIntelligenceExtraction(
   console.log("");
 }
 
-function printCanonicalPipeline(
-  state,
-) {
+function printCanonicalPipeline(state) {
   const pipeline =
     state.pipeline
       ?.canonicalSequence ?? [];
@@ -911,9 +876,7 @@ function printCanonicalPipeline(
   console.log("");
 }
 
-function printDoNotRebuild(
-  state,
-) {
+function printDoNotRebuild(state) {
   const capabilities =
     asArray(state.capabilities);
 
@@ -944,9 +907,7 @@ function printDoNotRebuild(
       } (${capability.id})`,
     );
 
-    if (
-      ownedObjects.length > 0
-    ) {
+    if (ownedObjects.length > 0) {
       console.log(
         `  Owns: ${ownedObjects.join(
           ", ",
@@ -967,9 +928,7 @@ function printDoNotRebuild(
   console.log("");
 }
 
-function printDuplicateProtection(
-  state,
-) {
+function printDuplicateProtection(state) {
   const duplicateProtection =
     state.duplicateProtection ??
     {};
@@ -1051,11 +1010,8 @@ function printDuplicateProtection(
   console.log("");
 }
 
-function printArchitectureGaps(
-  state,
-) {
-  const gaps =
-    state.gaps ?? {};
+function printArchitectureGaps(state) {
+  const gaps = state.gaps ?? {};
 
   const unpopulatedDomains =
     asArray(
@@ -1085,9 +1041,7 @@ function printArchitectureGaps(
       const domain of
       unpopulatedDomains
     ) {
-      console.log(
-        `- ${domain}`,
-      );
+      console.log(`- ${domain}`);
     }
 
     console.log("");
@@ -1150,7 +1104,7 @@ function printRecommendation(
   console.log(
     compactText(
       reason,
-      "The architecture should be extended before new capability creation.",
+      "Expose, orchestrate, and refine existing intelligence before creating new reasoning architecture.",
     ),
   );
 
@@ -1193,18 +1147,14 @@ function printRecommendation(
       const blocker of
       blockers
     ) {
-      console.log(
-        `- ${blocker}`,
-      );
+      console.log(`- ${blocker}`);
     }
   }
 
   console.log("");
 }
 
-function printPreBuildGate(
-  state,
-) {
+function printPreBuildGate(state) {
   const checks = asArray(
     state.recommendations
       ?.requiredPreBuildChecks,
@@ -1226,9 +1176,7 @@ function printPreBuildGate(
 
   console.log("");
 
-  console.log(
-    "Decision Rule",
-  );
+  console.log("Decision Rule");
 
   console.log(
     compactText(
@@ -1241,9 +1189,7 @@ function printPreBuildGate(
   console.log("");
 }
 
-function printStartupDocuments(
-  state,
-) {
+function printStartupDocuments(state) {
   const architectureFiles =
     asArray(
       state.handoff
@@ -1259,8 +1205,10 @@ function printStartupDocuments(
   ];
 
   const files = [
-    ...productFiles,
-    ...architectureFiles,
+    ...new Set([
+      ...productFiles,
+      ...architectureFiles,
+    ]),
   ];
 
   console.log(
@@ -1323,16 +1271,12 @@ function renderSprintStartup() {
   printRule();
   console.log("");
 
-  printProductCanon(
-    productCanon,
-  );
+  printProductCanon(productCanon);
 
   printRule();
   console.log("");
 
-  printProductState(
-    productState,
-  );
+  printProductState(productState);
 
   printRule();
   console.log("");
@@ -1356,9 +1300,7 @@ function renderSprintStartup() {
   printRule();
   console.log("");
 
-  printArchitectureHealth(
-    state,
-  );
+  printArchitectureHealth(state);
 
   printRule();
   console.log("");
@@ -1370,9 +1312,7 @@ function renderSprintStartup() {
   printRule();
   console.log("");
 
-  printCanonicalPipeline(
-    state,
-  );
+  printCanonicalPipeline(state);
 
   printRule();
   console.log("");
@@ -1382,16 +1322,12 @@ function renderSprintStartup() {
   printRule();
   console.log("");
 
-  printDuplicateProtection(
-    state,
-  );
+  printDuplicateProtection(state);
 
   printRule();
   console.log("");
 
-  printArchitectureGaps(
-    state,
-  );
+  printArchitectureGaps(state);
 
   printRule();
   console.log("");
