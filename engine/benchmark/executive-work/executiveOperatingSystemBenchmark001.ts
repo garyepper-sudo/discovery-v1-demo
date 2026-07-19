@@ -30,6 +30,26 @@ import {
   saveExecutiveReview,
 } from "../../v3/work/saveExecutiveReview";
 
+import {
+  createExecutiveLearning,
+} from "../../v3/work/createExecutiveLearning";
+
+import {
+  saveExecutiveLearning,
+} from "../../v3/work/saveExecutiveLearning";
+
+import {
+  createOperatingModelImprovement,
+} from "../../v3/work/createOperatingModelImprovement";
+
+import {
+  saveOperatingModelImprovement,
+} from "../../v3/work/saveOperatingModelImprovement";
+
+import {
+  applyOperatingModelImprovement,
+} from "../../v3/work/applyOperatingModelImprovement";
+
 import type {
   ExecutiveDecision,
 } from "../../v3/model/simulate/executiveDecision";
@@ -315,6 +335,16 @@ const benchmarkRuntime = {
     executiveReviews:
       runtime.memory
         .executiveReviews ??
+      [],
+
+    executiveLearning:
+      runtime.memory
+        .executiveLearning ??
+      [],
+
+    operatingModelImprovements:
+      runtime.memory
+        .operatingModelImprovements ??
       [],
   },
 };
@@ -719,6 +749,129 @@ const persistedExecutiveReview =
         executiveReview.id,
     );
 
+const executiveLearning =
+  createExecutiveLearning({
+    review:
+      executiveReview,
+
+    learnedAt:
+      REVIEW_AT,
+  });
+
+const deterministicExecutiveLearning =
+  createExecutiveLearning({
+    review:
+      executiveReview,
+
+    learnedAt:
+      REVIEW_AT,
+  });
+
+const runtimeSnapshotBeforeLearningSave =
+  JSON.stringify(
+    reviewRuntime,
+  );
+
+const learningRuntime =
+  saveExecutiveLearning({
+    runtime:
+      reviewRuntime,
+
+    learning:
+      executiveLearning,
+  });
+
+const runtimeSnapshotAfterLearningSave =
+  JSON.stringify(
+    reviewRuntime,
+  );
+
+const persistedExecutiveLearning =
+  learningRuntime.memory
+    .executiveLearning
+    .find(
+      (candidate) =>
+        candidate.id ===
+        executiveLearning.id,
+    );
+
+const operatingModelImprovement =
+  createOperatingModelImprovement({
+    learning:
+      executiveLearning,
+
+    createdAt:
+      REVIEW_AT,
+  });
+
+const deterministicOperatingModelImprovement =
+  createOperatingModelImprovement({
+    learning:
+      executiveLearning,
+
+    createdAt:
+      REVIEW_AT,
+  });
+
+const runtimeSnapshotBeforeImprovementSave =
+  JSON.stringify(
+    learningRuntime,
+  );
+
+const improvementRuntime =
+  saveOperatingModelImprovement({
+    runtime:
+      learningRuntime,
+
+    improvement:
+      operatingModelImprovement,
+  });
+
+const runtimeSnapshotAfterImprovementSave =
+  JSON.stringify(
+    learningRuntime,
+  );
+
+const persistedOperatingModelImprovement =
+  improvementRuntime.memory
+    .operatingModelImprovements
+    .find(
+      (candidate) =>
+        candidate.id ===
+        operatingModelImprovement.id,
+    );
+
+const runtimeSnapshotBeforeImprovementApplication =
+  JSON.stringify(
+    improvementRuntime,
+  );
+
+const improvedRuntime =
+  applyOperatingModelImprovement({
+    runtime:
+      improvementRuntime,
+
+    improvementId:
+      operatingModelImprovement.id,
+
+    appliedAt:
+      REVIEW_AT,
+  });
+
+const runtimeSnapshotAfterImprovementApplication =
+  JSON.stringify(
+    improvementRuntime,
+  );
+
+const appliedOperatingModelImprovement =
+  improvedRuntime.memory
+    .operatingModelImprovements
+    .find(
+      (candidate) =>
+        candidate.id ===
+        operatingModelImprovement.id,
+    );
+
 const hasUnderstanding =
   benchmarkRuntime.memory
     .organizationalConditions
@@ -799,37 +952,71 @@ const hasCompletedReview =
     "inconclusive";
 
 const hasLearningFoundation =
-  reviewRuntime.memory
+  learningRuntime.memory
     .predictionEvaluations
     .length > 0 ||
-  reviewRuntime.memory
+  learningRuntime.memory
     .organizationalUnderstandingState !==
     undefined;
 
 const reviewProducedLearning =
-  false;
+  Boolean(
+    persistedExecutiveLearning,
+  ) &&
+  executiveLearning
+    .organizationalKnowledge
+    .length > 0 &&
+  executiveLearning
+    .futureRecommendationChanges
+    .length > 0;
 
 const hasDecisionOutcomeLearning =
   hasCompletedReview &&
   reviewProducedLearning;
 
-const operatingModelChanged =
+const canonicalBeliefCountBefore =
+  benchmarkRuntime.memory
+    .organizationalMemory
+    ?.beliefs.length ??
+  0;
+
+const canonicalBeliefCountAfter =
+  improvedRuntime.memory
+    .organizationalMemory
+    ?.beliefs.length ??
+  0;
+
+const canonicalBeliefsChanged =
   JSON.stringify(
-    reviewRuntime.organizationModel,
+    improvedRuntime.memory
+      .organizationalMemory
+      ?.beliefs,
   ) !==
   JSON.stringify(
-    benchmarkRuntime.organizationModel,
+    benchmarkRuntime.memory
+      .organizationalMemory
+      ?.beliefs,
   );
 
 const organizationalMemoryChanged =
   JSON.stringify(
-    reviewRuntime.memory
+    improvedRuntime.memory
       .organizationalMemory,
   ) !==
   JSON.stringify(
     benchmarkRuntime.memory
       .organizationalMemory,
   );
+
+const operatingModelImprovementApplied =
+  appliedOperatingModelImprovement
+    ?.status ===
+    "applied" &&
+  appliedOperatingModelImprovement
+    .appliedAt ===
+    REVIEW_AT &&
+  canonicalBeliefsChanged &&
+  organizationalMemoryChanged;
 
 const lifecycleChecks:
   LifecycleCheck[] = [
@@ -1041,19 +1228,18 @@ const lifecycleChecks:
 
       detail:
         hasDecisionOutcomeLearning
-          ? "The Executive Review produced explicit learning that can influence future judgment."
+          ? "The Executive Review produced and persisted review-specific Executive Learning that can influence future judgment."
           : hasLearningFoundation
             ? "Discovery has organizational learning infrastructure, but this Executive Review has not yet produced review-specific learning."
             : "No usable organizational learning pathway was detected.",
 
       evidence: [
-        `${reviewRuntime.memory.predictionEvaluations.length} pre-existing prediction evaluation(s)`,
-        hasCompletedReview
-          ? "Executive Review completed"
-          : "Executive Review not completed",
-        reviewProducedLearning
-          ? "Review-specific learning produced"
-          : "No review-specific learning object was produced",
+        `Learning: ${persistedExecutiveLearning?.id ?? "not found"}`,
+        `${executiveLearning.organizationalKnowledge.length} organizational knowledge item(s)`,
+        `${executiveLearning.futureRecommendationChanges.length} future recommendation change(s)`,
+        `Confidence adjustment: ${executiveLearning.confidenceAdjustment}`,
+        `Executive Review: ${executiveLearning.executiveReviewId}`,
+        `Learned at: ${executiveLearning.learnedAt}`,
       ],
     },
 
@@ -1062,29 +1248,31 @@ const lifecycleChecks:
         "Operating Model Improves",
 
       status:
-        operatingModelChanged ||
-        organizationalMemoryChanged
+        operatingModelImprovementApplied
           ? "PASS"
-          : hasLearningFoundation
+          : persistedOperatingModelImprovement
             ? "PARTIAL"
             : "MISSING",
 
       detail:
-        operatingModelChanged ||
-        organizationalMemoryChanged
-          ? "The completed lifecycle changed persistent organizational cognition."
-          : hasLearningFoundation
-            ? "Discovery has persistent cognition capable of improvement, but this benchmark stops before reviewed outcomes update the Operating Model."
-            : "No Operating Model improvement pathway was detected.",
+        operatingModelImprovementApplied
+          ? "Executive Learning produced a persisted Operating Model Improvement that was applied to durable organizational cognition."
+          : persistedOperatingModelImprovement
+            ? "An Operating Model Improvement was persisted, but it was not applied to organizational cognition."
+            : "No Operating Model Improvement was produced from Executive Learning.",
 
       evidence: [
-        operatingModelChanged
-          ? "Organization Model changed"
-          : "Organization Model unchanged",
+        `Improvement: ${appliedOperatingModelImprovement?.id ?? "not found"}`,
+        `Status: ${appliedOperatingModelImprovement?.status ?? "not applied"}`,
+        `${operatingModelImprovement.knowledgeUpdates.length} knowledge update(s)`,
+        `${operatingModelImprovement.recommendationUpdates.length} recommendation update(s)`,
+        `${operatingModelImprovement.beliefUpdates.length} typed belief update(s)`,
+        canonicalBeliefsChanged
+          ? `${canonicalBeliefCountBefore} → ${canonicalBeliefCountAfter} canonical persistent belief(s)`
+          : "Canonical persistent beliefs unchanged",
         organizationalMemoryChanged
           ? "Organizational Memory changed"
           : "Organizational Memory unchanged",
-        "Decision recording alone does not alter organizational cognition.",
       ],
     },
   ];
@@ -1397,6 +1585,330 @@ const assertions:
 
     {
       name:
+        "Executive Learning is deterministic",
+
+      passed:
+        JSON.stringify(
+          executiveLearning,
+        ) ===
+        JSON.stringify(
+          deterministicExecutiveLearning,
+        ),
+
+      detail:
+        JSON.stringify(
+          executiveLearning,
+        ) ===
+        JSON.stringify(
+          deterministicExecutiveLearning,
+        )
+          ? "Repeated learning creation produced identical results."
+          : "Repeated learning creation produced different results.",
+    },
+
+    {
+      name:
+        "Executive Learning save does not mutate review Runtime",
+
+      passed:
+        runtimeSnapshotBeforeLearningSave ===
+        runtimeSnapshotAfterLearningSave,
+
+      detail:
+        runtimeSnapshotBeforeLearningSave ===
+        runtimeSnapshotAfterLearningSave
+          ? "Review Runtime remained unchanged."
+          : "Review Runtime changed during Executive Learning persistence.",
+    },
+
+    {
+      name:
+        "Executive Learning save returns a new Runtime",
+
+      passed:
+        learningRuntime !==
+        reviewRuntime,
+
+      detail:
+        learningRuntime !==
+        reviewRuntime
+          ? "A new Runtime object was returned."
+          : "The review Runtime object was reused.",
+    },
+
+    {
+      name:
+        "Executive Learning persisted exactly once",
+
+      passed:
+        learningRuntime.memory
+          .executiveLearning
+          .length ===
+        reviewRuntime.memory
+          .executiveLearning
+          .length +
+          1,
+
+      detail:
+        `${reviewRuntime.memory.executiveLearning.length} → ${learningRuntime.memory.executiveLearning.length}`,
+    },
+
+    {
+      name:
+        "Persisted Executive Learning matches produced learning",
+
+      passed:
+        JSON.stringify(
+          persistedExecutiveLearning,
+        ) ===
+        JSON.stringify(
+          executiveLearning,
+        ),
+
+      detail:
+        persistedExecutiveLearning?.id ??
+        "Executive Learning not found.",
+    },
+
+    {
+      name:
+        "Executive Learning preserves lifecycle ancestry",
+
+      passed:
+        executiveLearning
+          .executiveReviewId ===
+          executiveReview.id &&
+        executiveLearning
+          .executiveWorkId ===
+          completedExecutiveWork.id &&
+        executiveLearning
+          .decisionRecordId ===
+          record.id &&
+        executiveLearning
+          .organizationId ===
+          ORGANIZATION_ID,
+
+      detail:
+        `${record.id} → ${completedExecutiveWork.id} → ${executiveReview.id} → ${executiveLearning.id}`,
+    },
+
+    {
+      name:
+        "Executive Learning produces durable knowledge",
+
+      passed:
+        executiveLearning
+          .organizationalKnowledge
+          .length > 0 &&
+        executiveLearning
+          .futureRecommendationChanges
+          .length > 0,
+
+      detail:
+        `${executiveLearning.organizationalKnowledge.length} knowledge item(s), ${executiveLearning.futureRecommendationChanges.length} recommendation change(s)`,
+    },
+
+    {
+      name:
+        "Operating Model Improvement is deterministic",
+
+      passed:
+        JSON.stringify(
+          operatingModelImprovement,
+        ) ===
+        JSON.stringify(
+          deterministicOperatingModelImprovement,
+        ),
+
+      detail:
+        JSON.stringify(
+          operatingModelImprovement,
+        ) ===
+        JSON.stringify(
+          deterministicOperatingModelImprovement,
+        )
+          ? "Repeated improvement creation produced identical results."
+          : "Repeated improvement creation produced different results.",
+    },
+
+    {
+      name:
+        "Operating Model Improvement save does not mutate learning Runtime",
+
+      passed:
+        runtimeSnapshotBeforeImprovementSave ===
+        runtimeSnapshotAfterImprovementSave,
+
+      detail:
+        runtimeSnapshotBeforeImprovementSave ===
+        runtimeSnapshotAfterImprovementSave
+          ? "Learning Runtime remained unchanged."
+          : "Learning Runtime changed during improvement persistence.",
+    },
+
+    {
+      name:
+        "Operating Model Improvement save returns a new Runtime",
+
+      passed:
+        improvementRuntime !==
+        learningRuntime,
+
+      detail:
+        improvementRuntime !==
+        learningRuntime
+          ? "A new Runtime object was returned."
+          : "The learning Runtime object was reused.",
+    },
+
+    {
+      name:
+        "Operating Model Improvement persisted exactly once",
+
+      passed:
+        improvementRuntime.memory
+          .operatingModelImprovements
+          .length ===
+        learningRuntime.memory
+          .operatingModelImprovements
+          .length +
+          1,
+
+      detail:
+        `${learningRuntime.memory.operatingModelImprovements.length} → ${improvementRuntime.memory.operatingModelImprovements.length}`,
+    },
+
+    {
+      name:
+        "Persisted Operating Model Improvement matches produced improvement",
+
+      passed:
+        JSON.stringify(
+          persistedOperatingModelImprovement,
+        ) ===
+        JSON.stringify(
+          operatingModelImprovement,
+        ),
+
+      detail:
+        persistedOperatingModelImprovement?.id ??
+        "Operating Model Improvement not found.",
+    },
+
+    {
+      name:
+        "Operating Model application does not mutate improvement Runtime",
+
+      passed:
+        runtimeSnapshotBeforeImprovementApplication ===
+        runtimeSnapshotAfterImprovementApplication,
+
+      detail:
+        runtimeSnapshotBeforeImprovementApplication ===
+        runtimeSnapshotAfterImprovementApplication
+          ? "Improvement Runtime remained unchanged."
+          : "Improvement Runtime changed during application.",
+    },
+
+    {
+      name:
+        "Operating Model application returns a new Runtime",
+
+      passed:
+        improvedRuntime !==
+        improvementRuntime,
+
+      detail:
+        improvedRuntime !==
+        improvementRuntime
+          ? "A new Runtime object was returned."
+          : "The improvement Runtime object was reused.",
+    },
+
+    {
+      name:
+        "Operating Model Improvement was marked applied",
+
+      passed:
+        appliedOperatingModelImprovement
+          ?.status ===
+          "applied" &&
+        appliedOperatingModelImprovement
+          .appliedAt ===
+          REVIEW_AT,
+
+      detail:
+        appliedOperatingModelImprovement
+          ? `${appliedOperatingModelImprovement.status}, applied ${appliedOperatingModelImprovement.appliedAt ?? "never"}`
+          : "Applied improvement not found.",
+    },
+
+    {
+      name:
+        "Operating Model Improvement preserves lifecycle ancestry",
+
+      passed:
+        operatingModelImprovement
+          .executiveLearningId ===
+          executiveLearning.id &&
+        operatingModelImprovement
+          .executiveReviewId ===
+          executiveReview.id &&
+        operatingModelImprovement
+          .executiveWorkId ===
+          completedExecutiveWork.id &&
+        operatingModelImprovement
+          .decisionRecordId ===
+          record.id &&
+        operatingModelImprovement
+          .organizationId ===
+          ORGANIZATION_ID,
+
+      detail:
+        `${record.id} → ${completedExecutiveWork.id} → ${executiveReview.id} → ${executiveLearning.id} → ${operatingModelImprovement.id}`,
+    },
+
+    {
+      name:
+        "Operating Model application changed durable cognition",
+
+      passed:
+        canonicalBeliefsChanged &&
+        organizationalMemoryChanged,
+
+      detail:
+        canonicalBeliefsChanged &&
+        organizationalMemoryChanged
+          ? `${canonicalBeliefCountBefore} → ${canonicalBeliefCountAfter} canonical persistent belief(s)`
+          : "No typed canonical organizational belief changed.",
+    },
+
+    {
+      name:
+        "Every typed belief update was applied to canonical memory",
+
+      passed:
+        operatingModelImprovement
+          .beliefUpdates
+          .every(
+            (update) =>
+              improvedRuntime.memory
+                .organizationalMemory
+                ?.beliefs
+                .some(
+                  (belief) =>
+                    belief.id ===
+                    update.beliefId,
+                ) ??
+              false,
+          ),
+
+      detail:
+        `${operatingModelImprovement.beliefUpdates.length} typed belief update(s), ${canonicalBeliefCountAfter - canonicalBeliefCountBefore} canonical belief(s) added`,
+    },
+
+    {
+      name:
         "Lifecycle preserves organization identity",
 
       passed:
@@ -1409,7 +1921,11 @@ const assertions:
           ORGANIZATION_ID &&
         executiveReview.organizationId ===
           ORGANIZATION_ID &&
-        reviewRuntime.metadata
+        executiveLearning.organizationId ===
+          ORGANIZATION_ID &&
+        operatingModelImprovement.organizationId ===
+          ORGANIZATION_ID &&
+        improvedRuntime.metadata
           .organizationId ===
           ORGANIZATION_ID,
 
@@ -1636,23 +2152,23 @@ console.log(
 printRule();
 
 console.log(
-  "1. Preserve the existing canonical reasoning and commitment pipeline.",
+  "1. Preserve the complete Executive Operating System lifecycle.",
 );
 
 console.log(
-  "2. Preserve the new Executive Work tracking foundation.",
+  "2. Preserve typed PersistentBelief application into canonical Organizational Memory.",
 );
 
 console.log(
-  "3. Preserve the new Executive Review foundation.",
+  "3. Add explicit existing-belief target ancestry so future improvements can update beliefs rather than only create them.",
 );
 
 console.log(
-  "4. Create and persist review-specific Executive Learning.",
+  "4. Stress-test learning and Operating Model improvement across mixed successful, failed, and inconclusive outcomes.",
 );
 
 console.log(
-  "5. Apply that learning back to the Operating Model.",
+  "5. Expose the completed lifecycle through the Executive Experience.",
 );
 
 console.log("");

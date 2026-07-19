@@ -33,6 +33,21 @@ export type ExecutiveWork = {
   decisionRecordId: string;
 
   /**
+   * Strategy selected by the executive when the decision was committed.
+   */
+  selectedOptionId: string;
+
+  /**
+   * Scenario associated with the selected strategy.
+   */
+  selectedScenarioId?: string;
+
+  /**
+   * Strategy originally recommended by Discovery.
+   */
+  recommendedOptionId?: string;
+
+  /**
    * Human-readable work title.
    */
   title: string;

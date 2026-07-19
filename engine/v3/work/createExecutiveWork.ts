@@ -68,6 +68,12 @@ export function createExecutiveWork({
     );
   }
 
+  const selectedOptionId =
+    requireNonEmptyString(
+      decisionRecord.selectedOptionId,
+      "selected option ID",
+    );
+
   const owner =
     requireNonEmptyString(
       decisionRecord.owner,
@@ -95,6 +101,14 @@ export function createExecutiveWork({
 
     decisionRecordId:
       decisionRecord.id,
+
+    selectedOptionId,
+
+    selectedScenarioId:
+      decisionRecord.selectedScenarioId,
+
+    recommendedOptionId:
+      decisionRecord.recommendedOptionId,
 
     title:
       requireNonEmptyString(

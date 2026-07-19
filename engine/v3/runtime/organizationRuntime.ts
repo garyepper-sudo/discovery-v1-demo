@@ -11,6 +11,12 @@ import type {
 import type {
   ExecutiveReview,
 } from "../work/executiveReview";
+import type {
+  ExecutiveLearning,
+} from "../work/executiveLearning";
+import type {
+  OperatingModelImprovement,
+} from "../work/operatingModelImprovement";
 import type { EntityMention } from "../entities/entityLifecycle";
 import type { ExecutiveState } from "../executive/executiveState";
 import type { OrganizationalCausalModel } from "../model/causal/organizationalCausalModel";
@@ -225,6 +231,17 @@ export type OrganizationRuntimeMemory = {
    * persisted Executive Work.
    */
   executiveReviews: ExecutiveReview[];
+
+  /**
+   * Review-specific Executive Learning produced from completed
+   * Executive Reviews.
+   */
+  executiveLearning: ExecutiveLearning[];
+
+  /**
+   * Proposed and applied improvements produced from Executive Learning.
+   */
+  operatingModelImprovements: OperatingModelImprovement[];
 };
 
 export type OrganizationRuntimeOrganism = {
@@ -361,6 +378,10 @@ export function createEmptyOrganizationRuntime(params: {
       executiveWork: [],
 
       executiveReviews: [],
+
+      executiveLearning: [],
+
+      operatingModelImprovements: [],
     },
 
     organism: {

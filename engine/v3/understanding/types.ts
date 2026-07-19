@@ -116,6 +116,42 @@ export type PersistentBelief = CognitiveObjectBase<"belief"> & {
   observationIds: string[];
   themeIds: string[];
   occurrenceCount: number;
+
+  /**
+   * Executive strategy whose observed outcomes produced this belief.
+   *
+   * Present only for beliefs created through the Executive Learning
+   * lifecycle.
+   */
+  selectedOptionId?: string;
+
+  /**
+   * Scenario associated with the selected executive strategy.
+   */
+  selectedScenarioId?: string;
+
+  /**
+   * Strategy originally recommended by Discovery.
+   */
+  recommendedOptionId?: string;
+
+  /**
+   * Executive lifecycle ancestry for review-derived beliefs.
+   */
+  executiveLearningId?: string;
+
+  executiveReviewId?: string;
+
+  executiveWorkId?: string;
+
+  decisionRecordId?: string;
+
+  /**
+   * Signed confidence adjustment produced by reviewed outcomes.
+   *
+   * Range: -1 to 1.
+   */
+  executiveOutcomeConfidenceAdjustment?: number;
 };
 
 export type PersistentContradiction = {

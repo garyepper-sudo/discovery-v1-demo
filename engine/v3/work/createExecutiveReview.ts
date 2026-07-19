@@ -60,7 +60,10 @@ function validateObservedOutcomes(
   observedOutcomes:
     ExecutiveObservedOutcome[],
 ): ExecutiveObservedOutcome[] {
-  if (observedOutcomes.length === 0) {
+  if (
+    observedOutcomes.length ===
+    0
+  ) {
     throw new Error(
       "Cannot create Executive Review: at least one observed outcome is required.",
     );
@@ -118,19 +121,22 @@ function resolveReviewStatus(
   const achieved =
     observedOutcomes.filter(
       (outcome) =>
-        outcome.achieved === true,
+        outcome.achieved ===
+        true,
     ).length;
 
   const notAchieved =
     observedOutcomes.filter(
       (outcome) =>
-        outcome.achieved === false,
+        outcome.achieved ===
+        false,
     ).length;
 
   const inconclusive =
     observedOutcomes.filter(
       (outcome) =>
-        outcome.achieved === null,
+        outcome.achieved ===
+        null,
     ).length;
 
   if (
@@ -165,13 +171,15 @@ function buildSummary(
   const achieved =
     observedOutcomes.filter(
       (outcome) =>
-        outcome.achieved === true,
+        outcome.achieved ===
+        true,
     ).length;
 
   const notAchieved =
     observedOutcomes.filter(
       (outcome) =>
-        outcome.achieved === false,
+        outcome.achieved ===
+        false,
     ).length;
 
   const inconclusive =
@@ -185,9 +193,13 @@ function buildSummary(
 /**
  * Creates the canonical review of one Executive Work item.
  *
- * This producer compares no new organizational models and performs no
- * learning. It records observed outcomes against the work item's existing
- * execution contract and deterministically resolves the review status.
+ * This producer:
+ *
+ * - records observed outcomes against the existing execution contract,
+ * - preserves selected-strategy ancestry,
+ * - deterministically resolves review status,
+ * - performs no learning,
+ * - performs no Runtime mutation.
  */
 export function createExecutiveReview({
   work,
@@ -196,12 +208,19 @@ export function createExecutiveReview({
   reviewedAt,
 }: CreateExecutiveReviewInput): ExecutiveReview {
   if (
-    work.status !== "completed"
+    work.status !==
+    "completed"
   ) {
     throw new Error(
       `Cannot create Executive Review: Executive Work ${work.id} is not completed.`,
     );
   }
+
+  const selectedOptionId =
+    requireNonEmptyString(
+      work.selectedOptionId,
+      "selected option ID",
+    );
 
   const canonicalReviewedAt =
     requireNonEmptyString(
@@ -231,6 +250,14 @@ export function createExecutiveReview({
 
     decisionRecordId:
       work.decisionRecordId,
+
+    selectedOptionId,
+
+    selectedScenarioId:
+      work.selectedScenarioId,
+
+    recommendedOptionId:
+      work.recommendedOptionId,
 
     status,
 

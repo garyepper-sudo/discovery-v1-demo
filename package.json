@@ -12,6 +12,7 @@
     "benchmark": "tsx engine/benchmark/runBenchmarks.ts",
     "evaluate": "tsx engine/benchmark/runBenchmarks.ts",
     "validate": "npm run typecheck && npm run evaluate",
+    "benchmark:executive-learning-calibration": "tsx engine/benchmark/executive-work/executiveLearningCalibrationBenchmark001.ts",
     "northstar:cognitive-layer-validation:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarCognitiveLayerValidation001.ts",
     "northstar:cognitive-trace:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarCognitiveTrace001.ts",
     "northstar:transformation-trace:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarTransformationTrace001.ts",
