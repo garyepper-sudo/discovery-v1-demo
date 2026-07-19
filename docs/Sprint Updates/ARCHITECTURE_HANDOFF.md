@@ -1,6 +1,6 @@
 # Discovery Architecture Handoff
 
-Generated: 2026-07-17T22:54:34.214Z
+Generated: 2026-07-19T15:46:41.430Z
 
 ## Purpose
 
@@ -55,9 +55,9 @@ Before adding any new cognitive capability:
 | CAP-ADP-001 | Prediction Outcome Evaluation | COG | PredictionEvaluation | OrganizationRuntime.predictionEvaluations | CAP-LRN-002, CAP-SIM-001 |
 | CAP-SYS-001 | Architectural Planning | SYS | ArchitectureRecommendation | DiscoveryArchitectureState.architectureRecommendations | CAP-SYS-002 |
 | CAP-SYS-002 | Architecture Recommendation Projection | SYS | ArchitectureRecommendationProjection | DiscoveryArchitectureState.architectureRecommendationProjection | None |
-| CAP-SIM-001 | Organizational Simulation | COG | SimulatedOrganizationState | OrganizationRuntime.simulatedOrganizationStates | CAP-COM-001, CAP-DEC-001, CAP-DEC-002, CAP-SYS-001, CAP-SIM-003 |
+| CAP-SIM-001 | Organizational Simulation | COG | SimulatedOrganizationState | OrganizationRuntime.simulatedOrganizationStates | CAP-COM-001, CAP-DEC-001, CAP-DEC-002, CAP-SIM-003, CAP-SYS-001 |
 | CAP-SIM-002 | Organizational Intervention Modeling | COG | OrganizationalIntervention | OrganizationRuntime.organizationalInterventions | CAP-DEC-001, CAP-SIM-001 |
-| CAP-SIM-003 | Executive Simulation Synthesis | EXEC | ExecutiveSimulation | OrganizationRuntime.executiveSimulation | CAP-DEC-001, CAP-DEC-005 |
+| CAP-SIM-003 | Executive Simulation Synthesis | EXEC | ExecutiveSimulation | OrganizationRuntime.memory.executiveSimulation | CAP-DEC-001, CAP-DEC-005 |
 | CAP-DEC-001 | Executive Decision Orchestration | EXEC | ExecutiveDecisionCycle | ExecutiveDecisionCycle | CAP-DEC-005 |
 | CAP-DEC-002 | Cross-Scenario Comparison | EXEC | ExecutiveScenarioComparisonEntry, ExecutiveScenarioComparisonSet | ExecutiveDecisionCycle.comparisonSet | CAP-DEC-001, CAP-DEC-003, CAP-DEC-004, CAP-SIM-003 |
 | CAP-DEC-003 | Executive Decision Ranking | EXEC | RankedExecutiveScenario | ExecutiveDecisionCycle.rankedScenarios | CAP-DEC-001, CAP-DEC-004, CAP-SIM-003 |
@@ -329,7 +329,7 @@ Before adding any new cognitive capability:
 
 **Canonical producer:** `engine/v3/simulation/buildExecutiveSimulation.ts`
 
-**Runtime destination:** `OrganizationRuntime.executiveSimulation`
+**Runtime destination:** `OrganizationRuntime.memory.executiveSimulation`
 
 **Executive destinations:** ExecutiveProjection.executiveSimulation, ExecutiveSimulationWorkspace, ExecutiveDecisionWorkspace, Atlas
 

@@ -8,76 +8,124 @@
 
 This document defines the immutable principles that guide every product decision inside Discovery.
 
-Every feature should reinforce these principles.
+Every feature, workflow, interaction, and engineering investment should reinforce these principles.
 
-If a proposed feature violates one of these principles, the feature should be reconsidered.
+If a proposed feature violates one or more of these principles, the feature should be reconsidered.
+
+These principles should remain stable even as Discovery evolves.
 
 ---
 
 # Principle 1
 
-## Discovery Improves Decisions
+## The Operating Model Is The Product
 
-Discovery exists to improve executive decision making.
+Discovery's most valuable asset is its Operating Model.
 
-Discovery does not exist to summarize information.
+Everything Discovery produces originates from the Operating Model.
 
-Discovery does not exist to answer arbitrary questions.
+Examples include:
 
-Every feature should improve:
-
-- understanding,
+- organizational understanding,
+- recommendations,
+- simulations,
 - confidence,
-- decision quality,
-- or organizational learning.
+- initiatives,
+- executive decisions,
+- organizational learning.
+
+Every feature should either:
+
+- improve the Operating Model,
+- expose the Operating Model,
+- or demonstrate the value of the Operating Model.
 
 ---
 
 # Principle 2
 
-## Discovery Surprises Before It Advises
+## Discovery Improves Executive Judgment
 
-The highest value Discovery can create is helping executives discover something they were not looking for.
+Discovery exists to improve executive judgment.
 
-Recommendations become more valuable after Discovery changes the executive's understanding.
+Discovery does not exist to summarize information.
 
-Understanding precedes advice.
+Discovery does not exist to answer arbitrary questions.
+
+Every feature should improve one or more of:
+
+- organizational understanding,
+- executive confidence,
+- executive judgment,
+- executive decision quality,
+- organizational learning.
 
 ---
 
 # Principle 3
 
-## Questions Are The Onboarding
+## Executive Work Is The Organizing Principle
 
-Executives should begin with an important business question.
+Discovery organizes itself around Executive Work.
 
-Discovery should never begin by requesting large amounts of organizational data.
+Executive Work includes:
 
-Discovery earns the right to request additional information by first creating value.
+- Discovery-generated recommendations,
+- executive-created initiatives,
+- executive-created decisions.
+
+Discovery should never organize itself around pages.
+
+Pages are simply views into Executive Work.
 
 ---
 
 # Principle 4
 
-## Every Upload Must Have A Purpose
+## Discovery Surprises Before It Advises
 
-Discovery should never ask users to upload information simply because more data is better.
+The highest value Discovery creates is helping executives discover something they were not looking for.
 
-Every request for information should answer:
+Recommendations become more valuable after Discovery changes executive understanding.
 
-Why?
-
-What assumption does this validate?
-
-How much additional confidence will this create?
-
-Executives should always understand why Discovery is requesting information.
+Understanding always precedes advice.
 
 ---
 
 # Principle 5
 
-## Explain Every Recommendation
+## Questions Begin The Conversation
+
+Discovery begins with executive intent.
+
+Executives should begin with important Executive Work.
+
+Discovery should never begin by requesting organizational information.
+
+Discovery earns the right to request additional context by creating value first.
+
+---
+
+# Principle 6
+
+## Every Upload Must Strengthen The Operating Model
+
+Discovery never requests organizational information simply because more data is better.
+
+Every request should answer:
+
+- Why does this matter?
+- Which assumption does it validate?
+- How much confidence could improve?
+- How does it strengthen the Operating Model?
+
+Executives should immediately understand why Discovery is asking.
+
+---
+
+# Principle 7
+
+## Every Recommendation Must Explain Itself
 
 Recommendations should never appear without explanation.
 
@@ -85,54 +133,61 @@ Every recommendation should explain:
 
 - why Discovery reached it,
 - supporting evidence,
+- supporting mechanisms,
+- supporting theories,
+- decisive advantages,
 - assumptions,
 - uncertainty,
-- competing explanations.
+- competing strategies.
 
 Trust is earned through explanation.
 
 ---
 
-# Principle 6
+# Principle 8
 
 ## Every Uncertainty Has A Next Step
 
 Discovery should never stop at:
 
-"We are uncertain."
+> We are uncertain.
 
 Instead Discovery should answer:
 
-"What would reduce this uncertainty?"
+> What would reduce this uncertainty?
 
 Every uncertainty should produce:
 
 - suggested evidence,
 - suggested investigation,
-- suggested interview,
-- suggested validation.
+- suggested validation,
+- estimated confidence improvement.
+
+Uncertainty should always lead to action.
 
 ---
 
-# Principle 7
+# Principle 9
 
 ## Discovery Helps Executives Think
 
-Discovery should never replace executive judgment.
+Discovery never replaces executive judgment.
 
-Discovery should challenge thinking.
+Discovery strengthens executive reasoning.
 
-Discovery should expose assumptions.
+Discovery should:
 
-Discovery should broaden consideration.
+- challenge assumptions,
+- expose blind spots,
+- broaden consideration,
+- improve reasoning,
+- improve confidence.
 
-Executives make decisions.
-
-Discovery improves reasoning.
+Executives always own commitments.
 
 ---
 
-# Principle 8
+# Principle 10
 
 ## Confidence Must Be Actionable
 
@@ -140,82 +195,192 @@ Confidence is not a score.
 
 Confidence should always answer:
 
-What limits confidence?
+- Why is confidence limited?
+- What assumption matters most?
+- What evidence would improve confidence?
+- How much improvement is expected?
 
-How can confidence improve?
-
-What information matters most?
-
-Discovery should expose Confidence Gaps rather than generic confidence percentages.
-
----
-
-# Principle 9
-
-## Every Decision Creates Learning
-
-Every committed decision should become organizational knowledge.
-
-Discovery should remember:
-
-- why decisions were made,
-- expected outcomes,
-- actual outcomes,
-- lessons learned.
-
-Organizations should continuously improve because Discovery remembers what organizations forget.
-
----
-
-# Principle 10
-
-## Trust Is The Product
-
-Discovery's most valuable feature is trust.
-
-Trust is created through:
-
-- transparency,
-- explanation,
-- intellectual honesty,
-- uncertainty,
-- continuous learning.
-
-Trust should always be more important than appearing intelligent.
+Confidence should always strengthen Executive Work.
 
 ---
 
 # Principle 11
 
-## Progressively Increase Sophistication
+## Reality Is The Final Authority
 
-Discovery should feel simple.
+Recommendations are hypotheses.
 
-Complexity should only appear when executives ask for it.
+Reality determines whether Discovery was correct.
 
-Understanding should unfold gradually.
+Discovery should continuously compare:
 
-The interface should remain calm regardless of engine complexity.
+```text
+Expected
+
+↓
+
+Observed
+
+↓
+
+Explanation
+
+↓
+
+Learning
+
+↓
+
+Operating Model Improves
+```
+
+Reality—not opinion—improves Discovery.
 
 ---
 
 # Principle 12
 
-## Measure Behavior, Not Opinions
+## Every Executive Work Item Creates Learning
 
-Discovery should evolve according to observed executive behavior.
+Every initiative and decision should strengthen:
 
-Success is measured by actions.
+- organizational understanding,
+- prediction calibration,
+- confidence calibration,
+- simulations,
+- recommendations,
+- organizational memory,
+- the Operating Model.
+
+Nothing important should be forgotten.
+
+---
+
+# Principle 13
+
+## Trust Is The Product
+
+Discovery's most valuable feature is trust.
+
+Trust is earned through:
+
+- transparency,
+- explanation,
+- observable reasoning,
+- intellectual honesty,
+- uncertainty,
+- continuous learning.
+
+Trust is more valuable than appearing intelligent.
+
+---
+
+# Principle 14
+
+## Observable Cognition
+
+Discovery should never pretend to think.
+
+Instead Discovery should expose authentic cognition occurring inside the Operating Model.
 
 Examples include:
 
-- simulations performed,
-- decisions committed,
-- confidence improved,
-- reviews completed,
-- executives returning for future decisions.
+- building understanding,
+- strengthening mechanisms,
+- updating theories,
+- evaluating interventions,
+- propagating organizational effects,
+- comparing strategies,
+- calibrating confidence.
 
-Behavior should drive product evolution.
+Executives should observe genuine reasoning.
+
+Not artificial AI animations.
+
+---
+
+# Principle 15
+
+## Progressively Increase Sophistication
+
+Discovery should always feel simple.
+
+Complexity appears only when executives request it.
+
+The experience should unfold naturally.
+
+```text
+Recommendation
+
+↓
+
+Why
+
+↓
+
+Compare
+
+↓
+
+Challenge
+
+↓
+
+Simulation
+
+↓
+
+Evidence
+```
+
+The interface should remain calm regardless of engine complexity.
+
+---
+
+# Principle 16
+
+## Behavior Matters More Than Opinions
+
+Discovery evolves according to executive behavior.
+
+Not feature requests.
+
+Not surveys.
+
+Not opinions.
+
+Examples include:
+
+- Executive Work created
+- recommendations explored
+- simulations performed
+- confidence improved
+- commitments recorded
+- tracking completed
+- reviews completed
+- executives returning
+
+Behavior determines the roadmap.
+
+---
+
+# Principle 17
+
+## The Product Must Compound
+
+Discovery should become more valuable through use.
+
+Every Executive Work item should strengthen the Operating Model.
+
+A stronger Operating Model produces:
+
+- better understanding,
+- better recommendations,
+- better simulations,
+- better confidence,
+- better executive judgment.
+
+The product should compound naturally.
 
 ---
 
@@ -229,7 +394,10 @@ Discovery should never become:
 - a reporting tool,
 - an information overload machine,
 - an AI that pretends certainty,
-- a system that asks users to train it.
+- a system that asks users to train it,
+- a collection of disconnected features.
+
+Everything should reinforce the Executive Operating System.
 
 ---
 
@@ -237,11 +405,15 @@ Discovery should never become:
 
 Before building any feature ask:
 
-Does this feature improve:
+Does this feature improve one or more of the following?
 
-- understanding?
-- confidence?
-- decision quality?
-- future decisions?
+- Operating Model quality?
+- Organizational understanding?
+- Executive confidence?
+- Executive judgment?
+- Executive Work?
+- Organizational learning?
 
-If the answer is no, it should not be built.
+If the answer is no, the feature should not be built.
+
+If the feature does not strengthen the Executive Work flywheel or the Operating Model, it does not belong in Discovery.

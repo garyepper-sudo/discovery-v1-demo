@@ -51,6 +51,11 @@ import {
 } from "./rankExecutiveScenarios";
 
 import {
+  buildExecutiveDecisionJustification,
+  type ExecutiveDecisionJustification,
+} from "./buildExecutiveDecisionJustification";
+
+import {
   buildExecutiveDecisionRecommendation,
   type ExecutiveDecisionRecommendation,
 } from "./buildExecutiveDecisionRecommendation";
@@ -124,6 +129,13 @@ export type ExecutiveDecisionCycle = {
    */
   rankedScenarios:
     RankedExecutiveScenario[];
+
+  /**
+   * Canonical explanation of why the winning strategy is preferred
+   * over the evaluated alternatives.
+   */
+  decisionJustification:
+    ExecutiveDecisionJustification;
 
   /**
    * Epistemic calibration explaining how much Discovery should trust
@@ -349,9 +361,11 @@ function runOptionScenarios(
  * 8. simulates every remaining option from the same organizational baseline,
  * 9. compares all projected futures,
  * 10. ranks the scenarios deterministically,
- * 11. synthesizes the final executive recommendation,
- * 12. synthesizes the canonical Executive Simulation,
- * 13. and returns the complete non-mutating decision cycle.
+ * 11. synthesizes the Executive Decision Justification,
+ * 12. calibrates confidence in the winning recommendation,
+ * 13. synthesizes the final executive recommendation,
+ * 14. synthesizes the canonical Executive Simulation,
+ * 15. and returns the complete non-mutating decision cycle.
  *
  * This orchestrator performs no independent organizational reasoning.
  */
@@ -455,6 +469,16 @@ export function runExecutiveDecisionCycle({
     );
   }
 
+  const decisionJustification =
+    buildExecutiveDecisionJustification({
+      generatedOptions,
+      comparisonSet,
+      rankedScenarios,
+      viabilityEvaluations,
+      generatedAt:
+        completedAt,
+    });
+
   const confidenceCalibration =
     calibrateDecisionConfidence({
       winner,
@@ -468,6 +492,7 @@ export function runExecutiveDecisionCycle({
       rankedScenarios,
       confidenceCalibration,
       viabilityEvaluations,
+      generatedOptions,
       generatedAt:
         completedAt,
     });
@@ -492,6 +517,7 @@ export function runExecutiveDecisionCycle({
     scenarios,
     comparisonSet,
     rankedScenarios,
+    decisionJustification,
     confidenceCalibration,
     recommendation,
     executiveSimulation,

@@ -3,6 +3,13 @@ import path from "path";
 
 const PROJECT_ROOT = process.cwd();
 
+const PRODUCT_CANON_PATH = path.join(
+  PROJECT_ROOT,
+  "docs",
+  "Product",
+  "PRODUCT_CANON.md",
+);
+
 const PRODUCT_STATE_PATH = path.join(
   PROJECT_ROOT,
   "docs",
@@ -17,12 +24,13 @@ const ARCHITECTURE_STATE_PATH = path.join(
   "DISCOVERY_ARCHITECTURE_STATE.json",
 );
 
-const ARCHITECTURE_RECOMMENDATION_PROJECTION_PATH = path.join(
-  PROJECT_ROOT,
-  "docs",
-  "Architecture",
-  "ARCHITECTURE_RECOMMENDATION_PROJECTION.json",
-);
+const ARCHITECTURE_RECOMMENDATION_PROJECTION_PATH =
+  path.join(
+    PROJECT_ROOT,
+    "docs",
+    "Architecture",
+    "ARCHITECTURE_RECOMMENDATION_PROJECTION.json",
+  );
 
 function loadRequiredMarkdown(
   filePath,
@@ -48,12 +56,17 @@ function loadArchitectureState() {
 
   try {
     return JSON.parse(
-      fs.readFileSync(ARCHITECTURE_STATE_PATH, "utf8"),
+      fs.readFileSync(
+        ARCHITECTURE_STATE_PATH,
+        "utf8",
+      ),
     );
   } catch (error) {
     throw new Error(
       `Could not parse architecture state: ${
-        error instanceof Error ? error.message : String(error)
+        error instanceof Error
+          ? error.message
+          : String(error)
       }`,
     );
   }
@@ -78,17 +91,24 @@ function loadArchitectureRecommendationProjection() {
   } catch (error) {
     throw new Error(
       `Could not parse architecture recommendation projection: ${
-        error instanceof Error ? error.message : String(error)
+        error instanceof Error
+          ? error.message
+          : String(error)
       }`,
     );
   }
 }
 
 function asArray(value) {
-  return Array.isArray(value) ? value : [];
+  return Array.isArray(value)
+    ? value
+    : [];
 }
 
-function compactText(value, fallback = "Not declared") {
+function compactText(
+  value,
+  fallback = "Not declared",
+) {
   if (typeof value !== "string") {
     return fallback;
   }
@@ -101,32 +121,60 @@ function compactText(value, fallback = "Not declared") {
   return normalized || fallback;
 }
 
-function truncate(value, maximumLength = 220) {
-  const normalized = compactText(value);
+function truncate(
+  value,
+  maximumLength = 220,
+) {
+  const normalized =
+    compactText(value);
 
-  if (normalized.length <= maximumLength) {
+  if (
+    normalized.length <=
+    maximumLength
+  ) {
     return normalized;
   }
 
-  return `${normalized.slice(0, maximumLength - 3).trim()}...`;
+  return `${normalized
+    .slice(
+      0,
+      maximumLength - 3,
+    )
+    .trim()}...`;
 }
 
 function statusIcon(condition) {
   return condition ? "✓" : "✗";
 }
 
-function printRule(character = "-", length = 57) {
-  console.log(character.repeat(length));
+function printRule(
+  character = "-",
+  length = 57,
+) {
+  console.log(
+    character.repeat(length),
+  );
 }
 
-function printMetric(label, value) {
+function printMetric(
+  label,
+  value,
+) {
   const width = 34;
-  const normalizedLabel = String(label);
+  const normalizedLabel =
+    String(label);
+
   const dots = ".".repeat(
-    Math.max(1, width - normalizedLabel.length),
+    Math.max(
+      1,
+      width -
+        normalizedLabel.length,
+    ),
   );
 
-  console.log(`${normalizedLabel} ${dots} ${value}`);
+  console.log(
+    `${normalizedLabel} ${dots} ${value}`,
+  );
 }
 
 function extractMarkdownSection(
@@ -138,19 +186,185 @@ function extractMarkdownSection(
     "m",
   );
 
-  const match = markdown.match(pattern);
+  const match =
+    markdown.match(pattern);
 
-  return match?.[1]?.trim() ?? "";
+  return (
+    match?.[1]?.trim() ?? ""
+  );
 }
 
 function stripMarkdown(value) {
   return value
     .replace(/\*\*/g, "")
-    .replace(/^[-*]\s+/gm, "• ")
-    .replace(/^```(?:text)?\s*$/gm, "")
-    .replace(/^```\s*$/gm, "")
-    .replace(/^---$/gm, "")
+    .replace(
+      /^[-*]\s+/gm,
+      "• ",
+    )
+    .replace(
+      /^```(?:text)?\s*$/gm,
+      "",
+    )
+    .replace(
+      /^```\s*$/gm,
+      "",
+    )
+    .replace(
+      /^---$/gm,
+      "",
+    )
     .trim();
+}
+
+function printStartupReadingOrder() {
+  const files = [
+    "docs/Product/PRODUCT_CANON.md",
+    "docs/Product/PRODUCT_STATE.md",
+    "docs/Sprint Updates/DISCOVERY_SNAPSHOT.md",
+    "docs/Architecture/DISCOVERY_ARCHITECTURE_STATE.json",
+    "docs/Architecture/COGNITIVE_CAPABILITY_REGISTRY.json",
+    "docs/Sprint Updates/PROJECT_STATE.md",
+    "docs/Sprint Updates/NEXT_CHAT.md",
+  ];
+
+  console.log(
+    "REQUIRED STARTUP READING",
+  );
+  console.log("");
+
+  for (
+    const [index, file] of
+    files.entries()
+  ) {
+    console.log(
+      `${index + 1}. ${file}`,
+    );
+  }
+
+  console.log("");
+
+  console.log(
+    "Product Canon defines what Discovery is.",
+  );
+
+  console.log(
+    "Product State defines the current product.",
+  );
+
+  console.log(
+    "Sprint documents define current implementation priorities.",
+  );
+
+  console.log(
+    "Architecture supports the product and should expand only when benchmark evidence proves a genuine gap.",
+  );
+
+  console.log("");
+}
+
+function printProductCanon(
+  productCanon,
+) {
+  const mission = stripMarkdown(
+    extractMarkdownSection(
+      productCanon,
+      "Mission",
+    ),
+  );
+
+  const productPhilosophy =
+    stripMarkdown(
+      extractMarkdownSection(
+        productCanon,
+        "Product Philosophy",
+      ),
+    );
+
+  const operatingModel =
+    stripMarkdown(
+      extractMarkdownSection(
+        productCanon,
+        "The Operating Model",
+      ),
+    );
+
+  const executiveWork =
+    stripMarkdown(
+      extractMarkdownSection(
+        productCanon,
+        "Executive Work",
+      ),
+    );
+
+  const lifecycle = stripMarkdown(
+    extractMarkdownSection(
+      productCanon,
+      "Unified Executive Work Lifecycle",
+    ),
+  );
+
+  const executiveConversation =
+    stripMarkdown(
+      extractMarkdownSection(
+        productCanon,
+        "The Executive Conversation",
+      ),
+    );
+
+  console.log("PRODUCT CANON");
+  console.log("");
+
+  console.log("Mission");
+  console.log(
+    truncate(mission, 360),
+  );
+  console.log("");
+
+  console.log("Product Identity");
+  console.log(
+    truncate(
+      productPhilosophy,
+      420,
+    ),
+  );
+  console.log("");
+
+  console.log("Operating Model");
+  console.log(
+    truncate(
+      operatingModel,
+      500,
+    ),
+  );
+  console.log("");
+
+  console.log("Executive Work");
+  console.log(
+    truncate(
+      executiveWork,
+      500,
+    ),
+  );
+  console.log("");
+
+  console.log(
+    "Executive Work Lifecycle",
+  );
+  console.log(
+    truncate(lifecycle, 500),
+  );
+  console.log("");
+
+  console.log(
+    "Executive Conversation",
+  );
+  console.log(
+    truncate(
+      executiveConversation,
+      500,
+    ),
+  );
+  console.log("");
 }
 
 function printProductState(
@@ -163,35 +377,49 @@ function printProductState(
     ),
   );
 
-  const currentMvp = stripMarkdown(
-    extractMarkdownSection(
-      productState,
-      "Current MVP",
-    ),
-  );
+  const operatingModel =
+    stripMarkdown(
+      extractMarkdownSection(
+        productState,
+        "Operating Model",
+      ),
+    );
 
-  const currentFocus = stripMarkdown(
-    extractMarkdownSection(
-      productState,
-      "Current Product Focus",
-    ),
-  );
+  const currentMvp =
+    stripMarkdown(
+      extractMarkdownSection(
+        productState,
+        "Current MVP",
+      ),
+    );
 
-  const validationGoal = stripMarkdown(
-    extractMarkdownSection(
-      productState,
-      "Current Validation Goal",
-    ),
-  );
+  const currentFocus =
+    stripMarkdown(
+      extractMarkdownSection(
+        productState,
+        "Current Product Focus",
+      ),
+    );
 
-  const principles = stripMarkdown(
-    extractMarkdownSection(
-      productState,
-      "Current Product Principles",
-    ),
-  );
+  const validationGoal =
+    stripMarkdown(
+      extractMarkdownSection(
+        productState,
+        "Current Validation Goal",
+      ),
+    );
 
-  console.log("DISCOVERY PRODUCT");
+  const principles =
+    stripMarkdown(
+      extractMarkdownSection(
+        productState,
+        "Current Product Principles",
+      ),
+    );
+
+  console.log(
+    "CURRENT PRODUCT STATE",
+  );
   console.log("");
 
   console.log("Identity");
@@ -200,49 +428,107 @@ function printProductState(
   );
   console.log("");
 
+  console.log("Operating Model");
+  console.log(
+    truncate(
+      operatingModel,
+      500,
+    ),
+  );
+  console.log("");
+
   console.log("Current MVP");
   console.log(
-    truncate(currentMvp, 700),
+    truncate(
+      currentMvp,
+      700,
+    ),
   );
   console.log("");
 
   console.log("Current Focus");
   console.log(
-    truncate(currentFocus, 500),
+    truncate(
+      currentFocus,
+      500,
+    ),
   );
   console.log("");
 
-  console.log("Validation Objective");
   console.log(
-    truncate(validationGoal, 500),
+    "Validation Objective",
+  );
+  console.log(
+    truncate(
+      validationGoal,
+      500,
+    ),
   );
   console.log("");
 
-  console.log("Product Principles");
   console.log(
-    truncate(principles, 420),
+    "Product Principles",
+  );
+  console.log(
+    truncate(
+      principles,
+      420,
+    ),
   );
   console.log("");
 }
 
-function printSprintReadiness(state) {
+function printSprintReadiness(
+  state,
+) {
   const health =
-    state.architecture?.healthScore ?? 0;
+    state.architecture
+      ?.healthScore ?? 0;
 
   const registryHealthy =
-    (state.architecture?.health?.duplicateIdCount ?? 0) === 0 &&
-    (state.architecture?.health?.missingDependencyCount ?? 0) === 0 &&
-    (state.architecture?.health?.missingCanonicalProducerCount ?? 0) === 0 &&
-    (state.architecture?.health?.capabilitiesWithoutProducerCount ?? 0) === 0 &&
-    (state.architecture?.health?.capabilitiesWithoutConsumersCount ?? 0) === 0 &&
-    (state.architecture?.health
-      ?.capabilitiesWithoutRuntimeDestinationCount ?? 0) === 0;
+    (
+      state.architecture
+        ?.health
+        ?.duplicateIdCount ?? 0
+    ) === 0 &&
+    (
+      state.architecture
+        ?.health
+        ?.missingDependencyCount ??
+      0
+    ) === 0 &&
+    (
+      state.architecture
+        ?.health
+        ?.missingCanonicalProducerCount ??
+      0
+    ) === 0 &&
+    (
+      state.architecture
+        ?.health
+        ?.capabilitiesWithoutProducerCount ??
+      0
+    ) === 0 &&
+    (
+      state.architecture
+        ?.health
+        ?.capabilitiesWithoutConsumersCount ??
+      0
+    ) === 0 &&
+    (
+      state.architecture
+        ?.health
+        ?.capabilitiesWithoutRuntimeDestinationCount ??
+      0
+    ) === 0;
 
   const ready =
     health === 100 &&
     registryHealthy;
 
-  console.log("SPRINT READINESS");
+  console.log(
+    "SPRINT READINESS",
+  );
   console.log("");
 
   console.log(
@@ -272,13 +558,22 @@ function printExecutiveSummary(
   state,
   ready,
 ) {
-  const project = state.project ?? {};
+  const project =
+    state.project ?? {};
 
-  console.log("EXECUTIVE SUMMARY");
+  console.log(
+    "EXECUTIVE SUMMARY",
+  );
   console.log("");
 
   console.log(
-    "Discovery is currently validating the Executive Decision Workspace.",
+    "Discovery is currently validating the Executive Operating System and one complete Executive Work lifecycle.",
+  );
+
+  console.log("");
+
+  console.log(
+    "The Operating Model is the brain behind Executive Work, recommendations, simulations, tracking, and learning.",
   );
 
   console.log("");
@@ -288,13 +583,24 @@ function printExecutiveSummary(
   );
 
   console.log(
-    "The current objective is validating one complete executive decision workflow before expanding the platform.",
+    "The current objective is validating one complete Executive Work flywheel before expanding the platform.",
   );
 
   console.log("");
 
+  if (!ready) {
+    console.log(
+      "Architectural validation requires attention before implementation continues.",
+    );
+
+    console.log("");
+  }
+
   if (project.nextPriority) {
-    console.log("Highest Priority");
+    console.log(
+      "Highest Priority",
+    );
+
     console.log(
       truncate(
         project.nextPriority,
@@ -306,97 +612,157 @@ function printExecutiveSummary(
   console.log("");
 }
 
-function capabilityNamesById(state, capabilityIds) {
-  const capabilityMap = new Map(
-    asArray(state.capabilities).map((capability) => [
-      capability.id,
-      capability.name,
-    ]),
-  );
+function capabilityNamesById(
+  state,
+  capabilityIds,
+) {
+  const capabilityMap =
+    new Map(
+      asArray(
+        state.capabilities,
+      ).map(
+        (capability) => [
+          capability.id,
+          capability.name,
+        ],
+      ),
+    );
 
   return capabilityIds.map(
     (capabilityId) =>
-      capabilityMap.get(capabilityId) ?? capabilityId,
+      capabilityMap.get(
+        capabilityId,
+      ) ?? capabilityId,
   );
 }
 
-function printProjectState(state) {
-  const project = state.project ?? {};
+function printProjectState(
+  state,
+) {
+  const project =
+    state.project ?? {};
 
-  console.log("CURRENT IMPLEMENTATION");
+  console.log(
+    "CURRENT IMPLEMENTATION",
+  );
   console.log("");
 
   console.log("Milestone");
   console.log(
-    truncate(project.currentMilestone, 280),
+    truncate(
+      project.currentMilestone,
+      280,
+    ),
   );
   console.log("");
 
-  console.log("Development Phase");
   console.log(
-    truncate(project.currentPhase, 280),
+    "Development Phase",
+  );
+  console.log(
+    truncate(
+      project.currentPhase,
+      280,
+    ),
   );
   console.log("");
 
-  console.log("Current Objective");
   console.log(
-    truncate(project.currentObjective, 420),
+    "Current Objective",
+  );
+  console.log(
+    truncate(
+      project.currentObjective,
+      420,
+    ),
   );
   console.log("");
 
   if (project.currentSprint) {
-    console.log("Current Sprint");
     console.log(
-      truncate(project.currentSprint, 220),
+      "Current Sprint",
     );
+
+    console.log(
+      truncate(
+        project.currentSprint,
+        220,
+      ),
+    );
+
     console.log("");
   }
 
   if (project.nextPriority) {
-    console.log("Next Priority");
     console.log(
-      truncate(project.nextPriority, 280),
+      "Next Priority",
     );
+
+    console.log(
+      truncate(
+        project.nextPriority,
+        280,
+      ),
+    );
+
     console.log("");
   }
 }
 
-function printArchitectureHealth(state) {
-  const architecture = state.architecture ?? {};
-  const health = architecture.health ?? {};
+function printArchitectureHealth(
+  state,
+) {
+  const architecture =
+    state.architecture ?? {};
 
-  console.log("ARCHITECTURE HEALTH");
+  const health =
+    architecture.health ?? {};
+
+  console.log(
+    "ARCHITECTURE HEALTH",
+  );
   console.log("");
 
   printMetric(
     "Architecture health",
-    `${architecture.healthScore ?? 0}%`,
+    `${
+      architecture.healthScore ??
+      0
+    }%`,
   );
 
   printMetric(
     "Registered capabilities",
-    architecture.capabilityCount ?? 0,
+    architecture.capabilityCount ??
+      0,
   );
 
   printMetric(
     "Canonical producers",
-    architecture.canonicalProducerCount ?? 0,
+    architecture.canonicalProducerCount ??
+      0,
   );
 
   printMetric(
     "Registered files",
-    architecture.registeredFileCount ?? 0,
+    architecture.registeredFileCount ??
+      0,
   );
 
   printMetric(
     "Cognitive objects",
-    architecture.cognitiveObjectCount ?? 0,
+    architecture.cognitiveObjectCount ??
+      0,
   );
 
   printMetric(
     "Connected traces",
-    `${architecture.connectedCapabilityTraceCount ?? 0}/${
-      architecture.capabilityTraceCount ?? 0
+    `${
+      architecture.connectedCapabilityTraceCount ??
+      0
+    }/${
+      architecture.capabilityTraceCount ??
+      0
     }`,
   );
 
@@ -409,66 +775,82 @@ function printArchitectureHealth(state) {
 
   printMetric(
     "Missing dependencies",
-    health.missingDependencyCount ?? 0,
+    health.missingDependencyCount ??
+      0,
   );
 
   printMetric(
     "Missing canonical producers",
-    health.missingCanonicalProducerCount ?? 0,
+    health.missingCanonicalProducerCount ??
+      0,
   );
 
   printMetric(
     "Capabilities without producer",
-    health.capabilitiesWithoutProducerCount ?? 0,
+    health.capabilitiesWithoutProducerCount ??
+      0,
   );
 
   printMetric(
     "Capabilities without consumers",
-    health.capabilitiesWithoutConsumersCount ?? 0,
+    health.capabilitiesWithoutConsumersCount ??
+      0,
   );
 
   printMetric(
     "Missing Runtime destinations",
-    health.capabilitiesWithoutRuntimeDestinationCount ?? 0,
+    health.capabilitiesWithoutRuntimeDestinationCount ??
+      0,
   );
 
   printMetric(
     "Multi-capability files",
-    health.multiCapabilityFileCount ?? 0,
+    health.multiCapabilityFileCount ??
+      0,
   );
 
   console.log("");
 }
 
-function printIntelligenceExtraction(state) {
-  const intelligence = state.intelligence ?? {};
+function printIntelligenceExtraction(
+  state,
+) {
+  const intelligence =
+    state.intelligence ?? {};
 
-  console.log("INTELLIGENCE EXTRACTION");
+  console.log(
+    "INTELLIGENCE EXTRACTION",
+  );
   console.log("");
 
   printMetric(
     "Produced cognitive objects",
-    intelligence.producedObjectCount ?? 0,
+    intelligence.producedObjectCount ??
+      0,
   );
 
   printMetric(
     "Executive capabilities",
-    intelligence.executiveCapabilityCount ?? 0,
+    intelligence.executiveCapabilityCount ??
+      0,
   );
 
   printMetric(
     "Projected capabilities",
-    intelligence.projectedCapabilityCount ?? 0,
+    intelligence.projectedCapabilityCount ??
+      0,
   );
 
   printMetric(
     "Structurally visible",
-    intelligence.structurallyVisibleCapabilityCount ?? 0,
+    intelligence.structurallyVisibleCapabilityCount ??
+      0,
   );
 
   printMetric(
     "Potentially hidden",
-    intelligence.potentiallyHiddenCapabilityCount ?? 0,
+    intelligence.potentiallyHiddenCapabilityCount ??
+      0,
   );
 
   const hiddenIds = asArray(
@@ -477,31 +859,51 @@ function printIntelligenceExtraction(state) {
 
   if (hiddenIds.length > 0) {
     console.log("");
-    console.log("Potentially Hidden Intelligence");
+
+    console.log(
+      "Potentially Hidden Intelligence",
+    );
+
     console.log("");
 
-    for (const capabilityName of capabilityNamesById(
-      state,
-      hiddenIds,
-    )) {
-      console.log(`- ${capabilityName}`);
+    for (
+      const capabilityName of
+      capabilityNamesById(
+        state,
+        hiddenIds,
+      )
+    ) {
+      console.log(
+        `- ${capabilityName}`,
+      );
     }
   }
 
   console.log("");
 }
 
-function printCanonicalPipeline(state) {
+function printCanonicalPipeline(
+  state,
+) {
   const pipeline =
-    state.pipeline?.canonicalSequence ?? [];
+    state.pipeline
+      ?.canonicalSequence ?? [];
 
-  console.log("CANONICAL PIPELINE");
+  console.log(
+    "CANONICAL PIPELINE",
+  );
   console.log("");
 
-  for (const [index, stage] of pipeline.entries()) {
+  for (
+    const [index, stage] of
+    pipeline.entries()
+  ) {
     console.log(stage);
 
-    if (index < pipeline.length - 1) {
+    if (
+      index <
+      pipeline.length - 1
+    ) {
       console.log("↓");
     }
   }
@@ -509,34 +911,52 @@ function printCanonicalPipeline(state) {
   console.log("");
 }
 
-function printDoNotRebuild(state) {
-  const capabilities = asArray(state.capabilities);
+function printDoNotRebuild(
+  state,
+) {
+  const capabilities =
+    asArray(state.capabilities);
 
-  console.log("DO NOT REBUILD");
+  console.log(
+    "DO NOT REBUILD",
+  );
   console.log("");
 
   console.log(
     "The following capabilities already exist and must be extended rather than recreated:",
   );
+
   console.log("");
 
-  for (const capability of capabilities) {
-    const ownedObjects = asArray(
-      capability.ownership?.ownsObjects,
-    );
+  for (
+    const capability of
+    capabilities
+  ) {
+    const ownedObjects =
+      asArray(
+        capability.ownership
+          ?.ownsObjects,
+      );
 
     console.log(
-      `${statusIcon(true)} ${capability.name} (${capability.id})`,
+      `${statusIcon(true)} ${
+        capability.name
+      } (${capability.id})`,
     );
 
-    if (ownedObjects.length > 0) {
+    if (
+      ownedObjects.length > 0
+    ) {
       console.log(
-        `  Owns: ${ownedObjects.join(", ")}`,
+        `  Owns: ${ownedObjects.join(
+          ", ",
+        )}`,
       );
     }
 
     if (
-      capability.ownership?.ownsCanonicalProducer
+      capability.ownership
+        ?.ownsCanonicalProducer
     ) {
       console.log(
         `  Producer: ${capability.ownership.ownsCanonicalProducer}`,
@@ -547,15 +967,20 @@ function printDoNotRebuild(state) {
   console.log("");
 }
 
-function printDuplicateProtection(state) {
+function printDuplicateProtection(
+  state,
+) {
   const duplicateProtection =
-    state.duplicateProtection ?? {};
+    state.duplicateProtection ??
+    {};
 
   const overlaps = asArray(
     duplicateProtection.potentialOverlaps,
   );
 
-  console.log("DUPLICATE-WORK PROTECTION");
+  console.log(
+    "DUPLICATE-WORK PROTECTION",
+  );
   console.log("");
 
   printMetric(
@@ -565,7 +990,8 @@ function printDuplicateProtection(state) {
 
   printMetric(
     "Duplicate IDs",
-    duplicateProtection.exactDuplicateIdCount ?? 0,
+    duplicateProtection.exactDuplicateIdCount ??
+      0,
   );
 
   printMetric(
@@ -576,22 +1002,33 @@ function printDuplicateProtection(state) {
 
   if (overlaps.length > 0) {
     console.log("");
-    console.log("Overlap Reviews Required");
+
+    console.log(
+      "Overlap Reviews Required",
+    );
+
     console.log("");
 
-    for (const overlap of overlaps) {
+    for (
+      const overlap of overlaps
+    ) {
       console.log(
         `- ${overlap.leftCapabilityName} ↔ ${overlap.rightCapabilityName}`,
       );
 
       console.log(
         `  Similarity: ${Math.round(
-          (overlap.semanticSimilarity ?? 0) * 100,
+          (
+            overlap.semanticSimilarity ??
+            0
+          ) * 100,
         )}%`,
       );
 
       if (
-        asArray(overlap.sharedProducedObjects).length > 0
+        asArray(
+          overlap.sharedProducedObjects,
+        ).length > 0
       ) {
         console.log(
           `  Shared objects: ${overlap.sharedProducedObjects.join(
@@ -603,25 +1040,37 @@ function printDuplicateProtection(state) {
   }
 
   console.log("");
+
   console.log(
     compactText(
       duplicateProtection.permanentRule,
       "Extend existing capabilities before creating new ones.",
     ),
   );
+
   console.log("");
 }
 
-function printArchitectureGaps(state) {
-  const gaps = state.gaps ?? {};
-  const unpopulatedDomains = asArray(
-    gaps.unpopulatedDomains,
-  );
+function printArchitectureGaps(
+  state,
+) {
+  const gaps =
+    state.gaps ?? {};
 
-  console.log("ARCHITECTURE GAPS");
+  const unpopulatedDomains =
+    asArray(
+      gaps.unpopulatedDomains,
+    );
+
+  console.log(
+    "ARCHITECTURE GAPS",
+  );
   console.log("");
 
-  if (unpopulatedDomains.length === 0) {
+  if (
+    unpopulatedDomains.length ===
+    0
+  ) {
     console.log(
       "No unpopulated cognitive domains were detected.",
     );
@@ -629,13 +1078,20 @@ function printArchitectureGaps(state) {
     console.log(
       "Domains without registered capabilities:",
     );
+
     console.log("");
 
-    for (const domain of unpopulatedDomains) {
-      console.log(`- ${domain}`);
+    for (
+      const domain of
+      unpopulatedDomains
+    ) {
+      console.log(
+        `- ${domain}`,
+      );
     }
 
     console.log("");
+
     console.log(
       "These are review areas, not automatic permission to build new capabilities.",
     );
@@ -649,7 +1105,8 @@ function printRecommendation(
   recommendationProjection,
 ) {
   const sprintBrief =
-    recommendationProjection?.sprintBrief;
+    recommendationProjection
+      ?.sprintBrief;
 
   const recommendations =
     state.recommendations ?? {};
@@ -662,7 +1119,9 @@ function printRecommendation(
     sprintBrief?.reason ??
     recommendations.reason;
 
-  console.log("ARCHITECTURAL RECOMMENDATION");
+  console.log(
+    "ARCHITECTURAL RECOMMENDATION",
+  );
   console.log("");
 
   console.log(
@@ -673,9 +1132,11 @@ function printRecommendation(
   );
 
   if (
-    typeof sprintBrief?.score === "number"
+    typeof sprintBrief?.score ===
+    "number"
   ) {
     console.log("");
+
     printMetric(
       "Priority score",
       sprintBrief.score,
@@ -683,7 +1144,9 @@ function printRecommendation(
   }
 
   console.log("");
+
   console.log("Reason");
+
   console.log(
     compactText(
       reason,
@@ -691,16 +1154,27 @@ function printRecommendation(
     ),
   );
 
-  const prerequisites = asArray(
-    sprintBrief?.prerequisites,
-  );
+  const prerequisites =
+    asArray(
+      sprintBrief?.prerequisites,
+    );
 
-  if (prerequisites.length > 0) {
+  if (
+    prerequisites.length > 0
+  ) {
     console.log("");
-    console.log("Prerequisites");
 
-    for (const prerequisite of prerequisites) {
-      console.log(`- ${prerequisite}`);
+    console.log(
+      "Prerequisites",
+    );
+
+    for (
+      const prerequisite of
+      prerequisites
+    ) {
+      console.log(
+        `- ${prerequisite}`,
+      );
     }
   }
 
@@ -710,33 +1184,56 @@ function printRecommendation(
 
   if (blockers.length > 0) {
     console.log("");
-    console.log("Current Blockers");
 
-    for (const blocker of blockers) {
-      console.log(`- ${blocker}`);
+    console.log(
+      "Current Blockers",
+    );
+
+    for (
+      const blocker of
+      blockers
+    ) {
+      console.log(
+        `- ${blocker}`,
+      );
     }
   }
 
   console.log("");
 }
 
-function printPreBuildGate(state) {
+function printPreBuildGate(
+  state,
+) {
   const checks = asArray(
-    state.recommendations?.requiredPreBuildChecks,
+    state.recommendations
+      ?.requiredPreBuildChecks,
   );
 
-  console.log("BEFORE BUILDING ANYTHING");
+  console.log(
+    "BEFORE BUILDING ANYTHING",
+  );
   console.log("");
 
-  for (const [index, check] of checks.entries()) {
-    console.log(`${index + 1}. ${check}`);
+  for (
+    const [index, check] of
+    checks.entries()
+  ) {
+    console.log(
+      `${index + 1}. ${check}`,
+    );
   }
 
   console.log("");
-  console.log("Decision Rule");
+
+  console.log(
+    "Decision Rule",
+  );
+
   console.log(
     compactText(
-      state.recommendations?.decisionRule,
+      state.recommendations
+        ?.decisionRule,
       "Do not create a new capability when an existing one already owns the responsibility.",
     ),
   );
@@ -744,12 +1241,31 @@ function printPreBuildGate(state) {
   console.log("");
 }
 
-function printStartupDocuments(state) {
-  const files = asArray(
-    state.handoff?.canonicalFiles,
-  );
+function printStartupDocuments(
+  state,
+) {
+  const architectureFiles =
+    asArray(
+      state.handoff
+        ?.canonicalFiles,
+    );
 
-  console.log("CANONICAL STARTUP FILES");
+  const productFiles = [
+    "docs/Product/PRODUCT_CANON.md",
+    "docs/Product/PRODUCT_STATE.md",
+    "docs/Product/PRODUCT_PRINCIPLES.md",
+    "docs/Product/EXECUTIVE_WORK_OBJECT.md",
+    "docs/Product/PRODUCT_FLYWHEEL.md",
+  ];
+
+  const files = [
+    ...productFiles,
+    ...architectureFiles,
+  ];
+
+  console.log(
+    "CANONICAL STARTUP FILES",
+  );
   console.log("");
 
   for (const file of files) {
@@ -760,11 +1276,17 @@ function printStartupDocuments(state) {
 }
 
 function renderSprintStartup() {
+  const productCanon =
+    loadRequiredMarkdown(
+      PRODUCT_CANON_PATH,
+      "Product canon",
+    );
+
   const productState =
-  loadRequiredMarkdown(
-    PRODUCT_STATE_PATH,
-    "Product state",
-  );
+    loadRequiredMarkdown(
+      PRODUCT_STATE_PATH,
+      "Product state",
+    );
 
   const state =
     loadArchitectureState();
@@ -773,29 +1295,50 @@ function renderSprintStartup() {
     loadArchitectureRecommendationProjection();
 
   console.log("");
+
   printRule("=");
-  console.log("DISCOVERY SPRINT STARTUP");
+
+  console.log(
+    "DISCOVERY SPRINT STARTUP",
+  );
+
   printRule("=");
+
   console.log("");
 
   console.log(
     `Architecture State Generated: ${
-      state.metadata?.generatedAt ?? "Unknown"
+      state.metadata
+        ?.generatedAt ?? "Unknown"
     }`,
   );
 
   console.log("");
 
   printRule();
-console.log("");
+  console.log("");
 
-printProductState(productState);
+  printStartupReadingOrder();
 
-printRule();
-console.log("");
+  printRule();
+  console.log("");
 
-const ready =
-  printSprintReadiness(state);
+  printProductCanon(
+    productCanon,
+  );
+
+  printRule();
+  console.log("");
+
+  printProductState(
+    productState,
+  );
+
+  printRule();
+  console.log("");
+
+  const ready =
+    printSprintReadiness(state);
 
   printRule();
   console.log("");
@@ -813,17 +1356,23 @@ const ready =
   printRule();
   console.log("");
 
-  printArchitectureHealth(state);
+  printArchitectureHealth(
+    state,
+  );
 
   printRule();
   console.log("");
 
-  printIntelligenceExtraction(state);
+  printIntelligenceExtraction(
+    state,
+  );
 
   printRule();
   console.log("");
 
-  printCanonicalPipeline(state);
+  printCanonicalPipeline(
+    state,
+  );
 
   printRule();
   console.log("");
@@ -833,12 +1382,16 @@ const ready =
   printRule();
   console.log("");
 
-  printDuplicateProtection(state);
+  printDuplicateProtection(
+    state,
+  );
 
   printRule();
   console.log("");
 
-  printArchitectureGaps(state);
+  printArchitectureGaps(
+    state,
+  );
 
   printRule();
   console.log("");
@@ -859,8 +1412,13 @@ const ready =
   printStartupDocuments(state);
 
   printRule("=");
-  console.log("STARTUP COMPLETE");
+
+  console.log(
+    "STARTUP COMPLETE",
+  );
+
   printRule("=");
+
   console.log("");
 }
 
@@ -868,6 +1426,7 @@ try {
   renderSprintStartup();
 } catch (error) {
   console.error("");
+
   console.error(
     "Sprint startup rendering failed.",
   );

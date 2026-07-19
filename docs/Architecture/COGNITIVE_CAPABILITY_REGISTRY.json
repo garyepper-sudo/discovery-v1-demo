@@ -1533,8 +1533,8 @@
         "CAP-COM-001",
         "CAP-DEC-001",
         "CAP-DEC-002",
-        "CAP-SYS-001",
-        "CAP-SIM-003"
+        "CAP-SIM-003",
+        "CAP-SYS-001"
       ],
       "runtimeDestination": "OrganizationRuntime.simulatedOrganizationStates",
       "executiveDestinations": [
@@ -2349,6 +2349,6 @@
       "terminalCapability": true
     }
   ],
-  "generatedAt": "2026-07-17T22:54:01.607Z",
+  "generatedAt": "2026-07-19T14:47:57.921Z",
   "capabilityCount": 30
 }

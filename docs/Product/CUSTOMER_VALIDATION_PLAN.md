@@ -10,7 +10,7 @@ This document defines how Discovery validates product-market fit.
 
 The purpose of customer validation is not to collect feature requests.
 
-The purpose is to determine whether Discovery genuinely improves executive decision making.
+The purpose is to determine whether Discovery genuinely improves executive judgment and becomes the operating system organizations naturally use for important work.
 
 Behavior matters more than opinions.
 
@@ -18,16 +18,21 @@ Behavior matters more than opinions.
 
 # Product Hypothesis
 
-Discovery will become the executive workspace organizations use to improve important decisions.
+Discovery will become the Executive Operating System organizations use to continuously improve strategic decisions and initiatives.
 
-Executives will trust Discovery because it:
+Organizations will trust Discovery because it:
 
+- builds an increasingly accurate Operating Model,
 - discovers valuable insights,
 - explains its reasoning,
 - challenges assumptions,
-- improves confidence,
+- simulates alternative futures,
+- improves executive confidence,
 - supports better decisions,
-- and continuously learns from outcomes.
+- tracks execution over time,
+- continuously learns from outcomes.
+
+The Operating Model becomes progressively more valuable as organizations contribute additional information and Discovery learns from reality.
 
 This hypothesis must be validated through customer behavior.
 
@@ -35,11 +40,16 @@ This hypothesis must be validated through customer behavior.
 
 # MVP Hypothesis
 
-The MVP succeeds if executives repeatedly use Discovery to improve important decisions.
+The MVP succeeds if executives repeatedly use Discovery to manage important Executive Work.
 
-The MVP does **not** need to validate every future feature.
+Executive Work includes both:
 
-It only needs to validate one complete decision workflow.
+- Discovery-generated recommendations and initiatives,
+- executive-created decisions and initiatives.
+
+The MVP does **not** need to validate every future capability.
+
+It needs to validate one complete Executive Work lifecycle.
 
 ---
 
@@ -47,12 +57,15 @@ It only needs to validate one complete decision workflow.
 
 Before expanding Discovery we must answer:
 
-- Can Discovery consistently create one valuable insight?
-- Does Discovery improve executive thinking?
-- Do executives explore simulations?
+- Does Discovery consistently surface valuable organizational understanding?
+- Do executives begin important work inside Discovery?
+- Do executives create their own initiatives and decisions?
+- Do executives explore simulations before committing?
+- Do executives challenge Discovery's reasoning?
 - Do executives improve confidence before deciding?
-- Do executives trust Discovery enough to record a decision?
-- Do they return for another important decision?
+- Do executives trust Discovery enough to commit important decisions?
+- Do executives return to track execution?
+- Do executives review outcomes and improve future decisions?
 
 Everything else is secondary.
 
@@ -70,6 +83,7 @@ Examples:
 - COO
 - Chief of Staff
 - General Manager
+- Business Unit Leader
 
 Company characteristics:
 
@@ -78,7 +92,7 @@ Company characteristics:
 - Moderate organizational complexity
 - Existing strategic planning processes
 
-The first customers should have real decisions to make today.
+The first customers should have important strategic work occurring today.
 
 ---
 
@@ -86,43 +100,69 @@ The first customers should have real decisions to make today.
 
 Executives should never be asked:
 
-"Do you like Discovery?"
+> "Do you like Discovery?"
 
 Instead Discovery should observe behavior.
 
-We care more about actions than opinions.
+We care more about:
+
+- what executives choose to explore,
+- what they trust,
+- what they simulate,
+- what they commit,
+- what they return to review.
+
+Behavior matters more than opinions.
 
 ---
 
-# Customer Workflow
+# Executive Work Lifecycle
 
-Every customer session should follow the same structure.
+Every customer session should naturally follow Discovery's Executive Work lifecycle.
 
-```
-Current Decision
-
-↓
-
-Current Understanding
+```text
+Executive Work
 
 ↓
 
-Discussion
+Understand
 
 ↓
 
-Simulation
+Recommend
 
 ↓
 
-Confidence
+Challenge
 
 ↓
 
-Decision
+Simulate
+
+↓
+
+Commit
+
+↓
+
+Track
+
+↓
+
+Review
+
+↓
+
+Learn
+
+↓
+
+Operating Model Improves
 ```
 
 Discovery should observe where executives naturally spend time.
+
+Every stage should create measurable value.
 
 ---
 
@@ -130,13 +170,17 @@ Discovery should observe where executives naturally spend time.
 
 Discovery should measure:
 
-- Did the executive challenge Discovery?
-- Did they ask follow-up questions?
+- Did the executive begin important work inside Discovery?
+- Did they create new decisions or initiatives?
+- Did they investigate Discovery-generated recommendations?
+- Did they challenge Discovery's reasoning?
 - Did they explore multiple simulations?
-- Did they improve confidence?
-- Did they contribute additional information?
-- Did they record a decision?
-- Did they request another session?
+- Did they improve confidence before committing?
+- Did they contribute additional organizational information?
+- Did they commit an important decision?
+- Did they return to monitor execution?
+- Did they complete a decision review?
+- Did they begin another important decision?
 
 Behavior predicts product-market fit.
 
@@ -144,19 +188,44 @@ Opinions do not.
 
 ---
 
+# Operating Model Validation
+
+Discovery's Operating Model should become visibly more valuable over time.
+
+Executives should naturally recognize that:
+
+- additional information improves recommendations,
+- better organizational understanding improves simulations,
+- completed decisions improve future confidence,
+- decision reviews improve future recommendations.
+
+Executives should voluntarily contribute richer organizational information because they understand how it improves the Operating Model.
+
+This is one of Discovery's most important product loops.
+
+---
+
 # Success Criteria
 
 Discovery demonstrates early product-market fit when executives consistently:
 
-✓ Return with another important decision.
+✓ Begin important Executive Work inside Discovery.
 
 ✓ Trust Discovery enough to include it in executive discussions.
 
-✓ Explore simulations before deciding.
+✓ Explore simulations before committing.
+
+✓ Challenge Discovery's reasoning.
 
 ✓ Improve confidence before committing.
 
-✓ Record important decisions.
+✓ Commit important decisions.
+
+✓ Return to track execution.
+
+✓ Complete decision reviews.
+
+✓ Start additional initiatives.
 
 ✓ Recommend Discovery to another executive.
 
@@ -168,13 +237,16 @@ These behaviors matter more than survey responses.
 
 Discovery should reconsider the product if executives consistently:
 
-- ignore simulations,
+- ignore Discovery recommendations,
+- avoid creating their own Executive Work,
+- skip simulations,
 - skip confidence improvements,
 - never commit decisions,
-- never return,
+- never return to track outcomes,
+- never complete reviews,
 - treat Discovery like a reporting dashboard,
 - treat Discovery like ChatGPT,
-- fail to discover new insights.
+- fail to discover valuable organizational understanding.
 
 Failure should drive product evolution.
 
@@ -184,29 +256,23 @@ Failure should drive product evolution.
 
 Discovery should validate these assumptions in order.
 
-1.
+1. Discovery creates valuable organizational understanding.
 
-Discovery creates valuable new understanding.
+2. The Operating Model becomes visibly more accurate over time.
 
-2.
+3. Executives naturally manage Executive Work inside Discovery.
 
-Discovery improves executive thinking.
+4. Simulation changes executive reasoning.
 
-3.
+5. Confidence improvements increase trust.
 
-Simulation changes executive reasoning.
+6. Executives commit important decisions.
 
-4.
+7. Decision tracking becomes habitual.
 
-Confidence improvements increase trust.
+8. Decision reviews improve future judgment.
 
-5.
-
-Executives commit decisions.
-
-6.
-
-Decision reviews become habitual.
+9. Organizations voluntarily enrich the Operating Model.
 
 Every roadmap decision should be based upon validated learning.
 
@@ -214,7 +280,7 @@ Every roadmap decision should be based upon validated learning.
 
 # Roadmap Rule
 
-New features should only be built after validating the current workflow.
+New features should only be built after validating the current Executive Work lifecycle.
 
 Discovery should avoid expanding until executive behavior demonstrates real value.
 
@@ -224,8 +290,10 @@ Behavior—not enthusiasm—determines the roadmap.
 
 # Product-Market Fit
 
-Discovery achieves product-market fit when executive teams naturally begin important decisions inside Discovery.
+Discovery achieves product-market fit when executive teams naturally begin, manage, and continuously improve important Executive Work inside Discovery.
 
-At that point Discovery has become part of the organization's decision-making process rather than another software application.
+Executives should trust the Operating Model as the organizational brain behind every recommendation, simulation, and decision.
+
+At that point Discovery has become part of the organization's executive operating system rather than another software application.
 
 That is the objective of customer validation.

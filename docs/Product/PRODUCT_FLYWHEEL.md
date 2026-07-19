@@ -6,13 +6,13 @@
 
 # Purpose
 
-This document defines the mechanisms through which Discovery becomes more valuable over time.
+This document defines how Discovery becomes progressively more valuable over time.
 
 Discovery should not become more valuable because engineers add features.
 
-Discovery should become more valuable because organizations use it.
+Discovery should become more valuable because organizations continuously improve their Operating Model through Executive Work.
 
-Every important decision should strengthen both the organization and Discovery itself.
+Every important initiative and decision should strengthen both the organization and Discovery itself.
 
 ---
 
@@ -20,38 +20,42 @@ Every important decision should strengthen both the organization and Discovery i
 
 Discovery is not software that produces recommendations.
 
-Discovery is software that continuously improves organizational judgment.
+Discovery is an Executive Operating System built around a continuously evolving Operating Model.
 
-The product should compound.
+The Operating Model should improve through use.
 
-Every completed decision should improve future decisions.
+Every completed Executive Work item should improve:
 
----
+- the Operating Model,
+- future understanding,
+- future simulations,
+- future recommendations,
+- future executive judgment.
 
-# Two Flywheels
-
-Discovery contains two independent flywheels.
-
-1.
-
-Customer Value Flywheel
-
-2.
-
-Discovery Learning Flywheel
-
-These reinforce one another.
+The product compounds through organizational learning.
 
 ---
 
-# Customer Value Flywheel
+# The Primary Flywheel
 
-```
-Question
+Discovery contains one canonical flywheel.
+
+Everything else supports it.
+
+```text
+Executive Work
+
+↓
+
+Operating Model
 
 ↓
 
 Understanding
+
+↓
+
+Recommendation
 
 ↓
 
@@ -63,41 +67,49 @@ Simulation
 
 ↓
 
-Higher Confidence
+Commitment
 
 ↓
 
-Better Decision
+Execution
 
 ↓
 
-Higher Trust
+Tracking
 
 ↓
 
-Next Important Decision
+Review
+
+↓
+
+Learning
+
+↓
+
+Operating Model Improves
 ```
 
-Every successful decision should increase executive trust.
-
-Higher trust should naturally lead executives to bring Discovery more important decisions.
-
-Discovery should earn a progressively larger role in organizational decision making.
+Every completed cycle strengthens the next one.
 
 ---
 
-# Discovery Learning Flywheel
+# Operating Model Flywheel
 
-```
-Question
+The Operating Model is Discovery's central asset.
+
+It evolves continuously.
+
+```text
+Better Organizational Information
 
 ↓
 
-Executive Feedback
+Better Operating Model
 
 ↓
 
-Better Understanding
+Better Organizational Understanding
 
 ↓
 
@@ -105,32 +117,70 @@ Better Recommendations
 
 ↓
 
-Better Simulations
+Better Executive Decisions
 
 ↓
 
-More Decisions
+Better Outcomes
 
 ↓
 
-More Reviews
+More Organizational Learning
 
 ↓
 
-Better Organizational Model
+Better Operating Model
 ```
 
-Discovery should continuously improve from usage.
+Every feature should reinforce this flywheel.
 
-The system should become smarter because executives interact with it.
+---
+
+# Executive Work Flywheel
+
+Executive Work continuously improves organizational judgment.
+
+```text
+Important Work
+
+↓
+
+Discovery Understanding
+
+↓
+
+Executive Reasoning
+
+↓
+
+Executive Commitment
+
+↓
+
+Execution
+
+↓
+
+Review
+
+↓
+
+Improved Judgment
+
+↓
+
+Next Executive Work
+```
+
+Organizations become progressively better decision-makers through repetition.
 
 ---
 
 # Immediate Learning
 
-Discovery should begin learning immediately.
+Discovery begins learning immediately.
 
-Learning does not begin after implementation.
+Learning starts during executive reasoning.
 
 Discovery learns from:
 
@@ -139,34 +189,38 @@ Discovery learns from:
 - simulation choices,
 - assumption validation,
 - evidence selection,
-- confidence improvements.
+- confidence improvements,
+- executive-created initiatives,
+- executive-created decisions.
 
-Every interaction should improve Discovery.
+Learning begins before commitment.
 
 ---
 
 # Long-Term Learning
 
-Some learning requires time.
+Reality ultimately determines whether Discovery was correct.
 
-Examples include:
+Long-term learning occurs through:
 
-- decision outcomes,
-- implementation success,
+- implementation,
+- execution tracking,
+- observed outcomes,
 - prediction accuracy,
-- executive reflection,
-- organizational performance.
+- executive reviews,
+- organizational performance,
+- executive reflection.
 
-These create long-term improvements.
+These continuously improve the Operating Model.
 
 ---
 
 # Progressive Trust
 
-Trust should compound naturally.
+Trust compounds naturally.
 
-```
-Useful Insight
+```text
+Valuable Understanding
 
 ↓
 
@@ -174,7 +228,7 @@ Executive Trust
 
 ↓
 
-More Important Decisions
+More Executive Work
 
 ↓
 
@@ -182,42 +236,55 @@ More Organizational Context
 
 ↓
 
-Better Understanding
+Better Operating Model
 
 ↓
 
-Better Decisions
+Better Recommendations
 
 ↓
 
-More Trust
+Higher Trust
 ```
 
-Discovery earns additional organizational information through trust.
+Discovery earns additional organizational understanding through trust.
 
-Discovery should never request large-scale integrations before demonstrating value.
+It should never demand large-scale organizational context before demonstrating value.
 
 ---
 
-# Progressive Context
+# Progressive Operating Model Growth
 
-Discovery should gradually expand its understanding.
+Discovery should gradually improve its understanding of the organization.
 
 Example
 
-Question
+```text
+Executive Question
 
 ↓
 
-One document
+One Document
 
 ↓
 
-Executive feedback
+Initial Operating Model
 
 ↓
 
-Salesforce
+Executive Feedback
+
+↓
+
+Sales Pipeline
+
+↓
+
+Leadership Notes
+
+↓
+
+CRM
 
 ↓
 
@@ -225,66 +292,192 @@ ERP
 
 ↓
 
-HRIS
-
-↓
-
 Organization
+```
 
-Every expansion should have an obvious executive benefit.
+Every expansion should produce visible executive value.
 
-Discovery earns organizational context.
+Discovery earns organizational understanding.
 
 It never demands it.
 
 ---
 
+# Observable Growth
+
+Executives should continuously observe the Operating Model improving.
+
+Examples include:
+
+```text
+Operating Model Updated
+
+Confidence
+
+82% → 86%
+
+Concepts Learned
+
++4
+
+Mechanisms Strengthened
+
++2
+
+Prediction Calibration
+
+Improved
+
+Recommendation Quality
+
+Improved
+```
+
+The Operating Model should feel alive.
+
+Its improvement should become one of Discovery's most compelling product experiences.
+
+---
+
 # Compounding Organizational Memory
 
-Every committed decision creates organizational memory.
+Every Executive Work item strengthens organizational memory.
 
-Memory includes:
+Discovery remembers:
 
-- reasoning,
-- assumptions,
+- why work began,
+- organizational understanding,
+- recommendations,
 - simulations,
-- expected outcomes,
-- actual outcomes,
-- executive reflections.
+- assumptions,
+- commitments,
+- execution,
+- outcomes,
+- reviews,
+- learning.
 
-Memory should continuously improve future decisions.
+Organizational memory continuously improves future Executive Work.
 
 ---
 
 # Executive Learning
 
-Discovery does not only learn about organizations.
+Discovery learns not only about organizations.
 
-Discovery also learns about executive reasoning.
+It also learns how executives reason.
 
 Examples include:
 
+- recurring executive concerns,
 - preferred evidence,
-- recurring concerns,
-- decision style,
-- confidence gaps,
-- successful reasoning patterns.
+- successful reasoning patterns,
+- confidence calibration,
+- prediction calibration,
+- organizational decision patterns.
 
-Discovery should become a progressively better executive thinking partner.
+Discovery should become a progressively better executive thought partner.
 
 ---
 
-# Switching Costs
+# Organizational Learning
 
-Discovery becomes increasingly valuable because it accumulates:
+Organizations should improve because Discovery continuously compares:
 
-- decision history,
+```text
+Expected
+
+↓
+
+Observed
+
+↓
+
+Explanation
+
+↓
+
+Learning
+
+↓
+
+Operating Model Improves
+```
+
+Reality becomes the teacher.
+
+The Operating Model becomes progressively more accurate.
+
+---
+
+# Product Flywheel
+
+Everything inside Discovery ultimately reinforces one loop.
+
+```text
+Operating Model
+
+↓
+
+Executive Work
+
+↓
+
+Understanding
+
+↓
+
+Recommendation
+
+↓
+
+Simulation
+
+↓
+
+Commitment
+
+↓
+
+Execution
+
+↓
+
+Tracking
+
+↓
+
+Review
+
+↓
+
+Learning
+
+↓
+
+Operating Model
+```
+
+This is Discovery's canonical product flywheel.
+
+Every major capability should strengthen one or more stages of this loop.
+
+---
+
+# Competitive Advantage
+
+Discovery becomes increasingly valuable because it continuously accumulates:
+
+- Operating Model quality,
 - organizational understanding,
-- prediction accuracy,
+- executive work history,
+- simulation knowledge,
+- prediction calibration,
+- confidence calibration,
+- organizational memory,
 - executive trust,
-- organizational memory.
+- organizational learning.
 
-These assets become difficult to recreate elsewhere.
+These assets become progressively more difficult to recreate elsewhere.
 
 The flywheel creates Discovery's long-term moat.
 
@@ -292,10 +485,19 @@ The flywheel creates Discovery's long-term moat.
 
 # Product Goal
 
-The product succeeds when every important decision makes the next decision better.
+Discovery succeeds when every important piece of Executive Work improves the Operating Model.
 
-Organizations should improve not because Discovery replaces executives.
+A better Operating Model produces:
 
-Organizations improve because Discovery helps executives think better every time they use it.
+- better understanding,
+- better recommendations,
+- better simulations,
+- better confidence,
+- better executive decisions,
+- better organizational outcomes.
+
+Organizations improve not because Discovery replaces executives.
+
+Organizations improve because Discovery continuously helps executives think better while simultaneously becoming smarter itself.
 
 That compounding improvement is Discovery's long-term competitive advantage.

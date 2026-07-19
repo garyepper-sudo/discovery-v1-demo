@@ -187,6 +187,66 @@ score: number;
 explanation: string;
 }[];
 
+decisionJustification: {
+recommendedOptionId: string;
+recommendedInterventionId: string;
+recommendedTitle: string;
+summary: string;
+whyRecommended: string[];
+decisiveAdvantages: string[];
+
+objectiveAlignment: {
+  score: number;
+  explanation: string;
+};
+
+organizationalImpact: {
+  benefitScore: number;
+  riskScore: number;
+  improvedConditionIds: string[];
+  worsenedConditionIds: string[];
+  explanation: string;
+};
+
+constraintPosition: {
+  status:
+    | "viable"
+    | "conditionally-viable"
+    | "disqualified";
+  explanation: string;
+  unresolvedRequiredConstraints: string[];
+  optionalIssues: string[];
+};
+
+confidence: {
+  score: number;
+  explanation: string;
+};
+
+alternatives: {
+  optionId: string;
+  interventionId: string;
+  title: string;
+  rank: number;
+  score: number;
+  scoreDifference: number;
+  summary: string;
+  reasonsRankedLower: string[];
+  strengths: string[];
+  weaknesses: string[];
+  improvedConditionIds: string[];
+  worsenedConditionIds: string[];
+  viabilityStatus:
+    | "viable"
+    | "conditionally-viable"
+    | "disqualified";
+}[];
+
+differentiatingConditionIds: string[];
+evidenceThatCouldChangePreference: string[];
+generatedAt: string;
+};
+
 confidence: {
 value: number;
 explanation: string;
@@ -202,6 +262,26 @@ recommendation: {
   headline: string;
   rationale: string;
   nextStep: string;
+
+  strategy?: {
+    optionId: string;
+    interventionId: string;
+    title: string;
+    description: string;
+    rationale: string;
+    type: string;
+    scope: string;
+    timeHorizon: string;
+    targetConditionIds: string[];
+    expectedMechanismIds: string[];
+  };
+
+  confidence: number;
+  expectedBenefits: string[];
+  tradeOffs: string[];
+  risks: string[];
+  assumptions: string[];
+  evidenceThatCouldChangeRecommendation: string[];
 };
 
 integrityKey: string;
@@ -836,6 +916,160 @@ rankedScenario.interventionId,
 );
 }
 
+function buildDecisionJustification(
+decisionCycle: ExecutiveDecisionCycle,
+): ExecutiveDecisionProjection["decisionJustification"] {
+const justification =
+decisionCycle.decisionJustification;
+
+return {
+recommendedOptionId:
+justification.recommendedOptionId,
+
+recommendedInterventionId:
+  justification.recommendedInterventionId,
+
+recommendedTitle:
+  justification.recommendedTitle,
+
+summary:
+  justification.summary,
+
+whyRecommended:
+  justification.whyRecommended,
+
+decisiveAdvantages:
+  justification.decisiveAdvantages,
+
+objectiveAlignment: {
+  score:
+    justification
+      .objectiveAlignment
+      .score,
+
+  explanation:
+    justification
+      .objectiveAlignment
+      .explanation,
+},
+
+organizationalImpact: {
+  benefitScore:
+    justification
+      .organizationalImpact
+      .benefitScore,
+
+  riskScore:
+    justification
+      .organizationalImpact
+      .riskScore,
+
+  improvedConditionIds:
+    justification
+      .organizationalImpact
+      .improvedConditionIds,
+
+  worsenedConditionIds:
+    justification
+      .organizationalImpact
+      .worsenedConditionIds,
+
+  explanation:
+    justification
+      .organizationalImpact
+      .explanation,
+},
+
+constraintPosition: {
+  status:
+    justification
+      .constraintPosition
+      .status,
+
+  explanation:
+    justification
+      .constraintPosition
+      .explanation,
+
+  unresolvedRequiredConstraints:
+    justification
+      .constraintPosition
+      .unresolvedRequiredConstraints,
+
+  optionalIssues:
+    justification
+      .constraintPosition
+      .optionalIssues,
+},
+
+confidence: {
+  score:
+    justification.confidence.score,
+
+  explanation:
+    justification
+      .confidence
+      .explanation,
+},
+
+alternatives:
+  justification.alternatives.map(
+    (alternative) => ({
+      optionId:
+        alternative.optionId,
+
+      interventionId:
+        alternative.interventionId,
+
+      title:
+        alternative.title,
+
+      rank:
+        alternative.rank,
+
+      score:
+        alternative.score,
+
+      scoreDifference:
+        alternative.scoreDifference,
+
+      summary:
+        alternative.summary,
+
+      reasonsRankedLower:
+        alternative.reasonsRankedLower,
+
+      strengths:
+        alternative.strengths,
+
+      weaknesses:
+        alternative.weaknesses,
+
+      improvedConditionIds:
+        alternative.improvedConditionIds,
+
+      worsenedConditionIds:
+        alternative.worsenedConditionIds,
+
+      viabilityStatus:
+        alternative.viabilityStatus,
+    }),
+  ),
+
+differentiatingConditionIds:
+  justification
+    .differentiatingConditionIds,
+
+evidenceThatCouldChangePreference:
+  justification
+    .evidenceThatCouldChangePreference,
+
+generatedAt:
+  justification.generatedAt,
+
+};
+}
+
 function buildConfidence(
 decisionCycle: ExecutiveDecisionCycle,
 ): ExecutiveDecisionProjection["confidence"] {
@@ -959,6 +1193,28 @@ rationale:
 
 nextStep,
 
+strategy:
+  recommendation.recommendedStrategy,
+
+confidence:
+  recommendation.confidence,
+
+expectedBenefits:
+  recommendation.expectedBenefits,
+
+tradeOffs:
+  recommendation.tradeOffs,
+
+risks:
+  recommendation.risks,
+
+assumptions:
+  recommendation.assumptions,
+
+evidenceThatCouldChangeRecommendation:
+  recommendation
+    .evidenceThatCouldChangeRecommendation,
+
 };
 }
 
@@ -998,6 +1254,11 @@ comparison:
 
 rankedStrategies:
   buildRankedStrategies(
+    decisionCycle,
+  ),
+
+decisionJustification:
+  buildDecisionJustification(
     decisionCycle,
   ),
 

@@ -14,11 +14,20 @@ import type {
   ExecutiveCommunication,
 } from "../../../engine/v3/communication/executiveCommunication";
 
+import type {
+  ExecutiveDecisionProjection,
+} from "../projection/buildExecutiveDecisionProjection";
+
 type BriefingWorkspaceProps = {
   communication: ExecutiveCommunication;
+
+  decisionProjection?:
+    ExecutiveDecisionProjection;
 };
 
-function toPercentage(value: number): number {
+function toPercentage(
+  value: number,
+): number {
   const percentage =
     value <= 1
       ? value * 100
@@ -27,17 +36,22 @@ function toPercentage(value: number): number {
   return Math.round(
     Math.max(
       0,
-      Math.min(100, percentage),
+      Math.min(
+        100,
+        percentage,
+      ),
     ),
   );
 }
 
 export default function BriefingWorkspace({
   communication,
+  decisionProjection,
 }: BriefingWorkspaceProps) {
-  const confidence = toPercentage(
-    communication.confidence.value,
-  );
+  const confidence =
+    toPercentage(
+      communication.confidence.value,
+    );
 
   return (
     <main className={styles.workspace}>
@@ -46,28 +60,40 @@ export default function BriefingWorkspace({
           <Header
             userName="Gary"
             meaningfulChangeCount={
-              communication.meaningfulChanges.length
+              communication
+                .meaningfulChanges
+                .length
             }
           />
 
           <TodaysStory
-            headline={communication.headline}
-            summary={communication.executiveSummary}
+            headline={
+              communication.headline
+            }
+            summary={
+              communication.executiveSummary
+            }
             confidence={confidence}
           />
 
           <RecommendedDecision
             headline={
-              communication.recommendation.headline
+              communication
+                .recommendation
+                .headline
             }
             rationale={
-              communication.recommendation.rationale
+              communication
+                .recommendation
+                .rationale
             }
             actionCount={
-              communication.recommendation.actions.length
+              communication
+                .recommendation
+                .actions.length
             }
-            decisionHref={
-              communication.recommendation.decisionHref
+            decisionProjection={
+              decisionProjection
             }
           />
         </section>
@@ -76,7 +102,9 @@ export default function BriefingWorkspace({
           <OrganizationPulse
             confidence={confidence}
             meaningfulChangeCount={
-              communication.meaningfulChanges.length
+              communication
+                .meaningfulChanges
+                .length
             }
           />
 
@@ -88,7 +116,8 @@ export default function BriefingWorkspace({
         <div className={styles.fullWidth}>
           <WhatChanged
             changes={
-              communication.meaningfulChanges
+              communication
+                .meaningfulChanges
             }
           />
         </div>

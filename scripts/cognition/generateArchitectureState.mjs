@@ -942,7 +942,7 @@ function buildArchitectureState() {
       registeredFileCount: fileEntries.length,
 
       cognitiveObjectCount:
-        countCognitiveObjects(cognitiveObjectModel),
+        intelligence.producedObjectCount,
 
       terminalCapabilityCount:
         capabilities.filter(

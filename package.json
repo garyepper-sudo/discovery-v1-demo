@@ -31,6 +31,7 @@
     "decision:quality:001": "tsx engine/benchmark/decision-intelligence/decisionQualityExperiment001.ts",
     "decision:integrity:001": "tsx engine/benchmark/executive-decision/executiveDecisionIntegrityExperiment001.ts",
     "benchmark:executive-decision-recording": "tsx engine/benchmark/executive-decision/executiveDecisionRecordingExperiment001.ts",
+    "benchmark:executive-decision-justification": "tsx engine/benchmark/executive-decision/executiveDecisionJustificationExperiment001.ts",
     "communication:001": "tsx engine/benchmark/executive-communication/executiveCommunicationExperiment001.ts",
     "decision:reflection:001": "tsx engine/benchmark/decision-learning/decisionReflectionExperiment001.ts",
     "decision:record-api:001": "tsx engine/benchmark/executive-decision/executiveDecisionRecordApiExperiment001.ts",
@@ -64,6 +65,8 @@
     "typescript": "5.7.2"
   },
   "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.18",
     "tsx": "^4.23.0"
   }
 }

@@ -14,10 +14,36 @@ import type {
   InterventionViabilityEvaluation,
 } from "./evaluateInterventionViability";
 
+import type {
+  InterventionOption,
+} from "../model/simulate/interventionOption";
+
 export type ExecutiveDecisionRecommendation = {
   recommendedInterventionId?: string;
 
   nextBestInterventionId?: string;
+
+  recommendedStrategy?: {
+    optionId: string;
+
+    interventionId: string;
+
+    title: string;
+
+    description: string;
+
+    rationale: string;
+
+    type: string;
+
+    scope: string;
+
+    timeHorizon: string;
+
+    targetConditionIds: string[];
+
+    expectedMechanismIds: string[];
+  };
 
   status:
     | "proceed"
@@ -56,6 +82,9 @@ export type BuildExecutiveDecisionRecommendationInput = {
   viabilityEvaluations:
     InterventionViabilityEvaluation[];
 
+  generatedOptions:
+    InterventionOption[];
+
   generatedAt?: string;
 };
 
@@ -86,6 +115,7 @@ export function buildExecutiveDecisionRecommendation({
   rankedScenarios,
   confidenceCalibration,
   viabilityEvaluations,
+  generatedOptions,
   generatedAt =
     new Date().toISOString(),
 }: BuildExecutiveDecisionRecommendationInput): ExecutiveDecisionRecommendation {
@@ -101,6 +131,19 @@ export function buildExecutiveDecisionRecommendation({
   const runnerUp =
     rankedScenarios[1];
 
+  const winningOption =
+    generatedOptions.find(
+      (option) =>
+        option.id ===
+        winner.optionId,
+    );
+
+  if (!winningOption) {
+    throw new Error(
+      "Winning intervention option could not be found.",
+    );
+  }
+
   const comparison =
     comparisonSet.scenarioComparisons.find(
       (scenario) =>
@@ -114,12 +157,12 @@ export function buildExecutiveDecisionRecommendation({
     );
   }
 
-const viability =
-  viabilityEvaluations.find(
-    (evaluation) =>
-      evaluation.optionId ===
-      winner.optionId,
-  );
+  const viability =
+    viabilityEvaluations.find(
+      (evaluation) =>
+        evaluation.optionId ===
+        winner.optionId,
+    );
 
   if (!viability) {
     throw new Error(
@@ -245,6 +288,38 @@ const viability =
 
     nextBestInterventionId:
       runnerUp?.interventionId,
+
+    recommendedStrategy: {
+      optionId:
+        winningOption.id,
+
+      interventionId:
+        winner.interventionId,
+
+      title:
+        winningOption.title,
+
+      description:
+        winningOption.description,
+
+      rationale:
+        winningOption.rationale,
+
+      type:
+        winningOption.type,
+
+      scope:
+        winningOption.scope,
+
+      timeHorizon:
+        winningOption.timeHorizon,
+
+      targetConditionIds:
+        winningOption.targetConditionIds,
+
+      expectedMechanismIds:
+        winningOption.expectedMechanismIds,
+    },
 
     status,
 

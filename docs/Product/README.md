@@ -2,25 +2,33 @@
 
 Welcome to the Discovery Product Canon.
 
-This folder defines **what Discovery is**, **why it exists**, and **how product decisions should be made**.
+This folder defines **what Discovery is**, **why it exists**, **how the product should evolve**, and **how every product decision should be made**.
 
-The documents contained here are canonical.
+These documents are canonical.
 
-The purpose of this folder is to ensure Discovery evolves intentionally rather than accumulating disconnected features.
+Their purpose is to ensure Discovery evolves intentionally rather than accumulating disconnected features.
+
+The Product Canon is the long-term source of truth for Discovery's product direction.
+
+Unlike sprint documents, these documents should change rarely.
 
 ---
 
 # Product Philosophy
 
-Discovery exists to help organizations continuously improve the quality of their decisions.
+Discovery exists to continuously improve executive judgment.
 
-Discovery does not replace executive judgment.
+Discovery does not replace executive decision-making.
 
-Discovery improves it.
+Discovery improves it through a continuously evolving Operating Model that understands how an organization actually works.
 
-The architecture explains **how Discovery thinks**.
+The Architecture Canon explains:
 
-The Product Canon explains **why Discovery exists**.
+> **How Discovery thinks.**
+
+The Product Canon explains:
+
+> **Why Discovery exists.**
 
 Both are equally important.
 
@@ -28,11 +36,11 @@ Both are equally important.
 
 # Reading Order
 
-New team members should read these documents in order.
+Every product sprint should begin by reading these documents.
 
 ## 1. PRODUCT_CANON.md
 
-Defines Discovery's mission, philosophy, executive workflow, and long-term vision.
+Defines Discovery's mission, philosophy, product identity, Executive Work lifecycle, Operating Model, and long-term vision.
 
 Read this first.
 
@@ -40,76 +48,70 @@ Read this first.
 
 ## 2. PRODUCT_PRINCIPLES.md
 
-Defines the immutable rules governing product decisions.
+Defines the immutable principles governing every product decision.
 
 Every feature should reinforce these principles.
 
 ---
 
-## 3. DECISION_OBJECT.md
+## 3. EXECUTIVE_WORK_OBJECT.md
 
 Defines the canonical product object around which Discovery is organized.
 
-Discovery revolves around Decisions.
+Discovery revolves around Executive Work.
 
 Not pages.
 
 ---
 
-## 4. UX_ROADMAP.md
+## 4. PRODUCT_FLYWHEEL.md
 
-Defines the executive experience.
+Defines how Discovery compounds in value through Executive Work and continuous Operating Model improvement.
 
-This explains how Discovery should evolve over time.
+This is Discovery's long-term product engine.
 
 ---
 
-## 5. TRUST_FRAMEWORK.md
+## 5. DECISION_CONFIDENCE.md
+
+Defines how Discovery measures, communicates, and improves executive confidence.
+
+Confidence should strengthen judgment.
+
+Not persuade executives.
+
+---
+
+## 6. TRUST_FRAMEWORK.md
 
 Defines how Discovery earns executive trust.
 
-Trust is Discovery's most valuable feature.
+Trust is Discovery's most valuable product feature.
 
 ---
 
-## 6. DECISION_CONFIDENCE.md
+## 7. ONBOARDING_STRATEGY.md
 
-Defines Discovery's confidence model.
+Defines how Discovery earns organizational understanding.
 
-Confidence should improve decisions rather than simply score them.
-
----
-
-## 7. PRODUCT_FLYWHEEL.md
-
-Defines how Discovery becomes increasingly valuable through usage.
-
-Every completed decision should improve the next one.
+Discovery creates value before requesting additional organizational information.
 
 ---
 
-## 8. ONBOARDING_STRATEGY.md
-
-Defines how Discovery earns organizational context.
-
-Discovery creates value before requesting additional information.
-
----
-
-## 9. PRODUCT_POSITIONING.md
+## 8. PRODUCT_POSITIONING.md
 
 Defines:
 
+- category,
 - market,
 - customer,
-- category,
 - pricing philosophy,
 - competitive positioning,
 - long-term moat.
 
 ---
 
-## 10. CUSTOMER_VALIDATION_PLAN.md
+## 9. CUSTOMER_VALIDATION_PLAN.md
 
 Defines how Discovery validates product-market fit.
 
@@ -119,64 +121,84 @@ Not feature requests.
 
 ---
 
+## 10. PRODUCT_STATE.md
+
+Defines Discovery's current product snapshot.
+
+Every sprint begins here after reviewing the Product Canon.
+
+This document evolves frequently.
+
+The others should remain relatively stable.
+
+---
+
+## 11. UX_ROADMAP.md
+
+Defines planned evolution of the executive experience.
+
+This roadmap implements the Product Canon.
+
+It does not redefine it.
+
+---
+
 # Product Development Philosophy
 
-Discovery should evolve through evidence.
+Discovery evolves through evidence.
 
-Every significant product decision should be traceable to one of three sources:
+Every significant product decision should be traceable to one of three sources.
 
-1.
+1. Product Canon
 
-The Product Canon
+2. Customer Validation
 
-2.
+3. Architecture Canon
 
-Customer Validation
+Every product discussion should begin by asking:
 
-3.
+- Which Product Principle does this improve?
+- Which Executive Work stage does this strengthen?
+- How does this improve the Operating Model?
+- Which customer behavior supports this change?
 
-The Architecture Canon
-
-Product discussions should begin by asking:
-
-Which product principle does this improve?
-
-Which customer behavior supports this change?
-
-If neither question has a clear answer, the feature should be reconsidered.
+If those questions cannot be answered clearly, the feature should be reconsidered.
 
 ---
 
 # Relationship To Architecture
 
-The repository now contains two canonical bodies of knowledge.
+The repository contains two canonical bodies of knowledge.
 
 ## Architecture
 
-How Discovery thinks.
-
-Examples:
+Defines:
 
 - cognition,
 - runtime,
 - capabilities,
 - operating systems,
-- executive communication.
+- executive communication,
+- reasoning.
+
+Architecture explains **how Discovery thinks**.
 
 ---
 
 ## Product
 
-Why Discovery exists.
+Defines:
 
-Examples:
-
-- executive workflow,
-- decision lifecycle,
-- trust,
+- Operating Model,
+- Executive Work,
+- executive experience,
 - confidence,
+- trust,
 - onboarding,
-- learning.
+- learning,
+- product flywheel.
+
+Product explains **why Discovery exists**.
 
 Architecture enables the product.
 
@@ -184,27 +206,79 @@ The product determines how architecture creates value.
 
 ---
 
+# Product Hierarchy
+
+Discovery should always be understood in this order.
+
+```text
+Operating Model
+
+↓
+
+Executive Work
+
+↓
+
+Executive Conversation
+
+↓
+
+Execution
+
+↓
+
+Tracking
+
+↓
+
+Learning
+
+↓
+
+Operating Model Improves
+```
+
+Every feature should reinforce this hierarchy.
+
+---
+
 # Long-Term Vision
 
-Discovery should become the workspace organizations naturally use for important decisions.
+Discovery becomes the Executive Operating System organizations naturally use to manage important Executive Work.
 
-Every interaction should improve one of four outcomes:
+Organizations should naturally begin:
 
-- Better understanding.
-- Better confidence.
-- Better decisions.
-- Better future decisions.
+- strategic initiatives,
+- executive decisions,
+- organizational transformations,
+- operational improvements,
 
-Everything else is secondary.
+inside Discovery.
+
+Every completed Executive Work item strengthens the Operating Model.
+
+Every improvement to the Operating Model improves future Executive Work.
+
+The product compounds naturally through use.
 
 ---
 
 # Canonical Rule
 
-Discovery is not a dashboard.
+Discovery is not:
 
-Discovery is not a chatbot.
+- a dashboard,
+- a chatbot,
+- a document repository,
+- a reporting platform.
 
-Discovery is an Executive Decision Workspace.
+Discovery is an Executive Operating System.
 
-Every feature should move Discovery closer to becoming the system organizations trust to continuously improve the quality of their decisions.
+Everything inside Discovery should strengthen one or more of:
+
+- the Operating Model,
+- Executive Work,
+- executive judgment,
+- organizational learning.
+
+Every feature should move Discovery closer to becoming the trusted operating system organizations use to continuously improve executive judgment.

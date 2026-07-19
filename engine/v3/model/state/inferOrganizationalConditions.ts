@@ -1,4 +1,5 @@
 import { rankOrganizationalCondition } from "./rankOrganizationalCondition";
+import { rankExecutiveConstraint } from "../judgment/rankExecutiveConstraint";
 
 type OrganizationalConditionStatus =
   | "stable"
@@ -1046,7 +1047,7 @@ function inferConditionSystemRelationship(
   });
 }
 
- export function synthesizeOrganizationalState(params: {
+export function synthesizeOrganizationalState(params: {
   conditions: OrganizationalCondition[];
   memoryMaturity?: any;
   previousState?: OrganizationalState;
@@ -1070,7 +1071,22 @@ function inferConditionSystemRelationship(
     .filter((condition) => condition.status === "improving")
     .slice(0, 3);
 
-  const dominantConditions = rankedConditions.slice(0, 4);
+  const executiveConstraintRanking = conditions
+    .slice()
+    .sort(
+      (left, right) =>
+        rankExecutiveConstraint({
+          condition: right,
+          allConditions: conditions,
+        }) -
+        rankExecutiveConstraint({
+          condition: left,
+          allConditions: conditions,
+        }),
+    );
+
+  const dominantConditions =
+    executiveConstraintRanking.slice(0, 4);
 
   const confidence = clamp01(
     average(rankedConditions.slice(0, 5).map((condition) => condition.confidence)) ||
@@ -1125,16 +1141,32 @@ function inferConditionSystemRelationship(
         }${third ? ` and ${third.name}` : ""}. ${systemRelationship}${memoryText}`
       : "Discovery does not yet have enough evidence to characterize the organization's current condition.";
 
+  const primaryDeterioratingCondition =
+    primary &&
+    ["deteriorating", "constrained", "weak", "unresolved"].includes(
+      primary.status,
+    )
+      ? primary
+      : null;
+
+  const nextMaterialConstraint =
+    deterioratingConditions.find(
+      (condition) =>
+        condition.id !== primary?.id,
+    );
+
   const executiveImplication =
-    deterioratingConditions.length > 0
-      ? `Leadership should focus first on ${deterioratingConditions[0].name}. It carries the highest combined risk because of its condition strength, confidence, priority, trend, and breadth of supporting evidence. ${
-          deterioratingConditions[1]
-            ? `${deterioratingConditions[1].name} should be treated as the next related constraint.`
+    primary
+      ? `Leadership should focus first on ${primary.name}. It carries the highest expected organizational leverage because its significance, downstream influence, and position in the condition system make it the strongest current candidate for executive intervention. ${
+          primaryDeterioratingCondition
+            ? `${primary.name} is also currently ${primary.status}.`
             : ""
-        } ${primary ? inferConditionSystemRelationship(primary, rankedConditions) : ""}`
-      : dominantConditions.length > 0
-        ? `Leadership should preserve the strongest stable conditions while continuing to collect evidence about emerging changes.`
-        : "Leadership should collect more operating evidence before treating this as a stable organizational diagnosis.";
+        } ${
+          nextMaterialConstraint
+            ? `${nextMaterialConstraint.name} remains a material related constraint.`
+            : ""
+        } ${inferConditionSystemRelationship(primary, rankedConditions)}`
+      : "Leadership should collect more operating evidence before treating this as a stable organizational diagnosis.";
 
   return {
     id: "organizational-state-current",

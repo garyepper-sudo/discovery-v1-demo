@@ -3,7 +3,7 @@
 import BriefingWorkspace from "./workspaces/BriefingWorkspace";
 import UnderstandingWorkspace from "./workspaces/UnderstandingWorkspace";
 import RecommendationWorkspace from "./workspaces/RecommendationWorkspace";
-import DecisionAnalysisWorkspace from "./workspaces/DecisionAnalysisWorkspace";
+import ExecutiveDecisionWorkspace from "./workspaces/ExecutiveDecisionWorkspace";
 import SimulationWorkspace from "./workspaces/SimulationWorkspace";
 import TimelineWorkspace from "./workspaces/TimelineWorkspace";
 import AskWorkspace from "./workspaces/AskWorkspace";
@@ -21,9 +21,14 @@ import type {
 } from "./ExecutiveWorkspaceMode";
 
 type ExecutiveWorkspaceProps = {
-  communication: ExecutiveCommunication;
-  decisionProjection?: ExecutiveDecisionProjection;
-  mode: ExecutiveWorkspaceMode;
+  communication:
+    ExecutiveCommunication;
+
+  decisionProjection?:
+    ExecutiveDecisionProjection;
+
+  mode:
+    ExecutiveWorkspaceMode;
 };
 
 export default function ExecutiveWorkspace({
@@ -35,60 +40,84 @@ export default function ExecutiveWorkspace({
     case "briefing":
       return (
         <BriefingWorkspace
-          communication={communication}
+          communication={
+            communication
+          }
+          decisionProjection={
+            decisionProjection
+          }
         />
       );
 
     case "understand":
       return (
         <UnderstandingWorkspace
-          communication={communication}
+          communication={
+            communication
+          }
         />
       );
 
     case "recommend":
       return (
         <RecommendationWorkspace
-          communication={communication}
+          communication={
+            communication
+          }
         />
       );
 
     case "decision":
       return decisionProjection ? (
-        <DecisionAnalysisWorkspace
-          projection={decisionProjection}
+        <ExecutiveDecisionWorkspace
+          projection={
+            decisionProjection
+          }
         />
       ) : (
         <RecommendationWorkspace
-          communication={communication}
+          communication={
+            communication
+          }
         />
       );
 
     case "simulate":
       return (
         <SimulationWorkspace
-          communication={communication}
+          communication={
+            communication
+          }
         />
       );
 
     case "timeline":
       return (
         <TimelineWorkspace
-          communication={communication}
+          communication={
+            communication
+          }
         />
       );
 
     case "ask":
       return (
         <AskWorkspace
-          communication={communication}
+          communication={
+            communication
+          }
         />
       );
 
     default:
       return (
         <BriefingWorkspace
-          communication={communication}
+          communication={
+            communication
+          }
+          decisionProjection={
+            decisionProjection
+          }
         />
       );
   }

@@ -1,6 +1,6 @@
 # Capability Trace — Theory Validation
 
-Generated: 2026-07-17T22:18:33.582Z
+Generated: 2026-07-19T14:47:59.315Z
 
 ## Verified Architecture
 
@@ -62,33 +62,24 @@ None declared.
 Review these files to determine whether they should be registered as consumers, validators, projections, simulations, or supporting implementations.
 
 - `components/executive-v2/answers/ExecutiveAnswerGrid.tsx`
-- `components/executive-v2/briefing/ExecutiveBriefing 2.tsx`
 - `components/executive-v2/briefing/ExecutiveBriefing.tsx`
-- `components/executive-v2/capabilities/ExecutiveCapabilityDefinition 2.tsx`
 - `components/executive-v2/capabilities/ExecutiveCapabilityDefinition.tsx`
-- `components/executive-v2/capabilities/ExecutiveCapabilityRegistry 2.ts`
 - `components/executive-v2/capabilities/ExecutiveCapabilityRegistry.tsx`
 - `components/executive-v2/projection/ExecutiveProjection.ts`
 - `components/executive-v2/projection/buildExecutiveProjection.ts`
-- `components/executive-v3/projection/buildExecutiveBriefingProjection 2.ts`
 - `components/executive-v3/projection/buildExecutiveBriefingProjection.ts`
-- `components/executive-v3/projection/buildExecutiveNarrative 2.ts`
 - `components/executive-v3/projection/buildExecutiveNarrative.ts`
 - `engine/benchmark/benchmarkReporter.ts`
 - `engine/benchmark/benchmarkScorer.ts`
 - `engine/benchmark/benchmarkTypes.ts`
-- `engine/benchmark/executive-communication/executiveCommunicationExperiment001 2.ts`
 - `engine/benchmark/executive-communication/executiveCommunicationExperiment001.ts`
-- `engine/benchmark/high-volume/captureRuntimeSnapshot 2.ts`
 - `engine/benchmark/high-volume/captureRuntimeSnapshot.ts`
 - `engine/benchmark/high-volume/northstar/runNorthstarPrecisionGap001.ts`
 - `engine/benchmark/high-volume/northstar/scoreNorthstarGroundTruth.ts`
 - `engine/benchmark/runAtlasSimulation.ts`
 - `engine/benchmark/runBenchmarkInvestigation.ts`
-- `engine/benchmark/runtime/cognitiveSemanticNormalizationAudit001 2.ts`
 - `engine/benchmark/runtime/cognitiveSemanticNormalizationAudit001.ts`
 - `engine/benchmark/understandingFitnessScorer.ts`
-- `engine/v3/communication/synthesizeExecutiveNarrative 2.ts`
 - `engine/v3/communication/synthesizeExecutiveNarrative.ts`
 - `engine/v3/model/judgment/buildExecutiveAssessment.ts`
 - `engine/v3/model/judgment/buildOrganizationalUnderstanding.ts`
@@ -122,29 +113,32 @@ This section records source-code references. It supplements, but does not replac
 
 | Layer | Status | Matches |
 |---|:---:|---:|
-| Engine | ✅ Found | 51 |
+| Engine | ✅ Found | 54 |
 | Runtime | ❌ Not found | 0 |
 | Executive | ❌ Not found | 0 |
-| Projection | ✅ Found | 35 |
-| UI | ✅ Found | 18 |
+| Projection | ✅ Found | 29 |
+| UI | ✅ Found | 14 |
 | API | ❌ Not found | 0 |
 | Simulation | ❌ Not found | 0 |
-| Benchmark | ✅ Found | 132 |
+| Benchmark | ✅ Found | 123 |
 | Other | ✅ Found | 6 |
 
 ### Detailed Matches
 
 #### Engine
 
-##### `engine/v3/communication/synthesizeExecutiveNarrative 2.ts`
-
-- Line 316 · **read** · matched `theoryValidation`
-  - `?.theoryValidation`
-
 ##### `engine/v3/communication/synthesizeExecutiveNarrative.ts`
 
-- Line 316 · **read** · matched `theoryValidation`
-  - `?.theoryValidation`
+- Line 34 · **type** · matched `theoryValidation`
+  - `theoryValidation?: {`
+- Line 491 · **definition** · matched `theoryValidation`
+  - `const theoryValidation =`
+- Line 493 · **read** · matched `theoryValidation`
+  - `assessment.theoryValidation,`
+- Line 498 · **unknown** · matched `theoryValidation`
+  - `theoryValidation`
+- Line 501 · **unknown** · matched `theoryValidation`
+  - `? theoryValidation`
 
 ##### `engine/v3/model/judgment/buildExecutiveAssessment.ts`
 
@@ -199,8 +193,8 @@ This section records source-code references. It supplements, but does not replac
   - `theoryValidation.additionalEvidenceThatWouldIncreaseConfidence,`
 - Line 122 · **unknown** · matched `theoryValidation`
   - `theoryValidation.evidenceThatWouldFalsifyTheory,`
-- Line 125 · **unknown** · matched `theoryValidation`
-  - `theoryValidation.executiveRecommendation,`
+- Line 125 · **unknown** · matched `Theory Validation`
+  - `"See the canonical Executive Recommendation for action guidance. This organizational understanding retains theory validation only.",`
 
 ##### `engine/v3/model/judgment/buildTheoryReflection.ts`
 
@@ -224,11 +218,11 @@ This section records source-code references. It supplements, but does not replac
   - `contradictoryEvidence: TheoryValidationEvidence[];`
 - Line 308 · **unknown** · matched `theoryValidation`
   - `supportingMechanisms: TheoryValidationEvidence[],`
-- Line 328 · **definition** · matched `buildTheoryReflection`
+- Line 340 · **definition** · matched `buildTheoryReflection`
   - `export function buildTheoryReflection(`
-- Line 329 · **unknown** · matched `buildTheoryReflection`
+- Line 341 · **unknown** · matched `buildTheoryReflection`
   - `input: BuildTheoryReflectionInput,`
-- Line 330 · **unknown** · matched `theoryValidation`
+- Line 342 · **unknown** · matched `theoryValidation`
   - `): TheoryValidation {`
 
 ##### `engine/v3/model/judgment/organizationalJudgment.ts`
@@ -263,64 +257,55 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `components/executive-v2/projection/ExecutiveProjection.ts`
 
-- Line 13 · **unknown** · matched `theoryValidation`
+- Line 17 · **unknown** · matched `theoryValidation`
   - `export type ExecutiveTheoryValidationEvidence = {`
-- Line 26 · **unknown** · matched `theoryValidation`
-  - `export type ExecutiveTheoryValidation = {`
 - Line 30 · **unknown** · matched `theoryValidation`
-  - `supportingMechanisms: ExecutiveTheoryValidationEvidence[];`
-- Line 31 · **unknown** · matched `theoryValidation`
-  - `supportingOrganizationalBeliefs: ExecutiveTheoryValidationEvidence[];`
+  - `export type ExecutiveTheoryValidation = {`
 - Line 34 · **unknown** · matched `theoryValidation`
+  - `supportingMechanisms: ExecutiveTheoryValidationEvidence[];`
+- Line 35 · **unknown** · matched `theoryValidation`
+  - `supportingOrganizationalBeliefs: ExecutiveTheoryValidationEvidence[];`
+- Line 38 · **unknown** · matched `theoryValidation`
   - `contradictoryOrWeakeningEvidence: ExecutiveTheoryValidationEvidence[];`
-- Line 68 · **type** · matched `theoryValidation`
+- Line 72 · **type** · matched `theoryValidation`
   - `theoryValidation?: ExecutiveTheoryValidation;`
-- Line 590 · **unknown** · matched `Theory Validation`
+- Line 594 · **unknown** · matched `Theory Validation`
   - `* This remains available independently because Theory Validation`
-- Line 593 · **type** · matched `theoryValidation`
+- Line 597 · **type** · matched `theoryValidation`
   - `theoryValidation?: ExecutiveTheoryValidation;`
 
 ##### `components/executive-v2/projection/buildExecutiveProjection.ts`
 
-- Line 24 · **unknown** · matched `theoryValidation`
+- Line 34 · **unknown** · matched `theoryValidation`
   - `ExecutiveTheoryValidation,`
-- Line 208 · **type** · matched `theoryValidation`
+- Line 218 · **type** · matched `theoryValidation`
   - `theoryValidation?: ExecutiveTheoryValidation;`
-- Line 467 · **type** · matched `theoryValidation`
+- Line 492 · **type** · matched `theoryValidation`
   - `theoryValidation:`
-- Line 468 · **read** · matched `theoryValidation`
+- Line 493 · **read** · matched `theoryValidation`
   - `executiveAssessment.theoryValidation,`
-- Line 472 · **unknown** · matched `theoryValidation`
+- Line 497 · **unknown** · matched `theoryValidation`
   - `function buildTheoryValidationProjection(`
-- Line 474 · **unknown** · matched `theoryValidation`
+- Line 499 · **unknown** · matched `theoryValidation`
   - `): ExecutiveTheoryValidation \| undefined {`
-- Line 475 · **read** · matched `theoryValidation`
+- Line 500 · **read** · matched `theoryValidation`
   - `return runtimeMemory?.executiveAssessment?.theoryValidation;`
-- Line 929 · **definition** · matched `theoryValidation`
+- Line 1075 · **definition** · matched `theoryValidation`
   - `const theoryValidation =`
-- Line 930 · **unknown** · matched `theoryValidation`
+- Line 1076 · **unknown** · matched `theoryValidation`
   - `buildTheoryValidationProjection(runtimeMemory);`
-- Line 995 · **unknown** · matched `theoryValidation`
+- Line 1143 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.dominantTheory \|\|`
-- Line 1011 · **unknown** · matched `theoryValidation`
+- Line 1161 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.whyDiscoveryBelievesIt \|\|`
-- Line 1020 · **unknown** · matched `theoryValidation`
+- Line 1170 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.evidenceThatWouldFalsifyTheory?.[0] \|\|`
-- Line 1021 · **unknown** · matched `theoryValidation`
+- Line 1171 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.calibratedConfidenceExplanation \|\|`
-- Line 1031 · **unknown** · matched `theoryValidation`
+- Line 1181 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.executiveRecommendation \|\|`
-- Line 1129 · **unknown** · matched `theoryValidation`
+- Line 1285 · **unknown** · matched `theoryValidation`
   - `theoryValidation,`
-
-##### `components/executive-v3/projection/buildExecutiveBriefingProjection 2.ts`
-
-- Line 102 · **read** · matched `theoryValidation`
-  - `?.theoryValidation`
-- Line 458 · **read** · matched `theoryValidation`
-  - `?.theoryValidation`
-- Line 527 · **read** · matched `theoryValidation`
-  - `?.theoryValidation`
 
 ##### `components/executive-v3/projection/buildExecutiveBriefingProjection.ts`
 
@@ -329,15 +314,6 @@ This section records source-code references. It supplements, but does not replac
 - Line 458 · **read** · matched `theoryValidation`
   - `?.theoryValidation`
 - Line 527 · **read** · matched `theoryValidation`
-  - `?.theoryValidation`
-
-##### `components/executive-v3/projection/buildExecutiveNarrative 2.ts`
-
-- Line 253 · **read** · matched `theoryValidation`
-  - `?.theoryValidation`
-- Line 706 · **read** · matched `theoryValidation`
-  - `?.theoryValidation`
-- Line 780 · **read** · matched `theoryValidation`
   - `?.theoryValidation`
 
 ##### `components/executive-v3/projection/buildExecutiveNarrative.ts`
@@ -374,13 +350,6 @@ This section records source-code references. It supplements, but does not replac
 - Line 63 · **unknown** · matched `theoryValidation`
   - `{theoryValidation.evidenceThatWouldFalsifyTheory`
 
-##### `components/executive-v2/briefing/ExecutiveBriefing 2.tsx`
-
-- Line 207 · **read** · matched `theoryValidation`
-  - `?.theoryValidation`
-- Line 318 · **read** · matched `theoryValidation`
-  - `?.theoryValidation`
-
 ##### `components/executive-v2/briefing/ExecutiveBriefing.tsx`
 
 - Line 207 · **read** · matched `theoryValidation`
@@ -388,19 +357,9 @@ This section records source-code references. It supplements, but does not replac
 - Line 318 · **read** · matched `theoryValidation`
   - `?.theoryValidation`
 
-##### `components/executive-v2/capabilities/ExecutiveCapabilityDefinition 2.tsx`
-
-- Line 12 · **unknown** · matched `CAP-SELF-001`
-  - `\| "CAP-SELF-001"`
-
 ##### `components/executive-v2/capabilities/ExecutiveCapabilityDefinition.tsx`
 
 - Line 12 · **unknown** · matched `CAP-SELF-001`
-  - `\| "CAP-SELF-001"`
-
-##### `components/executive-v2/capabilities/ExecutiveCapabilityRegistry 2.ts`
-
-- Line 20 · **unknown** · matched `CAP-SELF-001`
   - `\| "CAP-SELF-001"`
 
 ##### `components/executive-v2/capabilities/ExecutiveCapabilityRegistry.tsx`
@@ -539,44 +498,24 @@ This section records source-code references. It supplements, but does not replac
 - Line 124 · **unknown** · matched `theoryValidation`
   - `theoryValidationScore: number;`
 
-##### `engine/benchmark/executive-communication/executiveCommunicationExperiment001 2.ts`
-
-- Line 179 · **type** · matched `theoryValidation`
-  - `theoryValidation: {`
-
 ##### `engine/benchmark/executive-communication/executiveCommunicationExperiment001.ts`
 
 - Line 179 · **type** · matched `theoryValidation`
   - `theoryValidation: {`
 
-##### `engine/benchmark/high-volume/captureRuntimeSnapshot 2.ts`
-
-- Line 129 · **type** · matched `theoryValidation`
-  - `theoryValidation?: {`
-- Line 316 · **definition** · matched `theoryValidation`
-  - `const theoryValidation =`
-- Line 318 · **read** · matched `theoryValidation`
-  - `?.theoryValidation;`
-- Line 442 · **unknown** · matched `theoryValidation`
-  - `theoryValidation`
-- Line 456 · **unknown** · matched `theoryValidation`
-  - `theoryValidation`
-- Line 464 · **unknown** · matched `theoryValidation`
-  - `theoryValidation`
-
 ##### `engine/benchmark/high-volume/captureRuntimeSnapshot.ts`
 
 - Line 129 · **type** · matched `theoryValidation`
   - `theoryValidation?: {`
-- Line 316 · **definition** · matched `theoryValidation`
+- Line 323 · **definition** · matched `theoryValidation`
   - `const theoryValidation =`
-- Line 318 · **read** · matched `theoryValidation`
+- Line 325 · **read** · matched `theoryValidation`
   - `?.theoryValidation;`
-- Line 442 · **unknown** · matched `theoryValidation`
+- Line 453 · **unknown** · matched `theoryValidation`
   - `theoryValidation`
-- Line 456 · **unknown** · matched `theoryValidation`
+- Line 467 · **unknown** · matched `theoryValidation`
   - `theoryValidation`
-- Line 464 · **unknown** · matched `theoryValidation`
+- Line 475 · **unknown** · matched `theoryValidation`
   - `theoryValidation`
 
 ##### `engine/benchmark/high-volume/northstar/runNorthstarPrecisionGap001.ts`
@@ -658,13 +597,6 @@ This section records source-code references. It supplements, but does not replac
   - `theoryValidation:`
 - Line 530 · **read** · matched `theoryValidation`
   - `?.theoryValidation,`
-
-##### `engine/benchmark/runtime/cognitiveSemanticNormalizationAudit001 2.ts`
-
-- Line 673 · **unknown** · matched `Theory Validation`
-  - `"theory validation",`
-- Line 680 · **unknown** · matched `theory-validation`
-  - `"Uses theory identity or theory-validation language.",`
 
 ##### `engine/benchmark/runtime/cognitiveSemanticNormalizationAudit001.ts`
 

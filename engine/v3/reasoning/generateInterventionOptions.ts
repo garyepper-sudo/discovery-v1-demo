@@ -90,18 +90,49 @@ export function generateInterventionOptions({
   const options:
     InterventionOption[] = [];
 
-  const targetsExecution =
+  const targetsCoordination =
+    executiveDecision
+      .targetConditionIds
+      .includes(
+        "condition-coordination",
+      );
+
+  const targetsDecisionFlow =
+    executiveDecision
+      .targetConditionIds
+      .includes(
+        "condition-decisionflow",
+      );
+
+  const targetsExecutionCapacity =
     executiveDecision
       .targetConditionIds
       .includes(
         "condition-executioncapacity",
       );
 
-  if (!targetsExecution) {
+  const targetsOperatingModel =
+    executiveDecision
+      .targetConditionIds
+      .includes(
+        "condition-operatingmodel",
+      );
+
+  const targetsSupportedConstraint =
+    targetsCoordination ||
+    targetsDecisionFlow ||
+    targetsExecutionCapacity ||
+    targetsOperatingModel;
+
+  if (!targetsSupportedConstraint) {
     return options;
   }
 
   if (
+    (
+      targetsCoordination ||
+      targetsDecisionFlow
+    ) &&
     allows(
       executiveDecision,
       "governance",
@@ -138,6 +169,7 @@ export function generateInterventionOptions({
 
           targetConditionIds: [
             "condition-decisionflow",
+            "condition-coordination",
             "condition-executioncapacity",
           ],
 
@@ -169,6 +201,11 @@ export function generateInterventionOptions({
   }
 
   if (
+    (
+      targetsCoordination ||
+      targetsDecisionFlow ||
+      targetsOperatingModel
+    ) &&
     allows(
       executiveDecision,
       "policy",
@@ -194,7 +231,7 @@ export function generateInterventionOptions({
             "Define which roles own recurring operating decisions and when escalation is required.",
 
           rationale:
-            "Clear decision ownership may reduce ambiguity, waiting, and repeated escalation.",
+            "Clear decision ownership may reduce ambiguity, waiting, repeated escalation, and cross-functional coordination friction.",
 
           scope:
             "organization",
@@ -204,6 +241,7 @@ export function generateInterventionOptions({
               .timeHorizon,
 
           targetConditionIds: [
+            "condition-coordination",
             "condition-decisionflow",
             "condition-operatingmodel",
           ],
@@ -235,6 +273,7 @@ export function generateInterventionOptions({
   }
 
   if (
+    targetsExecutionCapacity &&
     allows(
       executiveDecision,
       "strategy",

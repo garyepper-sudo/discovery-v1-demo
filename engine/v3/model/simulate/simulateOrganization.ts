@@ -512,11 +512,13 @@ export function simulateOrganization(
     );
 
   return {
-    id:
-      `simulation-${input.organizationId}-${simulatedAt}`,
+  id:
+    input.intervention
+      ? `simulation-${input.organizationId}-${input.intervention.id}-${simulatedAt}`
+      : `simulation-${input.organizationId}-${simulatedAt}`,
 
-    organizationId:
-      input.organizationId,
+  organizationId:
+    input.organizationId,
 
     intervention:
       input.intervention,

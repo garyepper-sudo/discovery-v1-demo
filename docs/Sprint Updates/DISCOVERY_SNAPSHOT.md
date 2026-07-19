@@ -1,65 +1,443 @@
 # Discovery Snapshot (Sprint Startup)
 
-This document is the **minimum canonical context** required to begin a new Discovery sprint.
+This document is the **minimum canonical implementation context** required to begin a new Discovery sprint.
 
-Read this document before making architectural, product, UX, or implementation decisions.
+Unlike the Product Canon, this document changes frequently.
 
----
+Its purpose is to describe **where Discovery currently is**, **what the current sprint should accomplish**, and **how implementation decisions should be made**.
 
-# Discovery Identity
+Before reading this document, read:
 
-Discovery is an **Adaptive Executive Cognitive Operating System**.
+1. `docs/Product/PRODUCT_CANON.md`
+2. `docs/Product/PRODUCT_STATE.md`
+3. `docs/Architecture/DISCOVERY_ARCHITECTURE_STATE.json`
 
-Its purpose is to continuously improve the quality of executive judgment.
+Those documents define the long-term product philosophy and architecture.
 
-Discovery does not replace executive decision-making.
-
-Discovery improves executive judgment through structured organizational reasoning, causal understanding, optimization, simulation, executive communication, and accumulated organizational learning.
-
-Discovery helps executive teams:
-
-- understand organizational reality,
-- identify the highest-leverage organizational constraint,
-- understand why organizational conditions exist,
-- evaluate alternative interventions,
-- optimize decisions under real constraints,
-- simulate organizational futures,
-- communicate executive reasoning,
-- understand uncertainty and tradeoffs,
-- learn from completed executive decisions,
-- accumulate organizational memory,
-- continuously improve future recommendations.
-
-Discovery is **not**:
-
-- a dashboard,
-- a chatbot,
-- a document repository,
-- a reporting platform.
-
-Discovery organizes itself around **Executive Decisions**.
+This document defines the current implementation state.
 
 ---
 
 # Current Product Phase
 
-Discovery has entered **Executive Judgment Optimization and Product Validation**.
+Discovery has entered **Executive Product Validation**.
 
-The Executive Cognitive Operating System is now considered architecturally stable.
+The Executive Cognitive Operating System is considered architecturally stable.
 
-The primary objective is no longer expanding cognition.
+The primary objective is no longer expanding reasoning capabilities.
 
-The primary objective is improving:
+The primary objective is validating that Discovery's existing cognition works together as one coherent executive product.
 
-- executive judgment quality,
-- recommendation quality,
-- executive communication quality,
-- simulation quality,
-- benchmark accuracy,
-- executive trust,
-- and the overall executive experience.
+Current implementation focuses on:
 
-Architecture expansion should occur only when benchmark evidence reveals a genuine cognitive gap.
+- Executive Work,
+- Operating Model visibility,
+- Decision Lab,
+- executive confidence,
+- initiative tracking,
+- decision review,
+- organizational learning,
+- executive product validation.
+
+Architecture should expand only when benchmark evidence demonstrates a genuine missing reasoning capability.
+
+Assume a capability already exists until a benchmark proves otherwise.
+
+---
+
+# Current Product Objective
+
+Discovery is validating one complete Executive Work flywheel.
+
+Current priorities:
+
+- Make Executive Work the primary organizing principle.
+- Surface the Operating Model throughout the product.
+- Complete the Decision Lab experience.
+- Complete initiative tracking.
+- Complete executive review.
+- Complete organizational learning.
+- Reduce executive reading through progressive disclosure.
+- Expose existing intelligence before creating new intelligence.
+
+The current bottleneck is product experience.
+
+Not reasoning architecture.
+
+---
+
+# Executive Work
+
+Discovery organizes itself around **Executive Work**.
+
+Executive Work includes:
+
+- Discovery-generated recommendations,
+- executive-created decisions,
+- executive-created initiatives.
+
+Regardless of origin, every Executive Work item should follow the same lifecycle.
+
+```text
+Idea
+
+↓
+
+Understand
+
+↓
+
+Recommend
+
+↓
+
+Challenge
+
+↓
+
+Simulate
+
+↓
+
+Commit
+
+↓
+
+Track
+
+↓
+
+Review
+
+↓
+
+Learn
+
+↓
+
+Operating Model Improves
+```
+
+Discovery should treat every Executive Work item consistently.
+
+---
+
+# Canonical Product Experience
+
+Discovery supports three primary executive experiences.
+
+---
+
+## 1. Understand The Organization
+
+```text
+Evidence
+
+↓
+
+Operating Model
+
+↓
+
+Candidate Executive Findings
+
+↓
+
+Attention Prioritization
+
+↓
+
+Discoveries
+
+Insights
+
+Alerts
+
+Opportunities
+
+↓
+
+Executive Attention
+```
+
+Discovery continuously determines what deserves executive attention.
+
+Executives should never be overwhelmed.
+
+Only the highest-value findings should appear by default.
+
+Everything else should remain available through progressive disclosure.
+
+---
+
+## Discoveries
+
+A Discovery represents genuinely new organizational understanding.
+
+A Discovery should:
+
+- emerge through synthesis,
+- materially improve the Operating Model,
+- change executive judgment,
+- remain relatively rare,
+- create significant executive value.
+
+---
+
+## Insights
+
+Insights reveal meaningful organizational relationships.
+
+Examples include:
+
+- trends,
+- dependencies,
+- contradictions,
+- emerging patterns,
+- subtle organizational shifts.
+
+Insights do not necessarily create new organizational knowledge.
+
+---
+
+## Alerts
+
+Alerts identify situations requiring executive attention.
+
+Examples include:
+
+- deteriorating conditions,
+- initiative risk,
+- declining confidence,
+- failed assumptions,
+- rapidly changing organizational constraints.
+
+---
+
+## Opportunities
+
+Opportunities identify newly available paths for organizational improvement.
+
+Discovery should proactively identify opportunities rather than waiting for executive questions.
+
+---
+
+## Executive Attention
+
+Executive findings should be ranked using dimensions including:
+
+- organizational impact,
+- urgency,
+- confidence,
+- novelty,
+- executive relevance,
+- strategic importance,
+- expected decision value.
+
+Executives should always see the highest-value work first.
+
+---
+
+## 2. Decision Lab
+
+```text
+Executive Work
+
+↓
+
+Consult Operating Model
+
+↓
+
+Clarify Objective
+
+↓
+
+Reframe Decision
+
+↓
+
+Assess Organizational Context
+
+↓
+
+Identify Primary Constraint
+
+↓
+
+Generate Strategic Options
+
+↓
+
+Compare Strategies
+
+↓
+
+Challenge Assumptions
+
+↓
+
+Simulate Futures
+
+↓
+
+Recommend Strategy
+
+↓
+
+Executive Conversation
+
+↓
+
+Executive Brief
+
+↓
+
+Commit Executive Work
+```
+
+The Decision Lab is the primary executive reasoning environment.
+
+Executives should naturally use the Decision Lab when:
+
+- evaluating Discovery recommendations,
+- introducing external initiatives,
+- considering strategic decisions,
+- comparing alternatives,
+- challenging Discovery,
+- exploring simulations,
+- preparing board discussions.
+
+Discovery should never require that Executive Work originated inside Discovery.
+
+Everything should be evaluated through the Operating Model.
+
+---
+
+## 3. Initiative Tracking
+
+```text
+Committed Executive Work
+
+↓
+
+Execution
+
+↓
+
+Operating Model Updates
+
+↓
+
+Observed Outcomes
+
+↓
+
+Executive Review
+
+↓
+
+Continue
+
+Adjust
+
+Pause
+
+Stop
+
+Pivot
+
+↓
+
+Updated Simulation
+
+↓
+
+Organizational Learning
+
+↓
+
+Operating Model Improves
+```
+
+Executive Work does not end at commitment.
+
+Discovery should continue supporting work throughout execution.
+
+The original:
+
+- recommendation,
+- assumptions,
+- simulations,
+- confidence,
+- alternatives,
+- expected outcomes,
+
+should always remain preserved.
+
+Discovery continuously compares:
+
+Expected
+
+↓
+
+Observed
+
+↓
+
+Learning
+
+Discovery should recommend:
+
+- continue,
+- adjust,
+- pause,
+- stop,
+- pivot,
+
+based on evolving organizational reality.
+
+---
+
+# Executive Conversation
+
+Discovery should feel like a trusted executive advisor.
+
+Executives naturally ask questions in this order.
+
+```text
+What should I do?
+
+↓
+
+Why?
+
+↓
+
+What else could I do?
+
+↓
+
+What could make this wrong?
+
+↓
+
+What happens if...?
+
+↓
+
+Are we ready?
+
+↓
+
+How is execution progressing?
+
+↓
+
+What did we learn?
+```
+
+The product experience should naturally follow this conversation.
 
 ---
 
@@ -138,7 +516,7 @@ Executive Experience
 
 ↓
 
-Executive Decision
+Executive Work
 
 ↓
 
@@ -150,424 +528,113 @@ Executive Learning
 
 ↓
 
-Organizational Memory
+Operating Model
 ```
 
-This pipeline is canonical.
+This pipeline is architecturally stable.
 
-Consumers reuse upstream cognition.
+Consumers should always reuse upstream cognition.
 
-Downstream systems never recreate upstream reasoning.
+Prefer:
 
----
+- orchestration,
+- synthesis,
+- communication,
+- projection,
 
-# Executive Cognitive Operating Systems
-
-Discovery is organized as cooperating Cognitive Operating Systems.
-
-Current Operating Systems:
-
-- Perception
-- Organizational Understanding
-- Organizational Memory
-- Organizational Learning
-- Organizational Epistemics
-- Organizational Prediction
-- Executive Assessment
-- Executive Recommendation
-- Executive Optimization
-- Executive Simulation
-- Executive Communication
-- Executive Decision Learning
-
-Each Operating System owns one cognitive responsibility.
-
-Architecture should evolve by strengthening existing systems rather than introducing parallel cognition.
+before introducing new reasoning architecture.
 
 ---
 
-# Canonical Executive Responsibilities
+# Executive Product Validation
 
-## Executive Assessment
+Current product validation questions include:
 
-Answers:
+- Does Discovery create valuable understanding?
+- Do executives begin Executive Work inside Discovery?
+- Do executives challenge Discovery?
+- Do executives explore simulations?
+- Do executives improve confidence?
+- Do executives commit Executive Work?
+- Do executives return to track execution?
+- Do executives complete reviews?
+- Do executives voluntarily improve the Operating Model?
 
-> **What is happening?**
-
-Produces:
-
-- Executive Assessment
-
-Assessment does not recommend interventions.
-
----
-
-## Executive Recommendation
-
-Answers:
-
-> **What should leadership attempt to accomplish?**
-
-Produces:
-
-- Executive Recommendation
-
-Recommendation does not optimize or simulate.
+Executive behavior—not feature requests—drives product evolution.
 
 ---
 
-## Executive Optimization
+# Product Implementation Rules
 
-Answers:
+Current implementation should always:
 
-> **What is the strongest feasible recommendation under current constraints?**
-
-Produces:
-
-- Optimized Executive Recommendation
-
-Optimization does not replace the original recommendation.
-
----
-
-## Executive Simulation
-
-Answers:
-
-> **What is likely to happen if the recommendation is executed?**
-
-Produces:
-
-- Executive Simulation
-
-Simulation preserves recommendation ancestry.
-
----
-
-## Executive Communication
-
-Answers:
-
-> **How should Discovery communicate its reasoning to executives?**
-
-Produces:
-
-- Executive Communication
-- Executive Projection
-
-Communication performs no independent cognition.
-
-It communicates canonical cognition.
-
----
-
-## Executive Decision Learning
-
-Answers:
-
-> **What should Discovery learn after execution?**
-
-Produces:
-
-- Executive Decision Learning
-- Executive Memory
-
----
-
-# Product Principles
-
-Every feature should improve at least one of:
-
-- Executive Understanding
-- Executive Judgment
-- Decision Quality
-- Executive Confidence
-- Organizational Learning
-- Executive Trust
-
-Discovery should always:
-
+- strengthen the Operating Model,
+- strengthen Executive Work,
+- reduce executive reading,
+- use progressive disclosure,
 - explain before recommending,
-- identify the primary organizational constraint,
-- distinguish assessment from recommendation,
-- preserve recommendation ancestry,
+- expose assumptions,
 - expose uncertainty,
-- expose constraints,
 - expose tradeoffs,
-- explain causal reasoning,
-- recommend the highest-leverage intervention,
-- simulate organizational consequences,
-- learn from completed decisions.
+- preserve recommendation ancestry,
+- support executive challenges,
+- support post-commit tracking,
+- continuously improve organizational learning.
 
-Executives own decisions.
+Executives own commitments.
 
-Discovery improves judgment.
-
----
-
-# Current Validation Status
-
-## Architecture
-
-- TypeScript: Passing
-- Capability Registry: Healthy
-- Runtime Integrity: Passing
-- Cognitive Layer Validation: **PASS**
-- Executive Communication Validation: **13 / 13 PASS**
-- Executive Recommendation Validation: Passing
-- Executive Simulation Integration: Passing
-
-The Executive Cognitive Operating System is considered architecturally stable.
+Discovery improves executive judgment.
 
 ---
 
-## Current Benchmark Results
+# Operating Model Inputs
 
-### Northstar Ground Truth
+Uploading information and connecting systems are core product experiences.
 
-**81.33 / 100**
+They are not administrative setup.
 
-Discovery consistently identifies the correct primary organizational explanation.
+They strengthen the Operating Model.
 
-Remaining opportunities are concentrated in:
-
-- executive prioritization,
-- recommendation synthesis,
-- downstream business consequence modeling,
-- executive communication quality.
-
-### Executive Communication
-
-**13 / 13 PASS**
-
-Executive communication now produces:
-
-- executive headline,
-- executive summary,
-- executive recommendation,
-- executive forecast,
-- uncertainty,
-- supporting evidence,
-
-while remaining deterministic and free of engine language.
-
-### Cognitive Layer Validation
-
-**PASS**
-
-Validated pipeline:
+Executives should always understand:
 
 ```text
-Evidence
+More Organizational Information
+
 ↓
 
-Observations
+Stronger Operating Model
+
 ↓
 
-Signals
+Better Understanding
+
 ↓
 
-Phenomena
+Better Recommendations
+
 ↓
 
-Mechanisms
+Better Simulations
+
 ↓
 
-Beliefs
-↓
-
-Concepts
-↓
-
-Theories
-↓
-
-Conditions
-↓
-
-State
-↓
-
-Assessment
-↓
-
-Recommendation
-↓
-
-Communication
-↓
-
-Projection
+Better Executive Decisions
 ```
 
-Architecture integrity is considered stable.
+Every request for additional information should clearly explain the executive value it creates.
 
 ---
 
-# Current Product Workflow
+# Sprint Rule
 
-```text
-Question
+Before implementing any feature ask:
 
-↓
+- Does this strengthen Executive Work?
+- Does this improve the Operating Model?
+- Does this reduce executive reading?
+- Does this improve executive judgment?
+- Does this expose existing intelligence rather than creating duplicate intelligence?
 
-Current Understanding
+If the answer is no, the implementation should be reconsidered.
 
-↓
-
-Executive Assessment
-
-↓
-
-Executive Recommendation
-
-↓
-
-Executive Optimization
-
-↓
-
-Executive Simulation
-
-↓
-
-Executive Communication
-
-↓
-
-Executive Projection
-
-↓
-
-Executive Decision
-
-↓
-
-Implementation
-
-↓
-
-Observed Outcome
-
-↓
-
-Executive Learning
-
-↓
-
-Better Future Recommendation
-```
-
-This Executive Decision Flywheel is the canonical product workflow.
-
----
-
-# Current Development Priorities
-
-Discovery's primary bottleneck is no longer architecture.
-
-Current priorities are:
-
-1. Improve executive judgment quality.
-2. Improve recommendation prioritization.
-3. Improve executive communication quality.
-4. Improve simulation realism.
-5. Improve Ground Truth benchmark performance.
-6. Improve executive trust.
-7. Refine the executive experience.
-8. Validate Discovery with real executive users.
-
-Future work should strengthen existing cognition rather than expand architecture.
-
----
-
-# Current Risks
-
-Current risks include:
-
-- recommendation prioritization remains weaker than diagnosis,
-- communication occasionally repeats organizational themes,
-- recommendation synthesis can be further consolidate multiple conditions into a single executive strategy,
-- simulation calibration should continue improving,
-- customer validation has not yet begun,
-- product-market fit remains unvalidated.
-
-These are product-quality risks rather than architectural risks.
-
----
-
-# Working Principles
-
-Before implementing anything ask:
-
-1. Does this improve executive understanding?
-2. Does this improve executive judgment?
-3. Does this improve decision quality?
-4. Does this improve benchmark performance?
-5. Does this improve executive trust?
-6. Does a canonical producer already exist?
-7. Can an existing capability be extended?
-8. Does this preserve cognitive ancestry?
-9. Does this duplicate reasoning?
-10. Can this improvement be objectively benchmarked?
-
-If an existing capability can be extended, extend it.
-
-Do not create parallel cognition.
-
----
-
-# Core Principles
-
-> **Product before implementation.**
->
-> **Architecture serves executive judgment.**
->
-> **Canonical producers own reasoning.**
->
-> **Runtime stores cognition.**
->
-> **Executive Communication explains cognition.**
->
-> **The UI presents cognition.**
->
-> **Assessment explains reality.**
->
-> **Recommendation proposes action.**
->
-> **Optimization improves feasibility.**
->
-> **Simulation evaluates consequences.**
->
-> **Communication builds executive trust.**
->
-> **Every recommendation should explain itself.**
->
-> **Every simulation should preserve causal ancestry.**
->
-> **Every completed decision should improve future recommendations.**
->
-> **Reasoning quality is measured—not assumed.**
->
-> **Benchmark evidence drives architectural evolution.**
->
-> **Executive trust is Discovery's most valuable product feature.**
-
----
-
-# Sprint Startup Checklist
-
-Run:
-
-```bash
-npm run sprint:start
-npm run validate
-npm run sprint:docs
-npm run cognition:validate
-npm run architecture:state
-npm run discovery:brief
-```
-
-Paste the outputs together with this snapshot into the next chat.
-
-This snapshot provides the canonical product, architecture, benchmark, and cognitive context required to continue Discovery without relying on previous conversation history.
+The current priority is building the best possible executive product on top of a stable cognitive architecture.

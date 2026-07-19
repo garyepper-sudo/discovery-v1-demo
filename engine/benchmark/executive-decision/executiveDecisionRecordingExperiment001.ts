@@ -382,6 +382,137 @@ const checks: Check[] = [
 
   {
     name:
+      "Decision justification produced",
+
+    passed:
+      Boolean(
+        cycle.decisionJustification,
+      ),
+
+    detail:
+      cycle.decisionJustification
+        .recommendedTitle,
+  },
+
+  {
+    name:
+      "Decision justification matches winning option",
+
+    passed:
+      cycle.decisionJustification
+        .recommendedOptionId ===
+      selectedOptionId,
+
+    detail:
+      cycle.decisionJustification
+        .recommendedOptionId,
+  },
+
+  {
+    name:
+      "Decision justification matches recommendation",
+
+    passed:
+      cycle.decisionJustification
+        .recommendedInterventionId ===
+      recommendedOptionId,
+
+    detail:
+      cycle.decisionJustification
+        .recommendedInterventionId,
+  },
+
+  {
+    name:
+      "Decision justification explains recommendation",
+
+    passed:
+      cycle.decisionJustification
+        .whyRecommended
+        .length > 0,
+
+    detail:
+      `${cycle.decisionJustification.whyRecommended.length} reason(s)`,
+  },
+
+  {
+    name:
+      "Decision justification identifies decisive advantages",
+
+    passed:
+      cycle.decisionJustification
+        .decisiveAdvantages
+        .length > 0,
+
+    detail:
+      `${cycle.decisionJustification.decisiveAdvantages.length} decisive advantage(s)`,
+  },
+
+  {
+    name:
+      "Decision justification includes organizational impact",
+
+    passed:
+      cycle.decisionJustification
+        .organizationalImpact
+        .improvedConditionIds
+        .length > 0,
+
+    detail:
+      `${cycle.decisionJustification.organizationalImpact.improvedConditionIds.length} improved condition(s)`,
+  },
+
+  {
+    name:
+      "Decision justification preserves confidence",
+
+    passed:
+      cycle.decisionJustification
+        .confidence
+        .score ===
+      cycle.rankedScenarios[0]
+        ?.confidenceScore,
+
+    detail:
+      `${Math.round(
+        cycle.decisionJustification
+          .confidence
+          .score *
+          100,
+      )}%`,
+  },
+
+  {
+    name:
+      "Decision justification evaluates alternatives",
+
+    passed:
+      cycle.rankedScenarios.length <= 1 ||
+      cycle.decisionJustification
+        .alternatives
+        .length ===
+      cycle.rankedScenarios.length -
+        1,
+
+    detail:
+      `${cycle.decisionJustification.alternatives.length} alternative(s)`,
+  },
+
+  {
+    name:
+      "Decision justification includes change conditions",
+
+    passed:
+      cycle.decisionJustification
+        .evidenceThatCouldChangePreference
+        .length > 0,
+
+    detail:
+      `${cycle.decisionJustification.evidenceThatCouldChangePreference.length} change condition(s)`,
+  },
+
+  {
+    name:
       "Selected option exists in the cycle",
 
     passed:

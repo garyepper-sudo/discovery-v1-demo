@@ -147,6 +147,11 @@ export async function POST(
       );
     }
 
+    const runtime =
+      loadOrganizationRuntimeState(
+        organizationId,
+      );
+
     const now =
       new Date().toISOString();
 
@@ -156,17 +161,30 @@ export async function POST(
         "decision.title",
       );
 
-    const targetConditionIds =
+    const requestedTargetConditionIds =
       optionalStringArray(
         requestDecision
           .targetConditionIds,
       );
 
+    const primaryConstraintId =
+      runtime.memory
+        .organizationalState
+        ?.dominantConditions
+        ?.[0];
+
+    const targetConditionIds =
+      requestedTargetConditionIds.length > 0
+        ? requestedTargetConditionIds
+        : primaryConstraintId
+          ? [primaryConstraintId]
+          : [];
+
     if (
       targetConditionIds.length === 0
     ) {
       throw new Error(
-        "decision.targetConditionIds must include at least one organizational condition.",
+        "decision.targetConditionIds must include at least one organizational condition, or Runtime must contain a primary executive constraint.",
       );
     }
 
@@ -262,11 +280,6 @@ export async function POST(
         updatedAt:
           now,
       };
-
-    const runtime =
-      loadOrganizationRuntimeState(
-        organizationId,
-      );
 
     const decisionCycle =
       runExecutiveDecisionCycle({

@@ -30,6 +30,10 @@ import type {
 import type { OrganizationalIntervention } from "../model/simulate/organizationalIntervention";
 import type { SimulatedOrganizationState } from "../model/simulate/simulateOrganization";
 import type {
+  OrganizationalCondition,
+  OrganizationalState,
+} from "../model/state/inferOrganizationalConditions";
+import type {
   ExecutiveSimulation,
 } from "../simulation/executiveSimulation";
 import type {
@@ -104,6 +108,22 @@ export type OrganizationRuntimeMemory = {
   semanticConcepts: unknown[];
   meaningSignals: unknown[];
   organizationalConcepts: unknown[];
+
+  /**
+   * Canonical current organizational conditions inferred from
+   * Discovery's accumulated cognition.
+   */
+  organizationalConditions: OrganizationalCondition[];
+
+  /**
+   * Canonical synthesized organizational state.
+   *
+   * This includes the ranked dominant conditions and Discovery's
+   * current primary executive constraint.
+   *
+   * Newly created runtimes do not yet have an organizational state.
+   */
+  organizationalState: OrganizationalState | null;
 
   /**
    * Canonical model of how organizational entities
@@ -272,6 +292,13 @@ export function createEmptyOrganizationRuntime(params: {
       semanticConcepts: [],
       meaningSignals: [],
       organizationalConcepts: [],
+
+      /**
+       * No organizational conditions or synthesized state exist until
+       * the organizational condition pipeline has run.
+       */
+      organizationalConditions: [],
+      organizationalState: null,
 
       organizationalCausalModel: null,
 

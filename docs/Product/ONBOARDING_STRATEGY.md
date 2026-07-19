@@ -12,61 +12,99 @@ Discovery should create value before requesting significant organizational infor
 
 The objective of onboarding is not to collect data.
 
-The objective is to improve one important executive decision.
+The objective is to begin building the organization's Operating Model while immediately improving one important piece of Executive Work.
 
 ---
 
 # Product Philosophy
 
-Discovery should earn the right to request additional information.
+Discovery should earn the right to request additional organizational information.
 
 Discovery should never require organizations to upload everything before creating value.
 
 Every additional piece of information should have an obvious purpose.
 
-Executives should always understand why Discovery is asking.
+Executives should always understand:
+
+- why Discovery is requesting it,
+- how it improves the Operating Model,
+- how it strengthens the current Executive Work.
+
+Discovery should always explain the relationship:
+
+```text
+Better Organizational Information
+
+↓
+
+Better Operating Model
+
+↓
+
+Better Recommendations
+
+↓
+
+Better Executive Decisions
+```
 
 ---
 
-# The First Question
+# Executive Work First
 
-Discovery begins with executive intent.
+Discovery begins with Executive Work.
+
+Executive Work may originate from either:
+
+- Discovery,
+- the executive.
 
 Examples include:
 
 - Should we hire?
-- Why is execution slowing?
-- Should we expand?
 - Should we reorganize?
-- Should we raise prices?
+- Should we acquire?
+- Should we expand?
+- Why is execution slowing?
+- Launch European expansion.
+- Pricing strategy.
+- ERP implementation.
 
-The first interaction is always a business question.
+Discovery begins with executive intent.
 
-Not an upload.
+Never with document collection.
 
 ---
 
-# Initial Context
+# Minimal Initial Context
 
-Discovery should begin with minimal information.
+Discovery should begin with very little information.
 
 Examples include:
 
 - one executive question,
+- one initiative,
+- one decision,
 - one document,
+- one board deck,
 - one meeting transcript,
 - one strategy memo,
 - one executive summary.
 
-Discovery should form the best understanding possible from limited information.
+Discovery should form the strongest possible initial Operating Model using whatever information is available.
 
 ---
 
-# First Value
+# Immediate Value
 
-The first session should produce:
+The first session should produce meaningful executive value.
 
-Current Understanding
+```text
+Executive Work
+
+↓
+
+Understanding
 
 ↓
 
@@ -74,39 +112,49 @@ Recommendation
 
 ↓
 
+Challenge
+
+↓
+
 Simulation
 
 ↓
 
-Decision Confidence
+Confidence
 
-Discovery should create one memorable insight before requesting additional information.
+↓
+
+Executive Decision
+```
+
+Discovery should create one memorable insight before requesting additional organizational information.
 
 ---
 
-# Trust Before Expansion
+# Build Trust Before Expanding Context
 
-Only after creating value should Discovery recommend additional information.
+Only after creating value should Discovery recommend strengthening the Operating Model.
 
 Discovery should explain:
 
-Why additional information matters.
+- why additional information matters,
+- which assumption remains uncertain,
+- which recommendation would improve,
+- how much confidence is expected to improve,
+- how the Operating Model becomes more accurate.
 
-Which assumption remains uncertain.
-
-How much confidence could improve.
-
-Every request should directly strengthen the current decision.
+Every request should directly strengthen the current Executive Work.
 
 ---
 
-# Progressive Context
+# Progressive Operating Model Growth
 
-Discovery should expand organizational context gradually.
+Discovery should expand the Operating Model gradually.
 
 Example
 
-Question
+```text
+Executive Question
 
 ↓
 
@@ -114,7 +162,15 @@ One Document
 
 ↓
 
+Initial Operating Model
+
+↓
+
 Understanding
+
+↓
+
+Recommendation
 
 ↓
 
@@ -126,7 +182,7 @@ Sales Pipeline
 
 ↓
 
-Higher Confidence
+Better Operating Model
 
 ↓
 
@@ -138,25 +194,28 @@ Better Simulation
 
 ↓
 
-HRIS
+Leadership Notes
 
 ↓
 
-Organizational Model
+Improved Organizational Understanding
+```
 
-Discovery should grow with executive trust.
+Discovery should grow alongside executive trust.
 
 ---
 
-# Information Requests
+# Intelligent Information Requests
 
 Discovery should never ask:
 
-"Upload more documents."
+> Upload more documents.
 
 Instead Discovery should ask:
 
-"To validate this assumption…"
+> One important assumption remains uncertain.
+
+> Validating this assumption is expected to increase confidence by 7%.
 
 Examples include:
 
@@ -164,19 +223,55 @@ Examples include:
 - Customer escalation report
 - Sales pipeline review
 - Leadership meeting notes
+- Board materials
+- Product roadmap
+- Financial review
 
-Executives should immediately understand why each request exists.
+Executives should immediately understand why every request exists.
+
+---
+
+# Operating Model Visibility
+
+The Operating Model should remain visible throughout onboarding.
+
+Executives should continuously observe it improving.
+
+Examples:
+
+```text
+Operating Model Updated
+
+Confidence
+
+78% → 82%
+
+New Concepts
+
++4
+
+Mechanisms Strengthened
+
++2
+
+Prediction Quality
+
+Improved
+```
+
+Discovery should reinforce that organizational knowledge directly improves future executive decisions.
 
 ---
 
 # Progressive Integrations
 
-Discovery should not begin with enterprise integrations.
+Discovery should never begin with enterprise integrations.
 
 Instead Discovery earns integrations.
 
 Example
 
+```text
 Current Confidence
 
 82%
@@ -185,15 +280,21 @@ Potential
 
 91%
 
-Fastest improvement
+Largest Improvement
 
 Connect Salesforce
 
-Estimated confidence gain
+Expected Confidence Gain
 
 +6%
+```
 
-The integration should clearly improve the current decision.
+Discovery should always explain:
+
+- why the integration matters,
+- what assumption it validates,
+- how it strengthens the Operating Model,
+- how it improves the current Executive Work.
 
 ---
 
@@ -201,25 +302,44 @@ The integration should clearly improve the current decision.
 
 Discovery should never require integrations.
 
-Executives should always have multiple options.
+Executives should always have multiple ways to improve the Operating Model.
 
 Examples include:
 
-Connect CRM
+- Connect CRM
+- Upload report
+- Upload board deck
+- Answer three questions
+- Interview a stakeholder
+- Connect project management system
 
-OR
+Discovery should optimize flexibility rather than integration dependency.
 
-Upload report
+---
 
-OR
+# Observable Cognition
 
-Answer three questions
+During uploads, analysis, simulations, and reasoning, Discovery should expose authentic cognition rather than artificial loading indicators.
 
-OR
+Examples include:
 
-Interview a stakeholder
+```text
+Operating Model
 
-Discovery should optimize flexibility.
+Learning...
+
+✓ Organizational observations
+
+✓ Mechanisms updated
+
+✓ Theories strengthened
+
+✓ Organizational conditions recalculated
+
+Updating executive understanding...
+```
+
+Executives should observe Discovery improving its understanding in real time.
 
 ---
 
@@ -227,13 +347,16 @@ Discovery should optimize flexibility.
 
 Discovery begins learning immediately.
 
-Examples include:
+Learning occurs through:
 
 - executive corrections,
 - disagreement,
 - simulation choices,
 - confidence improvements,
-- evidence selection.
+- evidence selection,
+- organizational uploads,
+- executive-created initiatives,
+- executive-created decisions.
 
 Learning begins during the first session.
 
@@ -251,16 +374,36 @@ A successful first session should achieve:
 
 ✓ Executive explored one simulation.
 
-✓ Executive improved confidence OR committed a decision.
+✓ Executive strengthened the Operating Model.
 
-✓ Executive wants to return before the next important decision.
+✓ Executive improved confidence or committed Executive Work.
+
+✓ Executive understands why richer organizational context creates better future recommendations.
+
+✓ Executive wants to return before the next important initiative or decision.
+
+---
+
+# Long-Term Success
+
+Over time executives should naturally begin to think:
+
+> "The better Discovery understands our organization, the better it helps us make decisions."
+
+When this happens, organizations will voluntarily improve the Operating Model because they understand the value it creates.
+
+That is Discovery's long-term onboarding objective.
 
 ---
 
 # Product Goal
 
-Discovery succeeds when executives leave the first session thinking:
+Discovery succeeds when executives leave their first session thinking:
 
-"I understand this decision better than I did thirty minutes ago."
+> "I understand this work better than I did thirty minutes ago."
 
-Only then has Discovery earned the right to request more organizational context.
+and
+
+> "I can already see how improving the Operating Model will improve every important decision we make."
+
+Only then has Discovery earned the right to request additional organizational context.
