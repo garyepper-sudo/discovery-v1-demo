@@ -27,6 +27,7 @@
     "decision:scenario:001": "tsx engine/benchmark/decision-intelligence/scenarioIntegrationExperiment001.ts",
     "decision:calibrate": "tsx engine/benchmark/decision-intelligence/runDecisionCalibration.ts",
     "decision:rank:001": "tsx engine/benchmark/decision-intelligence/decisionRankingExperiment001.ts",
+    "benchmark:executive-operating-system": "tsx engine/benchmark/executive-work/executiveOperatingSystemBenchmark001.ts",
     "decision:cycle:001": "tsx engine/benchmark/decision-intelligence/decisionCycleExperiment001.ts",
     "decision:quality:001": "tsx engine/benchmark/decision-intelligence/decisionQualityExperiment001.ts",
     "decision:integrity:001": "tsx engine/benchmark/executive-decision/executiveDecisionIntegrityExperiment001.ts",

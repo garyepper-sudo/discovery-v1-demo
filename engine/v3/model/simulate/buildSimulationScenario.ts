@@ -156,6 +156,8 @@ export function buildSimulationScenario({
       investigationOpportunities,
       predictionReflection:
         projectedPredictionReflection,
+      generatedAt:
+        simulatedOrganizationState.simulatedAt,
     });
 
   const projectedUnderstandingCandidates =

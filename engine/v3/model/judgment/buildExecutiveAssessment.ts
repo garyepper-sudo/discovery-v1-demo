@@ -38,6 +38,7 @@ type BuildExecutiveAssessmentInput = {
   organizationalState?: OrganizationalStateLike;
   investigationOpportunities?: InvestigationOpportunityLike[];
   predictionReflection?: PredictionReflection;
+  generatedAt?: string;
 };
 
 export type ExecutiveAssessmentWithPrimaryJudgment =
@@ -276,7 +277,7 @@ export function buildExecutiveAssessment(
             input.organizationalConditions as BuildPrimaryExecutiveJudgmentInput["organizationalConditions"],
 
           now:
-            undefined,
+            input.generatedAt,
         })
       : undefined;
 
@@ -288,6 +289,8 @@ export function buildExecutiveAssessment(
           conditions: input.organizationalConditions as any,
           mechanisms: rankedMechanisms,
           organizationalState: input.organizationalState as any,
+          now:
+            input.generatedAt,
         })
       : undefined;
 
@@ -298,6 +301,8 @@ export function buildExecutiveAssessment(
           primaryConditionId: primaryCondition.id,
           conditions: input.organizationalConditions as any,
           dominantCausalChain: dominantCausalChain as any,
+          now:
+            input.generatedAt,
         })
       : undefined;
 
@@ -308,6 +313,8 @@ export function buildExecutiveAssessment(
           primaryConditionId: primaryCondition.id,
           conditions: input.organizationalConditions as any,
           dominantCausalChain: dominantCausalChain as any,
+          now:
+            input.generatedAt,
         })
       : undefined;
 
