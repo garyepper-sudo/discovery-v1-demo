@@ -12,6 +12,7 @@
     "benchmark": "tsx engine/benchmark/runBenchmarks.ts",
     "evaluate": "tsx engine/benchmark/runBenchmarks.ts",
     "validate": "npm run typecheck && npm run evaluate",
+    "projection:001": "tsx engine/benchmark/executive-projection/executiveProjectionExperiment001.ts",
     "communication:002": "tsx engine/benchmark/executive-communication/executiveCommunicationExperiment002.ts",
     "benchmark:executive-learning-calibration": "tsx engine/benchmark/executive-work/executiveLearningCalibrationBenchmark001.ts",
     "northstar:cognitive-layer-validation:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarCognitiveLayerValidation001.ts",

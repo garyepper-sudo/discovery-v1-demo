@@ -1369,6 +1369,9 @@ export function buildExecutiveProjection({
         }
       : undefined,
 
+          executiveCommunication:
+      runtimeMemory?.executiveCommunication,
+
     organizationalState,
 
     primaryExecutiveConstraint,
