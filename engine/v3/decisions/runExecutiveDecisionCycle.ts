@@ -14,6 +14,11 @@ import type {
   OrganizationalCondition,
 } from "../model/state/inferOrganizationalConditions";
 
+
+import type {
+  ExecutivePrimaryConstraint,
+} from "../model/judgment/buildPrimaryExecutiveConstraint";
+
 import {
   synthesizeExecutiveOptimizationObjective,
 } from "../optimization/synthesizeExecutiveOptimizationObjective";
@@ -191,6 +196,9 @@ type DecisionRuntimeMemory =
   OrganizationRuntime["memory"] & {
     organizationalConditions?:
       OrganizationalCondition[];
+
+    primaryExecutiveConstraint?:
+      ExecutivePrimaryConstraint | null;
   };
 
 function requireMatchingOrganization(
@@ -231,6 +239,20 @@ function requireOrganizationalConditions(
   }
 
   return conditions;
+}
+
+function getPrimaryExecutiveConstraint(
+  runtime:
+    OrganizationRuntime,
+): ExecutivePrimaryConstraint | null {
+  const memory =
+    runtime.memory as
+      DecisionRuntimeMemory;
+
+  return (
+    memory.primaryExecutiveConstraint ??
+    null
+  );
 }
 
 function evaluateOptionViability(
@@ -385,10 +407,16 @@ export function runExecutiveDecisionCycle({
       runtime,
     );
 
+  const primaryExecutiveConstraint =
+    getPrimaryExecutiveConstraint(
+      runtime,
+    );
+
   const optimizationObjective =
     synthesizeExecutiveOptimizationObjective({
       executiveDecision,
       conditions,
+      primaryExecutiveConstraint,
       generatedAt:
         completedAt,
     });
@@ -493,6 +521,8 @@ export function runExecutiveDecisionCycle({
       confidenceCalibration,
       viabilityEvaluations,
       generatedOptions,
+      primaryExecutiveConstraint,
+      optimizationObjective,
       generatedAt:
         completedAt,
     });

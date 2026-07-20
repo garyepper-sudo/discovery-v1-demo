@@ -6,9 +6,17 @@ import {
   runExecutiveDecisionCycle,
 } from "../../v3/decisions/runExecutiveDecisionCycle";
 
+import {
+  buildPrimaryExecutiveConstraint,
+} from "../../v3/model/judgment/buildPrimaryExecutiveConstraint";
+
 import type {
   ExecutiveDecision,
 } from "../../v3/model/simulate/executiveDecision";
+
+import type {
+  OrganizationalCondition,
+} from "../../v3/model/state/inferOrganizationalConditions";
 
 import type {
   OrganizationalUncertainty,
@@ -20,22 +28,238 @@ const ORGANIZATION_ID =
 const NOW =
   "2026-07-13T12:00:00.000Z";
 
+const MINIMUM_STRATEGY_COUNT = 3;
+
 type Check = {
   name: string;
+
   passed: boolean;
+
   detail: string;
 };
 
+type BenchmarkRuntimeMemory = {
+  organizationalConditions?:
+    OrganizationalCondition[];
+
+  organizationalUncertainty?:
+    OrganizationalUncertainty;
+
+  primaryExecutiveConstraint?:
+    ReturnType<
+      typeof buildPrimaryExecutiveConstraint
+    >;
+};
+
+function requireConditions(
+  runtimeMemory:
+    BenchmarkRuntimeMemory,
+): OrganizationalCondition[] {
+  const conditions =
+    runtimeMemory
+      .organizationalConditions;
+
+  if (
+    !Array.isArray(conditions) ||
+    conditions.length === 0
+  ) {
+    throw new Error(
+      "Decision Cycle Experiment 001 requires persisted organizational conditions.",
+    );
+  }
+
+  return conditions;
+}
+
+function chooseTargetConditionIds(
+  conditions:
+    OrganizationalCondition[],
+
+  primaryConditionId:
+    string,
+): string[] {
+  const additionalConditionIds =
+    conditions
+      .filter(
+        (condition) =>
+          condition.id !==
+          primaryConditionId,
+      )
+      .sort((left, right) => {
+        if (
+          right.priority !==
+          left.priority
+        ) {
+          const priorityScore = {
+            critical: 4,
+            high: 3,
+            medium: 2,
+            low: 1,
+          };
+
+          return (
+            priorityScore[
+              right.priority
+            ] -
+            priorityScore[
+              left.priority
+            ]
+          );
+        }
+
+        if (
+          right.confidence !==
+          left.confidence
+        ) {
+          return (
+            right.confidence -
+            left.confidence
+          );
+        }
+
+        return left.id.localeCompare(
+          right.id,
+        );
+      })
+      .slice(
+        0,
+        MINIMUM_STRATEGY_COUNT - 1,
+      )
+      .map(
+        (condition) =>
+          condition.id,
+      );
+
+  return [
+    primaryConditionId,
+    ...additionalConditionIds,
+  ];
+}
+
+function serializeRanking(
+  rankedScenarios:
+    ReturnType<
+      typeof runExecutiveDecisionCycle
+    >["rankedScenarios"],
+): string {
+  return JSON.stringify(
+    rankedScenarios.map(
+      (scenario) => ({
+        optionId:
+          scenario.optionId,
+
+        interventionId:
+          scenario.interventionId,
+
+        rank:
+          scenario.rank,
+
+        reasonsForRank:
+          scenario.reasonsForRank,
+      }),
+    ),
+  );
+}
+
+function recommendationAddressesConstraint(params: {
+  recommendation:
+    ReturnType<
+      typeof runExecutiveDecisionCycle
+    >["recommendation"];
+
+  primaryConstraintId:
+    string;
+
+  primaryConstraintTitle:
+    string;
+}): boolean {
+  const strategyTargetsConstraint =
+    params.recommendation
+      .recommendedStrategy
+      ?.targetConditionIds
+      .includes(
+        params.primaryConstraintId,
+      ) ?? false;
+
+  const recommendationLanguage = [
+    params.recommendation.summary,
+    ...params.recommendation
+      .whyRecommended,
+    ...params.recommendation
+      .expectedBenefits,
+  ]
+    .join(" ")
+    .toLowerCase();
+
+  const explainsIndirectAlignment =
+    recommendationLanguage.includes(
+      params.primaryConstraintTitle
+        .toLowerCase(),
+    ) ||
+    recommendationLanguage.includes(
+      params.primaryConstraintId
+        .toLowerCase(),
+    ) ||
+    recommendationLanguage.includes(
+      "primary executive constraint",
+    );
+
+  return (
+    strategyTargetsConstraint ||
+    explainsIndirectAlignment
+  );
+}
+
 console.log("");
-console.log("==========================================");
-console.log("DISCOVERY EXECUTIVE DECISION CYCLE");
+console.log(
+  "==========================================",
+);
+console.log(
+  "DISCOVERY EXECUTIVE DECISION CYCLE",
+);
 console.log("Experiment 001");
-console.log("==========================================");
+console.log(
+  "Comparative Executive Judgment",
+);
+console.log(
+  "==========================================",
+);
 console.log("");
 
 const runtime =
   loadOrganizationRuntimeState(
     ORGANIZATION_ID,
+  );
+
+const runtimeMemory =
+  runtime.memory as
+    typeof runtime.memory &
+    BenchmarkRuntimeMemory;
+
+const organizationalConditions =
+  requireConditions(
+    runtimeMemory,
+  );
+
+const primaryExecutiveConstraint =
+  buildPrimaryExecutiveConstraint({
+    organizationalConditions,
+
+    now:
+      NOW,
+  });
+
+if (!primaryExecutiveConstraint) {
+  throw new Error(
+    "Decision Cycle Experiment 001 could not synthesize a primary executive constraint.",
+  );
+}
+
+const targetConditionIds =
+  chooseTargetConditionIds(
+    organizationalConditions,
+    primaryExecutiveConstraint
+      .conditionId,
   );
 
 const organizationalUncertainty:
@@ -119,6 +343,8 @@ const benchmarkRuntime = {
     ...runtime.memory,
 
     organizationalUncertainty,
+
+    primaryExecutiveConstraint,
   },
 };
 
@@ -136,7 +362,7 @@ const executiveDecision: ExecutiveDecision = {
     "Improve Organizational Execution",
 
   objective:
-    "Increase execution throughput without increasing organizational risk.",
+    "Increase execution throughput by addressing the organization's highest-leverage constraint without increasing organizational risk.",
 
   rationale:
     "Leadership wants to improve execution quality using structural rather than staffing interventions.",
@@ -147,14 +373,16 @@ const executiveDecision: ExecutiveDecision = {
   timeHorizon:
     "near-term",
 
-  targetConditionIds: [
-    "condition-executioncapacity",
-  ],
+  targetConditionIds,
 
   successMetrics: [
     {
       name:
-        "Execution Capacity",
+        "Primary Constraint Improvement",
+
+      targetConditionId:
+        primaryExecutiveConstraint
+          .conditionId,
 
       baseline:
         0.48,
@@ -166,7 +394,7 @@ const executiveDecision: ExecutiveDecision = {
         "score",
 
       rationale:
-        "Execution capacity must improve enough to produce a material operating benefit.",
+        "The highest-leverage organizational constraint must improve enough to produce a material operating benefit.",
     },
   ],
 
@@ -224,9 +452,13 @@ const executiveDecision: ExecutiveDecision = {
 
   assumptions: [
     "The current organizational understanding is sufficiently accurate.",
+    "Structural interventions can be implemented without increasing headcount.",
+    "The primary executive constraint accurately represents the highest-leverage intervention point.",
   ],
 
-  openQuestions: [],
+  openQuestions: [
+    "Which structural strategy produces the greatest improvement under the current constraints?",
+  ],
 
   confidence:
     0.8,
@@ -243,7 +475,18 @@ const runtimeSnapshotBefore =
     benchmarkRuntime,
   );
 
-const cycle =
+const firstCycle =
+  runExecutiveDecisionCycle({
+    executiveDecision,
+
+    runtime:
+      benchmarkRuntime,
+
+    completedAt:
+      NOW,
+  });
+
+const secondCycle =
   runExecutiveDecisionCycle({
     executiveDecision,
 
@@ -260,11 +503,63 @@ const runtimeSnapshotAfter =
   );
 
 const viableOptionCount =
-  cycle.viabilityEvaluations.filter(
-    (evaluation) =>
-      evaluation.status !==
-      "disqualified",
-  ).length;
+  firstCycle
+    .viabilityEvaluations
+    .filter(
+      (evaluation) =>
+        evaluation.status !==
+        "disqualified",
+    )
+    .length;
+
+const winner =
+  firstCycle.rankedScenarios[0];
+
+const runnerUp =
+  firstCycle.rankedScenarios[1];
+
+const recommendation =
+  firstCycle.recommendation;
+
+const rankingIsDeterministic =
+  serializeRanking(
+    firstCycle.rankedScenarios,
+  ) ===
+  serializeRanking(
+    secondCycle.rankedScenarios,
+  );
+
+const recommendationIsDeterministic =
+  JSON.stringify(
+    firstCycle.recommendation,
+  ) ===
+  JSON.stringify(
+    secondCycle.recommendation,
+  );
+
+const recommendationAddressesPrimaryConstraint =
+  recommendationAddressesConstraint({
+    recommendation,
+
+    primaryConstraintId:
+      primaryExecutiveConstraint
+        .conditionId,
+
+    primaryConstraintTitle:
+      primaryExecutiveConstraint
+        .title,
+  });
+
+const recommendationExplainsComparison =
+  Boolean(runnerUp) &&
+  (
+    recommendation
+      .whyRecommended
+      .length > 0 ||
+    winner
+      ?.reasonsForRank
+      .length > 0
+  );
 
 const checks: Check[] = [
   {
@@ -272,23 +567,96 @@ const checks: Check[] = [
       "Executive Decision accepted",
 
     passed:
-      cycle.executiveDecision.id ===
+      firstCycle.executiveDecision
+        .id ===
       executiveDecision.id,
 
     detail:
-      cycle.executiveDecision.title,
+      firstCycle.executiveDecision
+        .title,
   },
 
   {
     name:
-      "Intervention options generated",
+      "Primary executive constraint supplied",
 
     passed:
-      cycle.generatedOptions.length >
-      0,
+      firstCycle.recommendation
+        .primaryConstraintId ===
+      primaryExecutiveConstraint
+        .conditionId,
 
     detail:
-      `${cycle.generatedOptions.length} option(s)`,
+      `${
+        firstCycle.recommendation
+          .primaryConstraintTitle ??
+        "none"
+      } · ${
+        firstCycle.recommendation
+          .primaryConstraintId ??
+        "none"
+      }`,
+  },
+
+  {
+    name:
+      "Optimization objective preserves primary constraint",
+
+    passed:
+      firstCycle
+        .optimizationObjective
+        .explanation
+        .includes(
+          primaryExecutiveConstraint
+            .title,
+        ),
+
+    detail:
+      firstCycle
+        .optimizationObjective
+        .explanation,
+  },
+
+  {
+    name:
+      "Recommendation preserves optimization objective",
+
+    passed:
+      firstCycle.recommendation
+        .optimizationObjectiveId ===
+      firstCycle
+        .optimizationObjective.id,
+
+    detail:
+      firstCycle.recommendation
+        .optimizationObjectiveId ??
+      "none",
+  },
+
+  {
+    name:
+      "Multiple intervention strategies generated",
+
+    passed:
+      firstCycle
+        .generatedOptions
+        .length >=
+      MINIMUM_STRATEGY_COUNT,
+
+    detail:
+      `${firstCycle.generatedOptions.length} option(s); minimum required ${MINIMUM_STRATEGY_COUNT}`,
+  },
+
+  {
+    name:
+      "Multiple viable alternatives preserved",
+
+    passed:
+      viableOptionCount >=
+      MINIMUM_STRATEGY_COUNT,
+
+    detail:
+      `${viableOptionCount} viable option(s); minimum required ${MINIMUM_STRATEGY_COUNT}`,
   },
 
   {
@@ -296,11 +664,15 @@ const checks: Check[] = [
       "Every generated option received a viability evaluation",
 
     passed:
-      cycle.generatedOptions.length ===
-      cycle.viabilityEvaluations.length,
+      firstCycle
+        .generatedOptions
+        .length ===
+      firstCycle
+        .viabilityEvaluations
+        .length,
 
     detail:
-      `${cycle.viabilityEvaluations.length}/${cycle.generatedOptions.length}`,
+      `${firstCycle.viabilityEvaluations.length}/${firstCycle.generatedOptions.length}`,
   },
 
   {
@@ -309,10 +681,12 @@ const checks: Check[] = [
 
     passed:
       viableOptionCount ===
-      cycle.evaluatedOptions.length,
+      firstCycle
+        .evaluatedOptions
+        .length,
 
     detail:
-      `${cycle.evaluatedOptions.length}/${viableOptionCount}`,
+      `${firstCycle.evaluatedOptions.length}/${viableOptionCount}`,
   },
 
   {
@@ -320,36 +694,107 @@ const checks: Check[] = [
       "Every evaluated option simulated",
 
     passed:
-      cycle.evaluatedOptions.length ===
-      cycle.scenarios.length,
+      firstCycle
+        .evaluatedOptions
+        .length ===
+      firstCycle
+        .scenarios
+        .length,
 
     detail:
-      `${cycle.scenarios.length}/${cycle.evaluatedOptions.length}`,
+      `${firstCycle.scenarios.length}/${firstCycle.evaluatedOptions.length}`,
   },
 
   {
     name:
-      "Scenario comparison created",
+      "Scenario comparison covers every simulation",
 
     passed:
-      cycle.comparisonSet
-        .scenarioComparisons.length ===
-      cycle.scenarios.length,
+      firstCycle
+        .comparisonSet
+        .scenarioComparisons
+        .length ===
+      firstCycle.scenarios.length,
 
     detail:
-      `${cycle.comparisonSet.scenarioComparisons.length} comparison(s)`,
+      `${firstCycle.comparisonSet.scenarioComparisons.length} comparison(s)`,
   },
 
   {
     name:
-      "Scenario ranking created",
+      "Scenario ranking covers every simulation",
 
     passed:
-      cycle.rankedScenarios.length ===
-      cycle.scenarios.length,
+      firstCycle
+        .rankedScenarios
+        .length ===
+      firstCycle.scenarios.length,
 
     detail:
-      `${cycle.rankedScenarios.length} ranked scenario(s)`,
+      `${firstCycle.rankedScenarios.length} ranked scenario(s)`,
+  },
+
+  {
+    name:
+      "Exactly one strategy wins",
+
+    passed:
+      Boolean(winner) &&
+      firstCycle
+        .rankedScenarios
+        .filter(
+          (scenario) =>
+            scenario.rank === 1,
+        )
+        .length === 1,
+
+    detail:
+      winner
+        ? `${winner.optionId} ranked first`
+        : "No winner.",
+  },
+
+  {
+    name:
+      "At least one alternative remains",
+
+    passed:
+      Boolean(runnerUp),
+
+    detail:
+      runnerUp
+        ? `${runnerUp.optionId} ranked second`
+        : "No runner-up.",
+  },
+
+  {
+    name:
+      "Winner is deterministic",
+
+    passed:
+      rankingIsDeterministic,
+
+    detail:
+      rankingIsDeterministic
+        ? winner?.optionId ??
+          "No winner."
+        : "Ranking changed between identical runs.",
+  },
+
+  {
+    name:
+      "Recommendation is deterministic",
+
+    passed:
+      recommendationIsDeterministic,
+
+    detail:
+      recommendationIsDeterministic
+        ? recommendation
+            .recommendedStrategy
+            ?.title ??
+          "No strategy."
+        : "Recommendation changed between identical runs.",
   },
 
   {
@@ -357,14 +802,17 @@ const checks: Check[] = [
       "Decision confidence calibrated",
 
     passed:
-      cycle.confidenceCalibration
+      firstCycle
+        .confidenceCalibration
         .calibratedConfidence >= 0 &&
-      cycle.confidenceCalibration
+      firstCycle
+        .confidenceCalibration
         .calibratedConfidence <= 1,
 
     detail:
       `${Math.round(
-        cycle.confidenceCalibration
+        firstCycle
+          .confidenceCalibration
           .calibratedConfidence *
           100,
       )}% calibrated confidence`,
@@ -376,12 +824,12 @@ const checks: Check[] = [
 
     passed:
       Boolean(
-        cycle.recommendation
+        recommendation
           .recommendedInterventionId,
       ),
 
     detail:
-      cycle.recommendation.status,
+      recommendation.status,
   },
 
   {
@@ -389,15 +837,66 @@ const checks: Check[] = [
       "Top-ranked option recommended",
 
     passed:
-      cycle.rankedScenarios[0]
-        .interventionId ===
-      cycle.recommendation
+      winner?.interventionId ===
+      recommendation
         .recommendedInterventionId,
 
     detail:
-      cycle.recommendation
+      recommendation
         .recommendedInterventionId ??
       "none",
+  },
+
+  {
+    name:
+      "Winning strategy addresses the primary constraint",
+
+    passed:
+      recommendationAddressesPrimaryConstraint,
+
+    detail:
+      recommendationAddressesPrimaryConstraint
+        ? primaryExecutiveConstraint
+            .title
+        : `Recommended target conditions: ${
+            recommendation
+              .recommendedStrategy
+              ?.targetConditionIds
+              .join(", ") ??
+            "none"
+          }`,
+  },
+
+  {
+    name:
+      "Recommendation explains comparative advantage",
+
+    passed:
+      recommendationExplainsComparison,
+
+    detail:
+      `${recommendation.whyRecommended.length} recommendation reason(s); ${
+        winner?.reasonsForRank
+          .length ?? 0
+      } ranking reason(s)`,
+  },
+
+  {
+    name:
+      "Recommendation evaluates alternatives",
+
+    passed:
+      firstCycle
+        .rankedScenarios
+        .length > 1,
+
+    detail:
+      `${Math.max(
+        0,
+        firstCycle
+          .rankedScenarios
+          .length - 1,
+      )} alternative(s)`,
   },
 
   {
@@ -418,19 +917,49 @@ const checks: Check[] = [
 
 const passed =
   checks.filter(
-    (check) => check.passed,
+    (check) =>
+      check.passed,
   ).length;
 
 const failed =
   checks.length -
   passed;
 
+console.log(
+  "Executive Judgment Context",
+);
+console.log(
+  "------------------------------",
+);
+console.log(
+  `Primary constraint: ${primaryExecutiveConstraint.title}`,
+);
+console.log(
+  `Constraint ID: ${primaryExecutiveConstraint.conditionId}`,
+);
+console.log(
+  `Target conditions: ${targetConditionIds.join(", ")}`,
+);
+console.log(
+  `Generated strategies: ${firstCycle.generatedOptions.length}`,
+);
+console.log(
+  `Viable strategies: ${viableOptionCount}`,
+);
+console.log("");
+
 console.log("Assertions");
-console.log("------------------------------");
+console.log(
+  "------------------------------",
+);
 
 for (const check of checks) {
   console.log(
-    `${check.passed ? "PASS" : "FAIL"}  ${check.name}`,
+    `${
+      check.passed
+        ? "PASS"
+        : "FAIL"
+    }  ${check.name}`,
   );
 
   console.log(
@@ -454,5 +983,7 @@ if (failed > 0) {
   process.exitCode = 1;
 }
 
-console.log("Experiment Complete");
+console.log(
+  "Experiment Complete",
+);
 console.log("");

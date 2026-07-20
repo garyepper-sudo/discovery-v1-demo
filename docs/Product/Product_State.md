@@ -16,7 +16,7 @@ This document defines **where the product currently is**.
 
 # Discovery
 
-**Status:** Executive Product Validation
+**Status:** Executive Judgment Optimization
 
 ---
 
@@ -73,51 +73,39 @@ Executives should naturally understand that improving the Operating Model improv
 
 ---
 
-# Current MVP
+# Current Product Lifecycle
 
-The MVP validates one complete Executive Work lifecycle.
+The Executive Work lifecycle has now been validated.
+
+Discovery's focus is no longer proving the workflow.
+
+Its focus is continuously improving executive judgment through an increasingly accurate Operating Model.
 
 ```text
 Executive Work
 
 ↓
 
-Understand
+Executive Review
 
 ↓
 
-Recommend
+Executive Learning
 
 ↓
 
-Challenge
+Operating Model Improvement
 
 ↓
 
-Simulate
+Persistent Organizational Memory
 
 ↓
 
-Commit
-
-↓
-
-Track
-
-↓
-
-Review
-
-↓
-
-Learn
-
-↓
-
-Operating Model Improves
+Longitudinal Executive Judgment
 ```
 
-Everything else is secondary until this workflow has been validated with real executive teams.
+Every completed Executive Work item should strengthen the Operating Model, making every future recommendation, simulation, explanation, and executive decision more effective.
 
 ---
 
@@ -129,16 +117,17 @@ The architecture is considered stable.
 
 The current objective is no longer expanding reasoning capabilities.
 
-The current objective is validating the Executive Product.
+The current objective is continuously improving executive judgment quality through product validation and Operating Model improvement.
 
 Current implementation priorities are:
 
-1. Validate the Executive Work experience.
-2. Surface intelligence already produced by the engine.
-3. Continuously expose the Operating Model.
-4. Improve executive confidence.
-5. Complete the Executive Work lifecycle.
-6. Validate executive behavior with real customers.
+1. Improve executive judgment quality.
+2. Increase recommendation quality.
+3. Strengthen executive confidence.
+4. Improve longitudinal executive learning.
+5. Continuously improve the Operating Model.
+6. Reduce executive cognitive load.
+7. Validate executive behavior with real customers.
 
 Architecture improvements now require benchmark evidence.
 
@@ -259,15 +248,15 @@ The objective is validating that Discovery genuinely improves executive judgment
 
 Questions to answer include:
 
-- Does Discovery consistently create valuable understanding?
+- Does Discovery consistently improve executive judgment?
+- Do executives trust Discovery's recommendations?
 - Do executives begin Executive Work inside Discovery?
 - Do executives challenge Discovery's reasoning?
-- Do executives explore simulations?
-- Do executives improve confidence before committing?
-- Do executives track execution?
-- Do executives complete reviews?
-- Do executives return for future Executive Work?
-- Do executives voluntarily strengthen the Operating Model?
+- Do executives explore simulations before committing?
+- Do executives improve confidence before acting?
+- Do executives complete Executive Reviews?
+- Does Executive Learning strengthen future recommendations?
+- Does the Operating Model become more accurate over time?
 
 Executive behavior—not feature requests—drives product evolution.
 
@@ -327,7 +316,9 @@ Examples include:
 - evaluating interventions,
 - propagating organizational effects,
 - comparing strategies,
-- calibrating confidence.
+- optimizing recommendations,
+- calibrating confidence,
+- learning from executive outcomes.
 
 The Operating Model should feel alive.
 
@@ -336,6 +327,12 @@ The Operating Model should feel alive.
 # Long-Term Product Vision
 
 Every completed Executive Work item should improve the Operating Model.
+
+Every Executive Review should improve Executive Learning.
+
+Every Executive Learning cycle should improve Persistent Organizational Memory.
+
+Persistent Organizational Memory should improve Longitudinal Executive Judgment.
 
 A better Operating Model produces:
 
@@ -346,7 +343,7 @@ A better Operating Model produces:
 - better executive decisions,
 - better organizational outcomes.
 
-The product should compound naturally through organizational learning.
+Discovery should become progressively more valuable every time an organization uses it.
 
 ---
 
@@ -356,6 +353,8 @@ Discovery succeeds when executive teams naturally begin important Executive Work
 
 Discovery succeeds when organizations voluntarily improve the Operating Model because they understand its value.
 
-Discovery succeeds when every important initiative and decision improves future executive judgment.
+Discovery succeeds when every Executive Review improves future executive judgment.
+
+Discovery succeeds when the Operating Model becomes an increasingly accurate representation of how the organization actually works.
 
 Everything else supports that objective.

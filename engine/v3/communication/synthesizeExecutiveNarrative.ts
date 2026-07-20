@@ -1,3 +1,7 @@
+import {
+  buildExecutiveStory,
+} from "./buildExecutiveStory";
+
 import type {
   ExecutiveCommunicationSource,
 } from "./executiveCommunicationSource";
@@ -1085,6 +1089,67 @@ export function synthesizeExecutiveNarrative(
 ): ExecutiveNarrative {
   const simulation =
     simulationRecord(source);
+
+  if (isCanonicalSource(source)) {
+    const story =
+      buildExecutiveStory(source);
+
+    return {
+      headline:
+        story.primaryConstraint.summary,
+
+      executiveSummary:
+        story.narrative,
+
+      confidence:
+        story.confidence.score,
+
+      why:
+        buildSignals(source),
+
+      changes:
+        buildChanges(source),
+
+      forecast: {
+        headline:
+          story.expectedOutcome,
+
+        confidence:
+          story.confidence.score,
+
+        timeHorizon:
+          stringValue(
+            simulation?.timeHorizon,
+          ),
+
+        explanation:
+          story.expectedOutcome,
+      },
+
+      recommendation: {
+        headline:
+          story.recommendation.title,
+
+        actions:
+          story.recommendation.actions,
+
+        rationale:
+          story.recommendation
+            .comparativeAdvantage ??
+          story.recommendation.rationale,
+
+        recommendedInvestigation:
+          story.nextEvidence
+            ?.question,
+
+        decisionHref:
+          "/executive-decision",
+      },
+
+      evidenceSections:
+        buildEvidenceSections(source),
+    };
+  }
 
   const investigation =
     primaryInvestigation(source);

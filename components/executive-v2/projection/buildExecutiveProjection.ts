@@ -29,6 +29,7 @@ import type {
   ExecutiveOrganizationalLearningProfile,
   ExecutiveOrganizationalState,
   ExecutivePredictionEvaluation,
+  ExecutivePrimaryConstraint,
   ExecutiveProjection,
   ExecutiveSimulationSummary,
   ExecutiveTheoryValidation,
@@ -61,6 +62,29 @@ type RuntimeOrganizationalCondition = {
   whyItMatters?: string;
   recommendedExecutiveAction?: string;
   supportingConceptIds?: string[];
+};
+
+type RuntimePrimaryExecutiveConstraint = {
+  id?: string;
+  conditionId?: string;
+  title?: string;
+  executiveSummary?: string;
+  whyNow?: string;
+  confidence?: number;
+  leverageScore?: number;
+  urgency?:
+    | "low"
+    | "medium"
+    | "high"
+    | "critical";
+  supportingConditionIds?: string[];
+  downstreamConditionIds?: string[];
+  expectedExecutiveImpact?: string;
+  supportingMechanismIds?: string[];
+  supportingBeliefIds?: string[];
+  supportingConceptIds?: string[];
+  supportingTheoryIds?: string[];
+  generatedAt?: string;
 };
 
 type RuntimeOrganizationalBelief = {
@@ -233,6 +257,8 @@ type RuntimeExecutiveMemory = {
   };
 
   organizationalConditions?: RuntimeOrganizationalCondition[];
+
+  primaryExecutiveConstraint?: RuntimePrimaryExecutiveConstraint;
 
   organizationalBeliefs?: RuntimeOrganizationalBelief[];
 
@@ -569,6 +595,83 @@ function buildOrganizationalConditionsProjection(
         condition.recommendedExecutiveAction ||
         "Continue gathering evidence and monitor this condition.",
     }));
+}
+
+function buildPrimaryExecutiveConstraintProjection(
+  runtimeMemory: RuntimeExecutiveMemory | undefined,
+): ExecutivePrimaryConstraint | undefined {
+  const constraint =
+    runtimeMemory?.primaryExecutiveConstraint;
+
+  if (
+    !constraint ||
+    typeof constraint.id !== "string" ||
+    constraint.id.trim().length === 0 ||
+    typeof constraint.conditionId !== "string" ||
+    constraint.conditionId.trim().length === 0 ||
+    typeof constraint.title !== "string" ||
+    constraint.title.trim().length === 0
+  ) {
+    return undefined;
+  }
+
+  return {
+    id: constraint.id,
+    conditionId: constraint.conditionId,
+    title: constraint.title,
+
+    executiveSummary:
+      constraint.executiveSummary ||
+      `${constraint.title} is the highest-leverage organizational constraint requiring executive attention.`,
+
+    whyNow:
+      constraint.whyNow ||
+      "Discovery selected this constraint because it currently represents the strongest point of executive leverage.",
+
+    confidence: toPercentage(
+      constraint.confidence,
+    ),
+
+    leverageScore:
+      typeof constraint.leverageScore === "number"
+        ? Math.max(
+            0,
+            Math.min(
+              1,
+              constraint.leverageScore,
+            ),
+          )
+        : 0,
+
+    urgency:
+      constraint.urgency ??
+      "medium",
+
+    supportingConditionIds:
+      constraint.supportingConditionIds ?? [],
+
+    downstreamConditionIds:
+      constraint.downstreamConditionIds ?? [],
+
+    expectedExecutiveImpact:
+      constraint.expectedExecutiveImpact ||
+      "Addressing this constraint is expected to create the greatest organizational improvement among currently identified intervention points.",
+
+    supportingMechanismIds:
+      constraint.supportingMechanismIds ?? [],
+
+    supportingBeliefIds:
+      constraint.supportingBeliefIds ?? [],
+
+    supportingConceptIds:
+      constraint.supportingConceptIds ?? [],
+
+    supportingTheoryIds:
+      constraint.supportingTheoryIds ?? [],
+
+    generatedAt:
+      constraint.generatedAt ?? "",
+  };
 }
 
 function buildOrganizationalBeliefsProjection(
@@ -1081,6 +1184,11 @@ export function buildExecutiveProjection({
   const organizationalConditions =
     buildOrganizationalConditionsProjection(runtimeMemory);
 
+  const primaryExecutiveConstraint =
+    buildPrimaryExecutiveConstraintProjection(
+      runtimeMemory,
+    );
+
   const organizationalBeliefs =
     buildOrganizationalBeliefsProjection(runtimeMemory);
 
@@ -1262,6 +1370,8 @@ export function buildExecutiveProjection({
       : undefined,
 
     organizationalState,
+
+    primaryExecutiveConstraint,
 
     organizationalConditions,
 

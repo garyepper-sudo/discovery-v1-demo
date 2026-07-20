@@ -137,6 +137,83 @@ export type ExecutiveOrganizationalCondition = {
   recommendedExecutiveAction: string;
 };
 
+
+export type ExecutivePrimaryConstraint = {
+  /**
+   * Stable identity for the projected primary constraint.
+   */
+  id: string;
+
+  /**
+   * Identity of the canonical OrganizationalCondition selected
+   * as the highest-leverage executive constraint.
+   */
+  conditionId: string;
+
+  /**
+   * Human-readable constraint name.
+   */
+  title: string;
+
+  /**
+   * Concise executive statement of the dominant constraint.
+   */
+  executiveSummary: string;
+
+  /**
+   * Why this constraint requires executive attention now.
+   */
+  whyNow: string;
+
+  /**
+   * Discovery's confidence in the selected constraint.
+   */
+  confidence: number;
+
+  /**
+   * Normalized 0–1 estimate of the constraint's executive leverage.
+   */
+  leverageScore: number;
+
+  /**
+   * Executive urgency classification.
+   */
+  urgency:
+    | "low"
+    | "medium"
+    | "high"
+    | "critical";
+
+  /**
+   * Organizational conditions that directly support or relate
+   * to the selected constraint.
+   */
+  supportingConditionIds: string[];
+
+  /**
+   * Conditions expected to be influenced by the selected constraint.
+   */
+  downstreamConditionIds: string[];
+
+  /**
+   * Expected organizational impact of addressing the constraint.
+   */
+  expectedExecutiveImpact: string;
+
+  /**
+   * Preserved cognitive ancestry.
+   */
+  supportingMechanismIds: string[];
+  supportingBeliefIds: string[];
+  supportingConceptIds: string[];
+  supportingTheoryIds: string[];
+
+  /**
+   * When Discovery synthesized the constraint.
+   */
+  generatedAt: string;
+};
+
 export type ExecutiveOrganizationalBelief = {
   /**
    * Discovery's current organizational belief.
@@ -541,6 +618,15 @@ export type ExecutiveProjection = {
    * organization's current operating state.
    */
   organizationalState?: ExecutiveOrganizationalState;
+
+  /**
+   * Discovery's single highest-leverage organizational constraint.
+   *
+   * Produced by deterministic executive synthesis from canonical
+   * Organizational Conditions and projected without recreating
+   * ranking logic in the presentation layer.
+   */
+  primaryExecutiveConstraint?: ExecutivePrimaryConstraint;
 
   /**
    * Discovery's highest-priority organizational conditions.

@@ -12,6 +12,7 @@ import { evaluateExplanations } from "../model/judgment/evaluateExplanations";
 import { detectJudgmentContradictions } from "../model/judgment/detectJudgmentContradictions";
 import { buildExecutiveAssessment } from "../model/judgment/buildExecutiveAssessment";
 import { buildExecutiveExplanation } from "../model/judgment/buildExecutiveExplanation";
+import { buildPrimaryExecutiveConstraint } from "../model/judgment/buildPrimaryExecutiveConstraint";
 import { inferOrganizationalMechanisms } from "../model/judgment/inferOrganizationalMechanisms";
 import { inferOrganizationalBeliefs } from "../model/beliefs/inferOrganizationalBeliefs";
 import { updateOrganizationalBeliefs } from "../model/beliefs/updateOrganizationalBeliefs";
@@ -86,6 +87,7 @@ export function evolveOrganizationRuntime(params: {
     executiveRecommendation?: any;
     executiveCommunication?: any;
     executiveExplanation?: any;
+    primaryExecutiveConstraint?: any;
     meaningSignals?: any[];
     organizationalConcepts?: any[];
     semanticConcepts?: any[];
@@ -532,6 +534,19 @@ export function evolveOrganizationRuntime(params: {
   const organizationalState =
     organizationalConditionResult.state;
 
+  /**
+   * Executive Primary Constraint
+   *
+   * Deterministically selects the single organizational condition with the
+   * greatest expected executive leverage. This is a synthesis of existing
+   * condition intelligence rather than a new reasoning capability.
+   */
+  const primaryExecutiveConstraint =
+    buildPrimaryExecutiveConstraint({
+      organizationalConditions,
+      now,
+    });
+
   const organizationalPredictionResult =
     inferOrganizationalPredictions({
       conditions: organizationalConditions.map(
@@ -714,6 +729,10 @@ export function evolveOrganizationRuntime(params: {
     organizationalState,
   );
   console.log(
+    "Primary Executive Constraint",
+    primaryExecutiveConstraint,
+  );
+  console.log(
     "Organizational Predictions",
     organizationalPredictions,
   );
@@ -763,6 +782,7 @@ export function evolveOrganizationRuntime(params: {
     memory: {
       ...cognitivelyUpdatedRuntime.memory,
       executiveAssessment,
+      primaryExecutiveConstraint,
       organizationalConditions,
       organizationalState,
     } as OrganizationRuntime["memory"],
@@ -1216,6 +1236,7 @@ const runtimeForExecutiveCommunication:
     executiveAssessment,
     executiveRecommendation,
     executiveExplanation,
+    primaryExecutiveConstraint,
 
     organizationalUnderstandingState:
       finalOrganizationalUnderstandingState,
@@ -1275,6 +1296,7 @@ const updatedMemory = {
     executiveRecommendation,
     executiveCommunication,
     executiveExplanation,
+    primaryExecutiveConstraint,
     organizationalConditions,
     organizationalState,
     organizationalCausalModel,
@@ -1370,6 +1392,7 @@ const updatedMemory = {
       executiveRecommendation,
       executiveCommunication,
       executiveExplanation,
+      primaryExecutiveConstraint,
     },
 
     understandingClusters,
@@ -1539,6 +1562,9 @@ const updatedMemory = {
 
     executiveExplanation:
       typeof executiveExplanation;
+
+    primaryExecutiveConstraint:
+      typeof primaryExecutiveConstraint;
 
     organizationalPhenomenaState:
       typeof organizationalPhenomenaState;
