@@ -23,3 +23,7 @@ export type {
 export {
   evolveOrganizationRuntime,
 } from "./evolveOrganizationRuntime";
+export {
+  DEFAULT_ORGANIZATION_ID,
+  resolveOrganizationId,
+} from "./activeOrganization";
