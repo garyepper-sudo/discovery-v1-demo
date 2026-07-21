@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import {
   loadOrganizationRuntimeState,
+  resolveOrganizationId,
 } from "../../../engine/v3/runtime";
 
 import {
@@ -94,8 +95,9 @@ export async function POST(
       (await req.json()) as ExecutiveScenarioRequest;
 
     const organizationId =
-      body.organizationId ||
-      "default-organization";
+      resolveOrganizationId(
+        body.organizationId,
+      );
 
     const requestIntervention =
       body.intervention;

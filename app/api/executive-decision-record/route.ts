@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import {
   loadOrganizationRuntimeState,
   persistOrganizationRuntimeState,
+  resolveOrganizationId,
 } from "../../../engine/v3/runtime";
 
 import type {
@@ -399,10 +400,9 @@ export async function POST(
         ExecutiveDecisionRecordRequest;
 
     const organizationId =
-      optionalText(
+      resolveOrganizationId(
         body.organizationId,
-      ) ??
-      "atlas-manufacturing-simulation";
+      );
 
     const submissionId =
       requireText(

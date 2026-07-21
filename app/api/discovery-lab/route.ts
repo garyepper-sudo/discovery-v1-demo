@@ -6,6 +6,10 @@ import {
   runOrganizationInvestigation,
 } from "../../../engine/v3/investigation/runOrganizationInvestigation";
 
+import {
+  resolveOrganizationId,
+} from "../../../engine/v3/runtime";
+
 export async function POST(
   req: Request,
 ) {
@@ -14,9 +18,9 @@ export async function POST(
       await req.json();
 
     const organizationId =
-      body.organizationId ||
-      body.company ||
-      "default-organization";
+      resolveOrganizationId(
+        body.organizationId,
+      );
 
     const investigation =
       runOrganizationInvestigation({
