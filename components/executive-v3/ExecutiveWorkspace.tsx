@@ -38,6 +38,9 @@ type ExecutiveWorkspaceProps = {
   projection:
     ExecutiveProjection;
 
+  organizationId:
+    string;
+
   communication:
     ExecutiveCommunication;
 
@@ -89,6 +92,7 @@ type ExecutiveWorkspaceProps = {
 
 export default function ExecutiveWorkspace({
   projection,
+  organizationId,
   communication,
   decisionProjection,
   mode,
@@ -214,6 +218,9 @@ export default function ExecutiveWorkspace({
         <SimulationWorkspace
           projection={
             projection
+          }
+          organizationId={
+            organizationId
           }
         />
       );

@@ -61,6 +61,9 @@ const loadingSteps = [
 ];
 
 export default function DiscoveryV1Page() {
+  const [organizationId, setOrganizationId] =
+    useState<string | null>(null);
+
   const [company, setCompany] = useState("");
   const [website, setWebsite] = useState("");
   const [industry, setIndustry] = useState("");
@@ -104,6 +107,16 @@ export default function DiscoveryV1Page() {
     setError(null);
 
     try {
+      const activeOrganizationId =
+        organizationId ??
+        `org_${crypto.randomUUID()}`;
+
+      if (!organizationId) {
+        setOrganizationId(
+          activeOrganizationId,
+        );
+      }
+
       const response = await fetch(
         "/api/discovery-lab",
         {
@@ -113,6 +126,8 @@ export default function DiscoveryV1Page() {
               "application/json",
           },
           body: JSON.stringify({
+            organizationId:
+              activeOrganizationId,
             company,
             website,
             industry,
@@ -152,10 +167,13 @@ export default function DiscoveryV1Page() {
     }
   }
 
-  if (projection) {
+  if (projection && organizationId) {
     return (
       <ExecutiveWorkspace
         projection={projection}
+        organizationId={
+          organizationId
+        }
       />
     );
   }

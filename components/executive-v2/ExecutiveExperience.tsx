@@ -34,7 +34,7 @@ type ExecutiveExperienceProps = {
    * Stable organization identity used by the canonical
    * Executive Communication producer.
    */
-  organizationId?: string;
+  organizationId: string;
 
   /**
    * Active V3 workspace perspective.
@@ -130,7 +130,7 @@ type ExecutiveExperienceProps = {
  */
 export default function ExecutiveExperience({
   projection,
-  organizationId = "default-organization",
+  organizationId,
   mode,
   decisionProjection,
   decisionDefinitionSource,
@@ -154,6 +154,7 @@ export default function ExecutiveExperience({
   return (
     <ExecutiveWorkspace
       projection={projection}
+      organizationId={organizationId}
       communication={communication}
       mode={mode}
       decisionProjection={decisionProjection}

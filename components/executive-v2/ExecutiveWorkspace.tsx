@@ -25,6 +25,7 @@ import type {
 
 type ExecutiveWorkspaceProps = {
   projection: ExecutiveProjection;
+  organizationId: string;
 };
 
 export type ExecutiveDecisionCommitSelection = {
@@ -128,10 +129,8 @@ function createSubmissionId(): string {
 
 export default function ExecutiveWorkspace({
   projection,
+  organizationId,
 }: ExecutiveWorkspaceProps) {
-  const organizationId =
-    "default-organization";
-
   const [
     mode,
     setMode,

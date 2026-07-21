@@ -24,6 +24,7 @@ import type {
 
 type SimulationWorkspaceProps = {
   projection: ExecutiveProjection;
+  organizationId: string;
 };
 
 type ExecutiveScenarioResponse = {
@@ -107,6 +108,7 @@ function formatHorizon(
 
 export default function SimulationWorkspace({
   projection,
+  organizationId,
 }: SimulationWorkspaceProps) {
   const executiveSimulation =
     projection.executiveSimulation;
@@ -328,10 +330,7 @@ export default function SimulationWorkspace({
             },
 
             body: JSON.stringify({
-              organizationId:
-                executiveSimulation
-                  ?.organizationId ??
-                communication.organizationId,
+              organizationId,
 
               changedEntityId:
                 primaryConditionId,
