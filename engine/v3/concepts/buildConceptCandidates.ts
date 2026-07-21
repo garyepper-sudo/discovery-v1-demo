@@ -1,4 +1,8 @@
-import type { SemanticCohort, SemanticObservationSourceType } from "../semantic";
+import type {
+  SemanticCohort,
+  SemanticObservation,
+  SemanticObservationSourceType,
+} from "../semantic";
 import type { ConceptCandidate, ConceptCandidateSourceType } from "./conceptCandidateTypes";
 
 export type BuildConceptCandidatesParams = {
@@ -320,6 +324,275 @@ function unique(values: string[]): string[] {
   return Array.from(new Set(values.filter(Boolean)));
 }
 
+const RELATIONAL_TERMS = [
+  "because",
+  "blocked by",
+  "caused by",
+  "concentrated in",
+  "constraining",
+  "depends on",
+  "driven by",
+  "enabled by",
+  "leads to",
+  "lack access",
+  "lack reliable access",
+  "lacks access",
+  "requires",
+  "reducing",
+  "resulting in",
+  "while",
+  "without",
+  "→",
+];
+
+const GENERIC_SEMANTIC_TERMS = [
+  "appears to be",
+  "clearer path for strategic execution",
+  "creating strategic momentum",
+  "discovery also",
+  "discovery sees",
+  "if supported by more evidence",
+  "is emerging",
+  "it is primarily explained by this mechanism",
+  "may be shaping",
+  "possible relationship",
+  "question:",
+  "strengthen momentum",
+  "organizational pattern",
+  "persistent semantic",
+  "strategic picture",
+];
+
+type SourceGroundedManifestation = {
+  text: string;
+  sourceObservationId: string;
+  sourceType: SemanticObservationSourceType;
+  ancestryCount: number;
+  informationDensity: number;
+};
+
+function normalizeSourceText(text: string): string {
+  const normalized = text
+    .replace(/^\s*(?:context|question|company|website|industry)\s*:\s*/i, "")
+    .replace(/\s+/g, " ")
+    .replace(/([.!?])\1+/g, "$1")
+    .trim();
+
+  if (!normalized) return "";
+
+  return /[.!?]$/.test(normalized) ? normalized : `${normalized}.`;
+}
+
+function removeEpistemicScaffolding(text: string): string {
+  return normalizeSourceText(text)
+    .replace(/\s+may be shaping the strategic picture\.?$/i, ".")
+    .replace(/\s+if supported by more evidence\.?$/i, ".")
+    .replace(/\s+/g, " ")
+    .replace(/([.!?])\1+/g, "$1")
+    .trim();
+}
+
+function extractClearestEvidence(text: string): string {
+  const match = text.match(
+    /(?:the clearest evidence says|the source evidence says)\s*:\s*([^.!?]+[.!?]?)/i,
+  );
+
+  return match ? removeEpistemicScaffolding(match[1]) : "";
+}
+
+function extractMechanismConsequence(text: string): string {
+  const match = text.match(
+    /(?:question\s*:\s*)?how can\s+(the company|the organization|the business)\s+([^?]+)\?\s*→/i,
+  );
+
+  if (!match) return "";
+
+  return `constraining the organization's ability to ${match[2]
+    .replace(/\s+/g, " ")
+    .trim()}`;
+}
+
+function joinAssertionAndConsequence(
+  assertion: string,
+  consequence: string,
+): string {
+  if (!assertion || !consequence) return assertion || consequence;
+
+  return normalizeSourceText(
+    `${assertion.replace(/[.!?]+$/, "")}, ${consequence}`,
+  );
+}
+
+function directAncestryCount(observation: SemanticObservation): number {
+  return unique([
+    ...observation.sourceIds,
+    ...observation.supportingUnderstandingIds,
+    ...observation.supportingClusterIds,
+    ...observation.supportingDynamicIds,
+    ...observation.supportingMeaningSignalIds,
+    ...observation.supportingConceptIds,
+    ...observation.supportingPhenomenonIds,
+    ...observation.supportingMechanismIds,
+    ...observation.supportingNetworkIds,
+    ...observation.supportingPatternIds,
+    ...observation.supportingBeliefIds,
+    ...observation.supportingCandidateIds,
+  ]).length;
+}
+
+function relationshipDetailCount(text: string): number {
+  const normalizedText = normalize(text);
+
+  return RELATIONAL_TERMS.filter((term) =>
+    term === "→"
+      ? text.includes(term)
+      : normalizedText.includes(normalize(term)),
+  ).length;
+}
+
+function informationDensity(text: string): number {
+  const normalizedText = normalize(text);
+  const distinctWords = new Set(
+    normalizedText.split(" ").filter((word) => word.length > 2),
+  ).size;
+  const relationalDetail = relationshipDetailCount(text);
+  const genericity = GENERIC_SEMANTIC_TERMS.filter((term) =>
+    normalizedText.includes(normalize(term)),
+  ).length;
+
+  return Math.min(distinctWords, 32) + relationalDetail * 12 - genericity * 5;
+}
+
+function manifestationQuality(text: string): number {
+  const normalizedText = normalize(text);
+  const wordCount = normalizedText.split(" ").filter(Boolean).length;
+  const wrapperPenalty = GENERIC_SEMANTIC_TERMS.filter((term) =>
+    normalizedText.includes(normalize(term)),
+  ).length;
+  const questionPenalty = text.includes("?") ? 20 : 0;
+  const narrationPenalty = /\bdiscovery\b/i.test(text) ? 20 : 0;
+  const lengthPenalty = Math.max(0, wordCount - 38) * 1.5;
+  const conciseBonus = wordCount >= 8 && wordCount <= 38 ? 12 : 0;
+  const declarativeBonus = /^[A-Z][^?]*[.]$/.test(text) ? 8 : 0;
+
+  return (
+    informationDensity(text) +
+    conciseBonus +
+    declarativeBonus -
+    wrapperPenalty * 15 -
+    questionPenalty -
+    narrationPenalty -
+    lengthPenalty
+  );
+}
+
+function compactSourceText(text: string): string {
+  const normalizedText = removeEpistemicScaffolding(text);
+  const clearestEvidence = extractClearestEvidence(text);
+  const mechanismConsequence = extractMechanismConsequence(text);
+  const groundedSynthesis = joinAssertionAndConsequence(
+    clearestEvidence,
+    mechanismConsequence,
+  );
+  const sentences =
+    normalizedText.match(/[^.!?]+(?:[.!?]+|$)/g)?.map(removeEpistemicScaffolding) ??
+    [];
+  const clauses = unique([
+    groundedSynthesis,
+    clearestEvidence,
+    ...sentences,
+  ]).filter(Boolean);
+
+  return clauses.reduce((cleanest, clause) =>
+    manifestationQuality(clause) > manifestationQuality(cleanest)
+      ? clause
+      : cleanest,
+  );
+}
+
+function richestObservationText(observation: SemanticObservation): string {
+  const statement = compactSourceText(observation.statement);
+  const summary = compactSourceText(observation.summary);
+  const variants = unique([statement, summary]).filter(Boolean);
+
+  return variants.reduce((richest, variant) =>
+    manifestationQuality(variant) > manifestationQuality(richest)
+      ? variant
+      : richest,
+  );
+}
+
+function selectSourceGroundedManifestation(
+  cohort: SemanticCohort,
+): SourceGroundedManifestation {
+  const understandingObservations = cohort.observations.filter(
+    (observation) => observation.sourceType === "understanding",
+  );
+  const candidates =
+    understandingObservations.length > 0
+      ? understandingObservations
+      : cohort.observations;
+
+  return candidates
+    .map((observation, index) => {
+      const text = richestObservationText(observation);
+
+      return {
+        text,
+        sourceObservationId: observation.id,
+        sourceType: observation.sourceType,
+        ancestryCount: directAncestryCount(observation),
+        informationDensity: informationDensity(text),
+        confidence: observation.confidence,
+        index,
+      };
+    })
+    .sort(
+      (a, b) =>
+        manifestationQuality(b.text) - manifestationQuality(a.text) ||
+        b.ancestryCount - a.ancestryCount ||
+        b.confidence - a.confidence ||
+        a.index - b.index,
+    )[0] ?? {
+    text: normalizeSourceText(cohort.canonicalMeaning.statement),
+    sourceObservationId: cohort.id,
+    sourceType: cohort.sourceTypes[0] ?? "mechanism",
+    ancestryCount: 0,
+    informationDensity: informationDensity(cohort.canonicalMeaning.statement),
+  };
+}
+
+function enrichedCandidateSummary(
+  prototype: TheoryPrototype,
+  manifestation: SourceGroundedManifestation,
+): string {
+  const normalizedSummary = normalizeSourceText(prototype.summary);
+
+  if (!manifestation.text) return normalizedSummary;
+
+  return `${normalizedSummary} Organization-specific manifestation: ${manifestation.text}`;
+}
+
+function manifestationTextForComparison(text: string): string {
+  const summaryMatch = text.match(
+    /organization-specific manifestation:\s*(.+)$/i,
+  );
+  if (summaryMatch) return summaryMatch[1];
+
+  const explanationMatch = text.match(
+    /organization-specific manifestation selected from [^\"]+ is "([^"]+)"/i,
+  );
+
+  return explanationMatch?.[1] ?? text;
+}
+
+function richerText(existing: string, candidate: string): string {
+  return manifestationQuality(manifestationTextForComparison(candidate)) >
+    manifestationQuality(manifestationTextForComparison(existing))
+    ? candidate
+    : existing;
+}
+
 function strengthOf(confidence: number): ConceptCandidate["strength"] {
   if (confidence >= 0.75) return "strong";
   if (confidence >= 0.45) return "moderate";
@@ -525,7 +798,10 @@ function interpretationConfidence(interpretation: ConceptInterpretation): number
   );
 }
 
-function candidateExplanation(interpretation: ConceptInterpretation): string {
+function candidateExplanation(
+  interpretation: ConceptInterpretation,
+  manifestation: SourceGroundedManifestation,
+): string {
   const { cohort } = interpretation;
 
   const supportParts = [
@@ -544,7 +820,7 @@ function candidateExplanation(interpretation: ConceptInterpretation): string {
     cohort.occurrenceCount > 1 ? `${cohort.occurrenceCount} occurrences` : "",
   ].filter(Boolean);
 
-  return `${interpretation.prototype.explanation} It interprets the persistent semantic cohort "${cohort.canonicalMeaning.statement}" and is supported by ${supportParts.join(
+  return `${interpretation.prototype.explanation} The organization-specific manifestation selected from ${manifestation.sourceType} observation ${manifestation.sourceObservationId} is "${manifestation.text}" It interprets the persistent semantic cohort "${cohort.canonicalMeaning.statement}" and is supported by ${supportParts.join(
     ", ",
   )}. This candidate classifies canonical semantic memory rather than rebuilding semantic meaning from raw observations.`;
 }
@@ -554,11 +830,12 @@ function buildCandidateFromInterpretation(
 ): ConceptCandidate {
   const { cohort, prototype } = interpretation;
   const confidence = interpretationConfidence(interpretation);
+  const manifestation = selectSourceGroundedManifestation(cohort);
 
   return {
     id: `concept-theory-${prototype.id}`,
     statement: prototype.statement,
-    summary: prototype.summary,
+    summary: enrichedCandidateSummary(prototype, manifestation),
     sourceType: conceptCandidateSourceType(cohort.sourceTypes),
     sourceIds: unique(cohort.sourceIds),
 
@@ -580,7 +857,7 @@ function buildCandidateFromInterpretation(
     semanticSignature: prototype.id,
     confidence,
     strength: strengthOf(confidence),
-    explanation: candidateExplanation(interpretation),
+    explanation: candidateExplanation(interpretation, manifestation),
   };
 }
 
@@ -630,10 +907,8 @@ function mergeCandidate(
     keywords: unique([...existing.keywords, ...candidate.keywords]).slice(0, 40),
     confidence,
     strength: strengthOf(confidence),
-    explanation:
-      existing.explanation === candidate.explanation
-        ? existing.explanation
-        : `${existing.explanation} ${candidate.explanation}`,
+    summary: richerText(existing.summary, candidate.summary),
+    explanation: richerText(existing.explanation, candidate.explanation),
   };
 }
 

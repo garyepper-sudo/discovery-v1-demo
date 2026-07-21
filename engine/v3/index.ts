@@ -56,7 +56,11 @@ ${input.context}
 
   workspace.metadata.stage = "themes";
   workspace.themes = scoreThemes(
-    detectThemes(workspace.evidence, workspace.signals)
+    detectThemes(
+      workspace.evidence,
+      workspace.signals,
+      workspace.evidenceNetwork.relationships
+    )
   );
 
   workspace.metadata.stage = "observations";

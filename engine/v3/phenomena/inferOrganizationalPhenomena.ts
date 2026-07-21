@@ -21,6 +21,10 @@ type UnderstandingLike = {
   interpretation?: string;
   organizationalBehavior?: string;
   executiveMeaning?: string;
+  whyItMatters?: string;
+  confidence?: number;
+  strength?: number;
+  stability?: number;
   themes?: string[];
   keywords?: string[];
   relatedEntityIds?: string[];
@@ -120,16 +124,17 @@ function getClusterText(params: {
       params,
     );
 
-  return [
-    params.cluster.label,
-    params.cluster.summary,
-    params.cluster.description,
-    ...(params.cluster.sharedThemes ?? []),
-    ...(params.cluster.sharedMechanisms ?? []),
-    ...members.map(
-      collectUnderstandingText,
-    ),
-  ]
+  const values = members.length > 0
+    ? members.map(collectUnderstandingText)
+    : [
+        params.cluster.label,
+        params.cluster.summary,
+        params.cluster.description,
+        ...(params.cluster.sharedThemes ?? []),
+        ...(params.cluster.sharedMechanisms ?? []),
+      ];
+
+  return values
     .map(normalizeText)
     .filter(Boolean)
     .join(" ");
@@ -291,6 +296,8 @@ const CLUSTER_SEMANTIC_SIGNATURES: SemanticSignature[] = [
         "distributed",
         "scattered",
         "localized",
+        "concentrated",
+        "lacks access",
         "silo",
         "hard to find",
       ],
@@ -585,6 +592,18 @@ function inferPhenomenonFromCluster(params: {
     };
   }
 
+  if (getClusterMemberUnderstandings({ cluster, understandings }).length > 0) {
+    return {
+      type: "emerging_organizational_phenomenon",
+      label: cluster.label || "Emerging Organizational Phenomenon",
+      description:
+        "Discovery is detecting an organization-specific manifestation from related organizational understandings.",
+      executiveMeaning:
+        "This matters because the source understanding describes how the organization is currently operating.",
+      possibleMechanismTypes: ["unknown"],
+    };
+  }
+
   if (
     includesAny(text, [
       "knowledge fragmentation",
@@ -847,10 +866,38 @@ function buildPatternEvidenceSummary(pattern: OrganizationalPattern): string {
 function buildClusterEvidenceSummary(params: {
   definition: PhenomenonDefinition;
   cluster: UnderstandingClusterLike;
+  sourceUnderstanding?: UnderstandingLike;
+  memberUnderstandings?: UnderstandingLike[];
 }): string {
-  const { definition, cluster } = params;
+  const {
+    definition,
+    cluster,
+    sourceUnderstanding,
+    memberUnderstandings = [],
+  } = params;
   const understandingIds = getClusterUnderstandingIds(cluster);
   const count = understandingIds.length;
+
+  const sourceStatements = [sourceUnderstanding, ...memberUnderstandings]
+    .filter((understanding): understanding is UnderstandingLike =>
+      Boolean(understanding),
+    )
+    .map((understanding) =>
+      understanding.statement ||
+      understanding.title ||
+      understanding.summary ||
+      understanding.description ||
+      understanding.explanation ||
+      "",
+    )
+    .filter(Boolean)
+    .filter((statement, index, all) => all.indexOf(statement) === index);
+
+  if (sourceStatements.length > 0) {
+    return `This phenomenon is inferred from ${count} related organizational understanding${
+      count === 1 ? "" : "s"
+    }. Source understandings state: ${sourceStatements.join(" ")}`;
+  }
 
   if (count === 0) {
     return `This phenomenon is inferred from a related cluster of organizational understandings around ${definition.label.toLowerCase()}.`;
@@ -930,6 +977,31 @@ function buildPhenomenonFromCluster(params: {
   );
 
   const understandingIds = getClusterUnderstandingIds(cluster);
+  const memberUnderstandings = getClusterMemberUnderstandings({
+    cluster,
+    understandings,
+  });
+  const understandingOrder = new Map(
+    understandings.map((understanding, order) => [understanding.id, order]),
+  );
+  const sourceUnderstanding = [...memberUnderstandings].sort((left, right) => {
+    const confidenceDelta = (right.confidence ?? 0) - (left.confidence ?? 0);
+    if (confidenceDelta !== 0) return confidenceDelta;
+
+    const strengthDelta = (right.strength ?? 0) - (left.strength ?? 0);
+    if (strengthDelta !== 0) return strengthDelta;
+
+    const stabilityDelta = (right.stability ?? 0) - (left.stability ?? 0);
+    if (stabilityDelta !== 0) return stabilityDelta;
+
+    return (understandingOrder.get(left.id) ?? 0) -
+      (understandingOrder.get(right.id) ?? 0);
+  })[0];
+  const sourceManifestation = sourceUnderstanding?.statement ||
+    sourceUnderstanding?.title ||
+    sourceUnderstanding?.summary ||
+    sourceUnderstanding?.description ||
+    sourceUnderstanding?.explanation;
 
   const confidence = clamp01(
     cluster.confidence ?? cluster.cohesion ?? existing?.confidence ?? 0.55,
@@ -947,7 +1019,8 @@ function buildPhenomenonFromCluster(params: {
     id: existing?.id ?? `phenomenon-${definition.type}-${index + 1}`,
     type: definition.type,
     label: definition.label,
-    description: existing?.description ?? definition.description,
+    description:
+      sourceManifestation ?? existing?.description ?? definition.description,
     clusterIds: [cluster.id],
     understandingIds,
     status: inferPhenomenonStatusFromCluster({
@@ -964,10 +1037,15 @@ function buildPhenomenonFromCluster(params: {
       }),
     ],
     possibleMechanismTypes: definition.possibleMechanismTypes,
-    executiveMeaning: existing?.executiveMeaning ?? definition.executiveMeaning,
+    executiveMeaning:
+      sourceUnderstanding?.whyItMatters ||
+      existing?.executiveMeaning ||
+      definition.executiveMeaning,
     evidenceSummary: buildClusterEvidenceSummary({
       definition,
       cluster,
+      sourceUnderstanding,
+      memberUnderstandings,
     }),
     changeExplanation: existing
       ? `Discovery refreshed its understanding of ${definition.label.toLowerCase()} from the latest investigation.`

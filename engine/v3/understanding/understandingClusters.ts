@@ -189,25 +189,78 @@ function mergeCapabilities(all: string[][]): string[] {
 
 function buildEntityCentricClusters(params: {
   organizationReasoningGraph: any;
+  understandings: any[];
   existingClusters: any[];
   now: string;
 }) {
   const nodes = asArray(params.organizationReasoningGraph?.nodes);
+  const understandings = asArray(params.understandings);
+  const validUnderstandingIds = new Set(
+    understandings.map((understanding: any) => understanding.id).filter(Boolean),
+  );
 
-  return nodes.map((node: any, index: number) => ({
-    id: `entity-cluster-${index + 1}-${params.now}`,
-    label: node.canonicalName ?? "Entity Cluster",
-    description: "Entity-centric cluster",
-    memberUnderstandingIds: [node.id].filter(Boolean),
-    sharedThemes: [node.category].filter(Boolean),
-    sharedMechanisms: [],
-    confidence: node.confidence ?? 0.5,
-    cohesion: 0.4,
-    stability: 0.4,
-    status: "emerging",
-    createdAt: params.now,
-    updatedAt: params.now,
-  }));
+  return nodes
+    .map((node: any, index: number) => {
+      const nodeEvidenceIds = new Set(asArray<string>(node.evidenceIds));
+      const entityNames = unique([
+        node.canonicalName,
+        ...asArray<string>(node.aliases),
+      ])
+        .map(normalizeText)
+        .filter((name) => name.length >= 3);
+
+      const directUnderstandingIds = asArray<string>(
+        node.understandingIds,
+      ).filter((id) => validUnderstandingIds.has(id));
+      const textSupportedUnderstandingIds = understandings
+        .filter((understanding: any) => {
+          const understandingText = normalizeText(
+            [
+              understanding.title,
+              understanding.statement,
+              understanding.summary,
+              understanding.mechanism,
+            ].filter(Boolean).join(" "),
+          );
+
+          return entityNames.some((name) => understandingText.includes(name));
+        })
+        .map((understanding: any) => understanding.id)
+        .filter((id) => validUnderstandingIds.has(id));
+      const evidenceSupportedUnderstandingIds = understandings
+        .filter((understanding: any) =>
+          asArray<string>(understanding.evidenceIds).some((id) =>
+            nodeEvidenceIds.has(id),
+          ),
+        )
+        .map((understanding: any) => understanding.id)
+        .filter((id) => validUnderstandingIds.has(id));
+      const memberUnderstandingIds = unique(
+        directUnderstandingIds.length > 0
+          ? directUnderstandingIds
+          : textSupportedUnderstandingIds.length > 0
+            ? textSupportedUnderstandingIds
+            : evidenceSupportedUnderstandingIds,
+      );
+
+      if (memberUnderstandingIds.length === 0) return null;
+
+      return {
+        id: `entity-cluster-${index + 1}-${params.now}`,
+        label: node.canonicalName ?? "Entity Cluster",
+        description: "Entity-centric cluster",
+        memberUnderstandingIds,
+        sharedThemes: [node.category].filter(Boolean),
+        sharedMechanisms: [],
+        confidence: node.confidence ?? 0.5,
+        cohesion: 0.4,
+        stability: 0.4,
+        status: "emerging",
+        createdAt: params.now,
+        updatedAt: params.now,
+      };
+    })
+    .filter((cluster) => cluster !== null);
 }
 
 function buildTextCentricClusters(params: {
@@ -357,11 +410,16 @@ export function buildUnderstandingClusters(params: {
   const now = params.now ?? new Date().toISOString();
 
   if (params.organizationReasoningGraph?.nodes?.length) {
-    return buildEntityCentricClusters({
+    const entityCentricClusters = buildEntityCentricClusters({
       organizationReasoningGraph: params.organizationReasoningGraph,
+      understandings: params.understandings,
       existingClusters: [],
       now,
     });
+
+    if (entityCentricClusters.length > 0) {
+      return entityCentricClusters;
+    }
   }
 
   return buildTextCentricClusters({

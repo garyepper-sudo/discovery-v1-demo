@@ -281,6 +281,8 @@ export function evolveOrganizationRuntime(params: {
     inferOrganizationalPhenomena({
       patterns: organizationalObservationState.patterns,
       clusters: understandingClusters,
+      understandings:
+        updatedOrganizationalUnderstandingState.currentUnderstandings,
       previousState: memory.organizationalPhenomenaState,
       now,
     });

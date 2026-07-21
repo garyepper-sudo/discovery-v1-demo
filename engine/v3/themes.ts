@@ -1,5 +1,6 @@
 import {
   V3Evidence,
+  V3EvidenceRelationship,
   V3Polarity,
   V3Signal,
   V3SignalStrength,
@@ -69,7 +70,8 @@ const themeRules: ThemeRule[] = [
 
 export function detectThemes(
   evidence: V3Evidence[],
-  signals: V3Signal[] = []
+  signals: V3Signal[] = [],
+  relationships: V3EvidenceRelationship[] = []
 ): V3Theme[] {
   const signalThemes = buildSignalThemes(evidence, signals);
 
@@ -114,7 +116,12 @@ export function detectThemes(
     ...ruleThemes.map((theme) => theme.title),
   ]);
 
-  const emergentThemes = buildEmergentThemes(evidence, existingTitles);
+  const emergentThemes = buildEmergentThemes(
+    evidence,
+    signals,
+    relationships,
+    existingTitles
+  );
 
   return [...signalThemes, ...ruleThemes, ...emergentThemes]
     .filter((theme, index, all) => {
@@ -254,45 +261,248 @@ function buildThemeDescription(title: string, evidence: V3Evidence[]): string {
 
 function buildEmergentThemes(
   evidence: V3Evidence[],
+  signals: V3Signal[],
+  relationships: V3EvidenceRelationship[],
   existingThemeIds: Set<string>
 ): V3Theme[] {
-  const keywordCounts = new Map<string, V3Evidence[]>();
+  const evidenceOrder = new Map(evidence.map((item, index) => [item.id, index]));
+  const evidenceById = new Map(evidence.map((item) => [item.id, item]));
+  const usableRelationships = relationships.filter((relationship) =>
+    ["depends_on", "explains", "supports", "extends"].includes(
+      relationship.type
+    )
+  );
+
+  const candidates = buildRelatedEvidenceGroups(evidence, usableRelationships)
+    .map((evidenceIds) => {
+      const matchedEvidence = evidenceIds
+        .map((id) => evidenceById.get(id))
+        .filter((item): item is V3Evidence => Boolean(item));
+      const matchedRelationships = usableRelationships.filter(
+        (relationship) =>
+          evidenceIds.includes(relationship.sourceEvidenceId) &&
+          evidenceIds.includes(relationship.targetEvidenceId)
+      );
+      const matchedSignals = signals.filter((signal) =>
+        signal.evidenceIds.some((id) => evidenceIds.includes(id))
+      );
+
+      if (
+        matchedEvidence.length < 2 ||
+        !hasOrganizationalGrounding(
+          matchedEvidence,
+          matchedRelationships,
+          matchedSignals
+        )
+      ) {
+        return null;
+      }
+
+      const title = choosePatternStatement(
+        matchedEvidence,
+        matchedRelationships,
+        matchedSignals,
+        evidenceOrder
+      );
+
+      if (!title || existingThemeIds.has(title)) return null;
+
+      return { title, matchedEvidence, matchedSignals };
+    })
+    .filter((candidate) => candidate !== null)
+    .filter(
+      (candidate, index, all) =>
+        all.findIndex((item) => item.title === candidate.title) === index
+    )
+    .slice(0, 3);
+
+  return candidates.map(({ title, matchedEvidence, matchedSignals }, index) => ({
+    id: `ET${index + 1}`,
+    title,
+    description: buildThemeDescription(title, matchedEvidence),
+    evidenceIds: matchedEvidence.map((item) => item.id),
+    signalIds: matchedSignals.map((signal) => signal.id),
+    confidence: calculateThemeConfidence(matchedEvidence),
+    keywords: collectKeywords(matchedEvidence, []),
+    entities: collectEntities(matchedEvidence),
+    polarity: dominantPolarity(matchedEvidence),
+    strength: strongestSignal(matchedEvidence),
+    stability: calculateStability(matchedEvidence),
+  }));
+}
+
+function buildRelatedEvidenceGroups(
+  evidence: V3Evidence[],
+  relationships: V3EvidenceRelationship[]
+): string[][] {
+  const evidenceIds = new Set(evidence.map((item) => item.id));
+  const adjacency = new Map<string, Set<string>>();
+
+  relationships.forEach((relationship) => {
+    const { sourceEvidenceId, targetEvidenceId } = relationship;
+    if (!evidenceIds.has(sourceEvidenceId) || !evidenceIds.has(targetEvidenceId)) {
+      return;
+    }
+
+    const sourceNeighbors = adjacency.get(sourceEvidenceId) ?? new Set<string>();
+    const targetNeighbors = adjacency.get(targetEvidenceId) ?? new Set<string>();
+    sourceNeighbors.add(targetEvidenceId);
+    targetNeighbors.add(sourceEvidenceId);
+    adjacency.set(sourceEvidenceId, sourceNeighbors);
+    adjacency.set(targetEvidenceId, targetNeighbors);
+  });
+
+  const visited = new Set<string>();
+  const groups: string[][] = [];
 
   evidence.forEach((item) => {
-    (item.keywords ?? []).forEach((keyword) => {
-      const current = keywordCounts.get(keyword) ?? [];
-      current.push(item);
-      keywordCounts.set(keyword, current);
+    if (visited.has(item.id) || !adjacency.has(item.id)) return;
+
+    const group: string[] = [];
+    const queue = [item.id];
+    visited.add(item.id);
+
+    while (queue.length > 0) {
+      const currentId = queue.shift();
+      if (!currentId) continue;
+      group.push(currentId);
+
+      adjacency.get(currentId)?.forEach((neighborId) => {
+        if (visited.has(neighborId)) return;
+        visited.add(neighborId);
+        queue.push(neighborId);
+      });
+    }
+
+    if (group.length >= 2) groups.push(group);
+  });
+
+  return groups;
+}
+
+function hasOrganizationalGrounding(
+  evidence: V3Evidence[],
+  relationships: V3EvidenceRelationship[],
+  signals: V3Signal[]
+): boolean {
+  const hasCausalRelationship = relationships.some(
+    (relationship) =>
+      relationship.type === "depends_on" || relationship.type === "explains"
+  );
+  const hasSignalOverlap = signals.some(
+    (signal) => signal.evidenceIds.filter((id) =>
+      evidence.some((item) => item.id === id)
+    ).length > 0
+  );
+  const entityCounts = new Map<string, number>();
+
+  evidence.forEach((item) => {
+    new Set(item.entities ?? []).forEach((entity) => {
+      const normalized = entity.trim().toLowerCase();
+      if (!normalized || ["company", "website", "industry", "context"].includes(normalized)) {
+        return;
+      }
+      entityCounts.set(normalized, (entityCounts.get(normalized) ?? 0) + 1);
     });
   });
 
-  return Array.from(keywordCounts.entries())
-    .filter(([, matchedEvidence]) => matchedEvidence.length >= 2)
-    .map(([keyword, matchedEvidence], index) => {
-      const title = `${capitalize(keyword)} Pattern`;
-      const id = `ET${index + 1}`;
+  const hasSharedEntity = Array.from(entityCounts.values()).some(
+    (count) => count >= 2
+  );
 
-      if (existingThemeIds.has(title)) return null;
-
-      return {
-        id,
-        title,
-        description: buildThemeDescription(title, matchedEvidence),
-        evidenceIds: matchedEvidence.map((item) => item.id),
-        signalIds: [],
-        confidence: calculateThemeConfidence(matchedEvidence),
-        keywords: collectKeywords(matchedEvidence, [keyword]),
-        entities: collectEntities(matchedEvidence),
-        polarity: dominantPolarity(matchedEvidence),
-        strength: strongestSignal(matchedEvidence),
-        stability: calculateStability(matchedEvidence),
-      };
-    })
-    .filter((theme) => theme !== null)
-    .slice(0, 3);
+  return hasCausalRelationship || hasSignalOverlap || hasSharedEntity;
 }
 
-function capitalize(value: string): string {
-  if (!value) return value;
-  return value.charAt(0).toUpperCase() + value.slice(1);
+function choosePatternStatement(
+  evidence: V3Evidence[],
+  relationships: V3EvidenceRelationship[],
+  signals: V3Signal[],
+  evidenceOrder: Map<string, number>
+): string {
+  const relationshipDegree = new Map<string, number>();
+  const relationshipPriority = new Map<string, number>();
+
+  relationships.forEach((relationship) => {
+    const priority = relationship.type === "depends_on"
+      ? 2
+      : relationship.type === "explains"
+        ? 1
+        : 0;
+
+    [relationship.sourceEvidenceId, relationship.targetEvidenceId].forEach(
+      (id) => {
+        relationshipDegree.set(id, (relationshipDegree.get(id) ?? 0) + 1);
+        relationshipPriority.set(
+          id,
+          Math.max(relationshipPriority.get(id) ?? 0, priority)
+        );
+      }
+    );
+  });
+
+  const strongestSignalConfidence = (id: string): number =>
+    signals.reduce(
+      (strongest, signal) =>
+        signal.evidenceIds.includes(id)
+          ? Math.max(strongest, signal.confidence)
+          : strongest,
+      0
+    );
+
+  const selected = [...evidence]
+    .filter((item) => !isRejectedMetadataStatement(item.text))
+    .sort((a, b) => {
+      const relationshipDelta =
+        (relationshipPriority.get(b.id) ?? 0) -
+        (relationshipPriority.get(a.id) ?? 0);
+      if (relationshipDelta !== 0) return relationshipDelta;
+
+      const signalDelta =
+        strongestSignalConfidence(b.id) - strongestSignalConfidence(a.id);
+      if (signalDelta !== 0) return signalDelta;
+
+      const degreeDelta =
+        (relationshipDegree.get(b.id) ?? 0) -
+        (relationshipDegree.get(a.id) ?? 0);
+      if (degreeDelta !== 0) return degreeDelta;
+
+      const confidenceDelta = b.confidence - a.confidence;
+      if (confidenceDelta !== 0) return confidenceDelta;
+
+      const languageDelta =
+        Number(hasRelationshipLanguage(b.text)) -
+        Number(hasRelationshipLanguage(a.text));
+      if (languageDelta !== 0) return languageDelta;
+
+      return (evidenceOrder.get(a.id) ?? 0) - (evidenceOrder.get(b.id) ?? 0);
+    })[0];
+
+  return selected ? normalizePatternTitle(selected.text) : "";
+}
+
+function hasRelationshipLanguage(text: string): boolean {
+  const normalized = text.toLowerCase();
+  return [
+    "depends on",
+    "requires",
+    "driven by",
+    "caused by",
+    "leads to",
+    "enabled by",
+    "blocked by",
+    "concentrated in",
+    "lacks access to",
+  ].some((phrase) => normalized.includes(phrase));
+}
+
+function isRejectedMetadataStatement(text: string): boolean {
+  return /^(company|website|industry)\s*:/i.test(text.trim());
+}
+
+function normalizePatternTitle(text: string): string {
+  return text
+    .trim()
+    .replace(/^context\s*:\s*/i, "")
+    .replace(/[.!?]+$/, "")
+    .trim();
 }
