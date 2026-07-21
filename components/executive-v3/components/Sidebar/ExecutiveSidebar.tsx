@@ -7,9 +7,6 @@ import type {
 } from "../../ExecutiveWorkspaceMode";
 
 type ExecutiveSidebarProps = {
-  understandingStrength: number;
-  mindStatus: string;
-
   mode: ExecutiveWorkspaceMode;
 
   onNavigate: (
@@ -24,39 +21,32 @@ const navigationItems: Array<{
 }> = [
   {
     mode: "briefing",
-    label: "Home",
+    label: "Executive Work",
     icon: "●",
   },
   {
     mode: "understand",
-    label: "Understand",
+    label: "Operating Model",
     icon: "⌕",
   },
   {
-    mode: "recommend",
-    label: "Recommend",
+    mode: "decision",
+    label: "Decision Lab",
     icon: "□",
   },
   {
-    mode: "simulate",
-    label: "Simulate",
-    icon: "⌘",
-  },
-  {
-    mode: "timeline",
-    label: "Timeline",
-    icon: "◌",
+    mode: "recommend",
+    label: "Executive Brief",
+    icon: "◇",
   },
   {
     mode: "ask",
     label: "Ask Discovery",
-    icon: "◇",
+    icon: "✦",
   },
 ];
 
 export default function ExecutiveSidebar({
-  understandingStrength,
-  mindStatus,
   mode,
   onNavigate,
 }: ExecutiveSidebarProps) {
@@ -122,7 +112,7 @@ export default function ExecutiveSidebar({
       </nav>
 
       <section className={styles.contribute}>
-        <p>Contribute Evidence</p>
+        <p>Strengthen Understanding</p>
 
         <button type="button">
           <span aria-hidden="true">⇧</span>
@@ -143,30 +133,9 @@ export default function ExecutiveSidebar({
           type="button"
           className={styles.moreButton}
         >
-          Show more ways
+          Connect more sources
           <span aria-hidden="true">›</span>
         </button>
-      </section>
-
-      <section className={styles.strength}>
-        <p>Understanding Strength</p>
-
-        <div className={styles.strengthSummary}>
-          <strong>{understandingStrength}%</strong>
-          <span>{mindStatus}</span>
-        </div>
-
-        <div
-          className={styles.strengthChart}
-          aria-hidden="true"
-        >
-          <i />
-          <i />
-          <i />
-          <i />
-          <i />
-          <i />
-        </div>
       </section>
     </aside>
   );

@@ -8,10 +8,19 @@ import type {
 
 type RecommendationWorkspaceProps = {
   communication: ExecutiveCommunication;
+
+  onOpenDecisionLab?: () => void;
+
+  isOpeningDecisionLab?: boolean;
+
+  decisionLabError?: string | null;
 };
 
 export default function RecommendationWorkspace({
   communication,
+  onOpenDecisionLab,
+  isOpeningDecisionLab = false,
+  decisionLabError = null,
 }: RecommendationWorkspaceProps) {
   const recommendation =
     communication.recommendation;
@@ -45,7 +54,8 @@ export default function RecommendationWorkspace({
               </ol>
             ) : (
               <p>
-                No supporting actions are currently available.
+                No supporting actions are currently
+                available.
               </p>
             )}
           </section>
@@ -65,13 +75,16 @@ export default function RecommendationWorkspace({
               </ul>
             ) : (
               <p>
-                Discovery has not identified a material trade-off.
+                Discovery has not identified a
+                material trade-off.
               </p>
             )}
           </section>
 
           <section>
-            <h2>Assumptions behind the recommendation</h2>
+            <h2>
+              Assumptions behind the recommendation
+            </h2>
 
             {recommendation.assumptions.length > 0 ? (
               <ul>
@@ -85,13 +98,16 @@ export default function RecommendationWorkspace({
               </ul>
             ) : (
               <p>
-                No explicit assumptions are currently recorded.
+                No explicit assumptions are
+                currently recorded.
               </p>
             )}
           </section>
 
           <section>
-            <h2>What could change this recommendation</h2>
+            <h2>
+              What could change this recommendation
+            </h2>
 
             {recommendation
               .evidenceThatCouldChangeRecommendation
@@ -107,20 +123,35 @@ export default function RecommendationWorkspace({
               </ul>
             ) : (
               <p>
-                Discovery has not identified any current evidence that would materially change the recommendation.
+                Discovery has not identified any
+                current evidence that would
+                materially change the
+                recommendation.
               </p>
             )}
           </section>
 
-          {recommendation.decisionHref ? (
-            <section>
-              <a
-                href={recommendation.decisionHref}
-              >
-                Open decision analysis
-              </a>
-            </section>
-          ) : null}
+          <section>
+            <button
+              type="button"
+              onClick={onOpenDecisionLab}
+              disabled={
+                !onOpenDecisionLab ||
+                isOpeningDecisionLab
+              }
+              aria-busy={isOpeningDecisionLab}
+            >
+              {isOpeningDecisionLab
+                ? "Preparing decision…"
+                : "Evaluate Decision"}
+            </button>
+
+            {decisionLabError ? (
+              <p role="alert">
+                {decisionLabError}
+              </p>
+            ) : null}
+          </section>
         </section>
 
         <aside className={styles.rail}>
@@ -155,7 +186,10 @@ export default function RecommendationWorkspace({
               </h3>
 
               <p>
-                {communication.uncertainty.implication}
+                {
+                  communication.uncertainty
+                    .implication
+                }
               </p>
             </section>
           ) : null}

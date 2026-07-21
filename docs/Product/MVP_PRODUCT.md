@@ -1,452 +1,252 @@
 # Discovery MVP Product
 
-**Status:** Canonical  
+**Status:** Canonical
 **Phase:** Functional MVP & Product Validation
 
 ---
 
 # Purpose
 
-The purpose of this MVP is to expose Discovery's core capabilities through one coherent, highly functional executive workflow.
+The purpose of Discovery's MVP is to validate one complete organizational lifecycle.
 
 The MVP should demonstrate that Discovery can:
 
-- maintain a living Operating Model of an organization,
-- surface deeper executive insights than a traditional BI dashboard,
-- evaluate active initiatives against current organizational reality,
-- accept important executive decisions,
-- suggest decisions and initiatives when supported by organizational evidence,
-- compare alternative strategies,
-- recommend a course of action,
-- continuously learn from new organizational information,
-- produce a board-ready executive brief.
+- create and maintain a living Operating Model,
+- continuously improve organizational understanding,
+- support executive work,
+- improve executive judgment,
+- learn from organizational outcomes,
+- improve future recommendations over time.
 
-The MVP is **not** intended to expose every capability within Discovery's Cognitive Operating System.
-
-Its purpose is to demonstrate Discovery's unique value through one complete executive workflow.
+The MVP is complete when an executive can repeatedly guide an organization through one complete lifecycle and observe Discovery becoming progressively better.
 
 ---
 
-# Product Philosophy
+# Product Objective
 
-Discovery is an **Executive Operating System**.
+Discovery is an Executive Operating System.
 
-Its purpose is to continuously improve executive judgment.
+It exists to continuously improve executive judgment.
 
-Discovery does not replace executive decision making.
+Discovery should allow executives to create, understand, improve, and learn from a living organization.
 
-Discovery helps executives:
+The product is not a collection of workflows.
 
-- understand organizational reality,
-- identify meaningful opportunities,
-- evaluate important decisions,
-- optimize organizational outcomes,
-- continuously learn from organizational change.
+The product is the organization itself.
 
 ---
 
-# Executive Workflows
-
-Discovery supports two primary workflows.
-
-## Daily Operating Mode
-
-Typical usage: approximately 20 minutes.
-
-The executive should be able to:
-
-1. Review current initiatives.
-2. Review Discovery's suggested decisions.
-3. Continue evaluating personal executive decisions.
-4. Review a small number of meaningful insights.
-5. Improve the Operating Model with additional information.
-6. Observe how the Operating Model changes.
-
-The daily experience should feel calm, focused, and trustworthy.
-
-Discovery should never overwhelm executives with excessive discoveries, alerts, or notifications.
-
----
-
-## Strategic Decision Mode
-
-Used before:
-
-- board meetings,
-- strategic planning,
-- acquisitions,
-- hiring decisions,
-- reorganizations,
-- significant investments,
-- major organizational commitments.
-
-The executive should be able to:
-
-1. Create a new decision.
-2. Open a Discovery-suggested decision.
-3. Define objectives.
-4. Define constraints.
-5. Compare strategies.
-6. Run organizational simulations.
-7. Review Discovery's recommendation.
-8. Commit the selected decision as an initiative.
-9. Produce a board-ready executive brief.
-
----
-
-# Core Product Loop
+# Canonical Product Loop
 
 ```text
-Improve Operating Model
+Organization
 
 ↓
-
-Understand Organization
-
-↓
-
-Surface Executive Insights
-
-↓
-
-Evaluate Decisions
-
-↓
-
-Compare Strategies
-
-↓
-
-Recommend Action
-
-↓
-
-Commit Initiative
-
-↓
-
-Track Against Reality
-
-↓
-
-Learn
-
-↓
-
-Improve Operating Model
-```
-
-This loop represents Discovery's complete executive flywheel.
-
----
-
-# MVP Navigation
-
-The MVP contains four primary product surfaces.
-
-```text
-Today
 
 Operating Model
 
-Decision Lab
+↓
 
-Executive Brief
+Executive Work
+
+↓
+
+Decision Support
+
+↓
+
+Executive Commitment
+
+↓
+
+Execution
+
+↓
+
+Review
+
+↓
+
+Learning
+
+↓
+
+Operating Model Evolution
+
+↓
+
+Repeat
 ```
 
-This intentionally minimizes navigation while exposing Discovery's complete value proposition.
+Everything inside the MVP exists to move the organization through this loop.
 
 ---
 
-# Today
+# MVP Scope
 
-## Purpose
+The MVP validates one organization.
 
-The Today experience helps executives remain synchronized with the evolving organization.
+One executive.
 
-It should answer:
+One continuously evolving Operating Model.
 
-- How is my business doing?
-- How are my initiatives performing?
-- What deserves executive attention?
-- What has Discovery learned?
-- Does Discovery need additional information?
-- Which decisions should I evaluate today?
+The objective is not feature completeness.
+
+The objective is demonstrating continuous organizational improvement.
 
 ---
 
-## Section 1 — Operating Model
+# Primary Executive Experience
 
-Shows Discovery's current organizational understanding.
+Executives should experience Discovery through four recurring activities.
 
-Display:
+## 1. Understand
 
-- Organizational State
-- Primary Executive Constraint
-- Overall Confidence
-- Freshness
-- Recent Meaningful Change
-- Executive Assessment
+Discovery explains:
 
-Primary action:
+- what changed,
+- why it changed,
+- what matters now,
+- remaining uncertainty.
 
-```
-View Operating Model →
-```
+The objective is understanding.
 
 ---
 
-## Section 2 — Executive Work
+## 2. Executive Work
 
-Executive Work is the center of the homepage.
+Executive Work becomes the primary product experience.
 
-It contains three groups.
+Executive Work contains:
 
-### Discovery Suggested
+- Discovery recommendations,
+- executive-created decisions,
+- executive-created initiatives,
+- active initiatives,
+- reviews due.
 
-Decisions or initiatives Discovery believes deserve executive evaluation.
+Every item follows the same lifecycle regardless of origin.
 
-Each card includes:
+---
 
-- title,
-- why it matters,
+## 3. Improve the Organization
+
+Executives improve organizational understanding by:
+
+- uploading evidence,
+- recording decisions,
+- recording initiatives,
+- completing reviews,
+- capturing outcomes.
+
+Every interaction improves the Operating Model.
+
+---
+
+## 4. Learn
+
+Discovery continuously improves through:
+
+- new evidence,
+- organizational outcomes,
+- executive reviews,
+- observed organizational change.
+
+Learning permanently improves future executive judgment.
+
+---
+
+# Executive Work Lifecycle
+
+Every Executive Work item follows the same lifecycle.
+
+```text
+Draft
+
+↓
+
+Evaluating
+
+↓
+
+Committed
+
+↓
+
+Executing
+
+↓
+
+Review Due
+
+↓
+
+Reviewed
+
+↓
+
+Learned
+
+↓
+
+Archived
+```
+
+Discovery-generated work and executive-created work follow the exact same lifecycle.
+
+---
+
+# Decision Support
+
+Decision Support exists to improve Executive Work.
+
+Discovery should expose:
+
+- organizational understanding,
+- constraints,
+- objectives,
+- recommendations,
+- alternatives,
+- simulations,
 - confidence,
-- urgency,
-- Evaluate button.
+- assumptions,
+- risks.
 
-Suggested work should remain rare.
-
-Discovery should only surface recommendations that could materially improve executive judgment.
-
----
-
-### My Decisions
-
-Executive-created decisions.
-
-Examples:
-
-- Hire VP Sales
-- Acquire Company X
-- Expand into Europe
-- Replace ERP
-
-Possible states:
-
-- Draft
-- Under Evaluation
-- Recommendation Ready
-- Decided
-
-Primary action:
-
-```
-Continue →
-```
-
----
-
-### Active Initiatives
-
-Committed executive decisions.
-
-Each initiative displays:
-
-- health,
-- trend,
-- Operating Model assessment,
-- primary organizational constraint,
-- recommended executive attention.
-
-Initiatives are continuously evaluated as the Operating Model evolves.
-
----
-
-## Section 3 — Key Insights
-
-Discovery surfaces only a small number of meaningful insights.
-
-Maximum:
-
-- three visible insights.
-
-Each insight explains:
-
-- what Discovery believes,
-- why it matters,
-- confidence,
-- why Discovery changed its understanding.
-
-Primary action:
-
-```
-Read Analysis →
-```
-
-Insights should explain organizational mechanisms and relationships rather than merely reporting metric movement.
-
----
-
-## Section 4 — Improve the Operating Model
-
-Discovery recommends the highest-value missing information.
-
-Examples:
-
-- Upload latest board deck.
-- Upload leadership update.
-- Upload financial package.
-- Connect CRM.
-- Refresh strategic plan.
-
-Discovery should explain why each input improves executive judgment.
-
-Use language such as:
-
-- Improve the Operating Model
-- Strengthen Understanding
-- Add Organizational Evidence
-
-Avoid presenting uploads as routine software maintenance.
+The interface should expose engine reasoning without recreating it.
 
 ---
 
 # Operating Model
 
-## Purpose
+The Operating Model is the organizational brain.
 
-Explain Discovery's current understanding of the organization.
+It continuously evolves through:
 
-Display:
+- evidence,
+- executive work,
+- execution,
+- review,
+- learning.
 
-- Organizational State
-- Primary Constraint
-- Organizational Conditions
-- Executive Assessment
-- Confidence
-- Meaningful Changes
-- Supporting Evidence
-- Remaining Uncertainty
-
-Executives should always be able to answer:
-
-> Why does Discovery believe this?
-
-and
-
-> Why has Discovery changed its understanding?
-
-Default to concise summaries.
-
-Use progressive disclosure for deeper reasoning.
-
----
-
-# Decision Lab
-
-## Purpose
-
-Evaluate any executive decision.
-
-Decision origin does not matter.
-
-Decisions may originate from:
-
-- Discovery,
-- Executive,
-- Board,
-- Investor,
-- Customer,
-- Market,
-- Existing Initiative,
-- Other.
-
-Once inside the Decision Lab, every decision follows the same evaluation workflow.
-
----
-
-## Workflow
-
-```text
-Decision
-
-↓
-
-Objectives
-
-↓
-
-Constraints
-
-↓
-
-Strategies
-
-↓
-
-Simulation
-
-↓
-
-Comparison
-
-↓
-
-Recommendation
-
-↓
-
-Executive Decision
-
-↓
-
-Commit Initiative
-```
-
----
-
-## Required Capabilities
-
-The Decision Lab must allow executives to:
-
-- create decisions,
-- edit decisions,
-- define objectives,
-- define constraints,
-- review assumptions,
-- compare multiple strategies,
-- review simulations,
-- inspect trade-offs,
-- understand recommendation confidence,
-- commit decisions as initiatives.
-
-All executive reasoning must originate from canonical engine outputs.
-
-The UI must never recreate cognitive reasoning.
+Every future recommendation derives from the current Operating Model.
 
 ---
 
 # Executive Brief
 
-## Purpose
+The Executive Brief summarizes the current Operating Model.
 
-Produce a concise executive artifact suitable for leadership meetings.
+It should explain:
 
-Sections:
+- organizational changes,
+- important executive work,
+- current priorities,
+- confidence,
+- recommended executive attention.
 
-- Decision Context
-- Current Organizational Understanding
-- Primary Constraint
-- Alternatives Considered
-- Recommended Strategy
-- Rationale
-- Risks
-- Trade-offs
-- Confidence
-- Assumptions
-- Recommended Next Steps
+The Brief summarizes organizational reality.
 
-The MVP contains one canonical brief format.
+It does not replace it.
 
 ---
 
@@ -454,65 +254,31 @@ The MVP contains one canonical brief format.
 
 ## Operating Model First
 
-The Operating Model is Discovery's organizational brain.
-
-Everything else derives from it.
+Everything derives from the Operating Model.
 
 ---
 
 ## Executive Work First
 
-Executives primarily open Discovery to:
+Executives primarily use Discovery to manage Executive Work.
 
-- review initiatives,
-- continue important decisions,
-- evaluate Discovery's suggestions.
-
-Executive Work is therefore the primary homepage experience.
+Executive Work is the center of the product.
 
 ---
 
-## Insights Before Discoveries
+## Continuous Understanding
 
-Insights are common.
+Discovery continuously updates organizational understanding.
 
-Discoveries are rare.
-
-Discovery should not manufacture activity simply to appear useful.
-
----
-
-## Decisions Can Originate Anywhere
-
-Discovery-generated decisions and executive-generated decisions follow the exact same lifecycle.
-
-The quality of evaluation should never depend upon where a decision originated.
-
----
-
-## Initiatives Are Living Commitments
-
-Once committed, initiatives remain continuously evaluated against the evolving Operating Model.
-
-Discovery should continuously reassess initiative health as organizational understanding improves.
+Executives should never need to rerun analysis manually.
 
 ---
 
 ## Progressive Disclosure
 
-Default experience:
+Executive summaries first.
 
-Executive Summary.
-
-Detailed reasoning should appear only when requested.
-
----
-
-## Minimize Reading
-
-Every component should answer one executive question.
-
-Avoid dense dashboards and excessive narrative.
+Reasoning available on demand.
 
 ---
 
@@ -520,51 +286,23 @@ Avoid dense dashboards and excessive narrative.
 
 The MVP prioritizes:
 
-- complete workflows,
-- real engine outputs,
+- complete organizational lifecycle,
+- engine fidelity,
 - executive clarity,
-- functional navigation,
-- useful recommendations.
+- continuous learning,
+- product validation.
 
-Visual polish follows customer validation.
-
----
-
-## Stewardship
-
-Discovery should encourage executives to strengthen the Operating Model.
-
-Executives should feel responsible for maintaining an accurate representation of their organization because better understanding produces better judgment.
+Visual polish follows validation.
 
 ---
 
-# MVP Data Policy
+# Data Principles
 
-## Use Canonical Engine Data
+Whenever possible, the interface should consume canonical Runtime and Projection outputs.
 
-Whenever possible, UI components should consume canonical Runtime and Executive Projection outputs.
+The UI should never recreate reasoning already owned by the engine.
 
----
-
-## Expand Projection Only When Necessary
-
-Only expose additional Runtime information when:
-
-- the engine already owns the information,
-- the workflow genuinely requires it,
-- the UI would otherwise recreate reasoning.
-
----
-
-## Temporary Fixtures
-
-Temporary fixtures may be used for:
-
-- My Decisions
-- Active Initiatives
-- Operating Model improvement requests
-
-Fixtures must remain centralized and easily replaceable.
+Additional projections should only be added when required to expose existing engine capabilities.
 
 ---
 
@@ -572,77 +310,37 @@ Fixtures must remain centralized and easily replaceable.
 
 The MVP intentionally excludes:
 
-- customizable dashboards,
-- advanced portfolio management,
-- collaboration,
-- comments,
+- advanced collaboration,
 - notifications,
-- complex settings,
-- chat-first workflows,
+- portfolio management,
+- custom dashboards,
+- personalization,
+- workflow automation,
 - extensive integrations,
-- multiple report templates,
-- advanced personalization,
-- gamification,
-- mobile-first optimization.
+- mobile optimization.
 
-These features should be driven by customer feedback rather than prediction.
+These will be driven by customer validation.
 
 ---
 
-# MVP Success Criteria
+# Relationship to Organizational Lifecycle
 
-The MVP succeeds when an executive can complete the following workflow:
+This document defines the MVP product.
 
-```text
-Open Discovery
+The organizational lifecycle is defined in:
 
-↓
-
-Understand Current Organization
-
-↓
-
-Review Initiative Health
-
-↓
-
-Review Discovery Suggestions
-
-↓
-
-Continue Personal Decisions
-
-↓
-
-Read One Insight
-
-↓
-
-Improve Operating Model
-
-↓
-
-Observe Organizational Change
-
-↓
-
-Evaluate Decision
-
-↓
-
-Compare Strategies
-
-↓
-
-Accept Recommendation
-
-↓
-
-Commit Initiative
-
-↓
-
-Generate Executive Brief
+```
+ORGANIZATIONAL_LIFECYCLE.md
 ```
 
-When an executive can naturally complete this workflow without explanation, Discovery is ready for customer validation.
+---
+
+# Relationship to Product Benchmark
+
+Product validation is defined in:
+
+```
+PRODUCT_BENCHMARK.md
+```
+
+The benchmark measures whether this MVP successfully exposes one complete organizational lifecycle end-to-end.

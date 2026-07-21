@@ -2,11 +2,17 @@ import type {
 ExecutiveDecisionCycle,
 } from "../../../engine/v3/decisions/runExecutiveDecisionCycle";
 
+import type {
+ExecutiveDecision,
+} from "../../../engine/v3/model/simulate/executiveDecision";
+
 import {
 buildExecutiveDecisionCycleIntegrityKey,
 } from "../../../engine/v3/decisions/buildExecutiveDecisionCycleIntegrityKey";
 
 export type ExecutiveDecisionProjection = {
+decision: ExecutiveDecision;
+
 objective: {
 id: string;
 headline: string;
@@ -1222,6 +1228,9 @@ export function buildExecutiveDecisionProjection(
 decisionCycle: ExecutiveDecisionCycle,
 ): ExecutiveDecisionProjection {
 return {
+decision:
+decisionCycle.executiveDecision,
+
 objective:
 buildObjective(
 decisionCycle,

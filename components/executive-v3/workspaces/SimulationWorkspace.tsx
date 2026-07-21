@@ -8,8 +8,13 @@ import {
 
 import styles from "../ExecutiveWorkspace.module.css";
 
+import SimulationDecisionSummary from "./simulation/SimulationDecisionSummary";
+
 import type {
-  ExecutiveCommunication,
+  ExecutiveProjection,
+} from "../../executive-v2/projection/ExecutiveProjection";
+
+import type {
   ExecutiveCommunicationForecast,
 } from "../../../engine/v3/communication/executiveCommunication";
 
@@ -18,7 +23,7 @@ import type {
 } from "../../executive-v2/projection/ExecutiveScenarioProjection";
 
 type SimulationWorkspaceProps = {
-  communication: ExecutiveCommunication;
+  projection: ExecutiveProjection;
 };
 
 type ExecutiveScenarioResponse = {
@@ -54,8 +59,15 @@ const horizonOptions: Array<{
 ];
 
 function toPercentage(
-  value: number,
+  value: number | undefined,
 ): number {
+  if (
+    value === undefined ||
+    Number.isNaN(value)
+  ) {
+    return 0;
+  }
+
   const percentage =
     value <= 1
       ? value * 100
@@ -64,7 +76,10 @@ function toPercentage(
   return Math.round(
     Math.max(
       0,
-      Math.min(100, percentage),
+      Math.min(
+        100,
+        percentage,
+      ),
     ),
   );
 }
@@ -74,6 +89,8 @@ function humanizeIdentifier(
 ): string {
   return value
     .replace(/^condition-/, "")
+    .replace(/^option-/, "")
+    .replace(/^intervention-/, "")
     .replace(/[-_]+/g, " ")
     .replace(
       /\b\w/g,
@@ -82,73 +99,131 @@ function humanizeIdentifier(
     );
 }
 
+function formatHorizon(
+  value: string,
+): string {
+  return humanizeIdentifier(value);
+}
+
 export default function SimulationWorkspace({
-  communication,
+  projection,
 }: SimulationWorkspaceProps) {
-  const recommendation =
-    communication.recommendation;
+  const executiveSimulation =
+    projection.executiveSimulation;
+
+  const communication =
+    projection.executiveCommunication;
+
+  const recommendedScenario =
+    executiveSimulation?.recommendedScenario;
+
+  const canonicalSimulatedState =
+    recommendedScenario
+      ?.scenario
+      .simulatedOrganizationState;
+
+  const alternativeScenarios =
+    executiveSimulation?.alternativeScenarios ??
+    [];
+
+  const recommendationTitle =
+    recommendedScenario
+      ? humanizeIdentifier(
+          recommendedScenario.optionId,
+        )
+      : communication
+        ?.recommendation.headline ??
+        "Discovery has not completed a recommended scenario.";
+
+  const recommendationSummary =
+    executiveSimulation?.executiveSummary ??
+    communication
+      ?.recommendation.rationale ??
+    "Discovery is still evaluating the strongest executive intervention.";
+
+  const decisionConfidence =
+    toPercentage(
+      executiveSimulation
+        ?.executiveConfidence ??
+      communication
+        ?.confidence.value ??
+      projection.currentUnderstanding
+        .confidence,
+    );
+
+  const baselineConfidence =
+    toPercentage(
+      projection.currentUnderstanding
+        .confidence,
+    );
+
+  const primaryConstraint =
+    projection.primaryExecutiveConstraint;
 
   const forecast =
-    communication.forecast;
+    communication?.forecast;
 
-  /**
-   * The executive should not have to select an internal condition ID.
-   *
-   * Discovery derives the most relevant condition from the communication
-   * product, prioritizing forecast scope, supporting signals, and meaningful
-   * organizational changes.
-   */
   const availableConditionIds =
     useMemo(() => {
       const conditionIds =
         new Set<string>();
 
-      forecast.affectedConditionIds.forEach(
-        (conditionId) => {
-          conditionIds.add(conditionId);
-        },
-      );
+      canonicalSimulatedState
+        ?.projectedConditions
+        .forEach((condition) => {
+          conditionIds.add(condition.id);
+        });
 
-      communication.supportingSignals.forEach(
-        (signal) => {
+      forecast
+        ?.affectedConditionIds
+        .forEach((conditionId) => {
+          conditionIds.add(conditionId);
+        });
+
+      communication
+        ?.supportingSignals
+        .forEach((signal) => {
           signal.supportingConditionIds.forEach(
             (conditionId) => {
               conditionIds.add(conditionId);
             },
           );
-        },
-      );
+        });
 
-      communication.meaningfulChanges.forEach(
-        (change) => {
-          if (
-            change.entityId.startsWith(
-              "condition-",
-            )
-          ) {
-            conditionIds.add(
-              change.entityId,
-            );
-          }
-        },
-      );
+      if (
+        primaryConstraint?.conditionId
+      ) {
+        conditionIds.add(
+          primaryConstraint.conditionId,
+        );
+      }
 
       return Array.from(conditionIds);
     }, [
-      communication.meaningfulChanges,
-      communication.supportingSignals,
-      forecast.affectedConditionIds,
+      canonicalSimulatedState,
+      communication,
+      forecast,
+      primaryConstraint,
     ]);
 
   const primaryConditionId =
+    primaryConstraint?.conditionId ??
+    canonicalSimulatedState
+      ?.projectedConditions[0]
+      ?.id ??
     availableConditionIds[0] ??
-    communication.meaningfulChanges.find(
-      (change) =>
-        change.entityId.startsWith(
-          "condition-",
-        ),
-    )?.entityId ??
     "condition-decisionflow";
+
+  const initialHorizon =
+    canonicalSimulatedState
+      ?.timeHorizon ??
+    forecast?.timeHorizon ??
+    "near-term";
+
+  const [
+    isAdjustingScenario,
+    setIsAdjustingScenario,
+  ] = useState(false);
 
   const [
     interventionStrength,
@@ -160,7 +235,7 @@ export default function SimulationWorkspace({
     setTimeHorizon,
   ] =
     useState<SimulationHorizon>(
-      forecast.timeHorizon,
+      initialHorizon,
     );
 
   const [
@@ -169,8 +244,8 @@ export default function SimulationWorkspace({
   ] = useState("");
 
   const [
-    projection,
-    setProjection,
+    customProjection,
+    setCustomProjection,
   ] =
     useState<ExecutiveScenarioProjection | null>(
       null,
@@ -199,15 +274,27 @@ export default function SimulationWorkspace({
     event.preventDefault();
 
     setError(null);
-    setProjection(null);
+    setCustomProjection(null);
     setIsDecisionConfirmed(false);
 
+    if (!communication) {
+      setError(
+        "Discovery cannot run an adjusted scenario because executive communication data is not available.",
+      );
+
+      return;
+    }
+
     const assumptions = [
-      ...recommendation.assumptions,
+      ...(executiveSimulation
+        ?.assumptions ??
+        communication
+          .recommendation.assumptions),
     ];
 
     if (
-      challengedAssumption.trim()
+      challengedAssumption
+        .trim()
         .length > 0
     ) {
       assumptions.push(
@@ -215,12 +302,16 @@ export default function SimulationWorkspace({
       );
     }
 
+    const recommendationActions =
+      communication
+        .recommendation.actions;
+
     const interventionDescription =
-      recommendation.actions.length > 0
-        ? recommendation.actions.join(
+      recommendationActions.length > 0
+        ? recommendationActions.join(
             " ",
           )
-        : recommendation.headline;
+        : recommendationSummary;
 
     setIsLoading(true);
 
@@ -238,6 +329,8 @@ export default function SimulationWorkspace({
 
             body: JSON.stringify({
               organizationId:
+                executiveSimulation
+                  ?.organizationId ??
                 communication.organizationId,
 
               changedEntityId:
@@ -250,21 +343,21 @@ export default function SimulationWorkspace({
                 type: "governance",
 
                 title:
-                  recommendation.headline,
+                  recommendationTitle,
 
                 description:
                   interventionDescription,
 
                 rationale:
-                  recommendation.rationale,
+                  recommendationSummary,
 
                 scope: "organization",
 
                 timeHorizon,
 
                 affectedConditionIds:
-                  availableConditionIds.length >
-                  0
+                  availableConditionIds
+                    .length > 0
                     ? availableConditionIds
                     : [
                         primaryConditionId,
@@ -273,8 +366,10 @@ export default function SimulationWorkspace({
                 assumptions,
 
                 confidence:
-                  communication.confidence
-                    .value,
+                  executiveSimulation
+                    ?.executiveConfidence ??
+                  communication
+                    .confidence.value,
               },
             }),
           },
@@ -292,15 +387,17 @@ export default function SimulationWorkspace({
       }
 
       if (
-        !result.executiveScenarioProjection
+        !result
+          .executiveScenarioProjection
       ) {
         throw new Error(
           "The simulation completed without returning a projected organizational future.",
         );
       }
 
-      setProjection(
-        result.executiveScenarioProjection,
+      setCustomProjection(
+        result
+          .executiveScenarioProjection,
       );
     } catch (caughtError) {
       setError(
@@ -313,500 +410,252 @@ export default function SimulationWorkspace({
     }
   }
 
-  const simulatedState =
-    projection?.projectedFuture
+  const customSimulatedState =
+    customProjection
+      ?.projectedFuture
       .simulatedOrganizationState;
 
-  const baselineConfidence =
-    toPercentage(
-      communication.confidence.value,
-    );
+  const activeSimulatedState =
+    customSimulatedState ??
+    canonicalSimulatedState;
 
-  const simulationConfidence =
-    simulatedState
-      ? toPercentage(
-          simulatedState.confidence,
-        )
-      : 0;
+  const activeSimulationConfidence =
+    toPercentage(
+      activeSimulatedState
+        ?.confidence ??
+      executiveSimulation
+        ?.executiveConfidence,
+    );
 
   const confidenceDelta =
-    simulationConfidence -
+    activeSimulationConfidence -
     baselineConfidence;
 
-  const primaryCondition =
-    simulatedState?.projectedConditions.find(
-      (condition) =>
-        condition.id ===
-        primaryConditionId,
-    );
-
   const improvingConditions =
-    simulatedState?.projectedConditions
+    activeSimulatedState
+      ?.projectedConditions
       .filter(
         (condition) =>
           condition.status ===
           "improving",
-      )
-      .slice(0, 2) ?? [];
+      ) ?? [];
 
   const unresolvedConditions =
-    simulatedState?.projectedConditions
+    activeSimulatedState
+      ?.projectedConditions
       .filter(
         (condition) =>
           condition.status ===
             "deteriorating" ||
           condition.status ===
             "constrained",
-      )
-      .slice(0, 2) ?? [];
+      ) ?? [];
+
+  const stableConditions =
+    activeSimulatedState
+      ?.projectedConditions
+      .filter(
+        (condition) =>
+          condition.status !==
+            "improving" &&
+          condition.status !==
+            "deteriorating" &&
+          condition.status !==
+            "constrained",
+      ) ?? [];
+
+  const expectedImprovements =
+    improvingConditions
+      .slice(0, 4)
+      .map(
+        (condition) =>
+          condition.name,
+      );
+
+  const visibleExpectedBenefits =
+    executiveSimulation
+      ?.expectedBenefits
+      .slice(0, 4) ??
+    [];
+
+  const visibleTradeoffs =
+    executiveSimulation
+      ?.tradeoffs
+      .slice(0, 4) ??
+    communication
+      ?.recommendation.tradeOffs
+      .slice(0, 4) ??
+    [];
+
+  const visibleRisks =
+    executiveSimulation
+      ?.risks
+      .slice(0, 4) ??
+    [];
+
+  const visibleAssumptions =
+    executiveSimulation
+      ?.assumptions
+      .slice(0, 4) ??
+    communication
+      ?.recommendation.assumptions
+      .slice(0, 4) ??
+    [];
+
+  const evidenceThatCouldChange =
+    executiveSimulation
+      ?.evidenceThatCouldChangeRecommendation
+      .slice(0, 4) ??
+    communication
+      ?.recommendation
+      .evidenceThatCouldChangeRecommendation
+      .slice(0, 4) ??
+    [];
 
   const executiveSynopsis =
-    improvingConditions.length > 0
-      ? `The intervention improves ${improvingConditions
-          .map(
-            (condition) =>
-              condition.name,
-          )
-          .join(
-            " and ",
-          )}, while ${
-          unresolvedConditions.length > 0
-            ? `${unresolvedConditions
-                .map(
-                  (condition) =>
-                    condition.name,
-                )
-                .join(
-                  " and ",
-                )} remain unresolved.`
-            : "no major unresolved conditions remain in the projected state."
-        }`
-      : "The intervention does not yet produce a clear improvement in the projected organizational state.";
+    activeSimulatedState
+      ?.explanation ??
+    executiveSimulation
+      ?.executiveSummary ??
+    recommendationSummary;
+
+  function scrollToElement(
+    elementId: string,
+  ): void {
+    window.requestAnimationFrame(
+      () => {
+        document
+          .getElementById(elementId)
+          ?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+      },
+    );
+  }
+
+  function openAlternativeComparison(): void {
+    scrollToElement(
+      "alternative-strategies",
+    );
+  }
+
+  function openScenarioChallenge(): void {
+    setIsAdjustingScenario(true);
+
+    scrollToElement(
+      "challenge-decision",
+    );
+  }
 
   function reviseScenario(): void {
     setIsDecisionConfirmed(false);
-    setProjection(null);
+    setCustomProjection(null);
+    setIsAdjustingScenario(true);
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    scrollToElement(
+      "challenge-decision",
+    );
   }
 
   return (
     <main className={styles.workspace}>
       <div className={styles.shell}>
         <section className={styles.main}>
-          <header
-            className={
-              styles.workspaceHeader
-            }
-          >
-            <p className={styles.eyebrow}>
-              Run a What-If Scenario
-            </p>
+          <SimulationDecisionSummary
+  title={recommendationTitle}
+  confidence={decisionConfidence}
+  summary={recommendationSummary}
+  primaryConstraint={
+    primaryConstraint?.title
+  }
+  expectedImprovements={
+    expectedImprovements
+  }
+  onMoveForward={() => {
+    if (
+      activeSimulatedState
+    ) {
+      setIsDecisionConfirmed(
+        true,
+      );
 
-            <h1>
-              Test what happens if leadership
-              follows Discovery&apos;s
-              recommendation.
-            </h1>
+      scrollToElement(
+        "decision-confirmation",
+      );
+    }
+  }}
+  onCompareAlternatives={
+    openAlternativeComparison
+  }
+  onChallengeDecision={
+    openScenarioChallenge
+  }
+/>
 
-            <p
+          {activeSimulatedState ? (
+            <section
               className={
-                styles.workspaceLead
-              }
-            >
-              Adjust the intensity, timing, or
-              assumptions behind the action and
-              compare the projected future with
-              the current organizational
-              baseline.
-            </p>
-          </header>
-
-          <section
-            className={styles.featureCard}
-          >
-            <h2>
-              Recommended intervention
-            </h2>
-
-            <h3>
-              {recommendation.headline}
-            </h3>
-
-            <p>
-              {recommendation.rationale}
-            </p>
-
-            {recommendation.actions.length >
-            0 ? (
-              <ul className={styles.list}>
-                {recommendation.actions.map(
-                  (action) => (
-                    <li
-                      key={action}
-                      className={
-                        styles.listItem
-                      }
-                    >
-                      {action}
-                    </li>
-                  ),
-                )}
-              </ul>
-            ) : null}
-
-            <div className={styles.metaRow}>
-              <span
-                className={styles.metaPill}
-              >
-                Primary focus:{" "}
-                {humanizeIdentifier(
-                  primaryConditionId,
-                )}
-              </span>
-
-              <span
-                className={styles.metaPill}
-              >
-                {
-                  Math.max(
-                    1,
-                    availableConditionIds.length,
-                  )
-                }{" "}
-                condition
-                {
-                  Math.max(
-                    1,
-                    availableConditionIds.length,
-                  ) === 1
-                    ? ""
-                    : "s"
-                }{" "}
-                in scope
-              </span>
-            </div>
-          </section>
-
-          <form
-            className={styles.card}
-            onSubmit={runSimulation}
-          >
-            <h2>
-              Configure the scenario
-            </h2>
-
-            <div
-              className={
-                styles.simulationControl
+                styles.impactSummary
               }
             >
               <div
                 className={
-                  styles.simulationControlHeader
+                  styles.impactHeader
                 }
               >
                 <div>
-                  <h3>
-                    Intervention intensity
-                  </h3>
-
-                  <p>
-                    Choose how strongly
-                    leadership should apply the
-                    recommendation.
+                  <p
+                    className={
+                      styles.eyebrow
+                    }
+                  >
+                    Expected Organizational
+                    Impact
                   </p>
+
+                  <h2>
+                    {improvingConditions.length >
+                    0
+                      ? `${improvingConditions.length} organizational condition${improvingConditions.length === 1 ? "" : "s"} expected to improve.`
+                      : "The recommended strategy does not yet produce a clear organizational improvement."}
+                  </h2>
                 </div>
 
-                <span
-                  className={styles.metaPill}
+                <div
+                  className={
+                    styles.confidenceComparison
+                  }
                 >
-                  {Math.round(
-                    interventionStrength *
-                      100,
-                  )}
-                  %
-                </span>
-              </div>
+                  <span>
+                    {baselineConfidence}%
+                  </span>
 
-              <input
-                aria-label="Intervention intensity"
-                className={
-                  styles.simulationRange
-                }
-                type="range"
-                min="0.05"
-                max="1"
-                step="0.05"
-                value={
-                  interventionStrength
-                }
-                onChange={(event) => {
-                  setInterventionStrength(
-                    Number(
-                      event.target.value,
-                    ),
-                  );
-                }}
-              />
+                  <span aria-hidden="true">
+                    →
+                  </span>
+
+                  <strong>
+                    {
+                      activeSimulationConfidence
+                    }
+                    %
+                  </strong>
+                </div>
+              </div>
 
               <div
                 className={
-                  styles.rangeLabels
+                  styles.impactList
                 }
               >
-                <span>Conservative</span>
-
-                <span>Aggressive</span>
-              </div>
-            </div>
-
-            <div
-              className={
-                styles.simulationControl
-              }
-            >
-              <h3>
-                Expected timeframe
-              </h3>
-
-              <div
-                className={
-                  styles.optionGrid
-                }
-              >
-                {horizonOptions.map(
-                  (option) => (
-                    <label
-                      key={option.value}
-                      className={
-                        timeHorizon ===
-                        option.value
-                          ? styles.optionCardActive
-                          : styles.optionCard
-                      }
-                    >
-                      <input
-                        type="radio"
-                        name="time-horizon"
-                        value={option.value}
-                        checked={
-                          timeHorizon ===
-                          option.value
-                        }
-                        onChange={() => {
-                          setTimeHorizon(
-                            option.value,
-                          );
-                        }}
-                      />
-
-                      <span>
-                        {option.label}
-                      </span>
-                    </label>
-                  ),
-                )}
-              </div>
-            </div>
-
-            <div
-              className={
-                styles.simulationControl
-              }
-            >
-              <label
-                htmlFor="challenged-assumption"
-              >
-                <h3>
-                  Anything Discovery might be
-                  missing?
-                </h3>
-
-                <p>
-                  Optional. Add an executive
-                  concern or belief Discovery
-                  should include in the
-                  simulation.
-                </p>
-              </label>
-
-              <textarea
-                id="challenged-assumption"
-                className={
-                  styles.simulationTextarea
-                }
-                rows={4}
-                value={
-                  challengedAssumption
-                }
-                placeholder="For example: Teams may resist distributing decision authority."
-                onChange={(event) => {
-                  setChallengedAssumption(
-                    event.target.value,
-                  );
-                }}
-              />
-            </div>
-
-            {error ? (
-              <p
-                className={
-                  styles.errorMessage
-                }
-                role="alert"
-              >
-                {error}
-              </p>
-            ) : null}
-
-            <button
-              className={
-                styles.primaryButton
-              }
-              type="submit"
-              disabled={isLoading}
-            >
-              {isLoading
-                ? "Simulating organizational future..."
-                : "Run what-if scenario"}
-            </button>
-          </form>
-
-          {projection &&
-          simulatedState ? (
-            <>
-              <section
-                className={
-                  styles.featureCard
-                }
-              >
-                <h2>
-                  Projected result
-                </h2>
-
-                <h3>
-                  {
-                    projection.summary
-                      .title
-                  }
-                </h3>
-
-                <p>
-                  {
-                    simulatedState.explanation
-                  }
-                </p>
-
-                <div
-                  className={
-                    styles.metaRow
-                  }
-                >
-                  <span
-                    className={
-                      styles.metaPill
-                    }
-                  >
-                    Confidence{" "}
-                    {simulationConfidence}%
-                  </span>
-
-                  <span
-                    className={
-                      styles.metaPill
-                    }
-                  >
-                    {
-                      projection.summary
-                        .timeHorizon
-                    }
-                  </span>
-
-                  <span
-                    className={
-                      styles.metaPill
-                    }
-                  >
-                    {
-                      simulatedState
-                        .projectedConditions
-                        .length
-                    }{" "}
-                    projected conditions
-                  </span>
-                </div>
-              </section>
-
-              <section
-                className={
-                  styles.impactSummary
-                }
-              >
-                <div
-                  className={
-                    styles.impactHeader
-                  }
-                >
-                  <div>
-                    <p
-                      className={
-                        styles.eyebrow
-                      }
-                    >
-                      What changes
-                    </p>
-
-                    <h2>
-                      The simulation produces{" "}
-                      {
-                        improvingConditions.length
-                      }{" "}
-                      clear improvement
-                      {
-                        improvingConditions.length ===
-                        1
-                          ? ""
-                          : "s"
-                      }
-                      .
-                    </h2>
-                  </div>
-
-                  <div
-                    className={
-                      styles.confidenceComparison
-                    }
-                  >
-                    <span>
-                      {baselineConfidence}%
-                    </span>
-
-                    <span aria-hidden="true">
-                      →
-                    </span>
-
-                    <strong>
-                      {
-                        simulationConfidence
-                      }
-                      %
-                    </strong>
-                  </div>
-                </div>
-
-                <div
-                  className={
-                    styles.impactList
-                  }
-                >
-                  {primaryCondition ? (
+                {improvingConditions
+                  .slice(0, 3)
+                  .map((condition) => (
                     <article
+                      key={condition.id}
                       className={
-                        styles.impactItemPrimary
+                        styles.impactItemPositive
                       }
                     >
                       <span
@@ -820,140 +669,140 @@ export default function SimulationWorkspace({
 
                       <div>
                         <strong>
-                          {
-                            primaryCondition.name
-                          }
+                          {condition.name}
                         </strong>
 
                         <p>
-                          Primary decision focus
-                          becomes{" "}
-                          {
-                            primaryCondition.status
-                          }
-                          .
+                          {condition.summary}
                         </p>
                       </div>
                     </article>
-                  ) : null}
+                  ))}
 
-                  {improvingConditions
-                    .filter(
-                      (condition) =>
-                        condition.id !==
-                        primaryConditionId,
-                    )
-                    .map(
-                      (condition) => (
-                        <article
-                          key={condition.id}
-                          className={
-                            styles.impactItemPositive
-                          }
-                        >
-                          <span
-                            className={
-                              styles.impactIcon
-                            }
-                            aria-hidden="true"
-                          >
-                            ✓
-                          </span>
-
-                          <div>
-                            <strong>
-                              {
-                                condition.name
-                              }
-                            </strong>
-
-                            <p>
-                              Projected to
-                              improve under this
-                              intervention.
-                            </p>
-                          </div>
-                        </article>
-                      ),
-                    )}
-
-                  {unresolvedConditions.map(
-                    (condition) => (
-                      <article
-                        key={condition.id}
+                {unresolvedConditions
+                  .slice(0, 3)
+                  .map((condition) => (
+                    <article
+                      key={condition.id}
+                      className={
+                        styles.impactItemWarning
+                      }
+                    >
+                      <span
                         className={
-                          styles.impactItemWarning
+                          styles.impactIcon
                         }
+                        aria-hidden="true"
                       >
-                        <span
-                          className={
-                            styles.impactIcon
-                          }
-                          aria-hidden="true"
-                        >
-                          !
-                        </span>
+                        !
+                      </span>
 
-                        <div>
-                          <strong>
-                            {
-                              condition.name
+                      <div>
+                        <strong>
+                          {condition.name}
+                        </strong>
+
+                        <p>
+                          Remains{" "}
+                          {
+                            condition.status
+                          }{" "}
+                          after the
+                          intervention.
+                        </p>
+                      </div>
+                    </article>
+                  ))}
+
+                {improvingConditions.length ===
+                  0 &&
+                unresolvedConditions.length ===
+                  0
+                  ? stableConditions
+                      .slice(0, 3)
+                      .map(
+                        (condition) => (
+                          <article
+                            key={
+                              condition.id
                             }
-                          </strong>
+                            className={
+                              styles.impactItemPrimary
+                            }
+                          >
+                            <span
+                              className={
+                                styles.impactIcon
+                              }
+                              aria-hidden="true"
+                            >
+                              →
+                            </span>
 
-                          <p>
-                            Remains{" "}
-                            {
-                              condition.status
-                            }{" "}
-                            after the
-                            intervention.
-                          </p>
-                        </div>
-                      </article>
-                    ),
-                  )}
-                </div>
+                            <div>
+                              <strong>
+                                {
+                                  condition.name
+                                }
+                              </strong>
+
+                              <p>
+                                {
+                                  condition.summary
+                                }
+                              </p>
+                            </div>
+                          </article>
+                        ),
+                      )
+                  : null}
+              </div>
+
+              <div
+                className={
+                  styles.executiveSynopsis
+                }
+              >
+                <span>
+                  Executive synopsis
+                </span>
+
+                <p>
+                  {executiveSynopsis}
+                </p>
+              </div>
+
+              <details
+                className={
+                  styles.detailsDisclosure
+                }
+              >
+                <summary>
+                  Explore all projected
+                  conditions
+                </summary>
 
                 <div
                   className={
-                    styles.executiveSynopsis
+                    styles.evidenceGrid
                   }
                 >
-                  <span>
-                    Executive synopsis
-                  </span>
-
-                  <p>
-                    {executiveSynopsis}
-                  </p>
-                </div>
-
-                <details
-                  className={
-                    styles.detailsDisclosure
-                  }
-                >
-                  <summary>
-                    Explore projected
-                    conditions
-                  </summary>
-
-                  <div
-                    className={
-                      styles.evidenceGrid
-                    }
-                  >
-                    {simulatedState.projectedConditions.map(
+                  {activeSimulatedState
+                    .projectedConditions
+                    .map(
                       (condition) => (
                         <article
-                          key={condition.id}
+                          key={
+                            condition.id
+                          }
                           className={
                             styles.evidenceCard
                           }
                         >
                           <h3>
-                            {condition.name}
+                            {
+                              condition.name
+                            }
                           </h3>
 
                           <p
@@ -996,13 +845,35 @@ export default function SimulationWorkspace({
                         </article>
                       ),
                     )}
-                  </div>
-                </details>
-              </section>
+                </div>
+              </details>
+            </section>
+          ) : (
+            <section
+              className={styles.card}
+            >
+              <h2>
+                No canonical simulation is
+                available.
+              </h2>
 
-              <section
+              <p>
+                Discovery has not yet produced a
+                complete recommended scenario
+                for this organization.
+              </p>
+            </section>
+          )}
+
+          {alternativeScenarios.length >
+          0 ? (
+            <section
+              id="alternative-strategies"
+              className={styles.card}
+            >
+              <div
                 className={
-                  styles.decisionCard
+                  styles.impactHeader
                 }
               >
                 <div>
@@ -1011,234 +882,739 @@ export default function SimulationWorkspace({
                       styles.eyebrow
                     }
                   >
-                    Decision confidence
+                    Alternative Strategies
                   </p>
 
                   <h2>
-                    {confidenceDelta > 0
-                      ? "This scenario increases confidence."
-                      : confidenceDelta ===
-                          0
-                        ? "This scenario maintains current confidence."
-                        : "This scenario does not yet improve confidence."}
+                    Compare the strongest
+                    available strategies
                   </h2>
-
-                  <p>
-                    Discovery&apos;s confidence
-                    moved from{" "}
-                    {baselineConfidence}% to{" "}
-                    {simulationConfidence}%.
-                  </p>
                 </div>
 
-                <div
+                <span
                   className={
-                    styles.confidenceComparison
+                    styles.metaPill
                   }
                 >
-                  <span>
-                    {baselineConfidence}%
-                  </span>
+                  {
+                    alternativeScenarios.length +
+                    1
+                  }{" "}
+                  scenarios compared
+                </span>
+              </div>
 
-                  <span aria-hidden="true">
-                    →
-                  </span>
-
-                  <strong>
-                    {simulationConfidence}%
-                  </strong>
-                </div>
-
-                <div
-                  className={
-                    styles.decisionActions
-                  }
-                >
-                  <button
+              <div
+                className={
+                  styles.evidenceGrid
+                }
+              >
+                {recommendedScenario ? (
+                  <article
                     className={
-                      styles.primaryButton
+                      styles.evidenceCard
                     }
-                    type="button"
-                    onClick={() => {
-                      setIsDecisionConfirmed(
-                        true,
-                      );
-                    }}
                   >
-                    Move forward
-                  </button>
-
-                  <button
-                    className={
-                      styles.secondaryButton
-                    }
-                    type="button"
-                    onClick={reviseScenario}
-                  >
-                    Adjust scenario
-                  </button>
-                </div>
-              </section>
-
-              {isDecisionConfirmed ? (
-                <section
-                  className={
-                    styles.decisionConfirmation
-                  }
-                >
-                  <div>
                     <p
                       className={
                         styles.eyebrow
                       }
                     >
-                      Decision ready
+                      Recommended
                     </p>
 
-                    <h2>
-                      Move forward with{" "}
+                    <h3>
                       {
-                        recommendation.headline
+                        recommendationTitle
                       }
-                    </h2>
+                    </h3>
+
+                    <p
+                      className={
+                        styles.evidenceSummary
+                      }
+                    >
+                      {
+                        recommendedScenario
+                          .scenario
+                          .simulatedOrganizationState
+                          .explanation
+                      }
+                    </p>
+
+                    <div
+                      className={
+                        styles.metaRow
+                      }
+                    >
+                      <span
+                        className={
+                          styles.metaPill
+                        }
+                      >
+                        Confidence{" "}
+                        {toPercentage(
+                          recommendedScenario
+                            .scenario
+                            .simulatedOrganizationState
+                            .confidence,
+                        )}
+                        %
+                      </span>
+                    </div>
+                  </article>
+                ) : null}
+
+                {alternativeScenarios.map(
+                  (scenario) => {
+                    const state =
+                      scenario
+                        .scenario
+                        .simulatedOrganizationState;
+
+                    return (
+                      <article
+                        key={
+                          scenario.scenarioId
+                        }
+                        className={
+                          styles.evidenceCard
+                        }
+                      >
+                        <p
+                          className={
+                            styles.eyebrow
+                          }
+                        >
+                          Alternative
+                        </p>
+
+                        <h3>
+                          {humanizeIdentifier(
+                            scenario.optionId,
+                          )}
+                        </h3>
+
+                        <p
+                          className={
+                            styles.evidenceSummary
+                          }
+                        >
+                          {
+                            state.explanation
+                          }
+                        </p>
+
+                        <div
+                          className={
+                            styles.metaRow
+                          }
+                        >
+                          <span
+                            className={
+                              styles.metaPill
+                            }
+                          >
+                            Confidence{" "}
+                            {toPercentage(
+                              state.confidence,
+                            )}
+                            %
+                          </span>
+
+                          <span
+                            className={
+                              styles.metaPill
+                            }
+                          >
+                            {formatHorizon(
+                              state.timeHorizon,
+                            )}
+                          </span>
+                        </div>
+                      </article>
+                    );
+                  },
+                )}
+              </div>
+            </section>
+          ) : null}
+
+          <section
+            className={styles.card}
+          >
+            <p className={styles.eyebrow}>
+              Executive Judgment
+            </p>
+
+            <h2>
+              Benefits, trade-offs, and risks
+            </h2>
+
+            <div
+              className={
+                styles.evidenceGrid
+              }
+            >
+              <article
+                className={
+                  styles.evidenceCard
+                }
+              >
+                <h3>Expected benefits</h3>
+
+                {visibleExpectedBenefits.length >
+                0 ? (
+                  <ul
+                    className={styles.list}
+                  >
+                    {visibleExpectedBenefits.map(
+                      (benefit) => (
+                        <li
+                          key={benefit}
+                          className={
+                            styles.listItem
+                          }
+                        >
+                          {benefit}
+                        </li>
+                      ),
+                    )}
+                  </ul>
+                ) : (
+                  <p>
+                    No explicit benefits are
+                    currently recorded.
+                  </p>
+                )}
+              </article>
+
+              <article
+                className={
+                  styles.evidenceCard
+                }
+              >
+                <h3>Trade-offs</h3>
+
+                {visibleTradeoffs.length >
+                0 ? (
+                  <ul
+                    className={styles.list}
+                  >
+                    {visibleTradeoffs.map(
+                      (tradeoff) => (
+                        <li
+                          key={tradeoff}
+                          className={
+                            styles.listItem
+                          }
+                        >
+                          {tradeoff}
+                        </li>
+                      ),
+                    )}
+                  </ul>
+                ) : (
+                  <p>
+                    No material trade-off is
+                    currently recorded.
+                  </p>
+                )}
+              </article>
+
+              <article
+                className={
+                  styles.evidenceCard
+                }
+              >
+                <h3>Risks</h3>
+
+                {visibleRisks.length >
+                0 ? (
+                  <ul
+                    className={styles.list}
+                  >
+                    {visibleRisks.map(
+                      (risk) => (
+                        <li
+                          key={risk}
+                          className={
+                            styles.listItem
+                          }
+                        >
+                          {risk}
+                        </li>
+                      ),
+                    )}
+                  </ul>
+                ) : (
+                  <p>
+                    No explicit risk is
+                    currently recorded.
+                  </p>
+                )}
+              </article>
+            </div>
+          </section>
+
+          {isAdjustingScenario ? (
+            <form
+              id="challenge-decision"
+              className={styles.card}
+              onSubmit={runSimulation}
+            >
+              <p
+                className={styles.eyebrow}
+              >
+                Challenge Decision
+              </p>
+
+              <h2>
+                Challenge Discovery&apos;s
+                recommendation
+              </h2>
+
+              <div
+                className={
+                  styles.simulationControl
+                }
+              >
+                <div
+                  className={
+                    styles.simulationControlHeader
+                  }
+                >
+                  <div>
+                    <h3>
+                      Intervention intensity
+                    </h3>
 
                     <p>
-                      Discovery will preserve
-                      the recommendation,
-                      scenario assumptions,
-                      projected future, and
-                      confidence at the time of
-                      the decision.
+                      Choose how strongly
+                      leadership should apply
+                      the strategy.
                     </p>
                   </div>
 
-                  <div
+                  <span
                     className={
-                      styles.decisionSummaryGrid
+                      styles.metaPill
                     }
                   >
-                    <article
-                      className={
-                        styles.decisionSummaryItem
-                      }
-                    >
-                      <span>
-                        Decision confidence
-                      </span>
+                    {Math.round(
+                      interventionStrength *
+                        100,
+                    )}
+                    %
+                  </span>
+                </div>
 
-                      <strong>
-                        {
-                          simulationConfidence
+                <input
+                  aria-label="Intervention intensity"
+                  className={
+                    styles.simulationRange
+                  }
+                  type="range"
+                  min="0.05"
+                  max="1"
+                  step="0.05"
+                  value={
+                    interventionStrength
+                  }
+                  onChange={(event) => {
+                    setInterventionStrength(
+                      Number(
+                        event.target.value,
+                      ),
+                    );
+                  }}
+                />
+
+                <div
+                  className={
+                    styles.rangeLabels
+                  }
+                >
+                  <span>Conservative</span>
+
+                  <span>Aggressive</span>
+                </div>
+              </div>
+
+              <div
+                className={
+                  styles.simulationControl
+                }
+              >
+                <h3>
+                  Expected timeframe
+                </h3>
+
+                <div
+                  className={
+                    styles.optionGrid
+                  }
+                >
+                  {horizonOptions.map(
+                    (option) => (
+                      <label
+                        key={option.value}
+                        className={
+                          timeHorizon ===
+                          option.value
+                            ? styles.optionCardActive
+                            : styles.optionCard
                         }
-                        %
-                      </strong>
-                    </article>
+                      >
+                        <input
+                          type="radio"
+                          name="time-horizon"
+                          value={
+                            option.value
+                          }
+                          checked={
+                            timeHorizon ===
+                            option.value
+                          }
+                          onChange={() => {
+                            setTimeHorizon(
+                              option.value,
+                            );
+                          }}
+                        />
 
-                    <article
-                      className={
-                        styles.decisionSummaryItem
-                      }
-                    >
-                      <span>
-                        Confidence change
-                      </span>
+                        <span>
+                          {option.label}
+                        </span>
+                      </label>
+                    ),
+                  )}
+                </div>
+              </div>
 
-                      <strong>
-                        {confidenceDelta >= 0
-                          ? `+${confidenceDelta}%`
-                          : `${confidenceDelta}%`}
-                      </strong>
-                    </article>
+              <div
+                className={
+                  styles.simulationControl
+                }
+              >
+                <label
+                  htmlFor="challenged-assumption"
+                >
+                  <h3>
+                    What might Discovery be
+                    missing?
+                  </h3>
 
-                    <article
-                      className={
-                        styles.decisionSummaryItem
-                      }
-                    >
-                      <span>
-                        Time horizon
-                      </span>
+                  <p>
+                    Add an executive concern,
+                    belief, or constraint that
+                    should be included in the
+                    adjusted scenario.
+                  </p>
+                </label>
 
-                      <strong>
-                        {
-                          projection.summary
-                            .timeHorizon
-                        }
-                      </strong>
-                    </article>
+                <textarea
+                  id="challenged-assumption"
+                  className={
+                    styles.simulationTextarea
+                  }
+                  rows={4}
+                  value={
+                    challengedAssumption
+                  }
+                  placeholder="For example: Teams may resist distributing decision authority."
+                  onChange={(event) => {
+                    setChallengedAssumption(
+                      event.target.value,
+                    );
+                  }}
+                />
+              </div>
 
-                    <article
-                      className={
-                        styles.decisionSummaryItem
-                      }
-                    >
-                      <span>
-                        Assumptions challenged
-                      </span>
-
-                      <strong>
-                        {challengedAssumption
-                          .trim()
-                          .length > 0
-                          ? 1
-                          : 0}
-                      </strong>
-                    </article>
-                  </div>
-
-                  <div
-                    className={
-                      styles.decisionActions
-                    }
-                  >
-                    <button
-                      className={
-                        styles.primaryButton
-                      }
-                      type="button"
-                    >
-                      Commit decision
-                    </button>
-
-                    <button
-                      className={
-                        styles.secondaryButton
-                      }
-                      type="button"
-                      onClick={() => {
-                        setIsDecisionConfirmed(
-                          false,
-                        );
-                      }}
-                    >
-                      Back to result
-                    </button>
-                  </div>
-                </section>
+              {error ? (
+                <p
+                  className={
+                    styles.errorMessage
+                  }
+                  role="alert"
+                >
+                  {error}
+                </p>
               ) : null}
-            </>
+
+              <button
+                className={
+                  styles.primaryButton
+                }
+                type="submit"
+                disabled={
+                  isLoading ||
+                  !communication
+                }
+              >
+                {isLoading
+                  ? "Simulating organizational future..."
+                  : "Run adjusted scenario"}
+              </button>
+            </form>
+          ) : null}
+
+          <details
+            className={
+              styles.detailsDisclosure
+            }
+          >
+            <summary>
+              Review assumptions and evidence
+              that could change the recommendation
+            </summary>
+
+            <div
+              className={
+                styles.evidenceGrid
+              }
+            >
+              <article
+                className={
+                  styles.evidenceCard
+                }
+              >
+                <h3>Key assumptions</h3>
+
+                {visibleAssumptions.length >
+                0 ? (
+                  <ul
+                    className={styles.list}
+                  >
+                    {visibleAssumptions.map(
+                      (assumption) => (
+                        <li
+                          key={assumption}
+                          className={
+                            styles.listItem
+                          }
+                        >
+                          {assumption}
+                        </li>
+                      ),
+                    )}
+                  </ul>
+                ) : (
+                  <p>
+                    No explicit assumptions are
+                    currently recorded.
+                  </p>
+                )}
+              </article>
+
+              <article
+                className={
+                  styles.evidenceCard
+                }
+              >
+                <h3>
+                  What could change the
+                  recommendation
+                </h3>
+
+                {evidenceThatCouldChange.length >
+                0 ? (
+                  <ul
+                    className={styles.list}
+                  >
+                    {evidenceThatCouldChange.map(
+                      (evidence) => (
+                        <li
+                          key={evidence}
+                          className={
+                            styles.listItem
+                          }
+                        >
+                          {evidence}
+                        </li>
+                      ),
+                    )}
+                  </ul>
+                ) : (
+                  <p>
+                    Discovery has not identified
+                    evidence that would
+                    materially change the
+                    recommendation.
+                  </p>
+                )}
+              </article>
+            </div>
+          </details>
+
+          {isDecisionConfirmed ? (
+            <section
+              id="decision-confirmation"
+              className={
+                styles.decisionConfirmation
+              }
+            >
+              <div>
+                <p
+                  className={
+                    styles.eyebrow
+                  }
+                >
+                  Decision Ready
+                </p>
+
+                <h2>
+                  Move forward with{" "}
+                  {recommendationTitle}
+                </h2>
+
+                <p>
+                  Discovery will preserve the
+                  recommended strategy,
+                  assumptions, projected future,
+                  alternatives considered, and
+                  confidence at the time of the
+                  decision.
+                </p>
+              </div>
+
+              <div
+                className={
+                  styles.decisionSummaryGrid
+                }
+              >
+                <article
+                  className={
+                    styles.decisionSummaryItem
+                  }
+                >
+                  <span>
+                    Decision confidence
+                  </span>
+
+                  <strong>
+                    {
+                      activeSimulationConfidence
+                    }
+                    %
+                  </strong>
+                </article>
+
+                <article
+                  className={
+                    styles.decisionSummaryItem
+                  }
+                >
+                  <span>
+                    Confidence change
+                  </span>
+
+                  <strong>
+                    {confidenceDelta >= 0
+                      ? `+${confidenceDelta}%`
+                      : `${confidenceDelta}%`}
+                  </strong>
+                </article>
+
+                <article
+                  className={
+                    styles.decisionSummaryItem
+                  }
+                >
+                  <span>
+                    Time horizon
+                  </span>
+
+                  <strong>
+                    {activeSimulatedState
+                      ? formatHorizon(
+                          activeSimulatedState
+                            .timeHorizon,
+                        )
+                      : "Unknown"}
+                  </strong>
+                </article>
+
+                <article
+                  className={
+                    styles.decisionSummaryItem
+                  }
+                >
+                  <span>
+                    Alternatives considered
+                  </span>
+
+                  <strong>
+                    {
+                      alternativeScenarios.length
+                    }
+                  </strong>
+                </article>
+              </div>
+
+              <div
+                className={
+                  styles.decisionActions
+                }
+              >
+                <button
+                  className={
+                    styles.primaryButton
+                  }
+                  type="button"
+                >
+                  Commit decision
+                </button>
+
+                <button
+                  className={
+                    styles.secondaryButton
+                  }
+                  type="button"
+                  onClick={() => {
+                    setIsDecisionConfirmed(
+                      false,
+                    );
+                  }}
+                >
+                  Back to analysis
+                </button>
+
+                <button
+                  className={
+                    styles.secondaryButton
+                  }
+                  type="button"
+                  onClick={reviseScenario}
+                >
+                  Revise scenario
+                </button>
+              </div>
+            </section>
           ) : null}
         </section>
 
         <aside className={styles.rail}>
           <section className={styles.card}>
-            <h2>
-              Current baseline
-            </h2>
+            <h2>Current baseline</h2>
 
             <h3>
-              {communication.headline}
+              {
+                projection
+                  .currentUnderstanding
+                  .belief
+              }
             </h3>
 
             <p>
-              {
-                communication.executiveSummary
-              }
+              {projection.explanation.why}
             </p>
 
             <div className={styles.metaRow}>
               <span
-                className={styles.metaPill}
+                className={
+                  styles.metaPill
+                }
               >
                 Confidence{" "}
                 {baselineConfidence}%
@@ -1246,41 +1622,99 @@ export default function SimulationWorkspace({
             </div>
           </section>
 
-          <section className={styles.card}>
-            <h2>
-              Expected future without action
-            </h2>
-
-            <h3>
-              {forecast.headline}
-            </h3>
-
-            <p>
-              {forecast.explanation}
-            </p>
-          </section>
-
-          {communication.uncertainty ? (
+          {primaryConstraint ? (
             <section
               className={styles.card}
             >
               <h2>
-                Uncertainty to reduce
+                Primary constraint
               </h2>
 
               <h3>
                 {
-                  communication.uncertainty
-                    .question
+                  primaryConstraint.title
                 }
               </h3>
 
               <p>
                 {
-                  communication.uncertainty
-                    .implication
+                  primaryConstraint
+                    .executiveSummary
                 }
               </p>
+
+              <div
+                className={
+                  styles.metaRow
+                }
+              >
+                <span
+                  className={
+                    styles.metaPill
+                  }
+                >
+                  {
+                    primaryConstraint
+                      .confidence
+                  }
+                  % confidence
+                </span>
+
+                <span
+                  className={
+                    styles.metaPill
+                  }
+                >
+                  {
+                    primaryConstraint
+                      .urgency
+                  }{" "}
+                  urgency
+                </span>
+              </div>
+            </section>
+          ) : null}
+
+          {forecast ? (
+            <section
+              className={styles.card}
+            >
+              <h2>
+                Future without action
+              </h2>
+
+              <h3>
+                {forecast.headline}
+              </h3>
+
+              <p>
+                {forecast.explanation}
+              </p>
+            </section>
+          ) : null}
+
+          {executiveSimulation
+            ?.keyDrivers.length ? (
+            <section
+              className={styles.card}
+            >
+              <h2>Key drivers</h2>
+
+              <ul className={styles.list}>
+                {executiveSimulation
+                  .keyDrivers
+                  .slice(0, 4)
+                  .map((driver) => (
+                    <li
+                      key={driver}
+                      className={
+                        styles.listItem
+                      }
+                    >
+                      {driver}
+                    </li>
+                  ))}
+              </ul>
             </section>
           ) : null}
         </aside>

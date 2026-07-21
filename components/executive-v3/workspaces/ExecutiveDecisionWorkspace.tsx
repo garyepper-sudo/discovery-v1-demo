@@ -2,12 +2,29 @@
 
 import styles from "../ExecutiveWorkspace.module.css";
 
+import DecisionCommitPanel from "./DecisionCommitPanel";
+
 import type {
   ExecutiveDecisionProjection,
 } from "../projection/buildExecutiveDecisionProjection";
 
+import type {
+  ExecutiveDecisionCommitSelection,
+} from "../../executive-v2/ExecutiveWorkspace";
+
 type ExecutiveDecisionWorkspaceProps = {
   projection: ExecutiveDecisionProjection;
+
+  onCommitDecision?: (
+    selection:
+      ExecutiveDecisionCommitSelection,
+  ) => Promise<void>;
+
+  isCommittingDecision?: boolean;
+
+  decisionCommitError?: string | null;
+
+  committedDecisionRecord?: unknown | null;
 };
 
 function formatPercent(
@@ -20,7 +37,6 @@ function formatLabel(
   value: string,
 ): string {
   return value
-    .replace(/^condition-/, "")
     .replace(/-/g, " ")
     .replace(
       /\b\w/g,
@@ -31,888 +47,1091 @@ function formatLabel(
 
 export default function ExecutiveDecisionWorkspace({
   projection,
+  onCommitDecision,
+  isCommittingDecision = false,
+  decisionCommitError = null,
+  committedDecisionRecord = null,
 }: ExecutiveDecisionWorkspaceProps) {
-  const {
-    decisionJustification,
-    recommendation,
-  } = projection;
+  const leadingStrategy =
+    projection.rankedStrategies[0];
+
+  const leadingFuture =
+    leadingStrategy
+      ? projection.simulatedFutures.find(
+          (future) =>
+            future.scenarioId ===
+            leadingStrategy.scenarioId,
+        )
+      : projection.simulatedFutures[0];
+
+  const viableStrategyCount =
+    projection.viabilityEvaluations.filter(
+      (evaluation) =>
+        evaluation.status !==
+        "disqualified",
+    ).length;
 
   return (
     <main className={styles.workspace}>
       <div className={styles.shell}>
-        <section className={styles.main}>
-          <section
+        <section
+          className={styles.main}
+          aria-label="Decision Lab"
+        >
+          <header
             className={
-              styles.decisionConfirmation
+              styles.workspaceHeader
             }
           >
-            <div>
-              <p
+            <p className={styles.eyebrow}>
+              Decision Lab
+            </p>
+
+            <h1>
+              {
+                projection.recommendation
+                  .headline
+              }
+            </h1>
+
+            <p
+              className={
+                styles.workspaceLead
+              }
+            >
+              {
+                projection.recommendation
+                  .rationale
+              }
+            </p>
+
+            <div
+              className={
+                styles.metaRow
+              }
+            >
+              <span
                 className={
-                  styles.placeholderEyebrow
+                  styles.metaPill
                 }
               >
-                Executive Decision
-              </p>
+                {
+                  projection.candidateStrategies
+                    .length
+                }{" "}
+                candidate{" "}
+                {projection.candidateStrategies
+                  .length === 1
+                  ? "strategy"
+                  : "strategies"}
+              </span>
 
-              <h2>
-                {recommendation.headline}
-              </h2>
+              <span
+                className={
+                  styles.metaPill
+                }
+              >
+                {
+                  projection.simulatedFutures
+                    .length
+                }{" "}
+                simulated{" "}
+                {projection.simulatedFutures
+                  .length === 1
+                  ? "future"
+                  : "futures"}
+              </span>
 
-              <p>
-                {recommendation.rationale}
-              </p>
+              <span
+                className={
+                  styles.metaPill
+                }
+              >
+                {formatLabel(
+                  projection.objective
+                    .timeHorizon,
+                )}
+              </span>
+            </div>
+          </header>
+
+          <section
+            className={
+              styles.featureCard
+            }
+            aria-labelledby="recommended-strategy-heading"
+          >
+            <p className={styles.eyebrow}>
+              Recommended Strategy
+            </p>
+
+            <div
+              className={
+                styles.decisionHeroHeader
+              }
+            >
+              <div
+                className={
+                  styles.decisionHeroCopy
+                }
+              >
+                <h2
+                  id="recommended-strategy-heading"
+                >
+                  {leadingStrategy
+                    ?.title ??
+                    projection
+                      .recommendation
+                      .headline}
+                </h2>
+
+                <p>
+                  {leadingStrategy
+                    ?.explanation ??
+                    projection
+                      .recommendation
+                      .rationale}
+                </p>
+              </div>
+
+              <div
+                className={
+                  styles.decisionHeroConfidence
+                }
+                aria-label={`Decision confidence ${formatPercent(
+                  projection.confidence
+                    .value,
+                )}`}
+              >
+                <strong>
+                  {formatPercent(
+                    projection.confidence
+                      .value,
+                  )}
+                </strong>
+
+                <span>
+                  Decision
+                  <br />
+                  confidence
+                </span>
+              </div>
             </div>
 
             <div
               className={
-                styles.decisionSummaryGrid
+                styles.executiveSynopsis
               }
             >
-              <div
-                className={
-                  styles.decisionSummaryItem
-                }
-              >
-                <span>Status</span>
-
-                <strong>
-                  {formatLabel(
-                    recommendation.status,
-                  )}
-                </strong>
-              </div>
-
-              <div
-                className={
-                  styles.decisionSummaryItem
-                }
-              >
-                <span>Confidence</span>
-
-                <strong>
-                  {formatPercent(
-                    recommendation.confidence,
-                  )}
-                </strong>
-              </div>
-
-              <div
-                className={
-                  styles.decisionSummaryItem
-                }
-              >
-                <span>
-                  Objective alignment
-                </span>
-
-                <strong>
-                  {formatPercent(
-                    decisionJustification
-                      .objectiveAlignment
-                      .score,
-                  )}
-                </strong>
-              </div>
-
-              <div
-                className={
-                  styles.decisionSummaryItem
-                }
-              >
-                <span>
-                  Alternatives considered
-                </span>
-
-                <strong>
-                  {
-                    decisionJustification
-                      .alternatives.length
-                  }
-                </strong>
-              </div>
-            </div>
-
-            <div>
-              <h3>Next step</h3>
+              <span>
+                Executive implication
+              </span>
 
               <p>
-                {recommendation.nextStep}
+                {
+                  projection.recommendation
+                    .nextStep
+                }
               </p>
             </div>
           </section>
 
-          <section>
-            <p
-              className={
-                styles.placeholderEyebrow
-              }
-            >
-              Executive Judgment
+          <section
+            className={styles.card}
+            aria-labelledby="why-recommendation-heading"
+          >
+            <p className={styles.eyebrow}>
+              Why
             </p>
 
-            <h2>
-              Why Discovery chose this
-            </h2>
+            <h3
+              id="why-recommendation-heading"
+            >
+              Why Discovery recommends this
+              strategy
+            </h3>
 
             <p>
-              {decisionJustification.summary}
+              {
+                projection.comparison
+                  .summary
+              }
             </p>
 
-            {decisionJustification
-              .decisiveAdvantages.length >
+            {projection.comparison
+              .differentiators.length >
             0 ? (
-              <>
-                <h3>
-                  Decisive advantages
-                </h3>
-
-                <ul>
-                  {decisionJustification
-                    .decisiveAdvantages
-                    .map((advantage) => (
-                      <li key={advantage}>
-                        {advantage}
+              <ul
+                className={styles.list}
+              >
+                {projection.comparison.differentiators
+                  .slice(0, 5)
+                  .map(
+                    (differentiator) => (
+                      <li
+                        key={
+                          differentiator
+                        }
+                        className={
+                          styles.listItem
+                        }
+                      >
+                        {
+                          differentiator
+                        }
                       </li>
-                    ))}
-                </ul>
-              </>
+                    ),
+                  )}
+              </ul>
             ) : null}
 
-            {decisionJustification
-              .whyRecommended.length >
-            0 ? (
-              <>
-                <h3>
-                  Supporting rationale
-                </h3>
-
-                <ul>
-                  {decisionJustification
-                    .whyRecommended
-                    .map((reason) => (
-                      <li key={reason}>
-                        {reason}
-                      </li>
-                    ))}
-                </ul>
-              </>
-            ) : null}
-          </section>
-
-          <section>
-            <p
+            <details
               className={
-                styles.placeholderEyebrow
+                styles.detailsDisclosure
               }
             >
-              Comparative Judgment
-            </p>
+              <summary>
+                Show decision objective
+              </summary>
 
-            <h2>
-              Alternatives considered
-            </h2>
+              <div
+                className={
+                  styles.evidenceGrid
+                }
+              >
+                <article
+                  className={
+                    styles.evidenceCard
+                  }
+                >
+                  <h3>
+                    Executive objective
+                  </h3>
 
-            {decisionJustification
-              .alternatives.length >
-            0 ? (
-              decisionJustification
-                .alternatives
-                .map((alternative) => (
-                  <article
-                    key={
-                      alternative.optionId
+                  <p
+                    className={
+                      styles.evidenceSummary
                     }
                   >
-                    <p
+                    {
+                      projection.objective
+                        .headline
+                    }
+                  </p>
+
+                  <p
+                    className={
+                      styles.evidenceContent
+                    }
+                  >
+                    {
+                      projection.objective
+                        .summary
+                    }
+                  </p>
+                </article>
+
+                <article
+                  className={
+                    styles.evidenceCard
+                  }
+                >
+                  <h3>
+                    Optimization objective
+                  </h3>
+
+                  <p
+                    className={
+                      styles.evidenceSummary
+                    }
+                  >
+                    {
+                      projection.optimization
+                        .objective
+                    }
+                  </p>
+
+                  <p
+                    className={
+                      styles.evidenceContent
+                    }
+                  >
+                    {
+                      projection.optimization
+                        .explanation
+                    }
+                  </p>
+                </article>
+              </div>
+
+              <div
+                className={
+                  styles.metaRow
+                }
+              >
+                <span
+                  className={
+                    styles.metaPill
+                  }
+                >
+                  Objective confidence{" "}
+                  {formatPercent(
+                    projection.objective
+                      .confidence,
+                  )}
+                </span>
+
+                <span
+                  className={
+                    styles.metaPill
+                  }
+                >
+                  Optimization confidence{" "}
+                  {formatPercent(
+                    projection.optimization
+                      .confidence,
+                  )}
+                </span>
+
+                <span
+                  className={
+                    styles.metaPill
+                  }
+                >
+                  {formatLabel(
+                    projection.optimization
+                      .tradeoffStrategy,
+                  )}{" "}
+                  trade-offs
+                </span>
+              </div>
+            </details>
+          </section>
+
+          <section
+            className={styles.card}
+            aria-labelledby="alternatives-heading"
+          >
+            <p className={styles.eyebrow}>
+              Alternatives
+            </p>
+
+            <h3 id="alternatives-heading">
+              Strategies considered
+            </h3>
+
+            <p>
+              Discovery compared viable
+              strategies against the same
+              objective, constraints, and
+              organizational baseline.
+            </p>
+
+            {projection.rankedStrategies
+              .length > 0 ? (
+              <div
+                className={
+                  styles.signalGrid
+                }
+              >
+                {projection.rankedStrategies.map(
+                  (strategy) => {
+                    const candidate =
+                      projection.candidateStrategies.find(
+                        (item) =>
+                          item.id ===
+                          strategy.scenarioId,
+                      );
+
+                    const viability =
+                      projection.viabilityEvaluations.find(
+                        (evaluation) =>
+                          evaluation.optionId ===
+                          strategy.scenarioId,
+                      );
+
+                    return (
+                      <article
+                        key={
+                          strategy.scenarioId
+                        }
+                        className={
+                          strategy.rank === 1
+                            ? styles.featureCard
+                            : styles.signalCard
+                        }
+                      >
+                        <p
+                          className={
+                            styles.eyebrow
+                          }
+                        >
+                          {strategy.rank ===
+                          1
+                            ? "Recommended"
+                            : `Rank ${strategy.rank}`}
+                        </p>
+
+                        <h3>
+                          {strategy.title}
+                        </h3>
+
+                        <div
+                          className={
+                            styles.confidenceRow
+                          }
+                        >
+                          <strong
+                            className={
+                              styles.confidenceValue
+                            }
+                          >
+                            {formatPercent(
+                              strategy.score,
+                            )}
+                          </strong>
+
+                          <span
+                            className={
+                              styles.confidenceLabel
+                            }
+                          >
+                            Score
+                          </span>
+                        </div>
+
+                        <p>
+                          {
+                            strategy.explanation
+                          }
+                        </p>
+
+                        {candidate ||
+                        viability ? (
+                          <details
+                            className={
+                              styles.detailsDisclosure
+                            }
+                          >
+                            <summary>
+                              Review strategy
+                            </summary>
+
+                            {candidate ? (
+                              <>
+                                <p>
+                                  {
+                                    candidate.description
+                                  }
+                                </p>
+
+                                <div
+                                  className={
+                                    styles.metaRow
+                                  }
+                                >
+                                  <span
+                                    className={
+                                      styles.metaPill
+                                    }
+                                  >
+                                    {formatLabel(
+                                      candidate.type,
+                                    )}
+                                  </span>
+
+                                  <span
+                                    className={
+                                      styles.metaPill
+                                    }
+                                  >
+                                    {formatLabel(
+                                      candidate.timeHorizon,
+                                    )}
+                                  </span>
+
+                                  <span
+                                    className={
+                                      styles.metaPill
+                                    }
+                                  >
+                                    {formatPercent(
+                                      candidate.confidence,
+                                    )}{" "}
+                                    confidence
+                                  </span>
+                                </div>
+
+                                {candidate.risks
+                                  .length >
+                                0 ? (
+                                  <>
+                                    <h4>
+                                      Risks
+                                    </h4>
+
+                                    <ul
+                                      className={
+                                        styles.list
+                                      }
+                                    >
+                                      {candidate.risks.map(
+                                        (
+                                          risk,
+                                        ) => (
+                                          <li
+                                            key={
+                                              risk
+                                            }
+                                            className={
+                                              styles.listItem
+                                            }
+                                          >
+                                            {
+                                              risk
+                                            }
+                                          </li>
+                                        ),
+                                      )}
+                                    </ul>
+                                  </>
+                                ) : null}
+
+                                {candidate
+                                  .missingEvidence
+                                  .length >
+                                0 ? (
+                                  <>
+                                    <h4>
+                                      Missing
+                                      evidence
+                                    </h4>
+
+                                    <ul
+                                      className={
+                                        styles.list
+                                      }
+                                    >
+                                      {candidate.missingEvidence.map(
+                                        (
+                                          evidence,
+                                        ) => (
+                                          <li
+                                            key={
+                                              evidence
+                                            }
+                                            className={
+                                              styles.listItem
+                                            }
+                                          >
+                                            {
+                                              evidence
+                                            }
+                                          </li>
+                                        ),
+                                      )}
+                                    </ul>
+                                  </>
+                                ) : null}
+                              </>
+                            ) : null}
+
+                            {viability ? (
+                              <>
+                                <h4>
+                                  Viability
+                                </h4>
+
+                                <p>
+                                  {
+                                    viability.explanation
+                                  }
+                                </p>
+                              </>
+                            ) : null}
+                          </details>
+                        ) : null}
+                      </article>
+                    );
+                  },
+                )}
+              </div>
+            ) : (
+              <p>
+                Discovery did not identify
+                any viable alternative
+                strategies.
+              </p>
+            )}
+          </section>
+
+          {leadingFuture ? (
+            <section
+              className={
+                styles.impactSummary
+              }
+              aria-labelledby="expected-future-heading"
+            >
+              <div
+                className={
+                  styles.impactHeader
+                }
+              >
+                <div>
+                  <p
+                    className={
+                      styles.eyebrow
+                    }
+                  >
+                    Expected Future
+                  </p>
+
+                  <h2
+                    id="expected-future-heading"
+                  >
+                    {leadingFuture.title}
+                  </h2>
+                </div>
+
+                <div
+                  className={
+                    styles.confidenceRow
+                  }
+                >
+                  <strong
+                    className={
+                      styles.confidenceValue
+                    }
+                  >
+                    {formatPercent(
+                      leadingFuture.confidence,
+                    )}
+                  </strong>
+
+                  <span
+                    className={
+                      styles.confidenceLabel
+                    }
+                  >
+                    Scenario confidence
+                  </span>
+                </div>
+              </div>
+
+              <p>
+                {leadingFuture.summary}
+              </p>
+
+              {leadingFuture
+                .conditionChanges.length >
+              0 ? (
+                <div
+                  className={
+                    styles.impactList
+                  }
+                >
+                  {leadingFuture.conditionChanges
+                    .slice(0, 5)
+                    .map((change) => (
+                      <article
+                        key={
+                          change.conditionId
+                        }
+                        className={
+                          change.change ===
+                          "improved"
+                            ? styles.impactItemPositive
+                            : change.change ===
+                                "worsened"
+                              ? styles.impactItemWarning
+                              : styles.impactItemPrimary
+                        }
+                      >
+                        <span
+                          className={
+                            styles.impactIcon
+                          }
+                        >
+                          {change.change ===
+                          "improved"
+                            ? "↑"
+                            : change.change ===
+                                "worsened"
+                              ? "↓"
+                              : "→"}
+                        </span>
+
+                        <div>
+                          <strong>
+                            {change.name}
+                          </strong>
+
+                          <p>
+                            {formatLabel(
+                              change.change,
+                            )}
+                            :{" "}
+                            {formatPercent(
+                              change.previousStrength,
+                            )}{" "}
+                            →{" "}
+                            {formatPercent(
+                              change.projectedStrength,
+                            )}
+                          </p>
+                        </div>
+                      </article>
+                    ))}
+                </div>
+              ) : null}
+
+              <details
+                className={
+                  styles.detailsDisclosure
+                }
+              >
+                <summary>
+                  Review full simulation
+                </summary>
+
+                {leadingFuture.risks
+                  .length > 0 ? (
+                  <>
+                    <h3>
+                      Scenario risks
+                    </h3>
+
+                    <ul
                       className={
-                        styles.placeholderEyebrow
+                        styles.list
                       }
                     >
-                      Rank {alternative.rank}
-                    </p>
+                      {leadingFuture.risks.map(
+                        (risk) => (
+                          <li
+                            key={risk}
+                            className={
+                              styles.listItem
+                            }
+                          >
+                            {risk}
+                          </li>
+                        ),
+                      )}
+                    </ul>
+                  </>
+                ) : null}
 
+                {leadingFuture
+                  .predictionChanges
+                  .length > 0 ? (
+                  <>
                     <h3>
-                      {alternative.title}
+                      Prediction changes
                     </h3>
 
-                    <p>
-                      {alternative.summary}
-                    </p>
-
-                    <p>
-                      <strong>
-                        Decision score:
-                      </strong>{" "}
-                      {formatPercent(
-                        alternative.score,
-                      )}
-                    </p>
-
-                    <p>
-                      <strong>
-                        Difference from the
-                        recommended strategy:
-                      </strong>{" "}
-                      {formatPercent(
-                        alternative
-                          .scoreDifference,
-                      )}
-                    </p>
-
-                    <p>
-                      <strong>
-                        Viability:
-                      </strong>{" "}
-                      {formatLabel(
-                        alternative
-                          .viabilityStatus,
-                      )}
-                    </p>
-
-                    {alternative
-                      .reasonsRankedLower
-                      .length > 0 ? (
-                      <>
-                        <h4>
-                          Why it ranked lower
-                        </h4>
-
-                        <ul>
-                          {alternative
-                            .reasonsRankedLower
-                            .map((reason) => (
-                              <li key={reason}>
-                                {reason}
-                              </li>
-                            ))}
-                        </ul>
-                      </>
-                    ) : null}
-
-                    {alternative.strengths
-                      .length > 0 ? (
-                      <>
-                        <h4>Strengths</h4>
-
-                        <ul>
-                          {alternative
-                            .strengths
-                            .map(
-                              (strength) => (
-                                <li
-                                  key={
-                                    strength
-                                  }
-                                >
-                                  {strength}
-                                </li>
-                              ),
-                            )}
-                        </ul>
-                      </>
-                    ) : null}
-
-                    {alternative.weaknesses
-                      .length > 0 ? (
-                      <>
-                        <h4>Weaknesses</h4>
-
-                        <ul>
-                          {alternative
-                            .weaknesses
-                            .map(
-                              (weakness) => (
-                                <li
-                                  key={
-                                    weakness
-                                  }
-                                >
-                                  {weakness}
-                                </li>
-                              ),
-                            )}
-                        </ul>
-                      </>
-                    ) : null}
-
-                    {alternative
-                      .improvedConditionIds
-                      .length > 0 ? (
-                      <>
-                        <h4>
-                          Conditions improved
-                        </h4>
-
-                        <ul>
-                          {alternative
-                            .improvedConditionIds
-                            .map(
-                              (
-                                conditionId,
-                              ) => (
-                                <li
-                                  key={
-                                    conditionId
-                                  }
-                                >
-                                  {formatLabel(
-                                    conditionId,
-                                  )}
-                                </li>
-                              ),
-                            )}
-                        </ul>
-                      </>
-                    ) : null}
-
-                    {alternative
-                      .worsenedConditionIds
-                      .length > 0 ? (
-                      <>
-                        <h4>
-                          Conditions worsened
-                        </h4>
-
-                        <ul>
-                          {alternative
-                            .worsenedConditionIds
-                            .map(
-                              (
-                                conditionId,
-                              ) => (
-                                <li
-                                  key={
-                                    conditionId
-                                  }
-                                >
-                                  {formatLabel(
-                                    conditionId,
-                                  )}
-                                </li>
-                              ),
-                            )}
-                        </ul>
-                      </>
-                    ) : null}
-                  </article>
-                ))
-            ) : (
-              <p>
-                No lower-ranked alternatives
-                were available for comparison.
-              </p>
-            )}
-          </section>
-
-          <section>
-            <p
-              className={
-                styles.placeholderEyebrow
-              }
-            >
-              Decision Boundaries
-            </p>
-
-            <h2>
-              What would change this
-              recommendation?
-            </h2>
-
-            <p>
-              Discovery would reconsider
-              this preference if new evidence
-              materially changed the expected
-              benefit, risk, constraint
-              position, or confidence of the
-              recommended strategy.
-            </p>
-
-            {decisionJustification
-              .evidenceThatCouldChangePreference
-              .length > 0 ? (
-              <ul>
-                {decisionJustification
-                  .evidenceThatCouldChangePreference
-                  .map((evidence) => (
-                    <li key={evidence}>
-                      {evidence}
-                    </li>
-                  ))}
-              </ul>
-            ) : (
-              <p>
-                Discovery has not identified
-                any current evidence that
-                would materially change this
-                preference.
-              </p>
-            )}
-
-            {recommendation.assumptions
-              .length > 0 ? (
-              <>
-                <h3>
-                  Assumptions supporting the
-                  recommendation
-                </h3>
-
-                <ul>
-                  {recommendation.assumptions.map(
-                    (assumption) => (
-                      <li key={assumption}>
-                        {assumption}
-                      </li>
-                    ),
-                  )}
-                </ul>
-              </>
-            ) : null}
-
-            {recommendation.risks.length >
-            0 ? (
-              <>
-                <h3>
-                  Risks to monitor
-                </h3>
-
-                <ul>
-                  {recommendation.risks.map(
-                    (risk) => (
-                      <li key={risk}>
-                        {risk}
-                      </li>
-                    ),
-                  )}
-                </ul>
-              </>
-            ) : null}
-          </section>
-
-          <section>
-            <p
-              className={
-                styles.placeholderEyebrow
-              }
-            >
-              Supporting Analysis
-            </p>
-
-            <h2>
-              How Discovery reached this
-              judgment
-            </h2>
-
-            <details>
-              <summary>
-                Objective and optimization
-              </summary>
-
-              <h3>
-                {projection.objective.headline}
-              </h3>
-
-              <p>
-                {projection.objective.summary}
-              </p>
-
-              <p>
-                {projection.objective.rationale}
-              </p>
-
-              <h3>
-                Optimization objective
-              </h3>
-
-              <p>
-                {
-                  projection.optimization
-                    .objective
-                }
-              </p>
-
-              <p>
-                {
-                  projection.optimization
-                    .explanation
-                }
-              </p>
-
-              <p>
-                <strong>
-                  Trade-off strategy:
-                </strong>{" "}
-                {formatLabel(
-                  projection.optimization
-                    .tradeoffStrategy,
-                )}
-              </p>
-            </details>
-
-            <details>
-              <summary>
-                Organizational impact
-              </summary>
-
-              <p>
-                {
-                  decisionJustification
-                    .organizationalImpact
-                    .explanation
-                }
-              </p>
-
-              <p>
-                <strong>
-                  Benefit score:
-                </strong>{" "}
-                {formatPercent(
-                  decisionJustification
-                    .organizationalImpact
-                    .benefitScore,
-                )}
-              </p>
-
-              <p>
-                <strong>
-                  Risk score:
-                </strong>{" "}
-                {formatPercent(
-                  decisionJustification
-                    .organizationalImpact
-                    .riskScore,
-                )}
-              </p>
-
-              {decisionJustification
-                .organizationalImpact
-                .improvedConditionIds
-                .length > 0 ? (
-                <>
-                  <h3>
-                    Conditions projected to
-                    improve
-                  </h3>
-
-                  <ul>
-                    {decisionJustification
-                      .organizationalImpact
-                      .improvedConditionIds
-                      .map(
-                        (conditionId) => (
+                    <ul
+                      className={
+                        styles.list
+                      }
+                    >
+                      {leadingFuture.predictionChanges.map(
+                        (change) => (
                           <li
                             key={
-                              conditionId
+                              change.predictionId
+                            }
+                            className={
+                              styles.listItem
                             }
                           >
+                            {
+                              change.statement
+                            }{" "}
+                            —{" "}
                             {formatLabel(
-                              conditionId,
+                              change.change,
                             )}
                           </li>
                         ),
                       )}
-                  </ul>
-                </>
-              ) : null}
+                    </ul>
+                  </>
+                ) : null}
 
-              {decisionJustification
-                .organizationalImpact
-                .worsenedConditionIds
-                .length > 0 ? (
-                <>
-                  <h3>
-                    Conditions projected to
-                    worsen
-                  </h3>
-
-                  <ul>
-                    {decisionJustification
-                      .organizationalImpact
-                      .worsenedConditionIds
-                      .map(
-                        (conditionId) => (
-                          <li
-                            key={
-                              conditionId
-                            }
-                          >
-                            {formatLabel(
-                              conditionId,
-                            )}
-                          </li>
-                        ),
-                      )}
-                  </ul>
-                </>
-              ) : null}
-            </details>
-
-            <details>
-              <summary>
-                Constraint position
-              </summary>
-
-              <p>
-                <strong>Status:</strong>{" "}
-                {formatLabel(
-                  decisionJustification
-                    .constraintPosition
-                    .status,
-                )}
-              </p>
-
-              <p>
-                {
-                  decisionJustification
-                    .constraintPosition
-                    .explanation
-                }
-              </p>
-
-              {decisionJustification
-                .constraintPosition
-                .unresolvedRequiredConstraints
-                .length > 0 ? (
-                <>
-                  <h3>
-                    Unresolved required
-                    constraints
-                  </h3>
-
-                  <ul>
-                    {decisionJustification
-                      .constraintPosition
-                      .unresolvedRequiredConstraints
-                      .map((constraint) => (
-                        <li
-                          key={
-                            constraint
-                          }
-                        >
-                          {constraint}
-                        </li>
-                      ))}
-                  </ul>
-                </>
-              ) : null}
-
-              {decisionJustification
-                .constraintPosition
-                .optionalIssues.length >
-              0 ? (
-                <>
-                  <h3>
-                    Optional issues
-                  </h3>
-
-                  <ul>
-                    {decisionJustification
-                      .constraintPosition
-                      .optionalIssues
-                      .map((issue) => (
-                        <li key={issue}>
-                          {issue}
-                        </li>
-                      ))}
-                  </ul>
-                </>
-              ) : null}
-            </details>
-
-            <details>
-              <summary>
-                Scenario comparison and ranking
-              </summary>
-
-              <p>
-                {projection.comparison.summary}
-              </p>
-
-              {projection.comparison
-                .differentiators.length >
-              0 ? (
-                <ul>
-                  {projection.comparison
-                    .differentiators
-                    .map(
-                      (
-                        differentiator,
-                      ) => (
-                        <li
-                          key={
-                            differentiator
-                          }
-                        >
-                          {
-                            differentiator
-                          }
-                        </li>
-                      ),
-                    )}
-                </ul>
-              ) : null}
-
-              {projection.rankedStrategies.map(
-                (strategy) => (
-                  <article
-                    key={
-                      strategy.scenarioId
+                {leadingFuture
+                  .understandingChange
+                  .changed ? (
+                  <div
+                    className={
+                      styles.evidenceGrid
                     }
                   >
-                    <h3>
-                      Rank {strategy.rank}:{" "}
-                      {strategy.title}
-                    </h3>
-
-                    <p>
-                      <strong>
-                        Score:
-                      </strong>{" "}
-                      {formatPercent(
-                        strategy.score,
-                      )}
-                    </p>
-
-                    <p>
-                      {
-                        strategy.explanation
+                    <article
+                      className={
+                        styles.evidenceCard
                       }
-                    </p>
-                  </article>
-                ),
-              )}
-            </details>
+                    >
+                      <h3>
+                        Current
+                        understanding
+                      </h3>
 
-            <details>
-              <summary>
-                Confidence and limitations
-              </summary>
+                      <p
+                        className={
+                          styles.evidenceContent
+                        }
+                      >
+                        {
+                          leadingFuture
+                            .understandingChange
+                            .previous
+                        }
+                      </p>
+                    </article>
 
-              <p>
-                {
-                  projection.confidence
-                    .explanation
-                }
-              </p>
+                    <article
+                      className={
+                        styles.evidenceCard
+                      }
+                    >
+                      <h3>
+                        Projected
+                        understanding
+                      </h3>
 
-              <p>
-                <strong>
-                  Calibrated confidence:
-                </strong>{" "}
-                {formatPercent(
-                  projection.confidence
-                    .value,
-                )}
-              </p>
+                      <p
+                        className={
+                          styles.evidenceContent
+                        }
+                      >
+                        {
+                          leadingFuture
+                            .understandingChange
+                            .projected
+                        }
+                      </p>
+                    </article>
+                  </div>
+                ) : null}
+              </details>
+            </section>
+          ) : null}
 
-              {projection.confidence
-                .limiters.length > 0 ? (
-                <ul>
-                  {projection.confidence
-                    .limiters
-                    .map((limiter) => (
-                      <li key={limiter}>
-                        {limiter}
-                      </li>
-                    ))}
-                </ul>
-              ) : (
-                <p>
-                  No material confidence
-                  limiters were identified.
-                </p>
-              )}
-            </details>
-          </section>
-        </section>
-
-        <aside className={styles.rail}>
-          <section>
-            <p
-              className={
-                styles.placeholderEyebrow
-              }
-            >
-              Recommended Strategy
+          <section
+            className={styles.card}
+            aria-labelledby="confidence-heading"
+          >
+            <p className={styles.eyebrow}>
+              Confidence
             </p>
 
-            <h2>
-              {
-                decisionJustification
-                  .recommendedTitle
+            <div
+              className={
+                styles.confidenceRow
               }
-            </h2>
+            >
+              <strong
+                className={
+                  styles.confidenceValue
+                }
+              >
+                {formatPercent(
+                  projection.confidence.value,
+                )}
+              </strong>
+
+              <span
+                className={
+                  styles.confidenceLabel
+                }
+              >
+                Calibrated confidence
+              </span>
+            </div>
+
+            <h3 id="confidence-heading">
+              How strongly Discovery
+              supports this recommendation
+            </h3>
 
             <p>
               {
-                decisionJustification
-                  .objectiveAlignment
+                projection.confidence
                   .explanation
               }
             </p>
+
+            {projection.confidence.limiters
+              .length > 0 ? (
+              <details
+                className={
+                  styles.detailsDisclosure
+                }
+              >
+                <summary>
+                  Review confidence limiters
+                </summary>
+
+                <ul
+                  className={styles.list}
+                >
+                  {projection.confidence.limiters.map(
+                    (limiter) => (
+                      <li
+                        key={limiter}
+                        className={
+                          styles.listItem
+                        }
+                      >
+                        {limiter}
+                      </li>
+                    ),
+                  )}
+                </ul>
+              </details>
+            ) : null}
           </section>
 
-          <section>
-            <h2>Decision confidence</h2>
+          <DecisionCommitPanel
+            projection={
+              projection
+            }
+            onCommitDecision={
+              onCommitDecision
+            }
+            isCommitting={
+              isCommittingDecision
+            }
+            error={
+              decisionCommitError
+            }
+            committedRecord={
+              committedDecisionRecord
+            }
+          />
+        </section>
 
-            <p>
-              <strong>
+        <aside
+          className={styles.rail}
+          aria-label="Decision summary"
+        >
+          <section
+            className={styles.card}
+          >
+            <p className={styles.eyebrow}>
+              Decision Summary
+            </p>
+
+            <h3>
+              {leadingStrategy
+                ?.title ??
+                projection.recommendation
+                  .headline}
+            </h3>
+
+            <div
+              className={
+                styles.confidenceRow
+              }
+            >
+              <strong
+                className={
+                  styles.confidenceValue
+                }
+              >
                 {formatPercent(
-                  recommendation.confidence,
+                  projection.confidence.value,
                 )}
               </strong>
+
+              <span
+                className={
+                  styles.confidenceLabel
+                }
+              >
+                Confidence
+              </span>
+            </div>
+          </section>
+
+          <section
+            className={styles.card}
+          >
+            <p className={styles.eyebrow}>
+              Evaluation
             </p>
+
+            <ul className={styles.list}>
+              <li
+                className={
+                  styles.listItem
+                }
+              >
+                {
+                  projection.candidateStrategies
+                    .length
+                }{" "}
+                candidate strategies
+              </li>
+
+              <li
+                className={
+                  styles.listItem
+                }
+              >
+                {viableStrategyCount} viable
+                alternatives
+              </li>
+
+              <li
+                className={
+                  styles.listItem
+                }
+              >
+                {
+                  projection.simulatedFutures
+                    .length
+                }{" "}
+                organizational futures
+              </li>
+            </ul>
+          </section>
+
+          <section
+            className={styles.card}
+          >
+            <p className={styles.eyebrow}>
+              Objective
+            </p>
+
+            <h3>
+              {
+                projection.objective
+                  .headline
+              }
+            </h3>
 
             <p>
               {
-                decisionJustification
-                  .confidence.explanation
+                projection.objective
+                  .summary
               }
             </p>
           </section>
 
-          <section>
-            <h2>Decision set</h2>
-
-            <p>
-              <strong>
-                Candidate strategies:
-              </strong>{" "}
-              {
-                projection
-                  .candidateStrategies
-                  .length
-              }
+          <section
+            className={styles.card}
+          >
+            <p className={styles.eyebrow}>
+              Operating Model
             </p>
 
             <p>
-              <strong>
-                Simulated futures:
-              </strong>{" "}
-              {
-                projection
-                  .simulatedFutures.length
-              }
-            </p>
-
-            <p>
-              <strong>
-                Ranked strategies:
-              </strong>{" "}
-              {
-                projection
-                  .rankedStrategies.length
-              }
-            </p>
-          </section>
-
-          <section>
-            <h2>Completed</h2>
-
-            <p>
-              {new Date(
-                projection.completedAt,
-              ).toLocaleString()}
+              The completed decision,
+              observed outcomes, and
+              executive review will improve
+              future recommendations.
             </p>
           </section>
         </aside>

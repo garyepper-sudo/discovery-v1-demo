@@ -4,7 +4,7 @@ import {
   useState,
 } from "react";
 
-import DecisionAnalysisWorkspace from "../../components/executive-v3/workspaces/DecisionAnalysisWorkspace";
+import ExecutiveDecisionWorkspace from "../../components/executive-v3/workspaces/ExecutiveDecisionWorkspace";
 
 import type {
   ExecutiveDecisionProjection,
@@ -197,7 +197,7 @@ export default function ExecutiveDecisionPage() {
 
   if (projection) {
     return (
-      <DecisionAnalysisWorkspace
+      <ExecutiveDecisionWorkspace
         projection={projection}
       />
     );

@@ -3,10 +3,15 @@
 import BriefingWorkspace from "./workspaces/BriefingWorkspace";
 import UnderstandingWorkspace from "./workspaces/UnderstandingWorkspace";
 import RecommendationWorkspace from "./workspaces/RecommendationWorkspace";
+import DecisionDefinitionWorkspace from "./workspaces/DecisionDefinitionWorkspace";
 import ExecutiveDecisionWorkspace from "./workspaces/ExecutiveDecisionWorkspace";
 import SimulationWorkspace from "./workspaces/SimulationWorkspace";
 import TimelineWorkspace from "./workspaces/TimelineWorkspace";
 import AskWorkspace from "./workspaces/AskWorkspace";
+
+import type {
+  ExecutiveProjection,
+} from "../executive-v2/projection/ExecutiveProjection";
 
 import type {
   ExecutiveCommunication,
@@ -17,10 +22,22 @@ import type {
 } from "./projection/buildExecutiveDecisionProjection";
 
 import type {
+  DecisionDefinitionDraft,
+  DecisionDefinitionSource,
+} from "./workspaces/DecisionDefinitionWorkspace";
+
+import type {
   ExecutiveWorkspaceMode,
 } from "./ExecutiveWorkspaceMode";
 
+import type {
+  ExecutiveDecisionCommitSelection,
+} from "../executive-v2/ExecutiveWorkspace";
+
 type ExecutiveWorkspaceProps = {
+  projection:
+    ExecutiveProjection;
+
   communication:
     ExecutiveCommunication;
 
@@ -29,12 +46,64 @@ type ExecutiveWorkspaceProps = {
 
   mode:
     ExecutiveWorkspaceMode;
+
+  decisionDefinitionSource?:
+    DecisionDefinitionSource;
+
+  decisionDefinitionDraft?:
+    Partial<DecisionDefinitionDraft>;
+
+  onOpenDecisionLab?:
+    () => void;
+
+  onCancelDecisionDefinition?:
+    () => void;
+
+  onEvaluateDecision?:
+    (
+      decision:
+        DecisionDefinitionDraft,
+    ) => void;
+
+  onCommitDecision?:
+    (
+      selection:
+        ExecutiveDecisionCommitSelection,
+    ) => Promise<void>;
+
+  isOpeningDecisionLab?:
+    boolean;
+
+  decisionLabError?:
+    string | null;
+
+  isCommittingDecision?:
+    boolean;
+
+  decisionCommitError?:
+    string | null;
+
+  committedDecisionRecord?:
+    unknown | null;
 };
 
 export default function ExecutiveWorkspace({
+  projection,
   communication,
   decisionProjection,
   mode,
+  decisionDefinitionSource =
+    "discovery-recommendation",
+  decisionDefinitionDraft,
+  onOpenDecisionLab,
+  onCancelDecisionDefinition,
+  onEvaluateDecision,
+  onCommitDecision,
+  isOpeningDecisionLab = false,
+  decisionLabError = null,
+  isCommittingDecision = false,
+  decisionCommitError = null,
+  committedDecisionRecord = null,
 }: ExecutiveWorkspaceProps) {
   switch (mode) {
     case "briefing":
@@ -52,8 +121,8 @@ export default function ExecutiveWorkspace({
     case "understand":
       return (
         <UnderstandingWorkspace
-          communication={
-            communication
+          projection={
+            projection
           }
         />
       );
@@ -64,6 +133,43 @@ export default function ExecutiveWorkspace({
           communication={
             communication
           }
+          onOpenDecisionLab={
+            onOpenDecisionLab
+          }
+          isOpeningDecisionLab={
+            isOpeningDecisionLab
+          }
+          decisionLabError={
+            decisionLabError
+          }
+        />
+      );
+
+    case "define-decision":
+      return (
+        <DecisionDefinitionWorkspace
+          source={
+            decisionDefinitionSource
+          }
+          initialDecision={
+            decisionDefinitionDraft
+          }
+          isEvaluating={
+            isOpeningDecisionLab
+          }
+          error={
+            decisionLabError
+          }
+          onCancel={() => {
+            onCancelDecisionDefinition?.();
+          }}
+          onEvaluate={(
+            decision,
+          ) => {
+            onEvaluateDecision?.(
+              decision,
+            );
+          }}
         />
       );
 
@@ -73,11 +179,32 @@ export default function ExecutiveWorkspace({
           projection={
             decisionProjection
           }
+          onCommitDecision={
+            onCommitDecision
+          }
+          isCommittingDecision={
+            isCommittingDecision
+          }
+          decisionCommitError={
+            decisionCommitError
+          }
+          committedDecisionRecord={
+            committedDecisionRecord
+          }
         />
       ) : (
         <RecommendationWorkspace
           communication={
             communication
+          }
+          onOpenDecisionLab={
+            onOpenDecisionLab
+          }
+          isOpeningDecisionLab={
+            isOpeningDecisionLab
+          }
+          decisionLabError={
+            decisionLabError
           }
         />
       );
@@ -85,8 +212,8 @@ export default function ExecutiveWorkspace({
     case "simulate":
       return (
         <SimulationWorkspace
-          communication={
-            communication
+          projection={
+            projection
           }
         />
       );

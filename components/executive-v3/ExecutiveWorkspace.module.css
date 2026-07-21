@@ -105,7 +105,7 @@
 }
 
 /* =====================================================
-   Executive Workspace Content
+   Shared Workspace Content
    ===================================================== */
 
 .workspaceHeader {
@@ -264,47 +264,6 @@
   content: "";
 }
 
-.signalGrid {
-  display: grid;
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
-
-  gap: 14px;
-}
-
-.signalCard {
-  min-height: 170px;
-
-  padding: 22px;
-
-  border: 1px solid var(--ds-border);
-  border-radius: 16px;
-
-  background:
-    rgba(255, 255, 255, 0.016);
-}
-
-.signalCard h3 {
-  margin: 0;
-
-  font-family: Georgia, "Times New Roman", serif;
-
-  font-size: 1.18rem;
-  font-weight: 400;
-
-  line-height: 1.3;
-  letter-spacing: -0.02em;
-}
-
-.signalCard p {
-  margin: 12px 0 0;
-
-  color: var(--ds-text-secondary);
-
-  font-size: 0.94rem;
-  line-height: 1.6;
-}
-
 .featureCard {
   padding: 30px;
 
@@ -382,6 +341,302 @@
 
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+/* =====================================================
+   Shared Buttons
+   ===================================================== */
+
+.decisionActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 26px;
+}
+
+.primaryButton,
+.secondaryButton {
+  appearance: none;
+
+  min-height: 44px;
+
+  padding: 0 18px;
+
+  border-radius: 11px;
+
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 750;
+
+  cursor: pointer;
+
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease,
+    opacity 150ms ease,
+    transform 150ms ease;
+}
+
+.primaryButton {
+  border: 1px solid
+    rgba(214, 178, 94, 0.7);
+
+  color: #0b0b09;
+
+  background:
+    linear-gradient(
+      180deg,
+      #e2c774,
+      #cfa94d
+    );
+}
+
+.primaryButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+
+  background:
+    linear-gradient(
+      180deg,
+      #ecd68c,
+      #dab75e
+    );
+}
+
+.secondaryButton {
+  border: 1px solid var(--ds-border);
+
+  color: var(--ds-text);
+
+  background:
+    rgba(255, 255, 255, 0.026);
+}
+
+.secondaryButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+
+  border-color:
+    rgba(214, 178, 94, 0.38);
+
+  background:
+    rgba(214, 178, 94, 0.07);
+}
+
+.primaryButton:focus-visible,
+.secondaryButton:focus-visible {
+  outline: 2px solid
+    rgba(214, 178, 94, 0.9);
+
+  outline-offset: 3px;
+}
+
+.primaryButton:disabled,
+.secondaryButton:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* =====================================================
+   Decision Hero
+   ===================================================== */
+
+.decisionHero {
+  padding: 34px 36px;
+
+  overflow: hidden;
+
+  border: 1px solid
+    rgba(214, 178, 94, 0.33);
+  border-radius: 22px;
+
+  background:
+    radial-gradient(
+      circle at 90% 0%,
+      rgba(214, 178, 94, 0.12),
+      transparent 34%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(214, 178, 94, 0.065),
+      rgba(255, 255, 255, 0.014)
+    );
+}
+
+.decisionHeroHeader {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto;
+
+  align-items: start;
+  gap: 42px;
+}
+
+.decisionHeroCopy {
+  min-width: 0;
+}
+
+.decisionHeroCopy h1 {
+  max-width: 840px;
+
+  margin: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(2.4rem, 3.6vw, 4rem);
+  font-weight: 400;
+
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.decisionHeroSummary {
+  max-width: 760px;
+
+  margin: 22px 0 0;
+
+  color: var(--ds-text-secondary);
+
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.decisionHeroConfidence {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  min-width: 220px;
+
+  padding: 18px 20px;
+
+  border: 1px solid var(--ds-border);
+  border-radius: 16px;
+
+  background:
+    rgba(0, 0, 0, 0.18);
+}
+
+.decisionHeroConfidence strong {
+  color: var(--ds-gold);
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(2.7rem, 4vw, 4rem);
+  font-weight: 400;
+
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+}
+
+.decisionHeroConfidence span {
+  color: var(--ds-text);
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 1.25rem;
+  line-height: 1.05;
+}
+
+.decisionHeroImpact {
+  margin-top: 26px;
+  padding-top: 22px;
+
+  border-top: 1px solid var(--ds-border);
+}
+
+.decisionHeroImpactLabel {
+  margin: 0 0 12px;
+
+  color: var(--ds-text-secondary);
+
+  font-size: 0.68rem;
+  font-weight: 750;
+
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.decisionHeroImpactGrid {
+  display: grid;
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.decisionHeroImpactItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-height: 46px;
+
+  padding: 10px 12px;
+
+  border: 1px solid var(--ds-border);
+  border-radius: 11px;
+
+  background:
+    rgba(255, 255, 255, 0.014);
+}
+
+.decisionHeroImpactItem span {
+  color: var(--ds-gold);
+  font-weight: 800;
+}
+
+.decisionHeroImpactItem strong {
+  font-size: 0.86rem;
+  line-height: 1.25;
+}
+
+/* =====================================================
+   Supporting Grids
+   ===================================================== */
+
+.signalGrid {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.signalCard {
+  min-height: 170px;
+
+  padding: 22px;
+
+  border: 1px solid var(--ds-border);
+  border-radius: 16px;
+
+  background:
+    rgba(255, 255, 255, 0.016);
+}
+
+.signalCard h3 {
+  margin: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: 1.18rem;
+  font-weight: 400;
+
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.signalCard p {
+  margin: 12px 0 0;
+
+  color: var(--ds-text-secondary);
+
+  font-size: 0.94rem;
+  line-height: 1.6;
 }
 
 .changeList {
@@ -540,7 +795,6 @@
   margin-top: 18px;
 }
 
-
 .impactSummary {
   display: grid;
   gap: 24px;
@@ -569,11 +823,7 @@
 
   font-family: Georgia, "Times New Roman", serif;
 
-  font-size: clamp(
-    2rem,
-    3vw,
-    3rem
-  );
+  font-size: clamp(2rem, 3vw, 3rem);
 
   font-weight: 400;
   line-height: 1.1;
@@ -702,7 +952,7 @@
   background:
     linear-gradient(
       145deg,
-      rgba(214, 178, 94, 0.10),
+      rgba(214, 178, 94, 0.1),
       rgba(255, 255, 255, 0.018)
     );
 }
@@ -714,11 +964,7 @@
 
   font-family: Georgia, "Times New Roman", serif;
 
-  font-size: clamp(
-    2rem,
-    3vw,
-    3rem
-  );
+  font-size: clamp(2rem, 3vw, 3rem);
 
   font-weight: 400;
 
@@ -753,7 +999,6 @@
   font-weight: 400;
 }
 
-
 .decisionConfirmation {
   display: grid;
   gap: 28px;
@@ -780,11 +1025,7 @@
 
   font-family: Georgia, "Times New Roman", serif;
 
-  font-size: clamp(
-    2.2rem,
-    3.4vw,
-    3.6rem
-  );
+  font-size: clamp(2.2rem, 3.4vw, 3.6rem);
 
   font-weight: 400;
   line-height: 1.08;
@@ -870,6 +1111,11 @@
     gap: 20px;
 
     padding: 22px 20px 40px;
+  }
+
+  .decisionHeroImpactGrid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -962,13 +1208,62 @@
   }
 
   .card,
-  .featureCard {
+  .featureCard,
+  .impactSummary {
     padding: 22px;
   }
 
-  .signalGrid,
-  .evidenceGrid {
+  .decisionHero {
+    padding: 26px 22px;
+  }
+
+  .decisionHeroHeader {
     grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .decisionHeroCopy h1 {
+    font-size: clamp(
+      2.2rem,
+      11vw,
+      3.2rem
+    );
+  }
+
+  .decisionHeroSummary {
+    margin-top: 18px;
+
+    font-size: 0.96rem;
+    line-height: 1.58;
+  }
+
+  .decisionHeroConfidence {
+    width: fit-content;
+    min-width: 0;
+  }
+
+  .decisionHeroConfidence strong {
+    font-size: 2.8rem;
+  }
+
+  .decisionHeroConfidence span {
+    font-size: 1.08rem;
+  }
+
+  .decisionHeroImpactGrid,
+  .signalGrid,
+  .evidenceGrid,
+  .outcomeGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .decisionActions {
+    align-items: stretch;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
   }
 
   .signalCard {
@@ -979,155 +1274,7 @@
     font-size: 2.8rem;
   }
 
-  .outcomeGrid {
-    grid-template-columns: 1fr;
-  }
-
-  
-.impactSummary {
-  display: grid;
-  gap: 24px;
-
-  padding: 30px;
-
-  border: 1px solid var(--ds-border);
-  border-radius: 20px;
-
-  background:
-    rgba(255, 255, 255, 0.016);
-}
-
-.impactHeader {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-
-  gap: 24px;
-}
-
-.impactHeader h2 {
-  max-width: 720px;
-
-  margin: 0;
-
-  font-family: Georgia, "Times New Roman", serif;
-
-  font-size: clamp(
-    2rem,
-    3vw,
-    3rem
-  );
-
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.035em;
-}
-
-.impactList {
-  display: grid;
-  gap: 10px;
-}
-
-.impactItemPrimary,
-.impactItemPositive,
-.impactItemWarning {
-  display: grid;
-  grid-template-columns:
-    34px minmax(0, 1fr);
-
-  gap: 14px;
-
-  padding: 16px 18px;
-
-  border: 1px solid var(--ds-border);
-  border-radius: 14px;
-}
-
-.impactItemPrimary {
-  border-color:
-    rgba(214, 178, 94, 0.4);
-
-  background:
-    rgba(214, 178, 94, 0.07);
-}
-
-.impactItemPositive {
-  background:
-    rgba(255, 255, 255, 0.014);
-}
-
-.impactItemWarning {
-  background:
-    rgba(255, 255, 255, 0.01);
-}
-
-.impactIcon {
-  display: grid;
-  place-items: center;
-
-  width: 30px;
-  height: 30px;
-
-  border: 1px solid var(--ds-border);
-  border-radius: 999px;
-
-  color: var(--ds-gold);
-
-  font-size: 0.86rem;
-  font-weight: 800;
-}
-
-.impactItemPrimary strong,
-.impactItemPositive strong,
-.impactItemWarning strong {
-  font-size: 1rem;
-}
-
-.impactItemPrimary p,
-.impactItemPositive p,
-.impactItemWarning p {
-  margin: 5px 0 0;
-
-  color: var(--ds-text-secondary);
-
-  font-size: 0.9rem;
-  line-height: 1.45;
-}
-
-.executiveSynopsis {
-  padding: 20px 22px;
-
-  border-left: 2px solid
-    var(--ds-gold);
-
-  background:
-    rgba(214, 178, 94, 0.045);
-}
-
-.executiveSynopsis span {
-  color: var(--ds-gold);
-
-  font-size: 0.68rem;
-  font-weight: 750;
-
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.executiveSynopsis p {
-  max-width: 840px;
-
-  margin: 10px 0 0;
-
-  color: var(--ds-text);
-
-  font-family: Georgia, "Times New Roman", serif;
-
-  font-size: 1.3rem;
-  line-height: 1.45;
-}
-
-.decisionCard {
+  .decisionCard {
     grid-template-columns: 1fr;
   }
 
@@ -1147,8 +1294,10 @@
   .impactHeader {
     display: grid;
   }
+}
 
-  .impactSummary {
-    padding: 22px;
+@media (max-width: 520px) {
+  .decisionSummaryGrid {
+    grid-template-columns: 1fr;
   }
 }

@@ -1,16 +1,25 @@
 "use client";
 
-import styles from "../ExecutiveWorkspace.module.css";
+import styles from "./UnderstandingWorkspace.module.css";
 
 import type {
-  ExecutiveCommunication,
-} from "../../../engine/v3/communication/executiveCommunication";
+  ExecutiveProjection,
+} from "../../executive-v2/projection/ExecutiveProjection";
 
 type UnderstandingWorkspaceProps = {
-  communication: ExecutiveCommunication;
+  projection: ExecutiveProjection;
 };
 
-function toPercentage(value: number): number {
+function toPercentage(
+  value: number | undefined,
+): number {
+  if (
+    value === undefined ||
+    Number.isNaN(value)
+  ) {
+    return 0;
+  }
+
   const percentage =
     value <= 1
       ? value * 100
@@ -19,264 +28,608 @@ function toPercentage(value: number): number {
   return Math.round(
     Math.max(
       0,
-      Math.min(100, percentage),
+      Math.min(
+        100,
+        percentage,
+      ),
     ),
   );
 }
 
-export default function UnderstandingWorkspace({
-  communication,
-}: UnderstandingWorkspaceProps) {
-  const confidence = toPercentage(
-    communication.confidence.value,
-  );
+function formatLabel(
+  value: string | undefined,
+): string {
+  if (!value) {
+    return "Unknown";
+  }
 
-  const forecastConfidence =
-    toPercentage(
-      communication.forecast.confidence,
+  return value
+    .replace(/-/g, " ")
+    .replace(
+      /\b\w/g,
+      (character) =>
+        character.toUpperCase(),
     );
+}
+
+function getConfidenceLabel(
+  confidence: number,
+): string {
+  if (confidence >= 80) {
+    return "High";
+  }
+
+  if (confidence >= 55) {
+    return "Developing";
+  }
+
+  return "Limited";
+}
+
+function getConditionPosition(
+  status: string,
+  index: number,
+): string {
+  if (index === 0) {
+    return "Priority";
+  }
+
+  if (
+    status === "critical" ||
+    status === "strained"
+  ) {
+    return "Needs Attention";
+  }
+
+  if (
+    status === "healthy" ||
+    status === "improving"
+  ) {
+    return "Positive";
+  }
+
+  return "Active";
+}
+
+export default function UnderstandingWorkspace({
+  projection,
+}: UnderstandingWorkspaceProps) {
+  const organizationalState =
+    projection.organizationalState;
+
+  const primaryConstraint =
+    projection.primaryExecutiveConstraint;
+
+  const conditions =
+    projection.organizationalConditions ?? [];
+
+  const executiveExplanation =
+    projection.executiveExplanation;
+
+  const theoryValidation =
+    projection.theoryValidation;
+
+  const investigationOpportunities =
+    projection.investigationOpportunities ?? [];
+
+  const communication =
+    projection.executiveCommunication;
+
+  const confidence =
+    toPercentage(
+      projection.currentUnderstanding.confidence,
+    );
+
+  const confidenceLabel =
+    getConfidenceLabel(confidence);
+
+  const visibleConditions =
+    conditions.slice(0, 5);
+
+  const evidenceSections =
+    communication?.evidenceSections ?? [];
+
+  const visibleEvidenceSections =
+    evidenceSections.slice(0, 4);
+
+  const visibleOpportunities =
+    investigationOpportunities.slice(0, 4);
+
+  const meaningfulChanges =
+    communication?.meaningfulChanges ?? [];
+
+  const visibleChanges =
+    meaningfulChanges.slice(0, 2);
+
+  const currentStateTitle =
+    organizationalState
+      ? formatLabel(
+          organizationalState.status,
+        )
+      : projection.currentUnderstanding.belief;
+
+  const currentStateSummary =
+    organizationalState?.summary ??
+    projection.explanation.why;
+
+  const currentStateImplication =
+    organizationalState?.executiveImplication;
+
+  const supportingAnalysisTitle =
+    theoryValidation?.dominantTheory ??
+    primaryConstraint?.title ??
+    projection.currentUnderstanding.belief;
+
+  const supportingAnalysis =
+    executiveExplanation?.assessmentNarrative ||
+    theoryValidation?.whyDiscoveryBelievesIt ||
+    projection.explanation.why;
+
+  const modelUpdateCount =
+    meaningfulChanges.length > 0
+      ? meaningfulChanges.length
+      : projection.predictionEvaluations?.length ??
+        0;
 
   return (
     <main className={styles.workspace}>
-      <div className={styles.shell}>
-        <section className={styles.main}>
-          <header className={styles.workspaceHeader}>
-            <p className={styles.eyebrow}>
-              Current Understanding
-            </p>
+      <header className={styles.pageHeader}>
+        <div>
+          <p className={styles.eyebrow}>
+            Operating Model
+          </p>
 
-            <h1>{communication.headline}</h1>
+          <h1>Operating Model</h1>
 
-            <p className={styles.workspaceLead}>
-              {communication.executiveSummary}
-            </p>
-          </header>
+          <p className={styles.pageLead}>
+            Discovery&apos;s current understanding
+            of your organization.
+          </p>
+        </div>
 
-          <section className={styles.card}>
-            <h2>Understanding confidence</h2>
+        <button
+          type="button"
+          className={styles.modelStatus}
+        >
+          <span
+            className={styles.statusDot}
+            aria-hidden="true"
+          />
 
-            <div className={styles.confidenceRow}>
-              <p className={styles.confidenceValue}>
-                {confidence}%
-              </p>
+          <span>
+            <strong>{confidence}%</strong>
 
-              <span className={styles.confidenceLabel}>
-                {communication.confidence.label}
-              </span>
-            </div>
+            <small>
+              {confidenceLabel} confidence
+            </small>
+          </span>
+        </button>
+      </header>
 
-            {communication.confidence.limiters.length > 0 ? (
-              <ul className={styles.list}>
-                {communication.confidence.limiters.map(
-                  (limiter) => (
-                    <li
-                      key={limiter}
-                      className={styles.listItem}
-                    >
-                      {limiter}
-                    </li>
-                  ),
-                )}
-              </ul>
-            ) : (
+      <section className={styles.summaryGrid}>
+        <article
+          className={`${styles.summaryCard} ${styles.stateCard}`}
+        >
+          <p className={styles.cardLabel}>
+            Current State
+          </p>
+
+          <h2>{currentStateTitle}</h2>
+
+          <p>{currentStateSummary}</p>
+
+          {currentStateImplication &&
+          currentStateImplication !==
+            currentStateSummary ? (
+            <p>{currentStateImplication}</p>
+          ) : null}
+        </article>
+
+        <article className={styles.summaryCard}>
+          <p className={styles.cardLabel}>
+            Primary Constraint
+          </p>
+
+          {primaryConstraint ? (
+            <>
+              <h2>
+                {primaryConstraint.title}
+              </h2>
+
               <p>
-                Discovery has not identified a material confidence limiter.
+                {
+                  primaryConstraint
+                    .executiveSummary
+                }
               </p>
-            )}
-          </section>
 
-          <section>
+              <span
+                className={
+                  styles.directionBadge
+                }
+              >
+                {formatLabel(
+                  primaryConstraint.urgency,
+                )}{" "}
+                urgency
+              </span>
+            </>
+          ) : (
+            <>
+              <h2>
+                Still being determined
+              </h2>
+
+              <p>
+                Discovery has not yet identified
+                a single dominant organizational
+                constraint.
+              </p>
+            </>
+          )}
+        </article>
+
+        <article className={styles.metricCard}>
+          <p className={styles.cardLabel}>
+            Confidence
+          </p>
+
+          <strong>{confidence}%</strong>
+
+          <span>{confidenceLabel}</span>
+
+          <div
+            className={styles.confidenceTrack}
+            aria-label={`Operating Model confidence ${confidence}%`}
+          >
+            <div
+              className={styles.confidenceFill}
+              style={{
+                width: `${confidence}%`,
+              }}
+            />
+          </div>
+        </article>
+
+        <article className={styles.metricCard}>
+          <p className={styles.cardLabel}>
+            Model Updates
+          </p>
+
+          <strong>{modelUpdateCount}</strong>
+
+          <span>
+            Meaningful changes identified
+          </span>
+        </article>
+      </section>
+
+      <section
+        className={styles.conditionsSection}
+      >
+        <header className={styles.sectionHeader}>
+          <div>
             <p className={styles.eyebrow}>
-              Supporting Signals
+              Conditions
             </p>
 
-            <div className={styles.signalGrid}>
-              {communication.supportingSignals.map(
-                (signal) => (
+            <h2>
+              Current organizational conditions
+            </h2>
+          </div>
+
+          <span className={styles.sectionCount}>
+            {conditions.length} identified
+          </span>
+        </header>
+
+        <div className={styles.conditionGrid}>
+          {visibleConditions.length > 0 ? (
+            visibleConditions.map(
+              (condition, index) => {
+                const conditionConfidence =
+                  toPercentage(
+                    condition.confidence,
+                  );
+
+                const conditionStatus =
+                  condition.status ||
+                  "unknown";
+
+                return (
                   <article
-                    key={signal.id}
-                    className={styles.signalCard}
+                    key={`${condition.name}-${index}`}
+                    className={
+                      index === 0
+                        ? `${styles.conditionCard} ${styles.primaryCondition}`
+                        : styles.conditionCard
+                    }
                   >
-                    <h3>{signal.statement}</h3>
+                    <div
+                      className={
+                        styles.conditionTopline
+                      }
+                    >
+                      <span
+                        className={
+                          styles.conditionMarker
+                        }
+                        aria-hidden="true"
+                      />
 
-                    {signal.implication ? (
-                      <p>{signal.implication}</p>
-                    ) : null}
+                      <span
+                        className={
+                          styles.conditionPosition
+                        }
+                      >
+                        {getConditionPosition(
+                          conditionStatus,
+                          index,
+                        )}
+                      </span>
+                    </div>
+
+                    <h3>{condition.name}</h3>
+
+                    <p>
+                      {condition.summary}
+                    </p>
+
+                    <div
+                      className={
+                        styles.signalMeta
+                      }
+                    >
+                      <span>
+                        {formatLabel(
+                          conditionStatus,
+                        )}
+                      </span>
+
+                      <span>
+                        {conditionConfidence}%
+                        confidence
+                      </span>
+                    </div>
                   </article>
-                ),
-              )}
-            </div>
-          </section>
-
-          <section className={styles.featureCard}>
-            <h2>What Discovery expects next</h2>
-
-            <h3>
-              {communication.forecast.headline}
-            </h3>
-
-            <p>
-              {communication.forecast.explanation}
-            </p>
-
-            <div className={styles.metaRow}>
-              <span className={styles.metaPill}>
-                Confidence {forecastConfidence}%
-              </span>
-
-              <span className={styles.metaPill}>
-                {communication.forecast.timeHorizon}
-              </span>
-
-              <span className={styles.metaPill}>
-                {
-                  communication.forecast
-                    .affectedConditionIds.length
-                }{" "}
-                condition
-                {
-                  communication.forecast
-                    .affectedConditionIds.length === 1
-                    ? ""
-                    : "s"
-                }{" "}
-                affected
-              </span>
-            </div>
-          </section>
-
-          {communication.uncertainty ? (
-            <section className={styles.card}>
-              <h2>What remains uncertain</h2>
-
+                );
+              },
+            )
+          ) : (
+            <article
+              className={styles.conditionCard}
+            >
               <h3>
-                {communication.uncertainty.question}
+                No active organizational
+                conditions are available.
               </h3>
 
               <p>
-                {communication.uncertainty.implication}
+                Add more evidence to help
+                Discovery form a stronger
+                Operating Model.
+              </p>
+            </article>
+          )}
+        </div>
+      </section>
+
+      <section className={styles.analysisGrid}>
+        <article className={styles.panel}>
+          <header
+            className={styles.panelHeader}
+          >
+            <div>
+              <p className={styles.eyebrow}>
+                Evidence
               </p>
 
-              {communication.uncertainty
-                .recommendedInvestigation ? (
-                <ul className={styles.list}>
-                  <li className={styles.listItem}>
-                    {
-                      communication.uncertainty
-                        .recommendedInvestigation
+              <h2>
+                Improve the Operating Model
+              </h2>
+            </div>
+          </header>
+
+          <div className={styles.evidenceList}>
+            {visibleOpportunities.length >
+            0 ? (
+              visibleOpportunities.map(
+                (opportunity, index) => (
+                  <article
+                    key={`${opportunity.topic}-${index}`}
+                    className={
+                      styles.evidenceItem
                     }
-                  </li>
-                </ul>
-              ) : null}
+                  >
+                    <span
+                      className={
+                        styles.evidenceMarker
+                      }
+                      aria-hidden="true"
+                    />
 
-              {communication.uncertainty
-                .expectedConfidenceGain !== undefined ? (
-                <div className={styles.metaRow}>
-                  <span className={styles.metaPill}>
-                    Potential confidence gain{" "}
-                    {toPercentage(
-                      communication.uncertainty
-                        .expectedConfidenceGain,
-                    )}
-                    %
-                  </span>
-                </div>
-              ) : null}
-            </section>
-          ) : null}
-        </section>
+                    <div>
+                      <h3>
+                        {opportunity.topic}
+                      </h3>
 
-        <aside className={styles.rail}>
-          <section className={styles.card}>
-            <h2>Meaningful changes</h2>
-
-            {communication.meaningfulChanges.length > 0 ? (
-              <div className={styles.changeList}>
-                {communication.meaningfulChanges.map(
-                  (change) => (
-                    <article
-                      key={change.entityId}
-                      className={styles.changeCard}
-                    >
-                      <h3>{change.label}</h3>
-
-                      <p>{change.statement}</p>
-
-                      <span className={styles.direction}>
-                        {change.direction}
-                      </span>
-                    </article>
-                  ),
-                )}
-              </div>
-            ) : (
-              <p>
-                No meaningful organizational changes are currently recorded.
-              </p>
-            )}
-          </section>
-        </aside>
-
-        <div className={styles.fullWidth}>
-          <section className={styles.card}>
-            <h2>Evidence and reasoning</h2>
-
-            {communication.evidenceSections.length > 0 ? (
-              <div className={styles.evidenceGrid}>
-                {communication.evidenceSections.map(
-                  (section) => (
-                    <article
-                      key={section.id}
-                      className={styles.evidenceCard}
-                    >
-                      <h3>{section.title}</h3>
-
-                      <p
-                        className={
-                          styles.evidenceSummary
+                      <p>
+                        {
+                          opportunity
+                            .suggestedExecutiveQuestion
                         }
-                      >
+                      </p>
+
+                      {opportunity.expectedConfidenceGain >
+                      0 ? (
+                        <small>
+                          Up to{" "}
+                          {
+                            opportunity
+                              .expectedConfidenceGain
+                          }
+                          % expected confidence
+                          gain
+                        </small>
+                      ) : null}
+                    </div>
+                  </article>
+                ),
+              )
+            ) : visibleEvidenceSections.length >
+              0 ? (
+              visibleEvidenceSections.map(
+                (section) => (
+                  <article
+                    key={section.id}
+                    className={
+                      styles.evidenceItem
+                    }
+                  >
+                    <span
+                      className={
+                        styles.evidenceMarker
+                      }
+                      aria-hidden="true"
+                    />
+
+                    <div>
+                      <h3>
+                        {section.title}
+                      </h3>
+
+                      <p>
                         {section.summary}
                       </p>
-
-                      <p
-                        className={
-                          styles.evidenceContent
-                        }
-                      >
-                        {section.content}
-                      </p>
-
-                      {section.metrics &&
-                      section.metrics.length > 0 ? (
-                        <div className={styles.metaRow}>
-                          {section.metrics.map(
-                            (metric) => (
-                              <span
-                                key={`${section.id}-${metric.label}`}
-                                className={
-                                  styles.metaPill
-                                }
-                              >
-                                {metric.label}:{" "}
-                                {metric.value}
-                              </span>
-                            ),
-                          )}
-                        </div>
-                      ) : null}
-                    </article>
-                  ),
-                )}
-              </div>
+                    </div>
+                  </article>
+                ),
+              )
             ) : (
-              <p>
-                No evidence sections are currently available.
-              </p>
+              <div
+                className={styles.emptyState}
+              >
+                Discovery has not identified a
+                priority evidence request.
+              </div>
             )}
-          </section>
+          </div>
+        </article>
+
+        <article className={styles.panel}>
+          <header
+            className={styles.panelHeader}
+          >
+            <div>
+              <p className={styles.eyebrow}>
+                Why Discovery Believes This
+              </p>
+
+              <h2>Supporting analysis</h2>
+            </div>
+          </header>
+
+          <div className={styles.analysisBody}>
+            <h3>
+              {supportingAnalysisTitle}
+            </h3>
+
+            <p>{supportingAnalysis}</p>
+
+            {executiveExplanation
+              ?.confidenceNarrative ? (
+              <p>
+                {
+                  executiveExplanation
+                    .confidenceNarrative
+                }
+              </p>
+            ) : null}
+
+            <button
+              type="button"
+              className={
+                styles.analysisAction
+              }
+            >
+              View supporting analysis →
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <section
+        className={styles.changesSection}
+      >
+        <header
+          className={styles.changesHeader}
+        >
+          <div>
+            <p className={styles.eyebrow}>
+              Recent Meaningful Changes
+            </p>
+
+            <h2>
+              How the Operating Model has evolved
+            </h2>
+          </div>
+
+          {meaningfulChanges.length >
+          visibleChanges.length ? (
+            <button
+              type="button"
+              className={
+                styles.changesAction
+              }
+            >
+              View all changes →
+            </button>
+          ) : null}
+        </header>
+
+        <div className={styles.changeGrid}>
+          {visibleChanges.length > 0 ? (
+            visibleChanges.map(
+              (change) => (
+                <article
+                  key={change.entityId}
+                  className={
+                    styles.changeItem
+                  }
+                >
+                  <div
+                    className={
+                      styles.changeTopline
+                    }
+                  >
+                    <h3>{change.label}</h3>
+
+                    <span>
+                      {formatLabel(
+                        change.direction,
+                      )}
+                    </span>
+                  </div>
+
+                  <p>{change.statement}</p>
+
+                  <small>
+                    {toPercentage(
+                      change.confidence,
+                    )}
+                    % confidence
+                  </small>
+                </article>
+              ),
+            )
+          ) : (
+            <p className={styles.emptyState}>
+              No meaningful organizational
+              changes are currently recorded.
+            </p>
+          )}
         </div>
-      </div>
+      </section>
     </main>
   );
 }
