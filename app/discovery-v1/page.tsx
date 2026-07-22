@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { buildProductHref } from "../../components/product-shell/data/productOrganization";
 
@@ -61,10 +61,37 @@ const loadingSteps = [
   "Generating initial insights",
 ];
 
-export default function DiscoveryV1Page() {
+export default function DiscoveryV1Page({
+  searchParams,
+}: {
+  searchParams: {
+    organizationId?: string | string[];
+  };
+}) {
   const router = useRouter();
   const [organizationId, setOrganizationId] =
-    useState<string | null>(null);
+    useState<string | null>(() => {
+      if (
+        typeof searchParams.organizationId !==
+        "string"
+      ) {
+        return null;
+      }
+
+      return (
+        searchParams.organizationId.trim() ||
+        null
+      );
+    });
+
+  useEffect(() => {
+    const queryOrganizationId =
+      typeof searchParams.organizationId === "string"
+        ? searchParams.organizationId.trim() || null
+        : null;
+
+    setOrganizationId(queryOrganizationId);
+  }, [searchParams.organizationId]);
 
   const [company, setCompany] = useState("");
   const [website, setWebsite] = useState("");
@@ -113,6 +140,12 @@ export default function DiscoveryV1Page() {
       if (!organizationId) {
         setOrganizationId(
           activeOrganizationId,
+        );
+        router.replace(
+          buildProductHref(
+            "/discovery-v1",
+            activeOrganizationId,
+          ),
         );
       }
 

@@ -8,6 +8,7 @@ import { buildDecisionsExperienceView } from "./data/buildDecisionsExperienceVie
 import { buildOrganizationExperienceView } from "./data/buildOrganizationExperienceView";
 import { buildResearchExperienceView } from "./data/buildResearchExperienceView";
 import { loadProductOrganization } from "./data/loadProductOrganization";
+import { buildProductHref } from "./data/productOrganization";
 
 type ProductWorkspaceProps = {
   children?: ReactNode;
@@ -82,7 +83,14 @@ export default function ProductWorkspace({
               ? "Discovery needs an organization before it can present a grounded understanding."
               : "Return to the organization setup experience and try again."}
           </p>
-          <Link href="/discovery-v1">Create or choose an organization</Link>
+          <Link
+            href={buildProductHref(
+              "/discovery-v1",
+              organization.organizationId,
+            )}
+          >
+            Create or choose an organization
+          </Link>
         </section>
       )}
     </DiscoveryShell>
