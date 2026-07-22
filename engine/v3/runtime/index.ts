@@ -27,3 +27,11 @@ export {
   DEFAULT_ORGANIZATION_ID,
   resolveOrganizationId,
 } from "./activeOrganization";
+
+export {
+  listOrganizations,
+} from "./organizationRegistry";
+
+export type {
+  OrganizationSummary,
+} from "./organizationRegistry";
