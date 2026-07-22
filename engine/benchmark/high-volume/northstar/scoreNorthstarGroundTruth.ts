@@ -1,11 +1,11 @@
 import {
-  loadOrganizationRuntimeState,
-} from "../../../v3/runtime/organizationStateStore";
-
-import {
   NORTHSTAR_ORGANIZATION_ID,
   northstarCompanyFixture,
 } from "./northstarCompanyFixture";
+
+import {
+  runCanonicalNorthstarGroundTruthReplay,
+} from "./runCanonicalNorthstarGroundTruthReplay";
 
 type GroundTruthDimension = {
   id: string;
@@ -922,9 +922,7 @@ function printDimension(
 export function scoreNorthstarGroundTruth():
   NorthstarGroundTruthScore {
   const runtime =
-    loadOrganizationRuntimeState(
-      NORTHSTAR_ORGANIZATION_ID,
-    );
+    runCanonicalNorthstarGroundTruthReplay();
 
   const memory =
     runtime.memory as
@@ -1015,8 +1013,7 @@ export function scoreNorthstarGroundTruth():
       NORTHSTAR_ORGANIZATION_ID,
 
     scoredAt:
-      new Date()
-        .toISOString(),
+      "2026-07-22T20:00:00.000Z",
 
     dimensionScore,
 

@@ -3,6 +3,7 @@ import {
 } from "node:fs";
 
 import {
+  basename,
   join,
 } from "node:path";
 
@@ -957,7 +958,15 @@ function runNorthstarIngestionExperiment001():
   return summary;
 }
 
-runNorthstarIngestionExperiment001();
+if (
+  basename(
+    process.argv[1] ??
+      "",
+  ) ===
+  "runNorthstarIngestionExperiment001.ts"
+) {
+  runNorthstarIngestionExperiment001();
+}
 
 export {
   runNorthstarIngestionExperiment001,
