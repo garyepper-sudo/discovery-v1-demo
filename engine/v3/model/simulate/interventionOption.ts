@@ -4,6 +4,46 @@ import type {
   OrganizationalInterventionType,
 } from "./organizationalIntervention";
 
+export type InterventionExecutionLevel =
+  | "low"
+  | "moderate"
+  | "high";
+
+/**
+ * Intrinsic execution characteristics of an intervention option.
+ *
+ * The profile is independent of the organization evaluating the option.
+ * Feasibility combines these stable characteristics with the current
+ * Executive Decision constraints.
+ */
+export type InterventionProfile = {
+  organizationalScope:
+    OrganizationalInterventionScope;
+
+  implementationBurden:
+    InterventionExecutionLevel;
+
+  organizationalDisruption:
+    InterventionExecutionLevel;
+
+  reversibility:
+    InterventionExecutionLevel;
+
+  leadershipAttentionRequired:
+    InterventionExecutionLevel;
+
+  coordinationRequirement:
+    InterventionExecutionLevel;
+
+  expectedTimeToImpact:
+    OrganizationalInterventionTimeHorizon;
+
+  implementationRisk:
+    InterventionExecutionLevel;
+
+  preconditions: string[];
+};
+
 export type InterventionConstraintEvaluation = {
   /**
    * Zero-based index of the corresponding constraint on
@@ -72,6 +112,12 @@ export type InterventionOption = {
    * Period over which the option should be evaluated.
    */
   timeHorizon: OrganizationalInterventionTimeHorizon;
+
+  /**
+   * Stable execution characteristics used to evaluate this option against
+   * the current decision constraints.
+   */
+  profile: InterventionProfile;
 
   /**
    * Conditions this option is expected to affect directly.

@@ -198,6 +198,37 @@ export function generateInterventionOptions({
             executiveDecision
               .timeHorizon,
 
+          profile: {
+            organizationalScope:
+              "organization",
+
+            implementationBurden:
+              "moderate",
+
+            organizationalDisruption:
+              "low",
+
+            reversibility:
+              "high",
+
+            leadershipAttentionRequired:
+              "moderate",
+
+            coordinationRequirement:
+              "low",
+
+            expectedTimeToImpact:
+              executiveDecision.timeHorizon,
+
+            implementationRisk:
+              "moderate",
+
+            preconditions: [
+              "Routine decisions can be separated from decisions requiring leadership review.",
+              "Decision accountability remains explicit after the approval layer is removed.",
+            ],
+          },
+
           targetConditionIds: [
             "condition-decisionflow",
             "condition-coordination",
@@ -284,6 +315,37 @@ export function generateInterventionOptions({
             executiveDecision
               .timeHorizon,
 
+          profile: {
+            organizationalScope:
+              "organization",
+
+            implementationBurden:
+              "moderate",
+
+            organizationalDisruption:
+              "moderate",
+
+            reversibility:
+              "high",
+
+            leadershipAttentionRequired:
+              "high",
+
+            coordinationRequirement:
+              "high",
+
+            expectedTimeToImpact:
+              executiveDecision.timeHorizon,
+
+            implementationRisk:
+              "moderate",
+
+            preconditions: [
+              "Leaders agree on recurring decision boundaries.",
+              "Named decision owners have sufficient authority and context.",
+            ],
+          },
+
           targetConditionIds: [
             "condition-coordination",
             "condition-decisionflow",
@@ -369,6 +431,37 @@ export function generateInterventionOptions({
           timeHorizon:
             executiveDecision
               .timeHorizon,
+
+          profile: {
+            organizationalScope:
+              "organization",
+
+            implementationBurden:
+              "low",
+
+            organizationalDisruption:
+              "moderate",
+
+            reversibility:
+              "high",
+
+            leadershipAttentionRequired:
+              "low",
+
+            coordinationRequirement:
+              "moderate",
+
+            expectedTimeToImpact:
+              executiveDecision.timeHorizon,
+
+            implementationRisk:
+              "low",
+
+            preconditions: [
+              "Leadership can stop or defer lower-priority work.",
+              "The remaining priority portfolio receives sustained focus.",
+            ],
+          },
 
           targetConditionIds: [
             "condition-executioncapacity",

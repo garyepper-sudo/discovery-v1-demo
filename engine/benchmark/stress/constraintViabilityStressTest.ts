@@ -108,6 +108,34 @@ const optionWithoutEvaluations:
   timeHorizon:
     "medium-term",
 
+  profile: {
+    organizationalScope:
+      "organization",
+
+    implementationBurden:
+      "high",
+
+    organizationalDisruption:
+      "high",
+
+    reversibility:
+      "moderate",
+
+    leadershipAttentionRequired:
+      "high",
+
+    coordinationRequirement:
+      "high",
+
+    expectedTimeToImpact:
+      "medium-term",
+
+    implementationRisk:
+      "high",
+
+    preconditions: [],
+  },
+
   targetConditionIds: [
     "condition-executioncapacity",
   ],
