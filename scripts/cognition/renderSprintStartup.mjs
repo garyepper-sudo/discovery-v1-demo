@@ -13,8 +13,8 @@ const PRODUCT_CANON_PATH = path.join(
 const PRODUCT_STATE_PATH = path.join(
   PROJECT_ROOT,
   "docs",
-  "Product",
-  "PRODUCT_STATE.md",
+  "Sprint Updates",
+  "PROJECT_STATE.md",
 );
 
 const ARCHITECTURE_STATE_PATH = path.join(
@@ -207,8 +207,10 @@ function extractAndStripSection(
 function printStartupReadingOrder() {
   const files = [
     "docs/Product/PRODUCT_CANON.md",
-    "docs/Product/PRODUCT_STATE.md",
+    "docs/Product/MVP_PRODUCT_SPECIFICATION.md",
+    "docs/Product/ORGANIZATION_PAGE_SPEC.md",
     "docs/Sprint Updates/DISCOVERY_SNAPSHOT.md",
+    "docs/Architecture/Validation/RUNTIME_VALIDATION.md",
     "docs/Architecture/DISCOVERY_ARCHITECTURE_STATE.json",
     "docs/Architecture/COGNITIVE_CAPABILITY_REGISTRY.json",
     "docs/Sprint Updates/PROJECT_STATE.md",
@@ -247,6 +249,55 @@ function printStartupReadingOrder() {
     "Architecture supports the product and should expand only when benchmark evidence proves a genuine gap.",
   );
 
+  console.log("");
+}
+
+function printRuntimeValidationRule() {
+  console.log(
+    "RUNTIME VALIDATION RULE",
+  );
+  console.log("");
+
+  console.log(
+    "Architecture documents describe intended behavior. Runtime validation confirms actual behavior.",
+  );
+  console.log("");
+
+  console.log(
+    "Do not infer Runtime behavior solely from producer contracts or architecture documentation. Inspect representative Runtime state when actual output semantics or lineage matter.",
+  );
+  console.log("");
+
+  console.log(
+    "Before architectural, cognitive, projection, or executive-experience changes:",
+  );
+  console.log(
+    "1. Read docs/Architecture/Validation/RUNTIME_VALIDATION.md.",
+  );
+  console.log(
+    "2. Inspect one relevant .discovery-runtime/organizations/*.json file when the task depends on actual output.",
+  );
+  console.log(
+    "3. Compare Runtime identity, persistence, memory, semantic layers, executive outputs, decisions, and learning state with canonical expectations.",
+  );
+  console.log(
+    "4. Treat discrepancies as validation findings rather than immediately adding architecture.",
+  );
+  console.log("");
+
+  console.log(
+    "Inspect: organization identity and persistence; memory structure; Understandings; Themes and semantic patterns; Phenomena; mechanism ancestry; organizational beliefs; semantic cohorts; concept candidates; conceptualUnderstanding; organizational conditions; primary executive constraint; executive assessment; executive recommendation; executive communication; decision records; learning state.",
+  );
+  console.log("");
+
+  console.log(
+    "Latest semantic Runtime validation: evidence-grounded Themes; direct Understanding ancestry in Phenomena; no Understanding → Phenomena → Mechanisms lineage discontinuity; normalized Conceptual Understanding with organization-specific manifestation; no diagnostic degradation or required semantic failure.",
+  );
+  console.log("");
+
+  console.log(
+    "Presentation caveat: normalized labels or primary descriptions may be more generic than richer source-grounded summaries, evidence fields, or ancestry.",
+  );
   console.log("");
 }
 
@@ -1198,10 +1249,10 @@ function printStartupDocuments(state) {
 
   const productFiles = [
     "docs/Product/PRODUCT_CANON.md",
-    "docs/Product/PRODUCT_STATE.md",
-    "docs/Product/PRODUCT_PRINCIPLES.md",
-    "docs/Product/EXECUTIVE_WORK_OBJECT.md",
-    "docs/Product/PRODUCT_FLYWHEEL.md",
+    "docs/Product/MVP_PRODUCT_SPECIFICATION.md",
+    "docs/Product/ORGANIZATION_PAGE_SPEC.md",
+    "docs/Sprint Updates/PROJECT_STATE.md",
+    "docs/Architecture/Validation/RUNTIME_VALIDATION.md",
   ];
 
   const files = [
@@ -1267,6 +1318,11 @@ function renderSprintStartup() {
   console.log("");
 
   printStartupReadingOrder();
+
+  printRule();
+  console.log("");
+
+  printRuntimeValidationRule();
 
   printRule();
   console.log("");

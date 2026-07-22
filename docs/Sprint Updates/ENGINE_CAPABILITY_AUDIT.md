@@ -1,380 +1,103 @@
 # Engine Capability Audit
 
-**Status:** Canonical (Sprint 77)
+**Status:** Canonical operational audit (Sprint 79 baseline)
 
----
+## Purpose
 
-# Purpose
+This document records the current health and product-use boundary of Discovery's implemented cognitive capabilities. The Capability Registry remains authoritative for individual capability ownership and producers. Benchmarks validate behavior. The Sprint 79 product specifications determine how capabilities are presented.
 
-This document is the canonical operational audit of Discovery's cognitive capabilities.
+## Architecture position
 
-Its purpose is to verify that every implemented capability:
+The Cognitive Operating System, Capability Registry, Runtime, and current semantic architecture are stable. New presentation requirements do not justify new cognition. Architectural changes require a demonstrated benchmark gap.
 
-- belongs to exactly one Cognitive Operating System,
-- belongs to exactly one Capability Registry entry,
-- has exactly one canonical producer,
-- produces one canonical cognitive object,
-- participates in the canonical cognitive pipeline,
-- persists canonical cognition when appropriate,
-- is consumed by downstream cognition,
-- is exposed through Executive Communication or Executive Projection when appropriate,
-- is benchmark validated,
-- and remains architecturally consistent.
+The engine already provides canonical cognition for evidence, understanding, phenomena, mechanisms, beliefs, concepts, organizational conditions, assessment, recommendation, optimization, simulation, decision recording, communication, learning, and persistent organizational memory.
 
-The Capability Registry remains the authoritative inventory of individual capabilities.
+## Persistent organization capability
 
-The benchmark suite validates that the implementation faithfully executes the documented architecture.
+- `engine/v3/runtime/activeOrganization.ts` owns canonical organization identity resolution.
+- Runtime persistence is organization-scoped.
+- Discovery, scenario, decision, and decision-record routes use the canonical resolver.
+- Integrated onboarding generates a stable opaque ID independent of company name.
+- Organization identity reaches Discovery Lab, Executive Workspace, Simulation, Decision, and Decision Commit.
 
----
+Authentication remains separate from Runtime organization identity. Organization switching and Clerk are not part of this completed milestone.
 
-# Current Architecture Status
+## Semantic Fidelity capability
 
-Discovery's first-generation **Executive Cognitive Operating System** is considered architecturally complete.
+### Themes
 
-The current focus is no longer expanding reasoning capability.
+- Emergent Themes use deterministic evidence relationships and signal overlap.
+- Repeated keywords no longer directly create labels such as `Consulting Pattern` or `Founder Pattern`.
+- Theme evidence and signal ancestry remain grounded.
+- The `V3Theme` contract is unchanged.
 
-Current engineering focuses on exposing existing cognition through a production-quality Executive Operating System.
+### Phenomena
 
-The following executive reasoning systems are considered canonical:
+- Runtime passes current Understandings into Phenomena inference.
+- Understanding clusters preserve real Understanding IDs.
+- Cluster-driven Phenomena retain organization-specific descriptions and direct ancestry.
+- The Understanding → Phenomena → Mechanisms lineage discontinuity is removed.
+- Pattern-driven Phenomena remain unchanged and benchmark-valid.
 
-- Executive Assessment
-- Executive Recommendation
-- Executive Optimization
-- Executive Simulation
-- Executive Communication
-- Executive Decision Orchestration
-- Executive Decision Recording
-- Executive Learning
-- Longitudinal Executive Judgment
+### Conceptual Understanding
 
-Each operating system possesses:
+- Theory prototype statements remain normalized and reusable.
+- Candidate summaries and explanations preserve concise organization-specific manifestations from Semantic Cohort observations.
+- Candidate IDs, semantic signatures, confidence calculations, ancestry, and ranking remain stable.
+- No founder-, consulting-, organization-, or fixture-specific prototype was added.
+- Final conceptual-understanding summaries carry both normalized identity and source meaning.
 
-- canonical cognitive objects,
-- deterministic producers,
-- explicit producer → consumer relationships,
-- runtime integration,
-- benchmark validation,
-- architectural validation,
-- deterministic behavior.
+## Current validation
 
-Future architectural expansion should require benchmark evidence rather than intuition.
+| Check | Result |
+|---|---|
+| `npm run typecheck` | PASS |
+| `npm run build` | PASS; existing out-of-scope React hook warnings only |
+| Executive Meaning Preservation | PASS |
+| Phenomenon Semantic Validation | PASS |
+| Full benchmark suite | 15/15 checks, 100% integrity |
+| Cognitive Semantic Normalization Audit | Successful exit; `NORMALIZATION REQUIRED` findings remain |
+| Architecture verification | 291/302 checks, 96% |
 
----
+Architecture verification currently has 11 known registry/dependency failures, including undeclared canonical exports and dependency reciprocity gaps. These and the normalization audit findings pre-date the completed Semantic Fidelity work and are not newly introduced regressions. Therefore older handoff claims of a completely passing architecture verifier are superseded.
 
-# Capability Health
+## Meaning-preservation result
 
-## Capability Registry
+- Evidence: PASS
+- Understanding: PASS
+- Semantic Concepts: PASS
+- Phenomena: PASS
+- Conceptual Understanding: PASS
+- First diagnostic semantic degradation: none
+- First required semantic failure: none
 
-- Duplicate capability IDs .............. 0
-- Missing producers ..................... 0
-- Missing consumers ..................... 0
-- Missing runtime destinations .......... 0
-- Missing dependencies .................. 0
-- Files implementing multiple capabilities ..... 0
+## Product-use boundary
 
-**Capability Registry Health: 100%**
+The Organization Model is the product. Existing cognition should now be composed into:
 
----
+- **Your Organization:** observe and improve the model
+- **Decisions:** recommendations, decision tracking, review, and learning
+- **Research:** investigation, comparison, simulation, and optimization
+- **Ask:** query and challenge the model
 
-## Architecture Validation
+Executive Brief, Decision Lab, Executive Work, simulation, and decision capabilities remain implemented capabilities, but they are not locked primary navigation destinations.
 
-Current validation status:
+## Sprint 79 engineering priority
 
-- Architecture Integrity ...................... ✅ PASS
-- Producer → Consumer Validation .............. ✅ PASS
-- Runtime Persistence Validation .............. ✅ PASS
-- Cognitive Layer Validation .................. ✅ PASS
-- Executive Communication Validation .......... ✅ PASS
-- Executive Recommendation Validation ......... ✅ PASS
-- Executive Simulation Validation ............. ✅ PASS
-- Executive Decision Validation ............... ✅ PASS
-- Executive Operating System Validation ....... ✅ PASS
-- Longitudinal Executive Judgment Validation .. ✅ PASS
+The next target is a product-shell and Organization-experience implementation, not an engine expansion:
 
-The architecture is currently considered internally consistent.
+1. Audit executive-v3 UI and routing.
+2. Plan the smallest navigation migration.
+3. Add the persistent shell.
+4. Implement one Your Organization page supporting EMPTY, EMERGING, DEVELOPING, ACTIVE, and EVOLVING.
+5. Reuse current engine and Runtime behavior.
+6. Add Decisions, Research, and Ask only after the stewardship experience works.
 
----
+## Capability guardrails
 
-# Current Benchmark Status
-
-Discovery possesses benchmark coverage across every major executive reasoning layer.
-
-| Benchmark | Status |
-|-----------|--------|
-| Executive Operating System | ✅ PASS |
-| Executive Decision Validation | ✅ PASS |
-| Executive Decision Recording | ✅ PASS |
-| Executive Communication | ✅ PASS |
-| Executive Simulation | ✅ PASS |
-| Executive Learning | ✅ PASS |
-| Longitudinal Executive Judgment | ✅ PASS |
-| Cognitive Layer Validation | ✅ PASS |
-| Runtime Validation | ✅ PASS |
-| Capability Registry Validation | ✅ PASS |
-| Production Build | ✅ PASS |
-| TypeScript | ✅ 0 Errors |
-
-Current benchmark work focuses on improving executive judgment quality rather than introducing new reasoning systems.
-
----
-
-# Canonical Cognitive Pipeline
-
-```text
-Evidence
-
-↓
-
-Observations
-
-↓
-
-Signals
-
-↓
-
-Contradictions
-
-↓
-
-Phenomena
-
-↓
-
-Mechanisms
-
-↓
-
-Beliefs
-
-↓
-
-Concepts
-
-↓
-
-Theories
-
-↓
-
-Organizational Conditions
-
-↓
-
-Organizational State
-
-↓
-
-Executive Assessment
-
-↓
-
-Executive Recommendation
-
-↓
-
-Executive Optimization
-
-↓
-
-Executive Simulation
-
-↓
-
-Executive Communication
-
-↓
-
-Executive Projection
-
-↓
-
-Executive Experience
-```
-
-Every downstream layer consumes upstream cognition.
-
-No presentation layer recreates reasoning.
-
----
-
-# Cognitive Operating Systems
-
-| Operating System | Status |
-|------------------|--------|
-| Perception | ✅ Canonical |
-| Understanding | ✅ Canonical |
-| Memory | ✅ Canonical |
-| Learning | ✅ Canonical |
-| Abstraction | ✅ Canonical |
-| Prediction | ✅ Canonical |
-| Epistemics | ✅ Canonical |
-| Executive Assessment | ✅ Canonical |
-| Executive Recommendation | ✅ Canonical |
-| Executive Optimization | ✅ Canonical |
-| Executive Simulation | ✅ Canonical |
-| Executive Communication | ✅ Canonical |
-| Executive Decision | ✅ Canonical |
-| Executive Learning | ✅ Canonical |
-| Longitudinal Executive Judgment | ✅ Canonical |
-
-Each operating system owns one primary cognitive responsibility.
-
-Consumers always reuse canonical cognition.
-
----
-
-# Executive Product Flow
-
-The current executive workflow built on top of the Cognitive Operating System is:
-
-```text
-Executive Brief
-
-↓
-
-Decision Definition
-(Executive Intent Confirmation)
-
-↓
-
-Decision Lab
-
-↓
-
-Commit Decision
-
-↓
-
-Decision Tracking
-
-↓
-
-Executive Review
-
-↓
-
-Executive Learning
-
-↓
-
-Operating Model Improvement
-```
-
-This workflow represents product orchestration.
-
-It does not introduce additional reasoning.
-
----
-
-# Runtime Health
-
-Canonical runtime persistence exists for:
-
-- Organizational State
-- Executive Assessment
-- Executive Recommendation
-- Executive Simulation
-- Executive Communication
-- Executive Projection
-- Executive Decision Records
-- Executive Work
-- Executive Review
-- Executive Learning
-- Operating Model Improvements
-- Persistent Organizational Memory
-
-Runtime preserves cognition.
-
-Runtime never recreates cognition.
-
----
-
-# Current Engineering Priorities
-
-Current priorities are:
-
-1. Improve executive judgment quality.
-2. Improve recommendation quality.
-3. Improve executive confidence calibration.
-4. Improve simulation quality.
-5. Improve executive communication.
-6. Reduce executive reading.
-7. Improve executive trust.
-8. Refine the executive product experience.
-
-Future work should strengthen existing cognition before introducing additional reasoning capabilities.
-
----
-
-# Current Risks
-
-The current risks are product risks rather than architectural risks.
-
-Primary risks include:
-
-- executive trust,
-- recommendation quality,
-- executive communication quality,
-- simulation usability,
-- decision workflow friction,
-- excessive executive reading,
-- product-market fit,
-- benchmark quality.
-
-The Cognitive Operating System itself is considered stable.
-
----
-
-# Canonical Producer Principles
-
-Every cognitive object must have:
-
-- one Operating System owner,
-- one Capability Registry owner,
-- one canonical producer,
-- one runtime representation when persisted,
-- explicit producer → consumer relationships,
-- benchmark validation,
-- deterministic behavior,
-- preserved cognitive ancestry.
-
-Reasoning belongs inside canonical producers.
-
-Communication explains cognition.
-
-Projection transports cognition.
-
-Runtime preserves cognition.
-
-Presentation renders cognition.
-
----
-
-# Development Principles
-
-> Architecture exists to improve executive judgment.
-
-> Canonical producers own reasoning.
-
-> Runtime preserves cognition.
-
-> Communication explains cognition.
-
-> Projection organizes cognition.
-
-> Presentation renders cognition.
-
-> Executives make decisions.
-
-> Discovery improves the quality of those decisions.
-
-> Every completed Executive Work item strengthens the Operating Model.
-
-> Benchmark evidence—not feature count—drives architectural evolution.
-
-> The Executive Cognitive Operating System should be treated as complete unless benchmark evidence demonstrates a genuine architectural gap.
-
-> The primary engineering challenge is now delivering the best possible executive experience on top of a stable cognitive architecture.
-
-> Executive trust remains Discovery's single most valuable product asset.
+- Preserve one canonical producer per cognitive object.
+- Reuse Runtime and existing engine outputs.
+- Preserve organization-specific meaning in every executive projection.
+- Do not add cognitive capabilities to solve layout or wording problems.
+- Keep visualization and onboarding state in the product layer.
+- Validate architectural changes with benchmarks before expanding the registry.

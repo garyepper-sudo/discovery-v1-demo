@@ -1,6 +1,6 @@
 # Capability Trace — Investigation Opportunity Generation
 
-Generated: 2026-07-21T16:14:01.868Z
+Generated: 2026-07-22T00:33:24.458Z
 
 ## Verified Architecture
 
@@ -274,45 +274,45 @@ This section records source-code references. It supplements, but does not replac
   - `import { refineInvestigationOpportunities } from "../model/investigation/refineInvestigationOpportunities";`
 - Line 111 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities?: any[];`
-- Line 698 · **unknown** · matched `buildInvestigationOpportunities`
+- Line 700 · **unknown** · matched `buildInvestigationOpportunities`
   - `buildInvestigationOpportunities({`
-- Line 704 · **unknown** · matched `investigationOpportunities`
+- Line 706 · **unknown** · matched `investigationOpportunities`
   - `previousInvestigationOpportunities:`
-- Line 705 · **read** · matched `investigationOpportunities`
+- Line 707 · **read** · matched `investigationOpportunities`
   - `memory.investigationOpportunities,`
-- Line 711 · **unknown** · matched `investigationOpportunities`
+- Line 713 · **unknown** · matched `investigationOpportunities`
   - `const initialInvestigationOpportunities =`
-- Line 714 · **definition** · matched `investigationOpportunities`
+- Line 716 · **definition** · matched `investigationOpportunities`
   - `let investigationOpportunities =`
-- Line 715 · **unknown** · matched `investigationOpportunities`
+- Line 717 · **unknown** · matched `investigationOpportunities`
   - `initialInvestigationOpportunities;`
-- Line 753 · **unknown** · matched `investigationOpportunities`
+- Line 755 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 774 · **unknown** · matched `investigationOpportunities`
+- Line 776 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1026 · **type** · matched `investigationOpportunities`
+- Line 1028 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities:`
-- Line 1027 · **unknown** · matched `investigationOpportunities`
+- Line 1029 · **unknown** · matched `investigationOpportunities`
   - `initialInvestigationOpportunities,`
-- Line 1033 · **assignment** · matched `investigationOpportunities`
+- Line 1035 · **assignment** · matched `investigationOpportunities`
   - `investigationOpportunities =`
-- Line 1034 · **unknown** · matched `investigationOpportunities`
-  - `refineInvestigationOpportunities({`
 - Line 1036 · **unknown** · matched `investigationOpportunities`
+  - `refineInvestigationOpportunities({`
+- Line 1038 · **unknown** · matched `investigationOpportunities`
   - `initialInvestigationOpportunities,`
-- Line 1047 · **unknown** · matched `investigationOpportunities`
+- Line 1049 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1065 · **unknown** · matched `investigationOpportunities`
+- Line 1067 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1254 · **unknown** · matched `investigationOpportunities`
+- Line 1256 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1309 · **unknown** · matched `investigationOpportunities`
+- Line 1311 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1390 · **unknown** · matched `investigationOpportunities`
+- Line 1392 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1650 · **type** · matched `investigationOpportunities`
+- Line 1652 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities:`
-- Line 1651 · **unknown** · matched `investigationOpportunities`
+- Line 1653 · **unknown** · matched `investigationOpportunities`
   - `typeof investigationOpportunities;`
 
 #### Projection

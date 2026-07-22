@@ -29,7 +29,7 @@ Output: docs/Architecture/COGNITIVE_CAPABILITY_AUDIT.json
 
 # Capability Trace — Executive Assessment
 
-Generated: 2026-07-21T16:14:00.522Z
+Generated: 2026-07-22T00:33:23.006Z
 
 ## Verified Architecture
 
@@ -106,7 +106,6 @@ Review these files to determine whether they should be registered as consumers, 
 - `components/executive-v2/projection/buildExecutiveScenarioProjection.ts`
 - `components/executive-v3/projection/buildExecutiveBriefingProjection.ts`
 - `components/executive-v3/projection/buildExecutiveNarrative.ts`
-- `components/executive-v3/workspaces/decision-definition/DecisionContextRail.tsx`
 - `components/executive-v3/workspaces/decision-definition/DiscoveryContextSection.tsx`
 - `engine/benchmark/auditCapability.ts`
 - `engine/benchmark/auditUnderstandingLayers.ts`
@@ -164,6 +163,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `scripts/cognition/generateArchitectureHandoff.mjs`
 - `scripts/cognition/generateArchitectureState.mjs`
 - `scripts/cognition/generateCognitiveRegistry.mjs`
+- `scripts/cognition/renderSprintStartup.mjs`
 - `scripts/cognition/reviewCognitiveDomain.mjs`
 
 ## Structural Search
@@ -195,11 +195,11 @@ This section records source-code references. It supplements, but does not replac
 | Runtime | ✅ Found | 23 |
 | Executive | ✅ Found | 9 |
 | Projection | ✅ Found | 42 |
-| UI | ✅ Found | 30 |
+| UI | ✅ Found | 29 |
 | API | ❌ Not found | 0 |
 | Simulation | ✅ Found | 21 |
 | Benchmark | ✅ Found | 167 |
-| Other | ✅ Found | 11 |
+| Other | ✅ Found | 12 |
 
 ### Detailed Matches
 
@@ -490,39 +490,39 @@ This section records source-code references. It supplements, but does not replac
   - `import { buildExecutiveAssessment } from "../model/judgment/buildExecutiveAssessment";`
 - Line 86 · **type** · matched `executiveAssessment`
   - `executiveAssessment?: any;`
-- Line 765 · **definition** · matched `executiveAssessment`
+- Line 767 · **definition** · matched `executiveAssessment`
   - `const executiveAssessment = buildExecutiveAssessment({`
-- Line 778 · **unknown** · matched `executiveAssessment`
+- Line 780 · **unknown** · matched `executiveAssessment`
   - `const runtimeWithExecutiveAssessment:`
-- Line 784 · **unknown** · matched `executiveAssessment`
+- Line 786 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 799 · **unknown** · matched `executiveAssessment`
+- Line 801 · **unknown** · matched `executiveAssessment`
   - `runtimeWithExecutiveAssessment,`
-- Line 806 · **unknown** · matched `executiveAssessment`
+- Line 808 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 822 · **unknown** · matched `executive-assessment`
+- Line 824 · **unknown** · matched `executive-assessment`
   - `understanding.source === "executive-assessment",`
-- Line 887 · **unknown** · matched `Executive Assessment`
+- Line 889 · **unknown** · matched `Executive Assessment`
   - `"Executive Assessment",`
-- Line 888 · **unknown** · matched `executiveAssessment`
+- Line 890 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 941 · **unknown** · matched `executiveAssessment`
+- Line 943 · **unknown** · matched `executiveAssessment`
   - `executiveAssessmentConfidence:`
-- Line 942 · **unknown** · matched `executiveAssessment`
+- Line 944 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment.confidence,`
-- Line 1043 · **unknown** · matched `executiveAssessment`
+- Line 1045 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 1236 · **unknown** · matched `executiveAssessment`
+- Line 1238 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 1295 · **unknown** · matched `executiveAssessment`
+- Line 1297 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 1507 · **unknown** · matched `executiveAssessment`
+- Line 1509 · **unknown** · matched `executiveAssessment`
   - `executiveAssessmentConfidence:`
-- Line 1508 · **unknown** · matched `executiveAssessment`
+- Line 1510 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment.confidence,`
-- Line 1554 · **type** · matched `executiveAssessment`
+- Line 1556 · **type** · matched `executiveAssessment`
   - `executiveAssessment:`
-- Line 1555 · **unknown** · matched `executiveAssessment`
+- Line 1557 · **unknown** · matched `executiveAssessment`
   - `typeof executiveAssessment;`
 
 ##### `engine/v3/runtime/organizationRuntime.ts`
@@ -740,14 +740,9 @@ This section records source-code references. It supplements, but does not replac
 - Line 29 · **read** · matched `executiveAssessment`
   - `assessment={projection.executiveAssessment}`
 
-##### `components/executive-v3/workspaces/decision-definition/DecisionContextRail.tsx`
-
-- Line 35 · **unknown** · matched `Executive Assessment`
-  - `<li>Executive assessment</li>`
-
 ##### `components/executive-v3/workspaces/decision-definition/DiscoveryContextSection.tsx`
 
-- Line 52 · **unknown** · matched `Executive Assessment`
+- Line 60 · **unknown** · matched `Executive Assessment`
   - `executive assessment.`
 
 ##### `app/discovery-v1/page.tsx`
@@ -1232,6 +1227,11 @@ This section records source-code references. It supplements, but does not replac
 - Line 83 · **unknown** · matched `executiveAssessment`
   - `/executiveAssessment/i,`
 
+##### `scripts/cognition/renderSprintStartup.mjs`
+
+- Line 289 · **unknown** · matched `Executive Assessment`
+  - `"Inspect: organization identity and persistence; memory structure; Understandings; Themes and semantic patterns; Phenomena; mechanism ancestry; organizational beliefs; semantic cohorts; concept candidates; conceptualUnderstanding; organizational conditions; primary executive constraint; executive assessment; executive recommendation; executive communication; decision records; learning state.",`
+
 ##### `scripts/cognition/reviewCognitiveDomain.mjs`
 
 - Line 73 · **unknown** · matched `CAP-UND-005`
@@ -1275,7 +1275,7 @@ Saved report: docs/Sprint Updates/Capability Traces/cap-und-005.md
 
 # Capability Trace — Executive Understanding Synthesis
 
-Generated: 2026-07-21T16:14:00.979Z
+Generated: 2026-07-22T00:33:23.461Z
 
 ## Verified Architecture
 
@@ -1353,6 +1353,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/benchmark/organizationalUnderstandingScorer.ts`
 - `engine/benchmark/runAtlasSimulation.ts`
 - `engine/benchmark/runBenchmarkInvestigation.ts`
+- `engine/benchmark/runtime/executiveMeaningPreservation001.ts`
 - `engine/benchmark/stress/experiments/decisionIntelligenceStressExperiment001.ts`
 - `engine/v3/executive/buildExecutiveChangeSummary.ts`
 - `engine/v3/executive/executiveLearningSummary.ts`
@@ -1420,13 +1421,13 @@ This section records source-code references. It supplements, but does not replac
 | Layer | Status | Matches |
 |---|:---:|---:|
 | Engine | ✅ Found | 86 |
-| Runtime | ✅ Found | 86 |
+| Runtime | ✅ Found | 87 |
 | Executive | ✅ Found | 12 |
 | Projection | ✅ Found | 6 |
 | UI | ✅ Found | 3 |
 | API | ❌ Not found | 0 |
 | Simulation | ✅ Found | 7 |
-| Benchmark | ✅ Found | 54 |
+| Benchmark | ✅ Found | 58 |
 | Other | ✅ Found | 8 |
 
 ### Detailed Matches
@@ -1695,61 +1696,63 @@ This section records source-code references. It supplements, but does not replac
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
 - Line 257 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 406 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 285 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 422 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 408 · **unknown** · matched `OrganizationalUnderstanding`
+  - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
+- Line 424 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.organizationalBeliefs,`
-- Line 473 · **unknown** · matched `OrganizationalUnderstanding`
-  - `const beliefUpdatedOrganizationalUnderstandingState:`
-- Line 474 · **unknown** · matched `OrganizationalUnderstanding`
-  - `OrganizationalUnderstandingState = {`
 - Line 475 · **unknown** · matched `OrganizationalUnderstanding`
-  - `...updatedOrganizationalUnderstandingState,`
-- Line 481 · **unknown** · matched `OrganizationalUnderstanding`
-  - `const synthesizedOrganizationalUnderstandingState =`
-- Line 482 · **unknown** · matched `synthesizeUnderstanding`
-  - `synthesizeUnderstanding({`
-- Line 483 · **unknown** · matched `OrganizationalUnderstanding`
-  - `state: beliefUpdatedOrganizationalUnderstandingState,`
-- Line 490 · **unknown** · matched `OrganizationalUnderstanding`
-  - `synthesizedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 805 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
-  - `buildExecutiveUnderstandingCandidates({`
-- Line 816 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const beliefUpdatedOrganizationalUnderstandingState:`
+- Line 476 · **unknown** · matched `OrganizationalUnderstanding`
   - `OrganizationalUnderstandingState = {`
-- Line 817 · **unknown** · matched `OrganizationalUnderstanding`
-  - `...existingOrganizationalUnderstandingState,`
-- Line 820 · **unknown** · matched `OrganizationalUnderstanding`
-  - `existingOrganizationalUnderstandingState.currentUnderstandings.filter(`
-- Line 832 · **unknown** · matched `consolidateUnderstanding`
-  - `consolidateUnderstanding(`
-- Line 837 · **unknown** · matched `OrganizationalUnderstanding`
-  - `const finalOrganizationalUnderstandingState =`
-- Line 838 · **unknown** · matched `synthesizeUnderstanding`
+- Line 477 · **unknown** · matched `OrganizationalUnderstanding`
+  - `...updatedOrganizationalUnderstandingState,`
+- Line 483 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const synthesizedOrganizationalUnderstandingState =`
+- Line 484 · **unknown** · matched `synthesizeUnderstanding`
   - `synthesizeUnderstanding({`
-- Line 874 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 485 · **unknown** · matched `OrganizationalUnderstanding`
+  - `state: beliefUpdatedOrganizationalUnderstandingState,`
+- Line 492 · **unknown** · matched `OrganizationalUnderstanding`
+  - `synthesizedOrganizationalUnderstandingState.currentUnderstandings,`
+- Line 807 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
+  - `buildExecutiveUnderstandingCandidates({`
+- Line 818 · **unknown** · matched `OrganizationalUnderstanding`
+  - `OrganizationalUnderstandingState = {`
+- Line 819 · **unknown** · matched `OrganizationalUnderstanding`
+  - `...existingOrganizationalUnderstandingState,`
+- Line 822 · **unknown** · matched `OrganizationalUnderstanding`
+  - `existingOrganizationalUnderstandingState.currentUnderstandings.filter(`
+- Line 834 · **unknown** · matched `consolidateUnderstanding`
+  - `consolidateUnderstanding(`
+- Line 839 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const finalOrganizationalUnderstandingState =`
+- Line 840 · **unknown** · matched `synthesizeUnderstanding`
+  - `synthesizeUnderstanding({`
+- Line 876 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState.currentUnderstandings.map(`
-- Line 900 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 902 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingScore:`
-- Line 901 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 903 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState.score.overall,`
-- Line 1241 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1243 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 1242 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1244 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState,`
-- Line 1325 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1327 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 1326 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1328 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState,`
-- Line 1374 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1376 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState,`
-- Line 1510 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1512 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingScore:`
-- Line 1511 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1513 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState.score.overall,`
-- Line 1581 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1583 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 1582 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1584 · **unknown** · matched `OrganizationalUnderstanding`
   - `typeof finalOrganizationalUnderstandingState;`
 
 ##### `engine/v3/runtime/index.ts`
@@ -2054,6 +2057,17 @@ This section records source-code references. It supplements, but does not replac
 - Line 551 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingScore,`
 
+##### `engine/benchmark/runtime/executiveMeaningPreservation001.ts`
+
+- Line 6 · **unknown** · matched `evolveOrganizationRuntime`
+  - `evolveOrganizationRuntime,`
+- Line 7 · **import** · matched `evolveOrganizationRuntime`
+  - `} from "../../v3/runtime/evolveOrganizationRuntime";`
+- Line 526 · **unknown** · matched `evolveOrganizationRuntime`
+  - `typeof evolveOrganizationRuntime`
+- Line 533 · **unknown** · matched `evolveOrganizationRuntime`
+  - `evolveOrganizationRuntime({`
+
 ##### `engine/benchmark/stress/experiments/decisionIntelligenceStressExperiment001.ts`
 
 - Line 11 · **unknown** · matched `evolveOrganizationRuntime`
@@ -2105,7 +2119,7 @@ A capability is considered fully connected only when:
 =========================================
 Architecture status: ✅ Connected
 Capability registry: Matched
-Structural matches: 262
+Structural matches: 267
 Saved report: docs/Sprint Updates/Capability Traces/cap-und-006.md
 =========================================
 
@@ -2114,7 +2128,7 @@ Saved report: docs/Sprint Updates/Capability Traces/cap-und-006.md
 
 # Capability Trace — Organizational Learning Profile
 
-Generated: 2026-07-21T16:14:01.263Z
+Generated: 2026-07-22T00:33:23.792Z
 
 ## Verified Architecture
 
@@ -2343,41 +2357,41 @@ This section records source-code references. It supplements, but does not replac
   - `import { computeOrganizationalLearningProfile } from "../model/learning/computeOrganizationalLearningProfile";`
 - Line 106 · **type** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile?: any;`
-- Line 601 · **read** · matched `organizationalLearningProfile`
+- Line 603 · **read** · matched `organizationalLearningProfile`
   - `memory.organizationalLearningProfile,`
-- Line 655 · **unknown** · matched `Organizational Learning Profile`
+- Line 657 · **unknown** · matched `Organizational Learning Profile`
   - `* - feed prediction performance into the Organizational Learning Profile`
-- Line 702 · **read** · matched `organizationalLearningProfile`
+- Line 704 · **read** · matched `organizationalLearningProfile`
   - `memory.organizationalLearningProfile,`
-- Line 1004 · **definition** · matched `organizationalLearningProfile`
+- Line 1006 · **definition** · matched `organizationalLearningProfile`
   - `const organizationalLearningProfile =`
-- Line 1005 · **unknown** · matched `organizationalLearningProfile`
+- Line 1007 · **unknown** · matched `organizationalLearningProfile`
   - `computeOrganizationalLearningProfile({`
-- Line 1022 · **unknown** · matched `organizationalLearningProfile`
+- Line 1024 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1054 · **unknown** · matched `Organizational Learning Profile`
+- Line 1056 · **unknown** · matched `Organizational Learning Profile`
   - `"Organizational Learning Profile",`
-- Line 1055 · **unknown** · matched `organizationalLearningProfile`
+- Line 1057 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1200 · **unknown** · matched `organizationalLearningProfile`
+- Line 1202 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1250 · **unknown** · matched `organizationalLearningProfile`
+- Line 1252 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1359 · **unknown** · matched `organizationalLearningProfile`
+- Line 1361 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1380 · **unknown** · matched `organizationalLearningProfile`
+- Line 1382 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1523 · **unknown** · matched `organizationalLearningProfile`
+- Line 1525 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile.learningVelocity,`
-- Line 1526 · **unknown** · matched `organizationalLearningProfile`
+- Line 1528 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile.learningVelocityScore,`
-- Line 1529 · **unknown** · matched `organizationalLearningProfile`
+- Line 1531 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile.understandingGrowth,`
-- Line 1532 · **unknown** · matched `organizationalLearningProfile`
+- Line 1534 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile.memoryGrowth,`
-- Line 1620 · **type** · matched `organizationalLearningProfile`
+- Line 1622 · **type** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile:`
-- Line 1621 · **unknown** · matched `organizationalLearningProfile`
+- Line 1623 · **unknown** · matched `organizationalLearningProfile`
   - `typeof organizationalLearningProfile;`
 
 #### Executive
@@ -2658,7 +2672,7 @@ Saved report: docs/Sprint Updates/Capability Traces/cap-lrn-002.md
 
 # Capability Trace — Theory Validation
 
-Generated: 2026-07-21T16:14:01.552Z
+Generated: 2026-07-22T00:33:24.124Z
 
 ## Verified Architecture
 
@@ -3380,7 +3394,7 @@ Saved report: docs/Sprint Updates/Capability Traces/cap-self-001.md
 
 # Capability Trace — Investigation Opportunity Generation
 
-Generated: 2026-07-21T16:14:01.868Z
+Generated: 2026-07-22T00:33:24.458Z
 
 ## Verified Architecture
 
@@ -3654,45 +3668,45 @@ This section records source-code references. It supplements, but does not replac
   - `import { refineInvestigationOpportunities } from "../model/investigation/refineInvestigationOpportunities";`
 - Line 111 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities?: any[];`
-- Line 698 · **unknown** · matched `buildInvestigationOpportunities`
+- Line 700 · **unknown** · matched `buildInvestigationOpportunities`
   - `buildInvestigationOpportunities({`
-- Line 704 · **unknown** · matched `investigationOpportunities`
+- Line 706 · **unknown** · matched `investigationOpportunities`
   - `previousInvestigationOpportunities:`
-- Line 705 · **read** · matched `investigationOpportunities`
+- Line 707 · **read** · matched `investigationOpportunities`
   - `memory.investigationOpportunities,`
-- Line 711 · **unknown** · matched `investigationOpportunities`
+- Line 713 · **unknown** · matched `investigationOpportunities`
   - `const initialInvestigationOpportunities =`
-- Line 714 · **definition** · matched `investigationOpportunities`
+- Line 716 · **definition** · matched `investigationOpportunities`
   - `let investigationOpportunities =`
-- Line 715 · **unknown** · matched `investigationOpportunities`
+- Line 717 · **unknown** · matched `investigationOpportunities`
   - `initialInvestigationOpportunities;`
-- Line 753 · **unknown** · matched `investigationOpportunities`
+- Line 755 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 774 · **unknown** · matched `investigationOpportunities`
+- Line 776 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1026 · **type** · matched `investigationOpportunities`
+- Line 1028 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities:`
-- Line 1027 · **unknown** · matched `investigationOpportunities`
+- Line 1029 · **unknown** · matched `investigationOpportunities`
   - `initialInvestigationOpportunities,`
-- Line 1033 · **assignment** · matched `investigationOpportunities`
+- Line 1035 · **assignment** · matched `investigationOpportunities`
   - `investigationOpportunities =`
-- Line 1034 · **unknown** · matched `investigationOpportunities`
-  - `refineInvestigationOpportunities({`
 - Line 1036 · **unknown** · matched `investigationOpportunities`
+  - `refineInvestigationOpportunities({`
+- Line 1038 · **unknown** · matched `investigationOpportunities`
   - `initialInvestigationOpportunities,`
-- Line 1047 · **unknown** · matched `investigationOpportunities`
+- Line 1049 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1065 · **unknown** · matched `investigationOpportunities`
+- Line 1067 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1254 · **unknown** · matched `investigationOpportunities`
+- Line 1256 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1309 · **unknown** · matched `investigationOpportunities`
+- Line 1311 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1390 · **unknown** · matched `investigationOpportunities`
+- Line 1392 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1650 · **type** · matched `investigationOpportunities`
+- Line 1652 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities:`
-- Line 1651 · **unknown** · matched `investigationOpportunities`
+- Line 1653 · **unknown** · matched `investigationOpportunities`
   - `typeof investigationOpportunities;`
 
 #### Projection
@@ -3928,19 +3942,21 @@ Output: docs/Sprint Updates/ARCHITECTURE_HANDOFF.md
 DISCOVERY SPRINT STARTUP
 =========================================================
 
-Architecture State Generated: 2026-07-21T16:14:01.981Z
+Architecture State Generated: 2026-07-22T00:33:24.575Z
 
 ---------------------------------------------------------
 
 REQUIRED STARTUP READING
 
 1. docs/Product/PRODUCT_CANON.md
-2. docs/Product/PRODUCT_STATE.md
-3. docs/Sprint Updates/DISCOVERY_SNAPSHOT.md
-4. docs/Architecture/DISCOVERY_ARCHITECTURE_STATE.json
-5. docs/Architecture/COGNITIVE_CAPABILITY_REGISTRY.json
-6. docs/Sprint Updates/PROJECT_STATE.md
-7. docs/Sprint Updates/NEXT_CHAT.md
+2. docs/Product/MVP_PRODUCT_SPECIFICATION.md
+3. docs/Product/ORGANIZATION_PAGE_SPEC.md
+4. docs/Sprint Updates/DISCOVERY_SNAPSHOT.md
+5. docs/Architecture/Validation/RUNTIME_VALIDATION.md
+6. docs/Architecture/DISCOVERY_ARCHITECTURE_STATE.json
+7. docs/Architecture/COGNITIVE_CAPABILITY_REGISTRY.json
+8. docs/Sprint Updates/PROJECT_STATE.md
+9. docs/Sprint Updates/NEXT_CHAT.md
 
 Product Canon defines what Discovery is.
 Product State defines the current product.
@@ -3949,19 +3965,39 @@ Architecture supports the product and should expand only when benchmark evidence
 
 ---------------------------------------------------------
 
+RUNTIME VALIDATION RULE
+
+Architecture documents describe intended behavior. Runtime validation confirms actual behavior.
+
+Do not infer Runtime behavior solely from producer contracts or architecture documentation. Inspect representative Runtime state when actual output semantics or lineage matter.
+
+Before architectural, cognitive, projection, or executive-experience changes:
+1. Read docs/Architecture/Validation/RUNTIME_VALIDATION.md.
+2. Inspect one relevant .discovery-runtime/organizations/*.json file when the task depends on actual output.
+3. Compare Runtime identity, persistence, memory, semantic layers, executive outputs, decisions, and learning state with canonical expectations.
+4. Treat discrepancies as validation findings rather than immediately adding architecture.
+
+Inspect: organization identity and persistence; memory structure; Understandings; Themes and semantic patterns; Phenomena; mechanism ancestry; organizational beliefs; semantic cohorts; concept candidates; conceptualUnderstanding; organizational conditions; primary executive constraint; executive assessment; executive recommendation; executive communication; decision records; learning state.
+
+Latest semantic Runtime validation: evidence-grounded Themes; direct Understanding ancestry in Phenomena; no Understanding → Phenomena → Mechanisms lineage discontinuity; normalized Conceptual Understanding with organization-specific manifestation; no diagnostic degradation or required semantic failure.
+
+Presentation caveat: normalized labels or primary descriptions may be more generic than richer source-grounded summaries, evidence fields, or ancestry.
+
+---------------------------------------------------------
+
 PRODUCT CANON
 
 Mission
-Discovery exists to continuously improve executive judgment. Discovery does not replace executive decision-making. It improves executive decision-making by continuously learning how an organization actually works. Every interaction should leave executives making better decisions than they would have made without Discovery.
+Discovery exists to continuously improve organizational judgment. It accomplishes this by continuously improving an organization's understanding of itself. Discovery does not replace executive decision-making. It improves executive decision-making by helping organizations better understand reality, make better commitments, learn from outcomes, and continu...
 
 Product Identity
 Not declared
 
 Operating Model
-The Operating Model is Discovery's foundation. It is Discovery's continuously evolving understanding of how an organization actually operates. The Operating Model represents: • organizational reality, • strategic objectives, • organizational conditions, • executive constraints, • organizational dependencies, • historical decisions, • initiatives, • organizational learning, • persistent organizational memory. Everything Discovery produces originates from the Operating Model. Including: • execu...
+The Operating Model is Discovery's foundation. It is Discovery's continuously evolving understanding of how an organization actually operates. The Operating Model represents: • organizational reality, • strategic objectives, • organizational conditions, • executive constraints, • organizational relationships, • historical decisions, • executive work, • organizational learning, • persistent organizational memory. Everything Discovery produces originates from the Operating Model. Including: • e...
 
 Executive Work
-Not declared
+Executive Work is the primary organizational object managed inside Discovery. Executive Work represents intentional organizational change. Executive Work includes: • executive decisions, • executive initiatives, • Discovery recommendations, • executive-created work. Discovery exists to improve Executive Work throughout its lifecycle.
 
 Executive Learning Cycle
 Not declared
@@ -3974,7 +4010,7 @@ Not declared
 CURRENT PRODUCT STATE
 
 Identity
-Discovery is an Executive Operating System. Its purpose is to continuously improve executive judgment. Discovery does not replace executive decision-making. It improves executive decision-making through a continuously evolving Operating Model that represents how an organization actually works. Discovery is not: • a dashboard, • a chatbot, • a reporting platform, • a document repository, • a project management syst...
+Not declared
 
 Operating Model
 Not declared
@@ -3983,10 +4019,10 @@ Current Product Lifecycle
 Not declared
 
 Current Focus
-Discovery has completed its first-generation Executive Cognitive Operating System. The architecture is considered stable. Current development is no longer focused on expanding reasoning capabilities. Current priorities are: 1. Improve executive usability. 2. Reduce executive reading. 3. Improve recommendation quality. 4. Improve executive communication. 5. Improve executive confidence. 6. Improve simulation usability. 7. Improve decision workflow. 8. Strengthen Executive Learning. 9. Increase...
+Not declared
 
 Validation Objective
-The objective is not feature expansion. The objective is validating that Discovery genuinely improves executive judgment. Questions to answer include: • Does Discovery reduce executive effort? • Do executives trust Discovery? • Do executives naturally begin important work inside Discovery? • Do executives challenge recommendations? • Do executives explore simulations? • Do executives commit decisions with greater confidence? • Do executives return for reviews? • Does Executive Learning improv...
+Not declared
 
 Product Principles
 Not declared
@@ -4018,10 +4054,10 @@ The current objective is continuously improving executive judgment quality throu
 CURRENT IMPLEMENTATION
 
 Milestone
-Milestone: Executive Operating System MVP ---
+Not declared
 
 Development Phase
-Executive Product Refinement Discovery has completed the first production implementation of its Executive Cognitive Operating System. The architecture is considered stable. The Executive Decision lifecycle is now implemented end-to-end. Current development is no longer focused...
+Discovery's Cognitive Operating System, Capability Registry, Runtime, and current semantic architecture are stable. The immediate development target is the product shell and Your Organization experience, not additional engine architecture. The locked product principle is: > Th...
 
 Current Objective
 Not declared
@@ -4223,17 +4259,10 @@ No unpopulated cognitive domains were detected.
 
 ARCHITECTURAL RECOMMENDATION
 
-Complete partially integrated capabilities
-
-Priority score .................... 118
+Expose intelligence already produced but not structurally visible in the Executive Workspace.
 
 Reason
-1 registered capability is not yet structurally connected through the full declared architecture.
-
-Prerequisites
-- Confirm the canonical Runtime destination.
-- Confirm projection or system-output pathways where applicable.
-- Confirm structural trace coverage.
+7 projected capability appear potentially hidden from the UI.
 
 ---------------------------------------------------------
 
@@ -4255,10 +4284,10 @@ Do not create a new capability when an existing capability already owns the resp
 CANONICAL STARTUP FILES
 
 - docs/Product/PRODUCT_CANON.md
-- docs/Product/PRODUCT_STATE.md
-- docs/Product/PRODUCT_PRINCIPLES.md
-- docs/Product/EXECUTIVE_WORK_OBJECT.md
-- docs/Product/PRODUCT_FLYWHEEL.md
+- docs/Product/MVP_PRODUCT_SPECIFICATION.md
+- docs/Product/ORGANIZATION_PAGE_SPEC.md
+- docs/Sprint Updates/PROJECT_STATE.md
+- docs/Architecture/Validation/RUNTIME_VALIDATION.md
 - docs/Architecture/DISCOVERY_ARCHITECTURE_STATE.json
 - docs/Architecture/COGNITIVE_CAPABILITY_REGISTRY.json
 - docs/Architecture/COGNITIVE_FILE_REGISTRY.json

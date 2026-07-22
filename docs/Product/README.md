@@ -135,7 +135,37 @@ The application exists to expose the lifecycle—not individual reasoning object
 
 ---
 
-## 4. MVP_PRODUCT.md
+## 4. MVP_PRODUCT_SPECIFICATION.md
+
+Defines the currently locked Sprint 79 MVP experience.
+
+Explains:
+
+- the Organization Model as the product,
+- model stewardship,
+- the canonical navigation,
+- progressive availability,
+- the unified first-use and mature experience.
+
+When older product workflows conflict with this specification, this specification governs the MVP.
+
+---
+
+## 5. ORGANIZATION_PAGE_SPEC.md
+
+Defines the canonical **Your Organization** page and its five maturity states:
+
+- EMPTY,
+- EMERGING,
+- DEVELOPING,
+- ACTIVE,
+- EVOLVING.
+
+This is the canonical first-use and mature Organization experience. It is not a separate onboarding flow.
+
+---
+
+## 6. MVP_PRODUCT.md
 
 Defines the scope of the MVP.
 
@@ -148,7 +178,11 @@ Explains:
 
 ---
 
-## 5. PRODUCT_BENCHMARK.md
+This document remains useful background. `MVP_PRODUCT_SPECIFICATION.md` governs where its older workflow or navigation assumptions conflict.
+
+---
+
+## 7. PRODUCT_BENCHMARK.md
 
 Defines the executable benchmark for validating the MVP.
 

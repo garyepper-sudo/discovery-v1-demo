@@ -1,6 +1,6 @@
 # Capability Trace — Executive Understanding Synthesis
 
-Generated: 2026-07-21T16:14:00.979Z
+Generated: 2026-07-22T00:33:23.461Z
 
 ## Verified Architecture
 
@@ -78,6 +78,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/benchmark/organizationalUnderstandingScorer.ts`
 - `engine/benchmark/runAtlasSimulation.ts`
 - `engine/benchmark/runBenchmarkInvestigation.ts`
+- `engine/benchmark/runtime/executiveMeaningPreservation001.ts`
 - `engine/benchmark/stress/experiments/decisionIntelligenceStressExperiment001.ts`
 - `engine/v3/executive/buildExecutiveChangeSummary.ts`
 - `engine/v3/executive/executiveLearningSummary.ts`
@@ -145,13 +146,13 @@ This section records source-code references. It supplements, but does not replac
 | Layer | Status | Matches |
 |---|:---:|---:|
 | Engine | ✅ Found | 86 |
-| Runtime | ✅ Found | 86 |
+| Runtime | ✅ Found | 87 |
 | Executive | ✅ Found | 12 |
 | Projection | ✅ Found | 6 |
 | UI | ✅ Found | 3 |
 | API | ❌ Not found | 0 |
 | Simulation | ✅ Found | 7 |
-| Benchmark | ✅ Found | 54 |
+| Benchmark | ✅ Found | 58 |
 | Other | ✅ Found | 8 |
 
 ### Detailed Matches
@@ -420,61 +421,63 @@ This section records source-code references. It supplements, but does not replac
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
 - Line 257 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 406 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 285 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 422 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 408 · **unknown** · matched `OrganizationalUnderstanding`
+  - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
+- Line 424 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.organizationalBeliefs,`
-- Line 473 · **unknown** · matched `OrganizationalUnderstanding`
-  - `const beliefUpdatedOrganizationalUnderstandingState:`
-- Line 474 · **unknown** · matched `OrganizationalUnderstanding`
-  - `OrganizationalUnderstandingState = {`
 - Line 475 · **unknown** · matched `OrganizationalUnderstanding`
-  - `...updatedOrganizationalUnderstandingState,`
-- Line 481 · **unknown** · matched `OrganizationalUnderstanding`
-  - `const synthesizedOrganizationalUnderstandingState =`
-- Line 482 · **unknown** · matched `synthesizeUnderstanding`
-  - `synthesizeUnderstanding({`
-- Line 483 · **unknown** · matched `OrganizationalUnderstanding`
-  - `state: beliefUpdatedOrganizationalUnderstandingState,`
-- Line 490 · **unknown** · matched `OrganizationalUnderstanding`
-  - `synthesizedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 805 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
-  - `buildExecutiveUnderstandingCandidates({`
-- Line 816 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const beliefUpdatedOrganizationalUnderstandingState:`
+- Line 476 · **unknown** · matched `OrganizationalUnderstanding`
   - `OrganizationalUnderstandingState = {`
-- Line 817 · **unknown** · matched `OrganizationalUnderstanding`
-  - `...existingOrganizationalUnderstandingState,`
-- Line 820 · **unknown** · matched `OrganizationalUnderstanding`
-  - `existingOrganizationalUnderstandingState.currentUnderstandings.filter(`
-- Line 832 · **unknown** · matched `consolidateUnderstanding`
-  - `consolidateUnderstanding(`
-- Line 837 · **unknown** · matched `OrganizationalUnderstanding`
-  - `const finalOrganizationalUnderstandingState =`
-- Line 838 · **unknown** · matched `synthesizeUnderstanding`
+- Line 477 · **unknown** · matched `OrganizationalUnderstanding`
+  - `...updatedOrganizationalUnderstandingState,`
+- Line 483 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const synthesizedOrganizationalUnderstandingState =`
+- Line 484 · **unknown** · matched `synthesizeUnderstanding`
   - `synthesizeUnderstanding({`
-- Line 874 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 485 · **unknown** · matched `OrganizationalUnderstanding`
+  - `state: beliefUpdatedOrganizationalUnderstandingState,`
+- Line 492 · **unknown** · matched `OrganizationalUnderstanding`
+  - `synthesizedOrganizationalUnderstandingState.currentUnderstandings,`
+- Line 807 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
+  - `buildExecutiveUnderstandingCandidates({`
+- Line 818 · **unknown** · matched `OrganizationalUnderstanding`
+  - `OrganizationalUnderstandingState = {`
+- Line 819 · **unknown** · matched `OrganizationalUnderstanding`
+  - `...existingOrganizationalUnderstandingState,`
+- Line 822 · **unknown** · matched `OrganizationalUnderstanding`
+  - `existingOrganizationalUnderstandingState.currentUnderstandings.filter(`
+- Line 834 · **unknown** · matched `consolidateUnderstanding`
+  - `consolidateUnderstanding(`
+- Line 839 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const finalOrganizationalUnderstandingState =`
+- Line 840 · **unknown** · matched `synthesizeUnderstanding`
+  - `synthesizeUnderstanding({`
+- Line 876 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState.currentUnderstandings.map(`
-- Line 900 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 902 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingScore:`
-- Line 901 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 903 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState.score.overall,`
-- Line 1241 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1243 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 1242 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1244 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState,`
-- Line 1325 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1327 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 1326 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1328 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState,`
-- Line 1374 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1376 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState,`
-- Line 1510 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1512 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingScore:`
-- Line 1511 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1513 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState.score.overall,`
-- Line 1581 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1583 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 1582 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1584 · **unknown** · matched `OrganizationalUnderstanding`
   - `typeof finalOrganizationalUnderstandingState;`
 
 ##### `engine/v3/runtime/index.ts`
@@ -778,6 +781,17 @@ This section records source-code references. It supplements, but does not replac
   - `organizationalUnderstanding,`
 - Line 551 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingScore,`
+
+##### `engine/benchmark/runtime/executiveMeaningPreservation001.ts`
+
+- Line 6 · **unknown** · matched `evolveOrganizationRuntime`
+  - `evolveOrganizationRuntime,`
+- Line 7 · **import** · matched `evolveOrganizationRuntime`
+  - `} from "../../v3/runtime/evolveOrganizationRuntime";`
+- Line 526 · **unknown** · matched `evolveOrganizationRuntime`
+  - `typeof evolveOrganizationRuntime`
+- Line 533 · **unknown** · matched `evolveOrganizationRuntime`
+  - `evolveOrganizationRuntime({`
 
 ##### `engine/benchmark/stress/experiments/decisionIntelligenceStressExperiment001.ts`
 
