@@ -639,6 +639,7 @@ export function buildExecutiveDecisionRecommendation({
 
   const risks =
     unique([
+      ...winningOption.risks,
       ...conditionRisks,
       ...constraintRisks,
       ...confidenceRisks,

@@ -29,6 +29,7 @@ Production architecture should not expand without benchmark evidence. Current op
 - **Longitudinal contradiction synthesis:** current evidence is compared with immediately previous evidence and classified as support, contradiction, qualification, or unrelated.
 - **Contradiction-aware belief revision:** a detected contradiction is associated with the stable challenged mechanism identity and enters the existing belief-update formula.
 - **Contradiction-aware mechanism confidence:** after immediate-previous identity reconciliation, unique qualifying contradictions reduce confidence only when opposing evidence intersects the continuing mechanism's current evidence ancestry.
+- **Intervention-specific recommendation risks:** Executive Recommendation synthesis preserves the winning intervention's existing risks in stable source order, removes exact duplicates, and leaves recommendation identity, confidence, and scenario ranking unchanged.
 
 ## Current measured state
 
@@ -40,10 +41,7 @@ The production Operating Model Evolution replay currently reports:
 - Mechanism confidence response to contradiction: **passing**; the production replay moves from `0.396425` to `0.352025` while preserving mechanism identity.
 - Historical mechanism truth: **failing**; explicit mechanism evolution history is absent.
 
-The Executive Decision Lab remains established and passing as a regression system. Its open findings remain:
-
-- risk specificity;
-- direct recommendation evidence grounding.
+The Executive Decision Lab remains established and passing as a regression system. Its baseline risk-recognition score now passes at `5/5` because the selected intervention's risks reach the final recommendation. Direct recommendation evidence grounding remains open. The reduced-capacity scenario still reports a risk-language scoring diagnostic even though its selected intervention risks are present.
 
 Do not represent those findings as completed.
 
@@ -83,7 +81,7 @@ Investigation-local evidence IDs such as `E6` are positional and are not durable
 
 ## Exact next work
 
-The next session should begin a separate benchmark-led investigation of historical mechanism truth. Sprint 101 does not authorize merge, split, retirement, reactivation, supersession, or full lineage implementation.
+The next session should begin with benchmark-guided selection among the remaining measured deficiencies. Historical mechanism truth remains absent, direct recommendation evidence grounding remains open, and the reduced-capacity risk-language scorer remains diagnostic. Sprint 102 does not authorize merge, split, retirement, reactivation, supersession, or full lineage implementation.
 
 ## Guardrails
 

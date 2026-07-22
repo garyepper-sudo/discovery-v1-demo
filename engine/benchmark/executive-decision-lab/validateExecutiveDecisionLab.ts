@@ -108,7 +108,7 @@ check("localized mechanism preserves structured scope through recommendation", (
   assert.equal(evaluation.scorecard.stressRobustness.score, 4);
   assert.deepEqual(
     evaluation.failures.map((failure) => failure.type),
-    ["risk-omission", "evidence-grounding"],
+    ["evidence-grounding"],
   );
 });
 check("baseline comparison artifact exposes canonical scope", () => {
@@ -116,7 +116,7 @@ check("baseline comparison artifact exposes canonical scope", () => {
   assert.ok(baseline.simulations.every((simulation) => simulation.scope === "organization"));
   assert.equal(baseline.recommendation.scope, "organization");
 });
-check("generic risks do not automatically receive full credit", () => assert.ok(baselineEvaluation.scorecard.riskRecognition.score < 5));
+check("intervention-specific recommendation risks receive full credit", () => assert.equal(baselineEvaluation.scorecard.riskRecognition.score, 5));
 check("direct and upstream evidence grounding remain distinct", () => {
   assert.equal(baseline.supportingEvidenceIds.length, 0);
   assert.ok(baseline.upstreamEvidenceIds.length > 0);
