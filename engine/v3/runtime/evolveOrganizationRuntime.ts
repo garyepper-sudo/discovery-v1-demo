@@ -1,4 +1,5 @@
 import type { DiscoveryV3Result } from "../types";
+import { detectContradictions } from "../contradictions";
 import type { OrganizationRuntime } from "./organizationRuntime";
 import type { OrganizationalUnderstandingState } from "./organizationalUnderstandingState";
 import { buildOrganizationReasoningGraph } from "../model/buildOrganizationReasoningGraph";
@@ -69,7 +70,23 @@ export function evolveOrganizationRuntime(params: {
     context: string;
   };
 }): OrganizationRuntime {
-  const { runtime, result, input } = params;
+  const { runtime, result: investigationResult, input } = params;
+
+  const previousUnderstandingState = runtime.memory.understandingState as
+    | Partial<DiscoveryV3Result>
+    | null;
+  const result: DiscoveryV3Result = {
+    ...investigationResult,
+    contradictions: detectContradictions(
+      investigationResult.evidence ?? [],
+      investigationResult.themes ?? [],
+      {
+        previousEvidence: Array.isArray(previousUnderstandingState?.evidence)
+          ? previousUnderstandingState.evidence
+          : [],
+      },
+    ),
+  };
 
   const memory = runtime.memory as typeof runtime.memory & {
     functionalInterpretationState?: any;
@@ -419,6 +436,7 @@ export function evolveOrganizationRuntime(params: {
       explanations: organizationalExplanations,
       judgments: organizationalJudgments,
       capabilities: organizationalCapabilitiesState.capabilities,
+      contradictions: result.contradictions,
 
       now,
     });

@@ -30,6 +30,12 @@ type MechanismLike = Pick<
   evidenceIds?: string[];
 };
 
+type ContradictionLike = {
+  id: string;
+  evidenceIds?: string[];
+  opposingEvidenceIds?: string[];
+};
+
 function asArray<T>(value: T[] | undefined | null): T[] {
   return Array.isArray(value) ? value : [];
 }
@@ -109,6 +115,35 @@ function supportingEvidenceIdsForCohort(
   );
 }
 
+function contradictedMechanismIdsForCohort(
+  cohort: SemanticCohort,
+  mechanisms: MechanismLike[],
+  contradictions: ContradictionLike[],
+): string[] {
+  const mechanismById = new Map(
+    mechanisms.map((mechanism) => [mechanism.id, mechanism]),
+  );
+  const opposingEvidenceIds = new Set(
+    contradictions.flatMap((contradiction) =>
+      asArray(contradiction.opposingEvidenceIds),
+    ),
+  );
+
+  if (opposingEvidenceIds.size === 0) return [];
+
+  return unique(
+    cohort.supportingMechanismIds.filter((mechanismId) => {
+      const mechanism = mechanismById.get(mechanismId);
+      if (!mechanism) return false;
+
+      return [
+        ...asArray(mechanism.supportingEvidenceIds),
+        ...asArray(mechanism.evidenceIds),
+      ].some((evidenceId) => opposingEvidenceIds.has(evidenceId));
+    }),
+  );
+}
+
 function confidenceForCohort(cohort: SemanticCohort): number {
   return clampConfidence(
     cohort.confidence * 0.45 +
@@ -184,11 +219,13 @@ export function inferOrganizationalBeliefs(params: {
   explanations?: unknown[];
   judgments?: unknown[];
   capabilities?: unknown[];
+  contradictions?: ContradictionLike[];
 
   now?: string;
 }): OrganizationalBelief[] {
   const now = params.now ?? new Date().toISOString();
   const mechanisms = asArray(params.mechanisms);
+  const contradictions = asArray(params.contradictions);
 
   const semanticObservations = buildSemanticObservations({
     mechanisms,
@@ -222,7 +259,11 @@ export function inferOrganizationalBeliefs(params: {
       supportingPatternIds: derivedPatternIdsForCohort(cohort, statement),
       supportingConceptIds: derivedConceptIdsForCohort(cohort, statement),
       supportingEvidenceIds: supportingEvidenceIdsForCohort(cohort, mechanisms),
-      contradictoryEvidenceIds: [],
+      contradictoryEvidenceIds: contradictedMechanismIdsForCohort(
+        cohort,
+        mechanisms,
+        contradictions,
+      ),
       trend: cohort.cohortState === "weakening" ? "weakening" : "stable",
       lastUpdatedAt: now,
     };

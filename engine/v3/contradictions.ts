@@ -5,9 +5,20 @@ import {
   V3Theme,
 } from "./types";
 
+export type LongitudinalContradictionContext = {
+  previousEvidence?: V3Evidence[];
+};
+
+type LongitudinalRelationship =
+  | "supports"
+  | "contradicts"
+  | "qualifies"
+  | "unrelated";
+
 export function detectContradictions(
   evidence: V3Evidence[],
-  themes: V3Theme[]
+  themes: V3Theme[],
+  longitudinalContext: LongitudinalContradictionContext = {},
 ): V3Contradiction[] {
   const contradictions: V3Contradiction[] = [];
 
@@ -78,12 +89,25 @@ export function detectContradictions(
     contradictions.length
   );
 
-  const questionContradictions = detectUnresolvedQuestionContradictions(
+  const longitudinalContradictions = detectLongitudinalContradictions(
     evidence,
-    contradictions.length + polarityContradictions.length
+    longitudinalContext.previousEvidence ?? [],
+    contradictions.length + polarityContradictions.length,
   );
 
-  return [...contradictions, ...polarityContradictions, ...questionContradictions]
+  const questionContradictions = detectUnresolvedQuestionContradictions(
+    evidence,
+    contradictions.length +
+      polarityContradictions.length +
+      longitudinalContradictions.length,
+  );
+
+  return [
+    ...contradictions,
+    ...polarityContradictions,
+    ...longitudinalContradictions,
+    ...questionContradictions,
+  ]
     .filter((contradiction, index, all) => {
       return (
         all.findIndex((item) => item.title === contradiction.title) === index
@@ -91,6 +115,223 @@ export function detectContradictions(
     })
     .sort((a, b) => b.confidence - a.confidence)
     .slice(0, 6);
+}
+
+const comparisonStopWords = new Set([
+  "about",
+  "after",
+  "also",
+  "been",
+  "before",
+  "being",
+  "between",
+  "both",
+  "company",
+  "context",
+  "could",
+  "current",
+  "from",
+  "have",
+  "industry",
+  "into",
+  "more",
+  "organization",
+  "question",
+  "should",
+  "their",
+  "there",
+  "these",
+  "this",
+  "through",
+  "using",
+  "website",
+  "were",
+  "what",
+  "when",
+  "where",
+  "which",
+  "while",
+  "with",
+  "would",
+]);
+
+const constraintMarkers = [
+  "blocked by",
+  "bottleneck",
+  "cannot",
+  "concentrated in",
+  "depend on",
+  "depends on",
+  "dependent on",
+  "lack access",
+  "lacks access",
+  "only when",
+  "requires",
+  "strongest when",
+  "unable to",
+];
+
+const resolutionMarkers = [
+  "able to",
+  "can be",
+  "documented",
+  "independent",
+  "met the same",
+  "no longer",
+  "resolved",
+  "standardized",
+  "succeeded",
+  "transferred",
+  "without",
+];
+
+const qualificationMarkers = [
+  "partially",
+  "some",
+  "suggesting",
+  "to an extent",
+  "under some conditions",
+];
+
+function comparableEvidence(evidence: V3Evidence[]): V3Evidence[] {
+  return evidence.filter((item) => {
+    const text = item.text.trim().toLowerCase();
+    return (
+      item.type !== "question" &&
+      text !== "context:" &&
+      !text.startsWith("company:") &&
+      !text.startsWith("website:") &&
+      !text.startsWith("industry:")
+    );
+  });
+}
+
+function normalizedTerms(text: string): string[] {
+  return Array.from(
+    new Set(
+      text
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, " ")
+        .split(/\s+/)
+        .map((term) => term.replace(/(?:ing|ed|es|s)$/i, ""))
+        .filter((term) => term.length >= 4)
+        .filter((term) => !comparisonStopWords.has(term)),
+    ),
+  );
+}
+
+function markerCount(text: string, markers: string[]): number {
+  const normalized = text.toLowerCase();
+  return markers.filter((marker) => normalized.includes(marker)).length;
+}
+
+function sharedTermCount(current: V3Evidence, previous: V3Evidence): number {
+  const previousTerms = new Set(normalizedTerms(previous.text));
+  return normalizedTerms(current.text).filter((term) =>
+    previousTerms.has(term),
+  ).length;
+}
+
+function classifyLongitudinalRelationship(
+  current: V3Evidence,
+  previous: V3Evidence,
+): { relationship: LongitudinalRelationship; score: number } {
+  const sharedTerms = sharedTermCount(current, previous);
+  if (sharedTerms < 2) return { relationship: "unrelated", score: sharedTerms };
+
+  const currentConstraints = markerCount(current.text, constraintMarkers);
+  const previousConstraints = markerCount(previous.text, constraintMarkers);
+  const currentResolutions = markerCount(current.text, resolutionMarkers);
+  const previousResolutions = markerCount(previous.text, resolutionMarkers);
+  const currentQualifications = markerCount(
+    current.text,
+    qualificationMarkers,
+  );
+
+  const reversesConstraint =
+    previousConstraints > previousResolutions &&
+    currentResolutions > currentConstraints;
+  const introducesConstraint =
+    previousResolutions > previousConstraints &&
+    currentConstraints > currentResolutions;
+
+  if (reversesConstraint || introducesConstraint) {
+    return {
+      relationship: currentQualifications > 0 ? "qualifies" : "contradicts",
+      score:
+        sharedTerms * 2 +
+        Math.abs(currentConstraints - currentResolutions) +
+        Math.abs(previousConstraints - previousResolutions),
+    };
+  }
+
+  const sameDirection =
+    (currentConstraints > currentResolutions &&
+      previousConstraints > previousResolutions) ||
+    (currentResolutions > currentConstraints &&
+      previousResolutions > previousConstraints);
+
+  return {
+    relationship: sameDirection ? "supports" : "unrelated",
+    score: sharedTerms,
+  };
+}
+
+function detectLongitudinalContradictions(
+  currentEvidence: V3Evidence[],
+  previousEvidence: V3Evidence[],
+  startingIndex: number,
+): V3Contradiction[] {
+  const previous = comparableEvidence(previousEvidence);
+  if (previous.length === 0) return [];
+
+  return comparableEvidence(currentEvidence).flatMap((current) => {
+    const comparisons = previous
+      .map((prior) => ({
+        prior,
+        ...classifyLongitudinalRelationship(current, prior),
+      }))
+      .filter(
+        (comparison) =>
+          comparison.relationship === "contradicts" ||
+          comparison.relationship === "qualifies",
+      )
+      .sort(
+        (left, right) =>
+          right.score - left.score || left.prior.id.localeCompare(right.prior.id),
+      );
+
+    const strongest = comparisons[0];
+    if (!strongest) return [];
+    if (comparisons[1]?.score === strongest.score) return [];
+
+    const isQualification = strongest.relationship === "qualifies";
+    const confidence = Number(
+      Math.min(
+        0.92,
+        current.confidence * 0.55 + strongest.prior.confidence * 0.35,
+      ).toFixed(2),
+    );
+
+    return [{
+      id: `C${startingIndex + 1}`,
+      title: isQualification
+        ? "New evidence qualifies previous organizational understanding"
+        : "New evidence conflicts with previous organizational understanding",
+      explanation: isQualification
+        ? "Current evidence narrows a previously established organizational constraint and indicates that it may not hold under every observed condition."
+        : "Current evidence opposes a previously established organizational constraint and requires Discovery to reassess the prior understanding.",
+      evidenceIds: [current.id],
+      opposingEvidenceIds: [current.id],
+      confidence,
+      severity: (isQualification ? "moderate" : "strong") as V3SignalStrength,
+      unresolvedQuestion:
+        "Under which organizational conditions does the previous understanding continue to hold?",
+    }];
+  }).map((contradiction, index) => ({
+    ...contradiction,
+    id: `C${startingIndex + index + 1}`,
+  }));
 }
 
 function detectPolarityContradictions(

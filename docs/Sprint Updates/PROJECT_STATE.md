@@ -1,108 +1,120 @@
 # Discovery Project State
 
-**Active branch:** `sprint-78-persistent-organizations`  
-**Current milestone:** Persistent Organizations and Semantic Fidelity complete  
-**Next sprint:** Sprint 79 — Organization Experience / Model Stewardship MVP
+**Active branch:** `sprint-79-organization-experience`
+**Current phase:** measured optimization of longitudinal Organization Model learning
+**Next investigation:** contradiction-aware Organizational Mechanism confidence
 
-## Current phase
+# Product Identity
 
-Discovery's Cognitive Operating System, Capability Registry, Runtime, and current semantic architecture are stable. The immediate development target is the product shell and **Your Organization** experience, not additional engine architecture.
+Discovery is an Executive Operating System centered on one continuously evolving **Organization Model**. Runtime is the canonical persistent organization record. Product workspaces, executive reasoning, decisions, simulations, research, and questions operate on that same model.
 
-The locked product principle is:
+> The Organization Model is the product.
 
-> **The Organization Model is the product.**
+# Operating Model
 
-Use **Your Organization** in the interface and **Organization Model** in product and engineering discussion. The user is the model's steward. Every important interaction should improve, validate, challenge, query, experiment with, or act on the model.
+Runtime is the canonical persisted Organization Model. Evidence, organizational cognition, executive work, decisions, reviews, and learning evolve that one model. Evidence IDs generated within an investigation are positional; stable cognitive identity must come from canonical objects such as Organizational Mechanisms.
 
-## Completed milestones
+# Implemented
 
-### Persistent organization identity
+### Product and Runtime
 
-- `engine/v3/runtime/activeOrganization.ts` is the canonical resolver.
-- Runtime already persisted organization-scoped state.
-- Discovery, scenario, decision, and decision-record API routes resolve identity consistently.
-- Integrated onboarding creates a stable opaque organization ID independently of display fields.
-- Identity flows through Discovery Lab, Executive Workspace, Simulation, Decision, and Decision Commit.
+- Organization-scoped Runtime persistence and canonical organization identity.
+- Active organization preservation through product navigation.
+- Read-only Runtime-backed organization registry.
+- Runtime-backed Your Organization, Decisions, Research, and Ask workspaces.
+- Executive recommendation, simulation, decision recording, communication, review, and learning pipelines.
 
-### Semantic Fidelity
+### Executive judgment and decision optimization
 
-- Themes now synthesize evidence-grounded organizational relationships instead of repeated-keyword taxonomy labels.
-- Runtime passes current Understandings into Phenomena inference.
-- Understanding clusters preserve genuine Understanding ancestry.
-- Cluster-driven Phenomena retain source meaning; pattern-driven Phenomena are unchanged.
-- The Understanding → Phenomena → Mechanisms lineage discontinuity is removed.
-- Concept Candidate statements remain normalized while summaries and explanations retain concise source-grounded organizational manifestations.
-- Concept IDs, signatures, confidence calculations, and ranking remain unchanged.
-- No organization-, founder-, industry-, or fixture-specific prototype was introduced.
+- Executive Decision Lab with typed cases, hidden ground truth, deterministic stress scenarios, semantic intervention correspondence, structured scope comparison, robustness/sensitivity evaluation, metamorphic validation, and failure taxonomy.
+- Intervention Profiles carrying intrinsic scope, burden, disruption, reversibility, leadership attention, coordination requirements, time to effect, implementation risk, and preconditions.
+- Capacity-aware feasibility that filters nonviable options before simulation.
+- Localized intervention scope propagated from conditions and mechanisms through option generation, simulation, and recommendation.
 
-## Canonical product direction
+### Longitudinal Organization Model learning
 
-The authoritative Sprint 79 specifications are:
+- Operating Model Evolution Lab with reusable timelines, eight evolution dimensions, stress scenarios, metamorphic transformations, failure taxonomy, production Runtime adapter, and deterministic in-memory replay.
+- Immediate-previous mechanism identity reconciliation for `same mechanism` versus `new mechanism`.
+- Longitudinal contradiction synthesis comparing current evidence with immediately previous evidence.
+- Contradiction-aware belief revision using the stable challenged mechanism identity.
 
-- `docs/Product/MVP_PRODUCT_SPECIFICATION.md`
-- `docs/Product/ORGANIZATION_PAGE_SPEC.md`
+# Current Validation Goal
 
-They supersede older primary-navigation assumptions when conflicts exist.
+Verify that the Organization Model learns appropriately across time while preserving stable identity, unrelated knowledge, recommendation continuity, and historical truth. The immediate validation target is whether recognized contradiction appropriately affects Organizational Mechanism confidence.
 
-Primary navigation:
+# Validated
 
-| Destination | Purpose |
-|---|---|
-| Your Organization | Observe and improve the Organization Model |
-| Decisions | Recommendations, tracking, review, and learning |
-| Research | Investigation, intervention comparison, simulation, and optimization |
-| Ask | Query and challenge the Organization Model |
+- Mechanism identity continuity now passes the production replay.
+- Qualifying evidence now lowers persistent belief confidence and satisfies the replay's belief-weakening invariant.
+- Executive recommendation identity remains stable through the replay.
+- Executive Decision Lab, Operating Model Evolution Lab foundation, Evolution stress pilot, Judgment Lab, Executive Decision regressions, simulation, recommendation Runtime, Runtime-backed executive language, and Decision Quality complete successfully.
+- Recent typecheck and production build pass; existing React Hook dependency warnings remain in Cognition Lab and Organism Viewer.
 
-Home, Executive Work, Executive Brief, Decision Lab, and Operating Model are not separate primary destinations. Existing capabilities should be composed beneath the locked navigation.
+Decision Quality remains approximately `88% / B+`, with its existing single-scenario differentiation diagnostic. Executive Decision Lab findings for risk specificity and direct recommendation evidence grounding remain open.
 
-## Your Organization maturity model
+# Measured Weaknesses
 
-Onboarding and mature use share one canonical page:
+1. **Mechanism confidence remains contradiction-insensitive.** The mechanism identity is stable and qualification is detected, but mechanism inference does not consume contradiction ancestry. The production replay still fails the mechanism-confidence-decrease invariant.
+2. **Historical mechanism truth is absent.** Runtime retains the current mechanism network but has no explicit durable mechanism revision or lineage history.
+
+# Designed but Deferred
+
+`docs/Architecture/Canon/ORGANIZATIONAL_MECHANISM_LIFECYCLE.md` defines creation, revision, unchanged continuity, merge, split, retirement, reactivation, and supersession.
+
+Only immediate-previous identity reconciliation is implemented. The following remain designed but deferred:
+
+- mechanism merge and split;
+- retirement and reactivation;
+- supersession;
+- revision history and historical lineage.
+
+# Current Product Lifecycle
 
 ```text
-EMPTY → EMERGING → DEVELOPING → ACTIVE → EVOLVING
+Organization → Organization Model → Continuous Understanding
+→ Executive Work → Decision Support → Commitment
+→ Execution → Review → Learning → Organization Model Evolution
 ```
 
-There is no separate onboarding wizard. First use asks for one important initiative, then one supporting document, surfaces one meaningful understanding for validation or correction, and reveals value progressively. Visual coherence increases only when meaningful learning occurs.
+# Benchmark Systems
 
-The stewardship loop is:
+### 1. Executive Judgment and Decision Lab
 
-```text
-Teach → Discovery Learns → Discovery Produces Value
-→ User Validates or Challenges → Organization Model Improves
-→ Discovery Earns the Next Request
-```
+Established decision-cycle validation and optimization. The Executive Decision Lab is the primary regression system for intervention quality, feasibility, sensitivity, robustness, scope, evidence grounding, and executive communication.
 
-## Validation baseline
+### 2. Operating Model Evolution Lab
 
-| Validation | Current result |
-|---|---|
-| `npm run typecheck` | PASS |
-| `npm run build` | PASS; existing out-of-scope React hook warnings only |
-| Executive Meaning Preservation | PASS end to end |
-| Phenomenon Semantic Validation | PASS |
-| Full benchmark suite | 15/15, 100% integrity |
-| Cognitive Semantic Normalization Audit | Successful exit; existing `NORMALIZATION REQUIRED` findings remain |
-| Architecture verification | 291/302, 96%; 11 known pre-existing registry/dependency failures |
+Established longitudinal validation for learning, stability, coherence, identity continuity, scope preservation, historical truth, decision learning, and recommendation continuity.
 
-Meaning-preservation layers now report Evidence, Understanding, Semantic Concepts, Phenomena, and Conceptual Understanding as PASS, with no diagnostic degradation and no required semantic failure. Remaining audit findings are not regressions introduced by this work.
+### 3. Evidence and Model Integrity validation
 
-## Immediate next implementation target
+Existing evidence, semantic fidelity, phenomenon, normalization, Runtime, and architecture checks provide integrity coverage. Future checks should consolidate into a durable suite rather than creating unrelated labs.
 
-First audit the current executive-v3 UI and routing. Produce the smallest migration plan for a persistent shell, the locked navigation, and a single stateful Your Organization page supporting all five maturity states without changing the engine.
+### 4. Cognitive System Reliability validation
 
-After plan approval:
+Existing Judgment Lab, stress, regression, simulation, recommendation, communication, and Decision Quality benchmarks provide reliability coverage. Future reliability checks should be grouped under this model.
 
-1. Implement the shell and left navigation.
-2. Implement Your Organization with placeholder coherence states.
-3. Reuse existing Runtime and engine capabilities for initiative, evidence, understanding, validation, and recommendation.
-4. Add Decisions, Research, and Ask only after the primary stewardship experience works.
+# Runtime Boundary
 
-## Guardrails
+Runtime remains canonical. No new Runtime schema, persistence model, mechanism-history collection, or lineage structure was added by the recent optimization work.
 
-- Benchmark evidence, not presentation preference, justifies cognitive changes.
-- Reuse existing cognition and Runtime.
-- Preserve organization-specific meaning in projections.
-- Use progressive disclosure and minimize reading.
-- Do not build a dashboard, separate onboarding wizard, or visualization gimmick.
-- Keep custom code focused on Discovery's unique organizational understanding.
+Evidence IDs generated by `runDiscoveryV3`, such as `E6`, are investigation-local and positional. They must not be described or used as globally durable longitudinal identity.
+
+# Current Product Focus
+
+Trace why a recognized longitudinal contradiction does not affect mechanism candidate or interpreted mechanism confidence. Identify the earliest responsible producer before authorizing a narrow repair.
+
+Historical mechanism continuity follows later, after current mechanism learning and confidence evolution are trustworthy.
+
+# Current Product Principles
+
+- Benchmark evidence justifies production changes.
+- Preserve established architecture and deterministic behavior.
+- Make one narrow production change per optimization sprint.
+- Run Decision and Evolution regression gates after production changes.
+- Do not broaden confidence work into mechanism lifecycle implementation.
+- Do not claim designed lifecycle behavior is implemented.
+
+# Document Status
+
+Current through Sprint 100 documentation synchronization.

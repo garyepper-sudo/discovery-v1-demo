@@ -22,6 +22,46 @@ No new product capabilities should be added until this benchmark is complete unl
 
 ---
 
+# Active Validation Systems
+
+The Product Benchmark describes the end-to-end product lifecycle. Active engine validation is organized into four durable groups:
+
+## 1. Executive Judgment and Decision Lab
+
+Established today:
+
+* Executive Decision Lab;
+* Executive Decision integrity and recording regressions;
+* simulation and recommendation Runtime validation;
+* Decision Quality evaluation.
+
+This group evaluates intervention quality, feasibility, sensitivity, robustness, structured scope, executive communication, risk specificity, and evidence grounding.
+
+## 2. Operating Model Evolution Lab
+
+Established today:
+
+* reusable longitudinal timeline contracts;
+* synthetic pilot and stress scenarios;
+* deterministic metamorphic transformations;
+* failure taxonomy;
+* production Runtime snapshot adapter;
+* in-memory production replay.
+
+This group evaluates learning, stability, coherence, identity continuity, scope preservation, historical truth, decision learning, and recommendation continuity.
+
+## 3. Evidence and Model Integrity Validation
+
+Existing evidence, semantic fidelity, phenomenon, normalization, Runtime, and architecture checks provide current integrity coverage. This is a grouping of existing validation, not a claim that one consolidated suite is already implemented.
+
+## 4. Cognitive System Reliability Validation
+
+Existing Judgment Lab, stress, simulation, recommendation, communication, and decision regression benchmarks provide current reliability coverage. This is a grouping of existing validation, not a new lab.
+
+Future integrity and reliability checks should consolidate under these durable groups rather than creating unrelated standalone labs.
+
+---
+
 # MVP Success Criteria
 
 Discovery is considered MVP complete when an executive can successfully guide a simulated organization through one complete organizational lifecycle and Discovery demonstrably improves its understanding of that organization over time.

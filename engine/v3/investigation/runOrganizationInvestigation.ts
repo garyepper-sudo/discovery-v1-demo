@@ -106,16 +106,27 @@ export function runOrganizationInvestigation(
       evolvedRuntime,
     );
 
+  const evolvedResult =
+    persistedRuntime.memory
+      .understandingState as
+      | DiscoveryV3Result
+      | null;
+
+  const effectiveResult =
+    evolvedResult ?? result;
+
   const executiveProjection =
     buildExecutiveProjection({
-      result,
+      result:
+        effectiveResult,
 
       runtime:
         persistedRuntime,
     });
 
   return {
-    result,
+    result:
+      effectiveResult,
     runtime:
       persistedRuntime,
     executiveProjection,

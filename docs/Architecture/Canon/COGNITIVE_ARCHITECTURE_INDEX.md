@@ -205,6 +205,27 @@ Primary Focus
 
 ---
 
+## 9. Organizational Mechanism Lifecycle
+
+**Document**
+
+```text
+ORGANIZATIONAL_MECHANISM_LIFECYCLE.md
+```
+
+Answers
+
+* How does Organizational Mechanism identity persist as understanding improves?
+* When is a mechanism revised rather than created as new?
+* What are the canonical semantics of merge, split, retirement, reactivation, and supersession?
+* Which longitudinal invariants must Runtime and cognition eventually preserve?
+
+Primary Focus
+
+**Mechanism Identity and Evolution**
+
+---
+
 # Executive Cognitive Operating System
 
 Discovery currently consists of cooperating Cognitive Operating Systems.
@@ -451,15 +472,6 @@ Executive Experience presents cognition.
 
 Discovery's first-generation Executive Cognitive Operating System is considered architecturally stable.
 
-Current development focuses on:
+Current development uses the Executive Decision Lab and Operating Model Evolution Lab to identify measured producer failures. The current investigation target is contradiction-aware Organizational Mechanism confidence. Historical mechanism lifecycle implementation remains deferred.
 
-* Executive Experience
-* Executive Explanation
-* Executive Narrative
-* Executive Trust
-* Behavioral Stress Testing
-* Customer Validation
-
-Future work should evolve existing Operating Systems through consumer migration rather than introducing parallel reasoning.
-
-Architecture now evolves primarily by exposing existing cognition rather than expanding the reasoning engine.
+Future work should evolve existing Operating Systems through measured producer improvements rather than introducing parallel reasoning.

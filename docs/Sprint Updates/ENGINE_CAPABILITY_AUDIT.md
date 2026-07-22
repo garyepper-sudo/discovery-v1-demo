@@ -1,103 +1,145 @@
 # Engine Capability Audit
 
-**Status:** Canonical operational audit (Sprint 79 baseline)
+**Status:** Canonical operational audit after Sprint 100
 
 ## Purpose
 
-This document records the current health and product-use boundary of Discovery's implemented cognitive capabilities. The Capability Registry remains authoritative for individual capability ownership and producers. Benchmarks validate behavior. The Sprint 79 product specifications determine how capabilities are presented.
+This document records the implemented and measured state of Discovery's engine capabilities. The machine Capability Registry remains authoritative for producer ownership. Architecture documents define intended behavior. Runtime and benchmarks establish actual behavior.
 
-## Architecture position
+## Status language
 
-The Cognitive Operating System, Capability Registry, Runtime, and current semantic architecture are stable. New presentation requirements do not justify new cognition. Architectural changes require a demonstrated benchmark gap.
+- **Implemented:** production behavior exists.
+- **Benchmark validated:** an active deterministic benchmark confirms the behavior.
+- **Partial:** part of the canonical behavior exists, with explicit missing behavior.
+- **Designed:** canonical architecture exists but production does not implement it fully.
+- **Deferred:** intentionally outside the current implementation sequence.
+- **Unresolved:** a benchmark-measured production weakness remains.
 
-The engine already provides canonical cognition for evidence, understanding, phenomena, mechanisms, beliefs, concepts, organizational conditions, assessment, recommendation, optimization, simulation, decision recording, communication, learning, and persistent organizational memory.
+## Canonical engine boundary
 
-## Persistent organization capability
+Discovery's Cognitive Operating System, Runtime, Organization Model, Executive Projection, Executive Communication, and Executive Decision pipeline are established. New presentation requirements do not justify new cognition. Production changes require a measured benchmark gap and a producer-level trace.
 
-- `engine/v3/runtime/activeOrganization.ts` owns canonical organization identity resolution.
-- Runtime persistence is organization-scoped.
-- Discovery, scenario, decision, and decision-record routes use the canonical resolver.
-- Integrated onboarding generates a stable opaque ID independent of company name.
-- Organization identity reaches Discovery Lab, Executive Workspace, Simulation, Decision, and Decision Commit.
+## Current capability status
 
-Authentication remains separate from Runtime organization identity. Organization switching and Clerk are not part of this completed milestone.
+| Capability | Status | Current evidence |
+|---|---|---|
+| Organization-scoped Runtime and identity | Implemented | Runtime persists by organization ID; active identity flows through product navigation and APIs. |
+| Semantic fidelity through Themes, Phenomena, and Conceptual Understanding | Benchmark validated | Executive Meaning Preservation reports no diagnostic degradation and no required semantic failure. |
+| Executive Decision Lab | Benchmark validated | Typed cases, hidden ground truth, stress and metamorphic scenarios, semantic correspondence, scope comparison, sensitivity, robustness, and failure taxonomy are established. |
+| Intervention Profiles | Implemented and benchmark validated | Intrinsic execution characteristics inform option-specific feasibility. |
+| Capacity-aware feasibility | Implemented and benchmark validated | High-burden options can be disqualified and only viable options enter simulation. |
+| Localized intervention scope | Implemented and benchmark validated | Targeted scope propagates through option, profile, simulation, and recommendation. |
+| Operating Model Evolution Lab | Benchmark validated | Eight longitudinal dimensions, stress scenarios, metamorphic transformations, failure taxonomy, Runtime adapter, and production replay are established. |
+| Production longitudinal replay | Benchmark validated | Chronological evidence runs through production cognition and in-memory Runtime snapshots without persistence. |
+| Organizational Mechanism lifecycle semantics | Designed | Canonical lifecycle document covers creation, revision, unchanged continuity, merge, split, retirement, reactivation, and supersession. |
+| Immediate-previous mechanism identity reconciliation | Implemented and benchmark validated | Replay identity continuity passes for `same mechanism` versus `new mechanism`. |
+| Longitudinal contradiction synthesis | Implemented and benchmark validated | Current evidence is compared with immediately previous evidence; qualification is detected deterministically. |
+| Contradiction-aware belief revision | Implemented and benchmark validated | Stable challenged mechanism identity enters existing contradiction ancestry; replay belief weakening passes. |
+| Contradiction-aware mechanism confidence | Unresolved | Mechanism confidence still rises after qualifying evidence. |
+| Historical mechanism continuity | Designed and deferred | No durable mechanism revisions, merge/split history, retirement, reactivation, supersession, or lineage exists in Runtime. |
 
-## Semantic Fidelity capability
+## Executive Decision optimization
 
-### Themes
+### Intervention Profiles
 
-- Emergent Themes use deterministic evidence relationships and signal overlap.
-- Repeated keywords no longer directly create labels such as `Consulting Pattern` or `Founder Pattern`.
-- Theme evidence and signal ancestry remain grounded.
-- The `V3Theme` contract is unchanged.
+Canonical intervention options contain intrinsic execution characteristics:
 
-### Phenomena
+- organizational scope;
+- implementation burden;
+- organizational disruption;
+- reversibility;
+- leadership attention;
+- coordination requirements;
+- expected time to impact;
+- implementation risk;
+- preconditions.
 
-- Runtime passes current Understandings into Phenomena inference.
-- Understanding clusters preserve real Understanding IDs.
-- Cluster-driven Phenomena retain organization-specific descriptions and direct ancestry.
-- The Understanding → Phenomena → Mechanisms lineage discontinuity is removed.
-- Pattern-driven Phenomena remain unchanged and benchmark-valid.
+These characteristics are stable properties of the intervention and participate in context-specific feasibility. Ranking, simulation algorithms, recommendation selection, confidence, and disposition were not broadly rewritten.
 
-### Conceptual Understanding
+### Capacity and localized scope
 
-- Theory prototype statements remain normalized and reusable.
-- Candidate summaries and explanations preserve concise organization-specific manifestations from Semantic Cohort observations.
-- Candidate IDs, semantic signatures, confidence calculations, ancestry, and ranking remain stable.
-- No founder-, consulting-, organization-, or fixture-specific prototype was added.
-- Final conceptual-understanding summaries carry both normalized identity and source meaning.
+Reduced implementation capacity can disqualify high-burden interventions. Localized conditions and supporting mechanism scope can produce department-scoped interventions. Structured scope remains visible through generated option, simulation input, and final recommendation.
 
-## Current validation
+Open Decision Lab findings remain:
+
+- risk specificity;
+- direct recommendation evidence grounding.
+
+## Longitudinal Organization Model capability
+
+### Production replay
+
+```text
+Evidence update
+↓
+runDiscoveryV3
+↓
+evolveOrganizationRuntime
+↓
+Production Runtime snapshot
+↓
+Benchmark adapter
+↓
+Operating Model Evolution evaluation
+```
+
+Replay is deterministic and in memory. It does not write Runtime state.
+
+### Mechanism identity
+
+Current mechanisms are compared with unclaimed immediately previous mechanisms using phenomenon ancestry, compatible type and scope, and additional existing ancestry. Confident, unambiguous matches reuse the previous ID; otherwise current canonical ID generation remains in effect.
+
+This capability distinguishes only the same mechanism from a new mechanism. Merge, split, retirement, reactivation, supersession, and history are not implemented.
+
+### Longitudinal contradiction and belief revision
+
+Contradiction synthesis compares current and previous evidence deterministically. The successful knowledge-transfer fixture is represented as a qualification of previous founder-dependency understanding.
+
+Belief inference joins the contradiction to a participating mechanism using current provenance, then stores the stable challenged mechanism identity in the existing contradiction ancestry field. The unchanged belief-update formula observes contradiction growth and lowers belief confidence from approximately `0.2515` to `0.2226`.
+
+Investigation-local evidence IDs such as `E6` remain positional and are not longitudinal identity.
+
+The belief's stored trend remains `stable` because the observed decrease is below the existing weakening threshold. This audit records the behavior without redefining the confidence contract.
+
+## Current measured weaknesses
+
+### Mechanism confidence — unresolved
+
+The contradiction exists and the mechanism ID remains stable, but mechanism inference does not consume contradiction ancestry. Mechanism confidence remains approximately `0.4135` after the qualifying update. This is the next producer-level investigation.
+
+### Historical mechanism truth — designed and deferred
+
+Runtime retains the current mechanism network. It does not retain explicit mechanism lifecycle events or historical states. Do not infer mechanism revision history from belief revisions or theory evolution.
+
+## Benchmark structure
+
+1. **Executive Judgment and Decision Lab:** established Executive Decision Lab plus decision regressions.
+2. **Operating Model Evolution Lab:** established longitudinal contracts, stress, metamorphic validation, adapter, and production replay.
+3. **Evidence and Model Integrity validation:** existing evidence, semantic, phenomenon, normalization, Runtime, and architecture checks.
+4. **Cognitive System Reliability validation:** existing Judgment Lab, stress, simulation, recommendation, communication, and Decision Quality checks.
+
+Future integrity and reliability checks should consolidate into durable grouped suites rather than proliferating standalone labs.
+
+## Recent validation baseline
 
 | Check | Result |
 |---|---|
 | `npm run typecheck` | PASS |
-| `npm run build` | PASS; existing out-of-scope React hook warnings only |
-| Executive Meaning Preservation | PASS |
-| Phenomenon Semantic Validation | PASS |
-| Full benchmark suite | 15/15 checks, 100% integrity |
-| Cognitive Semantic Normalization Audit | Successful exit; `NORMALIZATION REQUIRED` findings remain |
-| Architecture verification | 291/302 checks, 96% |
+| `npm run build` | PASS; existing React Hook warnings only |
+| Production Operating Model Replay | Deterministic; identity and belief weakening pass |
+| Operating Model Evolution Lab foundation | 14 passed, 0 failed |
+| Evolution stress pilot | All scenarios and transformations pass |
+| Executive Decision Lab | 39 passed, 0 failed |
+| Judgment Lab expansion | 15 passed, 0 failed |
+| Executive Decision regression gate | PASS |
+| Decision Quality | Approximately 88%, B+ |
 
-Architecture verification currently has 11 known registry/dependency failures, including undeclared canonical exports and dependency reciprocity gaps. These and the normalization audit findings pre-date the completed Semantic Fidelity work and are not newly introduced regressions. Therefore older handoff claims of a completely passing architecture verifier are superseded.
-
-## Meaning-preservation result
-
-- Evidence: PASS
-- Understanding: PASS
-- Semantic Concepts: PASS
-- Phenomena: PASS
-- Conceptual Understanding: PASS
-- First diagnostic semantic degradation: none
-- First required semantic failure: none
-
-## Product-use boundary
-
-The Organization Model is the product. Existing cognition should now be composed into:
-
-- **Your Organization:** observe and improve the model
-- **Decisions:** recommendations, decision tracking, review, and learning
-- **Research:** investigation, comparison, simulation, and optimization
-- **Ask:** query and challenge the model
-
-Executive Brief, Decision Lab, Executive Work, simulation, and decision capabilities remain implemented capabilities, but they are not locked primary navigation destinations.
-
-## Sprint 79 engineering priority
-
-The next target is a product-shell and Organization-experience implementation, not an engine expansion:
-
-1. Audit executive-v3 UI and routing.
-2. Plan the smallest navigation migration.
-3. Add the persistent shell.
-4. Implement one Your Organization page supporting EMPTY, EMERGING, DEVELOPING, ACTIVE, and EVOLVING.
-5. Reuse current engine and Runtime behavior.
-6. Add Decisions, Research, and Ask only after the stewardship experience works.
-
-## Capability guardrails
+## Guardrails
 
 - Preserve one canonical producer per cognitive object.
-- Reuse Runtime and existing engine outputs.
-- Preserve organization-specific meaning in every executive projection.
-- Do not add cognitive capabilities to solve layout or wording problems.
-- Keep visualization and onboarding state in the product layer.
-- Validate architectural changes with benchmarks before expanding the registry.
+- Use benchmarks and Runtime output to establish behavior.
+- Make one narrow production change per optimization sprint.
+- Preserve deterministic replay.
+- Run Decision and Evolution regressions after production changes.
+- Do not implement mechanism history while diagnosing confidence.
+- Do not mark designed lifecycle states as implemented.
