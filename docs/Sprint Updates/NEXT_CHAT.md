@@ -28,6 +28,7 @@ Production architecture should not expand without benchmark evidence. Current op
 - **Mechanism identity reconciliation:** immediately previous mechanisms are matched deterministically as either the same mechanism or a new mechanism. Full lifecycle and lineage are not implemented.
 - **Longitudinal contradiction synthesis:** current evidence is compared with immediately previous evidence and classified as support, contradiction, qualification, or unrelated.
 - **Contradiction-aware belief revision:** a detected contradiction is associated with the stable challenged mechanism identity and enters the existing belief-update formula.
+- **Contradiction-aware mechanism confidence:** after immediate-previous identity reconciliation, unique qualifying contradictions reduce confidence only when opposing evidence intersects the continuing mechanism's current evidence ancestry.
 
 ## Current measured state
 
@@ -36,7 +37,7 @@ The production Operating Model Evolution replay currently reports:
 - Mechanism identity continuity: **passing**.
 - Belief weakening after qualifying evidence: **passing**.
 - Recommendation continuity: **passing**.
-- Mechanism confidence response to contradiction: **failing**; confidence remains contradiction-insensitive.
+- Mechanism confidence response to contradiction: **passing**; the production replay moves from `0.396425` to `0.352025` while preserving mechanism identity.
 - Historical mechanism truth: **failing**; explicit mechanism evolution history is absent.
 
 The Executive Decision Lab remains established and passing as a regression system. Its open findings remain:
@@ -82,13 +83,7 @@ Investigation-local evidence IDs such as `E6` are positional and are not durable
 
 ## Exact next work
 
-The next session should diagnose:
-
-> Why does a recognized longitudinal contradiction not reduce Organizational Mechanism confidence?
-
-Start with a production trace. Do not pre-authorize a repair until repository evidence identifies the precise producer and smallest correct change.
-
-Mechanism history remains deferred until current-state mechanism learning and confidence evolution are trustworthy. Do not implement merge, split, retirement, reactivation, supersession, or lineage as part of confidence work.
+The next session should begin a separate benchmark-led investigation of historical mechanism truth. Sprint 101 does not authorize merge, split, retirement, reactivation, supersession, or full lineage implementation.
 
 ## Guardrails
 

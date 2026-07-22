@@ -2,8 +2,10 @@ import type {
   OrganizationalMechanism,
   OrganizationalMechanismType,
 } from "./organizationalMechanism";
+import type { V3Contradiction } from "../../types";
 
 const MIN_IDENTITY_RECONCILIATION_SCORE = 8;
+const CONTRADICTION_CONFIDENCE_WEIGHT = 0.06;
 
 function safeArray<T>(items: T[] | undefined | null): T[] {
   return Array.isArray(items) ? items : [];
@@ -171,6 +173,7 @@ function identityReconciliationScore(
 function reconcileMechanismIds(
   mechanisms: OrganizationalMechanism[],
   previousMechanisms: OrganizationalMechanism[],
+  contradictions: V3Contradiction[],
 ): OrganizationalMechanism[] {
   const availablePrevious = [...safeArray(previousMechanisms)].sort((left, right) =>
     left.id.localeCompare(right.id),
@@ -199,11 +202,50 @@ function reconcileMechanismIds(
     if (matches[1]?.score === matches[0].score) return mechanism;
 
     const previousId = matches[0].previous.id;
+    const previousMechanism = matches[0].previous;
     claimedPreviousIds.add(previousId);
+
+    const evidenceAncestry = new Set(
+      safeStringArray(mechanism.supportingEvidenceIds),
+    );
+    const matchedContradictions = safeArray(contradictions)
+      .filter((contradiction) =>
+        safeStringArray(contradiction.opposingEvidenceIds).some(
+          (evidenceId) => evidenceAncestry.has(evidenceId),
+        ),
+      )
+      .sort(
+        (left, right) =>
+          left.id.localeCompare(right.id) ||
+          right.confidence - left.confidence,
+      )
+      .filter(
+        (contradiction, index, all) =>
+          all.findIndex((candidate) => candidate.id === contradiction.id) ===
+          index,
+      );
+
+    const contradictionPenalty = matchedContradictions.reduce(
+      (total, contradiction) =>
+        total + Math.max(0, Math.min(1, contradiction.confidence)),
+      0,
+    ) * CONTRADICTION_CONFIDENCE_WEIGHT;
+
+    const confidence = matchedContradictions.length > 0
+      ? Math.max(
+          0,
+          Math.min(
+            1,
+            Math.min(mechanism.confidence, previousMechanism.confidence) -
+              contradictionPenalty,
+          ),
+        )
+      : mechanism.confidence;
 
     return {
       ...mechanism,
       id: previousId,
+      confidence,
       reinforcingMechanismIds: safeStringArray(
         mechanism.reinforcingMechanismIds,
       ).filter((id) => id !== previousId),
@@ -214,6 +256,7 @@ function reconcileMechanismIds(
 export function consolidateOrganizationalMechanisms(
   mechanisms: OrganizationalMechanism[] = [],
   previousMechanisms: OrganizationalMechanism[] = [],
+  contradictions: V3Contradiction[] = [],
 ): OrganizationalMechanism[] {
   const grouped = new Map<string, OrganizationalMechanism[]>();
 
@@ -413,5 +456,6 @@ export function consolidateOrganizationalMechanisms(
   return reconcileMechanismIds(
     consolidatedMechanisms,
     previousMechanisms,
+    contradictions,
   );
 }

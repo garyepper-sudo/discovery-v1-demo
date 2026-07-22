@@ -388,6 +388,7 @@ export function evolveOrganizationRuntime(params: {
     previousMechanisms: Array.isArray(memory.mechanismNetwork?.mechanisms)
       ? memory.mechanismNetwork.mechanisms
       : [],
+    contradictions: result.contradictions,
     phenomena: organizationalPhenomenaState.phenomena,
     understandings:
       updatedOrganizationalUnderstandingState.currentUnderstandings,

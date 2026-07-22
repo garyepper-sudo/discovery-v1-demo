@@ -1,5 +1,6 @@
 import type { OrganizationalExplanation } from "./organizationalJudgment";
 import type { OrganizationalMechanism } from "./organizationalMechanism";
+import type { V3Contradiction } from "../../types";
 
 export type PatternLike = {
   id: string;
@@ -105,6 +106,13 @@ export type InferOrganizationalMechanismsInput = {
    * Mechanism inference remains grounded in the current cognitive inputs.
    */
   previousMechanisms?: OrganizationalMechanism[];
+
+  /**
+   * Contradictions synthesized for the current investigation. These are used
+   * only after immediate-previous identity reconciliation, when evidence
+   * ancestry can be attributed to a continuing mechanism.
+   */
+  contradictions?: V3Contradiction[];
 
   /**
    * Primary ontology input.

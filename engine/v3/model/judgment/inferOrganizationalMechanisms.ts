@@ -19,6 +19,7 @@ export function inferOrganizationalMechanisms(
 
   const safeInput = {
     previousMechanisms: asArray(safeSource.previousMechanisms),
+    contradictions: asArray(safeSource.contradictions),
     phenomena: asArray(safeSource.phenomena),
     understandings: asArray(safeSource.understandings),
     patterns: asArray(safeSource.patterns),
@@ -61,6 +62,7 @@ export function inferOrganizationalMechanisms(
   const mechanisms = consolidateOrganizationalMechanisms(
     safeRawMechanisms,
     safeInput.previousMechanisms,
+    safeInput.contradictions,
   );
 
   const safeMechanisms = Array.isArray(mechanisms) ? mechanisms : [];
