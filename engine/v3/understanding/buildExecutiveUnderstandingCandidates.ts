@@ -31,6 +31,8 @@ type OrganizationalConditionLike = {
 type OrganizationalBeliefLike = {
   id: string;
   statement: string;
+  supportingEvidenceIds?: string[];
+  contradictoryEvidenceIds?: string[];
 };
 
 type OrganizationalTheoryLike = {
@@ -43,6 +45,13 @@ type OrganizationalMechanismLike = {
   id: string;
   title?: string;
   executiveName?: string;
+  supportingEvidenceIds?: string[];
+  supportingObservationIds?: string[];
+};
+
+type OrganizationalObservationLike = {
+  id: string;
+  evidenceIds?: string[];
 };
 
 export type BuildExecutiveUnderstandingCandidatesInput = {
@@ -52,6 +61,7 @@ export type BuildExecutiveUnderstandingCandidatesInput = {
   organizationalBeliefs?: OrganizationalBeliefLike[];
   theories?: OrganizationalTheoryLike[];
   mechanisms?: OrganizationalMechanismLike[];
+  observations?: OrganizationalObservationLike[];
 };
 
 function removeTrailingPeriod(value: string): string {
@@ -66,6 +76,12 @@ function conditionById(
   );
 }
 
+function uniqueIds(values: Array<string | undefined>): string[] {
+  return Array.from(
+    new Set(values.filter((value): value is string => Boolean(value))),
+  );
+}
+
 export function buildExecutiveUnderstandingCandidates(
   input: BuildExecutiveUnderstandingCandidatesInput,
 ): UnderstandingCandidate[] {
@@ -73,6 +89,7 @@ export function buildExecutiveUnderstandingCandidates(
   const beliefs = input.organizationalBeliefs ?? [];
   const theories = input.theories ?? [];
   const mechanisms = input.mechanisms ?? [];
+  const observations = input.observations ?? [];
 
   const conditionsById = conditionById(conditions);
 
@@ -115,6 +132,50 @@ export function buildExecutiveUnderstandingCandidates(
   const primaryBelief = beliefs.find((belief) =>
     primaryCondition.supportingBeliefIds?.includes(
       belief.id,
+    ),
+  );
+
+  const supportingBeliefIds =
+    primaryCondition.supportingBeliefIds ?? [];
+
+  const supportingMechanismIds =
+    input.executiveAssessment?.primaryMechanismIds ??
+    primaryCondition.supportingMechanismIds ??
+    [];
+
+  const supportingBeliefs = beliefs.filter((belief) =>
+    supportingBeliefIds.includes(belief.id),
+  );
+
+  const supportingMechanisms = mechanisms.filter((mechanism) =>
+    supportingMechanismIds.includes(mechanism.id),
+  );
+
+  const evidenceIds = uniqueIds([
+    ...supportingBeliefs.flatMap(
+      (belief) => belief.supportingEvidenceIds ?? [],
+    ),
+    ...supportingMechanisms.flatMap(
+      (mechanism) => mechanism.supportingEvidenceIds ?? [],
+    ),
+  ]);
+
+  const observationIds = uniqueIds([
+    ...supportingMechanisms.flatMap(
+      (mechanism) => mechanism.supportingObservationIds ?? [],
+    ),
+    ...observations
+      .filter((observation) =>
+        (observation.evidenceIds ?? []).some((evidenceId) =>
+          evidenceIds.includes(evidenceId),
+        ),
+      )
+      .map((observation) => observation.id),
+  ]);
+
+  const contradictionIds = uniqueIds(
+    supportingBeliefs.flatMap(
+      (belief) => belief.contradictoryEvidenceIds ?? [],
     ),
   );
 
@@ -170,20 +231,18 @@ export function buildExecutiveUnderstandingCandidates(
         input.organizationalState?.confidence,
 
       beliefIds:
-        primaryCondition.supportingBeliefIds ?? [],
+        supportingBeliefIds,
 
       mechanismIds:
-        input.executiveAssessment?.primaryMechanismIds ??
-        primaryCondition.supportingMechanismIds ??
-        [],
+        supportingMechanismIds,
 
       themeIds: supportingTheoryIds,
 
-      evidenceIds: [],
+      evidenceIds,
 
-      observationIds: [],
+      observationIds,
 
-      contradictionIds: [],
+      contradictionIds,
 
       source: "executive-assessment",
     },

@@ -23,6 +23,12 @@ export type PhenomenonLike = {
   relatedPatternIds?: string[];
   relatedObservationIds?: string[];
   possibleMechanismTypes?: string[];
+  understandingIds?: string[];
+};
+
+export type UnderstandingLike = {
+  id: string;
+  evidenceIds?: string[];
 };
 
 export type ReasoningPathLike = {
@@ -99,6 +105,9 @@ export type InferOrganizationalMechanismsInput = {
    * Mechanisms should be inferred from these conditions as operating forces.
    */
   phenomena?: PhenomenonLike[];
+
+  /** Source understandings used only to resolve phenomenon provenance. */
+  understandings?: UnderstandingLike[];
 
   /**
    * Supporting ontology input.

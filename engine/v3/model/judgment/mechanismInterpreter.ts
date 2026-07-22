@@ -4,7 +4,11 @@ import type {
   OrganizationalMechanismType,
 } from "./organizationalMechanism";
 import { mechanismProfiles } from "./mechanismProfiles";
-import type { MechanismCandidate } from "./mechanismInferenceTypes";
+import type {
+  MechanismCandidate,
+  PhenomenonLike,
+  UnderstandingLike,
+} from "./mechanismInferenceTypes";
 import { clamp01, countMatches, unique } from "./mechanismUtils";
 
 type OrganizationalScope = OrganizationalMechanism["organizationalScope"];
@@ -48,6 +52,34 @@ function normalizeCandidate(candidate: MechanismCandidate): MechanismCandidate {
     sharedCapabilities: safeArray(candidate.sharedCapabilities),
     sharedConsequences: safeArray(candidate.sharedConsequences),
   };
+}
+
+type MechanismProvenance = {
+  phenomena?: PhenomenonLike[];
+  understandings?: UnderstandingLike[];
+};
+
+function resolveSupportingEvidenceIds(
+  candidate: MechanismCandidate,
+  provenance: MechanismProvenance,
+): string[] {
+  const phenomenonIds = new Set(candidate.phenomenonIds);
+  const supportingUnderstandingIds = new Set(
+    safeArray(provenance.phenomena)
+      .filter((phenomenon) => phenomenonIds.has(phenomenon.id))
+      .flatMap((phenomenon) => safeArray(phenomenon.understandingIds)),
+  );
+
+  return Array.from(
+    new Set(
+      safeArray(provenance.understandings)
+        .filter((understanding) =>
+          supportingUnderstandingIds.has(understanding.id),
+        )
+        .flatMap((understanding) => safeArray(understanding.evidenceIds))
+        .filter(Boolean),
+    ),
+  ).sort((left, right) => left.localeCompare(right));
 }
 
 function candidateMechanismType(
@@ -237,6 +269,7 @@ function buildInterpretation(
 
 export function interpretMechanismCandidates(
   candidates: MechanismCandidate[] = [],
+  provenance: MechanismProvenance = {},
 ): OrganizationalMechanism[] {
   return safeArray(candidates)
     .map((rawCandidate, index): OrganizationalMechanism => {
@@ -269,6 +302,10 @@ export function interpretMechanismCandidates(
         ...candidate.sharedCapabilities,
         ...(profile.capabilities ?? []),
       ]).slice(0, 5);
+      const supportingEvidenceIds = resolveSupportingEvidenceIds(
+        candidate,
+        provenance,
+      );
 
       return {
         id: `organizational-mechanism-${index + 1}-${type}`,
@@ -301,7 +338,7 @@ export function interpretMechanismCandidates(
         affectedCapabilities,
         affectedCapabilityIds: affectedCapabilities,
 
-        supportingEvidenceIds: [],
+        supportingEvidenceIds,
         supportingExplanationIds: candidate.explanationIds,
         supportingClusterIds: candidate.clusterIds,
         supportingPhenomenonIds: candidate.phenomenonIds,

@@ -3,9 +3,12 @@ import "./globals.css";
 import "../styles/sprint19.css";
 
 export const metadata: Metadata = {
-  title: "Discovery Alpha",
+  title: {
+    default: "Discovery",
+    template: "%s · Discovery",
+  },
   description:
-    "A living investigation workspace for organizational understanding.",
+    "A continuously evolving model of your organization.",
 };
 
 export default function RootLayout({

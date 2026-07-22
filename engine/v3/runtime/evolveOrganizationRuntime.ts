@@ -369,6 +369,8 @@ export function evolveOrganizationRuntime(params: {
 
   const mechanismNetwork = inferOrganizationalMechanisms({
     phenomena: organizationalPhenomenaState.phenomena,
+    understandings:
+      updatedOrganizationalUnderstandingState.currentUnderstandings,
     patterns: ontologyPatterns,
     explanations: organizationalExplanations,
     reasoningPaths: organizationalReasoning.paths,
@@ -812,6 +814,7 @@ export function evolveOrganizationRuntime(params: {
         organizationalBeliefState.beliefs,
       theories: organizationalTheoryState.theories,
       mechanisms: safeMechanismNetwork.mechanisms,
+      observations: result.observations,
     });
 
   const canonicalUnderstandingBase:

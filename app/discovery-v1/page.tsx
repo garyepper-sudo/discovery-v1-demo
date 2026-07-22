@@ -1,8 +1,9 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import ExecutiveWorkspace from "../../components/executive-v2/ExecutiveWorkspace";
+import { buildProductHref } from "../../components/product-shell/data/productOrganization";
 
 import type {
   ExecutiveProjection,
@@ -61,6 +62,7 @@ const loadingSteps = [
 ];
 
 export default function DiscoveryV1Page() {
+  const router = useRouter();
   const [organizationId, setOrganizationId] =
     useState<string | null>(null);
 
@@ -75,9 +77,6 @@ export default function DiscoveryV1Page() {
       "board-deck",
       "strategic-plan",
     ]);
-
-  const [projection, setProjection] =
-    useState<ExecutiveProjection | null>(null);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] =
@@ -153,8 +152,11 @@ export default function DiscoveryV1Page() {
         );
       }
 
-      setProjection(
-        data.executiveProjection,
+      router.push(
+        buildProductHref(
+          "/your-organization",
+          activeOrganizationId,
+        ),
       );
     } catch (err) {
       setError(
@@ -165,17 +167,6 @@ export default function DiscoveryV1Page() {
     } finally {
       setLoading(false);
     }
-  }
-
-  if (projection && organizationId) {
-    return (
-      <ExecutiveWorkspace
-        projection={projection}
-        organizationId={
-          organizationId
-        }
-      />
-    );
   }
 
   const canBuildOperatingModel =

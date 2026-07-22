@@ -1,0 +1,431 @@
+.page {
+  min-height: calc(100vh - clamp(68px, 10vw, 144px));
+  animation: enter 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.header p,
+.eyebrow,
+.primaryMeta > p:first-child {
+  margin: 0;
+  color: rgba(245, 245, 245, 0.34);
+  font-size: 0.66rem;
+  font-weight: 650;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.header h1 {
+  margin: 10px 0 0;
+  color: rgba(245, 245, 245, 0.82);
+  font-size: 0.92rem;
+  font-weight: 520;
+  letter-spacing: -0.01em;
+}
+
+.primaryWork {
+  width: min(1020px, 100%);
+  padding: clamp(100px, 15vh, 170px) 0 clamp(130px, 18vh, 205px);
+}
+
+.primaryMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.primaryMeta > p:first-child,
+.eyebrow {
+  color: var(--ds-gold);
+}
+
+.primaryMeta > p:last-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: rgba(245, 245, 245, 0.34);
+  font-size: 0.7rem;
+}
+
+.primaryMeta span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(214, 178, 94, 0.76);
+  box-shadow: 0 0 9px rgba(214, 178, 94, 0.42);
+}
+
+.primaryWork h2 {
+  max-width: 960px;
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3.7rem, 7.2vw, 7.4rem);
+  font-weight: 400;
+  line-height: 0.96;
+  letter-spacing: -0.064em;
+  text-wrap: balance;
+}
+
+.primaryContext {
+  max-width: 630px;
+  margin: 34px 0 0;
+  color: rgba(245, 245, 245, 0.5);
+  font-size: clamp(1rem, 1.35vw, 1.12rem);
+  line-height: 1.72;
+}
+
+.lifecycle,
+.position,
+.recommendation,
+.explore,
+.otherWork {
+  border-top: 1px solid rgba(255, 255, 255, 0.055);
+}
+
+.lifecycle {
+  padding: clamp(105px, 15vh, 165px) 0;
+}
+
+.sectionIntroduction h2,
+.position h2,
+.explore h2,
+.otherWork h2 {
+  max-width: 650px;
+  margin: 20px 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.4rem, 4.5vw, 4.8rem);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.052em;
+  text-wrap: balance;
+}
+
+.lifecycle ol {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 28px);
+  margin: clamp(68px, 9vh, 92px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lifecycleSummary {
+  max-width: 560px;
+  margin: 24px 0 0;
+  color: rgba(245, 245, 245, 0.4);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.lifecycle li {
+  min-height: 106px;
+  padding-top: 17px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  color: rgba(245, 245, 245, 0.25);
+}
+
+.lifecycle li > span,
+.lifecycle li > strong,
+.lifecycle li > small {
+  display: block;
+}
+
+.lifecycle li > span {
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+}
+
+.lifecycle li > strong {
+  margin-top: 18px;
+  font-size: 0.78rem;
+  font-weight: 520;
+}
+
+.lifecycle li > small {
+  margin-top: 8px;
+  color: rgba(214, 178, 94, 0.62);
+  font-size: 0.62rem;
+}
+
+.lifecycle .currentStage {
+  border-color: rgba(214, 178, 94, 0.65);
+  color: rgba(245, 245, 245, 0.82);
+}
+
+.lifecycle .completeStage {
+  border-color: rgba(214, 178, 94, 0.24);
+  color: rgba(245, 245, 245, 0.5);
+}
+
+.position,
+.explore,
+.otherWork {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr);
+  gap: clamp(64px, 10vw, 140px);
+  padding: clamp(112px, 16vh, 180px) 0;
+}
+
+.positionDetail {
+  align-self: end;
+  max-width: 610px;
+}
+
+.positionDetail > p {
+  margin: 0;
+  color: rgba(245, 245, 245, 0.68);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.18rem, 1.8vw, 1.42rem);
+  line-height: 1.58;
+}
+
+.positionDetail ul {
+  margin: 34px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.positionMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 26px;
+  color: rgba(214, 178, 94, 0.68);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+}
+
+.positionDetail li {
+  position: relative;
+  padding: 8px 0 8px 20px;
+  color: rgba(245, 245, 245, 0.43);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.positionDetail li::before {
+  position: absolute;
+  top: 1.19em;
+  left: 1px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(214, 178, 94, 0.58);
+  content: "";
+}
+
+.recommendation {
+  padding: clamp(125px, 18vh, 205px) 0;
+}
+
+.recommendation h2 {
+  max-width: 920px;
+  margin: 24px 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3.2rem, 6.2vw, 6.6rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+  text-wrap: balance;
+}
+
+.recommendation > p:not(.eyebrow) {
+  max-width: 620px;
+  margin: 30px 0 0;
+  color: rgba(245, 245, 245, 0.49);
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+.recommendation > a {
+  width: fit-content;
+  display: block;
+  margin-top: 40px;
+  padding: 0 0 9px;
+  border-bottom: 1px solid rgba(214, 178, 94, 0.52);
+  color: rgba(240, 213, 138, 0.86);
+  font-size: 0.78rem;
+  text-decoration: none;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.recommendation > a:hover {
+  color: var(--ds-gold-soft);
+  border-color: var(--ds-gold-soft);
+}
+
+.explore ul,
+.otherWork ul {
+  align-self: end;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.explore li,
+.otherWork li {
+  border-top: 1px solid rgba(255, 255, 255, 0.065);
+}
+
+.explore a,
+.otherWork li {
+  min-height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 2px;
+}
+
+.explore li > small {
+  display: block;
+  max-width: 540px;
+  padding: 0 2px 18px;
+  color: rgba(245, 245, 245, 0.3);
+  font-size: 0.68rem;
+  line-height: 1.55;
+}
+
+.explore a {
+  color: rgba(245, 245, 245, 0.51);
+  font-size: 0.82rem;
+  text-decoration: none;
+  transition: color 160ms ease, padding 160ms ease;
+}
+
+.explore a:hover {
+  padding-left: 6px;
+  color: rgba(245, 245, 245, 0.82);
+}
+
+.explore i {
+  color: rgba(214, 178, 94, 0.48);
+  font-style: normal;
+}
+
+.recommendation a:focus-visible,
+.explore a:focus-visible {
+  outline: 1px solid rgba(240, 213, 138, 0.72);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.otherWork li > span {
+  color: rgba(245, 245, 245, 0.52);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+}
+
+.otherWork li > small {
+  color: rgba(245, 245, 245, 0.28);
+  font-size: 0.64rem;
+  letter-spacing: 0.04em;
+}
+
+.emptyWork {
+  align-self: end;
+  margin: 0;
+  color: rgba(245, 245, 245, 0.34);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.futureNote {
+  margin: 0;
+  padding: 30px 0 clamp(60px, 9vh, 100px);
+  border-top: 1px solid rgba(255, 255, 255, 0.055);
+  color: rgba(245, 245, 245, 0.27);
+  font-size: 0.7rem;
+  line-height: 1.6;
+}
+
+.futureNote:target {
+  color: rgba(245, 245, 245, 0.48);
+}
+
+@keyframes enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 980px) {
+  .position,
+  .explore,
+  .otherWork {
+    grid-template-columns: 1fr;
+    gap: 52px;
+  }
+
+  .lifecycle ol {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 24px;
+  }
+}
+
+@media (max-width: 820px) {
+  .primaryWork {
+    padding: 78px 0 112px;
+  }
+
+  .primaryMeta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .primaryWork h2 {
+    font-size: clamp(3.2rem, 14vw, 5.3rem);
+  }
+
+  .lifecycle,
+  .position,
+  .explore,
+  .otherWork {
+    padding: 96px 0;
+  }
+
+  .lifecycle ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 54px;
+  }
+
+  .recommendation {
+    padding: 108px 0;
+  }
+
+  .recommendation h2 {
+    font-size: clamp(2.9rem, 13vw, 4.9rem);
+  }
+}
+
+@media (max-width: 420px) {
+  .lifecycle ol {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .lifecycle li {
+    min-height: 76px;
+    display: grid;
+    grid-template-columns: 34px 1fr auto;
+    align-items: center;
+  }
+
+  .lifecycle li > strong,
+  .lifecycle li > small {
+    margin-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page {
+    animation: none;
+  }
+
+  .recommendation > a,
+  .explore a {
+    transition: none;
+  }
+}

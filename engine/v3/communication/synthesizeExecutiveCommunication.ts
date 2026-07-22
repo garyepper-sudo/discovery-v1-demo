@@ -145,6 +145,33 @@ function confidenceFraction(
     : value;
 }
 
+function uniqueSentences(
+  values: string[],
+): string[] {
+  const seen = new Set<string>();
+
+  return values.filter((value) => {
+    const normalized = value
+      .replace(/\s+/g, " ")
+      .trim();
+
+    const key = normalized
+      .toLowerCase()
+      .replace(/[.!?]+$/g, "")
+      .replace(/[^a-z0-9\s]/g, "")
+      .replace(/\s+/g, " ")
+      .replace(/^(?:leadership|leaders|management|executives?)\s+should\s+/, "")
+      .trim();
+
+    if (!key || seen.has(key)) {
+      return false;
+    }
+
+    seen.add(key);
+    return true;
+  });
+}
+
 /**
  * Canonical Executive Communication producer.
  *
@@ -341,7 +368,7 @@ export function synthesizeExecutiveCommunication(
 
       actions:
         canonicalRecommendation
-          ? [
+          ? uniqueSentences([
               canonicalRecommendation
                 .intervention
                 .executiveIntervention,
@@ -353,7 +380,7 @@ export function synthesizeExecutiveCommunication(
               (value) =>
                 value.trim().length >
                 0,
-            )
+            ))
           : narrative
               .recommendation
               .actions,

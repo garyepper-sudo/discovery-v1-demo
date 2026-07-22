@@ -85,6 +85,45 @@ function normalizeWhitespace(
     .trim();
 }
 
+function normalizedSentenceKey(
+  value: string,
+): string {
+  return normalizeWhitespace(value)
+    .toLowerCase()
+    .replace(/[.!?]+$/g, "")
+    .replace(/[^a-z0-9\s]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function completeSentence(
+  value: string,
+): string {
+  const normalized = normalizeWhitespace(value);
+
+  if (!normalized) {
+    return normalized;
+  }
+
+  return /[.!?]$/.test(normalized)
+    ? normalized
+    : `${normalized}.`;
+}
+
+function constraintLabel(
+  value: string,
+): string {
+  const normalized = normalizeWhitespace(value)
+    .replace(/[.!?]+$/g, "");
+
+  return normalized
+    .replace(
+      /\s+is\s+(?:the\s+organization(?:'s|’s)\s+|the\s+)?primary(?:\s+executive)?\s+constraint$/i,
+      "",
+    )
+    .trim();
+}
+
 function firstSentence(
   value: string | undefined,
 ): string | undefined {
@@ -180,7 +219,7 @@ function unique(
       normalizeWhitespace(value);
 
     const key =
-      normalized.toLowerCase();
+      normalizedSentenceKey(normalized);
 
     if (
       !normalized ||
@@ -350,7 +389,8 @@ function constraintTitleFrom(
       source,
     );
 
-  return (
+  return constraintLabel(
+    condition?.name ??
     stringValue(
       record?.title,
     ) ??
@@ -361,7 +401,7 @@ function constraintTitleFrom(
       judgment.headline,
     ) ??
     condition?.name ??
-    "Primary Executive Constraint"
+    "Primary Executive Constraint",
   );
 }
 
@@ -737,6 +777,11 @@ function recommendedTitleFrom(
   return (
     removeEngineLanguage(
       stringValue(
+        recommendation.headline,
+      ),
+    ) ??
+    removeEngineLanguage(
+      stringValue(
         intervention
           .executiveIntervention,
       ),
@@ -744,11 +789,6 @@ function recommendedTitleFrom(
     removeEngineLanguage(
       stringValue(
         intervention.title,
-      ),
-    ) ??
-    removeEngineLanguage(
-      stringValue(
-        recommendation.headline,
       ),
     ) ??
     "Address the primary executive constraint"
@@ -1284,7 +1324,7 @@ function confidenceFrom(
 
   const limitationSummary =
     limitations[0]
-      ? ` Confidence is limited by ${limitations[0].replace(/\.$/, "").toLowerCase()}.`
+      ? ` Confidence is limited because ${limitations[0].replace(/\.$/, "").toLowerCase()}.`
       : "";
 
   return {
@@ -1406,8 +1446,20 @@ function buildNarrative(params: {
         }`
       : undefined;
 
+  const constraintSentence =
+    /\bprimary(?:\s+executive)?\s+constraint\b/i.test(
+      params.primaryConstraintTitle,
+    )
+      ? completeSentence(params.primaryConstraintTitle)
+      : `${constraintLabel(params.primaryConstraintTitle)} is the primary executive constraint.`;
+
+  const recommendationSentence =
+    /[.!?]$/.test(params.recommendationTitle.trim())
+      ? completeSentence(params.recommendationTitle)
+      : `${params.recommendationTitle} is the recommended strategy.`;
+
   return unique([
-    `${params.primaryConstraintTitle} is the primary executive constraint.`,
+    constraintSentence,
 
     params.whyItMatters,
 
@@ -1415,7 +1467,7 @@ function buildNarrative(params: {
 
     comparisonSentence,
 
-    `${params.recommendationTitle} is the recommended strategy.`,
+    recommendationSentence,
 
     params.comparativeAdvantage ??
       params.recommendationRationale,

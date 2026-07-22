@@ -1,5 +1,16 @@
 import { redirect } from "next/navigation";
 
-export default function Home() {
-  redirect("/discovery-v1");
+import { buildProductHref } from "../components/product-shell/data/productOrganization";
+
+export default function Home({
+  searchParams,
+}: {
+  searchParams: { organizationId?: string | string[] };
+}) {
+  const organizationId =
+    typeof searchParams.organizationId === "string"
+      ? searchParams.organizationId.trim()
+      : undefined;
+
+  redirect(buildProductHref("/your-organization", organizationId || undefined));
 }

@@ -19,6 +19,7 @@ export function inferOrganizationalMechanisms(
 
   const safeInput = {
     phenomena: asArray(safeSource.phenomena),
+    understandings: asArray(safeSource.understandings),
     patterns: asArray(safeSource.patterns),
     compressedPatternThemes: asArray(safeSource.compressedPatternThemes),
     semanticConcepts: asArray(safeSource.semanticConcepts),
@@ -49,7 +50,10 @@ export function inferOrganizationalMechanisms(
 
   const safeCandidates = Array.isArray(candidates) ? candidates : [];
 
-  const rawMechanisms = interpretMechanismCandidates(safeCandidates);
+  const rawMechanisms = interpretMechanismCandidates(safeCandidates, {
+    phenomena: safeInput.phenomena,
+    understandings: safeInput.understandings,
+  });
 
   const safeRawMechanisms = Array.isArray(rawMechanisms) ? rawMechanisms : [];
 
