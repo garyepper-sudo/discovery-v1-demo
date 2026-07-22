@@ -1,13 +1,60 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import type { AskExperienceView as AskView } from "../data/buildAskExperienceView";
 import AnswerReasoning from "./AnswerReasoning";
 import styles from "./AskExperience.module.css";
+import AskComposer from "./AskComposer";
+import LivingModelContext from "../shared/LivingModelContext";
+import { useInteractionSession } from "../shared/InteractionSession";
+import { buildProductHref } from "../data/productOrganization";
 
 export default function AskExperience({ view }: { view: AskView }) {
+  const [input, setInput] = useState("");
+  const [candidate, setCandidate] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const { addEntry } = useInteractionSession();
+  const router = useRouter();
+
+  function brainstorm() {
+    const normalized = input.trim();
+    if (!normalized) return;
+    setCandidate(normalized);
+    addEntry({ action: "brainstorm", kind: "discussion", label: normalized, status: "provisional" });
+    setInput("");
+  }
+
+  async function saveCandidate() {
+    if (!candidate) return;
+    setSaving(true);
+    const response = await fetch("/api/product-interaction", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ organizationId: view.organization.id, interactionId: crypto.randomUUID(), action: "save-insight", content: candidate }) });
+    setSaving(false);
+    if (!response.ok) return;
+    addEntry({ action: "save-insight", kind: "observation", label: candidate, status: "saved" });
+    router.refresh();
+  }
+
   return (
     <article className={styles.page}>
-      <header className={styles.header}><p>Question the model</p><h1>Ask</h1></header>
+      <header className={styles.header}><p>Think with the model</p><h1>Let&apos;s brainstorm.</h1><span>What are you thinking about?</span></header>
+
+      <LivingModelContext model={view.model} activeIds={view.model.areas.slice(0, 2).map((area) => area.id)} />
+
+      <AskComposer value={input} onChange={setInput} onSubmit={(event) => { event.preventDefault(); brainstorm(); }} />
+
+      {candidate && <section className={styles.candidate} aria-label="Provisional model candidate">
+        <p>Discovery is considering this</p><h2>{candidate}</h2>
+        <span>This remains provisional until you choose a durable action.</span>
+        <div>
+          <button type="button" disabled={saving} onClick={() => void saveCandidate()}>Add to model</button>
+          <button type="button" disabled={saving} onClick={() => void saveCandidate()}>Save as insight</button>
+          <button type="button" onClick={() => router.push(buildProductHref("/decisions", view.organization.id))}>Create decision</button>
+          <button type="button" onClick={() => addEntry({ action: "stress-test", kind: "discussion", label: `Stress test later: ${candidate}`, status: "provisional" })}>Stress test later</button>
+        </div>
+      </section>}
 
       <section className={styles.primaryQuestion} aria-labelledby="current-question-title">
         <div className={styles.questionMeta}><p>Current question</p></div>

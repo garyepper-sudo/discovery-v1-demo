@@ -163,6 +163,19 @@
   font-size: 0.68rem;
 }
 
+.stewardship {
+  display: grid;
+  gap: 5px;
+  margin-top: auto;
+  padding: 16px 0;
+  border-top: 1px solid rgba(255,255,255,.06);
+  color: rgba(240,213,138,.76);
+  font-size: .72rem;
+  text-decoration: none;
+}
+
+.stewardship span { color: rgba(245,245,245,.28); font-size: .58rem; line-height: 1.45; }
+
 .statusMark {
   width: 5px;
   height: 5px;

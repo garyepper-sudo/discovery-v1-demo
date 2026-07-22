@@ -1,8 +1,10 @@
 import type { OrganizationRuntime } from "../../../engine/v3/runtime";
 import { buildProductHref } from "./productOrganization";
+import { buildOrganizationModelContext, type OrganizationModelContext } from "./buildOrganizationModelContext";
 
 export type AskExperienceView = {
   organization: { id: string; name: string };
+  model: OrganizationModelContext;
   question: { text: string; context: string | null } | null;
   answer: { headline: string; summary: string | null } | null;
   reasoning: {
@@ -153,6 +155,7 @@ export function buildAskExperienceView(runtime: OrganizationRuntime): AskExperie
 
   return {
     organization: { id: runtime.metadata.organizationId, name: runtime.metadata.name || "Your organization" },
+    model: buildOrganizationModelContext(runtime),
     question: questionText ? { text: questionText, context: compact(text(primaryOpportunity?.reason, communicationUncertainty.implication), 250) } : null,
     answer: answerHeadline ? { headline: answerHeadline, summary: answerSummary === answerHeadline ? null : answerSummary } : null,
     reasoning: {

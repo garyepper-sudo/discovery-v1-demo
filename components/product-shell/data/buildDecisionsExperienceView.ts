@@ -1,5 +1,6 @@
 import type { OrganizationRuntime } from "../../../engine/v3/runtime";
 import { buildProductHref } from "./productOrganization";
+import { buildOrganizationModelContext, type OrganizationModelContext } from "./buildOrganizationModelContext";
 
 export type DecisionLifecycleStageId =
   | "exploring"
@@ -11,6 +12,7 @@ export type DecisionLifecycleStageId =
 
 export type DecisionsExperienceView = {
   organization: { id: string; name: string };
+  model: OrganizationModelContext;
   state:
     | { kind: "active"; title: string; status: string; summary: string }
     | { kind: "no-active-decision"; title: string; summary: string }
@@ -25,6 +27,7 @@ export type DecisionsExperienceView = {
     recommendationStatus: string | null;
     observations: string[];
     risks: string[];
+    source: "Discovery" | "Leadership";
   };
   lifecycle: {
     stages: Array<{
@@ -37,7 +40,8 @@ export type DecisionsExperienceView = {
   };
   nextStep: { label: string; rationale: string; destination: string } | null;
   exploreFurther: Array<{ label: string; rationale?: string; destination: string }>;
-  otherWork: Array<{ title: string; status: string; summary?: string }>;
+  otherWork: Array<{ title: string; status: string; source: "Discovery" | "Leadership"; summary?: string }>;
+  counts: { active: number; recommended: number; review: number };
 };
 
 type UnknownRecord = Record<string, unknown>;
@@ -293,12 +297,14 @@ export function buildDecisionsExperienceView(runtime: OrganizationRuntime): Deci
     return {
       title,
       status: displayStatus(text(item.status)),
+      source: text(item.executiveDecisionId)?.startsWith("leadership-decision-") ? "Leadership" as const : "Discovery" as const,
       summary: compact(text(item.decision, item.rationale), 160) ?? undefined,
     };
   });
 
   return {
     organization: { id: runtime.metadata.organizationId, name: runtime.metadata.name || "Your organization" },
+    model: buildOrganizationModelContext(runtime),
     state,
     currentPosition: {
       headline: positionHeadline,
@@ -310,10 +316,16 @@ export function buildDecisionsExperienceView(runtime: OrganizationRuntime): Deci
       recommendationStatus: status,
       observations,
       risks: strings(recommendation.risks),
+      source: text(selectedRecord?.executiveDecisionId)?.startsWith("leadership-decision-") ? "Leadership" : "Discovery",
     },
     lifecycle: buildLifecycle(currentStage),
     nextStep,
     exploreFurther,
     otherWork,
+    counts: {
+      active: workItems.filter((item) => !["completed", "cancelled"].includes(text(item.status) ?? "")).length + decisionRecords.filter((item) => !["completed", "cancelled"].includes(text(item.status) ?? "") && !workItems.some((workItem) => text(workItem.decisionRecordId) === text(item.id))).length,
+      recommended: hasRecommendation ? 1 : 0,
+      review: reviews.filter((item) => text(item.status) !== "completed").length,
+    },
   };
 }

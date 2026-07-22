@@ -1,6 +1,7 @@
 import type { OrganizationRuntime } from "../../../engine/v3/runtime";
 
 import { buildProductHref } from "./productOrganization";
+import { buildOrganizationModelContext } from "./buildOrganizationModelContext";
 
 export type OrganizationExperienceView = {
   organization: {
@@ -11,6 +12,7 @@ export type OrganizationExperienceView = {
     coherence: number | null;
     coherenceLabel: string;
     summary: string;
+    areas: ReturnType<typeof buildOrganizationModelContext>["areas"];
   };
   currentUnderstanding: {
     headline: string;
@@ -23,6 +25,7 @@ export type OrganizationExperienceView = {
     missingEvidence: string | null;
     falsificationCondition: string;
   };
+  insights: string[];
   changes: {
     isFirstBaseline: boolean;
     summary: string;
@@ -148,6 +151,7 @@ export function buildOrganizationExperienceView(
   const organizationName = runtime.metadata.name || "Your organization";
   const coherence = normalizePercentage(health.coherence);
   const coherenceLabel = getCoherenceLabel(coherence);
+  const modelContext = buildOrganizationModelContext(runtime);
 
   const headline = firstText(
     selectedUnderstanding.statement,
@@ -283,6 +287,7 @@ export function buildOrganizationExperienceView(
           ?? "Discovery is establishing the first coherent view of this organization.",
         250,
       ),
+      areas: modelContext.areas,
     },
     currentUnderstanding: {
       headline: compact(headline, 360),
@@ -298,6 +303,7 @@ export function buildOrganizationExperienceView(
       missingEvidence: missingEvidence ? compact(missingEvidence, 220) : null,
       falsificationCondition: "Discovery has not yet identified the strongest evidence that would overturn this understanding.",
     },
+    insights: distinct([headline, ...supportingObservations], 3),
     changes: {
       isFirstBaseline,
       summary: isFirstBaseline

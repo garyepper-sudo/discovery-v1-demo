@@ -22,6 +22,14 @@
   letter-spacing: -0.01em;
 }
 
+.header > span { display:block; margin-top:12px; color:rgba(245,245,245,.42); font-size:.9rem; }
+.candidate { margin:38px 0 0; padding:28px; border:1px solid rgba(214,178,94,.18); background:rgba(214,178,94,.035); }
+.candidate>p { margin:0; color:var(--ds-gold); font-size:.62rem; font-weight:650; letter-spacing:.15em; text-transform:uppercase; }
+.candidate h2 { margin:14px 0 0; font-family:Georgia,"Times New Roman",serif; font-size:clamp(1.6rem,3vw,2.8rem); font-weight:400; }
+.candidate>span { display:block; margin-top:12px; color:rgba(245,245,245,.36); font-size:.7rem; }
+.candidate div { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+.candidate button { padding:10px 13px; border:1px solid rgba(214,178,94,.22); background:transparent; color:rgba(240,213,138,.78); cursor:pointer; }
+
 .eyebrow,
 .questionMeta > p {
   color: var(--ds-gold);

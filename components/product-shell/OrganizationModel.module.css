@@ -173,6 +173,12 @@
   animation: reveal 240ms ease both;
 }
 
+.areas { max-width:520px; display:grid; gap:0; margin:-20px auto 0; padding:24px 0 0; border-top:1px solid rgba(255,255,255,.06); list-style:none; animation:reveal 240ms ease both; }
+.areas li { display:grid; grid-template-columns:10px 1fr auto; gap:10px; align-items:center; padding:10px 0; color:rgba(245,245,245,.55); font-size:.76rem; }
+.areas li i { width:5px; height:5px; border-radius:50%; background:var(--ds-gold); box-shadow:0 0 10px rgba(214,178,94,.45); }
+.areas li small { color:rgba(245,245,245,.3); font-size:.62rem; text-transform:capitalize; }
+.areas .activeArea { color:rgba(245,245,245,.88); }
+
 @keyframes breathe {
   0%, 100% { transform: scale(0.985) rotate(-1deg); opacity: 0.72; }
   50% { transform: scale(1.025) rotate(1deg); opacity: 1; }

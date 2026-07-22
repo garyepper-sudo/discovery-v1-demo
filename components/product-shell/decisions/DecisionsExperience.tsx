@@ -1,19 +1,59 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import type { DecisionsExperienceView as DecisionsView } from "../data/buildDecisionsExperienceView";
 import DecisionLifecycle from "./DecisionLifecycle";
 import DecisionRecommendation from "./DecisionRecommendation";
 import styles from "./DecisionsExperience.module.css";
+import LivingModelContext from "../shared/LivingModelContext";
+import { useInteractionSession } from "../shared/InteractionSession";
 
 export default function DecisionsExperience({ view }: { view: DecisionsView }) {
+  const { entries, addEntry } = useInteractionSession();
+  const seed = [...entries].reverse().find((entry) => entry.kind === "discussion")?.label ?? "";
+  const [showForm, setShowForm] = useState(Boolean(seed));
+  const [considering, setConsidering] = useState(seed);
+  const [whyNow, setWhyNow] = useState("");
+  const [outcome, setOutcome] = useState("");
+  const [saving, setSaving] = useState(false);
+  const router = useRouter();
+
+  async function createDecision() {
+    setSaving(true);
+    const response = await fetch("/api/product-interaction", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ organizationId: view.organization.id, interactionId: crypto.randomUUID(), action: "create-decision", content: considering, whyNow, outcome, targetConditionIds: view.model.areas.slice(0, 2).map((area) => area.id) }) });
+    setSaving(false);
+    if (!response.ok) return;
+    addEntry({ action: "create-decision", kind: "decision", label: considering, status: "saved" });
+    setShowForm(false); setConsidering(""); setWhyNow(""); setOutcome(""); router.refresh();
+  }
+
   return (
     <article className={styles.page}>
       <header className={styles.header}>
         <p>Executive work</p>
-        <h1>Decisions</h1>
+        <h1>Decisions shaping your organization</h1>
       </header>
 
-      <section className={styles.primaryWork} aria-labelledby="primary-work-title">
+      <LivingModelContext model={view.model} activeIds={view.model.areas.slice(0, 2).map((area) => area.id)} />
+
+      <section className={styles.decisionOverview} aria-label="Decision overview">
+        <span><strong>{view.counts.active}</strong>Active</span><span><strong>{view.counts.recommended}</strong>Recommended</span><span><strong>{view.counts.review}</strong>Requiring review</span>
+        <a href="#active-decisions">Review active decisions</a>
+        <button type="button" onClick={() => setShowForm((current) => !current)}>Add decision</button>
+      </section>
+
+      {showForm && <form className={styles.decisionForm} onSubmit={(event) => { event.preventDefault(); void createDecision(); }}>
+        <label>What are you considering?<textarea rows={2} value={considering} onChange={(event) => setConsidering(event.target.value)} /></label>
+        <label>Why now?<textarea rows={2} value={whyNow} onChange={(event) => setWhyNow(event.target.value)} /></label>
+        <label>What outcome do you want?<textarea rows={2} value={outcome} onChange={(event) => setOutcome(event.target.value)} /></label>
+        <p>Discovery will connect this leadership-added decision to {view.model.areas.slice(0, 2).map((area) => area.label).join(" and ") || "the current Organization Model"}.</p>
+        <button type="submit" disabled={!considering.trim() || !whyNow.trim() || saving}>{saving ? "Opening…" : "Open decision"}</button>
+      </form>}
+
+      <section id="active-decisions" className={styles.primaryWork} aria-labelledby="primary-work-title">
         <div className={styles.primaryMeta}>
           <p>{view.state.kind === "active" ? "Active executive work" : "Decision posture"}</p>
           <p>{view.state.kind === "active" && <span aria-hidden="true" />}{view.state.kind === "active" ? view.state.status : "Not opened"}</p>
@@ -34,6 +74,7 @@ export default function DecisionsExperience({ view }: { view: DecisionsView }) {
           <p>{view.currentPosition.summary}</p>
           <div className={styles.positionMeta}>
             {view.currentPosition.recommendationStatus && <span>{view.currentPosition.recommendationStatus}</span>}
+            <span>Source: {view.currentPosition.source}</span>
             <span>{view.currentPosition.confidenceLabel}</span>
             {view.currentPosition.primaryConstraint && <span>Constraint: {view.currentPosition.primaryConstraint}</span>}
           </div>
@@ -76,7 +117,7 @@ export default function DecisionsExperience({ view }: { view: DecisionsView }) {
           <h2 id="other-work-title">{view.otherWork.length ? "Recorded elsewhere." : "Nothing else in motion."}</h2>
         </div>
         {view.otherWork.length ? (
-          <ul>{view.otherWork.map((work) => <li key={`${work.title}-${work.status}`}><span>{work.title}</span><small>{work.status}</small></li>)}</ul>
+          <ul>{view.otherWork.map((work) => <li key={`${work.title}-${work.status}`}><span>{work.title}</span><small>{work.source} · {work.status}</small></li>)}</ul>
         ) : <p className={styles.emptyWork}>No other Executive Work has been recorded.</p>}
       </section>
     </article>

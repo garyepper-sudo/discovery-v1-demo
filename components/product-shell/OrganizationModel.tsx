@@ -40,11 +40,9 @@ export default function OrganizationModel({ model }: OrganizationModelProps) {
           </span>
         </summary>
 
-        <p className={styles.placeholder}>
-          Full Organization Model exploration will arrive in a future sprint.
-          This view will make the relationships behind Discovery&apos;s
-          understanding available for examination and challenge.
-        </p>
+        <ul className={styles.areas}>
+          {model.areas.map((area, index) => <li key={area.id} className={index === 0 ? styles.activeArea : undefined}><i aria-hidden="true" /><span>{area.label}</span><small>{area.status.replace(/-/g, " ")}</small></li>)}
+        </ul>
       </details>
     </section>
   );

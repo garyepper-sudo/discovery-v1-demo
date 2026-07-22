@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import styles from "./DiscoveryShell.module.css";
+import SessionImpact from "./shared/SessionImpact";
 import {
   buildProductHref,
   type ProductOrganizationSummary,
@@ -24,8 +25,8 @@ type DiscoveryShellProps = {
 const navigation = [
   {
     href: "/your-organization",
-    label: "Your Organization",
-    description: "Observe and improve",
+    label: "Insights",
+    description: "See what matters",
     icon: Building2,
   },
   {
@@ -42,8 +43,8 @@ const navigation = [
   },
   {
     href: "/ask",
-    label: "Ask",
-    description: "Query and challenge",
+    label: "Think",
+    description: "Brainstorm with the model",
     icon: MessageCircleQuestion,
   },
 ] as const;
@@ -123,6 +124,11 @@ export default function DiscoveryShell({
           })}
         </nav>
 
+        <Link className={styles.stewardship} href={buildProductHref("/your-organization", organization.organizationId) + "#teach-discovery"}>
+          Teach Discovery
+          <span>Add context · Correct the model · Add evidence</span>
+        </Link>
+
         <div className={styles.sidebarFooter}>
           <span className={styles.statusMark} aria-hidden="true" />
           <span>
@@ -136,6 +142,7 @@ export default function DiscoveryShell({
       <main className={styles.workspace}>
         <div className={styles.workspaceInner}>
           {children}
+          <SessionImpact />
         </div>
       </main>
     </div>

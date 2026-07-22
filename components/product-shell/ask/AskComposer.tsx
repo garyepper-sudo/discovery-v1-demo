@@ -11,7 +11,7 @@ type AskComposerProps = {
 export default function AskComposer({ value, onChange, onSubmit }: AskComposerProps) {
   return (
     <form className={styles.composer} onSubmit={onSubmit}>
-      <label htmlFor="organization-question">What are you trying to understand?</label>
+      <label htmlFor="organization-question">What are you thinking about?</label>
       <div>
         <textarea
           id="organization-question"
@@ -19,13 +19,13 @@ export default function AskComposer({ value, onChange, onSubmit }: AskComposerPr
           rows={3}
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          placeholder="Ask a focused question about your organization"
+          placeholder="Explore an idea, assumption, or possible decision"
         />
-        <button type="submit" disabled={!value.trim()}>
-          Ask the organization
+        <button type="submit" aria-disabled={!value.trim()}>
+          Think with Discovery
         </button>
       </div>
-      <p>For this first pass, Discovery uses a clearly labeled static response.</p>
+      <p>Your message remains provisional until you explicitly save it or create a decision.</p>
     </form>
   );
 }
