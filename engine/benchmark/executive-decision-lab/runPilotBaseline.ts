@@ -18,6 +18,9 @@ for (const run of runs) {
   console.log(`Constraint: ${run.decisionFrame.primaryConstraintId ?? "none"}`);
   console.log(`Options: ${run.options.map((option) => `${option.rank ?? "-"}. ${option.label}`).join(" | ")}`);
   console.log(`Recommendation: ${run.recommendation.label ?? "none"}`);
+  console.log(`Generated scope: ${run.options.find((option) => option.id === run.recommendation.optionId)?.scope ?? "none"}`);
+  console.log(`Simulated scope: ${run.simulations.find((simulation) => simulation.optionId === run.recommendation.optionId)?.scope ?? "none"}`);
+  console.log(`Recommendation scope: ${run.recommendation.scope ?? "none"}`);
   console.log(`Mapped candidate: ${evaluation.correspondence.candidateId ?? "none"}`);
   console.log(`Correspondence: ${evaluation.correspondence.classification} (${evaluation.correspondence.confidence})`);
   console.log(`Response behavior: ${evaluation.responseBehavior}`);

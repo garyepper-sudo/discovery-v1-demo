@@ -1,6 +1,9 @@
 import type { ScoreDimension } from "../judgment-lab/contracts";
 import type { EvaluationUsage } from "../judgment-lab/contracts";
-import type { OrganizationalInterventionType } from "../../v3/model/simulate/organizationalIntervention";
+import type {
+  OrganizationalInterventionScope,
+  OrganizationalInterventionType,
+} from "../../v3/model/simulate/organizationalIntervention";
 
 export type DecisionCandidateInput = {
   id: string;
@@ -96,6 +99,7 @@ export type DecisionStressGroundTruth = {
   acceptableAlternativeIds: string[];
   expectedDisposition: "proceed" | "investigate-further" | "do-not-proceed";
   expectedConfidenceDirection: "increase" | "decrease" | "stable";
+  expectedScope?: OrganizationalInterventionScope;
   responseExpectation: DecisionScenarioExpectation;
   rationale: string;
 };
@@ -133,8 +137,9 @@ export type ExecutiveDecisionLabRunResult = {
   fixedTimestamp: string;
   engineInput: string;
   decisionFrame: { statedQuestion: string; interpretedObjective?: string; primaryConstraintId?: string };
-  options: Array<{ id: string; label: string; type: string; rank?: number; viability?: string; expectedImpact?: string; risks: string[]; assumptions: string[] }>;
-  recommendation: { interventionId?: string; label?: string; disposition?: string; confidence?: number; rationale?: string };
+  options: Array<{ id: string; label: string; type: string; scope: OrganizationalInterventionScope; rank?: number; viability?: string; expectedImpact?: string; risks: string[]; assumptions: string[] }>;
+  simulations: Array<{ optionId: string; interventionId: string; scope: OrganizationalInterventionScope }>;
+  recommendation: { optionId?: string; interventionId?: string; label?: string; scope?: OrganizationalInterventionScope; disposition?: string; confidence?: number; rationale?: string };
   assumptions: string[];
   risks: string[];
   tradeoffs: string[];
@@ -143,6 +148,16 @@ export type ExecutiveDecisionLabRunResult = {
   supportingEvidenceIds: string[];
   upstreamEvidenceIds: string[];
   deterministicSignature: string;
+};
+
+export type DecisionScopeComparison = {
+  expectedScope?: OrganizationalInterventionScope;
+  baselineRecommendationScope?: OrganizationalInterventionScope;
+  generatedScope?: OrganizationalInterventionScope;
+  simulatedScope?: OrganizationalInterventionScope;
+  recommendationScope?: OrganizationalInterventionScope;
+  preservesExpectedScope: boolean;
+  narrowsFromBaseline: boolean;
 };
 
 export type ExecutiveDecisionScorecard = {
@@ -169,6 +184,7 @@ export type ExecutiveDecisionEvaluation = {
   run: ExecutiveDecisionLabRunResult;
   correspondence: InterventionCorrespondenceResult;
   responseBehavior: DecisionResponseBehavior;
+  scopeComparison: DecisionScopeComparison;
   scorecard: ExecutiveDecisionScorecard;
   failures: ExecutiveDecisionFailure[];
 };

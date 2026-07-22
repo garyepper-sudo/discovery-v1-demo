@@ -90,8 +90,32 @@ check("missing evidence is appropriate change without recommendation churn", () 
   assert.equal(evaluation.responseBehavior, "appropriate-change");
   assert.equal(evaluation.run.recommendation.interventionId, baseline.recommendation.interventionId);
 });
-check("reduced capacity exposes unjustified insensitivity", () => assert.equal(scenarioEvaluation("implementation-capacity-reduced").responseBehavior, "unjustified-insensitivity"));
-check("localized mechanism exposes insufficient narrowing", () => assert.equal(scenarioEvaluation("approval-dependency-localized").responseBehavior, "unjustified-insensitivity"));
+check("reduced capacity produces an appropriate material response", () => assert.equal(scenarioEvaluation("implementation-capacity-reduced").responseBehavior, "appropriate-change"));
+check("localized mechanism preserves structured scope through recommendation", () => {
+  const evaluation = scenarioEvaluation("approval-dependency-localized");
+  assert.equal(evaluation.responseBehavior, "appropriate-change");
+  assert.deepEqual(evaluation.scopeComparison, {
+    expectedScope: "department",
+    baselineRecommendationScope: "organization",
+    generatedScope: "department",
+    simulatedScope: "department",
+    recommendationScope: "department",
+    preservesExpectedScope: true,
+    narrowsFromBaseline: true,
+  });
+  assert.equal(evaluation.scorecard.recommendationQuality.score, 5);
+  assert.equal(evaluation.scorecard.sensitivity.score, 5);
+  assert.equal(evaluation.scorecard.stressRobustness.score, 4);
+  assert.deepEqual(
+    evaluation.failures.map((failure) => failure.type),
+    ["risk-omission", "evidence-grounding"],
+  );
+});
+check("baseline comparison artifact exposes canonical scope", () => {
+  assert.ok(baseline.options.every((option) => option.scope === "organization"));
+  assert.ok(baseline.simulations.every((simulation) => simulation.scope === "organization"));
+  assert.equal(baseline.recommendation.scope, "organization");
+});
 check("generic risks do not automatically receive full credit", () => assert.ok(baselineEvaluation.scorecard.riskRecognition.score < 5));
 check("direct and upstream evidence grounding remain distinct", () => {
   assert.equal(baseline.supportingEvidenceIds.length, 0);

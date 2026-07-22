@@ -7,11 +7,23 @@ import type {
 } from "../model/simulate/executiveDecision";
 
 import type {
+  OrganizationalMechanism,
+} from "../model/judgment/organizationalMechanism";
+
+import type {
+  OrganizationalCondition,
+} from "../model/state/inferOrganizationalConditions";
+
+import type {
   InterventionOption,
 } from "../model/simulate/interventionOption";
 
 export type GenerateInterventionOptionsInput = {
   executiveDecision: ExecutiveDecision;
+
+  organizationalConditions?: OrganizationalCondition[];
+
+  organizationalMechanisms?: OrganizationalMechanism[];
 
   generatedAt?: string;
 };
@@ -71,10 +83,37 @@ function createOption(
 
   createdAt:
     string,
+
+  organizationalConditions:
+    OrganizationalCondition[],
+
+  organizationalMechanisms:
+    OrganizationalMechanism[],
 ): InterventionOption {
+  const scope = resolveOrganizationalScope({
+    executiveDecision,
+    option: input,
+    organizationalConditions,
+    organizationalMechanisms,
+  });
+
   const option:
     InterventionOption = {
       ...input,
+
+      description:
+        scope === "team"
+          ? `${input.description} Limit the change to the affected team.`
+          : scope === "department"
+            ? `${input.description} Limit the change to the affected department.`
+            : input.description,
+
+      scope,
+
+      profile: {
+        ...input.profile,
+        organizationalScope: scope,
+      },
 
       executiveDecisionId:
         executiveDecision.id,
@@ -96,8 +135,78 @@ function createOption(
   return option;
 }
 
+function normalizedMechanismId(
+  value: string,
+): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/^mechanism:/, "")
+    .replace(/[^a-z0-9]/g, "");
+}
+
+function resolveOrganizationalScope({
+  executiveDecision,
+  option,
+  organizationalConditions,
+  organizationalMechanisms,
+}: {
+  executiveDecision: ExecutiveDecision;
+  option: InterventionOptionInput;
+  organizationalConditions: OrganizationalCondition[];
+  organizationalMechanisms: OrganizationalMechanism[];
+}): InterventionOption["scope"] {
+  const targetedConditionIds = option.targetConditionIds.filter(
+    (conditionId) =>
+      executiveDecision.targetConditionIds.includes(conditionId),
+  );
+
+  if (targetedConditionIds.length !== 1) {
+    return "organization";
+  }
+
+  const condition = organizationalConditions.find(
+    (candidate) => candidate.id === targetedConditionIds[0],
+  );
+
+  if (!condition) {
+    return "organization";
+  }
+
+  const supportingMechanismIds = new Set(
+    condition.supportingMechanismIds.map(normalizedMechanismId),
+  );
+  const expectedMechanismIds = new Set(
+    option.expectedMechanismIds.map(normalizedMechanismId),
+  );
+
+  const relevantScopes = organizationalMechanisms
+    .filter((mechanism) => {
+      const id = normalizedMechanismId(mechanism.id);
+      const type = normalizedMechanismId(mechanism.type);
+
+      return (
+        supportingMechanismIds.has(id) &&
+        (expectedMechanismIds.has(id) || expectedMechanismIds.has(type))
+      );
+    })
+    .map((mechanism) => mechanism.organizationalScope);
+
+  if (relevantScopes.includes("local")) {
+    return "team";
+  }
+
+  if (relevantScopes.includes("crossFunctional")) {
+    return "department";
+  }
+
+  return "organization";
+}
+
 export function generateInterventionOptions({
   executiveDecision,
+  organizationalConditions = [],
+  organizationalMechanisms = [],
   generatedAt =
     new Date().toISOString(),
 }: GenerateInterventionOptionsInput): InterventionOption[] {
@@ -263,6 +372,8 @@ export function generateInterventionOptions({
             0.82,
         },
         generatedAt,
+        organizationalConditions,
+        organizationalMechanisms,
       ),
     );
   }
@@ -380,6 +491,8 @@ export function generateInterventionOptions({
             0.79,
         },
         generatedAt,
+        organizationalConditions,
+        organizationalMechanisms,
       ),
     );
   }
@@ -496,6 +609,8 @@ export function generateInterventionOptions({
             0.85,
         },
         generatedAt,
+        organizationalConditions,
+        organizationalMechanisms,
       ),
     );
   }

@@ -14,6 +14,9 @@ import type {
   OrganizationalCondition,
 } from "../model/state/inferOrganizationalConditions";
 
+import type {
+  OrganizationalMechanism,
+} from "../model/judgment/organizationalMechanism";
 
 import type {
   ExecutivePrimaryConstraint,
@@ -199,6 +202,10 @@ type DecisionRuntimeMemory =
 
     primaryExecutiveConstraint?:
       ExecutivePrimaryConstraint | null;
+
+    mechanismNetwork?: {
+      mechanisms?: OrganizationalMechanism[];
+    };
   };
 
 function requireMatchingOrganization(
@@ -424,6 +431,14 @@ export function runExecutiveDecisionCycle({
   const generatedOptions =
     generateInterventionOptions({
       executiveDecision,
+      organizationalConditions:
+        conditions,
+      organizationalMechanisms:
+        (
+          runtime.memory as
+            DecisionRuntimeMemory
+        ).mechanismNetwork
+          ?.mechanisms ?? [],
       generatedAt:
         completedAt,
     });

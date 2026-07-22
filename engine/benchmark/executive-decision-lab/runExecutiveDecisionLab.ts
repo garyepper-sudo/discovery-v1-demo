@@ -62,6 +62,10 @@ export function runExecutiveDecisionLab(params: {
   const understanding = runtime.memory.organizationalUnderstandingState.currentUnderstandings[0];
   const constraint = (runtime.memory as typeof runtime.memory & { primaryExecutiveConstraint?: { supportingEvidenceIds?: string[] } }).primaryExecutiveConstraint;
   const recommendation = cycle.recommendation;
+  const recommendedOption = cycle.generatedOptions.find(
+    (option) =>
+      option.id === recommendation.recommendedStrategy?.optionId,
+  );
 
   const result = {
     decisionCaseId: params.decisionCase.id,
@@ -77,15 +81,23 @@ export function runExecutiveDecisionLab(params: {
       id: option.id,
       label: option.title,
       type: option.type,
+      scope: option.scope,
       rank: ranking.get(option.id),
       viability: viability.get(option.id),
       expectedImpact: comparison.get(option.id),
       risks: option.risks,
       assumptions: option.assumptions,
     })),
+    simulations: cycle.scenarios.map((scenario) => ({
+      optionId: scenario.optionId,
+      interventionId: scenario.intervention.id,
+      scope: scenario.intervention.scope,
+    })),
     recommendation: {
+      optionId: recommendation.recommendedStrategy?.optionId,
       interventionId: recommendation.recommendedInterventionId,
       label: recommendation.recommendedStrategy?.title,
+      scope: recommendedOption?.scope,
       disposition: recommendation.status,
       confidence: recommendation.confidence,
       rationale: recommendation.summary,

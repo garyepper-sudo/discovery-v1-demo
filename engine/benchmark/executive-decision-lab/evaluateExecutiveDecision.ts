@@ -1,6 +1,7 @@
 import type { ScoreDimension } from "../judgment-lab/contracts";
 import type {
   DecisionResponseBehavior,
+  DecisionScopeComparison,
   DecisionScenarioExpectation,
   ExecutiveDecisionCase,
   ExecutiveDecisionEvaluation,
@@ -22,6 +23,12 @@ const similarity = (left: string | undefined, right: string | undefined) => {
 const dimension = (score: number, rationale: string, evidence: string[]): ScoreDimension => ({ score, maxScore: 5, passed: score >= 3, rationale, evidence });
 const same = (left: unknown, right: unknown) => JSON.stringify(left) === JSON.stringify(right);
 
+const scopeRank = {
+  team: 0,
+  department: 1,
+  organization: 2,
+} as const;
+
 function direction(actual: number | undefined, baseline: number | undefined): "increase" | "decrease" | "stable" {
   if (actual === undefined || baseline === undefined || Math.abs(actual - baseline) < 0.005) return "stable";
   return actual > baseline ? "increase" : "decrease";
@@ -34,7 +41,39 @@ function dispositionDirection(actual: string | undefined, baseline: string | und
   return "change";
 }
 
-function classifyResponse(run: ExecutiveDecisionLabRunResult, baseline: ExecutiveDecisionLabRunResult | undefined, expectation: DecisionScenarioExpectation | undefined): DecisionResponseBehavior {
+function compareScope(
+  run: ExecutiveDecisionLabRunResult,
+  baseline: ExecutiveDecisionLabRunResult | undefined,
+  expectedScope: DecisionScopeComparison["expectedScope"],
+): DecisionScopeComparison {
+  const generatedScope = run.options.find(
+    (option) => option.id === run.recommendation.optionId,
+  )?.scope;
+  const simulatedScope = run.simulations.find(
+    (simulation) => simulation.optionId === run.recommendation.optionId,
+  )?.scope;
+  const recommendationScope = run.recommendation.scope;
+  const baselineRecommendationScope = baseline?.recommendation.scope;
+
+  return {
+    expectedScope,
+    baselineRecommendationScope,
+    generatedScope,
+    simulatedScope,
+    recommendationScope,
+    preservesExpectedScope:
+      expectedScope !== undefined &&
+      generatedScope === expectedScope &&
+      simulatedScope === expectedScope &&
+      recommendationScope === expectedScope,
+    narrowsFromBaseline:
+      baselineRecommendationScope !== undefined &&
+      recommendationScope !== undefined &&
+      scopeRank[recommendationScope] < scopeRank[baselineRecommendationScope],
+  };
+}
+
+function classifyResponse(run: ExecutiveDecisionLabRunResult, baseline: ExecutiveDecisionLabRunResult | undefined, expectation: DecisionScenarioExpectation | undefined, scopeComparison: DecisionScopeComparison): DecisionResponseBehavior {
   if (!baseline || !expectation) return "inconclusive";
   const recommendationStable = run.recommendation.interventionId === baseline.recommendation.interventionId && run.recommendation.label === baseline.recommendation.label;
   const disposition = dispositionDirection(run.recommendation.disposition, baseline.recommendation.disposition);
@@ -43,7 +82,7 @@ function classifyResponse(run: ExecutiveDecisionLabRunResult, baseline: Executiv
   const recommendationSatisfied = expectation.recommendationExpectation === "stable"
     ? recommendationStable
     : expectation.recommendationExpectation === "narrow"
-      ? !recommendationStable
+      ? scopeComparison.preservesExpectedScope && scopeComparison.narrowsFromBaseline
       : !recommendationStable;
   const dispositionSatisfied = expectation.dispositionExpectation === disposition;
   const confidenceSatisfied = expectation.confidenceExpectation === confidence;
@@ -54,7 +93,7 @@ function classifyResponse(run: ExecutiveDecisionLabRunResult, baseline: Executiv
       ? "desirable-stability"
       : "appropriate-change";
   }
-  if (expectation.recommendationExpectation !== "stable" && recommendationStable) return "unjustified-insensitivity";
+  if (expectation.recommendationExpectation !== "stable" && !recommendationSatisfied) return "unjustified-insensitivity";
   if (!dispositionSatisfied && disposition === "stable" && expectation.dispositionExpectation !== "stable") return "unjustified-insensitivity";
   return "inconclusive";
 }
@@ -93,11 +132,19 @@ export function evaluateExecutiveDecision(params: {
     candidates: decisionCase.candidateInterventions,
     groundTruth,
   });
-  const responseBehavior = classifyResponse(run, params.baselineRun, expectedStress?.responseExpectation);
+  const scopeComparison = compareScope(run, params.baselineRun, expectedStress?.expectedScope);
+  const responseBehavior = classifyResponse(run, params.baselineRun, expectedStress?.responseExpectation, scopeComparison);
   const optionTypes = new Set(run.options.map((option) => option.type));
   const communication = `${run.recommendation.label ?? ""} ${run.recommendation.rationale ?? ""}`;
   const malformed = /\b(?:and|or)\s+(?:and|or)\b|\.\s+(?:is|are)\s+(?:the|a)\b/i.test(communication);
-  const responseEvidence = [`behavior=${responseBehavior}`, `recommendation=${run.recommendation.label ?? "none"}`];
+  const responseEvidence = [
+    `behavior=${responseBehavior}`,
+    `recommendation=${run.recommendation.label ?? "none"}`,
+    `expectedScope=${scopeComparison.expectedScope ?? "none"}`,
+    `generatedScope=${scopeComparison.generatedScope ?? "none"}`,
+    `simulatedScope=${scopeComparison.simulatedScope ?? "none"}`,
+    `recommendationScope=${scopeComparison.recommendationScope ?? "none"}`,
+  ];
   const robustScore = !expectedStress ? 4 : responseBehavior === "desirable-stability" ? 5 : responseBehavior === "appropriate-change" ? 4 : responseBehavior === "harmful-instability" ? 0 : 2;
   const sensitivityScore = !params.baselineRun ? 0 : responseBehavior === "appropriate-change" || responseBehavior === "desirable-stability" ? 5 : responseBehavior === "unjustified-insensitivity" ? 1 : responseBehavior === "harmful-instability" ? 0 : 2;
 
@@ -125,5 +172,5 @@ export function evaluateExecutiveDecision(params: {
   ];
   for (const [key, type, producer] of mapping) if (!scorecard[key].passed && !(key === "sensitivity" && !params.baselineRun)) failures.push({ type, severity: ["recommendation-mismatch", "constraint-misalignment"].includes(type) ? "high" : "medium", description: scorecard[key].rationale, supportingEvidence: scorecard[key].evidence, likelyProducerArea: producer });
   if (failures.length === 0) failures.push({ type: "none", severity: "low", description: "No scored decision failure detected.", supportingEvidence: [] });
-  return { run, correspondence, responseBehavior, scorecard, failures };
+  return { run, correspondence, responseBehavior, scopeComparison, scorecard, failures };
 }
