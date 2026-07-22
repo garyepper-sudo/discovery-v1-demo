@@ -368,6 +368,9 @@ export function evolveOrganizationRuntime(params: {
     });
 
   const mechanismNetwork = inferOrganizationalMechanisms({
+    previousMechanisms: Array.isArray(memory.mechanismNetwork?.mechanisms)
+      ? memory.mechanismNetwork.mechanisms
+      : [],
     phenomena: organizationalPhenomenaState.phenomena,
     understandings:
       updatedOrganizationalUnderstandingState.currentUnderstandings,

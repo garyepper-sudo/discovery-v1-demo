@@ -3,6 +3,8 @@ import type {
   OrganizationalMechanismType,
 } from "./organizationalMechanism";
 
+const MIN_IDENTITY_RECONCILIATION_SCORE = 8;
+
 function safeArray<T>(items: T[] | undefined | null): T[] {
   return Array.isArray(items) ? items : [];
 }
@@ -90,8 +92,128 @@ function mergeText(values: Array<string | undefined>): string {
   return valid[0] ?? "";
 }
 
+function sharedCount(left: string[], right: string[]): number {
+  const rightValues = new Set(right);
+  return uniqueStrings(left).filter((value) => rightValues.has(value)).length;
+}
+
+function identityReconciliationScore(
+  current: OrganizationalMechanism,
+  previous: OrganizationalMechanism,
+): number | undefined {
+  const currentPhenomenonIds = uniqueStrings([
+    ...safeStringArray(current.supportingPhenomenonIds),
+    ...safeStringArray(current.sourcePhenomenonIds),
+  ]);
+  const previousPhenomenonIds = uniqueStrings([
+    ...safeStringArray(previous.supportingPhenomenonIds),
+    ...safeStringArray(previous.sourcePhenomenonIds),
+  ]);
+  const sharedPhenomena = sharedCount(
+    currentPhenomenonIds,
+    previousPhenomenonIds,
+  );
+
+  if (sharedPhenomena === 0) return undefined;
+
+  const typesAreCompatible =
+    current.type === previous.type ||
+    current.type === "unknown" ||
+    previous.type === "unknown";
+  if (!typesAreCompatible) return undefined;
+
+  const scopesAreCompatible =
+    !current.organizationalScope ||
+    !previous.organizationalScope ||
+    current.organizationalScope === "unknown" ||
+    previous.organizationalScope === "unknown" ||
+    current.organizationalScope === previous.organizationalScope;
+  if (!scopesAreCompatible) return undefined;
+
+  const sharedEvidence = sharedCount(
+    safeStringArray(current.supportingEvidenceIds),
+    safeStringArray(previous.supportingEvidenceIds),
+  );
+  const sharedClusters = sharedCount(
+    uniqueStrings([
+      ...safeStringArray(current.supportingClusterIds),
+      ...safeStringArray(current.sourceClusterIds),
+    ]),
+    uniqueStrings([
+      ...safeStringArray(previous.supportingClusterIds),
+      ...safeStringArray(previous.sourceClusterIds),
+    ]),
+  );
+  const sharedCapabilities = sharedCount(
+    safeStringArray(current.affectedCapabilityIds),
+    safeStringArray(previous.affectedCapabilityIds),
+  );
+  const sharedThemes = sharedCount(
+    safeStringArray(current.supportingCompressedThemeIds),
+    safeStringArray(previous.supportingCompressedThemeIds),
+  );
+  const additionalAncestry =
+    sharedEvidence + sharedClusters + sharedCapabilities + sharedThemes;
+
+  if (additionalAncestry === 0) return undefined;
+
+  return (
+    Math.min(2, sharedPhenomena) * 4 +
+    Math.min(2, sharedEvidence) * 2 +
+    Math.min(2, sharedClusters) +
+    Math.min(2, sharedCapabilities) +
+    Math.min(2, sharedThemes) +
+    (current.type === previous.type ? 1 : 0) +
+    (current.organizationalScope === previous.organizationalScope ? 1 : 0)
+  );
+}
+
+function reconcileMechanismIds(
+  mechanisms: OrganizationalMechanism[],
+  previousMechanisms: OrganizationalMechanism[],
+): OrganizationalMechanism[] {
+  const availablePrevious = [...safeArray(previousMechanisms)].sort((left, right) =>
+    left.id.localeCompare(right.id),
+  );
+  const claimedPreviousIds = new Set<string>();
+
+  return mechanisms.map((mechanism) => {
+    const matches = availablePrevious
+      .filter((previous) => !claimedPreviousIds.has(previous.id))
+      .map((previous) => ({
+        previous,
+        score: identityReconciliationScore(mechanism, previous),
+      }))
+      .filter(
+        (match): match is { previous: OrganizationalMechanism; score: number } =>
+          match.score !== undefined &&
+          match.score >= MIN_IDENTITY_RECONCILIATION_SCORE,
+      )
+      .sort(
+        (left, right) =>
+          right.score - left.score ||
+          left.previous.id.localeCompare(right.previous.id),
+      );
+
+    if (matches.length === 0) return mechanism;
+    if (matches[1]?.score === matches[0].score) return mechanism;
+
+    const previousId = matches[0].previous.id;
+    claimedPreviousIds.add(previousId);
+
+    return {
+      ...mechanism,
+      id: previousId,
+      reinforcingMechanismIds: safeStringArray(
+        mechanism.reinforcingMechanismIds,
+      ).filter((id) => id !== previousId),
+    };
+  });
+}
+
 export function consolidateOrganizationalMechanisms(
   mechanisms: OrganizationalMechanism[] = [],
+  previousMechanisms: OrganizationalMechanism[] = [],
 ): OrganizationalMechanism[] {
   const grouped = new Map<string, OrganizationalMechanism[]>();
 
@@ -106,7 +228,7 @@ export function consolidateOrganizationalMechanisms(
     grouped.set(key, existing);
   }
 
-  return Array.from(grouped.values()).map((group): OrganizationalMechanism => {
+  const consolidatedMechanisms = Array.from(grouped.values()).map((group): OrganizationalMechanism => {
     const representative = group[0];
     const type = representative.type;
 
@@ -287,4 +409,9 @@ export function consolidateOrganizationalMechanisms(
       supportCount: group.length,
     };
   });
+
+  return reconcileMechanismIds(
+    consolidatedMechanisms,
+    previousMechanisms,
+  );
 }

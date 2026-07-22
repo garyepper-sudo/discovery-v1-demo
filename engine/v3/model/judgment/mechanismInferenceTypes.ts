@@ -1,4 +1,5 @@
 import type { OrganizationalExplanation } from "./organizationalJudgment";
+import type { OrganizationalMechanism } from "./organizationalMechanism";
 
 export type PatternLike = {
   id: string;
@@ -99,6 +100,12 @@ export type ExplanationLike = OrganizationalExplanation & {
 };
 
 export type InferOrganizationalMechanismsInput = {
+  /**
+   * Immediately previous Runtime mechanisms used only to reconcile identity.
+   * Mechanism inference remains grounded in the current cognitive inputs.
+   */
+  previousMechanisms?: OrganizationalMechanism[];
+
   /**
    * Primary ontology input.
    * Phenomena represent interpreted organizational conditions.
