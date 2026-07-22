@@ -216,6 +216,25 @@
   content: "";
 }
 
+.risks {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.065);
+}
+
+.risks h3 {
+  margin: 0;
+  color: rgba(245, 245, 245, 0.74);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+
+.positionDetail .risks ul {
+  margin-top: 20px;
+}
+
 .recommendation {
   padding: clamp(125px, 18vh, 205px) 0;
 }

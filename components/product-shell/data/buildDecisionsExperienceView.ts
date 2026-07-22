@@ -24,6 +24,7 @@ export type DecisionsExperienceView = {
     primaryConstraint: string | null;
     recommendationStatus: string | null;
     observations: string[];
+    risks: string[];
   };
   lifecycle: {
     stages: Array<{
@@ -308,6 +309,7 @@ export function buildDecisionsExperienceView(runtime: OrganizationRuntime): Deci
       primaryConstraint: constraintTitle,
       recommendationStatus: status,
       observations,
+      risks: strings(recommendation.risks),
     },
     lifecycle: buildLifecycle(currentStage),
     nextStep,

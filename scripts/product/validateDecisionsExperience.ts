@@ -24,6 +24,10 @@ function fixture(): OrganizationRuntime {
     rationale: "Clear ownership should reduce avoidable escalation.",
     confidence: 0.76,
     uncertaintySummary: "Evidence about exception handling is still needed.",
+    risks: [
+      "Delegated decisions may diverge while boundaries stabilize.",
+      "Escalation ownership may be unclear during transition.",
+    ],
   };
   return runtime;
 }
@@ -58,6 +62,10 @@ const noDecisionView = buildDecisionsExperienceView(noDecision);
 assert.equal(noDecisionView.state.kind, "no-active-decision");
 assert.equal(noDecisionView.lifecycle.currentStage, null);
 assert.equal(noDecisionView.lifecycle.stages.some((stage) => stage.status === "current"), false);
+assert.deepEqual(noDecisionView.currentPosition.risks, [
+  "Delegated decisions may diverge while boundaries stabilize.",
+  "Escalation ownership may be unclear during transition.",
+]);
 
 const constraintOnly = fixture();
 delete (constraintOnly.memory as unknown as MutableMemory).executiveRecommendation;
@@ -69,6 +77,10 @@ const active = fixture();
 const activeView = buildDecisionsExperienceView(active);
 assert.equal(activeView.state.kind, "active");
 assert.equal(activeView.lifecycle.currentStage, "executing");
+assert.deepEqual(activeView.currentPosition.risks, [
+  "Delegated decisions may diverge while boundaries stabilize.",
+  "Escalation ownership may be unclear during transition.",
+]);
 
 const committed = fixture();
 (committed.memory as unknown as MutableMemory).executiveDecisionRecords = [decision("decided")];
@@ -103,6 +115,7 @@ const empty = fixture();
 delete (empty.memory as unknown as MutableMemory).executiveRecommendation;
 delete (empty.memory as unknown as MutableMemory).primaryExecutiveConstraint;
 assert.equal(buildDecisionsExperienceView(empty).state.kind, "not-ready");
+assert.deepEqual(buildDecisionsExperienceView(empty).currentPosition.risks, []);
 
 const investigate = fixture();
 (investigate.memory as unknown as MutableMemory).executiveSimulation = {
@@ -111,6 +124,32 @@ const investigate = fixture();
 const investigateView = buildDecisionsExperienceView(investigate);
 assert.equal(investigateView.currentPosition.recommendationStatus, "Investigate further");
 assert.match(investigateView.nextStep?.destination ?? "", /^\/research\?/);
+assert.deepEqual(investigateView.currentPosition.risks, []);
+
+const projected = fixture();
+const projectedMemory = projected.memory as unknown as MutableMemory;
+projectedMemory.executiveSimulation = {
+  scenarioRanking: ["scenario-delegate", "scenario-centralize"],
+  recommendation: {
+    id: "simulation-recommendation-private-id",
+    headline: "Delegate routine decision authority.",
+    confidence: 0.8,
+    risks: [
+      "Delegated decisions may diverge while boundaries stabilize.",
+      "Escalation ownership may be unclear during transition.",
+    ],
+  },
+};
+const projectedSimulation = projectedMemory.executiveSimulation as MutableMemory;
+const projectedRecommendation = projectedSimulation.recommendation as MutableMemory;
+const recommendationIdentity = projectedRecommendation.id;
+const recommendationConfidence = projectedRecommendation.confidence;
+const runtimeBeforeProjection = JSON.stringify(projected);
+const projectedView = buildDecisionsExperienceView(projected);
+assert.deepEqual(projectedView.currentPosition.risks, projectedRecommendation.risks);
+assert.equal(projectedRecommendation.id, recommendationIdentity);
+assert.equal(projectedRecommendation.confidence, recommendationConfidence);
+assert.equal(JSON.stringify(projected), runtimeBeforeProjection);
 
 const visible = JSON.stringify(activeView);
 assert.equal(visible.includes("decision-private-id"), false);
@@ -118,4 +157,4 @@ assert.equal(visible.includes("Reduce founder dependency in delivery."), false);
 assert.equal(visible.includes("Challenge the current assumption."), false);
 assert.deepEqual(buildDecisionsExperienceView(noDecision), buildDecisionsExperienceView(noDecision));
 
-console.log("Decisions experience view validation: 15 checks passed.");
+console.log("Decisions experience view validation: 23 checks passed.");

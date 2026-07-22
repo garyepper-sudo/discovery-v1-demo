@@ -30,6 +30,7 @@ Production architecture should not expand without benchmark evidence. Current op
 - **Contradiction-aware belief revision:** a detected contradiction is associated with the stable challenged mechanism identity and enters the existing belief-update formula.
 - **Contradiction-aware mechanism confidence:** after immediate-previous identity reconciliation, unique qualifying contradictions reduce confidence only when opposing evidence intersects the continuing mechanism's current evidence ancestry.
 - **Intervention-specific recommendation risks:** Executive Recommendation synthesis preserves the winning intervention's existing risks in stable source order, removes exact duplicates, and leaves recommendation identity, confidence, and scenario ranking unchanged.
+- **Executive Recommendation risk projection:** the primary Decisions workspace now displays the selected recommendation's existing risks under “What could go wrong?” in their preserved order and wording, without changing Runtime, recommendation identity, confidence, or simulation.
 - **Deterministic Ground Truth benchmark:** Ground Truth now owns an isolated, deterministic 48-artifact Northstar replay, scores only that replay, and restores the prior persisted Runtime before exiting.
 
 ## Current measured state
@@ -43,6 +44,8 @@ The production Operating Model Evolution replay currently reports:
 - Historical mechanism truth: **failing**; explicit mechanism evolution history is absent.
 
 The Executive Decision Lab remains established and passing as a regression system. Its baseline risk-recognition score now passes at `5/5` because the selected intervention's risks reach the final recommendation. Direct recommendation evidence grounding remains open. The reduced-capacity scenario still reports a risk-language scoring diagnostic even though its selected intervention risks are present.
+
+Sprint 104 closes the downstream projection omission for those risks. Decisions Experience validation passes `23` checks, the focused recommendation-risk regression passes, Executive Decision Lab passes `39/39`, Operating Model Evolution Lab passes `14/14`, typecheck passes, the production build passes with the existing React Hook warnings, and cognition validation passes. No Runtime, recommendation, confidence, ranking, simulation, or executive-reasoning contract changed.
 
 Ground Truth is deterministic at `75 / 100` regardless of prior Cognitive Trace, Cognitive Layer Validation, Atlas, Executive Decision Lab, or Operating Model Evolution Lab execution. Repeated replays produce identical Runtime and score details with or without an existing persisted Northstar Runtime. Remaining deductions are `-20` for excessive-concurrent-work wording sensitivity and `-5` for the explicit staffing-boundary phrase; production already expresses equivalent meaning, so no production repair is authorized from those deductions yet.
 
@@ -84,7 +87,7 @@ Investigation-local evidence IDs such as `E6` are positional and are not durable
 
 ## Exact next work
 
-The next session should calibrate the remaining deterministic Ground Truth deductions against production semantics before selecting another optimization. Historical mechanism truth remains absent, direct recommendation evidence grounding remains open, and the reduced-capacity risk-language scorer remains diagnostic. Sprint 103 does not authorize merge, split, retirement, reactivation, supersession, or full lineage implementation.
+Begin the next optimization with canonical benchmarks and a production trace. Rank the remaining measured candidates before authorizing one narrow repair. Historical mechanism truth remains absent, direct recommendation evidence grounding remains open, the reduced-capacity risk-language scorer remains diagnostic, and the remaining Executive Communication audit findings are not authorized automatically. Sprint 104 does not authorize merge, split, retirement, reactivation, supersession, or full lineage implementation.
 
 ## Guardrails
 

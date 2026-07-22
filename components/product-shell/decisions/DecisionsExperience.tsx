@@ -40,6 +40,14 @@ export default function DecisionsExperience({ view }: { view: DecisionsView }) {
           {view.currentPosition.observations.length > 0 && (
             <ul>{view.currentPosition.observations.map((observation) => <li key={observation}>{observation}</li>)}</ul>
           )}
+          {view.currentPosition.risks.length > 0 && (
+            <section className={styles.risks} aria-labelledby="recommendation-risks-title">
+              <h3 id="recommendation-risks-title">What could go wrong?</h3>
+              <ul>
+                {view.currentPosition.risks.map((risk) => <li key={risk}>{risk}</li>)}
+              </ul>
+            </section>
+          )}
         </div>
       </section>
 
