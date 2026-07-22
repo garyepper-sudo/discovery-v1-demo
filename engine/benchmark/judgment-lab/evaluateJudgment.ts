@@ -1,4 +1,5 @@
 import type { ExecutivePerspective, JudgmentEvaluation, JudgmentFailure, JudgmentLabRunResult, JudgmentScorecard, OrganizationGroundTruth, PerspectiveAssessment, ScoreDimension } from "./contracts";
+import { buildFailureMemory } from "./failureMemory";
 
 const normalize = (value: string | undefined): string => (value ?? "").toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
 const terms = (value: string): string[] => normalize(value).split(" ").filter((term) => term.length >= 5);
@@ -92,5 +93,17 @@ export function classifyFailures(scorecard: JudgmentScorecard, perspective: Pers
 export function evaluateJudgment(params: Parameters<typeof buildJudgmentScorecard>[0]): JudgmentEvaluation {
   const scorecard = buildJudgmentScorecard(params);
   const perspective = assessPerspective(params.run, params.perspective);
-  return { run: params.run, scorecard, perspective, failures: classifyFailures(scorecard, perspective) };
+  const failures = classifyFailures(scorecard, perspective);
+  return {
+    run: params.run,
+    scorecard,
+    perspective,
+    failures,
+    failureMemory: buildFailureMemory({
+      failures,
+      run: params.run,
+      benchmarkCategory: "regression",
+      benchmarkCaseId: `${params.run.organizationId}:${params.run.perspectiveId}`,
+    }),
+  };
 }

@@ -1,5 +1,22 @@
 export type EvaluationUsage = "development" | "regression" | "holdout";
 
+export type BenchmarkCategory =
+  | "mechanism-library"
+  | "perspective"
+  | "metamorphic"
+  | "regression";
+
+export type JudgmentBenchmarkCase = {
+  id: string;
+  usage: EvaluationUsage;
+  category: BenchmarkCategory;
+  mechanismId?: string;
+  organizationId: string;
+  perspectiveIds: string[];
+  evidenceSubsetIds: string[];
+  groundTruthId: string;
+};
+
 export type SyntheticOrganizationSpec = {
   id: string;
   name: string;
@@ -127,9 +144,22 @@ export type PerspectiveAssessment = {
 export type JudgmentFailureType = "none" | "ingestion" | "entity-resolution" | "evidence-weighting" | "contradiction-handling" | "mechanism-selection" | "condition-ranking" | "ancestry-loss" | "confidence-calibration" | "uncertainty-quality" | "recommendation-mismatch" | "executive-language" | "benchmark-gap";
 export type JudgmentFailure = { type: JudgmentFailureType; severity: "low" | "medium" | "high"; description: string; supportingEvidence: string[]; likelyProducerArea?: string };
 
+export type JudgmentFailureMemory = {
+  regressionId: string;
+  failureType: Exclude<JudgmentFailureType, "none">;
+  severity: JudgmentFailure["severity"];
+  producerBoundary: string;
+  benchmarkCategory: BenchmarkCategory;
+  benchmarkCaseId: string;
+  organizationId: string;
+  perspectiveId: string;
+  supportingEvidence: string[];
+};
+
 export type JudgmentEvaluation = {
   run: JudgmentLabRunResult;
   scorecard: JudgmentScorecard;
   perspective: PerspectiveAssessment;
   failures: JudgmentFailure[];
+  failureMemory: JudgmentFailureMemory[];
 };
