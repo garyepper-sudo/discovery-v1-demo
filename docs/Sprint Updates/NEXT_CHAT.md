@@ -36,8 +36,15 @@ Production architecture should not expand without benchmark evidence. Current op
 - **Living Organization Model interaction loop:** Insights surfaces up to three model-backed insights with stewardship actions; Think keeps brainstorming provisional until an explicit save or decision action; Decisions combines Discovery recommendations with leadership-added draft decisions; Session Impact separates discussion from durable updates.
 - **Unified Executive Workspace:** `/your-organization` now composes the top insight, interactive Organization Model, Think, Decide, Experiment, Brief, Session Impact, and the living-model learning loop into the primary compact executive surface. Existing focused routes remain available.
 - **Deterministic Ground Truth benchmark:** Ground Truth now owns an isolated, deterministic 48-artifact Northstar replay, scores only that replay, and restores the prior persisted Runtime before exiting.
+- **Implementation foundation:** the Product Canon, Platform Principles, Design Language, UI System, Component Library, Motion System, Copy Guide, View Model Architecture, and Frontend Architecture define the product-to-frontend implementation boundary.
+- **Interactive Prototype Alpha:** the approved nine-scene Understanding journey is implemented as a deterministic, fixture-backed experience under `/alpha`.
+- **Advisor deployment boundary:** Alpha has a narrowly scoped server-side shared-password gate, protected responses and assets, safe redirects, and deployment-compatible `/alpha` routing. It does not introduce product authentication or alter existing application routes.
 
 ## Current measured state
+
+Sprint 110 extends the ephemeral interpretation with advisory `reasoningAnalysis`: reasoning quality, unsupported assumptions, missing evidence, competing hypotheses, possible biases, confidence, and challenge opportunity. It is provider-generated, never persisted, and never treated as organizational truth. Ask remains the sole executive-facing response composer.
+
+The Executive Collaboration Lab now scores Challenge Opportunity Detection and Challenge Quality separately and includes six held-out reasoning cases. On the split-dimension benchmark, Runtime-only scores `63.36`, Mock `90.88`, Provider V1 `77.81`, and Provider V2 `81.55` combined. V2 improves held-out score from `75.80` to `82.60` and challenge-opportunity detection from `2.50 / 5` to `4.44 / 5`, while recommendation quality, model stewardship, and Session Impact remain unchanged. All 96 live provider calls succeeded with zero fallbacks and zero critical failures. V2 is recommended to replace V1 on the experimental provider path; Prompt V1 remains frozen as the historical baseline.
 
 Sprint 109 adds exactly one experimental provider implementation: OpenAI behind `ExecutiveConversationInterpreter`. It uses a versioned bounded prompt, a minimized conversation-relevant Runtime projection, strict schema validation, sanitized ephemeral observability, and direct fallback from `openai` to `none`. It does not send organization IDs, complete Runtime, recommendations, decisions, evidence collections, or cognitive traces. It does not use mock as a production fallback.
 
@@ -109,7 +116,15 @@ Investigation-local evidence IDs such as `E6` are positional and are not durable
 
 ## Exact next work
 
-Run exactly one next experiment: evaluate Prompt Version 2 for constructive challenge and scenario-specific meaning coverage while preserving Prompt Version 1 unchanged as the canonical baseline. Keep `none` as default, retain `mock` as the deterministic regression oracle, and do not add outbound AI response rewriting or delegate organizational truth to the provider. The unrelated-condition recomputation finding belongs to a separate Operating Model sprint.
+Begin **Benchmark Baseline and Regression Analysis** from a clean Git state:
+
+1. Run the canonical deterministic benchmark and validation suites without production changes.
+2. Record exact scores, failures, warnings, determinism, Runtime restoration, and architecture findings.
+3. Compare results with the historical Ground Truth, Executive Collaboration, Executive Decision, Operating Model Evolution, Product Interaction Boundary, and Living Interaction Loop baselines.
+4. Rank regressions and remaining measured deficiencies by executive impact and earliest responsible producer.
+5. Recommend exactly one narrow benchmark-supported improvement.
+
+Do not begin Runtime integration for Prototype Alpha. Do not add cognition or tune the provider during baseline establishment.
 
 ## Guardrails
 
@@ -124,30 +139,25 @@ Run exactly one next experiment: evaluate Prompt Version 2 for constructive chal
 
 ## Working-tree state
 
-At the time of this handoff, the working tree includes uncommitted Sprint 99 and Sprint 100 production changes plus documentation synchronization. The commit hash is intentionally not recorded because the commit has not yet been created.
+At the time of this handoff, Prototype Alpha implementation, advisor access protection, and the deployment-routing repair are committed. The working tree still contains separable Sprint 110 conversation/benchmark work, strategic and Alpha documentation, generated architecture artifacts and capability traces, local Runtime state, provider output, and an empty experimental file. These must not be combined into a benchmark-improvement commit.
 
-After the user commits and pushes, begin the next session with:
+After repository synchronization, begin the next benchmark session with:
 
 ```bash
 git status
 git log -5 --oneline
 npm run typecheck
+npm run cognition:validate
 ```
 
 ## Copy-and-paste prompt for the next conversation
 
 ```text
-Read AGENTS.md, docs/Sprint Updates/DISCOVERY_SNAPSHOT.md, docs/Sprint Updates/PROJECT_STATE.md, docs/Sprint Updates/NEXT_CHAT.md, docs/Architecture/Validation/RUNTIME_VALIDATION.md, and docs/Architecture/Canon/ORGANIZATIONAL_MECHANISM_LIFECYCLE.md.
+Read AGENTS.md, docs/Sprint Updates/DISCOVERY_SNAPSHOT.md, docs/Sprint Updates/PROJECT_STATE.md, docs/Sprint Updates/NEXT_CHAT.md, and docs/Architecture/Validation/RUNTIME_VALIDATION.md.
 
 Inspect current repository state with git status and git log -5 --oneline. Run npm run typecheck before changing code.
 
-Discovery is an Executive Operating System centered on one continuously evolving Organization Model. Preserve the stable Cognitive Operating System, Runtime, Executive Projection, Executive Communication, and Executive Decision architecture. Treat the Executive Decision Lab and Operating Model Evolution Lab as required regression gates.
+Interactive Prototype Alpha is complete and deployed behind the temporary advisor access gate. It remains deterministic and fixture-backed. Runtime integration has not begun and is not authorized.
 
-Continue from the two remaining production replay findings:
-1. recognized longitudinal contradiction does not reduce Organizational Mechanism confidence;
-2. historical mechanism truth is not preserved.
-
-Investigate the mechanism-confidence finding first. Trace the exact production path and identify the earliest responsible producer before proposing or implementing a repair. Do not broadly tune confidence. Do not add a cognitive layer. Do not modify benchmark expectations. Defer mechanism history, merge, split, retirement, reactivation, supersession, and full lifecycle implementation. Add architecture only if the trace proves existing architecture is insufficient.
-
-Do not modify code until the diagnosis is complete and the user authorizes the narrow production change.
+Start the Benchmark Baseline and Regression Analysis phase. Run the canonical benchmark and validation suites without modifying production, Runtime, cognition, benchmark expectations, or provider prompts. Record exact current results, compare them with historical baselines, separate pre-existing failures from regressions, trace the earliest responsible producer for each material deficiency, and recommend exactly one narrow next optimization. Do not implement until the recommendation is approved.
 ```

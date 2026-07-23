@@ -4,59 +4,53 @@ Read this at the start of each sprint. Use `PROJECT_STATE.md` and `NEXT_CHAT.md`
 
 ## Identity
 
-Discovery is an Executive Operating System centered on one continuously evolving **Organization Model**.
+Discovery continuously builds Shared Organizational Intelligence. Its first major application is an Executive Operating System centered on one evolving Organization Model.
 
-> The Organization Model is the product.
+Runtime is canonical organizational memory. Executive recommendations, simulations, decisions, research, questions, and future applications interact with that same intelligence rather than creating parallel reasoning systems.
 
-Runtime is canonical organizational memory. Executive recommendations, simulations, decisions, research, and questions are interactions with the same model.
+## Completed foundation
 
-## Current systems
+- Stable Cognitive Operating System, Runtime, Capability Registry, Executive Projection, Executive Communication, simulation, and Executive Decision architecture.
+- Canonical Product, Platform, Shared Organizational Intelligence, Governance, Universal Intelligence Lifecycle, Design Language, UI, component, motion, copy, view-model, and frontend guidance.
+- Deterministic Interactive Prototype Alpha covering Ask, Orient, Plan, Learn, Understand, Respond, Follow, Return, and Home.
+- Temporary advisor access protection for `/alpha`, including signed HTTP-only sessions, safe redirects, protected caching behavior, and deployment-compatible root routing.
 
-- **Executive Decision Lab:** established decision-cycle regression and optimization system.
-- **Operating Model Evolution Lab:** established longitudinal validation for learning, stability, coherence, identity continuity, scope, historical truth, decision learning, and recommendation continuity.
-- **Production replay:** runs chronological evidence through production cognition and adapts in-memory Runtime snapshots for evolution evaluation without persistence.
-- **Mechanism identity reconciliation:** immediate-previous matching now preserves identity when interpretation becomes more precise.
-- **Longitudinal contradiction synthesis:** current evidence is compared with immediately previous evidence as support, contradiction, qualification, or unrelated.
-- **Contradiction-aware belief revision:** detected opposition is associated with the stable challenged mechanism identity; the existing belief formula now lowers confidence.
+Prototype Alpha is fixture-backed. It does not use Runtime, cognition, AI providers, persistence, or external connectors. Runtime integration has not begun.
 
-## Current measured result
+## Historical benchmark state
 
-- Mechanism identity continuity: **pass**.
-- Belief weakening after qualifying evidence: **pass**.
-- Recommendation continuity: **pass**.
-- Mechanism confidence response: **fail**; confidence remains contradiction-insensitive.
-- Historical mechanism truth: **fail**; explicit mechanism history is absent.
-- Executive Decision Lab open findings: risk specificity and direct recommendation evidence grounding.
+- Deterministic Ground Truth: `75 / 100`; remaining deductions are documented semantic-calibration findings rather than proven production defects.
+- Executive Collaboration Lab historical Runtime-only baseline: `65.21 / 100`.
+- Sprint 110 split-dimension results recorded in the dirty working tree: Runtime-only `63.36`, deterministic mock `90.88`, Provider V1 `77.81`, Provider V2 `81.55`.
+- Executive Decision Lab: `39/39` passing at the most recent recorded regression.
+- Operating Model Evolution Lab: `14/14` passing at the most recent recorded regression; historical mechanism lineage remains deferred.
+- Product Interaction Boundary: `14/14` passing at the most recent recorded regression.
+- Living Interaction Loop: `18/18` passing at the most recent recorded regression.
+- Cognition registry validation: 32 capabilities, no registry integrity failures.
+- Architecture verification: 291/302 checks pass; 11 known registry/export reciprocity findings remain unresolved and must not be represented as passing.
 
-## Optimization loop
+These are historical handoff values. Re-run the suites from a clean repository state before treating them as the current baseline.
+
+## Next phase
+
+**Benchmark Baseline and Regression Analysis**
 
 ```text
-Benchmark → Production replay → Root-cause trace
-→ Architecture only when required → One narrow production change
-→ Full regression → Calibrate only when justified → Commit
+Clean repository
+→ canonical benchmark replay
+→ compare historical baselines
+→ isolate regressions and pre-existing findings
+→ trace earliest responsible producer
+→ recommend one narrow improvement
 ```
 
-## Next
-
-Diagnose why recognized contradiction does not reduce Organizational Mechanism confidence. Do not pre-authorize a repair before the producer trace.
-
-Defer mechanism history and full lifecycle implementation until mechanism learning and confidence behavior are trustworthy.
-
-## Runtime Validation Rule
-
-Read `docs/Architecture/Validation/RUNTIME_VALIDATION.md` when work depends on actual output or lineage.
-
-Architecture describes intended behavior. Runtime validation confirms actual behavior.
-
-> Do not infer Runtime behavior solely from producer contracts or architecture documentation. Inspect representative Runtime state when actual output semantics or lineage matter.
-
-Evidence IDs such as `E6` are investigation-local and positional, not durable longitudinal identities.
+Do not begin Alpha Runtime integration, add cognition, tune prompts, or modify benchmark expectations during baseline establishment.
 
 ## Guardrails
 
-- Preserve stable architecture and determinism.
-- No new cognitive layer without benchmark proof.
-- No broad engine or confidence tuning.
-- One production change per optimization sprint.
-- Run both Decision and Evolution regressions after production changes.
-- Do not implement merge, split, retirement, reactivation, supersession, or lineage during confidence work.
+- Benchmark evidence must precede production changes.
+- Preserve Runtime and cognitive architecture.
+- Keep provider interpretation advisory, ephemeral, and separate from organizational truth.
+- Keep Prototype Alpha deterministic and fixture-backed until Runtime integration is explicitly authorized.
+- Run Decision and Evolution suites after any future reasoning change.
+- Do not combine generated artifacts, local Runtime state, provider output, strategic documentation, and benchmark implementation in one commit.
