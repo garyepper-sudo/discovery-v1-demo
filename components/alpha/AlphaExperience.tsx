@@ -42,7 +42,7 @@ import {
   Panel,
   PrivacyNote,
   QuietHeader,
-  ScreenActions,
+  LockPrototypeAction,
 } from "./AlphaPrimitives";
 import {
   ChangeCard,
@@ -174,6 +174,7 @@ function AlphaSidebar({
         <ShieldCheck size={16} aria-hidden="true" />
         Alpha prototype · deterministic fixture
       </p>
+      <LockPrototypeAction />
     </aside>
   );
 }
@@ -197,7 +198,7 @@ function MobileSceneHeader({
         </button>
       )}
       <strong>{scene === "home" ? "Discovery Home" : sceneLabels[scene].label}</strong>
-      <ScreenActions />
+      <LockPrototypeAction compact />
     </header>
   );
 }

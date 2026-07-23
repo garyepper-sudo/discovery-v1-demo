@@ -4,7 +4,6 @@ import {
   ArrowRight,
   CircleHelp,
   LockKeyhole,
-  MoreHorizontal,
 } from "lucide-react";
 
 import styles from "./AlphaExperience.module.css";
@@ -117,10 +116,22 @@ export function Panel({
   );
 }
 
-export function ScreenActions() {
+export function LockPrototypeAction({
+  compact = false,
+}: {
+  compact?: boolean;
+}) {
   return (
-    <button className={styles.iconAction} type="button" aria-label="More actions">
-      <MoreHorizontal size={20} aria-hidden="true" />
-    </button>
+    <form action="/alpha/lock" method="post" className={styles.lockForm}>
+      <button
+        className={compact ? styles.iconAction : styles.lockAction}
+        type="submit"
+        aria-label={compact ? "Lock prototype" : undefined}
+        title="Lock prototype"
+      >
+        <LockKeyhole size={compact ? 18 : 14} aria-hidden="true" />
+        {!compact && <span>Lock prototype</span>}
+      </button>
+    </form>
   );
 }

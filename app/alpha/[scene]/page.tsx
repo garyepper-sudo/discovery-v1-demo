@@ -7,11 +7,14 @@ import { alphaScenes, type AlphaScene } from "../../../product/alpha/viewModels"
 export const metadata: Metadata = {
   title: "Experience Alpha",
   description: "Deterministic prototype of the Discovery Experience Alpha.",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+  },
 };
 
-export function generateStaticParams() {
-  return alphaScenes.map((scene) => ({ scene }));
-}
+export const dynamic = "force-dynamic";
 
 export default function AlphaScenePage({
   params,
