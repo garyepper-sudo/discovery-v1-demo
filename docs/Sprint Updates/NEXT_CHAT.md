@@ -37,6 +37,10 @@ Production architecture should not expand without benchmark evidence. Current op
 
 ## Current measured state
 
+Sprint 109 adds exactly one experimental provider implementation: OpenAI behind `ExecutiveConversationInterpreter`. It uses a versioned bounded prompt, a minimized conversation-relevant Runtime projection, strict schema validation, sanitized ephemeral observability, and direct fallback from `openai` to `none`. It does not send organization IDs, complete Runtime, recommendations, decisions, evidence collections, or cognitive traces. It does not use mock as a production fallback.
+
+Sprint 109 completed a successful live OpenAI `gpt-4o-mini` evaluation using frozen Prompt Version 1. The canonical first-run baseline is `78.93` development, `77.85` held-out, and `78.49` combined, with 30 successful calls, zero fallbacks, zero schema repairs, zero invalid outputs, and zero critical failures. Average latency was `2,050 ms`; average usage was `411` input and `159` output tokens per turn. A reproduction scored `78.49` development, `83.85` held-out, and `80.63` combined, demonstrating live interpretation variance without prompt, model, scenario, schema, or scoring changes.
+
 Sprint 108 implements the canonical Executive Conversation Intelligence adapter. The provider-neutral contract interprets the current executive message, bounded recent turns, and read-only Runtime into an ephemeral description of conversational objective, intent, hypotheses, questions, assumptions, ambiguity, confidence, and recommended conversational action. It never persists, does not change organizational truth, and does not generate executive-facing responses. Ask remains the response composer. `CONVERSATION_INTERPRETER=none` is the backward-compatible default; `mock` selects the sole deterministic provider implemented in this sprint.
 
 The extended Executive Collaboration Lab records interpretation and response separately for every turn. The Runtime-only baseline remains `65.21 / 100`. Its deterministic controlled-mock baseline is `90.36 / 100`, with executive understanding `14.17 / 15`, collaborative reasoning `14.5 / 15`, constructive challenge `8 / 10`, continuity `10 / 10`, and trust `4.36 / 5`. The controlled score is not evidence of live-provider quality, unseen-conversation generalization, or a final AI-enabled score. The lab has zero critical failures and one remaining semantic-coverage warning. Repeated replay, reversed scenario order, organization isolation, and Runtime restoration pass.
@@ -103,7 +107,7 @@ Investigation-local evidence IDs such as `E6` are positional and are not durable
 
 ## Exact next work
 
-After explicit approval, evaluate and integrate one provider-backed Executive Conversation Interpreter behind the Sprint 108 interface. Do not change Ask's contract, introduce a general conversation architecture, or allow provider output to become organizational truth. Keep the mock provider as the deterministic regression path and the `none` fallback intact. The unrelated-condition recomputation finding belongs to a separate Operating Model sprint.
+Run exactly one next experiment: evaluate Prompt Version 2 for constructive challenge and scenario-specific meaning coverage while preserving Prompt Version 1 unchanged as the canonical baseline. Keep `none` as default, retain `mock` as the deterministic regression oracle, and do not add outbound AI response rewriting or delegate organizational truth to the provider. The unrelated-condition recomputation finding belongs to a separate Operating Model sprint.
 
 ## Guardrails
 

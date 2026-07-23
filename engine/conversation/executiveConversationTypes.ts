@@ -42,7 +42,7 @@ export type ExecutiveConversationInterpretation = {
 
 export interface ExecutiveConversationInterpreter {
   readonly provider: string;
-  interpret(request: ExecutiveConversationRequest): ExecutiveConversationInterpretation;
+  interpret(request: ExecutiveConversationRequest): Promise<ExecutiveConversationInterpretation>;
 }
 
-export type ConversationInterpreterMode = "none" | "mock";
+export type ConversationInterpreterMode = "none" | "mock" | "openai";

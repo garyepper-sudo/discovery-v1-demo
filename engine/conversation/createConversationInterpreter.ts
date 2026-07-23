@@ -1,4 +1,5 @@
 import { MockConversationInterpreter } from "./MockConversationInterpreter";
+import { OpenAIConversationInterpreter } from "./OpenAIConversationInterpreter";
 import type { ConversationInterpreterMode, ExecutiveConversationInterpreter } from "./executiveConversationTypes";
 
 export type ConversationIntelligenceFeatureFlags = {
@@ -6,11 +7,14 @@ export type ConversationIntelligenceFeatureFlags = {
 };
 
 export function parseConversationInterpreterMode(value: string | undefined): ConversationInterpreterMode {
-  return value?.trim().toLowerCase() === "mock" ? "mock" : "none";
+  const normalized = value?.trim().toLowerCase();
+  return normalized === "mock" || normalized === "openai" ? normalized : "none";
 }
 
 export function createConversationInterpreter(mode: ConversationInterpreterMode): ExecutiveConversationInterpreter | null {
-  return mode === "mock" ? new MockConversationInterpreter() : null;
+  if (mode === "mock") return new MockConversationInterpreter();
+  if (mode === "openai") return new OpenAIConversationInterpreter();
+  return null;
 }
 
 export function readConversationIntelligenceFeatureFlags(

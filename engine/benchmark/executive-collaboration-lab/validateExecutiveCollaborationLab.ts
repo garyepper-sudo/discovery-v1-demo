@@ -6,16 +6,17 @@ import { executiveConversationScenarios } from "./executiveConversationScenarios
 import { runExecutiveCollaborationLab } from "./runExecutiveCollaborationLab";
 import { MockConversationInterpreter } from "../../conversation";
 
+async function main() {
 const runtimeDirectory = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../.discovery-runtime/organizations");
 const snapshot = () => fs.existsSync(runtimeDirectory) ? Object.fromEntries(fs.readdirSync(runtimeDirectory).sort().map((name) => [name, fs.readFileSync(path.join(runtimeDirectory,name),"utf8")])) : {};
 const before = snapshot();
 const mockInterpreter = new MockConversationInterpreter();
-const runtimeOnly = runExecutiveCollaborationLab();
-const runtimeOnlyRepeated = runExecutiveCollaborationLab();
-const runtimeOnlyReversed = runExecutiveCollaborationLab([...executiveConversationScenarios].reverse());
-const controlledMock = runExecutiveCollaborationLab(executiveConversationScenarios, mockInterpreter);
-const controlledMockRepeated = runExecutiveCollaborationLab(executiveConversationScenarios, mockInterpreter);
-const controlledMockReversed = runExecutiveCollaborationLab([...executiveConversationScenarios].reverse(), mockInterpreter);
+const runtimeOnly = await runExecutiveCollaborationLab();
+const runtimeOnlyRepeated = await runExecutiveCollaborationLab();
+const runtimeOnlyReversed = await runExecutiveCollaborationLab([...executiveConversationScenarios].reverse());
+const controlledMock = await runExecutiveCollaborationLab(executiveConversationScenarios, mockInterpreter);
+const controlledMockRepeated = await runExecutiveCollaborationLab(executiveConversationScenarios, mockInterpreter);
+const controlledMockReversed = await runExecutiveCollaborationLab([...executiveConversationScenarios].reverse(), mockInterpreter);
 
 assert.equal(executiveConversationScenarios.length, 6);
 assert.deepEqual(runtimeOnlyRepeated, runtimeOnly);
@@ -54,3 +55,6 @@ console.log("Scenario order independence: PASS");
 console.log("Organization isolation: PASS");
 console.log("Runtime artifact restoration: PASS");
 console.log("Interpretation trace separation: PASS");
+}
+
+void main();

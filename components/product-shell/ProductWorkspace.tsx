@@ -12,7 +12,7 @@ import { buildBriefExperienceView } from "./data/buildBriefExperienceView";
 import { buildUnifiedExecutiveWorkspaceView } from "./data/buildUnifiedExecutiveWorkspaceView";
 import { loadProductOrganization } from "./data/loadProductOrganization";
 import { buildProductHref } from "./data/productOrganization";
-import { createConversationInterpreter, readConversationIntelligenceFeatureFlags } from "../../engine/conversation";
+import { ConversationProviderError, createConversationInterpreter, readConversationIntelligenceFeatureFlags } from "../../engine/conversation";
 
 type ProductWorkspaceProps = {
   children?: ReactNode;
@@ -35,7 +35,7 @@ type ProductWorkspaceProps = {
   renderUnified?: (view: ReturnType<typeof buildUnifiedExecutiveWorkspaceView>) => ReactNode;
 };
 
-export default function ProductWorkspace({
+export default async function ProductWorkspace({
   children,
   organizationId,
   renderOrganization,
@@ -60,13 +60,26 @@ export default function ProductWorkspace({
     : null;
   const conversationFlags = readConversationIntelligenceFeatureFlags();
   const conversationInterpreter = createConversationInterpreter(conversationFlags.conversationInterpreter);
-  const conversationInterpretation = conversationInterpreter && organization.runtime && askMessage?.trim()
-    ? conversationInterpreter.interpret({
+  let conversationInterpretation = null;
+  if (conversationInterpreter && organization.runtime && askMessage?.trim()) {
+    try {
+      conversationInterpretation = await conversationInterpreter.interpret({
       currentMessage: askMessage,
       recentConversation: [],
       runtime: organization.runtime,
-    })
-    : null;
+      });
+    } catch (error) {
+      if (error instanceof ConversationProviderError) {
+        console.warn("Conversation interpreter fallback", {
+          provider: error.observation.provider,
+          model: error.observation.model,
+          promptVersion: error.observation.promptVersion,
+          reason: error.reason,
+        });
+      }
+      conversationInterpretation = null;
+    }
+  }
   const askView = renderAsk && isAvailable && organization.runtime
     ? buildAskExperienceView(organization.runtime, conversationInterpretation)
     : null;

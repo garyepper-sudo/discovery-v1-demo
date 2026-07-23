@@ -16,6 +16,7 @@
     "communication:002": "tsx engine/benchmark/executive-communication/executiveCommunicationExperiment002.ts",
     "benchmark:executive-learning-calibration": "tsx engine/benchmark/executive-work/executiveLearningCalibrationBenchmark001.ts",
     "benchmark:executive-collaboration": "tsx engine/benchmark/executive-collaboration-lab/validateExecutiveCollaborationLab.ts",
+    "benchmark:executive-collaboration:provider": "tsx engine/benchmark/executive-collaboration-lab/evaluateProviderConversationIntelligence.ts",
     "validate:executive-conversation": "tsx scripts/product/validateExecutiveConversationIntelligence.ts",
     "northstar:cognitive-layer-validation:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarCognitiveLayerValidation001.ts",
     "northstar:cognitive-trace:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarCognitiveTrace001.ts",

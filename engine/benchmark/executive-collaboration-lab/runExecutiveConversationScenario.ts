@@ -21,10 +21,10 @@ function withFixedClock<T>(timestamp: string, operation: () => T): T {
   try { return operation(); } finally { globalThis.Date = RealDate; Math.random = realRandom; }
 }
 
-export function runExecutiveConversationScenario(
+export async function runExecutiveConversationScenario(
   scenario: ExecutiveConversationScenario,
   interpreter: ExecutiveConversationInterpreter | null = null,
-): ExecutiveConversationRun {
+): Promise<ExecutiveConversationRun> {
   let runtime = clone(scenario.initialRuntime);
   const initial = clone(runtime);
   const sessionEntries: SessionEntry[] = [];
@@ -33,12 +33,23 @@ export function runExecutiveConversationScenario(
   const fixedTimestamp = "2026-07-23T00:00:00.000Z";
   const recentConversation: ConversationContextTurn[] = [];
 
-  scenario.turns.filter((turn) => turn.speaker === "executive").forEach((turn, index) => {
-    const interpretation = interpreter?.interpret({
-      currentMessage: turn.message,
-      recentConversation: recentConversation.slice(-6),
-      runtime,
-    }) ?? null;
+  const executiveTurns = scenario.turns.filter((turn) => turn.speaker === "executive");
+  for (const [index, turn] of executiveTurns.entries()) {
+    let interpretation = null;
+    if (interpreter) {
+      try {
+        interpretation = await interpreter.interpret({
+          currentMessage: turn.message,
+          recentConversation: recentConversation.slice(-6),
+          runtime,
+        });
+      } catch {
+        interpretation = null;
+      }
+    }
+    const providerObservation = interpreter && "lastObservation" in interpreter
+      ? (interpreter as { lastObservation: import("../../conversation").ProviderConversationObservation | null }).lastObservation
+      : null;
     const ask = buildAskExperienceView(runtime, interpretation);
     const response = [ask.question?.text, ask.answer?.headline, ask.answer?.summary].filter(Boolean).join(" ");
     const durableWrites: ConversationAction[] = [];
@@ -54,12 +65,12 @@ export function runExecutiveConversationScenario(
       runtime = saveExecutiveDecisionRecord({ runtime, record });
       durableWrites.push("open-decision"); sessionEntries.push({ id: `${scenario.id}-decision`, action: "create-decision", kind: "decision", label: turn.message, status: "saved" });
     }
-    trace.push({ turn: index + 1, executiveMessage: turn.message, action: turn.action, interpretation, discoveryResponse: response, questionCount: (response.match(/\?/g) ?? []).length, recognizedConcepts: concepts(response, scenario.expected.requiredConcepts), challenged: interpretation?.recommendedConversationalAction === "challenge" || /uncertain|alternative|rather than|not enough|evidence|clarif/i.test(response), recommendationPresent: turn.action === "run-experiment" || turn.action === "open-decision", durableWrites });
+    trace.push({ turn: index + 1, executiveMessage: turn.message, action: turn.action, interpretation, providerObservation, discoveryResponse: response, questionCount: (response.match(/\?/g) ?? []).length, recognizedConcepts: concepts(response, scenario.expected.requiredConcepts), challenged: interpretation?.recommendedConversationalAction === "challenge" || /uncertain|alternative|rather than|not enough|evidence|clarif/i.test(response), recommendationPresent: turn.action === "run-experiment" || turn.action === "open-decision", durableWrites });
     recentConversation.push(
       { speaker: "executive", message: turn.message },
       { speaker: "discovery", message: response },
     );
-  });
+  }
 
   const impact = buildSessionImpact(sessionEntries);
   const decisionDelta = runtime.memory.executiveDecisionRecords.length - initial.memory.executiveDecisionRecords.length;

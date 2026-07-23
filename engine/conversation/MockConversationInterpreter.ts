@@ -20,7 +20,7 @@ function priorExecutiveMessages(turns: readonly ExecutiveConversationTurn[]): st
 export class MockConversationInterpreter implements ExecutiveConversationInterpreter {
   readonly provider = "mock";
 
-  interpret(request: ExecutiveConversationRequest): ExecutiveConversationInterpretation {
+  async interpret(request: ExecutiveConversationRequest): Promise<ExecutiveConversationInterpretation> {
     const currentMessage = compact(request.currentMessage);
     const normalized = currentMessage.toLowerCase();
     const priorMessages = priorExecutiveMessages(request.recentConversation);

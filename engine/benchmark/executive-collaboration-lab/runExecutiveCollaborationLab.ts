@@ -1,14 +1,18 @@
 import { executiveConversationScenarios } from "./executiveConversationScenarios";
 import { runExecutiveConversationScenario } from "./runExecutiveConversationScenario";
 import { scoreExecutiveConversation, COLLABORATION_WEIGHTS } from "./scoreExecutiveConversation";
-import type { CollaborationDimension } from "./executiveConversationTypes";
+import type { CollaborationDimension, ExecutiveConversationRun, ExecutiveConversationScenario, ScenarioScore } from "./executiveConversationTypes";
 import type { ExecutiveConversationInterpreter } from "../../conversation";
 
-export function runExecutiveCollaborationLab(
+export async function runExecutiveCollaborationLab(
   scenarios = executiveConversationScenarios,
   interpreter: ExecutiveConversationInterpreter | null = null,
 ) {
-  const results = scenarios.map((scenario) => { const run = runExecutiveConversationScenario(scenario, interpreter); return { scenario, run, score: scoreExecutiveConversation(scenario, run) }; });
+  const results: Array<{ scenario: ExecutiveConversationScenario; run: ExecutiveConversationRun; score: ScenarioScore }> = [];
+  for (const scenario of scenarios) {
+    const run = await runExecutiveConversationScenario(scenario, interpreter);
+    results.push({ scenario, run, score: scoreExecutiveConversation(scenario, run) });
+  }
   const dimensions = Object.keys(COLLABORATION_WEIGHTS).reduce((acc, key) => { const dimension = key as CollaborationDimension; acc[dimension] = Math.round(results.reduce((sum,item)=>sum+item.score.dimensions[dimension],0)/results.length*100)/100; return acc; }, {} as Record<CollaborationDimension,number>);
   return { results, dimensions, overallScore: Math.round(results.reduce((sum,item)=>sum+item.score.score,0)/results.length*100)/100, criticalFailures: results.flatMap((item)=>item.score.criticalFailures.map((failure)=>({scenarioId:item.scenario.id,failure}))), warnings: results.flatMap((item)=>item.score.warnings.map((warning)=>({scenarioId:item.scenario.id,warning}))) };
 }
