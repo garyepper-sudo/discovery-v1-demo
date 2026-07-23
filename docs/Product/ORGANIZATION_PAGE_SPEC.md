@@ -570,6 +570,6 @@ Future releases may expand the Organization Page with:
 
 These enhancements should always reinforce the same core principle:
 
-> The Organization Model is the product.
+> Within the Organization Page experience, the Organization Model is the primary product representation.
 
 Everything else is simply another way of interacting with it.

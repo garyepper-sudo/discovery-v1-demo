@@ -20,7 +20,7 @@ If another UX specification contradicts this document, this document is correct.
 
 # Core Principle
 
-**The Organization Model is the product.**
+**Within the Executive Operating System experience, the Organization Model is the primary product representation.**
 
 Discovery is not a collection of tools.
 
@@ -40,9 +40,11 @@ Everything else is simply a different interaction with that model.
 
 # Product Architecture
 
-Discovery consists of one underlying product:
+The current Executive Operating System experience consists of one underlying representation:
 
 > **The Organization Model**
+
+The broader shared organizational intelligence platform and its application hierarchy are defined in `docs/Architecture/Canon/SHARED_ORGANIZATIONAL_INTELLIGENCE.md`.
 
 Executives interact with that model through four perspectives.
 

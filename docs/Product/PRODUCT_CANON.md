@@ -22,9 +22,9 @@ If another product document conflicts with this one, this document is correct.
 
 # Mission
 
-Discovery exists to continuously improve organizational judgment.
+> **Discovery is a platform that continuously builds shared organizational intelligence that becomes more valuable than the sum of its contributors, information, and experiences.**
 
-It accomplishes this by continuously improving an organization's understanding of itself.
+Discovery helps organizations continuously grow shared intelligence. It accomplishes this by continuously improving an organization's understanding of itself.
 
 Discovery does not replace executive decision-making.
 
@@ -36,7 +36,9 @@ Every completed organizational cycle should leave both the organization and Disc
 
 # Product Identity
 
-Discovery is an **Executive Operating System**.
+Discovery is a **shared organizational intelligence platform**.
+
+Its first major application is the **Executive Operating System**, which remains the current product focus and helps organizations continuously evolve through better executive understanding, decisions, simulation, communication, and learning.
 
 Its purpose is to help organizations continuously evolve.
 
@@ -75,9 +77,9 @@ The organization—not the interface—is the center of the product.
 
 # The Operating Model
 
-The Operating Model is Discovery's foundation.
+The Operating Model is the functional foundation of Discovery's first major application and a primary representation within the broader platform.
 
-It is Discovery's continuously evolving understanding of how an organization actually operates.
+It is a primary representation of Discovery's continuously evolving Organizational Intelligence, especially how an organization actually operates.
 
 The Operating Model represents:
 
@@ -91,7 +93,9 @@ The Operating Model represents:
 - organizational learning,
 - persistent organizational memory.
 
-Everything Discovery produces originates from the Operating Model.
+The Operating Model is not the entirety of Organizational Intelligence. Decisions, simulations, outcomes, uncertainty, provenance, and organizational memory contribute to the broader persistent understanding held in Organization Runtime.
+
+Everything Discovery produces must remain grounded in that canonical Organizational Intelligence.
 
 Including:
 
@@ -106,11 +110,25 @@ Every improvement to the Operating Model should improve every future executive d
 
 The Operating Model is Discovery's primary competitive advantage.
 
+The complete strategic hierarchy and terminology are defined in:
+
+```text
+docs/Architecture/Canon/SHARED_ORGANIZATIONAL_INTELLIGENCE.md
+```
+
+# Participation and Adoption
+
+Participants contribute observations, evidence, questions, hypotheses, corrections, decisions, and outcomes. Discovery synthesizes organizational understanding through provenance, corroboration, confidence, contradiction handling, uncertainty, evidence quality, and explicit commitment boundaries.
+
+The product may begin with one meaningful problem for an individual, team, department, initiative, functional leader, or executive group. It should earn trust, discover adjacent relationships, expand participation, and build richer shared intelligence without assuming organization-wide or executive-only adoption.
+
+Participants do not directly modify organizational truth. Discovery represents its current best understanding, not absolute truth.
+
 ---
 
 # Executive Work
 
-Executive Work is the primary organizational object managed inside Discovery.
+Within the Executive Operating System application, Executive Work is the primary organizational object managed inside Discovery.
 
 Executive Work represents intentional organizational change.
 
@@ -183,7 +201,7 @@ Discovery succeeds when organizations repeatedly complete this lifecycle and imp
 
 # Executive Judgment
 
-Executive judgment is Discovery's north star.
+Executive judgment is the north star of Discovery's first major application.
 
 Discovery improves judgment by helping executives:
 
@@ -437,4 +455,4 @@ Discovery succeeds when:
 - every completed Executive Work item improves future executive judgment,
 - Discovery demonstrably becomes better as organizations evolve.
 
-Discovery's success is measured not by the quality of individual recommendations, but by the long-term improvement of organizational judgment.
+Discovery's success is measured not by the quality of individual recommendations, but by whether shared Organizational Intelligence becomes richer, more connected, more trustworthy, and more valuable over time—and improves organizational judgment as a result.

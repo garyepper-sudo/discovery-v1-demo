@@ -32,7 +32,7 @@ If another product workflow contradicts this document, this document is correct.
 
 # Product Identity
 
-Discovery is an **Executive Operating System** centered on a continuously evolving **Organization Model**.
+Discovery's MVP is its first major application: an **Executive Operating System** centered on a continuously evolving **Organization Model** and built on the shared organizational intelligence platform.
 
 The Organization Model represents Discovery’s current understanding of:
 
@@ -68,7 +68,9 @@ Discovery helps executives and other organizational stewards:
 
 # Central Product Principle
 
-> **The Organization Model is the product.**
+> **Within the MVP, the Organization Model is the primary product representation.**
+
+The broader product hierarchy is defined in `docs/Architecture/Canon/SHARED_ORGANIZATIONAL_INTELLIGENCE.md`.
 
 Everything else in Discovery is a way of interacting with that model.
 
@@ -1332,7 +1334,7 @@ Discovery succeeds when executives naturally develop the following loop:
 4. Improve, validate, or challenge the Organization Model.
 5. Use the model to support a decision.
 6. Return to observe outcomes and learning.
-7. Trust Discovery more because every interaction improves the model.
+7. Trust Discovery more because every meaningful, validated contribution has the potential to improve the model.
 
 At that point, Discovery is no longer another executive software application.
 

@@ -24,7 +24,7 @@ The MVP is complete when an executive can repeatedly guide an organization throu
 
 # Product Objective
 
-Discovery is an Executive Operating System.
+Discovery's MVP is its first major application: an Executive Operating System built on the shared organizational intelligence platform.
 
 It exists to continuously improve executive judgment.
 
@@ -32,7 +32,7 @@ Discovery should allow executives to create, understand, improve, and learn from
 
 The product is not a collection of workflows.
 
-The product is the organization itself.
+Within the MVP, the Organization Model is the primary product representation.
 
 ---
 

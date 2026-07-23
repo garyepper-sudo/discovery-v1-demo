@@ -8,6 +8,8 @@
 
 This document defines Discovery's Executive Cognitive Operating System (ECOS).
 
+The Executive Cognitive Operating System is Discovery's first major application built on the shared organizational intelligence platform. It remains the current product and engineering focus.
+
 It explains how Discovery thinks.
 
 It does not describe implementation.
@@ -22,9 +24,11 @@ Discovery is a coordinated system of specialized Cognitive Operating Systems tha
 
 # Core Principle
 
-Discovery exists to improve executive judgment.
+Within the Executive Operating System application, Discovery exists to improve executive judgment by drawing on and contributing to shared Organizational Intelligence.
 
 Everything else is in service of that objective.
+
+The broader platform hierarchy is defined in `SHARED_ORGANIZATIONAL_INTELLIGENCE.md`. This relationship does not change ECOS responsibilities, cognitive producers, Runtime contracts, or the implemented executive lifecycle.
 
 The architecture therefore follows one governing rule:
 

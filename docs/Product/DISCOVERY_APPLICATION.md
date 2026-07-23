@@ -26,7 +26,7 @@ The interface exists to guide executives through one continuous organizational l
 
 # Application Identity
 
-Discovery is one continuously running Executive Operating System.
+The current Discovery application is one continuously running Executive Operating System built on the shared organizational intelligence platform.
 
 It is not a collection of pages.
 
@@ -35,6 +35,8 @@ It is not a collection of independent tools.
 It is one continuously evolving organization.
 
 Everything presented to the executive is a different perspective on the same organization.
+
+This application is Discovery's first major application. It does not define the complete long-term platform hierarchy.
 
 ---
 

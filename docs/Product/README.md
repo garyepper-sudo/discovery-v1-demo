@@ -23,15 +23,17 @@ The Product Canon is the long-term source of truth for Discovery's product direc
 
 # Product Philosophy
 
-Discovery is an Executive Operating System.
+Discovery is a platform that continuously builds shared organizational intelligence.
 
-Its purpose is to continuously improve organizational judgment.
+Its first major application is the Executive Operating System, whose purpose is to continuously improve organizational judgment.
 
 Discovery does not replace executive decision-making.
 
 It improves executive decision-making by continuously improving an organization's understanding of itself.
 
 Organizations become progressively better because Discovery continuously learns alongside them.
+
+The canonical platform hierarchy is defined in `docs/Architecture/Canon/SHARED_ORGANIZATIONAL_INTELLIGENCE.md`.
 
 ---
 
@@ -304,9 +306,9 @@ Discovery is not:
 - a reporting platform,
 - a project management system.
 
-Discovery is an Executive Operating System.
+Discovery's first major application is an Executive Operating System.
 
-The organization is the product.
+Within that application, the Organization Model is the primary product representation.
 
 The Operating Model is the organizational brain.
 

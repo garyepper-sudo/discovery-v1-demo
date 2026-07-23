@@ -94,6 +94,10 @@ Memory currently resides within:
 OrganizationRuntime
 ```
 
+`OrganizationRuntime` remains the canonical technical persistence boundary. At the product level, it contains Discovery's continuously evolving Organizational Intelligence. Organizational Intelligence is the broader product and architectural construct; it is not a newly implemented persistence object or replacement Runtime.
+
+The Operating Model is a primary representation of how the organization functions within that intelligence. It is not a separate store and is not the entirety of Organizational Intelligence.
+
 Representative runtime objects include:
 
 ```text

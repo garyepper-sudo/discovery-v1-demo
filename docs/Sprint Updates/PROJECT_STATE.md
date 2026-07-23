@@ -4,11 +4,19 @@
 **Current phase:** benchmark-guided optimization of executive judgment
 **Next investigation:** calibrate the remaining deterministic Ground Truth deductions before authorizing production work
 
+## Strategic Product Direction
+
+Discovery is canonically a platform that continuously builds shared organizational intelligence that becomes more valuable than the sum of its contributors, information, and experiences.
+
+`docs/Architecture/Canon/SHARED_ORGANIZATIONAL_INTELLIGENCE.md` now defines the long-term hierarchy: Organizational Intelligence is the broader product and architectural construct; the Operating Model is a primary representation of how the organization functions; Organization Runtime remains the canonical persistence boundary; and the Executive Operating System is Discovery's first major application.
+
+This documentation direction authorizes no new Runtime contract, cognitive layer, Intelligence Scope, governance model, orchestration system, or application. The immediate benchmark roadmap and current conversation/reasoning work remain unchanged.
+
 # Product Identity
 
-Discovery is an Executive Operating System centered on one continuously evolving **Organization Model**. Runtime is the canonical persistent organization record. Product workspaces, executive reasoning, decisions, simulations, research, and questions operate on that same model.
+Discovery is a shared organizational intelligence platform whose first major application is the Executive Operating System. Runtime is the canonical persistent organization record. Product workspaces, executive reasoning, decisions, simulations, research, and questions operate on the same Organizational Intelligence.
 
-> The Organization Model is the product.
+> The Organization Model is the primary representation used by Discovery's current Executive Operating System application.
 
 # Operating Model
 

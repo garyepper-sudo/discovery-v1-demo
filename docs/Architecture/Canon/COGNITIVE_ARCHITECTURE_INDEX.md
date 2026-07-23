@@ -6,7 +6,7 @@
 
 # Purpose
 
-This document is the entry point for Discovery's Executive Cognitive Operating System.
+This document is the entry point for Discovery's cognitive architecture within the shared organizational intelligence platform.
 
 It explains how Discovery's architectural documents relate to one another and which document answers which architectural question.
 
@@ -29,9 +29,34 @@ Every architectural document should answer one of four questions:
 
 Together these documents define Discovery's Executive Cognitive Operating System.
 
+The strategic relationship among Organizational Intelligence, the Operating Model, Organization Runtime, applications, future Intelligence Scopes, and architecture expansion is defined by:
+
+```text
+SHARED_ORGANIZATIONAL_INTELLIGENCE.md
+```
+
 ---
 
 # Architecture Layers
+
+## 0. Shared Organizational Intelligence
+
+**Document**
+
+```text
+SHARED_ORGANIZATIONAL_INTELLIGENCE.md
+```
+
+Answers
+
+* What persistent intelligence is Discovery building?
+* How do Organizational Intelligence, the Operating Model, and Runtime relate?
+* How do applications consume and contribute to shared intelligence?
+* What principles govern future scopes, orchestration, adoption, and expansion?
+
+Primary Focus
+
+**Strategic Product and Architecture Direction**
 
 ## 1. Cognitive Object Model
 

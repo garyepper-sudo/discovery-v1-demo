@@ -4,11 +4,13 @@ Use this document as the opening context for the next ChatGPT or Codex conversat
 
 ## Discovery identity
 
-Discovery is an Executive Operating System centered on one continuously evolving **Organization Model**.
+Discovery is a platform that continuously builds shared organizational intelligence that becomes more valuable than the sum of its contributors, information, and experiences.
 
-> The Organization Model is the product.
+The Executive Operating System is Discovery's first major application. The Operating Model is a primary representation of how the organization functions, while Organization Runtime remains the canonical persistence boundary containing Discovery's evolving Organizational Intelligence.
 
 Executive recommendations, simulations, decisions, research, and questions are interactions with that same model. They do not form separate reasoning systems. Runtime is the canonical persistent representation of each organization.
+
+The strategic canon authorizes no new scopes, governance, Runtime contracts, cognitive layers, orchestration systems, or application families. Current benchmark-authorized conversation and reasoning work remains the immediate implementation priority.
 
 ## Stable architecture
 

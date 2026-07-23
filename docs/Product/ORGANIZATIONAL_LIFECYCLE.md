@@ -14,7 +14,7 @@ It answers one question:
 
 Discovery is not a collection of features.
 
-Discovery is a continuously evolving Executive Operating System.
+Discovery's current Executive Operating System application supports one continuously evolving organizational lifecycle.
 
 Every Runtime object, workflow, API, interface, and reasoning capability exists to move an organization through this lifecycle.
 
@@ -32,7 +32,7 @@ Executives continuously improve the organization through Executive Work.
 
 Every completed cycle should improve future executive judgment.
 
-The organization is the product.
+Within this application lifecycle, the Organization Model is the primary product representation.
 
 ---
 
