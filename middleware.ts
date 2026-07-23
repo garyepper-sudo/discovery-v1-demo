@@ -34,12 +34,21 @@ export async function middleware(request: NextRequest) {
     (await verifyAlphaSession(token, secret ?? ""));
 
   if (!authenticated) {
-    const accessUrl = new URL("/alpha-access", request.url);
+    const accessUrl = request.nextUrl.clone();
+    accessUrl.pathname = "/alpha-access";
+    accessUrl.search = "";
     accessUrl.searchParams.set(
       "next",
       safeAlphaPath(`${request.nextUrl.pathname}${request.nextUrl.search}`),
     );
     return protectedHeaders(NextResponse.redirect(accessUrl));
+  }
+
+  if (request.nextUrl.pathname === "/alpha") {
+    const alphaUrl = request.nextUrl.clone();
+    alphaUrl.pathname = "/alpha/ask";
+    alphaUrl.search = "";
+    return protectedHeaders(NextResponse.redirect(alphaUrl));
   }
 
   return protectedHeaders(NextResponse.next());
