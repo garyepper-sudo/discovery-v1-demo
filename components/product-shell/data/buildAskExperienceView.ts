@@ -1,10 +1,12 @@
 import type { OrganizationRuntime } from "../../../engine/v3/runtime";
+import type { ExecutiveConversationInterpretation } from "../../../engine/conversation";
 import { buildProductHref } from "./productOrganization";
 import { buildOrganizationModelContext, type OrganizationModelContext } from "./buildOrganizationModelContext";
 
 export type AskExperienceView = {
   organization: { id: string; name: string };
   model: OrganizationModelContext;
+  conversation: ExecutiveConversationInterpretation | null;
   question: { text: string; context: string | null } | null;
   answer: { headline: string; summary: string | null } | null;
   reasoning: {
@@ -83,7 +85,10 @@ function confidenceText(communication: UnknownRecord, explanation: UnknownRecord
   ), 240);
 }
 
-export function buildAskExperienceView(runtime: OrganizationRuntime): AskExperienceView {
+export function buildAskExperienceView(
+  runtime: OrganizationRuntime,
+  conversation: ExecutiveConversationInterpretation | null = null,
+): AskExperienceView {
   const memory = record(runtime.memory);
   const opportunities = records(memory.investigationOpportunities);
   const primaryOpportunity = opportunities[0] ?? null;
@@ -98,23 +103,36 @@ export function buildAskExperienceView(runtime: OrganizationRuntime): AskExperie
   const uncertainty = record(memory.organizationalUncertainty);
 
   const questionText = compact(text(
+    conversation?.recommendedConversationalAction === "clarify" || conversation?.recommendedConversationalAction === "challenge"
+      ? conversation.unresolvedQuestions[0]
+      : null,
     primaryOpportunity?.suggestedExecutiveQuestion,
     communicationUncertainty.question,
     strings(understanding.openQuestions)[0],
     explanation.uncertaintyNarrative,
   ), 230);
-  const answerHeadline = compact(text(
+  const runtimeAnswerHeadline = compact(text(
     communication.headline,
     communication.executiveSummary,
     explanation.executiveSummary,
     assessment.summary,
     understanding.statement,
   ), 250);
-  const answerSummary = compact(text(
+  const runtimeAnswerSummary = compact(text(
     readable(communication.executiveSummary),
     explanation.executiveSummary,
     assessment.summary,
     understanding.summary,
+  ), 320);
+  const answerHeadline = compact(text(
+    conversation?.executiveObjective,
+    runtimeAnswerHeadline,
+  ), 250);
+  const answerSummary = compact(text(
+    conversation && runtimeAnswerHeadline
+      ? `Discovery's current organizational view: ${runtimeAnswerHeadline}${runtimeAnswerSummary && runtimeAnswerSummary !== runtimeAnswerHeadline ? ` ${runtimeAnswerSummary}` : ""}`
+      : null,
+    runtimeAnswerSummary,
   ), 320);
   const observations = unique([
     ...records(communication.supportingSignals).map((signal) => compact(text(signal.statement), 190)),
@@ -156,6 +174,7 @@ export function buildAskExperienceView(runtime: OrganizationRuntime): AskExperie
   return {
     organization: { id: runtime.metadata.organizationId, name: runtime.metadata.name || "Your organization" },
     model: buildOrganizationModelContext(runtime),
+    conversation,
     question: questionText ? { text: questionText, context: compact(text(primaryOpportunity?.reason, communicationUncertainty.implication), 250) } : null,
     answer: answerHeadline ? { headline: answerHeadline, summary: answerSummary === answerHeadline ? null : answerSummary } : null,
     reasoning: {

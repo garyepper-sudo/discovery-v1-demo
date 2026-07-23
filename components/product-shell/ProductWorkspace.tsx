@@ -12,6 +12,7 @@ import { buildBriefExperienceView } from "./data/buildBriefExperienceView";
 import { buildUnifiedExecutiveWorkspaceView } from "./data/buildUnifiedExecutiveWorkspaceView";
 import { loadProductOrganization } from "./data/loadProductOrganization";
 import { buildProductHref } from "./data/productOrganization";
+import { createConversationInterpreter, readConversationIntelligenceFeatureFlags } from "../../engine/conversation";
 
 type ProductWorkspaceProps = {
   children?: ReactNode;
@@ -28,6 +29,7 @@ type ProductWorkspaceProps = {
   renderAsk?: (
     view: ReturnType<typeof buildAskExperienceView>,
   ) => ReactNode;
+  askMessage?: string;
   renderExperiment?: (view: ReturnType<typeof buildExperimentExperienceView>) => ReactNode;
   renderBrief?: (view: ReturnType<typeof buildBriefExperienceView>) => ReactNode;
   renderUnified?: (view: ReturnType<typeof buildUnifiedExecutiveWorkspaceView>) => ReactNode;
@@ -40,6 +42,7 @@ export default function ProductWorkspace({
   renderDecisions,
   renderResearch,
   renderAsk,
+  askMessage,
   renderExperiment,
   renderBrief,
   renderUnified,
@@ -55,8 +58,17 @@ export default function ProductWorkspace({
   const researchView = renderResearch && isAvailable && organization.runtime
     ? buildResearchExperienceView(organization.runtime)
     : null;
+  const conversationFlags = readConversationIntelligenceFeatureFlags();
+  const conversationInterpreter = createConversationInterpreter(conversationFlags.conversationInterpreter);
+  const conversationInterpretation = conversationInterpreter && organization.runtime && askMessage?.trim()
+    ? conversationInterpreter.interpret({
+      currentMessage: askMessage,
+      recentConversation: [],
+      runtime: organization.runtime,
+    })
+    : null;
   const askView = renderAsk && isAvailable && organization.runtime
-    ? buildAskExperienceView(organization.runtime)
+    ? buildAskExperienceView(organization.runtime, conversationInterpretation)
     : null;
   const experimentView = renderExperiment && isAvailable && organization.runtime ? buildExperimentExperienceView(organization.runtime) : null;
   const briefView = renderBrief && isAvailable && organization.runtime ? buildBriefExperienceView(organization.runtime) : null;

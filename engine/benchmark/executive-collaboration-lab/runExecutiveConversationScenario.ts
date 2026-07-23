@@ -5,6 +5,7 @@ import { buildAskExperienceView } from "../../../components/product-shell/data/b
 import { buildSessionImpact } from "../../../components/product-shell/data/buildSessionImpact";
 import { createLeadershipDecisionRecord } from "../../../components/product-shell/data/createLeadershipDecisionRecord";
 import type { SessionEntry } from "../../../components/product-shell/shared/InteractionSession";
+import type { ExecutiveConversationInterpreter, ExecutiveConversationTurn as ConversationContextTurn } from "../../conversation";
 import type { ConversationAction, ExecutiveConversationRun, ExecutiveConversationScenario } from "./executiveConversationTypes";
 
 const clone = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
@@ -20,16 +21,25 @@ function withFixedClock<T>(timestamp: string, operation: () => T): T {
   try { return operation(); } finally { globalThis.Date = RealDate; Math.random = realRandom; }
 }
 
-export function runExecutiveConversationScenario(scenario: ExecutiveConversationScenario): ExecutiveConversationRun {
+export function runExecutiveConversationScenario(
+  scenario: ExecutiveConversationScenario,
+  interpreter: ExecutiveConversationInterpreter | null = null,
+): ExecutiveConversationRun {
   let runtime = clone(scenario.initialRuntime);
   const initial = clone(runtime);
   const sessionEntries: SessionEntry[] = [];
   const trace: ExecutiveConversationRun["trace"] = [];
   const hardFailures: string[] = [];
   const fixedTimestamp = "2026-07-23T00:00:00.000Z";
+  const recentConversation: ConversationContextTurn[] = [];
 
   scenario.turns.filter((turn) => turn.speaker === "executive").forEach((turn, index) => {
-    const ask = buildAskExperienceView(runtime);
+    const interpretation = interpreter?.interpret({
+      currentMessage: turn.message,
+      recentConversation: recentConversation.slice(-6),
+      runtime,
+    }) ?? null;
+    const ask = buildAskExperienceView(runtime, interpretation);
     const response = [ask.question?.text, ask.answer?.headline, ask.answer?.summary].filter(Boolean).join(" ");
     const durableWrites: ConversationAction[] = [];
     if (turn.action === "brainstorm" || turn.action === "run-experiment") sessionEntries.push({ id: `${scenario.id}-${index}-provisional`, action: turn.action === "brainstorm" ? "brainstorm" : "stress-test", kind: "discussion", label: turn.message, status: "provisional" });
@@ -44,7 +54,11 @@ export function runExecutiveConversationScenario(scenario: ExecutiveConversation
       runtime = saveExecutiveDecisionRecord({ runtime, record });
       durableWrites.push("open-decision"); sessionEntries.push({ id: `${scenario.id}-decision`, action: "create-decision", kind: "decision", label: turn.message, status: "saved" });
     }
-    trace.push({ turn: index + 1, executiveMessage: turn.message, action: turn.action, discoveryResponse: response, questionCount: (response.match(/\?/g) ?? []).length, recognizedConcepts: concepts(response, scenario.expected.requiredConcepts), challenged: /uncertain|alternative|rather than|not enough|evidence|clarif/i.test(response), recommendationPresent: turn.action === "run-experiment" || turn.action === "open-decision", durableWrites });
+    trace.push({ turn: index + 1, executiveMessage: turn.message, action: turn.action, interpretation, discoveryResponse: response, questionCount: (response.match(/\?/g) ?? []).length, recognizedConcepts: concepts(response, scenario.expected.requiredConcepts), challenged: interpretation?.recommendedConversationalAction === "challenge" || /uncertain|alternative|rather than|not enough|evidence|clarif/i.test(response), recommendationPresent: turn.action === "run-experiment" || turn.action === "open-decision", durableWrites });
+    recentConversation.push(
+      { speaker: "executive", message: turn.message },
+      { speaker: "discovery", message: response },
+    );
   });
 
   const impact = buildSessionImpact(sessionEntries);

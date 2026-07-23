@@ -12,10 +12,12 @@ export default function AskPage({
 }: {
   searchParams: { organizationId?: string | string[]; prompt?: string | string[] };
 }) {
+  const prompt = Array.isArray(searchParams.prompt) ? searchParams.prompt[0] : searchParams.prompt;
   return (
     <ProductWorkspace
       organizationId={searchParams.organizationId}
-      renderAsk={(view) => <AskExperience view={view} initialPrompt={Array.isArray(searchParams.prompt) ? searchParams.prompt[0] : searchParams.prompt} />}
+      askMessage={prompt}
+      renderAsk={(view) => <AskExperience view={view} initialPrompt={prompt} />}
     />
   );
 }

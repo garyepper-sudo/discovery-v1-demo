@@ -37,6 +37,10 @@ Production architecture should not expand without benchmark evidence. Current op
 
 ## Current measured state
 
+Sprint 108 implements the canonical Executive Conversation Intelligence adapter. The provider-neutral contract interprets the current executive message, bounded recent turns, and read-only Runtime into an ephemeral description of conversational objective, intent, hypotheses, questions, assumptions, ambiguity, confidence, and recommended conversational action. It never persists, does not change organizational truth, and does not generate executive-facing responses. Ask remains the response composer. `CONVERSATION_INTERPRETER=none` is the backward-compatible default; `mock` selects the sole deterministic provider implemented in this sprint.
+
+The extended Executive Collaboration Lab records interpretation and response separately for every turn. The Runtime-only baseline remains `65.21 / 100`. Its deterministic controlled-mock baseline is `90.36 / 100`, with executive understanding `14.17 / 15`, collaborative reasoning `14.5 / 15`, constructive challenge `8 / 10`, continuity `10 / 10`, and trust `4.36 / 5`. The controlled score is not evidence of live-provider quality, unseen-conversation generalization, or a final AI-enabled score. The lab has zero critical failures and one remaining semantic-coverage warning. Repeated replay, reversed scenario order, organization isolation, and Runtime restoration pass.
+
 The Sprint 107 Executive Collaboration Lab establishes the first canonical multi-turn collaboration baseline across six scenarios. Overall score is `65.21 / 100`, with zero hard failures. Dimension scores are: executive understanding `3.33 / 15`, question quality `8 / 10`, collaborative reasoning `8 / 15`, constructive challenge `5.33 / 10`, conversational continuity `5.72 / 10`, model stewardship `13.33 / 15`, recommendation quality `8 / 10`, action handoff `5 / 5`, Session Impact accuracy `5 / 5`, and executive trust `3.49 / 5`. Repeated runs and reversed scenario order are identical, organization identity is isolated, and no persisted Runtime artifact is created or left modified.
 
 The earliest responsible producer for the dominant gap is the existing Ask experience projection boundary: `buildAskExperienceView(runtime)` receives Runtime but no current executive message or conversation history, so every turn projects substantially the same answer. This is a conversation quality gap, not evidence of missing cognition or a Runtime architecture gap. The single recommended next optimization is to make that existing response composition turn-aware while keeping all reasoning Runtime-backed and all persistence explicit. Do not implement until authorized.
@@ -99,7 +103,7 @@ Investigation-local evidence IDs such as `E6` are positional and are not durable
 
 ## Exact next work
 
-Await authorization for one narrow Sprint 107 production optimization: turn-aware response composition at the existing Ask experience boundary. It should preserve the current executive objective and direction across turns, project only relevant Runtime-backed meaning, and make a discriminating clarification or respectful challenge when warranted. Do not add cognition, Runtime state, a parallel conversation model, or automatic persistence. The lower-ranked constructive-challenge heuristic, unrelated-condition recomputation during evidence evolution, historical mechanism truth, durable Brief persistence, and deeper Experiment orchestration should wait.
+After explicit approval, evaluate and integrate one provider-backed Executive Conversation Interpreter behind the Sprint 108 interface. Do not change Ask's contract, introduce a general conversation architecture, or allow provider output to become organizational truth. Keep the mock provider as the deterministic regression path and the `none` fallback intact. The unrelated-condition recomputation finding belongs to a separate Operating Model sprint.
 
 ## Guardrails
 
