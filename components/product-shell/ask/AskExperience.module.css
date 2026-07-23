@@ -23,6 +23,11 @@
 }
 
 .header > span { display:block; margin-top:12px; color:rgba(245,245,245,.42); font-size:.9rem; }
+.thinkContext { display:grid; grid-template-columns:1fr 1fr; gap:44px; margin-top:34px; padding:24px 0 48px; border-bottom:1px solid rgba(255,255,255,.06); }
+.thinkContext p { margin:0 0 14px; color:rgba(245,245,245,.34); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; }
+.thinkContext ul { margin:0; padding:0; list-style:none; }
+.thinkContext li,.thinkContext span { padding:9px 0; color:rgba(245,245,245,.45); font-size:.74rem; line-height:1.5; }
+.thinkContext button { padding:0; border:0; background:transparent; color:rgba(245,245,245,.58); font:inherit; text-align:left; cursor:pointer; }
 .candidate { margin:38px 0 0; padding:28px; border:1px solid rgba(214,178,94,.18); background:rgba(214,178,94,.035); }
 .candidate>p { margin:0; color:var(--ds-gold); font-size:.62rem; font-weight:650; letter-spacing:.15em; text-transform:uppercase; }
 .candidate h2 { margin:14px 0 0; font-family:Georgia,"Times New Roman",serif; font-size:clamp(1.6rem,3vw,2.8rem); font-weight:400; }

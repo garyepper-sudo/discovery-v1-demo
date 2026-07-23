@@ -33,8 +33,8 @@ export default function DecisionsExperience({ view }: { view: DecisionsView }) {
   return (
     <article className={styles.page}>
       <header className={styles.header}>
-        <p>Executive work</p>
-        <h1>Decisions shaping your organization</h1>
+        <p>Current interaction · Decisions</p>
+        <h1>What are we deciding?</h1>
       </header>
 
       <LivingModelContext model={view.model} activeIds={view.model.areas.slice(0, 2).map((area) => area.id)} />

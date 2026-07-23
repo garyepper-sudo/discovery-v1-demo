@@ -5,9 +5,10 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import {
   Building2,
-  FlaskConical,
+  FileText,
   MessageCircleQuestion,
   Scale,
+  TestTubeDiagonal,
 } from "lucide-react";
 
 import styles from "./DiscoveryShell.module.css";
@@ -20,6 +21,7 @@ import {
 type DiscoveryShellProps = {
   children: ReactNode;
   organization: ProductOrganizationSummary;
+  showSessionImpact?: boolean;
 };
 
 const navigation = [
@@ -30,28 +32,35 @@ const navigation = [
     icon: Building2,
   },
   {
+    href: "/ask",
+    label: "Think",
+    description: "Ask & brainstorm",
+    icon: MessageCircleQuestion,
+  },
+  {
     href: "/decisions",
-    label: "Decisions",
-    description: "Act with the model",
+    label: "Decide",
+    description: "Track decisions",
     icon: Scale,
   },
   {
-    href: "/research",
-    label: "Research",
-    description: "Explore and test",
-    icon: FlaskConical,
+    href: "/experiment",
+    label: "Experiment",
+    description: "Stress test ideas",
+    icon: TestTubeDiagonal,
   },
   {
-    href: "/ask",
-    label: "Think",
-    description: "Brainstorm with the model",
-    icon: MessageCircleQuestion,
+    href: "/brief",
+    label: "Brief",
+    description: "Communicate impact",
+    icon: FileText,
   },
 ] as const;
 
 export default function DiscoveryShell({
   children,
   organization,
+  showSessionImpact = true,
 }: DiscoveryShellProps) {
   const pathname = usePathname();
   const homeHref = buildProductHref(
@@ -124,6 +133,13 @@ export default function DiscoveryShell({
           })}
         </nav>
 
+        <section className={styles.modelHealth} aria-label="Model health">
+          <strong>Model Health</strong><i aria-hidden="true" />
+          <span>Understanding <b>{organization.coherence ?? "—"}{organization.coherence == null ? "" : "%"}</b></span>
+          <span>Confidence <b>{organization.confidence ?? "—"}{organization.confidence == null ? "" : "%"}</b></span>
+          <span>Primary Constraint <b>{organization.primaryConstraint ?? "Still emerging"}</b></span>
+        </section>
+
         <Link className={styles.stewardship} href={buildProductHref("/your-organization", organization.organizationId) + "#teach-discovery"}>
           Teach Discovery
           <span>Add context · Correct the model · Add evidence</span>
@@ -142,7 +158,7 @@ export default function DiscoveryShell({
       <main className={styles.workspace}>
         <div className={styles.workspaceInner}>
           {children}
-          <SessionImpact />
+          {showSessionImpact && <SessionImpact />}
         </div>
       </main>
     </div>

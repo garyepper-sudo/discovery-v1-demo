@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import CurrentUnderstanding from "../../../components/product-shell/CurrentUnderstanding";
+import UnifiedExecutiveWorkspace from "../../../components/product-shell/unified/UnifiedExecutiveWorkspace";
 import ProductWorkspace from "../../../components/product-shell/ProductWorkspace";
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export default function YourOrganizationPage({
   return (
     <ProductWorkspace
       organizationId={searchParams.organizationId}
-      renderOrganization={(view) => <CurrentUnderstanding view={view} />}
+      renderUnified={(view) => <UnifiedExecutiveWorkspace view={view} />}
     />
   );
 }

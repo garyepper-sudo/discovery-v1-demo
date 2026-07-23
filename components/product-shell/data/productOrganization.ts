@@ -4,6 +4,8 @@ export type ProductOrganizationSummary = {
   runtimeAvailable: boolean;
   coherence?: number | null;
   coherenceLabel?: string;
+  confidence?: number | null;
+  primaryConstraint?: string;
 };
 
 export function buildProductHref(

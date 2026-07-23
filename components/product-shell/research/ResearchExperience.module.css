@@ -27,18 +27,23 @@
 
 .primaryQuestion {
   width: min(1060px, 100%);
-  padding: clamp(100px, 15vh, 170px) 0 clamp(132px, 19vh, 215px);
+  padding: clamp(42px, 7vh, 76px) 0 clamp(72px, 10vh, 112px);
 }
 
 .primaryQuestion h2 {
   margin: 28px 0 0;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(3.25rem, 6.35vw, 6.65rem);
+  font-size: clamp(2.7rem, 5vw, 5.2rem);
   font-weight: 400;
   line-height: 0.98;
   letter-spacing: -0.061em;
   text-wrap: balance;
 }
+
+.researchMeta { display:grid; gap:7px; width:fit-content; margin-top:24px; color:rgba(245,245,245,.34); font-size:.64rem; text-transform:uppercase; letter-spacing:.08em; }
+.researchMeta strong { color:rgba(240,213,138,.78); font-size:.82rem; font-weight:520; letter-spacing:0; text-transform:none; }
+.primaryActions { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
+.primaryActions a { padding:11px 15px; border:1px solid rgba(214,178,94,.25); color:rgba(240,213,138,.82); font-size:.72rem; text-decoration:none; }
 
 .primarySummary {
   max-width: 650px;

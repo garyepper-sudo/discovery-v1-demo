@@ -266,3 +266,6 @@
     transition: none;
   }
 }
+
+.modelHealth{display:grid;gap:11px;margin-top:auto;padding:14px;border:1px solid rgba(255,255,255,.08);border-radius:5px;background:rgba(255,255,255,.012)}.modelHealth>strong{font-size:.67rem}.modelHealth>i{display:block;height:28px;border-bottom:1px solid rgba(47,214,107,.48);transform:skewY(-7deg)}.modelHealth>span{display:flex;justify-content:space-between;gap:8px;color:rgba(245,245,245,.4);font-size:.58rem}.modelHealth b{color:rgba(245,245,245,.78);font-weight:520;text-align:right}.shell{--shell-sidebar:216px;background:#080a0b}.sidebar{padding:24px 16px 18px}.navigation{margin-top:32px}.navigationItem{min-height:52px;border-radius:5px}.stewardship{margin-top:14px}.workspaceInner{width:100%;padding:16px 18px}
+@media(max-width:1100px){.modelHealth{display:none}}

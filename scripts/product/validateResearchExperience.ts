@@ -48,6 +48,7 @@ assert.equal(populatedView.highestUnknown?.headline, "Which decisions still requ
 assert.equal(populatedView.evidenceRequests.length, 2);
 assert.equal(populatedView.opportunities.length, 1);
 assert.match(populatedView.recommendation?.destination ?? "", /^\/research\?/);
+assert.equal(populatedView.estimatedConfidenceImprovement, "12 points");
 
 const missingEvidence = fixture();
 (missingEvidence.memory as unknown as MutableMemory).investigationOpportunities = [];

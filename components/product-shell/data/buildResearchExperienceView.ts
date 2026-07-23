@@ -1,8 +1,11 @@
 import type { OrganizationRuntime } from "../../../engine/v3/runtime";
 import { buildProductHref } from "./productOrganization";
+import { buildOrganizationModelContext } from "./buildOrganizationModelContext";
 
 export type ResearchExperienceView = {
   organization: { id: string; name: string };
+  model: ReturnType<typeof buildOrganizationModelContext>;
+  estimatedConfidenceImprovement: string;
   highestUnknown: {
     headline: string;
     summary: string;
@@ -104,6 +107,7 @@ export function buildResearchExperienceView(runtime: OrganizationRuntime): Resea
     understanding?.whyItMatters,
   ));
   const attachedConfidence = primary ? null : percent(understanding?.confidence);
+  const expectedConfidenceGain = percent(primary?.expectedConfidenceGain);
   const researchHref = buildProductHref("/research", runtime.metadata.organizationId);
 
   const evidenceRequests = evidence.map((item) => ({
@@ -114,6 +118,10 @@ export function buildResearchExperienceView(runtime: OrganizationRuntime): Resea
 
   return {
     organization: { id: runtime.metadata.organizationId, name: runtime.metadata.name || "Your organization" },
+    model: buildOrganizationModelContext(runtime),
+    estimatedConfidenceImprovement: expectedConfidenceGain !== null
+      ? `${expectedConfidenceGain} points`
+      : attachedConfidence === null ? "Measured after evidence is added" : `Up to ${Math.max(0, 100 - attachedConfidence)} points`,
     highestUnknown: headline ? {
       headline,
       summary: summary ?? "Discovery has identified this question but has not yet recorded a fuller uncertainty explanation.",

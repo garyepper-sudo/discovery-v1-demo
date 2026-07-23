@@ -37,8 +37,8 @@ export default function CurrentUnderstanding({ view }: CurrentUnderstandingProps
   return (
     <article className={styles.page}>
       <header className={styles.header}>
-        <p>Organization model</p>
-        <h1>Insights</h1>
+        <p>Current interaction · Insights</p>
+        <h1>What should I know?</h1>
       </header>
 
       <OrganizationModel model={view.model} />
@@ -72,7 +72,6 @@ export default function CurrentUnderstanding({ view }: CurrentUnderstandingProps
           <a href="#insight-reasoning">Explore</a>
           <button type="button" onClick={() => setMode("add-context")}>Add context</button>
           <button type="button" onClick={() => setMode("challenge")}>Challenge</button>
-          <button type="button" disabled={saving} onClick={() => void commit("save-insight", understanding.headline)}>Save for later</button>
           <button type="button" onClick={() => { addEntry({ action: "brainstorm", kind: "discussion", label: understanding.headline, status: "provisional" }); router.push(buildProductHref("/ask", view.organization.id)); }}>Brainstorm</button>
         </div>
 

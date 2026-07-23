@@ -12,11 +12,11 @@ import LivingModelContext from "../shared/LivingModelContext";
 import { useInteractionSession } from "../shared/InteractionSession";
 import { buildProductHref } from "../data/productOrganization";
 
-export default function AskExperience({ view }: { view: AskView }) {
-  const [input, setInput] = useState("");
+export default function AskExperience({ view, initialPrompt = "" }: { view: AskView; initialPrompt?: string }) {
+  const [input, setInput] = useState(initialPrompt);
   const [candidate, setCandidate] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
-  const { addEntry } = useInteractionSession();
+  const { entries, addEntry } = useInteractionSession();
   const router = useRouter();
 
   function brainstorm() {
@@ -39,11 +39,16 @@ export default function AskExperience({ view }: { view: AskView }) {
 
   return (
     <article className={styles.page}>
-      <header className={styles.header}><p>Think with the model</p><h1>Let&apos;s brainstorm.</h1><span>What are you thinking about?</span></header>
+      <header className={styles.header}><p>Current interaction · Think</p><h1>What are you thinking about?</h1></header>
 
       <LivingModelContext model={view.model} activeIds={view.model.areas.slice(0, 2).map((area) => area.id)} />
 
       <AskComposer value={input} onChange={setInput} onSubmit={(event) => { event.preventDefault(); brainstorm(); }} />
+
+      <section className={styles.thinkContext} aria-label="Think context">
+        <div><p>Suggested prompts</p><ul>{[view.nextQuestion?.text, ...view.otherQuestions.map((item) => item.text)].filter((item): item is string => Boolean(item)).slice(0, 3).map((item) => <li key={item}><button type="button" onClick={() => setInput(item)}>{item}</button></li>)}</ul></div>
+        <div><p>Recent conversations</p>{entries.filter((entry) => entry.kind === "discussion").length ? <ul>{entries.filter((entry) => entry.kind === "discussion").slice(-3).reverse().map((entry) => <li key={entry.id}>{entry.label}</li>)}</ul> : <span>No conversations in this session yet.</span>}</div>
+      </section>
 
       {candidate && <section className={styles.candidate} aria-label="Provisional model candidate">
         <p>Discovery is considering this</p><h2>{candidate}</h2>

@@ -4,16 +4,19 @@ import type { ResearchExperienceView as ResearchView } from "../data/buildResear
 import ResearchRecommendation from "./ResearchRecommendation";
 import TeachDiscovery from "./TeachDiscovery";
 import styles from "./ResearchExperience.module.css";
+import LivingModelContext from "../shared/LivingModelContext";
 
 export default function ResearchExperience({ view }: { view: ResearchView }) {
   return (
     <article className={styles.page}>
-      <header className={styles.header}><p>Organization research</p><h1>Research</h1></header>
+      <header className={styles.header}><p>Current interaction · Research</p><h1>What should we investigate?</h1></header>
+
+      <LivingModelContext model={view.model} activeIds={view.model.areas.slice(0, 2).map((area) => area.id)} />
 
       <section className={styles.primaryQuestion} aria-labelledby="primary-research-title">
         <p className={styles.eyebrow}>Highest-leverage unknown</p>
         <h2 id="primary-research-title">{view.highestUnknown?.headline ?? "Discovery has not yet identified a high-priority research question."}</h2>
-        {view.highestUnknown && <><p className={styles.primarySummary}>{view.highestUnknown.summary}</p><p className={styles.confidence}>{view.highestUnknown.confidenceLabel}</p></>}
+        {view.highestUnknown && <><p className={styles.primarySummary}>{view.highestUnknown.summary}</p><div className={styles.researchMeta}><span>Estimated confidence improvement</span><strong>{view.estimatedConfidenceImprovement}</strong></div><div className={styles.primaryActions}><a href="#start-investigation">Start investigation</a><a href="#other-questions">Choose another question</a></div></>}
       </section>
 
       <section className={styles.importance} aria-labelledby="research-importance-title">
@@ -26,9 +29,9 @@ export default function ResearchExperience({ view }: { view: ResearchView }) {
       </section>
 
       <ResearchRecommendation recommendation={view.recommendation} />
-      <TeachDiscovery requests={view.evidenceRequests} />
+      <div id="start-investigation"><TeachDiscovery requests={view.evidenceRequests} /></div>
 
-      <section className={styles.opportunities} aria-labelledby="research-opportunities-title">
+      <section id="other-questions" className={styles.opportunities} aria-labelledby="research-opportunities-title">
         <div className={styles.sectionIntroduction}><p className={styles.eyebrow}>Other research opportunities</p><h2 id="research-opportunities-title">{view.opportunities.length ? "We know enough to ask better questions." : "No additional priorities are recorded."}</h2></div>
         {view.opportunities.length > 0 ? <ul>{view.opportunities.map((opportunity) => <li key={opportunity.title}><div><h3>{opportunity.title}</h3><p>{opportunity.summary}</p></div>{opportunity.destination && <Link href={opportunity.destination} aria-label={`Explore ${opportunity.title}`}>Explore</Link>}</li>)}</ul> : <p className={styles.emptyOpportunities}>Discovery has not yet identified additional research opportunities.</p>}
       </section>

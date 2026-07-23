@@ -32,6 +32,7 @@ Production architecture should not expand without benchmark evidence. Current op
 - **Intervention-specific recommendation risks:** Executive Recommendation synthesis preserves the winning intervention's existing risks in stable source order, removes exact duplicates, and leaves recommendation identity, confidence, and scenario ranking unchanged.
 - **Executive Recommendation risk projection:** the primary Decisions workspace now displays the selected recommendation's existing risks under “What could go wrong?” in their preserved order and wording, without changing Runtime, recommendation identity, confidence, or simulation.
 - **Living Organization Model interaction loop:** Insights surfaces up to three model-backed insights with stewardship actions; Think keeps brainstorming provisional until an explicit save or decision action; Decisions combines Discovery recommendations with leadership-added draft decisions; Session Impact separates discussion from durable updates.
+- **Unified Executive Workspace:** `/your-organization` now composes the top insight, interactive Organization Model, Think, Decide, Experiment, Brief, Session Impact, and the living-model learning loop into the primary compact executive surface. Existing focused routes remain available.
 - **Deterministic Ground Truth benchmark:** Ground Truth now owns an isolated, deterministic 48-artifact Northstar replay, scores only that replay, and restores the prior persisted Runtime before exiting.
 
 ## Current measured state
@@ -51,6 +52,8 @@ Sprint 104 closes the downstream projection omission for those risks. Decisions 
 Sprint 105 proves the first complete product interaction loop. Explicit context, challenges, and save-as-insight actions enter the existing organization-investigation and evidence path; save as insight does not create a standalone insight object. Leadership decisions persist as canonical draft Executive Decision Records with their origin and targeted conditions preserved; casual brainstorming stays provisional. The API rejects unsupported actions and uses stable interaction identities to make investigation and decision retries idempotent. A shared session ledger reports only successfully persisted changes as model impact and deduplicates repeated entries. Living interaction validation passes `18/18`, product interaction boundary validation passes `14/14`, all existing product experience validators pass, Executive Decision Lab passes `39/39`, Operating Model Evolution passes `14/14`, and typecheck, build, cognition validation, and diff checks pass.
 
 Authentication and authorization for the product-interaction route remain deferred to the existing product access-control boundary; Sprint 105 adds no parallel identity or authorization model.
+
+Sprint 106 changes only the product interaction composition. It adds no cognition, Runtime contract, or parallel persistence model. Unified Executive Workspace validation passes `28/28`; organization identity is preserved through every handoff; visual verification at `1440 × 900` and `1728 × 1117` confirms the primary functionality is visible without page scrolling while maintaining the dark premium visual language.
 
 Ground Truth is deterministic at `75 / 100` regardless of prior Cognitive Trace, Cognitive Layer Validation, Atlas, Executive Decision Lab, or Operating Model Evolution Lab execution. Repeated replays produce identical Runtime and score details with or without an existing persisted Northstar Runtime. Remaining deductions are `-20` for excessive-concurrent-work wording sensitivity and `-5` for the explicit staffing-boundary phrase; production already expresses equivalent meaning, so no production repair is authorized from those deductions yet.
 
@@ -92,7 +95,7 @@ Investigation-local evidence IDs such as `E6` are positional and are not durable
 
 ## Exact next work
 
-Validate the Sprint 105 loop through executive use before extending it. Brief and Experiment workflows, outcome-validated Session Impact, and deeper model visualization remain deferred. Historical mechanism truth remains absent, direct recommendation evidence grounding remains open, and the reduced-capacity risk-language scorer remains diagnostic. Sprint 105 does not authorize merge, split, retirement, reactivation, supersession, or full lineage implementation.
+Validate the unified Sprint 106 workspace through executive use. Durable Brief persistence, deeper Experiment orchestration, cross-session summaries, outcome-validated Session Impact, and richer model relationships remain deferred. Historical mechanism truth remains absent, direct recommendation evidence grounding remains open, and the reduced-capacity risk-language scorer remains diagnostic. Sprint 106 does not authorize merge, split, retirement, reactivation, supersession, or full lineage implementation.
 
 ## Guardrails
 

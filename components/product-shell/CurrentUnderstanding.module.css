@@ -26,7 +26,7 @@
 .understanding {
   width: min(980px, 100%);
   margin: 0;
-  padding: clamp(132px, 18vh, 210px) 0;
+  padding: clamp(42px, 7vh, 76px) 0 clamp(88px, 12vh, 132px);
   border-top: 1px solid rgba(255, 255, 255, 0.055);
 }
 
@@ -63,7 +63,7 @@
   max-width: 960px;
   margin: 0;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(3.45rem, 6.7vw, 7.2rem);
+  font-size: clamp(2.7rem, 5vw, 5.25rem);
   font-weight: 400;
   line-height: 0.96;
   letter-spacing: -0.062em;

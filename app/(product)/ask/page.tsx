@@ -10,12 +10,12 @@ export const metadata: Metadata = {
 export default function AskPage({
   searchParams,
 }: {
-  searchParams: { organizationId?: string | string[] };
+  searchParams: { organizationId?: string | string[]; prompt?: string | string[] };
 }) {
   return (
     <ProductWorkspace
       organizationId={searchParams.organizationId}
-      renderAsk={(view) => <AskExperience view={view} />}
+      renderAsk={(view) => <AskExperience view={view} initialPrompt={Array.isArray(searchParams.prompt) ? searchParams.prompt[0] : searchParams.prompt} />}
     />
   );
 }

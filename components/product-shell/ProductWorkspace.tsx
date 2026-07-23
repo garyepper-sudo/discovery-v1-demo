@@ -7,6 +7,9 @@ import { buildAskExperienceView } from "./data/buildAskExperienceView";
 import { buildDecisionsExperienceView } from "./data/buildDecisionsExperienceView";
 import { buildOrganizationExperienceView } from "./data/buildOrganizationExperienceView";
 import { buildResearchExperienceView } from "./data/buildResearchExperienceView";
+import { buildExperimentExperienceView } from "./data/buildExperimentExperienceView";
+import { buildBriefExperienceView } from "./data/buildBriefExperienceView";
+import { buildUnifiedExecutiveWorkspaceView } from "./data/buildUnifiedExecutiveWorkspaceView";
 import { loadProductOrganization } from "./data/loadProductOrganization";
 import { buildProductHref } from "./data/productOrganization";
 
@@ -25,6 +28,9 @@ type ProductWorkspaceProps = {
   renderAsk?: (
     view: ReturnType<typeof buildAskExperienceView>,
   ) => ReactNode;
+  renderExperiment?: (view: ReturnType<typeof buildExperimentExperienceView>) => ReactNode;
+  renderBrief?: (view: ReturnType<typeof buildBriefExperienceView>) => ReactNode;
+  renderUnified?: (view: ReturnType<typeof buildUnifiedExecutiveWorkspaceView>) => ReactNode;
 };
 
 export default function ProductWorkspace({
@@ -34,6 +40,9 @@ export default function ProductWorkspace({
   renderDecisions,
   renderResearch,
   renderAsk,
+  renderExperiment,
+  renderBrief,
+  renderUnified,
 }: ProductWorkspaceProps) {
   const organization = loadProductOrganization(organizationId);
   const isAvailable = organization.state === "available";
@@ -49,6 +58,9 @@ export default function ProductWorkspace({
   const askView = renderAsk && isAvailable && organization.runtime
     ? buildAskExperienceView(organization.runtime)
     : null;
+  const experimentView = renderExperiment && isAvailable && organization.runtime ? buildExperimentExperienceView(organization.runtime) : null;
+  const briefView = renderBrief && isAvailable && organization.runtime ? buildBriefExperienceView(organization.runtime) : null;
+  const unifiedView = renderUnified && isAvailable && organization.runtime ? buildUnifiedExecutiveWorkspaceView(organization.runtime) : null;
 
   return (
     <DiscoveryShell
@@ -58,10 +70,15 @@ export default function ProductWorkspace({
         runtimeAvailable: isAvailable,
         coherence: view?.model.coherence,
         coherenceLabel: view?.model.coherenceLabel,
+        confidence: view?.currentUnderstanding.confidence,
+        primaryConstraint: view?.model.areas[0]?.label,
       }}
+      showSessionImpact={!renderUnified}
     >
       {isAvailable ? (
-        renderOrganization && view
+        renderUnified && unifiedView
+          ? renderUnified(unifiedView)
+          : renderOrganization && view
           ? renderOrganization(view)
           : renderDecisions && decisionsView
             ? renderDecisions(decisionsView)
@@ -69,7 +86,11 @@ export default function ProductWorkspace({
               ? renderResearch(researchView)
               : renderAsk && askView
                 ? renderAsk(askView)
-                : children
+                : renderExperiment && experimentView
+                  ? renderExperiment(experimentView)
+                  : renderBrief && briefView
+                    ? renderBrief(briefView)
+                    : children
       ) : (
         <section className={styles.state} aria-labelledby="organization-state-title">
           <p>Organization model</p>
