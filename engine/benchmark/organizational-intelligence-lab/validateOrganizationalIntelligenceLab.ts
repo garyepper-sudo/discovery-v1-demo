@@ -1,0 +1,32 @@
+import assert from "node:assert/strict";
+import { runOrganizationalIntelligenceLab } from "./runOrganizationalIntelligenceLab";
+
+const report = runOrganizationalIntelligenceLab();
+assert.equal(report.cases.length, 12);
+assert.equal(report.hardFailures.length, 0);
+assert.equal(report.deterministic, true);
+assert.equal(report.inputOrderStable, true);
+assert.equal(report.runtimeUnchanged, true);
+assert.equal(report.complexityGrowth.bounded, true);
+assert.equal(report.architectureFindings.cognitionReuse, "SUPPORTED");
+assert.equal(report.architectureFindings.scopedComposition, "SUPPORTED_IN_BENCHMARK");
+assert.equal(report.architectureFindings.visibilityEnforcement, "BENCHMARK_POLICY_ONLY");
+assert.equal(report.architectureFindings.persistentAuthorization, "GENUINE_GAP");
+assert.equal(report.architectureFindings.temporalPolicyBehavior, "GENUINE_GAP");
+assert.equal(report.classification, "PARTIALLY_SUPPORTED_GENUINE_GAP_FOUND");
+
+console.log("ORGANIZATIONAL INTELLIGENCE LAB");
+console.log(`Overall: ${report.combinedScore.toFixed(2)} / 100`);
+console.log(`Classification: ${report.classification}`);
+for (const item of report.cases) console.log(`${item.id}  ${item.hardFailures.length ? "FAIL" : "PASS"}  ${item.name}`);
+console.log("\nDimensions");
+for (const [name, score] of Object.entries(report.dimensionScores)) console.log(`${name}: ${score.toFixed(2)}`);
+console.log("\nContext complexity");
+console.log(JSON.stringify(report.complexity, null, 2));
+console.log(`Processing growth: ${report.complexityGrowth.processingGrowth.toFixed(2)}x for ${report.complexityGrowth.contextGrowth.toFixed(2)}x contexts`);
+console.log("\nArchitecture findings");
+for (const [name, finding] of Object.entries(report.architectureFindings)) console.log(`${name}: ${finding}`);
+console.log("\nDeterminism: PASS");
+console.log("Input-order stability: PASS");
+console.log("Runtime unchanged: PASS");
+console.log("Privacy hard failures: 0");
