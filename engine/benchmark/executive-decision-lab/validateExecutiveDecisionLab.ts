@@ -2,11 +2,11 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 
-import { loadOrganizationRuntimeState } from "../../v3/runtime";
 import type { BlindComparisonManifest } from "../judgment-lab/comparisonContracts";
 import { atlasDecisionCase, atlasDecisionGroundTruth } from "./atlasDecisionPilot";
 import { evaluateExecutiveDecision } from "./evaluateExecutiveDecision";
 import { resolveInterventionCorrespondence } from "./interventionCorrespondence";
+import { loadIsolatedAtlasDecisionRuntime } from "./loadIsolatedAtlasDecisionRuntime";
 import { runExecutiveDecisionLab } from "./runExecutiveDecisionLab";
 
 const fixedTimestamp = "2026-07-22T12:00:00.000Z";
@@ -15,7 +15,7 @@ const snapshotRuntime = () => fs.existsSync(runtimeDirectory)
   ? fs.readdirSync(runtimeDirectory).sort().map((name) => ({ name, modified: fs.statSync(path.join(runtimeDirectory, name)).mtimeMs }))
   : [];
 const runtimeSnapshot = snapshotRuntime();
-const runtime = loadOrganizationRuntimeState(atlasDecisionCase.organizationId);
+const runtime = loadIsolatedAtlasDecisionRuntime();
 const baseline = runExecutiveDecisionLab({ decisionCase: atlasDecisionCase, runtime, fixedTimestamp });
 const repeated = runExecutiveDecisionLab({ decisionCase: atlasDecisionCase, runtime, fixedTimestamp });
 const baselineEvaluation = evaluateExecutiveDecision({ run: baseline, decisionCase: atlasDecisionCase, groundTruth: atlasDecisionGroundTruth });
