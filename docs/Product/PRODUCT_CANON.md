@@ -18,6 +18,13 @@ Unlike sprint documentation, this document changes rarely.
 
 If another product document conflicts with this one, this document is correct.
 
+This authority is limited to product identity, product philosophy, user value,
+product posture, and product-level application lifecycles. Specific canonical
+architecture documents govern their named technical domains, including
+security, Runtime, cognition, governance, tenancy, persistence, and the
+cross-application platform learning lifecycle. Broad product prose does not
+override those contracts.
+
 ---
 
 # Mission
@@ -75,27 +82,41 @@ The organization—not the interface—is the center of the product.
 
 ---
 
-# The Operating Model
+# The Organization Model and Operating Model
 
-The Operating Model is the functional foundation of Discovery's first major application and a primary representation within the broader platform.
+Discovery's model terminology follows this hierarchy:
 
-It is a primary representation of Discovery's continuously evolving Organizational Intelligence, especially how an organization actually operates.
+- **Shared Organizational Intelligence** is the broader platform-level
+  intelligence construct.
+- **Organization Runtime** is the canonical technical persistence boundary.
+- **Organization Model** is the user-facing living representation of how the
+  organization is understood.
+- **Operating Model** is the operational representation within the broader
+  Organization Model and Organizational Intelligence.
 
-The Operating Model represents:
+The Organization Model may include evidence, insights, contradictions,
+conditions, decisions, initiatives, outcomes, learning, uncertainty, and
+organizational memory. It is a product representation, not a new persistence
+object or a second Runtime.
 
-- organizational reality,
-- strategic objectives,
-- organizational conditions,
-- executive constraints,
-- organizational relationships,
-- historical decisions,
-- executive work,
-- organizational learning,
-- persistent organizational memory.
+The Operating Model focuses on how the organization currently operates,
+including:
 
-The Operating Model is not the entirety of Organizational Intelligence. Decisions, simulations, outcomes, uncertainty, provenance, and organizational memory contribute to the broader persistent understanding held in Organization Runtime.
+- structures,
+- behaviors,
+- constraints,
+- mechanisms,
+- coordination,
+- execution,
+- learning patterns.
 
-Everything Discovery produces must remain grounded in that canonical Organizational Intelligence.
+Decisions, initiatives, outcomes, simulations, uncertainty, provenance, and
+broader organizational memory may interact with and inform the Operating Model
+without being reducible to it. The Organization Model and Operating Model do
+not require separate Runtime objects.
+
+Everything Discovery produces must remain grounded in canonical Organizational
+Intelligence.
 
 Including:
 
@@ -106,7 +127,9 @@ Including:
 - confidence,
 - executive learning.
 
-Every improvement to the Operating Model should improve every future executive decision.
+Every warranted improvement to the Operating Model should improve future
+organizational understanding and, within the Executive Operating System,
+support better executive decisions.
 
 The Operating Model is Discovery's primary competitive advantage.
 
@@ -149,7 +172,8 @@ Organizations continuously evolve.
 
 Discovery continuously evolves with them.
 
-The canonical lifecycle is:
+The canonical product lifecycle for the Executive Operating System application
+is:
 
 ```text
 Organization
@@ -196,6 +220,13 @@ Repeat
 ```
 
 Discovery succeeds when organizations repeatedly complete this lifecycle and improve over time.
+
+This is an application-specific use of the broader Universal Intelligence
+Lifecycle. Not every platform learning cycle must become Executive Work, and
+not every investigation must become a decision. Other applications may
+instantiate the platform lifecycle through different interactions and actions
+without weakening this lifecycle's authority inside the Executive Operating
+System.
 
 ---
 
@@ -425,6 +456,10 @@ Better Executive Work
 ```
 
 Every completed cycle should strengthen the next.
+
+This sequence describes continuous improvement within the Executive Operating
+System. Other applications participate in the same platform learning lifecycle
+without being required to create Executive Work.
 
 ---
 
