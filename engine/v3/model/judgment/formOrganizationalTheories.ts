@@ -1,5 +1,5 @@
 import type {
-  OrganizationalExplanation,
+  OrganizationalExplanationSeed,
   OrganizationalExplanationType,
 } from "./organizationalJudgment";
 import type {
@@ -13,7 +13,7 @@ import type {
 
 type ExplanationGroup = {
   key: string;
-  explanations: OrganizationalExplanation[];
+  explanations: OrganizationalExplanationSeed[];
 };
 
 const DEFAULT_MAX_THEORIES = 8;
@@ -39,9 +39,9 @@ export function formOrganizationalTheories(
 }
 
 function groupExplanations(
-  explanations: OrganizationalExplanation[],
+  explanations: OrganizationalExplanationSeed[],
 ): ExplanationGroup[] {
-  const grouped = new Map<string, OrganizationalExplanation[]>();
+  const grouped = new Map<string, OrganizationalExplanationSeed[]>();
 
   for (const explanation of explanations) {
     const key = buildGroupKey(explanation);
@@ -56,7 +56,7 @@ function groupExplanations(
   }));
 }
 
-function buildGroupKey(explanation: OrganizationalExplanation): string {
+function buildGroupKey(explanation: OrganizationalExplanationSeed): string {
   const type = getStringValue(explanation, "explanationType") ?? "unknown";
   const sourceNodeId = getStringValue(explanation, "sourceNodeId");
   const targetNodeId = getStringValue(explanation, "targetNodeId");
@@ -166,7 +166,7 @@ function buildTheory(
 }
 
 function inferPhenomenon(
-  explanations: OrganizationalExplanation[],
+  explanations: OrganizationalExplanationSeed[],
 ): OrganizationalTheoryPhenomenon {
   const text = normalize(getExplanationText(explanations));
 
@@ -207,7 +207,7 @@ function inferPhenomenon(
 
 function buildTitle(
   phenomenon: OrganizationalTheoryPhenomenon,
-  explanations: OrganizationalExplanation[],
+  explanations: OrganizationalExplanationSeed[],
 ): string {
   const centralLabel = findMostCommonLabel(explanations);
 
@@ -230,7 +230,7 @@ function buildTitle(
   return titleByPhenomenon[phenomenon];
 }
 
-function buildThesis(explanations: OrganizationalExplanation[]): string {
+function buildThesis(explanations: OrganizationalExplanationSeed[]): string {
   const centralLabel = findMostCommonLabel(explanations);
   const explanationCount = explanations.length;
 
@@ -239,7 +239,7 @@ function buildThesis(explanations: OrganizationalExplanation[]): string {
   }. The pattern suggests that multiple local issues are connected through a shared systemic mechanism rather than existing as isolated failures.`;
 }
 
-function buildSummary(explanations: OrganizationalExplanation[]): string {
+function buildSummary(explanations: OrganizationalExplanationSeed[]): string {
   const strongestExplanation = [...explanations].sort(
     (a, b) => getNumberValue(b, "confidence") - getNumberValue(a, "confidence"),
   )[0];
@@ -253,7 +253,7 @@ function buildSummary(explanations: OrganizationalExplanation[]): string {
 }
 
 function inferSystemicCauses(
-  explanations: OrganizationalExplanation[],
+  explanations: OrganizationalExplanationSeed[],
 ): string[] {
   return unique(
     explanations
@@ -266,7 +266,7 @@ function inferSystemicCauses(
   ).slice(0, 5);
 }
 
-function inferSymptoms(explanations: OrganizationalExplanation[]): string[] {
+function inferSymptoms(explanations: OrganizationalExplanationSeed[]): string[] {
   return unique(
     explanations
       .map(
@@ -279,7 +279,7 @@ function inferSymptoms(explanations: OrganizationalExplanation[]): string[] {
 }
 
 function inferReinforcingPatterns(
-  explanations: OrganizationalExplanation[],
+  explanations: OrganizationalExplanationSeed[],
 ): string[] {
   const patterns = explanations
     .map(
@@ -311,7 +311,7 @@ function inferReinforcingPatterns(
 }
 
 function buildEvidenceFor(
-  explanations: OrganizationalExplanation[],
+  explanations: OrganizationalExplanationSeed[],
 ): OrganizationalTheoryEvidence[] {
   return explanations.map((explanation) => ({
     explanationId: getStringValue(explanation, "id"),
@@ -326,7 +326,7 @@ function buildEvidenceFor(
 }
 
 function inferPredictedDownstreamEffects(
-  explanations: OrganizationalExplanation[],
+  explanations: OrganizationalExplanationSeed[],
 ): string[] {
   const effects = explanations
     .map((explanation) => getStringValue(explanation, "executiveImplication"))
@@ -341,7 +341,7 @@ function inferPredictedDownstreamEffects(
 
 function buildExecutiveInterpretation(
   phenomenon: OrganizationalTheoryPhenomenon,
-  explanations: OrganizationalExplanation[],
+  explanations: OrganizationalExplanationSeed[],
 ): string {
   const centralLabel = findMostCommonLabel(explanations);
 
@@ -361,7 +361,7 @@ function buildExecutiveInterpretation(
 }
 
 function calculateExplanatoryPower(
-  explanations: OrganizationalExplanation[],
+  explanations: OrganizationalExplanationSeed[],
 ): number {
   const explanationCountScore = Math.min(1, explanations.length / 5);
   const confidenceScore = average(
@@ -372,7 +372,7 @@ function calculateExplanatoryPower(
 }
 
 function calculateActionability(
-  explanations: OrganizationalExplanation[],
+  explanations: OrganizationalExplanationSeed[],
 ): number {
   const actionableCount = explanations.filter((explanation) =>
     Boolean(
@@ -385,7 +385,7 @@ function calculateActionability(
 }
 
 function calculateStrategicImportance(
-  explanations: OrganizationalExplanation[],
+  explanations: OrganizationalExplanationSeed[],
 ): number {
   const importanceSignals = explanations.filter((explanation) => {
     const text = normalize(getSingleExplanationText(explanation));
@@ -407,7 +407,7 @@ function calculateStrategicImportance(
 }
 
 function calculateContradictionRisk(
-  explanations: OrganizationalExplanation[],
+  explanations: OrganizationalExplanationSeed[],
 ): number {
   const contradictionSignals = explanations.filter((explanation) => {
     const text = normalize(getSingleExplanationText(explanation));
@@ -448,7 +448,7 @@ function inferStatus(
 }
 
 function findCentralNodeIds(
-  explanations: OrganizationalExplanation[],
+  explanations: OrganizationalExplanationSeed[],
 ): string[] {
   const counts = new Map<string, number>();
 
@@ -471,7 +471,7 @@ function findCentralNodeIds(
 }
 
 function findMostCommonLabel(
-  explanations: OrganizationalExplanation[],
+  explanations: OrganizationalExplanationSeed[],
 ): string {
   const labels = explanations
     .flatMap((explanation) => [
@@ -493,11 +493,11 @@ function findMostCommonLabel(
   );
 }
 
-function getExplanationText(explanations: OrganizationalExplanation[]): string {
+function getExplanationText(explanations: OrganizationalExplanationSeed[]): string {
   return explanations.map(getSingleExplanationText).join(" ");
 }
 
-function getSingleExplanationText(explanation: OrganizationalExplanation): string {
+function getSingleExplanationText(explanation: OrganizationalExplanationSeed): string {
   return [
     getStringValue(explanation, "title"),
     getStringValue(explanation, "summary"),
@@ -510,7 +510,7 @@ function getSingleExplanationText(explanation: OrganizationalExplanation): strin
 }
 
 function getStringValue(
-  value: OrganizationalExplanation | undefined,
+  value: OrganizationalExplanationSeed | undefined,
   key: string,
 ): string | undefined {
   if (!value) return undefined;
@@ -522,7 +522,7 @@ function getStringValue(
 }
 
 function getNumberValue(
-  value: OrganizationalExplanation | undefined,
+  value: OrganizationalExplanationSeed | undefined,
   key: string,
 ): number {
   if (!value) return 0;
@@ -534,7 +534,7 @@ function getNumberValue(
 }
 
 function getStringArrayValue(
-  value: OrganizationalExplanation,
+  value: OrganizationalExplanationSeed,
   key: string,
 ): string[] {
   const record = value as unknown as Record<string, unknown>;
@@ -545,7 +545,7 @@ function getStringArrayValue(
     : [];
 }
 
-function getKnowledgeReferences(explanation: OrganizationalExplanation) {
+function getKnowledgeReferences(explanation: OrganizationalExplanationSeed) {
   const record = explanation as unknown as Record<string, unknown>;
   const field = record.evidenceReferences;
 

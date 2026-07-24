@@ -340,6 +340,7 @@ export function interpretMechanismCandidates(
 
         supportingEvidenceIds,
         supportingExplanationIds: candidate.explanationIds,
+        supportingExplanationSeedIds: candidate.explanationIds,
         supportingClusterIds: candidate.clusterIds,
         supportingPhenomenonIds: candidate.phenomenonIds,
 

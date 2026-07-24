@@ -3,6 +3,10 @@ import type {
   OrganizationalTheoryEvolution,
   OrganizationalTheoryStatus,
 } from "./organizationalTheories";
+import type {
+  OrganizationalOutcomeRef,
+  OrganizationalScopeRef,
+} from "../judgment/organizationalJudgment";
 
 type TheorySignal = {
   id?: string;
@@ -15,6 +19,11 @@ type TheorySignal = {
   supportingBeliefIds?: string[];
   supportingConceptIds?: string[];
   supportingEvidenceIds?: string[];
+  supportingExplanationSeedIds?: string[];
+  supportingReasoningPathIds?: string[];
+  reasoningPathIds?: string[];
+  scopeRef?: OrganizationalScopeRef;
+  outcomeRefs?: OrganizationalOutcomeRef[];
 };
 
 export type ConsolidateOrganizationalTheoriesParams = {
@@ -112,6 +121,22 @@ export function consolidateOrganizationalTheories({
       supportingEvidence: mergeIds(
         existing.supportingEvidence,
         candidate.supportingEvidence,
+      ),
+      explanationSeedIds: mergeIds(
+        existing.explanationSeedIds ?? [],
+        candidate.explanationSeedIds ?? [],
+      ),
+      reasoningPathIds: mergeIds(
+        existing.reasoningPathIds ?? [],
+        candidate.reasoningPathIds ?? [],
+      ),
+      scopeRefs: mergeObjects(
+        existing.scopeRefs ?? [],
+        candidate.scopeRefs ?? [],
+      ),
+      outcomeRefs: mergeObjects(
+        existing.outcomeRefs ?? [],
+        candidate.outcomeRefs ?? [],
       ),
       lastConfirmed: now,
       investigationCount: existing.investigationCount + 1,
@@ -290,6 +315,29 @@ function createTheory(params: {
   const supportingMechanisms = ids(params.mechanisms).slice(0, 12);
   const supportingConcepts = ids(params.concepts).slice(0, 12);
   const supportingEvidence = ids(params.evidence).slice(0, 16);
+  const explanationSeedIds = uniqueIds(
+    params.mechanisms.flatMap(
+      (mechanism) => mechanism.supportingExplanationSeedIds ?? [],
+    ),
+  );
+  const reasoningPathIds = uniqueIds(
+    params.mechanisms.flatMap(
+      (mechanism) =>
+        mechanism.supportingReasoningPathIds ??
+        mechanism.reasoningPathIds ??
+        [],
+    ),
+  );
+  const scopeRefs = mergeObjects(
+    [],
+    params.mechanisms
+      .map((mechanism) => mechanism.scopeRef)
+      .filter((scope): scope is OrganizationalScopeRef => Boolean(scope)),
+  );
+  const outcomeRefs = mergeObjects(
+    [],
+    params.mechanisms.flatMap((mechanism) => mechanism.outcomeRefs ?? []),
+  );
 
   const supportCount =
     supportingBeliefs.length +
@@ -333,6 +381,10 @@ function createTheory(params: {
     supportingBeliefs,
     supportingConcepts,
     supportingEvidence,
+    explanationSeedIds,
+    reasoningPathIds,
+    scopeRefs,
+    outcomeRefs,
     competingTheories: [],
     firstObserved: params.now,
     lastConfirmed: params.now,
@@ -411,7 +463,20 @@ function ids(items: TheorySignal[]): string[] {
 }
 
 function mergeIds(a: string[], b: string[]): string[] {
-  return Array.from(new Set([...a, ...b]));
+  return uniqueIds([...a, ...b]);
+}
+
+function uniqueIds(values: string[]): string[] {
+  return Array.from(new Set(values)).sort();
+}
+
+function mergeObjects<T>(a: T[], b: T[]): T[] {
+  const byValue = new Map(
+    [...a, ...b].map((value) => [JSON.stringify(value), value]),
+  );
+  return [...byValue.entries()]
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([, value]) => value);
 }
 
 function matchesAny(text: string, keywords: string[]): boolean {

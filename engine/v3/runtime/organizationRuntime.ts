@@ -46,6 +46,10 @@ import type {
   OrganizationalState,
 } from "../model/state/inferOrganizationalConditions";
 import type {
+  OrganizationalExplanation,
+  OrganizationalExplanationSeed,
+} from "../model/judgment/organizationalJudgment";
+import type {
   ExecutiveSimulation,
 } from "../simulation/executiveSimulation";
 import type {
@@ -105,6 +109,12 @@ export type OrganizationRuntimeMemory = {
   beliefs: PersistentBelief[];
 
   theories: OrganizationalTheory[];
+  organizationalExplanationSeeds: OrganizationalExplanationSeed[];
+  organizationalExplanations: OrganizationalExplanation[];
+  organizationalExplanationCompletionFailures: Array<{
+    seedId: string;
+    missingRelationships: string[];
+  }>;
   theoryEvolution: OrganizationalTheoryEvolution[];
   understandingEvolution: UnderstandingEvolution | null;
   memoryMaturity: OrganizationalMemoryMaturity | null;
@@ -314,6 +324,9 @@ export function createEmptyOrganizationRuntime(params: {
       beliefs: [],
 
       theories: [],
+      organizationalExplanationSeeds: [],
+      organizationalExplanations: [],
+      organizationalExplanationCompletionFailures: [],
       theoryEvolution: [],
       understandingEvolution: null,
       memoryMaturity: null,

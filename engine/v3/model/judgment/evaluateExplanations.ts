@@ -1,18 +1,18 @@
 import type {
-  OrganizationalExplanation,
+  OrganizationalExplanationSeed,
   OrganizationalJudgment,
   OrganizationalJudgmentCriteria,
 } from "./organizationalJudgment";
 
 type EvaluateExplanationsInput = {
-  explanations: OrganizationalExplanation[];
+  explanations: OrganizationalExplanationSeed[];
 };
 
 const clamp01 = (value: number): number =>
   Math.max(0, Math.min(1, value));
 
 function scoreExplanation(
-  explanation: OrganizationalExplanation,
+  explanation: OrganizationalExplanationSeed,
 ): OrganizationalJudgmentCriteria {
   const evidentialSupport = clamp01(
     explanation.evidenceReferences.length * 0.08,

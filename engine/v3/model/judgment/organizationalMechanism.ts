@@ -1,5 +1,9 @@
 import type { KnowledgeReference } from "../../cognition/cognitiveGraph";
 import type { CognitiveObjectBase } from "../cognition/cognitiveOntology";
+import type {
+  OrganizationalOutcomeRef,
+  OrganizationalScopeRef,
+} from "./organizationalJudgment";
 
 export type OrganizationalMechanismType =
   | "decisionLatency"
@@ -68,6 +72,8 @@ export type OrganizationalMechanism =
     stability: MechanismStability;
 
     organizationalScope?: string;
+    scopeRef?: OrganizationalScopeRef;
+    outcomeRefs?: OrganizationalOutcomeRef[];
 
     /**
      * Executive-facing capabilities affected by this mechanism.
@@ -81,6 +87,7 @@ export type OrganizationalMechanism =
      */
     supportingEvidenceIds: string[];
     supportingExplanationIds: string[];
+    supportingExplanationSeedIds?: string[];
     supportingReasoningPathIds?: string[];
     supportingJudgmentIds?: string[];
     supportingClusterIds: string[];

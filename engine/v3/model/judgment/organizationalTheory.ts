@@ -1,6 +1,6 @@
 import type { KnowledgeReference } from "../../cognition/cognitiveGraph";
 import type {
-  OrganizationalExplanation,
+  OrganizationalExplanationSeed,
   OrganizationalExplanationType,
 } from "./organizationalJudgment";
 
@@ -59,7 +59,7 @@ export type OrganizationalTheory = {
    * Keeps the theory self-contained so later judgment stages do not need to
    * repeatedly reconstruct the explanation objects from IDs.
    */
-  supportingExplanations: OrganizationalExplanation[];
+  supportingExplanations: OrganizationalExplanationSeed[];
 
   explanationTypes: OrganizationalExplanationType[];
 
@@ -86,7 +86,7 @@ export type OrganizationalTheory = {
 };
 
 export type FormOrganizationalTheoriesInput = {
-  explanations: OrganizationalExplanation[];
+  explanations: OrganizationalExplanationSeed[];
   maxTheories?: number;
 };
 

@@ -7,7 +7,7 @@ import type {
 } from "../../types";
 import { runDiscoveryV3 } from "../../v3";
 import type { KnowledgeReference } from "../../v3/cognition/cognitiveGraph";
-import type { OrganizationalExplanation } from "../../v3/model/judgment/organizationalJudgment";
+import type { OrganizationalExplanationSeed } from "../../v3/model/judgment/organizationalJudgment";
 import type { OrganizationalMechanism } from "../../v3/model/judgment/organizationalMechanism";
 import type { OrganizationalTheory } from "../../v3/model/memory/organizationalTheories";
 import { createEmptyOrganizationRuntime } from "../../v3/runtime/organizationRuntime";
@@ -448,9 +448,9 @@ function extendedMemory(execution: Execution): UnknownRecord {
   return execution.runtime.memory as unknown as UnknownRecord;
 }
 
-function productionExplanations(execution: Execution): OrganizationalExplanation[] {
-  const values = extendedMemory(execution).organizationalExplanations;
-  return Array.isArray(values) ? (values as OrganizationalExplanation[]) : [];
+function productionExplanations(execution: Execution): OrganizationalExplanationSeed[] {
+  const values = extendedMemory(execution).organizationalExplanationSeeds;
+  return Array.isArray(values) ? (values as OrganizationalExplanationSeed[]) : [];
 }
 
 function productionMechanisms(execution: Execution): OrganizationalMechanism[] {
@@ -523,10 +523,9 @@ function semanticIdentity(input: {
 }
 
 function evidenceIds(references: KnowledgeReference[]): string[] {
-  // KnowledgeReference does not currently include an Evidence node type.
-  // Direct Evidence ancestry must therefore come from Mechanism or Theory IDs.
-  void references;
-  return [];
+  return references
+    .filter((reference) => reference.type === "evidence")
+    .map((reference) => reference.id);
 }
 
 function constructCandidates(

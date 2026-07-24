@@ -37,7 +37,7 @@ function getOrganizationPath(
   );
 }
 
-function normalizeOrganizationRuntime(
+export function normalizeOrganizationRuntime(
   runtime: OrganizationRuntime,
 ): OrganizationRuntime {
   return {
@@ -54,6 +54,19 @@ function normalizeOrganizationRuntime(
         runtime.memory
           .executiveDecisionRecords ??
         [],
+      organizationalExplanationSeeds:
+        runtime.memory.organizationalExplanationSeeds ?? [],
+      organizationalExplanations:
+        runtime.memory.organizationalExplanations ?? [],
+      organizationalExplanationCompletionFailures:
+        runtime.memory.organizationalExplanationCompletionFailures ?? [],
+      theories: (runtime.memory.theories ?? []).map((theory) => ({
+        ...theory,
+        explanationSeedIds: theory.explanationSeedIds ?? [],
+        reasoningPathIds: theory.reasoningPathIds ?? [],
+        scopeRefs: theory.scopeRefs ?? [],
+        outcomeRefs: theory.outcomeRefs ?? [],
+      })),
     },
   };
 }

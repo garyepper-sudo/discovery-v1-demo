@@ -60,6 +60,7 @@ export type OrganizationalCondition = {
   supportingBeliefIds: string[];
   supportingMechanismIds: string[];
   supportingTheoryIds: string[];
+  supportingExplanationIds?: string[];
 
   /**
    * Conditions that currently influence this condition.
@@ -97,6 +98,7 @@ type InferOrganizationalConditionsInput = {
   organizationalBeliefs?: any[];
   mechanisms?: any[];
   theories?: any[];
+  explanations?: any[];
   theoryEvolution?: any[];
   capabilities?: any[];
   memoryMaturity?: any;
@@ -1021,6 +1023,7 @@ function scoreDomain(params: {
     supportingBeliefIds: unique(matchingBeliefs.map((belief) => belief.id)),
     supportingMechanismIds: unique(matchingMechanisms.map((mechanism) => mechanism.id)),
     supportingTheoryIds: unique(matchingTheories.map((theory) => theory.id)),
+    supportingExplanationIds: [],
     upstreamConditionIds: [],
     downstreamConditionIds: [],
     recommendedExecutiveAction: assessment.recommendedExecutiveAction,
@@ -1197,6 +1200,7 @@ export function inferOrganizationalConditions(
   const organizationalBeliefs = input.organizationalBeliefs ?? [];
   const mechanisms = input.mechanisms ?? [];
   const theories = input.theories ?? [];
+  const explanations = input.explanations ?? [];
   const theoryEvolution = input.theoryEvolution ?? [];
 
   const previousConditionsById = new Map(
@@ -1252,6 +1256,27 @@ export function inferOrganizationalConditions(
 
       return {
         ...condition,
+        supportingExplanationIds: unique(
+          explanations
+            .filter((explanation) => {
+              const mechanismIds = Array.isArray(explanation?.mechanismIds)
+                ? explanation.mechanismIds
+                : [];
+              const theoryIds = Array.isArray(explanation?.theoryIds)
+                ? explanation.theoryIds
+                : [];
+              return (
+                mechanismIds.some((id: string) =>
+                  condition.supportingMechanismIds.includes(id),
+                ) ||
+                theoryIds.some((id: string) =>
+                  condition.supportingTheoryIds.includes(id),
+                )
+              );
+            })
+            .map((explanation) => explanation.id)
+            .filter((id): id is string => typeof id === "string"),
+        ),
         upstreamConditionIds,
         downstreamConditionIds,
         summary: relationship

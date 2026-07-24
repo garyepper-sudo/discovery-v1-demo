@@ -1,4 +1,4 @@
-import type { OrganizationalExplanation } from "./organizationalJudgment";
+import type { OrganizationalExplanationSeed } from "./organizationalJudgment";
 import type { OrganizationalMechanism } from "./organizationalMechanism";
 import type { V3Contradiction } from "../../types";
 
@@ -93,7 +93,7 @@ export type OrganizationalJudgmentLike = {
   summary?: string;
 };
 
-export type ExplanationLike = OrganizationalExplanation & {
+export type ExplanationLike = OrganizationalExplanationSeed & {
   interpretation?: string;
   executiveImplication?: string;
   type?: string;

@@ -5,6 +5,7 @@
    ========================================================== */
 
 export type OrganizationalKnowledgeNodeType =
+  | "evidence"
   | "observation"
   | "belief"
   | "understanding"

@@ -8,7 +8,8 @@ import { calculateMemoryMaturity } from "../model/memory/calculateMemoryMaturity
 import { inferOrganizationalObservations } from "../model/observations/inferOrganizationalObservations";
 import { inferReasoningRelationships } from "../model/inferReasoningRelationships";
 import { runOrganizationalReasoningEngine } from "../model/reasoning";
-import { synthesizeExplanations } from "../model/judgment/synthesizeExplanations";
+import { synthesizeExplanationSeeds } from "../model/judgment/synthesizeExplanations";
+import { completeOrganizationalExplanations } from "../model/judgment/completeOrganizationalExplanations";
 import { evaluateExplanations } from "../model/judgment/evaluateExplanations";
 import { detectJudgmentContradictions } from "../model/judgment/detectJudgmentContradictions";
 import { buildExecutiveAssessment } from "../model/judgment/buildExecutiveAssessment";
@@ -332,7 +333,9 @@ export function evolveOrganizationRuntime(params: {
       maxPaths: 50,
     });
 
-  const organizationalExplanations = synthesizeExplanations({
+  const organizationalExplanationSeeds = synthesizeExplanationSeeds({
+    organizationId: runtime.metadata.organizationId,
+    generatedAt: now,
     reasoningPaths: organizationalReasoning.paths,
     indirectEffects: organizationalReasoning.indirectEffects,
     leveragePoints: organizationalReasoning.leveragePoints,
@@ -341,11 +344,11 @@ export function evolveOrganizationRuntime(params: {
   });
 
   let organizationalJudgments = evaluateExplanations({
-    explanations: organizationalExplanations,
+    explanations: organizationalExplanationSeeds,
   });
 
   organizationalJudgments = detectJudgmentContradictions({
-    explanations: organizationalExplanations,
+    explanations: organizationalExplanationSeeds,
     judgments: organizationalJudgments,
   });
 
@@ -362,8 +365,8 @@ export function evolveOrganizationRuntime(params: {
     organizationalReasoning,
   );
   console.log(
-    "Organizational Explanations",
-    organizationalExplanations,
+    "Organizational Explanation Seeds",
+    organizationalExplanationSeeds,
   );
   console.log(
     "Organizational Judgments",
@@ -393,7 +396,7 @@ export function evolveOrganizationRuntime(params: {
     understandings:
       updatedOrganizationalUnderstandingState.currentUnderstandings,
     patterns: ontologyPatterns,
-    explanations: organizationalExplanations,
+    explanations: organizationalExplanationSeeds,
     reasoningPaths: organizationalReasoning.paths,
     capabilities: organizationalCapabilitiesState.capabilities,
     understandingClusters,
@@ -401,10 +404,56 @@ export function evolveOrganizationRuntime(params: {
     semanticConcepts: organizationalConcepts,
   });
 
+  const organizationScope = {
+    organizationId: runtime.metadata.organizationId,
+    type: "organization" as const,
+    id: runtime.metadata.organizationId,
+  };
+  const seedById = new Map(
+    organizationalExplanationSeeds.map((seed) => [seed.id, seed]),
+  );
   const safeMechanismNetwork = {
     ...mechanismNetwork,
     mechanisms: Array.isArray(mechanismNetwork?.mechanisms)
-      ? mechanismNetwork.mechanisms
+      ? mechanismNetwork.mechanisms.map((mechanism) => {
+          const seedIds = Array.from(
+            new Set(
+              mechanism.supportingExplanationSeedIds ??
+                mechanism.supportingExplanationIds ??
+                [],
+            ),
+          ).sort();
+          const linkedSeeds = seedIds
+            .map((id) => seedById.get(id))
+            .filter((seed): seed is NonNullable<typeof seed> => Boolean(seed));
+          return {
+            ...mechanism,
+            supportingExplanationSeedIds: seedIds,
+            supportingReasoningPathIds: Array.from(
+              new Set([
+                ...(mechanism.supportingReasoningPathIds ?? []),
+                ...(mechanism.reasoningPathIds ?? []),
+                ...linkedSeeds.flatMap((seed) => seed.reasoningPathIds),
+              ]),
+            ).sort(),
+            scopeRef: organizationScope,
+            outcomeRefs: linkedSeeds
+              .flatMap((seed) => seed.outcomeRefs)
+              .filter(
+                (outcome, index, all) =>
+                  all.findIndex(
+                    (candidate) =>
+                      candidate.type === outcome.type &&
+                      candidate.id === outcome.id,
+                  ) === index,
+              )
+              .sort(
+                (left, right) =>
+                  left.type.localeCompare(right.type) ||
+                  left.id.localeCompare(right.id),
+              ),
+          };
+        })
       : [],
     edges: Array.isArray(mechanismNetwork?.edges)
       ? mechanismNetwork.edges
@@ -434,7 +483,7 @@ export function evolveOrganizationRuntime(params: {
       meaningSignals,
       phenomena: organizationalPhenomenaState.phenomena,
 
-      explanations: organizationalExplanations,
+      explanations: organizationalExplanationSeeds,
       judgments: organizationalJudgments,
       capabilities: organizationalCapabilitiesState.capabilities,
       contradictions: result.contradictions,
@@ -459,6 +508,23 @@ export function evolveOrganizationRuntime(params: {
       evidence: result.evidence ?? [],
       now,
     });
+
+  const organizationalExplanationCompletion =
+    completeOrganizationalExplanations({
+      organizationId: runtime.metadata.organizationId,
+      seeds: organizationalExplanationSeeds,
+      mechanisms: safeMechanismNetwork.mechanisms,
+      beliefs: organizationalBeliefState.beliefs,
+      theories: organizationalTheoryState.theories,
+      existingExplanations: memory.organizationalExplanations ?? [],
+      contradictionIds: (result.contradictions ?? []).map(
+        (contradiction) => contradiction.id,
+      ),
+      now,
+    });
+
+  const organizationalExplanations =
+    organizationalExplanationCompletion.explanations;
 
   const understandingEvolution = buildUnderstandingEvolution({
     beliefRevisions: organizationalBeliefState.revisions,
@@ -541,6 +607,7 @@ export function evolveOrganizationRuntime(params: {
         organizationalBeliefState.beliefs,
       mechanisms: safeMechanismNetwork.mechanisms,
       theories: organizationalTheoryState.theories,
+      explanations: organizationalExplanations,
       theoryEvolution: [
         ...(memory.theoryEvolution ?? []),
         ...organizationalTheoryState.theoryEvolution,
@@ -1317,7 +1384,10 @@ const updatedMemory = {
     organizationReasoningRelationships,
     organizationalReasoning,
 
+    organizationalExplanationSeeds,
     organizationalExplanations,
+    organizationalExplanationCompletionFailures:
+      organizationalExplanationCompletion.failures,
     organizationalJudgments,
     executiveAssessment,
     executiveRecommendation,
@@ -1388,6 +1458,8 @@ const updatedMemory = {
     organizationalMemory: {
       beliefs: organizationalBeliefState.beliefs,
       theories: organizationalTheoryState.theories,
+      organizationalExplanationSeeds,
+      organizationalExplanations,
 
       theoryEvolution: [
         ...(memory.theoryEvolution ?? []),

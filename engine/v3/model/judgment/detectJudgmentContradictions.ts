@@ -1,10 +1,10 @@
 import type {
-  OrganizationalExplanation,
+  OrganizationalExplanationSeed,
   OrganizationalJudgment,
 } from "./organizationalJudgment";
 
 type DetectJudgmentContradictionsInput = {
-  explanations: OrganizationalExplanation[];
+  explanations: OrganizationalExplanationSeed[];
   judgments: OrganizationalJudgment[];
 };
 

@@ -28,13 +28,55 @@ export type OrganizationalJudgmentCriteria = {
   interventionLeverage: number;
 };
 
-export type OrganizationalExplanation = {
+export type OrganizationalScopeType =
+  | "organization"
+  | "businessUnit"
+  | "department"
+  | "team"
+  | "process"
+  | "initiative"
+  | "decision"
+  | "crossFunctionalSystem";
+
+export type OrganizationalScopeRef = {
+  organizationId: string;
+  type: OrganizationalScopeType;
   id: string;
+  parent?: {
+    type: OrganizationalScopeType;
+    id: string;
+  };
+};
+
+export type OrganizationalOutcomeRef = {
+  type: "phenomenon" | "reasoningNode" | "indirectEffect";
+  id: string;
+};
+
+/**
+ * Investigation-local causal hypothesis formed before canonical Mechanisms
+ * and Theories exist. Seeds may support early judgment, but are not completed
+ * Organizational Explanations.
+ */
+export type OrganizationalExplanationSeed = {
+  id: string;
+  organizationId: string;
+  semanticKey: string;
+
   title: string;
   summary: string;
 
   explanationType: OrganizationalExplanationType;
 
+  scope: OrganizationalScopeRef;
+  outcomeRefs: OrganizationalOutcomeRef[];
+  reasoningPathIds: string[];
+  reasoningRelationshipIds: string[];
+  evidenceIds: string[];
+
+  /**
+   * Transitional aliases used by the existing early judgment pipeline.
+   */
   supportedPathIds: string[];
   explainedEffectIds: string[];
   relatedRootCauseIds: string[];
@@ -45,6 +87,36 @@ export type OrganizationalExplanation = {
   evidenceReferences: KnowledgeReference[];
 
   confidence: number;
+  generatedAt: string;
+};
+
+export type OrganizationalExplanation = {
+  id: string;
+  organizationId: string;
+  semanticKey: string;
+
+  claim: {
+    scope: OrganizationalScopeRef;
+    rootMechanismIds: string[];
+    outcomeRefs: OrganizationalOutcomeRef[];
+    causalRelationFamily: OrganizationalExplanationType;
+  };
+
+  explanationSeedIds: string[];
+  reasoningPathIds: string[];
+  mechanismIds: string[];
+  beliefIds: string[];
+  theoryIds: string[];
+  evidenceIds: string[];
+
+  contradictionIds: string[];
+  assumptions: string[];
+
+  viability: "unadjudicated";
+  uncertainty: string[];
+
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type OrganizationalJudgment = {

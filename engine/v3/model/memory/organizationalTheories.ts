@@ -20,6 +20,11 @@ export type OrganizationalTheory = {
   supportingConcepts: string[];
   supportingEvidence: string[];
 
+  explanationSeedIds?: string[];
+  reasoningPathIds?: string[];
+  scopeRefs?: OrganizationalScopeRef[];
+  outcomeRefs?: OrganizationalOutcomeRef[];
+
   competingTheories: string[];
 
   firstObserved: string;
@@ -59,3 +64,7 @@ export type OrganizationalMemoryMaturity = {
   conceptStability: number;
   reasons: string[];
 };
+import type {
+  OrganizationalOutcomeRef,
+  OrganizationalScopeRef,
+} from "../judgment/organizationalJudgment";

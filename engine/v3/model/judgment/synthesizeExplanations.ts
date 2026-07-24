@@ -1,10 +1,15 @@
 import type {
-  OrganizationalExplanation,
+  OrganizationalExplanationSeed,
   OrganizationalExplanationType,
+  OrganizationalOutcomeRef,
+  OrganizationalScopeRef,
 } from "./organizationalJudgment";
 import type { OrganizationalReasoningPath } from "../reasoning/reasoningTypes";
 
 type SynthesizeExplanationsInput = {
+  organizationId: string;
+  scope?: OrganizationalScopeRef;
+  generatedAt?: string;
   reasoningPaths: OrganizationalReasoningPath[];
   indirectEffects?: Array<{
     id: string;
@@ -44,6 +49,31 @@ const clamp01 = (value: number): number => Math.max(0, Math.min(1, value));
 const normalize = (value: string): string =>
   value.trim().toLowerCase().replace(/\s+/g, " ");
 
+const stable = (value: unknown): string => {
+  if (Array.isArray(value)) return `[${value.map(stable).join(",")}]`;
+  if (value && typeof value === "object") {
+    return `{${Object.entries(value as Record<string, unknown>)
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([key, item]) => `${JSON.stringify(key)}:${stable(item)}`)
+      .join(",")}}`;
+  }
+  return JSON.stringify(value);
+};
+
+const hash = (value: string): string => {
+  let result = 2166136261;
+  for (let index = 0; index < value.length; index += 1) {
+    result ^= value.charCodeAt(index);
+    result = Math.imul(result, 16777619);
+  }
+  return (result >>> 0).toString(16).padStart(8, "0");
+};
+
+const relationshipId = (
+  step: OrganizationalReasoningPath["steps"][number],
+): string =>
+  `${step.fromNodeId}->${normalize(step.relationship)}->${step.toNodeId}`;
+
 const inferExplanationType = (
   path: OrganizationalReasoningPath,
 ): OrganizationalExplanationType => {
@@ -73,10 +103,17 @@ const buildSummary = (
   }.`;
 };
 
-export function synthesizeExplanations(
+export function synthesizeExplanationSeeds(
   input: SynthesizeExplanationsInput,
-): OrganizationalExplanation[] {
+): OrganizationalExplanationSeed[] {
   const {
+    organizationId,
+    scope = {
+      organizationId,
+      type: "organization",
+      id: organizationId,
+    },
+    generatedAt = new Date().toISOString(),
     reasoningPaths,
     indirectEffects = [],
     leveragePoints = [],
@@ -96,10 +133,17 @@ export function synthesizeExplanations(
     grouped.set(key, existing);
   }
 
-  return Array.from(grouped.values()).map((paths, index) => {
+  return Array.from(grouped.entries())
+    .sort(([left], [right]) => left.localeCompare(right))
+    .map(([, paths]) => {
     const primaryPath = paths[0];
 
-    const pathIds = paths.map((path: OrganizationalReasoningPath) => path.id);
+    const pathIds = paths
+      .map((path: OrganizationalReasoningPath) => path.id)
+      .sort();
+    const reasoningRelationshipIds = Array.from(
+      new Set(paths.flatMap((path) => path.steps.map(relationshipId))),
+    ).sort();
 
     const evidenceReferences = paths.flatMap(
       (path: OrganizationalReasoningPath) =>
@@ -129,13 +173,37 @@ export function synthesizeExplanations(
       )
       .map((item) => item.id);
 
-    const explainedEffectIds = indirectEffects
+    const relatedIndirectEffects = indirectEffects
       .filter(
         (item) =>
           (item.sourceNodeId && sourceNodeIds.has(item.sourceNodeId)) ||
           (item.targetNodeId && targetNodeIds.has(item.targetNodeId)),
       )
-      .map((item) => item.id);
+      .sort((left, right) => left.id.localeCompare(right.id));
+    const explainedEffectIds = relatedIndirectEffects.map((item) => item.id);
+    const outcomeRefs: OrganizationalOutcomeRef[] = [
+      ...Array.from(targetNodeIds)
+        .sort()
+        .map((id) => ({ type: "reasoningNode" as const, id })),
+      ...relatedIndirectEffects.map((item) => ({
+        type: "indirectEffect" as const,
+        id: item.id,
+      })),
+    ];
+    const evidenceIds = Array.from(
+      new Set(
+        evidenceReferences
+          .filter((reference) => reference.type === "evidence")
+          .map((reference) => reference.id),
+      ),
+    ).sort();
+    const semanticKey = stable({
+      organizationId,
+      scope,
+      reasoningRelationshipIds,
+      sourceNodeId: primaryPath.sourceNodeId,
+      outcomeRefs,
+    });
 
     const relatedExecutiveConclusionIds = executiveConclusions
       .filter((item) => {
@@ -165,11 +233,19 @@ export function synthesizeExplanations(
     );
 
     return {
-      id: `organizational-explanation-${index + 1}`,
+      id: `organizational-explanation-seed:${hash(semanticKey)}`,
+      organizationId,
+      semanticKey,
       title: buildTitle(primaryPath),
       summary: buildSummary(primaryPath, paths.length),
 
       explanationType: inferExplanationType(primaryPath),
+
+      scope,
+      outcomeRefs,
+      reasoningPathIds: pathIds,
+      reasoningRelationshipIds,
+      evidenceIds,
 
       supportedPathIds: pathIds,
       explainedEffectIds,
@@ -185,6 +261,13 @@ export function synthesizeExplanations(
       evidenceReferences,
 
       confidence,
+      generatedAt,
     };
   });
 }
+
+/**
+ * Transitional source compatibility. New production code should use the
+ * semantically explicit seed producer.
+ */
+export const synthesizeExplanations = synthesizeExplanationSeeds;
