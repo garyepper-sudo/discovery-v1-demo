@@ -26,6 +26,7 @@
     "benchmark:primary-constraint-ranking": "tsx engine/benchmark/judgment-lab/primaryConstraintRankingGroundTruth.ts",
     "benchmark:causal-constraint-reasoning": "tsx engine/benchmark/judgment-lab/causalConstraintReasoningBenchmark.ts",
     "benchmark:causal-constraint-shadow": "tsx engine/benchmark/judgment-lab/causalConstraintProductionShadow.ts",
+    "benchmark:implicit-causal-edge-recovery": "tsx engine/benchmark/judgment-lab/implicitCausalEdgeRecovery.ts",
     "validate:executive-conversation": "tsx scripts/product/validateExecutiveConversationIntelligence.ts",
     "northstar:cognitive-layer-validation:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarCognitiveLayerValidation001.ts",
     "northstar:cognitive-trace:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarCognitiveTrace001.ts",
