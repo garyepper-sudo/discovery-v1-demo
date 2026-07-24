@@ -21,8 +21,8 @@ const controlledMockReversed = await runExecutiveCollaborationLab([...executiveC
 assert.equal(executiveConversationScenarios.length, 6);
 assert.deepEqual(runtimeOnlyRepeated, runtimeOnly);
 assert.deepEqual(controlledMockRepeated, controlledMock);
-assert.equal(runtimeOnly.overallScore, 65.21);
-assert.equal(controlledMock.overallScore, 90.36);
+assert.equal(runtimeOnly.overallScore, 67.47);
+assert.equal(controlledMock.overallScore, 91.67);
 for (const [mode, baseline, reversed] of [["none", runtimeOnly, runtimeOnlyReversed], ["mock", controlledMock, controlledMockReversed]] as const) {
   assert.deepEqual(reversed.results.map((item)=>item.scenario.id).sort(), baseline.results.map((item)=>item.scenario.id).sort());
   for (const item of baseline.results) {
@@ -32,6 +32,7 @@ for (const [mode, baseline, reversed] of [["none", runtimeOnly, runtimeOnlyRever
     assert.equal(item.run.organizationId, item.scenario.organizationId);
     assert.equal(item.run.finalRuntime.metadata.organizationId, item.scenario.organizationId);
     assert.ok(item.run.trace.every((turn) => mode === "mock" ? turn.interpretation !== null : turn.interpretation === null));
+    assert.ok(item.run.trace.every((turn) => mode === "mock" ? turn.interpretation?.reasoningAnalysis !== null : true));
   }
 }
 assert.deepEqual(snapshot(), before);
