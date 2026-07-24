@@ -29,6 +29,7 @@
     "benchmark:implicit-causal-edge-recovery": "tsx engine/benchmark/judgment-lab/implicitCausalEdgeRecovery.ts",
     "benchmark:competing-explanation-adjudication": "tsx engine/benchmark/judgment-lab/competingExplanationAdjudication.ts",
     "benchmark:competing-explanation-production-shadow": "tsx engine/benchmark/judgment-lab/competingExplanationProductionShadow.ts",
+    "benchmark:structured-explanation-candidate-shadow": "tsx engine/benchmark/judgment-lab/structuredExplanationCandidateShadow.ts",
     "validate:executive-conversation": "tsx scripts/product/validateExecutiveConversationIntelligence.ts",
     "northstar:cognitive-layer-validation:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarCognitiveLayerValidation001.ts",
     "northstar:cognitive-trace:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarCognitiveTrace001.ts",
