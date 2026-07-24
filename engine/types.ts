@@ -1,9 +1,44 @@
+export type InvestigationEvidenceSource = {
+  /**
+   * Stable identity of the originating document, message, interview, or
+   * equivalent source. Multiple evidence records may share this identity.
+   */
+  sourceId: string;
+
+  /**
+   * Compact caller-defined source classification. When omitted, canonical
+   * ingestion preserves the legacy generic "user" source behavior.
+   */
+  sourceType?: string;
+
+  /**
+   * Time associated with the source observation or statement.
+   *
+   * This is provenance only. It does not affect recency weighting.
+   */
+  observedAt?: string;
+
+  /**
+   * Optional normalized source reliability in the inclusive range [0, 1].
+   *
+   * This is provenance only. It does not affect confidence calculations.
+   */
+  reliability?: number;
+
+  /**
+   * Source content. Each non-empty line becomes a distinct evidence record
+   * while retaining the shared source identity.
+   */
+  content: string;
+};
+
 export type InvestigationInput = {
   company: string;
   website: string;
   industry: string;
   question: string;
   context: string;
+  evidenceSources?: InvestigationEvidenceSource[];
 };
 
 export type ParsedInput = {

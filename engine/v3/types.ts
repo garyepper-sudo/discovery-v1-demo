@@ -52,6 +52,32 @@ export type V3Evidence = {
   entities: string[];
   source: string;
 
+  /**
+   * Optional stable identity of the originating source.
+   *
+   * This remains distinct from the generated evidence-record ID.
+   */
+  sourceId?: string;
+
+  /**
+   * Optional caller-provided source classification.
+   */
+  sourceType?: string;
+
+  /**
+   * Optional time associated with the source observation or statement.
+   *
+   * Preserved as provenance only; not consumed by recency weighting.
+   */
+  observedAt?: string;
+
+  /**
+   * Optional normalized source reliability in the inclusive range [0, 1].
+   *
+   * Preserved as provenance only; not consumed by confidence calculations.
+   */
+  reliability?: number;
+
   polarity?: V3Polarity;
   strength?: V3SignalStrength;
   confidenceBand?: V3ConfidenceBand;

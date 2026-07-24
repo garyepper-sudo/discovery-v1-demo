@@ -45,7 +45,10 @@ ${input.context}
   const workspace = createInvestigationWorkspace(rawText);
 
   workspace.metadata.stage = "evidence";
-  workspace.evidence = buildEvidence(workspace.rawText);
+  workspace.evidence = buildEvidence(
+    workspace.rawText,
+    input.evidenceSources,
+  );
 
   workspace.metadata.stage = "evidenceNetwork";
   workspace.evidenceNetwork = buildEvidenceNetwork(workspace.evidence);

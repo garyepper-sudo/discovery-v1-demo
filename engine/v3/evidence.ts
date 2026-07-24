@@ -5,6 +5,7 @@ import {
   V3Polarity,
   V3SignalStrength,
 } from "./types";
+import type { InvestigationEvidenceSource } from "../types";
 
 function detectType(text: string): V3EvidenceType {
   const t = text.toLowerCase();
@@ -196,28 +197,101 @@ function extractEntities(text: string): string[] {
   );
 }
 
-export function buildEvidence(context: string): V3Evidence[] {
-  return context
+type EvidenceProvenance = {
+  sourceId: string;
+  sourceType: string;
+  observedAt?: string;
+  reliability?: number;
+};
+
+function validObservedAt(value: string | undefined): string | undefined {
+  if (typeof value !== "string") return undefined;
+  const trimmed = value.trim();
+  if (!trimmed || Number.isNaN(Date.parse(trimmed))) return undefined;
+  return trimmed;
+}
+
+function validReliability(value: number | undefined): number | undefined {
+  return typeof value === "number" &&
+    Number.isFinite(value) &&
+    value >= 0 &&
+    value <= 1
+    ? value
+    : undefined;
+}
+
+function provenanceFrom(
+  source: InvestigationEvidenceSource,
+): EvidenceProvenance | null {
+  const sourceId = source.sourceId?.trim();
+  if (!sourceId) return null;
+
+  const sourceType = source.sourceType?.trim() || "user";
+  const observedAt = validObservedAt(source.observedAt);
+  const reliability = validReliability(source.reliability);
+
+  return {
+    sourceId,
+    sourceType,
+    ...(observedAt === undefined ? {} : { observedAt }),
+    ...(reliability === undefined ? {} : { reliability }),
+  };
+}
+
+function evidenceRecord(
+  text: string,
+  index: number,
+  provenance?: EvidenceProvenance,
+): V3Evidence {
+  const type = detectType(text);
+  const confidence = confidenceFrom(text, type);
+
+  return {
+    id: `E${index + 1}`,
+    text,
+    type,
+    confidence,
+    confidenceBand: confidenceBand(confidence),
+    polarity: detectPolarity(text),
+    strength: detectStrength(text),
+    keywords: extractKeywords(text),
+    entities: extractEntities(text),
+    source: "user",
+    ...(provenance ?? {}),
+    relatedEvidenceIds: [],
+    inferredFrom: [],
+  };
+}
+
+export function buildEvidence(
+  context: string,
+  evidenceSources: InvestigationEvidenceSource[] = [],
+): V3Evidence[] {
+  const legacyLines = context
     .split("\n")
     .map((line) => line.trim())
-    .filter(Boolean)
-    .map((text, index) => {
-      const type = detectType(text);
-      const confidence = confidenceFrom(text, type);
+    .filter(Boolean);
 
-      return {
-        id: `E${index + 1}`,
-        text,
-        type,
-        confidence,
-        confidenceBand: confidenceBand(confidence),
-        polarity: detectPolarity(text),
-        strength: detectStrength(text),
-        keywords: extractKeywords(text),
-        entities: extractEntities(text),
-        source: "user",
-        relatedEvidenceIds: [],
-        inferredFrom: [],
-      };
-    });
+  const structuredLines = evidenceSources.flatMap((source) => {
+    const provenance = provenanceFrom(source);
+    if (!provenance || typeof source.content !== "string") return [];
+
+    return source.content
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean)
+      .map((text) => ({ text, provenance }));
+  });
+
+  const records: Array<{
+    text: string;
+    provenance?: EvidenceProvenance;
+  }> = [
+    ...legacyLines.map((text) => ({ text })),
+    ...structuredLines,
+  ];
+
+  return records.map((item, index) =>
+    evidenceRecord(item.text, index, item.provenance)
+  );
 }
