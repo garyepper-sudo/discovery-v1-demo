@@ -91,6 +91,15 @@ export class MockConversationInterpreter implements ExecutiveConversationInterpr
       ambiguity,
       confidence: Math.min(0.95, 0.55 + (priorMessages.length > 0 ? 0.15 : 0) + (currentMessage.length >= 24 ? 0.1 : 0)),
       recommendedConversationalAction,
+      reasoningAnalysis: {
+        reasoningQuality: assertsCause ? "weak" : isAmbiguous ? "uncertain" : "mixed",
+        unsupportedAssumptions: assertsCause ? [sentence(currentMessage)] : [],
+        missingEvidence: assertsCause || isAmbiguous ? ["Evidence that would test the participant's current explanation."] : [],
+        competingHypotheses: assertsCause ? ["Another explanation may account for the reported outcome."] : [],
+        possibleBiases: includesAny(normalized, ["i know", "definitely", "only"]) ? ["Possible confirmation or overconfidence bias."] : [],
+        confidence: assertsCause || isAmbiguous ? 0.75 : 0.55,
+        challengeOpportunity: assertsCause ? "high" : isAmbiguous ? "moderate" : "low",
+      },
     };
   }
 }

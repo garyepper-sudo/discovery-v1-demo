@@ -36,8 +36,29 @@ export type ExecutiveConversationInterpretation = {
   unresolvedQuestions: string[];
   assumptions: string[];
   ambiguity: string[];
+  /**
+   * Confidence in this ephemeral conversational interpretation only.
+   *
+   * This is not organizational, Runtime, recommendation, or model confidence.
+   */
   confidence: number;
   recommendedConversationalAction: ExecutiveConversationalAction;
+  reasoningAnalysis: ExecutiveReasoningAnalysis | null;
+};
+
+export type ExecutiveReasoningAnalysis = {
+  reasoningQuality: "uncertain" | "weak" | "mixed" | "sound";
+  unsupportedAssumptions: string[];
+  missingEvidence: string[];
+  competingHypotheses: string[];
+  possibleBiases: string[];
+  /**
+   * Confidence in this ephemeral analysis of the participant's reasoning only.
+   *
+   * This is not organizational, Runtime, recommendation, or model confidence.
+   */
+  confidence: number;
+  challengeOpportunity: "none" | "low" | "moderate" | "high";
 };
 
 export interface ExecutiveConversationInterpreter {

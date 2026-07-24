@@ -5,6 +5,8 @@ import {
   MockConversationInterpreter,
   OpenAIConversationInterpreter,
   ConversationProviderError,
+  CONVERSATION_PROMPT_VERSION_V1,
+  CONVERSATION_PROMPT_VERSION_V2,
   createConversationInterpreter,
   parseConversationInterpreterMode,
   readConversationIntelligenceFeatureFlags,
@@ -40,6 +42,8 @@ assert.equal(interpretation.executiveIntent, "reflect");
 assert.equal(interpretation.recommendedConversationalAction, "wait");
 assert.deepEqual(interpretation.discardedHypotheses, ["I prefer centralizing operating decisions in Option A."]);
 assert.ok(interpretation.executiveObjective.includes("changed direction"));
+assert.ok(interpretation.reasoningAnalysis);
+assert.equal(interpretation.reasoningAnalysis?.challengeOpportunity, "low");
 assert.equal(JSON.stringify(runtime), runtimeBefore);
 assert.equal(JSON.stringify((runtime.memory as unknown as Record<string, unknown>).executiveRecommendation), recommendationBefore);
 
@@ -66,17 +70,19 @@ await assert.rejects(() => missingCredentials.interpret(request), (error) => err
 assert.equal(missingCredentials.lastObservation?.fallbackReason, "missing-credentials");
 
 let transmittedBody = "";
+const { reasoningAnalysis: _reasoningAnalysis, ...v1Interpretation } = interpretation;
 const validProvider = new OpenAIConversationInterpreter({
   apiKey: "test-key",
+  promptVersion: CONVERSATION_PROMPT_VERSION_V1,
   fetchImplementation: async (_input, init) => {
     transmittedBody = String(init?.body ?? "");
     return new Response(JSON.stringify({
-      choices: [{ message: { content: JSON.stringify(interpretation) } }],
+      choices: [{ message: { content: JSON.stringify(v1Interpretation) } }],
       usage: { prompt_tokens: 140, completion_tokens: 65 },
     }), { status: 200, headers: { "content-type": "application/json" } });
   },
 });
-assert.deepEqual(await validProvider.interpret(request), interpretation);
+assert.deepEqual(await validProvider.interpret(request), { ...v1Interpretation, reasoningAnalysis: null });
 assert.equal(validProvider.lastObservation?.status, "success");
 assert.equal(validProvider.lastObservation?.inputTokens, 140);
 assert.equal(validProvider.lastObservation?.outputTokens, 65);
@@ -85,6 +91,138 @@ assert.equal(transmittedBody.includes("Preserve the current recommendation"), fa
 assert.equal(transmittedBody.includes("test-key"), false);
 assert.equal(JSON.stringify(runtime), runtimeBefore);
 
+const reasoningProvider = new OpenAIConversationInterpreter({
+  apiKey: "test-key",
+  promptVersion: CONVERSATION_PROMPT_VERSION_V2,
+  fetchImplementation: async () => new Response(JSON.stringify({
+    choices: [{ message: { content: JSON.stringify(interpretation) } }],
+    usage: { prompt_tokens: 165, completion_tokens: 90 },
+  }), { status: 200, headers: { "content-type": "application/json" } }),
+});
+assert.deepEqual(await reasoningProvider.interpret(request), interpretation);
+assert.equal(reasoningProvider.lastObservation?.promptVersion, CONVERSATION_PROMPT_VERSION_V2);
+assert.equal(reasoningProvider.lastObservation?.status, "success");
+assert.ok((await reasoningProvider.interpret(request)).reasoningAnalysis);
+
+const authorityViolations = [
+  {
+    name: "unsupported organizational fact",
+    reasoningAnalysis: {
+      ...interpretation.reasoningAnalysis!,
+      unsupportedAssumptions: ["The organization is failing because leadership is ineffective."],
+    },
+  },
+  {
+    name: "organizational directive",
+    reasoningAnalysis: {
+      ...interpretation.reasoningAnalysis!,
+      missingEvidence: ["The organization should replace the leadership team."],
+    },
+  },
+  {
+    name: "recommendation-like command",
+    reasoningAnalysis: {
+      ...interpretation.reasoningAnalysis!,
+      competingHypotheses: ["The company must restructure immediately."],
+    },
+  },
+  {
+    name: "organizational confidence claim",
+    reasoningAnalysis: {
+      ...interpretation.reasoningAnalysis!,
+      possibleBiases: ["Organizational confidence is 92%."],
+    },
+  },
+  {
+    name: "invented organizational fact",
+    reasoningAnalysis: {
+      ...interpretation.reasoningAnalysis!,
+      possibleBiases: ["Leadership has concealed delivery failures."],
+    },
+  },
+];
+
+for (const authorityViolation of authorityViolations) {
+  const provider = new OpenAIConversationInterpreter({
+    apiKey: "test-key",
+    promptVersion: CONVERSATION_PROMPT_VERSION_V2,
+    fetchImplementation: async () => new Response(JSON.stringify({
+      choices: [{
+        message: {
+          content: JSON.stringify({
+            ...interpretation,
+            reasoningAnalysis: authorityViolation.reasoningAnalysis,
+          }),
+        },
+      }],
+    }), { status: 200, headers: { "content-type": "application/json" } }),
+  });
+  await assert.rejects(
+    () => provider.interpret(request),
+    (error) =>
+      error instanceof ConversationProviderError &&
+      error.reason === "schema-failure",
+    authorityViolation.name,
+  );
+  assert.equal(provider.lastObservation?.invalidOutputCount, 1);
+  assert.equal(JSON.stringify(runtime), runtimeBefore);
+  assert.equal(
+    JSON.stringify(
+      (runtime.memory as unknown as Record<string, unknown>)
+        .executiveRecommendation,
+    ),
+    recommendationBefore,
+  );
+}
+
+const unknownReasoningFieldProvider = new OpenAIConversationInterpreter({
+  apiKey: "test-key",
+  promptVersion: CONVERSATION_PROMPT_VERSION_V2,
+  fetchImplementation: async () => new Response(JSON.stringify({
+    choices: [{
+      message: {
+        content: JSON.stringify({
+          ...interpretation,
+          reasoningAnalysis: {
+            ...interpretation.reasoningAnalysis!,
+            organizationalTruth: "The organization is healthy.",
+          },
+        }),
+      },
+    }],
+  }), { status: 200, headers: { "content-type": "application/json" } }),
+});
+await assert.rejects(
+  () => unknownReasoningFieldProvider.interpret(request),
+  (error) =>
+    error instanceof ConversationProviderError &&
+    error.reason === "schema-failure",
+);
+
+const malformedReasoningProvider = new OpenAIConversationInterpreter({
+  apiKey: "test-key",
+  promptVersion: CONVERSATION_PROMPT_VERSION_V2,
+  fetchImplementation: async () => new Response(JSON.stringify({
+    choices: [{
+      message: {
+        content: JSON.stringify({
+          ...interpretation,
+          reasoningAnalysis: {
+            ...interpretation.reasoningAnalysis!,
+            confidence: "high",
+          },
+        }),
+      },
+    }],
+  }), { status: 200, headers: { "content-type": "application/json" } }),
+});
+await assert.rejects(
+  () => malformedReasoningProvider.interpret(request),
+  (error) =>
+    error instanceof ConversationProviderError &&
+    error.reason === "schema-failure",
+);
+
 const malformedProvider = new OpenAIConversationInterpreter({
   apiKey: "test-key",
   fetchImplementation: async () => new Response(JSON.stringify({ choices: [{ message: { content: "not-json" } }] }), { status: 200 }),
@@ -92,7 +230,24 @@ const malformedProvider = new OpenAIConversationInterpreter({
 await assert.rejects(() => malformedProvider.interpret(request), (error) => error instanceof ConversationProviderError && error.reason === "malformed-output");
 assert.equal(malformedProvider.lastObservation?.invalidOutputCount, 1);
 
-console.log("Executive Conversation Intelligence validation: 32 checks passed.");
+assert.equal(JSON.stringify(runtime), runtimeBefore);
+assert.equal(
+  JSON.stringify(
+    (runtime.memory as unknown as Record<string, unknown>)
+      .executiveRecommendation,
+  ),
+  recommendationBefore,
+);
+assert.equal(
+  Object.prototype.hasOwnProperty.call(runtime.memory, "conversationInterpretation"),
+  false,
+);
+assert.equal(
+  Object.prototype.hasOwnProperty.call(runtime.memory, "reasoningAnalysis"),
+  false,
+);
+
+console.log("Executive Conversation Intelligence validation passed.");
 }
 
 void main();
