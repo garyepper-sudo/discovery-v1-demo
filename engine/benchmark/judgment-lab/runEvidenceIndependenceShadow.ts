@@ -25,6 +25,7 @@ import { detectThemes } from "../../v3/themes";
 import type {
   DiscoveryV3Result,
   V3Evidence,
+  V3Mechanism,
   V3Signal,
   V3Theme,
 } from "../../v3/types";
@@ -216,6 +217,41 @@ export function applyEvidenceIndependenceToThemes(
 }
 
 /**
+ * Benchmark-only Mechanism composition policy.
+ *
+ * The canonical Mechanism confidence formula includes one raw evidence-volume
+ * term: min(evidence.length * 0.025, 0.1). This adapter replaces only that
+ * term with a unique-sourceId count. All evidence identities, relationship
+ * terms, strength, stability, ordering, and downstream production functions
+ * remain unchanged.
+ */
+export function applyEvidenceIndependenceToMechanisms(
+  mechanisms: V3Mechanism[],
+  evidence: V3Evidence[],
+): V3Mechanism[] {
+  const evidenceById = new Map(evidence.map((item) => [item.id, item]));
+
+  return mechanisms.map((mechanism) => {
+    const recordCount = mechanism.evidenceIds.length;
+    const sourceCount = contributingSourceCountForEvidenceIds(
+      mechanism.evidenceIds,
+      evidenceById,
+    );
+    const confidence = clamp(
+      mechanism.confidence -
+        Math.min(recordCount * 0.025, 0.1) +
+        Math.min(sourceCount * 0.025, 0.1),
+    );
+
+    return {
+      ...mechanism,
+      confidence: Number(confidence.toFixed(12)),
+      priority: undefined,
+    };
+  });
+}
+
+/**
  * Benchmark-only copy of the canonical Discovery V3 orchestration.
  *
  * The sole behavioral difference is marked at the signals stage. This wrapper
@@ -225,6 +261,7 @@ export function runEvidenceIndependenceShadow(
   input: InvestigationInput,
   options: {
     themeEvidenceComposition?: "production" | "independent-source";
+    mechanismEvidenceComposition?: "production" | "independent-source";
   } = {},
 ): DiscoveryV3Result {
   const rawText = `
@@ -284,6 +321,12 @@ ${input.context}
     workspace.themes,
     workspace.contradictions,
   );
+  if (options.mechanismEvidenceComposition === "independent-source") {
+    workspace.mechanisms = applyEvidenceIndependenceToMechanisms(
+      workspace.mechanisms,
+      workspace.evidence,
+    );
+  }
 
   workspace.metadata.stage = "causalChains";
   workspace.causalChains = scoreCausalChains(
