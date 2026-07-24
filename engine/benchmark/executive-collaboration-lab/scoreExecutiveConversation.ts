@@ -1,7 +1,7 @@
 import type { CollaborationDimension, ExecutiveConversationRun, ExecutiveConversationScenario, ScenarioScore } from "./executiveConversationTypes";
 
 const clamp = (value: number, maximum: number) => Math.round(Math.max(0, Math.min(maximum, value)) * 100) / 100;
-export const COLLABORATION_WEIGHTS: Record<CollaborationDimension, number> = { executiveUnderstanding:15, questionQuality:10, collaborativeReasoning:15, constructiveChallenge:10, conversationalContinuity:10, modelStewardship:15, recommendationQuality:10, actionHandoff:5, sessionImpactAccuracy:5, executiveTrust:5 };
+export const COLLABORATION_WEIGHTS: Record<CollaborationDimension, number> = { executiveUnderstanding:15, questionQuality:10, collaborativeReasoning:15, challengeOpportunityDetection:5, challengeQuality:5, conversationalContinuity:10, modelStewardship:15, recommendationQuality:10, actionHandoff:5, sessionImpactAccuracy:5, executiveTrust:5 };
 
 export function scoreExecutiveConversation(scenario: ExecutiveConversationScenario, run: ExecutiveConversationRun): ScenarioScore {
   const recognized = new Set(run.trace.flatMap((turn) => turn.recognizedConcepts));
@@ -10,6 +10,11 @@ export function scoreExecutiveConversation(scenario: ExecutiveConversationScenar
   const uniqueResponses = new Set(run.trace.map((turn) => turn.discoveryResponse)).size;
   const challengeNeeded = scenario.expected.expectedChallenge === "required";
   const challenged = run.trace.some((turn) => turn.challenged);
+  const opportunityDetected = run.trace.some((turn) => {
+    const opportunity = turn.interpretation?.reasoningAnalysis?.challengeOpportunity;
+    return opportunity === "moderate" || opportunity === "high" || turn.interpretation?.recommendedConversationalAction === "challenge";
+  });
+  const usefulChallenge = run.trace.some((turn) => turn.interpretation?.recommendedConversationalAction === "challenge" && Boolean(turn.interpretation.unresolvedQuestions.length || turn.interpretation.reasoningAnalysis?.missingEvidence.length));
   const expectedWrites = scenario.expected.expectedDurableWrites;
   const actualWrites = run.trace.flatMap((turn) => turn.durableWrites);
   const writesCorrect = JSON.stringify(actualWrites) === JSON.stringify(expectedWrites);
@@ -20,7 +25,8 @@ export function scoreExecutiveConversation(scenario: ExecutiveConversationScenar
     executiveUnderstanding: clamp(15 * coverage, 15),
     questionQuality: clamp(questions <= scenario.expected.maximumUsefulClarifyingQuestions ? 10 : 10 - (questions - scenario.expected.maximumUsefulClarifyingQuestions) * 2, 10),
     collaborativeReasoning: clamp(6 + 9 * coverage, 15),
-    constructiveChallenge: clamp(challengeNeeded ? (challenged ? 8 : 2) : challenged ? 9 : 7, 10),
+    challengeOpportunityDetection: clamp(challengeNeeded ? (opportunityDetected ? 5 : 1) : opportunityDetected ? 3.5 : 5, 5),
+    challengeQuality: clamp(challengeNeeded ? (usefulChallenge ? 4.5 : challenged ? 2.5 : 1) : challenged ? 4.5 : 5, 5),
     conversationalContinuity: clamp(3 + 7 * (uniqueResponses / Math.max(1, run.trace.length)), 10),
     modelStewardship: clamp(writesCorrect && run.runtimeDiff.unrelatedAreasPreserved && run.hardFailures.length === 0 ? 15 : 5, 15),
     recommendationQuality: clamp(recommendationTiming ? 8 : 3, 10),
@@ -28,13 +34,15 @@ export function scoreExecutiveConversation(scenario: ExecutiveConversationScenar
     sessionImpactAccuracy: clamp(run.sessionImpact.durable.length === scenario.expected.expectedSessionImpactEntries ? 5 : 0, 5),
     executiveTrust: 0,
   };
-  dimensions.executiveTrust = clamp(5 * ((dimensions.questionQuality/10 + dimensions.constructiveChallenge/10 + dimensions.conversationalContinuity/10 + dimensions.modelStewardship/15) / 4), 5);
+  dimensions.executiveTrust = clamp(5 * ((dimensions.questionQuality/10 + (dimensions.challengeOpportunityDetection + dimensions.challengeQuality)/10 + dimensions.conversationalContinuity/10 + dimensions.modelStewardship/15) / 4), 5);
   const score = Math.round(Object.values(dimensions).reduce((sum, value) => sum + value, 0) * 100) / 100;
   const ordered = Object.entries(dimensions).sort((a,b) => b[1]/COLLABORATION_WEIGHTS[b[0] as CollaborationDimension] - a[1]/COLLABORATION_WEIGHTS[a[0] as CollaborationDimension]);
   const warnings = [];
   if (coverage < .67) warnings.push("Discovery response did not cover enough scenario-specific concepts.");
   if (uniqueResponses < run.trace.length) warnings.push("Discovery repeated the same projected response across changing turns.");
   if (challengeNeeded && !challenged) warnings.push("A weak executive assumption was not constructively challenged.");
+  if (challengeNeeded && !opportunityDetected) warnings.push("The interpreter missed a useful challenge opportunity.");
+  if (challengeNeeded && opportunityDetected && !usefulChallenge) warnings.push("The composed challenge was not sufficiently evidence-seeking or useful.");
   if (!recommendationTiming) warnings.push("Recommendation timing did not match the conversation state.");
   return { scenarioId: scenario.id, score, dimensions, criticalFailures: [...run.hardFailures], warnings, strongestBehavior: ordered[0][0], weakestBehavior: ordered[ordered.length-1][0] };
 }
