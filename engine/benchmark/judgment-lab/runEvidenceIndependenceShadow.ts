@@ -26,6 +26,7 @@ import type {
   DiscoveryV3Result,
   V3Evidence,
   V3Signal,
+  V3Theme,
 } from "../../v3/types";
 import { buildUnderstanding } from "../../v3/understanding";
 import { runUnderstandingEngine } from "../../v3/understanding/index";
@@ -37,6 +38,10 @@ import {
 
 const RECORD_SUPPORT_INCREMENT = 0.045;
 const MAX_SUPPORT_BONUS = 0.18;
+const THEME_EVIDENCE_INCREMENT = 0.09;
+const THEME_MAX_EVIDENCE_WEIGHT = 0.35;
+const THEME_STABILITY_INCREMENT = 0.12;
+const THEME_MAX_STABILITY_SUPPORT = 0.55;
 
 function clamp(value: number): number {
   return Math.max(0, Math.min(1, value));
@@ -46,13 +51,13 @@ function supportBonus(count: number): number {
   return Math.min(MAX_SUPPORT_BONUS, count * RECORD_SUPPORT_INCREMENT);
 }
 
-function contributingSourceCount(
-  signal: V3Signal,
+function contributingSourceCountForEvidenceIds(
+  evidenceIds: string[],
   evidenceById: Map<string, V3Evidence>,
 ): number {
   const sourceIds = new Set<string>();
 
-  for (const evidenceId of signal.evidenceIds) {
+  for (const evidenceId of evidenceIds) {
     const evidence = evidenceById.get(evidenceId);
     if (!evidence) continue;
 
@@ -80,9 +85,12 @@ export function applyEvidenceIndependenceToSignals(
 
   return scoreSignals(
     signals
-      .map((signal) => {
+      .map((signal, originalIndex) => {
         const recordCount = signal.evidenceIds.length;
-        const sourceCount = contributingSourceCount(signal, evidenceById);
+        const sourceCount = contributingSourceCountForEvidenceIds(
+          signal.evidenceIds,
+          evidenceById,
+        );
         const confidence = clamp(
           signal.confidence -
             supportBonus(recordCount) +
@@ -93,13 +101,117 @@ export function applyEvidenceIndependenceToSignals(
           ...signal,
           confidence: Number(confidence.toFixed(12)),
           priority: undefined,
+          originalIndex,
         };
       })
       .sort(
         (left, right) =>
           right.confidence - left.confidence ||
-          left.id.localeCompare(right.id),
-      ),
+          left.originalIndex - right.originalIndex,
+      )
+      .map(({ originalIndex: _originalIndex, ...signal }) => signal),
+  );
+}
+
+function average(values: number[]): number {
+  return values.length === 0
+    ? 0
+    : values.reduce((sum, value) => sum + value, 0) / values.length;
+}
+
+/**
+ * Benchmark-only Theme composition policy.
+ *
+ * This reproduces the canonical Theme confidence and stability formulas while
+ * replacing only their raw evidence-count terms with unique-sourceId counts.
+ * Signal-derived Theme confidence remains owned by the already-adjusted Signal;
+ * its Theme stability still receives the isolated source-aware composition.
+ */
+export function applyEvidenceIndependenceToThemes(
+  themes: V3Theme[],
+  evidence: V3Evidence[],
+): V3Theme[] {
+  const evidenceById = new Map(evidence.map((item) => [item.id, item]));
+
+  return scoreThemes(
+    themes
+      .map((theme, originalIndex) => {
+        const matchedEvidence = theme.evidenceIds
+          .map((id) => evidenceById.get(id))
+          .filter((item): item is V3Evidence => item !== undefined);
+        if (matchedEvidence.length === 0) {
+          return {
+            ...theme,
+            originalIndex,
+          };
+        }
+
+        const sourceCount = contributingSourceCountForEvidenceIds(
+          theme.evidenceIds,
+          evidenceById,
+        );
+        const evidenceConfidence = average(
+          matchedEvidence.map((item) => item.confidence),
+        );
+        const polarityConsistency =
+          new Set(
+            matchedEvidence.map((item) => item.polarity ?? "unknown"),
+          ).size <= 2
+            ? 0.1
+            : 0;
+        const stability = Number(
+          Math.min(
+            0.95,
+            Math.min(
+              THEME_MAX_STABILITY_SUPPORT,
+              sourceCount * THEME_STABILITY_INCREMENT,
+            ) +
+              evidenceConfidence * 0.35 +
+              polarityConsistency,
+          ).toFixed(2),
+        );
+
+        if (theme.id.startsWith("ST")) {
+          return {
+            ...theme,
+            stability,
+            priority: undefined,
+            originalIndex,
+          };
+        }
+
+        const strongSignalBonus = matchedEvidence.some(
+          (item) => item.strength === "strong",
+        )
+          ? 0.08
+          : 0;
+        const confidence = Number(
+          Math.min(
+            0.96,
+            0.25 +
+              Math.min(
+                THEME_MAX_EVIDENCE_WEIGHT,
+                sourceCount * THEME_EVIDENCE_INCREMENT,
+              ) +
+              evidenceConfidence * 0.45 +
+              strongSignalBonus,
+          ).toFixed(2),
+        );
+
+        return {
+          ...theme,
+          confidence,
+          stability,
+          priority: undefined,
+          originalIndex,
+        };
+      })
+      .sort(
+        (left, right) =>
+          right.confidence - left.confidence ||
+          left.originalIndex - right.originalIndex,
+      )
+      .map(({ originalIndex: _originalIndex, ...theme }) => theme),
   );
 }
 
@@ -111,6 +223,9 @@ export function applyEvidenceIndependenceToSignals(
  */
 export function runEvidenceIndependenceShadow(
   input: InvestigationInput,
+  options: {
+    themeEvidenceComposition?: "production" | "independent-source";
+  } = {},
 ): DiscoveryV3Result {
   const rawText = `
 Company: ${input.company}
@@ -138,13 +253,18 @@ ${input.context}
   );
 
   workspace.metadata.stage = "themes";
-  workspace.themes = scoreThemes(
-    detectThemes(
-      workspace.evidence,
-      workspace.signals,
-      workspace.evidenceNetwork.relationships,
-    ),
+  const detectedThemes = detectThemes(
+    workspace.evidence,
+    workspace.signals,
+    workspace.evidenceNetwork.relationships,
   );
+  workspace.themes =
+    options.themeEvidenceComposition === "independent-source"
+      ? applyEvidenceIndependenceToThemes(
+          detectedThemes,
+          workspace.evidence,
+        )
+      : scoreThemes(detectedThemes);
 
   workspace.metadata.stage = "observations";
   workspace.observations = buildObservations({
