@@ -85,11 +85,12 @@ Observed from the repository on 23 July 2026:
 | Component harness | no Storybook or equivalent declared |
 | Dependency philosophy | small dependency set; custom code carries current Discovery-specific behavior |
 
-Current routes are executive-workspace routes (`/your-organization`, `/ask`,
-`/research`, `/decisions`, `/experiment`, `/brief`, `/organizations`) rather
-than the approved Alpha scene route model. The current shell uses Insights,
-Think, Decide, Experiment, and Brief navigation and presents model-health
-metrics. It is implementation evidence, not Alpha product canon.
+The broader application retains its executive-workspace routes
+(`/your-organization`, `/ask`, `/research`, `/decisions`, `/experiment`,
+`/brief`, `/organizations`). The deterministic fixture-backed Alpha is a
+separate application surface under `/alpha/*`, with `/alpha` redirecting to
+`/alpha/ask` and `/alpha-access` providing its advisor access boundary. These
+surfaces are implemented independently; they are not unresolved alternatives.
 
 ## 5. Architectural Principles
 
@@ -214,11 +215,15 @@ Compatibility considerations:
   `components/product-shell/data`;
 - immediate movement is not required;
 - existing production experiences must not be renamed into Alpha contracts;
-- Alpha may begin in a contained directory and share approved primitives;
+- Alpha exists in a contained route and component boundary and shares approved
+  primitives where appropriate;
 - a directory move without behavior value is not a sprint objective.
 
-Exact route and directory names remain unresolved until the scene naming and
-identity model are approved.
+The implemented Alpha routes are `/alpha/ask`, `/alpha/orient`, `/alpha/plan`,
+`/alpha/learn`, `/alpha/understand`, `/alpha/respond`, `/alpha/follow`,
+`/alpha/return`, and `/alpha/home`. Frontend Architecture remains authoritative
+for route implementation, identity propagation, data loading, orchestration,
+and application composition boundaries.
 
 ## 8. Routing Architecture
 
@@ -663,7 +668,7 @@ analytics. This section does not canonize success metrics.
 - Validate semantic change, interruption, reduced motion, and immutable
   history.
 
-### Sprint E — Understand and Examine
+### Sprint E — Understand with examination
 
 - Build hero, synthesis, confidence, unknown, contradiction, relationships,
   and progressive reasoning.
@@ -890,19 +895,20 @@ support it.
 
 ## 34. Open Decisions
 
-1. Canonical Alpha route paths and whether scene is encoded in path or safe
-   query state.
-2. Respond versus Examine / Challenge-or-Confirm scene naming.
-3. Return as a distinct scene versus a state within Home.
-4. URL ownership of organization identity beyond the current query parameter.
-5. Component harness choice.
-6. Whether any motion requirement earns an external animation library.
-7. Route handlers versus server actions for Alpha action intents.
-8. Exact fixture repository and scenario-selection mechanism.
-9. View-model versioning before production integration.
-10. How Product Projection composes with existing Executive Projection.
-11. Automated enforcement of Runtime import boundaries.
-12. Durable production contracts for Understanding revisions, contributions,
+1. URL ownership of organization identity beyond the current query parameter.
+2. Component harness choice.
+3. Whether any motion requirement earns an external animation library.
+4. Route handlers versus server actions for future production-integrated action
+   intents.
+5. Exact production fixture or scenario-selection mechanism beyond Alpha.
+6. View-model versioning before production integration.
+
+`Respond` is the implemented Alpha routed scene. `Examine` remains a conceptual
+action and historical design term, not a standalone Alpha route. `Return`
+remains an implemented routed Alpha scene.
+7. How Product Projection composes with existing Executive Projection.
+8. Automated enforcement of Runtime import boundaries.
+9. Durable production contracts for Understanding revisions, contributions,
     Follow state, and learning plans.
 
 ## 35. Definition of Done

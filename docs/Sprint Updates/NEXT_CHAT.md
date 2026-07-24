@@ -116,15 +116,32 @@ Investigation-local evidence IDs such as `E6` are positional and are not durable
 
 ## Exact next work
 
-Begin **Benchmark Baseline and Regression Analysis** from a clean Git state:
+Complete repository integration before beginning another implementation sprint:
 
-1. Run the canonical deterministic benchmark and validation suites without production changes.
-2. Record exact scores, failures, warnings, determinism, Runtime restoration, and architecture findings.
-3. Compare results with the historical Ground Truth, Executive Collaboration, Executive Decision, Operating Model Evolution, Product Interaction Boundary, and Living Interaction Loop baselines.
-4. Rank regressions and remaining measured deficiencies by executive impact and earliest responsible producer.
-5. Recommend exactly one narrow benchmark-supported improvement.
+1. Regenerate the derived architecture artifacts once.
+2. Review and commit only the intended generated diffs.
+3. Add narrowly scoped ignore rules for local UUID Runtime organizations and
+   provider benchmark captures.
+4. Delete obsolete local files only after explicit authorization.
+5. Run final clean-tree validation.
+6. Do not push unless separately authorized.
 
-Do not begin Runtime integration for Prototype Alpha. Do not add cognition or tune the provider during baseline establishment.
+After cleanup, use comparator evidence to select the next narrow
+reasoning-validation target. Do not begin Runtime integration for Prototype
+Alpha, add cognition, tune the provider, or begin a feature sprint without
+benchmark evidence.
+
+## Current validation posture
+
+- Ground Truth: `75 / 100`.
+- Cognition validation: `32` capabilities passing.
+- Architecture validation: `291 / 302`, with `11` known pre-existing
+  reciprocity/export findings.
+- Typecheck: passing.
+- Build: passing with six existing React Hook warnings.
+- Structured evidence provenance preserves legacy reasoning.
+- Sprint 110 deterministic collaboration comparator: Runtime-only `67.47`;
+  controlled mock `91.67`.
 
 ## Guardrails
 
@@ -139,25 +156,22 @@ Do not begin Runtime integration for Prototype Alpha. Do not add cognition or tu
 
 ## Working-tree state
 
-At the time of this handoff, Prototype Alpha implementation, advisor access protection, and the deployment-routing repair are committed. The working tree still contains separable Sprint 110 conversation/benchmark work, strategic and Alpha documentation, generated architecture artifacts and capability traces, local Runtime state, provider output, and an empty experimental file. These must not be combined into a benchmark-improvement commit.
+Sprint 110 conversation and benchmark work, organizational-intelligence canon,
+evidence-provenance work, benchmark research, Alpha documentation, Design
+Language, UI System, and Component Library are committed.
 
-After repository synchronization, begin the next benchmark session with:
+The remaining dirty tree is limited to generated architecture output, three
+local UUID Runtime organizations, raw provider benchmark output, the repository
+integration record, and an empty accidental local file. Generated artifacts
+have not yet been refreshed from the final authored state. Local Runtime and
+provider output remain intentionally uncommitted.
 
-```bash
-git status
-git log -5 --oneline
-npm run typecheck
-npm run cognition:validate
-```
-
-## Copy-and-paste prompt for the next conversation
+## Next-chat instruction
 
 ```text
 Read AGENTS.md, docs/Sprint Updates/DISCOVERY_SNAPSHOT.md, docs/Sprint Updates/PROJECT_STATE.md, docs/Sprint Updates/NEXT_CHAT.md, and docs/Architecture/Validation/RUNTIME_VALIDATION.md.
 
-Inspect current repository state with git status and git log -5 --oneline. Run npm run typecheck before changing code.
+Inspect git status and recent history. Do not begin product, Runtime, cognition, provider-tuning, or benchmark-improvement work.
 
-Interactive Prototype Alpha is complete and deployed behind the temporary advisor access gate. It remains deterministic and fixture-backed. Runtime integration has not begun and is not authorized.
-
-Start the Benchmark Baseline and Regression Analysis phase. Run the canonical benchmark and validation suites without modifying production, Runtime, cognition, benchmark expectations, or provider prompts. Record exact current results, compare them with historical baselines, separate pre-existing failures from regressions, trace the earliest responsible producer for each material deficiency, and recommend exactly one narrow next optimization. Do not implement until the recommendation is approved.
+Complete only the remaining repository-integration sequence: regenerate and review derived architecture artifacts, add separately authorized narrow local-output ignore rules, remove obsolete local outputs only with explicit authorization, and run final clean-tree validation. Do not push.
 ```
