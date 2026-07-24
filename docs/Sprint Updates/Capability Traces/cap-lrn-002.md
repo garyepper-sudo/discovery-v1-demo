@@ -1,6 +1,6 @@
 # Capability Trace — Organizational Learning Profile
 
-Generated: 2026-07-22T00:33:23.792Z
+Generated: 2026-07-24T07:38:58.146Z
 
 ## Verified Architecture
 
@@ -75,6 +75,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/benchmark/decision-intelligence/scenarioIntegrationExperiment001.ts`
 - `engine/benchmark/executive-communication/executiveCommunicationExperiment001.ts`
 - `engine/benchmark/executive-communication/executiveCommunicationExperiment002.ts`
+- `engine/benchmark/executive-communication/runtimeBackedExecutiveLanguage001.ts`
 - `engine/benchmark/high-volume/captureRuntimeSnapshot.ts`
 - `engine/benchmark/high-volume/northstar/scoreNorthstarGroundTruth.ts`
 - `engine/benchmark/longitudinalBenchmarkRunner.ts`
@@ -128,7 +129,7 @@ This section records source-code references. It supplements, but does not replac
 | UI | ✅ Found | 18 |
 | API | ❌ Not found | 0 |
 | Simulation | ❌ Not found | 0 |
-| Benchmark | ✅ Found | 35 |
+| Benchmark | ✅ Found | 36 |
 | Other | ✅ Found | 7 |
 
 ### Detailed Matches
@@ -225,45 +226,45 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/runtime/evolveOrganizationRuntime.ts`
 
-- Line 21 · **import** · matched `organizationalLearningProfile`
+- Line 22 · **import** · matched `organizationalLearningProfile`
   - `import { computeOrganizationalLearningProfile } from "../model/learning/computeOrganizationalLearningProfile";`
-- Line 106 · **type** · matched `organizationalLearningProfile`
+- Line 123 · **type** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile?: any;`
-- Line 603 · **read** · matched `organizationalLearningProfile`
+- Line 627 · **read** · matched `organizationalLearningProfile`
   - `memory.organizationalLearningProfile,`
-- Line 657 · **unknown** · matched `Organizational Learning Profile`
+- Line 681 · **unknown** · matched `Organizational Learning Profile`
   - `* - feed prediction performance into the Organizational Learning Profile`
-- Line 704 · **read** · matched `organizationalLearningProfile`
+- Line 728 · **read** · matched `organizationalLearningProfile`
   - `memory.organizationalLearningProfile,`
-- Line 1006 · **definition** · matched `organizationalLearningProfile`
+- Line 1031 · **definition** · matched `organizationalLearningProfile`
   - `const organizationalLearningProfile =`
-- Line 1007 · **unknown** · matched `organizationalLearningProfile`
+- Line 1032 · **unknown** · matched `organizationalLearningProfile`
   - `computeOrganizationalLearningProfile({`
-- Line 1024 · **unknown** · matched `organizationalLearningProfile`
+- Line 1049 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1056 · **unknown** · matched `Organizational Learning Profile`
+- Line 1081 · **unknown** · matched `Organizational Learning Profile`
   - `"Organizational Learning Profile",`
-- Line 1057 · **unknown** · matched `organizationalLearningProfile`
+- Line 1082 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1202 · **unknown** · matched `organizationalLearningProfile`
+- Line 1227 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1252 · **unknown** · matched `organizationalLearningProfile`
+- Line 1277 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1361 · **unknown** · matched `organizationalLearningProfile`
+- Line 1386 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1382 · **unknown** · matched `organizationalLearningProfile`
+- Line 1407 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1525 · **unknown** · matched `organizationalLearningProfile`
+- Line 1550 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile.learningVelocity,`
-- Line 1528 · **unknown** · matched `organizationalLearningProfile`
+- Line 1553 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile.learningVelocityScore,`
-- Line 1531 · **unknown** · matched `organizationalLearningProfile`
+- Line 1556 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile.understandingGrowth,`
-- Line 1534 · **unknown** · matched `organizationalLearningProfile`
+- Line 1559 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile.memoryGrowth,`
-- Line 1622 · **type** · matched `organizationalLearningProfile`
+- Line 1647 · **type** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile:`
-- Line 1623 · **unknown** · matched `organizationalLearningProfile`
+- Line 1648 · **unknown** · matched `organizationalLearningProfile`
   - `typeof organizationalLearningProfile;`
 
 #### Executive
@@ -418,6 +419,11 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 571 · **type** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile: {`
+
+##### `engine/benchmark/executive-communication/runtimeBackedExecutiveLanguage001.ts`
+
+- Line 108 · **type** · matched `organizationalLearningProfile`
+  - `organizationalLearningProfile: memory.organizationalLearningProfile,`
 
 ##### `engine/benchmark/high-volume/captureRuntimeSnapshot.ts`
 

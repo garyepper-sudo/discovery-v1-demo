@@ -1,6 +1,6 @@
 # Capability Trace — Theory Validation
 
-Generated: 2026-07-22T00:33:24.124Z
+Generated: 2026-07-24T07:38:58.513Z
 
 ## Verified Architecture
 
@@ -70,6 +70,8 @@ Review these files to determine whether they should be registered as consumers, 
 - `components/executive-v3/projection/buildExecutiveBriefingProjection.ts`
 - `components/executive-v3/projection/buildExecutiveNarrative.ts`
 - `components/executive-v3/workspaces/UnderstandingWorkspace.tsx`
+- `components/product-shell/data/buildAskExperienceView.ts`
+- `components/product-shell/data/buildResearchExperienceView.ts`
 - `engine/benchmark/benchmarkReporter.ts`
 - `engine/benchmark/benchmarkScorer.ts`
 - `engine/benchmark/benchmarkTypes.ts`
@@ -120,7 +122,7 @@ This section records source-code references. It supplements, but does not replac
 | Runtime | ❌ Not found | 0 |
 | Executive | ❌ Not found | 0 |
 | Projection | ✅ Found | 29 |
-| UI | ✅ Found | 18 |
+| UI | ✅ Found | 27 |
 | API | ❌ Not found | 0 |
 | Simulation | ❌ Not found | 0 |
 | Benchmark | ✅ Found | 124 |
@@ -132,11 +134,11 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/communication/buildExecutiveStory.ts`
 
-- Line 473 · **definition** · matched `theoryValidation`
+- Line 513 · **definition** · matched `theoryValidation`
   - `const theoryValidation =`
-- Line 476 · **read** · matched `theoryValidation`
+- Line 516 · **read** · matched `theoryValidation`
   - `?.theoryValidation,`
-- Line 481 · **unknown** · matched `theoryValidation`
+- Line 521 · **unknown** · matched `theoryValidation`
   - `theoryValidation`
 
 ##### `engine/v3/communication/synthesizeExecutiveNarrative.ts`
@@ -262,7 +264,7 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 9 · **type** · matched `theoryValidation`
   - `theoryValidation?: {`
-- Line 93 · **read** · matched `theoryValidation`
+- Line 110 · **read** · matched `theoryValidation`
   - `input.executiveAssessment?.theoryValidation?.dominantTheory;`
 
 #### Projection
@@ -389,6 +391,30 @@ This section records source-code references. It supplements, but does not replac
   - `theoryValidation?.dominantTheory ??`
 - Line 165 · **unknown** · matched `theoryValidation`
   - `theoryValidation?.whyDiscoveryBelievesIt \|\|`
+
+##### `components/product-shell/data/buildAskExperienceView.ts`
+
+- Line 100 · **definition** · matched `theoryValidation`
+  - `const theoryValidation = record(assessment.theoryValidation);`
+- Line 139 · **unknown** · matched `theoryValidation`
+  - `...records(theoryValidation.supportingMechanisms).map((item) => compact(text(item.rationale, item.label), 190)),`
+- Line 143 · **unknown** · matched `theoryValidation`
+  - `strings(theoryValidation.evidenceThatWouldFalsifyTheory)[0],`
+- Line 154 · **unknown** · matched `theoryValidation`
+  - `...strings(theoryValidation.additionalEvidenceThatWouldIncreaseConfidence),`
+- Line 181 · **unknown** · matched `theoryValidation`
+  - `central: compact(text(explanation.assessmentNarrative, assessment.summary, understanding.mechanism, theoryValidation.whyDiscoveryBelievesIt), 320),`
+
+##### `components/product-shell/data/buildResearchExperienceView.ts`
+
+- Line 85 · **definition** · matched `theoryValidation`
+  - `const theoryValidation = record(assessment.theoryValidation);`
+- Line 91 · **unknown** · matched `theoryValidation`
+  - `...strings(theoryValidation.additionalEvidenceThatWouldIncreaseConfidence),`
+- Line 100 · **unknown** · matched `theoryValidation`
+  - `strings(theoryValidation.additionalEvidenceThatWouldIncreaseConfidence)[0],`
+- Line 134 · **unknown** · matched `theoryValidation`
+  - `impact: compact(text(explanation.investigationNarrative, understanding?.whyItMatters, theoryValidation.whyDiscoveryBelievesIt), 240),`
 
 #### Benchmark
 

@@ -1,6 +1,6 @@
 # Capability Trace — Executive Understanding Synthesis
 
-Generated: 2026-07-22T00:33:23.461Z
+Generated: 2026-07-24T07:38:57.802Z
 
 ## Verified Architecture
 
@@ -68,18 +68,33 @@ Review these files to determine whether they should be registered as consumers, 
 - `components/executive-v2/capabilities/ExecutiveCapabilityRegistry.tsx`
 - `components/executive-v2/projection/ExecutiveScenarioProjection.ts`
 - `components/executive-v2/projection/buildExecutiveProjection.ts`
+- `components/product-shell/data/buildAskExperienceView.ts`
+- `components/product-shell/data/buildOrganizationExperienceView.ts`
+- `components/product-shell/data/buildOrganizationModelContext.ts`
+- `components/product-shell/data/buildResearchExperienceView.ts`
 - `components/results/SemanticConceptInspector.tsx`
 - `engine/benchmark/auditUnderstandingLayers.ts`
+- `engine/benchmark/executive-collaboration-lab/executiveConversationScenarios.ts`
+- `engine/benchmark/executive-collaboration-lab/runExecutiveConversationScenario.ts`
+- `engine/benchmark/executive-decision-lab/runExecutiveDecisionLab.ts`
 - `engine/benchmark/executive-projection/executiveProjectionExperiment001.ts`
 - `engine/benchmark/executive-work/executiveOperatingSystemBenchmark001.ts`
 - `engine/benchmark/high-volume/captureRuntimeSnapshot.ts`
 - `engine/benchmark/high-volume/northstar/runNorthstarPrecisionGap001.ts`
 - `engine/benchmark/high-volume/northstar/scoreNorthstarGroundTruth.ts`
+- `engine/benchmark/high-volume/northstar/traceConcurrencyStaffingSemantics.ts`
+- `engine/benchmark/judgment-lab/decisiveEvidenceAblation.ts`
+- `engine/benchmark/judgment-lab/runJudgmentLab.ts`
+- `engine/benchmark/judgment-lab/validateJudgmentLabProvenance.ts`
+- `engine/benchmark/judgment/mechanismEvidencePropagation001.ts`
+- `engine/benchmark/operating-model-evolution-lab/productionReplay.ts`
+- `engine/benchmark/organizational-intelligence-lab/runOrganizationalIntelligenceLab.ts`
 - `engine/benchmark/organizationalUnderstandingScorer.ts`
 - `engine/benchmark/runAtlasSimulation.ts`
 - `engine/benchmark/runBenchmarkInvestigation.ts`
 - `engine/benchmark/runtime/executiveMeaningPreservation001.ts`
 - `engine/benchmark/stress/experiments/decisionIntelligenceStressExperiment001.ts`
+- `engine/conversation/OpenAIConversationInterpreter.ts`
 - `engine/v3/executive/buildExecutiveChangeSummary.ts`
 - `engine/v3/executive/executiveLearningSummary.ts`
 - `engine/v3/investigation/runOrganizationInvestigation.ts`
@@ -100,6 +115,11 @@ Review these files to determine whether they should be registered as consumers, 
 - `scripts/cognition/generateArchitectureHandoff.mjs`
 - `scripts/cognition/generateArchitectureState.mjs`
 - `scripts/cognition/reviewCognitiveDomain.mjs`
+- `scripts/product/validateAskExperience.ts`
+- `scripts/product/validateLivingInteractionLoop.ts`
+- `scripts/product/validateOrganizationExperience.ts`
+- `scripts/product/validateResearchExperience.ts`
+- `scripts/product/validateUnifiedExecutiveWorkspace.ts`
 
 ## Structural Search
 
@@ -145,19 +165,24 @@ This section records source-code references. It supplements, but does not replac
 
 | Layer | Status | Matches |
 |---|:---:|---:|
-| Engine | ✅ Found | 86 |
-| Runtime | ✅ Found | 87 |
+| Engine | ✅ Found | 87 |
+| Runtime | ✅ Found | 88 |
 | Executive | ✅ Found | 12 |
 | Projection | ✅ Found | 6 |
-| UI | ✅ Found | 3 |
+| UI | ✅ Found | 7 |
 | API | ❌ Not found | 0 |
 | Simulation | ✅ Found | 7 |
-| Benchmark | ✅ Found | 58 |
-| Other | ✅ Found | 8 |
+| Benchmark | ✅ Found | 87 |
+| Other | ✅ Found | 19 |
 
 ### Detailed Matches
 
 #### Engine
+
+##### `engine/conversation/OpenAIConversationInterpreter.ts`
+
+- Line 63 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const understandingState = record(memory.organizationalUnderstandingState);`
 
 ##### `engine/v3/investigation/runOrganizationInvestigation.ts`
 
@@ -246,11 +271,11 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 1 · **import** · matched `consolidateUnderstanding`
   - `import type { UnderstandingCandidate } from "./consolidateUnderstanding";`
-- Line 48 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
+- Line 57 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
   - `export type BuildExecutiveUnderstandingCandidatesInput = {`
-- Line 69 · **definition** · matched `buildExecutiveUnderstandingCandidates`
+- Line 85 · **definition** · matched `buildExecutiveUnderstandingCandidates`
   - `export function buildExecutiveUnderstandingCandidates(`
-- Line 70 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
+- Line 86 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
   - `input: BuildExecutiveUnderstandingCandidatesInput,`
 
 ##### `engine/v3/understanding/canonicalUnderstanding.ts`
@@ -371,113 +396,115 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/runtime/evolveOrganizationRuntime.ts`
 
-- Line 3 · **import** · matched `OrganizationalUnderstanding`
+- Line 4 · **import** · matched `OrganizationalUnderstanding`
   - `import type { OrganizationalUnderstandingState } from "./organizationalUnderstandingState";`
-- Line 23 · **import** · matched `OrganizationalUnderstanding`
+- Line 24 · **import** · matched `OrganizationalUnderstanding`
   - `import { updateOrganizationalUnderstandingState } from "./updateOrganizationalUnderstandingState";`
-- Line 25 · **unknown** · matched `consolidateUnderstanding`
+- Line 26 · **unknown** · matched `consolidateUnderstanding`
   - `consolidateUnderstanding,`
-- Line 27 · **import** · matched `consolidateUnderstanding`
+- Line 28 · **import** · matched `consolidateUnderstanding`
   - `} from "../understanding/consolidateUnderstanding";`
-- Line 28 · **import** · matched `synthesizeUnderstanding`
+- Line 29 · **import** · matched `synthesizeUnderstanding`
   - `import { synthesizeUnderstanding } from "../understanding/synthesizeUnderstanding";`
-- Line 29 · **import** · matched `buildExecutiveUnderstandingCandidates`
+- Line 30 · **import** · matched `buildExecutiveUnderstandingCandidates`
   - `import { buildExecutiveUnderstandingCandidates } from "../understanding/buildExecutiveUnderstandingCandidates";`
-- Line 40 · **import** · matched `OrganizationalUnderstanding`
+- Line 41 · **import** · matched `OrganizationalUnderstanding`
   - `import { createEmptyOrganizationalUnderstandingState } from "./organizationalUnderstandingState";`
-- Line 61 · **definition** · matched `evolveOrganizationRuntime`
+- Line 62 · **definition** · matched `evolveOrganizationRuntime`
   - `export function evolveOrganizationRuntime(params: {`
-- Line 123 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 140 · **unknown** · matched `OrganizationalUnderstanding`
   - `const existingOrganizationalUnderstandingState:`
-- Line 124 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 141 · **unknown** · matched `OrganizationalUnderstanding`
   - `OrganizationalUnderstandingState =`
-- Line 125 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 142 · **unknown** · matched `OrganizationalUnderstanding`
   - `memory.organizationalUnderstandingState ??`
-- Line 126 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 143 · **unknown** · matched `OrganizationalUnderstanding`
   - `createEmptyOrganizationalUnderstandingState({`
-- Line 152 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 169 · **unknown** · matched `OrganizationalUnderstanding`
   - `const baseOrganizationalUnderstandingState =`
-- Line 153 · **unknown** · matched `OrganizationalUnderstanding`
-  - `updateOrganizationalUnderstandingState({`
-- Line 154 · **unknown** · matched `OrganizationalUnderstanding`
-  - `state: existingOrganizationalUnderstandingState,`
-- Line 159 · **unknown** · matched `consolidateUnderstanding`
-  - `const consolidationResult = consolidateUnderstanding(`
-- Line 160 · **unknown** · matched `OrganizationalUnderstanding`
-  - `baseOrganizationalUnderstandingState,`
-- Line 164 · **unknown** · matched `OrganizationalUnderstanding`
-  - `const updatedOrganizationalUnderstandingState:`
-- Line 165 · **unknown** · matched `OrganizationalUnderstanding`
-  - `OrganizationalUnderstandingState = {`
-- Line 166 · **unknown** · matched `OrganizationalUnderstanding`
-  - `...baseOrganizationalUnderstandingState,`
 - Line 170 · **unknown** · matched `OrganizationalUnderstanding`
+  - `updateOrganizationalUnderstandingState({`
+- Line 171 · **unknown** · matched `OrganizationalUnderstanding`
+  - `state: existingOrganizationalUnderstandingState,`
+- Line 176 · **unknown** · matched `consolidateUnderstanding`
+  - `const consolidationResult = consolidateUnderstanding(`
+- Line 177 · **unknown** · matched `OrganizationalUnderstanding`
+  - `baseOrganizationalUnderstandingState,`
+- Line 181 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const updatedOrganizationalUnderstandingState:`
+- Line 182 · **unknown** · matched `OrganizationalUnderstanding`
+  - `OrganizationalUnderstandingState = {`
+- Line 183 · **unknown** · matched `OrganizationalUnderstanding`
+  - `...baseOrganizationalUnderstandingState,`
+- Line 187 · **unknown** · matched `OrganizationalUnderstanding`
   - `...baseOrganizationalUnderstandingState.evolutionHistory,`
-- Line 199 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 216 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 200 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 217 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState,`
-- Line 248 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 265 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 257 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 274 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 285 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 302 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 408 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 394 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 424 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 431 · **unknown** · matched `OrganizationalUnderstanding`
+  - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
+- Line 448 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.organizationalBeliefs,`
-- Line 475 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 499 · **unknown** · matched `OrganizationalUnderstanding`
   - `const beliefUpdatedOrganizationalUnderstandingState:`
-- Line 476 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 500 · **unknown** · matched `OrganizationalUnderstanding`
   - `OrganizationalUnderstandingState = {`
-- Line 477 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 501 · **unknown** · matched `OrganizationalUnderstanding`
   - `...updatedOrganizationalUnderstandingState,`
-- Line 483 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 507 · **unknown** · matched `OrganizationalUnderstanding`
   - `const synthesizedOrganizationalUnderstandingState =`
-- Line 484 · **unknown** · matched `synthesizeUnderstanding`
+- Line 508 · **unknown** · matched `synthesizeUnderstanding`
   - `synthesizeUnderstanding({`
-- Line 485 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 509 · **unknown** · matched `OrganizationalUnderstanding`
   - `state: beliefUpdatedOrganizationalUnderstandingState,`
-- Line 492 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 516 · **unknown** · matched `OrganizationalUnderstanding`
   - `synthesizedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 807 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
+- Line 831 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
   - `buildExecutiveUnderstandingCandidates({`
-- Line 818 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 843 · **unknown** · matched `OrganizationalUnderstanding`
   - `OrganizationalUnderstandingState = {`
-- Line 819 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 844 · **unknown** · matched `OrganizationalUnderstanding`
   - `...existingOrganizationalUnderstandingState,`
-- Line 822 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 847 · **unknown** · matched `OrganizationalUnderstanding`
   - `existingOrganizationalUnderstandingState.currentUnderstandings.filter(`
-- Line 834 · **unknown** · matched `consolidateUnderstanding`
+- Line 859 · **unknown** · matched `consolidateUnderstanding`
   - `consolidateUnderstanding(`
-- Line 839 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 864 · **unknown** · matched `OrganizationalUnderstanding`
   - `const finalOrganizationalUnderstandingState =`
-- Line 840 · **unknown** · matched `synthesizeUnderstanding`
+- Line 865 · **unknown** · matched `synthesizeUnderstanding`
   - `synthesizeUnderstanding({`
-- Line 876 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 901 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState.currentUnderstandings.map(`
-- Line 902 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 927 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingScore:`
-- Line 903 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 928 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState.score.overall,`
-- Line 1243 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1268 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 1244 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1269 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState,`
-- Line 1327 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1352 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 1328 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1353 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState,`
-- Line 1376 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1401 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState,`
-- Line 1512 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1537 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingScore:`
-- Line 1513 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1538 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState.score.overall,`
-- Line 1583 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1608 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 1584 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1609 · **unknown** · matched `OrganizationalUnderstanding`
   - `typeof finalOrganizationalUnderstandingState;`
 
 ##### `engine/v3/runtime/index.ts`
@@ -622,6 +649,26 @@ This section records source-code references. It supplements, but does not replac
 - Line 17 · **unknown** · matched `CAP-UND-006`
   - `\| "CAP-UND-006"`
 
+##### `components/product-shell/data/buildAskExperienceView.ts`
+
+- Line 101 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const understandingState = record(memory.organizationalUnderstandingState);`
+
+##### `components/product-shell/data/buildOrganizationExperienceView.ts`
+
+- Line 135 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const understandingState = record(memory.organizationalUnderstandingState);`
+
+##### `components/product-shell/data/buildOrganizationModelContext.ts`
+
+- Line 22 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const understanding = record(memory.organizationalUnderstandingState);`
+
+##### `components/product-shell/data/buildResearchExperienceView.ts`
+
+- Line 80 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const understandingState = record(memory.organizationalUnderstandingState);`
+
 ##### `components/results/SemanticConceptInspector.tsx`
 
 - Line 23 · **unknown** · matched `OrganizationalUnderstanding`
@@ -655,6 +702,23 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 11 · **unknown** · matched `consolidateUnderstanding`
   - `"consolidateUnderstanding",`
+
+##### `engine/benchmark/executive-collaboration-lab/executiveConversationScenarios.ts`
+
+- Line 11 · **unknown** · matched `OrganizationalUnderstanding`
+  - `value.memory.organizationalUnderstandingState.currentUnderstandings = [{ id: "understanding-baseline", statement: "Decision ownership and prioritization interact to slow execution.", summary: "Approval count alone does not explain the delay.", confidence: .72, openQuestions: ["Which decisions wait, and whether unclear priority or unclear ownership causes the wait?"], missingInformation: ["Recent decision-path evidence."], evidenceIds: [], observationIds: [], beliefIds: [], themeIds: [], mechanismIds: [], contradictionIds: [], recommendationIds: [], supportingDynamics: [], supportingCapabilities: [], investigationIds: [], implications: [], history: [] } as never];`
+
+##### `engine/benchmark/executive-collaboration-lab/runExecutiveConversationScenario.ts`
+
+- Line 2 · **import** · matched `evolveOrganizationRuntime`
+  - `import { evolveOrganizationRuntime } from "../../v3/runtime";`
+- Line 59 · **unknown** · matched `evolveOrganizationRuntime`
+  - `runtime = withFixedClock(fixedTimestamp, () => evolveOrganizationRuntime({ runtime, result: runDiscoveryV3({ company, website: "", industry: "", question: "What does this executive evidence change?", context: turn.message }), input: { company, website: "", industry: "", question: "What does this executive evidence change?", context: turn.message } }));`
+
+##### `engine/benchmark/executive-decision-lab/runExecutiveDecisionLab.ts`
+
+- Line 62 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const understanding = runtime.memory.organizationalUnderstandingState.currentUnderstandings[0];`
 
 ##### `engine/benchmark/executive-projection/executiveProjectionExperiment001.ts`
 
@@ -698,6 +762,77 @@ This section records source-code references. It supplements, but does not replac
   - `organizationalUnderstanding?: TextLike & {`
 - Line 732 · **unknown** · matched `OrganizationalUnderstanding`
   - `?.organizationalUnderstanding`
+
+##### `engine/benchmark/high-volume/northstar/traceConcurrencyStaffingSemantics.ts`
+
+- Line 6 · **import** · matched `evolveOrganizationRuntime`
+  - `import { evolveOrganizationRuntime } from "../../../v3/runtime/evolveOrganizationRuntime";`
+- Line 276 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const organizationalUnderstandingState =`
+- Line 277 · **unknown** · matched `OrganizationalUnderstanding`
+  - `memory.organizationalUnderstandingState as`
+- Line 306 · **unknown** · matched `organizational-understanding`
+  - `"organizational-understanding",`
+- Line 307 · **unknown** · matched `OrganizationalUnderstanding`
+  - `organizationalUnderstandingState?.currentUnderstandings,`
+- Line 404 · **unknown** · matched `evolveOrganizationRuntime`
+  - `const runtime = evolveOrganizationRuntime({`
+
+##### `engine/benchmark/judgment/mechanismEvidencePropagation001.ts`
+
+- Line 4 · **import** · matched `buildExecutiveUnderstandingCandidates`
+  - `import { buildExecutiveUnderstandingCandidates } from "../../v3/understanding/buildExecutiveUnderstandingCandidates";`
+- Line 77 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
+  - `const executiveUnderstanding = buildExecutiveUnderstandingCandidates({`
+- Line 98 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
+  - `} as Parameters<typeof buildExecutiveUnderstandingCandidates>[0])[0];`
+
+##### `engine/benchmark/judgment-lab/decisiveEvidenceAblation.ts`
+
+- Line 5 · **import** · matched `evolveOrganizationRuntime`
+  - `import { evolveOrganizationRuntime } from "../../v3/runtime/evolveOrganizationRuntime";`
+- Line 150 · **unknown** · matched `evolveOrganizationRuntime`
+  - `runtime: ReturnType<typeof evolveOrganizationRuntime>,`
+- Line 153 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const understandingState = record(memory.organizationalUnderstandingState);`
+- Line 263 · **unknown** · matched `evolveOrganizationRuntime`
+  - `runtime: ReturnType<typeof evolveOrganizationRuntime>;`
+- Line 279 · **unknown** · matched `evolveOrganizationRuntime`
+  - `let runtime: ReturnType<typeof evolveOrganizationRuntime>;`
+- Line 283 · **unknown** · matched `evolveOrganizationRuntime`
+  - `runtime = evolveOrganizationRuntime({`
+
+##### `engine/benchmark/judgment-lab/runJudgmentLab.ts`
+
+- Line 3 · **import** · matched `evolveOrganizationRuntime`
+  - `import { evolveOrganizationRuntime } from "../../v3/runtime/evolveOrganizationRuntime";`
+- Line 49 · **unknown** · matched `evolveOrganizationRuntime`
+  - `let runtime: ReturnType<typeof evolveOrganizationRuntime>;`
+- Line 54 · **unknown** · matched `evolveOrganizationRuntime`
+  - `runtime = evolveOrganizationRuntime({`
+- Line 63 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const understandingState = record(memory.organizationalUnderstandingState);`
+
+##### `engine/benchmark/judgment-lab/validateJudgmentLabProvenance.ts`
+
+- Line 6 · **import** · matched `evolveOrganizationRuntime`
+  - `import { evolveOrganizationRuntime } from "../../v3/runtime/evolveOrganizationRuntime";`
+- Line 57 · **unknown** · matched `evolveOrganizationRuntime`
+  - `const runtime = evolveOrganizationRuntime({`
+- Line 88 · **unknown** · matched `evolveOrganizationRuntime`
+  - `function substantiveRuntime(runtime: ReturnType<typeof evolveOrganizationRuntime>) {`
+
+##### `engine/benchmark/operating-model-evolution-lab/productionReplay.ts`
+
+- Line 3 · **import** · matched `evolveOrganizationRuntime`
+  - `import { evolveOrganizationRuntime } from "../../v3/runtime/evolveOrganizationRuntime";`
+- Line 30 · **unknown** · matched `evolveOrganizationRuntime`
+  - `runtime = evolveOrganizationRuntime({ runtime, result: runDiscoveryV3(input), input });`
+
+##### `engine/benchmark/organizational-intelligence-lab/runOrganizationalIntelligenceLab.ts`
+
+- Line 169 · **unknown** · matched `OrganizationalUnderstanding`
+  - `reusedObjects: ["OrganizationRuntime", "OrganizationalUnderstanding", "evidence lineage IDs", "contradictions", "missing information", "Executive Conversation benchmark isolation pattern"],`
 
 ##### `engine/benchmark/organizationalUnderstandingScorer.ts`
 
@@ -826,6 +961,43 @@ This section records source-code references. It supplements, but does not replac
   - `"CAP-UND-006",`
 - Line 253 · **unknown** · matched `OrganizationalUnderstanding`
   - `"OrganizationalUnderstandingState",`
+
+##### `scripts/product/validateAskExperience.ts`
+
+- Line 58 · **unknown** · matched `OrganizationalUnderstanding`
+  - `sparse.memory.organizationalUnderstandingState.currentUnderstandings = [];`
+
+##### `scripts/product/validateLivingInteractionLoop.ts`
+
+- Line 18 · **unknown** · matched `OrganizationalUnderstanding`
+  - `runtime.memory.organizationalUnderstandingState.health.coherence = 0.68;`
+- Line 19 · **unknown** · matched `OrganizationalUnderstanding`
+  - `runtime.memory.organizationalUnderstandingState.currentUnderstandings = [{`
+
+##### `scripts/product/validateOrganizationExperience.ts`
+
+- Line 17 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const understandingState = runtime.memory.organizationalUnderstandingState;`
+- Line 112 · **unknown** · matched `OrganizationalUnderstanding`
+  - `noEvolution.memory.organizationalUnderstandingState.evolutionHistory = [];`
+- Line 116 · **unknown** · matched `OrganizationalUnderstanding`
+  - `(coherenceWithoutConfidence.memory.organizationalUnderstandingState.currentUnderstandings[0] as unknown as Record<string, unknown>).confidence = undefined;`
+- Line 123 · **unknown** · matched `OrganizationalUnderstanding`
+  - `noUnderstanding.memory.organizationalUnderstandingState.currentUnderstandings = [];`
+
+##### `scripts/product/validateResearchExperience.ts`
+
+- Line 55 · **unknown** · matched `OrganizationalUnderstanding`
+  - `missingEvidence.memory.organizationalUnderstandingState.currentUnderstandings = [{`
+- Line 71 · **unknown** · matched `OrganizationalUnderstanding`
+  - `none.memory.organizationalUnderstandingState.currentUnderstandings = [];`
+
+##### `scripts/product/validateUnifiedExecutiveWorkspace.ts`
+
+- Line 12 · **unknown** · matched `OrganizationalUnderstanding`
+  - `runtime.memory.organizationalUnderstandingState.health.coherence = .64;`
+- Line 13 · **unknown** · matched `OrganizationalUnderstanding`
+  - `runtime.memory.organizationalUnderstandingState.currentUnderstandings = [{ id: "understanding-1", statement: "Decision ownership ambiguity is slowing execution.", summary: "Clarifying who decides could unlock capacity.", confidence: .73, observationIds: [], missingInformation: [], openQuestions: [], evidenceIds: [], beliefIds: [], themeIds: [], mechanismIds: [], contradictionIds: [], recommendationIds: [], supportingDynamics: [], supportingCapabilities: [], investigationIds: [], implications: [], history: [] } as never];`
 
 ## Interpretation
 

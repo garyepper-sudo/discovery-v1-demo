@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-22T00:33:24.575Z",
+    "generatedAt": "2026-07-24T07:38:58.981Z",
     "generator": "scripts/cognition/generateArchitectureState.mjs",
     "sourceOfTruthOrder": [
       "Verified source code",
@@ -14,7 +14,7 @@
   },
   "project": {
     "currentMilestone": null,
-    "currentPhase": "Discovery's Cognitive Operating System, Capability Registry, Runtime, and current semantic architecture are stable. The immediate development target is the product shell and Your Organization experience, not additional engine architecture.\n\nThe locked product principle is:\n\n> The Organization Model is the product.\n\nUse Your Organization in the interface and Organization Model in product and engineering discussion. The user is the model's steward. Every important interaction should improve, validate, challenge, query, experiment with, or act on the model.",
+    "currentPhase": "Repository Integration Completion and Benchmark-Driven Reasoning Validation.\nRepository integration is nearly complete. Production reasoning changes remain\nbenchmark-gated, and no new feature sprint should begin until generated\nartifacts, local-output handling, and final comparator validation are complete.",
     "currentObjective": null,
     "currentSprint": null,
     "nextPriority": null,
@@ -23,7 +23,20 @@
       "ENGINE_CAPABILITY_AUDIT.md",
       "PROJECT_STATE.md",
       "NEXT_CHAT.md",
-      "ARCHITECTURE_HANDOFF.md"
+      "ARCHITECTURE_HANDOFF.md",
+      "BENCHMARK_BASELINE.md",
+      "BENCHMARK_CHECKPOINT_AND_PRIORITIES.md",
+      "BENCHMARK_REGRESSION_ANALYSIS.md",
+      "EVIDENCE_PROVENANCE_PRESERVATION.md",
+      "EVIDENCE_SENSITIVITY_PRODUCTION_DESIGN.md",
+      "EXECUTIVE_CONVERSATION_PROVIDER_EVALUATION.md",
+      "EXPLANATORY_RELATIONSHIP_FEASIBILITY.md",
+      "JOINT_COMPOSITION_EXPERIMENT.md",
+      "JUDGMENT_DECISIVE_EVIDENCE_ABLATION.md",
+      "OBSERVATIONS_TO_SIGNALS_TRACE.md",
+      "RECURSIVE_ORGANIZATIONAL_INTELLIGENCE_VALIDATION.md",
+      "REPOSITORY_INTEGRATION_PLAN.md",
+      "THEME_COMPOSITION_POLICY_EXPERIMENT.md"
     ]
   },
   "architecture": {
