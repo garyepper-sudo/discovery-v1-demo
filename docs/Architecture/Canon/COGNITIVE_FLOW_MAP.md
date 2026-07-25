@@ -251,6 +251,26 @@ Executive Workspace
 Future Executive Decision
 ```
 
+Completed Organizational Explanations now form an additional structured path:
+
+```text
+Reasoning Relationships
+→ Reasoning Paths
+→ Explanation Seeds
+→ Mechanisms
+→ Beliefs
+→ Theories
+→ completed Organizational Explanations
+→ comparative Evidence roles (`supports`, `opposes`, `shared`)
+→ supporting links on Organizational Conditions
+```
+
+Production currently persists completed Explanations but does not adjudicate
+or consume their comparative roles or causal authority. Seed-based
+Organizational Judgments still feed Executive Assessment. The role collection
+is populated during normal forward Runtime evolution from bounded canonical
+Evidence identity and direct `contradicts` relationships.
+
 Discovery now possesses a complete adaptive executive cognition loop.
 
 Every executive recommendation remains traceable to evidence.
@@ -758,21 +778,18 @@ Every confidence adjustment should remain traceable to reviewed organizational e
 
 # Current Architecture Focus
 
-Discovery's first-generation Executive Cognitive Operating System is now architecturally complete.
+Discovery's first-generation Executive Cognitive Operating System is a stable
+downstream application. The current architecture priority is improving shared
+organizational understanding through the existing producer-consumer chain.
 
-Current priorities are:
+Discovery 2 begins with production-boundary integration:
 
-* Executive Judgment Quality
-* Longitudinal Executive Learning
-* Executive Confidence Calibration
-* Executive Experience
-* Executive Explanation
-* Executive Trust
-* Behavioral Stress Testing
-* Customer Validation
+1. preserve the activated candidate-specific comparative Evidence roles
+   without losing ancestry;
+2. evaluate completed Explanation adjudication beside production Assessment;
+3. preserve alternatives, uncertainty, scope, and deterministic fallback;
+4. authorize a production consumer only after benchmark evidence.
 
-Future evolution should continue strengthening existing producer → consumer transformations rather than introducing parallel reasoning systems.
-
-The objective is no longer expanding cognition.
-
-The objective is continuously improving executive judgment through reusable organizational cognition.
+The objective is not expanding cognition. It is making existing structured
+cognition more authoritative, traceable, and reusable without confusing
+persistence, authority, or disclosure.

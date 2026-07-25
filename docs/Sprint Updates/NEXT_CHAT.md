@@ -116,20 +116,9 @@ Investigation-local evidence IDs such as `E6` are positional and are not durable
 
 ## Exact next work
 
-Complete repository integration before beginning another implementation sprint:
-
-1. Regenerate the derived architecture artifacts once.
-2. Review and commit only the intended generated diffs.
-3. Add narrowly scoped ignore rules for local UUID Runtime organizations and
-   provider benchmark captures.
-4. Delete obsolete local files only after explicit authorization.
-5. Run final clean-tree validation.
-6. Do not push unless separately authorized.
-
-After cleanup, use comparator evidence to select the next narrow
-reasoning-validation target. Do not begin Runtime integration for Prototype
-Alpha, add cognition, tune the provider, or begin a feature sprint without
-benchmark evidence.
+Review and integrate the coherent Phase 1 production, benchmark, and canonical
+documentation change set. Do not begin Phase 2 or add a downstream consumer
+until Phase 1 is approved as one bounded production boundary.
 
 ## Current validation posture
 
@@ -156,15 +145,10 @@ benchmark evidence.
 
 ## Working-tree state
 
-Sprint 110 conversation and benchmark work, organizational-intelligence canon,
-evidence-provenance work, benchmark research, Alpha documentation, Design
-Language, UI System, and Component Library are committed.
-
-The remaining dirty tree is limited to generated architecture output, three
-local UUID Runtime organizations, raw provider benchmark output, the repository
-integration record, and an empty accidental local file. Generated artifacts
-have not yet been refreshed from the final authored state. Local Runtime and
-provider output remain intentionally uncommitted.
+The Phase 1 change set is ready for focused integration. Unrelated generated
+architecture artifacts, capability traces, benchmark research, provider
+output, Runtime state, and documentation changes must remain outside the
+Phase 1 commit.
 
 ## Next-chat instruction
 
@@ -173,5 +157,36 @@ Read AGENTS.md, docs/Sprint Updates/DISCOVERY_SNAPSHOT.md, docs/Sprint Updates/P
 
 Inspect git status and recent history. Do not begin product, Runtime, cognition, provider-tuning, or benchmark-improvement work.
 
-Complete only the remaining repository-integration sequence: regenerate and review derived architecture artifacts, add separately authorized narrow local-output ignore rules, remove obsolete local outputs only with explicit authorization, and run final clean-tree validation. Do not push.
+Review and integrate only Discovery 2 Phase 1. Do not begin Phase 2, add an
+Explanation adjudicator, or add a downstream consumer. Do not push.
 ```
+
+## Discovery 2 Phase 1 handoff
+
+Comparative Evidence Roles are active in normal forward Runtime evolution.
+Completed Organizational Explanations optionally contain deterministic
+`supports`, `opposes`, and `shared` assignments produced solely by
+`completeOrganizationalExplanations()`.
+
+The focused production gate passes `20/20`, including direct support,
+opposition, shared support, repeated and reversed-order determinism,
+organization isolation, historical compatibility, and downstream
+noninterference.
+
+Historical records without the optional field remain valid. Completed
+Explanations remain `unadjudicated`, and no downstream production consumer
+uses the role collection. Phase 1 does not add discrimination,
+counterfactual, observed-outcome, rule-out, or adjudication semantics.
+
+Discovery Scorecard closure:
+
+- Organizational Understanding Index: explicit representation enabled; no
+  measurable downstream improvement yet.
+- User Intelligence Index: unchanged.
+- Collective Intelligence Index: unchanged.
+- Governance Integrity Index: explicit traceable Evidence semantics supported;
+  no regression.
+- System Sustainability Index: unchanged; no regression.
+
+Do not begin Phase 2 until a separate benchmark and production-consumer review
+authorizes it.

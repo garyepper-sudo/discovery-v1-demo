@@ -90,6 +90,32 @@ export type OrganizationalExplanationSeed = {
   generatedAt: string;
 };
 
+export type OrganizationalExplanationEvidenceRole =
+  | "supports"
+  | "opposes"
+  | "shared";
+
+export type OrganizationalExplanationEvidenceRoleBasis =
+  | {
+      kind: "explanation-seed";
+      referenceIds: string[];
+    }
+  | {
+      kind: "evidence-relationship";
+      referenceIds: string[];
+    }
+  | {
+      kind: "shared-support";
+      referenceIds: string[];
+    };
+
+export type OrganizationalExplanationEvidenceRoleAssignment = {
+  evidenceId: string;
+  role: OrganizationalExplanationEvidenceRole;
+  basis: OrganizationalExplanationEvidenceRoleBasis;
+  relatedExplanationIds: string[];
+};
+
 export type OrganizationalExplanation = {
   id: string;
   organizationId: string;
@@ -111,6 +137,9 @@ export type OrganizationalExplanation = {
 
   contradictionIds: string[];
   assumptions: string[];
+
+  comparativeEvidenceRoles?:
+    OrganizationalExplanationEvidenceRoleAssignment[];
 
   viability: "unadjudicated";
   uncertainty: string[];

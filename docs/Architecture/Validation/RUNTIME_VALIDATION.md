@@ -489,6 +489,48 @@ Missing layers should appear as uncertainty rather than fabricated certainty.
 
 ---
 
+# Discovery 2 Phase 1 — Comparative Evidence Roles
+
+Normal forward `evolveOrganizationRuntime()` execution now supplies the
+completed Explanation producer with a bounded context containing:
+
+- the current Runtime organization identity;
+- current-investigation Evidence identities;
+- direct canonical `contradicts` Evidence relationships.
+
+Completed `OrganizationalExplanation` records may contain:
+
+```text
+comparativeEvidenceRoles:
+  supports
+  opposes
+  shared
+```
+
+Validation confirms:
+
+- focused production gate: `20/20 PASS`;
+- repeated and reversed-order equality;
+- stable Explanation and organization identity;
+- unresolved and malformed reference suppression;
+- organization and consecutive-evolution isolation;
+- historical missing-field compatibility;
+- no bulk Runtime migration;
+- no confidence, viability, ranking, Condition, State, Assessment,
+  Understanding, recommendation, projection, or application change.
+
+A representative normal evolution completed nine Explanations and materialized
+an explicit empty role collection on each. That input contained no qualifying
+direct Seed Evidence references. The focused production benchmark separately
+validates non-empty `supports`, `opposes`, and `shared` output.
+
+The optional collection is lazily materialized during forward evolution.
+Historical Runtime records remain valid without rewrite.
+
+No downstream consumer currently interprets the role collection.
+
+---
+
 # Current Assessment
 
 Runtime Architecture

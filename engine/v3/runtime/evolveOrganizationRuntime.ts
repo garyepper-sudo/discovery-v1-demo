@@ -520,6 +520,27 @@ export function evolveOrganizationRuntime(params: {
       contradictionIds: (result.contradictions ?? []).map(
         (contradiction) => contradiction.id,
       ),
+      evidenceContext: {
+        organizationId: runtime.metadata.organizationId,
+        evidence: [...(result.evidence ?? [])]
+          .map((item) => ({ id: item.id }))
+          .sort((left, right) => left.id.localeCompare(right.id)),
+        relationships: [...(result.evidenceRelationships ?? [])]
+          .filter((relationship) => relationship.type === "contradicts")
+          .map((relationship) => ({
+            id: relationship.id,
+            sourceEvidenceId: relationship.sourceEvidenceId,
+            targetEvidenceId: relationship.targetEvidenceId,
+            type: relationship.type,
+          }))
+          .sort(
+            (left, right) =>
+              left.id.localeCompare(right.id) ||
+              left.sourceEvidenceId.localeCompare(right.sourceEvidenceId) ||
+              left.targetEvidenceId.localeCompare(right.targetEvidenceId) ||
+              left.type.localeCompare(right.type),
+          ),
+      },
       now,
     });
 

@@ -558,6 +558,43 @@ No executive recommendation should lose provenance.
 
 # Current Status
 
+## Discovery 2 authority boundary
+
+Completed Organizational Explanations are implemented production objects with
+deterministic semantic identity, normalized scope, and Seed, Reasoning Path,
+Mechanism, Belief, Theory, Evidence, contradiction, assumption, and outcome
+ancestry.
+
+Their current production authority remains:
+
+```text
+viability: unadjudicated
+```
+
+Conditions retain matching Explanation IDs only after Condition scoring.
+Executive Assessment continues to consume earlier Seed-based Organizational
+Judgments. The benchmark-validated competing Explanation adjudicator is not a
+production capability.
+
+Completed Explanations now optionally own deterministic comparative Evidence
+roles:
+
+```text
+supports
+opposes
+shared
+```
+
+`completeOrganizationalExplanations()` is the sole producer. Normal forward
+Runtime evolution supplies a bounded organization-scoped view of canonical
+Evidence identities and direct `contradicts` relationships. Historical records
+without the field remain valid and no bulk migration occurs.
+
+These roles preserve candidate-relative structure without adjudicating the
+Explanation. `opposes` is not discrimination or decisive falsification;
+`shared` is not additional Evidence weight. Counterfactual, outcome, rule-out,
+and adjudication semantics remain absent.
+
 Canonical Object Domains
 
 * Perceptual Objects

@@ -2,11 +2,17 @@ import type { OrganizationalBelief } from "../beliefs/organizationalBeliefs";
 import type { OrganizationalTheory } from "../memory/organizationalTheories";
 import type {
   OrganizationalExplanation,
+  OrganizationalExplanationEvidenceRole,
+  OrganizationalExplanationEvidenceRoleAssignment,
   OrganizationalExplanationSeed,
   OrganizationalOutcomeRef,
   OrganizationalScopeRef,
 } from "./organizationalJudgment";
 import type { OrganizationalMechanism } from "./organizationalMechanism";
+import type {
+  V3Evidence,
+  V3EvidenceRelationship,
+} from "../../types";
 
 export type ExplanationCompletionFailure = {
   seedId: string;
@@ -18,6 +24,17 @@ export type CompleteOrganizationalExplanationsResult = {
   failures: ExplanationCompletionFailure[];
 };
 
+export type OrganizationalExplanationCompletionEvidenceContext = {
+  organizationId: string;
+  evidence: Array<Pick<V3Evidence, "id">>;
+  relationships: Array<
+    Pick<
+      V3EvidenceRelationship,
+      "id" | "sourceEvidenceId" | "targetEvidenceId" | "type"
+    >
+  >;
+};
+
 type CompleteOrganizationalExplanationsInput = {
   organizationId: string;
   seeds: OrganizationalExplanationSeed[];
@@ -26,6 +43,7 @@ type CompleteOrganizationalExplanationsInput = {
   theories: OrganizationalTheory[];
   existingExplanations?: OrganizationalExplanation[];
   contradictionIds?: string[];
+  evidenceContext?: OrganizationalExplanationCompletionEvidenceContext;
   now: string;
 };
 
@@ -77,6 +95,262 @@ function pathsForMechanism(mechanism: OrganizationalMechanism): string[] {
     ...(mechanism.supportingReasoningPathIds ?? []),
     ...(mechanism.reasoningPathIds ?? []),
   ]);
+}
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === "string" && value.length > 0;
+}
+
+function compareOutcomeRefs(
+  left: OrganizationalOutcomeRef,
+  right: OrganizationalOutcomeRef,
+): boolean {
+  return stable(left) === stable(right);
+}
+
+function explanationsAreComparable(
+  left: OrganizationalExplanation,
+  right: OrganizationalExplanation,
+): boolean {
+  if (left.id === right.id) return false;
+  if (left.organizationId !== right.organizationId) return false;
+  if (stable(left.claim.scope) !== stable(right.claim.scope)) return false;
+  return left.claim.outcomeRefs.some((leftOutcome) =>
+    right.claim.outcomeRefs.some((rightOutcome) =>
+      compareOutcomeRefs(leftOutcome, rightOutcome),
+    ),
+  );
+}
+
+type ValidEvidenceContext = {
+  evidenceIds: Set<string>;
+  relationships: Array<{
+    id: string;
+    sourceEvidenceId: string;
+    targetEvidenceId: string;
+    type: "contradicts";
+  }>;
+};
+
+function validateEvidenceContext(
+  organizationId: string,
+  context: OrganizationalExplanationCompletionEvidenceContext | undefined,
+): ValidEvidenceContext | null {
+  if (!context) return null;
+  if (
+    !isNonEmptyString(context.organizationId) ||
+    context.organizationId !== organizationId ||
+    !Array.isArray(context.evidence) ||
+    !Array.isArray(context.relationships)
+  ) {
+    return null;
+  }
+
+  const evidenceCounts = new Map<string, number>();
+  for (const item of context.evidence) {
+    const id = item && isNonEmptyString(item.id) ? item.id : "";
+    if (!id) continue;
+    evidenceCounts.set(id, (evidenceCounts.get(id) ?? 0) + 1);
+  }
+  const evidenceIds = new Set(
+    [...evidenceCounts.entries()]
+      .filter(([, count]) => count === 1)
+      .map(([id]) => id)
+      .sort(),
+  );
+
+  const relationshipsById = new Map<
+    string,
+    OrganizationalExplanationCompletionEvidenceContext["relationships"]
+  >();
+  for (const relationship of context.relationships) {
+    if (!relationship || !isNonEmptyString(relationship.id)) continue;
+    const current = relationshipsById.get(relationship.id) ?? [];
+    current.push(relationship);
+    relationshipsById.set(relationship.id, current);
+  }
+
+  const relationships = [...relationshipsById.entries()]
+    .sort(([left], [right]) => left.localeCompare(right))
+    .flatMap(([, candidates]) => {
+      if (
+        candidates.some(
+          (relationship) =>
+            relationship.type !== "contradicts" ||
+            !isNonEmptyString(relationship.sourceEvidenceId) ||
+            !isNonEmptyString(relationship.targetEvidenceId) ||
+            relationship.sourceEvidenceId === relationship.targetEvidenceId ||
+            !evidenceIds.has(relationship.sourceEvidenceId) ||
+            !evidenceIds.has(relationship.targetEvidenceId),
+        )
+      ) {
+        return [];
+      }
+      const uniqueCandidates = uniqueObjects(
+        candidates.map((relationship) => ({
+          id: relationship.id,
+          sourceEvidenceId: relationship.sourceEvidenceId,
+          targetEvidenceId: relationship.targetEvidenceId,
+          type: "contradicts" as const,
+        })),
+      );
+      return uniqueCandidates.length === 1 ? uniqueCandidates : [];
+    })
+    .sort(
+      (left, right) =>
+        left.id.localeCompare(right.id) ||
+        left.sourceEvidenceId.localeCompare(right.sourceEvidenceId) ||
+        left.targetEvidenceId.localeCompare(right.targetEvidenceId),
+    );
+
+  return { evidenceIds, relationships };
+}
+
+const roleOrder: Record<OrganizationalExplanationEvidenceRole, number> = {
+  supports: 0,
+  opposes: 1,
+  shared: 2,
+};
+
+function compareRoleAssignments(
+  left: OrganizationalExplanationEvidenceRoleAssignment,
+  right: OrganizationalExplanationEvidenceRoleAssignment,
+): number {
+  return (
+    left.evidenceId.localeCompare(right.evidenceId) ||
+    roleOrder[left.role] - roleOrder[right.role] ||
+    left.basis.kind.localeCompare(right.basis.kind) ||
+    stable(left.basis.referenceIds).localeCompare(
+      stable(right.basis.referenceIds),
+    ) ||
+    stable(left.relatedExplanationIds).localeCompare(
+      stable(right.relatedExplanationIds),
+    )
+  );
+}
+
+function formComparativeEvidenceRoles(params: {
+  input: CompleteOrganizationalExplanationsInput;
+  explanations: OrganizationalExplanation[];
+  context: ValidEvidenceContext;
+}): Map<string, OrganizationalExplanationEvidenceRoleAssignment[]> {
+  const { input, explanations, context } = params;
+  const seedById = new Map(input.seeds.map((seed) => [seed.id, seed]));
+  const byExplanation = new Map<
+    string,
+    OrganizationalExplanationEvidenceRoleAssignment[]
+  >();
+
+  for (const explanation of explanations) {
+    const assignments: OrganizationalExplanationEvidenceRoleAssignment[] = [];
+    for (const seedId of unique(explanation.explanationSeedIds)) {
+      const seed = seedById.get(seedId);
+      if (!seed || seed.reasoningPathIds.length === 0) continue;
+      const supportedEvidenceIds = unique([
+        ...seed.evidenceIds,
+        ...seed.evidenceReferences
+          .filter((reference) => reference.type === "evidence")
+          .map((reference) => reference.id),
+      ]).filter((evidenceId) => context.evidenceIds.has(evidenceId));
+      for (const evidenceId of supportedEvidenceIds) {
+        assignments.push({
+          evidenceId,
+          role: "supports",
+          basis: {
+            kind: "explanation-seed",
+            referenceIds: [seedId],
+          },
+          relatedExplanationIds: [],
+        });
+      }
+    }
+    byExplanation.set(explanation.id, assignments);
+  }
+
+  for (const explanation of explanations) {
+    const assignments = byExplanation.get(explanation.id) ?? [];
+    const supportedEvidenceIds = new Set(
+      assignments
+        .filter((assignment) => assignment.role === "supports")
+        .map((assignment) => assignment.evidenceId),
+    );
+    for (const relationship of context.relationships) {
+      const sourceSupports = supportedEvidenceIds.has(
+        relationship.sourceEvidenceId,
+      );
+      const targetSupports = supportedEvidenceIds.has(
+        relationship.targetEvidenceId,
+      );
+      if (sourceSupports === targetSupports) continue;
+      const evidenceId = sourceSupports
+        ? relationship.targetEvidenceId
+        : relationship.sourceEvidenceId;
+      assignments.push({
+        evidenceId,
+        role: "opposes",
+        basis: {
+          kind: "evidence-relationship",
+          referenceIds: [relationship.id],
+        },
+        relatedExplanationIds: [],
+      });
+    }
+    byExplanation.set(explanation.id, assignments);
+  }
+
+  for (const explanation of explanations) {
+    const assignments = byExplanation.get(explanation.id) ?? [];
+    const supports = assignments.filter(
+      (assignment) => assignment.role === "supports",
+    );
+    for (const support of supports) {
+      const relatedExplanations = explanations
+        .filter((candidate) =>
+          explanationsAreComparable(explanation, candidate),
+        )
+        .filter((candidate) =>
+          (byExplanation.get(candidate.id) ?? []).some(
+            (assignment) =>
+              assignment.role === "supports" &&
+              assignment.evidenceId === support.evidenceId,
+          ),
+        )
+        .sort((left, right) => left.id.localeCompare(right.id));
+      if (relatedExplanations.length === 0) continue;
+      const referenceIds = unique([
+        ...support.basis.referenceIds,
+        ...relatedExplanations.flatMap((candidate) =>
+          (byExplanation.get(candidate.id) ?? [])
+            .filter(
+              (assignment) =>
+                assignment.role === "supports" &&
+                assignment.evidenceId === support.evidenceId,
+            )
+            .flatMap((assignment) => assignment.basis.referenceIds),
+        ),
+      ]);
+      assignments.push({
+        evidenceId: support.evidenceId,
+        role: "shared",
+        basis: {
+          kind: "shared-support",
+          referenceIds,
+        },
+        relatedExplanationIds: relatedExplanations.map(
+          (candidate) => candidate.id,
+        ),
+      });
+    }
+    const byIdentity = new Map(
+      assignments.map((assignment) => [stable(assignment), assignment]),
+    );
+    byExplanation.set(
+      explanation.id,
+      [...byIdentity.values()].sort(compareRoleAssignments),
+    );
+  }
+
+  return byExplanation;
 }
 
 export function completeOrganizationalExplanations(
@@ -192,9 +466,31 @@ export function completeOrganizationalExplanations(
 
   const byId = new Map<string, OrganizationalExplanation>();
   for (const explanation of completed) byId.set(explanation.id, explanation);
+  const explanations = [...byId.values()].sort((a, b) =>
+    a.id.localeCompare(b.id),
+  );
+  const evidenceContext = validateEvidenceContext(
+    input.organizationId,
+    input.evidenceContext,
+  );
+  const rolesByExplanation = evidenceContext
+    ? formComparativeEvidenceRoles({
+        input,
+        explanations,
+        context: evidenceContext,
+      })
+    : null;
 
   return {
-    explanations: [...byId.values()].sort((a, b) => a.id.localeCompare(b.id)),
+    explanations: explanations.map((explanation) =>
+      rolesByExplanation
+        ? {
+            ...explanation,
+            comparativeEvidenceRoles:
+              rolesByExplanation.get(explanation.id) ?? [],
+          }
+        : explanation,
+    ),
     failures: failures.sort((a, b) => a.seedId.localeCompare(b.seedId)),
   };
 }

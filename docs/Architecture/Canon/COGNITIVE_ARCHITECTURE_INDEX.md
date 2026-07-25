@@ -35,6 +35,33 @@ The strategic relationship among Organizational Intelligence, the Operating Mode
 SHARED_ORGANIZATIONAL_INTELLIGENCE.md
 ```
 
+The gated production sequence for implementing that validated direction is
+defined by:
+
+```text
+DISCOVERY_2_SEQUENTIAL_IMPLEMENTATION_PROGRAM.md
+```
+
+The Phase 1 production contract is defined by:
+
+```text
+COMPARATIVE_EVIDENCE_ROLES_CONTRACT.md
+```
+
+The bounded producer input required before that contract can be implemented is
+defined by:
+
+```text
+COMPLETED_EXPLANATION_INPUT_CONTRACT.md
+```
+
+The permanent engineering optimization and promotion framework used to
+interpret benchmark and capability movement is defined by:
+
+```text
+DISCOVERY_SCORECARD.md
+```
+
 ---
 
 # Architecture Layers
