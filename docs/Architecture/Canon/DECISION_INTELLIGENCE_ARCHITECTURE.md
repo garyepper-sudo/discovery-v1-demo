@@ -6,13 +6,19 @@
 
 # Purpose
 
-This document defines Discovery's canonical architecture as an **Executive Cognitive Operating System**.
+This document defines the canonical decision-intelligence architecture of
+Discovery's **Executive Cognitive Operating System** application.
 
-Discovery does not exist simply to analyze organizations.
+It is subordinate to the platform identity and shared cognition boundaries in
+`SHARED_ORGANIZATIONAL_INTELLIGENCE.md`. Its executive optimization target
+governs this application, not Discovery's universal product identity.
 
-Discovery exists to continuously improve executive judgment.
+Within this application, Discovery does not exist simply to analyze
+organizations.
 
-Organizational understanding is no longer Discovery's final product.
+The application exists to continuously improve executive judgment.
+
+Organizational understanding is not this application's final projection.
 
 Understanding becomes the foundation upon which executives:
 
@@ -32,7 +38,8 @@ Organizations do not purchase software because they want analysis.
 
 Organizations purchase software because they want to consistently make better decisions.
 
-Discovery exists to continuously improve executive judgment through reusable cognitive operating systems.
+The Executive Cognitive Operating System exists to continuously improve
+executive judgment through reusable cognitive operating systems.
 
 ---
 
@@ -632,7 +639,8 @@ Discovery is no longer an Organizational Understanding Engine.
 
 Discovery is no longer merely a Decision Intelligence Platform.
 
-Discovery is an **Executive Cognitive Operating System**.
+Within the decision-intelligence application, Discovery operates as an
+**Executive Cognitive Operating System**.
 
 Its purpose is to continuously improve executive judgment through reusable organizational cognition.
 

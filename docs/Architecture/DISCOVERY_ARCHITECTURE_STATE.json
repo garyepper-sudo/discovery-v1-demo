@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-24T07:38:58.981Z",
+    "generatedAt": "2026-07-25T18:39:04.031Z",
     "generator": "scripts/cognition/generateArchitectureState.mjs",
     "sourceOfTruthOrder": [
       "Verified source code",
@@ -13,11 +13,11 @@
     ]
   },
   "project": {
-    "currentMilestone": null,
-    "currentPhase": "Repository Integration Completion and Benchmark-Driven Reasoning Validation.\nRepository integration is nearly complete. Production reasoning changes remain\nbenchmark-gated, and no new feature sprint should begin until generated\nartifacts, local-output handling, and final comparator validation are complete.",
-    "currentObjective": null,
-    "currentSprint": null,
-    "nextPriority": null,
+    "currentMilestone": "Discovery 2 Foundation milestone assembled through the partial Phase 8A\nRuntime-backed `Your Organization` integration.",
+    "currentPhase": "Conditional Phase 2 adjudication remains production-blocked. Phases 3 and 4\nare complete. Phase 5A authority transitions and the Phase 5B disclosure\ncontract remain unchanged. Phase 8A is an authorized product-validation\nexception; broader Phase 5 Governance and Phase 6 remain paused.",
+    "currentObjective": "Validate existing Discovery 2 cognition through the Runtime-backed product\nadapter. Preserve explicit missing-data states and do not invent semantic\ncontent, Evidence persistence, confidence, or disclosure authority.",
+    "currentSprint": "Discovery 2 Foundation audit, canonization, validation, and milestone commit.",
+    "nextPriority": "Preserve the completed Phase 4 ownership boundary. Phase 5, Explicit Authority\nTransitions and Contribution Validation, is next in the canonical sequence\nbut requires separate authorization.",
     "sourceDocuments": [
       "DISCOVERY_SNAPSHOT.md",
       "ENGINE_CAPABILITY_AUDIT.md",
@@ -27,16 +27,36 @@
       "BENCHMARK_BASELINE.md",
       "BENCHMARK_CHECKPOINT_AND_PRIORITIES.md",
       "BENCHMARK_REGRESSION_ANALYSIS.md",
+      "CANONICAL_UNDERSTANDING_COMPATIBILITY_SHADOW.md",
+      "CANONICAL_UNDERSTANDING_OWNERSHIP_MIGRATION.md",
+      "CAUSAL_CONSTRAINT_PRODUCTION_SHADOW.md",
+      "CAUSAL_CONSTRAINT_REASONING_BENCHMARK.md",
+      "COMPETING_EXPLANATION_ADJUDICATION.md",
+      "COMPETING_EXPLANATION_PRODUCTION_SHADOW.md",
+      "COMPLETED_EXPLANATION_ADJUDICATION_PRODUCTION_SHADOW.md",
+      "DISCLOSURE_ELIGIBILITY_AND_REVOCATION_CONTRACT.md",
+      "DISCOVERY_2_FOUNDATION_MILESTONE_AUDIT.md",
+      "EVIDENCE_INDEPENDENCE_BENCHMARK.md",
+      "EVIDENCE_INDEPENDENCE_SHADOW_EVALUATION.md",
       "EVIDENCE_PROVENANCE_PRESERVATION.md",
       "EVIDENCE_SENSITIVITY_PRODUCTION_DESIGN.md",
       "EXECUTIVE_CONVERSATION_PROVIDER_EVALUATION.md",
+      "EXPLANATION_SEED_THEORY_ANCESTRY_BRIDGE.md",
       "EXPLANATORY_RELATIONSHIP_FEASIBILITY.md",
+      "EXPLICIT_AUTHORITY_TRANSITIONS_AND_CONTRIBUTION_VALIDATION.md",
+      "IMPLICIT_CAUSAL_EDGE_RECOVERY.md",
       "JOINT_COMPOSITION_EXPERIMENT.md",
       "JUDGMENT_DECISIVE_EVIDENCE_ABLATION.md",
+      "MECHANISM_EVIDENCE_COMPOSITION_GROUND_TRUTH.md",
       "OBSERVATIONS_TO_SIGNALS_TRACE.md",
+      "PRIMARY_CONSTRAINT_RANKING_GROUND_TRUTH.md",
       "RECURSIVE_ORGANIZATIONAL_INTELLIGENCE_VALIDATION.md",
       "REPOSITORY_INTEGRATION_PLAN.md",
-      "THEME_COMPOSITION_POLICY_EXPERIMENT.md"
+      "RUNTIME_BACKED_YOUR_ORGANIZATION_INTEGRATION.md",
+      "STRUCTURED_EXPLANATION_CANDIDATE_SHADOW.md",
+      "THEME_COMPOSITION_POLICY_EXPERIMENT.md",
+      "THEME_EVIDENCE_COMPOSITION_ISOLATION.md",
+      "UNADJUDICATED_EXPLANATION_UNDERSTANDING_SHADOW.md"
     ]
   },
   "architecture": {
@@ -44,7 +64,7 @@
     "healthScore": 100,
     "capabilityCount": 32,
     "canonicalProducerCount": 32,
-    "registeredFileCount": 585,
+    "registeredFileCount": 1189,
     "cognitiveObjectCount": 38,
     "terminalCapabilityCount": 5,
     "capabilityTraceCount": 14,
@@ -447,6 +467,7 @@
           "CAP-UND-002",
           "CAP-UND-003",
           "CAP-UND-004",
+          "CAP-UND-006",
           "CAP-PRD-002"
         ],
         "consumedByCapabilities": [
@@ -460,7 +481,6 @@
       "destinations": {
         "runtime": "OrganizationRuntime.executiveAssessment",
         "executive": [
-          "OrganizationalUnderstanding",
           "ExecutiveProjection",
           "ExecutiveWorkspace"
         ]
@@ -489,12 +509,12 @@
         }
       },
       "searchTerms": [],
-      "notes": "Executive Assessment is the authoritative executive synthesis consumed by the canonical Executive Understanding Synthesis capability. It integrates Prediction Reflection but does not recreate prediction reasoning."
+      "notes": "Executive Assessment is an application-specific synthesis that consumes canonical Organizational Understanding together with organizational state, conditions, mechanisms, theories, beliefs, Prediction Reflection, and investigation context. It does not own reusable Organizational Understanding or recreate Explanation semantics."
     },
     {
       "id": "CAP-UND-006",
       "name": "Executive Understanding Synthesis",
-      "description": "Transforms Executive Assessment into Discovery's single canonical persistent Organizational Understanding and consolidates it longitudinally across investigations.",
+      "description": "Composes completed Organizational Explanations into Discovery's single canonical reusable Organizational Understanding. Assessment-derived currentUnderstandings remain a temporary downstream compatibility view.",
       "domain": "UND",
       "architecturalLayer": "COG",
       "subsystem": "Organizational Understanding",
@@ -505,8 +525,9 @@
           "OrganizationalUnderstanding",
           "OrganizationalUnderstandingState"
         ],
-        "ownsCanonicalProducer": "engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts",
+        "ownsCanonicalProducer": "engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow.ts",
         "implementationFiles": [
+          "engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow.ts",
           "engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts",
           "engine/v3/understanding/consolidateUnderstanding.ts",
           "engine/v3/understanding/synthesizeUnderstanding.ts",
@@ -521,7 +542,8 @@
         ],
         "consumedByCapabilities": [
           "CAP-COM-001",
-          "CAP-DEC-001"
+          "CAP-DEC-001",
+          "CAP-UND-005"
         ],
         "terminalCapability": true
       },
@@ -560,6 +582,7 @@
         }
       },
       "searchTerms": [
+        "buildCanonicalUnderstandingCompatibilityShadow",
         "buildExecutiveUnderstandingCandidates",
         "consolidateUnderstanding",
         "synthesizeUnderstanding",
@@ -567,7 +590,7 @@
         "OrganizationalUnderstanding",
         "OrganizationalUnderstandingState"
       ],
-      "notes": "This is the sole canonical producer of persistent Organizational Understanding. Investigation-level understandings and legacy belief-derived understandings remain available as supporting working cognition but do not compete for canonical executive understanding. This is a terminal cognitive capability consumed by Executive Projection, Executive Workspace, and Atlas rather than by another registered cognitive capability."
+      "notes": "The reference-only Category A composition is the sole canonical owner of reusable Organizational Understanding. Completed Explanations retain claims, ancestry, assumptions, comparative Evidence roles, and role availability. Executive Assessment consumes canonical composition. buildExecutiveUnderstandingCandidates, consolidation, and synthesis remain temporary compatibility adapters for current downstream contracts."
     },
     {
       "id": "CAP-MEM-001",
@@ -2135,7 +2158,6 @@
       "canonicalProducer": "engine/v3/model/judgment/buildExecutiveAssessment.ts",
       "runtimeDestination": "OrganizationRuntime.executiveAssessment",
       "executiveDestinations": [
-        "OrganizationalUnderstanding",
         "ExecutiveProjection",
         "ExecutiveWorkspace"
       ]
@@ -2146,7 +2168,7 @@
         "OrganizationalUnderstanding",
         "OrganizationalUnderstandingState"
       ],
-      "canonicalProducer": "engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts",
+      "canonicalProducer": "engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow.ts",
       "runtimeDestination": "OrganizationRuntime.organizationalUnderstandingState",
       "executiveDestinations": [
         "ExecutiveProjection",
@@ -2640,7 +2662,7 @@
         "leftCapabilityName": "Organizational Condition Inference",
         "rightCapabilityId": "CAP-UND-005",
         "rightCapabilityName": "Executive Assessment",
-        "semanticSimilarity": 0.333,
+        "semanticSimilarity": 0.348,
         "sharedProducedObjects": [],
         "sameCanonicalProducer": false,
         "status": "review-required",

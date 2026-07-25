@@ -1,0 +1,52 @@
+import assert from "node:assert/strict";
+import { runOrganizationalIntelligenceArchitectureBenchmark } from "./runOrganizationalIntelligenceArchitectureBenchmark";
+
+const report = runOrganizationalIntelligenceArchitectureBenchmark();
+assert.equal(report.results.length, 25);
+assert.equal(report.architectureC.executable, false);
+assert.equal(report.determinism.repeatedRunByteEqual, true);
+assert.equal(report.determinism.reversedOrderPassed, true);
+assert.equal(report.adversarial.passed, true);
+assert.equal(report.isolation.runtimeUnchanged, true);
+assert.equal(report.isolation.fixtureFactoriesStable, true);
+assert.equal(report.isolation.organizationIdentityStable, true);
+assert.equal(report.isolation.runtimeHashBefore, report.isolation.runtimeHashAfter);
+assert.equal(report.isolation.fixtureHashBefore, report.isolation.fixtureHashAfter);
+assert.equal(report.summaries.hybrid.criticalFailures, 0);
+assert.equal(report.summaries.hybrid.epistemic.duplicateInducedSupportDelta, 0);
+assert.equal(report.summaries.hybrid.understanding.localExceptionPreservation, 1);
+assert.equal(report.ablations.bypass.materialFailureExposed, true);
+assert.equal(report.ablations.noAncestryAwareIndependence.materialFailureExposed, true);
+assert.equal(report.classification, "A_HYBRID_BOUNDARY_VALIDATED_FOR_TESTED_SCOPE");
+
+console.log("DISCOVERY HYBRID ARCHITECTURE META-BENCHMARK — EXPERIMENT 1");
+console.log(`Classification: ${report.classification}`);
+console.log(`Development worlds: ${report.partition.development.join(", ")}`);
+console.log(`Held-out worlds: ${report.partition.heldOut.join(", ")}`);
+for (const architectureId of ["independent", "central", "hybrid"] as const) {
+  const summary = report.summaries[architectureId];
+  console.log(`\n${architectureId.toUpperCase()}`);
+  console.log(`Critical failures: ${summary.criticalFailures}`);
+  console.log(`Major failures: ${summary.majorFailures}`);
+  console.log(`Synthesis precision/recall: ${summary.understanding.synthesisPrecision.toFixed(3)} / ${summary.understanding.synthesisRecall.toFixed(3)}`);
+  console.log(`Local exception preservation: ${summary.understanding.localExceptionPreservation.toFixed(3)}`);
+  console.log(`Emergence recall: ${summary.understanding.emergenceRecall.toFixed(3)}`);
+  console.log(`Duplicate support delta: ${summary.epistemic.duplicateInducedSupportDelta.toFixed(6)}`);
+  console.log(`Unsupported admissions: ${summary.epistemic.unsupportedAdmissions}`);
+  console.log(`Direct leakage: ${summary.permission.directLeakage}`);
+  console.log(`Durable objects: ${summary.architecture.durableObjects}`);
+}
+console.log("\nABLATIONS");
+console.log(`Contribution Validation bypass critical failures: ${report.ablations.bypass.criticalFailures}`);
+console.log(`No independence critical failures: ${report.ablations.noAncestryAwareIndependence.criticalFailures}`);
+console.log(`No independence duplicate support delta: ${report.ablations.noAncestryAwareIndependence.duplicateInducedSupportDelta.toFixed(6)}`);
+console.log("\nDETERMINISM AND ISOLATION");
+console.log(`Repeated byte equality: ${report.determinism.repeatedRunByteEqual ? "PASS" : "FAIL"}`);
+console.log(`Reversed ordering: ${report.determinism.reversedOrderPassed ? "PASS" : "FAIL"}`);
+console.log(`Adversarial mutations: ${report.adversarial.passed ? "PASS" : "FAIL"} (${report.adversarial.checks.length} checks)`);
+console.log(`Runtime unchanged: ${report.isolation.runtimeUnchanged ? "PASS" : "FAIL"}`);
+console.log(`Fixture factories stable: ${report.isolation.fixtureFactoriesStable ? "PASS" : "FAIL"}`);
+console.log(`Organization identity stable: ${report.isolation.organizationIdentityStable ? "PASS" : "FAIL"}`);
+console.log(`Runtime hash: ${report.isolation.runtimeHashBefore}`);
+console.log(`Fixture hash: ${report.isolation.fixtureHashBefore}`);
+console.log("Architecture C: EXCLUDED — not fairly executable with current contracts");

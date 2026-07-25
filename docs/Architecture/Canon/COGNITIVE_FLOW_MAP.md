@@ -35,7 +35,7 @@ Every transformation has:
 
 ---
 
-# Executive Cognitive Operating System
+# Shared Cognition and the Executive Application
 
 Discovery is organized as cooperating Cognitive Operating Systems.
 
@@ -93,7 +93,14 @@ Consumers reuse canonical cognition.
 
 Presentation never recreates reasoning.
 
-Executive judgment continuously improves through reviewed organizational experience.
+Organizational understanding continuously improves through governed evidence,
+interaction, and reviewed outcomes. Executive judgment is one downstream use
+of that shared cognition.
+
+The conceptual order in this document does not override the active production
+call graph. Production investigation cognition currently detects Signals and
+Themes before building its legacy Observations, while the organizational
+Runtime path separately produces Organizational Observations and Phenomena.
 
 ---
 

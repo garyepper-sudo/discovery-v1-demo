@@ -1,5 +1,6 @@
 import type { OrganizationalBelief } from "../model/beliefs/organizationalBeliefs";
 import type { OrganizationalConcept } from "../concepts/synthesizeOrganizationalConcepts";
+import type { CanonicalUnderstandingComposition } from "../understanding/buildCanonicalUnderstandingCompatibilityShadow";
 
 export type UnderstandingStateStatus =
   | "emerging"
@@ -194,6 +195,17 @@ export type OrganizationalUnderstandingState = {
   executiveSummary: string;
 
   currentUnderstandings: OrganizationalUnderstandingItem[];
+
+  /**
+   * Canonical reusable Organizational Understanding composition.
+   *
+   * Completed Explanations retain ownership of claims, ancestry, assumptions,
+   * and comparative Evidence semantics. `currentUnderstandings` remains a
+   * temporary compatibility view for existing consumers.
+   *
+   * Optional for historical Runtime compatibility.
+   */
+  canonicalCompositions?: CanonicalUnderstandingComposition[];
   organizationalConcepts: OrganizationalConcept[];
   organizationalBeliefs: OrganizationalBelief[];
 

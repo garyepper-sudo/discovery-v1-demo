@@ -980,3 +980,11 @@ provider filter, projection behavior, capability, or registry entry.
 It does not modify authentication, cognition, Runtime, memory, evidence,
 providers, applications, or benchmarks. All named shapes are conceptual and
 require separate implementation approval.
+
+## Phase 5B contract mapping
+
+Phase 5B implements a smaller resolved-decision envelope with decision,
+organization, consumer, disposition, effective-time, supersession, and basis
+fields. It is not an implementation of the conceptual Governance objects in
+this document. No permission, membership, policy, sensitivity, context,
+lineage, audit, or disclosure-history object is activated.

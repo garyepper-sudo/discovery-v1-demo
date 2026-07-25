@@ -27,7 +27,9 @@ Every architectural document should answer one of four questions:
 3. **Who owns each responsibility?**
 4. **Where is each capability implemented?**
 
-Together these documents define Discovery's Executive Cognitive Operating System.
+Together these documents define Discovery's shared cognitive architecture.
+The Executive Cognitive Operating System is the first major downstream
+application of that architecture.
 
 The strategic relationship among Organizational Intelligence, the Operating Model, Organization Runtime, applications, future Intelligence Scopes, and architecture expansion is defined by:
 
@@ -48,6 +50,20 @@ The Phase 1 production contract is defined by:
 COMPARATIVE_EVIDENCE_ROLES_CONTRACT.md
 ```
 
+The Phase 2 completed-Explanation adjudication boundary and its current
+structured-semantic blocker are defined by:
+
+```text
+COMPLETED_EXPLANATION_ADJUDICATION_CONTRACT.md
+```
+
+The read-only audit of production candidates for the missing Phase 2
+candidate-relative test result is:
+
+```text
+CANDIDATE_RELATIVE_EXPLANATION_TEST_PRODUCER_AUDIT.md
+```
+
 The bounded producer input required before that contract can be implemented is
 defined by:
 
@@ -62,9 +78,53 @@ interpret benchmark and capability movement is defined by:
 DISCOVERY_SCORECARD.md
 ```
 
+The engineering instrumentation that relates repository, architecture,
+capability, benchmark, research, Runtime, migration, and Scorecard evidence
+without adding a score or production capability is:
+
+```text
+DISCOVERY_ENGINEERING_PERFORMANCE_SYSTEM.md
+```
+
+The canonical benchmark research methodology beneath the Organizational
+Understanding Index and the index of adapted research are:
+
+```text
+engine/benchmark/research/ORGANIZATIONAL_UNDERSTANDING_RESEARCH_FRAMEWORK.md
+engine/benchmark/research/README.md
+```
+
+Research dimensions and Local Understanding Utility remain benchmark-only
+profiles. They do not create cognitive objects, Runtime state, capabilities,
+or additional top-level Scorecard metrics.
+
 ---
 
 # Architecture Layers
+
+## Discovery 2 organizing theory
+
+Adaptive Organizational Cognition organizes the architecture at a high level:
+Discovery is a governed organizational learning system whose cognition
+exhibits a variation-selection-retention grammar at several boundaries.
+
+Structured Organizational Reasoning remains the technical execution
+architecture. The organizing theory does not rename canonical objects, imply
+an evolutionary algorithm, or authorize a universal candidate layer.
+
+Current benchmark evidence validates completed Explanation construction,
+competing Explanation adjudication, Contribution Validation as an
+architectural responsibility, and disciplined candidate ecology within
+controlled scopes. Phase 1 comparative Evidence roles are active in
+production. Completed Explanation adjudication remains benchmark validated,
+production blocked, and conditional rather than universally required.
+Unresolved competition is a valid state of Organizational Understanding.
+Phase 3 validated a read-only CAP-UND-006 shadow over completed,
+unadjudicated Explanations. Phase 4C promotes its reference-only Category A
+composition to the canonical Organizational Understanding owner. Completed
+Explanations retain explanatory truth and ancestry; Executive Assessment is a
+downstream consumer with bounded compatibility views preserving unchanged
+application behavior.
 
 ## 0. Shared Organizational Intelligence
 
@@ -522,8 +582,19 @@ Executive Experience presents cognition.
 
 # Current Status
 
-Discovery's first-generation Executive Cognitive Operating System is considered architecturally stable.
+Discovery's first-generation Executive Cognitive Operating System remains a
+stable application architecture.
 
-Current development uses the Executive Decision Lab and Operating Model Evolution Lab to identify measured producer failures. The current investigation target is contradiction-aware Organizational Mechanism confidence. Historical mechanism lifecycle implementation remains deferred.
+Current development is focused on the Discovery 2 production boundary between
+completed Organizational Explanations and downstream organizational
+understanding. Competing Explanation adjudication is benchmark validated, but
+production completed Explanations carry only the Phase 1 `supports`,
+`opposes`, and `shared` comparative Evidence roles. No canonical producer
+supplies the candidate-relative test results required for Phase 2
+adjudication. Production adjudication therefore remains deferred. One bounded
+CAP-UND-006 shadow may evaluate unadjudicated Explanations while preserving
+all alternatives, exact ancestry, explicit uncertainty, and complete
+production noninterference.
 
-Future work should evolve existing Operating Systems through measured producer improvements rather than introducing parallel reasoning.
+Future work should integrate one measured boundary at a time rather than
+introducing parallel reasoning or new universal candidate objects.

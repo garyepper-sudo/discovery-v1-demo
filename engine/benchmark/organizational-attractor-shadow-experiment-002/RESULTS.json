@@ -1,0 +1,2052 @@
+{
+  "experiment": "Organizational Attractor Shadow Experiment 002",
+  "posture": "held-out benchmark-only shadow",
+  "productionBehaviorChanged": false,
+  "architecturePromotionAuthorized": false,
+  "inputBoundary": {
+    "productionTypeImports": [
+      "V3Mechanism",
+      "V3Contradiction",
+      "OrganizationalCondition",
+      "OrganizationalState"
+    ],
+    "productionDerivedFields": [
+      "mechanism cause/mechanism/effect/confidence/stability/lineage",
+      "contradiction identity/explanation/Evidence lineage/confidence",
+      "condition identity/status/trend/confidence/mechanism lineage",
+      "state identity/summary/status/confidence/dominant conditions",
+      "dated historical snapshots"
+    ],
+    "benchmarkOwnedFields": [
+      "snapshot grouping and synthetic dates",
+      "synthetic artifact content",
+      "scoring-only scenario family",
+      "held-out future outcome",
+      "fixed inference thresholds"
+    ]
+  },
+  "registration": {
+    "registeredBeforeFutureReveal": true,
+    "inferenceBoundaryHash": "1c6f1b03a92ddf35ffac997465e7406c71184b59785e8268039dc6482bf96e8f",
+    "predictions": [
+      {
+        "modelId": "attractor",
+        "scenarioId": "scenario-001",
+        "predictionId": "attractor:scenario-001",
+        "triggeringCondition": "mistake-sensitive incentives AND privileged executive information AND visible local failure",
+        "predictedOutcome": "condition-decision-centralization",
+        "predictedConditionId": "condition-decision-centralization",
+        "confidence": 0.790092,
+        "supportingArtifactIds": [
+          "information",
+          "override",
+          "risk",
+          "state-001-a",
+          "state-001-c"
+        ],
+        "falsificationCondition": "The supported mechanisms (information, override, risk) remain inactive across the next consequential transition.",
+        "abstained": false
+      },
+      {
+        "modelId": "combined",
+        "scenarioId": "scenario-001",
+        "predictionId": "combined:scenario-001",
+        "triggeringCondition": "mistake-sensitive incentives AND privileged executive information AND visible local failure",
+        "predictedOutcome": "condition-decision-centralization",
+        "predictedConditionId": "condition-decision-centralization",
+        "confidence": 0.790092,
+        "supportingArtifactIds": [
+          "information",
+          "override",
+          "risk",
+          "state-001-a",
+          "state-001-c"
+        ],
+        "falsificationCondition": "The supported mechanisms (information, override, risk) remain inactive across the next consequential transition.",
+        "abstained": false
+      },
+      {
+        "modelId": "mechanisms",
+        "scenarioId": "scenario-001",
+        "predictionId": "mechanisms:scenario-001",
+        "triggeringCondition": "mistake-sensitive incentives AND privileged executive information AND visible local failure",
+        "predictedOutcome": "condition-decision-centralization",
+        "predictedConditionId": "condition-decision-centralization",
+        "confidence": 0.72184,
+        "supportingArtifactIds": [
+          "information",
+          "override",
+          "risk"
+        ],
+        "falsificationCondition": "The active mechanisms cease or produce a different condition.",
+        "abstained": false
+      },
+      {
+        "modelId": "state",
+        "scenarioId": "scenario-001",
+        "predictionId": "state:scenario-001",
+        "triggeringCondition": "latest Organizational State persists",
+        "predictedOutcome": "condition-decision-distribution",
+        "predictedConditionId": "condition-decision-distribution",
+        "confidence": 0.78,
+        "supportingArtifactIds": [
+          "state-001-d"
+        ],
+        "falsificationCondition": "A different Organizational Condition becomes dominant.",
+        "abstained": false
+      },
+      {
+        "modelId": "attractor",
+        "scenarioId": "scenario-002",
+        "predictionId": "attractor:scenario-002",
+        "triggeringCondition": "learning-safe incentives AND respected decision rights AND shared operating information",
+        "predictedOutcome": "condition-decision-distribution",
+        "predictedConditionId": "condition-decision-distribution",
+        "confidence": 0.777002,
+        "supportingArtifactIds": [
+          "access",
+          "rights",
+          "safety",
+          "state-002-b",
+          "state-002-c"
+        ],
+        "falsificationCondition": "The supported mechanisms (access, rights, safety) remain inactive across the next consequential transition.",
+        "abstained": false
+      },
+      {
+        "modelId": "combined",
+        "scenarioId": "scenario-002",
+        "predictionId": "combined:scenario-002",
+        "triggeringCondition": "learning-safe incentives AND respected decision rights AND shared operating information",
+        "predictedOutcome": "condition-decision-distribution",
+        "predictedConditionId": "condition-decision-distribution",
+        "confidence": 0.777002,
+        "supportingArtifactIds": [
+          "access",
+          "rights",
+          "safety",
+          "state-002-b",
+          "state-002-c"
+        ],
+        "falsificationCondition": "The supported mechanisms (access, rights, safety) remain inactive across the next consequential transition.",
+        "abstained": false
+      },
+      {
+        "modelId": "mechanisms",
+        "scenarioId": "scenario-002",
+        "predictionId": "mechanisms:scenario-002",
+        "triggeringCondition": "learning-safe incentives AND respected decision rights AND shared operating information",
+        "predictedOutcome": "condition-decision-distribution",
+        "predictedConditionId": "condition-decision-distribution",
+        "confidence": 0.7134,
+        "supportingArtifactIds": [
+          "access",
+          "rights",
+          "safety"
+        ],
+        "falsificationCondition": "The active mechanisms cease or produce a different condition.",
+        "abstained": false
+      },
+      {
+        "modelId": "state",
+        "scenarioId": "scenario-002",
+        "predictionId": "state:scenario-002",
+        "triggeringCondition": "latest Organizational State persists",
+        "predictedOutcome": "condition-decision-distribution",
+        "predictedConditionId": "condition-decision-distribution",
+        "confidence": 0.78,
+        "supportingArtifactIds": [
+          "state-002-c"
+        ],
+        "falsificationCondition": "A different Organizational Condition becomes dominant.",
+        "abstained": false
+      },
+      {
+        "modelId": "attractor",
+        "scenarioId": "scenario-003",
+        "predictionId": "attractor:scenario-003",
+        "triggeringCondition": "",
+        "predictedOutcome": "No supported Candidate Attractor.",
+        "confidence": 0.35,
+        "supportingArtifactIds": [],
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "combined",
+        "scenarioId": "scenario-003",
+        "predictionId": "combined:scenario-003",
+        "triggeringCondition": "",
+        "predictedOutcome": "Competing directional tendencies cannot be resolved from canonical artifacts.",
+        "confidence": 0.42,
+        "supportingArtifactIds": [
+          "access",
+          "information",
+          "override",
+          "rights",
+          "risk",
+          "safety"
+        ],
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "mechanisms",
+        "scenarioId": "scenario-003",
+        "predictionId": "mechanisms:scenario-003",
+        "triggeringCondition": "",
+        "predictedOutcome": "Current mechanisms do not identify one direction.",
+        "confidence": 0.4,
+        "supportingArtifactIds": [
+          "access",
+          "information",
+          "override",
+          "rights",
+          "risk",
+          "safety"
+        ],
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "state",
+        "scenarioId": "scenario-003",
+        "predictionId": "state:scenario-003",
+        "triggeringCondition": "latest Organizational State persists",
+        "predictedOutcome": "Latest state is unresolved.",
+        "confidence": 0.78,
+        "supportingArtifactIds": [
+          "state-003-c"
+        ],
+        "falsificationCondition": "A different Organizational Condition becomes dominant.",
+        "abstained": true
+      },
+      {
+        "modelId": "attractor",
+        "scenarioId": "scenario-004",
+        "predictionId": "attractor:scenario-004",
+        "triggeringCondition": "",
+        "predictedOutcome": "No supported Candidate Attractor.",
+        "confidence": 0.35,
+        "supportingArtifactIds": [],
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "combined",
+        "scenarioId": "scenario-004",
+        "predictionId": "combined:scenario-004",
+        "triggeringCondition": "",
+        "predictedOutcome": "A recurring state lacks multiple supported restoring mechanisms.",
+        "confidence": 0.35,
+        "supportingArtifactIds": [
+          "state-004-b"
+        ],
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "mechanisms",
+        "scenarioId": "scenario-004",
+        "predictionId": "mechanisms:scenario-004",
+        "triggeringCondition": "leadership transition",
+        "predictedOutcome": "condition-strategic-alignment",
+        "predictedConditionId": "condition-strategic-alignment",
+        "confidence": 0.517,
+        "supportingArtifactIds": [
+          "shock-b"
+        ],
+        "falsificationCondition": "The active mechanisms cease or produce a different condition.",
+        "abstained": false
+      },
+      {
+        "modelId": "state",
+        "scenarioId": "scenario-004",
+        "predictionId": "state:scenario-004",
+        "triggeringCondition": "latest Organizational State persists",
+        "predictedOutcome": "condition-strategic-alignment",
+        "predictedConditionId": "condition-strategic-alignment",
+        "confidence": 0.78,
+        "supportingArtifactIds": [
+          "state-004-b"
+        ],
+        "falsificationCondition": "A different Organizational Condition becomes dominant.",
+        "abstained": false
+      },
+      {
+        "modelId": "attractor",
+        "scenarioId": "scenario-005",
+        "predictionId": "attractor:scenario-005",
+        "triggeringCondition": "",
+        "predictedOutcome": "No supported Candidate Attractor.",
+        "confidence": 0.35,
+        "supportingArtifactIds": [],
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "combined",
+        "scenarioId": "scenario-005",
+        "predictionId": "combined:scenario-005",
+        "triggeringCondition": "",
+        "predictedOutcome": "A recurring state lacks multiple supported restoring mechanisms.",
+        "confidence": 0.35,
+        "supportingArtifactIds": [
+          "state-005-a",
+          "state-005-c"
+        ],
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "mechanisms",
+        "scenarioId": "scenario-005",
+        "predictionId": "mechanisms:scenario-005",
+        "triggeringCondition": "",
+        "predictedOutcome": "Current mechanisms do not identify one direction.",
+        "confidence": 0.4,
+        "supportingArtifactIds": [],
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "state",
+        "scenarioId": "scenario-005",
+        "predictionId": "state:scenario-005",
+        "triggeringCondition": "latest Organizational State persists",
+        "predictedOutcome": "condition-capacity-strain",
+        "predictedConditionId": "condition-capacity-strain",
+        "confidence": 0.78,
+        "supportingArtifactIds": [
+          "state-005-c"
+        ],
+        "falsificationCondition": "A different Organizational Condition becomes dominant.",
+        "abstained": false
+      },
+      {
+        "modelId": "attractor",
+        "scenarioId": "scenario-006",
+        "predictionId": "attractor:scenario-006",
+        "triggeringCondition": "",
+        "predictedOutcome": "No supported Candidate Attractor.",
+        "confidence": 0.35,
+        "supportingArtifactIds": [],
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "combined",
+        "scenarioId": "scenario-006",
+        "predictionId": "combined:scenario-006",
+        "triggeringCondition": "",
+        "predictedOutcome": "Strong mechanisms exist without sufficient temporal persistence.",
+        "confidence": 0.4,
+        "supportingArtifactIds": [
+          "information",
+          "override",
+          "risk"
+        ],
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "mechanisms",
+        "scenarioId": "scenario-006",
+        "predictionId": "mechanisms:scenario-006",
+        "triggeringCondition": "mistake-sensitive incentives AND privileged executive information AND visible local failure",
+        "predictedOutcome": "condition-decision-centralization",
+        "predictedConditionId": "condition-decision-centralization",
+        "confidence": 0.72184,
+        "supportingArtifactIds": [
+          "information",
+          "override",
+          "risk"
+        ],
+        "falsificationCondition": "The active mechanisms cease or produce a different condition.",
+        "abstained": false
+      },
+      {
+        "modelId": "state",
+        "scenarioId": "scenario-006",
+        "predictionId": "state:scenario-006",
+        "triggeringCondition": "latest Organizational State persists",
+        "predictedOutcome": "condition-decision-centralization",
+        "predictedConditionId": "condition-decision-centralization",
+        "confidence": 0.78,
+        "supportingArtifactIds": [
+          "state-006-a"
+        ],
+        "falsificationCondition": "A different Organizational Condition becomes dominant.",
+        "abstained": false
+      },
+      {
+        "modelId": "attractor",
+        "scenarioId": "scenario-007",
+        "predictionId": "attractor:scenario-007",
+        "triggeringCondition": "",
+        "predictedOutcome": "No supported Candidate Attractor.",
+        "confidence": 0.35,
+        "supportingArtifactIds": [],
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "combined",
+        "scenarioId": "scenario-007",
+        "predictionId": "combined:scenario-007",
+        "triggeringCondition": "",
+        "predictedOutcome": "Competing directional tendencies cannot be resolved from canonical artifacts.",
+        "confidence": 0.42,
+        "supportingArtifactIds": [
+          "access",
+          "information",
+          "override",
+          "rights",
+          "risk",
+          "safety"
+        ],
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "mechanisms",
+        "scenarioId": "scenario-007",
+        "predictionId": "mechanisms:scenario-007",
+        "triggeringCondition": "",
+        "predictedOutcome": "Current mechanisms do not identify one direction.",
+        "confidence": 0.4,
+        "supportingArtifactIds": [
+          "access",
+          "information",
+          "override",
+          "rights",
+          "risk",
+          "safety"
+        ],
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "state",
+        "scenarioId": "scenario-007",
+        "predictionId": "state:scenario-007",
+        "triggeringCondition": "latest Organizational State persists",
+        "predictedOutcome": "Latest state is unresolved.",
+        "confidence": 0.78,
+        "supportingArtifactIds": [
+          "state-007-c"
+        ],
+        "falsificationCondition": "A different Organizational Condition becomes dominant.",
+        "abstained": true
+      }
+    ]
+  },
+  "candidates": [
+    {
+      "scenarioId": "scenario-001",
+      "candidate": {
+        "id": "candidate-attractor:8389c914bde4",
+        "targetState": {
+          "conditionIds": [
+            "condition-decision-centralization"
+          ],
+          "stateSummary": "Conditional movement toward condition-decision-centralization."
+        },
+        "restoringMechanismIds": [
+          "information",
+          "override",
+          "risk"
+        ],
+        "activatingConditions": [
+          {
+            "condition": "privileged executive information",
+            "evidenceIds": [
+              "evidence-information"
+            ]
+          },
+          {
+            "condition": "visible local failure",
+            "evidenceIds": [
+              "evidence-override"
+            ]
+          },
+          {
+            "condition": "mistake-sensitive incentives",
+            "evidenceIds": [
+              "evidence-risk"
+            ]
+          }
+        ],
+        "weakeningConditions": [],
+        "historicalSupport": [
+          {
+            "beforeStateId": "state-001-a",
+            "perturbationEvidenceIds": [
+              "evidence-information",
+              "evidence-override",
+              "evidence-risk"
+            ],
+            "afterStateId": "state-001-c",
+            "restorationObserved": true
+          }
+        ],
+        "implications": [
+          {
+            "id": "implication:8389c914bde4",
+            "triggeringCondition": "mistake-sensitive incentives AND privileged executive information AND visible local failure",
+            "predictedOutcome": "condition-decision-centralization",
+            "predictionHorizon": "next consequential transition",
+            "confidence": 0.790092,
+            "distinguishingFromBaseline": "Retains conditional temporal restoration rather than carrying forward the latest state."
+          }
+        ],
+        "supportingArtifactIds": [
+          "information",
+          "override",
+          "risk",
+          "state-001-a",
+          "state-001-c"
+        ],
+        "opposingArtifactIds": [],
+        "persistenceConfidence": 0.790092,
+        "falsificationCriteria": [
+          "The supported mechanisms (information, override, risk) remain inactive across the next consequential transition."
+        ]
+      }
+    },
+    {
+      "scenarioId": "scenario-002",
+      "candidate": {
+        "id": "candidate-attractor:39ba1ba2fbb1",
+        "targetState": {
+          "conditionIds": [
+            "condition-decision-distribution"
+          ],
+          "stateSummary": "Conditional movement toward condition-decision-distribution."
+        },
+        "restoringMechanismIds": [
+          "access",
+          "rights",
+          "safety"
+        ],
+        "activatingConditions": [
+          {
+            "condition": "shared operating information",
+            "evidenceIds": [
+              "evidence-access"
+            ]
+          },
+          {
+            "condition": "respected decision rights",
+            "evidenceIds": [
+              "evidence-rights"
+            ]
+          },
+          {
+            "condition": "learning-safe incentives",
+            "evidenceIds": [
+              "evidence-safety"
+            ]
+          }
+        ],
+        "weakeningConditions": [],
+        "historicalSupport": [
+          {
+            "beforeStateId": "state-002-b",
+            "perturbationEvidenceIds": [],
+            "afterStateId": "state-002-c",
+            "restorationObserved": false
+          }
+        ],
+        "implications": [
+          {
+            "id": "implication:39ba1ba2fbb1",
+            "triggeringCondition": "learning-safe incentives AND respected decision rights AND shared operating information",
+            "predictedOutcome": "condition-decision-distribution",
+            "predictionHorizon": "next consequential transition",
+            "confidence": 0.777002,
+            "distinguishingFromBaseline": "Retains conditional temporal restoration rather than carrying forward the latest state."
+          }
+        ],
+        "supportingArtifactIds": [
+          "access",
+          "rights",
+          "safety",
+          "state-002-b",
+          "state-002-c"
+        ],
+        "opposingArtifactIds": [],
+        "persistenceConfidence": 0.777002,
+        "falsificationCriteria": [
+          "The supported mechanisms (access, rights, safety) remain inactive across the next consequential transition."
+        ]
+      }
+    },
+    {
+      "scenarioId": "scenario-003",
+      "candidate": null
+    },
+    {
+      "scenarioId": "scenario-004",
+      "candidate": null
+    },
+    {
+      "scenarioId": "scenario-005",
+      "candidate": null
+    },
+    {
+      "scenarioId": "scenario-006",
+      "candidate": null
+    },
+    {
+      "scenarioId": "scenario-007",
+      "candidate": null
+    }
+  ],
+  "modelScores": {
+    "state": {
+      "accuracy": 0.428571,
+      "triggerAccuracy": 0.571429,
+      "conditionalSpecificity": 0.642857,
+      "restorationDetection": 0.857143,
+      "mechanisticGrounding": 0.285714,
+      "temporalGrounding": 0.285714,
+      "falsifiability": 1,
+      "counterevidenceIntegration": 1,
+      "abstentionQuality": 0.571429,
+      "calibrationError": 0.7,
+      "total": 56.457135
+    },
+    "mechanisms": {
+      "accuracy": 0.714286,
+      "triggerAccuracy": 0.714286,
+      "conditionalSpecificity": 0.928571,
+      "restorationDetection": 1,
+      "mechanisticGrounding": 1,
+      "temporalGrounding": 0.428571,
+      "falsifiability": 1,
+      "counterevidenceIntegration": 1,
+      "abstentionQuality": 0.714286,
+      "calibrationError": 0.429086,
+      "total": 79.856118
+    },
+    "combined": {
+      "accuracy": 1,
+      "triggerAccuracy": 1,
+      "conditionalSpecificity": 1,
+      "restorationDetection": 1,
+      "mechanisticGrounding": 1,
+      "temporalGrounding": 1,
+      "falsifiability": 1,
+      "counterevidenceIntegration": 1,
+      "abstentionQuality": 1,
+      "calibrationError": 0.338987,
+      "total": 99.322026
+    },
+    "attractor": {
+      "accuracy": 1,
+      "triggerAccuracy": 1,
+      "conditionalSpecificity": 1,
+      "restorationDetection": 1,
+      "mechanisticGrounding": 1,
+      "temporalGrounding": 1,
+      "falsifiability": 1,
+      "counterevidenceIntegration": 1,
+      "abstentionQuality": 1,
+      "calibrationError": 0.311844,
+      "total": 99.376312
+    }
+  },
+  "hardGates": {
+    "noProductionFilesModifiedByExperiment": true,
+    "futureWithheldDuringRegistration": true,
+    "sameInformationBoundary": true,
+    "negativeControlFalsePositives": true,
+    "deterministic": true,
+    "incrementalValue": false,
+    "genuineTransitionNotWorse": true,
+    "usefulAbstention": true,
+    "lineageAndFalsification": true,
+    "noProductionAdoptionRecommendation": true,
+    "leakageAudit": true
+  },
+  "leakageAudit": {
+    "passed": true,
+    "checks": {
+      "noForbiddenInferenceFields": true,
+      "opaqueScenarioIds": true,
+      "scoringTruthSeparated": true,
+      "futureWithheldUntilAfterRegistration": true,
+      "sameCombinedAndAttractorInput": true,
+      "predictionsExcludeScoringFields": true
+    },
+    "forbiddenFixtureKeys": [],
+    "combinedInputHash": "1c6f1b03a92ddf35ffac997465e7406c71184b59785e8268039dc6482bf96e8f",
+    "attractorInputHash": "1c6f1b03a92ddf35ffac997465e7406c71184b59785e8268039dc6482bf96e8f",
+    "residualRisks": [
+      "Synthetic mechanism effects use Condition-oriented language that makes semantic linkage easier than unconstrained production text.",
+      "Fixed inference rules and fixtures share a benchmark-local ontology even though answer fields are withheld."
+    ]
+  },
+  "ablations": [
+    {
+      "ablation": "no-history",
+      "attractorScore": {
+        "accuracy": 0.714286,
+        "triggerAccuracy": 0.714286,
+        "conditionalSpecificity": 1,
+        "restorationDetection": 0.857143,
+        "mechanisticGrounding": 1,
+        "temporalGrounding": 1,
+        "falsifiability": 1,
+        "counterevidenceIntegration": 1,
+        "abstentionQuality": 0.714286,
+        "calibrationError": 0.435714,
+        "total": 84.842872
+      },
+      "predictions": [
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-001",
+          "predictionId": "attractor:scenario-001",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-002",
+          "predictionId": "attractor:scenario-002",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-003",
+          "predictionId": "attractor:scenario-003",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-004",
+          "predictionId": "attractor:scenario-004",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-005",
+          "predictionId": "attractor:scenario-005",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-006",
+          "predictionId": "attractor:scenario-006",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-007",
+          "predictionId": "attractor:scenario-007",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        }
+      ]
+    },
+    {
+      "ablation": "no-contradictions",
+      "attractorScore": {
+        "accuracy": 1,
+        "triggerAccuracy": 1,
+        "conditionalSpecificity": 1,
+        "restorationDetection": 1,
+        "mechanisticGrounding": 1,
+        "temporalGrounding": 1,
+        "falsifiability": 1,
+        "counterevidenceIntegration": 1,
+        "abstentionQuality": 1,
+        "calibrationError": 0.311844,
+        "total": 99.376312
+      },
+      "predictions": [
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-001",
+          "predictionId": "attractor:scenario-001",
+          "triggeringCondition": "mistake-sensitive incentives AND privileged executive information AND visible local failure",
+          "predictedOutcome": "condition-decision-centralization",
+          "predictedConditionId": "condition-decision-centralization",
+          "confidence": 0.790092,
+          "supportingArtifactIds": [
+            "information",
+            "override",
+            "risk",
+            "state-001-a",
+            "state-001-c"
+          ],
+          "falsificationCondition": "The supported mechanisms (information, override, risk) remain inactive across the next consequential transition.",
+          "abstained": false
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-002",
+          "predictionId": "attractor:scenario-002",
+          "triggeringCondition": "learning-safe incentives AND respected decision rights AND shared operating information",
+          "predictedOutcome": "condition-decision-distribution",
+          "predictedConditionId": "condition-decision-distribution",
+          "confidence": 0.777002,
+          "supportingArtifactIds": [
+            "access",
+            "rights",
+            "safety",
+            "state-002-b",
+            "state-002-c"
+          ],
+          "falsificationCondition": "The supported mechanisms (access, rights, safety) remain inactive across the next consequential transition.",
+          "abstained": false
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-003",
+          "predictionId": "attractor:scenario-003",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-004",
+          "predictionId": "attractor:scenario-004",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-005",
+          "predictionId": "attractor:scenario-005",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-006",
+          "predictionId": "attractor:scenario-006",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-007",
+          "predictionId": "attractor:scenario-007",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        }
+      ]
+    },
+    {
+      "ablation": "no-weakening",
+      "attractorScore": {
+        "accuracy": 1,
+        "triggerAccuracy": 1,
+        "conditionalSpecificity": 1,
+        "restorationDetection": 1,
+        "mechanisticGrounding": 1,
+        "temporalGrounding": 1,
+        "falsifiability": 1,
+        "counterevidenceIntegration": 1,
+        "abstentionQuality": 1,
+        "calibrationError": 0.311844,
+        "total": 99.376312
+      },
+      "predictions": [
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-001",
+          "predictionId": "attractor:scenario-001",
+          "triggeringCondition": "mistake-sensitive incentives AND privileged executive information AND visible local failure",
+          "predictedOutcome": "condition-decision-centralization",
+          "predictedConditionId": "condition-decision-centralization",
+          "confidence": 0.790092,
+          "supportingArtifactIds": [
+            "information",
+            "override",
+            "risk",
+            "state-001-a",
+            "state-001-c"
+          ],
+          "falsificationCondition": "The supported mechanisms (information, override, risk) remain inactive across the next consequential transition.",
+          "abstained": false
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-002",
+          "predictionId": "attractor:scenario-002",
+          "triggeringCondition": "learning-safe incentives AND respected decision rights AND shared operating information",
+          "predictedOutcome": "condition-decision-distribution",
+          "predictedConditionId": "condition-decision-distribution",
+          "confidence": 0.777002,
+          "supportingArtifactIds": [
+            "access",
+            "rights",
+            "safety",
+            "state-002-b",
+            "state-002-c"
+          ],
+          "falsificationCondition": "The supported mechanisms (access, rights, safety) remain inactive across the next consequential transition.",
+          "abstained": false
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-003",
+          "predictionId": "attractor:scenario-003",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-004",
+          "predictionId": "attractor:scenario-004",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-005",
+          "predictionId": "attractor:scenario-005",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-006",
+          "predictionId": "attractor:scenario-006",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-007",
+          "predictionId": "attractor:scenario-007",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        }
+      ]
+    },
+    {
+      "ablation": "no-falsification",
+      "attractorScore": {
+        "accuracy": 1,
+        "triggerAccuracy": 1,
+        "conditionalSpecificity": 1,
+        "restorationDetection": 1,
+        "mechanisticGrounding": 1,
+        "temporalGrounding": 1,
+        "falsifiability": 0.714286,
+        "counterevidenceIntegration": 1,
+        "abstentionQuality": 1,
+        "calibrationError": 0.311844,
+        "total": 97.0906
+      },
+      "predictions": [
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-001",
+          "predictionId": "attractor:scenario-001",
+          "triggeringCondition": "mistake-sensitive incentives AND privileged executive information AND visible local failure",
+          "predictedOutcome": "condition-decision-centralization",
+          "predictedConditionId": "condition-decision-centralization",
+          "confidence": 0.790092,
+          "supportingArtifactIds": [
+            "information",
+            "override",
+            "risk",
+            "state-001-a",
+            "state-001-c"
+          ],
+          "falsificationCondition": "",
+          "abstained": false
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-002",
+          "predictionId": "attractor:scenario-002",
+          "triggeringCondition": "learning-safe incentives AND respected decision rights AND shared operating information",
+          "predictedOutcome": "condition-decision-distribution",
+          "predictedConditionId": "condition-decision-distribution",
+          "confidence": 0.777002,
+          "supportingArtifactIds": [
+            "access",
+            "rights",
+            "safety",
+            "state-002-b",
+            "state-002-c"
+          ],
+          "falsificationCondition": "",
+          "abstained": false
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-003",
+          "predictionId": "attractor:scenario-003",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-004",
+          "predictionId": "attractor:scenario-004",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-005",
+          "predictionId": "attractor:scenario-005",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-006",
+          "predictionId": "attractor:scenario-006",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-007",
+          "predictionId": "attractor:scenario-007",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        }
+      ]
+    },
+    {
+      "ablation": "no-mechanism-confidence",
+      "attractorScore": {
+        "accuracy": 1,
+        "triggerAccuracy": 1,
+        "conditionalSpecificity": 1,
+        "restorationDetection": 1,
+        "mechanisticGrounding": 1,
+        "temporalGrounding": 1,
+        "falsifiability": 1,
+        "counterevidenceIntegration": 1,
+        "abstentionQuality": 1,
+        "calibrationError": 0.316171,
+        "total": 99.367658
+      },
+      "predictions": [
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-001",
+          "predictionId": "attractor:scenario-001",
+          "triggeringCondition": "mistake-sensitive incentives AND privileged executive information AND visible local failure",
+          "predictedOutcome": "condition-decision-centralization",
+          "predictedConditionId": "condition-decision-centralization",
+          "confidence": 0.774,
+          "supportingArtifactIds": [
+            "information",
+            "override",
+            "risk",
+            "state-001-a",
+            "state-001-c"
+          ],
+          "falsificationCondition": "The supported mechanisms (information, override, risk) remain inactive across the next consequential transition.",
+          "abstained": false
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-002",
+          "predictionId": "attractor:scenario-002",
+          "triggeringCondition": "learning-safe incentives AND respected decision rights AND shared operating information",
+          "predictedOutcome": "condition-decision-distribution",
+          "predictedConditionId": "condition-decision-distribution",
+          "confidence": 0.7628,
+          "supportingArtifactIds": [
+            "access",
+            "rights",
+            "safety",
+            "state-002-b",
+            "state-002-c"
+          ],
+          "falsificationCondition": "The supported mechanisms (access, rights, safety) remain inactive across the next consequential transition.",
+          "abstained": false
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-003",
+          "predictionId": "attractor:scenario-003",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-004",
+          "predictionId": "attractor:scenario-004",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-005",
+          "predictionId": "attractor:scenario-005",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-006",
+          "predictionId": "attractor:scenario-006",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-007",
+          "predictionId": "attractor:scenario-007",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        }
+      ]
+    },
+    {
+      "ablation": "latest-state-only",
+      "attractorScore": {
+        "accuracy": 0.714286,
+        "triggerAccuracy": 0.714286,
+        "conditionalSpecificity": 1,
+        "restorationDetection": 0.857143,
+        "mechanisticGrounding": 1,
+        "temporalGrounding": 1,
+        "falsifiability": 1,
+        "counterevidenceIntegration": 1,
+        "abstentionQuality": 0.714286,
+        "calibrationError": 0.435714,
+        "total": 84.842872
+      },
+      "predictions": [
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-001",
+          "predictionId": "attractor:scenario-001",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-002",
+          "predictionId": "attractor:scenario-002",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-003",
+          "predictionId": "attractor:scenario-003",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-004",
+          "predictionId": "attractor:scenario-004",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-005",
+          "predictionId": "attractor:scenario-005",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-006",
+          "predictionId": "attractor:scenario-006",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-007",
+          "predictionId": "attractor:scenario-007",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        }
+      ]
+    }
+  ],
+  "leaveOneScenarioOut": [
+    {
+      "heldOutScenarioId": "scenario-001",
+      "trainingScenarioIds": [
+        "scenario-002",
+        "scenario-003",
+        "scenario-004",
+        "scenario-005",
+        "scenario-006",
+        "scenario-007"
+      ],
+      "thresholdCalibration": "fixed-global-no-training",
+      "prediction": {
+        "modelId": "attractor",
+        "scenarioId": "scenario-001",
+        "predictionId": "attractor:scenario-001",
+        "triggeringCondition": "mistake-sensitive incentives AND privileged executive information AND visible local failure",
+        "predictedOutcome": "condition-decision-centralization",
+        "predictedConditionId": "condition-decision-centralization",
+        "confidence": 0.790092,
+        "supportingArtifactIds": [
+          "information",
+          "override",
+          "risk",
+          "state-001-a",
+          "state-001-c"
+        ],
+        "falsificationCondition": "The supported mechanisms (information, override, risk) remain inactive across the next consequential transition.",
+        "abstained": false
+      }
+    },
+    {
+      "heldOutScenarioId": "scenario-002",
+      "trainingScenarioIds": [
+        "scenario-001",
+        "scenario-003",
+        "scenario-004",
+        "scenario-005",
+        "scenario-006",
+        "scenario-007"
+      ],
+      "thresholdCalibration": "fixed-global-no-training",
+      "prediction": {
+        "modelId": "attractor",
+        "scenarioId": "scenario-002",
+        "predictionId": "attractor:scenario-002",
+        "triggeringCondition": "learning-safe incentives AND respected decision rights AND shared operating information",
+        "predictedOutcome": "condition-decision-distribution",
+        "predictedConditionId": "condition-decision-distribution",
+        "confidence": 0.777002,
+        "supportingArtifactIds": [
+          "access",
+          "rights",
+          "safety",
+          "state-002-b",
+          "state-002-c"
+        ],
+        "falsificationCondition": "The supported mechanisms (access, rights, safety) remain inactive across the next consequential transition.",
+        "abstained": false
+      }
+    },
+    {
+      "heldOutScenarioId": "scenario-003",
+      "trainingScenarioIds": [
+        "scenario-001",
+        "scenario-002",
+        "scenario-004",
+        "scenario-005",
+        "scenario-006",
+        "scenario-007"
+      ],
+      "thresholdCalibration": "fixed-global-no-training",
+      "prediction": {
+        "modelId": "attractor",
+        "scenarioId": "scenario-003",
+        "predictionId": "attractor:scenario-003",
+        "triggeringCondition": "",
+        "predictedOutcome": "No supported Candidate Attractor.",
+        "confidence": 0.35,
+        "supportingArtifactIds": [],
+        "falsificationCondition": "",
+        "abstained": true
+      }
+    },
+    {
+      "heldOutScenarioId": "scenario-004",
+      "trainingScenarioIds": [
+        "scenario-001",
+        "scenario-002",
+        "scenario-003",
+        "scenario-005",
+        "scenario-006",
+        "scenario-007"
+      ],
+      "thresholdCalibration": "fixed-global-no-training",
+      "prediction": {
+        "modelId": "attractor",
+        "scenarioId": "scenario-004",
+        "predictionId": "attractor:scenario-004",
+        "triggeringCondition": "",
+        "predictedOutcome": "No supported Candidate Attractor.",
+        "confidence": 0.35,
+        "supportingArtifactIds": [],
+        "falsificationCondition": "",
+        "abstained": true
+      }
+    },
+    {
+      "heldOutScenarioId": "scenario-005",
+      "trainingScenarioIds": [
+        "scenario-001",
+        "scenario-002",
+        "scenario-003",
+        "scenario-004",
+        "scenario-006",
+        "scenario-007"
+      ],
+      "thresholdCalibration": "fixed-global-no-training",
+      "prediction": {
+        "modelId": "attractor",
+        "scenarioId": "scenario-005",
+        "predictionId": "attractor:scenario-005",
+        "triggeringCondition": "",
+        "predictedOutcome": "No supported Candidate Attractor.",
+        "confidence": 0.35,
+        "supportingArtifactIds": [],
+        "falsificationCondition": "",
+        "abstained": true
+      }
+    },
+    {
+      "heldOutScenarioId": "scenario-006",
+      "trainingScenarioIds": [
+        "scenario-001",
+        "scenario-002",
+        "scenario-003",
+        "scenario-004",
+        "scenario-005",
+        "scenario-007"
+      ],
+      "thresholdCalibration": "fixed-global-no-training",
+      "prediction": {
+        "modelId": "attractor",
+        "scenarioId": "scenario-006",
+        "predictionId": "attractor:scenario-006",
+        "triggeringCondition": "",
+        "predictedOutcome": "No supported Candidate Attractor.",
+        "confidence": 0.35,
+        "supportingArtifactIds": [],
+        "falsificationCondition": "",
+        "abstained": true
+      }
+    },
+    {
+      "heldOutScenarioId": "scenario-007",
+      "trainingScenarioIds": [
+        "scenario-001",
+        "scenario-002",
+        "scenario-003",
+        "scenario-004",
+        "scenario-005",
+        "scenario-006"
+      ],
+      "thresholdCalibration": "fixed-global-no-training",
+      "prediction": {
+        "modelId": "attractor",
+        "scenarioId": "scenario-007",
+        "predictionId": "attractor:scenario-007",
+        "triggeringCondition": "",
+        "predictedOutcome": "No supported Candidate Attractor.",
+        "confidence": 0.35,
+        "supportingArtifactIds": [],
+        "falsificationCondition": "",
+        "abstained": true
+      }
+    }
+  ],
+  "determinism": {
+    "repeatedRunByteEqual": true,
+    "reversedScenarioOrderByteEqual": true,
+    "reversedArtifactOrderByteEqual": true,
+    "stablePredictionRegistration": true,
+    "stableScores": true
+  },
+  "scenarioResults": [
+    {
+      "scenarioId": "scenario-001",
+      "family": "temporary-change",
+      "expected": {
+        "scenarioId": "scenario-001",
+        "family": "temporary-change",
+        "shouldAbstain": false,
+        "expectedConditionId": "condition-decision-centralization"
+      },
+      "future": {
+        "scenarioId": "scenario-001",
+        "triggerObserved": true,
+        "realizedConditionIds": [
+          "condition-decision-centralization"
+        ],
+        "realizedSummary": "A visible local failure is followed by renewed executive approval."
+      },
+      "predictions": [
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-001",
+          "predictionId": "attractor:scenario-001",
+          "triggeringCondition": "mistake-sensitive incentives AND privileged executive information AND visible local failure",
+          "predictedOutcome": "condition-decision-centralization",
+          "predictedConditionId": "condition-decision-centralization",
+          "confidence": 0.790092,
+          "supportingArtifactIds": [
+            "information",
+            "override",
+            "risk",
+            "state-001-a",
+            "state-001-c"
+          ],
+          "falsificationCondition": "The supported mechanisms (information, override, risk) remain inactive across the next consequential transition.",
+          "abstained": false
+        },
+        {
+          "modelId": "combined",
+          "scenarioId": "scenario-001",
+          "predictionId": "combined:scenario-001",
+          "triggeringCondition": "mistake-sensitive incentives AND privileged executive information AND visible local failure",
+          "predictedOutcome": "condition-decision-centralization",
+          "predictedConditionId": "condition-decision-centralization",
+          "confidence": 0.790092,
+          "supportingArtifactIds": [
+            "information",
+            "override",
+            "risk",
+            "state-001-a",
+            "state-001-c"
+          ],
+          "falsificationCondition": "The supported mechanisms (information, override, risk) remain inactive across the next consequential transition.",
+          "abstained": false
+        },
+        {
+          "modelId": "mechanisms",
+          "scenarioId": "scenario-001",
+          "predictionId": "mechanisms:scenario-001",
+          "triggeringCondition": "mistake-sensitive incentives AND privileged executive information AND visible local failure",
+          "predictedOutcome": "condition-decision-centralization",
+          "predictedConditionId": "condition-decision-centralization",
+          "confidence": 0.72184,
+          "supportingArtifactIds": [
+            "information",
+            "override",
+            "risk"
+          ],
+          "falsificationCondition": "The active mechanisms cease or produce a different condition.",
+          "abstained": false
+        },
+        {
+          "modelId": "state",
+          "scenarioId": "scenario-001",
+          "predictionId": "state:scenario-001",
+          "triggeringCondition": "latest Organizational State persists",
+          "predictedOutcome": "condition-decision-distribution",
+          "predictedConditionId": "condition-decision-distribution",
+          "confidence": 0.78,
+          "supportingArtifactIds": [
+            "state-001-d"
+          ],
+          "falsificationCondition": "A different Organizational Condition becomes dominant.",
+          "abstained": false
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-002",
+      "family": "structural-transition",
+      "expected": {
+        "scenarioId": "scenario-002",
+        "family": "structural-transition",
+        "shouldAbstain": false,
+        "expectedConditionId": "condition-decision-distribution"
+      },
+      "future": {
+        "scenarioId": "scenario-002",
+        "triggerObserved": true,
+        "realizedConditionIds": [
+          "condition-decision-distribution"
+        ],
+        "realizedSummary": "Local decision rights remain intact after a contested decision."
+      },
+      "predictions": [
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-002",
+          "predictionId": "attractor:scenario-002",
+          "triggeringCondition": "learning-safe incentives AND respected decision rights AND shared operating information",
+          "predictedOutcome": "condition-decision-distribution",
+          "predictedConditionId": "condition-decision-distribution",
+          "confidence": 0.777002,
+          "supportingArtifactIds": [
+            "access",
+            "rights",
+            "safety",
+            "state-002-b",
+            "state-002-c"
+          ],
+          "falsificationCondition": "The supported mechanisms (access, rights, safety) remain inactive across the next consequential transition.",
+          "abstained": false
+        },
+        {
+          "modelId": "combined",
+          "scenarioId": "scenario-002",
+          "predictionId": "combined:scenario-002",
+          "triggeringCondition": "learning-safe incentives AND respected decision rights AND shared operating information",
+          "predictedOutcome": "condition-decision-distribution",
+          "predictedConditionId": "condition-decision-distribution",
+          "confidence": 0.777002,
+          "supportingArtifactIds": [
+            "access",
+            "rights",
+            "safety",
+            "state-002-b",
+            "state-002-c"
+          ],
+          "falsificationCondition": "The supported mechanisms (access, rights, safety) remain inactive across the next consequential transition.",
+          "abstained": false
+        },
+        {
+          "modelId": "mechanisms",
+          "scenarioId": "scenario-002",
+          "predictionId": "mechanisms:scenario-002",
+          "triggeringCondition": "learning-safe incentives AND respected decision rights AND shared operating information",
+          "predictedOutcome": "condition-decision-distribution",
+          "predictedConditionId": "condition-decision-distribution",
+          "confidence": 0.7134,
+          "supportingArtifactIds": [
+            "access",
+            "rights",
+            "safety"
+          ],
+          "falsificationCondition": "The active mechanisms cease or produce a different condition.",
+          "abstained": false
+        },
+        {
+          "modelId": "state",
+          "scenarioId": "scenario-002",
+          "predictionId": "state:scenario-002",
+          "triggeringCondition": "latest Organizational State persists",
+          "predictedOutcome": "condition-decision-distribution",
+          "predictedConditionId": "condition-decision-distribution",
+          "confidence": 0.78,
+          "supportingArtifactIds": [
+            "state-002-c"
+          ],
+          "falsificationCondition": "A different Organizational Condition becomes dominant.",
+          "abstained": false
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-003",
+      "family": "competing",
+      "expected": {
+        "scenarioId": "scenario-003",
+        "family": "competing",
+        "shouldAbstain": true
+      },
+      "future": {
+        "scenarioId": "scenario-003",
+        "triggerObserved": true,
+        "realizedConditionIds": [
+          "condition-decision-centralization",
+          "condition-decision-distribution"
+        ],
+        "realizedSummary": "Operational and exploration contexts continue to diverge."
+      },
+      "predictions": [
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-003",
+          "predictionId": "attractor:scenario-003",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "combined",
+          "scenarioId": "scenario-003",
+          "predictionId": "combined:scenario-003",
+          "triggeringCondition": "",
+          "predictedOutcome": "Competing directional tendencies cannot be resolved from canonical artifacts.",
+          "confidence": 0.42,
+          "supportingArtifactIds": [
+            "access",
+            "information",
+            "override",
+            "rights",
+            "risk",
+            "safety"
+          ],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "mechanisms",
+          "scenarioId": "scenario-003",
+          "predictionId": "mechanisms:scenario-003",
+          "triggeringCondition": "",
+          "predictedOutcome": "Current mechanisms do not identify one direction.",
+          "confidence": 0.4,
+          "supportingArtifactIds": [
+            "access",
+            "information",
+            "override",
+            "rights",
+            "risk",
+            "safety"
+          ],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "state",
+          "scenarioId": "scenario-003",
+          "predictionId": "state:scenario-003",
+          "triggeringCondition": "latest Organizational State persists",
+          "predictedOutcome": "Latest state is unresolved.",
+          "confidence": 0.78,
+          "supportingArtifactIds": [
+            "state-003-c"
+          ],
+          "falsificationCondition": "A different Organizational Condition becomes dominant.",
+          "abstained": true
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-004",
+      "family": "unstable",
+      "expected": {
+        "scenarioId": "scenario-004",
+        "family": "unstable",
+        "shouldAbstain": true
+      },
+      "future": {
+        "scenarioId": "scenario-004",
+        "triggerObserved": false,
+        "realizedConditionIds": [
+          "condition-knowledge-continuity"
+        ],
+        "realizedSummary": "A different external shock changes the dominant condition."
+      },
+      "predictions": [
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-004",
+          "predictionId": "attractor:scenario-004",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "combined",
+          "scenarioId": "scenario-004",
+          "predictionId": "combined:scenario-004",
+          "triggeringCondition": "",
+          "predictedOutcome": "A recurring state lacks multiple supported restoring mechanisms.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [
+            "state-004-b"
+          ],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "mechanisms",
+          "scenarioId": "scenario-004",
+          "predictionId": "mechanisms:scenario-004",
+          "triggeringCondition": "leadership transition",
+          "predictedOutcome": "condition-strategic-alignment",
+          "predictedConditionId": "condition-strategic-alignment",
+          "confidence": 0.517,
+          "supportingArtifactIds": [
+            "shock-b"
+          ],
+          "falsificationCondition": "The active mechanisms cease or produce a different condition.",
+          "abstained": false
+        },
+        {
+          "modelId": "state",
+          "scenarioId": "scenario-004",
+          "predictionId": "state:scenario-004",
+          "triggeringCondition": "latest Organizational State persists",
+          "predictedOutcome": "condition-strategic-alignment",
+          "predictedConditionId": "condition-strategic-alignment",
+          "confidence": 0.78,
+          "supportingArtifactIds": [
+            "state-004-b"
+          ],
+          "falsificationCondition": "A different Organizational Condition becomes dominant.",
+          "abstained": false
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-005",
+      "family": "recurrence-without-mechanism",
+      "expected": {
+        "scenarioId": "scenario-005",
+        "family": "recurrence-without-mechanism",
+        "shouldAbstain": true
+      },
+      "future": {
+        "scenarioId": "scenario-005",
+        "triggerObserved": false,
+        "realizedConditionIds": [],
+        "realizedSummary": "The repeated state does not recur."
+      },
+      "predictions": [
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-005",
+          "predictionId": "attractor:scenario-005",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "combined",
+          "scenarioId": "scenario-005",
+          "predictionId": "combined:scenario-005",
+          "triggeringCondition": "",
+          "predictedOutcome": "A recurring state lacks multiple supported restoring mechanisms.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [
+            "state-005-a",
+            "state-005-c"
+          ],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "mechanisms",
+          "scenarioId": "scenario-005",
+          "predictionId": "mechanisms:scenario-005",
+          "triggeringCondition": "",
+          "predictedOutcome": "Current mechanisms do not identify one direction.",
+          "confidence": 0.4,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "state",
+          "scenarioId": "scenario-005",
+          "predictionId": "state:scenario-005",
+          "triggeringCondition": "latest Organizational State persists",
+          "predictedOutcome": "condition-capacity-strain",
+          "predictedConditionId": "condition-capacity-strain",
+          "confidence": 0.78,
+          "supportingArtifactIds": [
+            "state-005-c"
+          ],
+          "falsificationCondition": "A different Organizational Condition becomes dominant.",
+          "abstained": false
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-006",
+      "family": "mechanism-without-restoration",
+      "expected": {
+        "scenarioId": "scenario-006",
+        "family": "mechanism-without-restoration",
+        "shouldAbstain": true
+      },
+      "future": {
+        "scenarioId": "scenario-006",
+        "triggerObserved": false,
+        "realizedConditionIds": [
+          "condition-decision-centralization"
+        ],
+        "realizedSummary": "Centralization remains plausible but no restoration event is observed."
+      },
+      "predictions": [
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-006",
+          "predictionId": "attractor:scenario-006",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "combined",
+          "scenarioId": "scenario-006",
+          "predictionId": "combined:scenario-006",
+          "triggeringCondition": "",
+          "predictedOutcome": "Strong mechanisms exist without sufficient temporal persistence.",
+          "confidence": 0.4,
+          "supportingArtifactIds": [
+            "information",
+            "override",
+            "risk"
+          ],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "mechanisms",
+          "scenarioId": "scenario-006",
+          "predictionId": "mechanisms:scenario-006",
+          "triggeringCondition": "mistake-sensitive incentives AND privileged executive information AND visible local failure",
+          "predictedOutcome": "condition-decision-centralization",
+          "predictedConditionId": "condition-decision-centralization",
+          "confidence": 0.72184,
+          "supportingArtifactIds": [
+            "information",
+            "override",
+            "risk"
+          ],
+          "falsificationCondition": "The active mechanisms cease or produce a different condition.",
+          "abstained": false
+        },
+        {
+          "modelId": "state",
+          "scenarioId": "scenario-006",
+          "predictionId": "state:scenario-006",
+          "triggeringCondition": "latest Organizational State persists",
+          "predictedOutcome": "condition-decision-centralization",
+          "predictedConditionId": "condition-decision-centralization",
+          "confidence": 0.78,
+          "supportingArtifactIds": [
+            "state-006-a"
+          ],
+          "falsificationCondition": "A different Organizational Condition becomes dominant.",
+          "abstained": false
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-007",
+      "family": "contradictory",
+      "expected": {
+        "scenarioId": "scenario-007",
+        "family": "contradictory",
+        "shouldAbstain": true
+      },
+      "future": {
+        "scenarioId": "scenario-007",
+        "triggerObserved": true,
+        "realizedConditionIds": [
+          "condition-decision-centralization",
+          "condition-decision-distribution"
+        ],
+        "realizedSummary": "Context-dependent decision patterns remain unresolved."
+      },
+      "predictions": [
+        {
+          "modelId": "attractor",
+          "scenarioId": "scenario-007",
+          "predictionId": "attractor:scenario-007",
+          "triggeringCondition": "",
+          "predictedOutcome": "No supported Candidate Attractor.",
+          "confidence": 0.35,
+          "supportingArtifactIds": [],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "combined",
+          "scenarioId": "scenario-007",
+          "predictionId": "combined:scenario-007",
+          "triggeringCondition": "",
+          "predictedOutcome": "Competing directional tendencies cannot be resolved from canonical artifacts.",
+          "confidence": 0.42,
+          "supportingArtifactIds": [
+            "access",
+            "information",
+            "override",
+            "rights",
+            "risk",
+            "safety"
+          ],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "mechanisms",
+          "scenarioId": "scenario-007",
+          "predictionId": "mechanisms:scenario-007",
+          "triggeringCondition": "",
+          "predictedOutcome": "Current mechanisms do not identify one direction.",
+          "confidence": 0.4,
+          "supportingArtifactIds": [
+            "access",
+            "information",
+            "override",
+            "rights",
+            "risk",
+            "safety"
+          ],
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "state",
+          "scenarioId": "scenario-007",
+          "predictionId": "state:scenario-007",
+          "triggeringCondition": "latest Organizational State persists",
+          "predictedOutcome": "Latest state is unresolved.",
+          "confidence": 0.78,
+          "supportingArtifactIds": [
+            "state-007-c"
+          ],
+          "falsificationCondition": "A different Organizational Condition becomes dominant.",
+          "abstained": true
+        }
+      ]
+    }
+  ],
+  "classification": "B — Compression value only",
+  "recommendation": "Do not add a cognitive layer. Consider the Candidate Attractor only as a research or projection format for canonical temporal reasoning."
+}

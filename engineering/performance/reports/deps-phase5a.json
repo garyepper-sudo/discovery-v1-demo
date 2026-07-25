@@ -1,0 +1,183 @@
+{
+  "schemaVersion": "1",
+  "reportVersion": "1.2.0",
+  "generationTimestamp": "2026-07-25T23:00:00.000Z",
+  "reportId": "deps-phase5a",
+  "title": "DEPS — Discovery 2 Phase 5A Explicit Authority Transitions",
+  "status": "current",
+  "disposition": "accept",
+  "sprint": {
+    "name": "Discovery 2 Phase 5A",
+    "classification": "A — EXPLICIT AUTHORITY TRANSITIONS DEMONSTRATED",
+    "repositoryRevision": "310be01853300d093f7db5d82ca17a8c89242394",
+    "worktreeState": "dirty",
+    "scope": "Explicit contribution validation and authority receipts at the canonical Organizational Understanding composition boundary."
+  },
+  "trend": {
+    "baselineReference": "deps-baseline-v1",
+    "previousCompatibleReport": "deps-phase1-1",
+    "previousCompatibleReportPath": "engineering/performance/reports/deps-phase1-1.json",
+    "currentReport": "deps-phase5a",
+    "comparabilityCohort": "deps-report-schema-v1"
+  },
+  "evidence": [
+    {
+      "id": "phase5a-gate",
+      "sourceId": "explicit-authority-transitions",
+      "artifact": "engine/benchmark/judgment-lab/explicitAuthorityTransitionsGate.ts",
+      "claimBoundary": "Fourteen deterministic production authority, compatibility, rollback, isolation, and noninterference scenarios."
+    },
+    {
+      "id": "phase5a-report",
+      "sourceId": "explicit-authority-transitions",
+      "artifact": "docs/Sprint Updates/EXPLICIT_AUTHORITY_TRANSITIONS_AND_CONTRIBUTION_VALIDATION.md",
+      "claimBoundary": "Phase 5A scope, ownership audit, Scorecard interpretation, rollback, and remaining boundaries."
+    },
+    {
+      "id": "phase4c-gate",
+      "sourceId": "canonical-understanding-ownership-migration",
+      "artifact": "docs/Sprint Updates/CANONICAL_UNDERSTANDING_OWNERSHIP_MIGRATION.md",
+      "claimBoundary": "Compatible predecessor ownership boundary retained by Phase 5A."
+    },
+    {
+      "id": "deps-canon",
+      "sourceId": "deps-report-validation",
+      "artifact": "docs/Architecture/Canon/DISCOVERY_ENGINEERING_PERFORMANCE_SYSTEM.md",
+      "claimBoundary": "Canonical DEPS evidence and reporting rules."
+    }
+  ],
+  "scorecard": [
+    {
+      "metric": "Organizational Understanding",
+      "state": "Improved",
+      "evidenceRefs": ["phase5a-gate", "phase5a-report"],
+      "rationale": "Canonical composition now distinguishes eligible organizational knowledge from provisional contributions."
+    },
+    {
+      "metric": "User Intelligence",
+      "state": "Unchanged",
+      "evidenceRefs": ["phase5a-gate"],
+      "rationale": "Application views and executive outputs remain byte-equivalent."
+    },
+    {
+      "metric": "Collective Intelligence",
+      "state": "Not Measured",
+      "evidenceRefs": ["phase5a-report"],
+      "rationale": "No multi-contributor or cross-scope outcome was measured."
+    },
+    {
+      "metric": "Governance Integrity",
+      "state": "Improved",
+      "evidenceRefs": ["phase5a-gate", "phase5a-report"],
+      "rationale": "Persistence, authority, and disclosure are explicit and non-collapsed."
+    },
+    {
+      "metric": "System Sustainability",
+      "state": "Improved",
+      "evidenceRefs": ["phase5a-gate", "phase5a-report"],
+      "rationale": "Receipts are additive, deterministic, historically compatible, and exactly rollbackable."
+    }
+  ],
+  "architecture": [
+    {
+      "area": "Authority ownership",
+      "state": "Improved",
+      "evidenceRefs": ["phase5a-gate", "phase5a-report"],
+      "observation": "One existing canonical composition owner now records explicit authority dispositions."
+    },
+    {
+      "area": "Truth ownership",
+      "state": "Unchanged",
+      "evidenceRefs": ["phase4c-gate", "phase5a-gate"],
+      "observation": "Completed Explanations retain claims and ancestry; canonical Understanding retains composition."
+    },
+    {
+      "area": "Compatibility and rollback",
+      "state": "Improved",
+      "evidenceRefs": ["phase5a-gate"],
+      "observation": "Historical reads, replay, downstream noninterference, and pre-authority rollback pass."
+    }
+  ],
+  "benchmarks": [
+    {
+      "sourceId": "canonical-understanding-ownership-migration",
+      "result": "Pass",
+      "previousResult": "Pass",
+      "movement": "Unchanged",
+      "evidenceRefs": ["phase4c-gate"],
+      "summary": "Phase 4C ownership remains the compatible production boundary."
+    },
+    {
+      "sourceId": "explicit-authority-transitions",
+      "result": "Pass",
+      "previousResult": "Not Measured",
+      "movement": "Improved",
+      "evidenceRefs": ["phase5a-gate", "phase5a-report"],
+      "summary": "Phase 5A passes 14/14 and yields Classification A."
+    }
+  ],
+  "researchObservations": [
+    {
+      "state": "Unchanged",
+      "evidenceRefs": ["phase5a-report"],
+      "observation": "No research adapter or benchmark-only cognition was promoted."
+    }
+  ],
+  "complexity": {
+    "introduced": ["One evaluator contract and one additive reference-only receipt on canonical compositions."],
+    "removed": ["Implicit authority at the completed-Explanation to canonical-composition boundary."],
+    "netEffect": "Increased",
+    "justified": true,
+    "justification": "The bounded additive surface makes authority auditable without a new service, store, capability, cognitive primitive, or dependency.",
+    "evidenceRefs": ["phase5a-gate", "phase5a-report"]
+  },
+  "governanceObservations": [
+    {
+      "state": "Improved",
+      "evidenceRefs": ["phase5a-gate", "phase5a-report"],
+      "observation": "Contribution admission, persistence, authority, and disclosure are explicitly distinct."
+    }
+  ],
+  "sustainabilityObservations": [
+    {
+      "state": "Improved",
+      "evidenceRefs": ["phase5a-gate"],
+      "observation": "Deterministic receipts and exact rollback preserve historical and operational compatibility."
+    }
+  ],
+  "regressions": [
+    {
+      "category": "production",
+      "state": "Unchanged",
+      "evidenceRefs": ["phase5a-gate"],
+      "observation": "No downstream assessment, recommendation, communication, projection, or application behavior changed."
+    }
+  ],
+  "unknownsAndUnmeasured": [
+    {
+      "area": "Disclosure enforcement",
+      "state": "Not Measured",
+      "reason": "Phase 5A explicitly leaves disclosure eligibility unevaluated."
+    },
+    {
+      "area": "Collective Intelligence",
+      "state": "Not Measured",
+      "reason": "No governed collective protocol was executed."
+    }
+  ],
+  "remainingRisks": {
+    "nextBlockingDependency": "Broader Phase 5 Governance and disclosure enforcement require separate authorization and contracts.",
+    "remainingDiscoveryPhase": "Complete the remaining sequential Phase 5 responsibilities before Phase 6.",
+    "remainingBenchmarkGap": "Purpose, permission, revocation, provider, disclosure, and Intelligence Scope behavior remain unmeasured."
+  },
+  "rollback": {
+    "available": true,
+    "evidenceRefs": ["phase5a-gate", "phase5a-report"],
+    "description": "Use implicit authority mode and remove additive authorityTransition receipts."
+  },
+  "engineeringDecision": {
+    "accept": true,
+    "evidenceRefs": ["phase5a-gate", "phase5a-report", "phase4c-gate"],
+    "rationale": "Accept: Phase 5A demonstrates explicit authority transitions with deterministic compatibility and no adjacent architecture promotion."
+  }
+}

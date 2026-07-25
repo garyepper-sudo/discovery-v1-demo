@@ -1,0 +1,224 @@
+{
+  "schemaVersion": "1",
+  "reportVersion": "1.0.0",
+  "generationTimestamp": "2026-07-25T17:22:53.997Z",
+  "reportId": "deps-baseline-v1",
+  "title": "DEPS Baseline v1 — Canonical Organizational Understanding Ownership Migration",
+  "status": "baseline",
+  "disposition": "accept",
+  "sprint": {
+    "name": "Discovery 2 Phase 4C",
+    "classification": "A — Canonical ownership migration complete",
+    "repositoryRevision": "310be01853300d093f7db5d82ca17a8c89242394",
+    "worktreeState": "dirty",
+    "scope": "Canonical Organizational Understanding ownership migration with compatibility adapters and exact rollback."
+  },
+  "trend": {
+    "baselineReference": "deps-baseline-v1",
+    "previousCompatibleReport": null,
+    "currentReport": "deps-baseline-v1",
+    "comparabilityCohort": "deps-report-schema-v1"
+  },
+  "evidence": [
+    {
+      "id": "phase4c-gate",
+      "sourceId": "canonical-understanding-ownership-migration",
+      "artifact": "docs/Sprint Updates/CANONICAL_UNDERSTANDING_OWNERSHIP_MIGRATION.md",
+      "claimBoundary": "Authoritative Phase 4C classification, ownership, compatibility, replay, and rollback report."
+    },
+    {
+      "id": "phase4c-runner",
+      "sourceId": "canonical-understanding-ownership-migration",
+      "artifact": "engine/benchmark/judgment-lab/canonicalUnderstandingOwnershipMigrationGate.ts",
+      "claimBoundary": "Native deterministic migration gate implementation."
+    },
+    {
+      "id": "architecture-registry",
+      "sourceId": "capability-validation",
+      "artifact": "docs/Architecture/COGNITIVE_CAPABILITY_AUDIT.json",
+      "claimBoundary": "Current capability-registry validation artifact."
+    },
+    {
+      "id": "architecture-deep",
+      "sourceId": "architecture-validation",
+      "artifact": "docs/Architecture/COGNITIVE_CAPABILITY_REGISTRY.json",
+      "claimBoundary": "Current deep architecture verification input; known findings remain separately reported."
+    },
+    {
+      "id": "scorecard-canon",
+      "sourceId": "discovery-scorecard",
+      "artifact": "docs/Architecture/Canon/DISCOVERY_SCORECARD.md",
+      "claimBoundary": "Five-score interpretation and guardrail rules."
+    },
+    {
+      "id": "research-status",
+      "sourceId": "localized-nonlinear-research-adapter",
+      "artifact": "engine/benchmark/research/localized-nonlinear-cognition-adapter/RESULT.json",
+      "claimBoundary": "Current benchmark-only research decision and explicit production-readiness limits."
+    }
+  ],
+  "scorecard": [
+    {
+      "metric": "Organizational Understanding",
+      "state": "Improved",
+      "evidenceRefs": ["phase4c-gate"],
+      "rationale": "Canonical reusable Category A composition became active without claiming a numerical uplift."
+    },
+    {
+      "metric": "User Intelligence",
+      "state": "Unchanged",
+      "evidenceRefs": ["phase4c-gate"],
+      "rationale": "The migration preserved existing downstream behavior and made no User Intelligence improvement claim."
+    },
+    {
+      "metric": "Collective Intelligence",
+      "state": "Unchanged",
+      "evidenceRefs": ["phase4c-gate"],
+      "rationale": "The migration made no Collective Intelligence change or improvement claim."
+    },
+    {
+      "metric": "Governance Integrity",
+      "state": "Improved",
+      "evidenceRefs": ["phase4c-gate"],
+      "rationale": "Single truth ownership improved while authority, persistence, provenance, and disclosure boundaries remained unchanged."
+    },
+    {
+      "metric": "System Sustainability",
+      "state": "Improved",
+      "evidenceRefs": ["phase4c-gate"],
+      "rationale": "The additive migration preserved deterministic replay, historical compatibility, and exact rollback."
+    }
+  ],
+  "architecture": [
+    {
+      "area": "Truth ownership",
+      "state": "Improved",
+      "evidenceRefs": ["phase4c-gate"],
+      "observation": "Canonical Organizational Understanding has one production composition owner."
+    },
+    {
+      "area": "Semantic ownership",
+      "state": "Improved",
+      "evidenceRefs": ["phase4c-gate"],
+      "observation": "Completed Explanations retain claims and ancestry; Organizational Understanding owns governed composition."
+    },
+    {
+      "area": "Rollback",
+      "state": "Improved",
+      "evidenceRefs": ["phase4c-gate", "phase4c-runner"],
+      "observation": "The explicit legacy path restores pre-migration Runtime and downstream bytes."
+    },
+    {
+      "area": "Migration",
+      "state": "Improved",
+      "evidenceRefs": ["phase4c-gate"],
+      "observation": "Category A ownership is active through an additive migration."
+    },
+    {
+      "area": "Compatibility",
+      "state": "Unchanged",
+      "evidenceRefs": ["phase4c-gate"],
+      "observation": "Historical records and existing consumers remain compatible."
+    },
+    {
+      "area": "Architecture validation",
+      "state": "Unchanged",
+      "evidenceRefs": ["architecture-registry", "architecture-deep"],
+      "observation": "Phase 4C ownership checks pass; unrelated pre-existing deep findings remain visible."
+    }
+  ],
+  "benchmarks": [
+    {
+      "sourceId": "canonical-understanding-ownership-migration",
+      "result": "Pass",
+      "evidenceRefs": ["phase4c-gate", "phase4c-runner"],
+      "summary": "The authoritative report records 14/14 migration scenarios passing."
+    },
+    {
+      "sourceId": "capability-validation",
+      "result": "Pass",
+      "evidenceRefs": ["architecture-registry"],
+      "summary": "The current capability audit records no structural registry failures."
+    },
+    {
+      "sourceId": "architecture-validation",
+      "result": "Known Findings",
+      "evidenceRefs": ["architecture-deep"],
+      "summary": "Deep architecture findings remain visible and are not represented as a full pass."
+    }
+  ],
+  "researchObservations": [
+    {
+      "state": "Not Measured",
+      "evidenceRefs": ["research-status"],
+      "observation": "No research result was promoted by Phase 4C. Local Understanding Utility remains benchmark-only and the localized nonlinear adapter decision remains replicate."
+    }
+  ],
+  "complexity": {
+    "introduced": [
+      "One additive canonical composition field in existing Organizational Understanding state.",
+      "One bounded ownership mode for explicit rollback.",
+      "One migration benchmark gate."
+    ],
+    "removed": [
+      "Executive Assessment ownership of canonical reusable Organizational Understanding."
+    ],
+    "netEffect": "Increased",
+    "justified": true,
+    "justification": "The bounded additive surface establishes one canonical truth owner while retaining exact compatibility and rollback.",
+    "evidenceRefs": ["phase4c-gate", "phase4c-runner"]
+  },
+  "governanceObservations": [
+    {
+      "state": "Improved",
+      "evidenceRefs": ["phase4c-gate"],
+      "observation": "Truth ownership converged without changing authority, provenance, persistence, or disclosure semantics."
+    }
+  ],
+  "sustainabilityObservations": [
+    {
+      "state": "Improved",
+      "evidenceRefs": ["phase4c-gate", "phase4c-runner"],
+      "observation": "Determinism, historical replay, additive persistence, downstream equivalence, and exact rollback are demonstrated."
+    }
+  ],
+  "regressions": [
+    {
+      "state": "Unchanged",
+      "evidenceRefs": ["architecture-deep"],
+      "observation": "Pre-existing deep architecture findings remain; Phase 4C introduces no reported ownership-boundary regression."
+    }
+  ],
+  "unknownsAndUnmeasured": [
+    {
+      "area": "Direct User Intelligence outcome",
+      "state": "Not Measured",
+      "reason": "Phase 4C tested downstream equivalence, not a controlled user-capability outcome."
+    },
+    {
+      "area": "Direct Collective Intelligence outcome",
+      "state": "Not Measured",
+      "reason": "Phase 4C did not test governed multi-contributor or cross-scope outcomes."
+    },
+    {
+      "area": "Runtime cost delta",
+      "state": "Not Measured",
+      "reason": "The migration gate did not measure elapsed time, peak memory, or persisted-artifact growth."
+    },
+    {
+      "area": "Long-term compatibility-adapter maintenance cost",
+      "state": "Not Measured",
+      "reason": "The adapters are intentionally retained and no longitudinal maintenance protocol exists."
+    }
+  ],
+  "rollback": {
+    "available": true,
+    "evidenceRefs": ["phase4c-gate", "phase4c-runner"],
+    "description": "Use the explicit legacy ownership path to restore the prior composition behavior and downstream bytes."
+  },
+  "engineeringDecision": {
+    "accept": true,
+    "evidenceRefs": ["phase4c-gate", "phase4c-runner", "scorecard-canon"],
+    "rationale": "Accept: canonical ownership improved, compatibility remained stable, no duplicate truth was introduced, and exact rollback was demonstrated."
+  }
+}

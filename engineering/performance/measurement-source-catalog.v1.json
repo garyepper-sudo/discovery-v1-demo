@@ -1,0 +1,289 @@
+{
+  "catalogId": "discovery-measurement-source-catalog",
+  "version": "1",
+  "status": "canonical",
+  "scope": "Deterministic engineering, benchmark, research, migration, and validation sources available to DEPS Phase 1.",
+  "sources": [
+    {
+      "id": "repository-diff-check",
+      "purpose": "Validate patch whitespace and repository diff integrity.",
+      "domain": "repository",
+      "owner": "Discovery Engineering",
+      "determinism": "deterministic",
+      "baselineCompatibility": "Compatible when Git and whitespace rules are unchanged.",
+      "maturity": "canonical-gate",
+      "command": "git diff --check",
+      "authoritativeOutputs": ["git diff --check process result"]
+    },
+    {
+      "id": "typescript-typecheck",
+      "purpose": "Validate TypeScript contract consistency.",
+      "domain": "engineering",
+      "owner": "Discovery Engineering",
+      "determinism": "deterministic",
+      "baselineCompatibility": "Compatible within the same dependency and TypeScript configuration cohort.",
+      "maturity": "canonical-gate",
+      "command": "npm run typecheck",
+      "authoritativeOutputs": ["tsconfig.json", "package.json"]
+    },
+    {
+      "id": "application-build",
+      "purpose": "Validate application compilation, lint integration, and packaging.",
+      "domain": "engineering",
+      "owner": "Discovery Engineering",
+      "determinism": "deterministic",
+      "baselineCompatibility": "Compatible within the same dependency, environment, and build configuration cohort.",
+      "maturity": "canonical-gate",
+      "command": "npm run build",
+      "authoritativeOutputs": ["package.json", "next.config.mjs"]
+    },
+    {
+      "id": "capability-validation",
+      "purpose": "Validate capability registry completeness, ownership declarations, dependencies, consumers, and Runtime destinations.",
+      "domain": "capability",
+      "owner": "Cognitive Architecture",
+      "determinism": "deterministic",
+      "baselineCompatibility": "Compatible for the same capability-registry protocol.",
+      "maturity": "canonical-validator",
+      "command": "npm run cognition:validate",
+      "authoritativeOutputs": ["docs/Architecture/COGNITIVE_CAPABILITY_AUDIT.json"]
+    },
+    {
+      "id": "architecture-validation",
+      "purpose": "Verify canonical producers, dependency reciprocity, Runtime destinations, executive consumers, and Operating System ownership.",
+      "domain": "architecture",
+      "owner": "Cognitive Architecture",
+      "determinism": "deterministic",
+      "baselineCompatibility": "Compatible for the same architecture-verification protocol and capability catalog.",
+      "maturity": "canonical-validator",
+      "command": "npm run verify:architecture",
+      "authoritativeOutputs": ["engine/benchmark/verifyArchitecture.ts", "docs/Architecture/COGNITIVE_CAPABILITY_REGISTRY.json"]
+    },
+    {
+      "id": "runtime-validation",
+      "purpose": "Define canonical inspection and replay expectations for actual persisted Runtime behavior.",
+      "domain": "runtime",
+      "owner": "Organization Runtime",
+      "determinism": "deterministic-with-fixed-fixture",
+      "baselineCompatibility": "Compatible only when Runtime fixture, clock, and state-construction protocol match.",
+      "maturity": "canonical-protocol",
+      "authoritativeOutputs": ["docs/Architecture/Validation/RUNTIME_VALIDATION.md"]
+    },
+    {
+      "id": "northstar-ground-truth",
+      "purpose": "Measure high-volume end-to-end semantic fidelity against canonical Northstar evidence.",
+      "domain": "cognition",
+      "owner": "Northstar Ground Truth",
+      "determinism": "deterministic-with-fixed-fixture",
+      "baselineCompatibility": "Only results with matching replay construction, fixture manifest, evaluator, and denominator are directly comparable.",
+      "maturity": "canonical-benchmark",
+      "command": "npm run northstar:ground-truth",
+      "authoritativeOutputs": ["engine/benchmark/high-volume/northstar/scoreNorthstarGroundTruth.ts", "docs/Sprint Updates/BENCHMARK_BASELINE.md"]
+    },
+    {
+      "id": "cognitive-layer-validation",
+      "purpose": "Validate canonical cognitive layers, handoffs, and transformation trace.",
+      "domain": "cognition",
+      "owner": "Northstar Cognitive Validation",
+      "determinism": "deterministic-with-fixed-fixture",
+      "baselineCompatibility": "Compatible for the same Northstar fixture and layer protocol.",
+      "maturity": "canonical-benchmark",
+      "command": "npm run northstar:cognitive-layer-validation:001",
+      "authoritativeOutputs": ["engine/benchmark/high-volume/northstar/runNorthstarCognitiveLayerValidation001.ts"]
+    },
+    {
+      "id": "executive-collaboration-lab",
+      "purpose": "Measure executive understanding, continuity, challenge, action utility, and trust calibration.",
+      "domain": "product",
+      "owner": "Executive Collaboration Lab",
+      "determinism": "deterministic-with-mock-or-runtime-fixture",
+      "baselineCompatibility": "Runtime-only, deterministic-mock, held-out, and provider cohorts must remain separate.",
+      "maturity": "canonical-benchmark",
+      "command": "npm run benchmark:executive-collaboration",
+      "authoritativeOutputs": ["engine/benchmark/executive-collaboration-lab/validateExecutiveCollaborationLab.ts", "docs/Sprint Updates/BENCHMARK_BASELINE.md"]
+    },
+    {
+      "id": "executive-decision-lab",
+      "purpose": "Measure decision comparison, ranking, recommendation, correspondence, calibration, and order independence.",
+      "domain": "product",
+      "owner": "Executive Decision Lab",
+      "determinism": "deterministic-with-isolated-fixture",
+      "baselineCompatibility": "Compatible for the same isolated Atlas decision fixture and evaluator.",
+      "maturity": "canonical-benchmark",
+      "authoritativeOutputs": ["engine/benchmark/executive-decision-lab/validateExecutiveDecisionLab.ts", "docs/Sprint Updates/BENCHMARK_BASELINE.md"]
+    },
+    {
+      "id": "executive-communication",
+      "purpose": "Measure grounded executive language and communication fidelity.",
+      "domain": "product",
+      "owner": "Executive Communication",
+      "determinism": "deterministic-with-fixed-fixture",
+      "baselineCompatibility": "Compatible for the same Runtime fixture and communication protocol.",
+      "maturity": "canonical-benchmark",
+      "command": "npm run communication:002",
+      "authoritativeOutputs": ["engine/benchmark/executive-communication/executiveCommunicationExperiment002.ts"]
+    },
+    {
+      "id": "organizational-intelligence-lab",
+      "purpose": "Measure reusable cognition, scoped composition, organizational learning, and benchmark governance policies.",
+      "domain": "organization",
+      "owner": "Organizational Intelligence Lab",
+      "determinism": "deterministic-with-fixed-fixture",
+      "baselineCompatibility": "Compatible for the same cases, policy wrapper, and evaluator.",
+      "maturity": "canonical-benchmark-with-research-boundaries",
+      "command": "npm run benchmark:organizational-intelligence",
+      "authoritativeOutputs": ["engine/benchmark/organizational-intelligence-lab/validateOrganizationalIntelligenceLab.ts", "docs/Sprint Updates/BENCHMARK_BASELINE.md"]
+    },
+    {
+      "id": "evidence-independence",
+      "purpose": "Measure Evidence identity, provenance, independence, and duplicate-resistance behavior.",
+      "domain": "governance",
+      "owner": "Judgment Lab",
+      "determinism": "deterministic-with-fixed-fixture",
+      "baselineCompatibility": "Compatible for the same evidence fixtures and evaluator.",
+      "maturity": "canonical-benchmark",
+      "command": "npm run benchmark:evidence-independence",
+      "authoritativeOutputs": ["engine/benchmark/judgment-lab/evidenceIndependenceBenchmark.ts", "docs/Sprint Updates/EVIDENCE_INDEPENDENCE_BENCHMARK.md"]
+    },
+    {
+      "id": "completed-explanation-adjudication-shadow",
+      "purpose": "Evaluate conditional candidate-relative Explanation adjudication without production activation.",
+      "domain": "cognition",
+      "owner": "Judgment Lab",
+      "determinism": "deterministic-with-fixed-fixture",
+      "baselineCompatibility": "Compatible only within the shadow contract and fixture protocol.",
+      "maturity": "validated-shadow-production-blocked",
+      "command": "npm run benchmark:completed-explanation-adjudication-shadow",
+      "authoritativeOutputs": ["engine/benchmark/judgment-lab/completedExplanationAdjudicationProductionShadow.ts", "docs/Architecture/Canon/COMPLETED_EXPLANATION_ADJUDICATION_CONTRACT.md"]
+    },
+    {
+      "id": "comparative-evidence-roles",
+      "purpose": "Validate deterministic comparative Evidence role production and historical compatibility.",
+      "domain": "cognition",
+      "owner": "Judgment Lab",
+      "determinism": "deterministic-with-fixed-fixture",
+      "baselineCompatibility": "Compatible for the same role contract and fixtures.",
+      "maturity": "canonical-production-gate",
+      "command": "npm run benchmark:comparative-evidence-roles-gate",
+      "authoritativeOutputs": ["engine/benchmark/judgment-lab/comparativeEvidenceRolesBenchmarkGate.ts", "docs/Architecture/Canon/COMPARATIVE_EVIDENCE_ROLES_CONTRACT.md"]
+    },
+    {
+      "id": "explanation-aware-understanding-shadow",
+      "purpose": "Evaluate reusable Organizational Understanding composed from unadjudicated completed Explanations.",
+      "domain": "organizational-understanding",
+      "owner": "Judgment Lab",
+      "determinism": "deterministic-with-fixed-fixture",
+      "baselineCompatibility": "Compatible for the same Phase 3 shadow protocol.",
+      "maturity": "validated-shadow",
+      "command": "npm run benchmark:unadjudicated-explanation-understanding-shadow",
+      "authoritativeOutputs": ["engine/benchmark/judgment-lab/unadjudicatedExplanationUnderstandingShadowGate.ts", "docs/Sprint Updates/UNADJUDICATED_EXPLANATION_UNDERSTANDING_SHADOW.md"]
+    },
+    {
+      "id": "canonical-understanding-compatibility-shadow",
+      "purpose": "Measure Category A semantic compatibility, reference ownership, historical reads, and noninterference.",
+      "domain": "migration",
+      "owner": "Judgment Lab",
+      "determinism": "deterministic-with-fixed-fixture",
+      "baselineCompatibility": "Compatible for the same Phase 4B protocol.",
+      "maturity": "completed-compatibility-shadow",
+      "command": "npm run benchmark:canonical-understanding-compatibility-shadow",
+      "authoritativeOutputs": ["engine/benchmark/judgment-lab/canonicalUnderstandingCompatibilityShadowGate.ts", "docs/Sprint Updates/CANONICAL_UNDERSTANDING_COMPATIBILITY_SHADOW.md"]
+    },
+    {
+      "id": "canonical-understanding-ownership-migration",
+      "purpose": "Validate one canonical Organizational Understanding owner, downstream equivalence, replay, compatibility, and exact rollback.",
+      "domain": "migration",
+      "owner": "Judgment Lab",
+      "determinism": "deterministic-with-fixed-fixture",
+      "baselineCompatibility": "Compatible for the same Phase 4C migration protocol and historical Runtime fixture.",
+      "maturity": "canonical-production-migration-gate",
+      "command": "npm run benchmark:canonical-understanding-ownership-migration",
+      "authoritativeOutputs": ["engine/benchmark/judgment-lab/canonicalUnderstandingOwnershipMigrationGate.ts", "docs/Sprint Updates/CANONICAL_UNDERSTANDING_OWNERSHIP_MIGRATION.md"]
+    },
+    {
+      "id": "explicit-authority-transitions",
+      "purpose": "Validate explicit contribution admission, composition eligibility, persistence separation, authority disposition, replay, rollback, isolation, and disclosure independence.",
+      "domain": "governance",
+      "owner": "Canonical Organizational Understanding",
+      "determinism": "deterministic-with-fixed-fixture",
+      "baselineCompatibility": "Compatible for the same Phase 5A authority-transition contract and fixed Atlas-derived fixture.",
+      "maturity": "canonical-production-gate",
+      "command": "npm run benchmark:explicit-authority-transitions",
+      "authoritativeOutputs": ["engine/benchmark/judgment-lab/explicitAuthorityTransitionsGate.ts", "docs/Sprint Updates/EXPLICIT_AUTHORITY_TRANSITIONS_AND_CONTRIBUTION_VALIDATION.md"]
+    },
+    {
+      "id": "disclosure-eligibility-revocation",
+      "purpose": "Validate fail-closed Organizational Understanding disclosure, future-read revocation, isolation, compatibility, rollback, and truth noninterference.",
+      "domain": "governance",
+      "owner": "Organizational Understanding Disclosure Contract",
+      "determinism": "deterministic-with-fixed-fixture",
+      "baselineCompatibility": "Compatible for the same Phase 5B resolved-decision contract and historical Runtime fixture.",
+      "maturity": "production-contract-activation-blocked",
+      "command": "npm run benchmark:disclosure-eligibility-revocation",
+      "authoritativeOutputs": ["engine/benchmark/judgment-lab/disclosureEligibilityRevocationContractGate.ts", "docs/Sprint Updates/DISCLOSURE_ELIGIBILITY_AND_REVOCATION_CONTRACT.md"]
+    },
+    {
+      "id": "runtime-backed-your-organization",
+      "purpose": "Validate the read-only Runtime-backed Your Organization adapter, canonical-owner mapping, missing-data behavior, deterministic replay, and non-mutation.",
+      "domain": "product",
+      "owner": "Your Organization Product Projection",
+      "determinism": "deterministic-with-fixed-runtime-fixture",
+      "baselineCompatibility": "Compatible for the same Runtime adapter contract, product view shape, and persisted replay fixture.",
+      "maturity": "partial-production-integration",
+      "command": "npm run validate:organization-experience",
+      "authoritativeOutputs": ["components/product-shell/data/buildRuntimeOrganizationView.ts", "scripts/product/validateOrganizationExperience.ts", "docs/Sprint Updates/RUNTIME_BACKED_YOUR_ORGANIZATION_INTEGRATION.md"]
+    },
+    {
+      "id": "organizational-understanding-research-framework",
+      "purpose": "Define the six-dimensional methodology beneath the Organizational Understanding Index.",
+      "domain": "research",
+      "owner": "Organizational Understanding Research",
+      "determinism": "not-an-executable-source",
+      "baselineCompatibility": "Adapters are comparable only within matching experiment protocols; dimensions are not aggregated.",
+      "maturity": "canonical-research-methodology",
+      "authoritativeOutputs": ["engine/benchmark/research/ORGANIZATIONAL_UNDERSTANDING_RESEARCH_FRAMEWORK.md"]
+    },
+    {
+      "id": "localized-nonlinear-research-adapter",
+      "purpose": "Adapt one localized nonlinear cognition experiment into the canonical OU research envelope.",
+      "domain": "research",
+      "owner": "Organizational Understanding Research",
+      "determinism": "deterministic-reference-adapter",
+      "baselineCompatibility": "Comparable only to the same source result hash and adapter protocol.",
+      "maturity": "research-decision-replicate",
+      "command": "npm run benchmark:research:localized-nonlinear-adapter",
+      "authoritativeOutputs": ["engine/benchmark/research/localized-nonlinear-cognition-adapter/RESULT.json", "engine/benchmark/research/localized-nonlinear-cognition-adapter/RESEARCH_REPORT.md"]
+    },
+    {
+      "id": "discovery-scorecard",
+      "purpose": "Interpret evidence through the five canonical Discovery scores and promotion guardrails.",
+      "domain": "scorecard",
+      "owner": "Discovery Architecture",
+      "determinism": "not-an-executable-source",
+      "baselineCompatibility": "Directional interpretations remain comparable while the five-score canon and evidence protocol are unchanged.",
+      "maturity": "canonical-framework",
+      "authoritativeOutputs": ["docs/Architecture/Canon/DISCOVERY_SCORECARD.md"]
+    },
+    {
+      "id": "benchmark-baseline-and-regression",
+      "purpose": "Record authoritative benchmark cohorts, known findings, comparability limits, and regression diagnoses.",
+      "domain": "regression",
+      "owner": "Discovery Engineering",
+      "determinism": "reference-artifact",
+      "baselineCompatibility": "Each recorded cohort carries its own comparability boundary.",
+      "maturity": "maintained-baseline",
+      "authoritativeOutputs": ["docs/Sprint Updates/BENCHMARK_BASELINE.md", "docs/Sprint Updates/BENCHMARK_REGRESSION_ANALYSIS.md"]
+    },
+    {
+      "id": "deps-report-validation",
+      "purpose": "Validate evidence traceability, report compatibility, explicit movement, complexity justification, rollback, and deterministic rendering.",
+      "domain": "engineering",
+      "owner": "Discovery Engineering Performance System",
+      "determinism": "deterministic-reference-tooling",
+      "baselineCompatibility": "Compatible when report schema and comparability cohort match.",
+      "maturity": "canonical-engineering-instrumentation",
+      "command": "npm run deps:report",
+      "authoritativeOutputs": ["scripts/performance/validatePerformanceReport.mjs", "scripts/performance/comparePerformanceReports.mjs", "scripts/performance/renderPerformanceReport.mjs", "docs/Architecture/Canon/DISCOVERY_ENGINEERING_PERFORMANCE_SYSTEM.md"]
+    }
+  ]
+}

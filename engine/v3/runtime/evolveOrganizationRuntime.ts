@@ -29,6 +29,7 @@ import {
 } from "../understanding/consolidateUnderstanding";
 import { synthesizeUnderstanding } from "../understanding/synthesizeUnderstanding";
 import { buildExecutiveUnderstandingCandidates } from "../understanding/buildExecutiveUnderstandingCandidates";
+import { buildCanonicalUnderstandingCompatibilityShadow } from "../understanding/buildCanonicalUnderstandingCompatibilityShadow";
 import { buildUnderstandingClusters } from "../understanding/understandingClusters";
 import { runSemanticCompression } from "../compression/semanticCompression";
 import { inferOrganizationalPhenomena } from "../phenomena/inferOrganizationalPhenomena";
@@ -63,6 +64,8 @@ import {
 export function evolveOrganizationRuntime(params: {
   runtime: OrganizationRuntime;
   result: DiscoveryV3Result;
+  organizationalUnderstandingOwnershipMode?: "canonical" | "legacy";
+  organizationalUnderstandingAuthorityMode?: "explicit" | "implicit";
   input: {
     company: string;
     website: string;
@@ -547,6 +550,19 @@ export function evolveOrganizationRuntime(params: {
   const organizationalExplanations =
     organizationalExplanationCompletion.explanations;
 
+  const canonicalOrganizationalUnderstanding =
+    params.organizationalUnderstandingOwnershipMode === "legacy"
+      ? existingOrganizationalUnderstandingState.canonicalCompositions
+      : buildCanonicalUnderstandingCompatibilityShadow({
+          organizationId: runtime.metadata.organizationId,
+          explanations: organizationalExplanations,
+          authorityTransitionMode:
+            params.organizationalUnderstandingAuthorityMode,
+          previousCompositions:
+            existingOrganizationalUnderstandingState.canonicalCompositions,
+          now,
+        });
+
   const understandingEvolution = buildUnderstandingEvolution({
     beliefRevisions: organizationalBeliefState.revisions,
     theoryEvolution:
@@ -586,6 +602,12 @@ export function evolveOrganizationRuntime(params: {
   const beliefUpdatedOrganizationalUnderstandingState:
     OrganizationalUnderstandingState = {
     ...updatedOrganizationalUnderstandingState,
+    ...(canonicalOrganizationalUnderstanding
+      ? {
+          canonicalCompositions:
+            canonicalOrganizationalUnderstanding,
+        }
+      : {}),
     organizationalBeliefs:
       organizationalBeliefState.beliefs,
     lastUpdatedAt: now,
@@ -887,6 +909,7 @@ export function evolveOrganizationRuntime(params: {
     organizationalState,
     investigationOpportunities,
     predictionReflection,
+    canonicalOrganizationalUnderstanding,
   });
 
   const runtimeWithExecutiveAssessment:
@@ -927,9 +950,16 @@ export function evolveOrganizationRuntime(params: {
       observations: result.observations,
     });
 
-  const canonicalUnderstandingBase:
+  const compatibilityUnderstandingBase:
     OrganizationalUnderstandingState = {
     ...existingOrganizationalUnderstandingState,
+
+    ...(canonicalOrganizationalUnderstanding
+      ? {
+          canonicalCompositions:
+            canonicalOrganizationalUnderstanding,
+        }
+      : {}),
 
     currentUnderstandings:
       existingOrganizationalUnderstandingState.currentUnderstandings.filter(
@@ -945,14 +975,14 @@ export function evolveOrganizationRuntime(params: {
 
   const finalUnderstandingConsolidation =
     consolidateUnderstanding(
-      canonicalUnderstandingBase,
+      compatibilityUnderstandingBase,
       executiveUnderstandingCandidates,
     );
 
   const finalOrganizationalUnderstandingState =
     synthesizeUnderstanding({
       state: {
-        ...canonicalUnderstandingBase,
+        ...compatibilityUnderstandingBase,
 
         currentUnderstandings:
           finalUnderstandingConsolidation.updatedUnderstandings,
@@ -961,7 +991,7 @@ export function evolveOrganizationRuntime(params: {
           organizationalBeliefState.beliefs,
 
         evolutionHistory: [
-          ...canonicalUnderstandingBase.evolutionHistory,
+          ...compatibilityUnderstandingBase.evolutionHistory,
 
           ...finalUnderstandingConsolidation.changes.map(
             (change) => ({
@@ -983,6 +1013,12 @@ export function evolveOrganizationRuntime(params: {
 
       now,
     });
+
+  const {
+    canonicalCompositions:
+      _canonicalCompositionsOwnedByOrganizationalUnderstanding,
+    ...organizationalMemoryCompatibilityUnderstandingState
+  } = finalOrganizationalUnderstandingState;
 
   console.log(
     "FINAL UNDERSTANDINGS",
@@ -1491,7 +1527,7 @@ const updatedMemory = {
       maturity: memoryMaturity,
 
       understandingState:
-        finalOrganizationalUnderstandingState,
+        organizationalMemoryCompatibilityUnderstandingState,
 
       lastUpdatedAt: now,
 

@@ -23,6 +23,17 @@ focused on the quality of Discovery's organizational intelligence.
 The framework is canonical. Individual benchmark composition and score
 methodology may evolve when deterministic evidence justifies the change.
 
+The benchmark research methodology beneath the Organizational Understanding
+Index is defined by:
+
+```text
+engine/benchmark/research/ORGANIZATIONAL_UNDERSTANDING_RESEARCH_FRAMEWORK.md
+```
+
+Its six research dimensions and any Local Understanding Utility profile are
+benchmark-level interpretations. They are not additional top-level Discovery
+Scorecard metrics.
+
 ---
 
 # Canonical engineering principle
@@ -47,6 +58,8 @@ Discovery uses four distinct measurement levels:
 Local Benchmark
 ↓
 Capability Health
+↓
+Organizational Understanding Research Dimensions
 ↓
 Discovery Scorecard
 ↓
@@ -75,6 +88,27 @@ It answers:
 
 Capability Health remains traceable to individual benchmark results. It is not
 a sixth canonical score.
+
+## Organizational Understanding Research Dimensions
+
+Research adapters may interpret local benchmark and capability movement
+through Explanatory Depth, Evidence Integration, Alternative Resolution, State
+and Dynamics Awareness, Longitudinal Learning, and Emergent Insight.
+
+For experiments that evaluate the usefulness of one bounded understanding
+change before user-level outcomes can be measured, those observations may be
+reported as a **Local Understanding Utility** profile. The profile must remain
+traceable to the six dimensions, controls, ablations, and native benchmark
+artifacts.
+
+Local Understanding Utility is:
+
+- benchmark-only;
+- local to a named experiment and protocol;
+- subordinate to the Organizational Understanding Index;
+- evaluated before any claim about the User Intelligence Index;
+- never a sixth Scorecard metric, permanent weighted formula, production
+  object, or substitute for user-outcome evidence.
 
 ## Discovery Scorecard
 

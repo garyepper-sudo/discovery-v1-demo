@@ -1,192 +1,209 @@
-# Discovery — New Chat Handoff
+# Discovery Next Chat
 
-Use this document as the opening context for the next ChatGPT or Codex conversation.
+## Read first
 
-## Discovery identity
+1. `AGENTS.md`
+2. `docs/Product/PRODUCT_CANON.md`
+3. `docs/Architecture/Canon/SHARED_ORGANIZATIONAL_INTELLIGENCE.md`
+4. `docs/Architecture/Canon/COGNITIVE_ARCHITECTURE_INDEX.md`
+5. `docs/Architecture/Canon/DISCOVERY_2_SEQUENTIAL_IMPLEMENTATION_PROGRAM.md`
+6. `docs/Architecture/Canon/DISCOVERY_SCORECARD.md`
+7. `engine/benchmark/research/ORGANIZATIONAL_UNDERSTANDING_RESEARCH_FRAMEWORK.md`
+8. `docs/Architecture/Canon/DISCOVERY_ENGINEERING_PERFORMANCE_SYSTEM.md`
+9. `engine/benchmark/research/README.md`
+10. `docs/Sprint Updates/DISCOVERY_SNAPSHOT.md`
+11. `docs/Sprint Updates/PROJECT_STATE.md`
+12. `docs/Architecture/Validation/RUNTIME_VALIDATION.md`
 
-Discovery is a platform that continuously builds shared organizational intelligence that becomes more valuable than the sum of its contributors, information, and experiences.
+Inspect `git status --short` before acting. The working tree contains
+pre-existing documentation edits and multiple untracked benchmark and research
+directories. Preserve them and do not treat their presence as production
+authorization.
 
-The Executive Operating System is Discovery's first major application. The Operating Model is a primary representation of how the organization functions, while Organization Runtime remains the canonical persistence boundary containing Discovery's evolving Organizational Intelligence.
+## Current Milestone
 
-Executive recommendations, simulations, decisions, research, and questions are interactions with that same model. They do not form separate reasoning systems. Runtime is the canonical persistent representation of each organization.
+Discovery 2 Foundation milestone assembled through the partial Phase 8A
+Runtime-backed `Your Organization` integration.
 
-The strategic canon authorizes no new scopes, governance, Runtime contracts, cognitive layers, orchestration systems, or application families. Current benchmark-authorized conversation and reasoning work remains the immediate implementation priority.
+## Current Development Phase
 
-## Stable architecture
+Conditional Phase 2 adjudication remains production-blocked. Phases 3 and 4
+are complete. Phase 5A authority transitions and the Phase 5B disclosure
+contract remain unchanged. Phase 8A is an authorized product-validation
+exception; broader Governance and Phase 6 remain paused.
 
-The Cognitive Operating System, Runtime, Organization Model, Capability Registry, Executive Projection, Executive Communication, and Executive Decision pipeline are established architecture.
+## Current Objective
 
-Production architecture should not expand without benchmark evidence. Current optimization work improves an existing producer only after a measured failure and a producer-level trace identify the responsible boundary.
+Preserve the read-only Runtime product adapter. Do not fill its explicit
+`Runtime not yet available` states with compatibility, benchmark, research, or
+invented data.
 
-## Completed recent milestones
+DEPS Phase 1.1 is available through `npm run deps:report`. Future substantial
+sprints should finish by creating a versioned reference-only manifest,
+declaring one compatible predecessor or a new cohort, and generating the
+deterministic engineering progress report after native validation.
 
-- **Executive Decision Lab:** established typed decision cases, hidden ground truth, deterministic stress and metamorphic scenarios, semantic intervention correspondence, robustness and sensitivity evaluation, structured scope comparison, and controlled failure taxonomy.
-- **Intervention Profiles:** canonical options carry intrinsic execution characteristics used by feasibility evaluation.
-- **Capacity-aware feasibility:** constrained implementation capacity can disqualify high-burden options before simulation and change the recommended viable option.
-- **Localized intervention scope:** targeted condition and mechanism scope propagates through generated option, profile, simulation input, and recommendation.
-- **Operating Model Evolution Lab:** established benchmark-only longitudinal validation for learning, stability, coherence, identity continuity, scope preservation, historical truth, decision learning, and recommendation continuity.
-- **Production replay:** chronological evidence updates run through `runDiscoveryV3`, `evolveOrganizationRuntime`, a benchmark-only Runtime adapter, and consecutive Organization Model evaluation without persisting Runtime.
-- **Organizational Mechanism Lifecycle:** `docs/Architecture/Canon/ORGANIZATIONAL_MECHANISM_LIFECYCLE.md` defines canonical lifecycle and identity semantics.
-- **Mechanism identity reconciliation:** immediately previous mechanisms are matched deterministically as either the same mechanism or a new mechanism. Full lifecycle and lineage are not implemented.
-- **Longitudinal contradiction synthesis:** current evidence is compared with immediately previous evidence and classified as support, contradiction, qualification, or unrelated.
-- **Contradiction-aware belief revision:** a detected contradiction is associated with the stable challenged mechanism identity and enters the existing belief-update formula.
-- **Contradiction-aware mechanism confidence:** after immediate-previous identity reconciliation, unique qualifying contradictions reduce confidence only when opposing evidence intersects the continuing mechanism's current evidence ancestry.
-- **Intervention-specific recommendation risks:** Executive Recommendation synthesis preserves the winning intervention's existing risks in stable source order, removes exact duplicates, and leaves recommendation identity, confidence, and scenario ranking unchanged.
-- **Executive Recommendation risk projection:** the primary Decisions workspace now displays the selected recommendation's existing risks under “What could go wrong?” in their preserved order and wording, without changing Runtime, recommendation identity, confidence, or simulation.
-- **Living Organization Model interaction loop:** Insights surfaces up to three model-backed insights with stewardship actions; Think keeps brainstorming provisional until an explicit save or decision action; Decisions combines Discovery recommendations with leadership-added draft decisions; Session Impact separates discussion from durable updates.
-- **Unified Executive Workspace:** `/your-organization` now composes the top insight, interactive Organization Model, Think, Decide, Experiment, Brief, Session Impact, and the living-model learning loop into the primary compact executive surface. Existing focused routes remain available.
-- **Deterministic Ground Truth benchmark:** Ground Truth now owns an isolated, deterministic 48-artifact Northstar replay, scores only that replay, and restores the prior persisted Runtime before exiting.
-- **Implementation foundation:** the Product Canon, Platform Principles, Design Language, UI System, Component Library, Motion System, Copy Guide, View Model Architecture, and Frontend Architecture define the product-to-frontend implementation boundary.
-- **Interactive Prototype Alpha:** the approved nine-scene Understanding journey is implemented as a deterministic, fixture-backed experience under `/alpha`.
-- **Advisor deployment boundary:** Alpha has a narrowly scoped server-side shared-password gate, protected responses and assets, safe redirects, and deployment-compatible `/alpha` routing. It does not introduce product authentication or alter existing application routes.
+## Current architectural state
 
-## Current measured state
+Discovery is a shared organizational intelligence platform. Organization
+Runtime is the canonical technical persistence boundary, the Organization
+Model is the living product representation, and the Operating Model is its
+primary operational representation.
 
-Sprint 110 extends the ephemeral interpretation with advisory `reasoningAnalysis`: reasoning quality, unsupported assumptions, missing evidence, competing hypotheses, possible biases, confidence, and challenge opportunity. It is provider-generated, never persisted, and never treated as organizational truth. Ask remains the sole executive-facing response composer.
+Organizational Understanding is reusable platform cognition. Executive
+Assessment and the Executive Cognitive Operating System are
+application-specific consumers or projections.
 
-The Executive Collaboration Lab now scores Challenge Opportunity Detection and Challenge Quality separately and includes six held-out reasoning cases. On the split-dimension benchmark, Runtime-only scores `63.36`, Mock `90.88`, Provider V1 `77.81`, and Provider V2 `81.55` combined. V2 improves held-out score from `75.80` to `82.60` and challenge-opportunity detection from `2.50 / 5` to `4.44 / 5`, while recommendation quality, model stewardship, and Session Impact remain unchanged. All 96 live provider calls succeeded with zero fallbacks and zero critical failures. V2 is recommended to replace V1 on the experimental provider path; Prompt V1 remains frozen as the historical baseline.
+Adaptive Organizational Cognition is the organizing theory. Structured
+Organizational Reasoning remains the technical execution architecture.
 
-Sprint 109 adds exactly one experimental provider implementation: OpenAI behind `ExecutiveConversationInterpreter`. It uses a versioned bounded prompt, a minimized conversation-relevant Runtime projection, strict schema validation, sanitized ephemeral observability, and direct fallback from `openai` to `none`. It does not send organization IDs, complete Runtime, recommendations, decisions, evidence collections, or cognitive traces. It does not use mock as a production fallback.
+## Current production boundary
 
-Sprint 109 completed a successful live OpenAI `gpt-4o-mini` evaluation using frozen Prompt Version 1. The canonical first-run baseline is `78.93` development, `77.85` held-out, and `78.49` combined, with 30 successful calls, zero fallbacks, zero schema repairs, zero invalid outputs, and zero critical failures. Average latency was `2,050 ms`; average usage was `411` input and `159` output tokens per turn. A reproduction scored `78.49` development, `83.85` held-out, and `80.63` combined, demonstrating live interpretation variance without prompt, model, scenario, schema, or scoring changes.
+Discovery 2 Phase 1 is complete and active. Phase 3's bounded shadow is
+complete, Phase 4C canonical ownership is active, Phase 5A authority
+transitions are active, and the Phase 5B disclosure contract is active.
+Conditional Phase 2 remains blocked.
 
-Sprint 108 implements the canonical Executive Conversation Intelligence adapter. The provider-neutral contract interprets the current executive message, bounded recent turns, and read-only Runtime into an ephemeral description of conversational objective, intent, hypotheses, questions, assumptions, ambiguity, confidence, and recommended conversational action. It never persists, does not change organizational truth, and does not generate executive-facing responses. Ask remains the response composer. `CONVERSATION_INTERPRETER=none` is the backward-compatible default; `mock` selects the sole deterministic provider implemented in this sprint.
+Production completed Explanations preserve:
 
-The extended Executive Collaboration Lab records interpretation and response separately for every turn. The Runtime-only baseline remains `65.21 / 100`. Its deterministic controlled-mock baseline is `90.36 / 100`, with executive understanding `14.17 / 15`, collaborative reasoning `14.5 / 15`, constructive challenge `8 / 10`, continuity `10 / 10`, and trust `4.36 / 5`. The controlled score is not evidence of live-provider quality, unseen-conversation generalization, or a final AI-enabled score. The lab has zero critical failures and one remaining semantic-coverage warning. Repeated replay, reversed scenario order, organization isolation, and Runtime restoration pass.
+- stable identity and normalized scope;
+- outcomes and complete structured ancestry;
+- optional deterministic `supports`, `opposes`, and `shared` comparative
+  Evidence roles.
 
-The Sprint 107 Executive Collaboration Lab establishes the first canonical multi-turn collaboration baseline across six scenarios. Overall score is `65.21 / 100`, with zero hard failures. Dimension scores are: executive understanding `3.33 / 15`, question quality `8 / 10`, collaborative reasoning `8 / 15`, constructive challenge `5.33 / 10`, conversational continuity `5.72 / 10`, model stewardship `13.33 / 15`, recommendation quality `8 / 10`, action handoff `5 / 5`, Session Impact accuracy `5 / 5`, and executive trust `3.49 / 5`. Repeated runs and reversed scenario order are identical, organization identity is isolated, and no persisted Runtime artifact is created or left modified.
+Historical records without the role field remain compatible. No downstream
+consumer interprets the roles. Completed Explanations remain
+`unadjudicated`.
 
-The earliest responsible producer for the dominant gap is the existing Ask experience projection boundary: `buildAskExperienceView(runtime)` receives Runtime but no current executive message or conversation history, so every turn projects substantially the same answer. This is a conversation quality gap, not evidence of missing cognition or a Runtime architecture gap. The single recommended next optimization is to make that existing response composition turn-aware while keeping all reasoning Runtime-backed and all persistence explicit. Do not implement until authorized.
+Executive Assessment consumes canonical Organizational Understanding while
+retaining its existing output semantics. `currentUnderstandings` remains an
+assessment-derived compatibility view.
 
-The production Operating Model Evolution replay currently reports:
+Canonical compositions now carry additive authority-transition receipts.
+Completed Explanations are admitted using existing identity, scope, outcome,
+and ancestry semantics. Invalid contributions remain provisional and cannot
+enter canonical composition. Persistence does not grant authority. Disclosure
+is now governed by a pure resolved-decision contract. Application enforcement
+and durable revocation remain blocked because no canonical decision producer
+or append-only decision-history owner exists. No policy, permission,
+membership, provider, or Intelligence Scope enforcement was introduced.
 
-- Mechanism identity continuity: **passing**.
-- Belief weakening after qualifying evidence: **passing**.
-- Recommendation continuity: **passing**.
-- Mechanism confidence response to contradiction: **passing**; the production replay moves from `0.396425` to `0.352025` while preserving mechanism identity.
-- Historical mechanism truth: **failing**; explicit mechanism evolution history is absent.
+## Phase 2 blocker
 
-The Executive Decision Lab remains established and passing as a regression system. Its baseline risk-recognition score now passes at `5/5` because the selected intervention's risks reach the final recommendation. Direct recommendation evidence grounding remains open. The reduced-capacity scenario still reports a risk-language scoring diagnostic even though its selected intervention risks are present.
+The completed-Explanation adjudication shadow passes `34/34`, but its
+discrimination, counterfactual, outcome, rule-out, and confidence semantics are
+benchmark-owned.
 
-Sprint 104 closes the downstream projection omission for those risks. Decisions Experience validation passes `23` checks, the focused recommendation-risk regression passes, Executive Decision Lab passes `39/39`, Operating Model Evolution Lab passes `14/14`, typecheck passes, the production build passes with the existing React Hook warnings, and cognition validation passes. No Runtime, recommendation, confidence, ranking, simulation, or executive-reasoning contract changed.
+No canonical production object currently identifies:
 
-Sprint 105 proves the first complete product interaction loop. Explicit context, challenges, and save-as-insight actions enter the existing organization-investigation and evidence path; save as insight does not create a standalone insight object. Leadership decisions persist as canonical draft Executive Decision Records with their origin and targeted conditions preserved; casual brainstorming stays provisional. The API rejects unsupported actions and uses stable interaction identities to make investigation and decision retries idempotent. A shared session ledger reports only successfully persisted changes as model impact and deduplicates repeated entries. Living interaction validation passes `18/18`, product interaction boundary validation passes `14/14`, all existing product experience validators pass, Executive Decision Lab passes `39/39`, Operating Model Evolution passes `14/14`, and typecheck, build, cognition validation, and diff checks pass.
+1. a completed Explanation under test;
+2. its competitor or viable comparison set;
+3. a structured test result that justifies relative standing.
 
-Authentication and authorization for the product-interaction route remain deferred to the existing product access-control boundary; Sprint 105 adds no parallel identity or authorization model.
+Phase 2 must remain blocked. Do not infer completed-Explanation authority from
+Evidence volume, Seed rank, Hypothesis status, Prediction accuracy, Belief
+confidence, Theory evolution, or decision learning.
 
-Sprint 106 changes only the product interaction composition. It adds no cognition, Runtime contract, or parallel persistence model. Unified Executive Workspace validation passes `28/28`; organization identity is preserved through every handoff; visual verification at `1440 × 900` and `1728 × 1117` confirms the primary functionality is visible without page scrolling while maintaining the dark premium visual language.
+Unresolved competition is a valid state of Organizational Understanding.
+Adjudication is conditional and is not required before the authorized shadow
+may evaluate reusable Understanding.
 
-Ground Truth is deterministic at `75 / 100` regardless of prior Cognitive Trace, Cognitive Layer Validation, Atlas, Executive Decision Lab, or Operating Model Evolution Lab execution. Repeated replays produce identical Runtime and score details with or without an existing persisted Northstar Runtime. Remaining deductions are `-20` for excessive-concurrent-work wording sensitivity and `-5` for the explicit staffing-boundary phrase; production already expresses equivalent meaning, so no production repair is authorized from those deductions yet.
+## Benchmark and research status
 
-Do not represent those findings as completed.
+Established benchmark evidence includes:
 
-## Current optimization methodology
+- Evidence Provenance `11/11`;
+- Evidence Independence `16/16`;
+- Explanation ancestry `18/18`;
+- completed Explanation adjudication shadow `34/34`;
+- Comparative Evidence Roles production gate `20/20`;
+- Phase 3 Explanation-aware Understanding shadow `15/15`, Classification A;
+- Phase 4C canonical ownership migration gate `14/14`, Classification A;
+- Phase 5A explicit authority transitions gate `14/14`, Classification A;
+- Phase 5B disclosure eligibility and revocation gate `14/14`; contract valid,
+  activation blocked;
+- architecture validation at `295/302` with 7 pre-existing findings.
+
+The Organizational Understanding Research Framework is complete. It defines
+six research dimensions beneath the Organizational Understanding Index.
+
+Local Understanding Utility is an optional benchmark-only profile beneath the
+Organizational Understanding Index and before the User Intelligence Index. It
+is not an additional Scorecard metric.
+
+The Localized Nonlinear Cognition Research Adapter is complete with decision
+`replicate`. Independent replication and a production contract owner remain
+not-yet-demonstrated. The result does not authorize production nonlinear
+cognition, a new cognitive layer, schema changes, or Phase 2.
+
+## Discovery Scorecard
+
+The five and only five canonical scores are:
+
+1. Organizational Understanding Index;
+2. User Intelligence Index;
+3. Collective Intelligence Index;
+4. Governance Integrity Index;
+5. System Sustainability Index.
+
+Organizational Understanding is directly optimized. Governance Integrity and
+System Sustainability are promotion guardrails.
+
+## Discovery 2 phase status
 
 ```text
-Benchmark
-↓
-Production replay
-↓
-Root-cause trace
-↓
-Architecture only when required
-↓
-One narrow production change
-↓
-Full regression
-↓
-Benchmark calibration when justified
-↓
-Commit
+Phase 0  baseline established
+Phase 1  comparative Evidence roles complete and active
+Phase 2  conditional adjudication contract designed; production blocked
+Phase 3  shadow complete; Classification A; canonical path unchanged
+Phase 4  complete; Classification A; canonical ownership active
+Phase 5  5A and 5B bounded contracts complete; enforcement activation blocked
+Phase 6  blocked
+Phase 7  not started
+Phase 8  Phase 8A partial Runtime product integration complete
 ```
 
-The Executive Decision Lab and Operating Model Evolution Lab are regression gates after production changes.
+Do not reorder this sequence.
 
-## Runtime Validation Rule
+## Intentional transitions
 
-Read `docs/Architecture/Validation/RUNTIME_VALIDATION.md` during startup.
+Do not mistake these known transitions for undocumented implementation:
 
-Architecture documents describe intended behavior. Runtime validation confirms actual behavior. Before architectural, cognitive, projection, or executive-experience changes, inspect representative Runtime output whenever the task depends on what Discovery actually produces.
+- assessment-derived `currentUnderstandings` remains as a compatibility view;
+- Executive Assessment retains Seed-era output semantics downstream;
+- disclosure-decision production and durable revocation remain unowned;
+- Governance Control Plane behavior is conceptual, not production;
+- Prototype Alpha remains fixture-backed;
+- benchmark policy wrappers and candidate structures are not production.
 
-> Do not infer Runtime behavior solely from producer contracts or architecture documentation. Inspect representative Runtime state when actual output semantics or lineage matter.
+## Next Priority
 
-When relevant, inspect one current `.discovery-runtime/organizations/*.json` file and compare actual Runtime state with canonical expectations. Treat discrepancies as validation findings before proposing architecture.
+The next product step must be separately authorized. Missing canonical prose,
+Evidence retrieval, Understanding confidence, and disclosure-decision
+production remain explicit blockers. Phase 6 remains blocked.
 
-Investigation-local evidence IDs such as `E6` are positional and are not durable longitudinal identities. Stable mechanism identity is used for persisted contradiction ancestry.
+Expected Scorecard treatment:
 
-## Exact next work
+```text
+Organizational Understanding  bounded shadow improvement only
+User Intelligence             unchanged
+Collective Intelligence       unchanged
+Governance Integrity          protected
+System Sustainability         unchanged
+```
 
-Review and integrate the coherent Phase 1 production, benchmark, and canonical
-documentation change set. Do not begin Phase 2 or add a downstream consumer
-until Phase 1 is approved as one bounded production boundary.
-
-## Current validation posture
-
-- Ground Truth: `75 / 100`.
-- Cognition validation: `32` capabilities passing.
-- Architecture validation: `291 / 302`, with `11` known pre-existing
-  reciprocity/export findings.
-- Typecheck: passing.
-- Build: passing with six existing React Hook warnings.
-- Structured evidence provenance preserves legacy reasoning.
-- Sprint 110 deterministic collaboration comparator: Runtime-only `67.47`;
-  controlled mock `91.67`.
+Do not claim Local Understanding Utility improvement.
 
 ## Guardrails
 
-- No new cognitive layers without benchmark proof.
-- No broad engine or confidence tuning.
-- One production change per optimization sprint.
-- Preserve deterministic behavior.
-- Run both Decision and Evolution regressions after production changes.
-- Do not conflate investigation-local evidence IDs with stable longitudinal identity.
-- Do not implement merge, split, lifecycle history, or lineage while fixing confidence.
-- Do not modify benchmark expectations merely to make production pass.
-
-## Working-tree state
-
-The Phase 1 change set is ready for focused integration. Unrelated generated
-architecture artifacts, capability traces, benchmark research, provider
-output, Runtime state, and documentation changes must remain outside the
-Phase 1 commit.
-
-## Next-chat instruction
-
-```text
-Read AGENTS.md, docs/Sprint Updates/DISCOVERY_SNAPSHOT.md, docs/Sprint Updates/PROJECT_STATE.md, docs/Sprint Updates/NEXT_CHAT.md, and docs/Architecture/Validation/RUNTIME_VALIDATION.md.
-
-Inspect git status and recent history. Do not begin product, Runtime, cognition, provider-tuning, or benchmark-improvement work.
-
-Review and integrate only Discovery 2 Phase 1. Do not begin Phase 2, add an
-Explanation adjudicator, or add a downstream consumer. Do not push.
-```
-
-## Discovery 2 Phase 1 handoff
-
-Comparative Evidence Roles are active in normal forward Runtime evolution.
-Completed Organizational Explanations optionally contain deterministic
-`supports`, `opposes`, and `shared` assignments produced solely by
-`completeOrganizationalExplanations()`.
-
-The focused production gate passes `20/20`, including direct support,
-opposition, shared support, repeated and reversed-order determinism,
-organization isolation, historical compatibility, and downstream
-noninterference.
-
-Historical records without the optional field remain valid. Completed
-Explanations remain `unadjudicated`, and no downstream production consumer
-uses the role collection. Phase 1 does not add discrimination,
-counterfactual, observed-outcome, rule-out, or adjudication semantics.
-
-Discovery Scorecard closure:
-
-- Organizational Understanding Index: explicit representation enabled; no
-  measurable downstream improvement yet.
-- User Intelligence Index: unchanged.
-- Collective Intelligence Index: unchanged.
-- Governance Integrity Index: explicit traceable Evidence semantics supported;
-  no regression.
-- System Sustainability Index: unchanged; no regression.
-
-Do not begin Phase 2 until a separate benchmark and production-consumer review
-authorizes it.
+- preserve one Organization Runtime and one organizational truth boundary;
+- do not create a universal candidate object or nonlinear cognition layer;
+- do not promote research adapters or benchmark fixtures into production;
+- keep persistence, authority, and disclosure distinct;
+- preserve deterministic replay and historical compatibility;
+- preserve the completed Phase 4 ownership boundary and its compatibility
+  rollback;
+- treat Phase 7 as a possible source of longitudinal candidate-relative
+  Evidence, not automatic adjudication;
+- report architecture validation as `295/302`, not fully passing;
+- do not stage, commit, or push without explicit authorization.

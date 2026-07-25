@@ -1,6 +1,6 @@
 # Engine Capability Audit
 
-**Status:** Canonical operational audit after Sprint 100
+**Status:** Canonical operational audit synchronized for Discovery 2
 
 ## Purpose
 
@@ -35,7 +35,11 @@ Discovery's Cognitive Operating System, Runtime, Organization Model, Executive P
 | Immediate-previous mechanism identity reconciliation | Implemented and benchmark validated | Replay identity continuity passes for `same mechanism` versus `new mechanism`. |
 | Longitudinal contradiction synthesis | Implemented and benchmark validated | Current evidence is compared with immediately previous evidence; qualification is detected deterministically. |
 | Contradiction-aware belief revision | Implemented and benchmark validated | Stable challenged mechanism identity enters existing contradiction ancestry; replay belief weakening passes. |
-| Contradiction-aware mechanism confidence | Unresolved | Mechanism confidence still rises after qualifying evidence. |
+| Contradiction-aware mechanism confidence | Implemented and benchmark validated | Continuing Mechanism confidence responds to qualifying contradiction ancestry without changing identity. |
+| Completed Organizational Explanation construction | Implemented and benchmark validated | Completed Explanations preserve deterministic identity, scope, outcomes, and structured Seed, path, Mechanism, Belief, Theory, Evidence, and contradiction ancestry. |
+| Competing completed-Explanation adjudication | Benchmark validated; not integrated | Shadow benchmarks preserve exact competing sets, leaders, abstention, revision, and determinism. Production consumption remains deferred. |
+| Comparative Evidence-role formation | Implemented and benchmark validated | Phase 1 production Explanations optionally preserve deterministic `supports`, `opposes`, and `shared` roles; production gate `20/20 PASS`. Discrimination and outcome-test semantics remain outside this role contract. |
+| Contribution Validation | Designed and benchmark supported | Architecture meta-benchmarks validate admission/authority boundaries; no production enforcement contract exists. |
 | Historical mechanism continuity | Designed and deferred | No durable mechanism revisions, merge/split history, retirement, reactivation, supersession, or lineage exists in Runtime. |
 
 ## Executive Decision optimization
@@ -103,9 +107,16 @@ The belief's stored trend remains `stable` because the observed decrease is belo
 
 ## Current measured weaknesses
 
-### Mechanism confidence — unresolved
+### Completed Explanation authority — unresolved
 
-The contradiction exists and the mechanism ID remains stable, but mechanism inference does not consume contradiction ancestry. Mechanism confidence remains approximately `0.4135` after the qualifying update. This is the next producer-level investigation.
+Completed Explanations exist and persist with structured ancestry, but remain
+`unadjudicated`. Conditions attach matching Explanation IDs after scoring and
+Executive Assessment consumes earlier Seed-based judgments. The current
+production boundary cannot fairly reuse the validated adjudicator because
+no canonical producer supplies a candidate-relative discrimination,
+falsification, rule-out, counterfactual, or observed-outcome test result.
+Phase 1 `supports`, `opposes`, and `shared` roles establish comparability and
+contestability but do not authorize relative standing.
 
 ### Historical mechanism truth — designed and deferred
 
@@ -141,5 +152,7 @@ Future integrity and reliability checks should consolidate into durable grouped 
 - Make one narrow production change per optimization sprint.
 - Preserve deterministic replay.
 - Run Decision and Evolution regressions after production changes.
-- Do not implement mechanism history while diagnosing confidence.
+- Do not implement mechanism history while integrating Explanation authority.
 - Do not mark designed lifecycle states as implemented.
+- Keep candidate ecology benchmark-only until a production contract is earned.
+- Do not confuse Evidence ancestry with comparative evidential role.

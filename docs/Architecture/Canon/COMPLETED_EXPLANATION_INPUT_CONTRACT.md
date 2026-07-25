@@ -716,4 +716,9 @@ Runtime evolution is active. This does not alter the Phase 2 gate.
 
 The design does not unblock Phase 2 adjudication. Missing discrimination,
 counterfactual, observed-outcome, and rule-out semantics remain explicit
-future gates.
+future gates. The canonical adjudication boundary and exact blocker are
+defined by:
+
+```text
+COMPLETED_EXPLANATION_ADJUDICATION_CONTRACT.md
+```

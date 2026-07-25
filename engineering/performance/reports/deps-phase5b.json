@@ -1,0 +1,183 @@
+{
+  "schemaVersion": "1",
+  "reportVersion": "1.3.0",
+  "generationTimestamp": "2026-07-26T00:00:00.000Z",
+  "reportId": "deps-phase5b",
+  "title": "DEPS — Discovery 2 Phase 5B Disclosure and Revocation",
+  "status": "current",
+  "disposition": "accept-contract-activation-blocked",
+  "sprint": {
+    "name": "Discovery 2 Phase 5B",
+    "classification": "Disclosure contract valid; activation blocked",
+    "repositoryRevision": "310be01853300d093f7db5d82ca17a8c89242394",
+    "worktreeState": "dirty",
+    "scope": "Fail-closed canonical Understanding disclosure and future-read revocation contract without policy infrastructure."
+  },
+  "trend": {
+    "baselineReference": "deps-baseline-v1",
+    "previousCompatibleReport": "deps-phase5a",
+    "previousCompatibleReportPath": "engineering/performance/reports/deps-phase5a.json",
+    "currentReport": "deps-phase5b",
+    "comparabilityCohort": "deps-report-schema-v1"
+  },
+  "evidence": [
+    {
+      "id": "phase5b-gate",
+      "sourceId": "disclosure-eligibility-revocation",
+      "artifact": "engine/benchmark/judgment-lab/disclosureEligibilityRevocationContractGate.ts",
+      "claimBoundary": "Fourteen deterministic disclosure, revocation, isolation, compatibility, and noninterference scenarios."
+    },
+    {
+      "id": "phase5b-report",
+      "sourceId": "disclosure-eligibility-revocation",
+      "artifact": "docs/Sprint Updates/DISCLOSURE_ELIGIBILITY_AND_REVOCATION_CONTRACT.md",
+      "claimBoundary": "Production-path audit, activation blocker, Scorecard interpretation, and rollback."
+    },
+    {
+      "id": "phase5a-report",
+      "sourceId": "explicit-authority-transitions",
+      "artifact": "docs/Sprint Updates/EXPLICIT_AUTHORITY_TRANSITIONS_AND_CONTRIBUTION_VALIDATION.md",
+      "claimBoundary": "Compatible predecessor authority boundary."
+    },
+    {
+      "id": "deps-canon",
+      "sourceId": "deps-report-validation",
+      "artifact": "docs/Architecture/Canon/DISCOVERY_ENGINEERING_PERFORMANCE_SYSTEM.md",
+      "claimBoundary": "Canonical DEPS evidence and reporting rules."
+    }
+  ],
+  "scorecard": [
+    {
+      "metric": "Organizational Understanding",
+      "state": "Unchanged",
+      "evidenceRefs": ["phase5b-gate", "phase5a-report"],
+      "rationale": "Disclosure never changes canonical truth, composition, or provenance."
+    },
+    {
+      "metric": "User Intelligence",
+      "state": "Unchanged",
+      "evidenceRefs": ["phase5b-report"],
+      "rationale": "Application enforcement is not activated and no user experience changes."
+    },
+    {
+      "metric": "Collective Intelligence",
+      "state": "Not Measured",
+      "evidenceRefs": ["phase5b-report"],
+      "rationale": "No collective or cross-scope protocol was executed."
+    },
+    {
+      "metric": "Governance Integrity",
+      "state": "Improved",
+      "evidenceRefs": ["phase5b-gate", "phase5b-report"],
+      "rationale": "Disclosure is fail-closed and revocation is separated from truth mutation."
+    },
+    {
+      "metric": "System Sustainability",
+      "state": "Improved",
+      "evidenceRefs": ["phase5b-gate", "phase5b-report"],
+      "rationale": "The pure contract is deterministic, historically compatible, and exactly rollbackable."
+    }
+  ],
+  "architecture": [
+    {
+      "area": "Disclosure enforcement contract",
+      "state": "Improved",
+      "evidenceRefs": ["phase5b-gate", "phase5b-report"],
+      "observation": "One fail-closed boundary accepts resolved decisions without owning policy."
+    },
+    {
+      "area": "Truth and Runtime ownership",
+      "state": "Unchanged",
+      "evidenceRefs": ["phase5b-gate", "phase5a-report"],
+      "observation": "Canonical Understanding and Runtime remain unchanged."
+    },
+    {
+      "area": "Activation readiness",
+      "state": "Not Measured",
+      "evidenceRefs": ["phase5b-report"],
+      "observation": "No canonical decision producer or durable revocation-history owner exists."
+    }
+  ],
+  "benchmarks": [
+    {
+      "sourceId": "explicit-authority-transitions",
+      "result": "Pass",
+      "previousResult": "Pass",
+      "movement": "Unchanged",
+      "evidenceRefs": ["phase5a-report"],
+      "summary": "Phase 5A authority remains the predecessor boundary."
+    },
+    {
+      "sourceId": "disclosure-eligibility-revocation",
+      "result": "Pass",
+      "previousResult": "Not Measured",
+      "movement": "Improved",
+      "evidenceRefs": ["phase5b-gate", "phase5b-report"],
+      "summary": "The Phase 5B contract gate passes 14/14; application activation remains blocked."
+    }
+  ],
+  "researchObservations": [
+    {
+      "state": "Unchanged",
+      "evidenceRefs": ["phase5b-report"],
+      "observation": "No benchmark research concept was promoted."
+    }
+  ],
+  "complexity": {
+    "introduced": ["One resolved-decision envelope and one pure disclosure enforcement function."],
+    "removed": ["Implicit disclosure eligibility at the canonical composition boundary."],
+    "netEffect": "Increased",
+    "justified": true,
+    "justification": "The bounded contract separates disclosure from truth without a new store, service, capability, dependency, or policy system.",
+    "evidenceRefs": ["phase5b-gate", "phase5b-report"]
+  },
+  "governanceObservations": [
+    {
+      "state": "Improved",
+      "evidenceRefs": ["phase5b-gate", "phase5b-report"],
+      "observation": "Withholding and revocation suppress future reads without changing authority or truth."
+    }
+  ],
+  "sustainabilityObservations": [
+    {
+      "state": "Improved",
+      "evidenceRefs": ["phase5b-gate"],
+      "observation": "Pure evaluation preserves determinism, compatibility, and rollback."
+    }
+  ],
+  "regressions": [
+    {
+      "category": "production",
+      "state": "Unchanged",
+      "evidenceRefs": ["phase5b-gate"],
+      "observation": "Runtime, cognition, projection, and application behavior are unchanged."
+    }
+  ],
+  "unknownsAndUnmeasured": [
+    {
+      "area": "Disclosure decision production",
+      "state": "Not Measured",
+      "reason": "No canonical identity, permission, membership, or policy authority exists."
+    },
+    {
+      "area": "Durable revocation latency and history",
+      "state": "Not Measured",
+      "reason": "No append-only decision-history owner or cache invalidation contract exists."
+    }
+  ],
+  "remainingRisks": {
+    "nextBlockingDependency": "Canonical resolved-decision production and durable revocation history remain unowned.",
+    "remainingDiscoveryPhase": "Complete Phase 5 enforcement activation before Phase 6.",
+    "remainingBenchmarkGap": "Application, provider, cache, audit, and distributed revocation enforcement remain unmeasured."
+  },
+  "rollback": {
+    "available": true,
+    "evidenceRefs": ["phase5b-gate", "phase5b-report"],
+    "description": "Remove the pure disclosure enforcement call; canonical Runtime and current applications are unchanged."
+  },
+  "engineeringDecision": {
+    "accept": true,
+    "evidenceRefs": ["phase5b-gate", "phase5b-report", "phase5a-report"],
+    "rationale": "Accept the bounded contract while keeping application and durable revocation activation blocked."
+  }
+}

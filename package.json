@@ -33,7 +33,14 @@
     "benchmark:explanation-seed-theory-bridge": "tsx engine/benchmark/judgment-lab/explanationSeedTheoryAncestryBridge.ts",
     "benchmark:completed-explanation-adjudication-shadow": "tsx engine/benchmark/judgment-lab/completedExplanationAdjudicationProductionShadow.ts",
     "benchmark:comparative-evidence-roles-gate": "tsx engine/benchmark/judgment-lab/comparativeEvidenceRolesBenchmarkGate.ts",
+    "benchmark:unadjudicated-explanation-understanding-shadow": "tsx engine/benchmark/judgment-lab/unadjudicatedExplanationUnderstandingShadowGate.ts",
+    "benchmark:canonical-understanding-compatibility-shadow": "tsx engine/benchmark/judgment-lab/canonicalUnderstandingCompatibilityShadowGate.ts",
+    "benchmark:canonical-understanding-ownership-migration": "tsx engine/benchmark/judgment-lab/canonicalUnderstandingOwnershipMigrationGate.ts",
+    "benchmark:explicit-authority-transitions": "tsx engine/benchmark/judgment-lab/explicitAuthorityTransitionsGate.ts",
+    "benchmark:disclosure-eligibility-revocation": "tsx engine/benchmark/judgment-lab/disclosureEligibilityRevocationContractGate.ts",
+    "benchmark:research:localized-nonlinear-adapter": "tsx engine/benchmark/research/localized-nonlinear-cognition-adapter/runLocalizedNonlinearResearchAdapter.ts",
     "validate:executive-conversation": "tsx scripts/product/validateExecutiveConversationIntelligence.ts",
+    "validate:organization-experience": "tsx scripts/product/validateOrganizationExperience.ts",
     "northstar:cognitive-layer-validation:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarCognitiveLayerValidation001.ts",
     "northstar:cognitive-trace:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarCognitiveTrace001.ts",
     "northstar:transformation-trace:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarTransformationTrace001.ts",
@@ -75,7 +82,9 @@
     "sprint:brief": "node scripts/cognition/renderSprintStartup.mjs",
     "discovery:brief": "npm run cognition:validate && npm run audit:executive-capabilities && npm run architecture:state && npm run architecture:handoff && npm run sprint:brief",
     "sprint:start": "npm run discovery:brief",
-    "sprint:architecture": "npm run cognition:validate && npm run audit:executive-capabilities && npm run architecture:state && npm run architecture:handoff && cat \"docs/Sprint Updates/ARCHITECTURE_HANDOFF.md\""
+    "sprint:architecture": "npm run cognition:validate && npm run audit:executive-capabilities && npm run architecture:state && npm run architecture:handoff && cat \"docs/Sprint Updates/ARCHITECTURE_HANDOFF.md\"",
+    "deps:validate": "node scripts/performance/validatePerformanceReport.mjs",
+    "deps:report": "npm run deps:validate && node scripts/performance/renderPerformanceReport.mjs"
   },
   "dependencies": {
     "@types/node": "22.10.1",

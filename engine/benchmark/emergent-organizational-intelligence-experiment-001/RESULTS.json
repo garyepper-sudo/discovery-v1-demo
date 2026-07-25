@@ -1,0 +1,3955 @@
+{
+  "experiment": "Emergent Organizational Intelligence Experiment 001",
+  "posture": "benchmark-only research",
+  "productionBehaviorChanged": false,
+  "architectureChangeAuthorized": false,
+  "registration": {
+    "registeredBeforeFutureReveal": true,
+    "inputHash": "a500abf0592e26e1299eededf459b36d3778a4c736266145a8742f784954f5d1",
+    "predictions": [
+      {
+        "modelId": "best-silo",
+        "scenarioId": "scenario-001",
+        "explanation": "Services pricing is too low.",
+        "predictedOutcome": "Services margin continues shrinking.",
+        "supportingEvidenceIds": [
+          "A4"
+        ],
+        "confidence": 0.56,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "canonical-combined",
+        "scenarioId": "scenario-001",
+        "mechanismId": "operating-model-mismatch",
+        "explanation": "commercial customization and roadmap exceptions interacts across Finance, Operations, Product, Sales; standard product work converts into bespoke implementation work, producing implementation delay and margin erosion.",
+        "predictedOutcome": "implementation delay and margin erosion",
+        "recommendedIntervention": "standardize-commercial-product-boundary",
+        "supportingEvidenceIds": [
+          "A1",
+          "A2",
+          "A3",
+          "A4"
+        ],
+        "confidence": 0.75288,
+        "falsificationCondition": "The predicted outcome does not occur when commercial customization and roadmap exceptions remains present.",
+        "abstained": false
+      },
+      {
+        "modelId": "emergent",
+        "scenarioId": "scenario-001",
+        "mechanismId": "operating-model-mismatch",
+        "explanation": "commercial customization and roadmap exceptions interacts across Finance, Operations, Product, Sales; standard product work converts into bespoke implementation work, producing implementation delay and margin erosion.",
+        "predictedOutcome": "implementation delay and margin erosion",
+        "recommendedIntervention": "standardize-commercial-product-boundary",
+        "supportingEvidenceIds": [
+          "A1",
+          "A2",
+          "A3",
+          "A4"
+        ],
+        "confidence": 0.75288,
+        "falsificationCondition": "The predicted outcome does not occur when commercial customization and roadmap exceptions remains present.",
+        "abstained": false
+      },
+      {
+        "modelId": "majority",
+        "scenarioId": "scenario-001",
+        "explanation": "Delivery capacity is insufficient.",
+        "predictedOutcome": "Delivery capacity is insufficient.",
+        "supportingEvidenceIds": [
+          "A1",
+          "A2",
+          "A3",
+          "A4"
+        ],
+        "confidence": 0.58,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "state",
+        "scenarioId": "scenario-001",
+        "explanation": "The organization is constrained by implementation delay and margin erosion.",
+        "predictedOutcome": "The organization is constrained by implementation delay and margin erosion.",
+        "supportingEvidenceIds": [],
+        "confidence": 0.76,
+        "falsificationCondition": "A different Organizational Condition becomes dominant.",
+        "abstained": true
+      },
+      {
+        "modelId": "summary",
+        "scenarioId": "scenario-001",
+        "explanation": "Sales: Enterprise deals require increasing customization. Product: Roadmap exceptions continue growing. Operations: Implementation timelines continue expanding. Finance: Services margin continues shrinking.",
+        "predictedOutcome": "Services margin continues shrinking.",
+        "supportingEvidenceIds": [
+          "A1",
+          "A2",
+          "A3",
+          "A4"
+        ],
+        "confidence": 0.62,
+        "falsificationCondition": "A listed observation is shown to be inaccurate.",
+        "abstained": true
+      },
+      {
+        "modelId": "best-silo",
+        "scenarioId": "scenario-002",
+        "explanation": "Technical estimates are unreliable.",
+        "predictedOutcome": "Teams restart work after roadmap changes.",
+        "supportingEvidenceIds": [
+          "B3"
+        ],
+        "confidence": 0.56,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "canonical-combined",
+        "scenarioId": "scenario-002",
+        "mechanismId": "priority-churn",
+        "explanation": "repeated priority changes interacts across Engineering, HR, Leadership, Product; work restarts before completion, producing delivery remains flat despite additional staffing.",
+        "predictedOutcome": "delivery remains flat despite additional staffing",
+        "recommendedIntervention": "stabilize-priority-commitments",
+        "supportingEvidenceIds": [
+          "B1",
+          "B2",
+          "B3",
+          "B4"
+        ],
+        "confidence": 0.75288,
+        "falsificationCondition": "The predicted outcome does not occur when repeated priority changes remains present.",
+        "abstained": false
+      },
+      {
+        "modelId": "emergent",
+        "scenarioId": "scenario-002",
+        "mechanismId": "priority-churn",
+        "explanation": "repeated priority changes interacts across Engineering, HR, Leadership, Product; work restarts before completion, producing delivery remains flat despite additional staffing.",
+        "predictedOutcome": "delivery remains flat despite additional staffing",
+        "recommendedIntervention": "stabilize-priority-commitments",
+        "supportingEvidenceIds": [
+          "B1",
+          "B2",
+          "B3",
+          "B4"
+        ],
+        "confidence": 0.75288,
+        "falsificationCondition": "The predicted outcome does not occur when repeated priority changes remains present.",
+        "abstained": false
+      },
+      {
+        "modelId": "majority",
+        "scenarioId": "scenario-002",
+        "explanation": "Capacity is the constraint.",
+        "predictedOutcome": "Capacity is the constraint.",
+        "supportingEvidenceIds": [
+          "B1",
+          "B2",
+          "B3",
+          "B4"
+        ],
+        "confidence": 0.58,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "state",
+        "scenarioId": "scenario-002",
+        "explanation": "The organization is constrained by delivery remains flat despite additional staffing.",
+        "predictedOutcome": "The organization is constrained by delivery remains flat despite additional staffing.",
+        "supportingEvidenceIds": [],
+        "confidence": 0.76,
+        "falsificationCondition": "A different Organizational Condition becomes dominant.",
+        "abstained": true
+      },
+      {
+        "modelId": "summary",
+        "scenarioId": "scenario-002",
+        "explanation": "Leadership: More engineers were approved after delivery slowed. Product: Priorities change several times during each quarter. Engineering: Teams restart work after roadmap changes. HR: Hiring increased while completed work remained flat.",
+        "predictedOutcome": "Hiring increased while completed work remained flat.",
+        "supportingEvidenceIds": [
+          "B1",
+          "B2",
+          "B3",
+          "B4"
+        ],
+        "confidence": 0.62,
+        "falsificationCondition": "A listed observation is shown to be inaccurate.",
+        "abstained": true
+      },
+      {
+        "modelId": "best-silo",
+        "scenarioId": "scenario-003",
+        "explanation": "Implementation needs more resources.",
+        "predictedOutcome": "Late implementations increase escalation pressure.",
+        "supportingEvidenceIds": [
+          "C3"
+        ],
+        "confidence": 0.56,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "canonical-combined",
+        "scenarioId": "scenario-003",
+        "mechanismId": "exception-reinforcement-loop",
+        "explanation": "account exceptions interacts across Customer Success, Finance, Product, Sales; exceptions reduce capacity and delays increase escalation concessions, producing more exception demand and lower margin.",
+        "predictedOutcome": "more exception demand and lower margin",
+        "recommendedIntervention": "price-and-govern-exceptions",
+        "supportingEvidenceIds": [
+          "C1",
+          "C2",
+          "C3",
+          "C4"
+        ],
+        "confidence": 0.77528,
+        "falsificationCondition": "The predicted outcome does not occur when account exceptions remains present.",
+        "abstained": false
+      },
+      {
+        "modelId": "emergent",
+        "scenarioId": "scenario-003",
+        "mechanismId": "exception-reinforcement-loop",
+        "explanation": "account exceptions interacts across Customer Success, Finance, Product, Sales; exceptions reduce capacity and delays increase escalation concessions, producing more exception demand and lower margin.",
+        "predictedOutcome": "more exception demand and lower margin",
+        "recommendedIntervention": "price-and-govern-exceptions",
+        "supportingEvidenceIds": [
+          "C1",
+          "C2",
+          "C3",
+          "C4"
+        ],
+        "confidence": 0.77528,
+        "falsificationCondition": "The predicted outcome does not occur when account exceptions remains present.",
+        "abstained": false
+      },
+      {
+        "modelId": "majority",
+        "scenarioId": "scenario-003",
+        "explanation": "Implementation needs more resources.",
+        "predictedOutcome": "Implementation needs more resources.",
+        "supportingEvidenceIds": [
+          "C1",
+          "C2",
+          "C3",
+          "C4"
+        ],
+        "confidence": 0.58,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "state",
+        "scenarioId": "scenario-003",
+        "explanation": "The organization is constrained by more exception demand and lower margin.",
+        "predictedOutcome": "The organization is constrained by more exception demand and lower margin.",
+        "supportingEvidenceIds": [],
+        "confidence": 0.76,
+        "falsificationCondition": "A different Organizational Condition becomes dominant.",
+        "abstained": true
+      },
+      {
+        "modelId": "summary",
+        "scenarioId": "scenario-003",
+        "explanation": "Sales: Exceptions are promised to retain strategic accounts. Product: Exception volume reduces roadmap capacity. Customer Success: Late implementations increase escalation pressure. Finance: Escalated accounts receive more concessions.",
+        "predictedOutcome": "Escalated accounts receive more concessions.",
+        "supportingEvidenceIds": [
+          "C1",
+          "C2",
+          "C3",
+          "C4"
+        ],
+        "confidence": 0.62,
+        "falsificationCondition": "A listed observation is shown to be inaccurate.",
+        "abstained": true
+      },
+      {
+        "modelId": "best-silo",
+        "scenarioId": "scenario-004",
+        "explanation": "Customers need better communication.",
+        "predictedOutcome": "Renewal concerns rise after repeated outages.",
+        "supportingEvidenceIds": [
+          "D4"
+        ],
+        "confidence": 0.56,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "canonical-combined",
+        "scenarioId": "scenario-004",
+        "mechanismId": "maintenance-deferral-chain",
+        "explanation": "deferred maintenance interacts across Customer Success, Engineering, Leadership, Operations; recovery capability erodes over time, producing longer incidents create delayed renewal risk.",
+        "predictedOutcome": "longer incidents create delayed renewal risk",
+        "recommendedIntervention": "restore-reliability-investment",
+        "supportingEvidenceIds": [
+          "D1",
+          "D2",
+          "D3",
+          "D4"
+        ],
+        "confidence": 0.77528,
+        "falsificationCondition": "The predicted outcome does not occur when deferred maintenance remains present.",
+        "abstained": false
+      },
+      {
+        "modelId": "emergent",
+        "scenarioId": "scenario-004",
+        "mechanismId": "maintenance-deferral-chain",
+        "explanation": "deferred maintenance interacts across Customer Success, Engineering, Leadership, Operations; recovery capability erodes over time, producing longer incidents create delayed renewal risk.",
+        "predictedOutcome": "longer incidents create delayed renewal risk",
+        "recommendedIntervention": "restore-reliability-investment",
+        "supportingEvidenceIds": [
+          "D1",
+          "D2",
+          "D3",
+          "D4"
+        ],
+        "confidence": 0.77528,
+        "falsificationCondition": "The predicted outcome does not occur when deferred maintenance remains present.",
+        "abstained": false
+      },
+      {
+        "modelId": "majority",
+        "scenarioId": "scenario-004",
+        "explanation": "Customers need better communication.",
+        "predictedOutcome": "Customers need better communication.",
+        "supportingEvidenceIds": [
+          "D1",
+          "D2",
+          "D3",
+          "D4"
+        ],
+        "confidence": 0.58,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "state",
+        "scenarioId": "scenario-004",
+        "explanation": "The organization is constrained by longer incidents create delayed renewal risk.",
+        "predictedOutcome": "The organization is constrained by longer incidents create delayed renewal risk.",
+        "supportingEvidenceIds": [],
+        "confidence": 0.76,
+        "falsificationCondition": "A different Organizational Condition becomes dominant.",
+        "abstained": true
+      },
+      {
+        "modelId": "summary",
+        "scenarioId": "scenario-004",
+        "explanation": "Leadership: Maintenance investment was deferred to protect a launch. Engineering: Deferred maintenance increases recovery time. Operations: Incident duration rises as runbooks become stale. Customer Success: Renewal concerns rise after repeated outages.",
+        "predictedOutcome": "Renewal concerns rise after repeated outages.",
+        "supportingEvidenceIds": [
+          "D1",
+          "D2",
+          "D3",
+          "D4"
+        ],
+        "confidence": 0.62,
+        "falsificationCondition": "A listed observation is shown to be inaccurate.",
+        "abstained": true
+      },
+      {
+        "modelId": "best-silo",
+        "scenarioId": "scenario-005",
+        "explanation": "Product requirements are unstable.",
+        "predictedOutcome": "Acceptance decisions change during implementation.",
+        "supportingEvidenceIds": [
+          "E2"
+        ],
+        "confidence": 0.56,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "canonical-combined",
+        "scenarioId": "scenario-005",
+        "mechanismId": "handoff-ownership-gap",
+        "explanation": "unowned cross-functional acceptance interacts across Engineering, Operations, Product; local completion criteria diverge, producing requirements reopen during implementation.",
+        "predictedOutcome": "requirements reopen during implementation",
+        "recommendedIntervention": "assign-cross-functional-acceptance-owner",
+        "supportingEvidenceIds": [
+          "E1",
+          "E2",
+          "E3"
+        ],
+        "confidence": 0.68568,
+        "falsificationCondition": "The predicted outcome does not occur when unowned cross-functional acceptance remains present.",
+        "abstained": false
+      },
+      {
+        "modelId": "emergent",
+        "scenarioId": "scenario-005",
+        "mechanismId": "handoff-ownership-gap",
+        "explanation": "unowned cross-functional acceptance interacts across Engineering, Operations, Product; local completion criteria diverge, producing requirements reopen during implementation.",
+        "predictedOutcome": "requirements reopen during implementation",
+        "recommendedIntervention": "assign-cross-functional-acceptance-owner",
+        "supportingEvidenceIds": [
+          "E1",
+          "E2",
+          "E3"
+        ],
+        "confidence": 0.68568,
+        "falsificationCondition": "The predicted outcome does not occur when unowned cross-functional acceptance remains present.",
+        "abstained": false
+      },
+      {
+        "modelId": "majority",
+        "scenarioId": "scenario-005",
+        "explanation": "Engineering execution is slow.",
+        "predictedOutcome": "Engineering execution is slow.",
+        "supportingEvidenceIds": [
+          "E1",
+          "E2",
+          "E3"
+        ],
+        "confidence": 0.58,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "state",
+        "scenarioId": "scenario-005",
+        "explanation": "The organization is constrained by requirements reopen during implementation.",
+        "predictedOutcome": "The organization is constrained by requirements reopen during implementation.",
+        "supportingEvidenceIds": [],
+        "confidence": 0.76,
+        "falsificationCondition": "A different Organizational Condition becomes dominant.",
+        "abstained": true
+      },
+      {
+        "modelId": "summary",
+        "scenarioId": "scenario-005",
+        "explanation": "Product: Requirements are complete before handoff. Engineering: Acceptance decisions change during implementation. Operations: No function owns cross-functional acceptance.",
+        "predictedOutcome": "No function owns cross-functional acceptance.",
+        "supportingEvidenceIds": [
+          "E1",
+          "E2",
+          "E3"
+        ],
+        "confidence": 0.62,
+        "falsificationCondition": "A listed observation is shown to be inaccurate.",
+        "abstained": true
+      },
+      {
+        "modelId": "best-silo",
+        "scenarioId": "scenario-006",
+        "explanation": "Regional data residency is the complete cause of launch delay.",
+        "predictedOutcome": "A new regulation requires regional data residency; the current architecture cannot comply.",
+        "supportingEvidenceIds": [
+          "F1"
+        ],
+        "confidence": 0.56,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "canonical-combined",
+        "scenarioId": "scenario-006",
+        "explanation": "Canonical artifacts do not support one integrated explanation.",
+        "supportingEvidenceIds": [],
+        "confidence": 0.35,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "emergent",
+        "scenarioId": "scenario-006",
+        "explanation": "No non-local, grounded organizational explanation is supported.",
+        "supportingEvidenceIds": [],
+        "confidence": 0.35,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "majority",
+        "scenarioId": "scenario-006",
+        "explanation": "Enterprise contracting is slow.",
+        "predictedOutcome": "Enterprise contracting is slow.",
+        "supportingEvidenceIds": [
+          "F1",
+          "F2"
+        ],
+        "confidence": 0.38,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "state",
+        "scenarioId": "scenario-006",
+        "explanation": "The organization is constrained by regulated-market launch delay.",
+        "predictedOutcome": "The organization is constrained by regulated-market launch delay.",
+        "supportingEvidenceIds": [],
+        "confidence": 0.76,
+        "falsificationCondition": "A different Organizational Condition becomes dominant.",
+        "abstained": true
+      },
+      {
+        "modelId": "summary",
+        "scenarioId": "scenario-006",
+        "explanation": "Legal: A new regulation requires regional data residency; the current architecture cannot comply. Sales: Regulated-market launches are delayed.",
+        "predictedOutcome": "Regulated-market launches are delayed.",
+        "supportingEvidenceIds": [
+          "F1",
+          "F2"
+        ],
+        "confidence": 0.4,
+        "falsificationCondition": "A listed observation is shown to be inaccurate.",
+        "abstained": true
+      },
+      {
+        "modelId": "best-silo",
+        "scenarioId": "scenario-007",
+        "explanation": "Operating discipline may be weakening.",
+        "predictedOutcome": "Travel spending increased this month.",
+        "supportingEvidenceIds": [
+          "G2"
+        ],
+        "confidence": 0.56,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "canonical-combined",
+        "scenarioId": "scenario-007",
+        "explanation": "Canonical artifacts do not support one integrated explanation.",
+        "supportingEvidenceIds": [],
+        "confidence": 0.35,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "emergent",
+        "scenarioId": "scenario-007",
+        "explanation": "No non-local, grounded organizational explanation is supported.",
+        "supportingEvidenceIds": [],
+        "confidence": 0.35,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "majority",
+        "scenarioId": "scenario-007",
+        "explanation": "Brand awareness may be weakening.",
+        "predictedOutcome": "Brand awareness may be weakening.",
+        "supportingEvidenceIds": [
+          "G1",
+          "G2"
+        ],
+        "confidence": 0.38,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "state",
+        "scenarioId": "scenario-007",
+        "explanation": "The current Organizational State is uncertain.",
+        "predictedOutcome": "The current Organizational State is uncertain.",
+        "supportingEvidenceIds": [],
+        "confidence": 0.4,
+        "falsificationCondition": "A different Organizational Condition becomes dominant.",
+        "abstained": true
+      },
+      {
+        "modelId": "summary",
+        "scenarioId": "scenario-007",
+        "explanation": "Marketing: Website traffic declined this month. Finance: Travel spending increased this month.",
+        "predictedOutcome": "Travel spending increased this month.",
+        "supportingEvidenceIds": [
+          "G1",
+          "G2"
+        ],
+        "confidence": 0.4,
+        "falsificationCondition": "A listed observation is shown to be inaccurate.",
+        "abstained": true
+      },
+      {
+        "modelId": "best-silo",
+        "scenarioId": "scenario-008",
+        "explanation": "External demand explains pipeline movement.",
+        "predictedOutcome": "A market contraction began in the same period.",
+        "supportingEvidenceIds": [
+          "H3"
+        ],
+        "confidence": 0.56,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "canonical-combined",
+        "scenarioId": "scenario-008",
+        "explanation": "Canonical artifacts do not support one integrated explanation.",
+        "supportingEvidenceIds": [],
+        "confidence": 0.35,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "emergent",
+        "scenarioId": "scenario-008",
+        "explanation": "No non-local, grounded organizational explanation is supported.",
+        "supportingEvidenceIds": [],
+        "confidence": 0.35,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "majority",
+        "scenarioId": "scenario-008",
+        "explanation": "Attendance policy caused turnover.",
+        "predictedOutcome": "Attendance policy caused turnover.",
+        "supportingEvidenceIds": [
+          "H1",
+          "H2",
+          "H3"
+        ],
+        "confidence": 0.58,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "state",
+        "scenarioId": "scenario-008",
+        "explanation": "The current Organizational State is uncertain.",
+        "predictedOutcome": "The current Organizational State is uncertain.",
+        "supportingEvidenceIds": [],
+        "confidence": 0.4,
+        "falsificationCondition": "A different Organizational Condition becomes dominant.",
+        "abstained": true
+      },
+      {
+        "modelId": "summary",
+        "scenarioId": "scenario-008",
+        "explanation": "HR: Turnover rose after office attendance changed. Sales: Pipeline also declined after office attendance changed. Finance: A market contraction began in the same period.",
+        "predictedOutcome": "A market contraction began in the same period.",
+        "supportingEvidenceIds": [
+          "H1",
+          "H2",
+          "H3"
+        ],
+        "confidence": 0.62,
+        "falsificationCondition": "A listed observation is shown to be inaccurate.",
+        "abstained": true
+      },
+      {
+        "modelId": "best-silo",
+        "scenarioId": "scenario-009",
+        "explanation": "One governance model should still be possible.",
+        "predictedOutcome": "Both operating contexts are strategically important.",
+        "supportingEvidenceIds": [
+          "I3"
+        ],
+        "confidence": 0.56,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "canonical-combined",
+        "scenarioId": "scenario-009",
+        "explanation": "Canonical artifacts do not support one integrated explanation.",
+        "supportingEvidenceIds": [],
+        "confidence": 0.35,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "emergent",
+        "scenarioId": "scenario-009",
+        "explanation": "No non-local, grounded organizational explanation is supported.",
+        "supportingEvidenceIds": [],
+        "confidence": 0.35,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "majority",
+        "scenarioId": "scenario-009",
+        "explanation": "Less approval improves learning.",
+        "predictedOutcome": "Less approval improves learning.",
+        "supportingEvidenceIds": [
+          "I1",
+          "I2",
+          "I3"
+        ],
+        "confidence": 0.58,
+        "falsificationCondition": "",
+        "abstained": true
+      },
+      {
+        "modelId": "state",
+        "scenarioId": "scenario-009",
+        "explanation": "The organization is constrained by no universal decision model is supported.",
+        "predictedOutcome": "The organization is constrained by no universal decision model is supported.",
+        "supportingEvidenceIds": [],
+        "confidence": 0.76,
+        "falsificationCondition": "A different Organizational Condition becomes dominant.",
+        "abstained": true
+      },
+      {
+        "modelId": "summary",
+        "scenarioId": "scenario-009",
+        "explanation": "Operations: Central approval reduces incidents in regulated work. Product: Local autonomy speeds exploration work. Leadership: Both operating contexts are strategically important.",
+        "predictedOutcome": "Both operating contexts are strategically important.",
+        "supportingEvidenceIds": [
+          "I1",
+          "I2",
+          "I3"
+        ],
+        "confidence": 0.62,
+        "falsificationCondition": "A listed observation is shown to be inaccurate.",
+        "abstained": true
+      }
+    ]
+  },
+  "scores": {
+    "best-silo": {
+      "explanationAccuracy": 0.444444,
+      "predictionAccuracy": 0.444444,
+      "interventionQuality": 0.444444,
+      "crossSiloNecessity": 1,
+      "individualRecoverability": 0.444444,
+      "mechanisticGrounding": 1,
+      "relationalNovelty": 1,
+      "lineage": 1,
+      "counterevidence": 1,
+      "abstention": 0.444444,
+      "calibrationError": 0.493333,
+      "total": 63.45775
+    },
+    "majority": {
+      "explanationAccuracy": 0.444444,
+      "predictionAccuracy": 0.444444,
+      "interventionQuality": 0.444444,
+      "crossSiloNecessity": 1,
+      "individualRecoverability": 0.444444,
+      "mechanisticGrounding": 1,
+      "relationalNovelty": 1,
+      "lineage": 1,
+      "counterevidence": 1,
+      "abstention": 0.444444,
+      "calibrationError": 0.446667,
+      "total": 63.551082
+    },
+    "summary": {
+      "explanationAccuracy": 0.444444,
+      "predictionAccuracy": 0.444444,
+      "interventionQuality": 0.444444,
+      "crossSiloNecessity": 1,
+      "individualRecoverability": 0.444444,
+      "mechanisticGrounding": 1,
+      "relationalNovelty": 1,
+      "lineage": 1,
+      "counterevidence": 1,
+      "abstention": 0.444444,
+      "calibrationError": 0.437778,
+      "total": 63.56886
+    },
+    "state": {
+      "explanationAccuracy": 0.444444,
+      "predictionAccuracy": 0.444444,
+      "interventionQuality": 0.444444,
+      "crossSiloNecessity": 1,
+      "individualRecoverability": 0.444444,
+      "mechanisticGrounding": 1,
+      "relationalNovelty": 1,
+      "lineage": 1,
+      "counterevidence": 1,
+      "abstention": 0.444444,
+      "calibrationError": 0.391111,
+      "total": 63.662194
+    },
+    "canonical-combined": {
+      "explanationAccuracy": 1,
+      "predictionAccuracy": 1,
+      "interventionQuality": 1,
+      "crossSiloNecessity": 1,
+      "individualRecoverability": 1,
+      "mechanisticGrounding": 1,
+      "relationalNovelty": 1,
+      "lineage": 1,
+      "counterevidence": 1,
+      "abstention": 1,
+      "calibrationError": 0.295333,
+      "total": 99.409334
+    },
+    "emergent": {
+      "explanationAccuracy": 1,
+      "predictionAccuracy": 1,
+      "interventionQuality": 1,
+      "crossSiloNecessity": 1,
+      "individualRecoverability": 1,
+      "mechanisticGrounding": 1,
+      "relationalNovelty": 1,
+      "lineage": 1,
+      "counterevidence": 1,
+      "abstention": 1,
+      "calibrationError": 0.295333,
+      "total": 99.409334
+    }
+  },
+  "hardGates": {
+    "noProductionChanges": true,
+    "zeroLeakage": true,
+    "sameCanonicalAndEmergentInformation": true,
+    "bestIndividualSiloOutperformed": true,
+    "genericSummaryOutperformed": true,
+    "predictionImproves": true,
+    "interventionImproves": true,
+    "falsePositiveEmergenceBounded": true,
+    "deterministic": true,
+    "correctAbstention": true,
+    "noIndividualRecovery": true
+  },
+  "leakageAudit": {
+    "passed": true,
+    "checks": {
+      "noScoringFieldsInInference": true,
+      "opaqueScenarioIds": true,
+      "futureWithheld": true,
+      "sameCanonicalAndEmergentInput": true,
+      "predictionsExcludeAnswerFields": true,
+      "truthStoredSeparately": true
+    },
+    "forbiddenFields": [],
+    "canonicalHash": "a500abf0592e26e1299eededf459b36d3778a4c736266145a8742f784954f5d1",
+    "emergentHash": "a500abf0592e26e1299eededf459b36d3778a4c736266145a8742f784954f5d1",
+    "residualRisks": [
+      "Canonical artifacts are synthetic production-shaped outputs, not replayed production outputs.",
+      "Benchmark authors supplied cross-silo Mechanism ancestry, so the fixture already represents successful canonical synthesis.",
+      "Intervention mappings are benchmark-local and shared by Canonical Combined and Emergent."
+    ]
+  },
+  "individualRecoverability": [
+    {
+      "scenarioId": "scenario-001",
+      "isolatedSilos": [
+        {
+          "silo": "Finance",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Operations",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Product",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Sales",
+          "recoveredCompleteExplanation": false
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-002",
+      "isolatedSilos": [
+        {
+          "silo": "Engineering",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "HR",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Leadership",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Product",
+          "recoveredCompleteExplanation": false
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-003",
+      "isolatedSilos": [
+        {
+          "silo": "Customer Success",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Finance",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Product",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Sales",
+          "recoveredCompleteExplanation": false
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-004",
+      "isolatedSilos": [
+        {
+          "silo": "Customer Success",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Engineering",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Leadership",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Operations",
+          "recoveredCompleteExplanation": false
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-005",
+      "isolatedSilos": [
+        {
+          "silo": "Engineering",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Operations",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Product",
+          "recoveredCompleteExplanation": false
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-006",
+      "isolatedSilos": [
+        {
+          "silo": "Legal",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Sales",
+          "recoveredCompleteExplanation": false
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-007",
+      "isolatedSilos": [
+        {
+          "silo": "Finance",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Marketing",
+          "recoveredCompleteExplanation": false
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-008",
+      "isolatedSilos": [
+        {
+          "silo": "Finance",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "HR",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Sales",
+          "recoveredCompleteExplanation": false
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-009",
+      "isolatedSilos": [
+        {
+          "silo": "Leadership",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Operations",
+          "recoveredCompleteExplanation": false
+        },
+        {
+          "silo": "Product",
+          "recoveredCompleteExplanation": false
+        }
+      ]
+    }
+  ],
+  "siloRemovalTests": [
+    {
+      "scenarioId": "scenario-001",
+      "oneSilo": [
+        {
+          "removedSilos": [
+            "Finance"
+          ],
+          "candidatePresent": true,
+          "confidence": 0.70808,
+          "confidenceDelta": -0.04479999999999995
+        },
+        {
+          "removedSilos": [
+            "Operations"
+          ],
+          "candidatePresent": true,
+          "confidence": 0.70808,
+          "confidenceDelta": -0.04479999999999995
+        },
+        {
+          "removedSilos": [
+            "Product"
+          ],
+          "candidatePresent": true,
+          "confidence": 0.70808,
+          "confidenceDelta": -0.04479999999999995
+        },
+        {
+          "removedSilos": [
+            "Sales"
+          ],
+          "candidatePresent": true,
+          "confidence": 0.70808,
+          "confidenceDelta": -0.04479999999999995
+        }
+      ],
+      "twoSilos": [
+        {
+          "removedSilos": [
+            "Finance",
+            "Operations"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.75288
+        },
+        {
+          "removedSilos": [
+            "Finance",
+            "Product"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.75288
+        },
+        {
+          "removedSilos": [
+            "Finance",
+            "Sales"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.75288
+        },
+        {
+          "removedSilos": [
+            "Operations",
+            "Product"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.75288
+        },
+        {
+          "removedSilos": [
+            "Operations",
+            "Sales"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.75288
+        },
+        {
+          "removedSilos": [
+            "Product",
+            "Sales"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.75288
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-002",
+      "oneSilo": [
+        {
+          "removedSilos": [
+            "Engineering"
+          ],
+          "candidatePresent": true,
+          "confidence": 0.70808,
+          "confidenceDelta": -0.04479999999999995
+        },
+        {
+          "removedSilos": [
+            "HR"
+          ],
+          "candidatePresent": true,
+          "confidence": 0.70808,
+          "confidenceDelta": -0.04479999999999995
+        },
+        {
+          "removedSilos": [
+            "Leadership"
+          ],
+          "candidatePresent": true,
+          "confidence": 0.70808,
+          "confidenceDelta": -0.04479999999999995
+        },
+        {
+          "removedSilos": [
+            "Product"
+          ],
+          "candidatePresent": true,
+          "confidence": 0.70808,
+          "confidenceDelta": -0.04479999999999995
+        }
+      ],
+      "twoSilos": [
+        {
+          "removedSilos": [
+            "Engineering",
+            "HR"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.75288
+        },
+        {
+          "removedSilos": [
+            "Engineering",
+            "Leadership"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.75288
+        },
+        {
+          "removedSilos": [
+            "Engineering",
+            "Product"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.75288
+        },
+        {
+          "removedSilos": [
+            "HR",
+            "Leadership"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.75288
+        },
+        {
+          "removedSilos": [
+            "HR",
+            "Product"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.75288
+        },
+        {
+          "removedSilos": [
+            "Leadership",
+            "Product"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.75288
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-003",
+      "oneSilo": [
+        {
+          "removedSilos": [
+            "Customer Success"
+          ],
+          "candidatePresent": true,
+          "confidence": 0.73048,
+          "confidenceDelta": -0.04479999999999995
+        },
+        {
+          "removedSilos": [
+            "Finance"
+          ],
+          "candidatePresent": true,
+          "confidence": 0.73048,
+          "confidenceDelta": -0.04479999999999995
+        },
+        {
+          "removedSilos": [
+            "Product"
+          ],
+          "candidatePresent": true,
+          "confidence": 0.73048,
+          "confidenceDelta": -0.04479999999999995
+        },
+        {
+          "removedSilos": [
+            "Sales"
+          ],
+          "candidatePresent": true,
+          "confidence": 0.73048,
+          "confidenceDelta": -0.04479999999999995
+        }
+      ],
+      "twoSilos": [
+        {
+          "removedSilos": [
+            "Customer Success",
+            "Finance"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.77528
+        },
+        {
+          "removedSilos": [
+            "Customer Success",
+            "Product"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.77528
+        },
+        {
+          "removedSilos": [
+            "Customer Success",
+            "Sales"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.77528
+        },
+        {
+          "removedSilos": [
+            "Finance",
+            "Product"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.77528
+        },
+        {
+          "removedSilos": [
+            "Finance",
+            "Sales"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.77528
+        },
+        {
+          "removedSilos": [
+            "Product",
+            "Sales"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.77528
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-004",
+      "oneSilo": [
+        {
+          "removedSilos": [
+            "Customer Success"
+          ],
+          "candidatePresent": true,
+          "confidence": 0.73048,
+          "confidenceDelta": -0.04479999999999995
+        },
+        {
+          "removedSilos": [
+            "Engineering"
+          ],
+          "candidatePresent": true,
+          "confidence": 0.73048,
+          "confidenceDelta": -0.04479999999999995
+        },
+        {
+          "removedSilos": [
+            "Leadership"
+          ],
+          "candidatePresent": true,
+          "confidence": 0.73048,
+          "confidenceDelta": -0.04479999999999995
+        },
+        {
+          "removedSilos": [
+            "Operations"
+          ],
+          "candidatePresent": true,
+          "confidence": 0.73048,
+          "confidenceDelta": -0.04479999999999995
+        }
+      ],
+      "twoSilos": [
+        {
+          "removedSilos": [
+            "Customer Success",
+            "Engineering"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.77528
+        },
+        {
+          "removedSilos": [
+            "Customer Success",
+            "Leadership"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.77528
+        },
+        {
+          "removedSilos": [
+            "Customer Success",
+            "Operations"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.77528
+        },
+        {
+          "removedSilos": [
+            "Engineering",
+            "Leadership"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.77528
+        },
+        {
+          "removedSilos": [
+            "Engineering",
+            "Operations"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.77528
+        },
+        {
+          "removedSilos": [
+            "Leadership",
+            "Operations"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.77528
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-005",
+      "oneSilo": [
+        {
+          "removedSilos": [
+            "Engineering"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.68568
+        },
+        {
+          "removedSilos": [
+            "Operations"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.68568
+        },
+        {
+          "removedSilos": [
+            "Product"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.68568
+        }
+      ],
+      "twoSilos": [
+        {
+          "removedSilos": [
+            "Engineering",
+            "Operations"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.68568
+        },
+        {
+          "removedSilos": [
+            "Engineering",
+            "Product"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.68568
+        },
+        {
+          "removedSilos": [
+            "Operations",
+            "Product"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": -0.68568
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-006",
+      "oneSilo": [
+        {
+          "removedSilos": [
+            "Legal"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        },
+        {
+          "removedSilos": [
+            "Sales"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        }
+      ],
+      "twoSilos": [
+        {
+          "removedSilos": [
+            "Legal",
+            "Sales"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-007",
+      "oneSilo": [
+        {
+          "removedSilos": [
+            "Finance"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        },
+        {
+          "removedSilos": [
+            "Marketing"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        }
+      ],
+      "twoSilos": [
+        {
+          "removedSilos": [
+            "Finance",
+            "Marketing"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-008",
+      "oneSilo": [
+        {
+          "removedSilos": [
+            "Finance"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        },
+        {
+          "removedSilos": [
+            "HR"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        },
+        {
+          "removedSilos": [
+            "Sales"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        }
+      ],
+      "twoSilos": [
+        {
+          "removedSilos": [
+            "Finance",
+            "HR"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        },
+        {
+          "removedSilos": [
+            "Finance",
+            "Sales"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        },
+        {
+          "removedSilos": [
+            "HR",
+            "Sales"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        }
+      ]
+    },
+    {
+      "scenarioId": "scenario-009",
+      "oneSilo": [
+        {
+          "removedSilos": [
+            "Leadership"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        },
+        {
+          "removedSilos": [
+            "Operations"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        },
+        {
+          "removedSilos": [
+            "Product"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        }
+      ],
+      "twoSilos": [
+        {
+          "removedSilos": [
+            "Leadership",
+            "Operations"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        },
+        {
+          "removedSilos": [
+            "Leadership",
+            "Product"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        },
+        {
+          "removedSilos": [
+            "Operations",
+            "Product"
+          ],
+          "candidatePresent": false,
+          "confidence": 0,
+          "confidenceDelta": 0
+        }
+      ]
+    }
+  ],
+  "ablations": [
+    {
+      "ablation": "no-history",
+      "score": {
+        "explanationAccuracy": 1,
+        "predictionAccuracy": 1,
+        "interventionQuality": 1,
+        "crossSiloNecessity": 1,
+        "individualRecoverability": 1,
+        "mechanisticGrounding": 1,
+        "relationalNovelty": 1,
+        "lineage": 1,
+        "counterevidence": 1,
+        "abstention": 1,
+        "calibrationError": 0.300311,
+        "total": 99.399378
+      },
+      "candidates": [
+        {
+          "scenarioId": "scenario-001",
+          "candidate": {
+            "explanation": "commercial customization and roadmap exceptions interacts across Finance, Operations, Product, Sales; standard product work converts into bespoke implementation work, producing implementation delay and margin erosion.",
+            "mechanismId": "operating-model-mismatch",
+            "requiredSilos": [
+              "Finance",
+              "Operations",
+              "Product",
+              "Sales"
+            ],
+            "supportingEvidenceIds": [
+              "A1",
+              "A2",
+              "A3",
+              "A4"
+            ],
+            "reconciledLocalInterpretations": [
+              "Sales: Demand remains healthy; customization helps win. is locally plausible but explains only Enterprise deals require increasing customization.",
+              "Product: Prioritization discipline is weak. is locally plausible but explains only Roadmap exceptions continue growing.",
+              "Operations: Delivery capacity is insufficient. is locally plausible but explains only Implementation timelines continue expanding.",
+              "Finance: Services pricing is too low. is locally plausible but explains only Services margin continues shrinking."
+            ],
+            "discoveredRelationships": [
+              "commercial customization and roadmap exceptions → standard product work converts into bespoke implementation work",
+              "standard product work converts into bespoke implementation work → implementation delay and margin erosion"
+            ],
+            "discoveredMechanisms": [
+              "standard product work converts into bespoke implementation work"
+            ],
+            "interventionImplications": [
+              "Change commercial customization and roadmap exceptions rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "implementation delay and margin erosion"
+            ],
+            "confidence": 0.75288,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when commercial customization and roadmap exceptions remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-002",
+          "candidate": {
+            "explanation": "repeated priority changes interacts across Engineering, HR, Leadership, Product; work restarts before completion, producing delivery remains flat despite additional staffing.",
+            "mechanismId": "priority-churn",
+            "requiredSilos": [
+              "Engineering",
+              "HR",
+              "Leadership",
+              "Product"
+            ],
+            "supportingEvidenceIds": [
+              "B1",
+              "B2",
+              "B3",
+              "B4"
+            ],
+            "reconciledLocalInterpretations": [
+              "Leadership: Capacity is the constraint. is locally plausible but explains only More engineers were approved after delivery slowed.",
+              "Product: Customer demand is volatile. is locally plausible but explains only Priorities change several times during each quarter.",
+              "Engineering: Technical estimates are unreliable. is locally plausible but explains only Teams restart work after roadmap changes.",
+              "HR: Onboarding needs improvement. is locally plausible but explains only Hiring increased while completed work remained flat."
+            ],
+            "discoveredRelationships": [
+              "repeated priority changes → work restarts before completion",
+              "work restarts before completion → delivery remains flat despite additional staffing"
+            ],
+            "discoveredMechanisms": [
+              "work restarts before completion"
+            ],
+            "interventionImplications": [
+              "Change repeated priority changes rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "delivery remains flat despite additional staffing"
+            ],
+            "confidence": 0.75288,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when repeated priority changes remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-003",
+          "candidate": {
+            "explanation": "account exceptions interacts across Customer Success, Finance, Product, Sales; exceptions reduce capacity and delays increase escalation concessions, producing more exception demand and lower margin.",
+            "mechanismId": "exception-reinforcement-loop",
+            "requiredSilos": [
+              "Customer Success",
+              "Finance",
+              "Product",
+              "Sales"
+            ],
+            "supportingEvidenceIds": [
+              "C1",
+              "C2",
+              "C3",
+              "C4"
+            ],
+            "reconciledLocalInterpretations": [
+              "Sales: Product flexibility protects revenue. is locally plausible but explains only Exceptions are promised to retain strategic accounts.",
+              "Product: Sales qualification is inconsistent. is locally plausible but explains only Exception volume reduces roadmap capacity.",
+              "Customer Success: Implementation needs more resources. is locally plausible but explains only Late implementations increase escalation pressure.",
+              "Finance: Renewal risk is increasing. is locally plausible but explains only Escalated accounts receive more concessions."
+            ],
+            "discoveredRelationships": [
+              "account exceptions → exceptions reduce capacity and delays increase escalation concessions",
+              "exceptions reduce capacity and delays increase escalation concessions → more exception demand and lower margin"
+            ],
+            "discoveredMechanisms": [
+              "exceptions reduce capacity and delays increase escalation concessions"
+            ],
+            "interventionImplications": [
+              "Change account exceptions rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "more exception demand and lower margin"
+            ],
+            "confidence": 0.75288,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when account exceptions remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-004",
+          "candidate": {
+            "explanation": "deferred maintenance interacts across Customer Success, Engineering, Leadership, Operations; recovery capability erodes over time, producing longer incidents create delayed renewal risk.",
+            "mechanismId": "maintenance-deferral-chain",
+            "requiredSilos": [
+              "Customer Success",
+              "Engineering",
+              "Leadership",
+              "Operations"
+            ],
+            "supportingEvidenceIds": [
+              "D1",
+              "D2",
+              "D3",
+              "D4"
+            ],
+            "reconciledLocalInterpretations": [
+              "Leadership: Launch timing is strategically necessary. is locally plausible but explains only Maintenance investment was deferred to protect a launch.",
+              "Engineering: Reliability work needs prioritization. is locally plausible but explains only Deferred maintenance increases recovery time.",
+              "Operations: Operational discipline is inconsistent. is locally plausible but explains only Incident duration rises as runbooks become stale.",
+              "Customer Success: Customers need better communication. is locally plausible but explains only Renewal concerns rise after repeated outages."
+            ],
+            "discoveredRelationships": [
+              "deferred maintenance → recovery capability erodes over time",
+              "recovery capability erodes over time → longer incidents create delayed renewal risk"
+            ],
+            "discoveredMechanisms": [
+              "recovery capability erodes over time"
+            ],
+            "interventionImplications": [
+              "Change deferred maintenance rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "longer incidents create delayed renewal risk"
+            ],
+            "confidence": 0.75288,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when deferred maintenance remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-005",
+          "candidate": {
+            "explanation": "unowned cross-functional acceptance interacts across Engineering, Operations, Product; local completion criteria diverge, producing requirements reopen during implementation.",
+            "mechanismId": "handoff-ownership-gap",
+            "requiredSilos": [
+              "Engineering",
+              "Operations",
+              "Product"
+            ],
+            "supportingEvidenceIds": [
+              "E1",
+              "E2",
+              "E3"
+            ],
+            "reconciledLocalInterpretations": [
+              "Product: Engineering execution is slow. is locally plausible but explains only Requirements are complete before handoff.",
+              "Engineering: Product requirements are unstable. is locally plausible but explains only Acceptance decisions change during implementation.",
+              "Operations: Handoff accountability is unclear. is locally plausible but explains only No function owns cross-functional acceptance."
+            ],
+            "discoveredRelationships": [
+              "unowned cross-functional acceptance → local completion criteria diverge",
+              "local completion criteria diverge → requirements reopen during implementation"
+            ],
+            "discoveredMechanisms": [
+              "local completion criteria diverge"
+            ],
+            "interventionImplications": [
+              "Change unowned cross-functional acceptance rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "requirements reopen during implementation"
+            ],
+            "confidence": 0.68568,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when unowned cross-functional acceptance remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-006",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-007",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-008",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-009",
+          "candidate": null
+        }
+      ]
+    },
+    {
+      "ablation": "no-contradictions",
+      "score": {
+        "explanationAccuracy": 1,
+        "predictionAccuracy": 1,
+        "interventionQuality": 1,
+        "crossSiloNecessity": 1,
+        "individualRecoverability": 1,
+        "mechanisticGrounding": 1,
+        "relationalNovelty": 1,
+        "lineage": 1,
+        "counterevidence": 1,
+        "abstention": 1,
+        "calibrationError": 0.292844,
+        "total": 99.414312
+      },
+      "candidates": [
+        {
+          "scenarioId": "scenario-001",
+          "candidate": {
+            "explanation": "commercial customization and roadmap exceptions interacts across Finance, Operations, Product, Sales; standard product work converts into bespoke implementation work, producing implementation delay and margin erosion.",
+            "mechanismId": "operating-model-mismatch",
+            "requiredSilos": [
+              "Finance",
+              "Operations",
+              "Product",
+              "Sales"
+            ],
+            "supportingEvidenceIds": [
+              "A1",
+              "A2",
+              "A3",
+              "A4"
+            ],
+            "reconciledLocalInterpretations": [
+              "Sales: Demand remains healthy; customization helps win. is locally plausible but explains only Enterprise deals require increasing customization.",
+              "Product: Prioritization discipline is weak. is locally plausible but explains only Roadmap exceptions continue growing.",
+              "Operations: Delivery capacity is insufficient. is locally plausible but explains only Implementation timelines continue expanding.",
+              "Finance: Services pricing is too low. is locally plausible but explains only Services margin continues shrinking."
+            ],
+            "discoveredRelationships": [
+              "commercial customization and roadmap exceptions → standard product work converts into bespoke implementation work",
+              "standard product work converts into bespoke implementation work → implementation delay and margin erosion"
+            ],
+            "discoveredMechanisms": [
+              "standard product work converts into bespoke implementation work"
+            ],
+            "interventionImplications": [
+              "Change commercial customization and roadmap exceptions rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "implementation delay and margin erosion"
+            ],
+            "confidence": 0.75288,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when commercial customization and roadmap exceptions remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-002",
+          "candidate": {
+            "explanation": "repeated priority changes interacts across Engineering, HR, Leadership, Product; work restarts before completion, producing delivery remains flat despite additional staffing.",
+            "mechanismId": "priority-churn",
+            "requiredSilos": [
+              "Engineering",
+              "HR",
+              "Leadership",
+              "Product"
+            ],
+            "supportingEvidenceIds": [
+              "B1",
+              "B2",
+              "B3",
+              "B4"
+            ],
+            "reconciledLocalInterpretations": [
+              "Leadership: Capacity is the constraint. is locally plausible but explains only More engineers were approved after delivery slowed.",
+              "Product: Customer demand is volatile. is locally plausible but explains only Priorities change several times during each quarter.",
+              "Engineering: Technical estimates are unreliable. is locally plausible but explains only Teams restart work after roadmap changes.",
+              "HR: Onboarding needs improvement. is locally plausible but explains only Hiring increased while completed work remained flat."
+            ],
+            "discoveredRelationships": [
+              "repeated priority changes → work restarts before completion",
+              "work restarts before completion → delivery remains flat despite additional staffing"
+            ],
+            "discoveredMechanisms": [
+              "work restarts before completion"
+            ],
+            "interventionImplications": [
+              "Change repeated priority changes rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "delivery remains flat despite additional staffing"
+            ],
+            "confidence": 0.75288,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when repeated priority changes remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-003",
+          "candidate": {
+            "explanation": "account exceptions interacts across Customer Success, Finance, Product, Sales; exceptions reduce capacity and delays increase escalation concessions, producing more exception demand and lower margin.",
+            "mechanismId": "exception-reinforcement-loop",
+            "requiredSilos": [
+              "Customer Success",
+              "Finance",
+              "Product",
+              "Sales"
+            ],
+            "supportingEvidenceIds": [
+              "C1",
+              "C2",
+              "C3",
+              "C4"
+            ],
+            "reconciledLocalInterpretations": [
+              "Sales: Product flexibility protects revenue. is locally plausible but explains only Exceptions are promised to retain strategic accounts.",
+              "Product: Sales qualification is inconsistent. is locally plausible but explains only Exception volume reduces roadmap capacity.",
+              "Customer Success: Implementation needs more resources. is locally plausible but explains only Late implementations increase escalation pressure.",
+              "Finance: Renewal risk is increasing. is locally plausible but explains only Escalated accounts receive more concessions."
+            ],
+            "discoveredRelationships": [
+              "account exceptions → exceptions reduce capacity and delays increase escalation concessions",
+              "exceptions reduce capacity and delays increase escalation concessions → more exception demand and lower margin"
+            ],
+            "discoveredMechanisms": [
+              "exceptions reduce capacity and delays increase escalation concessions"
+            ],
+            "interventionImplications": [
+              "Change account exceptions rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "more exception demand and lower margin"
+            ],
+            "confidence": 0.77528,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when account exceptions remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-004",
+          "candidate": {
+            "explanation": "deferred maintenance interacts across Customer Success, Engineering, Leadership, Operations; recovery capability erodes over time, producing longer incidents create delayed renewal risk.",
+            "mechanismId": "maintenance-deferral-chain",
+            "requiredSilos": [
+              "Customer Success",
+              "Engineering",
+              "Leadership",
+              "Operations"
+            ],
+            "supportingEvidenceIds": [
+              "D1",
+              "D2",
+              "D3",
+              "D4"
+            ],
+            "reconciledLocalInterpretations": [
+              "Leadership: Launch timing is strategically necessary. is locally plausible but explains only Maintenance investment was deferred to protect a launch.",
+              "Engineering: Reliability work needs prioritization. is locally plausible but explains only Deferred maintenance increases recovery time.",
+              "Operations: Operational discipline is inconsistent. is locally plausible but explains only Incident duration rises as runbooks become stale.",
+              "Customer Success: Customers need better communication. is locally plausible but explains only Renewal concerns rise after repeated outages."
+            ],
+            "discoveredRelationships": [
+              "deferred maintenance → recovery capability erodes over time",
+              "recovery capability erodes over time → longer incidents create delayed renewal risk"
+            ],
+            "discoveredMechanisms": [
+              "recovery capability erodes over time"
+            ],
+            "interventionImplications": [
+              "Change deferred maintenance rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "longer incidents create delayed renewal risk"
+            ],
+            "confidence": 0.77528,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when deferred maintenance remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-005",
+          "candidate": {
+            "explanation": "unowned cross-functional acceptance interacts across Engineering, Operations, Product; local completion criteria diverge, producing requirements reopen during implementation.",
+            "mechanismId": "handoff-ownership-gap",
+            "requiredSilos": [
+              "Engineering",
+              "Operations",
+              "Product"
+            ],
+            "supportingEvidenceIds": [
+              "E1",
+              "E2",
+              "E3"
+            ],
+            "reconciledLocalInterpretations": [
+              "Product: Engineering execution is slow. is locally plausible but explains only Requirements are complete before handoff.",
+              "Engineering: Product requirements are unstable. is locally plausible but explains only Acceptance decisions change during implementation.",
+              "Operations: Handoff accountability is unclear. is locally plausible but explains only No function owns cross-functional acceptance."
+            ],
+            "discoveredRelationships": [
+              "unowned cross-functional acceptance → local completion criteria diverge",
+              "local completion criteria diverge → requirements reopen during implementation"
+            ],
+            "discoveredMechanisms": [
+              "local completion criteria diverge"
+            ],
+            "interventionImplications": [
+              "Change unowned cross-functional acceptance rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "requirements reopen during implementation"
+            ],
+            "confidence": 0.70808,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when unowned cross-functional acceptance remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-006",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-007",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-008",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-009",
+          "candidate": null
+        }
+      ]
+    },
+    {
+      "ablation": "no-mechanisms",
+      "score": {
+        "explanationAccuracy": 0.444444,
+        "predictionAccuracy": 0.444444,
+        "interventionQuality": 0.444444,
+        "crossSiloNecessity": 1,
+        "individualRecoverability": 0.444444,
+        "mechanisticGrounding": 1,
+        "relationalNovelty": 1,
+        "lineage": 1,
+        "counterevidence": 1,
+        "abstention": 0.444444,
+        "calibrationError": 0.516667,
+        "total": 63.411082
+      },
+      "candidates": [
+        {
+          "scenarioId": "scenario-001",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-002",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-003",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-004",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-005",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-006",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-007",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-008",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-009",
+          "candidate": null
+        }
+      ]
+    },
+    {
+      "ablation": "no-theories",
+      "score": {
+        "explanationAccuracy": 1,
+        "predictionAccuracy": 1,
+        "interventionQuality": 1,
+        "crossSiloNecessity": 1,
+        "individualRecoverability": 1,
+        "mechanisticGrounding": 1,
+        "relationalNovelty": 1,
+        "lineage": 1,
+        "counterevidence": 1,
+        "abstention": 1,
+        "calibrationError": 0.307778,
+        "total": 99.384444
+      },
+      "candidates": [
+        {
+          "scenarioId": "scenario-001",
+          "candidate": {
+            "explanation": "commercial customization and roadmap exceptions interacts across Finance, Operations, Product, Sales; standard product work converts into bespoke implementation work, producing implementation delay and margin erosion.",
+            "mechanismId": "operating-model-mismatch",
+            "requiredSilos": [
+              "Finance",
+              "Operations",
+              "Product",
+              "Sales"
+            ],
+            "supportingEvidenceIds": [
+              "A1",
+              "A2",
+              "A3",
+              "A4"
+            ],
+            "reconciledLocalInterpretations": [
+              "Sales: Demand remains healthy; customization helps win. is locally plausible but explains only Enterprise deals require increasing customization.",
+              "Product: Prioritization discipline is weak. is locally plausible but explains only Roadmap exceptions continue growing.",
+              "Operations: Delivery capacity is insufficient. is locally plausible but explains only Implementation timelines continue expanding.",
+              "Finance: Services pricing is too low. is locally plausible but explains only Services margin continues shrinking."
+            ],
+            "discoveredRelationships": [
+              "commercial customization and roadmap exceptions → standard product work converts into bespoke implementation work",
+              "standard product work converts into bespoke implementation work → implementation delay and margin erosion"
+            ],
+            "discoveredMechanisms": [
+              "standard product work converts into bespoke implementation work"
+            ],
+            "interventionImplications": [
+              "Change commercial customization and roadmap exceptions rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "implementation delay and margin erosion"
+            ],
+            "confidence": 0.73048,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when commercial customization and roadmap exceptions remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-002",
+          "candidate": {
+            "explanation": "repeated priority changes interacts across Engineering, HR, Leadership, Product; work restarts before completion, producing delivery remains flat despite additional staffing.",
+            "mechanismId": "priority-churn",
+            "requiredSilos": [
+              "Engineering",
+              "HR",
+              "Leadership",
+              "Product"
+            ],
+            "supportingEvidenceIds": [
+              "B1",
+              "B2",
+              "B3",
+              "B4"
+            ],
+            "reconciledLocalInterpretations": [
+              "Leadership: Capacity is the constraint. is locally plausible but explains only More engineers were approved after delivery slowed.",
+              "Product: Customer demand is volatile. is locally plausible but explains only Priorities change several times during each quarter.",
+              "Engineering: Technical estimates are unreliable. is locally plausible but explains only Teams restart work after roadmap changes.",
+              "HR: Onboarding needs improvement. is locally plausible but explains only Hiring increased while completed work remained flat."
+            ],
+            "discoveredRelationships": [
+              "repeated priority changes → work restarts before completion",
+              "work restarts before completion → delivery remains flat despite additional staffing"
+            ],
+            "discoveredMechanisms": [
+              "work restarts before completion"
+            ],
+            "interventionImplications": [
+              "Change repeated priority changes rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "delivery remains flat despite additional staffing"
+            ],
+            "confidence": 0.73048,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when repeated priority changes remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-003",
+          "candidate": {
+            "explanation": "account exceptions interacts across Customer Success, Finance, Product, Sales; exceptions reduce capacity and delays increase escalation concessions, producing more exception demand and lower margin.",
+            "mechanismId": "exception-reinforcement-loop",
+            "requiredSilos": [
+              "Customer Success",
+              "Finance",
+              "Product",
+              "Sales"
+            ],
+            "supportingEvidenceIds": [
+              "C1",
+              "C2",
+              "C3",
+              "C4"
+            ],
+            "reconciledLocalInterpretations": [
+              "Sales: Product flexibility protects revenue. is locally plausible but explains only Exceptions are promised to retain strategic accounts.",
+              "Product: Sales qualification is inconsistent. is locally plausible but explains only Exception volume reduces roadmap capacity.",
+              "Customer Success: Implementation needs more resources. is locally plausible but explains only Late implementations increase escalation pressure.",
+              "Finance: Renewal risk is increasing. is locally plausible but explains only Escalated accounts receive more concessions."
+            ],
+            "discoveredRelationships": [
+              "account exceptions → exceptions reduce capacity and delays increase escalation concessions",
+              "exceptions reduce capacity and delays increase escalation concessions → more exception demand and lower margin"
+            ],
+            "discoveredMechanisms": [
+              "exceptions reduce capacity and delays increase escalation concessions"
+            ],
+            "interventionImplications": [
+              "Change account exceptions rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "more exception demand and lower margin"
+            ],
+            "confidence": 0.75288,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when account exceptions remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-004",
+          "candidate": {
+            "explanation": "deferred maintenance interacts across Customer Success, Engineering, Leadership, Operations; recovery capability erodes over time, producing longer incidents create delayed renewal risk.",
+            "mechanismId": "maintenance-deferral-chain",
+            "requiredSilos": [
+              "Customer Success",
+              "Engineering",
+              "Leadership",
+              "Operations"
+            ],
+            "supportingEvidenceIds": [
+              "D1",
+              "D2",
+              "D3",
+              "D4"
+            ],
+            "reconciledLocalInterpretations": [
+              "Leadership: Launch timing is strategically necessary. is locally plausible but explains only Maintenance investment was deferred to protect a launch.",
+              "Engineering: Reliability work needs prioritization. is locally plausible but explains only Deferred maintenance increases recovery time.",
+              "Operations: Operational discipline is inconsistent. is locally plausible but explains only Incident duration rises as runbooks become stale.",
+              "Customer Success: Customers need better communication. is locally plausible but explains only Renewal concerns rise after repeated outages."
+            ],
+            "discoveredRelationships": [
+              "deferred maintenance → recovery capability erodes over time",
+              "recovery capability erodes over time → longer incidents create delayed renewal risk"
+            ],
+            "discoveredMechanisms": [
+              "recovery capability erodes over time"
+            ],
+            "interventionImplications": [
+              "Change deferred maintenance rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "longer incidents create delayed renewal risk"
+            ],
+            "confidence": 0.75288,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when deferred maintenance remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-005",
+          "candidate": {
+            "explanation": "unowned cross-functional acceptance interacts across Engineering, Operations, Product; local completion criteria diverge, producing requirements reopen during implementation.",
+            "mechanismId": "handoff-ownership-gap",
+            "requiredSilos": [
+              "Engineering",
+              "Operations",
+              "Product"
+            ],
+            "supportingEvidenceIds": [
+              "E1",
+              "E2",
+              "E3"
+            ],
+            "reconciledLocalInterpretations": [
+              "Product: Engineering execution is slow. is locally plausible but explains only Requirements are complete before handoff.",
+              "Engineering: Product requirements are unstable. is locally plausible but explains only Acceptance decisions change during implementation.",
+              "Operations: Handoff accountability is unclear. is locally plausible but explains only No function owns cross-functional acceptance."
+            ],
+            "discoveredRelationships": [
+              "unowned cross-functional acceptance → local completion criteria diverge",
+              "local completion criteria diverge → requirements reopen during implementation"
+            ],
+            "discoveredMechanisms": [
+              "local completion criteria diverge"
+            ],
+            "interventionImplications": [
+              "Change unowned cross-functional acceptance rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "requirements reopen during implementation"
+            ],
+            "confidence": 0.66328,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when unowned cross-functional acceptance remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-006",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-007",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-008",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-009",
+          "candidate": null
+        }
+      ]
+    },
+    {
+      "ablation": "no-conditions",
+      "score": {
+        "explanationAccuracy": 1,
+        "predictionAccuracy": 1,
+        "interventionQuality": 1,
+        "crossSiloNecessity": 1,
+        "individualRecoverability": 1,
+        "mechanisticGrounding": 1,
+        "relationalNovelty": 1,
+        "lineage": 1,
+        "counterevidence": 1,
+        "abstention": 1,
+        "calibrationError": 0.307778,
+        "total": 99.384444
+      },
+      "candidates": [
+        {
+          "scenarioId": "scenario-001",
+          "candidate": {
+            "explanation": "commercial customization and roadmap exceptions interacts across Finance, Operations, Product, Sales; standard product work converts into bespoke implementation work, producing implementation delay and margin erosion.",
+            "mechanismId": "operating-model-mismatch",
+            "requiredSilos": [
+              "Finance",
+              "Operations",
+              "Product",
+              "Sales"
+            ],
+            "supportingEvidenceIds": [
+              "A1",
+              "A2",
+              "A3",
+              "A4"
+            ],
+            "reconciledLocalInterpretations": [
+              "Sales: Demand remains healthy; customization helps win. is locally plausible but explains only Enterprise deals require increasing customization.",
+              "Product: Prioritization discipline is weak. is locally plausible but explains only Roadmap exceptions continue growing.",
+              "Operations: Delivery capacity is insufficient. is locally plausible but explains only Implementation timelines continue expanding.",
+              "Finance: Services pricing is too low. is locally plausible but explains only Services margin continues shrinking."
+            ],
+            "discoveredRelationships": [
+              "commercial customization and roadmap exceptions → standard product work converts into bespoke implementation work",
+              "standard product work converts into bespoke implementation work → implementation delay and margin erosion"
+            ],
+            "discoveredMechanisms": [
+              "standard product work converts into bespoke implementation work"
+            ],
+            "interventionImplications": [
+              "Change commercial customization and roadmap exceptions rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "implementation delay and margin erosion"
+            ],
+            "confidence": 0.73048,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when commercial customization and roadmap exceptions remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-002",
+          "candidate": {
+            "explanation": "repeated priority changes interacts across Engineering, HR, Leadership, Product; work restarts before completion, producing delivery remains flat despite additional staffing.",
+            "mechanismId": "priority-churn",
+            "requiredSilos": [
+              "Engineering",
+              "HR",
+              "Leadership",
+              "Product"
+            ],
+            "supportingEvidenceIds": [
+              "B1",
+              "B2",
+              "B3",
+              "B4"
+            ],
+            "reconciledLocalInterpretations": [
+              "Leadership: Capacity is the constraint. is locally plausible but explains only More engineers were approved after delivery slowed.",
+              "Product: Customer demand is volatile. is locally plausible but explains only Priorities change several times during each quarter.",
+              "Engineering: Technical estimates are unreliable. is locally plausible but explains only Teams restart work after roadmap changes.",
+              "HR: Onboarding needs improvement. is locally plausible but explains only Hiring increased while completed work remained flat."
+            ],
+            "discoveredRelationships": [
+              "repeated priority changes → work restarts before completion",
+              "work restarts before completion → delivery remains flat despite additional staffing"
+            ],
+            "discoveredMechanisms": [
+              "work restarts before completion"
+            ],
+            "interventionImplications": [
+              "Change repeated priority changes rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "delivery remains flat despite additional staffing"
+            ],
+            "confidence": 0.73048,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when repeated priority changes remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-003",
+          "candidate": {
+            "explanation": "account exceptions interacts across Customer Success, Finance, Product, Sales; exceptions reduce capacity and delays increase escalation concessions, producing more exception demand and lower margin.",
+            "mechanismId": "exception-reinforcement-loop",
+            "requiredSilos": [
+              "Customer Success",
+              "Finance",
+              "Product",
+              "Sales"
+            ],
+            "supportingEvidenceIds": [
+              "C1",
+              "C2",
+              "C3",
+              "C4"
+            ],
+            "reconciledLocalInterpretations": [
+              "Sales: Product flexibility protects revenue. is locally plausible but explains only Exceptions are promised to retain strategic accounts.",
+              "Product: Sales qualification is inconsistent. is locally plausible but explains only Exception volume reduces roadmap capacity.",
+              "Customer Success: Implementation needs more resources. is locally plausible but explains only Late implementations increase escalation pressure.",
+              "Finance: Renewal risk is increasing. is locally plausible but explains only Escalated accounts receive more concessions."
+            ],
+            "discoveredRelationships": [
+              "account exceptions → exceptions reduce capacity and delays increase escalation concessions",
+              "exceptions reduce capacity and delays increase escalation concessions → more exception demand and lower margin"
+            ],
+            "discoveredMechanisms": [
+              "exceptions reduce capacity and delays increase escalation concessions"
+            ],
+            "interventionImplications": [
+              "Change account exceptions rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "more exception demand and lower margin"
+            ],
+            "confidence": 0.75288,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when account exceptions remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-004",
+          "candidate": {
+            "explanation": "deferred maintenance interacts across Customer Success, Engineering, Leadership, Operations; recovery capability erodes over time, producing longer incidents create delayed renewal risk.",
+            "mechanismId": "maintenance-deferral-chain",
+            "requiredSilos": [
+              "Customer Success",
+              "Engineering",
+              "Leadership",
+              "Operations"
+            ],
+            "supportingEvidenceIds": [
+              "D1",
+              "D2",
+              "D3",
+              "D4"
+            ],
+            "reconciledLocalInterpretations": [
+              "Leadership: Launch timing is strategically necessary. is locally plausible but explains only Maintenance investment was deferred to protect a launch.",
+              "Engineering: Reliability work needs prioritization. is locally plausible but explains only Deferred maintenance increases recovery time.",
+              "Operations: Operational discipline is inconsistent. is locally plausible but explains only Incident duration rises as runbooks become stale.",
+              "Customer Success: Customers need better communication. is locally plausible but explains only Renewal concerns rise after repeated outages."
+            ],
+            "discoveredRelationships": [
+              "deferred maintenance → recovery capability erodes over time",
+              "recovery capability erodes over time → longer incidents create delayed renewal risk"
+            ],
+            "discoveredMechanisms": [
+              "recovery capability erodes over time"
+            ],
+            "interventionImplications": [
+              "Change deferred maintenance rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "longer incidents create delayed renewal risk"
+            ],
+            "confidence": 0.75288,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when deferred maintenance remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-005",
+          "candidate": {
+            "explanation": "unowned cross-functional acceptance interacts across Engineering, Operations, Product; local completion criteria diverge, producing requirements reopen during implementation.",
+            "mechanismId": "handoff-ownership-gap",
+            "requiredSilos": [
+              "Engineering",
+              "Operations",
+              "Product"
+            ],
+            "supportingEvidenceIds": [
+              "E1",
+              "E2",
+              "E3"
+            ],
+            "reconciledLocalInterpretations": [
+              "Product: Engineering execution is slow. is locally plausible but explains only Requirements are complete before handoff.",
+              "Engineering: Product requirements are unstable. is locally plausible but explains only Acceptance decisions change during implementation.",
+              "Operations: Handoff accountability is unclear. is locally plausible but explains only No function owns cross-functional acceptance."
+            ],
+            "discoveredRelationships": [
+              "unowned cross-functional acceptance → local completion criteria diverge",
+              "local completion criteria diverge → requirements reopen during implementation"
+            ],
+            "discoveredMechanisms": [
+              "local completion criteria diverge"
+            ],
+            "interventionImplications": [
+              "Change unowned cross-functional acceptance rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "requirements reopen during implementation"
+            ],
+            "confidence": 0.66328,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when unowned cross-functional acceptance remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-006",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-007",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-008",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-009",
+          "candidate": null
+        }
+      ]
+    },
+    {
+      "ablation": "no-lineage",
+      "score": {
+        "explanationAccuracy": 1,
+        "predictionAccuracy": 1,
+        "interventionQuality": 1,
+        "crossSiloNecessity": 0.444444,
+        "individualRecoverability": 1,
+        "mechanisticGrounding": 1,
+        "relationalNovelty": 1,
+        "lineage": 0.444444,
+        "counterevidence": 1,
+        "abstention": 1,
+        "calibrationError": 0.295333,
+        "total": 91.075994
+      },
+      "candidates": [
+        {
+          "scenarioId": "scenario-001",
+          "candidate": {
+            "explanation": "commercial customization and roadmap exceptions interacts across Finance, Operations, Product, Sales; standard product work converts into bespoke implementation work, producing implementation delay and margin erosion.",
+            "mechanismId": "operating-model-mismatch",
+            "requiredSilos": [
+              "Finance",
+              "Operations",
+              "Product",
+              "Sales"
+            ],
+            "supportingEvidenceIds": [],
+            "reconciledLocalInterpretations": [
+              "Sales: Demand remains healthy; customization helps win. is locally plausible but explains only Enterprise deals require increasing customization.",
+              "Product: Prioritization discipline is weak. is locally plausible but explains only Roadmap exceptions continue growing.",
+              "Operations: Delivery capacity is insufficient. is locally plausible but explains only Implementation timelines continue expanding.",
+              "Finance: Services pricing is too low. is locally plausible but explains only Services margin continues shrinking."
+            ],
+            "discoveredRelationships": [
+              "commercial customization and roadmap exceptions → standard product work converts into bespoke implementation work",
+              "standard product work converts into bespoke implementation work → implementation delay and margin erosion"
+            ],
+            "discoveredMechanisms": [
+              "standard product work converts into bespoke implementation work"
+            ],
+            "interventionImplications": [
+              "Change commercial customization and roadmap exceptions rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "implementation delay and margin erosion"
+            ],
+            "confidence": 0.75288,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when commercial customization and roadmap exceptions remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-002",
+          "candidate": {
+            "explanation": "repeated priority changes interacts across Engineering, HR, Leadership, Product; work restarts before completion, producing delivery remains flat despite additional staffing.",
+            "mechanismId": "priority-churn",
+            "requiredSilos": [
+              "Engineering",
+              "HR",
+              "Leadership",
+              "Product"
+            ],
+            "supportingEvidenceIds": [],
+            "reconciledLocalInterpretations": [
+              "Leadership: Capacity is the constraint. is locally plausible but explains only More engineers were approved after delivery slowed.",
+              "Product: Customer demand is volatile. is locally plausible but explains only Priorities change several times during each quarter.",
+              "Engineering: Technical estimates are unreliable. is locally plausible but explains only Teams restart work after roadmap changes.",
+              "HR: Onboarding needs improvement. is locally plausible but explains only Hiring increased while completed work remained flat."
+            ],
+            "discoveredRelationships": [
+              "repeated priority changes → work restarts before completion",
+              "work restarts before completion → delivery remains flat despite additional staffing"
+            ],
+            "discoveredMechanisms": [
+              "work restarts before completion"
+            ],
+            "interventionImplications": [
+              "Change repeated priority changes rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "delivery remains flat despite additional staffing"
+            ],
+            "confidence": 0.75288,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when repeated priority changes remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-003",
+          "candidate": {
+            "explanation": "account exceptions interacts across Customer Success, Finance, Product, Sales; exceptions reduce capacity and delays increase escalation concessions, producing more exception demand and lower margin.",
+            "mechanismId": "exception-reinforcement-loop",
+            "requiredSilos": [
+              "Customer Success",
+              "Finance",
+              "Product",
+              "Sales"
+            ],
+            "supportingEvidenceIds": [],
+            "reconciledLocalInterpretations": [
+              "Sales: Product flexibility protects revenue. is locally plausible but explains only Exceptions are promised to retain strategic accounts.",
+              "Product: Sales qualification is inconsistent. is locally plausible but explains only Exception volume reduces roadmap capacity.",
+              "Customer Success: Implementation needs more resources. is locally plausible but explains only Late implementations increase escalation pressure.",
+              "Finance: Renewal risk is increasing. is locally plausible but explains only Escalated accounts receive more concessions."
+            ],
+            "discoveredRelationships": [
+              "account exceptions → exceptions reduce capacity and delays increase escalation concessions",
+              "exceptions reduce capacity and delays increase escalation concessions → more exception demand and lower margin"
+            ],
+            "discoveredMechanisms": [
+              "exceptions reduce capacity and delays increase escalation concessions"
+            ],
+            "interventionImplications": [
+              "Change account exceptions rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "more exception demand and lower margin"
+            ],
+            "confidence": 0.77528,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when account exceptions remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-004",
+          "candidate": {
+            "explanation": "deferred maintenance interacts across Customer Success, Engineering, Leadership, Operations; recovery capability erodes over time, producing longer incidents create delayed renewal risk.",
+            "mechanismId": "maintenance-deferral-chain",
+            "requiredSilos": [
+              "Customer Success",
+              "Engineering",
+              "Leadership",
+              "Operations"
+            ],
+            "supportingEvidenceIds": [],
+            "reconciledLocalInterpretations": [
+              "Leadership: Launch timing is strategically necessary. is locally plausible but explains only Maintenance investment was deferred to protect a launch.",
+              "Engineering: Reliability work needs prioritization. is locally plausible but explains only Deferred maintenance increases recovery time.",
+              "Operations: Operational discipline is inconsistent. is locally plausible but explains only Incident duration rises as runbooks become stale.",
+              "Customer Success: Customers need better communication. is locally plausible but explains only Renewal concerns rise after repeated outages."
+            ],
+            "discoveredRelationships": [
+              "deferred maintenance → recovery capability erodes over time",
+              "recovery capability erodes over time → longer incidents create delayed renewal risk"
+            ],
+            "discoveredMechanisms": [
+              "recovery capability erodes over time"
+            ],
+            "interventionImplications": [
+              "Change deferred maintenance rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "longer incidents create delayed renewal risk"
+            ],
+            "confidence": 0.77528,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when deferred maintenance remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-005",
+          "candidate": {
+            "explanation": "unowned cross-functional acceptance interacts across Engineering, Operations, Product; local completion criteria diverge, producing requirements reopen during implementation.",
+            "mechanismId": "handoff-ownership-gap",
+            "requiredSilos": [
+              "Engineering",
+              "Operations",
+              "Product"
+            ],
+            "supportingEvidenceIds": [],
+            "reconciledLocalInterpretations": [
+              "Product: Engineering execution is slow. is locally plausible but explains only Requirements are complete before handoff.",
+              "Engineering: Product requirements are unstable. is locally plausible but explains only Acceptance decisions change during implementation.",
+              "Operations: Handoff accountability is unclear. is locally plausible but explains only No function owns cross-functional acceptance."
+            ],
+            "discoveredRelationships": [
+              "unowned cross-functional acceptance → local completion criteria diverge",
+              "local completion criteria diverge → requirements reopen during implementation"
+            ],
+            "discoveredMechanisms": [
+              "local completion criteria diverge"
+            ],
+            "interventionImplications": [
+              "Change unowned cross-functional acceptance rather than treating each local symptom independently."
+            ],
+            "predictedOutcomes": [
+              "requirements reopen during implementation"
+            ],
+            "confidence": 0.68568,
+            "falsificationCriteria": [
+              "The predicted outcome does not occur when unowned cross-functional acceptance remains present.",
+              "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+            ]
+          }
+        },
+        {
+          "scenarioId": "scenario-006",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-007",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-008",
+          "candidate": null
+        },
+        {
+          "scenarioId": "scenario-009",
+          "candidate": null
+        }
+      ]
+    }
+  ],
+  "determinism": {
+    "repeatedRunByteEqual": true,
+    "reversedEvidenceOrderByteEqual": true,
+    "reversedSiloOrderByteEqual": true,
+    "reversedScenarioOrderByteEqual": true,
+    "deterministicRegistration": true
+  },
+  "scenarioResults": [
+    {
+      "truth": {
+        "scenarioId": "scenario-001",
+        "family": "cross-functional-bottleneck",
+        "expectedMechanismId": "operating-model-mismatch",
+        "expectedOutcome": "implementation delay and margin erosion",
+        "effectiveIntervention": "standardize-commercial-product-boundary",
+        "requiredSilos": [
+          "Sales",
+          "Product",
+          "Operations",
+          "Finance"
+        ],
+        "shouldAbstain": false
+      },
+      "future": {
+        "scenarioId": "scenario-001",
+        "observedOutcome": "implementation delay and margin erosion",
+        "effectiveIntervention": "standardize-commercial-product-boundary"
+      },
+      "predictions": [
+        {
+          "modelId": "best-silo",
+          "scenarioId": "scenario-001",
+          "explanation": "Services pricing is too low.",
+          "predictedOutcome": "Services margin continues shrinking.",
+          "supportingEvidenceIds": [
+            "A4"
+          ],
+          "confidence": 0.56,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "canonical-combined",
+          "scenarioId": "scenario-001",
+          "mechanismId": "operating-model-mismatch",
+          "explanation": "commercial customization and roadmap exceptions interacts across Finance, Operations, Product, Sales; standard product work converts into bespoke implementation work, producing implementation delay and margin erosion.",
+          "predictedOutcome": "implementation delay and margin erosion",
+          "recommendedIntervention": "standardize-commercial-product-boundary",
+          "supportingEvidenceIds": [
+            "A1",
+            "A2",
+            "A3",
+            "A4"
+          ],
+          "confidence": 0.75288,
+          "falsificationCondition": "The predicted outcome does not occur when commercial customization and roadmap exceptions remains present.",
+          "abstained": false
+        },
+        {
+          "modelId": "emergent",
+          "scenarioId": "scenario-001",
+          "mechanismId": "operating-model-mismatch",
+          "explanation": "commercial customization and roadmap exceptions interacts across Finance, Operations, Product, Sales; standard product work converts into bespoke implementation work, producing implementation delay and margin erosion.",
+          "predictedOutcome": "implementation delay and margin erosion",
+          "recommendedIntervention": "standardize-commercial-product-boundary",
+          "supportingEvidenceIds": [
+            "A1",
+            "A2",
+            "A3",
+            "A4"
+          ],
+          "confidence": 0.75288,
+          "falsificationCondition": "The predicted outcome does not occur when commercial customization and roadmap exceptions remains present.",
+          "abstained": false
+        },
+        {
+          "modelId": "majority",
+          "scenarioId": "scenario-001",
+          "explanation": "Delivery capacity is insufficient.",
+          "predictedOutcome": "Delivery capacity is insufficient.",
+          "supportingEvidenceIds": [
+            "A1",
+            "A2",
+            "A3",
+            "A4"
+          ],
+          "confidence": 0.58,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "state",
+          "scenarioId": "scenario-001",
+          "explanation": "The organization is constrained by implementation delay and margin erosion.",
+          "predictedOutcome": "The organization is constrained by implementation delay and margin erosion.",
+          "supportingEvidenceIds": [],
+          "confidence": 0.76,
+          "falsificationCondition": "A different Organizational Condition becomes dominant.",
+          "abstained": true
+        },
+        {
+          "modelId": "summary",
+          "scenarioId": "scenario-001",
+          "explanation": "Sales: Enterprise deals require increasing customization. Product: Roadmap exceptions continue growing. Operations: Implementation timelines continue expanding. Finance: Services margin continues shrinking.",
+          "predictedOutcome": "Services margin continues shrinking.",
+          "supportingEvidenceIds": [
+            "A1",
+            "A2",
+            "A3",
+            "A4"
+          ],
+          "confidence": 0.62,
+          "falsificationCondition": "A listed observation is shown to be inaccurate.",
+          "abstained": true
+        }
+      ],
+      "emergentUnderstanding": {
+        "explanation": "commercial customization and roadmap exceptions interacts across Finance, Operations, Product, Sales; standard product work converts into bespoke implementation work, producing implementation delay and margin erosion.",
+        "mechanismId": "operating-model-mismatch",
+        "requiredSilos": [
+          "Finance",
+          "Operations",
+          "Product",
+          "Sales"
+        ],
+        "supportingEvidenceIds": [
+          "A1",
+          "A2",
+          "A3",
+          "A4"
+        ],
+        "reconciledLocalInterpretations": [
+          "Sales: Demand remains healthy; customization helps win. is locally plausible but explains only Enterprise deals require increasing customization.",
+          "Product: Prioritization discipline is weak. is locally plausible but explains only Roadmap exceptions continue growing.",
+          "Operations: Delivery capacity is insufficient. is locally plausible but explains only Implementation timelines continue expanding.",
+          "Finance: Services pricing is too low. is locally plausible but explains only Services margin continues shrinking."
+        ],
+        "discoveredRelationships": [
+          "commercial customization and roadmap exceptions → standard product work converts into bespoke implementation work",
+          "standard product work converts into bespoke implementation work → implementation delay and margin erosion"
+        ],
+        "discoveredMechanisms": [
+          "standard product work converts into bespoke implementation work"
+        ],
+        "interventionImplications": [
+          "Change commercial customization and roadmap exceptions rather than treating each local symptom independently."
+        ],
+        "predictedOutcomes": [
+          "implementation delay and margin erosion"
+        ],
+        "confidence": 0.75288,
+        "falsificationCriteria": [
+          "The predicted outcome does not occur when commercial customization and roadmap exceptions remains present.",
+          "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+        ]
+      }
+    },
+    {
+      "truth": {
+        "scenarioId": "scenario-002",
+        "family": "misdiagnosed-constraint",
+        "expectedMechanismId": "priority-churn",
+        "expectedOutcome": "delivery remains flat despite additional staffing",
+        "effectiveIntervention": "stabilize-priority-commitments",
+        "requiredSilos": [
+          "Leadership",
+          "Product",
+          "Engineering",
+          "HR"
+        ],
+        "shouldAbstain": false
+      },
+      "future": {
+        "scenarioId": "scenario-002",
+        "observedOutcome": "delivery remains flat despite additional staffing",
+        "effectiveIntervention": "stabilize-priority-commitments"
+      },
+      "predictions": [
+        {
+          "modelId": "best-silo",
+          "scenarioId": "scenario-002",
+          "explanation": "Technical estimates are unreliable.",
+          "predictedOutcome": "Teams restart work after roadmap changes.",
+          "supportingEvidenceIds": [
+            "B3"
+          ],
+          "confidence": 0.56,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "canonical-combined",
+          "scenarioId": "scenario-002",
+          "mechanismId": "priority-churn",
+          "explanation": "repeated priority changes interacts across Engineering, HR, Leadership, Product; work restarts before completion, producing delivery remains flat despite additional staffing.",
+          "predictedOutcome": "delivery remains flat despite additional staffing",
+          "recommendedIntervention": "stabilize-priority-commitments",
+          "supportingEvidenceIds": [
+            "B1",
+            "B2",
+            "B3",
+            "B4"
+          ],
+          "confidence": 0.75288,
+          "falsificationCondition": "The predicted outcome does not occur when repeated priority changes remains present.",
+          "abstained": false
+        },
+        {
+          "modelId": "emergent",
+          "scenarioId": "scenario-002",
+          "mechanismId": "priority-churn",
+          "explanation": "repeated priority changes interacts across Engineering, HR, Leadership, Product; work restarts before completion, producing delivery remains flat despite additional staffing.",
+          "predictedOutcome": "delivery remains flat despite additional staffing",
+          "recommendedIntervention": "stabilize-priority-commitments",
+          "supportingEvidenceIds": [
+            "B1",
+            "B2",
+            "B3",
+            "B4"
+          ],
+          "confidence": 0.75288,
+          "falsificationCondition": "The predicted outcome does not occur when repeated priority changes remains present.",
+          "abstained": false
+        },
+        {
+          "modelId": "majority",
+          "scenarioId": "scenario-002",
+          "explanation": "Capacity is the constraint.",
+          "predictedOutcome": "Capacity is the constraint.",
+          "supportingEvidenceIds": [
+            "B1",
+            "B2",
+            "B3",
+            "B4"
+          ],
+          "confidence": 0.58,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "state",
+          "scenarioId": "scenario-002",
+          "explanation": "The organization is constrained by delivery remains flat despite additional staffing.",
+          "predictedOutcome": "The organization is constrained by delivery remains flat despite additional staffing.",
+          "supportingEvidenceIds": [],
+          "confidence": 0.76,
+          "falsificationCondition": "A different Organizational Condition becomes dominant.",
+          "abstained": true
+        },
+        {
+          "modelId": "summary",
+          "scenarioId": "scenario-002",
+          "explanation": "Leadership: More engineers were approved after delivery slowed. Product: Priorities change several times during each quarter. Engineering: Teams restart work after roadmap changes. HR: Hiring increased while completed work remained flat.",
+          "predictedOutcome": "Hiring increased while completed work remained flat.",
+          "supportingEvidenceIds": [
+            "B1",
+            "B2",
+            "B3",
+            "B4"
+          ],
+          "confidence": 0.62,
+          "falsificationCondition": "A listed observation is shown to be inaccurate.",
+          "abstained": true
+        }
+      ],
+      "emergentUnderstanding": {
+        "explanation": "repeated priority changes interacts across Engineering, HR, Leadership, Product; work restarts before completion, producing delivery remains flat despite additional staffing.",
+        "mechanismId": "priority-churn",
+        "requiredSilos": [
+          "Engineering",
+          "HR",
+          "Leadership",
+          "Product"
+        ],
+        "supportingEvidenceIds": [
+          "B1",
+          "B2",
+          "B3",
+          "B4"
+        ],
+        "reconciledLocalInterpretations": [
+          "Leadership: Capacity is the constraint. is locally plausible but explains only More engineers were approved after delivery slowed.",
+          "Product: Customer demand is volatile. is locally plausible but explains only Priorities change several times during each quarter.",
+          "Engineering: Technical estimates are unreliable. is locally plausible but explains only Teams restart work after roadmap changes.",
+          "HR: Onboarding needs improvement. is locally plausible but explains only Hiring increased while completed work remained flat."
+        ],
+        "discoveredRelationships": [
+          "repeated priority changes → work restarts before completion",
+          "work restarts before completion → delivery remains flat despite additional staffing"
+        ],
+        "discoveredMechanisms": [
+          "work restarts before completion"
+        ],
+        "interventionImplications": [
+          "Change repeated priority changes rather than treating each local symptom independently."
+        ],
+        "predictedOutcomes": [
+          "delivery remains flat despite additional staffing"
+        ],
+        "confidence": 0.75288,
+        "falsificationCriteria": [
+          "The predicted outcome does not occur when repeated priority changes remains present.",
+          "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+        ]
+      }
+    },
+    {
+      "truth": {
+        "scenarioId": "scenario-003",
+        "family": "feedback-loop",
+        "expectedMechanismId": "exception-reinforcement-loop",
+        "expectedOutcome": "more exception demand and lower margin",
+        "effectiveIntervention": "price-and-govern-exceptions",
+        "requiredSilos": [
+          "Sales",
+          "Product",
+          "Customer Success",
+          "Finance"
+        ],
+        "shouldAbstain": false
+      },
+      "future": {
+        "scenarioId": "scenario-003",
+        "observedOutcome": "more exception demand and lower margin",
+        "effectiveIntervention": "price-and-govern-exceptions"
+      },
+      "predictions": [
+        {
+          "modelId": "best-silo",
+          "scenarioId": "scenario-003",
+          "explanation": "Implementation needs more resources.",
+          "predictedOutcome": "Late implementations increase escalation pressure.",
+          "supportingEvidenceIds": [
+            "C3"
+          ],
+          "confidence": 0.56,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "canonical-combined",
+          "scenarioId": "scenario-003",
+          "mechanismId": "exception-reinforcement-loop",
+          "explanation": "account exceptions interacts across Customer Success, Finance, Product, Sales; exceptions reduce capacity and delays increase escalation concessions, producing more exception demand and lower margin.",
+          "predictedOutcome": "more exception demand and lower margin",
+          "recommendedIntervention": "price-and-govern-exceptions",
+          "supportingEvidenceIds": [
+            "C1",
+            "C2",
+            "C3",
+            "C4"
+          ],
+          "confidence": 0.77528,
+          "falsificationCondition": "The predicted outcome does not occur when account exceptions remains present.",
+          "abstained": false
+        },
+        {
+          "modelId": "emergent",
+          "scenarioId": "scenario-003",
+          "mechanismId": "exception-reinforcement-loop",
+          "explanation": "account exceptions interacts across Customer Success, Finance, Product, Sales; exceptions reduce capacity and delays increase escalation concessions, producing more exception demand and lower margin.",
+          "predictedOutcome": "more exception demand and lower margin",
+          "recommendedIntervention": "price-and-govern-exceptions",
+          "supportingEvidenceIds": [
+            "C1",
+            "C2",
+            "C3",
+            "C4"
+          ],
+          "confidence": 0.77528,
+          "falsificationCondition": "The predicted outcome does not occur when account exceptions remains present.",
+          "abstained": false
+        },
+        {
+          "modelId": "majority",
+          "scenarioId": "scenario-003",
+          "explanation": "Implementation needs more resources.",
+          "predictedOutcome": "Implementation needs more resources.",
+          "supportingEvidenceIds": [
+            "C1",
+            "C2",
+            "C3",
+            "C4"
+          ],
+          "confidence": 0.58,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "state",
+          "scenarioId": "scenario-003",
+          "explanation": "The organization is constrained by more exception demand and lower margin.",
+          "predictedOutcome": "The organization is constrained by more exception demand and lower margin.",
+          "supportingEvidenceIds": [],
+          "confidence": 0.76,
+          "falsificationCondition": "A different Organizational Condition becomes dominant.",
+          "abstained": true
+        },
+        {
+          "modelId": "summary",
+          "scenarioId": "scenario-003",
+          "explanation": "Sales: Exceptions are promised to retain strategic accounts. Product: Exception volume reduces roadmap capacity. Customer Success: Late implementations increase escalation pressure. Finance: Escalated accounts receive more concessions.",
+          "predictedOutcome": "Escalated accounts receive more concessions.",
+          "supportingEvidenceIds": [
+            "C1",
+            "C2",
+            "C3",
+            "C4"
+          ],
+          "confidence": 0.62,
+          "falsificationCondition": "A listed observation is shown to be inaccurate.",
+          "abstained": true
+        }
+      ],
+      "emergentUnderstanding": {
+        "explanation": "account exceptions interacts across Customer Success, Finance, Product, Sales; exceptions reduce capacity and delays increase escalation concessions, producing more exception demand and lower margin.",
+        "mechanismId": "exception-reinforcement-loop",
+        "requiredSilos": [
+          "Customer Success",
+          "Finance",
+          "Product",
+          "Sales"
+        ],
+        "supportingEvidenceIds": [
+          "C1",
+          "C2",
+          "C3",
+          "C4"
+        ],
+        "reconciledLocalInterpretations": [
+          "Sales: Product flexibility protects revenue. is locally plausible but explains only Exceptions are promised to retain strategic accounts.",
+          "Product: Sales qualification is inconsistent. is locally plausible but explains only Exception volume reduces roadmap capacity.",
+          "Customer Success: Implementation needs more resources. is locally plausible but explains only Late implementations increase escalation pressure.",
+          "Finance: Renewal risk is increasing. is locally plausible but explains only Escalated accounts receive more concessions."
+        ],
+        "discoveredRelationships": [
+          "account exceptions → exceptions reduce capacity and delays increase escalation concessions",
+          "exceptions reduce capacity and delays increase escalation concessions → more exception demand and lower margin"
+        ],
+        "discoveredMechanisms": [
+          "exceptions reduce capacity and delays increase escalation concessions"
+        ],
+        "interventionImplications": [
+          "Change account exceptions rather than treating each local symptom independently."
+        ],
+        "predictedOutcomes": [
+          "more exception demand and lower margin"
+        ],
+        "confidence": 0.77528,
+        "falsificationCriteria": [
+          "The predicted outcome does not occur when account exceptions remains present.",
+          "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+        ]
+      }
+    },
+    {
+      "truth": {
+        "scenarioId": "scenario-004",
+        "family": "delayed-consequence",
+        "expectedMechanismId": "maintenance-deferral-chain",
+        "expectedOutcome": "longer incidents create delayed renewal risk",
+        "effectiveIntervention": "restore-reliability-investment",
+        "requiredSilos": [
+          "Leadership",
+          "Engineering",
+          "Operations",
+          "Customer Success"
+        ],
+        "shouldAbstain": false
+      },
+      "future": {
+        "scenarioId": "scenario-004",
+        "observedOutcome": "longer incidents create delayed renewal risk",
+        "effectiveIntervention": "restore-reliability-investment"
+      },
+      "predictions": [
+        {
+          "modelId": "best-silo",
+          "scenarioId": "scenario-004",
+          "explanation": "Customers need better communication.",
+          "predictedOutcome": "Renewal concerns rise after repeated outages.",
+          "supportingEvidenceIds": [
+            "D4"
+          ],
+          "confidence": 0.56,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "canonical-combined",
+          "scenarioId": "scenario-004",
+          "mechanismId": "maintenance-deferral-chain",
+          "explanation": "deferred maintenance interacts across Customer Success, Engineering, Leadership, Operations; recovery capability erodes over time, producing longer incidents create delayed renewal risk.",
+          "predictedOutcome": "longer incidents create delayed renewal risk",
+          "recommendedIntervention": "restore-reliability-investment",
+          "supportingEvidenceIds": [
+            "D1",
+            "D2",
+            "D3",
+            "D4"
+          ],
+          "confidence": 0.77528,
+          "falsificationCondition": "The predicted outcome does not occur when deferred maintenance remains present.",
+          "abstained": false
+        },
+        {
+          "modelId": "emergent",
+          "scenarioId": "scenario-004",
+          "mechanismId": "maintenance-deferral-chain",
+          "explanation": "deferred maintenance interacts across Customer Success, Engineering, Leadership, Operations; recovery capability erodes over time, producing longer incidents create delayed renewal risk.",
+          "predictedOutcome": "longer incidents create delayed renewal risk",
+          "recommendedIntervention": "restore-reliability-investment",
+          "supportingEvidenceIds": [
+            "D1",
+            "D2",
+            "D3",
+            "D4"
+          ],
+          "confidence": 0.77528,
+          "falsificationCondition": "The predicted outcome does not occur when deferred maintenance remains present.",
+          "abstained": false
+        },
+        {
+          "modelId": "majority",
+          "scenarioId": "scenario-004",
+          "explanation": "Customers need better communication.",
+          "predictedOutcome": "Customers need better communication.",
+          "supportingEvidenceIds": [
+            "D1",
+            "D2",
+            "D3",
+            "D4"
+          ],
+          "confidence": 0.58,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "state",
+          "scenarioId": "scenario-004",
+          "explanation": "The organization is constrained by longer incidents create delayed renewal risk.",
+          "predictedOutcome": "The organization is constrained by longer incidents create delayed renewal risk.",
+          "supportingEvidenceIds": [],
+          "confidence": 0.76,
+          "falsificationCondition": "A different Organizational Condition becomes dominant.",
+          "abstained": true
+        },
+        {
+          "modelId": "summary",
+          "scenarioId": "scenario-004",
+          "explanation": "Leadership: Maintenance investment was deferred to protect a launch. Engineering: Deferred maintenance increases recovery time. Operations: Incident duration rises as runbooks become stale. Customer Success: Renewal concerns rise after repeated outages.",
+          "predictedOutcome": "Renewal concerns rise after repeated outages.",
+          "supportingEvidenceIds": [
+            "D1",
+            "D2",
+            "D3",
+            "D4"
+          ],
+          "confidence": 0.62,
+          "falsificationCondition": "A listed observation is shown to be inaccurate.",
+          "abstained": true
+        }
+      ],
+      "emergentUnderstanding": {
+        "explanation": "deferred maintenance interacts across Customer Success, Engineering, Leadership, Operations; recovery capability erodes over time, producing longer incidents create delayed renewal risk.",
+        "mechanismId": "maintenance-deferral-chain",
+        "requiredSilos": [
+          "Customer Success",
+          "Engineering",
+          "Leadership",
+          "Operations"
+        ],
+        "supportingEvidenceIds": [
+          "D1",
+          "D2",
+          "D3",
+          "D4"
+        ],
+        "reconciledLocalInterpretations": [
+          "Leadership: Launch timing is strategically necessary. is locally plausible but explains only Maintenance investment was deferred to protect a launch.",
+          "Engineering: Reliability work needs prioritization. is locally plausible but explains only Deferred maintenance increases recovery time.",
+          "Operations: Operational discipline is inconsistent. is locally plausible but explains only Incident duration rises as runbooks become stale.",
+          "Customer Success: Customers need better communication. is locally plausible but explains only Renewal concerns rise after repeated outages."
+        ],
+        "discoveredRelationships": [
+          "deferred maintenance → recovery capability erodes over time",
+          "recovery capability erodes over time → longer incidents create delayed renewal risk"
+        ],
+        "discoveredMechanisms": [
+          "recovery capability erodes over time"
+        ],
+        "interventionImplications": [
+          "Change deferred maintenance rather than treating each local symptom independently."
+        ],
+        "predictedOutcomes": [
+          "longer incidents create delayed renewal risk"
+        ],
+        "confidence": 0.77528,
+        "falsificationCriteria": [
+          "The predicted outcome does not occur when deferred maintenance remains present.",
+          "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+        ]
+      }
+    },
+    {
+      "truth": {
+        "scenarioId": "scenario-005",
+        "family": "reconciled-local-explanations",
+        "expectedMechanismId": "handoff-ownership-gap",
+        "expectedOutcome": "requirements reopen during implementation",
+        "effectiveIntervention": "assign-cross-functional-acceptance-owner",
+        "requiredSilos": [
+          "Product",
+          "Engineering",
+          "Operations"
+        ],
+        "shouldAbstain": false
+      },
+      "future": {
+        "scenarioId": "scenario-005",
+        "observedOutcome": "requirements reopen during implementation",
+        "effectiveIntervention": "assign-cross-functional-acceptance-owner"
+      },
+      "predictions": [
+        {
+          "modelId": "best-silo",
+          "scenarioId": "scenario-005",
+          "explanation": "Product requirements are unstable.",
+          "predictedOutcome": "Acceptance decisions change during implementation.",
+          "supportingEvidenceIds": [
+            "E2"
+          ],
+          "confidence": 0.56,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "canonical-combined",
+          "scenarioId": "scenario-005",
+          "mechanismId": "handoff-ownership-gap",
+          "explanation": "unowned cross-functional acceptance interacts across Engineering, Operations, Product; local completion criteria diverge, producing requirements reopen during implementation.",
+          "predictedOutcome": "requirements reopen during implementation",
+          "recommendedIntervention": "assign-cross-functional-acceptance-owner",
+          "supportingEvidenceIds": [
+            "E1",
+            "E2",
+            "E3"
+          ],
+          "confidence": 0.68568,
+          "falsificationCondition": "The predicted outcome does not occur when unowned cross-functional acceptance remains present.",
+          "abstained": false
+        },
+        {
+          "modelId": "emergent",
+          "scenarioId": "scenario-005",
+          "mechanismId": "handoff-ownership-gap",
+          "explanation": "unowned cross-functional acceptance interacts across Engineering, Operations, Product; local completion criteria diverge, producing requirements reopen during implementation.",
+          "predictedOutcome": "requirements reopen during implementation",
+          "recommendedIntervention": "assign-cross-functional-acceptance-owner",
+          "supportingEvidenceIds": [
+            "E1",
+            "E2",
+            "E3"
+          ],
+          "confidence": 0.68568,
+          "falsificationCondition": "The predicted outcome does not occur when unowned cross-functional acceptance remains present.",
+          "abstained": false
+        },
+        {
+          "modelId": "majority",
+          "scenarioId": "scenario-005",
+          "explanation": "Engineering execution is slow.",
+          "predictedOutcome": "Engineering execution is slow.",
+          "supportingEvidenceIds": [
+            "E1",
+            "E2",
+            "E3"
+          ],
+          "confidence": 0.58,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "state",
+          "scenarioId": "scenario-005",
+          "explanation": "The organization is constrained by requirements reopen during implementation.",
+          "predictedOutcome": "The organization is constrained by requirements reopen during implementation.",
+          "supportingEvidenceIds": [],
+          "confidence": 0.76,
+          "falsificationCondition": "A different Organizational Condition becomes dominant.",
+          "abstained": true
+        },
+        {
+          "modelId": "summary",
+          "scenarioId": "scenario-005",
+          "explanation": "Product: Requirements are complete before handoff. Engineering: Acceptance decisions change during implementation. Operations: No function owns cross-functional acceptance.",
+          "predictedOutcome": "No function owns cross-functional acceptance.",
+          "supportingEvidenceIds": [
+            "E1",
+            "E2",
+            "E3"
+          ],
+          "confidence": 0.62,
+          "falsificationCondition": "A listed observation is shown to be inaccurate.",
+          "abstained": true
+        }
+      ],
+      "emergentUnderstanding": {
+        "explanation": "unowned cross-functional acceptance interacts across Engineering, Operations, Product; local completion criteria diverge, producing requirements reopen during implementation.",
+        "mechanismId": "handoff-ownership-gap",
+        "requiredSilos": [
+          "Engineering",
+          "Operations",
+          "Product"
+        ],
+        "supportingEvidenceIds": [
+          "E1",
+          "E2",
+          "E3"
+        ],
+        "reconciledLocalInterpretations": [
+          "Product: Engineering execution is slow. is locally plausible but explains only Requirements are complete before handoff.",
+          "Engineering: Product requirements are unstable. is locally plausible but explains only Acceptance decisions change during implementation.",
+          "Operations: Handoff accountability is unclear. is locally plausible but explains only No function owns cross-functional acceptance."
+        ],
+        "discoveredRelationships": [
+          "unowned cross-functional acceptance → local completion criteria diverge",
+          "local completion criteria diverge → requirements reopen during implementation"
+        ],
+        "discoveredMechanisms": [
+          "local completion criteria diverge"
+        ],
+        "interventionImplications": [
+          "Change unowned cross-functional acceptance rather than treating each local symptom independently."
+        ],
+        "predictedOutcomes": [
+          "requirements reopen during implementation"
+        ],
+        "confidence": 0.68568,
+        "falsificationCriteria": [
+          "The predicted outcome does not occur when unowned cross-functional acceptance remains present.",
+          "Removing one claimed cross-silo link leaves the explanation and prediction unchanged."
+        ]
+      }
+    },
+    {
+      "truth": {
+        "scenarioId": "scenario-006",
+        "family": "single-silo-answer",
+        "requiredSilos": [
+          "Legal"
+        ],
+        "shouldAbstain": true
+      },
+      "future": {
+        "scenarioId": "scenario-006",
+        "observedOutcome": "No stable integrated mechanism is confirmed."
+      },
+      "predictions": [
+        {
+          "modelId": "best-silo",
+          "scenarioId": "scenario-006",
+          "explanation": "Regional data residency is the complete cause of launch delay.",
+          "predictedOutcome": "A new regulation requires regional data residency; the current architecture cannot comply.",
+          "supportingEvidenceIds": [
+            "F1"
+          ],
+          "confidence": 0.56,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "canonical-combined",
+          "scenarioId": "scenario-006",
+          "explanation": "Canonical artifacts do not support one integrated explanation.",
+          "supportingEvidenceIds": [],
+          "confidence": 0.35,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "emergent",
+          "scenarioId": "scenario-006",
+          "explanation": "No non-local, grounded organizational explanation is supported.",
+          "supportingEvidenceIds": [],
+          "confidence": 0.35,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "majority",
+          "scenarioId": "scenario-006",
+          "explanation": "Enterprise contracting is slow.",
+          "predictedOutcome": "Enterprise contracting is slow.",
+          "supportingEvidenceIds": [
+            "F1",
+            "F2"
+          ],
+          "confidence": 0.38,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "state",
+          "scenarioId": "scenario-006",
+          "explanation": "The organization is constrained by regulated-market launch delay.",
+          "predictedOutcome": "The organization is constrained by regulated-market launch delay.",
+          "supportingEvidenceIds": [],
+          "confidence": 0.76,
+          "falsificationCondition": "A different Organizational Condition becomes dominant.",
+          "abstained": true
+        },
+        {
+          "modelId": "summary",
+          "scenarioId": "scenario-006",
+          "explanation": "Legal: A new regulation requires regional data residency; the current architecture cannot comply. Sales: Regulated-market launches are delayed.",
+          "predictedOutcome": "Regulated-market launches are delayed.",
+          "supportingEvidenceIds": [
+            "F1",
+            "F2"
+          ],
+          "confidence": 0.4,
+          "falsificationCondition": "A listed observation is shown to be inaccurate.",
+          "abstained": true
+        }
+      ],
+      "emergentUnderstanding": null
+    },
+    {
+      "truth": {
+        "scenarioId": "scenario-007",
+        "family": "insufficient",
+        "requiredSilos": [],
+        "shouldAbstain": true
+      },
+      "future": {
+        "scenarioId": "scenario-007",
+        "observedOutcome": "No stable integrated mechanism is confirmed."
+      },
+      "predictions": [
+        {
+          "modelId": "best-silo",
+          "scenarioId": "scenario-007",
+          "explanation": "Operating discipline may be weakening.",
+          "predictedOutcome": "Travel spending increased this month.",
+          "supportingEvidenceIds": [
+            "G2"
+          ],
+          "confidence": 0.56,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "canonical-combined",
+          "scenarioId": "scenario-007",
+          "explanation": "Canonical artifacts do not support one integrated explanation.",
+          "supportingEvidenceIds": [],
+          "confidence": 0.35,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "emergent",
+          "scenarioId": "scenario-007",
+          "explanation": "No non-local, grounded organizational explanation is supported.",
+          "supportingEvidenceIds": [],
+          "confidence": 0.35,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "majority",
+          "scenarioId": "scenario-007",
+          "explanation": "Brand awareness may be weakening.",
+          "predictedOutcome": "Brand awareness may be weakening.",
+          "supportingEvidenceIds": [
+            "G1",
+            "G2"
+          ],
+          "confidence": 0.38,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "state",
+          "scenarioId": "scenario-007",
+          "explanation": "The current Organizational State is uncertain.",
+          "predictedOutcome": "The current Organizational State is uncertain.",
+          "supportingEvidenceIds": [],
+          "confidence": 0.4,
+          "falsificationCondition": "A different Organizational Condition becomes dominant.",
+          "abstained": true
+        },
+        {
+          "modelId": "summary",
+          "scenarioId": "scenario-007",
+          "explanation": "Marketing: Website traffic declined this month. Finance: Travel spending increased this month.",
+          "predictedOutcome": "Travel spending increased this month.",
+          "supportingEvidenceIds": [
+            "G1",
+            "G2"
+          ],
+          "confidence": 0.4,
+          "falsificationCondition": "A listed observation is shown to be inaccurate.",
+          "abstained": true
+        }
+      ],
+      "emergentUnderstanding": null
+    },
+    {
+      "truth": {
+        "scenarioId": "scenario-008",
+        "family": "coincidental-correlation",
+        "requiredSilos": [],
+        "shouldAbstain": true
+      },
+      "future": {
+        "scenarioId": "scenario-008",
+        "observedOutcome": "No stable integrated mechanism is confirmed."
+      },
+      "predictions": [
+        {
+          "modelId": "best-silo",
+          "scenarioId": "scenario-008",
+          "explanation": "External demand explains pipeline movement.",
+          "predictedOutcome": "A market contraction began in the same period.",
+          "supportingEvidenceIds": [
+            "H3"
+          ],
+          "confidence": 0.56,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "canonical-combined",
+          "scenarioId": "scenario-008",
+          "explanation": "Canonical artifacts do not support one integrated explanation.",
+          "supportingEvidenceIds": [],
+          "confidence": 0.35,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "emergent",
+          "scenarioId": "scenario-008",
+          "explanation": "No non-local, grounded organizational explanation is supported.",
+          "supportingEvidenceIds": [],
+          "confidence": 0.35,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "majority",
+          "scenarioId": "scenario-008",
+          "explanation": "Attendance policy caused turnover.",
+          "predictedOutcome": "Attendance policy caused turnover.",
+          "supportingEvidenceIds": [
+            "H1",
+            "H2",
+            "H3"
+          ],
+          "confidence": 0.58,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "state",
+          "scenarioId": "scenario-008",
+          "explanation": "The current Organizational State is uncertain.",
+          "predictedOutcome": "The current Organizational State is uncertain.",
+          "supportingEvidenceIds": [],
+          "confidence": 0.4,
+          "falsificationCondition": "A different Organizational Condition becomes dominant.",
+          "abstained": true
+        },
+        {
+          "modelId": "summary",
+          "scenarioId": "scenario-008",
+          "explanation": "HR: Turnover rose after office attendance changed. Sales: Pipeline also declined after office attendance changed. Finance: A market contraction began in the same period.",
+          "predictedOutcome": "A market contraction began in the same period.",
+          "supportingEvidenceIds": [
+            "H1",
+            "H2",
+            "H3"
+          ],
+          "confidence": 0.62,
+          "falsificationCondition": "A listed observation is shown to be inaccurate.",
+          "abstained": true
+        }
+      ],
+      "emergentUnderstanding": null
+    },
+    {
+      "truth": {
+        "scenarioId": "scenario-009",
+        "family": "unresolved-contradiction",
+        "requiredSilos": [],
+        "shouldAbstain": true
+      },
+      "future": {
+        "scenarioId": "scenario-009",
+        "observedOutcome": "No stable integrated mechanism is confirmed."
+      },
+      "predictions": [
+        {
+          "modelId": "best-silo",
+          "scenarioId": "scenario-009",
+          "explanation": "One governance model should still be possible.",
+          "predictedOutcome": "Both operating contexts are strategically important.",
+          "supportingEvidenceIds": [
+            "I3"
+          ],
+          "confidence": 0.56,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "canonical-combined",
+          "scenarioId": "scenario-009",
+          "explanation": "Canonical artifacts do not support one integrated explanation.",
+          "supportingEvidenceIds": [],
+          "confidence": 0.35,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "emergent",
+          "scenarioId": "scenario-009",
+          "explanation": "No non-local, grounded organizational explanation is supported.",
+          "supportingEvidenceIds": [],
+          "confidence": 0.35,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "majority",
+          "scenarioId": "scenario-009",
+          "explanation": "Less approval improves learning.",
+          "predictedOutcome": "Less approval improves learning.",
+          "supportingEvidenceIds": [
+            "I1",
+            "I2",
+            "I3"
+          ],
+          "confidence": 0.58,
+          "falsificationCondition": "",
+          "abstained": true
+        },
+        {
+          "modelId": "state",
+          "scenarioId": "scenario-009",
+          "explanation": "The organization is constrained by no universal decision model is supported.",
+          "predictedOutcome": "The organization is constrained by no universal decision model is supported.",
+          "supportingEvidenceIds": [],
+          "confidence": 0.76,
+          "falsificationCondition": "A different Organizational Condition becomes dominant.",
+          "abstained": true
+        },
+        {
+          "modelId": "summary",
+          "scenarioId": "scenario-009",
+          "explanation": "Operations: Central approval reduces incidents in regulated work. Product: Local autonomy speeds exploration work. Leadership: Both operating contexts are strategically important.",
+          "predictedOutcome": "Both operating contexts are strategically important.",
+          "supportingEvidenceIds": [
+            "I1",
+            "I2",
+            "I3"
+          ],
+          "confidence": 0.62,
+          "falsificationCondition": "A listed observation is shown to be inaccurate.",
+          "abstained": true
+        }
+      ],
+      "emergentUnderstanding": null
+    }
+  ],
+  "classification": "EMERGENT CAPABILITY ALREADY PRESENT IN STRUCTURED CANONICAL COGNITION",
+  "finalAnswers": {
+    "unavailableToIndividualSilo": true,
+    "outperformsGenericSummary": true,
+    "structuredCognitionOutperformsRawAggregation": true,
+    "componentsContributingMost": "Cross-silo Mechanism ancestry and Evidence lineage; history matters in the delayed-consequence fixture.",
+    "necessaryEvidence": "At least three independent silos linked by one supported canonical Mechanism.",
+    "improvesPrediction": true,
+    "improvesIntervention": true,
+    "nonlinearOrAggregation": "The benchmark shows relational composition beyond concatenation, but the emergent projection adds no value above canonical structured cognition."
+  },
+  "recommendation": "Do not add an Emergent Intelligence layer. Treat the result as controlled evidence that cross-silo Mechanisms in existing structured cognition can exhibit emergent organizational intelligence; require production replay before making a stronger claim."
+}

@@ -11,6 +11,13 @@ defined by:
 COMPLETED_EXPLANATION_INPUT_CONTRACT.md
 ```
 
+The downstream completed-Explanation adjudication boundary and the decisive
+semantics that remain unavailable are defined by:
+
+```text
+COMPLETED_EXPLANATION_ADJUDICATION_CONTRACT.md
+```
+
 That document refines only the structured input boundary. The allowed roles
 and their semantics remain governed here.
 

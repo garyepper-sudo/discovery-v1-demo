@@ -149,9 +149,9 @@ function extractMarkdownSection(
   heading,
 ) {
   const pattern = new RegExp(
-    `^# ${escapeRegExp(
+    `^#{1,6} ${escapeRegExp(
       heading,
-    )}\\s*$([\\s\\S]*?)(?=^# |\\Z)`,
+    )}\\s*$([\\s\\S]*?)(?=^#{1,6} |\\Z)`,
     "m",
   );
 
@@ -311,13 +311,19 @@ function printProductCanon(productCanon) {
   const productPhilosophy =
     extractAndStripSection(
       productCanon,
-      ["Product Philosophy"],
+      [
+        "Product Identity",
+        "Product Philosophy",
+      ],
     );
 
   const operatingModel =
     extractAndStripSection(
       productCanon,
-      ["The Operating Model"],
+      [
+        "The Organization Model and Operating Model",
+        "The Operating Model",
+      ],
     );
 
   const executiveWork =
@@ -587,29 +593,34 @@ function printExecutiveSummary(
   console.log("");
 
   console.log(
-    "Discovery has completed the first generation of its Executive Cognitive Operating System.",
+    "Discovery is a shared organizational intelligence platform. Its Executive Cognitive Operating System is the mature first application, not the identity or endpoint of the platform.",
   );
 
   console.log("");
 
   console.log(
-    "The Executive Work lifecycle is implemented, integrated, and benchmark validated.",
+    compactText(
+      project.currentMilestone,
+      "Current milestone is not declared.",
+    ),
   );
 
   console.log("");
 
   console.log(
-    "The Operating Model is the foundation behind understanding, recommendations, simulations, Executive Work, review, learning, and future executive judgment.",
+    compactText(
+      project.currentPhase,
+      "Current development phase is not declared.",
+    ),
   );
 
   console.log("");
 
   console.log(
-    "Architecture is stable.",
-  );
-
-  console.log(
-    "The current objective is continuously improving executive judgment quality through recommendation refinement, confidence calibration, executive communication, Executive Learning, and Operating Model improvement.",
+    compactText(
+      project.currentObjective,
+      "Current objective is not declared.",
+    ),
   );
 
   console.log("");
@@ -742,11 +753,16 @@ function printArchitectureHealth(state) {
   console.log("");
 
   printMetric(
-    "Architecture health",
+    "Registry structural health",
     `${
       architecture.healthScore ??
       0
     }%`,
+  );
+
+  printMetric(
+    "Architecture validation",
+    "295/302; 7 pre-existing findings",
   );
 
   printMetric(

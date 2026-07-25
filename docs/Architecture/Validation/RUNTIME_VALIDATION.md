@@ -193,6 +193,13 @@ simulatedOrganizationStates
 ...
 ```
 
+`organizationalUnderstandingState.canonicalCompositions` is additive and may
+be absent from historical Runtime records. Forward evolution derives it only
+from persisted completed Explanations, preserves their identities, and does
+not fabricate ancestry. Canonical compositions persist only in the registered
+Organizational Understanding destination; the nested organizational-memory
+compatibility mirror omits them to prevent a second physical owner.
+
 Validation
 
 Runtime contains substantially richer cognition than currently exposed through Executive Experience.
@@ -529,6 +536,32 @@ Historical Runtime records remain valid without rewrite.
 
 No downstream consumer currently interprets the role collection.
 
+## Phase 5A authority-transition validation
+
+Forward evolution evaluates completed Explanations before canonical
+Organizational Understanding composition. Eligible contributions receive an
+additive authority receipt on their canonical composition. Provisional
+contributions may remain persistable but are excluded from canonical
+composition; persistence is not authority.
+
+Historical records without receipts remain loadable and are not backfilled on
+read. Replay preserves receipts, organization isolation is required, and
+`organizationalUnderstandingAuthorityMode: "implicit"` provides the bounded
+pre-authority rollback path. Disclosure is not evaluated by Runtime.
+
+## Phase 5B disclosure and revocation validation
+
+Organization Runtime remains the truth store, not the disclosure authority.
+The Phase 5B contract accepts canonical compositions plus an externally
+resolved disclosure decision. Eligible decisions return authorized
+compositions; withheld, revoked, mismatched, or historically unreceipted input
+fails closed.
+
+Revocation affects future disclosure without rewriting Runtime. No disclosure
+decision or revocation history is persisted in Runtime. Application activation
+remains blocked until a canonical decision producer and durable history owner
+exist.
+
 ---
 
 # Current Assessment
@@ -569,3 +602,13 @@ The next stage of development should prioritize:
 4. Runtime inspection tooling,
 
 rather than expanding cognitive scope.
+
+## Phase 8A product replay
+
+`npm run validate:organization-experience` loads a persisted Atlas Runtime
+twice, builds the Runtime-backed `Your Organization` view twice, and requires
+byte-identical Runtime and view output. The adapter performs no writes.
+
+Canonical-owner gaps fail visibly as `Runtime not yet available`; the product
+does not substitute `currentUnderstandings`, benchmark fixtures, or research
+objects for missing canonical content.

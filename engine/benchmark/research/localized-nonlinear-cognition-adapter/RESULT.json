@@ -1,0 +1,1347 @@
+{
+  "framework": "organizational-understanding-research-framework",
+  "frameworkVersion": "1",
+  "sourceExperiment": {
+    "name": "Localized Nonlinear Cognition Experiment 001",
+    "classification": "A — Localized Nonlinear Cognition Demonstrated",
+    "resultFile": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+    "resultHash": "61aba37a2de5e8c9952a82c80f7103a33aa9150dd9795a133a074a5e47e228e8"
+  },
+  "records": [
+    {
+      "experimentId": "localized-nonlinear-cognition-experiment-001",
+      "architectureId": "stable-linear",
+      "scenarioIds": [
+        "lnc-001",
+        "lnc-002",
+        "lnc-003",
+        "lnc-004",
+        "lnc-005",
+        "lnc-006",
+        "lnc-007",
+        "lnc-008",
+        "lnc-009",
+        "lnc-010",
+        "lnc-011",
+        "lnc-012",
+        "lnc-013",
+        "lnc-014",
+        "lnc-015",
+        "lnc-016",
+        "lnc-017",
+        "lnc-018",
+        "lnc-019"
+      ],
+      "treatmentType": "baseline",
+      "sourceArtifacts": [
+        {
+          "id": "source-classification",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/classification",
+          "description": "Original experiment classification."
+        },
+        {
+          "id": "utility",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/scores/utility",
+          "description": "Original architecture utility values."
+        },
+        {
+          "id": "architecture-scores",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/scores",
+          "description": "Original architecture metrics and transition analyses."
+        },
+        {
+          "id": "stability",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/stability",
+          "description": "Cascade, oscillation, and irreversible-error analysis."
+        },
+        {
+          "id": "interpretability",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/interpretability",
+          "description": "Lineage, reason, reversal, and causal-chain analysis."
+        },
+        {
+          "id": "determinism",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/determinism",
+          "description": "Repeated and reordered execution controls."
+        },
+        {
+          "id": "leakage",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/leakage",
+          "description": "Semantic-boundary and benchmark-leakage audit."
+        },
+        {
+          "id": "ablations",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/ablations",
+          "description": "Localized-zone contribution ablations."
+        },
+        {
+          "id": "sequence-tests",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/sequenceTests",
+          "description": "Formation and revision sequence controls."
+        },
+        {
+          "id": "state-reversal",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/demonstratedRevision/reversibleStateTransition",
+          "scenarioId": "lnc-009",
+          "description": "Localized reversible state transition."
+        },
+        {
+          "id": "alternative-promotion",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/demonstratedRevision/alternativePromotion",
+          "scenarioId": "lnc-011",
+          "description": "Localized alternative promotion after a discriminating outcome."
+        },
+        {
+          "id": "mechanism-retirement",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/demonstratedRevision/mechanismRetirement",
+          "scenarioId": "lnc-012",
+          "description": "Localized mechanism retirement after falsification."
+        },
+        {
+          "id": "multi-cycle",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/scenarioResults/13",
+          "scenarioId": "lnc-014",
+          "description": "Recursive-learning scenario with bounded confidence history."
+        }
+      ],
+      "measuredResults": {
+        "utility": 0.5328654970760234,
+        "predictionMae": 0.15368421052631578,
+        "transitionPrecision": 0,
+        "transitionRecall": 0,
+        "negativeControlPrecision": 1,
+        "expectedTransitionCount": 36,
+        "observedExpectedTransitionCount": 0,
+        "falseTransitionCount": 0,
+        "falseNonlinearClassificationCount": 0,
+        "lineageComplete": true,
+        "cascadeDetected": false,
+        "oscillationDetected": false
+      },
+      "researchDimensions": {
+        "explanatoryDepth": {
+          "status": "unchanged",
+          "evidenceStrength": "strong",
+          "measuredIndicators": [
+            {
+              "name": "prediction MAE",
+              "value": 0.15368421052631578,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            },
+            {
+              "name": "missed expected transitions",
+              "value": 36,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            }
+          ],
+          "interpretation": "The stable comparator preserved static interpretation but missed every required qualitative transition.",
+          "limitations": [
+            "This is baseline behavior, not an improvement claim."
+          ]
+        },
+        "evidenceIntegration": {
+          "status": "not-measured",
+          "evidenceStrength": "limited",
+          "measuredIndicators": [
+            {
+              "name": "negative-control precision",
+              "value": 1,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            },
+            {
+              "name": "lineage completeness",
+              "value": 1,
+              "artifactReferenceIds": [
+                "interpretability"
+              ]
+            }
+          ],
+          "interpretation": "Lineage and negative-control safety are available as boundary evidence, but the experiment did not measure independent-source or governed cross-silo integration.",
+          "limitations": [
+            "Evidence Integration is not measured; no positive integration claim is made."
+          ]
+        },
+        "alternativeResolution": {
+          "status": "unchanged",
+          "evidenceStrength": "moderate",
+          "measuredIndicators": [
+            {
+              "name": "alternative discrimination",
+              "value": 0.8421052631578947,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            }
+          ],
+          "interpretation": "The stable comparator retained its existing alternative choice behavior without structural revision.",
+          "limitations": [
+            "No alternative-promotion transition was available in the stable comparator."
+          ]
+        },
+        "stateAndDynamicsAwareness": {
+          "status": "unchanged",
+          "evidenceStrength": "strong",
+          "measuredIndicators": [
+            {
+              "name": "transition recall",
+              "value": 0,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            },
+            {
+              "name": "blanket abstention",
+              "value": true,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            }
+          ],
+          "interpretation": "The stable comparator remained safe but expressed no required state or dynamic transition.",
+          "limitations": [
+            "This is the experiment baseline."
+          ]
+        },
+        "longitudinalLearning": {
+          "status": "unchanged",
+          "evidenceStrength": "limited",
+          "measuredIndicators": [
+            {
+              "name": "confidence cascade rate",
+              "value": 0,
+              "artifactReferenceIds": [
+                "stability"
+              ]
+            },
+            {
+              "name": "oscillation rate",
+              "value": 0,
+              "artifactReferenceIds": [
+                "stability"
+              ]
+            }
+          ],
+          "interpretation": "The stable comparator remained bounded but did not perform outcome-driven structural revision.",
+          "limitations": [
+            "It serves as the non-learning baseline in this experiment."
+          ]
+        },
+        "emergentInsight": {
+          "status": "not-measured",
+          "evidenceStrength": "none",
+          "measuredIndicators": [],
+          "interpretation": "The experiment did not test whether governed composition produces an insight unavailable from any isolated input or silo.",
+          "limitations": [
+            "No positive result is inferred from the presence of nonlinear behavior."
+          ]
+        }
+      },
+      "guardrails": {
+        "governanceIntegrity": {
+          "status": "passed",
+          "measuredIndicators": [
+            {
+              "name": "lineage completeness",
+              "value": 1,
+              "artifactReferenceIds": [
+                "interpretability"
+              ]
+            },
+            {
+              "name": "false transitions",
+              "value": 0,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            },
+            {
+              "name": "negative-control precision",
+              "value": 1,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            }
+          ],
+          "interpretation": "Measured transitions remained attributable and negative controls remained safe.",
+          "limitations": [
+            "Permission, purpose limitation, and privacy were outside this experiment."
+          ]
+        },
+        "systemSustainability": {
+          "status": "passed",
+          "measuredIndicators": [
+            {
+              "name": "determinism controls passed",
+              "value": true,
+              "artifactReferenceIds": [
+                "determinism"
+              ]
+            },
+            {
+              "name": "confidence cascade rate",
+              "value": 0,
+              "artifactReferenceIds": [
+                "stability"
+              ]
+            },
+            {
+              "name": "oscillation rate",
+              "value": 0,
+              "artifactReferenceIds": [
+                "stability"
+              ]
+            }
+          ],
+          "interpretation": "The measured architecture remained deterministic, bounded, and free of cascades and oscillation.",
+          "limitations": [
+            "Production performance, migration, and maintenance costs were not measured."
+          ]
+        }
+      },
+      "complexityEvidence": {
+        "benchmarkObserved": [
+          "No qualitative transition zones are active.",
+          "The architecture abstained from every qualitative transition."
+        ],
+        "productionEstimated": [],
+        "limitations": [
+          "Repository-level production cost was not evaluated."
+        ]
+      },
+      "traceability": {
+        "sourceResultHash": "61aba37a2de5e8c9952a82c80f7103a33aa9150dd9795a133a074a5e47e228e8",
+        "adapterProtocolVersion": "1",
+        "directlyMeasuredFields": [
+          "utility",
+          "predictionMae",
+          "transitionPrecision",
+          "transitionRecall",
+          "negativeControlPrecision",
+          "transition counts",
+          "lineage completeness",
+          "cascade and oscillation rates"
+        ],
+        "derivedInterpretations": [
+          "six research-dimension assessments",
+          "Governance Integrity disposition",
+          "System Sustainability disposition",
+          "production-readiness gate disposition"
+        ]
+      },
+      "productionReadinessGates": [
+        {
+          "gate": "Treatment is isolated to one stated semantic responsibility.",
+          "status": "not-yet-demonstrated",
+          "evidence": "The baseline is a comparator and is not a production-improvement candidate.",
+          "artifactReferenceIds": [
+            "leakage",
+            "sequence-tests"
+          ]
+        },
+        {
+          "gate": "At least one research dimension improves against independent expected outcomes.",
+          "status": "not-yet-demonstrated",
+          "evidence": "The baseline is a comparator and is not a production-improvement candidate.",
+          "artifactReferenceIds": [
+            "architecture-scores"
+          ]
+        },
+        {
+          "gate": "Improvement survives relevant controls and contribution ablations.",
+          "status": "not-yet-demonstrated",
+          "evidence": "The baseline is a comparator and is not a production-improvement candidate.",
+          "artifactReferenceIds": [
+            "architecture-scores",
+            "ablations"
+          ]
+        },
+        {
+          "gate": "Deterministic replay, ordering, identity, and fixture isolation hold.",
+          "status": "passed",
+          "evidence": "The stable baseline passed the shared determinism controls.",
+          "artifactReferenceIds": [
+            "determinism",
+            "leakage"
+          ]
+        },
+        {
+          "gate": "No material regression appears in any measured dimension.",
+          "status": "not-yet-demonstrated",
+          "evidence": "The baseline is a comparator and is not a production-improvement candidate.",
+          "artifactReferenceIds": [
+            "architecture-scores",
+            "stability"
+          ]
+        },
+        {
+          "gate": "Governance Integrity and System Sustainability remain acceptable.",
+          "status": "passed",
+          "evidence": "The stable baseline remained bounded and lineage-preserving.",
+          "artifactReferenceIds": [
+            "interpretability",
+            "stability"
+          ]
+        },
+        {
+          "gate": "The earliest responsible canonical producer is identified.",
+          "status": "not-yet-demonstrated",
+          "evidence": "The baseline is a comparator and is not a production-improvement candidate.",
+          "artifactReferenceIds": [
+            "ablations",
+            "sequence-tests"
+          ]
+        },
+        {
+          "gate": "The smallest compatible production extension and rollback path are known.",
+          "status": "not-yet-demonstrated",
+          "evidence": "The baseline is a comparator and is not a production-improvement candidate.",
+          "artifactReferenceIds": [
+            "source-classification"
+          ]
+        },
+        {
+          "gate": "Independent replication or equivalent held-out evaluation supports the result.",
+          "status": "not-yet-demonstrated",
+          "evidence": "The baseline is a comparator and is not a production-improvement candidate.",
+          "artifactReferenceIds": [
+            "source-classification"
+          ]
+        }
+      ],
+      "decision": "continue-research"
+    },
+    {
+      "experimentId": "localized-nonlinear-cognition-experiment-001",
+      "architectureId": "localized-nonlinear",
+      "scenarioIds": [
+        "lnc-001",
+        "lnc-002",
+        "lnc-003",
+        "lnc-004",
+        "lnc-005",
+        "lnc-006",
+        "lnc-007",
+        "lnc-008",
+        "lnc-009",
+        "lnc-010",
+        "lnc-011",
+        "lnc-012",
+        "lnc-013",
+        "lnc-014",
+        "lnc-015",
+        "lnc-016",
+        "lnc-017",
+        "lnc-018",
+        "lnc-019"
+      ],
+      "treatmentType": "localized-nonlinear",
+      "sourceArtifacts": [
+        {
+          "id": "source-classification",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/classification",
+          "description": "Original experiment classification."
+        },
+        {
+          "id": "utility",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/scores/utility",
+          "description": "Original architecture utility values."
+        },
+        {
+          "id": "architecture-scores",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/scores",
+          "description": "Original architecture metrics and transition analyses."
+        },
+        {
+          "id": "stability",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/stability",
+          "description": "Cascade, oscillation, and irreversible-error analysis."
+        },
+        {
+          "id": "interpretability",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/interpretability",
+          "description": "Lineage, reason, reversal, and causal-chain analysis."
+        },
+        {
+          "id": "determinism",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/determinism",
+          "description": "Repeated and reordered execution controls."
+        },
+        {
+          "id": "leakage",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/leakage",
+          "description": "Semantic-boundary and benchmark-leakage audit."
+        },
+        {
+          "id": "ablations",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/ablations",
+          "description": "Localized-zone contribution ablations."
+        },
+        {
+          "id": "sequence-tests",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/sequenceTests",
+          "description": "Formation and revision sequence controls."
+        },
+        {
+          "id": "state-reversal",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/demonstratedRevision/reversibleStateTransition",
+          "scenarioId": "lnc-009",
+          "description": "Localized reversible state transition."
+        },
+        {
+          "id": "alternative-promotion",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/demonstratedRevision/alternativePromotion",
+          "scenarioId": "lnc-011",
+          "description": "Localized alternative promotion after a discriminating outcome."
+        },
+        {
+          "id": "mechanism-retirement",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/demonstratedRevision/mechanismRetirement",
+          "scenarioId": "lnc-012",
+          "description": "Localized mechanism retirement after falsification."
+        },
+        {
+          "id": "multi-cycle",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/scenarioResults/13",
+          "scenarioId": "lnc-014",
+          "description": "Recursive-learning scenario with bounded confidence history."
+        }
+      ],
+      "measuredResults": {
+        "utility": 0.9752923976608187,
+        "predictionMae": 0.00789473684210527,
+        "transitionPrecision": 1,
+        "transitionRecall": 1,
+        "negativeControlPrecision": 1,
+        "expectedTransitionCount": 36,
+        "observedExpectedTransitionCount": 36,
+        "falseTransitionCount": 0,
+        "falseNonlinearClassificationCount": 0,
+        "lineageComplete": true,
+        "reversible": true,
+        "alternativePromoted": true,
+        "mechanismRetired": true,
+        "cascadeDetected": false,
+        "oscillationDetected": false
+      },
+      "researchDimensions": {
+        "explanatoryDepth": {
+          "status": "improved",
+          "evidenceStrength": "strong",
+          "measuredIndicators": [
+            {
+              "name": "mechanism and activation explanation accuracy",
+              "value": 0.9649122807017544,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            },
+            {
+              "name": "prediction MAE",
+              "value": 0.00789473684210527,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            },
+            {
+              "name": "transition lineage completeness",
+              "value": 1,
+              "artifactReferenceIds": [
+                "interpretability"
+              ]
+            }
+          ],
+          "interpretation": "The treatment recovered qualified mechanism, state-interaction, and outcome-revision structure against preregistered truth.",
+          "limitations": [
+            "The experiment did not measure natural-language richness or universal organizational explanation quality."
+          ]
+        },
+        "evidenceIntegration": {
+          "status": "not-measured",
+          "evidenceStrength": "limited",
+          "measuredIndicators": [
+            {
+              "name": "negative-control precision",
+              "value": 1,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            },
+            {
+              "name": "lineage completeness",
+              "value": 1,
+              "artifactReferenceIds": [
+                "interpretability"
+              ]
+            }
+          ],
+          "interpretation": "Lineage and negative-control safety are available as boundary evidence, but the experiment did not measure independent-source or governed cross-silo integration.",
+          "limitations": [
+            "Evidence Integration is not measured; no positive integration claim is made."
+          ]
+        },
+        "alternativeResolution": {
+          "status": "improved",
+          "evidenceStrength": "moderate",
+          "measuredIndicators": [
+            {
+              "name": "alternative discrimination",
+              "value": 0.8947368421052632,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            },
+            {
+              "name": "alternative promoted",
+              "value": true,
+              "artifactReferenceIds": [
+                "alternative-promotion"
+              ]
+            },
+            {
+              "name": "mechanism retired",
+              "value": true,
+              "artifactReferenceIds": [
+                "mechanism-retirement"
+              ]
+            }
+          ],
+          "interpretation": "Registered discriminating outcomes safely weakened, retired, or promoted the tested alternatives.",
+          "limitations": [
+            "Completed Explanation adjudication and comparative Evidence roles were not measured."
+          ]
+        },
+        "stateAndDynamicsAwareness": {
+          "status": "improved",
+          "evidenceStrength": "strong",
+          "measuredIndicators": [
+            {
+              "name": "expected transitions recovered",
+              "value": 36,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            },
+            {
+              "name": "transition precision",
+              "value": 1,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            },
+            {
+              "name": "reversible state transition",
+              "value": true,
+              "artifactReferenceIds": [
+                "state-reversal"
+              ]
+            },
+            {
+              "name": "false transitions",
+              "value": 0,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            }
+          ],
+          "interpretation": "The treatment recovered all expected state-sensitive transitions, including reversal, without false transitions.",
+          "limitations": [
+            "The result is limited to the controlled scenario corpus."
+          ]
+        },
+        "longitudinalLearning": {
+          "status": "improved",
+          "evidenceStrength": "moderate",
+          "measuredIndicators": [
+            {
+              "name": "confidence cascade rate",
+              "value": 0,
+              "artifactReferenceIds": [
+                "stability"
+              ]
+            },
+            {
+              "name": "oscillation rate",
+              "value": 0,
+              "artifactReferenceIds": [
+                "stability"
+              ]
+            },
+            {
+              "name": "bounded multi-cycle confidence",
+              "value": true,
+              "artifactReferenceIds": [
+                "multi-cycle"
+              ]
+            },
+            {
+              "name": "alternative promoted after outcome",
+              "value": true,
+              "artifactReferenceIds": [
+                "alternative-promotion"
+              ]
+            }
+          ],
+          "interpretation": "Across the synthetic multi-cycle case, registered outcomes revised structure and confidence without cascade or oscillation.",
+          "limitations": [
+            "Real-world longitudinal learning, persistence, and temporal governance were not measured."
+          ]
+        },
+        "emergentInsight": {
+          "status": "not-measured",
+          "evidenceStrength": "none",
+          "measuredIndicators": [],
+          "interpretation": "The experiment did not test whether governed composition produces an insight unavailable from any isolated input or silo.",
+          "limitations": [
+            "No positive result is inferred from the presence of nonlinear behavior."
+          ]
+        }
+      },
+      "guardrails": {
+        "governanceIntegrity": {
+          "status": "passed",
+          "measuredIndicators": [
+            {
+              "name": "lineage completeness",
+              "value": 1,
+              "artifactReferenceIds": [
+                "interpretability"
+              ]
+            },
+            {
+              "name": "false transitions",
+              "value": 0,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            },
+            {
+              "name": "negative-control precision",
+              "value": 1,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            }
+          ],
+          "interpretation": "Measured transitions remained attributable and negative controls remained safe.",
+          "limitations": [
+            "Permission, purpose limitation, and privacy were outside this experiment."
+          ]
+        },
+        "systemSustainability": {
+          "status": "passed",
+          "measuredIndicators": [
+            {
+              "name": "determinism controls passed",
+              "value": true,
+              "artifactReferenceIds": [
+                "determinism"
+              ]
+            },
+            {
+              "name": "confidence cascade rate",
+              "value": 0,
+              "artifactReferenceIds": [
+                "stability"
+              ]
+            },
+            {
+              "name": "oscillation rate",
+              "value": 0,
+              "artifactReferenceIds": [
+                "stability"
+              ]
+            }
+          ],
+          "interpretation": "The measured architecture remained deterministic, bounded, and free of cascades and oscillation.",
+          "limitations": [
+            "Production performance, migration, and maintenance costs were not measured."
+          ]
+        }
+      },
+      "complexityEvidence": {
+        "benchmarkObserved": [
+          "Nonlinearity is concentrated in three explicit transition zones.",
+          "Each transition carries lineage, reason, and reversal criteria.",
+          "Ablations isolate formation, state interaction, and outcome revision contribution."
+        ],
+        "productionEstimated": [
+          "Any production implementation would require separately designed ownership, migration, and rollback contracts."
+        ],
+        "limitations": [
+          "The experiment did not measure production migration or maintenance cost."
+        ]
+      },
+      "traceability": {
+        "sourceResultHash": "61aba37a2de5e8c9952a82c80f7103a33aa9150dd9795a133a074a5e47e228e8",
+        "adapterProtocolVersion": "1",
+        "directlyMeasuredFields": [
+          "utility",
+          "predictionMae",
+          "transitionPrecision",
+          "transitionRecall",
+          "negativeControlPrecision",
+          "transition counts",
+          "lineage completeness",
+          "cascade and oscillation rates"
+        ],
+        "derivedInterpretations": [
+          "six research-dimension assessments",
+          "Governance Integrity disposition",
+          "System Sustainability disposition",
+          "production-readiness gate disposition"
+        ]
+      },
+      "productionReadinessGates": [
+        {
+          "gate": "Treatment is isolated to one stated semantic responsibility.",
+          "status": "passed",
+          "evidence": "Three localized transition zones are explicit and lower representation is unchanged.",
+          "artifactReferenceIds": [
+            "leakage",
+            "sequence-tests"
+          ]
+        },
+        {
+          "gate": "At least one research dimension improves against independent expected outcomes.",
+          "status": "passed",
+          "evidence": "All 36 preregistered expected transitions were recovered with zero false transitions.",
+          "artifactReferenceIds": [
+            "architecture-scores"
+          ]
+        },
+        {
+          "gate": "Improvement survives relevant controls and contribution ablations.",
+          "status": "passed",
+          "evidence": "Negative-control precision remained 1.0 and each localized-zone ablation reduced utility or transition recall.",
+          "artifactReferenceIds": [
+            "architecture-scores",
+            "ablations"
+          ]
+        },
+        {
+          "gate": "Deterministic replay, ordering, identity, and fixture isolation hold.",
+          "status": "passed",
+          "evidence": "All recorded determinism and leakage-isolation checks passed.",
+          "artifactReferenceIds": [
+            "determinism",
+            "leakage"
+          ]
+        },
+        {
+          "gate": "No material regression appears in any measured dimension.",
+          "status": "passed",
+          "evidence": "Localized metrics improved or remained safe relative to the stable baseline.",
+          "artifactReferenceIds": [
+            "architecture-scores",
+            "stability"
+          ]
+        },
+        {
+          "gate": "Governance Integrity and System Sustainability remain acceptable.",
+          "status": "passed",
+          "evidence": "Lineage was complete; false transitions, cascades, and oscillation were zero.",
+          "artifactReferenceIds": [
+            "interpretability",
+            "stability"
+          ]
+        },
+        {
+          "gate": "The earliest responsible canonical producer is identified.",
+          "status": "passed",
+          "evidence": "The experiment isolates formation, state interaction, and post-prediction revision zones.",
+          "artifactReferenceIds": [
+            "ablations",
+            "sequence-tests"
+          ]
+        },
+        {
+          "gate": "The smallest compatible production extension and rollback path are known.",
+          "status": "not-yet-demonstrated",
+          "evidence": "The benchmark does not design or assign a production contract.",
+          "artifactReferenceIds": [
+            "source-classification"
+          ]
+        },
+        {
+          "gate": "Independent replication or equivalent held-out evaluation supports the result.",
+          "status": "not-yet-demonstrated",
+          "evidence": "The result uses one controlled synthetic corpus and explicitly recommends independent replication.",
+          "artifactReferenceIds": [
+            "source-classification"
+          ]
+        }
+      ],
+      "decision": "replicate"
+    },
+    {
+      "experimentId": "localized-nonlinear-cognition-experiment-001",
+      "architectureId": "pervasive-nonlinear",
+      "scenarioIds": [
+        "lnc-001",
+        "lnc-002",
+        "lnc-003",
+        "lnc-004",
+        "lnc-005",
+        "lnc-006",
+        "lnc-007",
+        "lnc-008",
+        "lnc-009",
+        "lnc-010",
+        "lnc-011",
+        "lnc-012",
+        "lnc-013",
+        "lnc-014",
+        "lnc-015",
+        "lnc-016",
+        "lnc-017",
+        "lnc-018",
+        "lnc-019"
+      ],
+      "treatmentType": "pervasive-nonlinear",
+      "sourceArtifacts": [
+        {
+          "id": "source-classification",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/classification",
+          "description": "Original experiment classification."
+        },
+        {
+          "id": "utility",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/scores/utility",
+          "description": "Original architecture utility values."
+        },
+        {
+          "id": "architecture-scores",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/scores",
+          "description": "Original architecture metrics and transition analyses."
+        },
+        {
+          "id": "stability",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/stability",
+          "description": "Cascade, oscillation, and irreversible-error analysis."
+        },
+        {
+          "id": "interpretability",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/interpretability",
+          "description": "Lineage, reason, reversal, and causal-chain analysis."
+        },
+        {
+          "id": "determinism",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/determinism",
+          "description": "Repeated and reordered execution controls."
+        },
+        {
+          "id": "leakage",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/leakage",
+          "description": "Semantic-boundary and benchmark-leakage audit."
+        },
+        {
+          "id": "ablations",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/ablations",
+          "description": "Localized-zone contribution ablations."
+        },
+        {
+          "id": "sequence-tests",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/sequenceTests",
+          "description": "Formation and revision sequence controls."
+        },
+        {
+          "id": "state-reversal",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/demonstratedRevision/reversibleStateTransition",
+          "scenarioId": "lnc-009",
+          "description": "Localized reversible state transition."
+        },
+        {
+          "id": "alternative-promotion",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/demonstratedRevision/alternativePromotion",
+          "scenarioId": "lnc-011",
+          "description": "Localized alternative promotion after a discriminating outcome."
+        },
+        {
+          "id": "mechanism-retirement",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/demonstratedRevision/mechanismRetirement",
+          "scenarioId": "lnc-012",
+          "description": "Localized mechanism retirement after falsification."
+        },
+        {
+          "id": "multi-cycle",
+          "file": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+          "jsonPointer": "/scenarioResults/13",
+          "scenarioId": "lnc-014",
+          "description": "Recursive-learning scenario with bounded confidence history."
+        }
+      ],
+      "measuredResults": {
+        "utility": 0.6096978557504873,
+        "predictionMae": 0.20000000000000004,
+        "transitionPrecision": 0.6666666666666666,
+        "transitionRecall": 0.8888888888888888,
+        "negativeControlPrecision": 0.25,
+        "expectedTransitionCount": 36,
+        "observedExpectedTransitionCount": 32,
+        "falseTransitionCount": 16,
+        "falseNonlinearClassificationCount": 6,
+        "lineageComplete": true,
+        "cascadeDetected": true,
+        "oscillationDetected": false
+      },
+      "researchDimensions": {
+        "explanatoryDepth": {
+          "status": "mixed",
+          "evidenceStrength": "strong",
+          "measuredIndicators": [
+            {
+              "name": "prediction MAE",
+              "value": 0.20000000000000004,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            },
+            {
+              "name": "false transitions",
+              "value": 16,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            }
+          ],
+          "interpretation": "Some expected structure was recovered, but unsupported transitions and higher prediction error make explanatory adequacy mixed.",
+          "limitations": [
+            "The experiment is a controlled synthetic architecture test."
+          ]
+        },
+        "evidenceIntegration": {
+          "status": "regressed",
+          "evidenceStrength": "strong",
+          "measuredIndicators": [
+            {
+              "name": "negative-control precision",
+              "value": 0.25,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            },
+            {
+              "name": "false nonlinear classifications",
+              "value": 6,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            },
+            {
+              "name": "lineage completeness",
+              "value": 1,
+              "artifactReferenceIds": [
+                "interpretability"
+              ]
+            }
+          ],
+          "interpretation": "Inputs remained traceable, but broad composition converted irrelevant or redundant support into false nonlinear behavior.",
+          "limitations": [
+            "Independent-source and governed cross-silo integration were not measured."
+          ]
+        },
+        "alternativeResolution": {
+          "status": "regressed",
+          "evidenceStrength": "strong",
+          "measuredIndicators": [
+            {
+              "name": "alternative discrimination",
+              "value": 0.6842105263157895,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            }
+          ],
+          "interpretation": "Alternative discrimination fell below the stable comparator while false transitions increased.",
+          "limitations": [
+            "Completed Explanation adjudication was not measured."
+          ]
+        },
+        "stateAndDynamicsAwareness": {
+          "status": "regressed",
+          "evidenceStrength": "strong",
+          "measuredIndicators": [
+            {
+              "name": "transition precision",
+              "value": 0.6666666666666666,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            },
+            {
+              "name": "false transitions",
+              "value": 16,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            }
+          ],
+          "interpretation": "Broad nonlinear behavior recovered some expected transitions but introduced unsupported state changes.",
+          "limitations": [
+            "The treatment's deterministic ordering does not make its transitions valid."
+          ]
+        },
+        "longitudinalLearning": {
+          "status": "regressed",
+          "evidenceStrength": "strong",
+          "measuredIndicators": [
+            {
+              "name": "confidence cascade rate",
+              "value": 0.15789473684210525,
+              "artifactReferenceIds": [
+                "stability"
+              ]
+            },
+            {
+              "name": "oscillation rate",
+              "value": 0,
+              "artifactReferenceIds": [
+                "stability"
+              ]
+            }
+          ],
+          "interpretation": "Recursive feedback caused confidence cascades, making the multi-cycle behavior unsafe.",
+          "limitations": [
+            "Persistence and real-world learning were not measured."
+          ]
+        },
+        "emergentInsight": {
+          "status": "not-measured",
+          "evidenceStrength": "none",
+          "measuredIndicators": [],
+          "interpretation": "The experiment did not test whether governed composition produces an insight unavailable from any isolated input or silo.",
+          "limitations": [
+            "No positive result is inferred from the presence of nonlinear behavior."
+          ]
+        }
+      },
+      "guardrails": {
+        "governanceIntegrity": {
+          "status": "failed",
+          "measuredIndicators": [
+            {
+              "name": "lineage completeness",
+              "value": 1,
+              "artifactReferenceIds": [
+                "interpretability"
+              ]
+            },
+            {
+              "name": "false transitions",
+              "value": 16,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            },
+            {
+              "name": "negative-control precision",
+              "value": 0.25,
+              "artifactReferenceIds": [
+                "architecture-scores"
+              ]
+            }
+          ],
+          "interpretation": "Complete lineage did not prevent unsupported transitions or negative-control failures.",
+          "limitations": [
+            "Permission, purpose limitation, and privacy were outside this experiment."
+          ]
+        },
+        "systemSustainability": {
+          "status": "failed",
+          "measuredIndicators": [
+            {
+              "name": "determinism controls passed",
+              "value": true,
+              "artifactReferenceIds": [
+                "determinism"
+              ]
+            },
+            {
+              "name": "confidence cascade rate",
+              "value": 0.15789473684210525,
+              "artifactReferenceIds": [
+                "stability"
+              ]
+            },
+            {
+              "name": "oscillation rate",
+              "value": 0,
+              "artifactReferenceIds": [
+                "stability"
+              ]
+            }
+          ],
+          "interpretation": "Execution was deterministic, but broad nonlinear placement caused false transitions and confidence cascades.",
+          "limitations": [
+            "Production performance, migration, and maintenance costs were not measured."
+          ]
+        }
+      },
+      "complexityEvidence": {
+        "benchmarkObserved": [
+          "Nonlinearity is applied across lower-layer promotion, condition switching, and recursive feedback.",
+          "The treatment produced 16 false transitions and a 0.158 confidence-cascade rate."
+        ],
+        "productionEstimated": [
+          "Pervasive placement implies a broader validation and rollback surface than localized placement."
+        ],
+        "limitations": [
+          "The broader production cost is an architectural estimate, not a measured repository metric."
+        ]
+      },
+      "traceability": {
+        "sourceResultHash": "61aba37a2de5e8c9952a82c80f7103a33aa9150dd9795a133a074a5e47e228e8",
+        "adapterProtocolVersion": "1",
+        "directlyMeasuredFields": [
+          "utility",
+          "predictionMae",
+          "transitionPrecision",
+          "transitionRecall",
+          "negativeControlPrecision",
+          "transition counts",
+          "lineage completeness",
+          "cascade and oscillation rates"
+        ],
+        "derivedInterpretations": [
+          "six research-dimension assessments",
+          "Governance Integrity disposition",
+          "System Sustainability disposition",
+          "production-readiness gate disposition"
+        ]
+      },
+      "productionReadinessGates": [
+        {
+          "gate": "Treatment is isolated to one stated semantic responsibility.",
+          "status": "passed",
+          "evidence": "Three localized transition zones are explicit and lower representation is unchanged.",
+          "artifactReferenceIds": [
+            "leakage",
+            "sequence-tests"
+          ]
+        },
+        {
+          "gate": "At least one research dimension improves against independent expected outcomes.",
+          "status": "passed",
+          "evidence": "All 36 preregistered expected transitions were recovered with zero false transitions.",
+          "artifactReferenceIds": [
+            "architecture-scores"
+          ]
+        },
+        {
+          "gate": "Improvement survives relevant controls and contribution ablations.",
+          "status": "failed",
+          "evidence": "Negative-control precision fell to 0.25.",
+          "artifactReferenceIds": [
+            "architecture-scores",
+            "ablations"
+          ]
+        },
+        {
+          "gate": "Deterministic replay, ordering, identity, and fixture isolation hold.",
+          "status": "passed",
+          "evidence": "All recorded determinism and leakage-isolation checks passed.",
+          "artifactReferenceIds": [
+            "determinism",
+            "leakage"
+          ]
+        },
+        {
+          "gate": "No material regression appears in any measured dimension.",
+          "status": "failed",
+          "evidence": "The treatment produced 16 false transitions and worse prediction error.",
+          "artifactReferenceIds": [
+            "architecture-scores",
+            "stability"
+          ]
+        },
+        {
+          "gate": "Governance Integrity and System Sustainability remain acceptable.",
+          "status": "failed",
+          "evidence": "The treatment produced false transitions and a non-zero confidence-cascade rate.",
+          "artifactReferenceIds": [
+            "interpretability",
+            "stability"
+          ]
+        },
+        {
+          "gate": "The earliest responsible canonical producer is identified.",
+          "status": "passed",
+          "evidence": "The experiment isolates formation, state interaction, and post-prediction revision zones.",
+          "artifactReferenceIds": [
+            "ablations",
+            "sequence-tests"
+          ]
+        },
+        {
+          "gate": "The smallest compatible production extension and rollback path are known.",
+          "status": "not-yet-demonstrated",
+          "evidence": "The benchmark does not design or assign a production contract.",
+          "artifactReferenceIds": [
+            "source-classification"
+          ]
+        },
+        {
+          "gate": "Independent replication or equivalent held-out evaluation supports the result.",
+          "status": "not-yet-demonstrated",
+          "evidence": "The result uses one controlled synthetic corpus and explicitly recommends independent replication.",
+          "artifactReferenceIds": [
+            "source-classification"
+          ]
+        }
+      ],
+      "decision": "reject"
+    }
+  ],
+  "comparison": {
+    "stableLinear": "stable-linear",
+    "localizedNonlinear": "localized-nonlinear",
+    "pervasiveNonlinear": "pervasive-nonlinear",
+    "weightedTotal": null
+  },
+  "finalDecision": "replicate",
+  "finalDecisionBasis": "Localized behavior passes the measured scientific and guardrail gates, but independent replication and a production contract are not yet demonstrated."
+}

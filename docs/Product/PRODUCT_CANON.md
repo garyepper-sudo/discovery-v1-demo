@@ -31,7 +31,10 @@ override those contracts.
 
 > **Discovery is a platform that continuously builds shared organizational intelligence that becomes more valuable than the sum of its contributors, information, and experiences.**
 
-Discovery helps organizations continuously grow shared intelligence. It accomplishes this by continuously improving an organization's understanding of itself.
+Discovery exists to maximize useful organizational understanding for any
+authorized person, team, function, initiative, or organizational scope.
+Discovery helps organizations continuously grow shared intelligence by
+improving an organization's governed understanding of itself.
 
 Discovery does not replace executive decision-making.
 
@@ -48,6 +51,23 @@ Discovery is a **shared organizational intelligence platform**.
 Its first major application is the **Executive Operating System**, which remains the current product focus and helps organizations continuously evolve through better executive understanding, decisions, simulation, communication, and learning.
 
 Its purpose is to help organizations continuously evolve.
+
+Executive Assessment, recommendation, simulation, decision, and communication
+are downstream applications or projections of organizational understanding.
+They are not the universal endpoint of cognition.
+
+Organizational Understanding is reusable platform cognition. Executive
+Assessment may interpret that understanding for executive work, but it does
+not own the organization's universal truth or define the endpoint for other
+applications.
+
+Canonical Organizational Understanding owns governed Explanation composition,
+organizational scope, outcome membership, composition uncertainty, stable
+revision identity, and reusable organizational truth. Completed Explanations
+retain their claims, ancestry, assumptions, and comparative Evidence roles.
+Executive Assessment consumes canonical Organizational Understanding; legacy
+assessment-derived Understanding fields are compatibility views, not a second
+truth owner.
 
 Discovery is not:
 
@@ -138,6 +158,44 @@ The complete strategic hierarchy and terminology are defined in:
 ```text
 docs/Architecture/Canon/SHARED_ORGANIZATIONAL_INTELLIGENCE.md
 ```
+
+# Discovery 2 Architecture
+
+Discovery 2 is organized by **Adaptive Organizational Cognition**:
+
+> Discovery is a governed organizational learning system whose cognition
+> exhibits a variation-selection-retention grammar at several boundaries.
+
+This is an organizing theory above the technical architecture. It does not
+make Discovery an evolutionary algorithm, authorize randomness, or require a
+universal candidate object.
+
+Structured Organizational Reasoning remains the technical execution
+architecture. Explanation-centered reasoning is the current frontier:
+completed Organizational Explanations exist and retain structured ancestry;
+competing Explanation adjudication is benchmark validated; production
+consumption remains intentionally deferred.
+
+Applications consume canonical cognition and contribute through governed
+paths. They do not create organizational truth. AI may perform bounded
+interpretation, retrieval, candidate generation, simulation assistance, and
+communication. Discovery retains ownership of identity, ancestry,
+contradiction, authority, retention, revision, governance, and organizational
+truth.
+
+Persistence, cognitive authority, and permission to disclose are separate.
+Evidence ancestry is also distinct from comparative evidential role.
+Contribution Validation is the architectural responsibility that must govern
+source admission, bounded authority transitions, and disclosure without
+collapsing those responsibilities into one undifferentiated filter.
+
+# Architecture Evolution
+
+Discovery's first major product framing centered the Executive Cognitive
+Operating System and executive judgment. That framing remains valid for the
+first application and its workflows. It is superseded as the identity of the
+whole platform by Shared Organizational Intelligence and governed
+organizational understanding for any authorized participant.
 
 # Participation and Adoption
 
@@ -491,3 +549,15 @@ Discovery succeeds when:
 - Discovery demonstrably becomes better as organizations evolve.
 
 Discovery's success is measured not by the quality of individual recommendations, but by whether shared Organizational Intelligence becomes richer, more connected, more trustworthy, and more valuable over time—and improves organizational judgment as a result.
+
+## Phase 8A product integration status
+
+`Your Organization` now includes a read-only Runtime-backed adapter for
+canonical Organizational Understanding references, completed Explanations,
+uncertainty, Conditions, Organizational State, investigation opportunities,
+recent learning, and model evolution.
+
+The existing workspace and interaction model remain intact. Missing canonical
+display prose, persisted Evidence bodies, canonical Understanding confidence,
+and activated disclosure decisions are shown as unavailable rather than
+reconstructed in the product.

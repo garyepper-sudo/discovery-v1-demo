@@ -14,9 +14,12 @@ When uncertain, preserve existing architecture and ask for clarification rather 
 
 # Discovery Identity
 
-Discovery is an Executive Cognitive Operating System.
+Discovery is a shared organizational intelligence platform.
 
-Its purpose is to continuously improve executive judgment through a continuously evolving Operating Model.
+Its purpose is to maximize useful organizational understanding for any
+authorized person, team, function, or organizational scope. The Executive
+Cognitive Operating System is Discovery's first major application, not the
+universal identity or endpoint of the platform.
 
 Discovery is not:
 
@@ -27,14 +30,14 @@ Discovery is not:
 
 Discovery is:
 
-- an Executive Operating System
+- a governed organizational learning system
 - an organizational reasoning engine
-- a decision support platform
-- a continuous organizational learning system
+- a shared intelligence platform
+- a decision and action support platform
 
-The Operating Model is the product.
-
-Everything else exists to improve it.
+The Organization Model is the living product representation. The Operating
+Model is its primary operational representation. Organization Runtime remains
+the canonical technical persistence boundary.
 
 ---
 
@@ -51,7 +54,9 @@ Organizations continuously generate:
 - reviews
 - learning
 
-Every completed activity should improve the Operating Model.
+Every governed, meaningful activity should be capable of improving future
+organizational understanding. Interaction or persistence alone never grants
+organizational authority.
 
 The product exists to create a continuous organizational learning flywheel.
 
@@ -59,7 +64,8 @@ The product exists to create a continuous organizational learning flywheel.
 
 # Current Product Stage
 
-Discovery is currently focused on completing one complete organizational lifecycle.
+Discovery has completed its first executive lifecycle and is beginning the
+Discovery 2 production-integration program.
 
 Current lifecycle:
 
@@ -101,7 +107,8 @@ Learning
 
 Operating Model Evolution
 
-Future work should strengthen this lifecycle rather than introducing unrelated features.
+Future work should strengthen shared organizational understanding rather than
+introducing unrelated features or executive-only cognition.
 
 ---
 
@@ -120,6 +127,22 @@ Do not redesign them unless explicitly instructed.
 - Executive Decision pipeline
 
 Current work is exposing these capabilities through the product.
+
+Discovery's current organizing theory is **Adaptive Organizational Cognition**:
+the platform is a governed organizational learning system whose cognition
+exhibits a variation-selection-retention grammar at several boundaries. This
+is an organizing theory, not an evolutionary algorithm or replacement for the
+technical architecture.
+
+Structured Organizational Reasoning remains the technical execution
+architecture. Explanation-centered reasoning is the current frontier.
+Completed Organizational Explanations exist in production, while competing
+Explanation adjudication is benchmark validated and not production integrated.
+
+Authority, persistence, and disclosure are distinct. Evidence ancestry records
+where cognition came from; comparative evidential role records how Evidence
+supports, opposes, discriminates among, or revises specific alternatives.
+These concepts must not be conflated.
 
 ---
 
@@ -414,4 +437,6 @@ over large rewrites.
 
 The goal is not simply to write working code.
 
-The goal is to continuously improve Discovery while preserving the integrity of its Executive Cognitive Operating System.
+The goal is to continuously improve Discovery while preserving its governed
+Organizational Model, structured cognition, Runtime boundaries, and downstream
+Executive Cognitive Operating System.

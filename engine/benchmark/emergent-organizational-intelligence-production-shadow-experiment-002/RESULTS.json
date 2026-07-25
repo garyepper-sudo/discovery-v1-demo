@@ -1,0 +1,3963 @@
+{
+  "experiment": "Emergent Organizational Intelligence Production-Shadow Experiment 002",
+  "generatedAt": "2026-07-24T20:00:00.000Z",
+  "classification": "B — Partial Capability",
+  "productionPathAudit": {
+    "entryPoint": "runDiscoveryV3(InvestigationInput)",
+    "rawInputContract": "InvestigationEvidenceSource[]",
+    "invokedProductionFunctions": [
+      "buildEvidence",
+      "buildEvidenceNetwork",
+      "detectSignals",
+      "detectThemes",
+      "buildObservations",
+      "detectContradictions",
+      "buildMechanisms",
+      "buildCausalChains",
+      "generateExplanations",
+      "buildBeliefs",
+      "buildHypotheses",
+      "buildUnderstandingObject",
+      "runUnderstandingEngine",
+      "buildOrganismState",
+      "evolveOrganizationRuntime"
+    ],
+    "stagesExercised": [
+      "Evidence",
+      "Evidence relationships and network",
+      "Signals",
+      "Themes",
+      "Observations",
+      "Contradictions",
+      "Mechanisms",
+      "Causal Chains",
+      "Explanations",
+      "Beliefs",
+      "Hypotheses",
+      "Understanding",
+      "Organism State",
+      "Runtime Phenomena",
+      "Runtime Concepts",
+      "Runtime organizational Mechanisms",
+      "Runtime organizational Beliefs",
+      "Runtime Theories",
+      "Runtime Conditions",
+      "Runtime Organizational State",
+      "Executive Assessment",
+      "Predictions",
+      "Simulation",
+      "Executive Recommendation"
+    ],
+    "stagesNotDirectlyAvailable": [
+      "A production emergent-understanding projection",
+      "A canonical cross-silo emergence classifier"
+    ],
+    "benchmarkAdapters": [
+      {
+        "name": "raw fixture to InvestigationInput",
+        "kind": "shape-only",
+        "semanticContentAdded": false
+      },
+      {
+        "name": "generated cognition extractor",
+        "kind": "shape-and-lineage-only",
+        "semanticContentAdded": false
+      },
+      {
+        "name": "verbal projection",
+        "kind": "communication-only",
+        "semanticContentAdded": false
+      }
+    ],
+    "semanticInferenceLocations": [
+      "unchanged production Evidence Network, Theme, Mechanism, Belief, Theory, Condition, and State producers"
+    ],
+    "bypasses": [
+      "No persistence filesystem is used; Runtime evolves only in benchmark memory.",
+      "Historical multi-investigation replay is limited to Evidence timestamps within one isolated investigation per scenario."
+    ]
+  },
+  "dataSeparation": {
+    "registrationPrecedesFutureReveal": true,
+    "rawInputHash": "8e6f0a7a0a652db9b45ff79e8f4b31ee533dd4316571ffeb13b4b874d7110b2f"
+  },
+  "scores": {
+    "best-silo": {
+      "mechanismCorrectness": 0.454545,
+      "predictionAccuracy": 0.454545,
+      "interventionAccuracy": 0.454545,
+      "abstentionQuality": 0.545455,
+      "lineage": 0.545455,
+      "calibrationError": 0.332727,
+      "total": 48.79089
+    },
+    "local-aggregation": {
+      "mechanismCorrectness": 0.454545,
+      "predictionAccuracy": 0.454545,
+      "interventionAccuracy": 0.454545,
+      "abstentionQuality": 0.454545,
+      "lineage": 0.545455,
+      "calibrationError": 0.401818,
+      "total": 47.081785
+    },
+    "generic-summary": {
+      "mechanismCorrectness": 0.818182,
+      "predictionAccuracy": 0.545455,
+      "interventionAccuracy": 0.454545,
+      "abstentionQuality": 0.454545,
+      "lineage": 0.454545,
+      "calibrationError": 0.527273,
+      "total": 56.909085
+    },
+    "production-state": {
+      "mechanismCorrectness": 0.454545,
+      "predictionAccuracy": 0.454545,
+      "interventionAccuracy": 0.454545,
+      "abstentionQuality": 0.454545,
+      "lineage": 0.454545,
+      "calibrationError": 0.67529,
+      "total": 44.805325
+    },
+    "production-combined": {
+      "mechanismCorrectness": 0.454545,
+      "predictionAccuracy": 0.363636,
+      "interventionAccuracy": 0.363636,
+      "abstentionQuality": 0.727273,
+      "lineage": 0.727273,
+      "calibrationError": 0.408182,
+      "total": 48.86816
+    },
+    "verbal-projection": {
+      "mechanismCorrectness": 0.454545,
+      "predictionAccuracy": 0.363636,
+      "interventionAccuracy": 0.363636,
+      "abstentionQuality": 0.727273,
+      "lineage": 0.727273,
+      "calibrationError": 0.408182,
+      "total": 48.86816
+    }
+  },
+  "gates": {
+    "rawEvidenceOrigin": true,
+    "crossSiloMechanismFormation": false,
+    "individualNonRecoverability": false,
+    "genericSummarySuperiority": false,
+    "predictionImprovement": false,
+    "interventionImprovement": false,
+    "evidenceLineage": false,
+    "counterfactualNecessity": true,
+    "negativeControlAbstention": false,
+    "determinism": true,
+    "noInformationAdvantage": true,
+    "noBenchmarkSemanticInjection": true
+  },
+  "determinism": {
+    "repeatedByteEquality": true,
+    "reversedScenarioOrderEquality": true,
+    "reversedRawEvidenceOrderEquality": true,
+    "reversedSiloAndWithinSiloOrderEquality": true,
+    "stablePredictionRegistration": true,
+    "stableVerbalOutputs": true
+  },
+  "leakage": {
+    "passed": true,
+    "checks": {
+      "opaqueScenarioIds": true,
+      "neutralSourceIds": true,
+      "noScoringFieldsInInference": true,
+      "scoringTruthSeparated": true,
+      "futureWithheldBeforeRegistration": true,
+      "noAnswerFieldsInPredictions": true,
+      "adaptersShapeOnly": true,
+      "productionArtifactsGenerated": true,
+      "genericSummaryReceivedAllRawEvidence": true
+    },
+    "forbiddenFields": [],
+    "rawInputHash": "8e6f0a7a0a652db9b45ff79e8f4b31ee533dd4316571ffeb13b4b874d7110b2f",
+    "semanticInjectionDetected": false,
+    "residualRisks": [
+      "Synthetic Evidence wording was authored to make supported relationships plausible.",
+      "Scoring uses expected semantic terms after registration.",
+      "The benchmark-local model adapter selects a generated cross-silo Mechanism but does not create its semantics."
+    ]
+  },
+  "scenarioResults": [
+    {
+      "scenarioId": "scenario-001",
+      "evidenceCount": 5,
+      "silos": [
+        "Finance",
+        "Leadership",
+        "Operations",
+        "Product",
+        "Sales"
+      ],
+      "generated": {
+        "observations": 13,
+        "signals": 4,
+        "contradictions": 2,
+        "mechanisms": 1,
+        "qualifyingCrossSiloMechanisms": 1,
+        "phenomena": 4,
+        "concepts": 3,
+        "theories": 4,
+        "conditions": 8
+      },
+      "registeredProductionPrediction": {
+        "scenarioId": "scenario-001",
+        "modelId": "production-combined",
+        "explanation": "Enterprise agreements increasingly include customer-specific workflow commitments.; Discovery sees one condition depending on another enabling condition.; Roadmap exceptions for customer-specific workflows continue to increase.",
+        "mechanismId": "M-1",
+        "predictedOutcome": "Roadmap exceptions for customer-specific workflows continue to increase.",
+        "triggeringConditions": [
+          "Enterprise agreements increasingly include customer-specific workflow commitments."
+        ],
+        "predictionHorizon": "next observed organizational transition",
+        "confidence": 0.75,
+        "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+        "expectedInterventionEffect": "Roadmap exceptions for customer-specific workflows continue to increase.",
+        "supportingEvidenceIds": [
+          "E3",
+          "E6",
+          "E7",
+          "E8"
+        ],
+        "supportingCognitionArtifactIds": [
+          "M-1"
+        ],
+        "falsificationCriteria": [
+          "The predicted effect does not follow Enterprise agreements increasingly include customer-specific workflow commitments..",
+          "Removing a required silo leaves the mechanism unchanged."
+        ],
+        "abstained": false
+      }
+    },
+    {
+      "scenarioId": "scenario-002",
+      "evidenceCount": 5,
+      "silos": [
+        "HR",
+        "Information Systems",
+        "Leadership",
+        "Management",
+        "Teams"
+      ],
+      "generated": {
+        "observations": 11,
+        "signals": 4,
+        "contradictions": 1,
+        "mechanisms": 1,
+        "qualifyingCrossSiloMechanisms": 1,
+        "phenomena": 3,
+        "concepts": 3,
+        "theories": 2,
+        "conditions": 8
+      },
+      "registeredProductionPrediction": {
+        "scenarioId": "scenario-002",
+        "modelId": "production-combined",
+        "explanation": "Leadership says teams should make more decisions locally.; Discovery sees one condition depending on another enabling condition.; Promotion outcomes favor managers with fewer visible local failures.",
+        "mechanismId": "M-1",
+        "predictedOutcome": "Promotion outcomes favor managers with fewer visible local failures.",
+        "triggeringConditions": [
+          "Leadership says teams should make more decisions locally."
+        ],
+        "predictionHorizon": "next observed organizational transition",
+        "confidence": 0.7,
+        "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+        "expectedInterventionEffect": "Promotion outcomes favor managers with fewer visible local failures.",
+        "supportingEvidenceIds": [
+          "E6",
+          "E7",
+          "E8"
+        ],
+        "supportingCognitionArtifactIds": [
+          "M-1"
+        ],
+        "falsificationCriteria": [
+          "The predicted effect does not follow Leadership says teams should make more decisions locally..",
+          "Removing a required silo leaves the mechanism unchanged."
+        ],
+        "abstained": false
+      }
+    },
+    {
+      "scenarioId": "scenario-003",
+      "evidenceCount": 4,
+      "silos": [
+        "Finance",
+        "Operations",
+        "Procurement",
+        "Sales"
+      ],
+      "generated": {
+        "observations": 6,
+        "signals": 1,
+        "contradictions": 1,
+        "mechanisms": 1,
+        "qualifyingCrossSiloMechanisms": 1,
+        "phenomena": 1,
+        "concepts": 1,
+        "theories": 2,
+        "conditions": 5
+      },
+      "registeredProductionPrediction": {
+        "scenarioId": "scenario-003",
+        "modelId": "production-combined",
+        "explanation": "Supplier selection increasingly favors the lowest unit price.; Discovery sees a possible cause-effect path connecting these evidence items.; Lower-priced suppliers have longer and more variable lead times.",
+        "mechanismId": "M-1",
+        "predictedOutcome": "Lower-priced suppliers have longer and more variable lead times.",
+        "triggeringConditions": [
+          "Supplier selection increasingly favors the lowest unit price."
+        ],
+        "predictionHorizon": "next observed organizational transition",
+        "confidence": 0.67,
+        "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+        "expectedInterventionEffect": "Lower-priced suppliers have longer and more variable lead times.",
+        "supportingEvidenceIds": [
+          "E6",
+          "E7",
+          "E8"
+        ],
+        "supportingCognitionArtifactIds": [
+          "M-1"
+        ],
+        "falsificationCriteria": [
+          "The predicted effect does not follow Supplier selection increasingly favors the lowest unit price..",
+          "Removing a required silo leaves the mechanism unchanged."
+        ],
+        "abstained": false
+      }
+    },
+    {
+      "scenarioId": "scenario-004",
+      "evidenceCount": 5,
+      "silos": [
+        "Leadership",
+        "Marketing",
+        "Product",
+        "Sales",
+        "Support"
+      ],
+      "generated": {
+        "observations": 12,
+        "signals": 3,
+        "contradictions": 2,
+        "mechanisms": 3,
+        "qualifyingCrossSiloMechanisms": 0,
+        "phenomena": 1,
+        "concepts": 4,
+        "theories": 3,
+        "conditions": 8
+      },
+      "registeredProductionPrediction": {
+        "scenarioId": "scenario-004",
+        "modelId": "production-combined",
+        "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+        "predictedOutcome": "",
+        "triggeringConditions": [],
+        "predictionHorizon": "next observed organizational transition",
+        "confidence": 0.3,
+        "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+        "expectedInterventionEffect": "",
+        "supportingEvidenceIds": [],
+        "supportingCognitionArtifactIds": [],
+        "falsificationCriteria": [],
+        "abstained": true
+      }
+    },
+    {
+      "scenarioId": "scenario-005",
+      "evidenceCount": 4,
+      "silos": [
+        "Customer Success",
+        "Engineering",
+        "Leadership",
+        "Operations"
+      ],
+      "generated": {
+        "observations": 9,
+        "signals": 3,
+        "contradictions": 1,
+        "mechanisms": 1,
+        "qualifyingCrossSiloMechanisms": 1,
+        "phenomena": 1,
+        "concepts": 5,
+        "theories": 4,
+        "conditions": 8
+      },
+      "registeredProductionPrediction": {
+        "scenarioId": "scenario-005",
+        "modelId": "production-combined",
+        "explanation": "Deferred maintenance increased recovery complexity.; Discovery sees competing signals that create an unresolved strategic tension.; Incident duration increased as recovery procedures became stale.",
+        "mechanismId": "M-1",
+        "predictedOutcome": "Incident duration increased as recovery procedures became stale.",
+        "triggeringConditions": [
+          "Deferred maintenance increased recovery complexity."
+        ],
+        "predictionHorizon": "next observed organizational transition",
+        "confidence": 0.74,
+        "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+        "expectedInterventionEffect": "Incident duration increased as recovery procedures became stale.",
+        "supportingEvidenceIds": [
+          "E6",
+          "E7",
+          "E8",
+          "E9"
+        ],
+        "supportingCognitionArtifactIds": [
+          "M-1"
+        ],
+        "falsificationCriteria": [
+          "The predicted effect does not follow Deferred maintenance increased recovery complexity..",
+          "Removing a required silo leaves the mechanism unchanged."
+        ],
+        "abstained": false
+      }
+    },
+    {
+      "scenarioId": "scenario-006",
+      "evidenceCount": 4,
+      "silos": [
+        "Engineering",
+        "Leadership",
+        "Operations",
+        "Product"
+      ],
+      "generated": {
+        "observations": 9,
+        "signals": 3,
+        "contradictions": 1,
+        "mechanisms": 1,
+        "qualifyingCrossSiloMechanisms": 0,
+        "phenomena": 4,
+        "concepts": 5,
+        "theories": 4,
+        "conditions": 8
+      },
+      "registeredProductionPrediction": {
+        "scenarioId": "scenario-006",
+        "modelId": "production-combined",
+        "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+        "predictedOutcome": "",
+        "triggeringConditions": [],
+        "predictionHorizon": "next observed organizational transition",
+        "confidence": 0.3,
+        "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+        "expectedInterventionEffect": "",
+        "supportingEvidenceIds": [],
+        "supportingCognitionArtifactIds": [],
+        "falsificationCriteria": [],
+        "abstained": true
+      }
+    },
+    {
+      "scenarioId": "scenario-007",
+      "evidenceCount": 3,
+      "silos": [
+        "Finance",
+        "Legal",
+        "Sales"
+      ],
+      "generated": {
+        "observations": 7,
+        "signals": 1,
+        "contradictions": 1,
+        "mechanisms": 1,
+        "qualifyingCrossSiloMechanisms": 0,
+        "phenomena": 1,
+        "concepts": 3,
+        "theories": 3,
+        "conditions": 8
+      },
+      "registeredProductionPrediction": {
+        "scenarioId": "scenario-007",
+        "modelId": "production-combined",
+        "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+        "predictedOutcome": "",
+        "triggeringConditions": [],
+        "predictionHorizon": "next observed organizational transition",
+        "confidence": 0.3,
+        "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+        "expectedInterventionEffect": "",
+        "supportingEvidenceIds": [],
+        "supportingCognitionArtifactIds": [],
+        "falsificationCriteria": [],
+        "abstained": true
+      }
+    },
+    {
+      "scenarioId": "scenario-008",
+      "evidenceCount": 4,
+      "silos": [
+        "Finance",
+        "HR",
+        "Marketing",
+        "Operations"
+      ],
+      "generated": {
+        "observations": 9,
+        "signals": 3,
+        "contradictions": 4,
+        "mechanisms": 1,
+        "qualifyingCrossSiloMechanisms": 0,
+        "phenomena": 1,
+        "concepts": 2,
+        "theories": 2,
+        "conditions": 8
+      },
+      "registeredProductionPrediction": {
+        "scenarioId": "scenario-008",
+        "modelId": "production-combined",
+        "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+        "predictedOutcome": "",
+        "triggeringConditions": [],
+        "predictionHorizon": "next observed organizational transition",
+        "confidence": 0.3,
+        "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+        "expectedInterventionEffect": "",
+        "supportingEvidenceIds": [],
+        "supportingCognitionArtifactIds": [],
+        "falsificationCriteria": [],
+        "abstained": true
+      }
+    },
+    {
+      "scenarioId": "scenario-009",
+      "evidenceCount": 3,
+      "silos": [
+        "Finance",
+        "HR",
+        "Operations"
+      ],
+      "generated": {
+        "observations": 7,
+        "signals": 3,
+        "contradictions": 1,
+        "mechanisms": 1,
+        "qualifyingCrossSiloMechanisms": 1,
+        "phenomena": 2,
+        "concepts": 3,
+        "theories": 3,
+        "conditions": 8
+      },
+      "registeredProductionPrediction": {
+        "scenarioId": "scenario-009",
+        "modelId": "production-combined",
+        "explanation": "Approval steps increased after one quality review.; Discovery sees one condition depending on another enabling condition.; Some managers may be more cautious after the review.",
+        "mechanismId": "M-1",
+        "predictedOutcome": "Some managers may be more cautious after the review.",
+        "triggeringConditions": [
+          "Approval steps increased after one quality review."
+        ],
+        "predictionHorizon": "next observed organizational transition",
+        "confidence": 0.69,
+        "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+        "expectedInterventionEffect": "Some managers may be more cautious after the review.",
+        "supportingEvidenceIds": [
+          "E6",
+          "E7",
+          "E8"
+        ],
+        "supportingCognitionArtifactIds": [
+          "M-1"
+        ],
+        "falsificationCriteria": [
+          "The predicted effect does not follow Approval steps increased after one quality review..",
+          "Removing a required silo leaves the mechanism unchanged."
+        ],
+        "abstained": false
+      }
+    },
+    {
+      "scenarioId": "scenario-010",
+      "evidenceCount": 4,
+      "silos": [
+        "Finance",
+        "HR",
+        "Operations",
+        "Sales"
+      ],
+      "generated": {
+        "observations": 9,
+        "signals": 3,
+        "contradictions": 4,
+        "mechanisms": 1,
+        "qualifyingCrossSiloMechanisms": 0,
+        "phenomena": 1,
+        "concepts": 3,
+        "theories": 3,
+        "conditions": 8
+      },
+      "registeredProductionPrediction": {
+        "scenarioId": "scenario-010",
+        "modelId": "production-combined",
+        "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+        "predictedOutcome": "",
+        "triggeringConditions": [],
+        "predictionHorizon": "next observed organizational transition",
+        "confidence": 0.3,
+        "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+        "expectedInterventionEffect": "",
+        "supportingEvidenceIds": [],
+        "supportingCognitionArtifactIds": [],
+        "falsificationCriteria": [],
+        "abstained": true
+      }
+    },
+    {
+      "scenarioId": "scenario-011",
+      "evidenceCount": 5,
+      "silos": [
+        "HR",
+        "Information Systems",
+        "Leadership"
+      ],
+      "generated": {
+        "observations": 10,
+        "signals": 3,
+        "contradictions": 1,
+        "mechanisms": 2,
+        "qualifyingCrossSiloMechanisms": 0,
+        "phenomena": 1,
+        "concepts": 5,
+        "theories": 4,
+        "conditions": 8
+      },
+      "registeredProductionPrediction": {
+        "scenarioId": "scenario-011",
+        "modelId": "production-combined",
+        "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+        "predictedOutcome": "",
+        "triggeringConditions": [],
+        "predictionHorizon": "next observed organizational transition",
+        "confidence": 0.3,
+        "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+        "expectedInterventionEffect": "",
+        "supportingEvidenceIds": [],
+        "supportingCognitionArtifactIds": [],
+        "falsificationCriteria": [],
+        "abstained": true
+      }
+    }
+  ],
+  "registeredPredictions": [
+    {
+      "scenarioId": "scenario-001",
+      "modelId": "best-silo",
+      "variantId": "Finance",
+      "explanation": "The Finance evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-001",
+      "modelId": "best-silo",
+      "variantId": "Leadership",
+      "explanation": "The Leadership evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-001",
+      "modelId": "best-silo",
+      "variantId": "Operations",
+      "explanation": "The Operations evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-001",
+      "modelId": "best-silo",
+      "variantId": "Product",
+      "explanation": "The Product evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-001",
+      "modelId": "best-silo",
+      "variantId": "Sales",
+      "explanation": "Industry: Enterprise Software; Discovery sees one condition depending on another enabling condition.; Enterprise agreements increasingly include customer-specific workflow commitments.",
+      "mechanismId": "M-1",
+      "predictedOutcome": "Enterprise agreements increasingly include customer-specific workflow commitments.",
+      "triggeringConditions": [
+        "Industry: Enterprise Software"
+      ],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.66,
+      "recommendedIntervention": "Leadership should establish a canonical mechanism for capturing, maintaining, and reusing critical operating knowledge.",
+      "expectedInterventionEffect": "Enterprise agreements increasingly include customer-specific workflow commitments.",
+      "supportingEvidenceIds": [
+        "E3",
+        "E6"
+      ],
+      "supportingCognitionArtifactIds": [
+        "M-1"
+      ],
+      "falsificationCriteria": [
+        "The predicted effect does not follow Industry: Enterprise Software."
+      ],
+      "abstained": false
+    },
+    {
+      "scenarioId": "scenario-001",
+      "modelId": "generic-summary",
+      "explanation": "Sales: Enterprise agreements increasingly include customer-specific workflow commitments. Product: Roadmap exceptions for customer-specific workflows continue to increase. Operations: Implementation duration and specialist handoffs continue to increase. Finance: Services margin declines as implementation effort rises. Leadership: Leadership believes execution quality is the main issue.",
+      "predictedOutcome": "Leadership believes execution quality is the main issue.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.6,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Leadership believes execution quality is the main issue.",
+      "supportingEvidenceIds": [
+        "src-001-a",
+        "src-001-b",
+        "src-001-c",
+        "src-001-d",
+        "src-001-e"
+      ],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [
+        "One or more summarized observations do not persist."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-001",
+      "modelId": "local-aggregation",
+      "explanation": "Industry: Enterprise Software; Discovery sees one condition depending on another enabling condition.; Enterprise agreements increasingly include customer-specific workflow commitments. The Finance evidence does not produce a supported mechanism. The Leadership evidence does not produce a supported mechanism. The Operations evidence does not produce a supported mechanism. The Product evidence does not produce a supported mechanism.",
+      "predictedOutcome": "Enterprise agreements increasingly include customer-specific workflow commitments.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.66,
+      "recommendedIntervention": "Leadership should establish a canonical mechanism for capturing, maintaining, and reusing critical operating knowledge.",
+      "expectedInterventionEffect": "Enterprise agreements increasingly include customer-specific workflow commitments.",
+      "supportingEvidenceIds": [
+        "E3",
+        "E6"
+      ],
+      "supportingCognitionArtifactIds": [
+        "M-1"
+      ],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-001",
+      "modelId": "production-combined",
+      "explanation": "Enterprise agreements increasingly include customer-specific workflow commitments.; Discovery sees one condition depending on another enabling condition.; Roadmap exceptions for customer-specific workflows continue to increase.",
+      "mechanismId": "M-1",
+      "predictedOutcome": "Roadmap exceptions for customer-specific workflows continue to increase.",
+      "triggeringConditions": [
+        "Enterprise agreements increasingly include customer-specific workflow commitments."
+      ],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.75,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "Roadmap exceptions for customer-specific workflows continue to increase.",
+      "supportingEvidenceIds": [
+        "E3",
+        "E6",
+        "E7",
+        "E8"
+      ],
+      "supportingCognitionArtifactIds": [
+        "M-1"
+      ],
+      "falsificationCriteria": [
+        "The predicted effect does not follow Enterprise agreements increasingly include customer-specific workflow commitments..",
+        "Removing a required silo leaves the mechanism unchanged."
+      ],
+      "abstained": false
+    },
+    {
+      "scenarioId": "scenario-001",
+      "modelId": "production-state",
+      "explanation": "Discovery currently sees the organization as strained. The primary condition is Knowledge Continuity, reinforced by Operating Model and Strategic Alignment. Knowledge Continuity appears connected to Learning System and Operating Model upstream and may influence Leadership Dependency, Coordination System, and Execution Capacity downstream. Memory maturity is 38.",
+      "predictedOutcome": "Discovery currently sees the organization as strained. The primary condition is Knowledge Continuity, reinforced by Operating Model and Strategic Alignment. Knowledge Continuity appears connected to Learning System and Operating Model upstream and may influence Leadership Dependency, Coordination System, and Execution Capacity downstream. Memory maturity is 38.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.5772685459117077,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Discovery currently sees the organization as strained. The primary condition is Knowledge Continuity, reinforced by Operating Model and Strategic Alignment. Knowledge Continuity appears connected to Learning System and Operating Model upstream and may influence Leadership Dependency, Coordination System, and Execution Capacity downstream. Memory maturity is 38.",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [
+        "organizational-state-current"
+      ],
+      "falsificationCriteria": [
+        "A different Organizational State becomes dominant."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-001",
+      "modelId": "verbal-projection",
+      "explanation": "Roadmap exceptions for customer-specific workflows continue to increase. is not explained by one local issue. Production connected enterprise agreements increasingly include customer-specific workflow commitments. through discovery sees one condition depending on another enabling condition.. Operations, Product, Sales each observe a different part of the pattern. The relationship appears only when their Evidence is connected. Roadmap exceptions for customer-specific workflows continue to increase.",
+      "mechanismId": "M-1",
+      "predictedOutcome": "Roadmap exceptions for customer-specific workflows continue to increase.",
+      "triggeringConditions": [
+        "Enterprise agreements increasingly include customer-specific workflow commitments."
+      ],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.75,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "Roadmap exceptions for customer-specific workflows continue to increase.",
+      "supportingEvidenceIds": [
+        "E3",
+        "E6",
+        "E7",
+        "E8"
+      ],
+      "supportingCognitionArtifactIds": [
+        "M-1"
+      ],
+      "falsificationCriteria": [
+        "The predicted effect does not follow Enterprise agreements increasingly include customer-specific workflow commitments..",
+        "Removing a required silo leaves the mechanism unchanged."
+      ],
+      "abstained": false
+    },
+    {
+      "scenarioId": "scenario-002",
+      "modelId": "best-silo",
+      "variantId": "HR",
+      "explanation": "The HR evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-002",
+      "modelId": "best-silo",
+      "variantId": "Information Systems",
+      "explanation": "The Information Systems evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-002",
+      "modelId": "best-silo",
+      "variantId": "Leadership",
+      "explanation": "The Leadership evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-002",
+      "modelId": "best-silo",
+      "variantId": "Management",
+      "explanation": "The Management evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-002",
+      "modelId": "best-silo",
+      "variantId": "Teams",
+      "explanation": "The Teams evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-002",
+      "modelId": "generic-summary",
+      "explanation": "Leadership: Leadership says teams should make more decisions locally. Management: Managers escalate ambiguous decisions before acting. HR: Promotion outcomes favor managers with fewer visible local failures. Information Systems: Executives retain access to commercial and capacity information needed for trade-offs. Teams: Teams wait for senior approval when uncertainty increases.",
+      "predictedOutcome": "Teams wait for senior approval when uncertainty increases.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.6,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Teams wait for senior approval when uncertainty increases.",
+      "supportingEvidenceIds": [
+        "src-002-a",
+        "src-002-b",
+        "src-002-c",
+        "src-002-d",
+        "src-002-e"
+      ],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [
+        "One or more summarized observations do not persist."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-002",
+      "modelId": "local-aggregation",
+      "explanation": "The HR evidence does not produce a supported mechanism. The Information Systems evidence does not produce a supported mechanism. The Leadership evidence does not produce a supported mechanism. The Management evidence does not produce a supported mechanism. The Teams evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-002",
+      "modelId": "production-combined",
+      "explanation": "Leadership says teams should make more decisions locally.; Discovery sees one condition depending on another enabling condition.; Promotion outcomes favor managers with fewer visible local failures.",
+      "mechanismId": "M-1",
+      "predictedOutcome": "Promotion outcomes favor managers with fewer visible local failures.",
+      "triggeringConditions": [
+        "Leadership says teams should make more decisions locally."
+      ],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.7,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "Promotion outcomes favor managers with fewer visible local failures.",
+      "supportingEvidenceIds": [
+        "E6",
+        "E7",
+        "E8"
+      ],
+      "supportingCognitionArtifactIds": [
+        "M-1"
+      ],
+      "falsificationCriteria": [
+        "The predicted effect does not follow Leadership says teams should make more decisions locally..",
+        "Removing a required silo leaves the mechanism unchanged."
+      ],
+      "abstained": false
+    },
+    {
+      "scenarioId": "scenario-002",
+      "modelId": "production-state",
+      "explanation": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Decision Flow and Knowledge Continuity. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 32.",
+      "predictedOutcome": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Decision Flow and Knowledge Continuity. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 32.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.7291956636246877,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Decision Flow and Knowledge Continuity. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 32.",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [
+        "organizational-state-current"
+      ],
+      "falsificationCriteria": [
+        "A different Organizational State becomes dominant."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-002",
+      "modelId": "verbal-projection",
+      "explanation": "Promotion outcomes favor managers with fewer visible local failures. is not explained by one local issue. Production connected leadership says teams should make more decisions locally. through discovery sees one condition depending on another enabling condition.. HR, Leadership, Management each observe a different part of the pattern. The relationship appears only when their Evidence is connected. Promotion outcomes favor managers with fewer visible local failures.",
+      "mechanismId": "M-1",
+      "predictedOutcome": "Promotion outcomes favor managers with fewer visible local failures.",
+      "triggeringConditions": [
+        "Leadership says teams should make more decisions locally."
+      ],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.7,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "Promotion outcomes favor managers with fewer visible local failures.",
+      "supportingEvidenceIds": [
+        "E6",
+        "E7",
+        "E8"
+      ],
+      "supportingCognitionArtifactIds": [
+        "M-1"
+      ],
+      "falsificationCriteria": [
+        "The predicted effect does not follow Leadership says teams should make more decisions locally..",
+        "Removing a required silo leaves the mechanism unchanged."
+      ],
+      "abstained": false
+    },
+    {
+      "scenarioId": "scenario-003",
+      "modelId": "best-silo",
+      "variantId": "Finance",
+      "explanation": "The Finance evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish a canonical mechanism for capturing, maintaining, and reusing critical operating knowledge.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-003",
+      "modelId": "best-silo",
+      "variantId": "Operations",
+      "explanation": "The Operations evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish a canonical mechanism for capturing, maintaining, and reusing critical operating knowledge.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-003",
+      "modelId": "best-silo",
+      "variantId": "Procurement",
+      "explanation": "The Procurement evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish a canonical mechanism for capturing, maintaining, and reusing critical operating knowledge.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-003",
+      "modelId": "best-silo",
+      "variantId": "Sales",
+      "explanation": "The Sales evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-003",
+      "modelId": "generic-summary",
+      "explanation": "Procurement: Supplier selection increasingly favors the lowest unit price. Operations: Lower-priced suppliers have longer and more variable lead times. Sales: Customer delivery commitments are missed more often. Finance: Inventory buffers and expedite spending both continue to rise.",
+      "predictedOutcome": "Inventory buffers and expedite spending both continue to rise.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.6,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Inventory buffers and expedite spending both continue to rise.",
+      "supportingEvidenceIds": [
+        "src-003-a",
+        "src-003-b",
+        "src-003-c",
+        "src-003-d"
+      ],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [
+        "One or more summarized observations do not persist."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-003",
+      "modelId": "local-aggregation",
+      "explanation": "The Finance evidence does not produce a supported mechanism. The Operations evidence does not produce a supported mechanism. The Procurement evidence does not produce a supported mechanism. The Sales evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish a canonical mechanism for capturing, maintaining, and reusing critical operating knowledge.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-003",
+      "modelId": "production-combined",
+      "explanation": "Supplier selection increasingly favors the lowest unit price.; Discovery sees a possible cause-effect path connecting these evidence items.; Lower-priced suppliers have longer and more variable lead times.",
+      "mechanismId": "M-1",
+      "predictedOutcome": "Lower-priced suppliers have longer and more variable lead times.",
+      "triggeringConditions": [
+        "Supplier selection increasingly favors the lowest unit price."
+      ],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.67,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "Lower-priced suppliers have longer and more variable lead times.",
+      "supportingEvidenceIds": [
+        "E6",
+        "E7",
+        "E8"
+      ],
+      "supportingCognitionArtifactIds": [
+        "M-1"
+      ],
+      "falsificationCriteria": [
+        "The predicted effect does not follow Supplier selection increasingly favors the lowest unit price..",
+        "Removing a required silo leaves the mechanism unchanged."
+      ],
+      "abstained": false
+    },
+    {
+      "scenarioId": "scenario-003",
+      "modelId": "production-state",
+      "explanation": "Discovery currently sees the organization as strained. The primary condition is Knowledge Continuity, reinforced by Coordination System and Execution Capacity. Knowledge Continuity appears connected to Learning System and Operating Model upstream and may influence Coordination System and Execution Capacity downstream. Memory maturity is 19.",
+      "predictedOutcome": "Discovery currently sees the organization as strained. The primary condition is Knowledge Continuity, reinforced by Coordination System and Execution Capacity. Knowledge Continuity appears connected to Learning System and Operating Model upstream and may influence Coordination System and Execution Capacity downstream. Memory maturity is 19.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.5900304786155204,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Discovery currently sees the organization as strained. The primary condition is Knowledge Continuity, reinforced by Coordination System and Execution Capacity. Knowledge Continuity appears connected to Learning System and Operating Model upstream and may influence Coordination System and Execution Capacity downstream. Memory maturity is 19.",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [
+        "organizational-state-current"
+      ],
+      "falsificationCriteria": [
+        "A different Organizational State becomes dominant."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-003",
+      "modelId": "verbal-projection",
+      "explanation": "Lower-priced suppliers have longer and more variable lead times. is not explained by one local issue. Production connected supplier selection increasingly favors the lowest unit price. through discovery sees a possible cause-effect path connecting these evidence items.. Operations, Procurement, Sales each observe a different part of the pattern. The relationship appears only when their Evidence is connected. Lower-priced suppliers have longer and more variable lead times.",
+      "mechanismId": "M-1",
+      "predictedOutcome": "Lower-priced suppliers have longer and more variable lead times.",
+      "triggeringConditions": [
+        "Supplier selection increasingly favors the lowest unit price."
+      ],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.67,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "Lower-priced suppliers have longer and more variable lead times.",
+      "supportingEvidenceIds": [
+        "E6",
+        "E7",
+        "E8"
+      ],
+      "supportingCognitionArtifactIds": [
+        "M-1"
+      ],
+      "falsificationCriteria": [
+        "The predicted effect does not follow Supplier selection increasingly favors the lowest unit price..",
+        "Removing a required silo leaves the mechanism unchanged."
+      ],
+      "abstained": false
+    },
+    {
+      "scenarioId": "scenario-004",
+      "modelId": "best-silo",
+      "variantId": "Leadership",
+      "explanation": "The Leadership evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-004",
+      "modelId": "best-silo",
+      "variantId": "Marketing",
+      "explanation": "The Marketing evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should reduce the number of concurrently active priorities and explicitly protect the highest-leverage work from new demand.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-004",
+      "modelId": "best-silo",
+      "variantId": "Product",
+      "explanation": "The Product evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-004",
+      "modelId": "best-silo",
+      "variantId": "Sales",
+      "explanation": "The Sales evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish a canonical mechanism for capturing, maintaining, and reusing critical operating knowledge.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-004",
+      "modelId": "best-silo",
+      "variantId": "Support",
+      "explanation": "The Support evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish a canonical mechanism for capturing, maintaining, and reusing critical operating knowledge.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-004",
+      "modelId": "generic-summary",
+      "explanation": "Support: Customers repeatedly report confusion completing core workflows. Product: Use of advanced features remains low after activation. Sales: Prospects and customers increasingly request workflow training. Marketing: Marketing believes product awareness is insufficient. Leadership: Leadership believes the main problem is market awareness.",
+      "predictedOutcome": "Leadership believes the main problem is market awareness.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.6,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Leadership believes the main problem is market awareness.",
+      "supportingEvidenceIds": [
+        "src-004-a",
+        "src-004-b",
+        "src-004-c",
+        "src-004-d",
+        "src-004-e"
+      ],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [
+        "One or more summarized observations do not persist."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-004",
+      "modelId": "local-aggregation",
+      "explanation": "The Leadership evidence does not produce a supported mechanism. The Marketing evidence does not produce a supported mechanism. The Product evidence does not produce a supported mechanism. The Sales evidence does not produce a supported mechanism. The Support evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-004",
+      "modelId": "production-combined",
+      "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-004",
+      "modelId": "production-state",
+      "explanation": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Knowledge Continuity and Leadership Dependency. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 27.",
+      "predictedOutcome": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Knowledge Continuity and Leadership Dependency. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 27.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.7054582364242575,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Knowledge Continuity and Leadership Dependency. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 27.",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [
+        "organizational-state-current"
+      ],
+      "falsificationCriteria": [
+        "A different Organizational State becomes dominant."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-004",
+      "modelId": "verbal-projection",
+      "explanation": "No grounded cross-silo understanding is available to communicate.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-005",
+      "modelId": "best-silo",
+      "variantId": "Customer Success",
+      "explanation": "The Customer Success evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-005",
+      "modelId": "best-silo",
+      "variantId": "Engineering",
+      "explanation": "The Engineering evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-005",
+      "modelId": "best-silo",
+      "variantId": "Leadership",
+      "explanation": "The Leadership evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-005",
+      "modelId": "best-silo",
+      "variantId": "Operations",
+      "explanation": "The Operations evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-005",
+      "modelId": "generic-summary",
+      "explanation": "Leadership: Leadership deferred maintenance work to protect a launch date. Engineering: Deferred maintenance increased recovery complexity. Operations: Incident duration increased as recovery procedures became stale. Customer Success: Renewal concerns increased after repeated long outages.",
+      "predictedOutcome": "Renewal concerns increased after repeated long outages.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.6,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Renewal concerns increased after repeated long outages.",
+      "supportingEvidenceIds": [
+        "src-005-a",
+        "src-005-b",
+        "src-005-c",
+        "src-005-d"
+      ],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [
+        "One or more summarized observations do not persist."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-005",
+      "modelId": "local-aggregation",
+      "explanation": "The Customer Success evidence does not produce a supported mechanism. The Engineering evidence does not produce a supported mechanism. The Leadership evidence does not produce a supported mechanism. The Operations evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-005",
+      "modelId": "production-combined",
+      "explanation": "Deferred maintenance increased recovery complexity.; Discovery sees competing signals that create an unresolved strategic tension.; Incident duration increased as recovery procedures became stale.",
+      "mechanismId": "M-1",
+      "predictedOutcome": "Incident duration increased as recovery procedures became stale.",
+      "triggeringConditions": [
+        "Deferred maintenance increased recovery complexity."
+      ],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.74,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "Incident duration increased as recovery procedures became stale.",
+      "supportingEvidenceIds": [
+        "E6",
+        "E7",
+        "E8",
+        "E9"
+      ],
+      "supportingCognitionArtifactIds": [
+        "M-1"
+      ],
+      "falsificationCriteria": [
+        "The predicted effect does not follow Deferred maintenance increased recovery complexity..",
+        "Removing a required silo leaves the mechanism unchanged."
+      ],
+      "abstained": false
+    },
+    {
+      "scenarioId": "scenario-005",
+      "modelId": "production-state",
+      "explanation": "Discovery currently sees the organization as strained. The primary condition is Knowledge Continuity, reinforced by Learning System and Decision Flow. Knowledge Continuity appears connected to Learning System and Operating Model upstream and may influence Leadership Dependency, Coordination System, and Execution Capacity downstream. Memory maturity is 33.",
+      "predictedOutcome": "Discovery currently sees the organization as strained. The primary condition is Knowledge Continuity, reinforced by Learning System and Decision Flow. Knowledge Continuity appears connected to Learning System and Operating Model upstream and may influence Leadership Dependency, Coordination System, and Execution Capacity downstream. Memory maturity is 33.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.6571705664732143,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Discovery currently sees the organization as strained. The primary condition is Knowledge Continuity, reinforced by Learning System and Decision Flow. Knowledge Continuity appears connected to Learning System and Operating Model upstream and may influence Leadership Dependency, Coordination System, and Execution Capacity downstream. Memory maturity is 33.",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [
+        "organizational-state-current"
+      ],
+      "falsificationCriteria": [
+        "A different Organizational State becomes dominant."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-005",
+      "modelId": "verbal-projection",
+      "explanation": "Incident duration increased as recovery procedures became stale. is not explained by one local issue. Production connected deferred maintenance increased recovery complexity. through discovery sees competing signals that create an unresolved strategic tension.. Customer Success, Engineering, Leadership, Operations each observe a different part of the pattern. The relationship appears only when their Evidence is connected. Incident duration increased as recovery procedures became stale.",
+      "mechanismId": "M-1",
+      "predictedOutcome": "Incident duration increased as recovery procedures became stale.",
+      "triggeringConditions": [
+        "Deferred maintenance increased recovery complexity."
+      ],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.74,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "Incident duration increased as recovery procedures became stale.",
+      "supportingEvidenceIds": [
+        "E6",
+        "E7",
+        "E8",
+        "E9"
+      ],
+      "supportingCognitionArtifactIds": [
+        "M-1"
+      ],
+      "falsificationCriteria": [
+        "The predicted effect does not follow Deferred maintenance increased recovery complexity..",
+        "Removing a required silo leaves the mechanism unchanged."
+      ],
+      "abstained": false
+    },
+    {
+      "scenarioId": "scenario-006",
+      "modelId": "best-silo",
+      "variantId": "Engineering",
+      "explanation": "The Engineering evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-006",
+      "modelId": "best-silo",
+      "variantId": "Leadership",
+      "explanation": "The Leadership evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-006",
+      "modelId": "best-silo",
+      "variantId": "Operations",
+      "explanation": "The Operations evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-006",
+      "modelId": "best-silo",
+      "variantId": "Product",
+      "explanation": "The Product evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-006",
+      "modelId": "generic-summary",
+      "explanation": "Product: Requirements are complete before formal handoff. Engineering: Acceptance decisions change during implementation. Operations: No function owns cross-functional acceptance decisions. Leadership: Leadership believes engineering estimation is weak.",
+      "predictedOutcome": "Leadership believes engineering estimation is weak.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.6,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Leadership believes engineering estimation is weak.",
+      "supportingEvidenceIds": [
+        "src-006-a",
+        "src-006-b",
+        "src-006-c",
+        "src-006-d"
+      ],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [
+        "One or more summarized observations do not persist."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-006",
+      "modelId": "local-aggregation",
+      "explanation": "The Engineering evidence does not produce a supported mechanism. The Leadership evidence does not produce a supported mechanism. The Operations evidence does not produce a supported mechanism. The Product evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-006",
+      "modelId": "production-combined",
+      "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-006",
+      "modelId": "production-state",
+      "explanation": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Coordination System and Knowledge Continuity. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 56.",
+      "predictedOutcome": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Coordination System and Knowledge Continuity. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 56.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.6632261384661353,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Coordination System and Knowledge Continuity. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 56.",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [
+        "organizational-state-current"
+      ],
+      "falsificationCriteria": [
+        "A different Organizational State becomes dominant."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-006",
+      "modelId": "verbal-projection",
+      "explanation": "No grounded cross-silo understanding is available to communicate.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-007",
+      "modelId": "best-silo",
+      "variantId": "Finance",
+      "explanation": "The Finance evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should reduce the number of concurrently active priorities and explicitly protect the highest-leverage work from new demand.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-007",
+      "modelId": "best-silo",
+      "variantId": "Legal",
+      "explanation": "The Legal evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-007",
+      "modelId": "best-silo",
+      "variantId": "Sales",
+      "explanation": "The Sales evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-007",
+      "modelId": "generic-summary",
+      "explanation": "Legal: A new regional data-residency rule applies, and the current architecture cannot satisfy it; this is the complete cause of the regulated-market launch delay. Sales: Regulated-market launches are delayed. Finance: Revenue from the affected region is below plan.",
+      "predictedOutcome": "Revenue from the affected region is below plan.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.6,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Revenue from the affected region is below plan.",
+      "supportingEvidenceIds": [
+        "src-007-a",
+        "src-007-b",
+        "src-007-c"
+      ],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [
+        "One or more summarized observations do not persist."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-007",
+      "modelId": "local-aggregation",
+      "explanation": "The Finance evidence does not produce a supported mechanism. The Legal evidence does not produce a supported mechanism. The Sales evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should reduce the number of concurrently active priorities and explicitly protect the highest-leverage work from new demand.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-007",
+      "modelId": "production-combined",
+      "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-007",
+      "modelId": "production-state",
+      "explanation": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Knowledge Continuity and Operating Model. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 26.",
+      "predictedOutcome": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Knowledge Continuity and Operating Model. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 26.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.7215685849642256,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Knowledge Continuity and Operating Model. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 26.",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [
+        "organizational-state-current"
+      ],
+      "falsificationCriteria": [
+        "A different Organizational State becomes dominant."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-007",
+      "modelId": "verbal-projection",
+      "explanation": "No grounded cross-silo understanding is available to communicate.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-008",
+      "modelId": "best-silo",
+      "variantId": "Finance",
+      "explanation": "The Finance evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-008",
+      "modelId": "best-silo",
+      "variantId": "HR",
+      "explanation": "The HR evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-008",
+      "modelId": "best-silo",
+      "variantId": "Marketing",
+      "explanation": "Website:; Discovery sees competing signals that create an unresolved strategic tension.; Website traffic declined during the month.",
+      "mechanismId": "M-1",
+      "predictedOutcome": "Website traffic declined during the month.",
+      "triggeringConditions": [
+        "Website:"
+      ],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.73,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "Website traffic declined during the month.",
+      "supportingEvidenceIds": [
+        "E2",
+        "E6"
+      ],
+      "supportingCognitionArtifactIds": [
+        "M-1"
+      ],
+      "falsificationCriteria": [
+        "The predicted effect does not follow Website:."
+      ],
+      "abstained": false
+    },
+    {
+      "scenarioId": "scenario-008",
+      "modelId": "best-silo",
+      "variantId": "Operations",
+      "explanation": "The Operations evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-008",
+      "modelId": "generic-summary",
+      "explanation": "Marketing: Website traffic declined during the month. Finance: Travel spending increased during the month. Operations: Warehouse temperature variance also increased. HR: Benefits enrollment completed during the same period.",
+      "predictedOutcome": "Benefits enrollment completed during the same period.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.6,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Benefits enrollment completed during the same period.",
+      "supportingEvidenceIds": [
+        "src-008-a",
+        "src-008-b",
+        "src-008-c",
+        "src-008-d"
+      ],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [
+        "One or more summarized observations do not persist."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-008",
+      "modelId": "local-aggregation",
+      "explanation": "Website:; Discovery sees competing signals that create an unresolved strategic tension.; Website traffic declined during the month. The Finance evidence does not produce a supported mechanism. The HR evidence does not produce a supported mechanism. The Operations evidence does not produce a supported mechanism.",
+      "predictedOutcome": "Website traffic declined during the month.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.73,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "Website traffic declined during the month.",
+      "supportingEvidenceIds": [
+        "E2",
+        "E6"
+      ],
+      "supportingCognitionArtifactIds": [
+        "M-1"
+      ],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-008",
+      "modelId": "production-combined",
+      "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-008",
+      "modelId": "production-state",
+      "explanation": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Knowledge Continuity and Operating Model. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 20.",
+      "predictedOutcome": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Knowledge Continuity and Operating Model. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 20.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.7286052888888889,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Knowledge Continuity and Operating Model. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 20.",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [
+        "organizational-state-current"
+      ],
+      "falsificationCriteria": [
+        "A different Organizational State becomes dominant."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-008",
+      "modelId": "verbal-projection",
+      "explanation": "No grounded cross-silo understanding is available to communicate.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-009",
+      "modelId": "best-silo",
+      "variantId": "Finance",
+      "explanation": "The Finance evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-009",
+      "modelId": "best-silo",
+      "variantId": "HR",
+      "explanation": "The HR evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-009",
+      "modelId": "best-silo",
+      "variantId": "Operations",
+      "explanation": "The Operations evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-009",
+      "modelId": "generic-summary",
+      "explanation": "Operations: Approval steps increased after one quality review. HR: Some managers may be more cautious after the review. Finance: Overtime also increased, but the cause is not yet known.",
+      "predictedOutcome": "Overtime also increased, but the cause is not yet known.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.6,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Overtime also increased, but the cause is not yet known.",
+      "supportingEvidenceIds": [
+        "src-009-a",
+        "src-009-b",
+        "src-009-c"
+      ],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [
+        "One or more summarized observations do not persist."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-009",
+      "modelId": "local-aggregation",
+      "explanation": "The Finance evidence does not produce a supported mechanism. The HR evidence does not produce a supported mechanism. The Operations evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-009",
+      "modelId": "production-combined",
+      "explanation": "Approval steps increased after one quality review.; Discovery sees one condition depending on another enabling condition.; Some managers may be more cautious after the review.",
+      "mechanismId": "M-1",
+      "predictedOutcome": "Some managers may be more cautious after the review.",
+      "triggeringConditions": [
+        "Approval steps increased after one quality review."
+      ],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.69,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "Some managers may be more cautious after the review.",
+      "supportingEvidenceIds": [
+        "E6",
+        "E7",
+        "E8"
+      ],
+      "supportingCognitionArtifactIds": [
+        "M-1"
+      ],
+      "falsificationCriteria": [
+        "The predicted effect does not follow Approval steps increased after one quality review..",
+        "Removing a required silo leaves the mechanism unchanged."
+      ],
+      "abstained": false
+    },
+    {
+      "scenarioId": "scenario-009",
+      "modelId": "production-state",
+      "explanation": "Discovery currently sees the organization as strained. The primary condition is Decision Flow, reinforced by Strategic Alignment and Knowledge Continuity. Decision Flow appears connected to Leadership Dependency, Operating Model, and Strategic Alignment upstream and may influence Coordination System and Execution Capacity downstream. Memory maturity is 38.",
+      "predictedOutcome": "Discovery currently sees the organization as strained. The primary condition is Decision Flow, reinforced by Strategic Alignment and Knowledge Continuity. Decision Flow appears connected to Leadership Dependency, Operating Model, and Strategic Alignment upstream and may influence Coordination System and Execution Capacity downstream. Memory maturity is 38.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.682497543501734,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Discovery currently sees the organization as strained. The primary condition is Decision Flow, reinforced by Strategic Alignment and Knowledge Continuity. Decision Flow appears connected to Leadership Dependency, Operating Model, and Strategic Alignment upstream and may influence Coordination System and Execution Capacity downstream. Memory maturity is 38.",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [
+        "organizational-state-current"
+      ],
+      "falsificationCriteria": [
+        "A different Organizational State becomes dominant."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-009",
+      "modelId": "verbal-projection",
+      "explanation": "Some managers may be more cautious after the review. is not explained by one local issue. Production connected approval steps increased after one quality review. through discovery sees one condition depending on another enabling condition.. Finance, HR, Operations each observe a different part of the pattern. The relationship appears only when their Evidence is connected. Some managers may be more cautious after the review.",
+      "mechanismId": "M-1",
+      "predictedOutcome": "Some managers may be more cautious after the review.",
+      "triggeringConditions": [
+        "Approval steps increased after one quality review."
+      ],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.69,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "Some managers may be more cautious after the review.",
+      "supportingEvidenceIds": [
+        "E6",
+        "E7",
+        "E8"
+      ],
+      "supportingCognitionArtifactIds": [
+        "M-1"
+      ],
+      "falsificationCriteria": [
+        "The predicted effect does not follow Approval steps increased after one quality review..",
+        "Removing a required silo leaves the mechanism unchanged."
+      ],
+      "abstained": false
+    },
+    {
+      "scenarioId": "scenario-010",
+      "modelId": "best-silo",
+      "variantId": "Finance",
+      "explanation": "The Finance evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should reduce the number of concurrently active priorities and explicitly protect the highest-leverage work from new demand.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-010",
+      "modelId": "best-silo",
+      "variantId": "HR",
+      "explanation": "The HR evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-010",
+      "modelId": "best-silo",
+      "variantId": "Operations",
+      "explanation": "The Operations evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-010",
+      "modelId": "best-silo",
+      "variantId": "Sales",
+      "explanation": "The Sales evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-010",
+      "modelId": "generic-summary",
+      "explanation": "HR: Turnover increased after the office attendance policy changed. Sales: Pipeline declined after the office attendance policy changed. Finance: A market contraction began during the same period. Operations: Fulfillment performance remained stable.",
+      "predictedOutcome": "Fulfillment performance remained stable.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.6,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Fulfillment performance remained stable.",
+      "supportingEvidenceIds": [
+        "src-010-a",
+        "src-010-b",
+        "src-010-c",
+        "src-010-d"
+      ],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [
+        "One or more summarized observations do not persist."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-010",
+      "modelId": "local-aggregation",
+      "explanation": "The Finance evidence does not produce a supported mechanism. The HR evidence does not produce a supported mechanism. The Operations evidence does not produce a supported mechanism. The Sales evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should reduce the number of concurrently active priorities and explicitly protect the highest-leverage work from new demand.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-010",
+      "modelId": "production-combined",
+      "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-010",
+      "modelId": "production-state",
+      "explanation": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Knowledge Continuity and Operating Model. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 26.",
+      "predictedOutcome": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Knowledge Continuity and Operating Model. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 26.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.6593873338310186,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Discovery currently sees the organization as strained. The primary condition is Strategic Alignment, reinforced by Knowledge Continuity and Operating Model. Strategic Alignment appears connected to Leadership Dependency and Learning System upstream and may influence Decision Flow, Execution Capacity, and Coordination System downstream. Memory maturity is 26.",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [
+        "organizational-state-current"
+      ],
+      "falsificationCriteria": [
+        "A different Organizational State becomes dominant."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-010",
+      "modelId": "verbal-projection",
+      "explanation": "No grounded cross-silo understanding is available to communicate.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-011",
+      "modelId": "best-silo",
+      "variantId": "HR",
+      "explanation": "Performance reviews previously penalized visible local mistakes.; Discovery sees a possible cause-effect path connecting these evidence items.; Reviews now reward learning from reversible local decisions.",
+      "mechanismId": "M-1",
+      "predictedOutcome": "Reviews now reward learning from reversible local decisions.",
+      "triggeringConditions": [
+        "Performance reviews previously penalized visible local mistakes."
+      ],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.63,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "Reviews now reward learning from reversible local decisions.",
+      "supportingEvidenceIds": [
+        "E6",
+        "E7"
+      ],
+      "supportingCognitionArtifactIds": [
+        "M-1"
+      ],
+      "falsificationCriteria": [
+        "The predicted effect does not follow Performance reviews previously penalized visible local mistakes.."
+      ],
+      "abstained": false
+    },
+    {
+      "scenarioId": "scenario-011",
+      "modelId": "best-silo",
+      "variantId": "Information Systems",
+      "explanation": "The Information Systems evidence does not produce a supported mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-011",
+      "modelId": "best-silo",
+      "variantId": "Leadership",
+      "explanation": "Executives previously approved most ambiguous operating decisions.; Discovery sees competing signals that create an unresolved strategic tension.; Executives now decline routine overrides and review learning afterward.",
+      "mechanismId": "M-1",
+      "predictedOutcome": "Executives now decline routine overrides and review learning afterward.",
+      "triggeringConditions": [
+        "Executives previously approved most ambiguous operating decisions."
+      ],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.6,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "Executives now decline routine overrides and review learning afterward.",
+      "supportingEvidenceIds": [
+        "E6",
+        "E7"
+      ],
+      "supportingCognitionArtifactIds": [
+        "M-1"
+      ],
+      "falsificationCriteria": [
+        "The predicted effect does not follow Executives previously approved most ambiguous operating decisions.."
+      ],
+      "abstained": false
+    },
+    {
+      "scenarioId": "scenario-011",
+      "modelId": "generic-summary",
+      "explanation": "Leadership: Executives previously approved most ambiguous operating decisions. HR: Performance reviews previously penalized visible local mistakes. Information Systems: Decision data is now broadly available to operating teams. HR: Reviews now reward learning from reversible local decisions. Leadership: Executives now decline routine overrides and review learning afterward.",
+      "predictedOutcome": "Executives now decline routine overrides and review learning afterward.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.6,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Executives now decline routine overrides and review learning afterward.",
+      "supportingEvidenceIds": [
+        "src-011-a",
+        "src-011-b",
+        "src-011-c",
+        "src-011-d",
+        "src-011-e"
+      ],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [
+        "One or more summarized observations do not persist."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-011",
+      "modelId": "local-aggregation",
+      "explanation": "Performance reviews previously penalized visible local mistakes.; Discovery sees a possible cause-effect path connecting these evidence items.; Reviews now reward learning from reversible local decisions. Executives previously approved most ambiguous operating decisions.; Discovery sees competing signals that create an unresolved strategic tension.; Executives now decline routine overrides and review learning afterward. The Information Systems evidence does not produce a supported mechanism.",
+      "predictedOutcome": "Reviews now reward learning from reversible local decisions.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.63,
+      "recommendedIntervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions.",
+      "expectedInterventionEffect": "Reviews now reward learning from reversible local decisions.",
+      "supportingEvidenceIds": [
+        "E6",
+        "E6",
+        "E7",
+        "E7"
+      ],
+      "supportingCognitionArtifactIds": [
+        "M-1",
+        "M-1"
+      ],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-011",
+      "modelId": "production-combined",
+      "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-011",
+      "modelId": "production-state",
+      "explanation": "Discovery currently sees the organization as critical. The primary condition is Learning System, reinforced by Knowledge Continuity and Strategic Alignment. Learning System appears connected to Knowledge Continuity and Execution Capacity upstream and may influence Operating Model, Strategic Alignment, and Coordination System downstream. Memory maturity is 41.",
+      "predictedOutcome": "Discovery currently sees the organization as critical. The primary condition is Learning System, reinforced by Knowledge Continuity and Strategic Alignment. Learning System appears connected to Knowledge Continuity and Execution Capacity upstream and may influence Operating Model, Strategic Alignment, and Coordination System downstream. Memory maturity is 41.",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.7137794961249538,
+      "recommendedIntervention": "",
+      "expectedInterventionEffect": "Discovery currently sees the organization as critical. The primary condition is Learning System, reinforced by Knowledge Continuity and Strategic Alignment. Learning System appears connected to Knowledge Continuity and Execution Capacity upstream and may influence Operating Model, Strategic Alignment, and Coordination System downstream. Memory maturity is 41.",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [
+        "organizational-state-current"
+      ],
+      "falsificationCriteria": [
+        "A different Organizational State becomes dominant."
+      ],
+      "abstained": true
+    },
+    {
+      "scenarioId": "scenario-011",
+      "modelId": "verbal-projection",
+      "explanation": "No grounded cross-silo understanding is available to communicate.",
+      "predictedOutcome": "",
+      "triggeringConditions": [],
+      "predictionHorizon": "next observed organizational transition",
+      "confidence": 0.3,
+      "recommendedIntervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows.",
+      "expectedInterventionEffect": "",
+      "supportingEvidenceIds": [],
+      "supportingCognitionArtifactIds": [],
+      "falsificationCriteria": [],
+      "abstained": true
+    }
+  ],
+  "verbalArtifacts": [
+    {
+      "scenarioId": "scenario-001",
+      "verbal": {
+        "whatDiscoverySees": "Roadmap exceptions for customer-specific workflows continue to increase. is not explained by one local issue. Production connected enterprise agreements increasingly include customer-specific workflow commitments. through discovery sees one condition depending on another enabling condition..",
+        "whyThisWasHardToSee": "Operations, Product, Sales each observe a different part of the pattern. The relationship appears only when their Evidence is connected.",
+        "evidenceChain": [
+          "Sales: Enterprise agreements increasingly include customer-specific workflow commitments.",
+          "Product: Roadmap exceptions for customer-specific workflows continue to increase.",
+          "Operations: Implementation duration and specialist handoffs continue to increase."
+        ],
+        "whatThisExplains": "Roadmap exceptions for customer-specific workflows continue to increase.",
+        "whatDiscoveryPredicts": "If enterprise agreements increasingly include customer-specific workflow commitments. continues, roadmap exceptions for customer-specific workflows continue to increase. is likely to continue.",
+        "whatWouldChangeTheConclusion": "The predicted effect does not follow Enterprise agreements increasingly include customer-specific workflow commitments.. Removing a required silo leaves the mechanism unchanged.",
+        "whatToDoNext": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+      }
+    },
+    {
+      "scenarioId": "scenario-002",
+      "verbal": {
+        "whatDiscoverySees": "Promotion outcomes favor managers with fewer visible local failures. is not explained by one local issue. Production connected leadership says teams should make more decisions locally. through discovery sees one condition depending on another enabling condition..",
+        "whyThisWasHardToSee": "HR, Leadership, Management each observe a different part of the pattern. The relationship appears only when their Evidence is connected.",
+        "evidenceChain": [
+          "Leadership: Leadership says teams should make more decisions locally.",
+          "Management: Managers escalate ambiguous decisions before acting.",
+          "HR: Promotion outcomes favor managers with fewer visible local failures."
+        ],
+        "whatThisExplains": "Promotion outcomes favor managers with fewer visible local failures.",
+        "whatDiscoveryPredicts": "If leadership says teams should make more decisions locally. continues, promotion outcomes favor managers with fewer visible local failures. is likely to continue.",
+        "whatWouldChangeTheConclusion": "The predicted effect does not follow Leadership says teams should make more decisions locally.. Removing a required silo leaves the mechanism unchanged.",
+        "whatToDoNext": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+      }
+    },
+    {
+      "scenarioId": "scenario-003",
+      "verbal": {
+        "whatDiscoverySees": "Lower-priced suppliers have longer and more variable lead times. is not explained by one local issue. Production connected supplier selection increasingly favors the lowest unit price. through discovery sees a possible cause-effect path connecting these evidence items..",
+        "whyThisWasHardToSee": "Operations, Procurement, Sales each observe a different part of the pattern. The relationship appears only when their Evidence is connected.",
+        "evidenceChain": [
+          "Procurement: Supplier selection increasingly favors the lowest unit price.",
+          "Operations: Lower-priced suppliers have longer and more variable lead times.",
+          "Sales: Customer delivery commitments are missed more often."
+        ],
+        "whatThisExplains": "Lower-priced suppliers have longer and more variable lead times.",
+        "whatDiscoveryPredicts": "If supplier selection increasingly favors the lowest unit price. continues, lower-priced suppliers have longer and more variable lead times. is likely to continue.",
+        "whatWouldChangeTheConclusion": "The predicted effect does not follow Supplier selection increasingly favors the lowest unit price.. Removing a required silo leaves the mechanism unchanged.",
+        "whatToDoNext": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+      }
+    },
+    {
+      "scenarioId": "scenario-004",
+      "verbal": null
+    },
+    {
+      "scenarioId": "scenario-005",
+      "verbal": {
+        "whatDiscoverySees": "Incident duration increased as recovery procedures became stale. is not explained by one local issue. Production connected deferred maintenance increased recovery complexity. through discovery sees competing signals that create an unresolved strategic tension..",
+        "whyThisWasHardToSee": "Customer Success, Engineering, Leadership, Operations each observe a different part of the pattern. The relationship appears only when their Evidence is connected.",
+        "evidenceChain": [
+          "Leadership: Leadership deferred maintenance work to protect a launch date.",
+          "Engineering: Deferred maintenance increased recovery complexity.",
+          "Operations: Incident duration increased as recovery procedures became stale.",
+          "Customer Success: Renewal concerns increased after repeated long outages."
+        ],
+        "whatThisExplains": "Incident duration increased as recovery procedures became stale.",
+        "whatDiscoveryPredicts": "If deferred maintenance increased recovery complexity. continues, incident duration increased as recovery procedures became stale. is likely to continue.",
+        "whatWouldChangeTheConclusion": "The predicted effect does not follow Deferred maintenance increased recovery complexity.. Removing a required silo leaves the mechanism unchanged.",
+        "whatToDoNext": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+      }
+    },
+    {
+      "scenarioId": "scenario-006",
+      "verbal": null
+    },
+    {
+      "scenarioId": "scenario-007",
+      "verbal": null
+    },
+    {
+      "scenarioId": "scenario-008",
+      "verbal": null
+    },
+    {
+      "scenarioId": "scenario-009",
+      "verbal": {
+        "whatDiscoverySees": "Some managers may be more cautious after the review. is not explained by one local issue. Production connected approval steps increased after one quality review. through discovery sees one condition depending on another enabling condition..",
+        "whyThisWasHardToSee": "Finance, HR, Operations each observe a different part of the pattern. The relationship appears only when their Evidence is connected.",
+        "evidenceChain": [
+          "Operations: Approval steps increased after one quality review.",
+          "HR: Some managers may be more cautious after the review.",
+          "Finance: Overtime also increased, but the cause is not yet known."
+        ],
+        "whatThisExplains": "Some managers may be more cautious after the review.",
+        "whatDiscoveryPredicts": "If approval steps increased after one quality review. continues, some managers may be more cautious after the review. is likely to continue.",
+        "whatWouldChangeTheConclusion": "The predicted effect does not follow Approval steps increased after one quality review.. Removing a required silo leaves the mechanism unchanged.",
+        "whatToDoNext": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+      }
+    },
+    {
+      "scenarioId": "scenario-010",
+      "verbal": null
+    },
+    {
+      "scenarioId": "scenario-011",
+      "verbal": null
+    }
+  ],
+  "ablations": {
+    "silo": {
+      "rows": [
+        {
+          "scenarioId": "scenario-001",
+          "removed": [
+            "Finance"
+          ],
+          "remainingEvidence": 4,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 1,
+          "confidence": 0.75,
+          "abstained": false,
+          "prediction": "Roadmap exceptions for customer-specific workflows continue to increase.",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        },
+        {
+          "scenarioId": "scenario-001",
+          "removed": [
+            "Leadership"
+          ],
+          "remainingEvidence": 4,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 1,
+          "confidence": 0.75,
+          "abstained": false,
+          "prediction": "Roadmap exceptions for customer-specific workflows continue to increase.",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        },
+        {
+          "scenarioId": "scenario-001",
+          "removed": [
+            "Operations"
+          ],
+          "remainingEvidence": 4,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-001",
+          "removed": [
+            "Product"
+          ],
+          "remainingEvidence": 4,
+          "mechanismCount": 2,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        },
+        {
+          "scenarioId": "scenario-001",
+          "removed": [
+            "Sales"
+          ],
+          "remainingEvidence": 4,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-001",
+          "removed": [
+            "Finance",
+            "Leadership"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 1,
+          "confidence": 0.75,
+          "abstained": false,
+          "prediction": "Roadmap exceptions for customer-specific workflows continue to increase.",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        },
+        {
+          "scenarioId": "scenario-001",
+          "removed": [
+            "Finance",
+            "Operations"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        },
+        {
+          "scenarioId": "scenario-001",
+          "removed": [
+            "Finance",
+            "Product"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-001",
+          "removed": [
+            "Finance",
+            "Sales"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        },
+        {
+          "scenarioId": "scenario-001",
+          "removed": [
+            "Leadership",
+            "Operations"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-001",
+          "removed": [
+            "Leadership",
+            "Product"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 2,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-001",
+          "removed": [
+            "Leadership",
+            "Sales"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-001",
+          "removed": [
+            "Operations",
+            "Product"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        },
+        {
+          "scenarioId": "scenario-001",
+          "removed": [
+            "Operations",
+            "Sales"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 0,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        },
+        {
+          "scenarioId": "scenario-001",
+          "removed": [
+            "Product",
+            "Sales"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-002",
+          "removed": [
+            "HR"
+          ],
+          "remainingEvidence": 4,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-002",
+          "removed": [
+            "Information Systems"
+          ],
+          "remainingEvidence": 4,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 1,
+          "confidence": 0.7,
+          "abstained": false,
+          "prediction": "Promotion outcomes favor managers with fewer visible local failures.",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-002",
+          "removed": [
+            "Leadership"
+          ],
+          "remainingEvidence": 4,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-002",
+          "removed": [
+            "Management"
+          ],
+          "remainingEvidence": 4,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-002",
+          "removed": [
+            "Teams"
+          ],
+          "remainingEvidence": 4,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 1,
+          "confidence": 0.7,
+          "abstained": false,
+          "prediction": "Promotion outcomes favor managers with fewer visible local failures.",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-002",
+          "removed": [
+            "HR",
+            "Teams"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-003",
+          "removed": [
+            "Finance"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 1,
+          "confidence": 0.67,
+          "abstained": false,
+          "prediction": "Lower-priced suppliers have longer and more variable lead times.",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        },
+        {
+          "scenarioId": "scenario-003",
+          "removed": [
+            "Operations"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        },
+        {
+          "scenarioId": "scenario-003",
+          "removed": [
+            "Procurement"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        },
+        {
+          "scenarioId": "scenario-003",
+          "removed": [
+            "Sales"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should establish a canonical mechanism for capturing, maintaining, and reusing critical operating knowledge."
+        },
+        {
+          "scenarioId": "scenario-003",
+          "removed": [
+            "Finance",
+            "Sales"
+          ],
+          "remainingEvidence": 2,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should establish a canonical mechanism for capturing, maintaining, and reusing critical operating knowledge."
+        },
+        {
+          "scenarioId": "scenario-004",
+          "removed": [
+            "Leadership"
+          ],
+          "remainingEvidence": 4,
+          "mechanismCount": 2,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        },
+        {
+          "scenarioId": "scenario-004",
+          "removed": [
+            "Marketing"
+          ],
+          "remainingEvidence": 4,
+          "mechanismCount": 2,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        },
+        {
+          "scenarioId": "scenario-004",
+          "removed": [
+            "Product"
+          ],
+          "remainingEvidence": 4,
+          "mechanismCount": 3,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-004",
+          "removed": [
+            "Sales"
+          ],
+          "remainingEvidence": 4,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-004",
+          "removed": [
+            "Support"
+          ],
+          "remainingEvidence": 4,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-004",
+          "removed": [
+            "Leadership",
+            "Support"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 0,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should establish a canonical mechanism for capturing, maintaining, and reusing critical operating knowledge."
+        },
+        {
+          "scenarioId": "scenario-005",
+          "removed": [
+            "Customer Success"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 1,
+          "confidence": 0.68,
+          "abstained": false,
+          "prediction": "Deferred maintenance increased recovery complexity.",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        },
+        {
+          "scenarioId": "scenario-005",
+          "removed": [
+            "Engineering"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        },
+        {
+          "scenarioId": "scenario-005",
+          "removed": [
+            "Leadership"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 1,
+          "confidence": 0.68,
+          "abstained": false,
+          "prediction": "Incident duration increased as recovery procedures became stale.",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-005",
+          "removed": [
+            "Operations"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 1,
+          "confidence": 0.69,
+          "abstained": false,
+          "prediction": "Renewal concerns increased after repeated long outages.",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        },
+        {
+          "scenarioId": "scenario-005",
+          "removed": [
+            "Customer Success",
+            "Operations"
+          ],
+          "remainingEvidence": 2,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-006",
+          "removed": [
+            "Engineering"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-006",
+          "removed": [
+            "Leadership"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-006",
+          "removed": [
+            "Operations"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 0,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should assign clear decision ownership for routine operating decisions and reserve escalation for defined exceptions."
+        },
+        {
+          "scenarioId": "scenario-006",
+          "removed": [
+            "Product"
+          ],
+          "remainingEvidence": 3,
+          "mechanismCount": 1,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        },
+        {
+          "scenarioId": "scenario-006",
+          "removed": [
+            "Engineering",
+            "Product"
+          ],
+          "remainingEvidence": 2,
+          "mechanismCount": 0,
+          "qualifyingCrossSiloMechanisms": 0,
+          "confidence": 0.3,
+          "abstained": true,
+          "prediction": "",
+          "intervention": "Leadership should establish explicit ownership and handoff accountability for the highest-friction cross-functional workflows."
+        }
+      ],
+      "criticalRemovalSensitivity": 0.785714
+    },
+    "cognition": [
+      {
+        "scenarioId": "scenario-001",
+        "variants": [
+          {
+            "name": "remove-contradictions",
+            "abstained": false,
+            "confidence": 0.75,
+            "explanation": "Enterprise agreements increasingly include customer-specific workflow commitments.; Discovery sees one condition depending on another enabling condition.; Roadmap exceptions for customer-specific workflows continue to increase.",
+            "lineageCount": 4
+          },
+          {
+            "name": "remove-mechanisms",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "remove-history",
+            "abstained": false,
+            "confidence": 0.75,
+            "explanation": "Enterprise agreements increasingly include customer-specific workflow commitments.; Discovery sees one condition depending on another enabling condition.; Roadmap exceptions for customer-specific workflows continue to increase.",
+            "lineageCount": 4
+          },
+          {
+            "name": "remove-theories",
+            "abstained": false,
+            "confidence": 0.75,
+            "explanation": "Enterprise agreements increasingly include customer-specific workflow commitments.; Discovery sees one condition depending on another enabling condition.; Roadmap exceptions for customer-specific workflows continue to increase.",
+            "lineageCount": 4
+          },
+          {
+            "name": "remove-conditions",
+            "abstained": false,
+            "confidence": 0.75,
+            "explanation": "Enterprise agreements increasingly include customer-specific workflow commitments.; Discovery sees one condition depending on another enabling condition.; Roadmap exceptions for customer-specific workflows continue to increase.",
+            "lineageCount": 4
+          },
+          {
+            "name": "remove-organizational-state",
+            "abstained": false,
+            "confidence": 0.75,
+            "explanation": "Enterprise agreements increasingly include customer-specific workflow commitments.; Discovery sees one condition depending on another enabling condition.; Roadmap exceptions for customer-specific workflows continue to increase.",
+            "lineageCount": 4
+          },
+          {
+            "name": "remove-lineage",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "latest-snapshot-only",
+            "abstained": false,
+            "confidence": 0.75,
+            "explanation": "Enterprise agreements increasingly include customer-specific workflow commitments.; Discovery sees one condition depending on another enabling condition.; Roadmap exceptions for customer-specific workflows continue to increase.",
+            "lineageCount": 4
+          }
+        ]
+      },
+      {
+        "scenarioId": "scenario-002",
+        "variants": [
+          {
+            "name": "remove-contradictions",
+            "abstained": false,
+            "confidence": 0.7,
+            "explanation": "Leadership says teams should make more decisions locally.; Discovery sees one condition depending on another enabling condition.; Promotion outcomes favor managers with fewer visible local failures.",
+            "lineageCount": 3
+          },
+          {
+            "name": "remove-mechanisms",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "remove-history",
+            "abstained": false,
+            "confidence": 0.7,
+            "explanation": "Leadership says teams should make more decisions locally.; Discovery sees one condition depending on another enabling condition.; Promotion outcomes favor managers with fewer visible local failures.",
+            "lineageCount": 3
+          },
+          {
+            "name": "remove-theories",
+            "abstained": false,
+            "confidence": 0.7,
+            "explanation": "Leadership says teams should make more decisions locally.; Discovery sees one condition depending on another enabling condition.; Promotion outcomes favor managers with fewer visible local failures.",
+            "lineageCount": 3
+          },
+          {
+            "name": "remove-conditions",
+            "abstained": false,
+            "confidence": 0.7,
+            "explanation": "Leadership says teams should make more decisions locally.; Discovery sees one condition depending on another enabling condition.; Promotion outcomes favor managers with fewer visible local failures.",
+            "lineageCount": 3
+          },
+          {
+            "name": "remove-organizational-state",
+            "abstained": false,
+            "confidence": 0.7,
+            "explanation": "Leadership says teams should make more decisions locally.; Discovery sees one condition depending on another enabling condition.; Promotion outcomes favor managers with fewer visible local failures.",
+            "lineageCount": 3
+          },
+          {
+            "name": "remove-lineage",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "latest-snapshot-only",
+            "abstained": false,
+            "confidence": 0.7,
+            "explanation": "Leadership says teams should make more decisions locally.; Discovery sees one condition depending on another enabling condition.; Promotion outcomes favor managers with fewer visible local failures.",
+            "lineageCount": 3
+          }
+        ]
+      },
+      {
+        "scenarioId": "scenario-003",
+        "variants": [
+          {
+            "name": "remove-contradictions",
+            "abstained": false,
+            "confidence": 0.67,
+            "explanation": "Supplier selection increasingly favors the lowest unit price.; Discovery sees a possible cause-effect path connecting these evidence items.; Lower-priced suppliers have longer and more variable lead times.",
+            "lineageCount": 3
+          },
+          {
+            "name": "remove-mechanisms",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "remove-history",
+            "abstained": false,
+            "confidence": 0.67,
+            "explanation": "Supplier selection increasingly favors the lowest unit price.; Discovery sees a possible cause-effect path connecting these evidence items.; Lower-priced suppliers have longer and more variable lead times.",
+            "lineageCount": 3
+          },
+          {
+            "name": "remove-theories",
+            "abstained": false,
+            "confidence": 0.67,
+            "explanation": "Supplier selection increasingly favors the lowest unit price.; Discovery sees a possible cause-effect path connecting these evidence items.; Lower-priced suppliers have longer and more variable lead times.",
+            "lineageCount": 3
+          },
+          {
+            "name": "remove-conditions",
+            "abstained": false,
+            "confidence": 0.67,
+            "explanation": "Supplier selection increasingly favors the lowest unit price.; Discovery sees a possible cause-effect path connecting these evidence items.; Lower-priced suppliers have longer and more variable lead times.",
+            "lineageCount": 3
+          },
+          {
+            "name": "remove-organizational-state",
+            "abstained": false,
+            "confidence": 0.67,
+            "explanation": "Supplier selection increasingly favors the lowest unit price.; Discovery sees a possible cause-effect path connecting these evidence items.; Lower-priced suppliers have longer and more variable lead times.",
+            "lineageCount": 3
+          },
+          {
+            "name": "remove-lineage",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "latest-snapshot-only",
+            "abstained": false,
+            "confidence": 0.67,
+            "explanation": "Supplier selection increasingly favors the lowest unit price.; Discovery sees a possible cause-effect path connecting these evidence items.; Lower-priced suppliers have longer and more variable lead times.",
+            "lineageCount": 3
+          }
+        ]
+      },
+      {
+        "scenarioId": "scenario-004",
+        "variants": [
+          {
+            "name": "remove-contradictions",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "remove-mechanisms",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "remove-history",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "remove-theories",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "remove-conditions",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "remove-organizational-state",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "remove-lineage",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "latest-snapshot-only",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          }
+        ]
+      },
+      {
+        "scenarioId": "scenario-005",
+        "variants": [
+          {
+            "name": "remove-contradictions",
+            "abstained": false,
+            "confidence": 0.74,
+            "explanation": "Deferred maintenance increased recovery complexity.; Discovery sees competing signals that create an unresolved strategic tension.; Incident duration increased as recovery procedures became stale.",
+            "lineageCount": 4
+          },
+          {
+            "name": "remove-mechanisms",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "remove-history",
+            "abstained": false,
+            "confidence": 0.74,
+            "explanation": "Deferred maintenance increased recovery complexity.; Discovery sees competing signals that create an unresolved strategic tension.; Incident duration increased as recovery procedures became stale.",
+            "lineageCount": 4
+          },
+          {
+            "name": "remove-theories",
+            "abstained": false,
+            "confidence": 0.74,
+            "explanation": "Deferred maintenance increased recovery complexity.; Discovery sees competing signals that create an unresolved strategic tension.; Incident duration increased as recovery procedures became stale.",
+            "lineageCount": 4
+          },
+          {
+            "name": "remove-conditions",
+            "abstained": false,
+            "confidence": 0.74,
+            "explanation": "Deferred maintenance increased recovery complexity.; Discovery sees competing signals that create an unresolved strategic tension.; Incident duration increased as recovery procedures became stale.",
+            "lineageCount": 4
+          },
+          {
+            "name": "remove-organizational-state",
+            "abstained": false,
+            "confidence": 0.74,
+            "explanation": "Deferred maintenance increased recovery complexity.; Discovery sees competing signals that create an unresolved strategic tension.; Incident duration increased as recovery procedures became stale.",
+            "lineageCount": 4
+          },
+          {
+            "name": "remove-lineage",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "latest-snapshot-only",
+            "abstained": false,
+            "confidence": 0.74,
+            "explanation": "Deferred maintenance increased recovery complexity.; Discovery sees competing signals that create an unresolved strategic tension.; Incident duration increased as recovery procedures became stale.",
+            "lineageCount": 4
+          }
+        ]
+      },
+      {
+        "scenarioId": "scenario-006",
+        "variants": [
+          {
+            "name": "remove-contradictions",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "remove-mechanisms",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "remove-history",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "remove-theories",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "remove-conditions",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "remove-organizational-state",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "remove-lineage",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          },
+          {
+            "name": "latest-snapshot-only",
+            "abstained": true,
+            "confidence": 0.3,
+            "explanation": "Production cognition did not generate a qualifying cross-silo mechanism.",
+            "lineageCount": 0
+          }
+        ]
+      }
+    ],
+    "evidenceQuality": [
+      {
+        "name": "reduce-temporal-depth",
+        "evidenceCount": 5,
+        "siloCount": 5,
+        "qualifyingCrossSiloMechanisms": 1,
+        "confidence": 0.75,
+        "abstained": false
+      },
+      {
+        "name": "increase-redundancy",
+        "evidenceCount": 8,
+        "siloCount": 5,
+        "qualifyingCrossSiloMechanisms": 1,
+        "confidence": 0.83,
+        "abstained": false
+      },
+      {
+        "name": "remove-complementary-evidence",
+        "evidenceCount": 1,
+        "siloCount": 1,
+        "qualifyingCrossSiloMechanisms": 0,
+        "confidence": 0.3,
+        "abstained": true
+      },
+      {
+        "name": "add-noise",
+        "evidenceCount": 6,
+        "siloCount": 6,
+        "qualifyingCrossSiloMechanisms": 1,
+        "confidence": 0.75,
+        "abstained": false
+      },
+      {
+        "name": "add-low-quality-conflict",
+        "evidenceCount": 6,
+        "siloCount": 6,
+        "qualifyingCrossSiloMechanisms": 1,
+        "confidence": 0.75,
+        "abstained": false
+      },
+      {
+        "name": "reduce-source-diversity",
+        "evidenceCount": 5,
+        "siloCount": 1,
+        "qualifyingCrossSiloMechanisms": 0,
+        "confidence": 0.3,
+        "abstained": true
+      },
+      {
+        "name": "increase-source-count-same-semantics",
+        "evidenceCount": 9,
+        "siloCount": 5,
+        "qualifyingCrossSiloMechanisms": 1,
+        "confidence": 0.84,
+        "abstained": false
+      }
+    ]
+  },
+  "preconditions": {
+    "rows": [
+      {
+        "scenarioId": "scenario-001",
+        "evidenceCount": 5,
+        "evidenceBySilo": {
+          "Finance": 1,
+          "Leadership": 1,
+          "Operations": 1,
+          "Product": 1,
+          "Sales": 1
+        },
+        "uniqueSources": 5,
+        "averageEvidenceWords": 7.6,
+        "siloDiversity": 5,
+        "siloBalance": 1,
+        "largestSiloConcentration": 0.2,
+        "distinctFactRatio": 1,
+        "redundancyRatio": 0,
+        "crossSiloRelationshipCount": 1,
+        "connectedComponentsObserved": 1,
+        "temporalSpanDays": 0,
+        "meaningfulPeriods": 1,
+        "delayedConsequencePresent": false,
+        "contradictionCount": 2,
+        "mechanismCount": 1,
+        "crossSiloMechanismCount": 1,
+        "meanMechanismConfidence": 0.75,
+        "maximumSupportingSilos": 3,
+        "alternativeMechanismCount": 0,
+        "lineageCompleteness": 1,
+        "unsupportedMechanismCount": 0,
+        "productionRegisteredMechanism": true,
+        "expectedEmergence": true
+      },
+      {
+        "scenarioId": "scenario-002",
+        "evidenceCount": 5,
+        "evidenceBySilo": {
+          "HR": 1,
+          "Information Systems": 1,
+          "Leadership": 1,
+          "Management": 1,
+          "Teams": 1
+        },
+        "uniqueSources": 5,
+        "averageEvidenceWords": 8.4,
+        "siloDiversity": 5,
+        "siloBalance": 1,
+        "largestSiloConcentration": 0.2,
+        "distinctFactRatio": 1,
+        "redundancyRatio": 0,
+        "crossSiloRelationshipCount": 1,
+        "connectedComponentsObserved": 1,
+        "temporalSpanDays": 0,
+        "meaningfulPeriods": 1,
+        "delayedConsequencePresent": false,
+        "contradictionCount": 1,
+        "mechanismCount": 1,
+        "crossSiloMechanismCount": 1,
+        "meanMechanismConfidence": 0.7,
+        "maximumSupportingSilos": 3,
+        "alternativeMechanismCount": 0,
+        "lineageCompleteness": 1,
+        "unsupportedMechanismCount": 0,
+        "productionRegisteredMechanism": true,
+        "expectedEmergence": true
+      },
+      {
+        "scenarioId": "scenario-003",
+        "evidenceCount": 4,
+        "evidenceBySilo": {
+          "Finance": 1,
+          "Operations": 1,
+          "Procurement": 1,
+          "Sales": 1
+        },
+        "uniqueSources": 4,
+        "averageEvidenceWords": 8.25,
+        "siloDiversity": 4,
+        "siloBalance": 1,
+        "largestSiloConcentration": 0.25,
+        "distinctFactRatio": 1,
+        "redundancyRatio": 0,
+        "crossSiloRelationshipCount": 1,
+        "connectedComponentsObserved": 1,
+        "temporalSpanDays": 0,
+        "meaningfulPeriods": 1,
+        "delayedConsequencePresent": false,
+        "contradictionCount": 1,
+        "mechanismCount": 1,
+        "crossSiloMechanismCount": 1,
+        "meanMechanismConfidence": 0.67,
+        "maximumSupportingSilos": 3,
+        "alternativeMechanismCount": 0,
+        "lineageCompleteness": 1,
+        "unsupportedMechanismCount": 0,
+        "productionRegisteredMechanism": true,
+        "expectedEmergence": true
+      },
+      {
+        "scenarioId": "scenario-004",
+        "evidenceCount": 5,
+        "evidenceBySilo": {
+          "Leadership": 1,
+          "Marketing": 1,
+          "Product": 1,
+          "Sales": 1,
+          "Support": 1
+        },
+        "uniqueSources": 5,
+        "averageEvidenceWords": 7.2,
+        "siloDiversity": 5,
+        "siloBalance": 1,
+        "largestSiloConcentration": 0.2,
+        "distinctFactRatio": 1,
+        "redundancyRatio": 0,
+        "crossSiloRelationshipCount": 0,
+        "connectedComponentsObserved": 5,
+        "temporalSpanDays": 0,
+        "meaningfulPeriods": 1,
+        "delayedConsequencePresent": false,
+        "contradictionCount": 2,
+        "mechanismCount": 3,
+        "crossSiloMechanismCount": 0,
+        "meanMechanismConfidence": 0.633333,
+        "maximumSupportingSilos": 2,
+        "alternativeMechanismCount": 2,
+        "lineageCompleteness": 1,
+        "unsupportedMechanismCount": 0,
+        "productionRegisteredMechanism": false,
+        "expectedEmergence": true
+      },
+      {
+        "scenarioId": "scenario-005",
+        "evidenceCount": 4,
+        "evidenceBySilo": {
+          "Customer Success": 1,
+          "Engineering": 1,
+          "Leadership": 1,
+          "Operations": 1
+        },
+        "uniqueSources": 4,
+        "averageEvidenceWords": 7.25,
+        "siloDiversity": 4,
+        "siloBalance": 1,
+        "largestSiloConcentration": 0.25,
+        "distinctFactRatio": 1,
+        "redundancyRatio": 0,
+        "crossSiloRelationshipCount": 1,
+        "connectedComponentsObserved": 1,
+        "temporalSpanDays": 304,
+        "meaningfulPeriods": 4,
+        "delayedConsequencePresent": true,
+        "contradictionCount": 1,
+        "mechanismCount": 1,
+        "crossSiloMechanismCount": 1,
+        "meanMechanismConfidence": 0.74,
+        "maximumSupportingSilos": 4,
+        "alternativeMechanismCount": 0,
+        "lineageCompleteness": 1,
+        "unsupportedMechanismCount": 0,
+        "productionRegisteredMechanism": true,
+        "expectedEmergence": true
+      },
+      {
+        "scenarioId": "scenario-006",
+        "evidenceCount": 4,
+        "evidenceBySilo": {
+          "Engineering": 1,
+          "Leadership": 1,
+          "Operations": 1,
+          "Product": 1
+        },
+        "uniqueSources": 4,
+        "averageEvidenceWords": 5.75,
+        "siloDiversity": 4,
+        "siloBalance": 1,
+        "largestSiloConcentration": 0.25,
+        "distinctFactRatio": 1,
+        "redundancyRatio": 0,
+        "crossSiloRelationshipCount": 0,
+        "connectedComponentsObserved": 4,
+        "temporalSpanDays": 0,
+        "meaningfulPeriods": 1,
+        "delayedConsequencePresent": false,
+        "contradictionCount": 1,
+        "mechanismCount": 1,
+        "crossSiloMechanismCount": 0,
+        "meanMechanismConfidence": 0.62,
+        "maximumSupportingSilos": 2,
+        "alternativeMechanismCount": 0,
+        "lineageCompleteness": 1,
+        "unsupportedMechanismCount": 0,
+        "productionRegisteredMechanism": false,
+        "expectedEmergence": true
+      },
+      {
+        "scenarioId": "scenario-007",
+        "evidenceCount": 3,
+        "evidenceBySilo": {
+          "Finance": 1,
+          "Legal": 1,
+          "Sales": 1
+        },
+        "uniqueSources": 3,
+        "averageEvidenceWords": 11.666667,
+        "siloDiversity": 3,
+        "siloBalance": 1,
+        "largestSiloConcentration": 0.333333,
+        "distinctFactRatio": 1,
+        "redundancyRatio": 0,
+        "crossSiloRelationshipCount": 0,
+        "connectedComponentsObserved": 3,
+        "temporalSpanDays": 0,
+        "meaningfulPeriods": 1,
+        "delayedConsequencePresent": false,
+        "contradictionCount": 1,
+        "mechanismCount": 1,
+        "crossSiloMechanismCount": 0,
+        "meanMechanismConfidence": 0.71,
+        "maximumSupportingSilos": 2,
+        "alternativeMechanismCount": 0,
+        "lineageCompleteness": 1,
+        "unsupportedMechanismCount": 0,
+        "productionRegisteredMechanism": false,
+        "expectedEmergence": false
+      },
+      {
+        "scenarioId": "scenario-008",
+        "evidenceCount": 4,
+        "evidenceBySilo": {
+          "Finance": 1,
+          "HR": 1,
+          "Marketing": 1,
+          "Operations": 1
+        },
+        "uniqueSources": 4,
+        "averageEvidenceWords": 6,
+        "siloDiversity": 4,
+        "siloBalance": 1,
+        "largestSiloConcentration": 0.25,
+        "distinctFactRatio": 1,
+        "redundancyRatio": 0,
+        "crossSiloRelationshipCount": 0,
+        "connectedComponentsObserved": 4,
+        "temporalSpanDays": 0,
+        "meaningfulPeriods": 1,
+        "delayedConsequencePresent": false,
+        "contradictionCount": 4,
+        "mechanismCount": 1,
+        "crossSiloMechanismCount": 0,
+        "meanMechanismConfidence": 0.73,
+        "maximumSupportingSilos": 2,
+        "alternativeMechanismCount": 0,
+        "lineageCompleteness": 1,
+        "unsupportedMechanismCount": 0,
+        "productionRegisteredMechanism": false,
+        "expectedEmergence": false
+      },
+      {
+        "scenarioId": "scenario-009",
+        "evidenceCount": 3,
+        "evidenceBySilo": {
+          "Finance": 1,
+          "HR": 1,
+          "Operations": 1
+        },
+        "uniqueSources": 3,
+        "averageEvidenceWords": 8.666667,
+        "siloDiversity": 3,
+        "siloBalance": 1,
+        "largestSiloConcentration": 0.333333,
+        "distinctFactRatio": 1,
+        "redundancyRatio": 0,
+        "crossSiloRelationshipCount": 1,
+        "connectedComponentsObserved": 1,
+        "temporalSpanDays": 0,
+        "meaningfulPeriods": 1,
+        "delayedConsequencePresent": false,
+        "contradictionCount": 1,
+        "mechanismCount": 1,
+        "crossSiloMechanismCount": 1,
+        "meanMechanismConfidence": 0.69,
+        "maximumSupportingSilos": 3,
+        "alternativeMechanismCount": 0,
+        "lineageCompleteness": 1,
+        "unsupportedMechanismCount": 0,
+        "productionRegisteredMechanism": true,
+        "expectedEmergence": false
+      },
+      {
+        "scenarioId": "scenario-010",
+        "evidenceCount": 4,
+        "evidenceBySilo": {
+          "Finance": 1,
+          "HR": 1,
+          "Operations": 1,
+          "Sales": 1
+        },
+        "uniqueSources": 4,
+        "averageEvidenceWords": 7,
+        "siloDiversity": 4,
+        "siloBalance": 1,
+        "largestSiloConcentration": 0.25,
+        "distinctFactRatio": 1,
+        "redundancyRatio": 0,
+        "crossSiloRelationshipCount": 0,
+        "connectedComponentsObserved": 4,
+        "temporalSpanDays": 0,
+        "meaningfulPeriods": 1,
+        "delayedConsequencePresent": false,
+        "contradictionCount": 4,
+        "mechanismCount": 1,
+        "crossSiloMechanismCount": 0,
+        "meanMechanismConfidence": 0.72,
+        "maximumSupportingSilos": 2,
+        "alternativeMechanismCount": 0,
+        "lineageCompleteness": 1,
+        "unsupportedMechanismCount": 0,
+        "productionRegisteredMechanism": false,
+        "expectedEmergence": false
+      },
+      {
+        "scenarioId": "scenario-011",
+        "evidenceCount": 5,
+        "evidenceBySilo": {
+          "HR": 2,
+          "Information Systems": 1,
+          "Leadership": 2
+        },
+        "uniqueSources": 5,
+        "averageEvidenceWords": 8,
+        "siloDiversity": 3,
+        "siloBalance": 0.6,
+        "largestSiloConcentration": 0.4,
+        "distinctFactRatio": 1,
+        "redundancyRatio": 0,
+        "crossSiloRelationshipCount": 0,
+        "connectedComponentsObserved": 3,
+        "temporalSpanDays": 243,
+        "meaningfulPeriods": 2,
+        "delayedConsequencePresent": false,
+        "contradictionCount": 1,
+        "mechanismCount": 2,
+        "crossSiloMechanismCount": 0,
+        "meanMechanismConfidence": 0.645,
+        "maximumSupportingSilos": 2,
+        "alternativeMechanismCount": 1,
+        "lineageCompleteness": 1,
+        "unsupportedMechanismCount": 0,
+        "productionRegisteredMechanism": false,
+        "expectedEmergence": false
+      }
+    ],
+    "groupedComparison": {
+      "successfulPositiveScenarios": 4,
+      "failedPositiveScenarios": 2,
+      "evidenceCount": {
+        "successMean": 4.5,
+        "failureMean": 4.5
+      },
+      "siloDiversity": {
+        "successMean": 4.5,
+        "failureMean": 4.5
+      },
+      "crossSiloMechanisms": {
+        "successMean": 1,
+        "failureMean": 0
+      }
+    },
+    "candidateHypotheses": [
+      "Raw Evidence volume is not sufficient without a generated relational Mechanism.",
+      "Silo diversity is useful only when production lineage actually spans those silos.",
+      "Temporal depth may matter specifically for delayed-consequence families.",
+      "Contradictions may help only when production can connect them to a discriminating mechanism.",
+      "Complete lineage is evidence of groundedness, not by itself evidence of correctness.",
+      "Noise can reduce observability even when Evidence count increases."
+    ],
+    "caveat": "These descriptive comparisons are exploratory, non-causal, and too small to establish a universal threshold."
+  },
+  "machineResultHash": "c91c25d8f4b897e6443229a295b3c052a7612399d26b707d59d58584fe39375e"
+}

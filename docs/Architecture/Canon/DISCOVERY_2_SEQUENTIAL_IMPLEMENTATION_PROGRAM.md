@@ -366,6 +366,16 @@ gated.
 
 ## Phase 2 — Completed Explanation adjudication
 
+**Status:** Conditional responsibility; contract designed; production
+activation blocked
+
+The canonical production contract and current missing-semantic gate are
+defined by:
+
+```text
+COMPLETED_EXPLANATION_ADJUDICATION_CONTRACT.md
+```
+
 ### Objective
 
 Apply the validated competing-Explanation adjudication policy to production
@@ -439,89 +449,193 @@ behavior changes before authorization.
 Record the canonical adjudication owner, lifecycle transitions, persistence
 behavior, and the continuing downstream non-consumption boundary.
 
+### Contract decision
+
+Current production can identify comparable Explanations and preserve
+`supports`, `opposes`, and `shared` structure. It cannot canonically derive
+discrimination, falsification, rule-out, counterfactual comparison, or
+Explanation-targeted observed-outcome confirmation or weakening.
+
+The `34/34` completed-Explanation shadow depends on benchmark-owned forms of
+those semantics and benchmark-owned confidence constants. Phase 2 must not
+copy them into production.
+
+Production implementation is blocked pending a structured,
+candidate-relative Explanation test-result contract with an existing canonical
+producer. Until that contract exists, completed Explanations remain
+`unadjudicated`, unresolved alternatives are preserved, and no leader,
+confidence, rank, or viability transition is authorized.
+
+### Sequential-program amendment
+
+Unresolved competition is a valid state of organizational understanding.
+Adjudication is conditional rather than a universal prerequisite for reusable
+Organizational Understanding.
+
+A completed Explanation may contribute to one bounded Understanding shadow
+while remaining `unadjudicated`, provided the shadow preserves every relevant
+alternative and exact ancestry, distinguishes `supports`, `opposes`, and
+`shared`, makes uncertainty explicit, and creates no rank, selection,
+candidate-relative confidence, falsification, rule-out, outcome confirmation,
+or authority transition.
+
+Phase 2 adjudication may activate only when a canonical producer supplies a
+structured candidate-relative result. That result may eventually arise from a
+candidate-specific test or experiment, a required
+Explanation-to-Prediction implication, an intervention response, an observed
+outcome, or later contradiction or longitudinal Evidence. Phase 7 is the most
+likely owner of longitudinal outcome-based testing and revision, but
+adjudication is not permanently assigned to Phase 7 if an earlier canonical
+producer later satisfies the Phase 2 gate.
+
 ---
 
-## Phase 3 — One Explanation-aware understanding consumer
+## Phase 3 — One unadjudicated Explanation-aware understanding consumer
+
+**Status:** Read-only, non-authoritative CAP-UND-006 shadow complete;
+classification A; canonical production consumption not activated
 
 ### Objective
 
-Allow exactly one existing organizational-understanding boundary to consume
-adjudicated completed Explanations and prove measurable semantic improvement.
+Evaluate whether exactly one existing Organizational Understanding boundary
+can use completed, unadjudicated Explanations to improve reusable
+organizational understanding without selecting or ranking an Explanation.
 
 ### Architectural rationale
 
 Production value is not established when cognition is merely persisted.
-One narrow consumer must demonstrate that adjudicated Explanations improve
-useful organizational understanding without destabilizing Conditions, State,
-recommendations, or application contracts.
+One narrow shadow may test whether exact ancestry, comparative Evidence roles,
+preserved alternatives, and explicit uncertainty improve useful
+Organizational Understanding without waiting for unsupported adjudication.
+The shadow is an explicit exception to the former strict Phase 2 dependency;
+it does not claim that Phase 2 is complete.
 
 ### Production changes
 
-1. run an Explanation-aware shadow beside the current Seed-judgment path;
-2. compare identity, meaning, confidence, ranking, and downstream effects;
-3. select one existing consumer only after the shadow passes;
-4. preserve the current path behind a deterministic fallback;
-5. do not broaden consumption in the same change.
+1. implement one deterministic shadow at the CAP-UND-006 Organizational
+   Understanding boundary;
+2. consume completed Explanations as read-only inputs;
+3. use only stable identity, scope, ancestry, `supports`, `opposes`, `shared`,
+   and explicit unresolved state;
+4. compare the shadow with the current assessment-derived Understanding path;
+5. persist nothing and leave canonical output unchanged;
+6. preserve exact fallback by removing or disabling the shadow;
+7. do not broaden consumption or activate a new owner in the same change.
 
-The preferred first consumer is the existing organizational-understanding or
-Assessment composition boundary, selected by the earliest-responsible-producer
-trace. Executive Assessment remains downstream rather than becoming the owner
-of universal organizational truth.
+Executive Assessment remains downstream in the target architecture and must
+not become the owner of universal organizational truth.
 
 ### Affected Runtime objects
 
-- existing `organizationalUnderstandingState` or `executiveAssessment`, but
-  not both unless the trace proves they are inseparable;
 - `organizationalExplanations` as a read-only input;
+- no Runtime write;
+- no change to `organizationalUnderstandingState`, `executiveAssessment`, or
+  any other persisted object;
 - no new top-level Runtime object.
 
 ### Affected capabilities
 
-- CAP-UND-005 Executive Assessment or CAP-UND-006 Executive Understanding
-  Synthesis, exactly one as the initial consumer;
+- CAP-UND-006 Executive Understanding Synthesis as the sole shadow boundary;
 - existing Explanation producer as an upstream dependency;
-- CAP-MEM-001 only for compatibility, not new persistence ownership.
+- no CAP-UND-005 ownership or behavior change;
+- no new capability.
 
 ### Migration strategy
 
-Use dual-run comparison and a feature-controlled deterministic fallback.
-Persist no duplicate understanding. Switch the canonical consumer only after
-shadow equality and improvement gates pass. Removal of the old path is a later
-cleanup decision, not part of initial activation.
+No migration. Historical Explanations without comparative roles remain valid
+and must be represented as role data unavailable, not as explicit empty
+support or resolved competition. The shadow writes nothing, and removal
+requires no Runtime repair or historical backfill.
 
 ### Benchmark gates
 
-- measurable Ground Truth or semantic-fidelity improvement;
+- measurable improvement in at least one Organizational Understanding research
+  dimension, reported as a positive hypothesis until observed;
+- exact comparable sets, ancestry, role assignments, and unresolved
+  alternatives;
+- explicit distinction between unavailable role data and present empty roles;
+- no rank, leader, candidate-relative confidence, viability movement,
+  falsification, rule-out, counterfactual discrimination, outcome
+  confirmation, or candidate-specific missing-Evidence prescription;
+- repeated and reversed-order byte equality;
+- organization isolation, duplicate resistance, and irrelevant-Evidence
+  invariance;
+- zero Runtime writes and byte-identical canonical output;
 - no regression in Judgment, Decision, Evolution, Simulation, communication,
   or interaction suites;
-- stable recommendation, decision, and organization identity unless the
-  benchmark explicitly proves the prior result wrong;
-- bounded confidence and preserved uncertainty;
 - fallback output exactly matches the previous production baseline;
 - Runtime replay and serialization equality.
 
 ### Rollback criteria
 
-Disable the new consumer if semantic improvement is absent, unrelated rankings
-move, recommendation identity changes without causal justification,
-determinism fails, or fallback equality is lost.
+Remove or disable the shadow if semantic improvement is absent, any production
+output moves, alternatives or ancestry are lost, unavailable roles are
+misrepresented, unsupported authority semantics appear, determinism fails, or
+fallback equality is lost.
 
 ### Completion criteria
 
-- one existing consumer uses adjudicated completed Explanations;
-- a measured understanding-quality improvement is demonstrated;
+- one CAP-UND-006 shadow reads unadjudicated completed Explanations;
+- a measured Organizational Understanding improvement is demonstrated;
+- canonical Understanding, Executive Assessment, Runtime, recommendation,
+  projection, and application output remain unchanged;
 - fallback restores the previous output exactly;
-- no other consumer or application is migrated.
+- no consumer activation, persistence, or application migration occurs;
+- User Intelligence, Collective Intelligence, and Local Understanding Utility
+  remain unclaimed.
+
+### Observed result
+
+The focused deterministic gate passed all 15 required scenarios and classified
+the shadow:
+
+```text
+A — Shadow demonstrates bounded Understanding improvement
+```
+
+The result demonstrates bounded improvement in reusable Explanation
+traceability, Evidence integration, unresolved-alternative preservation, and
+uncertainty representation. It does not complete Phase 2, activate the shadow,
+change the canonical Understanding producer, or authorize Phase 4. The shadow
+is not invoked by Runtime and persists nothing.
+
+Expected Scorecard effect:
+
+```text
+Organizational Understanding  + hypothesis only
+User Intelligence             unchanged
+Collective Intelligence       unchanged
+Governance Integrity          protected
+System Sustainability         unchanged
+```
+
+Deferred semantics:
+
+- candidate-relative confidence;
+- ranking, leader, or preferred Explanation selection;
+- viability transitions and weakening as an authority state;
+- falsification, rule-out, and counterfactual discrimination;
+- observed-outcome confirmation;
+- required Explanation-to-Prediction implications;
+- candidate-specific missing-Evidence prescriptions;
+- structural retirement;
+- longitudinal Explanation revision and adjudication history;
+- application disclosure behavior.
 
 ### Documentation updates
 
-Update capability ownership, flow maps, Runtime validation, benchmark
-baselines, project state, and the explicit list of consumers still using the
-legacy path.
+Record the shadow benchmark, unchanged ownership, unchanged canonical output,
+rollback boundary, and whether the hypothesis earned a later activation
+proposal.
 
 ---
 
 ## Phase 4 — Understanding ownership convergence
+
+**Completion status:** Phase 4C complete; Classification A. Category A
+reference-only composition is the canonical production owner. Existing
+assessment-derived outputs remain as bounded compatibility views while
+consumers migrate.
 
 ### Objective
 
@@ -533,6 +647,27 @@ boundary without creating parallel organizational truth.
 Phase 3 proves one consumer. Only then can Discovery reconcile the current
 Assessment-derived final Understanding with the platform rule that Executive
 Assessment is a downstream projection.
+
+For this amended sequence, “proves one consumer” meant that the Phase 3 shadow
+had to demonstrate measurable Organizational Understanding improvement and
+pass all noninterference gates. That prerequisite was satisfied before Phase
+4C activation; the shadow itself did not activate or replace the canonical
+consumer.
+
+The Phase 4B compatibility shadow demonstrated stable composition and revision
+identity, exact Explanation membership, reference-based trace resolution,
+historical compatibility, application independence, and no duplicated
+Explanation ownership. It did not demonstrate Category A derivation of current
+assessment, recommendation, communication, projection, or product semantics.
+Those outputs remained byte-identical only through a temporary adapter
+classified as a legacy assumption.
+
+Phase 4C accepted that bounded adapter as the migration boundary rather than
+as a second truth owner. Canonical compositions now persist once in
+Organizational Understanding State; Executive Assessment consumes them while
+retaining its existing output contract, and `currentUnderstandings` remains a
+deprecated compatibility view. The ownership gate passes `14/14` with exact
+rollback and downstream noninterference.
 
 ### Production changes
 
@@ -591,9 +726,21 @@ becomes coupled to application wording.
 Update Product Canon references, Shared Organizational Intelligence, the
 Cognitive Architecture Index, capability ownership, and Runtime validation.
 
+### Phase 4C result
+
+Classification A. Organizational Understanding has one canonical composition
+owner, completed Explanations retain explanatory truth, and Executive
+Assessment is downstream. Compatibility adapters remain intentionally until
+their consumers migrate; they do not constitute parallel organizational
+truth.
+
 ---
 
 ## Phase 5 — Explicit authority transitions and Contribution Validation
+
+**Status:** Phases 5A and 5B complete. Explicit authority transitions and the
+disclosure/revocation enforcement contract are active. Application enforcement
+and durable revocation remain blocked; Phase 6 remains blocked.
 
 ### Objective
 
@@ -666,6 +813,34 @@ revocation cannot invalidate future use.
 
 Update Governance Architecture, Object Model, Behavioral Model, security and
 tenancy references, Runtime boundaries, and capability traces.
+
+### Phase 5A result
+
+Classification A. The existing completed-Explanation and canonical
+Organizational Understanding boundary now records separate, deterministic
+decisions for contribution admission, cognitive use, canonical composition
+eligibility, persistence eligibility, authority disposition, and disclosure
+eligibility. Authority is not inferred from persistence, confidence,
+recommendation, rank, adjudication, permissions, or policy.
+
+This is not the completion of full Phase 5 Governance enforcement. Disclosure
+remains explicitly unevaluated at the application boundary, and no permission,
+purpose, revocation, policy-version, provider-enforcement, or scoped-cognition
+contract was introduced. Those responsibilities remain sequentially gated.
+
+### Phase 5B result
+
+The minimum production disclosure contract is implemented and passes its
+focused `14/14` gate. An already-resolved decision may disclose or suppress
+authorized canonical compositions for an exact organization and consumer.
+Withholding and revocation affect future reads only; canonical truth,
+provenance, historical Runtime, and prior disclosure history remain unchanged.
+
+Activation is blocked because no canonical production owner currently resolves
+consumer disclosure decisions or persists append-only revocation history.
+Applications and projections may not infer eligibility. Phase 5B introduces no
+permissions, membership, policy engine, Governance Control Plane, provider
+integration, or Intelligence Scope.
 
 ---
 
@@ -746,6 +921,11 @@ the application contract using the first scope.
 Use existing decisions, predictions, experiments, reviews, and outcomes to
 revise completed Explanations and Organizational Understanding over time.
 
+Phase 7 may produce structured candidate-relative testing and revision
+Evidence when exact Explanation-to-implication ancestry exists. It does not
+automatically adjudicate every Explanation, and unresolved competition remains
+valid when outcomes do not discriminate.
+
 ### Architectural rationale
 
 Discovery becomes more intelligent only when later outcomes can strengthen,
@@ -814,6 +994,10 @@ baseline.
 ---
 
 ## Phase 8 — Application projection and Alpha integration
+
+**Status:** Phase 8A partial Runtime-backed `Your Organization` integration
+complete as an explicitly authorized product-validation exception. It does not
+activate Phase 6 or resume broader Phase 5 Governance.
 
 ### Objective
 
@@ -885,6 +1069,20 @@ Update Product Canon implementation status, frontend and view-model
 architecture, Alpha specifications, Runtime validation, project state, and
 deployment handoff.
 
+### Phase 8A result
+
+The existing route already loaded persisted Runtime, but its primary view model
+depended on the assessment-derived `currentUnderstandings` compatibility view.
+Phase 8A adds a read-only adapter for canonical compositions, completed
+Explanations, uncertainty, Conditions, Organizational State, investigation
+opportunities, learning changes, and model evolution.
+
+The integration is partial. Canonical Evidence bodies are not persisted, and
+the completed-Explanation contract does not require human-readable claim
+prose. Those sections report `Runtime not yet available`. No cognition,
+Runtime schema, capability, benchmark object, research object, or product
+interaction architecture was added.
+
 ---
 
 # Dependency graph
@@ -894,9 +1092,10 @@ Phase 0  Baseline and release harness
    ↓
 Phase 1  Comparative Evidence roles
    ↓
-Phase 2  Completed Explanation adjudication
-   ↓
-Phase 3  One Explanation-aware consumer
+Phase 2  Conditional completed Explanation adjudication
+   ├── blocked until canonical candidate-relative Evidence exists
+   ↓ explicit authorized exception
+Phase 3  Unadjudicated Explanation-aware Understanding shadow
    ↓
 Phase 4  Understanding ownership convergence
    ↓
@@ -930,7 +1129,9 @@ authorized.
 ## Work that may not be parallelized
 
 - Phase 2 production adjudication before Phase 1 role parity;
-- Phase 3 production consumption before Phase 2 authority is reproducible;
+- Phase 3 canonical production consumption before either Phase 2 authority is
+  reproducible or the unadjudicated shadow independently earns a later
+  activation proposal;
 - Phase 4 ownership convergence before one consumer proves value;
 - Phase 6 scoped cognition before Phase 5 Governance enforcement;
 - Phase 8 Runtime-backed application integration before its cognitive and

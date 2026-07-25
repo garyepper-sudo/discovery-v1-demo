@@ -165,7 +165,9 @@ Executive Narrative
 Executive Workspace
 ```
 
-Discovery now possesses a complete executive cognition pipeline from organizational evidence through adaptive executive judgment.
+Discovery possesses a complete first-generation executive application pipeline
+over shared organizational cognition. Executive Assessment and judgment are
+downstream consumers, not the universal endpoint of the cognitive model.
 
 Executive cognition is now longitudinal.
 
@@ -367,6 +369,13 @@ Objects include:
 Runtime stores cognition.
 
 It never stores presentation.
+
+`OrganizationalUnderstandingState.canonicalCompositions` is the canonical
+production-owned composition of completed Organizational Explanations into
+reusable organizational truth. It references Explanation identities and does
+not copy explanatory claims, ancestry, assumptions, or comparative Evidence
+roles. Historical states may omit it. `currentUnderstandings` remains a
+bounded assessment-derived compatibility view during consumer migration.
 
 ---
 
@@ -594,6 +603,20 @@ These roles preserve candidate-relative structure without adjudicating the
 Explanation. `opposes` is not discrimination or decisive falsification;
 `shared` is not additional Evidence weight. Counterfactual, outcome, rule-out,
 and adjudication semantics remain absent.
+
+## Canonical Understanding authority receipts
+
+Canonical Organizational Understanding compositions may carry an additive
+`authorityTransition` receipt. The receipt records decision ownership,
+contributing Explanation identities, authority disposition, and basis. It does
+not copy Explanation claims, ancestry, assumptions, or comparative Evidence
+roles and is not a new cognitive object or truth owner.
+
+Contribution admission, cognitive use, canonical composition eligibility,
+persistence eligibility, authority disposition, and disclosure eligibility
+remain distinct. Persistence never grants authority. Disclosure is outside
+this receipt and remains explicitly unevaluated until an application boundary
+applies an authorized disclosure contract.
 
 Canonical Object Domains
 

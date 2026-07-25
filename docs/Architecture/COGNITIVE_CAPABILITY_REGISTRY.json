@@ -109,6 +109,7 @@
             "buildEvidence"
           ],
           "imports": [
+            "../types",
             "./types"
           ]
         }
@@ -252,7 +253,8 @@
           ],
           "imports": [
             "../../cognition/cognitiveGraph",
-            "../cognition/cognitiveOntology"
+            "../cognition/cognitiveOntology",
+            "./organizationalJudgment"
           ]
         },
         {
@@ -502,6 +504,7 @@
             "synthesizeOrganizationalState"
           ],
           "imports": [
+            "../judgment/rankExecutiveConstraint",
             "./rankOrganizationalCondition"
           ]
         }
@@ -526,6 +529,7 @@
         "CAP-UND-002",
         "CAP-UND-003",
         "CAP-UND-004",
+        "CAP-UND-006",
         "CAP-PRD-002"
       ],
       "producesObjects": [
@@ -539,7 +543,6 @@
       ],
       "runtimeDestination": "OrganizationRuntime.executiveAssessment",
       "executiveDestinations": [
-        "OrganizationalUnderstanding",
         "ExecutiveProjection",
         "ExecutiveWorkspace"
       ],
@@ -549,7 +552,7 @@
       ],
       "livingOrganizationStage": 2,
       "reviewStatus": "reviewed",
-      "notes": "Executive Assessment is the authoritative executive synthesis consumed by the canonical Executive Understanding Synthesis capability. It integrates Prediction Reflection but does not recreate prediction reasoning.",
+      "notes": "Executive Assessment is an application-specific synthesis that consumes canonical Organizational Understanding together with organizational state, conditions, mechanisms, theories, beliefs, Prediction Reflection, and investigation context. It does not own reusable Organizational Understanding or recreate Explanation semantics.",
       "canonicalProducerExists": true,
       "resolvedFiles": [
         {
@@ -559,14 +562,24 @@
           "architecturalLayer": "EXEC",
           "cognitiveDomain": "UND",
           "exports": [
+            "ExecutiveAssessmentWithPrimaryJudgment",
             "buildExecutiveAssessment"
           ],
           "imports": [
             "../../concepts/conceptCandidateTypes",
+            "../../understanding/buildCanonicalUnderstandingCompatibilityShadow",
             "../predictions/buildPredictionReflection",
+            "./buildDominantCausalChain",
+            "./buildExecutiveFocus",
             "./buildExecutivePriority",
+            "./buildExecutiveRisks",
             "./buildOrganizationalUnderstanding",
+            "./buildPrimaryExecutiveJudgment",
             "./buildTheoryReflection",
+            "./executiveDominantCausalChainTypes",
+            "./executiveFocusTypes",
+            "./executivePrimaryJudgmentTypes",
+            "./executiveRiskTypes",
             "./organizationalJudgment",
             "./organizationalMechanism"
           ]
@@ -579,6 +592,7 @@
       "id": "CAP-UND-006",
       "name": "Executive Understanding Synthesis",
       "searchTerms": [
+        "buildCanonicalUnderstandingCompatibilityShadow",
         "buildExecutiveUnderstandingCandidates",
         "consolidateUnderstanding",
         "synthesizeUnderstanding",
@@ -586,11 +600,12 @@
         "OrganizationalUnderstanding",
         "OrganizationalUnderstandingState"
       ],
-      "description": "Transforms Executive Assessment into Discovery's single canonical persistent Organizational Understanding and consolidates it longitudinally across investigations.",
+      "description": "Composes completed Organizational Explanations into Discovery's single canonical reusable Organizational Understanding. Assessment-derived currentUnderstandings remain a temporary downstream compatibility view.",
       "domain": "UND",
       "status": "canonical",
-      "canonicalProducer": "engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts",
+      "canonicalProducer": "engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow.ts",
       "implementationFiles": [
+        "engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow.ts",
         "engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts",
         "engine/v3/understanding/consolidateUnderstanding.ts",
         "engine/v3/understanding/synthesizeUnderstanding.ts",
@@ -606,7 +621,8 @@
       ],
       "consumedByCapabilities": [
         "CAP-COM-001",
-        "CAP-DEC-001"
+        "CAP-DEC-001",
+        "CAP-UND-005"
       ],
       "runtimeDestination": "OrganizationRuntime.organizationalUnderstandingState",
       "executiveDestinations": [
@@ -623,9 +639,26 @@
       ],
       "livingOrganizationStage": 2,
       "reviewStatus": "reviewed",
-      "notes": "This is the sole canonical producer of persistent Organizational Understanding. Investigation-level understandings and legacy belief-derived understandings remain available as supporting working cognition but do not compete for canonical executive understanding. This is a terminal cognitive capability consumed by Executive Projection, Executive Workspace, and Atlas rather than by another registered cognitive capability.",
+      "notes": "The reference-only Category A composition is the sole canonical owner of reusable Organizational Understanding. Completed Explanations retain claims, ancestry, assumptions, comparative Evidence roles, and role availability. Executive Assessment consumes canonical composition. buildExecutiveUnderstandingCandidates, consolidation, and synthesis remain temporary compatibility adapters for current downstream contracts.",
       "canonicalProducerExists": true,
       "resolvedFiles": [
+        {
+          "path": "engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-PER-096",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "PER",
+          "exports": [
+            "CanonicalUnderstandingComposition",
+            "CanonicalUnderstandingCompositionUncertainty",
+            "CanonicalUnderstandingTraceView",
+            "buildCanonicalUnderstandingCompatibilityShadow",
+            "resolveCanonicalUnderstandingTrace"
+          ],
+          "imports": [
+            "../model/judgment/organizationalJudgment"
+          ]
+        },
         {
           "path": "engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts",
           "existsInFileRegistry": true,
@@ -685,6 +718,7 @@
             "../concepts/buildConceptCandidates",
             "../concepts/compressConceptCandidates",
             "../concepts/synthesizeOrganizationalConcepts",
+            "../contradictions",
             "../functional/inferFunctionalInterpretations",
             "../meaning/extractMeaning",
             "../model/beliefs/inferOrganizationalBeliefs",
@@ -698,6 +732,8 @@
             "../model/investigation/refineInvestigationOpportunities",
             "../model/judgment/buildExecutiveAssessment",
             "../model/judgment/buildExecutiveExplanation",
+            "../model/judgment/buildPrimaryExecutiveConstraint",
+            "../model/judgment/completeOrganizationalExplanations",
             "../model/judgment/detectJudgmentContradictions",
             "../model/judgment/evaluateExplanations",
             "../model/judgment/inferOrganizationalMechanisms",
@@ -716,8 +752,11 @@
             "../model/simulate/simulateOrganization",
             "../model/state/inferOrganizationalConditions",
             "../model/synchronizeOrganizationModel",
+            "../operating-systems/communication/runExecutiveCommunicationOperatingSystem",
+            "../operating-systems/recommendation/runExecutiveRecommendationOperatingSystem",
             "../phenomena/inferOrganizationalPhenomena",
             "../types",
+            "../understanding/buildCanonicalUnderstandingCompatibilityShadow",
             "../understanding/buildExecutiveUnderstandingCandidates",
             "../understanding/consolidateUnderstanding",
             "../understanding/synthesizeUnderstanding",
@@ -781,11 +820,14 @@
           "exports": [
             "OrganizationId",
             "loadOrganizationRuntimeState",
+            "normalizeOrganizationRuntime",
+            "persistOrganizationRuntimeState",
             "resetOrganizationRuntimeState",
             "saveOrganizationRuntimeState"
           ],
           "imports": [
             "./organizationRuntime",
+            "./runtimeStorageLocation",
             "fs",
             "path"
           ]
@@ -805,17 +847,29 @@
           ],
           "imports": [
             "../cognition/observationEvolution",
+            "../communication/executiveCommunication",
+            "../decisions/executiveDecisionRecord",
             "../entities/entityLifecycle",
             "../executive/executiveState",
             "../model/causal/organizationalCausalModel",
             "../model/createOrganizationModel",
+            "../model/epistemic/organizationalUncertainty",
+            "../model/judgment/organizationalJudgment",
             "../model/memory/organizationalMemory",
             "../model/memory/organizationalTheories",
+            "../model/optimization/optimizedExecutiveRecommendationTypes",
             "../model/organizationModel",
             "../model/predictions/evaluatePredictionOutcomes",
+            "../model/recommendation/executiveRecommendationTypes",
             "../model/simulate/organizationalIntervention",
             "../model/simulate/simulateOrganization",
+            "../model/state/inferOrganizationalConditions",
+            "../simulation/executiveSimulation",
             "../understanding/types",
+            "../work/executiveLearning",
+            "../work/executiveReview",
+            "../work/executiveWork",
+            "../work/operatingModelImprovement",
             "./organizationalUnderstandingState"
           ]
         }
@@ -1696,7 +1750,45 @@
       "reviewStatus": "reviewed",
       "notes": "Canonical synthesis capability for assembling existing simulation, comparison, ranking, optimization, and recommendation cognition into a stable executive-facing simulation object. It performs no independent organizational simulation, scenario comparison, ranking, optimization, recommendation generation, confidence calibration, or constraint reasoning. The producer is deterministic when generatedAt is supplied.",
       "canonicalProducerExists": true,
-      "resolvedFiles": [],
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/simulation/executiveSimulation.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-SIM-020",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "SIM",
+          "exports": [
+            "ExecutiveSimulation",
+            "ExecutiveSimulationScenario"
+          ],
+          "imports": [
+            "../decisions/buildExecutiveDecisionRecommendation",
+            "../decisions/compareExecutiveScenarios",
+            "../decisions/rankExecutiveScenarios",
+            "../optimization/executiveOptimizationObjective",
+            "../scenarios/runExecutiveScenario"
+          ]
+        },
+        {
+          "path": "engine/v3/simulation/buildExecutiveSimulation.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-SIM-019",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "SIM",
+          "exports": [
+            "BuildExecutiveSimulationInput",
+            "buildExecutiveSimulation"
+          ],
+          "imports": [
+            "../decisions/buildExecutiveDecisionRecommendation",
+            "../decisions/compareExecutiveScenarios",
+            "../decisions/rankExecutiveScenarios",
+            "../optimization/executiveOptimizationObjective",
+            "../scenarios/runExecutiveScenario",
+            "./executiveSimulation"
+          ]
+        }
+      ],
       "missingImplementationFiles": [],
       "subsystem": "Executive Simulation",
       "architecturalLayer": "EXEC"
@@ -1765,6 +1857,8 @@
             "runExecutiveDecisionCycle"
           ],
           "imports": [
+            "../model/judgment/buildPrimaryExecutiveConstraint",
+            "../model/judgment/organizationalMechanism",
             "../model/simulate/executiveDecision",
             "../model/simulate/interventionOption",
             "../model/state/inferOrganizationalConditions",
@@ -1775,6 +1869,9 @@
             "../runtime/organizationRuntime",
             "../scenarios/buildExecutiveDecisionContext",
             "../scenarios/runExecutiveScenario",
+            "../simulation/buildExecutiveSimulation",
+            "../simulation/executiveSimulation",
+            "./buildExecutiveDecisionJustification",
             "./buildExecutiveDecisionRecommendation",
             "./calibrateDecisionConfidence",
             "./compareExecutiveScenarios",
@@ -1794,8 +1891,10 @@
           ],
           "imports": [
             "../decisions/evaluateInterventionConstraints",
+            "../model/judgment/organizationalMechanism",
             "../model/simulate/executiveDecision",
-            "../model/simulate/interventionOption"
+            "../model/simulate/interventionOption",
+            "../model/state/inferOrganizationalConditions"
           ]
         },
         {
@@ -2048,6 +2147,9 @@
             "buildExecutiveDecisionRecommendation"
           ],
           "imports": [
+            "../model/judgment/buildPrimaryExecutiveConstraint",
+            "../model/simulate/interventionOption",
+            "../optimization/executiveOptimizationObjective",
             "./calibrateDecisionConfidence",
             "./compareExecutiveScenarios",
             "./evaluateInterventionViability",
@@ -2097,7 +2199,54 @@
       "reviewStatus": "reviewed",
       "notes": "Canonical producer for converting a completed non-mutating Executive Decision Cycle and an explicit leadership response into a durable Executive Decision Record. It preserves generated Intervention Option identity separately from executable Organizational Intervention identity, records accepted, modified, alternative, deferred, or rejected dispositions, and does not alter organizational cognition. Persistence is performed through saveExecutiveDecisionRecord() and persistOrganizationRuntimeState() without incrementing investigation count.",
       "canonicalProducerExists": true,
-      "resolvedFiles": [],
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/decisions/executiveDecisionRecord.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-SIM-005",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "SIM",
+          "exports": [
+            "ExecutiveDecisionDisposition",
+            "ExecutiveDecisionExpectedOutcome",
+            "ExecutiveDecisionOutcomeStatus",
+            "ExecutiveDecisionRecord",
+            "ExecutiveDecisionRecordStatus",
+            "ExecutiveDecisionSuccessCriterion"
+          ],
+          "imports": []
+        },
+        {
+          "path": "engine/v3/decisions/recordExecutiveDecision.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-SIM-007",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "SIM",
+          "exports": [
+            "RecordExecutiveDecisionInput",
+            "recordExecutiveDecision"
+          ],
+          "imports": [
+            "./executiveDecisionRecord",
+            "./runExecutiveDecisionCycle"
+          ]
+        },
+        {
+          "path": "engine/v3/decisions/saveExecutiveDecisionRecord.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-MEM-002",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "MEM",
+          "exports": [
+            "SaveExecutiveDecisionRecordInput",
+            "saveExecutiveDecisionRecord"
+          ],
+          "imports": [
+            "../runtime/organizationRuntime",
+            "./executiveDecisionRecord"
+          ]
+        }
+      ],
       "missingImplementationFiles": [],
       "subsystem": "Executive Decision Recording",
       "architecturalLayer": "EXEC",
@@ -2148,7 +2297,129 @@
       "reviewStatus": "reviewed",
       "notes": "Canonical post-decision lifecycle capability. It preserves Decision Record ancestry through Executive Work, Executive Review, Executive Learning, and Operating Model Improvement.",
       "canonicalProducerExists": true,
-      "resolvedFiles": [],
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/work/executiveWork.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-PER-114",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "PER",
+          "exports": [
+            "ExecutiveWork",
+            "ExecutiveWorkHealth",
+            "ExecutiveWorkStatus"
+          ],
+          "imports": [
+            "../decisions/executiveDecisionRecord"
+          ]
+        },
+        {
+          "path": "engine/v3/work/createExecutiveWork.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-125",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "CreateExecutiveWorkInput",
+            "createExecutiveWork"
+          ],
+          "imports": [
+            "../decisions/executiveDecisionRecord",
+            "./executiveWork"
+          ]
+        },
+        {
+          "path": "engine/v3/work/createExecutiveReview.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-PER-111",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "PER",
+          "exports": [
+            "CreateExecutiveReviewInput",
+            "createExecutiveReview"
+          ],
+          "imports": [
+            "./executiveReview",
+            "./executiveWork"
+          ]
+        },
+        {
+          "path": "engine/v3/work/createExecutiveLearning.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-PER-110",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "PER",
+          "exports": [
+            "CreateExecutiveLearningInput",
+            "createExecutiveLearning"
+          ],
+          "imports": [
+            "./executiveLearning",
+            "./executiveReview"
+          ]
+        },
+        {
+          "path": "engine/v3/work/createOperatingModelImprovement.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-MEM-013",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "MEM",
+          "exports": [
+            "CreateOperatingModelImprovementInput",
+            "createOperatingModelImprovement"
+          ],
+          "imports": [
+            "./executiveLearning",
+            "./operatingModelImprovement"
+          ]
+        },
+        {
+          "path": "engine/v3/work/applyOperatingModelImprovement.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-UND-124",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "UND",
+          "exports": [
+            "ApplyOperatingModelImprovementInput",
+            "applyOperatingModelImprovement"
+          ],
+          "imports": [
+            "../runtime/organizationRuntime",
+            "../understanding/types",
+            "./operatingModelImprovement"
+          ]
+        },
+        {
+          "path": "engine/v3/work/saveExecutiveLearning.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-MEM-014",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "MEM",
+          "exports": [
+            "SaveExecutiveLearningInput",
+            "saveExecutiveLearning"
+          ],
+          "imports": [
+            "../runtime/organizationRuntime",
+            "./executiveLearning"
+          ]
+        },
+        {
+          "path": "engine/v3/work/saveOperatingModelImprovement.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-MEM-017",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "MEM",
+          "exports": [
+            "SaveOperatingModelImprovementInput",
+            "saveOperatingModelImprovement"
+          ],
+          "imports": [
+            "../runtime/organizationRuntime",
+            "./operatingModelImprovement"
+          ]
+        }
+      ],
       "missingImplementationFiles": [],
       "subsystem": "Executive Work Lifecycle",
       "architecturalLayer": "EXEC",
@@ -2188,7 +2459,27 @@
       "reviewStatus": "reviewed",
       "notes": "Applies bounded longitudinal confidence adjustment from reviewed Executive Learning. It does not change scenario ranking and counts each Executive Learning event once.",
       "canonicalProducerExists": true,
-      "resolvedFiles": [],
+      "resolvedFiles": [
+        {
+          "path": "engine/v3/decisions/calibrateDecisionConfidence.ts",
+          "existsInFileRegistry": true,
+          "fileId": "COG-SELF-002",
+          "architecturalLayer": "COG",
+          "cognitiveDomain": "SELF",
+          "exports": [
+            "CalibrateDecisionConfidenceInput",
+            "DecisionConfidenceCalibration",
+            "calibrateDecisionConfidence"
+          ],
+          "imports": [
+            "../model/epistemic/organizationalUncertainty",
+            "../runtime/organizationRuntime",
+            "../understanding/types",
+            "./evaluateInterventionViability",
+            "./rankExecutiveScenarios"
+          ]
+        }
+      ],
       "missingImplementationFiles": [],
       "subsystem": "Longitudinal Executive Judgment",
       "architecturalLayer": "EXEC",
@@ -2331,6 +2622,7 @@
             "synthesizeExecutiveOptimizationObjective"
           ],
           "imports": [
+            "../model/judgment/buildPrimaryExecutiveConstraint",
             "../model/simulate/executiveDecision",
             "../model/state/inferOrganizationalConditions",
             "./executiveOptimizationObjective",
@@ -2405,10 +2697,13 @@
           "architecturalLayer": "COG",
           "cognitiveDomain": "UND",
           "exports": [
+            "ExecutiveNarrativeSource",
+            "LegacyExecutiveCommunicationProjection",
             "synthesizeExecutiveNarrative"
           ],
           "imports": [
-            "../../../components/executive-v2/projection/ExecutiveProjection",
+            "./buildExecutiveStory",
+            "./executiveCommunicationSource",
             "./executiveNarrative"
           ]
         },
@@ -2441,8 +2736,8 @@
             "synthesizeExecutiveCommunication"
           ],
           "imports": [
-            "../../../components/executive-v2/projection/ExecutiveProjection",
             "./executiveCommunication",
+            "./executiveCommunicationSource",
             "./synthesizeExecutiveNarrative"
           ]
         }
@@ -2453,6 +2748,6 @@
       "terminalCapability": true
     }
   ],
-  "generatedAt": "2026-07-22T00:33:22.543Z",
+  "generatedAt": "2026-07-25T18:42:18.403Z",
   "capabilityCount": 32
 }

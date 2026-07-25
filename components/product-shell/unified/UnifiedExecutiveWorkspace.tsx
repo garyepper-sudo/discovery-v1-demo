@@ -77,6 +77,22 @@ export default function UnifiedExecutiveWorkspace({ view }: { view: View }) {
         <article className={styles.experiment}><p><FlaskConical size={15}/> Experiment</p><h2>Stress test ideas.</h2><span>Simulate scenarios and compare outcomes.</span><div className={styles.scenario}><strong>{view.experiment.currentScenario}</strong><small>{view.experiment.recentScenarios[0]?.status ?? "Ready"}</small></div>{view.experiment.recentScenarios.slice(0,3).map((item)=><div className={styles.outcome} key={item.id}><span>{item.title}</span><em>{item.status}</em></div>)}<Link className={styles.panelAction} href={view.experiment.runDestination}>Run experiment</Link><Link className={styles.secondaryAction} href={view.experiment.destination}>See all experiments <ArrowRight size={14}/></Link></article>
         <article className={styles.brief}><p><BookOpen size={15}/> Brief</p><h2>Communicate impact.</h2><span>Turn decisions and insights into clear briefs.</span>{view.brief.templates.map((item)=><Link className={styles.briefRow} href={`${view.brief.destination}&template=${encodeURIComponent(item)}`} key={item}>{item}<small>Create</small></Link>)}<Link className={styles.panelAction} href={view.brief.destination}><Plus size={14}/> Create new brief</Link><Link className={styles.secondaryAction} href={view.brief.destination}>View all briefs <ArrowRight size={14}/></Link></article>
       </section>
+      <section className={styles.runtimeDetails} aria-label="Runtime-backed organization details">
+        {Object.values(view.runtimeSections).map((section) => (
+          <article key={section.title}>
+            <p>{section.title}</p>
+            <h3>{section.summary}</h3>
+            <small>{section.owner}</small>
+            {section.items.length > 1 && (
+              <ul>
+                {section.items.slice(1, 3).map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            )}
+          </article>
+        ))}
+      </section>
     </main>
 
     {impactOpen && <aside className={styles.impact} id="session-recap"><button className={styles.close} onClick={()=>setImpactOpen(false)} aria-label="Close session impact"><X size={16}/></button><p>Session impact</p><h2>{impact.durable.length ? `Great session, ${view.greetingName}.` : "Nothing durable has changed yet."}</h2><span>{impact.durable.length ? "Here’s how you improved your Organization Model." : "Your brainstorming remains provisional."}</span>{impact.durable.length?<ul>{impact.durable.map((entry)=><li key={entry.id}><strong>{entry.action.replace(/-/g," ")}</strong><span>{entry.label}</span></li>)}</ul>:<div className={styles.emptyImpact}>Saved observations and decisions will appear here after persistence succeeds.</div>}<a href="#session-recap">View full session recap</a></aside>}

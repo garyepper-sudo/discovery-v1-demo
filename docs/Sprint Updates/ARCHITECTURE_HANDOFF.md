@@ -1,6 +1,6 @@
 # Discovery Architecture Handoff
 
-Generated: 2026-07-22T00:33:24.678Z
+Generated: 2026-07-25T18:39:04.185Z
 
 ## Purpose
 
@@ -22,7 +22,7 @@ Before adding any new cognitive capability:
 
 - Registered capabilities: 32
 - Canonical producers: 32
-- Registered files: 585
+- Registered files: 1189
 - Terminal capabilities: 5
 - Duplicate capability IDs: 0
 - Missing dependencies: 0
@@ -43,7 +43,7 @@ Before adding any new cognitive capability:
 | CAP-UND-003 | Organizational Theory Formation | COG | OrganizationalTheory | OrganizationalMemory.theories | CAP-SELF-001, CAP-UND-004, CAP-UND-005 |
 | CAP-UND-004 | Organizational Condition Inference | EXEC | OrganizationalCondition | OrganizationRuntime.organizationalConditions | CAP-ADP-001, CAP-COM-001, CAP-OPT-001, CAP-OPT-002, CAP-PRD-001, CAP-SELF-002, CAP-SIM-001, CAP-UND-005 |
 | CAP-UND-005 | Executive Assessment | EXEC | ExecutiveAssessment | OrganizationRuntime.executiveAssessment | CAP-COM-001, CAP-DEC-001, CAP-DEC-002, CAP-UND-006 |
-| CAP-UND-006 | Executive Understanding Synthesis | COG | OrganizationalUnderstanding, OrganizationalUnderstandingState | OrganizationRuntime.organizationalUnderstandingState | CAP-COM-001, CAP-DEC-001 |
+| CAP-UND-006 | Executive Understanding Synthesis | COG | OrganizationalUnderstanding, OrganizationalUnderstandingState | OrganizationRuntime.organizationalUnderstandingState | CAP-COM-001, CAP-DEC-001, CAP-UND-005 |
 | CAP-MEM-001 | Organizational Runtime Persistence | RUN | OrganizationRuntime | OrganizationRuntime | CAP-DEC-005, CAP-DEC-006, CAP-DEC-007, CAP-LRN-001, CAP-LRN-002, CAP-SYS-001, CAP-UND-006 |
 | CAP-LRN-001 | Organizational Belief Evolution | COG | OrganizationalBeliefRevision | OrganizationRuntime.organizationalBeliefRevisions | CAP-LRN-002 |
 | CAP-LRN-002 | Organizational Learning Profile | COG | OrganizationalLearningProfile | OrganizationRuntime.organizationalLearningProfile | CAP-COM-001, CAP-PRD-001, CAP-SIM-001 |
@@ -145,7 +145,7 @@ Before adding any new cognitive capability:
 
 ### CAP-UND-005 — Executive Assessment
 
-**Depends on:** CAP-UND-001, CAP-UND-002, CAP-UND-003, CAP-UND-004, CAP-PRD-002
+**Depends on:** CAP-UND-001, CAP-UND-002, CAP-UND-003, CAP-UND-004, CAP-UND-006, CAP-PRD-002
 
 **Produces:** ExecutiveAssessment
 
@@ -153,7 +153,7 @@ Before adding any new cognitive capability:
 
 **Runtime destination:** `OrganizationRuntime.executiveAssessment`
 
-**Executive destinations:** OrganizationalUnderstanding, ExecutiveProjection, ExecutiveWorkspace
+**Executive destinations:** ExecutiveProjection, ExecutiveWorkspace
 
 ### CAP-UND-006 — Executive Understanding Synthesis
 
@@ -161,7 +161,7 @@ Before adding any new cognitive capability:
 
 **Produces:** OrganizationalUnderstanding, OrganizationalUnderstandingState
 
-**Canonical producer:** `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
+**Canonical producer:** `engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow.ts`
 
 **Runtime destination:** `OrganizationRuntime.organizationalUnderstandingState`
 
@@ -461,7 +461,7 @@ Before adding any new cognitive capability:
 
 Possible overlap with **CAP-UND-005 — Executive Assessment**.
 
-Reason: semantic similarity 36%.
+Reason: semantic similarity 37%.
 
 Review before creating a new capability. Similarity does not automatically mean duplication; one capability may legitimately depend on or transform another.
 
@@ -552,7 +552,8 @@ Executive Workspace
 
 ### CAP-UND-006 — Executive Understanding Synthesis
 
-- Canonical producer: `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
+- Canonical producer: `engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow.ts`
+- Implementation: `engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow.ts`
 - Implementation: `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
 - Implementation: `engine/v3/understanding/consolidateUnderstanding.ts`
 - Implementation: `engine/v3/understanding/synthesizeUnderstanding.ts`
@@ -719,4 +720,3 @@ Treat the following files as canonical architectural sources:
 - `docs/Sprint Updates/ARCHITECTURE_HANDOFF.md`
 
 When architectural evidence conflicts, prefer the current registry and verified source-code trace over older sprint prose.
-

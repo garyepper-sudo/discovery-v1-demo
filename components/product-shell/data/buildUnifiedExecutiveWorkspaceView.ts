@@ -5,6 +5,7 @@ import { buildDecisionsExperienceView } from "./buildDecisionsExperienceView";
 import { buildExperimentExperienceView } from "./buildExperimentExperienceView";
 import { buildBriefExperienceView } from "./buildBriefExperienceView";
 import { buildProductHref } from "./productOrganization";
+import { buildRuntimeOrganizationView } from "./buildRuntimeOrganizationView";
 
 export function buildUnifiedExecutiveWorkspaceView(runtime: OrganizationRuntime) {
   const organization = buildOrganizationExperienceView(runtime);
@@ -13,22 +14,41 @@ export function buildUnifiedExecutiveWorkspaceView(runtime: OrganizationRuntime)
   const experiment = buildExperimentExperienceView(runtime);
   const brief = buildBriefExperienceView(runtime);
   const organizationId = runtime.metadata.organizationId;
+  const runtimeSections = buildRuntimeOrganizationView(runtime);
+  const runtimeInsights = [
+    runtimeSections.currentUnderstanding,
+    runtimeSections.explanations,
+  ].flatMap((section) =>
+    section.available
+      ? [section.summary, ...section.items].filter(
+          (item, index, items) => items.indexOf(item) === index,
+        )
+      : [],
+  );
   return {
     organization: organization.organization,
     greetingName: organization.organization.name.split(/\s+/)[0] || "there",
     summary: {
       understanding: organization.model.coherence,
       understandingLabel: organization.model.coherenceLabel,
-      confidence: organization.currentUnderstanding.confidence,
-      confidenceLabel: organization.currentUnderstanding.confidenceLabel,
+      confidence: null,
+      confidenceLabel: "Runtime not yet available",
       primaryConstraint: organization.model.areas[0]?.label ?? "Still emerging",
     },
-    insights: organization.insights.map((headline, index) => ({
+    insights: (
+      runtimeInsights.length > 0
+        ? runtimeInsights
+        : [runtimeSections.currentUnderstanding.summary]
+    ).slice(0, 3).map((headline, index) => ({
       id: `insight-${index + 1}`,
       headline,
-      implication: index === 0 ? organization.currentUnderstanding.explanation : organization.currentUnderstanding.reasoning,
+      implication:
+        index === 0
+          ? runtimeSections.explanations.summary
+          : runtimeSections.uncertainty.summary,
       activeAreaIds: organization.model.areas.filter((_, areaIndex) => areaIndex === 0 || areaIndex === index + 1).map((area) => area.id),
     })),
+    runtimeSections,
     model: organization.model,
     influence: {
       statement: decisions.state.kind === "active" ? decisions.state.summary : organization.currentUnderstanding.explanation,

@@ -1,6 +1,6 @@
 # Capability Trace — Theory Validation
 
-Generated: 2026-07-24T07:38:58.513Z
+Generated: 2026-07-25T18:39:02.274Z
 
 ## Verified Architecture
 
@@ -80,6 +80,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/benchmark/high-volume/captureRuntimeSnapshot.ts`
 - `engine/benchmark/high-volume/northstar/runNorthstarPrecisionGap001.ts`
 - `engine/benchmark/high-volume/northstar/scoreNorthstarGroundTruth.ts`
+- `engine/benchmark/judgment-lab/unadjudicatedExplanationUnderstandingShadowGate.ts`
 - `engine/benchmark/runAtlasSimulation.ts`
 - `engine/benchmark/runBenchmarkInvestigation.ts`
 - `engine/benchmark/runtime/cognitiveSemanticNormalizationAudit001.ts`
@@ -125,7 +126,7 @@ This section records source-code references. It supplements, but does not replac
 | UI | ✅ Found | 27 |
 | API | ❌ Not found | 0 |
 | Simulation | ❌ Not found | 0 |
-| Benchmark | ✅ Found | 124 |
+| Benchmark | ✅ Found | 125 |
 | Other | ✅ Found | 6 |
 
 ### Detailed Matches
@@ -158,19 +159,19 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 2 · **import** · matched `buildTheoryReflection`
   - `import { buildTheoryReflection } from "./buildTheoryReflection";`
-- Line 364 · **definition** · matched `theoryValidation`
+- Line 378 · **definition** · matched `theoryValidation`
   - `const theoryValidation = buildTheoryReflection({`
-- Line 430 · **unknown** · matched `theoryValidation`
+- Line 444 · **unknown** · matched `theoryValidation`
   - `theoryValidation.whyDiscoveryBelievesIt`
-- Line 432 · **unknown** · matched `theoryValidation`
+- Line 446 · **unknown** · matched `theoryValidation`
   - `theoryValidation.calibratedConfidenceExplanation`
-- Line 433 · **unknown** · matched `theoryValidation`
+- Line 447 · **unknown** · matched `theoryValidation`
   - `} ${theoryValidation.executiveRecommendation}\``
-- Line 435 · **unknown** · matched `theoryValidation`
+- Line 449 · **unknown** · matched `theoryValidation`
   - `? \`${strongestJudgment.assessment} This explanation ranked highest because it had the strongest combined judgment score across evidence, explanatory power, causal plausibility, executive significance, and intervention leverage. ${theoryValidation.calibratedConfidenceExplanation}\``
-- Line 497 · **unknown** · matched `theoryValidation`
+- Line 511 · **unknown** · matched `theoryValidation`
   - `theoryValidation,`
-- Line 550 · **unknown** · matched `theoryValidation`
+- Line 564 · **unknown** · matched `theoryValidation`
   - `theoryValidation,`
 
 ##### `engine/v3/model/judgment/buildOrganizationalUnderstanding.ts`
@@ -241,23 +242,23 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/model/judgment/organizationalJudgment.ts`
 
-- Line 82 · **unknown** · matched `theoryValidation`
+- Line 183 · **unknown** · matched `theoryValidation`
   - `export type TheoryValidationEvidence = {`
-- Line 95 · **unknown** · matched `theoryValidation`
+- Line 196 · **unknown** · matched `theoryValidation`
   - `export type TheoryValidation = {`
-- Line 100 · **unknown** · matched `theoryValidation`
+- Line 201 · **unknown** · matched `theoryValidation`
   - `supportingMechanisms: TheoryValidationEvidence[];`
-- Line 101 · **unknown** · matched `theoryValidation`
+- Line 202 · **unknown** · matched `theoryValidation`
   - `supportingOrganizationalBeliefs: TheoryValidationEvidence[];`
-- Line 105 · **unknown** · matched `theoryValidation`
+- Line 206 · **unknown** · matched `theoryValidation`
   - `contradictoryOrWeakeningEvidence: TheoryValidationEvidence[];`
-- Line 176 · **unknown** · matched `theoryValidation`
+- Line 277 · **unknown** · matched `theoryValidation`
   - `supportingMechanisms: TheoryValidationEvidence[];`
-- Line 181 · **unknown** · matched `theoryValidation`
+- Line 282 · **unknown** · matched `theoryValidation`
   - `supportingOrganizationalBeliefs: TheoryValidationEvidence[];`
-- Line 191 · **unknown** · matched `theoryValidation`
+- Line 292 · **unknown** · matched `theoryValidation`
   - `contradictoryOrWeakeningEvidence: TheoryValidationEvidence[];`
-- Line 280 · **type** · matched `theoryValidation`
+- Line 381 · **type** · matched `theoryValidation`
   - `theoryValidation?: TheoryValidation;`
 
 ##### `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
@@ -583,6 +584,11 @@ This section records source-code references. It supplements, but does not replac
   - `theoryValidation?: {`
 - Line 736 · **read** · matched `theoryValidation`
   - `?.theoryValidation`
+
+##### `engine/benchmark/judgment-lab/unadjudicatedExplanationUnderstandingShadowGate.ts`
+
+- Line 322 · **type** · matched `theoryValidation`
+  - `theoryValidation: { dominantTheory: "Capacity limits throughput" },`
 
 ##### `engine/benchmark/runAtlasSimulation.ts`
 

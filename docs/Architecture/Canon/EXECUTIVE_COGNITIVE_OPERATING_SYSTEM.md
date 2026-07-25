@@ -10,6 +10,12 @@ This document defines Discovery's Executive Cognitive Operating System (ECOS).
 
 The Executive Cognitive Operating System is Discovery's first major application built on the shared organizational intelligence platform. It remains the current product and engineering focus.
 
+It is not Discovery's universal product identity or cognition endpoint.
+Discovery exists to maximize useful organizational understanding for any
+authorized participant or scope. Executive Assessment, recommendations,
+simulation, communication, decisions, and learning consume and contribute to
+the same governed Organizational Model.
+
 It explains how Discovery thinks.
 
 It does not describe implementation.
@@ -447,6 +453,19 @@ Discovery should feel like thinking with another executive that learns from ever
 
 # Architectural Evolution
 
+## Discovery 2 context
+
+The first-generation ECOS established a complete executive application over
+Runtime-backed cognition. Discovery 2 retains that application while shifting
+the platform-level optimization target from executive judgment alone to useful
+organizational understanding.
+
+Adaptive Organizational Cognition is the high-level organizing theory.
+Structured Organizational Reasoning remains the technical architecture.
+Completed Explanation adjudication is benchmark validated but not production
+integrated. The next architecture work occurs at that production boundary and
+does not authorize redesign of ECOS.
+
 Discovery evolves through one preferred mechanism.
 
 ```text
@@ -514,11 +533,14 @@ Discovery follows these architectural principles.
 
 # North Star
 
-Discovery is an Executive Cognitive Operating System.
+Within Discovery's first major application, the product operates as an
+Executive Cognitive Operating System.
 
-Its purpose is not merely to analyze organizations.
+That application's purpose is not merely to analyze organizations.
 
-Its purpose is to continuously improve executive judgment through reusable organizational cognition.
+Its purpose is to continuously improve executive judgment through reusable
+organizational cognition while contributing to the governed Organization
+Model.
 
 Every Operating System exists to answer one executive question.
 

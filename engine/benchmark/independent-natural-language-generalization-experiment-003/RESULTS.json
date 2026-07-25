@@ -1,0 +1,1570 @@
+{
+  "experiment": "Independent Natural Language Generalization Experiment 003",
+  "generatedAt": "2026-07-25T18:00:00.000Z",
+  "conclusion": "Benchmark-specific capability demonstrated; natural-language generalization not demonstrated",
+  "unchangedProducerSha256": "37d93db2434254e0f14099ef7dfa0f8956b004594c33f7cd529654dd5a21f68c",
+  "corpus": [
+    {
+      "id": "nl-001",
+      "family": "commercial-complexity",
+      "industry": "Software",
+      "style": "executive-email",
+      "terminologySet": "enterprise-special-handling",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-002",
+      "family": "commercial-complexity",
+      "industry": "Healthcare",
+      "style": "meeting-notes",
+      "terminologySet": "clinical-variants",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-003",
+      "family": "commercial-complexity",
+      "industry": "Manufacturing",
+      "style": "operations-report",
+      "terminologySet": "engineered-orders",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-004",
+      "family": "commercial-complexity",
+      "industry": "Government",
+      "style": "board-summary",
+      "terminologySet": "agency-variants",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-005",
+      "family": "decision-escalation",
+      "industry": "Professional Services",
+      "style": "slack",
+      "terminologySet": "career-risk",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-006",
+      "family": "decision-escalation",
+      "industry": "Banking",
+      "style": "hr-observation",
+      "terminologySet": "control-exposure",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-007",
+      "family": "decision-escalation",
+      "industry": "Government",
+      "style": "meeting-notes",
+      "terminologySet": "ministerial-clearance",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-008",
+      "family": "decision-escalation",
+      "industry": "Healthcare",
+      "style": "fragmented-bullets",
+      "terminologySet": "clinical-escalation",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-009",
+      "family": "local-optimization",
+      "industry": "Manufacturing",
+      "style": "finance-commentary",
+      "terminologySet": "purchase-price-variance",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-010",
+      "family": "local-optimization",
+      "industry": "Healthcare",
+      "style": "operations-report",
+      "terminologySet": "lowest-rate-vendors",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-011",
+      "family": "local-optimization",
+      "industry": "Government",
+      "style": "board-summary",
+      "terminologySet": "lowest-bid",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-012",
+      "family": "local-optimization",
+      "industry": "Professional Services",
+      "style": "executive-email",
+      "terminologySet": "rate-card",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-013",
+      "family": "workflow-adoption",
+      "industry": "Software",
+      "style": "customer-interview",
+      "terminologySet": "jobs-to-be-done",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-014",
+      "family": "workflow-adoption",
+      "industry": "Healthcare",
+      "style": "meeting-notes",
+      "terminologySet": "clinical-workflow",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-015",
+      "family": "workflow-adoption",
+      "industry": "Government",
+      "style": "operations-report",
+      "terminologySet": "case-processing",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-016",
+      "family": "workflow-adoption",
+      "industry": "Manufacturing",
+      "style": "slack",
+      "terminologySet": "operator-flow",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-017",
+      "family": "shared-driver-branches",
+      "industry": "Software",
+      "style": "engineering-standup",
+      "terminologySet": "priority-reset",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-018",
+      "family": "shared-driver-branches",
+      "industry": "Healthcare",
+      "style": "operations-report",
+      "terminologySet": "service-reprioritization",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-019",
+      "family": "shared-driver-branches",
+      "industry": "Government",
+      "style": "board-summary",
+      "terminologySet": "ministerial-pivots",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-020",
+      "family": "shared-driver-branches",
+      "industry": "Professional Services",
+      "style": "slack",
+      "terminologySet": "client-pivots",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-021",
+      "family": "shared-mediator-convergence",
+      "industry": "Professional Services",
+      "style": "board-summary",
+      "terminologySet": "demand-capacity-gap",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-022",
+      "family": "shared-mediator-convergence",
+      "industry": "Healthcare",
+      "style": "operations-report",
+      "terminologySet": "care-capacity",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-023",
+      "family": "shared-mediator-convergence",
+      "industry": "Manufacturing",
+      "style": "meeting-notes",
+      "terminologySet": "load-skill-gap",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-024",
+      "family": "shared-mediator-convergence",
+      "industry": "Government",
+      "style": "executive-email",
+      "terminologySet": "casework-resourcing",
+      "kind": "positive"
+    },
+    {
+      "id": "nl-025",
+      "family": "correlation",
+      "industry": "Software",
+      "style": "finance-commentary",
+      "terminologySet": "correlation",
+      "kind": "negative"
+    },
+    {
+      "id": "nl-026",
+      "family": "common-cause",
+      "industry": "Healthcare",
+      "style": "meeting-notes",
+      "terminologySet": "common-cause",
+      "kind": "negative"
+    },
+    {
+      "id": "nl-027",
+      "family": "reverse-causality",
+      "industry": "Manufacturing",
+      "style": "operations-report",
+      "terminologySet": "reverse-causality",
+      "kind": "negative"
+    },
+    {
+      "id": "nl-028",
+      "family": "political-blame",
+      "industry": "Government",
+      "style": "executive-email",
+      "terminologySet": "political-blame",
+      "kind": "negative"
+    },
+    {
+      "id": "nl-029",
+      "family": "incomplete",
+      "industry": "Professional Services",
+      "style": "slack",
+      "terminologySet": "incomplete",
+      "kind": "negative"
+    },
+    {
+      "id": "nl-030",
+      "family": "misleading-summary",
+      "industry": "Software",
+      "style": "board-summary",
+      "terminologySet": "misleading-summary",
+      "kind": "negative"
+    },
+    {
+      "id": "nl-031",
+      "family": "redundant",
+      "industry": "Healthcare",
+      "style": "fragmented-bullets",
+      "terminologySet": "redundant",
+      "kind": "negative"
+    },
+    {
+      "id": "nl-032",
+      "family": "one-silo",
+      "industry": "Government",
+      "style": "meeting-notes",
+      "terminologySet": "one-silo",
+      "kind": "negative"
+    },
+    {
+      "id": "nl-033",
+      "family": "dense-unrelated",
+      "industry": "Manufacturing",
+      "style": "operations-report",
+      "terminologySet": "dense-unrelated",
+      "kind": "negative"
+    }
+  ],
+  "evaluation": {
+    "precision": 0,
+    "recall": 0,
+    "truePositives": 0,
+    "falsePositives": 0,
+    "falseNegatives": 24,
+    "trueNegatives": 9,
+    "cases": [
+      {
+        "scenarioId": "nl-001",
+        "family": "commercial-complexity",
+        "industry": "Software",
+        "style": "executive-email",
+        "terminologySet": "enterprise-special-handling",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "linear",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "synonym-drift",
+          "political-language"
+        ]
+      },
+      {
+        "scenarioId": "nl-002",
+        "family": "commercial-complexity",
+        "industry": "Healthcare",
+        "style": "meeting-notes",
+        "terminologySet": "clinical-variants",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "linear",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "implicit-mediation",
+          "fragmented-structure"
+        ]
+      },
+      {
+        "scenarioId": "nl-003",
+        "family": "commercial-complexity",
+        "industry": "Manufacturing",
+        "style": "operations-report",
+        "terminologySet": "engineered-orders",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "linear",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "passive-voice",
+          "terminology-drift"
+        ]
+      },
+      {
+        "scenarioId": "nl-004",
+        "family": "commercial-complexity",
+        "industry": "Government",
+        "style": "board-summary",
+        "terminologySet": "agency-variants",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "linear",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "hedging",
+          "political-language"
+        ]
+      },
+      {
+        "scenarioId": "nl-005",
+        "family": "decision-escalation",
+        "industry": "Professional Services",
+        "style": "slack",
+        "terminologySet": "career-risk",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "linear",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "shorthand",
+          "pronoun-reference"
+        ]
+      },
+      {
+        "scenarioId": "nl-006",
+        "family": "decision-escalation",
+        "industry": "Banking",
+        "style": "hr-observation",
+        "terminologySet": "control-exposure",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "linear",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "indirect",
+          "hidden-activation"
+        ]
+      },
+      {
+        "scenarioId": "nl-007",
+        "family": "decision-escalation",
+        "industry": "Government",
+        "style": "meeting-notes",
+        "terminologySet": "ministerial-clearance",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "linear",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "passive-voice",
+          "political-language"
+        ]
+      },
+      {
+        "scenarioId": "nl-008",
+        "family": "decision-escalation",
+        "industry": "Healthcare",
+        "style": "fragmented-bullets",
+        "terminologySet": "clinical-escalation",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "linear",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "fragmented-structure",
+          "missing-chronology"
+        ]
+      },
+      {
+        "scenarioId": "nl-009",
+        "family": "local-optimization",
+        "industry": "Manufacturing",
+        "style": "finance-commentary",
+        "terminologySet": "purchase-price-variance",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "linear",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "mixed-terminology"
+        ]
+      },
+      {
+        "scenarioId": "nl-010",
+        "family": "local-optimization",
+        "industry": "Healthcare",
+        "style": "operations-report",
+        "terminologySet": "lowest-rate-vendors",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "linear",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "indirect"
+        ]
+      },
+      {
+        "scenarioId": "nl-011",
+        "family": "local-optimization",
+        "industry": "Government",
+        "style": "board-summary",
+        "terminologySet": "lowest-bid",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "linear",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "political-language"
+        ]
+      },
+      {
+        "scenarioId": "nl-012",
+        "family": "local-optimization",
+        "industry": "Professional Services",
+        "style": "executive-email",
+        "terminologySet": "rate-card",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "linear",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "hedging"
+        ]
+      },
+      {
+        "scenarioId": "nl-013",
+        "family": "workflow-adoption",
+        "industry": "Software",
+        "style": "customer-interview",
+        "terminologySet": "jobs-to-be-done",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "linear",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "pronoun-reference",
+          "vague-language"
+        ]
+      },
+      {
+        "scenarioId": "nl-014",
+        "family": "workflow-adoption",
+        "industry": "Healthcare",
+        "style": "meeting-notes",
+        "terminologySet": "clinical-workflow",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "linear",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "fragmented-structure"
+        ]
+      },
+      {
+        "scenarioId": "nl-015",
+        "family": "workflow-adoption",
+        "industry": "Government",
+        "style": "operations-report",
+        "terminologySet": "case-processing",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "linear",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "passive-voice"
+        ]
+      },
+      {
+        "scenarioId": "nl-016",
+        "family": "workflow-adoption",
+        "industry": "Manufacturing",
+        "style": "slack",
+        "terminologySet": "operator-flow",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "linear",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "sarcasm",
+          "shorthand"
+        ]
+      },
+      {
+        "scenarioId": "nl-017",
+        "family": "shared-driver-branches",
+        "industry": "Software",
+        "style": "engineering-standup",
+        "terminologySet": "priority-reset",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "branching",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "shorthand"
+        ]
+      },
+      {
+        "scenarioId": "nl-018",
+        "family": "shared-driver-branches",
+        "industry": "Healthcare",
+        "style": "operations-report",
+        "terminologySet": "service-reprioritization",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "branching",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "passive-voice"
+        ]
+      },
+      {
+        "scenarioId": "nl-019",
+        "family": "shared-driver-branches",
+        "industry": "Government",
+        "style": "board-summary",
+        "terminologySet": "ministerial-pivots",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "branching",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "political-language"
+        ]
+      },
+      {
+        "scenarioId": "nl-020",
+        "family": "shared-driver-branches",
+        "industry": "Professional Services",
+        "style": "slack",
+        "terminologySet": "client-pivots",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "branching",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "pronoun-reference"
+        ]
+      },
+      {
+        "scenarioId": "nl-021",
+        "family": "shared-mediator-convergence",
+        "industry": "Professional Services",
+        "style": "board-summary",
+        "terminologySet": "demand-capacity-gap",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "converging",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "mixed-terminology"
+        ]
+      },
+      {
+        "scenarioId": "nl-022",
+        "family": "shared-mediator-convergence",
+        "industry": "Healthcare",
+        "style": "operations-report",
+        "terminologySet": "care-capacity",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "converging",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "indirect"
+        ]
+      },
+      {
+        "scenarioId": "nl-023",
+        "family": "shared-mediator-convergence",
+        "industry": "Manufacturing",
+        "style": "meeting-notes",
+        "terminologySet": "load-skill-gap",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "converging",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "fragmented-structure"
+        ]
+      },
+      {
+        "scenarioId": "nl-024",
+        "family": "shared-mediator-convergence",
+        "industry": "Government",
+        "style": "executive-email",
+        "terminologySet": "casework-resourcing",
+        "expectedQualification": true,
+        "qualified": false,
+        "expectedTopology": "converging",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 4,
+        "phenomena": [
+          "hedging",
+          "political-language"
+        ]
+      },
+      {
+        "scenarioId": "nl-025",
+        "family": "correlation",
+        "industry": "Software",
+        "style": "finance-commentary",
+        "terminologySet": "correlation",
+        "expectedQualification": false,
+        "qualified": false,
+        "expectedTopology": "unresolved",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 0,
+        "phenomena": [
+          "correlation"
+        ]
+      },
+      {
+        "scenarioId": "nl-026",
+        "family": "common-cause",
+        "industry": "Healthcare",
+        "style": "meeting-notes",
+        "terminologySet": "common-cause",
+        "expectedQualification": false,
+        "qualified": false,
+        "expectedTopology": "unresolved",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 0,
+        "phenomena": [
+          "common-cause"
+        ]
+      },
+      {
+        "scenarioId": "nl-027",
+        "family": "reverse-causality",
+        "industry": "Manufacturing",
+        "style": "operations-report",
+        "terminologySet": "reverse-causality",
+        "expectedQualification": false,
+        "qualified": false,
+        "expectedTopology": "unresolved",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 0,
+        "phenomena": [
+          "reverse-causality"
+        ]
+      },
+      {
+        "scenarioId": "nl-028",
+        "family": "political-blame",
+        "industry": "Government",
+        "style": "executive-email",
+        "terminologySet": "political-blame",
+        "expectedQualification": false,
+        "qualified": false,
+        "expectedTopology": "unresolved",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 0,
+        "phenomena": [
+          "political-blame"
+        ]
+      },
+      {
+        "scenarioId": "nl-029",
+        "family": "incomplete",
+        "industry": "Professional Services",
+        "style": "slack",
+        "terminologySet": "incomplete",
+        "expectedQualification": false,
+        "qualified": false,
+        "expectedTopology": "unresolved",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 0,
+        "phenomena": [
+          "incomplete"
+        ]
+      },
+      {
+        "scenarioId": "nl-030",
+        "family": "misleading-summary",
+        "industry": "Software",
+        "style": "board-summary",
+        "terminologySet": "misleading-summary",
+        "expectedQualification": false,
+        "qualified": false,
+        "expectedTopology": "unresolved",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 0,
+        "phenomena": [
+          "misleading-summary"
+        ]
+      },
+      {
+        "scenarioId": "nl-031",
+        "family": "redundant",
+        "industry": "Healthcare",
+        "style": "fragmented-bullets",
+        "terminologySet": "redundant",
+        "expectedQualification": false,
+        "qualified": false,
+        "expectedTopology": "unresolved",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 0,
+        "phenomena": [
+          "redundant"
+        ]
+      },
+      {
+        "scenarioId": "nl-032",
+        "family": "one-silo",
+        "industry": "Government",
+        "style": "meeting-notes",
+        "terminologySet": "one-silo",
+        "expectedQualification": false,
+        "qualified": false,
+        "expectedTopology": "unresolved",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 0,
+        "phenomena": [
+          "one-silo"
+        ]
+      },
+      {
+        "scenarioId": "nl-033",
+        "family": "dense-unrelated",
+        "industry": "Manufacturing",
+        "style": "operations-report",
+        "terminologySet": "dense-unrelated",
+        "expectedQualification": false,
+        "qualified": false,
+        "expectedTopology": "unresolved",
+        "recoveredTopology": "unresolved",
+        "topologyRecovered": false,
+        "mediatorRecovered": false,
+        "alternativeRecovered": false,
+        "implicationRecovered": false,
+        "falsificationRecovered": false,
+        "expectedNodesRecovered": 0,
+        "expectedNodeCount": 0,
+        "phenomena": [
+          "dense-unrelated"
+        ]
+      }
+    ]
+  },
+  "controlledRegression": [
+    {
+      "scenarioId": "ref-001",
+      "expected": true,
+      "qualified": true,
+      "topology": "linear",
+      "expectedTopology": "linear",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-002",
+      "expected": true,
+      "qualified": true,
+      "topology": "linear",
+      "expectedTopology": "linear",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-003",
+      "expected": true,
+      "qualified": true,
+      "topology": "linear",
+      "expectedTopology": "linear",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-004",
+      "expected": true,
+      "qualified": true,
+      "topology": "linear",
+      "expectedTopology": "linear",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-005",
+      "expected": true,
+      "qualified": true,
+      "topology": "linear",
+      "expectedTopology": "linear",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-006",
+      "expected": true,
+      "qualified": true,
+      "topology": "linear",
+      "expectedTopology": "linear",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-007",
+      "expected": true,
+      "qualified": true,
+      "topology": "linear",
+      "expectedTopology": "linear",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-008",
+      "expected": true,
+      "qualified": true,
+      "topology": "linear",
+      "expectedTopology": "linear",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-009",
+      "expected": true,
+      "qualified": true,
+      "topology": "linear",
+      "expectedTopology": "linear",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-010",
+      "expected": true,
+      "qualified": true,
+      "topology": "linear",
+      "expectedTopology": "linear",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-011",
+      "expected": true,
+      "qualified": true,
+      "topology": "branching",
+      "expectedTopology": "branching",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-012",
+      "expected": true,
+      "qualified": true,
+      "topology": "branching",
+      "expectedTopology": "branching",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-013",
+      "expected": true,
+      "qualified": true,
+      "topology": "branching",
+      "expectedTopology": "branching",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-014",
+      "expected": true,
+      "qualified": true,
+      "topology": "branching",
+      "expectedTopology": "branching",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-015",
+      "expected": true,
+      "qualified": true,
+      "topology": "converging",
+      "expectedTopology": "converging",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-016",
+      "expected": true,
+      "qualified": true,
+      "topology": "converging",
+      "expectedTopology": "converging",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-017",
+      "expected": true,
+      "qualified": true,
+      "topology": "converging",
+      "expectedTopology": "converging",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-018",
+      "expected": true,
+      "qualified": true,
+      "topology": "converging",
+      "expectedTopology": "converging",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-019",
+      "expected": true,
+      "qualified": true,
+      "topology": "branching",
+      "expectedTopology": "branching",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-020",
+      "expected": true,
+      "qualified": true,
+      "topology": "branching",
+      "expectedTopology": "branching",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-021",
+      "expected": true,
+      "qualified": true,
+      "topology": "branching",
+      "expectedTopology": "branching",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-022",
+      "expected": true,
+      "qualified": true,
+      "topology": "converging",
+      "expectedTopology": "converging",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-023",
+      "expected": true,
+      "qualified": true,
+      "topology": "converging",
+      "expectedTopology": "converging",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-024",
+      "expected": true,
+      "qualified": true,
+      "topology": "converging",
+      "expectedTopology": "converging",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-025",
+      "expected": false,
+      "qualified": false,
+      "topology": "unresolved",
+      "expectedTopology": "unresolved",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-026",
+      "expected": false,
+      "qualified": false,
+      "topology": "unresolved",
+      "expectedTopology": "unresolved",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-027",
+      "expected": false,
+      "qualified": false,
+      "topology": "unresolved",
+      "expectedTopology": "unresolved",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-028",
+      "expected": false,
+      "qualified": false,
+      "topology": "unresolved",
+      "expectedTopology": "unresolved",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-029",
+      "expected": false,
+      "qualified": false,
+      "topology": "unresolved",
+      "expectedTopology": "unresolved",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-030",
+      "expected": false,
+      "qualified": false,
+      "topology": "unresolved",
+      "expectedTopology": "unresolved",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-031",
+      "expected": false,
+      "qualified": false,
+      "topology": "unresolved",
+      "expectedTopology": "unresolved",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-032",
+      "expected": false,
+      "qualified": false,
+      "topology": "unresolved",
+      "expectedTopology": "unresolved",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-033",
+      "expected": false,
+      "qualified": false,
+      "topology": "converging",
+      "expectedTopology": "unresolved",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-034",
+      "expected": false,
+      "qualified": false,
+      "topology": "linear",
+      "expectedTopology": "unresolved",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-035",
+      "expected": false,
+      "qualified": false,
+      "topology": "linear",
+      "expectedTopology": "unresolved",
+      "passed": true
+    },
+    {
+      "scenarioId": "ref-036",
+      "expected": false,
+      "qualified": false,
+      "topology": "unresolved",
+      "expectedTopology": "unresolved",
+      "passed": true
+    }
+  ],
+  "failureAnalysis": {
+    "failedPositiveCases": 24,
+    "causes": {
+      "exactGrammarDependence": 24,
+      "synonym-drift": 1,
+      "political-language": 6,
+      "implicit-mediation": 1,
+      "fragmented-structure": 4,
+      "passive-voice": 4,
+      "terminology-drift": 1,
+      "hedging": 3,
+      "shorthand": 3,
+      "pronoun-reference": 3,
+      "indirect": 3,
+      "hidden-activation": 1,
+      "missing-chronology": 1,
+      "mixed-terminology": 2,
+      "vague-language": 1,
+      "sarcasm": 1
+    },
+    "diagnosis": "The unchanged producer recognizes only the bounded explicit and implicit sentence forms used by Experiment 002. Independently phrased causal content does not reach edge formation."
+  },
+  "writingStyleAnalysis": {
+    "board-summary": {
+      "cases": 4,
+      "qualified": 0,
+      "recoveryRate": 0
+    },
+    "customer-interview": {
+      "cases": 1,
+      "qualified": 0,
+      "recoveryRate": 0
+    },
+    "engineering-standup": {
+      "cases": 1,
+      "qualified": 0,
+      "recoveryRate": 0
+    },
+    "executive-email": {
+      "cases": 3,
+      "qualified": 0,
+      "recoveryRate": 0
+    },
+    "finance-commentary": {
+      "cases": 1,
+      "qualified": 0,
+      "recoveryRate": 0
+    },
+    "fragmented-bullets": {
+      "cases": 1,
+      "qualified": 0,
+      "recoveryRate": 0
+    },
+    "hr-observation": {
+      "cases": 1,
+      "qualified": 0,
+      "recoveryRate": 0
+    },
+    "meeting-notes": {
+      "cases": 4,
+      "qualified": 0,
+      "recoveryRate": 0
+    },
+    "operations-report": {
+      "cases": 5,
+      "qualified": 0,
+      "recoveryRate": 0
+    },
+    "slack": {
+      "cases": 3,
+      "qualified": 0,
+      "recoveryRate": 0
+    }
+  },
+  "industryAnalysis": {
+    "Banking": {
+      "cases": 1,
+      "qualified": 0,
+      "recoveryRate": 0
+    },
+    "Government": {
+      "cases": 6,
+      "qualified": 0,
+      "recoveryRate": 0
+    },
+    "Healthcare": {
+      "cases": 6,
+      "qualified": 0,
+      "recoveryRate": 0
+    },
+    "Manufacturing": {
+      "cases": 4,
+      "qualified": 0,
+      "recoveryRate": 0
+    },
+    "Professional Services": {
+      "cases": 4,
+      "qualified": 0,
+      "recoveryRate": 0
+    },
+    "Software": {
+      "cases": 3,
+      "qualified": 0,
+      "recoveryRate": 0
+    }
+  },
+  "terminologyAnalysis": {
+    "terminologySets": 24,
+    "invariantRecoveries": 0,
+    "invarianceRate": 0,
+    "conclusion": "Failure across distinct terminology sets indicates exact benchmark grammar, not organizational vocabulary, controls recovery."
+  },
+  "confidenceCalibration": {
+    "meanPositiveConfidence": 0.2999999999999999,
+    "meanNegativeConfidence": 0.3
+  },
+  "baselines": {
+    "bestIndividualSilo": "No individual silo contained a complete distributed topology.",
+    "genericSummarization": "Preserved narrative content but supplied no grounded edge-basis contract.",
+    "fullCanonicalCombined": [
+      {
+        "scenarioId": "nl-001",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-002",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-003",
+        "productionMechanismCount": 1
+      },
+      {
+        "scenarioId": "nl-004",
+        "productionMechanismCount": 2
+      },
+      {
+        "scenarioId": "nl-005",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-006",
+        "productionMechanismCount": 1
+      },
+      {
+        "scenarioId": "nl-007",
+        "productionMechanismCount": 2
+      },
+      {
+        "scenarioId": "nl-008",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-009",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-010",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-011",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-012",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-013",
+        "productionMechanismCount": 1
+      },
+      {
+        "scenarioId": "nl-014",
+        "productionMechanismCount": 1
+      },
+      {
+        "scenarioId": "nl-015",
+        "productionMechanismCount": 1
+      },
+      {
+        "scenarioId": "nl-016",
+        "productionMechanismCount": 1
+      },
+      {
+        "scenarioId": "nl-017",
+        "productionMechanismCount": 2
+      },
+      {
+        "scenarioId": "nl-018",
+        "productionMechanismCount": 1
+      },
+      {
+        "scenarioId": "nl-019",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-020",
+        "productionMechanismCount": 1
+      },
+      {
+        "scenarioId": "nl-021",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-022",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-023",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-024",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-025",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-026",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-027",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-028",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-029",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-030",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-031",
+        "productionMechanismCount": 1
+      },
+      {
+        "scenarioId": "nl-032",
+        "productionMechanismCount": 0
+      },
+      {
+        "scenarioId": "nl-033",
+        "productionMechanismCount": 0
+      }
+    ]
+  },
+  "leakage": {
+    "passed": true,
+    "unchangedProducerSha256": "37d93db2434254e0f14099ef7dfa0f8956b004594c33f7cd529654dd5a21f68c",
+    "checks": {
+      "opaqueScenarioIds": true,
+      "producerHasNoTruthImport": true,
+      "producerHasNoNaturalCorpusImport": true,
+      "heldOutWithheldUntilRegistration": true,
+      "noProducerTuning": true,
+      "corpusUsesMultipleDocumentStyles": true,
+      "corpusUsesMultipleIndustries": true,
+      "corpusAvoidsControlledLeadPhrase": true,
+      "externalHumanAuthorshipNotClaimed": true
+    },
+    "limitation": "The corpus is independently phrased within this benchmark implementation, not collected from independently recruited human authors."
+  },
+  "determinism": {
+    "repeatedByteIdentity": true,
+    "reversedScenarioOrder": true,
+    "reversedEvidenceOrder": true,
+    "reversedSiloOrder": true,
+    "stableCandidateFormation": true,
+    "stableProductionArtifacts": true
+  },
+  "hardGates": {
+    "producerUnchanged": true,
+    "noProductionModifications": true,
+    "rawEvidenceOnly": true,
+    "truthWithheldUntilRegistration": true,
+    "controlledRegressionPasses": true,
+    "naturalLanguagePrecisionHigh": false,
+    "naturalLanguageRecallHigh": false,
+    "industryInvariant": false,
+    "writingStyleInvariant": false,
+    "terminologyInvariant": false,
+    "negativeControlsRejected": true,
+    "determinism": true,
+    "noProductionAdoptionAuthorized": true
+  },
+  "machineResultHash": "e1b8916b7cba99db5c9c34ffac94e9c8250aa80e15c23ce7922c90a8d5be4720"
+}

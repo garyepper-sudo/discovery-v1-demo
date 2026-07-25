@@ -27,6 +27,7 @@ import type {
 import type { OrganizationalMechanism } from "./organizationalMechanism";
 import type { ConceptCandidate } from "../../concepts/conceptCandidateTypes";
 import type { PredictionReflection } from "../predictions/buildPredictionReflection";
+import type { CanonicalUnderstandingComposition } from "../../understanding/buildCanonicalUnderstandingCompatibilityShadow";
 
 type BuildExecutiveAssessmentInput = {
   judgments: OrganizationalJudgment[];
@@ -38,6 +39,8 @@ type BuildExecutiveAssessmentInput = {
   organizationalState?: OrganizationalStateLike;
   investigationOpportunities?: InvestigationOpportunityLike[];
   predictionReflection?: PredictionReflection;
+  canonicalOrganizationalUnderstanding?:
+    readonly CanonicalUnderstandingComposition[];
   generatedAt?: string;
 };
 
@@ -247,6 +250,17 @@ function buildPredictionNarrative(
 export function buildExecutiveAssessment(
   input: BuildExecutiveAssessmentInput,
 ): ExecutiveAssessmentWithPrimaryJudgment {
+  for (const composition of input.canonicalOrganizationalUnderstanding ?? []) {
+    if (
+      composition.scope.organizationId !== composition.organizationId ||
+      composition.explanationIds.length === 0
+    ) {
+      throw new Error(
+        `Invalid canonical Organizational Understanding composition: ${composition.id}`,
+      );
+    }
+  }
+
   const priority = buildExecutivePriority(input);
 
   const {

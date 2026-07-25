@@ -12,6 +12,54 @@ This document defines the long-term product and architectural direction of Disco
 
 It does not authorize new Runtime contracts, cognitive layers, scopes, governance systems, orchestration systems, or product applications.
 
+# Discovery 2 Architecture
+
+Discovery's high-level organizing theory is **Adaptive Organizational
+Cognition**:
+
+> Discovery is a governed organizational learning system whose cognition
+> exhibits a variation-selection-retention grammar at several boundaries.
+
+The theory describes how alternatives may be generated or preserved, evaluated
+against Evidence and contradiction, retained with identity and ancestry, and
+revised through later Evidence and outcomes. It does not replace Structured
+Organizational Reasoning, Runtime, Governance, or application architecture. It
+does not imply an evolutionary algorithm or universal candidate subsystem.
+
+Explanation-centered reasoning is the current technical frontier. Production
+creates completed Organizational Explanations with structured ancestry.
+Benchmark shadows validate competing Explanation preservation, adjudication,
+abstention, and revision. Phase 1 production Explanations now preserve the
+bounded comparative Evidence roles `supports`, `opposes`, and `shared`.
+Production adjudication and downstream consumption remain deferred because no
+canonical producer yet supplies candidate-relative discrimination,
+falsification, rule-out, counterfactual, or observed-outcome test results.
+
+Unresolved competition is a valid state of Organizational Understanding.
+Adjudication is conditional rather than a universal prerequisite for reusable
+Understanding. One bounded CAP-UND-006 shadow may evaluate completed,
+unadjudicated Explanations using only their exact ancestry and Phase 1 roles,
+provided it persists nothing, changes no canonical output, preserves every
+relevant alternative, and creates no candidate-relative authority.
+
+The architecture distinguishes:
+
+- persistence from cognitive authority;
+- cognitive validity from disclosure eligibility;
+- Evidence ancestry from comparative evidential role;
+- applications from canonical cognition;
+- AI contribution from Discovery-owned organizational truth.
+
+Contribution Validation is an architectural responsibility distributed across
+source admission, authority transition, and projection or disclosure. Its
+future production contracts require separate authorization.
+
+Phase 5A authority transitions are explicit at canonical composition. Phase
+5B defines fail-closed disclosure enforcement, while resolved-decision
+production and durable revocation remain unowned. Existing
+persistence and downstream consumption must not be interpreted as a complete
+authority lifecycle.
+
 # Canonical Definition
 
 > **Discovery is a platform that continuously builds shared organizational intelligence that becomes more valuable than the sum of its contributors, information, and experiences.**
@@ -201,7 +249,11 @@ Applications may use different workflows, interfaces, summaries, permissions, an
 
 # Benchmark Direction
 
-Current foundation benchmarks continue to evaluate whether Discovery can understand evidence, reason correctly, converse responsibly, interpret participant reasoning, preserve organizational truth boundaries, and produce reliable decisions and simulations.
+Current foundation benchmarks continue to evaluate whether Discovery can
+understand evidence, preserve provenance and independence, reason through
+contradiction and competing Explanations, converse responsibly, preserve
+organizational truth boundaries, and produce reliable downstream decisions and
+simulations.
 
 Future Intelligence Growth benchmark families may evaluate Organizational Intelligence Growth, Multi-Perspective Synthesis, Cross-Silo Intelligence, Cross-Scope Relationship Discovery, Organizational Memory, Organizational Learning, Intelligence Acquisition, and Industry Transfer.
 
@@ -255,4 +307,29 @@ Long-term or deferred:
 
 This canon defines strategic direction only. It does not authorize schemas, services, objects, membership models, permissions, connectors, orchestration, or new cognitive capabilities.
 
-The immediate engineering priority remains conversation intelligence, reasoning interpretation, organizational understanding quality, benchmark performance, and architectural simplicity. Future expansion requires measured evidence and explicit authorization.
+The immediate engineering priority is Discovery 2 production-boundary
+integration. Phase 1 comparative Evidence roles are complete and active.
+Phase 2 completed-Explanation adjudication is contract-designed but blocked
+pending a canonical candidate-relative test-result producer. No authoritative
+adjudication consumer may be introduced until that gate is resolved. Phase 3
+validated unadjudicated Explanation-aware Understanding, and Phase 4C has
+promoted its reference-only Category A composition to the canonical
+Organizational Understanding owner. Completed Explanations retain explanatory
+claims and ancestry; Organizational Understanding owns governed composition,
+scope, membership, uncertainty, revision identity, and reusable truth;
+Executive Assessment is downstream. Bounded legacy views remain compatibility
+adapters, not parallel truth. Future expansion requires measured evidence and
+explicit authorization.
+
+Phase 5A makes the existing contribution-to-composition authority transition
+explicit. Canonical compositions record reference-only authority receipts;
+invalid contributions remain provisional and cannot enter canonical
+composition. This does not implement permissions, purpose limitation,
+revocation, disclosure enforcement, a Governance Control Plane, or bounded
+Intelligence Scopes. Those remain gated by the sequential program.
+
+Phase 5B adds the pure disclosure enforcement contract. It consumes a resolved
+organization- and consumer-specific decision, discloses only explicitly
+authorized canonical compositions, and otherwise fails closed. Application
+activation and durable revocation remain blocked until canonical decision and
+history owners exist outside Runtime.

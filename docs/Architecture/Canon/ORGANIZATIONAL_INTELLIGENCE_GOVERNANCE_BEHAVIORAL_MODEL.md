@@ -814,3 +814,11 @@ cognitive producer, capability, or benchmark behavior.
 
 All diagrams, states, events, sequences, and failure rules are proposed
 architecture requiring separate approval before implementation.
+
+## Phase 5B contract mapping
+
+Phase 5B validates the minimum future-read behavior: `eligible` discloses,
+while `withheld`, `revoked`, or identity mismatch fails closed. Revocation
+does not mutate canonical truth or historical Runtime. The broader lifecycle,
+event log, cache invalidation, policy evaluation, audit, and distributed
+revocation behavior in this model remain conceptual and activation-blocked.

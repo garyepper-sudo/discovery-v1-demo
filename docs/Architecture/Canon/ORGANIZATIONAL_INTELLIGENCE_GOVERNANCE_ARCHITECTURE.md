@@ -307,3 +307,16 @@ This investigation does not:
 - authorize nested contexts, new Runtime objects, or a second reasoning engine.
 
 Production remains unchanged until a separately approved implementation sprint.
+
+## Phase 5B bounded implementation
+
+Phase 5B implements only the fail-closed enforcement contract that accepts an
+already-resolved disclosure decision at the canonical Organizational
+Understanding boundary. It does not implement the recommended control plane
+or any of its identity, membership, permission, purpose, policy, audit, or
+revocation-history responsibilities.
+
+Application activation remains blocked because this architecture still has no
+canonical production decision authority. Durable revocation remains blocked
+because there is no append-only decision-history owner outside Organization
+Runtime.

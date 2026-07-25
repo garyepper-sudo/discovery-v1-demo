@@ -4,7 +4,14 @@ import {
   buildOrganizationExperienceView,
 } from "../../components/product-shell/data/buildOrganizationExperienceView";
 import {
+  buildRuntimeOrganizationView,
+} from "../../components/product-shell/data/buildRuntimeOrganizationView";
+import {
+  buildUnifiedExecutiveWorkspaceView,
+} from "../../components/product-shell/data/buildUnifiedExecutiveWorkspaceView";
+import {
   createEmptyOrganizationRuntime,
+  loadOrganizationRuntimeState,
   type OrganizationRuntime,
 } from "../../engine/v3/runtime";
 
@@ -143,3 +150,98 @@ assert.deepEqual(
 );
 
 console.log("Organization experience view validation: 10 checks passed.");
+
+const canonical = runtimeFixture();
+const canonicalMemory = canonical.memory as unknown as Record<string, unknown>;
+const canonicalState = canonical.memory.organizationalUnderstandingState;
+canonicalState.canonicalCompositions = [
+  {
+    id: "canonical-understanding-validation",
+    revisionId: "canonical-understanding-validation:revision:1",
+    previousRevisionId: null,
+    organizationId: canonical.metadata.organizationId,
+    scope: {
+      organizationId: canonical.metadata.organizationId,
+      type: "organization",
+      id: canonical.metadata.organizationId,
+    },
+    outcomeRef: { type: "phenomenon", id: "delivery-dependence" },
+    explanationIds: ["completed-explanation-validation"],
+    authorityTransition: {
+      authorityOwner: "canonical-organizational-understanding",
+      contributionDecisionOwner:
+        "canonical-understanding-contribution-validation",
+      persistenceOwner: "organization-runtime",
+      disclosureOwner: "application-boundary-not-evaluated",
+      explanationIds: ["completed-explanation-validation"],
+      disposition: "authorized-organizational-knowledge",
+      basis: ["existing-production-semantics-satisfied"],
+    },
+    compositionUncertainty: ["unresolved-alternatives"],
+    createdAt: "2026-01-01T00:00:00.000Z",
+    updatedAt: "2026-01-01T00:00:00.000Z",
+  },
+];
+canonicalMemory.organizationalExplanations = [
+  {
+    id: "completed-explanation-validation",
+    organizationId: canonical.metadata.organizationId,
+    title: "Delivery judgment remains concentrated in senior leaders.",
+    summary:
+      "Critical delivery choices still depend on direct senior involvement.",
+    uncertainty: ["Independent delivery outcomes remain unavailable."],
+    evidenceReferences: [],
+  },
+];
+canonicalMemory.organizationalState = {
+  summary: "The organization is constrained by concentrated delivery judgment.",
+  executiveImplication: "Make delivery judgment reusable.",
+  recommendedFocus: ["Knowledge Continuity"],
+};
+canonicalMemory.learningEvents = [
+  { reason: "The delivery-dependence explanation strengthened." },
+];
+canonicalMemory.understandingEvolution = {
+  summary: "The model now connects delivery dependence to knowledge continuity.",
+};
+
+const canonicalBefore = JSON.stringify(canonical);
+const runtimeView = buildRuntimeOrganizationView(canonical);
+const unifiedRuntimeView = buildUnifiedExecutiveWorkspaceView(canonical);
+
+assert.equal(runtimeView.currentUnderstanding.available, true);
+assert.equal(runtimeView.explanations.available, true);
+assert.equal(runtimeView.evidence.available, false);
+assert.equal(runtimeView.evidence.summary, "Runtime not yet available");
+assert.equal(runtimeView.organizationalState.available, true);
+assert.equal(runtimeView.investigations.available, true);
+assert.equal(runtimeView.recentChanges.available, true);
+assert.equal(runtimeView.modelEvolution.available, true);
+assert.equal(
+  unifiedRuntimeView.insights[0]?.headline,
+  "Delivery judgment remains concentrated in senior leaders.",
+);
+assert.equal(JSON.stringify(canonical), canonicalBefore);
+assert.deepEqual(
+  buildRuntimeOrganizationView(canonical),
+  buildRuntimeOrganizationView(canonical),
+);
+
+console.log(
+  "Runtime-backed organization adapter validation: 11 checks passed.",
+);
+
+const replayFirst = loadOrganizationRuntimeState(
+  "atlas-manufacturing-simulation",
+);
+const replayBytes = JSON.stringify(replayFirst);
+const replayViewFirst = buildRuntimeOrganizationView(replayFirst);
+const replaySecond = loadOrganizationRuntimeState(
+  "atlas-manufacturing-simulation",
+);
+const replayViewSecond = buildRuntimeOrganizationView(replaySecond);
+assert.equal(JSON.stringify(replayFirst), replayBytes);
+assert.equal(JSON.stringify(replaySecond), replayBytes);
+assert.deepEqual(replayViewFirst, replayViewSecond);
+
+console.log("Runtime-backed organization replay validation: 3 checks passed.");
