@@ -1,6 +1,6 @@
 # Capability Trace — Executive Understanding Synthesis
 
-Generated: 2026-07-25T18:38:59.534Z
+Generated: 2026-07-25T23:57:31.733Z
 
 ## Verified Architecture
 
@@ -71,6 +71,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `components/executive-v2/projection/ExecutiveScenarioProjection.ts`
 - `components/executive-v2/projection/buildExecutiveProjection.ts`
 - `components/product-shell/data/buildAskExperienceView.ts`
+- `components/product-shell/data/buildOrganizationExperienceFromProjection.ts`
 - `components/product-shell/data/buildOrganizationExperienceView.ts`
 - `components/product-shell/data/buildOrganizationModelContext.ts`
 - `components/product-shell/data/buildResearchExperienceView.ts`
@@ -156,6 +157,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/v3/model/memory/organizationalMemory.ts`
 - `engine/v3/model/simulate/buildSimulationScenario.ts`
 - `engine/v3/model/simulate/compareSimulationScenario.ts`
+- `engine/v3/projection/organizationalUnderstandingProjection.ts`
 - `engine/v3/runtime/index.ts`
 - `engine/v3/runtime/organizationRuntime.ts`
 - `engine/v3/runtime/organizationalUnderstandingState.ts`
@@ -171,8 +173,10 @@ Review these files to determine whether they should be registered as consumers, 
 - `scripts/product/validateAskExperience.ts`
 - `scripts/product/validateLivingInteractionLoop.ts`
 - `scripts/product/validateOrganizationExperience.ts`
+- `scripts/product/validateOrganizationalUnderstandingProjectionShadow.ts`
 - `scripts/product/validateResearchExperience.ts`
 - `scripts/product/validateUnifiedExecutiveWorkspace.ts`
+- `scripts/product/validateYourOrganizationProjectionCompatibility.ts`
 
 ## Structural Search
 
@@ -225,7 +229,7 @@ This section records source-code references. It supplements, but does not replac
 | Engine | ✅ Found | 104 |
 | Runtime | ✅ Found | 105 |
 | Executive | ✅ Found | 12 |
-| Projection | ✅ Found | 6 |
+| Projection | ✅ Found | 76 |
 | UI | ✅ Found | 7 |
 | API | ❌ Not found | 0 |
 | Simulation | ✅ Found | 7 |
@@ -336,9 +340,9 @@ This section records source-code references. It supplements, but does not replac
   - `authorityOwner: "canonical-organizational-understanding";`
 - Line 171 · **definition** · matched `buildCanonicalUnderstandingCompatibilityShadow`
   - `export function buildCanonicalUnderstandingCompatibilityShadow(input: {`
-- Line 231 · **type** · matched `organizational-understanding`
+- Line 238 · **type** · matched `organizational-understanding`
   - `const compositionId = \`organizational-understanding:${encodedIdentity([`
-- Line 259 · **unknown** · matched `organizational-understanding`
+- Line 266 · **unknown** · matched `organizational-understanding`
   - `"canonical-organizational-understanding" as const,`
 
 ##### `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
@@ -719,7 +723,7 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `components/product-shell/data/buildRuntimeOrganizationView.ts`
 
-- Line 78 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 126 · **unknown** · matched `OrganizationalUnderstanding`
   - `const understandingState = record(memory.organizationalUnderstandingState);`
 
 #### Executive
@@ -756,6 +760,39 @@ This section records source-code references. It supplements, but does not replac
 
 #### Projection
 
+##### `engine/v3/projection/organizationalUnderstandingProjection.ts`
+
+- Line 17 · **import** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `} from "../understanding/buildCanonicalUnderstandingCompatibilityShadow";`
+- Line 19 · **unknown** · matched `OrganizationalUnderstanding`
+  - `OrganizationalUnderstandingDisclosureResult,`
+- Line 20 · **import** · matched `OrganizationalUnderstanding`
+  - `} from "../understanding/discloseCanonicalOrganizationalUnderstanding";`
+- Line 41 · **unknown** · matched `organizational-understanding`
+  - `\| "organizational-understanding"`
+- Line 70 · **unknown** · matched `OrganizationalUnderstanding`
+  - `disclosure: OrganizationalUnderstandingDisclosureResult;`
+- Line 131 · **unknown** · matched `organizational-understanding`
+  - `owner: "organizational-understanding";`
+- Line 151 · **unknown** · matched `OrganizationalUnderstanding`
+  - `export type OrganizationalUnderstandingProjection = {`
+- Line 210 · **unknown** · matched `organizational-understanding`
+  - `objectType: "organizational-understanding",`
+- Line 265 · **unknown** · matched `OrganizationalUnderstanding`
+  - `): OrganizationalUnderstandingProjection {`
+- Line 282 · **unknown** · matched `organizational-understanding`
+  - `projectionId: \`organizational-understanding-projection:${encodeURIComponent(`
+- Line 345 · **unknown** · matched `OrganizationalUnderstanding`
+  - `export function compileOrganizationalUnderstandingProjection(`
+- Line 347 · **unknown** · matched `OrganizationalUnderstanding`
+  - `): OrganizationalUnderstandingProjection {`
+- Line 513 · **unknown** · matched `organizational-understanding`
+  - `owner: "organizational-understanding",`
+- Line 566 · **unknown** · matched `organizational-understanding`
+  - `objectType: "organizational-understanding",`
+- Line 708 · **unknown** · matched `organizational-understanding`
+  - `projectionId: \`organizational-understanding-projection:${encodeURIComponent(`
+
 ##### `components/executive-v2/projection/ExecutiveScenarioProjection.ts`
 
 - Line 23 · **import** · matched `consolidateUnderstanding`
@@ -773,6 +810,125 @@ This section records source-code references. It supplements, but does not replac
   - `runtimeMemory?.organizationalUnderstandingState?.health?.uncertainty ??`
 - Line 1234 · **unknown** · matched `OrganizationalUnderstanding`
   - `runtimeMemory?.organizationalUnderstandingState?.health`
+
+##### `components/product-shell/data/buildOrganizationExperienceFromProjection.ts`
+
+- Line 2 · **unknown** · matched `OrganizationalUnderstanding`
+  - `OrganizationalUnderstandingProjection,`
+- Line 5 · **import** · matched `OrganizationalUnderstanding`
+  - `} from "../../../engine/v3/projection/organizationalUnderstandingProjection";`
+- Line 60 · **unknown** · matched `OrganizationalUnderstanding`
+  - `projection: OrganizationalUnderstandingProjection,`
+- Line 79 · **unknown** · matched `OrganizationalUnderstanding`
+  - `projection: OrganizationalUnderstandingProjection;`
+
+##### `scripts/product/validateOrganizationalUnderstandingProjectionShadow.ts`
+
+- Line 22 · **unknown** · matched `OrganizationalUnderstanding`
+  - `compileOrganizationalUnderstandingProjection,`
+- Line 26 · **import** · matched `OrganizationalUnderstanding`
+  - `} from "../../engine/v3/projection/organizationalUnderstandingProjection";`
+- Line 33 · **unknown** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `buildCanonicalUnderstandingCompatibilityShadow,`
+- Line 35 · **import** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `} from "../../engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow";`
+- Line 37 · **unknown** · matched `OrganizationalUnderstanding`
+  - `discloseCanonicalOrganizationalUnderstanding,`
+- Line 38 · **type** · matched `OrganizationalUnderstanding`
+  - `type OrganizationalUnderstandingDisclosureDecision,`
+- Line 39 · **type** · matched `OrganizationalUnderstanding`
+  - `type OrganizationalUnderstandingDisclosureResult,`
+- Line 40 · **import** · matched `OrganizationalUnderstanding`
+  - `} from "../../engine/v3/understanding/discloseCanonicalOrganizationalUnderstanding";`
+- Line 110 · **unknown** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `const compositions = buildCanonicalUnderstandingCompatibilityShadow({`
+- Line 289 · **unknown** · matched `organizational-understanding`
+  - `objectType: "organizational-understanding",`
+- Line 310 · **unknown** · matched `OrganizationalUnderstanding`
+  - `disposition: OrganizationalUnderstandingDisclosureDecision["disposition"],`
+- Line 311 · **unknown** · matched `OrganizationalUnderstanding`
+  - `overrides: Partial<OrganizationalUnderstandingDisclosureDecision> = {},`
+- Line 312 · **unknown** · matched `OrganizationalUnderstanding`
+  - `): OrganizationalUnderstandingDisclosureDecision {`
+- Line 325 · **unknown** · matched `OrganizationalUnderstanding`
+  - `disposition: OrganizationalUnderstandingDisclosureDecision["disposition"],`
+- Line 326 · **unknown** · matched `OrganizationalUnderstanding`
+  - `overrides: Partial<OrganizationalUnderstandingDisclosureDecision> = {},`
+- Line 327 · **unknown** · matched `OrganizationalUnderstanding`
+  - `): OrganizationalUnderstandingDisclosureResult {`
+- Line 328 · **unknown** · matched `OrganizationalUnderstanding`
+  - `return discloseCanonicalOrganizationalUnderstanding({`
+- Line 337 · **unknown** · matched `OrganizationalUnderstanding`
+  - `disclosed: OrganizationalUnderstandingDisclosureResult = disclosure(`
+- Line 369 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const projection = compileOrganizationalUnderstandingProjection(`
+- Line 375 · **unknown** · matched `OrganizationalUnderstanding`
+  - `stable(compileOrganizationalUnderstandingProjection(eligibleSource)),`
+- Line 390 · **unknown** · matched `OrganizationalUnderstanding`
+  - `stable(compileOrganizationalUnderstandingProjection(reversed)),`
+- Line 411 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const output = compileOrganizationalUnderstandingProjection(mismatched);`
+- Line 422 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const output = compileOrganizationalUnderstandingProjection(mismatched);`
+- Line 428 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const output = compileOrganizationalUnderstandingProjection(`
+- Line 438 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const output = compileOrganizationalUnderstandingProjection(`
+- Line 451 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const invalidDisclosure: OrganizationalUnderstandingDisclosureResult = {`
+- Line 461 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const output = compileOrganizationalUnderstandingProjection(invalidSource);`
+- Line 506 · **unknown** · matched `organizational-understanding`
+  - `item.value.owner === "organizational-understanding" &&`
+- Line 543 · **unknown** · matched `OrganizationalUnderstanding`
+  - `compileOrganizationalUnderstandingProjection(withFixtureProse),`
+- Line 585 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const emptyDisclosure: OrganizationalUnderstandingDisclosureResult = {`
+- Line 593 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const output = compileOrganizationalUnderstandingProjection(`
+- Line 614 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const output = compileOrganizationalUnderstandingProjection(missing);`
+- Line 624 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const output = compileOrganizationalUnderstandingProjection(historical);`
+- Line 661 · **unknown** · matched `OrganizationalUnderstanding`
+  - `runtime.memory.organizationalUnderstandingState.canonicalCompositions =`
+- Line 697 · **unknown** · matched `OrganizationalUnderstanding`
+  - `runtime.memory.organizationalUnderstandingState.canonicalCompositions ?? [];`
+- Line 702 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const replayDisclosure = discloseCanonicalOrganizationalUnderstanding({`
+- Line 725 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const first = compileOrganizationalUnderstandingProjection(replaySource);`
+- Line 726 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const second = compileOrganizationalUnderstandingProjection(replaySource);`
+- Line 743 · **unknown** · matched `OrganizationalUnderstanding`
+  - `productSource.includes("compileOrganizationalUnderstandingProjection"),`
+
+##### `scripts/product/validateYourOrganizationProjectionCompatibility.ts`
+
+- Line 12 · **unknown** · matched `OrganizationalUnderstanding`
+  - `OrganizationalUnderstandingProjection,`
+- Line 14 · **import** · matched `OrganizationalUnderstanding`
+  - `} from "../../engine/v3/projection/organizationalUnderstandingProjection";`
+- Line 27 · **unknown** · matched `OrganizationalUnderstanding`
+  - `function projection(): OrganizationalUnderstandingProjection {`
+- Line 41 · **unknown** · matched `organizational-understanding`
+  - `objectType: "organizational-understanding",`
+- Line 58 · **unknown** · matched `organizational-understanding`
+  - `authorityOwner: "canonical-organizational-understanding",`
+- Line 173 · **unknown** · matched `organizational-understanding`
+  - `objectType: "organizational-understanding",`
+- Line 178 · **unknown** · matched `organizational-understanding`
+  - `owner: "organizational-understanding",`
+- Line 292 · **unknown** · matched `organizational-understanding`
+  - `objectType: "organizational-understanding",`
+- Line 297 · **unknown** · matched `organizational-understanding`
+  - `objectType: "organizational-understanding",`
+- Line 305 · **unknown** · matched `organizational-understanding`
+  - `objectType: "organizational-understanding",`
+- Line 323 · **unknown** · matched `OrganizationalUnderstanding`
+  - `area: area as OrganizationalUnderstandingProjection["availability"][number]["area"],`
+- Line 332 · **unknown** · matched `OrganizationalUnderstanding`
+  - `): OrganizationalUnderstandingProjection {`
 
 #### UI
 

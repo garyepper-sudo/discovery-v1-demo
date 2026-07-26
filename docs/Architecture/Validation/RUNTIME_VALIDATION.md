@@ -200,6 +200,12 @@ not fabricate ancestry. Canonical compositions persist only in the registered
 Organizational Understanding destination; the nested organizational-memory
 compatibility mirror omits them to prevent a second physical owner.
 
+The Organizational Understanding Projection shadow is not Runtime state. Its
+compiler accepts an explicit, disclosure-evaluated source envelope and emits
+an ephemeral projection. Persisted Atlas replay confirms byte-stable projection
+and unchanged Runtime bytes. The compiler does not traverse Runtime or add a
+projection collection to memory.
+
 Validation
 
 Runtime contains substantially richer cognition than currently exposed through Executive Experience.
@@ -612,3 +618,21 @@ byte-identical Runtime and view output. The adapter performs no writes.
 Canonical-owner gaps fail visibly as `Runtime not yet available`; the product
 does not substitute `currentUnderstandings`, benchmark fixtures, or research
 objects for missing canonical content.
+
+## Projection compatibility replay
+
+`npm run validate:your-organization-projection-compatibility` validates a
+separate, inactive adapter from the disclosure-enforced Organizational
+Understanding Projection into the same nine Runtime-details sections. The
+`43/43` gate preserves identity, revision, membership, uncertainty, Evidence
+roles, availability, persisted replay immutability, and active-route
+noninterference.
+
+The candidate intentionally leaves canonical Explanation headlines, summaries,
+Evidence bodies, and readable evolution unavailable. It does not traverse
+Runtime to fill those gaps. Activation remains blocked by the missing
+disclosure-decision producer and by bounded product-contract work for
+authorized communication and priority.
+
+These two inactive shadows constitute the completed Discovery Projection
+Foundation. Runtime remains unchanged and no projection object is persisted.

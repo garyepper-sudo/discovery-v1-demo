@@ -1,6 +1,8 @@
 # Discovery Startup Snapshot
 
-**Milestone:** Discovery 2 Foundation assembled through Phase 8A.
+**Milestone:** Discovery Projection Foundation complete. Reusable
+Organizational Understanding projection and Your Organization compatibility
+contracts are validated, canonized, non-persistent, and inactive.
 
 Read this at the start of each sprint. Use `PROJECT_STATE.md` for the complete
 current boundary and `NEXT_CHAT.md` for the next authorized work.
@@ -81,6 +83,15 @@ behavior; activation remains blocked.
 | Phase 7 | Not started; remains gated |
 | Phase 8 | Phase 8A partial Runtime-backed `Your Organization` integration complete as an authorized product-validation exception |
 
+Phase 8 now also contains a pure, non-persistent projection shadow. It requires
+an explicit disclosure result, preserves canonical identity and revision,
+fails closed, and leaves the active Phase 8A adapter unchanged.
+
+Its pure compatibility adapter passes `43/43` and maps into the existing
+nine-section Runtime-details shape while preserving availability, references,
+source revisions, disclosure provenance, and Evidence roles. It does not
+traverse Runtime or synthesize prose. The active route remains unchanged.
+
 Phase 2 is blocked because no canonical production producer supplies a
 completed-Explanation-relative discrimination, falsification, rule-out,
 counterfactual, or observed-outcome test result. The benchmark-owned `34/34`
@@ -112,6 +123,10 @@ falsification, rule-out, or outcome confirmation.
   application activation blocked.
 - Runtime-backed `Your Organization`: product adapter `24/24`; deterministic
   persisted replay; canonical data gaps remain explicit.
+- Organizational Understanding Projection shadow: `30/30`; disclosure
+  enforced in the shadow harness, active application path unchanged.
+- Your Organization projection compatibility: `43/43`; availability and trace
+  preserved, product contract refinement required, active path unchanged.
 - Organizational Intelligence structural benchmark: `99.63/100`; its policy
   wrappers are not production Governance.
 - Candidate Ecology and hybrid architecture results remain benchmark-only.
@@ -160,12 +175,11 @@ Local Understanding Utility remain subordinate benchmark profiles.
 
 ## Current authorized work
 
-Phase 4C promotes reference-only Category A composition to the canonical
-Organizational Understanding owner with stable revision identity, historical
-compatibility, exact rollback, and unchanged downstream behavior. The
-assessment-derived view remains a bounded compatibility adapter. User
-Intelligence, Collective Intelligence, and Local Understanding Utility remain
-unclaimed.
+The Projection Foundation is complete. The next authorized work is decision
+only: determine the minimum reusable Product Communication and Priority
+Contract. Do not implement communication, disclosure production, route
+activation, Phase 6, or broader Governance. User Intelligence, Collective
+Intelligence, and Local Understanding Utility remain unclaimed.
 
 DEPS Phase 1.1 now provides engineering-only continuous progress reporting
 through `npm run deps:report`. The current report compares against DEPS

@@ -1,4 +1,4 @@
 {
-  "manifest": "engineering/performance/reports/deps-phase8a.json",
-  "markdownOutput": "engineering/performance/reports/DEPS_PHASE_8A.md"
+  "manifest": "engineering/performance/reports/deps-projection-compatibility.json",
+  "markdownOutput": "engineering/performance/reports/DEPS_PROJECTION_COMPATIBILITY.md"
 }

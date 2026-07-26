@@ -4,8 +4,9 @@
 
 ## Current Milestone
 
-Discovery 2 Foundation milestone assembled through the partial Phase 8A
-Runtime-backed `Your Organization` integration.
+Discovery Projection Foundation complete on top of the Discovery 2 Foundation
+milestone. The reusable Organizational Understanding Projection and inactive
+Your Organization compatibility adapter are implemented and validated.
 
 ## Current Development Phase
 
@@ -16,13 +17,14 @@ exception; broader Phase 5 Governance and Phase 6 remain paused.
 
 ## Current Objective
 
-Validate existing Discovery 2 cognition through the Runtime-backed product
-adapter. Preserve explicit missing-data states and do not invent semantic
-content, Evidence persistence, confidence, or disclosure authority.
+Preserve the completed Projection Foundation. The active Phase 8A product
+adapter remains unchanged; communication/priority and disclosure-decision
+production remain separate activation blockers.
 
 ## Current Sprint
 
-Discovery 2 Foundation audit, canonization, validation, and milestone commit.
+Projection Foundation audit, documentation synchronization, validation, and
+canonization.
 
 ## Product Identity
 
@@ -148,7 +150,7 @@ Current Explanation behavior:
 | Phase 5 | Phases 5A and 5B complete at their bounded contracts | Authority gate `14/14`; disclosure gate `14/14`; application enforcement and durable revocation blocked |
 | Phase 6 | Blocked | Requires completion of Phase 5 authority and disclosure enforcement |
 | Phase 7 | Not started | Requires stable Explanation authority and Governance |
-| Phase 8 | Phase 8A partial product integration | Runtime adapter active; canonical prose, Evidence bodies, confidence, and disclosure-decision production remain unavailable |
+| Phase 8 | Phase 8A partial product integration plus projection and compatibility shadows | Runtime adapter remains active; compiler passes `30/30` and compatibility adapter passes `43/43`; application activation, authorized communication/priority, Evidence bodies, confidence, and disclosure-decision production remain unavailable |
 
 Phase 2 may not infer a leader from Evidence volume, Seed-era Judgment rank,
 Hypothesis status, Prediction accuracy, Belief confidence, Theory evolution,
@@ -176,6 +178,8 @@ Adjudication is not a universal prerequisite for reusable Understanding.
 | Explicit authority transitions | Phase 5A gate `14/14`; Classification A; persistence distinct from authority |
 | Disclosure and revocation contract | Phase 5B gate `14/14`; contract valid; application activation blocked |
 | Runtime-backed Your Organization | Product adapter validation `24/24`; persisted replay deterministic; no Runtime mutation |
+| Organizational Understanding projection | Shadow `30/30`; pure, disclosure-enforced, deterministic, non-persistent; active product path unchanged |
+| Your Organization projection compatibility | Shadow `43/43`; pure, deterministic, availability- and trace-preserving; product contract refinement required |
 | Organizational Intelligence structure | `99.63/100`; policy wrappers are benchmark-only |
 | Candidate Intelligence Ecology | Classification A in synthetic scope; benchmark-only |
 | Hybrid architecture | Classification A in synthetic scope; benchmark-only |
@@ -240,9 +244,11 @@ These are known transitions, not documentation defects:
 
 ## Next Priority
 
-Preserve the completed Phase 4 ownership boundary. Phase 5, Explicit Authority
-Transitions and Contribution Validation, is next in the canonical sequence
-but requires separate authorization.
+Run a read-only Product Communication and Priority Contract Decision Sprint.
+Determine the smallest reusable disclosure-safe owner for readable synthesis,
+audience framing, product-safe priority, change summaries, “why this matters,”
+and next-inquiry framing. Do not implement it automatically. A production
+disclosure-decision producer remains a separate later activation prerequisite.
 
 ## Remaining production roadmap
 
@@ -269,9 +275,9 @@ gate.
 
 ## Repository safety
 
-The working tree contains pre-existing modified documentation and multiple
-untracked benchmark and research directories. Their presence is not production
-authorization.
+The projection-shadow sprint began at milestone commit `e39be469` with one
+untracked read-only Alpha decision document. That document is preserved and
+classified as part of the current documentation change set.
 
 Future work must inspect `git status --short`, preserve unrelated changes, and
 separate:

@@ -40,6 +40,54 @@ export type RuntimeOrganizationSection = {
   available: boolean;
   summary: string;
   items: string[];
+  availability?: {
+    state:
+      | "available-with-content"
+      | "available-empty"
+      | "runtime-data-unavailable"
+      | "referenced-data-missing"
+      | "withheld"
+      | "revoked"
+      | "organization-mismatch"
+      | "consumer-mismatch"
+      | "authority-receipt-invalid"
+      | "historical-compatibility-unavailable"
+      | "communication-synthesis-unavailable";
+    sourceArea:
+      | "projection"
+      | "understanding"
+      | "explanations"
+      | "evidence"
+      | "uncertainty"
+      | "conditions"
+      | "organizational-state"
+      | "investigations"
+      | "evolution";
+  };
+  references?: Array<{
+    objectType: string;
+    objectId: string;
+    revisionId?: string;
+  }>;
+  projectionMetadata?: {
+    projectionId: string;
+    contractVersion: string;
+    organizationId: string;
+    consumerId: string;
+    disclosureDecisionId: string;
+    sourceRevisionIds: string[];
+    evidenceRoles: Array<{
+      evidenceId: string;
+      explanationId: string;
+      role: "supports" | "opposes" | "shared";
+      basisKind:
+        | "explanation-seed"
+        | "evidence-relationship"
+        | "shared-support";
+      basisReferenceIds: string[];
+      relatedExplanationIds: string[];
+    }>;
+  };
 };
 
 export type RuntimeOrganizationView = {

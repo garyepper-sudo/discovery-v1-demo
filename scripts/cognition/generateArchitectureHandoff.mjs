@@ -413,7 +413,7 @@ function buildArchitectureHandoff() {
 
   fs.writeFileSync(
     OUTPUT_PATH,
-    `${lines.join("\n")}\n`,
+    `${lines.join("\n").replace(/\n+$/g, "")}\n`,
     "utf8",
   );
 

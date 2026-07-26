@@ -1,6 +1,6 @@
 # Capability Trace — Investigation Opportunity Generation
 
-Generated: 2026-07-25T18:39:03.837Z
+Generated: 2026-07-25T23:57:35.100Z
 
 ## Verified Architecture
 
@@ -95,6 +95,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/v3/model/judgment/buildExecutivePriority.ts`
 - `engine/v3/model/simulate/buildSimulationScenario.ts`
 - `engine/v3/operating-systems/communication/runExecutiveCommunicationOperatingSystem.ts`
+- `engine/v3/projection/organizationalUnderstandingProjection.ts`
 - `engine/v3/runtime/evolveOrganizationRuntime.ts`
 - `engine/v3/scenarios/buildExecutiveDecisionContext.ts`
 - `engine/v3/scenarios/runExecutiveScenario.ts`
@@ -102,6 +103,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `scripts/product/validateAskExperience.ts`
 - `scripts/product/validateExecutiveInteractionArchitecture.ts`
 - `scripts/product/validateOrganizationExperience.ts`
+- `scripts/product/validateOrganizationalUnderstandingProjectionShadow.ts`
 - `scripts/product/validateResearchExperience.ts`
 - `scripts/product/validateUnifiedExecutiveWorkspace.ts`
 
@@ -136,7 +138,7 @@ This section records source-code references. It supplements, but does not replac
 | Engine | ✅ Found | 47 |
 | Runtime | ✅ Found | 24 |
 | Executive | ❌ Not found | 0 |
-| Projection | ✅ Found | 10 |
+| Projection | ✅ Found | 14 |
 | UI | ✅ Found | 27 |
 | API | ❌ Not found | 0 |
 | Simulation | ✅ Found | 4 |
@@ -333,10 +335,15 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `components/product-shell/data/buildRuntimeOrganizationView.ts`
 
-- Line 139 · **read** · matched `investigationOpportunities`
+- Line 187 · **read** · matched `investigationOpportunities`
   - `const investigations = records(memory.investigationOpportunities);`
 
 #### Projection
+
+##### `engine/v3/projection/organizationalUnderstandingProjection.ts`
+
+- Line 6 · **import** · matched `buildInvestigationOpportunities`
+  - `} from "../model/investigation/buildInvestigationOpportunities";`
 
 ##### `components/executive-v2/projection/ExecutiveProjection.ts`
 
@@ -369,6 +376,15 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 791 · **read** · matched `investigationOpportunities`
   - `.investigationOpportunities?.[0]`
+
+##### `scripts/product/validateOrganizationalUnderstandingProjectionShadow.ts`
+
+- Line 13 · **import** · matched `buildInvestigationOpportunities`
+  - `} from "../../engine/v3/model/investigation/buildInvestigationOpportunities";`
+- Line 694 · **type** · matched `investigationOpportunities`
+  - `investigationOpportunities?: InvestigationOpportunity[];`
+- Line 722 · **read** · matched `investigationOpportunities`
+  - `investigations: memory.investigationOpportunities ?? [],`
 
 #### UI
 

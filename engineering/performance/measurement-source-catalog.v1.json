@@ -234,6 +234,28 @@
       "authoritativeOutputs": ["components/product-shell/data/buildRuntimeOrganizationView.ts", "scripts/product/validateOrganizationExperience.ts", "docs/Sprint Updates/RUNTIME_BACKED_YOUR_ORGANIZATION_INTEGRATION.md"]
     },
     {
+      "id": "organizational-understanding-projection-shadow",
+      "purpose": "Validate pure disclosure-enforced Organizational Understanding projection, reference resolution, explicit availability, progressive trace closure, product compatibility, replay, and non-mutation.",
+      "domain": "projection",
+      "owner": "Organizational Understanding Projection",
+      "determinism": "deterministic-with-fixed-fixture-and-runtime-replay",
+      "baselineCompatibility": "Compatible for the same projection contract version, disclosure contract, production-shaped fixture, and persisted replay source.",
+      "maturity": "validated-shadow-application-activation-blocked",
+      "command": "npm run validate:organizational-understanding-projection-shadow",
+      "authoritativeOutputs": ["engine/v3/projection/organizationalUnderstandingProjection.ts", "scripts/product/validateOrganizationalUnderstandingProjectionShadow.ts", "docs/Sprint Updates/ORGANIZATIONAL_UNDERSTANDING_PROJECTION_SHADOW.md"]
+    },
+    {
+      "id": "your-organization-projection-compatibility",
+      "purpose": "Validate pure compatibility shaping from disclosed Organizational Understanding Projection into the existing Your Organization Runtime-details contract.",
+      "domain": "projection",
+      "owner": "Your Organization Projection Compatibility",
+      "determinism": "deterministic-with-fixed-projection-and-runtime-replay",
+      "baselineCompatibility": "Compatible for the same projection contract version, Runtime-details view shape, and persisted replay fixture.",
+      "maturity": "validated-shadow-product-contract-refinement-required",
+      "command": "npm run validate:your-organization-projection-compatibility",
+      "authoritativeOutputs": ["components/product-shell/data/buildOrganizationExperienceFromProjection.ts", "scripts/product/validateYourOrganizationProjectionCompatibility.ts", "docs/Sprint Updates/YOUR_ORGANIZATION_PROJECTION_COMPATIBILITY_ADAPTER.md"]
+    },
+    {
       "id": "organizational-understanding-research-framework",
       "purpose": "Define the six-dimensional methodology beneath the Organizational Understanding Index.",
       "domain": "research",

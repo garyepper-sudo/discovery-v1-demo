@@ -1426,8 +1426,6 @@ function renderSprintStartup() {
   );
 
   printRule("=");
-
-  console.log("");
 }
 
 try {

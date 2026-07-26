@@ -33,7 +33,7 @@ Output: docs/Architecture/COGNITIVE_CAPABILITY_AUDIT.json
 
 # Capability Trace — Executive Assessment
 
-Generated: 2026-07-25T18:38:56.562Z
+Generated: 2026-07-25T23:57:29.401Z
 
 ## Verified Architecture
 
@@ -1722,7 +1722,7 @@ Saved report: docs/Sprint Updates/Capability Traces/cap-und-005.md
 
 # Capability Trace — Executive Understanding Synthesis
 
-Generated: 2026-07-25T18:38:59.534Z
+Generated: 2026-07-25T23:57:31.733Z
 
 ## Verified Architecture
 
@@ -1793,6 +1793,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `components/executive-v2/projection/ExecutiveScenarioProjection.ts`
 - `components/executive-v2/projection/buildExecutiveProjection.ts`
 - `components/product-shell/data/buildAskExperienceView.ts`
+- `components/product-shell/data/buildOrganizationExperienceFromProjection.ts`
 - `components/product-shell/data/buildOrganizationExperienceView.ts`
 - `components/product-shell/data/buildOrganizationModelContext.ts`
 - `components/product-shell/data/buildResearchExperienceView.ts`
@@ -1878,6 +1879,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/v3/model/memory/organizationalMemory.ts`
 - `engine/v3/model/simulate/buildSimulationScenario.ts`
 - `engine/v3/model/simulate/compareSimulationScenario.ts`
+- `engine/v3/projection/organizationalUnderstandingProjection.ts`
 - `engine/v3/runtime/index.ts`
 - `engine/v3/runtime/organizationRuntime.ts`
 - `engine/v3/runtime/organizationalUnderstandingState.ts`
@@ -1893,8 +1895,10 @@ Review these files to determine whether they should be registered as consumers, 
 - `scripts/product/validateAskExperience.ts`
 - `scripts/product/validateLivingInteractionLoop.ts`
 - `scripts/product/validateOrganizationExperience.ts`
+- `scripts/product/validateOrganizationalUnderstandingProjectionShadow.ts`
 - `scripts/product/validateResearchExperience.ts`
 - `scripts/product/validateUnifiedExecutiveWorkspace.ts`
+- `scripts/product/validateYourOrganizationProjectionCompatibility.ts`
 
 ## Structural Search
 
@@ -1947,7 +1951,7 @@ This section records source-code references. It supplements, but does not replac
 | Engine | ✅ Found | 104 |
 | Runtime | ✅ Found | 105 |
 | Executive | ✅ Found | 12 |
-| Projection | ✅ Found | 6 |
+| Projection | ✅ Found | 76 |
 | UI | ✅ Found | 7 |
 | API | ❌ Not found | 0 |
 | Simulation | ✅ Found | 7 |
@@ -2058,9 +2062,9 @@ This section records source-code references. It supplements, but does not replac
   - `authorityOwner: "canonical-organizational-understanding";`
 - Line 171 · **definition** · matched `buildCanonicalUnderstandingCompatibilityShadow`
   - `export function buildCanonicalUnderstandingCompatibilityShadow(input: {`
-- Line 231 · **type** · matched `organizational-understanding`
+- Line 238 · **type** · matched `organizational-understanding`
   - `const compositionId = \`organizational-understanding:${encodedIdentity([`
-- Line 259 · **unknown** · matched `organizational-understanding`
+- Line 266 · **unknown** · matched `organizational-understanding`
   - `"canonical-organizational-understanding" as const,`
 
 ##### `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
@@ -2441,7 +2445,7 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `components/product-shell/data/buildRuntimeOrganizationView.ts`
 
-- Line 78 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 126 · **unknown** · matched `OrganizationalUnderstanding`
   - `const understandingState = record(memory.organizationalUnderstandingState);`
 
 #### Executive
@@ -2478,6 +2482,39 @@ This section records source-code references. It supplements, but does not replac
 
 #### Projection
 
+##### `engine/v3/projection/organizationalUnderstandingProjection.ts`
+
+- Line 17 · **import** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `} from "../understanding/buildCanonicalUnderstandingCompatibilityShadow";`
+- Line 19 · **unknown** · matched `OrganizationalUnderstanding`
+  - `OrganizationalUnderstandingDisclosureResult,`
+- Line 20 · **import** · matched `OrganizationalUnderstanding`
+  - `} from "../understanding/discloseCanonicalOrganizationalUnderstanding";`
+- Line 41 · **unknown** · matched `organizational-understanding`
+  - `\| "organizational-understanding"`
+- Line 70 · **unknown** · matched `OrganizationalUnderstanding`
+  - `disclosure: OrganizationalUnderstandingDisclosureResult;`
+- Line 131 · **unknown** · matched `organizational-understanding`
+  - `owner: "organizational-understanding";`
+- Line 151 · **unknown** · matched `OrganizationalUnderstanding`
+  - `export type OrganizationalUnderstandingProjection = {`
+- Line 210 · **unknown** · matched `organizational-understanding`
+  - `objectType: "organizational-understanding",`
+- Line 265 · **unknown** · matched `OrganizationalUnderstanding`
+  - `): OrganizationalUnderstandingProjection {`
+- Line 282 · **unknown** · matched `organizational-understanding`
+  - `projectionId: \`organizational-understanding-projection:${encodeURIComponent(`
+- Line 345 · **unknown** · matched `OrganizationalUnderstanding`
+  - `export function compileOrganizationalUnderstandingProjection(`
+- Line 347 · **unknown** · matched `OrganizationalUnderstanding`
+  - `): OrganizationalUnderstandingProjection {`
+- Line 513 · **unknown** · matched `organizational-understanding`
+  - `owner: "organizational-understanding",`
+- Line 566 · **unknown** · matched `organizational-understanding`
+  - `objectType: "organizational-understanding",`
+- Line 708 · **unknown** · matched `organizational-understanding`
+  - `projectionId: \`organizational-understanding-projection:${encodeURIComponent(`
+
 ##### `components/executive-v2/projection/ExecutiveScenarioProjection.ts`
 
 - Line 23 · **import** · matched `consolidateUnderstanding`
@@ -2495,6 +2532,125 @@ This section records source-code references. It supplements, but does not replac
   - `runtimeMemory?.organizationalUnderstandingState?.health?.uncertainty ??`
 - Line 1234 · **unknown** · matched `OrganizationalUnderstanding`
   - `runtimeMemory?.organizationalUnderstandingState?.health`
+
+##### `components/product-shell/data/buildOrganizationExperienceFromProjection.ts`
+
+- Line 2 · **unknown** · matched `OrganizationalUnderstanding`
+  - `OrganizationalUnderstandingProjection,`
+- Line 5 · **import** · matched `OrganizationalUnderstanding`
+  - `} from "../../../engine/v3/projection/organizationalUnderstandingProjection";`
+- Line 60 · **unknown** · matched `OrganizationalUnderstanding`
+  - `projection: OrganizationalUnderstandingProjection,`
+- Line 79 · **unknown** · matched `OrganizationalUnderstanding`
+  - `projection: OrganizationalUnderstandingProjection;`
+
+##### `scripts/product/validateOrganizationalUnderstandingProjectionShadow.ts`
+
+- Line 22 · **unknown** · matched `OrganizationalUnderstanding`
+  - `compileOrganizationalUnderstandingProjection,`
+- Line 26 · **import** · matched `OrganizationalUnderstanding`
+  - `} from "../../engine/v3/projection/organizationalUnderstandingProjection";`
+- Line 33 · **unknown** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `buildCanonicalUnderstandingCompatibilityShadow,`
+- Line 35 · **import** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `} from "../../engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow";`
+- Line 37 · **unknown** · matched `OrganizationalUnderstanding`
+  - `discloseCanonicalOrganizationalUnderstanding,`
+- Line 38 · **type** · matched `OrganizationalUnderstanding`
+  - `type OrganizationalUnderstandingDisclosureDecision,`
+- Line 39 · **type** · matched `OrganizationalUnderstanding`
+  - `type OrganizationalUnderstandingDisclosureResult,`
+- Line 40 · **import** · matched `OrganizationalUnderstanding`
+  - `} from "../../engine/v3/understanding/discloseCanonicalOrganizationalUnderstanding";`
+- Line 110 · **unknown** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `const compositions = buildCanonicalUnderstandingCompatibilityShadow({`
+- Line 289 · **unknown** · matched `organizational-understanding`
+  - `objectType: "organizational-understanding",`
+- Line 310 · **unknown** · matched `OrganizationalUnderstanding`
+  - `disposition: OrganizationalUnderstandingDisclosureDecision["disposition"],`
+- Line 311 · **unknown** · matched `OrganizationalUnderstanding`
+  - `overrides: Partial<OrganizationalUnderstandingDisclosureDecision> = {},`
+- Line 312 · **unknown** · matched `OrganizationalUnderstanding`
+  - `): OrganizationalUnderstandingDisclosureDecision {`
+- Line 325 · **unknown** · matched `OrganizationalUnderstanding`
+  - `disposition: OrganizationalUnderstandingDisclosureDecision["disposition"],`
+- Line 326 · **unknown** · matched `OrganizationalUnderstanding`
+  - `overrides: Partial<OrganizationalUnderstandingDisclosureDecision> = {},`
+- Line 327 · **unknown** · matched `OrganizationalUnderstanding`
+  - `): OrganizationalUnderstandingDisclosureResult {`
+- Line 328 · **unknown** · matched `OrganizationalUnderstanding`
+  - `return discloseCanonicalOrganizationalUnderstanding({`
+- Line 337 · **unknown** · matched `OrganizationalUnderstanding`
+  - `disclosed: OrganizationalUnderstandingDisclosureResult = disclosure(`
+- Line 369 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const projection = compileOrganizationalUnderstandingProjection(`
+- Line 375 · **unknown** · matched `OrganizationalUnderstanding`
+  - `stable(compileOrganizationalUnderstandingProjection(eligibleSource)),`
+- Line 390 · **unknown** · matched `OrganizationalUnderstanding`
+  - `stable(compileOrganizationalUnderstandingProjection(reversed)),`
+- Line 411 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const output = compileOrganizationalUnderstandingProjection(mismatched);`
+- Line 422 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const output = compileOrganizationalUnderstandingProjection(mismatched);`
+- Line 428 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const output = compileOrganizationalUnderstandingProjection(`
+- Line 438 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const output = compileOrganizationalUnderstandingProjection(`
+- Line 451 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const invalidDisclosure: OrganizationalUnderstandingDisclosureResult = {`
+- Line 461 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const output = compileOrganizationalUnderstandingProjection(invalidSource);`
+- Line 506 · **unknown** · matched `organizational-understanding`
+  - `item.value.owner === "organizational-understanding" &&`
+- Line 543 · **unknown** · matched `OrganizationalUnderstanding`
+  - `compileOrganizationalUnderstandingProjection(withFixtureProse),`
+- Line 585 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const emptyDisclosure: OrganizationalUnderstandingDisclosureResult = {`
+- Line 593 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const output = compileOrganizationalUnderstandingProjection(`
+- Line 614 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const output = compileOrganizationalUnderstandingProjection(missing);`
+- Line 624 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const output = compileOrganizationalUnderstandingProjection(historical);`
+- Line 661 · **unknown** · matched `OrganizationalUnderstanding`
+  - `runtime.memory.organizationalUnderstandingState.canonicalCompositions =`
+- Line 697 · **unknown** · matched `OrganizationalUnderstanding`
+  - `runtime.memory.organizationalUnderstandingState.canonicalCompositions ?? [];`
+- Line 702 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const replayDisclosure = discloseCanonicalOrganizationalUnderstanding({`
+- Line 725 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const first = compileOrganizationalUnderstandingProjection(replaySource);`
+- Line 726 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const second = compileOrganizationalUnderstandingProjection(replaySource);`
+- Line 743 · **unknown** · matched `OrganizationalUnderstanding`
+  - `productSource.includes("compileOrganizationalUnderstandingProjection"),`
+
+##### `scripts/product/validateYourOrganizationProjectionCompatibility.ts`
+
+- Line 12 · **unknown** · matched `OrganizationalUnderstanding`
+  - `OrganizationalUnderstandingProjection,`
+- Line 14 · **import** · matched `OrganizationalUnderstanding`
+  - `} from "../../engine/v3/projection/organizationalUnderstandingProjection";`
+- Line 27 · **unknown** · matched `OrganizationalUnderstanding`
+  - `function projection(): OrganizationalUnderstandingProjection {`
+- Line 41 · **unknown** · matched `organizational-understanding`
+  - `objectType: "organizational-understanding",`
+- Line 58 · **unknown** · matched `organizational-understanding`
+  - `authorityOwner: "canonical-organizational-understanding",`
+- Line 173 · **unknown** · matched `organizational-understanding`
+  - `objectType: "organizational-understanding",`
+- Line 178 · **unknown** · matched `organizational-understanding`
+  - `owner: "organizational-understanding",`
+- Line 292 · **unknown** · matched `organizational-understanding`
+  - `objectType: "organizational-understanding",`
+- Line 297 · **unknown** · matched `organizational-understanding`
+  - `objectType: "organizational-understanding",`
+- Line 305 · **unknown** · matched `organizational-understanding`
+  - `objectType: "organizational-understanding",`
+- Line 323 · **unknown** · matched `OrganizationalUnderstanding`
+  - `area: area as OrganizationalUnderstandingProjection["availability"][number]["area"],`
+- Line 332 · **unknown** · matched `OrganizationalUnderstanding`
+  - `): OrganizationalUnderstandingProjection {`
 
 #### UI
 
@@ -3373,7 +3529,7 @@ A capability is considered fully connected only when:
 =========================================
 Architecture status: ✅ Connected
 Capability registry: Matched
-Structural matches: 524
+Structural matches: 594
 Saved report: docs/Sprint Updates/Capability Traces/cap-und-006.md
 =========================================
 
@@ -3382,7 +3538,7 @@ Saved report: docs/Sprint Updates/Capability Traces/cap-und-006.md
 
 # Capability Trace — Organizational Learning Profile
 
-Generated: 2026-07-25T18:39:00.918Z
+Generated: 2026-07-25T23:57:32.779Z
 
 ## Verified Architecture
 
@@ -3932,7 +4088,7 @@ Saved report: docs/Sprint Updates/Capability Traces/cap-lrn-002.md
 
 # Capability Trace — Theory Validation
 
-Generated: 2026-07-25T18:39:02.274Z
+Generated: 2026-07-25T23:57:33.849Z
 
 ## Verified Architecture
 
@@ -4686,7 +4842,7 @@ Saved report: docs/Sprint Updates/Capability Traces/cap-self-001.md
 
 # Capability Trace — Investigation Opportunity Generation
 
-Generated: 2026-07-25T18:39:03.837Z
+Generated: 2026-07-25T23:57:35.100Z
 
 ## Verified Architecture
 
@@ -4781,6 +4937,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/v3/model/judgment/buildExecutivePriority.ts`
 - `engine/v3/model/simulate/buildSimulationScenario.ts`
 - `engine/v3/operating-systems/communication/runExecutiveCommunicationOperatingSystem.ts`
+- `engine/v3/projection/organizationalUnderstandingProjection.ts`
 - `engine/v3/runtime/evolveOrganizationRuntime.ts`
 - `engine/v3/scenarios/buildExecutiveDecisionContext.ts`
 - `engine/v3/scenarios/runExecutiveScenario.ts`
@@ -4788,6 +4945,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `scripts/product/validateAskExperience.ts`
 - `scripts/product/validateExecutiveInteractionArchitecture.ts`
 - `scripts/product/validateOrganizationExperience.ts`
+- `scripts/product/validateOrganizationalUnderstandingProjectionShadow.ts`
 - `scripts/product/validateResearchExperience.ts`
 - `scripts/product/validateUnifiedExecutiveWorkspace.ts`
 
@@ -4822,7 +4980,7 @@ This section records source-code references. It supplements, but does not replac
 | Engine | ✅ Found | 47 |
 | Runtime | ✅ Found | 24 |
 | Executive | ❌ Not found | 0 |
-| Projection | ✅ Found | 10 |
+| Projection | ✅ Found | 14 |
 | UI | ✅ Found | 27 |
 | API | ❌ Not found | 0 |
 | Simulation | ✅ Found | 4 |
@@ -5019,10 +5177,15 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `components/product-shell/data/buildRuntimeOrganizationView.ts`
 
-- Line 139 · **read** · matched `investigationOpportunities`
+- Line 187 · **read** · matched `investigationOpportunities`
   - `const investigations = records(memory.investigationOpportunities);`
 
 #### Projection
+
+##### `engine/v3/projection/organizationalUnderstandingProjection.ts`
+
+- Line 6 · **import** · matched `buildInvestigationOpportunities`
+  - `} from "../model/investigation/buildInvestigationOpportunities";`
 
 ##### `components/executive-v2/projection/ExecutiveProjection.ts`
 
@@ -5055,6 +5218,15 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 791 · **read** · matched `investigationOpportunities`
   - `.investigationOpportunities?.[0]`
+
+##### `scripts/product/validateOrganizationalUnderstandingProjectionShadow.ts`
+
+- Line 13 · **import** · matched `buildInvestigationOpportunities`
+  - `} from "../../engine/v3/model/investigation/buildInvestigationOpportunities";`
+- Line 694 · **type** · matched `investigationOpportunities`
+  - `investigationOpportunities?: InvestigationOpportunity[];`
+- Line 722 · **read** · matched `investigationOpportunities`
+  - `investigations: memory.investigationOpportunities ?? [],`
 
 #### UI
 
@@ -5285,7 +5457,7 @@ A capability is considered fully connected only when:
 =========================================
 Architecture status: ✅ Connected
 Capability registry: Matched
-Structural matches: 144
+Structural matches: 148
 Saved report: docs/Sprint Updates/Capability Traces/cap-self-002.md
 =========================================
 
@@ -5348,7 +5520,7 @@ Output: docs/Sprint Updates/ARCHITECTURE_HANDOFF.md
 DISCOVERY SPRINT STARTUP
 =========================================================
 
-Architecture State Generated: 2026-07-25T18:39:04.031Z
+Architecture State Generated: 2026-07-25T23:57:35.228Z
 
 ---------------------------------------------------------
 
@@ -5447,33 +5619,33 @@ EXECUTIVE SUMMARY
 
 Discovery is a shared organizational intelligence platform. Its Executive Cognitive Operating System is the mature first application, not the identity or endpoint of the platform.
 
-Discovery 2 Foundation milestone assembled through the partial Phase 8A Runtime-backed `Your Organization` integration.
+Discovery Projection Foundation complete on top of the Discovery 2 Foundation milestone. The reusable Organizational Understanding Projection and inactive Your Organization compatibility adapter are implemented and validated.
 
 Conditional Phase 2 adjudication remains production-blocked. Phases 3 and 4 are complete. Phase 5A authority transitions and the Phase 5B disclosure contract remain unchanged. Phase 8A is an authorized product-validation exception; broader Phase 5 Governance and Phase 6 remain paused.
 
-Validate existing Discovery 2 cognition through the Runtime-backed product adapter. Preserve explicit missing-data states and do not invent semantic content, Evidence persistence, confidence, or disclosure authority.
+Preserve the completed Projection Foundation. The active Phase 8A product adapter remains unchanged; communication/priority and disclosure-decision production remain separate activation blockers.
 
 Highest Priority
-Preserve the completed Phase 4 ownership boundary. Phase 5, Explicit Authority Transitions and Contribution Validation, is next in the canonical sequence but requires separate authorization.
+Run a read-only Product Communication and Priority Contract Decision Sprint. Determine the smallest reusable disclosure-safe owner for readable synthesis, audience framing, product-safe priority, change summaries, “why this matters,” and next-inquiry framing. Do not implement...
 
 ---------------------------------------------------------
 
 CURRENT IMPLEMENTATION
 
 Milestone
-Discovery 2 Foundation milestone assembled through the partial Phase 8A Runtime-backed `Your Organization` integration.
+Discovery Projection Foundation complete on top of the Discovery 2 Foundation milestone. The reusable Organizational Understanding Projection and inactive Your Organization compatibility adapter are implemented and validated.
 
 Development Phase
 Conditional Phase 2 adjudication remains production-blocked. Phases 3 and 4 are complete. Phase 5A authority transitions and the Phase 5B disclosure contract remain unchanged. Phase 8A is an authorized product-validation exception; broader Phase 5 Governance and Phase 6 remain...
 
 Current Objective
-Validate existing Discovery 2 cognition through the Runtime-backed product adapter. Preserve explicit missing-data states and do not invent semantic content, Evidence persistence, confidence, or disclosure authority.
+Preserve the completed Projection Foundation. The active Phase 8A product adapter remains unchanged; communication/priority and disclosure-decision production remain separate activation blockers.
 
 Current Sprint
-Discovery 2 Foundation audit, canonization, validation, and milestone commit.
+Projection Foundation audit, documentation synchronization, validation, and canonization.
 
 Next Priority
-Preserve the completed Phase 4 ownership boundary. Phase 5, Explicit Authority Transitions and Contribution Validation, is next in the canonical sequence but requires separate authorization.
+Run a read-only Product Communication and Priority Contract Decision Sprint. Determine the smallest reusable disclosure-safe owner for readable synthesis, audience framing, product-safe priority, change summaries, “why this matters,” and next-inquiry framing. Do not implement...
 
 ---------------------------------------------------------
 

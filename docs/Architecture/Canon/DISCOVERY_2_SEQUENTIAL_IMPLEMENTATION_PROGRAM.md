@@ -1083,6 +1083,40 @@ prose. Those sections report `Runtime not yet available`. No cognition,
 Runtime schema, capability, benchmark object, research object, or product
 interaction architecture was added.
 
+### Organizational Understanding Projection shadow result
+
+The first reusable projection contract is implemented as a pure,
+non-persistent shadow. It requires an existing disclosure result, resolves only
+disclosed canonical composition revisions and exact Explanation membership,
+preserves structured uncertainty and trace references, represents unavailable
+data explicitly, and performs no ranking, confidence calculation, prose
+synthesis, authority decision, Runtime access, or persistence.
+
+The focused shadow gate passes `30/30`. The active Phase 8A adapter remains
+unchanged. Application activation remains blocked because no production
+disclosure-decision producer exists. This shadow does not activate Phase 6,
+resume broader Phase 5 Governance, or authorize communication synthesis.
+
+### Your Organization projection compatibility result
+
+A pure compatibility adapter now maps the completed projection into the
+existing nine-section Runtime-details contract in shadow. It preserves
+canonical identity, revision, disclosure provenance, Explanation membership,
+Evidence roles, and explicit availability without rereading Runtime or
+creating prose, confidence, ranking, or recommendations. The focused gate
+passes `43/43`; the active Phase 8A adapter and user-visible route remain
+unchanged.
+
+Classification is B — compatibility adapter valid; product contract refinement
+required. The existing top-insight contract requires readable communication
+and priority that the projection does not own. A real disclosure-decision
+producer also remains required before activation.
+
+Together, the projection compiler and inactive compatibility adapter constitute
+the completed Discovery Projection Foundation. The next recommended work is a
+read-only Product Communication and Priority Contract decision, not automatic
+implementation or route activation.
+
 ---
 
 # Dependency graph

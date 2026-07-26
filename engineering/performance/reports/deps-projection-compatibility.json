@@ -1,0 +1,221 @@
+{
+  "schemaVersion": "1",
+  "reportVersion": "1.6.0",
+  "generationTimestamp": "2026-07-28T00:00:00.000Z",
+  "reportId": "deps-projection-compatibility",
+  "title": "DEPS — Your Organization Projection Compatibility",
+  "status": "current",
+  "disposition": "accept-shadow",
+  "sprint": {
+    "name": "Your Organization Projection Compatibility Adapter",
+    "classification": "B — Compatibility Adapter Valid; Product Contract Refinement Required",
+    "repositoryRevision": "e39be469bfbb02bf846546c515606d33110e5403",
+    "worktreeState": "dirty",
+    "scope": "Pure inactive compatibility mapping from disclosed Organizational Understanding Projection into the existing Runtime-details contract."
+  },
+  "trend": {
+    "baselineReference": "deps-baseline-v1",
+    "previousCompatibleReport": "deps-projection-shadow",
+    "previousCompatibleReportPath": "engineering/performance/reports/deps-projection-shadow.json",
+    "currentReport": "deps-projection-compatibility",
+    "comparabilityCohort": "deps-report-schema-v1"
+  },
+  "evidence": [
+    {
+      "id": "compatibility-validation",
+      "sourceId": "your-organization-projection-compatibility",
+      "artifact": "scripts/product/validateYourOrganizationProjectionCompatibility.ts",
+      "claimBoundary": "Forty-three deterministic compatibility, availability, identity, trace, replay, non-mutation, active-path, and rollback checks."
+    },
+    {
+      "id": "compatibility-report",
+      "sourceId": "your-organization-projection-compatibility",
+      "artifact": "docs/Sprint Updates/YOUR_ORGANIZATION_PROJECTION_COMPATIBILITY_ADAPTER.md",
+      "claimBoundary": "Field inventory, ownership, parity, communication boundary, disclosure activation interface, blockers, and rollback."
+    },
+    {
+      "id": "projection-validation",
+      "sourceId": "organizational-understanding-projection-shadow",
+      "artifact": "scripts/product/validateOrganizationalUnderstandingProjectionShadow.ts",
+      "claimBoundary": "Existing thirty-check projection compiler regression."
+    },
+    {
+      "id": "phase8a-validation",
+      "sourceId": "runtime-backed-your-organization",
+      "artifact": "scripts/product/validateOrganizationExperience.ts",
+      "claimBoundary": "Existing product behavior, persisted Runtime replay, and non-mutation regression."
+    },
+    {
+      "id": "phase5b-validation",
+      "sourceId": "disclosure-eligibility-revocation",
+      "artifact": "engine/benchmark/judgment-lab/disclosureEligibilityRevocationContractGate.ts",
+      "claimBoundary": "Resolved-decision disclosure, revocation, isolation, and truth noninterference."
+    },
+    {
+      "id": "deps-canon",
+      "sourceId": "deps-report-validation",
+      "artifact": "docs/Architecture/Canon/DISCOVERY_ENGINEERING_PERFORMANCE_SYSTEM.md",
+      "claimBoundary": "Canonical DEPS evidence and reporting rules."
+    }
+  ],
+  "scorecard": [
+    {
+      "metric": "Organizational Understanding",
+      "state": "Unchanged",
+      "evidenceRefs": ["compatibility-validation", "compatibility-report"],
+      "rationale": "The adapter reshapes existing projected cognition without creating, selecting, or revising Organizational Understanding."
+    },
+    {
+      "metric": "User Intelligence",
+      "state": "Not Measured",
+      "evidenceRefs": ["compatibility-report"],
+      "rationale": "The active product path is unchanged and no real-user or Local Understanding Utility outcome was measured."
+    },
+    {
+      "metric": "Collective Intelligence",
+      "state": "Not Measured",
+      "evidenceRefs": ["compatibility-report"],
+      "rationale": "No participation, contribution, cross-scope synthesis, or collective learning behavior changed."
+    },
+    {
+      "metric": "Governance Integrity",
+      "state": "Improved",
+      "evidenceRefs": ["compatibility-validation", "projection-validation", "phase5b-validation"],
+      "rationale": "The product compatibility boundary preserves fail-closed disclosure states and cannot refill protected gaps through Runtime traversal."
+    },
+    {
+      "metric": "System Sustainability",
+      "state": "Improved",
+      "evidenceRefs": ["compatibility-validation", "compatibility-report"],
+      "rationale": "A thin reusable adapter isolates product shaping from Runtime traversal and keeps rollback local."
+    }
+  ],
+  "architecture": [
+    {
+      "area": "Compatibility ownership",
+      "state": "Improved",
+      "evidenceRefs": ["compatibility-validation", "compatibility-report"],
+      "observation": "Projection-to-product shaping is isolated from cognition, Runtime, disclosure decisions, communication synthesis, and UI composition."
+    },
+    {
+      "area": "Canonical traceability",
+      "state": "Improved",
+      "evidenceRefs": ["compatibility-validation"],
+      "observation": "Composition identity, revision, source revisions, decision identity, Explanation membership, canonical references, and Evidence roles survive compatibility shaping."
+    },
+    {
+      "area": "Active product integration",
+      "state": "Unchanged",
+      "evidenceRefs": ["compatibility-validation", "phase8a-validation"],
+      "observation": "The Phase 8A Runtime adapter remains active and user-visible behavior is unchanged."
+    }
+  ],
+  "benchmarks": [
+    {
+      "sourceId": "organizational-understanding-projection-shadow",
+      "result": "Pass — 30/30",
+      "previousResult": "Pass — 30/30",
+      "movement": "Unchanged",
+      "evidenceRefs": ["projection-validation"],
+      "summary": "The reusable projection compiler remains pure, deterministic, fail-closed, and inactive."
+    },
+    {
+      "sourceId": "your-organization-projection-compatibility",
+      "result": "Pass — 43/43",
+      "previousResult": "Not Measured",
+      "movement": "Improved",
+      "evidenceRefs": ["compatibility-validation", "compatibility-report"],
+      "summary": "The compatibility adapter is deterministic, disclosure-state preserving, Runtime-independent, non-mutating, and inactive."
+    },
+    {
+      "sourceId": "runtime-backed-your-organization",
+      "result": "Pass — 24/24",
+      "previousResult": "Pass",
+      "movement": "Unchanged",
+      "evidenceRefs": ["phase8a-validation"],
+      "summary": "The active Runtime-backed experience and replay regression remain passing."
+    },
+    {
+      "sourceId": "disclosure-eligibility-revocation",
+      "result": "Pass — 14/14",
+      "previousResult": "Pass",
+      "movement": "Unchanged",
+      "evidenceRefs": ["phase5b-validation"],
+      "summary": "The disclosure contract remains passing and production decision generation remains unowned."
+    }
+  ],
+  "researchObservations": [
+    {
+      "state": "Not Measured",
+      "evidenceRefs": ["compatibility-report"],
+      "observation": "No Organizational Understanding research dimension, Local Understanding Utility, or User Intelligence outcome was evaluated."
+    }
+  ],
+  "complexity": {
+    "introduced": [
+      "One pure compatibility adapter.",
+      "Optional backward-compatible availability, reference, and projection trace metadata.",
+      "One focused forty-three-check validator.",
+      "One versioned DEPS report."
+    ],
+    "removed": [],
+    "netEffect": "Increased",
+    "justified": true,
+    "justification": "The bounded additions demonstrate a reversible migration boundary and expose the exact product-contract gap without duplicating Runtime traversal.",
+    "evidenceRefs": ["compatibility-validation", "compatibility-report"]
+  },
+  "governanceObservations": [
+    {
+      "state": "Improved",
+      "evidenceRefs": ["compatibility-validation", "projection-validation"],
+      "observation": "Compatibility preserves withheld, revoked, mismatch, invalid-authority, and historical states and has no Runtime fallback."
+    }
+  ],
+  "sustainabilityObservations": [
+    {
+      "state": "Improved",
+      "evidenceRefs": ["compatibility-validation", "compatibility-report"],
+      "observation": "The adapter proves reusable projection can feed the existing section shape with local rollback and no persistence migration."
+    }
+  ],
+  "regressions": [
+    {
+      "category": "product",
+      "state": "Unchanged",
+      "evidenceRefs": ["compatibility-validation", "phase8a-validation"],
+      "observation": "The active adapter remains selected and existing organization-experience output remains passing."
+    }
+  ],
+  "unknownsAndUnmeasured": [
+    {
+      "area": "Authorized communication and priority",
+      "state": "Not Measured",
+      "reason": "No owner currently supplies disclosed canonical headlines, summaries, evolution narrative, or a top-Explanation priority."
+    },
+    {
+      "area": "Application disclosure activation",
+      "state": "Not Measured",
+      "reason": "No production disclosure-decision producer or validity and revocation lifecycle exists."
+    },
+    {
+      "area": "User and Local Understanding Utility",
+      "state": "Not Measured",
+      "reason": "No user-visible treatment or real-user outcome changed."
+    }
+  ],
+  "remainingRisks": {
+    "nextBlockingDependency": "The current prose-first top-insight contract requires bounded authorized communication and upstream priority before disclosure becomes the sole activation blocker.",
+    "remainingDiscoveryPhase": "Phase 8 compatibility remains inactive; broader Phase 5 Governance and Phase 6 remain paused.",
+    "remainingBenchmarkGap": "Active browser behavior, user comprehension, decision validity, and revocation-in-application remain unmeasured."
+  },
+  "rollback": {
+    "available": true,
+    "evidenceRefs": ["compatibility-validation", "compatibility-report"],
+    "description": "Remove the compatibility adapter and its optional contract metadata, validator, command, report, and documentation; the active Phase 8A adapter and Runtime remain unchanged."
+  },
+  "engineeringDecision": {
+    "accept": true,
+    "evidenceRefs": ["compatibility-validation", "compatibility-report", "projection-validation", "phase8a-validation"],
+    "rationale": "Accept the inactive adapter and refine the product communication and priority contract before implementing disclosure activation."
+  }
+}
