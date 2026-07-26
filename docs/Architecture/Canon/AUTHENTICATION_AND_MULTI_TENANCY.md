@@ -79,6 +79,12 @@ The pinned inactive dependency currently has unresolved security advisories.
 Clerk and Next remediation plus deployed-session validation are mandatory
 before any hosted activation.
 
+Discovery also has an inactive PostgreSQL/Drizzle foundation for Alpha access
+records, immutable lifecycle history, and append-only disclosure audit. These
+operational governance records remain outside Organization Runtime and
+cognition. Local PostgreSQL 17 validation is complete; Neon provisioning,
+hosted roles, PITR, live grants, and route integration are not active.
+
 ---
 
 # Multi-Tenancy Philosophy

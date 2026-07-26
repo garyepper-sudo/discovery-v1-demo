@@ -1497,3 +1497,19 @@ Each phase requires separate authorization. A phase review must report:
 
 Completion of one phase authorizes planning for the next phase. It does not
 authorize implementation of the next phase.
+
+## Inactive Alpha durable storage foundation
+
+The separately authorized Phase 8 Alpha program now includes an inactive
+PostgreSQL/Drizzle repository shadow for Discovery-owned access, lifecycle,
+and disclosure audit. Local PostgreSQL 17 validation passes `60/60`. This is
+operational governance storage, not Organization Runtime, canonical cognition,
+a new Discovery 2 phase, or route activation. The canonical implementation
+sequence remains unchanged.
+
+The subsequent Alpha Readiness Assessment does not add or reorder a Discovery
+2 phase. It authorizes a bounded deployment-readiness sequence: dependency
+remediation, durable hosted Runtime, hosted storage verification,
+identity/authorization enforcement, minimum operations and recovery, and
+deployed tenant-isolation validation. Hosted Alpha remains inactive until
+those gates pass.

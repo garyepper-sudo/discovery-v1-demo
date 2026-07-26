@@ -300,6 +300,17 @@
       "authoritativeOutputs": ["lib/auth/resolveVerifiedConsumerIdentityFromClerk.ts", "engine/v3/governance/clerkVerifiedConsumerIdentity.ts", "scripts/product/validateClerkIdentityShadowIntegration.ts", "docs/Sprint Updates/CLERK_IDENTITY_SHADOW_INTEGRATION.md"]
     },
     {
+      "id": "durable-alpha-postgresql-storage-foundation",
+      "purpose": "Validate PostgreSQL 17 migrations, transactional Alpha access lifecycle, database-enforced append-only audit, inactive disclosure replay, and Runtime/product noninterference.",
+      "domain": "governance",
+      "owner": "Discovery Alpha Access and Disclosure Audit Stores",
+      "determinism": "deterministic-with-fixed-clock-identities-and-disposable-postgresql-17",
+      "baselineCompatibility": "Compatible for migration 0000, alpha-explicit-allowlist-disclosure policy version 1, and the fixed local PostgreSQL validation protocol.",
+      "maturity": "validated-inactive-local-shadow-hosted-operations-required",
+      "command": "npm run validate:alpha-postgres-storage",
+      "authoritativeOutputs": ["db/migrations/0000_alpha_governance_foundation.sql", "scripts/storage/validateAlphaPostgresStorage.ts", "docs/Sprint Updates/DURABLE_ALPHA_POSTGRESQL_STORAGE_FOUNDATION.md"]
+    },
+    {
       "id": "organizational-understanding-research-framework",
       "purpose": "Define the six-dimensional methodology beneath the Organizational Understanding Index.",
       "domain": "research",

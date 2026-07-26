@@ -4,10 +4,10 @@
 
 ## Current Milestone
 
-Discovery Alpha Governance Identity Foundation complete on top of the Product
-Communication, Projection, and Discovery 2 Foundation milestones. The inactive
-explicit-allowlist producer passes `61/61`, and its official server-only Clerk
-identity shadow passes `28/28`. Hosted activation remains blocked.
+Durable Alpha PostgreSQL Storage Foundation complete as an inactive local
+shadow. PostgreSQL `17.10` validation passes `60/60`; the existing producer
+remains `61/61` and Clerk identity shadow remains `28/28`. Hosted activation
+remains blocked.
 
 ## Current Development Phase
 
@@ -18,14 +18,14 @@ exception; broader Phase 5 Governance and Phase 6 remain paused.
 
 ## Current Objective
 
-Preserve the completed Alpha Governance Identity Foundation. The active Phase
-8A product adapter remains unchanged. Live Clerk deployment verification,
-durable access and audit stores, dependency-security remediation, and
-activation review remain missing, so hosted Alpha remains blocked.
+Preserve the inactive durable access and append-only audit foundation. The
+active Phase 8A product adapter remains unchanged. Neon operational
+verification, live Clerk deployment verification, dependency remediation, and
+activation review remain missing.
 
 ## Current Sprint
 
-Discovery Alpha Governance Identity Foundation canonization.
+Durable Alpha PostgreSQL Storage Foundation — inactive repository shadow.
 
 ## Product Identity
 
@@ -250,14 +250,17 @@ These are known transitions, not documentation defects:
 
 ## Next Priority
 
-Run one read-only **Durable Alpha Access and Audit Storage Decision Sprint**.
-Determine storage, lifecycle, retention, administration, security, recovery,
-and activation prerequisites without implementing storage. Preserve Clerk as
-authentication only and keep Discovery authorization independent.
+Run one bounded **Alpha Readiness implementation** program. Follow
+`ALPHA_READINESS_ASSESSMENT.md`: remediate Clerk and Next, provide durable
+hosted Runtime persistence, provision and verify Neon, activate identity and
+authorization across every supported read/write boundary, establish minimum
+operations, and pass deployed tenant-isolation and recovery gates. Do not
+resume general Discovery 2 cognition or broader Governance.
 
-The current dependency audit reports 19 vulnerable package entries: 17 high
-and 2 critical. Clerk and Next findings require remediation before hosted
-activation. No automatic audit fix is authorized.
+The all-dependencies audit moved from 19 entries (17 high, 2 critical) to 23
+(4 moderate, 17 high, 2 critical) through Drizzle Kit development tooling.
+The post-install production-only audit is 5 (3 high, 2 critical). No automatic
+audit fix is authorized.
 
 ## Remaining production roadmap
 

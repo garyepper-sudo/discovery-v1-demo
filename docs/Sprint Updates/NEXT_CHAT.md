@@ -22,11 +22,11 @@ authorization.
 
 ## Current Milestone
 
-Discovery Alpha Governance Identity Foundation complete. The inactive Alpha
-explicit-allowlist producer passes `61/61`, and its official server-only Clerk
-identity shadow passes `28/28`. Live deployment verification remains
-unmeasured, dependency remediation remains open, and the active route is
-unchanged.
+Durable Alpha PostgreSQL Storage Foundation complete as an inactive local
+shadow. PostgreSQL `17.10` validation passes `60/60`; Alpha producer `61/61`
+and Clerk identity `28/28` remain passing. Hosted operations and live
+deployment remain unmeasured, dependency remediation remains open, and the
+active route is unchanged.
 
 ## Current Development Phase
 
@@ -39,9 +39,9 @@ exception; broader Governance and Phase 6 remain paused.
 
 Preserve the canonized identity and authorization boundary. Clerk is
 authentication-only; Discovery owns organization access and disclosure.
-Live provider-session verification, durable access and audit stores,
-dependency remediation, and activation review remain missing. Do not activate
-the route, implement storage, implement Phase 6, or resume broader Governance
+Live provider-session verification, hosted Neon operations, dependency
+remediation, and activation review remain missing. Do not activate the route,
+provision hosted storage, implement Phase 6, or resume broader Governance
 without explicit authorization.
 
 DEPS Phase 1.1 is available through `npm run deps:report`. Future substantial
@@ -198,22 +198,22 @@ Do not mistake these known transitions for undocumented implementation:
 
 ## Next Priority
 
-Run one read-only architecture sprint:
+Run one separately authorized implementation sprint:
 
-**Durable Alpha Access and Audit Storage Decision Sprint**
+**Alpha Readiness implementation**
 
-Determine storage technology, access-record and audit-event lifecycle,
-append-only boundaries, administration, encryption, transactions, stale
-decision prevention, environments, migration, recovery, observability,
-dependency-security prerequisites, and route-activation prerequisites. Do not
-implement storage. Keep the product route inactive and authorization before
-Runtime loading.
+Execute only the bounded sequence in `ALPHA_READINESS_ASSESSMENT.md`:
+dependency remediation, durable hosted Runtime, hosted Neon verification,
+identity/authorization activation across supported reads and writes, minimum
+operations and recovery, and deployed tenant-isolation validation. Do not
+resume general Discovery 2 cognition, broaden Governance, or add product
+features.
 
-The dependency baseline is not activation-ready: `npm audit --json` reports 19
-vulnerable package entries, including 17 high and 2 critical. Clerk and Next
-production-path findings require remediation and live verification before
-hosted activation. Do not run automatic audit remediation in the decision
-sprint.
+The dependency baseline is not activation-ready: the all-dependencies audit
+moved from 19 to 23 through four moderate Drizzle Kit development-tool
+entries; the production-only audit is 5 (3 high, 2 critical). Clerk and Next
+remediation must pass before deployed identity
+verification or route activation. Do not run automatic audit fixes.
 
 Expected Scorecard treatment:
 

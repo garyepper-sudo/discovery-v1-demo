@@ -1,0 +1,16 @@
+services:
+  alpha-postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: discovery_alpha
+      POSTGRES_USER: discovery_local
+      POSTGRES_PASSWORD: discovery_local_only
+    ports:
+      - "127.0.0.1:55432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U discovery_local -d discovery_alpha"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+    tmpfs:
+      - /var/lib/postgresql/data

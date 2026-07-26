@@ -1,4 +1,4 @@
 {
-  "manifest": "engineering/performance/reports/deps-clerk-identity-shadow.json",
-  "markdownOutput": "engineering/performance/reports/DEPS_CLERK_IDENTITY_SHADOW.md"
+  "manifest": "engineering/performance/reports/deps-alpha-postgresql-storage-foundation.json",
+  "markdownOutput": "engineering/performance/reports/DEPS_ALPHA_POSTGRESQL_STORAGE_FOUNDATION.md"
 }

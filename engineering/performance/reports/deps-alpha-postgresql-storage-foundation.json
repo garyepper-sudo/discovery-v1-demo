@@ -1,0 +1,206 @@
+{
+  "schemaVersion": "1",
+  "reportVersion": "1.11.0",
+  "generationTimestamp": "2026-07-26T00:00:00.000Z",
+  "reportId": "deps-alpha-postgresql-storage-foundation",
+  "title": "DEPS — Durable Alpha PostgreSQL Storage Foundation",
+  "status": "current",
+  "disposition": "accept-inactive-local-shadow-hosted-operations-required",
+  "sprint": {
+    "name": "Durable Alpha PostgreSQL Storage Foundation",
+    "classification": "B — Storage Foundation Valid; Deployment or Operational Integration Required",
+    "repositoryRevision": "a65391c30e62df02787c913db8b27a1eff021345",
+    "worktreeState": "dirty",
+    "scope": "Inactive PostgreSQL/Drizzle access lifecycle, append-only audit, administration, and bounded disclosure transaction foundation."
+  },
+  "trend": {
+    "baselineReference": "deps-baseline-v1",
+    "previousCompatibleReport": "deps-clerk-identity-shadow",
+    "previousCompatibleReportPath": "engineering/performance/reports/deps-clerk-identity-shadow.json",
+    "currentReport": "deps-alpha-postgresql-storage-foundation",
+    "comparabilityCohort": "deps-report-schema-v1"
+  },
+  "evidence": [
+    {
+      "id": "storage-validation",
+      "sourceId": "durable-alpha-postgresql-storage-foundation",
+      "artifact": "scripts/storage/validateAlphaPostgresStorage.ts",
+      "claimBoundary": "Sixty deterministic PostgreSQL 17 storage, isolation, lifecycle, audit, failure, replay, CLI, and noninterference checks."
+    },
+    {
+      "id": "storage-migration",
+      "sourceId": "durable-alpha-postgresql-storage-foundation",
+      "artifact": "db/migrations/0000_alpha_governance_foundation.sql",
+      "claimBoundary": "Reviewed local PostgreSQL schema, constraints, indexes, roles, immutable transition trigger, and append-only triggers."
+    },
+    {
+      "id": "storage-report",
+      "sourceId": "durable-alpha-postgresql-storage-foundation",
+      "artifact": "docs/Sprint Updates/DURABLE_ALPHA_POSTGRESQL_STORAGE_FOUNDATION.md",
+      "claimBoundary": "Inactive architecture, dependencies, validation evidence, limitations, rollback, and hosted activation blockers."
+    },
+    {
+      "id": "clerk-regression",
+      "sourceId": "clerk-identity-shadow-integration",
+      "artifact": "scripts/product/validateClerkIdentityShadowIntegration.ts",
+      "claimBoundary": "Existing twenty-eight-check server identity shadow regression."
+    },
+    {
+      "id": "producer-regression",
+      "sourceId": "alpha-allowlist-disclosure-producer-shadow",
+      "artifact": "scripts/product/validateAlphaAllowlistDisclosureProducerShadow.ts",
+      "claimBoundary": "Existing sixty-one-check disclosure producer and inactive product-chain regression."
+    }
+  ],
+  "scorecard": [
+    {
+      "metric": "Organizational Understanding",
+      "state": "Unchanged",
+      "evidenceRefs": ["storage-validation"],
+      "rationale": "Storage persists governance access and audit records only; it does not create or alter organizational cognition."
+    },
+    {
+      "metric": "User Intelligence",
+      "state": "Not Measured",
+      "evidenceRefs": ["storage-report"],
+      "rationale": "The shadow is inactive and no real-user comprehension or decision outcome was measured."
+    },
+    {
+      "metric": "Collective Intelligence",
+      "state": "Not Measured",
+      "evidenceRefs": ["storage-report"],
+      "rationale": "No collaboration, contribution, membership, or shared-learning behavior changed."
+    },
+    {
+      "metric": "Governance Integrity",
+      "state": "Improved",
+      "evidenceRefs": ["storage-validation", "storage-migration"],
+      "rationale": "Access lifecycle is transaction-safe and disclosure audit is database-enforced append-only with fail-closed write behavior."
+    },
+    {
+      "metric": "System Sustainability",
+      "state": "Improved",
+      "evidenceRefs": ["storage-validation", "storage-migration"],
+      "rationale": "Versioned SQL, explicit mappings, isolated credentials, deterministic validation, and backup/restore evidence establish a replaceable durable boundary."
+    }
+  ],
+  "architecture": [
+    {
+      "area": "Discovery-owned durable governance storage",
+      "state": "Improved",
+      "evidenceRefs": ["storage-migration", "storage-validation"],
+      "observation": "Access, lifecycle, and disclosure audit now have explicit inactive PostgreSQL owners outside Runtime and cognition."
+    },
+    {
+      "area": "Active product integration",
+      "state": "Unchanged",
+      "evidenceRefs": ["storage-validation"],
+      "observation": "Routes, middleware, layout, Runtime, projection, communication, and UI remain unchanged."
+    }
+  ],
+  "benchmarks": [
+    {
+      "sourceId": "durable-alpha-postgresql-storage-foundation",
+      "result": "Pass — 60/60",
+      "previousResult": "Not Measured",
+      "movement": "Improved",
+      "evidenceRefs": ["storage-validation", "storage-migration"],
+      "summary": "PostgreSQL 17 lifecycle, append-only audit, concurrency, failure, replay, and noninterference checks pass locally."
+    },
+    {
+      "sourceId": "clerk-identity-shadow-integration",
+      "result": "Pass — 28/28",
+      "previousResult": "Pass — 28/28",
+      "movement": "Unchanged",
+      "evidenceRefs": ["clerk-regression"],
+      "summary": "The official server identity shadow remains passing."
+    },
+    {
+      "sourceId": "alpha-allowlist-disclosure-producer-shadow",
+      "result": "Pass — 61/61",
+      "previousResult": "Pass — 61/61",
+      "movement": "Unchanged",
+      "evidenceRefs": ["producer-regression"],
+      "summary": "The pure policy and inactive delivery chain remain passing."
+    }
+  ],
+  "researchObservations": [
+    {
+      "state": "Not Measured",
+      "evidenceRefs": ["storage-report"],
+      "observation": "No research adapter, Local Understanding Utility profile, or research conclusion changed."
+    }
+  ],
+  "complexity": {
+    "introduced": [
+      "PostgreSQL/Drizzle configuration, schema, reviewed migration, and local service.",
+      "Access and audit repositories, explicit mapping, transaction shadow, and controlled CLI.",
+      "A sixty-check PostgreSQL gate and bounded logical backup/restore procedure."
+    ],
+    "removed": [],
+    "netEffect": "Increased",
+    "justified": true,
+    "justification": "Durable governed access and auditable disclosure require transactional storage and operational tooling; the additions remain isolated and inactive.",
+    "evidenceRefs": ["storage-validation", "storage-migration"]
+  },
+  "governanceObservations": [
+    {
+      "state": "Improved",
+      "evidenceRefs": ["storage-validation", "storage-migration"],
+      "observation": "Database constraints and roles enforce exact scope, terminal transitions, uniqueness, and append-only history."
+    }
+  ],
+  "sustainabilityObservations": [
+    {
+      "state": "Improved",
+      "evidenceRefs": ["storage-validation", "storage-migration"],
+      "observation": "Local PostgreSQL 17, versioned SQL, deterministic IDs, explicit failure mapping, and restore evidence reduce activation uncertainty."
+    }
+  ],
+  "regressions": [
+    {
+      "category": "product",
+      "state": "Unchanged",
+      "evidenceRefs": ["storage-validation"],
+      "observation": "The implementation is inactive and active route files are byte-equivalent to HEAD."
+    },
+    {
+      "category": "Runtime",
+      "state": "Unchanged",
+      "evidenceRefs": ["storage-validation"],
+      "observation": "Runtime is read once only after authorization and remains byte-identical."
+    }
+  ],
+  "unknownsAndUnmeasured": [
+    {
+      "area": "Hosted Neon operations",
+      "state": "Not Measured",
+      "reason": "Provisioning, environment wiring, hosted roles, pooled connections, and PITR were not activated."
+    },
+    {
+      "area": "User and Local Understanding Utility",
+      "state": "Not Measured",
+      "reason": "No user-visible product path changed."
+    },
+    {
+      "area": "Dependency security",
+      "state": "Not Measured",
+      "reason": "All-dependencies audit moved from 19 to 23 through four moderate Drizzle Kit development-tool findings; production-only audit is 3 high and 2 critical."
+    }
+  ],
+  "remainingRisks": {
+    "nextBlockingDependency": "Dependency remediation is required before deployed Clerk verification or route activation.",
+    "remainingDiscoveryPhase": "Alpha Readiness implementation is next; the durable storage foundation and hosted Alpha remain inactive, while broader Governance and Phase 6 remain paused.",
+    "remainingBenchmarkGap": "Hosted role behavior, Neon pooling, live PITR, deployed tenant isolation, monitoring, and browser testing remain unmeasured."
+  },
+  "rollback": {
+    "available": true,
+    "evidenceRefs": ["storage-validation", "storage-migration"],
+    "description": "Remove inactive dependencies, database files, repositories, CLI, validator, local service, and reports; no active product or Runtime code depends on them."
+  },
+  "engineeringDecision": {
+    "accept": true,
+    "evidenceRefs": ["storage-validation", "storage-migration", "storage-report"],
+    "rationale": "Accept Classification B: the local foundation is valid and inactive, while Neon deployment, security remediation, and operational verification remain required."
+  }
+}

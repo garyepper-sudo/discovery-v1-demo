@@ -1,12 +1,14 @@
 # Discovery Startup Snapshot
 
-**Milestone:** Discovery Alpha Governance Identity Foundation complete.
+**Milestone:** Durable Alpha PostgreSQL Storage Foundation complete as an
+inactive local shadow.
 Reusable projection and Product Communication foundations remain intact. The
 inactive explicit allowlist producer validates authorization before Runtime
 and the complete delivery chain. An official server-only Clerk adapter
 constructs verified consumer identity without activating middleware or routes.
-Live deployment verification, durable stores, dependency remediation, and
-hosted activation remain blocked.
+PostgreSQL `17.10` validation passes `60/60`. Hosted Neon operations,
+dependency remediation, deployment verification, and activation remain
+blocked.
 
 Read this at the start of each sprint. Use `PROJECT_STATE.md` for the complete
 current boundary and `NEXT_CHAT.md` for the next authorized work.
@@ -190,14 +192,18 @@ into its typed identity while preserving injected access and audit boundaries.
 Denied requests cannot load Runtime. Live provider-session verification and
 durable access or audit stores remain unimplemented.
 
-The next recommended work is a read-only Durable Alpha Access and Audit Storage
-Decision Sprint. It does not authorize storage implementation, broader
-Governance, Phase 6, or route activation. User Intelligence and Collective
-Intelligence remain unmeasured.
+The next recommended work is the bounded Alpha Readiness implementation
+sequence defined by `ALPHA_READINESS_ASSESSMENT.md`. The storage foundation is
+complete but hosted Alpha remains inactive until dependency remediation,
+durable hosted Runtime, Neon verification, enforced identity/authorization,
+minimum operations and recovery, and deployed tenant-isolation validation are
+complete. Broader Governance, Phase 6, and new product features remain outside
+that authorization. User Intelligence and Collective Intelligence remain
+unmeasured.
 
-The current dependency audit reports 19 vulnerable package entries: 17 high
-and 2 critical. Clerk and Next production-path findings must be remediated and
-revalidated before hosted activation. No automatic remediation was performed.
+The all-dependencies audit moved from 19 entries to 23 through four moderate
+Drizzle Kit development-only entries. The post-install production-only audit
+is 5 (3 high, 2 critical). Clerk and Next must be remediated before activation.
 
 DEPS Phase 1.1 now provides engineering-only continuous progress reporting
 through `npm run deps:report`. The current report compares against DEPS

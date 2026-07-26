@@ -47,6 +47,11 @@
     "validate:your-organization-communication-adapter": "tsx scripts/product/validateYourOrganizationCommunicationAdapter.ts",
     "validate:alpha-allowlist-disclosure-producer-shadow": "tsx scripts/product/validateAlphaAllowlistDisclosureProducerShadow.ts",
     "validate:clerk-identity-shadow": "tsx scripts/product/validateClerkIdentityShadowIntegration.ts",
+    "storage:migrate": "tsx scripts/storage/migrateAlphaGovernance.ts up",
+    "storage:status": "tsx scripts/storage/migrateAlphaGovernance.ts status",
+    "storage:reset:local": "tsx scripts/storage/migrateAlphaGovernance.ts reset",
+    "storage:alpha-access": "tsx scripts/storage/alphaAccessAdmin.ts",
+    "validate:alpha-postgres-storage": "tsx scripts/storage/validateAlphaPostgresStorage.ts",
     "northstar:cognitive-layer-validation:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarCognitiveLayerValidation001.ts",
     "northstar:cognitive-trace:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarCognitiveTrace001.ts",
     "northstar:transformation-trace:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarTransformationTrace001.ts",
@@ -94,16 +99,20 @@
   },
   "dependencies": {
     "@clerk/nextjs": "6.10.0",
+    "@neondatabase/serverless": "1.1.0",
     "@types/node": "22.10.1",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
+    "drizzle-orm": "0.45.2",
     "lucide-react": "^1.23.0",
     "next": "14.2.18",
+    "postgres": "3.4.9",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "typescript": "5.7.2"
   },
   "devDependencies": {
+    "drizzle-kit": "0.31.10",
     "eslint": "^8.57.1",
     "eslint-config-next": "^14.2.18",
     "tsx": "^4.23.0"

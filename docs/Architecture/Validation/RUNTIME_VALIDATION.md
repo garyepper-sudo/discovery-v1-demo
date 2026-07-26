@@ -694,3 +694,23 @@ The persisted Atlas SHA-256 remains
 before and after. No audit event, access record, decision, projection,
 communication plan, or candidate view is persisted. The active route imports
 none of the producer shadow.
+
+## Durable Alpha PostgreSQL storage replay
+
+`npm run validate:alpha-postgres-storage` validates the inactive governance
+storage boundary against disposable PostgreSQL 17. Its `60/60` gate proves
+transactional lifecycle, database-enforced append-only history, fail-closed
+audit writes, one Runtime load after access eligibility, and active-file byte
+equivalence.
+
+Access, lifecycle, and audit rows remain outside Runtime. The persisted Atlas
+Runtime SHA-256 remains byte-identical before and after:
+`ce267f9e34bc60f94d4c1e16e0a153042f5d8a5b1d54ee4633999c17041fc9cc`.
+No active route imports the repository or transaction shadow. Hosted Neon and
+PITR behavior remain unvalidated.
+
+The Alpha Readiness Assessment identifies durable hosted Runtime persistence
+as a separate critical deployment gate: the current Vercel `/tmp` location is
+ephemeral and is not approved for customer organizational truth. The next
+phase is bounded Alpha Readiness implementation, not additional Runtime
+cognition.

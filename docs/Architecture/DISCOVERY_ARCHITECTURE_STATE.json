@@ -13,11 +13,11 @@
     ]
   },
   "project": {
-    "currentMilestone": "Discovery Alpha Governance Identity Foundation complete on top of the Product\nCommunication, Projection, and Discovery 2 Foundation milestones. The inactive\nexplicit-allowlist producer passes `61/61`, and its official server-only Clerk\nidentity shadow passes `28/28`. Hosted activation remains blocked.",
+    "currentMilestone": "Durable Alpha PostgreSQL Storage Foundation complete as an inactive local\nshadow. PostgreSQL `17.10` validation passes `60/60`; the existing producer\nremains `61/61` and Clerk identity shadow remains `28/28`. Hosted activation\nremains blocked.",
     "currentPhase": "Conditional Phase 2 adjudication remains production-blocked. Phases 3 and 4\nare complete. Phase 5A authority transitions and the Phase 5B disclosure\ncontract remain unchanged. Phase 8A is an authorized product-validation\nexception; broader Phase 5 Governance and Phase 6 remain paused.",
-    "currentObjective": "Preserve the completed Alpha Governance Identity Foundation. The active Phase\n8A product adapter remains unchanged. Live Clerk deployment verification,\ndurable access and audit stores, dependency-security remediation, and\nactivation review remain missing, so hosted Alpha remains blocked.",
-    "currentSprint": "Discovery Alpha Governance Identity Foundation canonization.",
-    "nextPriority": "Run one read-only Durable Alpha Access and Audit Storage Decision Sprint.\nDetermine storage, lifecycle, retention, administration, security, recovery,\nand activation prerequisites without implementing storage. Preserve Clerk as\nauthentication only and keep Discovery authorization independent.\n\nThe current dependency audit reports 19 vulnerable package entries: 17 high\nand 2 critical. Clerk and Next findings require remediation before hosted\nactivation. No automatic audit fix is authorized.",
+    "currentObjective": "Preserve the inactive durable access and append-only audit foundation. The\nactive Phase 8A product adapter remains unchanged. Neon operational\nverification, live Clerk deployment verification, dependency remediation, and\nactivation review remain missing.",
+    "currentSprint": "Durable Alpha PostgreSQL Storage Foundation — inactive repository shadow.",
+    "nextPriority": "Run one bounded Alpha Readiness implementation program. Follow\n`ALPHA_READINESS_ASSESSMENT.md`: remediate Clerk and Next, provide durable\nhosted Runtime persistence, provision and verify Neon, activate identity and\nauthorization across every supported read/write boundary, establish minimum\noperations, and pass deployed tenant-isolation and recovery gates. Do not\nresume general Discovery 2 cognition or broader Governance.\n\nThe all-dependencies audit moved from 19 entries (17 high, 2 critical) to 23\n(4 moderate, 17 high, 2 critical) through Drizzle Kit development tooling.\nThe post-install production-only audit is 5 (3 high, 2 critical). No automatic\naudit fix is authorized.",
     "sourceDocuments": [
       "DISCOVERY_SNAPSHOT.md",
       "ENGINE_CAPABILITY_AUDIT.md",
@@ -44,6 +44,8 @@
       "DISCOVERY_ALPHA_GOVERNANCE_IDENTITY_FOUNDATION_COMPLETE.md",
       "DISCOVERY_PRODUCT_COMMUNICATION_FOUNDATION_COMPLETE.md",
       "DISCOVERY_PROJECTION_FOUNDATION_COMPLETE.md",
+      "DURABLE_ALPHA_ACCESS_AND_AUDIT_STORAGE_DECISION.md",
+      "DURABLE_ALPHA_POSTGRESQL_STORAGE_FOUNDATION.md",
       "EVIDENCE_INDEPENDENCE_BENCHMARK.md",
       "EVIDENCE_INDEPENDENCE_SHADOW_EVALUATION.md",
       "EVIDENCE_PROVENANCE_PRESERVATION.md",
