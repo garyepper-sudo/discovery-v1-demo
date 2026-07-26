@@ -1,8 +1,10 @@
 # Discovery Startup Snapshot
 
 **Milestone:** Discovery Projection Foundation complete. Reusable
-Organizational Understanding projection and Your Organization compatibility
-contracts are validated, canonized, non-persistent, and inactive.
+Organizational Understanding projection, Your Organization compatibility, and
+structured Product Communication contracts are validated, non-persistent, and
+inactive. A thin Your Organization communication adapter now validates the
+plan-to-product boundary without changing the active route.
 
 Read this at the start of each sprint. Use `PROJECT_STATE.md` for the complete
 current boundary and `NEXT_CHAT.md` for the next authorized work.
@@ -175,11 +177,15 @@ Local Understanding Utility remain subordinate benchmark profiles.
 
 ## Current authorized work
 
-The Projection Foundation is complete. The next authorized work is decision
-only: determine the minimum reusable Product Communication and Priority
-Contract. Do not implement communication, disclosure production, route
-activation, Phase 6, or broader Governance. User Intelligence, Collective
-Intelligence, and Local Understanding Utility remain unclaimed.
+The Product Communication Foundation is complete. Its decision, structured
+compiler, source-pass-through shadow, and inactive Your Organization adapter
+are implemented and validated. Both communication paths remain inactive; the
+active route remains Phase 8A. Narrative synthesis remains unimplemented.
+
+The next authorized work is a read-only Consumer-Specific Disclosure Decision
+Producer Architecture Sprint. It does not authorize implementation, broader
+Governance, Phase 6, or route activation. User Intelligence and Collective
+Intelligence remain unmeasured.
 
 DEPS Phase 1.1 now provides engineering-only continuous progress reporting
 through `npm run deps:report`. The current report compares against DEPS

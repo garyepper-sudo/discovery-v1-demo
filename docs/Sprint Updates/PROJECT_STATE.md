@@ -4,9 +4,10 @@
 
 ## Current Milestone
 
-Discovery Projection Foundation complete on top of the Discovery 2 Foundation
-milestone. The reusable Organizational Understanding Projection and inactive
-Your Organization compatibility adapter are implemented and validated.
+Discovery Product Communication Foundation complete on top of the Projection
+and Discovery 2 Foundation milestones. The reusable projection, structured
+Product Communication Plan, source-pass-through shadow, and inactive
+Your Organization communication adapter are implemented and validated.
 
 ## Current Development Phase
 
@@ -17,13 +18,14 @@ exception; broader Phase 5 Governance and Phase 6 remain paused.
 
 ## Current Objective
 
-Preserve the completed Projection Foundation. The active Phase 8A product
-adapter remains unchanged; communication/priority and disclosure-decision
-production remain separate activation blockers.
+Preserve the completed Product Communication Foundation. The active Phase 8A
+product adapter remains unchanged. Narrative synthesis remains unimplemented;
+consumer-specific disclosure-decision production is the remaining technical
+activation blocker.
 
 ## Current Sprint
 
-Projection Foundation audit, documentation synchronization, validation, and
+Product Communication Foundation audit, validation, documentation, and
 canonization.
 
 ## Product Identity
@@ -150,7 +152,7 @@ Current Explanation behavior:
 | Phase 5 | Phases 5A and 5B complete at their bounded contracts | Authority gate `14/14`; disclosure gate `14/14`; application enforcement and durable revocation blocked |
 | Phase 6 | Blocked | Requires completion of Phase 5 authority and disclosure enforcement |
 | Phase 7 | Not started | Requires stable Explanation authority and Governance |
-| Phase 8 | Phase 8A partial product integration plus projection and compatibility shadows | Runtime adapter remains active; compiler passes `30/30` and compatibility adapter passes `43/43`; application activation, authorized communication/priority, Evidence bodies, confidence, and disclosure-decision production remain unavailable |
+| Phase 8 | Phase 8A partial product integration plus projection, compatibility, communication, and product-adapter shadows | Runtime adapter remains active; projection `30/30`, compatibility `43/43`, communication `60/60`, and product adapter `69/69`; application activation and disclosure-decision production remain unavailable |
 
 Phase 2 may not infer a leader from Evidence volume, Seed-era Judgment rank,
 Hypothesis status, Prediction accuracy, Belief confidence, Theory evolution,
@@ -179,6 +181,8 @@ Adjudication is not a universal prerequisite for reusable Understanding.
 | Disclosure and revocation contract | Phase 5B gate `14/14`; contract valid; application activation blocked |
 | Runtime-backed Your Organization | Product adapter validation `24/24`; persisted replay deterministic; no Runtime mutation |
 | Organizational Understanding projection | Shadow `30/30`; pure, disclosure-enforced, deterministic, non-persistent; active product path unchanged |
+| Structured Product Communication | Shadow `60/60`; explicit priority provenance, exact source pass-through, uncertainty and alternatives preserved; no narrative or route activation |
+| Your Organization communication adapter | Shadow `69/69`; product shape preserves plan identity, provenance, alternatives, Evidence roles, availability, and exact readable fields; active route unchanged |
 | Your Organization projection compatibility | Shadow `43/43`; pure, deterministic, availability- and trace-preserving; product contract refinement required |
 | Organizational Intelligence structure | `99.63/100`; policy wrappers are benchmark-only |
 | Candidate Intelligence Ecology | Classification A in synthetic scope; benchmark-only |
@@ -244,11 +248,11 @@ These are known transitions, not documentation defects:
 
 ## Next Priority
 
-Run a read-only Product Communication and Priority Contract Decision Sprint.
-Determine the smallest reusable disclosure-safe owner for readable synthesis,
-audience framing, product-safe priority, change summaries, “why this matters,”
-and next-inquiry framing. Do not implement it automatically. A production
-disclosure-decision producer remains a separate later activation prerequisite.
+Run a read-only Consumer-Specific Disclosure Decision Producer Architecture
+Sprint. Define the minimum real consumer identity, membership, scope,
+permission, authority, revision, validity, supersession, revocation, caching,
+historical, and failure contracts required for safe activation. Do not
+implement or activate the producer automatically.
 
 ## Remaining production roadmap
 

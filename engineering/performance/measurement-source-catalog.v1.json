@@ -256,6 +256,28 @@
       "authoritativeOutputs": ["components/product-shell/data/buildOrganizationExperienceFromProjection.ts", "scripts/product/validateYourOrganizationProjectionCompatibility.ts", "docs/Sprint Updates/YOUR_ORGANIZATION_PROJECTION_COMPATIBILITY_ADAPTER.md"]
     },
     {
+      "id": "structured-product-communication-shadow",
+      "purpose": "Validate deterministic communication planning, explicit priority provenance, exact source-text pass-through, uncertainty, alternatives, abstention, Runtime non-mutation, and active-route noninterference.",
+      "domain": "product-communication",
+      "owner": "Product Communication",
+      "determinism": "deterministic-with-fixed-projection-and-runtime-replay",
+      "baselineCompatibility": "Compatible for the same communication contract, organization policy, disclosed projection fixture, and Runtime replay fixture.",
+      "maturity": "validated-shadow-route-inactive",
+      "command": "npm run validate:structured-product-communication-shadow",
+      "authoritativeOutputs": ["engine/v3/communication/productCommunicationPlan.ts", "engine/benchmark/product-communication/structuredProductCommunicationShadow.ts", "docs/Sprint Updates/STRUCTURED_PRODUCT_COMMUNICATION_CONTRACT_SHADOW.md"]
+    },
+    {
+      "id": "your-organization-product-communication-adapter",
+      "purpose": "Validate pure inactive mapping from Product Communication Plan into a source-preserving Your Organization candidate view.",
+      "domain": "product-communication",
+      "owner": "Your Organization Product Communication",
+      "determinism": "deterministic-with-fixed-plan-and-runtime-replay",
+      "baselineCompatibility": "Compatible for the same plan contract, adapter contract, persisted Runtime fixture, and active Phase 8A output.",
+      "maturity": "validated-shadow-disclosure-activation-blocked",
+      "command": "npm run validate:your-organization-communication-adapter",
+      "authoritativeOutputs": ["components/product-shell/data/buildYourOrganizationCommunicationView.ts", "scripts/product/validateYourOrganizationCommunicationAdapter.ts", "docs/Sprint Updates/YOUR_ORGANIZATION_PRODUCT_COMMUNICATION_ADAPTER.md"]
+    },
+    {
       "id": "organizational-understanding-research-framework",
       "purpose": "Define the six-dimensional methodology beneath the Organizational Understanding Index.",
       "domain": "research",

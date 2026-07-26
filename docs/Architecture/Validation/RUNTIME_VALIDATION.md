@@ -636,3 +636,32 @@ authorized communication and priority.
 
 These two inactive shadows constitute the completed Discovery Projection
 Foundation. Runtime remains unchanged and no projection object is persisted.
+
+## Structured communication replay
+
+`npm run validate:structured-product-communication-shadow` validates a third
+inactive boundary over the disclosed projection. The `60/60` gate requires
+byte-stable planning under repeated and reversed inputs, exact source-field
+pass-through, explicit priority provenance, uncertainty and alternative
+retention, protected-state non-leakage, persisted Atlas Runtime immutability,
+and active-route noninterference.
+
+The communication compiler does not load Runtime. The validator loads the
+persisted Atlas fixture only to prove byte-identical non-mutation; SHA-256
+remains
+`ce267f9e34bc60f94d4c1e16e0a153042f5d8a5b1d54ee4633999c17041fc9cc`.
+The plan is not Runtime state and is not persisted. Narrative synthesis and
+product activation remain unavailable.
+
+## Product communication adapter replay
+
+`npm run validate:your-organization-communication-adapter` validates the
+inactive plan-to-product mapping. The `69/69` gate loads the persisted Atlas
+Runtime only in the validator to compare active Phase 8A output and file bytes
+before and after candidate construction. The adapter itself receives only
+`ProductCommunicationPlan`.
+
+The candidate view, persisted Runtime, and active route output are
+deterministically hashed. Runtime remains byte-identical, and the active route
+does not import the candidate adapter. No product communication view is
+persisted.

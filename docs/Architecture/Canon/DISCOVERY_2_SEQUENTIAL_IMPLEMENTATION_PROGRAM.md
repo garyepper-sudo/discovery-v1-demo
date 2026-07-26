@@ -1117,6 +1117,42 @@ the completed Discovery Projection Foundation. The next recommended work is a
 read-only Product Communication and Priority Contract decision, not automatic
 implementation or route activation.
 
+### Structured Product Communication shadow result
+
+The subsequent bounded shadow implements the decision's first structured
+contract. It accepts only a disclosure-enforced projection, explicit consumer
+context, and named upstream priority signals. A versioned organization policy
+emits lead, support, uncertainty, change, inquiry, alternatives, availability,
+and priority provenance without traversing Runtime, ranking cognition,
+calculating confidence, generating prose, or persisting output.
+
+The focused gate passes `60/60`. Exact authorized Condition summaries,
+Investigation Opportunity questions, and Explanation uncertainty statements
+may pass through unchanged. Missing readable text abstains. Unresolved
+alternatives remain unresolved. The active Phase 8A path is unchanged.
+
+Classification is A — Source-Pass-Through Communication Shadow Demonstrated.
+The next recommended sprint is a thin inactive Your Organization
+communication adapter. Narrative synthesis, disclosure production, route
+activation, broader Phase 5 Governance, and Phase 6 remain unauthorized.
+
+### Your Organization Product Communication adapter result
+
+A pure adapter now maps only `ProductCommunicationPlan` into an inactive
+Your Organization candidate view. It preserves lead role, exact source text,
+policy and priority provenance, canonical references, comparative Evidence
+roles, uncertainty, unresolved alternatives, inquiries, changes, and all
+communication availability states. It marks narrative, recommendation,
+confidence, Evidence-body, and action fields unavailable rather than
+fabricating parity.
+
+The focused gate passes `69/69`. Runtime and projection are not adapter inputs,
+and the active Phase 8A route remains byte-identical. Classification is
+A — Your Organization Communication Adapter Demonstrated. Excluding the known
+disclosure-decision producer blocker, the candidate contract is technically
+sufficient. The next recommended work is a separately authorized
+disclosure-decision producer, not route activation.
+
 ---
 
 # Dependency graph

@@ -1,0 +1,229 @@
+{
+  "schemaVersion": "1",
+  "reportVersion": "1.8.0",
+  "generationTimestamp": "2026-07-30T00:00:00.000Z",
+  "reportId": "deps-your-organization-communication-adapter",
+  "title": "DEPS — Your Organization Product Communication Adapter",
+  "status": "current",
+  "disposition": "accept-shadow",
+  "sprint": {
+    "name": "Your Organization Product Communication Adapter",
+    "classification": "A — Your Organization Communication Adapter Demonstrated",
+    "repositoryRevision": "24c90a48099de2b7088d4832b6bc2219fd2528bf",
+    "worktreeState": "dirty",
+    "scope": "Pure inactive mapping from Product Communication Plan into a source-preserving Your Organization candidate view."
+  },
+  "trend": {
+    "baselineReference": "deps-baseline-v1",
+    "previousCompatibleReport": "deps-product-communication-shadow",
+    "previousCompatibleReportPath": "engineering/performance/reports/deps-product-communication-shadow.json",
+    "currentReport": "deps-your-organization-communication-adapter",
+    "comparabilityCohort": "deps-report-schema-v1"
+  },
+  "evidence": [
+    {
+      "id": "adapter-validation",
+      "sourceId": "your-organization-product-communication-adapter",
+      "artifact": "scripts/product/validateYourOrganizationCommunicationAdapter.ts",
+      "claimBoundary": "Sixty-nine deterministic mapping, source-fidelity, provenance, availability, alternatives, Evidence-role, replay, non-mutation, active-equivalence, and rollback checks."
+    },
+    {
+      "id": "adapter-report",
+      "sourceId": "your-organization-product-communication-adapter",
+      "artifact": "docs/Sprint Updates/YOUR_ORGANIZATION_PRODUCT_COMMUNICATION_ADAPTER.md",
+      "claimBoundary": "Field inventory, ownership, hidden-priority audit, semantic parity, Local Understanding Utility, activation readiness, and rollback."
+    },
+    {
+      "id": "communication-validation",
+      "sourceId": "structured-product-communication-shadow",
+      "artifact": "engine/benchmark/product-communication/structuredProductCommunicationShadow.ts",
+      "claimBoundary": "Existing sixty-check Product Communication Plan regression."
+    },
+    {
+      "id": "projection-validation",
+      "sourceId": "organizational-understanding-projection-shadow",
+      "artifact": "scripts/product/validateOrganizationalUnderstandingProjectionShadow.ts",
+      "claimBoundary": "Existing thirty-check disclosed projection regression."
+    },
+    {
+      "id": "compatibility-validation",
+      "sourceId": "your-organization-projection-compatibility",
+      "artifact": "scripts/product/validateYourOrganizationProjectionCompatibility.ts",
+      "claimBoundary": "Existing forty-three-check projection compatibility regression."
+    },
+    {
+      "id": "phase8a-validation",
+      "sourceId": "runtime-backed-your-organization",
+      "artifact": "scripts/product/validateOrganizationExperience.ts",
+      "claimBoundary": "Existing twenty-four-check active product and persisted replay regression."
+    }
+  ],
+  "scorecard": [
+    {
+      "metric": "Organizational Understanding",
+      "state": "Unchanged",
+      "evidenceRefs": ["adapter-validation", "adapter-report"],
+      "rationale": "The adapter maps a completed plan without creating, selecting, ranking, or revising cognition."
+    },
+    {
+      "metric": "User Intelligence",
+      "state": "Not Measured",
+      "evidenceRefs": ["adapter-report"],
+      "rationale": "The candidate remains inactive and no real-user outcome was measured."
+    },
+    {
+      "metric": "Collective Intelligence",
+      "state": "Not Measured",
+      "evidenceRefs": ["adapter-report"],
+      "rationale": "No participation, contribution, shared learning, or cross-scope behavior changed."
+    },
+    {
+      "metric": "Governance Integrity",
+      "state": "Improved",
+      "evidenceRefs": ["adapter-validation", "communication-validation"],
+      "rationale": "The product boundary now preserves plan provenance, protected availability, uncertainty, alternatives, and Evidence roles without Runtime fallback."
+    },
+    {
+      "metric": "System Sustainability",
+      "state": "Improved",
+      "evidenceRefs": ["adapter-validation", "adapter-report"],
+      "rationale": "A pure local adapter isolates product shaping from communication policy and retains an exact rollback boundary."
+    }
+  ],
+  "architecture": [
+    {
+      "area": "Product communication ownership",
+      "state": "Improved",
+      "evidenceRefs": ["adapter-validation"],
+      "observation": "Plan semantics remain upstream while the adapter owns shape-only compatibility."
+    },
+    {
+      "area": "Product traceability",
+      "state": "Improved",
+      "evidenceRefs": ["adapter-validation"],
+      "observation": "Policy, priority, projection, disclosure, revision, canonical references, uncertainty, alternatives, and Evidence roles survive mapping."
+    },
+    {
+      "area": "Active product integration",
+      "state": "Unchanged",
+      "evidenceRefs": ["adapter-validation", "phase8a-validation"],
+      "observation": "The active Phase 8A route remains byte-identical and does not import the candidate."
+    }
+  ],
+  "benchmarks": [
+    {
+      "sourceId": "your-organization-product-communication-adapter",
+      "result": "Pass — 69/69",
+      "previousResult": "Not Measured",
+      "movement": "Improved",
+      "evidenceRefs": ["adapter-validation"],
+      "summary": "The inactive adapter is deterministic, source-faithful, provenance-complete, availability-preserving, Runtime-independent, and locally reversible."
+    },
+    {
+      "sourceId": "structured-product-communication-shadow",
+      "result": "Pass — 60/60",
+      "previousResult": "Pass — 60/60",
+      "movement": "Unchanged",
+      "evidenceRefs": ["communication-validation"],
+      "summary": "The structured communication contract remains passing with additive Evidence-role pass-through."
+    },
+    {
+      "sourceId": "organizational-understanding-projection-shadow",
+      "result": "Pass — 30/30",
+      "previousResult": "Pass — 30/30",
+      "movement": "Unchanged",
+      "evidenceRefs": ["projection-validation"],
+      "summary": "The disclosed projection boundary remains passing."
+    },
+    {
+      "sourceId": "your-organization-projection-compatibility",
+      "result": "Pass — 43/43",
+      "previousResult": "Pass — 43/43",
+      "movement": "Unchanged",
+      "evidenceRefs": ["compatibility-validation"],
+      "summary": "The prior compatibility candidate remains passing and inactive."
+    },
+    {
+      "sourceId": "runtime-backed-your-organization",
+      "result": "Pass — 24/24",
+      "previousResult": "Pass — 24/24",
+      "movement": "Unchanged",
+      "evidenceRefs": ["phase8a-validation"],
+      "summary": "The active Runtime-backed experience remains unchanged."
+    }
+  ],
+  "researchObservations": [
+    {
+      "state": "Not Measured",
+      "evidenceRefs": ["adapter-report"],
+      "observation": "Action Utility, Continuity reference preservation, and Trust Calibration have benchmark support; user Understanding Gain and Cognitive Load Reduction remain hypotheses."
+    }
+  ],
+  "complexity": {
+    "introduced": [
+      "One pure inactive plan-to-product adapter.",
+      "One focused sixty-nine-check validator.",
+      "Additive comparative Evidence-role pass-through in the communication plan.",
+      "One measurement source and versioned DEPS report."
+    ],
+    "removed": [],
+    "netEffect": "Increased",
+    "justified": true,
+    "justification": "The bounded additions demonstrate a source-preserving product boundary without changing Runtime, routes, UI, cognition, or disclosure.",
+    "evidenceRefs": ["adapter-validation", "adapter-report"]
+  },
+  "governanceObservations": [
+    {
+      "state": "Improved",
+      "evidenceRefs": ["adapter-validation"],
+      "observation": "Protected states and semantic provenance reach the product boundary without fallback or narrative invention."
+    }
+  ],
+  "sustainabilityObservations": [
+    {
+      "state": "Improved",
+      "evidenceRefs": ["adapter-validation", "adapter-report"],
+      "observation": "The adapter is versioned, pure, normalized, non-persistent, inactive, and removable independently."
+    }
+  ],
+  "regressions": [
+    {
+      "category": "product",
+      "state": "Unchanged",
+      "evidenceRefs": ["adapter-validation", "phase8a-validation"],
+      "observation": "Active route output is byte-identical and the new adapter is not imported."
+    }
+  ],
+  "unknownsAndUnmeasured": [
+    {
+      "area": "User and Local Understanding Utility",
+      "state": "Not Measured",
+      "reason": "No user-visible treatment, comprehension study, or decision outcome changed."
+    },
+    {
+      "area": "Disclosure production",
+      "state": "Not Measured",
+      "reason": "No production resolved-decision producer or durable revocation owner exists."
+    },
+    {
+      "area": "Narrative enrichment",
+      "state": "Not Measured",
+      "reason": "Generated explanation, why-it-matters, and change narrative remain unavailable by design."
+    }
+  ],
+  "remainingRisks": {
+    "nextBlockingDependency": "A real disclosure-decision producer is required before any candidate activation.",
+    "remainingDiscoveryPhase": "Phase 8 shadows remain inactive; broader Phase 5 Governance and Phase 6 remain paused.",
+    "remainingBenchmarkGap": "Real-user comprehension, browser behavior, active revocation, and narrative usefulness remain unmeasured."
+  },
+  "rollback": {
+    "available": true,
+    "evidenceRefs": ["adapter-validation", "adapter-report"],
+    "description": "Remove the adapter, validator, command, DEPS source/report, and documentation synchronization; active Phase 8A behavior remains unchanged."
+  },
+  "engineeringDecision": {
+    "accept": true,
+    "evidenceRefs": ["adapter-validation", "adapter-report", "communication-validation", "phase8a-validation"],
+    "rationale": "Accept the inactive adapter and make disclosure-decision production the next separately authorized boundary."
+  }
+}

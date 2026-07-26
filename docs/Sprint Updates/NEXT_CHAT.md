@@ -22,10 +22,10 @@ authorization.
 
 ## Current Milestone
 
-Discovery Projection Foundation complete on top of the Discovery 2 Foundation
-milestone. The reusable Organizational Understanding Projection and inactive
-Your Organization compatibility adapter are implemented, validated, and
-canonized.
+Discovery Product Communication Foundation complete on top of the Projection
+and Discovery 2 Foundation milestones. The projection, structured
+communication compiler, source-pass-through shadow, and inactive
+Your Organization communication adapter are implemented and validated.
 
 ## Current Development Phase
 
@@ -36,9 +36,11 @@ exception; broader Governance and Phase 6 remain paused.
 
 ## Current Objective
 
-Conduct a read-only Product Communication and Priority Contract Decision
-Sprint. Do not implement the contract, disclosure-decision producer, route
-activation, Phase 6, or broader Governance.
+The Product Communication and Priority Contract, structured shadow, and thin
+inactive Your Organization communication adapter are complete. The next
+recommended sprint is a separately authorized disclosure-decision producer.
+Do not activate the route, implement narrative synthesis, implement Phase 6,
+or resume broader Governance without explicit authorization.
 
 DEPS Phase 1.1 is available through `npm run deps:report`. Future substantial
 sprints should finish by creating a versioned reference-only manifest,
@@ -128,6 +130,12 @@ Established benchmark evidence includes:
   path unchanged;
 - Your Organization projection compatibility shadow `43/43`; product contract
   refinement required;
+- structured Product Communication shadow `60/60`; priority provenance, exact
+  source pass-through, uncertainty, alternatives, replay non-mutation, and
+  active-route noninterference demonstrated;
+- Your Organization Product Communication adapter `69/69`; exact plan-to-view
+  mapping, Evidence roles, availability, replay immutability, and active-output
+  equivalence demonstrated;
 - architecture validation at `295/302` with 7 pre-existing findings.
 
 The Organizational Understanding Research Framework is complete. It defines
@@ -167,7 +175,8 @@ Phase 5  5A and 5B bounded contracts complete; enforcement activation blocked
 Phase 6  blocked
 Phase 7  not started
 Phase 8  Phase 8A partial Runtime product integration complete;
-         reusable projection and compatibility shadows validated but inactive
+         reusable projection, compatibility, and structured communication
+         shadows plus the product communication adapter validated but inactive
 ```
 
 Do not reorder this sequence.
@@ -185,29 +194,22 @@ Do not mistake these known transitions for undocumented implementation:
 
 ## Next Priority
 
-Decide the narrow reusable communication and priority contract needed by the
-current top-insight fields without moving synthesis or hidden cognition into
-projection.
+Run a read-only:
 
-The decision sprint should determine:
+**Consumer-Specific Disclosure Decision Producer Architecture Sprint**
 
-- the downstream owner for readable Organizational Understanding;
-- whether it consumes canonical cognition, projection, or application
-  cognition;
-- how product-safe priority is supplied;
-- how summaries preserve uncertainty and unresolved alternatives;
-- how Your Organization receives a readable top-insight contract;
-- how the contract can later support Research, Think/Ask, Decisions, and
-  Communication;
-- what remains UI-only;
-- what benchmark can measure Local Understanding Utility;
-- how communication remains disclosure-safe;
-- whether disclosure-producer work should follow before activation.
+Determine the minimum real producer required to activate the existing
+projection and communication path safely. Resolve authoritative consumer
+identity, organization membership, scope, permissions or role inputs,
+authority-receipt validation, canonical revision inputs, decision identity,
+validity duration, supersession, revocation, caching, historical handling,
+failure behavior, and the exact boundary with current Clerk/application
+identity infrastructure.
 
-The next implementation step must be separately authorized. Authorized
-communication and priority, Evidence retrieval, Understanding confidence, and
-disclosure-decision production remain explicit blockers. Phase 6 remains
-blocked.
+Determine whether a narrow Alpha producer is possible without implementing the
+full Governance Control Plane. Do not implement the producer, activate the
+route, implement narrative synthesis, resume broader Governance, or begin
+Phase 6 in that architecture sprint.
 
 Expected Scorecard treatment:
 
@@ -233,4 +235,4 @@ Do not claim Local Understanding Utility or active user improvement.
 - treat Phase 7 as a possible source of longitudinal candidate-relative
   Evidence, not automatic adjudication;
 - report architecture validation as `295/302`, not fully passing;
-- do not stage, commit, or push without explicit authorization.
+- do not implement or activate without explicit authorization.
