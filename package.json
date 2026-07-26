@@ -45,6 +45,8 @@
     "validate:your-organization-projection-compatibility": "tsx scripts/product/validateYourOrganizationProjectionCompatibility.ts",
     "validate:structured-product-communication-shadow": "tsx engine/benchmark/product-communication/structuredProductCommunicationShadow.ts",
     "validate:your-organization-communication-adapter": "tsx scripts/product/validateYourOrganizationCommunicationAdapter.ts",
+    "validate:alpha-allowlist-disclosure-producer-shadow": "tsx scripts/product/validateAlphaAllowlistDisclosureProducerShadow.ts",
+    "validate:clerk-identity-shadow": "tsx scripts/product/validateClerkIdentityShadowIntegration.ts",
     "northstar:cognitive-layer-validation:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarCognitiveLayerValidation001.ts",
     "northstar:cognitive-trace:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarCognitiveTrace001.ts",
     "northstar:transformation-trace:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarTransformationTrace001.ts",
@@ -91,6 +93,7 @@
     "deps:report": "npm run deps:validate && node scripts/performance/renderPerformanceReport.mjs"
   },
   "dependencies": {
+    "@clerk/nextjs": "6.10.0",
     "@types/node": "22.10.1",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",

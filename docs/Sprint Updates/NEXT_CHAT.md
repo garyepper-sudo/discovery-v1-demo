@@ -22,10 +22,11 @@ authorization.
 
 ## Current Milestone
 
-Discovery Product Communication Foundation complete on top of the Projection
-and Discovery 2 Foundation milestones. The projection, structured
-communication compiler, source-pass-through shadow, and inactive
-Your Organization communication adapter are implemented and validated.
+Discovery Alpha Governance Identity Foundation complete. The inactive Alpha
+explicit-allowlist producer passes `61/61`, and its official server-only Clerk
+identity shadow passes `28/28`. Live deployment verification remains
+unmeasured, dependency remediation remains open, and the active route is
+unchanged.
 
 ## Current Development Phase
 
@@ -36,11 +37,12 @@ exception; broader Governance and Phase 6 remain paused.
 
 ## Current Objective
 
-The Product Communication and Priority Contract, structured shadow, and thin
-inactive Your Organization communication adapter are complete. The next
-recommended sprint is a separately authorized disclosure-decision producer.
-Do not activate the route, implement narrative synthesis, implement Phase 6,
-or resume broader Governance without explicit authorization.
+Preserve the canonized identity and authorization boundary. Clerk is
+authentication-only; Discovery owns organization access and disclosure.
+Live provider-session verification, durable access and audit stores,
+dependency remediation, and activation review remain missing. Do not activate
+the route, implement storage, implement Phase 6, or resume broader Governance
+without explicit authorization.
 
 DEPS Phase 1.1 is available through `npm run deps:report`. Future substantial
 sprints should finish by creating a versioned reference-only manifest,
@@ -187,29 +189,31 @@ Do not mistake these known transitions for undocumented implementation:
 
 - assessment-derived `currentUnderstandings` remains as a compatibility view;
 - Executive Assessment retains Seed-era output semantics downstream;
-- disclosure-decision production and durable revocation remain unowned;
-- Governance Control Plane behavior is conceptual, not production;
+- the bounded Alpha producer, injected access-reader contract, and official
+  server-only Clerk identity shadow are demonstrated, but live deployment
+  verification and durable stores remain unimplemented;
+  the full Governance Control Plane remains conceptual;
 - Prototype Alpha remains fixture-backed;
 - benchmark policy wrappers and candidate structures are not production.
 
 ## Next Priority
 
-Run a read-only:
+Run one read-only architecture sprint:
 
-**Consumer-Specific Disclosure Decision Producer Architecture Sprint**
+**Durable Alpha Access and Audit Storage Decision Sprint**
 
-Determine the minimum real producer required to activate the existing
-projection and communication path safely. Resolve authoritative consumer
-identity, organization membership, scope, permissions or role inputs,
-authority-receipt validation, canonical revision inputs, decision identity,
-validity duration, supersession, revocation, caching, historical handling,
-failure behavior, and the exact boundary with current Clerk/application
-identity infrastructure.
+Determine storage technology, access-record and audit-event lifecycle,
+append-only boundaries, administration, encryption, transactions, stale
+decision prevention, environments, migration, recovery, observability,
+dependency-security prerequisites, and route-activation prerequisites. Do not
+implement storage. Keep the product route inactive and authorization before
+Runtime loading.
 
-Determine whether a narrow Alpha producer is possible without implementing the
-full Governance Control Plane. Do not implement the producer, activate the
-route, implement narrative synthesis, resume broader Governance, or begin
-Phase 6 in that architecture sprint.
+The dependency baseline is not activation-ready: `npm audit --json` reports 19
+vulnerable package entries, including 17 high and 2 critical. Clerk and Next
+production-path findings require remediation and live verification before
+hosted activation. Do not run automatic audit remediation in the decision
+sprint.
 
 Expected Scorecard treatment:
 

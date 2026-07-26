@@ -63,6 +63,22 @@ Reasons:
 
 Authentication should remain independent of Discovery's cognitive architecture.
 
+## Current Alpha implementation boundary
+
+The current inactive Alpha integration uses Clerk only to verify a stable
+consumer identity on the server. Discovery separately owns organization access
+records, policy, disclosure decisions, and authorization-before-Runtime
+ordering.
+
+Clerk Organizations, organization membership, roles, and permissions are not
+part of the current implementation and do not grant Discovery authority. The
+shared Alpha password remains a preview gate, not identity or authorization.
+The active route and middleware do not yet use Clerk.
+
+The pinned inactive dependency currently has unresolved security advisories.
+Clerk and Next remediation plus deployed-session validation are mandatory
+before any hosted activation.
+
 ---
 
 # Multi-Tenancy Philosophy

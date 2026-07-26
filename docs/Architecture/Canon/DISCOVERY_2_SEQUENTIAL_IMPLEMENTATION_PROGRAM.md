@@ -1153,6 +1153,44 @@ disclosure-decision producer blocker, the candidate contract is technically
 sufficient. The next recommended work is a separately authorized
 disclosure-decision producer, not route activation.
 
+### Alpha explicit allowlist disclosure producer shadow result
+
+A bounded inactive producer now resolves
+`alpha-explicit-allowlist-disclosure@1` from a typed verified consumer,
+injected versioned per-consumer/per-organization access records, explicit
+request time, exact canonical composition revisions, and deterministic
+authority-receipt references. It emits the existing disclosure decision and
+result plus stable producer provenance and an audit-ready non-persistent event.
+
+The two-stage shadow proves access preflight occurs before the injected
+persisted Runtime loader. Denied, revoked, invalid, conflicting, guessed, and
+reader-failure cases do not load Runtime. An eligible request loads once,
+validates exact authority receipts, invokes existing disclosure enforcement,
+and completes the existing projection, Product Communication, and inactive
+Your Organization adapter chain.
+
+The focused gate passes `61/61`; persisted Runtime is byte-identical and the
+active route remains unchanged. Classification is B — Producer Contract Valid;
+Identity or Durable Access Integration Required. Benchmark identity, injected
+records, and the append-only-shaped test sink are not production identity,
+access persistence, or audit persistence.
+
+### Clerk identity shadow result
+
+An official server-only Clerk adapter now maps authenticated `userId` and
+`sessionId` state into the existing `VerifiedConsumerIdentity`. A deterministic
+core and injected orchestration validate failure-before-access,
+authorization-before-Runtime, and one-load behavior without credentials or
+route activation.
+
+The focused gate passes `28/28`; active middleware, layout, product routes,
+Runtime, cognition, disclosure, projection, communication, and UI remain
+unchanged. Classification is B — Identity Contract Integrated; Live
+Deployment Verification Required. Clerk remains authentication only;
+The next recommended work is a read-only Durable Alpha Access and Audit Storage
+Decision Sprint. It does not authorize storage implementation. Clerk and Next
+dependency-security findings must also be resolved before hosted activation.
+
 ---
 
 # Dependency graph

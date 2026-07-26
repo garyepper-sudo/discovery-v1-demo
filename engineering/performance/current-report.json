@@ -1,4 +1,4 @@
 {
-  "manifest": "engineering/performance/reports/deps-your-organization-communication-adapter.json",
-  "markdownOutput": "engineering/performance/reports/DEPS_YOUR_ORGANIZATION_COMMUNICATION_ADAPTER.md"
+  "manifest": "engineering/performance/reports/deps-clerk-identity-shadow.json",
+  "markdownOutput": "engineering/performance/reports/DEPS_CLERK_IDENTITY_SHADOW.md"
 }

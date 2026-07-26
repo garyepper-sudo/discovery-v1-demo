@@ -33,7 +33,7 @@ Output: docs/Architecture/COGNITIVE_CAPABILITY_AUDIT.json
 
 # Capability Trace — Executive Assessment
 
-Generated: 2026-07-26T04:41:41.142Z
+Generated: 2026-07-26T05:12:58.809Z
 
 ## Verified Architecture
 
@@ -1722,7 +1722,7 @@ Saved report: docs/Sprint Updates/Capability Traces/cap-und-005.md
 
 # Capability Trace — Executive Understanding Synthesis
 
-Generated: 2026-07-26T04:41:43.548Z
+Generated: 2026-07-26T05:13:01.177Z
 
 ## Verified Architecture
 
@@ -1874,6 +1874,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/v3/communication/productCommunicationPlan.ts`
 - `engine/v3/executive/buildExecutiveChangeSummary.ts`
 - `engine/v3/executive/executiveLearningSummary.ts`
+- `engine/v3/governance/alphaAllowlistDisclosureProducer.ts`
 - `engine/v3/investigation/runOrganizationInvestigation.ts`
 - `engine/v3/model/judgment/buildExecutiveAssessment.ts`
 - `engine/v3/model/judgment/buildOrganizationalUnderstanding.ts`
@@ -1895,6 +1896,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `scripts/cognition/generateArchitectureHandoff.mjs`
 - `scripts/cognition/generateArchitectureState.mjs`
 - `scripts/cognition/reviewCognitiveDomain.mjs`
+- `scripts/product/validateAlphaAllowlistDisclosureProducerShadow.ts`
 - `scripts/product/validateAskExperience.ts`
 - `scripts/product/validateLivingInteractionLoop.ts`
 - `scripts/product/validateOrganizationExperience.ts`
@@ -1952,7 +1954,7 @@ This section records source-code references. It supplements, but does not replac
 
 | Layer | Status | Matches |
 |---|:---:|---:|
-| Engine | ✅ Found | 111 |
+| Engine | ✅ Found | 121 |
 | Runtime | ✅ Found | 105 |
 | Executive | ✅ Found | 12 |
 | Projection | ✅ Found | 76 |
@@ -1960,7 +1962,7 @@ This section records source-code references. It supplements, but does not replac
 | API | ❌ Not found | 0 |
 | Simulation | ✅ Found | 7 |
 | Benchmark | ✅ Found | 276 |
-| Other | ✅ Found | 23 |
+| Other | ✅ Found | 29 |
 
 ### Detailed Matches
 
@@ -1987,6 +1989,29 @@ This section records source-code references. It supplements, but does not replac
   - `projection: OrganizationalUnderstandingProjection,`
 - Line 489 · **unknown** · matched `OrganizationalUnderstanding`
   - `projection: OrganizationalUnderstandingProjection,`
+
+##### `engine/v3/governance/alphaAllowlistDisclosureProducer.ts`
+
+- Line 6 · **import** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `} from "../understanding/buildCanonicalUnderstandingCompatibilityShadow";`
+- Line 8 · **unknown** · matched `OrganizationalUnderstanding`
+  - `discloseCanonicalOrganizationalUnderstanding,`
+- Line 9 · **type** · matched `OrganizationalUnderstanding`
+  - `type OrganizationalUnderstandingDisclosureDecision,`
+- Line 10 · **type** · matched `OrganizationalUnderstanding`
+  - `type OrganizationalUnderstandingDisclosureResult,`
+- Line 11 · **import** · matched `OrganizationalUnderstanding`
+  - `} from "../understanding/discloseCanonicalOrganizationalUnderstanding";`
+- Line 145 · **unknown** · matched `OrganizationalUnderstanding`
+  - `decision: OrganizationalUnderstandingDisclosureDecision;`
+- Line 146 · **unknown** · matched `OrganizationalUnderstanding`
+  - `disclosure: OrganizationalUnderstandingDisclosureResult;`
+- Line 485 · **unknown** · matched `organizational-understanding`
+  - `"canonical-organizational-understanding" &&`
+- Line 535 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const decision: OrganizationalUnderstandingDisclosureDecision = {`
+- Line 543 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const disclosure = discloseCanonicalOrganizationalUnderstanding({`
 
 ##### `engine/v3/investigation/runOrganizationInvestigation.ts`
 
@@ -3528,6 +3553,21 @@ This section records source-code references. It supplements, but does not replac
 - Line 253 · **unknown** · matched `OrganizationalUnderstanding`
   - `"OrganizationalUnderstandingState",`
 
+##### `scripts/product/validateAlphaAllowlistDisclosureProducerShadow.ts`
+
+- Line 32 · **unknown** · matched `OrganizationalUnderstanding`
+  - `compileOrganizationalUnderstandingProjection,`
+- Line 34 · **import** · matched `OrganizationalUnderstanding`
+  - `} from "../../engine/v3/projection/organizationalUnderstandingProjection";`
+- Line 43 · **unknown** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `buildCanonicalUnderstandingCompatibilityShadow,`
+- Line 45 · **import** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `} from "../../engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow";`
+- Line 189 · **unknown** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `const compositions = buildCanonicalUnderstandingCompatibilityShadow({`
+- Line 807 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const projection = compileOrganizationalUnderstandingProjection({`
+
 ##### `scripts/product/validateAskExperience.ts`
 
 - Line 58 · **unknown** · matched `OrganizationalUnderstanding`
@@ -3593,7 +3633,7 @@ A capability is considered fully connected only when:
 =========================================
 Architecture status: ✅ Connected
 Capability registry: Matched
-Structural matches: 618
+Structural matches: 634
 Saved report: docs/Sprint Updates/Capability Traces/cap-und-006.md
 =========================================
 
@@ -3602,7 +3642,7 @@ Saved report: docs/Sprint Updates/Capability Traces/cap-und-006.md
 
 # Capability Trace — Organizational Learning Profile
 
-Generated: 2026-07-26T04:41:44.617Z
+Generated: 2026-07-26T05:13:02.259Z
 
 ## Verified Architecture
 
@@ -4152,7 +4192,7 @@ Saved report: docs/Sprint Updates/Capability Traces/cap-lrn-002.md
 
 # Capability Trace — Theory Validation
 
-Generated: 2026-07-26T04:41:45.712Z
+Generated: 2026-07-26T05:13:03.337Z
 
 ## Verified Architecture
 
@@ -4906,7 +4946,7 @@ Saved report: docs/Sprint Updates/Capability Traces/cap-self-001.md
 
 # Capability Trace — Investigation Opportunity Generation
 
-Generated: 2026-07-26T04:41:46.997Z
+Generated: 2026-07-26T05:13:04.593Z
 
 ## Verified Architecture
 
@@ -5584,7 +5624,7 @@ Output: docs/Sprint Updates/ARCHITECTURE_HANDOFF.md
 DISCOVERY SPRINT STARTUP
 =========================================================
 
-Architecture State Generated: 2026-07-26T04:41:47.133Z
+Architecture State Generated: 2026-07-26T05:13:04.711Z
 
 ---------------------------------------------------------
 
@@ -5683,14 +5723,14 @@ EXECUTIVE SUMMARY
 
 Discovery is a shared organizational intelligence platform. Its Executive Cognitive Operating System is the mature first application, not the identity or endpoint of the platform.
 
-Discovery Product Communication Foundation complete on top of the Projection and Discovery 2 Foundation milestones. The reusable projection, structured Product Communication Plan, source-pass-through shadow, and inactive Your Organization communication adapter are implemented and validated.
+Discovery Product Communication Foundation complete on top of the Projection and Discovery 2 Foundation milestones. The reusable projection, structured Product Communication Plan, source-pass-through shadow, and inactive Your Organization communication adapter are implemented and validated. The inactive Alpha explicit-allowlist disclosure producer shadow is also demonstrated `61/61`.
 
 Conditional Phase 2 adjudication remains production-blocked. Phases 3 and 4 are complete. Phase 5A authority transitions and the Phase 5B disclosure contract remain unchanged. Phase 8A is an authorized product-validation exception; broader Phase 5 Governance and Phase 6 remain paused.
 
-Preserve the completed Product Communication Foundation. The active Phase 8A product adapter remains unchanged. Narrative synthesis remains unimplemented; consumer-specific disclosure-decision production is the remaining technical activation blocker.
+Preserve the completed Product Communication Foundation. The active Phase 8A product adapter remains unchanged. Narrative synthesis remains unimplemented; the Alpha disclosure-producer architecture now selects a request-time explicit allowlist over Clerk identity and a separate Discovery-owned access record. Clerk identity, durable access records, bounded audit, and the inactive producer shadow were the activation dependencies. The producer shadow is now implemented; actual Clerk verification and durable access and audit stores remain missing, so activation remains blocked.
 
 Highest Priority
-Run a read-only Consumer-Specific Disclosure Decision Producer Architecture Sprint. Define the minimum real consumer identity, membership, scope, permission, authority, revision, validity, supersession, revocation, caching, historical, and failure contracts required for safe a...
+Run one separately authorized Clerk Identity Shadow Integration sprint. Construct `VerifiedConsumerIdentity` only from actual server-verified Clerk identity while keeping the allowlist reader and audit sink injected, the route inactive, and authorization before Runtime loading...
 
 ---------------------------------------------------------
 
@@ -5703,13 +5743,13 @@ Development Phase
 Conditional Phase 2 adjudication remains production-blocked. Phases 3 and 4 are complete. Phase 5A authority transitions and the Phase 5B disclosure contract remain unchanged. Phase 8A is an authorized product-validation exception; broader Phase 5 Governance and Phase 6 remain...
 
 Current Objective
-Preserve the completed Product Communication Foundation. The active Phase 8A product adapter remains unchanged. Narrative synthesis remains unimplemented; consumer-specific disclosure-decision production is the remaining technical activation blocker.
+Preserve the completed Product Communication Foundation. The active Phase 8A product adapter remains unchanged. Narrative synthesis remains unimplemented; the Alpha disclosure-producer architecture now selects a request-time explicit allowlist over Clerk identity and a separate Discovery-owned access record. Clerk identity, durable access records, bounded audit, and the inactive producer shadow were the activation...
 
 Current Sprint
-Product Communication Foundation audit, validation, documentation, and canonization.
+Alpha Explicit Allowlist Disclosure Producer inactive shadow.
 
 Next Priority
-Run a read-only Consumer-Specific Disclosure Decision Producer Architecture Sprint. Define the minimum real consumer identity, membership, scope, permission, authority, revision, validity, supersession, revocation, caching, historical, and failure contracts required for safe a...
+Run one separately authorized Clerk Identity Shadow Integration sprint. Construct `VerifiedConsumerIdentity` only from actual server-verified Clerk identity while keeping the allowlist reader and audit sink injected, the route inactive, and authorization before Runtime loading...
 
 ---------------------------------------------------------
 

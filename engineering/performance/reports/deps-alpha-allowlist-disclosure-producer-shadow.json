@@ -1,0 +1,257 @@
+{
+  "schemaVersion": "1",
+  "reportVersion": "1.9.0",
+  "generationTimestamp": "2026-08-01T00:00:00.000Z",
+  "reportId": "deps-alpha-allowlist-disclosure-producer-shadow",
+  "title": "DEPS — Alpha Explicit Allowlist Disclosure Producer Shadow",
+  "status": "current",
+  "disposition": "accept-shadow-production-activation-blocked",
+  "sprint": {
+    "name": "Alpha Explicit Allowlist Disclosure Producer Shadow",
+    "classification": "B — Producer Contract Valid; Identity or Durable Access Integration Required",
+    "repositoryRevision": "2f57d7e7baab4b428d3605bded5602d90b6733bc",
+    "worktreeState": "dirty",
+    "scope": "Inactive request-time Alpha allowlist decision production, authorization-before-Runtime orchestration, exact authority validation, audit-ready output, and end-to-end delivery replay."
+  },
+  "trend": {
+    "baselineReference": "deps-baseline-v1",
+    "previousCompatibleReport": "deps-your-organization-communication-adapter",
+    "previousCompatibleReportPath": "engineering/performance/reports/deps-your-organization-communication-adapter.json",
+    "currentReport": "deps-alpha-allowlist-disclosure-producer-shadow",
+    "comparabilityCohort": "deps-report-schema-v1"
+  },
+  "evidence": [
+    {
+      "id": "alpha-producer-validation",
+      "sourceId": "alpha-allowlist-disclosure-producer-shadow",
+      "artifact": "scripts/product/validateAlphaAllowlistDisclosureProducerShadow.ts",
+      "claimBoundary": "Sixty-one deterministic identity, access, preflight, loader-isolation, authority, revocation, audit, delivery-chain, Runtime non-mutation, and active-route isolation checks."
+    },
+    {
+      "id": "alpha-producer-contract",
+      "sourceId": "alpha-allowlist-disclosure-producer-shadow",
+      "artifact": "engine/v3/governance/alphaAllowlistDisclosureProducer.ts",
+      "claimBoundary": "Pure request-time policy contracts with injected access reader and Runtime loader; no production identity, persistence, route, or network integration."
+    },
+    {
+      "id": "alpha-producer-report",
+      "sourceId": "alpha-allowlist-disclosure-producer-shadow",
+      "artifact": "docs/Sprint Updates/ALPHA_EXPLICIT_ALLOWLIST_DISCLOSURE_PRODUCER_SHADOW.md",
+      "claimBoundary": "Architecture, threat results, validation hashes, activation dependencies, rollback, Scorecard limits, and next recommendation."
+    },
+    {
+      "id": "phase5b-validation",
+      "sourceId": "disclosure-eligibility-revocation",
+      "artifact": "engine/benchmark/judgment-lab/disclosureEligibilityRevocationContractGate.ts",
+      "claimBoundary": "Existing fourteen-check disclosure and revocation contract regression."
+    },
+    {
+      "id": "projection-validation",
+      "sourceId": "organizational-understanding-projection-shadow",
+      "artifact": "scripts/product/validateOrganizationalUnderstandingProjectionShadow.ts",
+      "claimBoundary": "Existing thirty-check disclosure-enforced projection regression."
+    },
+    {
+      "id": "communication-validation",
+      "sourceId": "structured-product-communication-shadow",
+      "artifact": "engine/benchmark/product-communication/structuredProductCommunicationShadow.ts",
+      "claimBoundary": "Existing sixty-check Product Communication regression."
+    },
+    {
+      "id": "adapter-validation",
+      "sourceId": "your-organization-product-communication-adapter",
+      "artifact": "scripts/product/validateYourOrganizationCommunicationAdapter.ts",
+      "claimBoundary": "Existing sixty-nine-check inactive Your Organization communication adapter regression."
+    },
+    {
+      "id": "phase8a-validation",
+      "sourceId": "runtime-backed-your-organization",
+      "artifact": "scripts/product/validateOrganizationExperience.ts",
+      "claimBoundary": "Existing twenty-four-check active product and persisted replay regression."
+    }
+  ],
+  "scorecard": [
+    {
+      "metric": "Organizational Understanding",
+      "state": "Unchanged",
+      "evidenceRefs": ["alpha-producer-validation", "alpha-producer-contract"],
+      "rationale": "The producer validates access and authority references without creating, ranking, revising, or persisting organizational cognition."
+    },
+    {
+      "metric": "User Intelligence",
+      "state": "Not Measured",
+      "evidenceRefs": ["alpha-producer-report"],
+      "rationale": "The shadow is inactive and uses benchmark-owned identity; no real-user comprehension or decision outcome was measured."
+    },
+    {
+      "metric": "Collective Intelligence",
+      "state": "Not Measured",
+      "evidenceRefs": ["alpha-producer-report"],
+      "rationale": "No contribution, collaboration, membership, cross-scope use, or shared learning behavior changed."
+    },
+    {
+      "metric": "Governance Integrity",
+      "state": "Improved",
+      "evidenceRefs": ["alpha-producer-validation", "alpha-producer-contract", "phase5b-validation"],
+      "rationale": "The inactive shadow now demonstrates explicit identity and access inputs, default-deny preflight before Runtime loading, exact authority validation, request-time revocation, and audit-ready provenance."
+    },
+    {
+      "metric": "System Sustainability",
+      "state": "Improved",
+      "evidenceRefs": ["alpha-producer-validation", "alpha-producer-contract"],
+      "rationale": "Typed identity, access-reader, preflight, loader, decision, and audit boundaries isolate the transitional policy and preserve a local rollback."
+    }
+  ],
+  "architecture": [
+    {
+      "area": "Authorization before Runtime loading",
+      "state": "Improved",
+      "evidenceRefs": ["alpha-producer-validation"],
+      "observation": "Denied, revoked, invalid, guessed, and reader-failure cases cannot invoke the injected Runtime loader."
+    },
+    {
+      "area": "Disclosure decision ownership",
+      "state": "Improved",
+      "evidenceRefs": ["alpha-producer-contract", "phase5b-validation"],
+      "observation": "The Alpha policy produces the existing resolved decision while existing disclosure enforcement remains the filtering owner."
+    },
+    {
+      "area": "Production identity and persistence",
+      "state": "Unchanged",
+      "evidenceRefs": ["alpha-producer-report"],
+      "observation": "Clerk verification and durable access and audit stores remain absent; hosted activation is blocked."
+    },
+    {
+      "area": "Active product integration",
+      "state": "Unchanged",
+      "evidenceRefs": ["alpha-producer-validation", "phase8a-validation"],
+      "observation": "No route or UI imports the producer and active Phase 8A behavior remains unchanged."
+    }
+  ],
+  "benchmarks": [
+    {
+      "sourceId": "alpha-allowlist-disclosure-producer-shadow",
+      "result": "Pass — 61/61",
+      "previousResult": "Not Measured",
+      "movement": "Improved",
+      "evidenceRefs": ["alpha-producer-validation"],
+      "summary": "The inactive producer is deterministic, explicit, request-bound, fail-closed, authorization-before-Runtime, authority-exact, audit-ready, and end-to-end delivery compatible."
+    },
+    {
+      "sourceId": "organizational-understanding-projection-shadow",
+      "result": "Pass — 30/30",
+      "previousResult": "Pass — 30/30",
+      "movement": "Unchanged",
+      "evidenceRefs": ["projection-validation"],
+      "summary": "The disclosed projection boundary remains passing."
+    },
+    {
+      "sourceId": "structured-product-communication-shadow",
+      "result": "Pass — 60/60",
+      "previousResult": "Pass — 60/60",
+      "movement": "Unchanged",
+      "evidenceRefs": ["communication-validation"],
+      "summary": "The structured communication contract remains passing."
+    },
+    {
+      "sourceId": "your-organization-product-communication-adapter",
+      "result": "Pass — 69/69",
+      "previousResult": "Pass — 69/69",
+      "movement": "Unchanged",
+      "evidenceRefs": ["adapter-validation"],
+      "summary": "The inactive product communication adapter remains passing."
+    },
+    {
+      "sourceId": "runtime-backed-your-organization",
+      "result": "Pass — 24/24",
+      "previousResult": "Pass — 24/24",
+      "movement": "Unchanged",
+      "evidenceRefs": ["phase8a-validation"],
+      "summary": "The active Runtime-backed experience remains unchanged."
+    }
+  ],
+  "researchObservations": [
+    {
+      "state": "Not Measured",
+      "evidenceRefs": ["alpha-producer-report"],
+      "observation": "No research adapter, Local Understanding Utility profile, nonlinear cognition, or production-readiness conclusion changed."
+    }
+  ],
+  "complexity": {
+    "introduced": [
+      "One isolated Alpha governance producer module with typed identity, access, receipt, preflight, decision, audit, and orchestration contracts.",
+      "One focused sixty-one-check validator with a benchmark-owned identity, access reader, audit sink, and persisted Runtime replay.",
+      "One measurement source and versioned DEPS report."
+    ],
+    "removed": [],
+    "netEffect": "Increased",
+    "justified": true,
+    "justification": "The additions prove the minimum fail-closed authorization boundary and full inactive delivery chain without coupling policy to Runtime, routes, projection, communication, or UI.",
+    "evidenceRefs": ["alpha-producer-validation", "alpha-producer-contract", "alpha-producer-report"]
+  },
+  "governanceObservations": [
+    {
+      "state": "Improved",
+      "evidenceRefs": ["alpha-producer-validation", "alpha-producer-contract"],
+      "observation": "Explicit request-time access, revocation, authority, provenance, and denial behavior now have a deterministic inactive implementation boundary."
+    }
+  ],
+  "sustainabilityObservations": [
+    {
+      "state": "Improved",
+      "evidenceRefs": ["alpha-producer-validation", "alpha-producer-contract"],
+      "observation": "The policy is isolated behind injected interfaces, normalized identities, deterministic IDs, no cross-request cache, no persistence, and an exact removal boundary."
+    }
+  ],
+  "regressions": [
+    {
+      "category": "product",
+      "state": "Unchanged",
+      "evidenceRefs": ["alpha-producer-validation", "phase8a-validation"],
+      "observation": "The producer remains inactive; active route and UI behavior are unchanged."
+    },
+    {
+      "category": "Runtime",
+      "state": "Unchanged",
+      "evidenceRefs": ["alpha-producer-validation"],
+      "observation": "Persisted Atlas Runtime is byte-identical before and after replay."
+    }
+  ],
+  "unknownsAndUnmeasured": [
+    {
+      "area": "User and Local Understanding Utility",
+      "state": "Not Measured",
+      "reason": "No user-visible treatment, comprehension study, or decision outcome changed."
+    },
+    {
+      "area": "Production identity",
+      "state": "Not Measured",
+      "reason": "The typed identity is constructed only by the benchmark; Clerk is not installed or integrated."
+    },
+    {
+      "area": "Durable access and audit",
+      "state": "Not Measured",
+      "reason": "Injected records and an in-memory append-only-shaped sink do not demonstrate durable lifecycle, operations, or incident recovery."
+    },
+    {
+      "area": "Hosted activation",
+      "state": "Not Measured",
+      "reason": "No route, deployment, browser session, or operational activation was attempted."
+    }
+  ],
+  "remainingRisks": {
+    "nextBlockingDependency": "Actual server-verified Clerk identity must construct the typed consumer identity before durable access records can bind to a real principal.",
+    "remainingDiscoveryPhase": "Phase 8 shadows remain inactive; broader Phase 5 Governance and Phase 6 remain paused.",
+    "remainingBenchmarkGap": "Real provider identity, durable access and audit lifecycle, browser isolation, operational failure handling, and activation rollback remain unmeasured."
+  },
+  "rollback": {
+    "available": true,
+    "evidenceRefs": ["alpha-producer-validation", "alpha-producer-contract", "alpha-producer-report"],
+    "description": "Remove the producer, validator, command, DEPS source/report, and documentation synchronization; Runtime, cognition, disclosure enforcement, projection, communication, routes, UI, dependencies, and persisted organizations remain unchanged."
+  },
+  "engineeringDecision": {
+    "accept": true,
+    "evidenceRefs": ["alpha-producer-validation", "alpha-producer-contract", "alpha-producer-report", "phase5b-validation", "phase8a-validation"],
+    "rationale": "Accept the inactive producer shadow and make actual Clerk identity integration in shadow the one next separately authorized step. Hosted activation remains blocked."
+  }
+}

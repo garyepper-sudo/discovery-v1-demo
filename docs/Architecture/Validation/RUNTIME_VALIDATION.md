@@ -665,3 +665,32 @@ The candidate view, persisted Runtime, and active route output are
 deterministically hashed. Runtime remains byte-identical, and the active route
 does not import the candidate adapter. No product communication view is
 persisted.
+
+## Alpha allowlist disclosure producer replay
+
+`npm run validate:alpha-allowlist-disclosure-producer-shadow` validates the
+inactive two-stage authorization and delivery chain. Its `61/61` gate first
+resolves a benchmark-owned verified identity against an injected versioned
+organization access reader. Runtime loading is instrumented and forbidden
+unless preflight is eligible.
+
+After eligibility, the injected loader reads the persisted Atlas Runtime once.
+Because the checked-in Atlas fixture is historical and contains no canonical
+composition authority receipts, the validator supplies one benchmark-owned
+production-shaped Explanation and derives one current canonical composition
+and exact receipt without persisting either. Existing disclosure enforcement,
+Organizational Understanding Projection, Product Communication, the inactive
+Your Organization communication adapter, and the compatibility candidate then
+complete the shadow chain.
+
+Missing, revoked, malformed, conflicting, guessed, unsupported, and
+reader-failure requests do not load Runtime. Loader failure and Runtime
+identity mismatch fail closed. Composition, revision, and authority receipt
+changes require a new decision. Revocation suppresses the next request without
+rewriting prior output.
+
+The persisted Atlas SHA-256 remains
+`ce267f9e34bc60f94d4c1e16e0a153042f5d8a5b1d54ee4633999c17041fc9cc`
+before and after. No audit event, access record, decision, projection,
+communication plan, or candidate view is persisted. The active route imports
+none of the producer shadow.

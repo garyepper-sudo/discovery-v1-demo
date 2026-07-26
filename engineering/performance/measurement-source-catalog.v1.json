@@ -278,6 +278,28 @@
       "authoritativeOutputs": ["components/product-shell/data/buildYourOrganizationCommunicationView.ts", "scripts/product/validateYourOrganizationCommunicationAdapter.ts", "docs/Sprint Updates/YOUR_ORGANIZATION_PRODUCT_COMMUNICATION_ADAPTER.md"]
     },
     {
+      "id": "alpha-allowlist-disclosure-producer-shadow",
+      "purpose": "Validate explicit verified-identity and versioned allowlist preflight before Runtime loading, exact authority-qualified disclosure, audit-ready provenance, fail-closed behavior, inactive delivery, and non-mutation.",
+      "domain": "governance",
+      "owner": "Alpha Disclosure Decision Producer",
+      "determinism": "deterministic-with-fixed-policy-fixtures-and-persisted-runtime-replay",
+      "baselineCompatibility": "Compatible for alpha-explicit-allowlist-disclosure policy version 1, the existing Phase 5B disclosure contract, fixed shadow identity and access fixtures, and the persisted Atlas replay.",
+      "maturity": "validated-shadow-production-identity-and-durable-stores-missing",
+      "command": "npm run validate:alpha-allowlist-disclosure-producer-shadow",
+      "authoritativeOutputs": ["engine/v3/governance/alphaAllowlistDisclosureProducer.ts", "scripts/product/validateAlphaAllowlistDisclosureProducerShadow.ts", "docs/Sprint Updates/ALPHA_EXPLICIT_ALLOWLIST_DISCLOSURE_PRODUCER_SHADOW.md"]
+    },
+    {
+      "id": "clerk-identity-shadow-integration",
+      "purpose": "Validate official server-verified Clerk identity normalization, fail-closed identity handling, access-before-Runtime ordering, inactive isolation, and integration with the existing Alpha disclosure producer.",
+      "domain": "governance",
+      "owner": "Alpha Consumer Identity Boundary",
+      "determinism": "deterministic-with-injected-server-auth-snapshots",
+      "baselineCompatibility": "Compatible for the existing VerifiedConsumerIdentity and alpha-explicit-allowlist-disclosure policy version 1 contracts.",
+      "maturity": "validated-shadow-live-deployment-verification-required",
+      "command": "npm run validate:clerk-identity-shadow",
+      "authoritativeOutputs": ["lib/auth/resolveVerifiedConsumerIdentityFromClerk.ts", "engine/v3/governance/clerkVerifiedConsumerIdentity.ts", "scripts/product/validateClerkIdentityShadowIntegration.ts", "docs/Sprint Updates/CLERK_IDENTITY_SHADOW_INTEGRATION.md"]
+    },
+    {
       "id": "organizational-understanding-research-framework",
       "purpose": "Define the six-dimensional methodology beneath the Organizational Understanding Index.",
       "domain": "research",

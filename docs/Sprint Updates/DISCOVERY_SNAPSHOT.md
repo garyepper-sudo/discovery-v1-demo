@@ -1,10 +1,12 @@
 # Discovery Startup Snapshot
 
-**Milestone:** Discovery Projection Foundation complete. Reusable
-Organizational Understanding projection, Your Organization compatibility, and
-structured Product Communication contracts are validated, non-persistent, and
-inactive. A thin Your Organization communication adapter now validates the
-plan-to-product boundary without changing the active route.
+**Milestone:** Discovery Alpha Governance Identity Foundation complete.
+Reusable projection and Product Communication foundations remain intact. The
+inactive explicit allowlist producer validates authorization before Runtime
+and the complete delivery chain. An official server-only Clerk adapter
+constructs verified consumer identity without activating middleware or routes.
+Live deployment verification, durable stores, dependency remediation, and
+hosted activation remain blocked.
 
 Read this at the start of each sprint. Use `PROJECT_STATE.md` for the complete
 current boundary and `NEXT_CHAT.md` for the next authorized work.
@@ -83,7 +85,7 @@ behavior; activation remains blocked.
 | Phase 5 — authority and Contribution Validation | Phases 5A and 5B bounded contracts complete; disclosure application activation and durable revocation blocked |
 | Phase 6 — bounded Intelligence Scope | Blocked pending full Phase 5 authority and disclosure enforcement |
 | Phase 7 | Not started; remains gated |
-| Phase 8 | Phase 8A partial Runtime-backed `Your Organization` integration complete as an authorized product-validation exception |
+| Phase 8 | Phase 8A partial Runtime-backed `Your Organization` integration plus projection, communication, and allowlist-producer shadows; all new shadows remain inactive |
 
 Phase 8 now also contains a pure, non-persistent projection shadow. It requires
 an explicit disclosure result, preserves canonical identity and revision,
@@ -182,10 +184,20 @@ compiler, source-pass-through shadow, and inactive Your Organization adapter
 are implemented and validated. Both communication paths remain inactive; the
 active route remains Phase 8A. Narrative synthesis remains unimplemented.
 
-The next authorized work is a read-only Consumer-Specific Disclosure Decision
-Producer Architecture Sprint. It does not authorize implementation, broader
+The Alpha explicit-allowlist producer shadow passes `61/61`. The separate
+Clerk identity shadow passes `28/28` and maps official server `auth()` state
+into its typed identity while preserving injected access and audit boundaries.
+Denied requests cannot load Runtime. Live provider-session verification and
+durable access or audit stores remain unimplemented.
+
+The next recommended work is a read-only Durable Alpha Access and Audit Storage
+Decision Sprint. It does not authorize storage implementation, broader
 Governance, Phase 6, or route activation. User Intelligence and Collective
 Intelligence remain unmeasured.
+
+The current dependency audit reports 19 vulnerable package entries: 17 high
+and 2 critical. Clerk and Next production-path findings must be remediated and
+revalidated before hosted activation. No automatic remediation was performed.
 
 DEPS Phase 1.1 now provides engineering-only continuous progress reporting
 through `npm run deps:report`. The current report compares against DEPS

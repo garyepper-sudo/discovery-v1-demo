@@ -4,10 +4,10 @@
 
 ## Current Milestone
 
-Discovery Product Communication Foundation complete on top of the Projection
-and Discovery 2 Foundation milestones. The reusable projection, structured
-Product Communication Plan, source-pass-through shadow, and inactive
-Your Organization communication adapter are implemented and validated.
+Discovery Alpha Governance Identity Foundation complete on top of the Product
+Communication, Projection, and Discovery 2 Foundation milestones. The inactive
+explicit-allowlist producer passes `61/61`, and its official server-only Clerk
+identity shadow passes `28/28`. Hosted activation remains blocked.
 
 ## Current Development Phase
 
@@ -18,15 +18,14 @@ exception; broader Phase 5 Governance and Phase 6 remain paused.
 
 ## Current Objective
 
-Preserve the completed Product Communication Foundation. The active Phase 8A
-product adapter remains unchanged. Narrative synthesis remains unimplemented;
-consumer-specific disclosure-decision production is the remaining technical
-activation blocker.
+Preserve the completed Alpha Governance Identity Foundation. The active Phase
+8A product adapter remains unchanged. Live Clerk deployment verification,
+durable access and audit stores, dependency-security remediation, and
+activation review remain missing, so hosted Alpha remains blocked.
 
 ## Current Sprint
 
-Product Communication Foundation audit, validation, documentation, and
-canonization.
+Discovery Alpha Governance Identity Foundation canonization.
 
 ## Product Identity
 
@@ -241,18 +240,24 @@ These are known transitions, not documentation defects:
   canonical composition boundary;
 - completed Explanations remain unadjudicated;
 - completed Phase 3 work is a shadow, not canonical consumption;
-- disclosure-decision production and durable revocation history remain unowned;
+- the long-term Governance Control Plane remains unimplemented; the bounded
+  Alpha producer accepts injected access records outside Runtime, and an
+  inactive official Clerk server adapter supplies typed identity, but live
+  deployment verification and durable access and audit stores are absent;
 - Governance Control Plane contracts are canonical but not implemented;
 - Prototype Alpha remains fixture-backed;
 - full historical Mechanism lifecycle behavior remains deferred.
 
 ## Next Priority
 
-Run a read-only Consumer-Specific Disclosure Decision Producer Architecture
-Sprint. Define the minimum real consumer identity, membership, scope,
-permission, authority, revision, validity, supersession, revocation, caching,
-historical, and failure contracts required for safe activation. Do not
-implement or activate the producer automatically.
+Run one read-only **Durable Alpha Access and Audit Storage Decision Sprint**.
+Determine storage, lifecycle, retention, administration, security, recovery,
+and activation prerequisites without implementing storage. Preserve Clerk as
+authentication only and keep Discovery authorization independent.
+
+The current dependency audit reports 19 vulnerable package entries: 17 high
+and 2 critical. Clerk and Next findings require remediation before hosted
+activation. No automatic audit fix is authorized.
 
 ## Remaining production roadmap
 
