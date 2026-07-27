@@ -2,7 +2,83 @@
 
 Date: 2026-07-27
 
-Classification: A — Gate 6 Access Provisioning Passed
+Classification: C — Gate 7 Activation Failed and Safe Rollback Completed
+
+## Gate 7 Activation Attempt and Safe Rollback — 2026-07-27
+
+Pre-activation verification passed:
+
+- Production deployment Ready with all visible deployments terminal;
+- canonical Atlas access record active;
+- access/lifecycle/disclosure counts `1/1/0`;
+- no active Neon transaction;
+- no temporary provisioning secret;
+- Runtime provisioning, access provisioning, and Alpha disabled;
+- Runtime and access provisioning operations returning 404.
+
+Gate 7.1 configured the exact Production organization:
+
+```text
+DISCOVERY_ALPHA_ORGANIZATION_ID=atlas-manufacturing-simulation
+```
+
+No fallback organization was configured. Deployment
+`dpl_323mD7QEJvYdHrsqdJpU4rPkdPYG` became Ready with Alpha still disabled.
+The product route remained 404, provisioning remained closed, and governance
+remained `1/1/0`.
+
+Gate 7.2 enabled only:
+
+```text
+DISCOVERY_ALPHA_YOUR_ORGANIZATION_ENABLED=true
+```
+
+Activation deployment `dpl_H3AbyCvM386q99jYbDn17rNWz79R` became Ready.
+Runtime and access provisioning remained absent and their operations returned
+404. The activation was verified at `2026-07-27T14:08:09-0700`.
+
+The mandatory bounded health request then failed with HTTP 503:
+
+```json
+{
+  "status": "not-ready",
+  "checks": {
+    "configuration": true,
+    "database": false,
+    "runtime": false
+  }
+}
+```
+
+The health response was bounded and exposed no secrets, credentials, provider
+tokens, Runtime contents, or protected organization data. The health route
+checks the application database before checking the Runtime; because the
+database operation failed, `runtime:false` does not independently establish a
+missing or changed Runtime.
+
+Gate 7 stopped immediately. No browser login, organizational disclosure,
+negative-user replay, logout, persistence replay, or no-op deployment replay
+was attempted, and no disclosure audit event was created.
+
+The Alpha enable flag was removed, and rollback deployment
+`dpl_D4p3Eei5a6iTsXQLoiaLfq3nrgCX` became Ready at the Production alias.
+Post-rollback evidence confirmed:
+
+- `DISCOVERY_ALPHA_YOUR_ORGANIZATION_ENABLED` absent;
+- canonical `DISCOVERY_ALPHA_ORGANIZATION_ID` retained;
+- Runtime provisioning, access provisioning, and operation secret absent;
+- product route, Runtime provisioning, and access provisioning return 404;
+- access records: 1;
+- lifecycle events: 1;
+- disclosure events: 0;
+- active Neon transactions: 0.
+
+The Atlas Runtime was not uploaded, replaced, backed up, or otherwise written.
+The access and lifecycle records were not changed. The exact continuation
+point is read-only diagnosis of the Production application database
+connection/role used by `/api/health`, followed by a disabled-state health
+preflight. Alpha must remain disabled until the database and Runtime health
+checks can both pass.
 
 ## Gate 6 Access Provisioning — 2026-07-27
 
@@ -889,3 +965,34 @@ Do not activate the hosted Alpha yet. The infrastructure appears bounded and
 accessible, but the required governed identity and product-ready synthetic
 Runtime inputs are not available. Resume from the continuation sequence once
 those exact inputs have been reviewed.
+
+## Gate 7 Application Database Readiness Restoration
+
+The Gate 7 health failure was conclusively classified as
+`missing-configuration`: the Production Function had no usable
+`DISCOVERY_DATABASE_URL`. The administrative database URL used by Gate 6 was
+not reused for application traffic.
+
+Only the approved pooled Production `DISCOVERY_DATABASE_URL` was restored.
+Deployment `dpl_Eva1hnRCWi78RVYK3xTWFZ49mHvZ` reached READY, and the bounded
+health response reported configuration, database, and existing hosted Runtime
+readiness as true.
+
+Final read-only state:
+
+- access: 1;
+- lifecycle: 1;
+- disclosure: 0;
+- active Neon transactions: 0;
+- Alpha disabled;
+- Runtime provisioning disabled;
+- access provisioning disabled;
+- product and both protected provisioning routes: 404.
+
+No Neon data, Blob, Runtime, access, lifecycle, or disclosure state changed.
+The temporary one-time diagnostic machinery was removed in favor of the
+compact health implementation. No database URL, credential, or provider token
+is recorded here.
+
+The exact continuation point is a fresh Gate 7 pre-activation verification,
+which requires separate approval.

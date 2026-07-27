@@ -2,11 +2,70 @@
 
 ## Status
 
-**GATE 6 ACCESS PROVISIONING PASSED — GATE 7 NOT STARTED**
+**GATE 7 ACTIVATION FAILED — SAFE ROLLBACK COMPLETED**
 
 The canonical Atlas Runtime and its governed access grant now exist in
-Production. Alpha remains disabled, and no Gate 7 configuration or activation
-has begun.
+Production. The bounded Gate 7 activation failed health readiness and was
+immediately returned to the safe Alpha-disabled state.
+
+## Gate 7 Activation Attempt and Rollback — 2026-07-27
+
+Gate 7.0 passed with the canonical active access record, governance counts
+`1/1/0`, no active Neon transaction, no provisioning secret, terminal
+deployments, and Runtime and access provisioning routes returning 404.
+
+Gate 7.1 configured only:
+
+```text
+DISCOVERY_ALPHA_ORGANIZATION_ID=atlas-manufacturing-simulation
+```
+
+Deployment `dpl_323mD7QEJvYdHrsqdJpU4rPkdPYG` became Ready while Alpha
+remained disabled. The product route and both provisioning routes returned
+404, and governance remained `1/1/0`.
+
+Gate 7.2 then enabled only
+`DISCOVERY_ALPHA_YOUR_ORGANIZATION_ENABLED=true`. Activation deployment
+`dpl_H3AbyCvM386q99jYbDn17rNWz79R` became Ready at the Production alias.
+Runtime and access provisioning remained disabled and continued returning
+404.
+
+The first mandatory Gate 7.3 health request at
+`2026-07-27T14:08:09-0700` returned HTTP 503 with bounded evidence:
+
+```json
+{
+  "status": "not-ready",
+  "checks": {
+    "configuration": true,
+    "database": false,
+    "runtime": false
+  }
+}
+```
+
+The response exposed no credentials, secrets, provider tokens, Runtime
+contents, or database details. Because every Gate 7 step is stop-on-failure,
+no browser, disclosure, tenant-isolation, logout, persistence, or broader
+validation replay was attempted.
+
+The Alpha enable flag was removed immediately. Rollback deployment
+`dpl_D4p3Eei5a6iTsXQLoiaLfq3nrgCX` became Ready and owns the Production
+alias. Post-rollback verification confirmed:
+
+- only the canonical Atlas organization ID remains configured;
+- Alpha and the product route are disabled and return 404;
+- Runtime and access provisioning remain disabled and return 404;
+- access records: 1;
+- lifecycle events: 1;
+- disclosure events: 0;
+- active Neon transactions: 0.
+
+The exact blocker is Production health readiness: after configuration passed,
+the application-role database check failed, so the sequential Runtime
+existence check did not complete. Resume Gate 7 from a read-only diagnosis of
+the Production application database connection and role. Do not re-enable
+Alpha until bounded health reports database and Runtime ready.
 
 ## Gate 6 Access Provisioning — 2026-07-27
 
@@ -322,3 +381,36 @@ is required to clear them.
 The first design partner has **not** been deployed. Reporting otherwise would
 misrepresent the absence of Neon, Clerk, hosting, customer identity, customer
 Runtime, hosted validation, and rollback evidence.
+
+## Gate 7 Application Database Readiness Restoration
+
+The interrupted Gate 7 pre-activation check was classified as a missing
+Production application database configuration. The deployed Function did not
+receive a usable `DISCOVERY_DATABASE_URL`; Gate 6 had succeeded through the
+separate administrative connection and that URL was not substituted for
+application traffic.
+
+The secured pooled Neon application URL was validated locally without exposing
+its value, then only `DISCOVERY_DATABASE_URL` was replaced in Vercel
+Production. The final correction deployment is
+`dpl_Eva1hnRCWi78RVYK3xTWFZ49mHvZ`.
+
+The bounded Production health response is now `ready` with configuration,
+database, and Runtime checks all true. Post-repair read-only verification
+confirmed:
+
+- access records: 1;
+- lifecycle events: 1;
+- disclosure events: 0;
+- active Neon transactions: 0;
+- Alpha, Runtime provisioning, and access provisioning remain disabled;
+- product and protected provisioning routes return 404.
+
+The existing Atlas Runtime was read for readiness only; no Runtime write,
+replacement, migration, governance mutation, or Gate 7 activation occurred.
+The large temporary diagnostic was removed. The standard health route retains
+only bounded server-side failure metadata while its public response remains
+unchanged.
+
+The exact continuation point is a fresh Gate 7 pre-activation verification
+after explicit approval.
