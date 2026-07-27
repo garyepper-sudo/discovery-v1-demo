@@ -31,8 +31,35 @@ and organization enumeration. Focused validation covers Production
 request-context recognition and fail-closed behavior for development,
 wrong-project, expired, and missing tokens.
 
-The diagnostic remained undeployed while this section was written. No Blob,
-Neon, access, Alpha configuration, or hosted data mutation occurred.
+The diagnostic was deployed from commit
+`4d705e40efdf765710828e68c0a615601b18a08c` and invoked through the Production
+alias with a temporary sensitive operation secret. Hosted evidence confirmed:
+
+- `VERCEL_ENV=production`;
+- request-context OIDC present and environment-variable OIDC absent;
+- issuer `https://oidc.vercel.com/discovery-os`;
+- audience `https://vercel.com/discovery-os`;
+- subject scoped to project `discovery-v1-demo` and `environment:production`;
+- project `prj_4W6ASUOhAu9ScTsQEklYgdHsYVnz`;
+- team `team_w0EeqjE5iHRsGT1WOAnl7mkO`;
+- connected private store `store_E5CmGzzbA6DnZkbl`;
+- `EXACT_OBJECT_ABSENT_NO_CONFLICT` for the deterministic Atlas Runtime key.
+
+The raw token, credentials, Runtime bytes, and unrelated object identities were
+not returned. The temporary secret and enable flag were removed immediately
+after the check, the same commit was redeployed, and the diagnostic route was
+verified to return 404 again.
+
+Read-only Neon checks found all three governance tables and the Drizzle
+migration journal absent. Therefore the Atlas organization, scoped Clerk user,
+lifecycle, and disclosure-audit conflict counts are zero by schema absence.
+All application, administration, and migration endpoints again negotiated
+authorized TLS 1.3.
+
+Gate 3 is complete. No migration, Blob write, access grant, Alpha organization
+configuration, or Alpha feature activation occurred. The exact continuation
+step is Gate 4: run the reviewed governance migrations, verify idempotency and
+the required tables/triggers, and stop on any failure.
 
 ## Resume Audit — 2026-07-27
 
