@@ -2,7 +2,91 @@
 
 Date: 2026-07-27
 
-Classification: A — All Pre-Mutation Blockers Resolved
+Classification: A — Gate 6 Access Provisioning Passed
+
+## Gate 6 Access Provisioning — 2026-07-27
+
+Gate 6 completed through the canonical access-only Production workflow.
+Immediately before execution, Neon contained zero access, lifecycle, and
+disclosure records; no transaction was active; Runtime and access
+provisioning returned 404; and Alpha was disabled.
+
+The bounded execution configured only
+`DISCOVERY_ACCESS_PROVISIONING_ENABLED=true` and a one-time sensitive
+operation secret. Runtime provisioning remained disabled, and neither
+`DISCOVERY_ALPHA_ORGANIZATION_ID` nor
+`DISCOVERY_ALPHA_YOUR_ORGANIZATION_ENABLED` was configured. Access-enabled
+deployment `dpl_he9p4Hz1wBuL6keieoAyAQB1tq3N` became Ready before the
+operation was invoked.
+
+The fixed Production route provisioned:
+
+- organization: `atlas-manufacturing-simulation`;
+- Clerk consumer: `user_3H5yQgEI6LpgRv7CeNoZsRGvu3p`;
+- operator: `discovery-alpha-operator`;
+- idempotency key: `gate6-access-20260727-002`;
+- access record:
+  `alpha-access:33492b6cc126be6503c628d4311da394cdd4550428dbb491220072312ac1dd8c`.
+
+The HTTP 200 receipt reported `ACCESS_PROVISIONED`,
+`runtimeWritten: false`, and `activationChanged: false`. The database contains
+exactly one active access record and one matching initial `grant` lifecycle
+event with reason `first-design-partner-provisioning`. No disclosure event was
+created.
+
+An exact replay with the same idempotency key returned the documented
+fail-closed HTTP 409. Counts remained one access, one lifecycle, and zero
+disclosure, proving that the replay created no duplicate. Hosted
+authorization preflight replay produced:
+
+- approved user plus Atlas: `AUTHORIZED`;
+- wrong user: denied;
+- wrong organization: denied;
+- missing identity: denied;
+- malformed organization: denied;
+- nonexistent organization: denied.
+
+Every replay case performed zero Runtime mutations. The authorized replay was
+limited to access preflight, so it did not create a disclosure audit event or
+activate the product.
+
+The Runtime remains addressed at:
+
+```text
+discovery/runtime/v2/organizations/atlas-manufacturing-simulation/runtime.json
+```
+
+with approved SHA-256:
+
+```text
+8c3ad0b42c53f7027d3f0cb0a12457e84a25c03063b4c6a47d14a8fe23bef5fa
+```
+
+Gate 6 invoked only the access implementation, which checks Runtime existence
+and has no Runtime write path. A fresh direct Blob digest was not performed
+after cleanup because the request-context diagnostic is correctly unavailable
+when Runtime authority is disabled. The bounded receipt, independent routing
+contract, and disabled Runtime authority establish that Gate 6 did not modify
+the Blob.
+
+The access flag and one-time secret were removed immediately after replay, the
+local secret was deleted, and cleanup deployment
+`dpl_CLWGmziMv9g5gFMbZz8CSVRf2Qih` became Ready. Production Runtime, access,
+and diagnostic provisioning requests now return 404. Runtime provisioning,
+access provisioning, and Alpha are disabled; no temporary execution secret
+remains.
+
+Focused validation passed:
+
+- staged provisioning operations: 21 checks;
+- protected Production provisioning operation: 31 checks;
+- Clerk identity shadow: 28 checks;
+- hosted authorization preflight replay: approved pair authorized and all
+  required negative cases denied;
+- `npm run typecheck`;
+- `npm run build` (six pre-existing React Hook warnings).
+
+Gate 6 is complete. Gate 7 was not started and remains approval-gated.
 
 ## Gate 4 Migration Journal Remediation — 2026-07-27
 

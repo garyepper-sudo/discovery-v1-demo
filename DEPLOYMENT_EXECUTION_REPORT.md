@@ -2,10 +2,62 @@
 
 ## Status
 
-**DEPLOYMENT BLOCKED — NO EXTERNAL RESOURCES MUTATED**
+**GATE 6 ACCESS PROVISIONING PASSED — GATE 7 NOT STARTED**
 
-Discovery's repository-side deployment foundation is present, but the first
-design-partner deployment could not be executed from this environment.
+The canonical Atlas Runtime and its governed access grant now exist in
+Production. Alpha remains disabled, and no Gate 7 configuration or activation
+has begun.
+
+## Gate 6 Access Provisioning — 2026-07-27
+
+Gate 6 executed through the reviewed access-only Production route with:
+
+- organization: `atlas-manufacturing-simulation`;
+- consumer: `user_3H5yQgEI6LpgRv7CeNoZsRGvu3p`;
+- operator: `discovery-alpha-operator`;
+- idempotency key: `gate6-access-20260727-002`;
+- access record:
+  `alpha-access:33492b6cc126be6503c628d4311da394cdd4550428dbb491220072312ac1dd8c`.
+
+Only `DISCOVERY_ACCESS_PROVISIONING_ENABLED` and a one-time sensitive
+operation secret were configured for the bounded execution window. Runtime
+provisioning and Alpha remained disabled. Deployment
+`dpl_he9p4Hz1wBuL6keieoAyAQB1tq3N` became Ready before invocation. The
+canonical request returned `ACCESS_PROVISIONED`, `runtimeWritten: false`, and
+`activationChanged: false`.
+
+An exact replay with the same idempotency key failed closed with HTTP 409.
+Read-only Neon verification afterward confirmed exactly one active access
+record, one initial `grant` lifecycle event, zero disclosure events, and no
+active transaction. The access enable flag and operation secret were removed,
+the local one-time secret was deleted, and cleanup deployment
+`dpl_CLWGmziMv9g5gFMbZz8CSVRf2Qih` became Ready. Runtime, access, and
+diagnostic provisioning requests now return 404.
+
+The Runtime remained on the approved deterministic key:
+
+```text
+discovery/runtime/v2/organizations/atlas-manufacturing-simulation/runtime.json
+```
+
+Its approved SHA-256 remains:
+
+```text
+8c3ad0b42c53f7027d3f0cb0a12457e84a25c03063b4c6a47d14a8fe23bef5fa
+```
+
+The access-only route checked Runtime existence but invoked no Runtime write
+method. A fresh direct Blob digest was not requested after cleanup because the
+Production request-context diagnostic is correctly disabled with Runtime
+authority; the successful receipt, independent routing validation, and
+closed Runtime authority provide the bounded no-write evidence.
+
+Hosted authorization preflight replay returned `AUTHORIZED` only for the
+approved consumer and Atlas organization. Wrong user, wrong organization,
+missing identity, malformed organization, and nonexistent organization all
+denied with no Runtime mutation. Focused staged provisioning, protected
+provisioning, Clerk identity, typecheck, and Production build validation
+passed. Gate 6 is complete. Gate 7 remains separately approval-gated.
 
 ## Execution Audit
 
