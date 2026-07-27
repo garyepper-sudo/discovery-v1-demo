@@ -271,6 +271,61 @@ or otherwise obtain provider-side failure evidence, then review a new Gate 5
 retry. The frozen Runtime, governance state, and Alpha activation remain
 unchanged.
 
+### Gate 5 409 Classification and Corrected Upload — 2026-07-27
+
+A temporary bounded diagnostic was added only to the Runtime provisioning
+failure boundary. It recorded request ID, operation, conditional mode, and
+bounded provider error metadata; it did not record Runtime bytes, headers,
+credentials, tokens, or provider URLs.
+
+The controlled reproduction used Production request-context OIDC and again
+proved `EXACT_OBJECT_ABSENT_NO_CONFLICT` before writing. Vercel Blob then
+returned the exact failure:
+
+```text
+This blob already exists, use allowOverwrite: true if you want to overwrite it.
+```
+
+The installed `@vercel/blob` 2.6.1 invocation was verified to send
+`addRandomSuffix: false` and `allowOverwrite: false`. The deterministic key
+generator was unchanged. The failing precondition was therefore provider
+pathname uniqueness in the configured `discovery/runtime/v1` namespace, not
+the repository's exact-object conflict check, Runtime validation, digest,
+request scope, or OIDC authorization.
+
+Overwrite protection was not weakened. Production was moved to the fresh,
+deterministic `discovery/runtime/v2` namespace. The temporary diagnostic was
+removed and the removal was deployed before the final retry.
+
+The corrected Gate 5 request succeeded:
+
+- result: `RUNTIME_PROVISIONED`;
+- request ID: `gate5-runtime-v2-create-20260727-001`;
+- backend: `vercel-blob`;
+- object key:
+  `discovery/runtime/v2/organizations/atlas-manufacturing-simulation/runtime.json`;
+- SHA-256:
+  `8c3ad0b42c53f7027d3f0cb0a12457e84a25c03063b4c6a47d14a8fe23bef5fa`;
+- provider revision: `565031538731594771a09f65e2dbd432`;
+- backup: none, as required for first create;
+- access written: false;
+- activation changed: false.
+
+Before returning the receipt, the canonical repository performed an
+authenticated uncached read and verified byte equality, digest equality,
+organization identity, and schema. The post-create diagnostic reported
+`EXACT_OBJECT_PRESENT_CONFLICT` without returning Runtime contents.
+
+Read-only Neon verification remained zero access records, zero lifecycle
+events, and zero disclosure events. Runtime authority and the one-time secret
+were removed, temporary local diagnostic files were deleted, and cleanup
+deployment `dpl_68QLvpBWsmh7i1H8oRT5m7UUWwNT` became Ready. Runtime
+provisioning, access provisioning, and Alpha each returned 404 afterward. The
+stored Runtime remains intact in the v2 namespace.
+
+Gate 5 is complete. The exact next step is Gate 6 access-only provisioning;
+it must not upload or replace Runtime and must not activate Alpha.
+
 ## Production Blob OIDC Gate 3 Recovery — 2026-07-27
 
 The first launch attempt stopped before mutation when a local exact-key Blob

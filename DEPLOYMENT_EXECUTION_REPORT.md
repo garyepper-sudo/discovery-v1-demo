@@ -179,6 +179,28 @@ Alpha again return 404. Gate 5 remains incomplete and Gate 6 is blocked until
 the create failure can be classified without exposing credentials or Runtime
 contents.
 
+### Gate 5 409 Resolution
+
+Bounded instrumentation classified the provider rejection exactly: Vercel
+Blob reported that the deterministic pathname already existed when
+`allowOverwrite: false` was used, although authenticated exact-key `head`
+checks reported no readable object. The failure was a provider namespace
+collision at the configured `discovery/runtime/v1` prefix.
+
+Discovery retained conditional first-create and no-overwrite behavior. The
+smallest safe correction moved Production to the fresh deterministic
+`discovery/runtime/v2` prefix. Temporary diagnostics were removed before the
+final retry.
+
+The final Runtime-only request returned `RUNTIME_PROVISIONED`, revision
+`565031538731594771a09f65e2dbd432`, and the approved Atlas digest. The
+repository's immediate authenticated read-back verified exact bytes, digest,
+organization identity, and schema. No access, lifecycle, disclosure, or Alpha
+state changed. Runtime authority and the one-time secret were removed after
+the upload, while the v2 prefix and stored Runtime remain configured.
+
+Gate 5 is complete. Gate 6 access-only provisioning is the next launch step.
+
 Repository inspection found no clean persisted Runtime with canonical
 composition available for a real customer. Benchmark-generated state is not a
 permitted substitute.
