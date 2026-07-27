@@ -48,6 +48,7 @@
     "validate:alpha-allowlist-disclosure-producer-shadow": "tsx scripts/product/validateAlphaAllowlistDisclosureProducerShadow.ts",
     "validate:clerk-identity-shadow": "tsx scripts/product/validateClerkIdentityShadowIntegration.ts",
     "validate:alpha-your-organization-activation": "tsx scripts/product/validateAlphaYourOrganizationActivation.ts",
+    "validate:production-reachability": "tsx scripts/product/validateProductionReachability.ts",
     "storage:migrate": "tsx scripts/storage/migrateAlphaGovernance.ts up",
     "storage:status": "tsx scripts/storage/migrateAlphaGovernance.ts status",
     "storage:reset:local": "tsx scripts/storage/migrateAlphaGovernance.ts reset",

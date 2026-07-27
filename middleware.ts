@@ -7,6 +7,7 @@ import {
   verifyAlphaSession,
 } from "./lib/alpha-access/session";
 import { isYourOrganizationAlphaActivationEnabled } from "./lib/alpha-activation/config";
+import { productionRouteDisposition } from "./lib/production-route-policy";
 
 const protectedAlphaPath = /^\/alpha(?:\/|$)/;
 const protectedAlphaAsset =
@@ -74,8 +75,17 @@ export async function middleware(
   request: NextRequest,
   event?: NextFetchEvent,
 ): Promise<NextResponse> {
+  const activationEnabled = isYourOrganizationAlphaActivationEnabled();
   if (
-    isYourOrganizationAlphaActivationEnabled() &&
+    productionRouteDisposition({
+      pathname: request.nextUrl.pathname,
+      activationEnabled,
+    }) === "not-found"
+  ) {
+    return protectedHeaders(new NextResponse("Not found.", { status: 404 }));
+  }
+  if (
+    activationEnabled &&
     activatedYourOrganizationPath.test(request.nextUrl.pathname)
   ) {
     if (!event) {
@@ -96,7 +106,7 @@ export async function middleware(
         });
   }
   if (
-    isYourOrganizationAlphaActivationEnabled() &&
+    activationEnabled &&
     inactiveDesignPartnerSurface.test(request.nextUrl.pathname)
   ) {
     return protectedHeaders(new NextResponse("Not available in the bounded Alpha.", {
@@ -108,6 +118,7 @@ export async function middleware(
 
 export const config = {
   matcher: [
+    "/",
     "/alpha/:path*",
     "/your-organization/:path*",
     "/ask/:path*",
@@ -118,6 +129,8 @@ export const config = {
     "/research/:path*",
     "/discovery-v1/:path*",
     "/executive-decision/:path*",
+    "/cognition-lab/:path*",
+    "/discovery-lab/:path*",
     "/api/analyze/:path*",
     "/api/discovery-lab/:path*",
     "/api/executive-decision/:path*",

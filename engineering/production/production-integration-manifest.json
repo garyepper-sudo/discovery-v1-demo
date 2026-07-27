@@ -1,0 +1,4965 @@
+{
+  "schemaVersion": 2,
+  "auditDate": "2026-07-26",
+  "baseSha": "848aa29f1fccbaf7a008a5990ebac09fce3bbbdb",
+  "auditedCandidateParentSha": "d853db9d42d203292a310462c13dab65279063ee",
+  "correctedCandidateIdentity": "the commit containing this manifest",
+  "correctedNonManifestDiffSha256": "1b7277b808c813b523a37734108fc2a7187cff1f8efc592eb18376c7509f1807",
+  "ancestor": true,
+  "historicalCommitCount": 74,
+  "classification": "A — Corrected Candidate Approved for Production",
+  "promotionMethod": "Fast-forward origin/main to the committed production-integration tip after clean-tree revalidation.",
+  "runtimeSnapshots": [
+    {
+      "path": ".discovery-runtime/organizations/Gary.json",
+      "classification": "UNVERIFIED_LOCAL_RUNTIME",
+      "history": "added by e526d0d",
+      "references": 0,
+      "disposition": "removed"
+    },
+    {
+      "path": ".discovery-runtime/organizations/Gary_1.json",
+      "classification": "UNVERIFIED_LOCAL_RUNTIME",
+      "history": "added by e526d0d",
+      "references": 0,
+      "disposition": "removed"
+    },
+    {
+      "path": ".discovery-runtime/organizations/Gary_2.json",
+      "classification": "UNVERIFIED_LOCAL_RUNTIME",
+      "history": "added by e526d0d",
+      "references": 0,
+      "disposition": "removed"
+    },
+    {
+      "path": ".discovery-runtime/organizations/default-organization.json",
+      "classification": "PROVEN_SYNTHETIC_NONCANONICAL_FIXTURE",
+      "history": "long-lived generated development/benchmark Runtime; candidate churn originated in e526d0d",
+      "references": 1,
+      "disposition": "restored byte-for-byte to origin/main; retained for development compatibility; application fallback disabled"
+    }
+  ],
+  "routePolicy": {
+    "development": {
+      "product": "available locally",
+      "labs": "available locally"
+    },
+    "preview": {
+      "inactiveProduct": "404",
+      "/api/health": "available",
+      "/alpha/*": "password-gated advisor prototype",
+      "activeProduct": "only /your-organization proceeds to governance"
+    },
+    "production": {
+      "inactiveProduct": "404",
+      "/api/health": "available",
+      "/alpha/*": "password-gated advisor prototype",
+      "activeProduct": "only /your-organization proceeds to governance"
+    },
+    "labs": {
+      "/cognition-lab": "INTERNAL_DEVELOPMENT",
+      "/discovery-lab": "BENCHMARK_OR_RESEARCH",
+      "/executive-decision": "ADVISOR_DEMO"
+    }
+  },
+  "authorizationOrder": [
+    "Clerk verified identity",
+    "Discovery access lookup",
+    "authorization",
+    "Runtime loading",
+    "authority-qualified disclosure",
+    "projection",
+    "communication",
+    "product adapter",
+    "Your Organization"
+  ],
+  "security": {
+    "trackedSecrets": false,
+    "providerCredentials": false,
+    "customerOrPersonalRuntimeSnapshots": false,
+    "trackedBackups": false,
+    "benchmarkRoutesPublicByDefault": false,
+    "defaultRuntimeFallback": false,
+    "featureFlagDefault": "false"
+  },
+  "validation": {
+    "npmCi": "PASS",
+    "productionAudit": "PASS — 0 vulnerabilities",
+    "typecheck": "PASS",
+    "build": "PASS",
+    "canonicalBenchmark": "PASS — 15/15",
+    "architecture": "ACCEPTED BASELINE — 295/302, 98%, seven pre-existing findings",
+    "deps": "PASS",
+    "atlas": "PASS — canonical 100%",
+    "northstar": "PASS — 75/100",
+    "cognition": "PASS — 32 capabilities",
+    "organizationExperience": "PASS — 10 + 11 + 3",
+    "projection": "PASS — 30/30",
+    "projectionCompatibility": "PASS — 43/43",
+    "productCommunication": "PASS — 60/60",
+    "communicationAdapter": "PASS — 69/69",
+    "clerk": "PASS — 28/28",
+    "disclosureProducer": "PASS — 61/61",
+    "authorityTransitions": "PASS — 14/14",
+    "disclosureContract": "PASS — 14/14",
+    "activation": "PASS — 23/23",
+    "postgresStorage": "PASS — 60/60",
+    "migration": "PASS — clean and idempotent",
+    "deploymentEnvironment": "PASS",
+    "deploymentDatabase": "PASS",
+    "runtimeBackupRestore": "PASS — byte-identical",
+    "productionReachability": "PASS — 38/38",
+    "diffCheck": "PASS"
+  },
+  "acceptedBaselines": [
+    "Architecture 295/302",
+    "Six build warnings",
+    "Development audit 17 findings; production audit zero"
+  ],
+  "unresolvedBlockers": [],
+  "commits": [
+    {
+      "sha": "b840669283cfa07ea7df03ca85980482bb26ac61",
+      "date": "2026-07-20",
+      "title": "Define Discovery functional MVP product",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "e526d0d110251df63e81750b1b827c968c3281d9",
+      "date": "2026-07-21",
+      "title": "Complete MVP decision workflow and product canon consolidation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "0c8013d6cfad40a2f9b63394d306ce930eb0def1",
+      "date": "2026-07-21",
+      "title": "Centralize active organization identity",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "c2e184be0d7cbcbba62e323d8acb23201f0516e9",
+      "date": "2026-07-21",
+      "title": "Resolve organization identity at API boundaries",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "b87d6f050b84a5b67033aa62cab34e6ac5d8e51c",
+      "date": "2026-07-21",
+      "title": "Propagate organization identity through executive workflow",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "540d33f46951ef3a68925f438daf61fa56c67683",
+      "date": "2026-07-21",
+      "title": "Reorganize architecture documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "86ec96d39859e7014efdf8168d21b18539d03c77",
+      "date": "2026-07-21",
+      "title": "Add executive meaning preservation benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "1d51ed23f9b8610bd00ffac89e6ec7271e2fc28e",
+      "date": "2026-07-21",
+      "title": "Preserve semantic fidelity across cognitive pipeline",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "f41d7acb5735d8878a6e4bc73abdaa3c4bc28083",
+      "date": "2026-07-21",
+      "title": "Complete Sprint 79 kickoff and product foundation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "87013865aa10bd7eeef7c3e307fa15b7b8d3ac11",
+      "date": "2026-07-21",
+      "title": "Complete executive product and judgment evaluation foundation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "878d2dc86f2bb7c02ec1dd3a21b445214737b6fd",
+      "date": "2026-07-21",
+      "title": "Add AI engineering workflow and Codex task framework",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "15d6044568fce70a4e97b75c880dded56f246356",
+      "date": "2026-07-21",
+      "title": "Expand Judgment Lab benchmark contracts",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "19d0099e924b00d1b1921576e9e14a54cf3bd8ea",
+      "date": "2026-07-22",
+      "title": "Persist active organization identity through navigation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "349e10483e95a194c5e330514bb45db0eea9509f",
+      "date": "2026-07-22",
+      "title": "Add read-only organization registry",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "c89ab0544697ba4af51141e818571fac884d8bef",
+      "date": "2026-07-22",
+      "title": "Add organizations selection experience",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "a2572014903ada5ebdeff8aacf9e34b7792102a3",
+      "date": "2026-07-22",
+      "title": "Add Executive Decision Lab and intervention feasibility profiles",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "76fedda17be8fc0ea0c2612ab503a9136e41135e",
+      "date": "2026-07-22",
+      "title": "Complete localized intervention optimization",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "a427b365d56fb512ce7fab0054b4b597dc523fee",
+      "date": "2026-07-22",
+      "title": "Implement mechanism identity reconciliation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "98defb881587aa72c88b8d588d551e32397c1081",
+      "date": "2026-07-22",
+      "title": "Implement contradiction-aware organizational learning",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "684082f7ea089f225884280b3cc6e7cff9ecce9e",
+      "date": "2026-07-22",
+      "title": "Implement contradiction-aware mechanism confidence",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "55401038b3f9b62244d93a2be3c3a15fae173f7e",
+      "date": "2026-07-22",
+      "title": "Preserve intervention risks in executive recommendations",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "2933331609324f8f90ad050531f98e05b12c6d5d",
+      "date": "2026-07-22",
+      "title": "Make Ground Truth benchmark deterministic",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "b0cce5e46cda2f54bd9ae01339622228e887421d",
+      "date": "2026-07-22",
+      "title": "Project recommendation risks into Decisions workspace",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "5d55d9dbd46e37a1183f281c67ed27564289f908",
+      "date": "2026-07-22",
+      "title": "Implement living Organization Model interaction loop",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "70c83a309eb28c13afc8384fa8854605b686f36d",
+      "date": "2026-07-22",
+      "title": "Recreate unified executive workspace",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "fa5bd4b38b20c26d3a793df63bd72bd169bf9425",
+      "date": "2026-07-22",
+      "title": "Add Executive Collaboration Lab baseline",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "97874fc236070b45fd37244fe814bd9a9377f9a0",
+      "date": "2026-07-22",
+      "title": "Add executive conversation intelligence boundary",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "ec5a4112d504fcb334a09910c48c547e74ce9d6f",
+      "date": "2026-07-22",
+      "title": "Evaluate OpenAI conversation interpreter",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "2c61b7f4ddd2b2633d9ce87b5eef23327f93d680",
+      "date": "2026-07-22",
+      "title": "Canonize shared organizational intelligence strategy",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "ea4d14442c8cdf4354756915aff37d3fed51be81",
+      "date": "2026-07-22",
+      "title": "Validate recursive organizational intelligence composition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "008744e5cf8541624a61fb55e28de884196bd303",
+      "date": "2026-07-23",
+      "title": "Canonicalize Discovery implementation foundation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "37f8de1dcb9a0b6d7c6d97d92b1ae0d0fb07e191",
+      "date": "2026-07-23",
+      "title": "Implement Discovery Interactive Prototype Alpha",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "81263a62f2890914187355fe2d31d2a464ff2ba4",
+      "date": "2026-07-23",
+      "title": "Protect Discovery Interactive Prototype Alpha",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "eca47a06239f4f1e4240bd437e34a051b2c1b5aa",
+      "date": "2026-07-23",
+      "title": "Fix Alpha deployment routing",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "5bee35a827a51b5aadf9d33b83d5ba89457396f9",
+      "date": "2026-07-23",
+      "title": "Update benchmark handoff after Interactive Prototype Alpha",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "8e1ce3440d17f2bbf2951f7407269d0e64f498d1",
+      "date": "2026-07-23",
+      "title": "Isolate Executive Decision Lab fixture state",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "2315a687effc20cb63da3003086f1eb7fa663920",
+      "date": "2026-07-23",
+      "title": "Document benchmark baseline and research priorities",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "980042505098bfcb4c82cced92687c2dfa60eb5a",
+      "date": "2026-07-23",
+      "title": "Trace Northstar concurrency and staffing semantics",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "dceb4c1e5409dd5bee06fa03046ac134283c6602",
+      "date": "2026-07-23",
+      "title": "Evaluate Northstar theme composition policies",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "d2114036faec3e6c2a631f25ccdca43481316f94",
+      "date": "2026-07-23",
+      "title": "Evaluate joint Northstar composition policies",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "2f4986fd7ac79b2dfeace83e2a2198e6240917d0",
+      "date": "2026-07-23",
+      "title": "Evaluate explanatory relationship feasibility",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "607c5d5368383bc1043b04356e3e7a36f9119de1",
+      "date": "2026-07-23",
+      "title": "Test judgment sensitivity to decisive evidence",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "0f9418f236a52fc89e231a8a135999b0b229888d",
+      "date": "2026-07-23",
+      "title": "Design evidence sensitivity provenance contract",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "a77436be7b5fe751e11147be3e9e746ee4c644f9",
+      "date": "2026-07-23",
+      "title": "Preserve structured evidence provenance",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "bc8a81b7e0df9243e4c02a8f41dc3d62207dd6e0",
+      "date": "2026-07-23",
+      "title": "Harden conversation interpretation authority boundary",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "88c79656c7514d1ab8dc028c08eb9b060df31964",
+      "date": "2026-07-23",
+      "title": "Harden Sprint 110 benchmark result boundaries",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "520ba0b6982cf9e0e466e60d183478b6d8c9312e",
+      "date": "2026-07-23",
+      "title": "Extend Executive Collaboration Lab reasoning evaluation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "ae09c5ea6429a00698e0a960b6bbb22f02052622",
+      "date": "2026-07-23",
+      "title": "Canonize organizational intelligence authority hierarchy",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "d896336bd07343ad3880a247f3265549f1c3ee5c",
+      "date": "2026-07-23",
+      "title": "Document Discovery Experience Alpha specifications",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "cdf5bc6b96e6e76873a7c7351cc2acfb346e978e",
+      "date": "2026-07-23",
+      "title": "Canonize Discovery design language",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "81ced04d6c41a25fdae7b6bacbb151ff634f35c4",
+      "date": "2026-07-23",
+      "title": "Define Discovery UI system",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "95fb00d12b18b40f4d2bc7e79fd279aefdad40a8",
+      "date": "2026-07-24",
+      "title": "Define Discovery component architecture",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "c26276d87616aa7480831e5b5fe94820c4561fd3",
+      "date": "2026-07-24",
+      "title": "Finalize repository integration handoff",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "df40c8313fa752db89a4507c38b98146c89c68fc",
+      "date": "2026-07-24",
+      "title": "Refresh generated architecture state",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "b2b12886757cc9e66fbfd245aef589e9ba0cf805",
+      "date": "2026-07-24",
+      "title": "Ignore local repository outputs",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "0b02838a8cf9bcaff8ed1bc1d492b4c224ad3292",
+      "date": "2026-07-24",
+      "title": "Add evidence independence benchmarks",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "a234b4a634dec8d47f7e667cb01a9a3adb678243",
+      "date": "2026-07-24",
+      "title": "Add theme evidence composition benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "c49f2b29854f51c9a3738cddf6985949ea0b9912",
+      "date": "2026-07-24",
+      "title": "Add mechanism evidence ground truth benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "8ee87abb2ea5355208117636bb475c9ed79268c2",
+      "date": "2026-07-24",
+      "title": "Add primary constraint ranking benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "94857ae31d5dcac18c706bdb4c93ba084d7db326",
+      "date": "2026-07-24",
+      "title": "Add causal constraint reasoning benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "749a903600fdd212cdc185d1399e1b218367152b",
+      "date": "2026-07-24",
+      "title": "Add causal constraint production shadow",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "711bc4a106bc357651e2214275c27e30df277e79",
+      "date": "2026-07-24",
+      "title": "Add implicit causal edge recovery benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "12f72000640122e5eed52cc3fb25998248550aff",
+      "date": "2026-07-24",
+      "title": "Add competing explanation adjudication benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "78868231c0e7d4e2866503929f0d3ae7ed13cde8",
+      "date": "2026-07-24",
+      "title": "Add competing explanation production shadow",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "58fb844f1182763b84e55b4ace414977596399aa",
+      "date": "2026-07-24",
+      "title": "Add structured explanation candidate shadow",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "8c92af73f30f9dbb9206a70a40ef295cb52b7b9c",
+      "date": "2026-07-24",
+      "title": "Implement structured explanation ancestry bridge",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "84e5cdd281933bff607be28b010aa61629a3dad1",
+      "date": "2026-07-24",
+      "title": "Add completed explanation adjudication shadow",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "310be01853300d093f7db5d82ca17a8c89242394",
+      "date": "2026-07-24",
+      "title": "Implement comparative evidence roles",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "e39be469bfbb02bf846546c515606d33110e5403",
+      "date": "2026-07-25",
+      "title": "Canonize Discovery 2 foundation milestone",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "24c90a48099de2b7088d4832b6bc2219fd2528bf",
+      "date": "2026-07-25",
+      "title": "Canonize Discovery projection foundation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "2f57d7e7baab4b428d3605bded5602d90b6733bc",
+      "date": "2026-07-25",
+      "title": "Canonize Discovery product communication foundation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "a65391c30e62df02787c913db8b27a1eff021345",
+      "date": "2026-07-26",
+      "title": "Canonize Discovery Alpha governance identity foundation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "4fea7bd1a660089a9937dc209edb861b0f759d5e",
+      "date": "2026-07-26",
+      "title": "Canonize Discovery durable Alpha storage foundation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "d853db9d42d203292a310462c13dab65279063ee",
+      "date": "2026-07-26",
+      "title": "Complete Discovery Alpha activation and deployment foundation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "sha": "SELF",
+      "date": "2026-07-26",
+      "title": "Resolve Discovery production integration blockers",
+      "recommendation": "APPROVE"
+    }
+  ],
+  "filesByCategory": {
+    "deployment": 10,
+    "documentation": 166,
+    "production application": 118,
+    "storage": 12,
+    "benchmark": 296,
+    "research": 7,
+    "cognition": 44,
+    "communication": 3,
+    "governance": 7,
+    "projection": 1,
+    "Runtime": 8,
+    "generated canonical artifact": 29,
+    "fixture": 2,
+    "validation": 26
+  },
+  "files": [
+    {
+      "status": "A",
+      "path": ".env.example",
+      "category": "deployment",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": ".gitignore",
+      "category": "deployment",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "AGENTS.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/(product)/ask/page.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/(product)/brief/page.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/(product)/decisions/page.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/(product)/experiment/page.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/(product)/layout.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/(product)/organizations/page.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/(product)/research/page.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/(product)/your-organization/page.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/alpha-access/AlphaAccess.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/alpha-access/AlphaAccessForm.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/alpha-access/page.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/alpha-access/submit/route.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/alpha/[scene]/page.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/alpha/lock/route.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/alpha/page.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "app/api/discovery-lab/route.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "app/api/executive-decision-record/route.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "app/api/executive-decision/route.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "app/api/executive-scenario/route.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/api/health/route.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/api/product-interaction/route.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "app/discovery-v1/DiscoveryOnboarding.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "app/discovery-v1/page.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "app/executive-decision/page.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "app/layout.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "app/page.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/alpha/AlphaExperience.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/alpha/AlphaExperience.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/alpha/AlphaPrimitives.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/alpha/AlphaSemantic.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "components/executive-v2/ExecutiveExperience.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "components/executive-v2/ExecutiveWorkspace.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "components/executive-v3/components/Sidebar/ExecutiveSidebar.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "components/executive-v3/ExecutiveWorkspace.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "components/executive-v3/ExecutiveWorkspace.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "components/executive-v3/ExecutiveWorkspaceMode.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/executive-v3/mvp/discoveryMvpFixtures.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "components/executive-v3/projection/buildExecutiveDecisionProjection.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/executive-v3/shared/WorkspaceHero.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/executive-v3/workspaces/BriefingWorkspace.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "components/executive-v3/workspaces/BriefingWorkspace.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/executive-v3/workspaces/decision-definition/DecisionContextRail.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/executive-v3/workspaces/decision-definition/DecisionFooter.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/executive-v3/workspaces/decision-definition/DecisionHeader.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/executive-v3/workspaces/decision-definition/DecisionSuccessSection.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/executive-v3/workspaces/decision-definition/DiscoveryContextSection.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/executive-v3/workspaces/decision-definition/EvaluationPreferences.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "D",
+      "path": "components/executive-v3/workspaces/DecisionAnalysisWorkspace.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/executive-v3/workspaces/DecisionCommitPanel.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/executive-v3/workspaces/DecisionDefinitionWorkspace.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/executive-v3/workspaces/DecisionReviewModal.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "components/executive-v3/workspaces/ExecutiveDecisionWorkspace.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/executive-v3/workspaces/OperatingSnapshotCard.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/executive-v3/workspaces/OperatingSnapshotCard.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "components/executive-v3/workspaces/RecommendationWorkspace.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/executive-v3/workspaces/simulation/SimulationDecisionSummary.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "components/executive-v3/workspaces/SimulationWorkspace.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/executive-v3/workspaces/UnderstandingWorkspace.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "components/executive-v3/workspaces/UnderstandingWorkspace.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/ask/AnswerReasoning.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/ask/AskComposer.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/ask/AskExperience.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/ask/AskExperience.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/brief/BriefExperience.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/brief/BriefExperience.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/CurrentUnderstanding.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/CurrentUnderstanding.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/buildActivatedYourOrganizationView.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/buildAskExperienceView.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/buildBriefExperienceView.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/buildDecisionsExperienceView.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/buildExperimentExperienceView.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/buildOrganizationExperienceFromProjection.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/buildOrganizationExperienceView.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/buildOrganizationModelContext.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/buildOrganizationsExperienceView.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/buildResearchExperienceView.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/buildRuntimeOrganizationView.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/buildSessionImpact.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/buildUnifiedExecutiveWorkspaceView.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/buildYourOrganizationCommunicationView.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/composeActivatedYourOrganization.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/createLeadershipDecisionRecord.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/loadActivatedYourOrganization.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/loadProductOrganization.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/productInteractionBoundary.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/data/productOrganization.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/decisions/DecisionLifecycle.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/decisions/DecisionRecommendation.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/decisions/DecisionsExperience.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/decisions/DecisionsExperience.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/DiscoveryShell.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/DiscoveryShell.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/experiment/ExperimentExperience.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/experiment/ExperimentExperience.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/experiment/types.ts",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/ExploreTogether.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/OrganizationJourney.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/OrganizationModel.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/OrganizationModel.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/organizations/OrganizationsExperience.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/organizations/OrganizationsExperience.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/ProductWorkspace.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/ProductWorkspace.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/research/ResearchExperience.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/research/ResearchExperience.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/research/ResearchRecommendation.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/research/TeachDiscovery.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/shared/InteractionSession.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/shared/LivingModelContext.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/shared/LivingModelContext.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/shared/SessionImpact.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/shared/SessionImpact.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/SinceLastVisit.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/unified/UnifiedExecutiveWorkspace.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/unified/UnifiedExecutiveWorkspace.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/WorkspacePlaceholder.module.css",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "components/product-shell/WorkspacePlaceholder.tsx",
+      "category": "production application",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "compose.alpha-storage.yml",
+      "category": "storage",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "db/config.ts",
+      "category": "storage",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "db/governance/disclosureTransactionShadow.ts",
+      "category": "storage",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "db/governance/mapping.ts",
+      "category": "storage",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "db/governance/postgresRepositories.ts",
+      "category": "storage",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "db/governance/types.ts",
+      "category": "storage",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "db/index.ts",
+      "category": "storage",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "db/migrations/0000_alpha_governance_foundation.sql",
+      "category": "storage",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "db/migrations/meta/_journal.json",
+      "category": "storage",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "db/schema/alphaGovernance.ts",
+      "category": "storage",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "db/schema/index.ts",
+      "category": "storage",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "DEPLOYMENT_EXECUTION_REPORT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "discovery-brief.txt",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Architecture/Archive/ARCHITECTURE_RECOMMENDATION_PROJECTION.json",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Architecture/Archive/ARCHITECTURE_RECOMMENDATIONS.json",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Architecture/Archive/COGNITIVE_CAPABILITY_CANDIDATES.json",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Architecture/Archive/Executive_Optimization_Objective_Synthesis",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Architecture/Archive/Executive_Optimization_Objective_Synthesis 2",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Architecture/Archive/EXECUTIVE_PRODUCT_OPERATING_SYSTEMS.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Canon/AUTHENTICATION_AND_MULTI_TENANCY.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Canon/CANDIDATE_RELATIVE_EXPLANATION_TEST_PRODUCER_AUDIT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R051",
+      "path": "docs/Architecture/Canon/COGNITIVE_ARCHITECTURE_INDEX.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R080",
+      "path": "docs/Architecture/Canon/COGNITIVE_FLOW_MAP.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R076",
+      "path": "docs/Architecture/Canon/COGNITIVE_OBJECT_MODEL.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Canon/COMPARATIVE_EVIDENCE_ROLES_CONTRACT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Canon/COMPLETED_EXPLANATION_ADJUDICATION_CONTRACT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Canon/COMPLETED_EXPLANATION_INPUT_CONTRACT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R089",
+      "path": "docs/Architecture/Canon/DECISION_INTELLIGENCE_ARCHITECTURE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Architecture/Canon/DECISION_LEARNING_ARCHITECTURE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Canon/DISCOVERY_2_SEQUENTIAL_IMPLEMENTATION_PROGRAM.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Canon/DISCOVERY_ENGINEERING_PERFORMANCE_SYSTEM.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Canon/DISCOVERY_PLATFORM_PRINCIPLES.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Canon/DISCOVERY_SCORECARD.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R083",
+      "path": "docs/Architecture/Canon/EXECUTIVE_COGNITIVE_OPERATING_SYSTEM.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Architecture/Canon/EXECUTIVE_COMMUNICATION_OPERATING_SYSTEM.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Canon/EXECUTIVE_CONVERSATION_INTELLIGENCE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Architecture/Canon/EXECUTIVE_DECISION_OPERATING_SYSTEM.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Architecture/Canon/EXECUTIVE_PRODUCT_FLOW.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Architecture/Canon/EXECUTIVE_SIMULATION_OPERATING_SYSTEM.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Canon/ORGANIZATIONAL_INTELLIGENCE_GOVERNANCE_ARCHITECTURE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Canon/ORGANIZATIONAL_INTELLIGENCE_GOVERNANCE_BEHAVIORAL_MODEL.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Canon/ORGANIZATIONAL_INTELLIGENCE_GOVERNANCE_OBJECT_MODEL.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Canon/ORGANIZATIONAL_MECHANISM_LIFECYCLE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Canon/ORGANIZATIONAL_UNDERSTANDING_DISCLOSURE_AND_REVOCATION_CONTRACT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Architecture/Canon/PHENOMENON_ARCHITECTURE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Canon/SHARED_ORGANIZATIONAL_INTELLIGENCE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Canon/UNIVERSAL_INTELLIGENCE_LIFECYCLE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "docs/Architecture/Cognitive Operating Systems/MEMORY_OPERATING_SYSTEM.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "docs/Architecture/COGNITIVE_CAPABILITY_AUDIT.json",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "docs/Architecture/COGNITIVE_CAPABILITY_REGISTRY.json",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "docs/Architecture/COGNITIVE_FILE_REGISTRY.json",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "docs/Architecture/DISCOVERY_ARCHITECTURE_STATE.json",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/DISCOVERY_FRONTEND_ARCHITECTURE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "D",
+      "path": "docs/Architecture/EXECUTIVE_ASSESSMENT_ARCHITECTURE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "D",
+      "path": "docs/Architecture/EXECUTIVE_INTELLIGENCE_OPERATING_SYSTEM.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "D",
+      "path": "docs/Architecture/OPTIMIZATION_ARCHITECTURE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "D",
+      "path": "docs/Architecture/ORGANIZATIONAL_PHYSICS.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/README.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Architecture/Reference/ATLAS_SIMULATION_ARCHITECTURE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Architecture/Reference/COGNITIVE_DOMAIN_REGISTRY.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Architecture/Validation/ATLAS_EVALUATION_LOOP.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Architecture/Validation/EXECUTIVE_PROJECTION_AUDIT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Architecture/Validation/RUNTIME_VALIDATION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "D",
+      "path": "docs/benchmark-001-approval-bottleneck.txt",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "D",
+      "path": "docs/COMPONENT_OWNERSHIP.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "D",
+      "path": "docs/DISCOVERY_COGNITIVE_FITNESS_PROFILE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "D",
+      "path": "docs/ENGINE_MAP.md.",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Engineering/CODEX_GUIDE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "D",
+      "path": "docs/MENTAL_MODELS.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/Alpha/ALPHA_ACCESS_SETUP.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/Alpha/Discovery_Experience_Alpha_Canonical_Experience.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/Alpha/Discovery_Experience_Alpha_Scene_1.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/Alpha/Discovery_Experience_Alpha_Scene_2.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/Alpha/Discovery_Experience_Alpha_Scene_3.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/Alpha/Discovery_Experience_Alpha_Scene_4.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/Alpha/Discovery_Experience_Alpha_Scene_5.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/Alpha/Discovery_Experience_Alpha_Scene_6.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/Alpha/Discovery_Experience_Alpha_Scene_7.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/Alpha/Discovery_Experience_Alpha_Scene_8.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/Alpha/Discovery_Experience_Alpha_Scene_9.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/Alpha/Discovery_Experience_Alpha_Specification.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Product/Archive/CUSTOMER_VALIDATION_PLAN.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Product/Archive/DECISION_CONFIDENCE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Product/Archive/DECISION_OBJECT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Product/Archive/DISCOVERY_PRODUCT_PHILOSOPHY.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/Archive/EXECUTIVE_WORKSPACE_DESIGN_STANDARD.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Product/Archive/ONBOARDING_STRATEGY.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Product/Archive/PRODUCT_FLYWHEEL.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Product/Archive/PRODUCT_POSITIONING.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Product/Archive/PRODUCT_PRINCIPLES.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/Archive/Product_State.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Product/Archive/TRUST_FRAMEWORK.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "R100",
+      "path": "docs/Product/Archive/UX_ROADMAP.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/DISCOVERY_APPLICATION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/DISCOVERY_COMPONENT_LIBRARY.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/DISCOVERY_COPY_GUIDE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/DISCOVERY_DESIGN_LANGUAGE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/DISCOVERY_MOTION_SYSTEM.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/DISCOVERY_UI_SYSTEM.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/DISCOVERY_VIEW_MODEL_ARCHITECTURE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/MVP_PRODUCT_SPECIFICATION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/MVP_PRODUCT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/ORGANIZATION_EXPERIENCE_CANON.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/ORGANIZATION_PAGE_SPEC.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/ORGANIZATIONAL_LIFECYCLE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Product/PRODUCT_BENCHMARK.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "docs/Product/PRODUCT_CANON.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "D",
+      "path": "docs/Product/Product_State.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "docs/Product/README.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/ALPHA_ACTIVATION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/ALPHA_EXPLICIT_ALLOWLIST_DISCLOSURE_PRODUCER_SHADOW.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/ALPHA_GOVERNANCE_ACTIVATION_STRATEGY.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/ALPHA_READINESS_ASSESSMENT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/ALPHA_VALIDATION_NEXT_INTEGRATION_DECISION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "docs/Sprint Updates/ARCHITECTURE_HANDOFF.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/BENCHMARK_BASELINE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/BENCHMARK_CHECKPOINT_AND_PRIORITIES.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/BENCHMARK_REGRESSION_ANALYSIS.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/CANONICAL_UNDERSTANDING_COMPATIBILITY_SHADOW.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/CANONICAL_UNDERSTANDING_OWNERSHIP_MIGRATION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "docs/Sprint Updates/Capability Traces/cap-lrn-002.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "docs/Sprint Updates/Capability Traces/cap-self-001.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "docs/Sprint Updates/Capability Traces/cap-self-002.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "docs/Sprint Updates/Capability Traces/cap-und-005.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "docs/Sprint Updates/Capability Traces/cap-und-006.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/CAUSAL_CONSTRAINT_PRODUCTION_SHADOW.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/CAUSAL_CONSTRAINT_REASONING_BENCHMARK.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/CLERK_DEPENDENCY_SECURITY_REVIEW.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/CLERK_IDENTITY_SHADOW_INTEGRATION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/COMPETING_EXPLANATION_ADJUDICATION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/COMPETING_EXPLANATION_PRODUCTION_SHADOW.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/COMPLETED_EXPLANATION_ADJUDICATION_PRODUCTION_SHADOW.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/DESIGN_PARTNER_DEPLOYMENT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/DISCLOSURE_ELIGIBILITY_AND_REVOCATION_CONTRACT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/DISCOVERY_2_FOUNDATION_MILESTONE_AUDIT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/DISCOVERY_ALPHA_GOVERNANCE_IDENTITY_FOUNDATION_COMPLETE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/DISCOVERY_PRODUCT_COMMUNICATION_FOUNDATION_COMPLETE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/DISCOVERY_PROJECTION_FOUNDATION_COMPLETE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "docs/Sprint Updates/DISCOVERY_SNAPSHOT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/DURABLE_ALPHA_ACCESS_AND_AUDIT_STORAGE_DECISION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/DURABLE_ALPHA_POSTGRESQL_STORAGE_FOUNDATION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "docs/Sprint Updates/ENGINE_CAPABILITY_AUDIT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/EVIDENCE_INDEPENDENCE_BENCHMARK.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/EVIDENCE_INDEPENDENCE_SHADOW_EVALUATION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/EVIDENCE_PROVENANCE_PRESERVATION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/EVIDENCE_SENSITIVITY_PRODUCTION_DESIGN.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/EXECUTIVE_CONVERSATION_PROVIDER_EVALUATION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/EXPLANATION_SEED_THEORY_ANCESTRY_BRIDGE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/EXPLANATORY_RELATIONSHIP_FEASIBILITY.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/EXPLICIT_AUTHORITY_TRANSITIONS_AND_CONTRIBUTION_VALIDATION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/IMPLICIT_CAUSAL_EDGE_RECOVERY.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/JOINT_COMPOSITION_EXPERIMENT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/JUDGMENT_DECISIVE_EVIDENCE_ABLATION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/MECHANISM_EVIDENCE_COMPOSITION_GROUND_TRUTH.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "docs/Sprint Updates/NEXT_CHAT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/OBSERVATIONS_TO_SIGNALS_TRACE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/ORGANIZATIONAL_UNDERSTANDING_PROJECTION_SHADOW.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/PRIMARY_CONSTRAINT_RANKING_GROUND_TRUTH.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/PRODUCT_COMMUNICATION_AND_PRIORITY_CONTRACT_DECISION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/PRODUCTION_INTEGRATION_MANIFEST.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "docs/Sprint Updates/PROJECT_STATE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/RECURSIVE_ORGANIZATIONAL_INTELLIGENCE_VALIDATION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/REPOSITORY_INTEGRATION_PLAN.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/RUNTIME_BACKED_YOUR_ORGANIZATION_INTEGRATION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/STRUCTURED_EXPLANATION_CANDIDATE_SHADOW.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/STRUCTURED_PRODUCT_COMMUNICATION_CONTRACT_SHADOW.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/THEME_COMPOSITION_POLICY_EXPERIMENT.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/THEME_EVIDENCE_COMPOSITION_ISOLATION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/UNADJUDICATED_EXPLANATION_UNDERSTANDING_SHADOW.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/YOUR_ORGANIZATION_PRODUCT_COMMUNICATION_ADAPTER.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/Sprint Updates/YOUR_ORGANIZATION_PROJECTION_COMPATIBILITY_ADAPTER.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "D",
+      "path": "docs/SPRINT_27_SUMMARY.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "D",
+      "path": "docs/Startup_Prompt.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "docs/tasks/S78-C2.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "D",
+      "path": "docs/UNDERSTANDING_COMPRESSION.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "D",
+      "path": "docs/UNDERSTANDING_SCORECARD_BASELINE.md",
+      "category": "documentation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "drizzle.config.ts",
+      "category": "storage",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/auditInterventionTargetRecoverability.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/auditLeakage.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/auditPredictionRecoverability.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/BENCHMARK_REPORT.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/classifyFieldDerivations.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/collectCanonicalInputs.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/deriveCandidateEnrichedMechanisms.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/evaluateQualificationContracts.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/fixtures.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/productionPathAudit.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/README.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/recommendNextEvidence.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/RESULTS.json",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/runCandidateEnrichedMechanismShadowExperiment001.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/runCounterfactualAblations.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/runProductionShadowCognition.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/scoreExperiment.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/types.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-intelligence-ecology/candidateEcologyTypes.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-intelligence-ecology/candidatePolicies.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-intelligence-ecology/candidateWorlds.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-intelligence-ecology/runCandidateIntelligenceEcologyBenchmark.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-intelligence-ecology/scoreCandidateEcology.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/candidate-intelligence-ecology/validateCandidateIntelligenceEcologyBenchmark.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/auditInterventionLeverage.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/auditLeakage.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/BENCHMARK_REPORT.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/classifySupportStatus.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/collectCanonicalInputs.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/composePairwiseRelationships.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/deriveFalsificationCriteria.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/fixtures.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/formCandidateCausalMechanisms.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/identifyCompetingExplanations.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/productionPathAudit.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/README.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/recommendNextEvidence.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/registerCausalImplications.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/RESULTS.json",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/runCausalMechanismFormationExperiment001.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/runCounterfactualAblations.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/runProductionShadowCognition.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/scoreExperiment.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-experiment-001/types.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/auditInterventionLeverage.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/auditLeakage.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/auditPredictionRecoverability.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/BENCHMARK_REPORT.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/classifyTopology.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/collectCanonicalInputs.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/deriveTopologyAwareFalsification.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/fixtures.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/formBranchingMechanisms.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/formCandidateMechanisms.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/formConvergingMechanisms.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/formExplicitLinearMechanisms.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/identifyAlternativesAndConfounders.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/inferImplicitEdges.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/productionPathAudit.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/README.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/recommendNextEvidence.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/registerTopologyAwareImplications.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/RESULTS.json",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/runCausalMechanismFormationRefinementExperiment002.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/runCounterfactualAblations.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/runProductionShadowCognition.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/scoreExperiment.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/causal-mechanism-formation-refinement-experiment-002/types.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/auditFalsePositive.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/auditInterventionHandoff.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/auditLeakage.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/auditMechanismCompleteness.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/auditPredictionHandoff.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/BENCHMARK_REPORT.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/decomposeGeneratedMechanisms.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/evaluateEligibilityContracts.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/fixtures.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/productionPathAudit.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/README.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/recomposeMechanismImplications.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/RESULTS.json",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/runCrossSiloMechanismImplicationInterventionAudit001.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/runProductionShadowCognition.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/scoreAudit.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/traceCognitionHandoffs.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/cross-silo-mechanism-implication-intervention-audit-001/types.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergence-phase-transition-experiment-001/analyzePhaseTransition.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergence-phase-transition-experiment-001/analyzeThresholdPredictors.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergence-phase-transition-experiment-001/auditLeakage.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergence-phase-transition-experiment-001/BENCHMARK_REPORT.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergence-phase-transition-experiment-001/buildAnalysisGraph.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergence-phase-transition-experiment-001/calculateRelationalMetrics.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergence-phase-transition-experiment-001/fixtures.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergence-phase-transition-experiment-001/generateEvidenceConfigurations.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergence-phase-transition-experiment-001/productionPathAudit.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergence-phase-transition-experiment-001/README.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergence-phase-transition-experiment-001/RESULTS.json",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergence-phase-transition-experiment-001/runEmergencePhaseTransitionExperiment001.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergence-phase-transition-experiment-001/runProductionShadowCognition.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergence-phase-transition-experiment-001/scoreEmergence.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergence-phase-transition-experiment-001/traceProducerStages.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergence-phase-transition-experiment-001/types.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergence-phase-transition-experiment-001/verbalizeBoundaryTransition.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-experiment-001/auditLeakage.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-experiment-001/BENCHMARK_REPORT.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-experiment-001/fixtures.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-experiment-001/inferEmergentUnderstanding.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-experiment-001/interventionModels.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-experiment-001/predictionModels.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-experiment-001/README.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-experiment-001/registerPredictions.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-experiment-001/RESULTS.json",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-experiment-001/runEmergentOrganizationalIntelligenceExperiment001.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-experiment-001/scoreExperiment.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-experiment-001/types.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/analyzeEmergencePreconditions.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/auditLeakage.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/BENCHMARK_REPORT.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/extractGeneratedCognition.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/fixtures.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/predictionModels.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/productionPathAudit.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/README.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/registerPredictions.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/RESULTS.json",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/runEmergentOrganizationalIntelligenceProductionShadowExperiment002.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/runProductionShadowCognition.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/scoreExperiment.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/types.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/verbalizeEmergentUnderstanding.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-collaboration-lab/evaluateProviderConversationIntelligence.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-collaboration-lab/evaluateReasoningInterpretation.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-collaboration-lab/executiveConversationScenarios.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-collaboration-lab/executiveConversationTypes.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-collaboration-lab/heldOutConversationScenarios.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-collaboration-lab/reasoningHeldOutConversationScenarios.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-collaboration-lab/runExecutiveCollaborationLab.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-collaboration-lab/runExecutiveConversationScenario.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-collaboration-lab/scoreExecutiveConversation.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-collaboration-lab/validateExecutiveCollaborationLab.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-communication/runtimeBackedExecutiveLanguage001.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-decision-lab/atlasDecisionPilot.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-decision-lab/contracts.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-decision-lab/evaluateExecutiveDecision.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-decision-lab/executiveDecisionOrderIndependenceRegression.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-decision-lab/interventionCorrespondence.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-decision-lab/loadIsolatedAtlasDecisionRuntime.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-decision-lab/recommendationRiskRegression.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-decision-lab/runExecutiveDecisionLab.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-decision-lab/runPilotBaseline.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/executive-decision-lab/validateExecutiveDecisionLab.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/high-volume/northstar/explanatoryRelationshipFeasibility.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/high-volume/northstar/groundTruthDeterminismRegression.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/high-volume/northstar/jointCompositionExperiment.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/high-volume/northstar/runCanonicalNorthstarGroundTruthReplay.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/benchmark/high-volume/northstar/runNorthstarIngestionExperiment001.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/benchmark/high-volume/northstar/scoreNorthstarGroundTruth.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/high-volume/northstar/themeCompositionPolicyExperiment.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/high-volume/northstar/traceConcurrencyStaffingSemantics.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/independent-natural-language-generalization-experiment-003/auditIndependenceAndLeakage.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/independent-natural-language-generalization-experiment-003/BENCHMARK_REPORT.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/independent-natural-language-generalization-experiment-003/collectCanonicalInputs.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/independent-natural-language-generalization-experiment-003/evaluateGeneralization.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/independent-natural-language-generalization-experiment-003/failureAnalysis.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/independent-natural-language-generalization-experiment-003/generateNaturalLanguageScenarios.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/independent-natural-language-generalization-experiment-003/independentScenarioCorpus.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/independent-natural-language-generalization-experiment-003/industryAnalysis.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/independent-natural-language-generalization-experiment-003/internalTypes.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/independent-natural-language-generalization-experiment-003/README.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/independent-natural-language-generalization-experiment-003/RESULTS.json",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/independent-natural-language-generalization-experiment-003/runIndependentNaturalLanguageGeneralizationExperiment003.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/independent-natural-language-generalization-experiment-003/runProductionShadowCognition.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/independent-natural-language-generalization-experiment-003/terminologyAnalysis.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/independent-natural-language-generalization-experiment-003/types.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/independent-natural-language-generalization-experiment-003/writingStyleAnalysis.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/atlasIndustrialPilot.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/atlasIndustrialProvenancePilot.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/canonicalUnderstandingCompatibilityShadowGate.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/canonicalUnderstandingOwnershipMigrationGate.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/causalConstraintProductionShadow.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/causalConstraintReasoningBenchmark.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/comparativeEvidenceRolesBenchmarkGate.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/comparisonContracts.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/competingExplanationAdjudication.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/competingExplanationProductionShadow.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/completedExplanationAdjudicationProductionShadow.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/contracts.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/decisiveEvidenceAblation.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/disclosureEligibilityRevocationContractGate.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/evaluateJudgment.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/evidenceIndependenceBenchmark.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/evidenceIndependenceShadowEvaluation.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/evidenceSensitivityDesignFeasibility.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/explanationSeedTheoryAncestryBridge.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/explicitAuthorityTransitionsGate.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/failureMemory.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/implicitCausalEdgeRecovery.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/mechanismEvidenceCompositionGroundTruth.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/mechanismLibrary.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/metamorphic.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/primaryConstraintRankingGroundTruth.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/runEvidenceIndependenceShadow.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/runJudgmentLab.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/runPilotBaseline.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/structuredExplanationCandidateShadow.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/themeEvidenceCompositionIsolation.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/unadjudicatedExplanationUnderstandingShadowGate.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/validateEvidenceProvenancePreservation.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/validateJudgmentLab.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/validateJudgmentLabExpansion.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment-lab/validateJudgmentLabProvenance.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/judgment/mechanismEvidencePropagation001.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/analyzeInterpretability.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/analyzeStability.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/analyzeTransitions.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/applyOutcomeDrivenRevision.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/auditLeakage.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/BENCHMARK_REPORT.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/evaluateMechanismStateInteraction.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/fixtures.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/parseCognitiveInput.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/productionPathAudit.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/qualifyMechanismTransitions.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/README.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/runLocalizedNonlinearCognition.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/runLocalizedNonlinearCognitionExperiment001.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/runLocalizedZoneAblations.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/runMultiCycleLearning.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/runPervasiveNonlinearCognition.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/runProductionShadowCognition.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/runStableLinearBaseline.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/scoreExperiment.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/types.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/localized-nonlinear-cognition-experiment-001/verbalizeDynamicRevision.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/operating-model-evolution-lab/contracts.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/operating-model-evolution-lab/evaluateOperatingModelEvolution.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/operating-model-evolution-lab/mechanismConfidenceRegression.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/operating-model-evolution-lab/metamorphic.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/operating-model-evolution-lab/productionReplay.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/operating-model-evolution-lab/productionSnapshotAdapter.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/operating-model-evolution-lab/stressScenarios.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/operating-model-evolution-lab/syntheticPilot.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/operating-model-evolution-lab/validateOperatingModelEvolutionLab.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/operating-model-evolution-lab/validateOperatingModelEvolutionStressPilot.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/operating-model-evolution-lab/validateProductionOperatingModelReplay.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-experiment-001/BENCHMARK_REPORT.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-experiment-001/fixtures.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-experiment-001/inferCandidateAttractor.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-experiment-001/predictionModels.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-experiment-001/README.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-experiment-001/runOrganizationalAttractorExperiment001.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-experiment-001/scoreExperiment.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-experiment-001/types.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-shadow-experiment-002/auditLeakage.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-shadow-experiment-002/BENCHMARK_REPORT.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-shadow-experiment-002/fixtures.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-shadow-experiment-002/inferCandidateAttractor.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-shadow-experiment-002/predictionModels.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-shadow-experiment-002/README.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-shadow-experiment-002/registerPredictions.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-shadow-experiment-002/RESULTS.json",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-shadow-experiment-002/runOrganizationalAttractorShadowExperiment002.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-shadow-experiment-002/scoreExperiment.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-attractor-shadow-experiment-002/types.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-intelligence-architecture/architectureAdapters.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-intelligence-architecture/architectureBenchmarkTypes.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-intelligence-architecture/architectureWorlds.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-intelligence-architecture/runOrganizationalIntelligenceArchitectureBenchmark.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-intelligence-architecture/scoreArchitectureRun.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-intelligence-architecture/validateOrganizationalIntelligenceArchitectureBenchmark.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-intelligence-lab/composeScopedIntelligence.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-intelligence-lab/evaluateContextComplexity.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-intelligence-lab/evaluateNoninterference.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-intelligence-lab/organizationalIntelligenceFixtures.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-intelligence-lab/organizationalIntelligenceLabTypes.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-intelligence-lab/runOrganizationalIntelligenceLab.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/organizational-intelligence-lab/validateOrganizationalIntelligenceLab.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/product-communication/structuredProductCommunicationShadow.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/research/localized-nonlinear-cognition-adapter/README.md",
+      "category": "research",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/research/localized-nonlinear-cognition-adapter/RESEARCH_REPORT.md",
+      "category": "research",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/research/localized-nonlinear-cognition-adapter/RESULT.json",
+      "category": "research",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/research/localized-nonlinear-cognition-adapter/runLocalizedNonlinearResearchAdapter.ts",
+      "category": "research",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/research/localized-nonlinear-cognition-adapter/types.ts",
+      "category": "research",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/research/ORGANIZATIONAL_UNDERSTANDING_RESEARCH_FRAMEWORK.md",
+      "category": "research",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/research/README.md",
+      "category": "research",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/runtime/executiveMeaningPreservation001.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/state-dependent-causal-dynamics-experiment-001/analyzeThresholds.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/state-dependent-causal-dynamics-experiment-001/auditLeakage.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/state-dependent-causal-dynamics-experiment-001/BENCHMARK_REPORT.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/state-dependent-causal-dynamics-experiment-001/collectDynamicInputs.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/state-dependent-causal-dynamics-experiment-001/dynamicScenarioCorpus.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/state-dependent-causal-dynamics-experiment-001/evaluateDynamics.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/state-dependent-causal-dynamics-experiment-001/failureAnalysis.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/state-dependent-causal-dynamics-experiment-001/formDynamicEdges.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/state-dependent-causal-dynamics-experiment-001/generateDynamicStates.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/state-dependent-causal-dynamics-experiment-001/README.md",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/state-dependent-causal-dynamics-experiment-001/RESULTS.json",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/state-dependent-causal-dynamics-experiment-001/runCounterfactualAnalysis.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/state-dependent-causal-dynamics-experiment-001/runProductionShadowCognition.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/state-dependent-causal-dynamics-experiment-001/runStateDependentCausalDynamicsExperiment001.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/benchmark/state-dependent-causal-dynamics-experiment-001/types.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/benchmark/stress/constraintViabilityStressTest.ts",
+      "category": "benchmark",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/conversation/createConversationInterpreter.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/conversation/executiveConversationTypes.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/conversation/index.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/conversation/MockConversationInterpreter.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/conversation/OpenAIConversationInterpreter.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/types.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/cognition/cognitiveGraph.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/communication/buildExecutiveStory.ts",
+      "category": "communication",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/v3/communication/productCommunicationPlan.ts",
+      "category": "communication",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/communication/synthesizeExecutiveCommunication.ts",
+      "category": "communication",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/concepts/buildConceptCandidates.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/contradictions.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/decisions/buildExecutiveDecisionRecommendation.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/decisions/evaluateInterventionConstraints.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/decisions/runExecutiveDecisionCycle.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/evidence.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/v3/governance/alphaAllowlistDisclosureProducer.ts",
+      "category": "governance",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/v3/governance/clerkVerifiedConsumerIdentity.ts",
+      "category": "governance",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/index.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/investigation/runOrganizationInvestigation.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/beliefs/inferOrganizationalBeliefs.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/judgment/buildExecutiveAssessment.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/v3/model/judgment/completeOrganizationalExplanations.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/judgment/consolidateOrganizationalMechanisms.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/judgment/detectJudgmentContradictions.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/judgment/evaluateExplanations.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/judgment/formOrganizationalTheories.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/judgment/inferOrganizationalMechanisms.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/judgment/mechanismInferenceTypes.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/judgment/mechanismInterpreter.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/judgment/organizationalJudgment.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/judgment/organizationalMechanism.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/judgment/organizationalTheory.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/judgment/rankExecutiveJudgments.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/judgment/synthesizeExplanations.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/memory/consolidateOrganizationalTheories.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/memory/organizationalMemory.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/memory/organizationalTheories.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/simulate/interventionOption.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/model/state/inferOrganizationalConditions.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/phenomena/inferOrganizationalPhenomena.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/v3/projection/organizationalUnderstandingProjection.ts",
+      "category": "projection",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/reasoning/generateInterventionOptions.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/v3/runtime/activeOrganization.ts",
+      "category": "Runtime",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/runtime/evolveOrganizationRuntime.ts",
+      "category": "Runtime",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/runtime/index.ts",
+      "category": "Runtime",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/runtime/organizationalUnderstandingState.ts",
+      "category": "Runtime",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/v3/runtime/organizationRegistry.ts",
+      "category": "Runtime",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/runtime/organizationRuntime.ts",
+      "category": "Runtime",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/runtime/organizationStateStore.ts",
+      "category": "Runtime",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/v3/runtime/runtimeStorageLocation.ts",
+      "category": "Runtime",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/themes.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/types.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/v3/understanding/buildUnadjudicatedExplanationUnderstandingShadow.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engine/v3/understanding/discloseCanonicalOrganizationalUnderstanding.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "engine/v3/understanding/understandingClusters.ts",
+      "category": "cognition",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/current-report.json",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/measurement-source-catalog.v1.json",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/DEPS_ALPHA_ALLOWLIST_DISCLOSURE_PRODUCER_SHADOW.md",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/DEPS_ALPHA_POSTGRESQL_STORAGE_FOUNDATION.md",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/DEPS_ALPHA_YOUR_ORGANIZATION_ACTIVATION.md",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/DEPS_BASELINE_V1.md",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/DEPS_CLERK_IDENTITY_SHADOW.md",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/DEPS_PHASE_1_1.md",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/DEPS_PHASE_5A.md",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/DEPS_PHASE_5B.md",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/DEPS_PHASE_8A.md",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/DEPS_PRODUCT_COMMUNICATION_SHADOW.md",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/DEPS_PROJECTION_COMPATIBILITY.md",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/DEPS_PROJECTION_SHADOW.md",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/DEPS_YOUR_ORGANIZATION_COMMUNICATION_ADAPTER.md",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/deps-alpha-allowlist-disclosure-producer-shadow.json",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/deps-alpha-postgresql-storage-foundation.json",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/deps-alpha-your-organization-activation.json",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/deps-baseline-v1.json",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/deps-clerk-identity-shadow.json",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/deps-phase1-1.json",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/deps-phase5a.json",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/deps-phase5b.json",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/deps-phase8a.json",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/deps-product-communication-shadow.json",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/deps-projection-compatibility.json",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/deps-projection-shadow.json",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/performance/reports/deps-your-organization-communication-adapter.json",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "engineering/production/production-integration-manifest.json",
+      "category": "generated canonical artifact",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "lib/alpha-access/session.ts",
+      "category": "governance",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "lib/alpha-activation/config.ts",
+      "category": "governance",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "lib/auth/resolveVerifiedConsumerIdentityFromClerk.ts",
+      "category": "governance",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "lib/operations/alphaOperationalLog.ts",
+      "category": "deployment",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "lib/production-route-policy.ts",
+      "category": "governance",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "middleware.ts",
+      "category": "governance",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "next-env.d.ts",
+      "category": "deployment",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "package-lock.json",
+      "category": "deployment",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "package.json",
+      "category": "deployment",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "product/alpha/fixtures.ts",
+      "category": "fixture",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "product/alpha/viewModels.ts",
+      "category": "fixture",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "scripts/cognition/generateArchitectureHandoff.mjs",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "M",
+      "path": "scripts/cognition/renderSprintStartup.mjs",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/deployment/provisionDesignPartner.ts",
+      "category": "deployment",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/deployment/runtimeRecovery.ts",
+      "category": "deployment",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/deployment/validateAlphaEnvironment.ts",
+      "category": "deployment",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/deployment/validateHostedAlphaDatabase.ts",
+      "category": "deployment",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/performance/comparePerformanceReports.mjs",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/performance/depsPaths.mjs",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/performance/renderPerformanceReport.mjs",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/performance/validatePerformanceReport.mjs",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/product/validateAlphaAccessGate.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/product/validateAlphaAllowlistDisclosureProducerShadow.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/product/validateAlphaYourOrganizationActivation.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/product/validateAskExperience.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/product/validateClerkIdentityShadowIntegration.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/product/validateDecisionsExperience.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/product/validateExecutiveConversationIntelligence.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/product/validateExecutiveInteractionArchitecture.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/product/validateLivingInteractionLoop.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/product/validateOrganizationalUnderstandingProjectionShadow.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/product/validateOrganizationExperience.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/product/validateProductInteractionBoundary.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/product/validateProductionReachability.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/product/validateResearchExperience.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/product/validateUnifiedExecutiveWorkspace.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/product/validateYourOrganizationCommunicationAdapter.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/product/validateYourOrganizationProjectionCompatibility.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/storage/alphaAccessAdmin.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/storage/migrateAlphaGovernance.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    },
+    {
+      "status": "A",
+      "path": "scripts/storage/validateAlphaPostgresStorage.ts",
+      "category": "validation",
+      "recommendation": "APPROVE"
+    }
+  ]
+}
+
