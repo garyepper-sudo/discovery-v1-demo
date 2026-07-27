@@ -45,6 +45,37 @@ function exactHeader(request: Request, name: string, expected: string): boolean 
   return request.headers.get(name) === expected;
 }
 
+function boundedProviderError(error: unknown): {
+  name: string;
+  code: string | null;
+  status: number | null;
+  message: string;
+} {
+  const provider = error as {
+    name?: unknown;
+    code?: unknown;
+    status?: unknown;
+    statusCode?: unknown;
+    message?: unknown;
+  };
+  return {
+    name: typeof provider?.name === "string"
+      ? provider.name.slice(0, 100)
+      : "Error",
+    code: typeof provider?.code === "string"
+      ? provider.code.slice(0, 100)
+      : null,
+    status: typeof provider?.status === "number"
+      ? provider.status
+      : typeof provider?.statusCode === "number"
+        ? provider.statusCode
+        : null,
+    message: typeof provider?.message === "string"
+      ? provider.message.replace(/https?:\/\/\S+/g, "[redacted-url]").slice(0, 300)
+      : "Runtime provisioning failed",
+  };
+}
+
 function operationEnabled(operation: string | null): boolean {
   if (operation === "runtime") {
     return process.env.DISCOVERY_RUNTIME_PROVISIONING_ENABLED === "true";
@@ -226,12 +257,15 @@ export async function POST(request: Request): Promise<Response> {
       accessWritten: false,
       activationChanged: false,
     });
-  } catch {
+  } catch (error) {
     console.error(JSON.stringify({
       event: "alpha-runtime-provisioning-failed",
       requestId,
+      operation: "runtime",
+      conditionalMode: "first-create-no-overwrite",
       organizationId: ORGANIZATION_ID,
       operatorId: OPERATOR_ID,
+      providerError: boundedProviderError(error),
     }));
     return new Response("Runtime provisioning failed closed.", { status: 409 });
   }
