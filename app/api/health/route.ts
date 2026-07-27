@@ -1,11 +1,8 @@
-import { access } from "node:fs/promises";
-import path from "node:path";
-
 import postgres from "postgres";
 import { NextRequest, NextResponse } from "next/server";
 
 import { requireDiscoveryDatabaseUrl } from "../../../db/config";
-import { getRuntimeOrganizationsDirectory } from "../../../engine/v3/runtime/runtimeStorageLocation";
+import { createOrganizationRuntimeRepository } from "../../../engine/v3/runtime";
 
 export const dynamic = "force-dynamic";
 
@@ -28,10 +25,8 @@ export async function GET(request: NextRequest) {
     sql = postgres(requireDiscoveryDatabaseUrl("application"), { max: 1 });
     const [{ ok }] = await sql<{ ok: number }[]>`SELECT 1 AS ok`;
     checks.database = ok === 1;
-    await access(
-      path.join(getRuntimeOrganizationsDirectory(), `${organizationId}.json`),
-    );
-    checks.runtime = true;
+    checks.runtime =
+      await createOrganizationRuntimeRepository().exists(organizationId);
   } catch {
     // The response intentionally exposes only bounded readiness categories.
   } finally {

@@ -22,8 +22,16 @@ The local activation is valid. Production dependency remediation, bounded
 operational logging, environment validation, provisioning, and recovery
 tooling are complete. This is not yet evidence that a hosted design partner
 can safely use the system: live Clerk deployment, hosted Neon storage, durable
-hosted Runtime persistence, monitoring configuration, and deployed rollback
+hosted Runtime provider setup, monitoring configuration, and deployed rollback
 verification remain blocking operational work.
+
+Runtime persistence now sits behind one organization Runtime repository
+contract. Local development, benchmarks, and replay retain the filesystem
+implementation. Vercel preview and production require the private
+`vercel-blob` implementation and reject filesystem or `/tmp` fallback.
+Runtime JSON schema and bytes are unchanged. The activation loader continues
+to resolve identity and durable access eligibility before it invokes the
+configured repository.
 
 ## Activation Audit
 

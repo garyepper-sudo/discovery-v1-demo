@@ -54,7 +54,9 @@ Production requires:
 DISCOVERY_DATABASE_URL
 DISCOVERY_DATABASE_ADMIN_URL
 DISCOVERY_DATABASE_MIGRATION_URL
-DISCOVERY_RUNTIME_ORGANIZATIONS_DIRECTORY
+DISCOVERY_RUNTIME_STORAGE_BACKEND=vercel-blob
+DISCOVERY_RUNTIME_BLOB_PREFIX=discovery/runtime/v1
+BLOB_READ_WRITE_TOKEN
 DISCOVERY_ALPHA_ORGANIZATION_ID
 DISCOVERY_ALPHA_YOUR_ORGANIZATION_ENABLED=true
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
@@ -66,16 +68,76 @@ Database URLs must require TLS. Use:
 - the Neon pooled application endpoint for `DISCOVERY_DATABASE_URL`;
 - a least-privilege administrative endpoint for access lifecycle operations;
 - the direct Neon endpoint for migrations;
-- an absolute path on a persistent mounted volume for the Runtime directory.
+- a connected private Vercel Blob store for hosted Runtime persistence.
+
+Local development, benchmarks, and replay continue to use:
+
+```text
+DISCOVERY_RUNTIME_STORAGE_BACKEND=filesystem
+DISCOVERY_RUNTIME_ORGANIZATIONS_DIRECTORY=/absolute/local/path
+```
+
+Vercel preview and production must use `vercel-blob`; they cannot use `/tmp`
+as durable Runtime storage. `DISCOVERY_RUNTIME_BLOB_PREFIX` is optional and
+defaults to `discovery/runtime/v1`. A connected private store supplies
+`BLOB_READ_WRITE_TOKEN`; provider-managed OIDC may instead use
+`VERCEL_OIDC_TOKEN` with `BLOB_STORE_ID`.
 
 Run before release:
 
 ```bash
 npm run deployment:validate-environment
+npm run deployment:validate-runtime-storage
 ```
 
 The validator prints no secret values. Secrets belong in the deployment
 platform's encrypted environment, never `.env`, build output, logs, or Git.
+
+## Runtime Storage, Provisioning, and Recovery
+
+Both backends implement read, existence check, create, revision-safe replace,
+backup, and restore without changing the Runtime JSON model:
+
+- `filesystem` preserves exact bytes and uses atomic rename for local work.
+- `vercel-blob` uses authenticated private objects, consistent uncached reads,
+  deterministic organization keys, and ETag-conditional writes.
+
+The active key is:
+
+```text
+discovery/runtime/v1/organizations/<organizationId>/runtime.json
+```
+
+Named backups are immutable objects at:
+
+```text
+discovery/runtime/v1/organizations/<organizationId>/backups/<backupId>.json
+```
+
+The repository never enumerates organization objects. The activation loader
+supplies only the exact organization id after authorization succeeds.
+
+`deployment:provision-design-partner` verifies the reviewed local Runtime,
+its organization identity, product readiness, uploaded bytes, and retrieved
+digest. Existing objects are refused unless `--allow-overwrite true` is
+explicitly supplied; replacement first creates an immutable named backup.
+
+Use backend-neutral backup and restore:
+
+```bash
+DISCOVERY_OPERATION_OPERATOR_ID=EXACT_OPERATOR_ID \
+DISCOVERY_OPERATION_REQUEST_ID=EXACT_REQUEST_ID \
+npm run deployment:runtime-recovery -- backup EXACT_ORGANIZATION_ID BACKUP_ID
+
+DISCOVERY_OPERATION_OPERATOR_ID=EXACT_OPERATOR_ID \
+DISCOVERY_OPERATION_REQUEST_ID=EXACT_REQUEST_ID \
+npm run deployment:runtime-recovery -- restore EXACT_ORGANIZATION_ID BACKUP_ID
+```
+
+Restore is revision-conditional and fails closed on a concurrent update.
+Operational logs contain identifiers, backend, outcome, revision, and digest,
+never Runtime content. Application rollback does not automatically restore
+Runtime; a named Runtime restore is a separate reviewed operation.
 
 ## Neon PostgreSQL Procedure
 
@@ -206,7 +268,7 @@ Minimum alerts:
 - readiness remains `503`;
 - repeated database or audit failures;
 - repeated Runtime failures;
-- unexpected process restart or persistent-volume unavailability.
+- private Blob authentication or object-read failure.
 
 ## Recovery and Rollback
 
@@ -214,14 +276,14 @@ Minimum alerts:
 
 ```bash
 npm run deployment:runtime-recovery -- \
-  backup EXACT_ORGANIZATION_ID /secure/backups/runtime.json
+  backup EXACT_ORGANIZATION_ID BACKUP_ID
 
 npm run deployment:runtime-recovery -- \
-  restore EXACT_ORGANIZATION_ID /secure/backups/runtime.json
+  restore EXACT_ORGANIZATION_ID BACKUP_ID
 ```
 
-Backup and restore produce SHA-256 evidence and reject organization mismatch
-or a non-product-ready Runtime.
+Backup and restore produce SHA-256 evidence, use the configured repository,
+reject organization mismatch, and fail closed on revision conflicts.
 
 ### Database
 

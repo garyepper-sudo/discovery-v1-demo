@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { copyFile, mkdir, readFile, rename, stat, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import postgres from "postgres";
@@ -8,10 +8,10 @@ import postgres from "postgres";
 import { requireDiscoveryDatabaseUrl } from "../../db/config";
 import { PostgresAlphaAccessRecordRepository } from "../../db/governance/postgresRepositories";
 import {
-  normalizeOrganizationRuntime,
-} from "../../engine/v3/runtime/organizationStateStore";
-import type { OrganizationRuntime } from "../../engine/v3/runtime";
-import { getRuntimeOrganizationsDirectory } from "../../engine/v3/runtime/runtimeStorageLocation";
+  createOrganizationRuntimeRepository,
+  type OrganizationRuntime,
+} from "../../engine/v3/runtime";
+import { normalizeOrganizationRuntime } from "../../engine/v3/runtime/organizationStateStore";
 
 const args = new Map<string, string>();
 for (let index = 2; index < process.argv.length; index += 2) {
@@ -20,6 +20,7 @@ for (let index = 2; index < process.argv.length; index += 2) {
   if (!name?.startsWith("--") || !value) throw new Error("Arguments require --name value");
   args.set(name.slice(2), value);
 }
+
 function exact(name: string): string {
   const value = args.get(name);
   if (!value || value === "*" || value.trim() !== value) {
@@ -29,66 +30,91 @@ function exact(name: string): string {
 }
 
 async function main(): Promise<void> {
-const organizationId = exact("organization");
-const consumerId = exact("consumer");
-const actor = exact("actor");
-const sourcePath = path.resolve(exact("runtime-source"));
-const idempotencyKey = exact("idempotency-key");
-assert.match(organizationId, /^[a-zA-Z0-9_-]+$/);
+  const organizationId = exact("organization");
+  const consumerId = exact("consumer");
+  const actor = exact("actor");
+  const sourcePath = path.resolve(exact("runtime-source"));
+  const idempotencyKey = exact("idempotency-key");
+  const allowOverwrite = args.get("allow-overwrite") === "true";
+  assert.match(organizationId, /^[a-zA-Z0-9_-]+$/);
 
-const raw = await readFile(sourcePath, "utf8");
-const runtime = normalizeOrganizationRuntime(JSON.parse(raw) as OrganizationRuntime);
-assert.equal(runtime.metadata.organizationId, organizationId, "Runtime organization mismatch");
-assert.ok(runtime.metadata.investigationCount > 0, "Runtime has no completed investigation");
-assert.ok(
-  (runtime.memory.organizationalUnderstandingState.canonicalCompositions ?? []).length > 0,
-  "Runtime has no canonical Organizational Understanding composition",
-);
+  const raw = await readFile(sourcePath);
+  const runtime = normalizeOrganizationRuntime(
+    JSON.parse(raw.toString("utf8")) as OrganizationRuntime,
+  );
+  assert.equal(runtime.metadata.organizationId, organizationId, "Runtime organization mismatch");
+  assert.ok(runtime.metadata.investigationCount > 0, "Runtime has no completed investigation");
+  assert.ok(
+    (runtime.memory.organizationalUnderstandingState.canonicalCompositions ?? []).length > 0,
+    "Runtime has no canonical Organizational Understanding composition",
+  );
 
-const directory = getRuntimeOrganizationsDirectory();
-await mkdir(directory, { recursive: true });
-const destination = path.join(directory, `${organizationId}.json`);
-const temporary = `${destination}.provisioning`;
-let backup: string | undefined;
-try {
-  await stat(destination);
-  backup = `${destination}.backup-${Date.now()}`;
-  await copyFile(destination, backup);
-} catch {}
+  const repository = createOrganizationRuntimeRepository();
+  const requestId = createHash("sha256").update(idempotencyKey).digest("hex");
+  const metadata = { requestId, operatorId: actor };
+  const existing = await repository.read(organizationId);
+  let backupId: string | undefined;
+  let stored;
+  if (existing) {
+    if (!allowOverwrite) {
+      throw new Error("Runtime already exists; pass --allow-overwrite true to replace it");
+    }
+    backupId = `pre-provision-${requestId.slice(0, 24)}`;
+    await repository.backup(organizationId, backupId, metadata);
+    stored = await repository.replace(
+      organizationId,
+      raw,
+      existing.revision,
+      metadata,
+    );
+  } else {
+    stored = await repository.create(organizationId, raw, metadata);
+  }
 
-await writeFile(temporary, `${JSON.stringify(runtime, null, 2)}\n`, {
-  encoding: "utf8",
-  flag: "wx",
-});
-await rename(temporary, destination);
+  const verified = await repository.read(organizationId);
+  assert.ok(verified, "Uploaded Runtime is unavailable");
+  assert.equal(verified.runtime.metadata.organizationId, organizationId);
+  assert.equal(
+    createHash("sha256").update(verified.bytes).digest("hex"),
+    createHash("sha256").update(raw).digest("hex"),
+    "Uploaded Runtime bytes changed",
+  );
 
-const sql = postgres(requireDiscoveryDatabaseUrl("administration"), { max: 1 });
-try {
-  const access = await new PostgresAlphaAccessRecordRepository(sql).grantAccess({
-    accessRecordId: `alpha-access:${createHash("sha256").update(idempotencyKey).digest("hex")}`,
-    consumerId,
-    organizationId,
-    experience: "organization",
-    actor,
-    reasonCode: "first-design-partner-provisioning",
-    idempotencyKey,
-    grantedAt: new Date().toISOString(),
-  });
-  console.log(JSON.stringify({
-    result: "PROVISIONED",
-    organizationId,
-    consumerId,
-    runtimePath: destination,
-    runtimeSha256: createHash("sha256").update(raw).digest("hex"),
-    accessRecordId: access.accessRecordId,
-    backupCreated: Boolean(backup),
-  }, null, 2));
-} catch (error) {
-  if (backup) await copyFile(backup, destination);
-  throw error;
-} finally {
-  await sql.end();
-}
+  const sql = postgres(requireDiscoveryDatabaseUrl("administration"), { max: 1 });
+  try {
+    const access = await new PostgresAlphaAccessRecordRepository(sql).grantAccess({
+      accessRecordId: `alpha-access:${requestId}`,
+      consumerId,
+      organizationId,
+      experience: "organization",
+      actor,
+      reasonCode: "first-design-partner-provisioning",
+      idempotencyKey,
+      grantedAt: new Date().toISOString(),
+    });
+    console.log(JSON.stringify({
+      result: "PROVISIONED",
+      organizationId,
+      consumerId,
+      runtimeBackend: repository.backend,
+      runtimeSha256: createHash("sha256").update(raw).digest("hex"),
+      runtimeRevision: stored.revision,
+      accessRecordId: access.accessRecordId,
+      backupId,
+    }, null, 2));
+  } catch (error) {
+    if (backupId) {
+      await repository.restore(
+        organizationId,
+        backupId,
+        verified.revision,
+        metadata,
+      );
+    }
+    throw error;
+  } finally {
+    await sql.end();
+  }
 }
 
 main().catch((error: unknown) => {

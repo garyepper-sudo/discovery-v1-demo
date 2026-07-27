@@ -8,7 +8,7 @@ import {
   buildAlphaCanonicalAuthorityReceipt,
 } from "../../../engine/v3/governance/alphaAllowlistDisclosureProducer";
 import {
-  loadOrganizationRuntimeState,
+  createOrganizationRuntimeRepository,
   type OrganizationRuntime,
 } from "../../../engine/v3/runtime";
 import { resolveVerifiedConsumerIdentityFromClerk } from "../../../lib/auth/resolveVerifiedConsumerIdentityFromClerk";
@@ -76,8 +76,12 @@ export async function loadActivatedYourOrganization(
       experience: "organization",
       resolvedAt,
       runtimeLoader: {
-        load({ organizationId: authorizedOrganizationId }) {
-          const loaded = loadOrganizationRuntimeState(authorizedOrganizationId);
+        async load({ organizationId: authorizedOrganizationId }) {
+          const stored = await createOrganizationRuntimeRepository().read(
+            authorizedOrganizationId,
+          );
+          if (!stored) throw new Error("Runtime unavailable");
+          const loaded = stored.runtime;
           const compositions =
             loaded.memory.organizationalUnderstandingState
               .canonicalCompositions ?? [];

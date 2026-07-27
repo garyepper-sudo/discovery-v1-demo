@@ -1,49 +1,52 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { copyFile, mkdir, readFile, rename } from "node:fs/promises";
-import path from "node:path";
 
-import type { OrganizationRuntime } from "../../engine/v3/runtime";
-import { normalizeOrganizationRuntime } from "../../engine/v3/runtime/organizationStateStore";
-import { getRuntimeOrganizationsDirectory } from "../../engine/v3/runtime/runtimeStorageLocation";
+import { createOrganizationRuntimeRepository } from "../../engine/v3/runtime";
 
 async function main(): Promise<void> {
-const [operation, organizationId, artifactArgument] = process.argv.slice(2);
-assert.match(organizationId ?? "", /^[a-zA-Z0-9_-]+$/, "Exact organization id required");
-const directory = getRuntimeOrganizationsDirectory();
-const active = path.join(directory, `${organizationId}.json`);
-const artifact = path.resolve(artifactArgument ?? "");
-assert.notEqual(artifact, process.cwd(), "Explicit artifact path required");
+  const [operation, organizationId, backupId] = process.argv.slice(2);
+  assert.match(organizationId ?? "", /^[a-zA-Z0-9_-]+$/, "Exact organization id required");
+  assert.match(backupId ?? "", /^[a-zA-Z0-9_-]+$/, "Exact backup id required");
 
-if (operation === "backup") {
-  await mkdir(path.dirname(artifact), { recursive: true });
-  const bytes = await readFile(active);
-  await copyFile(active, artifact);
-  console.log(JSON.stringify({
-    operation,
-    organizationId,
-    artifact,
-    sha256: createHash("sha256").update(bytes).digest("hex"),
-  }));
-} else if (operation === "restore") {
-  const raw = await readFile(artifact, "utf8");
-  const runtime = normalizeOrganizationRuntime(JSON.parse(raw) as OrganizationRuntime);
-  assert.equal(runtime.metadata.organizationId, organizationId, "Backup organization mismatch");
-  assert.ok(runtime.metadata.investigationCount > 0, "Backup Runtime is not product-ready");
-  const temporary = `${active}.restoring`;
-  await mkdir(directory, { recursive: true });
-  await copyFile(artifact, temporary);
-  await rename(temporary, active);
-  const restored = await readFile(active);
-  console.log(JSON.stringify({
-    operation,
-    organizationId,
-    artifact,
-    sha256: createHash("sha256").update(restored).digest("hex"),
-  }));
-} else {
+  const repository = createOrganizationRuntimeRepository();
+  const metadata = {
+    requestId: process.env.DISCOVERY_OPERATION_REQUEST_ID ?? crypto.randomUUID(),
+    operatorId: process.env.DISCOVERY_OPERATION_OPERATOR_ID ?? "runtime-recovery-cli",
+  };
+
+  if (operation === "backup") {
+    const current = await repository.backup(organizationId!, backupId!, metadata);
+    console.log(JSON.stringify({
+      operation,
+      organizationId,
+      backupId,
+      backend: repository.backend,
+      sha256: createHash("sha256").update(current.bytes).digest("hex"),
+    }));
+    return;
+  }
+
+  if (operation === "restore") {
+    const current = await repository.read(organizationId!);
+    assert.ok(current, "Active Runtime is unavailable");
+    const restored = await repository.restore(
+      organizationId!,
+      backupId!,
+      current.revision,
+      metadata,
+    );
+    assert.equal(restored.runtime.metadata.organizationId, organizationId);
+    console.log(JSON.stringify({
+      operation,
+      organizationId,
+      backupId,
+      backend: repository.backend,
+      sha256: createHash("sha256").update(restored.bytes).digest("hex"),
+    }));
+    return;
+  }
+
   throw new Error("Operation must be backup or restore");
-}
 }
 
 main().catch((error: unknown) => {

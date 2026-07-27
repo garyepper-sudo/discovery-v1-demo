@@ -35,3 +35,22 @@ export {
 export type {
   OrganizationSummary,
 } from "./organizationRegistry";
+
+export {
+  configuredRuntimeStorageBackend,
+  createOrganizationRuntimeRepository,
+  FilesystemOrganizationRuntimeRepository,
+  organizationRuntimeBackupObjectKey,
+  organizationRuntimeObjectKey,
+  RuntimeStorageConflictError,
+  RuntimeStorageIntegrityError,
+  VercelBlobOrganizationRuntimeRepository,
+} from "./organizationRuntimeRepository";
+
+export type {
+  OrganizationRuntimeRepository,
+  PrivateBlobClient,
+  RuntimeStorageBackend,
+  RuntimeStorageOperationMetadata,
+  StoredOrganizationRuntime,
+} from "./organizationRuntimeRepository";

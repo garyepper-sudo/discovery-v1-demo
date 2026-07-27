@@ -5,7 +5,7 @@ const required = [
   "DISCOVERY_DATABASE_URL",
   "DISCOVERY_DATABASE_ADMIN_URL",
   "DISCOVERY_DATABASE_MIGRATION_URL",
-  "DISCOVERY_RUNTIME_ORGANIZATIONS_DIRECTORY",
+  "DISCOVERY_RUNTIME_STORAGE_BACKEND",
   "DISCOVERY_ALPHA_ORGANIZATION_ID",
   "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
   "CLERK_SECRET_KEY",
@@ -31,11 +31,32 @@ for (const name of [
   }
 }
 
-assert.equal(
-  path.isAbsolute(process.env.DISCOVERY_RUNTIME_ORGANIZATIONS_DIRECTORY!),
-  true,
-  "Runtime directory must be absolute",
+const runtimeBackend = process.env.DISCOVERY_RUNTIME_STORAGE_BACKEND;
+assert.match(
+  runtimeBackend!,
+  /^(filesystem|vercel-blob)$/,
+  "Runtime backend must be filesystem or vercel-blob",
 );
+if (runtimeBackend === "filesystem") {
+  assert.ok(
+    process.env.DISCOVERY_RUNTIME_ORGANIZATIONS_DIRECTORY,
+    "Filesystem Runtime directory is required",
+  );
+  assert.equal(
+    path.isAbsolute(process.env.DISCOVERY_RUNTIME_ORGANIZATIONS_DIRECTORY!),
+    true,
+    "Runtime directory must be absolute",
+  );
+  assert.notEqual(process.env.VERCEL, "1", "Vercel cannot use filesystem Runtime storage");
+}
+if (runtimeBackend === "vercel-blob") {
+  assert.ok(
+    process.env.BLOB_READ_WRITE_TOKEN || (
+      process.env.VERCEL_OIDC_TOKEN && process.env.BLOB_STORE_ID
+    ),
+    "Private Blob authentication is required",
+  );
+}
 assert.match(
   process.env.DISCOVERY_ALPHA_ORGANIZATION_ID!,
   /^[a-zA-Z0-9_-]+$/,
@@ -62,5 +83,5 @@ console.log(JSON.stringify({
   result: "PASS",
   secretValuesPrinted: false,
   organizationId: process.env.DISCOVERY_ALPHA_ORGANIZATION_ID,
-  runtimeDirectory: process.env.DISCOVERY_RUNTIME_ORGANIZATIONS_DIRECTORY,
+  runtimeBackend,
 }));

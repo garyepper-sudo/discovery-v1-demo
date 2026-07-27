@@ -29,7 +29,13 @@ export async function runDurableAlphaDisclosureTransaction(input: {
   organizationId: string;
   experience: "organization";
   resolvedAt: string;
-  runtimeLoader: AlphaRuntimeCompositionLoader;
+  runtimeLoader: {
+    load: (
+      input: Parameters<AlphaRuntimeCompositionLoader["load"]>[0],
+    ) =>
+      | ReturnType<AlphaRuntimeCompositionLoader["load"]>
+      | Promise<ReturnType<AlphaRuntimeCompositionLoader["load"]>>;
+  };
 }): Promise<DurableAlphaDisclosureShadowResult> {
   let runtimeLoaderInvocations: 0 | 1 = 0;
   try {
@@ -74,7 +80,7 @@ export async function runDurableAlphaDisclosureTransaction(input: {
         let runtime;
         try {
           runtimeLoaderInvocations = 1;
-          runtime = input.runtimeLoader.load({
+          runtime = await input.runtimeLoader.load({
             organizationId: input.organizationId,
           });
         } catch {

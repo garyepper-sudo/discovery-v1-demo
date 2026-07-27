@@ -60,12 +60,11 @@ or secret was created.
 
 ### Application Hosting
 
-Vercel is the known production provider and watches `main`, but no local Vercel
-project metadata or authenticated deployment credential is available. The
-repository's current Vercel fallback stores Runtime under `/tmp`; that does not
-meet the design-partner durability requirement. No deployment was attempted,
-and production promotion remains a reviewed Git operation followed by explicit
-hosted configuration and validation.
+Vercel is the known production provider and watches `main`. The repository now
+contains a private Vercel Blob Runtime adapter and explicitly rejects
+filesystem or `/tmp` persistence on Vercel. No Blob store was created or
+connected during this sprint; provider configuration and hosted validation
+remain external.
 
 ## Configuration
 
@@ -77,7 +76,9 @@ The required configuration remains:
 DISCOVERY_DATABASE_URL
 DISCOVERY_DATABASE_ADMIN_URL
 DISCOVERY_DATABASE_MIGRATION_URL
-DISCOVERY_RUNTIME_ORGANIZATIONS_DIRECTORY
+DISCOVERY_RUNTIME_STORAGE_BACKEND=vercel-blob
+DISCOVERY_RUNTIME_BLOB_PREFIX=discovery/runtime/v1
+BLOB_READ_WRITE_TOKEN
 DISCOVERY_ALPHA_ORGANIZATION_ID
 DISCOVERY_ALPHA_YOUR_ORGANIZATION_ENABLED=true
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
@@ -85,8 +86,15 @@ CLERK_SECRET_KEY
 ```
 
 The three database URLs must identify the chosen Neon pooled application,
-administration, and direct migration endpoints. The Runtime directory must be
-an absolute path on the selected host's persistent volume.
+administration, and direct migration endpoints. Hosted Runtime storage requires
+a connected private Blob store. Local development, benchmarks, replay, and
+tooling retain `DISCOVERY_RUNTIME_STORAGE_BACKEND=filesystem` with an absolute
+`DISCOVERY_RUNTIME_ORGANIZATIONS_DIRECTORY`.
+
+The adapter preserves exact Runtime JSON bytes and schema, deterministic
+organization keys, consistent reads, ETag-conditional replacement, immutable
+backup, and revision-conditional restore. Provisioning refuses overwrite
+unless explicitly authorized and never logs Runtime content.
 
 ## Provisioning
 
@@ -99,7 +107,7 @@ Provisioning requires:
 3. named operator id;
 4. product-ready Runtime whose metadata matches the organization id;
 5. migrated Neon administration connection;
-6. persistent Runtime destination.
+6. connected private Runtime object store.
 
 The supported command remains:
 
@@ -118,7 +126,8 @@ permitted substitute.
 
 ## Hosted Validation
 
-The following could not be executed because no hosted deployment exists:
+The application is deployed, but the following cannot be executed until the
+private Blob store and remaining Alpha resources are configured:
 
 - Neon PostgreSQL validation;
 - production migration and idempotent upgrade;
@@ -148,8 +157,8 @@ The deployment can resume when the user provides or establishes:
 
 1. an authenticated Neon console session or scoped Neon credentials;
 2. an authenticated Clerk dashboard session or the production Clerk keys;
-3. the Vercel project identity, production domain, and deployment credentials;
-4. a durable hosted Runtime boundary compatible with the Vercel deployment;
+3. access to configure the existing Vercel production project;
+4. a connected private Vercel Blob store;
 5. the design partner's exact Clerk user id;
 6. the exact Discovery organization id;
 7. the canonical product-ready Runtime file;
