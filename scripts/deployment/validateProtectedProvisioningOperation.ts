@@ -162,31 +162,79 @@ async function main(): Promise<void> {
   }), /Organization access already exists/);
   assert.equal(accessConflictRepository.writes, 0);
 
-  process.env.DISCOVERY_PROVISIONING_OPERATION_ENABLED = "false";
   const route = await import(
     "../../app/api/internal/provision-atlas-runtime/route"
   );
-  const disabled = await route.POST(new Request(
+  const routeRequest = (
+    operation: "runtime" | "access",
+    authorized = false,
+    validScope = false,
+  ) => new Request(
     "https://discovery.invalid/api/internal/provision-atlas-runtime",
-    { method: "POST" },
-  ));
-  assert.equal(disabled.status, 404);
-
-  process.env.VERCEL_ENV = "preview";
-  process.env.DISCOVERY_PROVISIONING_OPERATION_ENABLED = "true";
-  const preview = await route.POST(new Request(
-    "https://discovery.invalid/api/internal/provision-atlas-runtime",
-    { method: "POST" },
-  ));
-  assert.equal(preview.status, 404);
+    {
+      method: "POST",
+      headers: {
+        "x-discovery-provisioning-operation": operation,
+        ...(authorized ? {
+          "x-discovery-provisioning-secret":
+            "validation-only-strong-operation-secret",
+        } : {}),
+        ...(validScope ? {
+          "x-discovery-organization-id": ORGANIZATION_ID,
+          "x-discovery-consumer-id": CONSUMER_ID,
+          "x-discovery-operator-id": OPERATOR_ID,
+          "x-discovery-runtime-sha256": digest,
+          "x-discovery-idempotency-key": `validate-${operation}-authority`,
+        } : {}),
+      },
+    },
+  );
 
   process.env.VERCEL_ENV = "production";
   process.env.DISCOVERY_PROVISIONING_OPERATION_SECRET =
     "validation-only-strong-operation-secret";
-  const unauthorized = await route.POST(new Request(
+  process.env.DISCOVERY_RUNTIME_PROVISIONING_ENABLED = "false";
+  process.env.DISCOVERY_ACCESS_PROVISIONING_ENABLED = "false";
+  assert.equal((await route.POST(routeRequest("runtime"))).status, 404);
+  assert.equal((await route.POST(routeRequest("access"))).status, 404);
+
+  process.env.DISCOVERY_RUNTIME_PROVISIONING_ENABLED = "true";
+  assert.equal(
+    (await route.POST(routeRequest("runtime", true, false))).status,
+    400,
+  );
+  assert.equal((await route.POST(routeRequest("access"))).status, 404);
+
+  process.env.DISCOVERY_RUNTIME_PROVISIONING_ENABLED = "false";
+  process.env.DISCOVERY_ACCESS_PROVISIONING_ENABLED = "true";
+  assert.equal((await route.POST(routeRequest("runtime"))).status, 404);
+  assert.equal(
+    (await route.POST(routeRequest("access", true, false))).status,
+    400,
+  );
+
+  process.env.DISCOVERY_RUNTIME_PROVISIONING_ENABLED = "true";
+  assert.equal(
+    (await route.POST(routeRequest("runtime", true, false))).status,
+    400,
+  );
+  assert.equal(
+    (await route.POST(routeRequest("access", true, false))).status,
+    400,
+  );
+
+  process.env.VERCEL_ENV = "preview";
+  const preview = await route.POST(new Request(
     "https://discovery.invalid/api/internal/provision-atlas-runtime",
-    { method: "POST" },
+    {
+      method: "POST",
+      headers: { "x-discovery-provisioning-operation": "runtime" },
+    },
   ));
+  assert.equal(preview.status, 404);
+
+  process.env.VERCEL_ENV = "production";
+  const unauthorized = await route.POST(routeRequest("runtime"));
   assert.equal(unauthorized.status, 401);
 
   const productionToken = unsignedOidcToken({
@@ -254,15 +302,19 @@ async function main(): Promise<void> {
 
   delete process.env.VERCEL_ENV;
   delete process.env.DISCOVERY_PROVISIONING_OPERATION_SECRET;
-  process.env.DISCOVERY_PROVISIONING_OPERATION_ENABLED = "false";
+  process.env.DISCOVERY_RUNTIME_PROVISIONING_ENABLED = "false";
+  process.env.DISCOVERY_ACCESS_PROVISIONING_ENABLED = "false";
 
   console.log(JSON.stringify({
     validation: "protected-production-provisioning-operation",
     result: "PASS",
-    checks: 24,
+    checks: 31,
     frozenRuntimeSha256: digest,
     disabledByDefault: true,
     productionEnvironmentOnly: true,
+    runtimeAuthorityIndependent: true,
+    accessAuthorityIndependent: true,
+    bothEnabledRemainIndependentlyRouted: true,
     unauthorizedRejected: true,
     requestContextProductionOidcRecognized: true,
     environmentOidcSupported: true,

@@ -250,6 +250,23 @@ event. The access record is the existing canonical organization-to-Clerk
 mapping; no parallel organization or identity store is introduced. It never
 writes Runtime.
 
+The protected Production route enforces these as independent, default-disabled
+authorities:
+
+- `DISCOVERY_RUNTIME_PROVISIONING_ENABLED=true` permits only the `runtime`
+  operation and its read-only Blob diagnostic. It cannot invoke access,
+  lifecycle, disclosure, or Alpha activation.
+- `DISCOVERY_ACCESS_PROVISIONING_ENABLED=true` permits only the `access`
+  operation. It cannot upload, replace, back up, or otherwise write Runtime,
+  and it cannot activate Alpha.
+- when neither flag is enabled, both operations return 404;
+- when both flags are enabled, the explicit operation header still selects one
+  independently bounded implementation. One flag never implies the other.
+
+Both authorities continue to require Production, the protected operation
+secret, exact fixed scope headers, and a valid idempotency key. Enable only the
+authority for the active launch gate, then disable it after the gate succeeds.
+
 Gate 7 remains an external deployment operation. It sets the exact Alpha
 organization and activation flag, deploys, checks health, and runs replay. It
 does not provision Runtime or access. Each gate therefore has an independent

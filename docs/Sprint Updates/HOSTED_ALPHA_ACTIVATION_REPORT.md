@@ -198,6 +198,26 @@ activation occurred. The exact continuation requirement is a reviewed,
 default-disabled Runtime-specific enable control that cannot authorize the
 access operation.
 
+### Independent Provisioning Authority Resolution — 2026-07-27
+
+The repository now replaces the shared enable control with two
+default-disabled authorities:
+
+- `DISCOVERY_RUNTIME_PROVISIONING_ENABLED` permits only the Runtime operation
+  and its read-only diagnostic;
+- `DISCOVERY_ACCESS_PROVISIONING_ENABLED` permits only the access operation.
+
+Route validation proves all four control states: neither enabled rejects both;
+Runtime-only rejects access; access-only rejects Runtime; and both enabled
+remain independently routed by the explicit operation header. The existing
+Production-only boundary, protected secret, fixed Atlas scope, idempotency
+contract, repositories, Runtime validation, and governance semantics are
+unchanged. Neither flag can activate Alpha.
+
+This resolves the repository control-boundary blocker only. Neither flag was
+configured in Vercel, the revised route was not invoked, and Gate 5 remains
+unexecuted pending deployment of the reviewed commit.
+
 ## Production Blob OIDC Gate 3 Recovery — 2026-07-27
 
 The first launch attempt stopped before mutation when a local exact-key Blob
@@ -433,9 +453,12 @@ The reviewed operation is:
 POST /api/internal/provision-atlas-runtime
 ```
 
-It is available only when `VERCEL_ENV=production` and is disabled unless
-`DISCOVERY_PROVISIONING_OPERATION_ENABLED=true`. Outside Production or when
-disabled, it returns 404. Execution additionally requires an unguessable
+It is available only when `VERCEL_ENV=production`. Runtime execution and the
+read-only diagnostic require
+`DISCOVERY_RUNTIME_PROVISIONING_ENABLED=true`; access execution requires
+`DISCOVERY_ACCESS_PROVISIONING_ENABLED=true`. Both controls default to false,
+and a disabled operation returns 404 even if the other operation is enabled.
+Execution additionally requires an unguessable
 `DISCOVERY_PROVISIONING_OPERATION_SECRET`, supplied in the protected request
 header.
 
@@ -499,17 +522,19 @@ variable, Alpha flag, or deployment was changed.
 ### Exact Continuation Sequence
 
 1. Create an unguessable one-time operation secret.
-2. Configure the operation enable flag and secret for Production while leaving
-   the governed Alpha feature flag disabled.
+2. Configure only the Runtime provisioning enable flag and secret for
+   Production while leaving access provisioning and the governed Alpha feature
+   flag disabled.
 3. Deploy the reviewed code and confirm the operation returns 401 without the
    secret and rejects incorrect scope or digest.
 4. Create the Neon recovery point and run the reviewed migration and hosted
    database validator.
 5. Send the frozen Runtime bytes once with the exact reviewed headers and a
    unique idempotency key.
-6. Verify the bounded receipt, Runtime digest, access record, lifecycle event,
-   and exact-key backup.
-7. Disable the operation immediately and redeploy.
+6. Verify the bounded Runtime receipt, digest, retrieval, and backup behavior,
+   then disable Runtime provisioning and redeploy.
+7. Enable only access provisioning, execute Gate 6, verify the access and
+   lifecycle records, then disable access provisioning and redeploy.
 8. Configure the Alpha organization ID, complete pre-activation health and
    authorization checks, then enable the governed Alpha separately.
 

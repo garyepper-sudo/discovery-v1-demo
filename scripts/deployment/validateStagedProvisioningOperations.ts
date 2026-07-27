@@ -150,6 +150,9 @@ async function main(): Promise<void> {
   );
   assert.ok(routeSource.includes('operation === "access"'));
   assert.ok(routeSource.includes('operation !== "runtime"'));
+  assert.ok(routeSource.includes("DISCOVERY_RUNTIME_PROVISIONING_ENABLED"));
+  assert.ok(routeSource.includes("DISCOVERY_ACCESS_PROVISIONING_ENABLED"));
+  assert.ok(!routeSource.includes("DISCOVERY_PROVISIONING_OPERATION_ENABLED"));
   assert.ok(!routeSource.includes("provisionDesignPartner("));
   assert.ok(!routeSource.includes("DISCOVERY_ALPHA_YOUR_ORGANIZATION_ENABLED="));
 
@@ -168,7 +171,7 @@ async function main(): Promise<void> {
   console.log(JSON.stringify({
     validation: "staged-alpha-provisioning-operations",
     result: "PASS",
-    checks: 18,
+    checks: 21,
     gate5: {
       runtimeUploaded: true,
       accessWrites: 0,

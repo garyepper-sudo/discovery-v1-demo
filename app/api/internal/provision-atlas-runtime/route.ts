@@ -45,11 +45,23 @@ function exactHeader(request: Request, name: string, expected: string): boolean 
   return request.headers.get(name) === expected;
 }
 
+function operationEnabled(operation: string | null): boolean {
+  if (operation === "runtime") {
+    return process.env.DISCOVERY_RUNTIME_PROVISIONING_ENABLED === "true";
+  }
+  if (operation === "access") {
+    return process.env.DISCOVERY_ACCESS_PROVISIONING_ENABLED === "true";
+  }
+  return false;
+}
+
 export async function POST(request: Request): Promise<Response> {
-  if (
-    process.env.VERCEL_ENV !== "production" ||
-    process.env.DISCOVERY_PROVISIONING_OPERATION_ENABLED !== "true"
-  ) {
+  const mode = new URL(request.url).searchParams.get("mode");
+  const operation =
+    mode === "diagnostic"
+      ? "runtime"
+      : request.headers.get("x-discovery-provisioning-operation");
+  if (process.env.VERCEL_ENV !== "production" || !operationEnabled(operation)) {
     return disabled();
   }
   if (!authorized(request)) {
@@ -71,7 +83,7 @@ export async function POST(request: Request): Promise<Response> {
   ) {
     return new Response("Invalid idempotency key.", { status: 400 });
   }
-  if (new URL(request.url).searchParams.get("mode") === "diagnostic") {
+  if (mode === "diagnostic") {
     try {
       const token = await getVercelOidcToken();
       const oidc = boundedVercelOidcEvidence(token, {
@@ -129,7 +141,6 @@ export async function POST(request: Request): Promise<Response> {
       }, { status: 502 });
     }
   }
-  const operation = request.headers.get("x-discovery-provisioning-operation");
   if (operation === "access") {
     const sql = postgres(requireDiscoveryDatabaseUrl("administration"), { max: 1 });
     const requestId = request.headers.get("x-request-id") ?? crypto.randomUUID();

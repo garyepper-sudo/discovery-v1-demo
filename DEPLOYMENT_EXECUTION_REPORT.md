@@ -138,15 +138,19 @@ provisioning step.
 ### Gate 5 Production Control Boundary
 
 The reviewed Runtime artifact and Production deployment passed preflight, but
-hosted Gate 5 stopped before upload. The protected route currently uses one
-enable flag and one secret for both the Runtime and access operations. The
-operation header separates dispatch behavior but does not prevent the access
-operation from becoming callable while the shared flag is enabled.
+hosted Gate 5 stopped before upload because the deployed route used one enable
+flag for both Runtime and access operations. The repository now resolves that
+control-boundary defect with two default-disabled authorities:
+`DISCOVERY_RUNTIME_PROVISIONING_ENABLED` gates only Runtime provisioning and
+its diagnostic, while `DISCOVERY_ACCESS_PROVISIONING_ENABLED` gates only
+access provisioning. The shared secret and fixed request scope remain
+mandatory, but neither enable flag authorizes the other operation.
 
-Gate 5 therefore requires a Runtime-specific, default-disabled enable control
-before the one-shot Production upload can execute. No provider configuration,
-Blob object, governance record, deployment, or Alpha activation changed
-during this stopped attempt.
+Focused validation covers neither enabled, Runtime only, access only, and both
+enabled. Even when both are enabled, the explicit operation header routes to
+one bounded implementation; Runtime cannot grant access and access cannot
+write Runtime. No provider configuration, Blob object, governance record,
+deployment, or Alpha activation changed while implementing this separation.
 
 Repository inspection found no clean persisted Runtime with canonical
 composition available for a real customer. Benchmark-generated state is not a
