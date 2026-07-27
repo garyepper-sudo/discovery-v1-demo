@@ -52,6 +52,7 @@
     "storage:migrate": "tsx scripts/storage/migrateAlphaGovernance.ts up",
     "storage:status": "tsx scripts/storage/migrateAlphaGovernance.ts status",
     "storage:reset:local": "tsx scripts/storage/migrateAlphaGovernance.ts reset",
+    "validate:governance-migration-journal": "tsx scripts/storage/validateGovernanceMigrationJournal.ts",
     "storage:alpha-access": "tsx scripts/storage/alphaAccessAdmin.ts",
     "validate:alpha-postgres-storage": "tsx scripts/storage/validateAlphaPostgresStorage.ts",
     "deployment:validate-environment": "tsx scripts/deployment/validateAlphaEnvironment.ts",

@@ -4,6 +4,46 @@ Date: 2026-07-27
 
 Classification: A — All Pre-Mutation Blockers Resolved
 
+## Gate 4 Migration Journal Remediation — 2026-07-27
+
+Gate 4 previously stopped before mutation because the custom migration runner
+treated `alpha_access_records` existence as migration state and ignored the
+database journal.
+
+The canonical runner now uses the installed Drizzle PostgreSQL migrator and
+its standard `drizzle.__drizzle_migrations` log:
+
+- `id serial primary key`;
+- `hash text not null`, containing the migration SQL SHA-256;
+- `created_at bigint`, containing the ordered timestamp from
+  `db/migrations/meta/_journal.json`.
+
+The exact Production commands remain:
+
+```bash
+npm run storage:status
+npm run storage:migrate
+```
+
+Status is read-only and returns one of `EMPTY`, `PENDING`, `CURRENT`,
+`DRIFTED`, `PARTIAL`, or `UNKNOWN`. It checks the database journal against the
+ordered committed files and verifies every reviewed governance table, index,
+constraint, function, trigger, role, and grant. Migration execution refuses
+partial, drifted, or unknown state and uses a session advisory lock to
+serialize concurrent attempts.
+
+Isolated PostgreSQL 17.10 validation passed 19 journal scenarios, including
+empty state, first application, second-run no-op, missing journal, missing
+schema, edited SQL digest, transactional failure rollback, concurrent
+execution, and clean reconstruction. Exactly one journal row was retained.
+The existing PostgreSQL storage suite remained 60/60, and the hosted database
+validator passed against the isolated database.
+
+Hosted Neon was not contacted or mutated during this remediation. Gate 4 has
+not passed. Before restarting it, the operator must create and record the
+Neon recovery branch `pre-gate4-governance-migration` from the active
+Production branch head.
+
 ## Production Blob OIDC Gate 3 Recovery — 2026-07-27
 
 The first launch attempt stopped before mutation when a local exact-key Blob

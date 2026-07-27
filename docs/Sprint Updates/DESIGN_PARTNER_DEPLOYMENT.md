@@ -156,7 +156,21 @@ npm run deployment:validate-database
 ```
 
 The first migration is a clean install. The second run is the idempotent
-upgrade check. `deployment:validate-database` verifies PostgreSQL 17, the
+upgrade check. The canonical runner uses Drizzle's PostgreSQL journal at
+`drizzle.__drizzle_migrations`. `storage:status` is non-mutating and reports
+exactly one of `EMPTY`, `PENDING`, `CURRENT`, `DRIFTED`, `PARTIAL`, or
+`UNKNOWN`. Migration execution is accepted only from `EMPTY`, `PENDING`, or
+`CURRENT`; it refuses inconsistent schema, edited applied SQL, and unknown
+history. A PostgreSQL advisory lock serializes concurrent attempts.
+
+The journal stores Drizzle's ordered migration timestamp and SHA-256 content
+hash. Status cross-checks journal identity and digest against committed files,
+then verifies the complete tables, indexes, constraints, functions, triggers,
+roles, and grants. Governance objects without a journal and journal entries
+without the complete schema report `PARTIAL`; an applied digest mismatch
+reports `DRIFTED`.
+
+`deployment:validate-database` verifies PostgreSQL 17, the
 governance tables, all three enforcement triggers, application connectivity,
 and bounded pooled concurrency.
 
@@ -165,9 +179,12 @@ point-in-time restore marker. Database rollback means restoring that isolated
 branch and deploying the preceding application release. The migration is
 additive; do not use the local destructive reset against Neon.
 
-Local PostgreSQL 17 validation demonstrated clean install, idempotent upgrade,
-schema status, append-only enforcement, and local reset. Neon provisioning,
-roles, pooling, PITR, and restore remain unmeasured here.
+Local PostgreSQL 17 validation demonstrated the complete 19-check journal
+matrix, clean reconstruction, concurrent serialization, transactional failure
+rollback, edited-history rejection, idempotent upgrade, schema status, and the
+existing 60-check append-only storage contract. Neon migration and recovery
+remain unexecuted. A verified Neon recovery branch is still required before
+the Production migration command may run.
 
 ## Clerk Deployment
 
