@@ -161,6 +161,43 @@ provisioning writes, and fail-closed access before Runtime. These are isolated
 validation results; the decoupled route has not yet been deployed or invoked
 against Production.
 
+## Gate 5 Runtime-Only Execution Stop — 2026-07-27
+
+Production release `f88e9d8f8e6ae5c15b060a54c5608ea159660639`
+was correlated to successful Vercel Production deployment
+`dpl_Fek5Vx1Hv6BXLfT1W26g4phwgQH4`. The deployment was `READY`, targeted
+Production, served the Production alias, and included the protected
+provisioning route. Before execution, both the protected route and
+`/your-organization` returned 404. Alpha remained disabled.
+
+The frozen Runtime passed the bounded preflight:
+
+- path:
+  `.local-provisioning/atlas-manufacturing-simulation.runtime.json`;
+- organization ID: `atlas-manufacturing-simulation`;
+- byte length: `3,328,426`;
+- SHA-256:
+  `8c3ad0b42c53f7027d3f0cb0a12457e84a25c03063b4c6a47d14a8fe23bef5fa`;
+- investigations: 3;
+- completed Explanations: 3;
+- canonical Organizational Understanding compositions: 10;
+- Evidence lineage present;
+- no credential, email, customer-data, or fixture-reference pattern detected.
+
+Execution stopped at Gate 5.2 before provider configuration or Blob access.
+Although the route dispatches `runtime` and `access` independently, both write
+operations use the same `DISCOVERY_PROVISIONING_OPERATION_ENABLED` flag and
+the same operator secret. Enabling that flag would enable the access operation
+as well as Runtime provisioning, violating the Gate 5 requirement that access
+provisioning remain disabled.
+
+No Vercel variable was added or changed. No redeployment, Production
+diagnostic, Blob read/write, Runtime upload, database operation, access record,
+lifecycle event, disclosure event, Alpha organization setting, or Alpha
+activation occurred. The exact continuation requirement is a reviewed,
+default-disabled Runtime-specific enable control that cannot authorize the
+access operation.
+
 ## Production Blob OIDC Gate 3 Recovery — 2026-07-27
 
 The first launch attempt stopped before mutation when a local exact-key Blob

@@ -135,6 +135,19 @@ npm run deployment:provision-design-partner -- \
 Activation is a third external deployment operation and performs neither
 provisioning step.
 
+### Gate 5 Production Control Boundary
+
+The reviewed Runtime artifact and Production deployment passed preflight, but
+hosted Gate 5 stopped before upload. The protected route currently uses one
+enable flag and one secret for both the Runtime and access operations. The
+operation header separates dispatch behavior but does not prevent the access
+operation from becoming callable while the shared flag is enabled.
+
+Gate 5 therefore requires a Runtime-specific, default-disabled enable control
+before the one-shot Production upload can execute. No provider configuration,
+Blob object, governance record, deployment, or Alpha activation changed
+during this stopped attempt.
+
 Repository inspection found no clean persisted Runtime with canonical
 composition available for a real customer. Benchmark-generated state is not a
 permitted substitute.
