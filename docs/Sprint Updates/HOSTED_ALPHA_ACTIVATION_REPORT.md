@@ -44,6 +44,69 @@ not passed. Before restarting it, the operator must create and record the
 Neon recovery branch `pre-gate4-governance-migration` from the active
 Production branch head.
 
+## Gate 4.2a Recovery Verification and Migration — 2026-07-27
+
+The Neon recovery point was independently verified before migration:
+
+- name: `pre-gate4-governance-migration`;
+- branch ID: `br-curly-night-afpu45kz`;
+- parent: `production`;
+- parent branch ID: `br-bitter-unit-afa9tns5`;
+- created at: `2026-07-27 12:04:29 -0700`;
+- creation mode: branch data and schema from the current parent head.
+
+Strictly read-only transactions against both direct connections confirmed
+PostgreSQL `17.10`, database `neondb`, authorized TLS 1.3, correct Neon branch
+identity, and an identical bounded pre-migration schema fingerprint:
+`a3b99ddcea352bde8477fce298be703c936a9d07e00e2c170383db067944caf9`.
+Both inventories contained zero relevant relations, columns, constraints,
+triggers, functions, or Alpha roles. The Drizzle journal, governance tables,
+access records, lifecycle records, disclosure records, and database Runtime
+objects were absent.
+
+From that verified `EMPTY` state, the reviewed migration applied once to
+Production. Canonical status then reported `CURRENT`, one expected and one
+applied migration, a present journal, complete schema, and no missing objects.
+A second migration invocation was a no-op. Hosted validation confirmed
+PostgreSQL 17, the complete governance schema, all three append-only
+enforcement triggers, and pooled application connectivity.
+
+A final read-only comparison proved that Production moved to fingerprint
+`4e0bd19638481f8284aebde723072257833254f11c380f364e0ce53c0da5afa4`
+while the recovery branch retained the exact empty pre-migration fingerprint.
+The recovery branch still contains no migration journal, governance tables,
+access records, lifecycle records, disclosure records, Runtime objects, or
+Alpha roles. No Runtime, access, audit, Blob, Clerk, or Vercel configuration
+mutation occurred.
+
+## Gate 5 Runtime Provisioning Attempt — 2026-07-27
+
+Gate 5.1 passed for the frozen Atlas Runtime:
+
+- source:
+  `.local-provisioning/atlas-manufacturing-simulation.runtime.json`;
+- organization ID: `atlas-manufacturing-simulation`;
+- byte length: `3,328,426`;
+- SHA-256:
+  `8c3ad0b42c53f7027d3f0cb0a12457e84a25c03063b4c6a47d14a8fe23bef5fa`;
+- JSON parsing, Runtime normalization, organization identity, completed
+  investigation, canonical Organizational Understanding, and completed
+  Explanation requirements passed.
+
+Gate 5.2 stopped before the exact-key result could be established. Vercel CLI
+`env run --environment production` loaded the Production variables and
+provided the correct project, owner, and Blob store identity, but its bounded
+OIDC claims were scoped to `environment:development`. Private Vercel Blob
+rejected the read-only `HEAD` request because the connected store permits OIDC
+for the Production environment, not development.
+
+The raw token, credentials, and URLs were not printed. No backend-neutral
+backup was created because Gate 5.2 did not pass. No Runtime was uploaded, no
+Blob object was written, no access/lifecycle/disclosure record was created,
+and no Vercel configuration or Alpha flag changed. Gate 5 can continue only
+from a Production request-context execution surface or another
+provider-supported Production-scoped credential.
+
 ## Production Blob OIDC Gate 3 Recovery — 2026-07-27
 
 The first launch attempt stopped before mutation when a local exact-key Blob
