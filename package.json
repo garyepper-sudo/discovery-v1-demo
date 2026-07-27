@@ -56,6 +56,8 @@
     "validate:alpha-postgres-storage": "tsx scripts/storage/validateAlphaPostgresStorage.ts",
     "deployment:validate-environment": "tsx scripts/deployment/validateAlphaEnvironment.ts",
     "deployment:validate-database": "tsx scripts/deployment/validateHostedAlphaDatabase.ts",
+    "deployment:validate-neon-tls": "tsx scripts/deployment/validateNeonTls.ts",
+    "deployment:validate-protected-provisioning": "tsx scripts/deployment/validateProtectedProvisioningOperation.ts",
     "deployment:provision-design-partner": "tsx scripts/deployment/provisionDesignPartner.ts",
     "deployment:runtime-recovery": "tsx scripts/deployment/runtimeRecovery.ts",
     "deployment:validate-runtime-storage": "tsx scripts/deployment/validateHostedRuntimeStorage.ts",

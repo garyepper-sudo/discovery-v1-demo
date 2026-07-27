@@ -199,6 +199,7 @@ npm run deployment:provision-design-partner -- \
   --consumer EXACT_CLERK_USER_ID \
   --actor EXACT_OPERATOR_ID \
   --runtime-source /secure/path/organization-runtime.json \
+  --runtime-sha256 REVIEWED_RUNTIME_SHA256 \
   --idempotency-key UNIQUE_PROVISIONING_KEY
 ```
 
