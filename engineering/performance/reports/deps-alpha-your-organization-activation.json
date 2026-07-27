@@ -1,0 +1,195 @@
+{
+  "schemaVersion": "1",
+  "reportVersion": "1.12.0",
+  "generationTimestamp": "2026-07-26T00:00:00.000Z",
+  "reportId": "deps-alpha-your-organization-activation",
+  "title": "DEPS — Alpha Your Organization Activation",
+  "status": "current",
+  "disposition": "accept-bounded-local-activation-hosted-blockers-remain",
+  "sprint": {
+    "name": "Discovery Alpha Activation — First Design Partner",
+    "classification": "B — Activation Valid; Bounded Blockers Remain",
+    "repositoryRevision": "4fea7bd1a660089a9937dc209edb861b0f759d5e",
+    "worktreeState": "dirty",
+    "scope": "Feature-flagged activation of the authenticated, organization-scoped Your Organization path through durable access, Runtime disclosure, projection, product communication, and the existing UI."
+  },
+  "trend": {
+    "baselineReference": "deps-baseline-v1",
+    "previousCompatibleReport": "deps-alpha-postgresql-storage-foundation",
+    "previousCompatibleReportPath": "engineering/performance/reports/deps-alpha-postgresql-storage-foundation.json",
+    "currentReport": "deps-alpha-your-organization-activation",
+    "comparabilityCohort": "deps-report-schema-v1"
+  },
+  "evidence": [
+    {
+      "id": "activation-validation",
+      "sourceId": "alpha-your-organization-activation",
+      "artifact": "scripts/product/validateAlphaYourOrganizationActivation.ts",
+      "claimBoundary": "Twenty-three local PostgreSQL-backed checks cover owner, denial, revocation, wrong organization, missing stages, audit, determinism, non-mutation, and rollback."
+    },
+    {
+      "id": "activation-implementation",
+      "sourceId": "alpha-your-organization-activation",
+      "artifact": "components/product-shell/data/loadActivatedYourOrganization.ts",
+      "claimBoundary": "Server-only access-before-Runtime orchestration for the single feature-flagged Your Organization route."
+    },
+    {
+      "id": "activation-report",
+      "sourceId": "alpha-your-organization-activation",
+      "artifact": "docs/Sprint Updates/ALPHA_ACTIVATION.md",
+      "claimBoundary": "Activation architecture, inactive boundaries, rollback, validation, readiness, and hosted blockers."
+    },
+    {
+      "id": "storage-regression",
+      "sourceId": "durable-alpha-postgresql-storage-foundation",
+      "artifact": "scripts/storage/validateAlphaPostgresStorage.ts",
+      "claimBoundary": "Sixty PostgreSQL lifecycle, isolation, audit, failure, replay, CLI, and activation-boundary checks."
+    }
+  ],
+  "scorecard": [
+    {
+      "metric": "Organizational Understanding",
+      "state": "Unchanged",
+      "evidenceRefs": ["activation-validation"],
+      "rationale": "The activation consumes existing canonical Organizational Understanding and does not create or alter cognition."
+    },
+    {
+      "metric": "User Intelligence",
+      "state": "Not Measured",
+      "evidenceRefs": ["activation-report"],
+      "rationale": "The path is locally validated but no design-partner comprehension, trust, or decision outcome has been measured."
+    },
+    {
+      "metric": "Collective Intelligence",
+      "state": "Not Measured",
+      "evidenceRefs": ["activation-report"],
+      "rationale": "No collaboration, contribution, organization creation, or shared-learning workflow was activated."
+    },
+    {
+      "metric": "Governance Integrity",
+      "state": "Improved",
+      "evidenceRefs": ["activation-validation", "storage-regression"],
+      "rationale": "Verified identity, exact organization scope, access-before-Runtime ordering, revocation, authority-qualified disclosure, and append-only audit now govern the active bounded path."
+    },
+    {
+      "metric": "System Sustainability",
+      "state": "Improved",
+      "evidenceRefs": ["activation-validation", "activation-report"],
+      "rationale": "One environment flag provides exact route rollback, failures remain explicit, and the activation composes existing owners without duplicating cognition."
+    }
+  ],
+  "architecture": [
+    {
+      "area": "Bounded product integration",
+      "state": "Improved",
+      "evidenceRefs": ["activation-implementation", "activation-validation"],
+      "observation": "The first authenticated product path now composes governance, Runtime, projection, communication, and UI owners end to end."
+    },
+    {
+      "area": "Canonical cognition and Runtime",
+      "state": "Unchanged",
+      "evidenceRefs": ["activation-validation"],
+      "observation": "Cognition is not expanded, Runtime is loaded once after authorization, and replay confirms no mutation."
+    }
+  ],
+  "benchmarks": [
+    {
+      "sourceId": "alpha-your-organization-activation",
+      "result": "Pass — 23/23",
+      "previousResult": "Not Measured",
+      "movement": "Improved",
+      "evidenceRefs": ["activation-validation"],
+      "summary": "The complete local authenticated delivery path and all requested denial, missing-stage, audit, determinism, and rollback cases pass."
+    },
+    {
+      "sourceId": "durable-alpha-postgresql-storage-foundation",
+      "result": "Pass — 60/60",
+      "previousResult": "Pass — 60/60",
+      "movement": "Unchanged",
+      "evidenceRefs": ["storage-regression"],
+      "summary": "Durable access and audit behavior remains passing after bounded activation."
+    }
+  ],
+  "researchObservations": [
+    {
+      "area": "Research",
+      "state": "Unchanged",
+      "evidenceRefs": ["activation-report"],
+      "observation": "No benchmark-only research object, adapter, result, or conclusion changed or became product-visible."
+    }
+  ],
+  "complexity": {
+    "introduced": [
+      "A server-only activation orchestrator and pure projection-to-view composer.",
+      "One route-level feature flag, Clerk boundary, bounded middleware matcher, sign-out control, and explicit unavailable states.",
+      "A PostgreSQL-backed end-to-end activation validator."
+    ],
+    "removed": [],
+    "netEffect": "Increased",
+    "justified": true,
+    "justification": "A real authenticated product path requires explicit orchestration across existing owners; the additions are isolated to one route and have one-step rollback.",
+    "evidenceRefs": ["activation-implementation", "activation-validation"]
+  },
+  "governanceObservations": [
+    {
+      "area": "Alpha disclosure enforcement",
+      "state": "Improved",
+      "evidenceRefs": ["activation-validation", "storage-regression"],
+      "observation": "The approved allowlist policy now controls the only activated product path without broadening policy or disclosure scope."
+    }
+  ],
+  "sustainabilityObservations": [
+    {
+      "area": "Activation and rollback",
+      "state": "Improved",
+      "evidenceRefs": ["activation-validation", "activation-report"],
+      "observation": "The default route remains the rollback path, unsupported stages fail closed, and no data migration is required to deactivate."
+    }
+  ],
+  "regressions": [
+    {
+      "category": "product",
+      "state": "Improved",
+      "evidenceRefs": ["activation-validation"],
+      "observation": "Your Organization changes data delivery only when flagged; other product experiences remain unavailable in the bounded Alpha."
+    },
+    {
+      "category": "Runtime",
+      "state": "Unchanged",
+      "evidenceRefs": ["activation-validation"],
+      "observation": "Runtime replay is deterministic and the activation neither writes nor mutates Runtime."
+    }
+  ],
+  "unknownsAndUnmeasured": [
+    {
+      "area": "Hosted Clerk and Neon behavior",
+      "state": "Not Measured",
+      "reason": "Production tenant configuration, hosted roles, pooling, browser sessions, and deployed callbacks were not available in local validation."
+    },
+    {
+      "area": "Design-partner understanding and trust",
+      "state": "Not Measured",
+      "reason": "No external design partner has used the activated path."
+    },
+    {
+      "area": "Hosted operations",
+      "state": "Not Measured",
+      "reason": "Monitoring, alerting, backup recovery, deployment smoke tests, and release rollback remain to be demonstrated."
+    }
+  ],
+  "remainingRisks": {
+    "nextBlockingDependency": "Remediate production dependency vulnerabilities and verify deployed Clerk, Neon, Runtime persistence, secrets, monitoring, and rollback.",
+    "remainingDiscoveryPhase": "Complete bounded hosted Alpha operations, then enable the flag only for the provisioned design partner; do not expand architecture.",
+    "remainingBenchmarkGap": "A deployed browser replay with the real identity provider, hosted database, hosted Runtime, and design-partner organization remains unmeasured."
+  },
+  "rollback": {
+    "available": true,
+    "evidenceRefs": ["activation-validation", "activation-report"],
+    "description": "Set DISCOVERY_ALPHA_YOUR_ORGANIZATION_ENABLED=false to restore the committed Phase 8A route and disable the Clerk activation boundary without changing Runtime or stored audit history."
+  },
+  "engineeringDecision": {
+    "accept": true,
+    "evidenceRefs": ["activation-validation", "activation-report"],
+    "rationale": "Accept Classification B: bounded local activation is valid and reversible, while external access remains blocked until hosted security and operational evidence exists."
+  }
+}

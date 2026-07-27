@@ -176,6 +176,27 @@
 
 .stewardship span { color: rgba(245,245,245,.28); font-size: .58rem; line-height: 1.45; }
 
+.sessionControl {
+  padding: 0 0 14px;
+}
+
+.sessionControl button {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  background: transparent;
+  color: rgba(245, 245, 245, 0.52);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.sessionControl button:hover {
+  border-color: rgba(214, 178, 94, 0.28);
+  color: rgba(240, 213, 138, 0.84);
+}
+
 .statusMark {
   width: 5px;
   height: 5px;

@@ -311,6 +311,17 @@
       "authoritativeOutputs": ["db/migrations/0000_alpha_governance_foundation.sql", "scripts/storage/validateAlphaPostgresStorage.ts", "docs/Sprint Updates/DURABLE_ALPHA_POSTGRESQL_STORAGE_FOUNDATION.md"]
     },
     {
+      "id": "alpha-your-organization-activation",
+      "purpose": "Validate the bounded authenticated Your Organization path from durable access evaluation through Runtime disclosure, projection, communication, UI composition, denial cases, audit, replay, and rollback.",
+      "domain": "product-integration",
+      "owner": "Your Organization Alpha Activation",
+      "determinism": "deterministic-with-fixed-identity-canonical-runtime-and-disposable-postgresql-17",
+      "baselineCompatibility": "Compatible for the Alpha allowlist policy version 1, existing projection and communication contracts, and the fixed activation validation protocol.",
+      "maturity": "validated-local-activation-hosted-operations-required",
+      "command": "npm run validate:alpha-your-organization-activation",
+      "authoritativeOutputs": ["components/product-shell/data/loadActivatedYourOrganization.ts", "scripts/product/validateAlphaYourOrganizationActivation.ts", "docs/Sprint Updates/ALPHA_ACTIVATION.md"]
+    },
+    {
       "id": "organizational-understanding-research-framework",
       "purpose": "Define the six-dimensional methodology beneath the Organizational Understanding Index.",
       "domain": "research",

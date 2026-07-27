@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { execFileSync, spawnSync } from "node:child_process";
+import { spawnSync } from "node:child_process";
 
 import {
   ALPHA_ALLOWLIST_POLICY_ID,
@@ -209,13 +209,19 @@ check(
 check(adapterSource.includes("await auth()"), "adapter invokes Clerk server auth");
 check(!/email|organizationId|password|cookie|searchParams/.test(adapterSource), "adapter accepts no client identity surrogate");
 
-for (const path of ["middleware.ts", "app/layout.tsx"]) {
-  const current = readFileSync(path, "utf8");
-  const committed = execFileSync("git", ["show", `HEAD:${path}`], {
-    encoding: "utf8",
-  });
-  equal(current, committed, `${path} remains inactive and unchanged`);
-}
+const middlewareSource = readFileSync("middleware.ts", "utf8");
+const layoutSource = readFileSync("app/layout.tsx", "utf8");
+check(
+  middlewareSource.includes("clerkMiddleware") &&
+    middlewareSource.includes("auth.protect()") &&
+    middlewareSource.includes("activatedYourOrganizationPath"),
+  "Clerk protects only the feature-flagged Your Organization activation",
+);
+check(
+  layoutSource.includes("<ClerkProvider>") &&
+    layoutSource.includes("isYourOrganizationAlphaActivationEnabled"),
+  "ClerkProvider is active only inside the bounded activation",
+);
 
 const clientImportSearch = spawnSync(
   "rg",
@@ -228,8 +234,10 @@ const clientImportSearch = spawnSync(
   { encoding: "utf8" },
 );
 check(
-  clientImportSearch.status === 1 && clientImportSearch.stdout.trim() === "",
-  "active product and client code do not import the shadow",
+  clientImportSearch.status === 0 &&
+    clientImportSearch.stdout.trim() ===
+      "components/product-shell/data/loadActivatedYourOrganization.ts",
+  "only the server activation loader imports the verified identity adapter",
 );
 
 console.log(
@@ -238,7 +246,7 @@ console.log(
       validation: "clerk-identity-shadow",
       result: "PASS",
       checks,
-      activation: "inactive",
+      activation: "feature-flagged-your-organization-only",
       liveDeploymentVerification: "not-demonstrated",
     },
     null,

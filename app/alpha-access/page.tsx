@@ -15,13 +15,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AlphaAccessPage({
+export default async function AlphaAccessPage({
   searchParams,
 }: {
-  searchParams: { next?: string; error?: string };
+  searchParams: Promise<{ next?: string; error?: string }>;
 }) {
-  const next = safeAlphaPath(searchParams.next);
-  const invalid = searchParams.error === "invalid";
+  const resolvedSearchParams = await searchParams;
+  const next = safeAlphaPath(resolvedSearchParams.next);
+  const invalid = resolvedSearchParams.error === "invalid";
 
   return (
     <main className={styles.page}>

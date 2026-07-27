@@ -7,15 +7,16 @@ export const metadata: Metadata = {
   title: "Ask",
 };
 
-export default function AskPage({
+export default async function AskPage({
   searchParams,
 }: {
-  searchParams: { organizationId?: string | string[]; prompt?: string | string[] };
+  searchParams: Promise<{ organizationId?: string | string[]; prompt?: string | string[] }>;
 }) {
-  const prompt = Array.isArray(searchParams.prompt) ? searchParams.prompt[0] : searchParams.prompt;
+  const resolvedSearchParams = await searchParams;
+  const prompt = Array.isArray(resolvedSearchParams.prompt) ? resolvedSearchParams.prompt[0] : resolvedSearchParams.prompt;
   return (
     <ProductWorkspace
-      organizationId={searchParams.organizationId}
+      organizationId={resolvedSearchParams.organizationId}
       askMessage={prompt}
       renderAsk={(view) => <AskExperience view={view} initialPrompt={prompt} />}
     />

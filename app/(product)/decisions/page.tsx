@@ -7,14 +7,15 @@ export const metadata: Metadata = {
   title: "Decisions",
 };
 
-export default function DecisionsPage({
+export default async function DecisionsPage({
   searchParams,
 }: {
-  searchParams: { organizationId?: string | string[] };
+  searchParams: Promise<{ organizationId?: string | string[] }>;
 }) {
+  const resolvedSearchParams = await searchParams;
   return (
     <ProductWorkspace
-      organizationId={searchParams.organizationId}
+      organizationId={resolvedSearchParams.organizationId}
       renderDecisions={(view) => <DecisionsExperience view={view} />}
     />
   );

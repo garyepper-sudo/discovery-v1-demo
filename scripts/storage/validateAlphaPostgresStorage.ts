@@ -382,11 +382,8 @@ check("51", "CLI requires confirmation before mutation", cliSource.includes("Mut
 check("52", "CLI has no Clerk email lookup", !/email|clerkClient/.test(cliSource));
 
 for (const relativePath of [
-  "app/(product)/your-organization/page.tsx",
   "components/product-shell/ProductWorkspace.tsx",
   "components/product-shell/data/buildRuntimeOrganizationView.ts",
-  "middleware.ts",
-  "app/layout.tsx",
 ]) {
   check(
     `route-${results.length + 1}`,
@@ -394,6 +391,21 @@ for (const relativePath of [
     readFileSync(relativePath, "utf8") === execFileSync("git", ["show", `HEAD:${relativePath}`], { encoding: "utf8" }),
   );
 }
+const activatedRouteSource = readFileSync(
+  "app/(product)/your-organization/page.tsx",
+  "utf8",
+);
+check("55", "Your Organization route retains feature-flag rollback",
+  activatedRouteSource.includes("isYourOrganizationAlphaActivationEnabled") &&
+  activatedRouteSource.includes("<ProductWorkspace"));
+const middlewareSource = readFileSync("middleware.ts", "utf8");
+check("56", "middleware limits Clerk protection to bounded activation",
+  middlewareSource.includes("activatedYourOrganizationPath") &&
+  middlewareSource.includes("protectActivatedYourOrganization"));
+const layoutSource = readFileSync("app/layout.tsx", "utf8");
+check("57", "Clerk provider is conditional on the activation flag",
+  layoutSource.includes("isYourOrganizationAlphaActivationEnabled") &&
+  layoutSource.includes("<ClerkProvider>"));
 
 const runtimeSerialized = runtimeBytesBefore.toString("utf8");
 check("58", "Runtime contains no Alpha access table data", !runtimeSerialized.includes("alpha_access_records"));
@@ -415,8 +427,8 @@ const output = {
       .update(readFileSync(".discovery-runtime/organizations/atlas-manufacturing-simulation.json"))
       .digest("hex"),
   },
-  activation: "inactive",
-  classification: "B — STORAGE FOUNDATION VALID; DEPLOYMENT OR OPERATIONAL INTEGRATION REQUIRED",
+  activation: "feature-flagged-your-organization",
+  classification: "A — STORAGE ACTIVE AT BOUNDED LOCAL YOUR ORGANIZATION BOUNDARY",
 };
 
 console.log(JSON.stringify(output, null, 2));

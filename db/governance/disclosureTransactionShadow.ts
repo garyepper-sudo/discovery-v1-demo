@@ -23,7 +23,7 @@ export type DurableAlphaDisclosureShadowResult =
       runtimeLoaderInvocations: 0 | 1;
     };
 
-export async function runDurableAlphaDisclosureTransactionShadow(input: {
+export async function runDurableAlphaDisclosureTransaction(input: {
   sql: Sql<Record<string, unknown>>;
   identity: VerifiedConsumerIdentity;
   organizationId: string;
@@ -117,3 +117,7 @@ export async function runDurableAlphaDisclosureTransactionShadow(input: {
     };
   }
 }
+
+/** Backward-compatible name retained for the completed inactive shadow gate. */
+export const runDurableAlphaDisclosureTransactionShadow =
+  runDurableAlphaDisclosureTransaction;

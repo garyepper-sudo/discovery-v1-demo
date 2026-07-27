@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 import { buildProductHref } from "../../components/product-shell/data/productOrganization";
 
@@ -64,34 +64,25 @@ const loadingSteps = [
 export default function DiscoveryV1Page({
   searchParams,
 }: {
-  searchParams: {
-    organizationId?: string | string[];
-  };
+  searchParams: Promise<{ organizationId?: string | string[] }>;
 }) {
   const router = useRouter();
+  const resolvedSearchParams = use(searchParams);
   const [organizationId, setOrganizationId] =
     useState<string | null>(() => {
-      if (
-        typeof searchParams.organizationId !==
-        "string"
-      ) {
-        return null;
-      }
-
-      return (
-        searchParams.organizationId.trim() ||
-        null
-      );
+      return typeof resolvedSearchParams.organizationId === "string"
+        ? resolvedSearchParams.organizationId.trim() || null
+        : null;
     });
 
   useEffect(() => {
     const queryOrganizationId =
-      typeof searchParams.organizationId === "string"
-        ? searchParams.organizationId.trim() || null
+      typeof resolvedSearchParams.organizationId === "string"
+        ? resolvedSearchParams.organizationId.trim() || null
         : null;
 
     setOrganizationId(queryOrganizationId);
-  }, [searchParams.organizationId]);
+  }, [resolvedSearchParams.organizationId]);
 
   const [company, setCompany] = useState("");
   const [website, setWebsite] = useState("");

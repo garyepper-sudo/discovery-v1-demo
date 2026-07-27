@@ -22,6 +22,7 @@ type DiscoveryShellProps = {
   children: ReactNode;
   organization: ProductOrganizationSummary;
   showSessionImpact?: boolean;
+  sessionControl?: ReactNode;
 };
 
 const navigation = [
@@ -61,6 +62,7 @@ export default function DiscoveryShell({
   children,
   organization,
   showSessionImpact = true,
+  sessionControl,
 }: DiscoveryShellProps) {
   const pathname = usePathname();
   const homeHref = buildProductHref(
@@ -144,6 +146,10 @@ export default function DiscoveryShell({
           Teach Discovery
           <span>Add context · Correct the model · Add evidence</span>
         </Link>
+
+        {sessionControl && (
+          <div className={styles.sessionControl}>{sessionControl}</div>
+        )}
 
         <div className={styles.sidebarFooter}>
           <span className={styles.statusMark} aria-hidden="true" />

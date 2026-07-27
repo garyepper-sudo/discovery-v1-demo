@@ -1,14 +1,19 @@
-import { NextRequest, NextResponse } from "next/server";
+import { clerkMiddleware } from "@clerk/nextjs/server";
+import { NextRequest, NextResponse, type NextFetchEvent } from "next/server";
 
 import {
   ALPHA_ACCESS_COOKIE,
   safeAlphaPath,
   verifyAlphaSession,
 } from "./lib/alpha-access/session";
+import { isYourOrganizationAlphaActivationEnabled } from "./lib/alpha-activation/config";
 
 const protectedAlphaPath = /^\/alpha(?:\/|$)/;
 const protectedAlphaAsset =
   /^\/_next\/static\/(?:chunks|css)\/app\/alpha(?:\/|$)/;
+const activatedYourOrganizationPath = /^\/your-organization(?:\/|$)/;
+const inactiveDesignPartnerSurface =
+  /^\/(?:ask|brief|decisions|experiment|organizations|research|discovery-v1|executive-decision|api\/(?:analyze|discovery-lab|executive-decision|executive-decision-record|executive-scenario|product-interaction))(?:\/|$)/;
 
 function protectedHeaders(response: NextResponse): NextResponse {
   response.headers.set("Cache-Control", "private, no-store, max-age=0");
@@ -18,7 +23,18 @@ function protectedHeaders(response: NextResponse): NextResponse {
   return response;
 }
 
-export async function middleware(request: NextRequest) {
+function requestId(request: NextRequest): string {
+  return request.headers.get("x-request-id") ?? crypto.randomUUID();
+}
+
+const protectActivatedYourOrganization = clerkMiddleware(async (auth, request) => {
+  await auth.protect();
+  const headers = new Headers(request.headers);
+  headers.set("x-discovery-request-id", requestId(request));
+  return protectedHeaders(NextResponse.next({ request: { headers } }));
+});
+
+async function legacyAlphaMiddleware(request: NextRequest) {
   if (
     !protectedAlphaPath.test(request.nextUrl.pathname) &&
     !protectedAlphaAsset.test(request.nextUrl.pathname)
@@ -54,9 +70,60 @@ export async function middleware(request: NextRequest) {
   return protectedHeaders(NextResponse.next());
 }
 
+export async function middleware(
+  request: NextRequest,
+  event?: NextFetchEvent,
+): Promise<NextResponse> {
+  if (
+    isYourOrganizationAlphaActivationEnabled() &&
+    activatedYourOrganizationPath.test(request.nextUrl.pathname)
+  ) {
+    if (!event) {
+      return new NextResponse("Authentication boundary unavailable.", {
+        status: 503,
+      });
+    }
+    const response = await protectActivatedYourOrganization(request, event);
+    if (!response) {
+      return new NextResponse("Authentication required.", { status: 401 });
+    }
+    return response instanceof NextResponse
+      ? response
+      : new NextResponse(response.body, {
+          status: response.status,
+          statusText: response.statusText,
+          headers: response.headers,
+        });
+  }
+  if (
+    isYourOrganizationAlphaActivationEnabled() &&
+    inactiveDesignPartnerSurface.test(request.nextUrl.pathname)
+  ) {
+    return protectedHeaders(new NextResponse("Not available in the bounded Alpha.", {
+      status: 404,
+    }));
+  }
+  return legacyAlphaMiddleware(request);
+}
+
 export const config = {
   matcher: [
     "/alpha/:path*",
+    "/your-organization/:path*",
+    "/ask/:path*",
+    "/brief/:path*",
+    "/decisions/:path*",
+    "/experiment/:path*",
+    "/organizations/:path*",
+    "/research/:path*",
+    "/discovery-v1/:path*",
+    "/executive-decision/:path*",
+    "/api/analyze/:path*",
+    "/api/discovery-lab/:path*",
+    "/api/executive-decision/:path*",
+    "/api/executive-decision-record/:path*",
+    "/api/executive-scenario/:path*",
+    "/api/product-interaction/:path*",
     "/_next/static/chunks/app/alpha/:path*",
     "/_next/static/css/app/alpha/:path*",
   ],

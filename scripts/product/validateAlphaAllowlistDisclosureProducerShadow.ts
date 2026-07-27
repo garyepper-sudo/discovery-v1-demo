@@ -871,7 +871,7 @@ scenario("53-candidate-view-chain", "The compatibility candidate is shaped only 
   );
 });
 
-scenario("54-active-route-unchanged", "No active route or UI imports the inactive Alpha producer.", () => {
+scenario("54-bounded-route-activation", "Only the feature-flagged Your Organization activation loader and composer import the Alpha producer.", () => {
   const appAndComponents = [
     ...fs.readdirSync(path.join(ROOT, "app"), { recursive: true, withFileTypes: true })
       .filter((entry) => entry.isFile() && /\.(ts|tsx)$/.test(entry.name))
@@ -880,12 +880,16 @@ scenario("54-active-route-unchanged", "No active route or UI imports the inactiv
       .filter((entry) => entry.isFile() && /\.(ts|tsx)$/.test(entry.name))
       .map((entry) => path.join(entry.parentPath, entry.name)),
   ];
-  for (const file of appAndComponents) {
-    assert.equal(
+  const matches = appAndComponents
+    .filter((file) =>
       fs.readFileSync(file, "utf8").includes("alphaAllowlistDisclosureProducer"),
-      false,
-    );
-  }
+    )
+    .map((file) => path.relative(ROOT, file))
+    .sort();
+  assert.deepEqual(matches, [
+    "components/product-shell/data/composeActivatedYourOrganization.ts",
+    "components/product-shell/data/loadActivatedYourOrganization.ts",
+  ]);
 });
 
 scenario("55-clerk-sdk-isolated", "The Alpha policy producer does not import the Clerk SDK.", () => {
@@ -942,9 +946,8 @@ scenario("60-no-user-intelligence-claim", "The shadow result contains no User In
   assert.equal(serialized.includes("Local Understanding Utility"), false);
 });
 
-scenario("61-active-path-byte-equivalence", "Active Your Organization route and view-model sources remain byte-identical to HEAD.", () => {
+scenario("61-reversible-active-path", "Your Organization activation retains the byte-identical Phase 8A rollback adapters.", () => {
   for (const relativePath of [
-    "app/(product)/your-organization/page.tsx",
     "components/product-shell/ProductWorkspace.tsx",
     "components/product-shell/data/buildRuntimeOrganizationView.ts",
   ]) {
@@ -955,6 +958,15 @@ scenario("61-active-path-byte-equivalence", "Active Your Organization route and 
     });
     assert.equal(current, head);
   }
+  const route = fs.readFileSync(
+    path.join(ROOT, "app/(product)/your-organization/page.tsx"),
+    "utf8",
+  );
+  assert.equal(
+    route.includes("isYourOrganizationAlphaActivationEnabled"),
+    true,
+  );
+  assert.equal(route.includes("<ProductWorkspace"), true);
 });
 
 const output = {
@@ -990,11 +1002,11 @@ const output = {
     loaderCallsForSuccessfulReplay: runtimeLoadCalls,
     mutated: false,
   },
-  activeRoute: "unchanged-inactive-shadow",
-  productionActivation: "blocked",
+  activeRoute: "feature-flagged-your-organization-only",
+  productionActivation: "bounded-local-validation",
   classification:
     results.length === 61
-      ? "B — PRODUCER CONTRACT VALID; IDENTITY OR DURABLE ACCESS INTEGRATION REQUIRED"
+      ? "A — PRODUCER ACTIVE AT FEATURE-FLAGGED YOUR ORGANIZATION BOUNDARY"
       : "C — ALPHA DISCLOSURE PRODUCER BLOCKED",
 };
 

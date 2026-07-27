@@ -16,14 +16,15 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default function AlphaScenePage({
+export default async function AlphaScenePage({
   params,
 }: {
-  params: { scene: string };
+  params: Promise<{ scene: string }>;
 }) {
-  if (!alphaScenes.includes(params.scene as AlphaScene)) {
+  const resolvedParams = await params;
+  if (!alphaScenes.includes(resolvedParams.scene as AlphaScene)) {
     notFound();
   }
 
-  return <AlphaExperience initialScene={params.scene as AlphaScene} />;
+  return <AlphaExperience initialScene={resolvedParams.scene as AlphaScene} />;
 }
