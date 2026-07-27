@@ -218,6 +218,59 @@ This resolves the repository control-boundary blocker only. Neither flag was
 configured in Vercel, the revised route was not invoked, and Gate 5 remains
 unexecuted pending deployment of the reviewed commit.
 
+### Gate 5 Runtime-Only Retry — Stopped Safely — 2026-07-27
+
+Production deployment `dpl_E9QYg4ruFbijLHvv2auW9iX6TctH` was verified Ready,
+targeting Production, serving the canonical alias, and built from `main` at
+commit `fc504518b3acd8f2e8acb11f566772ce078cc86c`. Before mutation, the Runtime
+and access operations and `/your-organization` each returned 404. Neither
+provisioning authority, the operation secret, nor an Alpha activation variable
+was present in Production.
+
+The frozen Runtime was reverified at 3,328,426 bytes with SHA-256
+`8c3ad0b42c53f7027d3f0cb0a12457e84a25c03063b4c6a47d14a8fe23bef5fa`.
+The staged provisioning validation passed 21/21 and the protected provisioning
+validation passed 31/31.
+
+Only `DISCOVERY_RUNTIME_PROVISIONING_ENABLED` and a temporary one-time
+operation secret were configured. Deployment
+`dpl_APZqqXZ96xU8eqXfqXw8NnWpj2Nf` became Ready with Runtime authority enabled.
+An authenticated Runtime request reached its scoped boundary with HTTP 400
+for intentionally incomplete scope, while an otherwise correctly scoped
+access request and the Alpha route both remained 404.
+
+The bounded Production OIDC diagnostic then passed and reported:
+
+- Production request-context OIDC, not an environment token;
+- the expected project, team, Production environment, and private Blob store;
+- `EXACT_OBJECT_ABSENT_NO_CONFLICT`;
+- no Runtime contents or raw token returned.
+
+The conditional first-create request used idempotency key
+`gate5-runtime-create-20260727-001` and request ID
+`gate5-runtime-create-20260727-001`. At `2026-07-27T19:57:37.690Z`, the route
+returned HTTP 409 and emitted the bounded
+`alpha-runtime-provisioning-failed` event. The route's fail-closed logging
+does not retain the underlying exception class, so repository and provider
+evidence do not establish a more specific cause. No retry was attempted.
+
+An immediate authenticated exact-object diagnostic again reported
+`EXACT_OBJECT_ABSENT_NO_CONFLICT`, proving that no Runtime object was created.
+A read-only Neon query reported zero access records, zero lifecycle events,
+and zero disclosure events.
+
+The Runtime authority and temporary secret were removed immediately. Cleanup
+deployment `dpl_9FfFSVXG1NEaERH2AgwinwfH6nMU` became Ready and serves the
+Production alias. After cleanup, Runtime provisioning, access provisioning,
+and the Alpha route each return 404; no relevant activation or provisioning
+variables remain; and the local temporary secret file was deleted.
+
+Gate 5 remains incomplete. Gate 6 must not begin. The next bounded step is to
+establish a non-sensitive error classification for the Runtime create failure
+or otherwise obtain provider-side failure evidence, then review a new Gate 5
+retry. The frozen Runtime, governance state, and Alpha activation remain
+unchanged.
+
 ## Production Blob OIDC Gate 3 Recovery — 2026-07-27
 
 The first launch attempt stopped before mutation when a local exact-key Blob

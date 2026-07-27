@@ -152,6 +152,33 @@ one bounded implementation; Runtime cannot grant access and access cannot
 write Runtime. No provider configuration, Blob object, governance record,
 deployment, or Alpha activation changed while implementing this separation.
 
+### Gate 5 Runtime-Only Hosted Retry
+
+The reviewed `fc504518b3acd8f2e8acb11f566772ce078cc86c` release was verified
+live in Production. Only Runtime provisioning and a temporary one-time secret
+were enabled. Access provisioning and Alpha remained disabled and returned
+404 throughout the attempt.
+
+Production request-context OIDC passed its project, team, environment, and
+store checks. The exact Atlas object was absent before the write. The
+conditional first-create request then returned HTTP 409 with the bounded
+`alpha-runtime-provisioning-failed` event. The current bounded route log does
+not record the underlying exception class. An immediate exact-object
+diagnostic proved that the object remained absent, so no restore or deletion
+was required and no retry was attempted.
+
+Read-only Neon verification remained:
+
+- access records: 0;
+- lifecycle events: 0;
+- disclosure events: 0.
+
+The Runtime authority and temporary secret were removed, the same reviewed
+release was redeployed, and Runtime provisioning, access provisioning, and
+Alpha again return 404. Gate 5 remains incomplete and Gate 6 is blocked until
+the create failure can be classified without exposing credentials or Runtime
+contents.
+
 Repository inspection found no clean persisted Runtime with canonical
 composition available for a real customer. Benchmark-generated state is not a
 permitted substitute.
