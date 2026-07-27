@@ -79,6 +79,9 @@ class MemoryRuntimeRepository implements OrganizationRuntimeRepository {
 function accessRepository(existing = false): AlphaAccessRecordRepository {
   let granted = false;
   return {
+    async findAccessRecordsForConsumer() {
+      return [];
+    },
     async findAccessRecords() {
       return existing ? [{
         accessRecordId: "existing",

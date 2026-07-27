@@ -47,6 +47,7 @@
     "validate:your-organization-communication-adapter": "tsx scripts/product/validateYourOrganizationCommunicationAdapter.ts",
     "validate:alpha-allowlist-disclosure-producer-shadow": "tsx scripts/product/validateAlphaAllowlistDisclosureProducerShadow.ts",
     "validate:clerk-identity-shadow": "tsx scripts/product/validateClerkIdentityShadowIntegration.ts",
+    "validate:authorized-organization-resolution": "tsx scripts/product/validateAuthorizedOrganizationResolution.ts",
     "validate:alpha-your-organization-activation": "tsx scripts/product/validateAlphaYourOrganizationActivation.ts",
     "validate:production-reachability": "tsx scripts/product/validateProductionReachability.ts",
     "storage:migrate": "tsx scripts/storage/migrateAlphaGovernance.ts up",

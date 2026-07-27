@@ -11,6 +11,8 @@ import {
   createOrganizationRuntimeRepository,
   type OrganizationRuntime,
 } from "../../../engine/v3/runtime";
+import { PostgresAlphaAccessRecordRepository } from "../../../db/governance/postgresRepositories";
+import { resolveAuthorizedOrganization } from "../../../lib/alpha-activation/resolveAuthorizedOrganization";
 import { resolveVerifiedConsumerIdentityFromClerk } from "../../../lib/auth/resolveVerifiedConsumerIdentityFromClerk";
 import { writeAlphaOperationalLog } from "../../../lib/operations/alphaOperationalLog";
 import {
@@ -18,27 +20,18 @@ import {
   type ActivatedYourOrganizationState,
 } from "./composeActivatedYourOrganization";
 
-const VALID_ORGANIZATION_ID = /^[a-zA-Z0-9_-]+$/;
-
 export async function loadActivatedYourOrganization(
-  organizationId: string | string[] | undefined,
+  requestedOrganizationId: string | string[] | undefined,
   requestId = crypto.randomUUID(),
 ): Promise<ActivatedYourOrganizationState> {
   writeAlphaOperationalLog({
     event: "alpha.request.started",
     requestId,
-    ...(typeof organizationId === "string" ? { organizationId } : {}),
+    ...(typeof requestedOrganizationId === "string"
+      ? { organizationId: requestedOrganizationId }
+      : {}),
     outcome: "started",
   });
-  if (
-    typeof organizationId !== "string" ||
-    !VALID_ORGANIZATION_ID.test(organizationId)
-  ) {
-    return {
-      status: "organization-required",
-      reason: "exact-organization-identifier-required",
-    };
-  }
 
   const resolvedAt = new Date().toISOString();
   const identityResolution =
@@ -50,6 +43,13 @@ export async function loadActivatedYourOrganization(
     };
   }
 
+  if (Array.isArray(requestedOrganizationId)) {
+    return {
+      status: "organization-required",
+      reason: "invalid-organization-id",
+    };
+  }
+
   let sql;
   try {
     sql = postgres(requireDiscoveryDatabaseUrl("application"), { max: 1 });
@@ -57,7 +57,9 @@ export async function loadActivatedYourOrganization(
     writeAlphaOperationalLog({
       event: "alpha.database.failed",
       requestId,
-      organizationId,
+      ...(requestedOrganizationId
+        ? { organizationId: requestedOrganizationId }
+        : {}),
       outcome: "failed",
       reason: "database-configuration-unavailable",
     });
@@ -69,6 +71,32 @@ export async function loadActivatedYourOrganization(
 
   let runtime: OrganizationRuntime | undefined;
   try {
+    const organizationResolution = await resolveAuthorizedOrganization({
+      identity: identityResolution.identity,
+      ...(requestedOrganizationId ? { requestedOrganizationId } : {}),
+      ...(process.env.DISCOVERY_ALPHA_ORGANIZATION_ID
+        ? {
+            configuredOrganizationId:
+              process.env.DISCOVERY_ALPHA_ORGANIZATION_ID,
+          }
+        : {}),
+      resolvedAt,
+      accessRepository: new PostgresAlphaAccessRecordRepository(sql),
+    });
+    if (organizationResolution.status !== "resolved") {
+      writeAlphaOperationalLog({
+        event: "alpha.access.denied",
+        requestId,
+        outcome: "denied",
+        reason: organizationResolution.reason,
+      });
+      return {
+        status: "organization-required",
+        reason: organizationResolution.reason,
+      };
+    }
+    const organizationId = organizationResolution.organizationId;
+
     const durable = await runDurableAlphaDisclosureTransaction({
       sql,
       identity: identityResolution.identity,

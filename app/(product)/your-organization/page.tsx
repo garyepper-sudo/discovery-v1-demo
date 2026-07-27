@@ -20,8 +20,8 @@ const stateMessage = {
     explanation: "Discovery could not verify an authenticated design-partner session.",
   },
   "organization-required": {
-    title: "Your organization could not be resolved.",
-    explanation: "Use the exact organization link supplied during design-partner provisioning.",
+    title: "Discovery could not resolve an organization you are authorized to access.",
+    explanation: "Access is unavailable for this authenticated session.",
   },
   "access-denied": {
     title: "You do not have access to this organization.",

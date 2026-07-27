@@ -996,3 +996,80 @@ is recorded here.
 
 The exact continuation point is a fresh Gate 7 pre-activation verification,
 which requires separate approval.
+
+## Gate 7 Retry — Failed Activation and Verified Rollback
+
+The Production Alpha flag was enabled without enabling Runtime or access
+provisioning. A minimal Edge-safe correction was required so Vercel middleware
+could evaluate the configured activation flag through direct environment
+access.
+
+Activation deployment `dpl_H5THfVPu1HDJRUVYpuJcCJrcWfnG` reached READY.
+Unauthenticated access redirected to Clerk and exposed no Atlas content.
+Clerk sign-in completed successfully, but the approved product route returned
+“Your organization could not be resolved” before authorization, Runtime
+retrieval, or disclosure.
+
+The hosted route currently requires an `organizationId` query parameter.
+That conflicts with the Gate 7 requirement to use only the exact configured
+`DISCOVERY_ALPHA_ORGANIZATION_ID` and not route-parameter or inferred
+organization identity. Product experience, disclosure, logout, and persistence
+replay could not proceed.
+
+The Alpha flag was removed immediately. Rollback deployment
+`dpl_7fNY7qHHdcMST3UcCJsJAWigPERs` reached READY with:
+
+- health ready;
+- Alpha disabled;
+- Runtime provisioning disabled;
+- access provisioning disabled;
+- product and provisioning routes returning 404;
+- access 1;
+- lifecycle 1;
+- disclosure 0;
+- active Neon transactions 0.
+
+No Runtime, access, lifecycle, disclosure, migration, or Blob mutation occurred.
+Gate 7 remains incomplete pending an explicitly reviewed organization-resolution
+correction.
+
+## Canonical Organization Resolution Correction
+
+The hosted Alpha no longer requires an organization query parameter for a
+verified user with one eligible durable access scope. The canonical order is:
+
+1. verify Clerk identity;
+2. load that consumer's durable governance records;
+3. apply the optional deployment organization guardrail;
+4. resolve exactly one authorized organization;
+5. load only that organization's Runtime;
+6. project, disclose, and render.
+
+`DISCOVERY_ALPHA_ORGANIZATION_ID` constrains which already-authorized
+organization this deployment may serve. It is not authority and cannot replace
+or override Neon governance. A query parameter is accepted only as a requested
+selection already authorized by durable access. Wrong, malformed,
+unauthorized, ambiguous, revoked, expired, or guardrail-conflicting cases fail
+closed without Runtime reads or disclosure writes.
+
+The focused resolver validator passed 38 checks. Clerk identity,
+authorization and provisioning boundaries, authorization-before-Runtime,
+projection compatibility, Product Communication, Organization Experience,
+production reachability, typecheck, build, and repository validation passed.
+The accepted architecture result remains 295/302 (98%) with seven historical
+findings.
+
+Corrected code was deployed with Alpha disabled as
+`dpl_98yBj1DWtKkTcZyB5rH4U6gtBZ4i`. The deployment reached READY and final
+hosted verification confirmed:
+
+- health ready;
+- product route 404;
+- Runtime provisioning route 404;
+- access provisioning route 404;
+- access 1;
+- lifecycle 1;
+- disclosure 0;
+- active Neon transactions 0.
+
+The exact continuation point is a fresh Gate 7 activation retry.

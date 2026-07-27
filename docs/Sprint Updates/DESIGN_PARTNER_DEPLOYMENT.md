@@ -70,6 +70,22 @@ Database URLs must require TLS. Use:
 - the direct Neon endpoint for migrations;
 - a connected private Vercel Blob store for hosted Runtime persistence.
 
+### Authorized organization resolution
+
+The hosted Alpha resolves organization identity only after Clerk verification
+and a durable governance lookup for that exact consumer. One eligible
+organization resolves automatically. With multiple eligible organizations, an
+explicit selection is required unless `DISCOVERY_ALPHA_ORGANIZATION_ID`
+selects exactly one organization the consumer is already authorized to access.
+
+`DISCOVERY_ALPHA_ORGANIZATION_ID` is a deployment guardrail, not authority. It
+constrains which already-authorized organization the deployment may serve and
+cannot grant access or replace the governance repository. An
+`organizationId` query parameter is only a requested selection and succeeds
+only when durable access already authorizes it. Zero eligible organizations,
+ambiguous access, malformed or unauthorized selection, and a guardrail/access
+mismatch all fail closed before Runtime retrieval or disclosure.
+
 Local development, benchmarks, and replay continue to use:
 
 ```text

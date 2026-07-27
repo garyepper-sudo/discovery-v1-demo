@@ -53,6 +53,41 @@ export class PostgresAlphaAccessRecordRepository
 {
   constructor(private readonly sql: GovernanceSql) {}
 
+  async findAccessRecordsForConsumer(input: {
+    consumerId: string;
+    experience: "organization";
+    resolvedAt: string;
+  }): Promise<readonly AlphaOrganizationAccessRecord[]> {
+    validateIdentity(input.consumerId, "consumerId");
+    if (
+      input.experience !== "organization" ||
+      !Number.isFinite(Date.parse(input.resolvedAt))
+    ) {
+      throw new AlphaStorageError("integrity-failure", "Invalid access lookup");
+    }
+    try {
+      const rows = await this.sql<AlphaAccessDatabaseRow[]>`
+        SELECT access_record_id, policy_id, policy_version, consumer_id,
+          organization_id, relationship, experience, scope_type, scope_id,
+          status, granted_at, expires_at, revoked_at, supersedes_access_record_id
+        FROM alpha_access_records
+        WHERE policy_id = ${ALPHA_ALLOWLIST_POLICY_ID}
+          AND policy_version = ${ALPHA_ALLOWLIST_POLICY_VERSION}
+          AND consumer_id = ${input.consumerId}
+          AND experience = ${input.experience}
+        ORDER BY organization_id, granted_at, access_record_id
+      `;
+      return rows.map(mapAlphaAccessRow);
+    } catch (error) {
+      if (error instanceof AlphaStorageError) throw error;
+      throw new AlphaStorageError(
+        "unavailable",
+        "Alpha access store unavailable",
+        true,
+      );
+    }
+  }
+
   private async serializable<T>(
     operation: (transaction: TransactionSql<Record<string, unknown>>) => Promise<T>,
   ): Promise<T> {

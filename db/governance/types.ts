@@ -51,6 +51,11 @@ export type SupersedeAlphaAccessInput = {
 };
 
 export interface AlphaAccessRecordRepository {
+  findAccessRecordsForConsumer(input: {
+    consumerId: string;
+    experience: "organization";
+    resolvedAt: string;
+  }): Promise<readonly AlphaOrganizationAccessRecord[]>;
   findAccessRecords(input: {
     consumerId: string;
     organizationId: string;

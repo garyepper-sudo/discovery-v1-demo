@@ -414,3 +414,63 @@ unchanged.
 
 The exact continuation point is a fresh Gate 7 pre-activation verification
 after explicit approval.
+
+## Gate 7 Retry and Safe Rollback
+
+Gate 7 was retried against the verified 1/1/0 governance state. The governed
+Alpha flag was enabled only in Vercel Production, with Runtime and access
+provisioning disabled and no temporary operation secret.
+
+Activation exposed a bounded Edge configuration defect: the activation helper
+used computed `process.env` access, which prevented Vercel middleware from
+receiving the statically configured flag. A minimal compatible correction now
+uses direct hosted environment access while preserving explicit environment
+injection for validation.
+
+Deployment `dpl_H5THfVPu1HDJRUVYpuJcCJrcWfnG` then reached READY and correctly
+enforced Clerk authentication. In a clean unauthenticated session, the direct
+Production route redirected to Clerk and disclosed no Atlas content. After
+successful Clerk sign-in, however, the product returned “Your organization
+could not be resolved” and rendered no organizational content.
+
+The exact blocker is that the activated route currently requires an
+`organizationId` query parameter. Gate 7 requires organization identity to
+come from the exact Production `DISCOVERY_ALPHA_ORGANIZATION_ID` and explicitly
+forbids route-parameter identity. The mandatory approved-user product check
+therefore failed.
+
+The Alpha flag was immediately removed and rollback deployment
+`dpl_7fNY7qHHdcMST3UcCJsJAWigPERs` reached READY. Post-rollback verification
+confirmed health ready, product and provisioning routes returning 404, access
+1, lifecycle 1, disclosure 0, and zero active Neon transactions. Runtime and
+governance state were not mutated.
+
+## Canonical Authorized Organization Resolution
+
+The mandatory query-parameter dependency has been removed from the hosted
+Alpha entry path. After Clerk verification, the server now queries the durable
+governance repository for that consumer's access records and resolves only
+eligible organization authority. One authorized organization resolves
+automatically. Zero or ambiguous authorized organizations fail closed.
+
+`DISCOVERY_ALPHA_ORGANIZATION_ID` is now explicitly a deployment guardrail:
+the configured organization resolves only when the verified consumer already
+has eligible durable access to the same organization. It cannot grant access.
+An explicit `organizationId` query is only an authorized selection, never an
+authority source; malformed, unauthorized, or guardrail-conflicting values
+deny without fallback.
+
+Resolution completes before Runtime retrieval. Denied resolver validation
+proved zero Runtime reads and zero disclosure writes. Focused resolution,
+Clerk, access, provisioning-boundary, Runtime-ordering, projection,
+communication, organization-experience, build, and repository validation
+passed. The accepted architecture baseline remains 295/302, 98%, with seven
+historical findings.
+
+Disabled-state Production deployment
+`dpl_98yBj1DWtKkTcZyB5rH4U6gtBZ4i` reached READY. Health remained ready,
+product and provisioning routes remained 404, governance remained 1/1/0, and
+there were zero active Neon transactions. Alpha was not activated.
+
+The exact continuation point is a fresh Gate 7 activation retry after explicit
+approval.

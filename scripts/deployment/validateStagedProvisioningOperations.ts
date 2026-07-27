@@ -73,6 +73,9 @@ class MemoryRuntimeRepository implements OrganizationRuntimeRepository {
 class MemoryAccessRepository implements AlphaAccessRecordRepository {
   grants = 0;
 
+  async findAccessRecordsForConsumer() {
+    return [];
+  }
   async findAccessRecords() {
     return [];
   }
