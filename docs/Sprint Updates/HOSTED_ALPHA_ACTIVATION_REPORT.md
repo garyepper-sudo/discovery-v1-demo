@@ -4,6 +4,36 @@ Date: 2026-07-27
 
 Classification: A — All Pre-Mutation Blockers Resolved
 
+## Production Blob OIDC Gate 3 Recovery — 2026-07-27
+
+The first launch attempt stopped before mutation when a local exact-key Blob
+read returned 403. Bounded claims proved that `vercel env run --environment
+production` set `VERCEL_ENV=production` but minted an OIDC token whose subject
+and `environment` claim were both `development`. Its project and team claims
+matched `discovery-v1-demo` and `discovery-os`.
+
+Root-cause classification:
+
+```text
+WRONG_ENVIRONMENT_OIDC_TOKEN
+```
+
+The failure therefore does not establish a Production Function authorization
+defect. `@vercel/blob` 2.6.1 already delegates token acquisition to
+`@vercel/oidc` 3.8.1, whose supported helper checks the Vercel request context
+before its environment fallback.
+
+The protected one-shot route now has an authenticated, Production-only
+diagnostic mode. It validates the request-context token's Production and
+project claims, then performs only the deterministic Atlas Runtime existence
+check. Its bounded response excludes raw tokens, credentials, Runtime bytes,
+and organization enumeration. Focused validation covers Production
+request-context recognition and fail-closed behavior for development,
+wrong-project, expired, and missing tokens.
+
+The diagnostic remained undeployed while this section was written. No Blob,
+Neon, access, Alpha configuration, or hosted data mutation occurred.
+
 ## Resume Audit — 2026-07-27
 
 The activation was resumed with these confirmed identifiers:

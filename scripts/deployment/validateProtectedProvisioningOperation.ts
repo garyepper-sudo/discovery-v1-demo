@@ -9,12 +9,36 @@ import type {
 } from "../../engine/v3/runtime";
 import { normalizeOrganizationRuntime } from "../../engine/v3/runtime/organizationStateStore";
 import { provisionDesignPartner } from "../../lib/alpha-provisioning/provisionDesignPartner";
+import { boundedVercelOidcEvidence } from "../../lib/alpha-provisioning/vercelOidcEvidence";
 
 const ORGANIZATION_ID = "atlas-manufacturing-simulation";
 const CONSUMER_ID = "user_3H5yQgEI6LpgRv7CeNoZsRGvu3p";
 const OPERATOR_ID = "discovery-alpha-operator";
 const FROZEN_RUNTIME =
   ".local-provisioning/atlas-manufacturing-simulation.runtime.json";
+
+function unsignedOidcToken(input: {
+  environment: string;
+  projectId: string;
+  expiresAt?: number;
+}): string {
+  const encode = (value: unknown) =>
+    Buffer.from(JSON.stringify(value)).toString("base64url");
+  return [
+    encode({ alg: "none", typ: "JWT" }),
+    encode({
+      iss: "https://oidc.vercel.com/discovery-os",
+      aud: "https://vercel.com/discovery-os",
+      sub: `owner:discovery-os:project:discovery-v1-demo:environment:${input.environment}`,
+      project_id: input.projectId,
+      owner_id: "team_validation",
+      environment: input.environment,
+      iat: 1_800_000_000,
+      exp: input.expiresAt ?? 1_800_003_600,
+    }),
+    "validation-signature",
+  ].join(".");
+}
 
 class MemoryRuntimeRepository implements OrganizationRuntimeRepository {
   readonly backend = "vercel-blob" as const;
@@ -165,6 +189,69 @@ async function main(): Promise<void> {
   ));
   assert.equal(unauthorized.status, 401);
 
+  const productionToken = unsignedOidcToken({
+    environment: "production",
+    projectId: "project_validation",
+  });
+  const requestContextEvidence = boundedVercelOidcEvidence(productionToken, {
+    environment: "production",
+    projectId: "project_validation",
+    nowSeconds: 1_800_000_100,
+    requestContextToken: productionToken,
+    environmentToken: "",
+  });
+  assert.equal(requestContextEvidence.requestContextTokenDetected, true);
+  assert.equal(requestContextEvidence.environmentTokenDetected, false);
+  assert.equal("token" in requestContextEvidence, false);
+
+  const environmentEvidence = boundedVercelOidcEvidence(productionToken, {
+    environment: "production",
+    projectId: "project_validation",
+    nowSeconds: 1_800_000_100,
+    requestContextToken: "",
+    environmentToken: productionToken,
+  });
+  assert.equal(environmentEvidence.environmentTokenDetected, true);
+  await assert.rejects(async () => boundedVercelOidcEvidence(
+    unsignedOidcToken({
+      environment: "development",
+      projectId: "project_validation",
+    }),
+    {
+      environment: "production",
+      projectId: "project_validation",
+      nowSeconds: 1_800_000_100,
+    },
+  ), /environment scope mismatch/);
+  await assert.rejects(async () => boundedVercelOidcEvidence(
+    unsignedOidcToken({
+      environment: "production",
+      projectId: "wrong_project",
+    }),
+    {
+      environment: "production",
+      projectId: "project_validation",
+      nowSeconds: 1_800_000_100,
+    },
+  ), /project scope mismatch/);
+  await assert.rejects(async () => boundedVercelOidcEvidence(
+    unsignedOidcToken({
+      environment: "production",
+      projectId: "project_validation",
+      expiresAt: 1_800_000_000,
+    }),
+    {
+      environment: "production",
+      projectId: "project_validation",
+      nowSeconds: 1_800_000_100,
+    },
+  ), /expired/);
+  await assert.rejects(async () => boundedVercelOidcEvidence("", {
+    environment: "production",
+    projectId: "project_validation",
+    nowSeconds: 1_800_000_100,
+  }), /malformed/);
+
   delete process.env.VERCEL_ENV;
   delete process.env.DISCOVERY_PROVISIONING_OPERATION_SECRET;
   process.env.DISCOVERY_PROVISIONING_OPERATION_ENABLED = "false";
@@ -172,11 +259,18 @@ async function main(): Promise<void> {
   console.log(JSON.stringify({
     validation: "protected-production-provisioning-operation",
     result: "PASS",
-    checks: 16,
+    checks: 24,
     frozenRuntimeSha256: digest,
     disabledByDefault: true,
     productionEnvironmentOnly: true,
     unauthorizedRejected: true,
+    requestContextProductionOidcRecognized: true,
+    environmentOidcSupported: true,
+    wrongEnvironmentFailsClosed: true,
+    wrongProjectFailsClosed: true,
+    expiredOidcFailsClosed: true,
+    missingOidcFailsClosed: true,
+    rawOidcTokenExcluded: true,
     digestMismatchBeforeWrite: true,
     accessConflictBeforeWrite: true,
     overwriteDisabled: true,

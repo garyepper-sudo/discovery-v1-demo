@@ -1,11 +1,13 @@
 import { createHash, timingSafeEqual } from "node:crypto";
 
 import postgres from "postgres";
+import { getVercelOidcToken } from "@vercel/oidc";
 
 import { requireDiscoveryDatabaseUrl } from "../../../../db/config";
 import { PostgresAlphaAccessRecordRepository } from "../../../../db/governance/postgresRepositories";
 import { createOrganizationRuntimeRepository } from "../../../../engine/v3/runtime";
 import { provisionDesignPartner } from "../../../../lib/alpha-provisioning/provisionDesignPartner";
+import { boundedVercelOidcEvidence } from "../../../../lib/alpha-provisioning/vercelOidcEvidence";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -65,6 +67,64 @@ export async function POST(request: Request): Promise<Response> {
     !/^[a-zA-Z0-9:_-]+$/.test(idempotencyKey)
   ) {
     return new Response("Invalid idempotency key.", { status: 400 });
+  }
+  if (new URL(request.url).searchParams.get("mode") === "diagnostic") {
+    try {
+      const token = await getVercelOidcToken();
+      const oidc = boundedVercelOidcEvidence(token, {
+        environment: "production",
+        projectId: process.env.VERCEL_PROJECT_ID,
+      });
+      const repository = createOrganizationRuntimeRepository();
+      const runtimePresent = await repository.exists(ORGANIZATION_ID);
+      return Response.json({
+        validation: "production-blob-oidc-diagnostic",
+        result: "PASS",
+        vercelEnvironment: process.env.VERCEL_ENV,
+        projectId: process.env.VERCEL_PROJECT_ID,
+        deploymentIdHash: process.env.VERCEL_DEPLOYMENT_ID
+          ? createHash("sha256")
+              .update(process.env.VERCEL_DEPLOYMENT_ID)
+              .digest("hex")
+              .slice(0, 12)
+          : null,
+        oidc,
+        blobStoreId: process.env.BLOB_STORE_ID,
+        runtimeObject:
+          runtimePresent
+            ? "EXACT_OBJECT_PRESENT_CONFLICT"
+            : "EXACT_OBJECT_ABSENT_NO_CONFLICT",
+        runtimeContentsReturned: false,
+        rawTokenReturned: false,
+      });
+    } catch (error) {
+      const provider = error as {
+        name?: string;
+        status?: number;
+        statusCode?: number;
+        code?: string;
+      };
+      return Response.json({
+        validation: "production-blob-oidc-diagnostic",
+        result: "FAIL",
+        vercelEnvironment: process.env.VERCEL_ENV,
+        requestContextTokenDetected: Boolean((
+          globalThis as typeof globalThis & {
+            [key: symbol]: { get?: () => { headers?: Record<string, string> } };
+          }
+        )[Symbol.for("@vercel/request-context")]?.get?.()?.headers?.[
+          "x-vercel-oidc-token"
+        ]),
+        environmentTokenDetected: Boolean(process.env.VERCEL_OIDC_TOKEN),
+        blobStoreId: process.env.BLOB_STORE_ID,
+        error: {
+          class: provider.name ?? "Error",
+          status: provider.status ?? provider.statusCode ?? null,
+          code: provider.code ?? null,
+        },
+        rawTokenReturned: false,
+      }, { status: 502 });
+    }
   }
   if (request.headers.get("content-type") !== "application/json") {
     return new Response("Runtime must be canonical JSON.", { status: 415 });
