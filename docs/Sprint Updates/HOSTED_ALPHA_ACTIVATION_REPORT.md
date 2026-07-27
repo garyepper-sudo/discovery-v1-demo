@@ -107,6 +107,27 @@ and no Vercel configuration or Alpha flag changed. Gate 5 can continue only
 from a Production request-context execution surface or another
 provider-supported Production-scoped credential.
 
+## Gate 5 Production Route Audit — 2026-07-27
+
+The existing protected Production route was audited before invocation. Its
+Production request-context OIDC diagnostic mode is read-only, but its only
+write mode calls `provisionDesignPartner`. That operation creates or replaces
+the Runtime and then grants the scoped Alpha access record. It does not expose
+a Runtime-only write mode.
+
+For a first upload, the repository correctly refuses overwrite but there is no
+existing Runtime to pass to the repository's backup operation. Consequently,
+the write path creates no pre-upload backup. If the subsequent access grant
+fails on this first-upload path, `backupId` is absent and the current
+compensation branch cannot restore a previous Runtime.
+
+Invoking the route would therefore violate both Gate 5 constraints: no access
+grant and backup before upload. Adding a Runtime-only mode would require a code
+change and Production redeployment, which this gate explicitly forbids.
+Execution stopped before any hosted request. No diagnostic, Blob read/write,
+Runtime upload, database operation, access/lifecycle/disclosure record,
+configuration change, Alpha activation, or redeployment occurred.
+
 ## Production Blob OIDC Gate 3 Recovery — 2026-07-27
 
 The first launch attempt stopped before mutation when a local exact-key Blob
