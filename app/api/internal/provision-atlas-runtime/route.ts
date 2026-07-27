@@ -6,7 +6,10 @@ import { getVercelOidcToken } from "@vercel/oidc";
 import { requireDiscoveryDatabaseUrl } from "../../../../db/config";
 import { PostgresAlphaAccessRecordRepository } from "../../../../db/governance/postgresRepositories";
 import { createOrganizationRuntimeRepository } from "../../../../engine/v3/runtime";
-import { provisionDesignPartner } from "../../../../lib/alpha-provisioning/provisionDesignPartner";
+import {
+  provisionAlphaAccess,
+  provisionOrganizationRuntime,
+} from "../../../../lib/alpha-provisioning/provisionDesignPartner";
 import { boundedVercelOidcEvidence } from "../../../../lib/alpha-provisioning/vercelOidcEvidence";
 
 export const dynamic = "force-dynamic";
@@ -126,6 +129,51 @@ export async function POST(request: Request): Promise<Response> {
       }, { status: 502 });
     }
   }
+  const operation = request.headers.get("x-discovery-provisioning-operation");
+  if (operation === "access") {
+    const sql = postgres(requireDiscoveryDatabaseUrl("administration"), { max: 1 });
+    const requestId = request.headers.get("x-request-id") ?? crypto.randomUUID();
+    try {
+      const receipt = await provisionAlphaAccess({
+        organizationId: ORGANIZATION_ID,
+        consumerId: CONSUMER_ID,
+        actor: OPERATOR_ID,
+        idempotencyKey,
+        repository: createOrganizationRuntimeRepository(),
+        accessRepository: new PostgresAlphaAccessRecordRepository(sql),
+      });
+      console.info(JSON.stringify({
+        event: "alpha-access-provisioning-completed",
+        requestId,
+        organizationId: receipt.organizationId,
+        consumerId: receipt.consumerId,
+        operatorId: OPERATOR_ID,
+        accessRecordId: receipt.accessRecordId,
+      }));
+      return Response.json({
+        result: receipt.result,
+        requestId,
+        organizationId: receipt.organizationId,
+        consumerId: receipt.consumerId,
+        accessRecordId: receipt.accessRecordId,
+        runtimeWritten: false,
+        activationChanged: false,
+      });
+    } catch {
+      console.error(JSON.stringify({
+        event: "alpha-access-provisioning-failed",
+        requestId,
+        organizationId: ORGANIZATION_ID,
+        operatorId: OPERATOR_ID,
+      }));
+      return new Response("Access provisioning failed closed.", { status: 409 });
+    } finally {
+      await sql.end();
+    }
+  }
+  if (operation !== "runtime") {
+    return new Response("Invalid provisioning operation.", { status: 400 });
+  }
   if (request.headers.get("content-type") !== "application/json") {
     return new Response("Runtime must be canonical JSON.", { status: 415 });
   }
@@ -139,49 +187,42 @@ export async function POST(request: Request): Promise<Response> {
     return new Response("Runtime upload is empty or too large.", { status: 413 });
   }
 
-  const sql = postgres(requireDiscoveryDatabaseUrl("administration"), { max: 1 });
   const requestId = request.headers.get("x-request-id") ?? crypto.randomUUID();
   try {
-    const receipt = await provisionDesignPartner({
+    const receipt = await provisionOrganizationRuntime({
       organizationId: ORGANIZATION_ID,
-      consumerId: CONSUMER_ID,
       actor: OPERATOR_ID,
       idempotencyKey,
       expectedRuntimeSha256: RUNTIME_SHA256,
       runtimeBytes,
       repository: createOrganizationRuntimeRepository(),
-      accessRepository: new PostgresAlphaAccessRecordRepository(sql),
     });
     console.info(JSON.stringify({
-      event: "alpha-provisioning-completed",
+      event: "alpha-runtime-provisioning-completed",
       requestId,
       organizationId: receipt.organizationId,
-      consumerId: receipt.consumerId,
       operatorId: OPERATOR_ID,
       runtimeSha256: receipt.runtimeSha256,
-      accessRecordId: receipt.accessRecordId,
     }));
     return Response.json({
       result: receipt.result,
       requestId,
       organizationId: receipt.organizationId,
-      consumerId: receipt.consumerId,
       runtimeBackend: receipt.runtimeBackend,
       runtimeSha256: receipt.runtimeSha256,
       runtimeRevision: receipt.runtimeRevision,
-      accessRecordId: receipt.accessRecordId,
-      oneTimeOperationConsumed: true,
+      backupId: receipt.backupId ?? null,
+      accessWritten: false,
+      activationChanged: false,
     });
   } catch {
     console.error(JSON.stringify({
-      event: "alpha-provisioning-failed",
+      event: "alpha-runtime-provisioning-failed",
       requestId,
       organizationId: ORGANIZATION_ID,
       operatorId: OPERATOR_ID,
     }));
-    return new Response("Provisioning failed closed.", { status: 409 });
-  } finally {
-    await sql.end();
+    return new Response("Runtime provisioning failed closed.", { status: 409 });
   }
 }
 

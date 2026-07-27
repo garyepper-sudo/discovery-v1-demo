@@ -109,16 +109,31 @@ Provisioning requires:
 5. migrated Neon administration connection;
 6. connected private Runtime object store.
 
-The supported command remains:
+The supported workflow is now staged. Provision Runtime first:
 
 ```bash
 npm run deployment:provision-design-partner -- \
+  --operation runtime \
+  --organization EXACT_ORGANIZATION_ID \
+  --actor EXACT_OPERATOR_ID \
+  --runtime-source /secure/path/organization-runtime.json \
+  --runtime-sha256 REVIEWED_RUNTIME_SHA256 \
+  --idempotency-key UNIQUE_RUNTIME_KEY
+```
+
+Then provision access without touching Runtime:
+
+```bash
+npm run deployment:provision-design-partner -- \
+  --operation access \
   --organization EXACT_ORGANIZATION_ID \
   --consumer EXACT_CLERK_USER_ID \
   --actor EXACT_OPERATOR_ID \
-  --runtime-source /secure/path/organization-runtime.json \
-  --idempotency-key UNIQUE_PROVISIONING_KEY
+  --idempotency-key UNIQUE_ACCESS_KEY
 ```
+
+Activation is a third external deployment operation and performs neither
+provisioning step.
 
 Repository inspection found no clean persisted Runtime with canonical
 composition available for a real customer. Benchmark-generated state is not a

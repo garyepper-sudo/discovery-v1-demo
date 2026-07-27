@@ -128,6 +128,39 @@ Execution stopped before any hosted request. No diagnostic, Blob read/write,
 Runtime upload, database operation, access/lifecycle/disclosure record,
 configuration change, Alpha activation, or redeployment occurred.
 
+## Staged Provisioning Architecture — 2026-07-27
+
+The protected Production route now exposes two explicit write operations
+through the existing authentication, fixed Atlas scope, Runtime repository,
+and bounded logging boundary:
+
+1. `x-discovery-provisioning-operation: runtime` validates the frozen Runtime,
+   performs conflict and conditional replacement checks, backs up an existing
+   Runtime before replacement, uploads, reads back, and verifies bytes,
+   digest, organization identity, and schema. It never opens the governance
+   database or creates access.
+2. `x-discovery-provisioning-operation: access` requires the exact Runtime to
+   exist, then uses the existing PostgreSQL repository to create the canonical
+   organization-to-Clerk access mapping and transactional lifecycle event. It
+   never writes or replaces Runtime.
+3. Activation remains outside the provisioning route. The operator sets
+   `DISCOVERY_ALPHA_ORGANIZATION_ID` and
+   `DISCOVERY_ALPHA_YOUR_ORGANIZATION_ENABLED`, deploys, verifies health, and
+   runs replay only after Gates 5 and 6 pass.
+
+The route no longer calls the coupled `provisionDesignPartner` composition.
+The CLI accepts the same explicit `runtime` or `access` operation. Existing
+repositories, digest checks, conflict behavior, replacement backup, Runtime
+normalization, access transaction, lifecycle semantics, and disclosure
+boundaries remain unchanged. No second provisioning architecture, identity
+store, authorization policy, or activation owner was introduced.
+
+Focused validation demonstrates Runtime upload with zero access writes,
+access grant with zero Runtime writes, activation recognition with zero
+provisioning writes, and fail-closed access before Runtime. These are isolated
+validation results; the decoupled route has not yet been deployed or invoked
+against Production.
+
 ## Production Blob OIDC Gate 3 Recovery — 2026-07-27
 
 The first launch attempt stopped before mutation when a local exact-key Blob

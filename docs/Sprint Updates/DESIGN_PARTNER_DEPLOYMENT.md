@@ -205,31 +205,55 @@ Discovery's durable access record remains the organization authorization
 owner. Local identity validation passes, but live Clerk behavior is not
 demonstrated without production keys and a deployed domain.
 
-## Organization and Access Provisioning
+## Staged Organization Provisioning
 
 The supported operator workflow requires an already produced canonical
 organization Runtime. It does not create or invent cognition.
 
+Gate 5 provisions Runtime only:
+
 ```bash
 npm run deployment:provision-design-partner -- \
+  --operation runtime \
   --organization EXACT_ORGANIZATION_ID \
-  --consumer EXACT_CLERK_USER_ID \
   --actor EXACT_OPERATOR_ID \
   --runtime-source /secure/path/organization-runtime.json \
   --runtime-sha256 REVIEWED_RUNTIME_SHA256 \
-  --idempotency-key UNIQUE_PROVISIONING_KEY
+  --idempotency-key UNIQUE_RUNTIME_KEY
 ```
 
-The command:
+Gate 6 provisions access only after the Runtime exists:
+
+```bash
+npm run deployment:provision-design-partner -- \
+  --operation access \
+  --organization EXACT_ORGANIZATION_ID \
+  --consumer EXACT_CLERK_USER_ID \
+  --actor EXACT_OPERATOR_ID \
+  --idempotency-key UNIQUE_ACCESS_KEY
+```
+
+The Runtime operation:
 
 - verifies exact organization identity;
 - rejects a Runtime without a completed investigation;
 - rejects a Runtime without canonical Organizational Understanding;
 - writes the Runtime atomically to the persistent volume;
 - preserves a prior Runtime backup when replacing;
-- grants idempotent organization-scoped Alpha access through the repository;
-- restores the prior Runtime if the access grant fails;
-- requires no manual database editing.
+- retrieves and verifies exact bytes, digest, organization identity, and
+  schema;
+- never opens the governance database or grants access.
+
+The access operation verifies that the Runtime exists, then grants
+idempotent organization-scoped Alpha access and its transactional lifecycle
+event. The access record is the existing canonical organization-to-Clerk
+mapping; no parallel organization or identity store is introduced. It never
+writes Runtime.
+
+Gate 7 remains an external deployment operation. It sets the exact Alpha
+organization and activation flag, deploys, checks health, and runs replay. It
+does not provision Runtime or access. Each gate therefore has an independent
+idempotency key and rollback boundary and requires no manual database editing.
 
 Repository reconstruction found no persisted Runtime currently containing a
 canonical composition. A product-ready design-partner Runtime must therefore

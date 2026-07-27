@@ -6,7 +6,10 @@ import postgres from "postgres";
 import { requireDiscoveryDatabaseUrl } from "../../db/config";
 import { PostgresAlphaAccessRecordRepository } from "../../db/governance/postgresRepositories";
 import { createOrganizationRuntimeRepository } from "../../engine/v3/runtime";
-import { provisionDesignPartner } from "../../lib/alpha-provisioning/provisionDesignPartner";
+import {
+  provisionAlphaAccess,
+  provisionOrganizationRuntime,
+} from "../../lib/alpha-provisioning/provisionDesignPartner";
 
 const args = new Map<string, string>();
 for (let index = 2; index < process.argv.length; index += 2) {
@@ -25,27 +28,38 @@ function exact(name: string): string {
 }
 
 async function main(): Promise<void> {
+  const operation = exact("operation");
   const organizationId = exact("organization");
-  const consumerId = exact("consumer");
   const actor = exact("actor");
-  const sourcePath = path.resolve(exact("runtime-source"));
   const idempotencyKey = exact("idempotency-key");
-  const allowOverwrite = args.get("allow-overwrite") === "true";
-  const raw = await readFile(sourcePath);
-  const sql = postgres(requireDiscoveryDatabaseUrl("administration"), { max: 1 });
-  try {
-    const receipt = await provisionDesignPartner({
-      consumerId,
+  const repository = createOrganizationRuntimeRepository();
+  if (operation === "runtime") {
+    const sourcePath = path.resolve(exact("runtime-source"));
+    const raw = await readFile(sourcePath);
+    console.log(JSON.stringify(await provisionOrganizationRuntime({
       organizationId,
       actor,
       idempotencyKey,
       expectedRuntimeSha256: exact("runtime-sha256"),
       runtimeBytes: raw,
-      repository: createOrganizationRuntimeRepository(),
+      repository,
+      allowOverwrite: args.get("allow-overwrite") === "true",
+    }), null, 2));
+    return;
+  }
+  if (operation !== "access") {
+    throw new Error("Operation must be runtime or access");
+  }
+  const sql = postgres(requireDiscoveryDatabaseUrl("administration"), { max: 1 });
+  try {
+    console.log(JSON.stringify(await provisionAlphaAccess({
+      organizationId,
+      consumerId: exact("consumer"),
+      actor,
+      idempotencyKey,
+      repository,
       accessRepository: new PostgresAlphaAccessRecordRepository(sql),
-      allowOverwrite,
-    });
-    console.log(JSON.stringify(receipt, null, 2));
+    }), null, 2));
   } finally {
     await sql.end();
   }
