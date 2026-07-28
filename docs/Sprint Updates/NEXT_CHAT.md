@@ -1,242 +1,68 @@
 # Discovery Next Chat
 
-## Read first
+## Read First
 
 1. `AGENTS.md`
-2. `docs/Product/PRODUCT_CANON.md`
-3. `docs/Architecture/Canon/SHARED_ORGANIZATIONAL_INTELLIGENCE.md`
-4. `docs/Architecture/Canon/COGNITIVE_ARCHITECTURE_INDEX.md`
-5. `docs/Architecture/Canon/DISCOVERY_2_SEQUENTIAL_IMPLEMENTATION_PROGRAM.md`
-6. `docs/Architecture/Canon/DISCOVERY_SCORECARD.md`
-7. `engine/benchmark/research/ORGANIZATIONAL_UNDERSTANDING_RESEARCH_FRAMEWORK.md`
-8. `docs/Architecture/Canon/DISCOVERY_ENGINEERING_PERFORMANCE_SYSTEM.md`
-9. `engine/benchmark/research/README.md`
-10. `docs/Sprint Updates/DISCOVERY_SNAPSHOT.md`
-11. `docs/Sprint Updates/PROJECT_STATE.md`
-12. `docs/Architecture/Validation/RUNTIME_VALIDATION.md`
+2. `docs/Architecture/Canon/DISCOVERY_ALPHA_V1_OPERATIONAL_BASELINE.md`
+3. `docs/Sprint Updates/DISCOVERY_SNAPSHOT.md`
+4. `docs/Sprint Updates/PROJECT_STATE.md`
+5. `docs/Sprint Updates/NEXT_PHASE_PROGRAM.md`
+6. `docs/Product/PRODUCT_CANON.md`
+7. `docs/Architecture/Canon/COGNITIVE_ARCHITECTURE_INDEX.md`
 
-Inspect `git status --short` before acting. The working tree contains
-pre-existing documentation edits and multiple untracked benchmark and research
-directories. Preserve them and do not treat their presence as production
-authorization.
+Inspect `git status --short` before acting. Preserve unrelated work and do not
+stage, clean, rename, or inspect the duplicate untracked ` 2` and ` 3` files
+as a collection.
 
 ## Current Milestone
 
-Durable Alpha PostgreSQL Storage Foundation complete as an inactive local
-shadow. PostgreSQL `17.10` validation passes `60/60`; Alpha producer `61/61`
-and Clerk identity `28/28` remain passing. Hosted operations and live
-deployment remain unmeasured, dependency remediation remains open, and the
-active route is unchanged.
+Discovery Hosted Alpha is operational and Acceptance Replay 001 passed.
+`/your-organization` hosts the canonical nine-scene experience for the
+access-authorized Atlas organization. Quantitative truthfulness is active and
+the accepted Production architecture is frozen by default.
 
-## Current Development Phase
+Operationally proven does not mean commercially validated.
 
-Conditional Phase 2 adjudication remains production-blocked. Phases 3 and 4
-are complete. Phase 5A authority transitions and the Phase 5B disclosure
-contract remain unchanged. Phase 8A is an authorized product-validation
-exception; broader Governance and Phase 6 remain paused.
-
-## Current Objective
-
-Preserve the canonized identity and authorization boundary. Clerk is
-authentication-only; Discovery owns organization access and disclosure.
-Live provider-session verification, hosted Neon operations, dependency
-remediation, and activation review remain missing. Do not activate the route,
-provision hosted storage, implement Phase 6, or resume broader Governance
-without explicit authorization.
-
-DEPS Phase 1.1 is available through `npm run deps:report`. Future substantial
-sprints should finish by creating a versioned reference-only manifest,
-declaring one compatible predecessor or a new cohort, and generating the
-deterministic engineering progress report after native validation.
-
-## Current architectural state
-
-Discovery is a shared organizational intelligence platform. Organization
-Runtime is the canonical technical persistence boundary, the Organization
-Model is the living product representation, and the Operating Model is its
-primary operational representation.
-
-Organizational Understanding is reusable platform cognition. Executive
-Assessment and the Executive Cognitive Operating System are
-application-specific consumers or projections.
-
-Adaptive Organizational Cognition is the organizing theory. Structured
-Organizational Reasoning remains the technical execution architecture.
-
-## Current production boundary
-
-Discovery 2 Phase 1 is complete and active. Phase 3's bounded shadow is
-complete, Phase 4C canonical ownership is active, Phase 5A authority
-transitions are active, and the Phase 5B disclosure contract is active.
-Conditional Phase 2 remains blocked.
-
-Production completed Explanations preserve:
-
-- stable identity and normalized scope;
-- outcomes and complete structured ancestry;
-- optional deterministic `supports`, `opposes`, and `shared` comparative
-  Evidence roles.
-
-Historical records without the role field remain compatible. No downstream
-consumer interprets the roles. Completed Explanations remain
-`unadjudicated`.
-
-Executive Assessment consumes canonical Organizational Understanding while
-retaining its existing output semantics. `currentUnderstandings` remains an
-assessment-derived compatibility view.
-
-Canonical compositions now carry additive authority-transition receipts.
-Completed Explanations are admitted using existing identity, scope, outcome,
-and ancestry semantics. Invalid contributions remain provisional and cannot
-enter canonical composition. Persistence does not grant authority. Disclosure
-is now governed by a pure resolved-decision contract. Application enforcement
-and durable revocation remain blocked because no canonical decision producer
-or append-only decision-history owner exists. No policy, permission,
-membership, provider, or Intelligence Scope enforcement was introduced.
-
-## Phase 2 blocker
-
-The completed-Explanation adjudication shadow passes `34/34`, but its
-discrimination, counterfactual, outcome, rule-out, and confidence semantics are
-benchmark-owned.
-
-No canonical production object currently identifies:
-
-1. a completed Explanation under test;
-2. its competitor or viable comparison set;
-3. a structured test result that justifies relative standing.
-
-Phase 2 must remain blocked. Do not infer completed-Explanation authority from
-Evidence volume, Seed rank, Hypothesis status, Prediction accuracy, Belief
-confidence, Theory evolution, or decision learning.
-
-Unresolved competition is a valid state of Organizational Understanding.
-Adjudication is conditional and is not required before the authorized shadow
-may evaluate reusable Understanding.
-
-## Benchmark and research status
-
-Established benchmark evidence includes:
-
-- Evidence Provenance `11/11`;
-- Evidence Independence `16/16`;
-- Explanation ancestry `18/18`;
-- completed Explanation adjudication shadow `34/34`;
-- Comparative Evidence Roles production gate `20/20`;
-- Phase 3 Explanation-aware Understanding shadow `15/15`, Classification A;
-- Phase 4C canonical ownership migration gate `14/14`, Classification A;
-- Phase 5A explicit authority transitions gate `14/14`, Classification A;
-- Phase 5B disclosure eligibility and revocation gate `14/14`; contract valid,
-  activation blocked;
-- Organizational Understanding Projection shadow `30/30`; active application
-  path unchanged;
-- Your Organization projection compatibility shadow `43/43`; product contract
-  refinement required;
-- structured Product Communication shadow `60/60`; priority provenance, exact
-  source pass-through, uncertainty, alternatives, replay non-mutation, and
-  active-route noninterference demonstrated;
-- Your Organization Product Communication adapter `69/69`; exact plan-to-view
-  mapping, Evidence roles, availability, replay immutability, and active-output
-  equivalence demonstrated;
-- architecture validation at `295/302` with 7 pre-existing findings.
-
-The Organizational Understanding Research Framework is complete. It defines
-six research dimensions beneath the Organizational Understanding Index.
-
-Local Understanding Utility is an optional benchmark-only profile beneath the
-Organizational Understanding Index and before the User Intelligence Index. It
-is not an additional Scorecard metric.
-
-The Localized Nonlinear Cognition Research Adapter is complete with decision
-`replicate`. Independent replication and a production contract owner remain
-not-yet-demonstrated. The result does not authorize production nonlinear
-cognition, a new cognitive layer, schema changes, or Phase 2.
-
-## Discovery Scorecard
-
-The five and only five canonical scores are:
-
-1. Organizational Understanding Index;
-2. User Intelligence Index;
-3. Collective Intelligence Index;
-4. Governance Integrity Index;
-5. System Sustainability Index.
-
-Organizational Understanding is directly optimized. Governance Integrity and
-System Sustainability are promotion guardrails.
-
-## Discovery 2 phase status
+## Current Production Boundary
 
 ```text
-Phase 0  baseline established
-Phase 1  comparative Evidence roles complete and active
-Phase 2  conditional adjudication contract designed; production blocked
-Phase 3  shadow complete; Classification A; canonical path unchanged
-Phase 4  complete; Classification A; canonical ownership active
-Phase 5  5A and 5B bounded contracts complete; enforcement activation blocked
-Phase 6  blocked
-Phase 7  not started
-Phase 8  Phase 8A partial Runtime product integration complete;
-         reusable projection, compatibility, and structured communication
-         shadows plus the product communication adapter validated but inactive
+Verified Clerk identity
+→ durable access lookup
+→ authorized organization resolution
+→ private Runtime retrieval
+→ canonical projection
+→ disclosure qualification
+→ product view model
+→ canonical Discovery Experience
 ```
 
-Do not reorder this sequence.
-
-## Intentional transitions
-
-Do not mistake these known transitions for undocumented implementation:
-
-- assessment-derived `currentUnderstandings` remains as a compatibility view;
-- Executive Assessment retains Seed-era output semantics downstream;
-- the bounded Alpha producer, injected access-reader contract, and official
-  server-only Clerk identity shadow are demonstrated, but live deployment
-  verification and durable stores remain unimplemented;
-  the full Governance Control Plane remains conceptual;
-- Prototype Alpha remains fixture-backed;
-- benchmark policy wrappers and candidate structures are not production.
+Authorization precedes Runtime. Query parameters and deployment configuration
+cannot grant access. Runtime and access provisioning are disabled during
+normal operation. Alpha remains enabled for the configured organization.
 
 ## Next Priority
 
-Run one separately authorized implementation sprint:
-
-**Alpha Readiness implementation**
-
-Execute only the bounded sequence in `ALPHA_READINESS_ASSESSMENT.md`:
-dependency remediation, durable hosted Runtime, hosted Neon verification,
-identity/authorization activation across supported reads and writes, minimum
-operations and recovery, and deployed tenant-isolation validation. Do not
-resume general Discovery 2 cognition, broaden Governance, or add product
-features.
-
-The dependency baseline is not activation-ready: the all-dependencies audit
-moved from 19 to 23 through four moderate Drizzle Kit development-tool
-entries; the production-only audit is 5 (3 high, 2 critical). Clerk and Next
-remediation must pass before deployed identity
-verification or route activation. Do not run automatic audit fixes.
-
-Expected Scorecard treatment:
+Begin **Discovery Phase 2.1 — Repeatable Organization Activation**. Define a
+bounded, idempotent, reversible, independently authorized operator workflow:
 
 ```text
-Organizational Understanding  unchanged
-User Intelligence             not measured
-Collective Intelligence       not measured
-Governance Integrity          improved at the shadow contract boundary
-System Sustainability         improved through a shared reusable contract
+create organization
+→ provision Runtime
+→ create access
+→ activate
+→ smoke test
+→ issue receipt
 ```
 
-Do not claim Local Understanding Utility or active user improvement.
+Reuse existing infrastructure and preserve default-disabled controls. Do not
+resume broad infrastructure construction or redesign Runtime, governance,
+authorization, organization resolution, projection, disclosure, health,
+provisioning, or product boundaries without demonstrated evidence and an
+explicit baseline revision.
 
-## Guardrails
+## Program Direction
 
-- preserve one Organization Runtime and one organizational truth boundary;
-- do not create a universal candidate object or nonlinear cognition layer;
-- do not promote research adapters or benchmark fixtures into production;
-- keep persistence, authority, and disclosure distinct;
-- preserve deterministic replay and historical compatibility;
-- preserve the completed Phase 4 ownership boundary and its compatibility
-  rollback;
-- treat Phase 7 as a possible source of longitudinal candidate-relative
-  Evidence, not automatic adjudication;
-- report architecture validation as `295/302`, not fully passing;
-- do not implement or activate without explicit authorization.
+After Phase 2.1, prioritize AI-guided onboarding, goal-directed incremental
+retrieval, longitudinal Atlas, understanding quality, benchmark improvement,
+fine-grained disclosure, and design-partner readiness. The full sequence is in
+`docs/Sprint Updates/NEXT_PHASE_PROGRAM.md`.

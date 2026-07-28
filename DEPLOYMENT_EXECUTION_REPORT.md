@@ -717,3 +717,48 @@ Runtime were ready; the product and provisioning routes returned 404; access
 was 1, lifecycle was 1, disclosure was 17, and active transactions were 0.
 No Runtime, Blob, or governance mutation occurred. The exact continuation
 point is the final hosted Alpha acceptance replay.
+
+## Final Hosted Alpha Acceptance Replay
+
+The reviewed `main` release
+`2799d5b69fb1bc92dfc678e11d7aee120d0011c6` was activated by adding only
+`DISCOVERY_ALPHA_YOUR_ORGANIZATION_ENABLED=true` to Production and redeploying
+the reviewed release. Deployment `dpl_Hocmbhb4jSVCY4xurEXzr2tTgrFf` reached
+READY at `https://discovery-v1-demo.vercel.app`. Runtime provisioning and
+access provisioning remained disabled, and no provisioning operation secret
+was configured.
+
+The acceptance replay ran in Chrome incognito. The unauthenticated route
+failed closed through Clerk without Atlas content or disclosure. The approved
+user authenticated, resolved automatically to Atlas, and completed Home,
+Orient, Ask, Understand, Plan, Learn, Respond, Follow, and Return.
+Runtime-backed content and organization identity persisted through navigation
+and refresh. The experience displayed no fabricated percentages, scores,
+ratings, trends, or sparklines; undisclosed quantitative states remained
+explicitly unavailable or undisclosed.
+
+Logout destroyed the usable session. Refresh, browser Back, and direct
+navigation did not reveal protected content and returned to Clerk sign-in.
+One approved Atlas request had already begun while the session was valid and
+completed during logout; Production logs place its authorized request start
+before session termination. No request begun signed out produced disclosure.
+Re-login reused the same access and lifecycle records and reloaded Runtime.
+
+Missing session, malformed organization, wrong organization, and nonexistent
+organization checks failed closed with no Runtime delivery or disclosure. The
+replay began at access 1 / lifecycle 1 / disclosure 17 and ended at access 1 /
+lifecycle 1 / disclosure 21. The four disclosures were the approved initial
+render, approved refresh, approved request already in flight before logout,
+and approved re-login. Idle-in-transaction connections remained zero.
+
+Final health was READY with configuration, database, and Runtime true. Runtime
+and access provisioning routes returned 404. Atlas Runtime remained unchanged:
+no Runtime or Blob write authority was enabled or invoked. Alpha remains
+enabled for the provisioned Production organization.
+
+Clean-release typecheck, build, the full validation suite, dependency
+reporting, quantitative truthfulness (18 checks), experience promotion
+(19 checks), Organization Experience, Clerk identity, authorized organization
+resolution, Production reachability, and hosted Runtime storage passed.
+Architecture remained at the accepted 295/302 (98%) baseline with the same
+seven historical findings.

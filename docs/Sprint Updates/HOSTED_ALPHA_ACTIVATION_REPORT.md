@@ -1330,3 +1330,46 @@ Alpha remained disabled. Final health was ready, the product and provisioning
 routes returned 404, governance was access 1 / lifecycle 1 / disclosure 17,
 and active transactions were 0. Runtime and Blob remained unchanged. The
 exact continuation point is the final hosted Alpha acceptance replay.
+
+## Final Hosted Alpha Activation
+
+Production activation used reviewed `main` commit
+`2799d5b69fb1bc92dfc678e11d7aee120d0011c6`. Only
+`DISCOVERY_ALPHA_YOUR_ORGANIZATION_ENABLED=true` was added. Deployment
+`dpl_Hocmbhb4jSVCY4xurEXzr2tTgrFf` reached READY at the canonical Production
+alias. Runtime provisioning, access provisioning, and temporary
+operation-secret authority remained absent.
+
+A Chrome incognito replay verified the complete hosted boundary. An
+unauthenticated request reached Clerk sign-in and disclosed no Atlas content.
+The approved user resolved automatically to Atlas and completed all nine
+canonical scenes: Home, Orient, Ask, Understand, Plan, Learn, Respond, Follow,
+and Return. Runtime-backed organization content persisted across navigation
+and refresh. Missing quantitative information remained unavailable or
+undisclosed, with no fabricated percentages, scores, ratings, trends, or
+sparklines.
+
+Logout removed access to the protected experience. Refresh, browser Back, and
+direct-route checks revealed no protected content and returned to sign-in.
+Production logs showed one authorized Atlas request completed during logout,
+but it began before the valid session was terminated. No request initiated
+after sign-out produced disclosure. Re-login reused the existing access and
+lifecycle records and loaded Atlas again.
+
+Wrong organization, nonexistent organization, malformed organization, and
+missing-session checks failed closed without Runtime or disclosure.
+Governance moved from 1 access / 1 lifecycle / 17 disclosure to 1 / 1 / 21.
+The four replay disclosures were approved initial render, approved refresh,
+the approved in-flight pre-termination request, and approved re-login.
+Database idle-in-transaction count remained zero.
+
+Final health was READY with configuration, database, and Runtime ready. Both
+provisioning routes returned 404. Runtime and Blob were unchanged because no
+write authority was enabled or invoked. Alpha remains enabled only for the
+configured Production organization.
+
+Clean-release validation passed typecheck, build, the full suite, dependency
+reporting, quantitative truthfulness (18 checks), experience promotion
+(19 checks), Organization Experience, Clerk identity, authorized organization
+resolution, Production reachability, and hosted Runtime storage. The accepted
+architecture baseline remains 295/302 (98%) with seven historical findings.
