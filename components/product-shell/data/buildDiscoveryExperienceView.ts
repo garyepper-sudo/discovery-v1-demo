@@ -74,7 +74,7 @@ export function buildDiscoveryExperienceView(input: {
         sections.uncertainty.items[1] ??
         "No additional contradiction is currently available.",
       confidence: {
-        qualitative: "Early",
+        qualitative: null,
         value: null,
         change: null,
         rationale: "This view contains authority-qualified projected understanding.",
@@ -86,7 +86,7 @@ export function buildDiscoveryExperienceView(input: {
       id: `authorized-source-${index + 1}`,
       title,
       rationale: "Authorized next inquiry from the projected organization view.",
-      contribution: index === 0 ? "High" : "Medium",
+      contribution: null,
       state: "Included",
       tone: (["green", "blue", "violet", "orange"] as const)[index % 4],
     })),
@@ -137,7 +137,7 @@ export function buildDiscoveryExperienceView(input: {
       detail: "Available from the authority-qualified projected organization view.",
       action: "Review understanding",
       kind: index === 0 ? "learning" : "relationship",
-      impact: index === 0 ? "High" : "Moderate",
+      impact: null,
     })),
   };
 }

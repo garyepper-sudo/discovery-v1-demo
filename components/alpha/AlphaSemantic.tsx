@@ -40,35 +40,22 @@ export function ConfidenceSummary({
       <div>
         <Eyebrow>Confidence</Eyebrow>
         <p className={styles.confidenceValue}>
-          <strong>{confidence.qualitative}</strong>
-          <b>{confidence.value === null ? "Not quantified" : `${confidence.value}%`}</b>
-          <span>{confidence.change === null ? "No authorized trend" : `↑ ${confidence.change} pts`}</span>
+          <strong>{confidence.qualitative ?? "Unavailable"}</strong>
+          <b>{confidence.value === null ? "Undisclosed" : `${confidence.value}%`}</b>
+          <span>{confidence.change === null ? "Trend unavailable" : `↑ ${confidence.change} pts`}</span>
         </p>
       </div>
-      <div
-        className={styles.confidenceArc}
-        role="img"
-        aria-label={`${confidence.qualitative} confidence${confidence.value === null ? ", not quantitatively disclosed" : ` at ${confidence.value} percent`}${confidence.change === null ? "" : `, increased by ${confidence.change} points`}. ${confidence.rationale} ${confidence.limitation}`}
-      >
-        <i />
-        <i />
-      </div>
-      {!compact && (
-        <ul className={styles.confidenceReasons}>
-          <li>
-            <Check size={16} aria-hidden="true" />
-            Multiple source categories agree
-          </li>
-          <li>
-            <Check size={16} aria-hidden="true" />
-            Pattern repeats across teams
-          </li>
-          <li>
-            <AlertTriangle size={16} aria-hidden="true" />
-            One meaningful contradiction remains
-          </li>
-        </ul>
+      {confidence.value !== null && (
+        <div
+          className={styles.confidenceArc}
+          role="img"
+          aria-label={`${confidence.qualitative ?? "Available"} confidence at ${confidence.value} percent${confidence.change === null ? "" : `, increased by ${confidence.change} points`}. ${confidence.rationale} ${confidence.limitation}`}
+        >
+          <i />
+          <i />
+        </div>
       )}
+      {!compact && <p>{confidence.rationale} {confidence.limitation}</p>}
       <p className={styles.srOnly}>
         {confidence.rationale} {confidence.limitation}
       </p>
@@ -213,7 +200,7 @@ export function ChangeCard({
       {!compact && (
         <div className={styles.changeImpact}>
           <span>Impact on Understanding</span>
-          <strong>{change.impact}</strong>
+          <strong>{change.impact ?? "Unavailable"}</strong>
         </div>
       )}
     </article>
@@ -222,8 +209,10 @@ export function ChangeCard({
 
 export function RelationshipRow({
   relationship,
+  showTrend = true,
 }: {
   relationship: RelationshipViewModel;
+  showTrend?: boolean;
 }) {
   return (
     <article className={styles.relationshipRow}>
@@ -234,7 +223,9 @@ export function RelationshipRow({
         <strong>{relationship.title}</strong>
         <span>{relationship.description}</span>
       </div>
-      <Sparkline tone={relationship.tone} label={`${relationship.title}: ${relationship.description}`} />
+      {showTrend && (
+        <Sparkline tone={relationship.tone} label={`${relationship.title}: ${relationship.description}`} />
+      )}
       <ArrowRight size={16} aria-hidden="true" />
     </article>
   );

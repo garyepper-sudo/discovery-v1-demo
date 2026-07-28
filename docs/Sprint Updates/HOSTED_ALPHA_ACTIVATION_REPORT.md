@@ -1299,3 +1299,34 @@ at `2026-07-28T01:00:05.191Z`; the disabled deployment and route checks added
 none. Hosted Runtime storage validation passed 28 checks. No Runtime or Blob
 write authority was enabled, and the existing Atlas Runtime remained
 unchanged.
+
+## Quantitative Truthfulness Correction
+
+The hosted replay identified prototype-only confidence percentages and trend
+deltas in Home and Related Understandings even though the authorized
+Production view model disclosed no such values. Discovery now enforces truth
+over completeness at the presentation boundary: quantitative information may
+appear only when supplied through Runtime, projection, authorized disclosure,
+and the product view model.
+
+For the current Atlas projection, qualitative confidence, scalar confidence,
+trend, contribution rating, and impact rating remain null. The hosted
+experience therefore displays bounded “Unavailable,” “Undisclosed,” and
+“Trend unavailable” states. It suppresses synthetic sparklines, evolution
+graphs, trend arrows, prototype timestamps, confidence projections, and
+fixture-only ratings. The `/alpha/*` deterministic visual fixture remains
+isolated from `/your-organization`.
+
+The semantic components still render real quantitative values when a future
+authorized view model supplies them. This change does not alter Runtime,
+projection, disclosure, governance, authorization, storage, or cognition.
+
+Clean-tree typecheck, build, and full validation passed. Quantitative
+truthfulness passed 18 focused checks, experience promotion passed 19 checks,
+and architecture remained at the accepted 295/302 baseline with seven
+historical findings. The six historical React Hook warnings were unchanged.
+
+Alpha remained disabled. Final health was ready, the product and provisioning
+routes returned 404, governance was access 1 / lifecycle 1 / disclosure 17,
+and active transactions were 0. Runtime and Blob remained unchanged. The
+exact continuation point is the final hosted Alpha acceptance replay.

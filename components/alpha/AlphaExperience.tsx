@@ -191,7 +191,7 @@ function AlphaSidebar({
       </div>
       <div className={styles.sidebarConfidence}>
         <span>Confidence in this Understanding</span>
-        <strong>{experience.understanding.confidence.qualitative}</strong>
+        <strong>{experience.understanding.confidence.qualitative ?? "Unavailable"}</strong>
         <small>
           {experience.understanding.confidence.value === null
             ? "Not quantitatively disclosed"
@@ -375,9 +375,15 @@ function PlanScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
           <p>The smallest set of information I expect will most improve my understanding.</p>
         </header>
         <Panel className={styles.confidenceProjection}>
-          <span><small>Current understanding</small><strong>Early</strong></span>
+          <span>
+            <small>Current confidence</small>
+            <strong>{hosted ? "Unavailable" : "Early"}</strong>
+          </span>
           <span className={styles.dottedArrow} aria-hidden="true">·········· →</span>
-          <span><small>Expected after learning</small><strong>Moderate</strong></span>
+          <span>
+            <small>Expected after learning</small>
+            <strong>{hosted ? "Unavailable" : "Moderate"}</strong>
+          </span>
         </Panel>
         <section className={styles.planUnknown}>
           <CircleHelp size={25} aria-hidden="true" />
@@ -405,7 +411,7 @@ function PlanScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
                   </div>
                   <div className={styles.contribution}>
                     <small>Expected contribution</small>
-                    <b>{source.contribution}</b>
+                    <b>{source.contribution ?? "Unavailable"}</b>
                   </div>
                   <button type="button" onClick={() => cycleSource(source.id)}>
                     {source.state} <ChevronDown size={15} aria-hidden="true" />
@@ -468,7 +474,7 @@ function LearnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
             <h2>{experience.understanding.synthesis}</h2>
             <p className={styles.currentExplanation}>{experience.understanding.explanation}</p>
             <p className={styles.learningConfidence}>
-              <strong>{experience.understanding.confidence.qualitative}</strong>
+              <strong>{experience.understanding.confidence.qualitative ?? "Unavailable"}</strong>
               <span>
                 {experience.understanding.confidence.value === null
                   ? "A scalar score and trend are not disclosed"
@@ -476,8 +482,12 @@ function LearnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
               </span>
             </p>
           </div>
-          <EvolutionGraph />
-          <DirectionSummary />
+          {!hosted && (
+            <>
+              <EvolutionGraph />
+              <DirectionSummary />
+            </>
+          )}
         </Panel>
         <div className={styles.learningGrid}>
           <section className={styles.eventsPanel} aria-labelledby="events-title">
@@ -532,11 +542,11 @@ function LearnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
 }
 
 function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
-  const { experience } = useAlphaExperience();
+  const { experience, hosted } = useAlphaExperience();
   const [openDetail, setOpenDetail] = useState<string | null>(null);
   const details = [
     ["why", "Why this matters", experience.understanding.whyItMatters, "green"],
-    ["strongest", "Strongest explanation", experience.understanding.strongestExplanation, "violet"],
+    ["strongest", hosted ? "Current explanation" : "Strongest explanation", experience.understanding.strongestExplanation, "violet"],
     ["unknown", "Largest remaining unknown", experience.understanding.primaryUnknown, "blue"],
     ["contradiction", "Key contradiction", experience.understanding.contradiction, "orange"],
   ] as const;
@@ -549,7 +559,9 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
             <ArrowLeft size={16} aria-hidden="true" /> Back to understandings
           </button>
           <div>
-            <span className={styles.titleIcon}><TrendingUp size={32} aria-hidden="true" /></span>
+            <span className={styles.titleIcon}>
+              {hosted ? <Lightbulb size={32} aria-hidden="true" /> : <TrendingUp size={32} aria-hidden="true" />}
+            </span>
             <div>
               <h1 data-scene-heading tabIndex={-1}>{experience.understanding.title}</h1>
               <span className={styles.livingBadge}>Living Understanding</span>
@@ -563,7 +575,7 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
             <Eyebrow>Current synthesis</Eyebrow>
             <h2>{experience.understanding.synthesis}</h2>
             <p>{experience.understanding.explanation}</p>
-            <span>Updated today · 8:12 AM</span>
+            <span>{hosted ? "Update timing unavailable" : "Updated today · 8:12 AM"}</span>
             <button className={styles.inlineLink} type="button" onClick={() => setOpenDetail("strongest")}>
               See why Discovery believes this <ArrowRight size={16} aria-hidden="true" />
             </button>
@@ -580,7 +592,7 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
               aria-expanded={openDetail === id}
             >
               <span className={`${styles.semanticIcon} ${styles[`tone_${tone}`]}`}>
-                {id === "why" ? <Users size={20} aria-hidden="true" /> : id === "unknown" ? <CircleHelp size={20} aria-hidden="true" /> : id === "contradiction" ? <AlertTriangle size={20} aria-hidden="true" /> : <TrendingUp size={20} aria-hidden="true" />}
+                {id === "why" ? <Users size={20} aria-hidden="true" /> : id === "unknown" ? <CircleHelp size={20} aria-hidden="true" /> : id === "contradiction" ? <AlertTriangle size={20} aria-hidden="true" /> : <Lightbulb size={20} aria-hidden="true" />}
               </span>
               <strong>{title}</strong>
               <p>{copy}</p>
@@ -591,22 +603,28 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
         <div className={styles.understandingLower}>
           <Panel className={styles.beforeAfter}>
             <h2>How this Understanding changed</h2>
-            <div><span><small>Before</small>Planning and execution appeared equally plausible.</span><ArrowRight aria-hidden="true" /><span><small>Now</small>Ownership ambiguity is the strongest explanation.</span></div>
-            <EvolutionGraph early={62} current={74} />
+            {hosted ? (
+              <p>{experience.changes[0]?.headline ?? "No meaningful change is currently available."}</p>
+            ) : (
+              <div><span><small>Before</small>Planning and execution appeared equally plausible.</span><ArrowRight aria-hidden="true" /><span><small>Now</small>Ownership ambiguity is the strongest explanation.</span></div>
+            )}
+            {hosted ? <p>Quantitative evolution is unavailable.</p> : <EvolutionGraph early={62} current={74} />}
           </Panel>
           <Panel className={styles.relationshipsPanel}>
             <div className={styles.sectionHeading}><h2>Related Understandings</h2><button type="button">View all</button></div>
-            {experience.relationships.slice(0, 3).map((relationship) => <RelationshipRow key={relationship.id} relationship={relationship} />)}
+            {experience.relationships.slice(0, 3).map((relationship) => (
+              <RelationshipRow key={relationship.id} relationship={relationship} showTrend={!hosted} />
+            ))}
           </Panel>
           <Panel tone="violet" className={styles.recommendedLearning}>
             <Eyebrow tone="violet">Next recommended learning</Eyebrow>
-            <h2>Compare decision practices in the consistently delivering team.</h2>
-            <p>Expected contribution: <strong>High</strong></p>
+            <h2>{hosted ? experience.sources[0]?.title ?? "Not yet available in this Alpha" : "Compare decision practices in the consistently delivering team."}</h2>
+            <p>Expected contribution: <strong>{hosted ? "Unavailable" : "High"}</strong></p>
             <button className={styles.inlineLink} type="button" onClick={() => navigate("plan")}>See learning plan <ArrowRight size={16} aria-hidden="true" /></button>
           </Panel>
         </div>
         <footer className={styles.understandingFooter}>
-          <span>First created May 1, 2025 · Last meaningful change today · 8:12 AM</span>
+          <span>{hosted ? "Creation and change timing unavailable" : "First created May 1, 2025 · Last meaningful change today · 8:12 AM"}</span>
           <div>
             <Action tone="secondary" arrow onClick={() => navigate("respond")}>Examine this Understanding</Action>
             <Action arrow onClick={() => navigate("follow")}>Follow this Understanding</Action>
@@ -724,7 +742,7 @@ function FollowScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
         <Panel tone="violet" className={styles.followMeaning}>
           <span className={styles.followOrb} aria-hidden="true">✦</span>
           <div><h2>What following means</h2><p>Discovery preserves the current Understanding, challenges assumptions, and shows meaningful changes over time.</p></div>
-          <Sparkline tone="violet" label="Illustrative path of continued Understanding evolution" />
+          {!hosted && <Sparkline tone="violet" label="Illustrative path of continued Understanding evolution" />}
         </Panel>
         <div className={styles.followGrid}>
           <Panel>
@@ -735,17 +753,19 @@ function FollowScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
           </Panel>
           <Panel>
             <h2>Discovery is currently watching</h2>
-            {experience.relationships.map((relationship) => <RelationshipRow key={relationship.id} relationship={relationship} />)}
+            {experience.relationships.map((relationship) => (
+              <RelationshipRow key={relationship.id} relationship={relationship} showTrend={!hosted} />
+            ))}
           </Panel>
         </div>
         <Panel className={styles.nextLikely}>
           <Target size={30} aria-hidden="true" />
-          <div><Eyebrow>Next likely learning</Eyebrow><h2>Compare the consistently delivering team with the rest of Engineering.</h2><p>This comparison could materially qualify the current explanation.</p></div>
-          <div><small>Expected contribution</small><strong>High</strong></div>
+          <div><Eyebrow>{hosted ? "Available next inquiry" : "Next likely learning"}</Eyebrow><h2>{hosted ? experience.sources[0]?.title ?? "Not yet available in this Alpha" : "Compare the consistently delivering team with the rest of Engineering."}</h2><p>{hosted ? "This inquiry is available from the authorized projection." : "This comparison could materially qualify the current explanation."}</p></div>
+          <div><small>Expected contribution</small><strong>{hosted ? "Unavailable" : "High"}</strong></div>
         </Panel>
         <FollowConfirmation paused={paused} onToggle={() => setPaused((value) => !value)} />
         <footer className={styles.followFooter}>
-          <span>First created May 1, 2025 · Last meaningful change 8 min ago</span>
+          <span>{hosted ? "Creation and change timing unavailable" : "First created May 1, 2025 · Last meaningful change 8 min ago"}</span>
           <Action arrow onClick={() => navigate("return")}>See what changed</Action>
         </footer>
       </div>
@@ -754,7 +774,7 @@ function FollowScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
 }
 
 function ReturnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
-  const { experience } = useAlphaExperience();
+  const { experience, hosted } = useAlphaExperience();
   return (
     <SceneFrame scene="return" navigate={navigate}>
       <MobileSceneHeader scene="return" onBack={() => navigate("follow")} />
@@ -781,8 +801,11 @@ function ReturnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
                 key={relationship.id}
                 relationship={{
                   ...relationship,
-                  description: `${["Moderate", "Early", "Early"][index]} confidence · ${[81, 64, 58][index]}%`,
+                  description: hosted
+                    ? `${relationship.description} · Confidence unavailable`
+                    : `${["Moderate", "Early", "Early"][index]} confidence · ${[81, 64, 58][index]}%`,
                 }}
+                showTrend={!hosted}
               />
             ))}
           </div>
@@ -798,7 +821,7 @@ function ReturnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
 }
 
 function HomeScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
-  const { experience } = useAlphaExperience();
+  const { experience, hosted } = useAlphaExperience();
   return (
     <SceneFrame scene="home" navigate={navigate}>
       <MobileSceneHeader scene="home" />
@@ -810,26 +833,34 @@ function HomeScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
         </header>
         <div className={styles.homeLead}>
           <article className={styles.heroLearning}>
-            <Eyebrow tone="violet">Most important learning</Eyebrow>
+            <Eyebrow tone="violet">{hosted ? "Available learning" : "Most important learning"}</Eyebrow>
             <div>
-              <span className={`${styles.changeIcon} ${styles.tone_green}`}><TrendingUp size={30} aria-hidden="true" /></span>
+              <span className={`${styles.changeIcon} ${styles.tone_green}`}>
+                {hosted ? <Lightbulb size={30} aria-hidden="true" /> : <TrendingUp size={30} aria-hidden="true" />}
+              </span>
               <div><h2>{experience.understanding.title}</h2><p>{experience.understanding.synthesis}</p><Action tone="secondary" arrow onClick={() => navigate("return")}>See what changed</Action></div>
-              <Sparkline tone="green" label={`${experience.understanding.title} trend`} />
+              {!hosted && <Sparkline tone="green" label={`${experience.understanding.title} trend`} />}
             </div>
             <footer>
-              <span>Impact on Understanding <strong>High</strong></span>
-              <span><strong>{experience.understanding.confidence.qualitative} confidence</strong> · {experience.understanding.confidence.value === null ? "not quantitatively disclosed" : `${experience.understanding.confidence.value}%`}</span>
+              <span>Impact on Understanding <strong>{experience.changes[0]?.impact ?? "Unavailable"}</strong></span>
+              <span><strong>{experience.understanding.confidence.qualitative ?? "Unavailable"} confidence</strong> · {experience.understanding.confidence.value === null ? "undisclosed" : `${experience.understanding.confidence.value}%`}</span>
             </footer>
           </article>
           <Panel className={styles.recentChanges}>
             <div className={styles.sectionHeading}><Eyebrow>Recent changes</Eyebrow><button type="button" onClick={() => navigate("return")}>View all</button></div>
-            <p><TrendingUp size={17} aria-hidden="true" /> {experience.changes[0]?.headline ?? "No meaningful change is currently available"}</p>
-            <p><AlertTriangle size={17} aria-hidden="true" /> New contradiction emerged</p>
-            <p><GitBranch size={17} aria-hidden="true" /> Product Prioritization became strongly related</p>
+            {hosted ? experience.changes.slice(0, 3).map((change) => (
+              <p key={change.id}><Lightbulb size={17} aria-hidden="true" /> {change.headline}</p>
+            )) : (
+              <>
+                <p><TrendingUp size={17} aria-hidden="true" /> {experience.changes[0]?.headline ?? "No meaningful change is currently available"}</p>
+                <p><AlertTriangle size={17} aria-hidden="true" /> New contradiction emerged</p>
+                <p><GitBranch size={17} aria-hidden="true" /> Product Prioritization became strongly related</p>
+              </>
+            )}
           </Panel>
         </div>
         <section className={styles.homeSecondary} aria-labelledby="other-learning-title">
-          <h2 className={styles.sectionLabel} id="other-learning-title">Other key learnings</h2>
+          <h2 className={styles.sectionLabel} id="other-learning-title">{hosted ? "Additional available learnings" : "Other key learnings"}</h2>
           <div>
             {experience.changes.slice(1, 4).map((change) => (
               <ChangeCard key={change.id} change={change} compact onAction={() => navigate(change.kind === "learning" ? "plan" : "understand")} />
@@ -842,8 +873,12 @@ function HomeScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
             {experience.relationships.slice(0, 3).map((relationship, index) => (
               <article key={relationship.id}>
                 <div><span className={`${styles.semanticIcon} ${styles[`tone_${relationship.tone}`]}`}><GitBranch size={18} aria-hidden="true" /></span><strong>{relationship.title}</strong></div>
-                <span><b>{["Moderate", "Early", "Early"][index]}</b> confidence · {[81, 64, 58][index]}% · +{[7, 4, 2][index]} pts</span>
-                <Sparkline tone={relationship.tone} label={`${relationship.title} trend`} />
+                <span>
+                  {hosted
+                    ? <><b>Confidence unavailable</b> · Trend unavailable</>
+                    : <><b>{["Moderate", "Early", "Early"][index]}</b> confidence · {[81, 64, 58][index]}% · +{[7, 4, 2][index]} pts</>}
+                </span>
+                {!hosted && <Sparkline tone={relationship.tone} label={`${relationship.title} trend`} />}
               </article>
             ))}
           </div>

@@ -13,7 +13,7 @@ export const alphaScenes = [
 export type AlphaScene = (typeof alphaScenes)[number];
 
 export type ConfidenceViewModel = {
-  qualitative: "Early" | "Moderate" | "High";
+  qualitative: "Early" | "Moderate" | "High" | null;
   value: number | null;
   change: number | null;
   rationale: string;
@@ -38,7 +38,7 @@ export type SourceViewModel = {
   id: string;
   title: string;
   rationale: string;
-  contribution: "High" | "Medium";
+  contribution: "High" | "Medium" | null;
   state: "Included" | "Limited" | "Excluded";
   tone: "green" | "blue" | "violet" | "orange";
 };
@@ -73,7 +73,7 @@ export type MeaningfulChangeViewModel = {
   detail: string;
   action: string;
   kind: "confidence" | "contradiction" | "learning" | "relationship";
-  impact: "High" | "Moderate";
+  impact: "High" | "Moderate" | null;
 };
 
 export type AlphaFixture = {

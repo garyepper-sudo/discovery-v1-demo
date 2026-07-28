@@ -51,6 +51,7 @@
     "validate:alpha-your-organization-activation": "tsx scripts/product/validateAlphaYourOrganizationActivation.ts",
     "validate:production-reachability": "tsx scripts/product/validateProductionReachability.ts",
     "validate:discovery-experience-promotion": "tsx scripts/product/validateDiscoveryExperiencePromotion.ts",
+    "validate:discovery-quantitative-truthfulness": "tsx scripts/product/validateDiscoveryQuantitativeTruthfulness.ts",
     "storage:migrate": "tsx scripts/storage/migrateAlphaGovernance.ts up",
     "storage:status": "tsx scripts/storage/migrateAlphaGovernance.ts status",
     "storage:reset:local": "tsx scripts/storage/migrateAlphaGovernance.ts reset",

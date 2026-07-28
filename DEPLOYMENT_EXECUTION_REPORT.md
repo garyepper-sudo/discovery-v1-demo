@@ -682,3 +682,38 @@ created by the disabled deployment or its post-deployment route checks.
 Runtime storage validation passed 28 checks; health continued to load the
 configured Runtime repository. No Runtime or Blob write authority was enabled,
 so the approved Atlas Runtime remained unchanged.
+
+## Quantitative Truthfulness Correction
+
+The final hosted acceptance replay exposed a presentation defect: the
+Production adapter disclosed no scalar confidence or trend, but prototype
+presentation code still displayed `81%`, `64%`, `58%`, and corresponding
+synthetic point increases. The bounded correction applies the canonical rule
+that a quantitative value may render only when it reaches the UI through
+Runtime, projection, authorized disclosure, and the product view model.
+
+The Production adapter now leaves qualitative confidence, scalar confidence,
+trend, source contribution rating, and change-impact rating explicitly null
+when those values are not disclosed. The hosted experience renders
+“Unavailable,” “Undisclosed,” or “Trend unavailable” for those states.
+Synthetic sparklines, evolution graphs, trend arrows, prototype timestamps,
+confidence projections, and fixture-only ratings are suppressed in hosted
+mode. The deterministic `/alpha/*` visual-development fixture retains its
+prototype values, but they cannot enter the `/your-organization` adapter.
+
+Runtime-backed quantitative rendering remains supported: the semantic
+confidence component renders a percentage and trend only when the authorized
+view model supplies non-null values. No Runtime, projection, disclosure,
+authorization, governance, storage, or cognition contract changed.
+
+Clean-tree typecheck, build, and the full validation suite passed. The focused
+quantitative-truthfulness validator passed 18 checks, and the existing
+experience-promotion validator passed 19 checks. Architecture remained at the
+accepted 295/302 (98%) baseline with the same seven historical findings. The
+six historical React Hook warnings were unchanged.
+
+Production remained safely disabled. Health, configuration, database, and
+Runtime were ready; the product and provisioning routes returned 404; access
+was 1, lifecycle was 1, disclosure was 17, and active transactions were 0.
+No Runtime, Blob, or governance mutation occurred. The exact continuation
+point is the final hosted Alpha acceptance replay.
