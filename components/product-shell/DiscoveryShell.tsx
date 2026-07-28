@@ -65,6 +65,12 @@ export default function DiscoveryShell({
   sessionControl,
 }: DiscoveryShellProps) {
   const pathname = usePathname();
+  const environmentLabel =
+    process.env.NEXT_PUBLIC_DISCOVERY_ENV === "development"
+      ? "Onboarding Test Environment"
+      : process.env.NEXT_PUBLIC_DISCOVERY_ENV === "staging"
+        ? "Staging"
+        : null;
   const homeHref = buildProductHref(
     "/your-organization",
     organization.organizationId,
@@ -162,6 +168,9 @@ export default function DiscoveryShell({
       </aside>
 
       <main className={styles.workspace}>
+        {environmentLabel && (
+          <div className={styles.environmentBadge}>{environmentLabel}</div>
+        )}
         <div className={styles.workspaceInner}>
           {children}
           {showSessionImpact && <SessionImpact />}

@@ -7,6 +7,7 @@ import {
   verifyAlphaSession,
 } from "./lib/alpha-access/session";
 import { isYourOrganizationAlphaActivationEnabled } from "./lib/alpha-activation/config";
+import { onboardingTestEnvironmentEnabled } from "./lib/environment/discoveryEnvironment";
 import { productionRouteDisposition } from "./lib/production-route-policy";
 
 const protectedAlphaPath = /^\/alpha(?:\/|$)/;
@@ -15,6 +16,8 @@ const protectedAlphaAsset =
 const activatedYourOrganizationPath = /^\/your-organization(?:\/|$)/;
 const inactiveDesignPartnerSurface =
   /^\/(?:ask|brief|decisions|experiment|organizations|research|discovery-v1|executive-decision|api\/(?:analyze|discovery-lab|executive-decision|executive-decision-record|executive-scenario|product-interaction))(?:\/|$)/;
+const onboardingTestSurface =
+  /^\/(?:onboarding|discovery-v1|your-organization|organizations|api\/discovery-lab)(?:\/|$)/;
 
 function protectedHeaders(response: NextResponse): NextResponse {
   response.headers.set("Cache-Control", "private, no-store, max-age=0");
@@ -77,6 +80,27 @@ export async function middleware(
 ): Promise<NextResponse> {
   const activationEnabled = isYourOrganizationAlphaActivationEnabled();
   if (
+    onboardingTestEnvironmentEnabled() &&
+    onboardingTestSurface.test(request.nextUrl.pathname)
+  ) {
+    if (!event) {
+      return new NextResponse("Authentication boundary unavailable.", {
+        status: 503,
+      });
+    }
+    const response = await protectActivatedYourOrganization(request, event);
+    if (!response) {
+      return new NextResponse("Authentication required.", { status: 401 });
+    }
+    return response instanceof NextResponse
+      ? response
+      : new NextResponse(response.body, {
+          status: response.status,
+          statusText: response.statusText,
+          headers: response.headers,
+        });
+  }
+  if (
     productionRouteDisposition({
       pathname: request.nextUrl.pathname,
       activationEnabled,
@@ -119,6 +143,7 @@ export async function middleware(
 export const config = {
   matcher: [
     "/",
+    "/onboarding/:path*",
     "/alpha/:path*",
     "/your-organization/:path*",
     "/ask/:path*",
