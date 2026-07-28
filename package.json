@@ -50,6 +50,7 @@
     "validate:authorized-organization-resolution": "tsx scripts/product/validateAuthorizedOrganizationResolution.ts",
     "validate:alpha-your-organization-activation": "tsx scripts/product/validateAlphaYourOrganizationActivation.ts",
     "validate:production-reachability": "tsx scripts/product/validateProductionReachability.ts",
+    "validate:onboarding-foundation": "tsx scripts/product/validateOnboardingFoundation.ts",
     "validate:discovery-experience-promotion": "tsx scripts/product/validateDiscoveryExperiencePromotion.ts",
     "validate:discovery-quantitative-truthfulness": "tsx scripts/product/validateDiscoveryQuantitativeTruthfulness.ts",
     "storage:migrate": "tsx scripts/storage/migrateAlphaGovernance.ts up",
