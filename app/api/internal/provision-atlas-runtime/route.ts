@@ -16,7 +16,7 @@ export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 const ORGANIZATION_ID = "atlas-manufacturing-simulation";
-const CONSUMER_ID = "user_3H5yQgEI6LpgRv7CeNoZsRGvu3p";
+const ACCESS_RELATIONSHIP = "allowed_alpha_user";
 const OPERATOR_ID = "discovery-alpha-operator";
 const RUNTIME_SHA256 =
   "8c3ad0b42c53f7027d3f0cb0a12457e84a25c03063b4c6a47d14a8fe23bef5fa";
@@ -45,6 +45,13 @@ function exactHeader(request: Request, name: string, expected: string): boolean 
   return request.headers.get(name) === expected;
 }
 
+function exactClerkUserId(request: Request): string | null {
+  const consumerId = request.headers.get("x-discovery-consumer-id");
+  return consumerId && /^user_[a-zA-Z0-9]{20,100}$/.test(consumerId)
+    ? consumerId
+    : null;
+}
+
 function operationEnabled(operation: string | null): boolean {
   if (operation === "runtime") {
     return process.env.DISCOVERY_RUNTIME_PROVISIONING_ENABLED === "true";
@@ -69,7 +76,6 @@ export async function POST(request: Request): Promise<Response> {
   }
   if (
     !exactHeader(request, "x-discovery-organization-id", ORGANIZATION_ID) ||
-    !exactHeader(request, "x-discovery-consumer-id", CONSUMER_ID) ||
     !exactHeader(request, "x-discovery-operator-id", OPERATOR_ID) ||
     !exactHeader(request, "x-discovery-runtime-sha256", RUNTIME_SHA256)
   ) {
@@ -142,12 +148,39 @@ export async function POST(request: Request): Promise<Response> {
     }
   }
   if (operation === "access") {
+    const consumerId = exactClerkUserId(request);
+    if (
+      !consumerId ||
+      !exactHeader(
+        request,
+        "x-discovery-access-relationship",
+        ACCESS_RELATIONSHIP,
+      )
+    ) {
+      return new Response("Invalid provisioning scope.", { status: 400 });
+    }
+    if (mode === "dry-run") {
+      return Response.json({
+        result: "ACCESS_PROVISIONING_DRY_RUN",
+        organizationId: ORGANIZATION_ID,
+        consumerId,
+        relationship: ACCESS_RELATIONSHIP,
+        experience: "organization",
+        runtimeWritten: false,
+        accessWritten: false,
+        lifecycleEventWritten: false,
+        activationChanged: false,
+      });
+    }
+    if (mode !== null) {
+      return new Response("Invalid provisioning mode.", { status: 400 });
+    }
     const sql = postgres(requireDiscoveryDatabaseUrl("administration"), { max: 1 });
     const requestId = request.headers.get("x-request-id") ?? crypto.randomUUID();
     try {
       const receipt = await provisionAlphaAccess({
         organizationId: ORGANIZATION_ID,
-        consumerId: CONSUMER_ID,
+        consumerId,
         actor: OPERATOR_ID,
         idempotencyKey,
         repository: createOrganizationRuntimeRepository(),

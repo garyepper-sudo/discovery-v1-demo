@@ -183,6 +183,10 @@ export async function provisionAlphaAccess(
   exact(input.idempotencyKey, "idempotency key");
   assert.match(input.organizationId, /^[a-zA-Z0-9_-]+$/);
   const resolvedAt = input.now ?? new Date().toISOString();
+  const requestId = createHash("sha256")
+    .update(input.idempotencyKey)
+    .digest("hex");
+  const accessRecordId = `alpha-access:${requestId}`;
   assert.ok(
     await input.repository.exists(input.organizationId),
     "Organization Runtime is unavailable",
@@ -194,13 +198,21 @@ export async function provisionAlphaAccess(
     resolvedAt,
   });
   if (existingAccess.length > 0) {
+    if (
+      existingAccess.length === 1 &&
+      existingAccess[0].accessRecordId === accessRecordId
+    ) {
+      return {
+        result: "ACCESS_PROVISIONED",
+        organizationId: input.organizationId,
+        consumerId: input.consumerId,
+        accessRecordId,
+      };
+    }
     throw new Error("Organization access already exists");
   }
-  const requestId = createHash("sha256")
-    .update(input.idempotencyKey)
-    .digest("hex");
   const access = await input.accessRepository.grantAccess({
-    accessRecordId: `alpha-access:${requestId}`,
+    accessRecordId,
     consumerId: input.consumerId,
     organizationId: input.organizationId,
     experience: "organization",

@@ -280,7 +280,13 @@ authorities:
   independently bounded implementation. One flag never implies the other.
 
 Both authorities continue to require Production, the protected operation
-secret, exact fixed scope headers, and a valid idempotency key. Enable only the
+secret, exact fixed organization, operator, and Runtime-digest scope headers,
+and a valid idempotency key. Access provisioning additionally requires exactly
+one canonical Clerk `user_...` identifier and the exact
+`allowed_alpha_user` relationship. Missing, malformed, wildcard, bulk, and
+email-based consumer targets fail closed. The optional access-only
+`?mode=dry-run` validates this complete scope without opening storage or
+writing access, lifecycle, Runtime, or activation state. Enable only the
 authority for the active launch gate, then disable it after the gate succeeds.
 
 Gate 7 remains an external deployment operation. It sets the exact Alpha

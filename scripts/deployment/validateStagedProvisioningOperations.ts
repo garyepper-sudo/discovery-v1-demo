@@ -19,7 +19,7 @@ import {
 } from "../../lib/alpha-provisioning/provisionDesignPartner";
 
 const ORGANIZATION_ID = "atlas-manufacturing-simulation";
-const CONSUMER_ID = "user_3H5yQgEI6LpgRv7CeNoZsRGvu3p";
+const CONSUMER_ID = "user_3H7HZOeAHXJ3Hi8MNjmgmHBmDsG";
 const OPERATOR_ID = "discovery-alpha-operator";
 const RUNTIME_PATH =
   ".local-provisioning/atlas-manufacturing-simulation.runtime.json";
@@ -72,16 +72,19 @@ class MemoryRuntimeRepository implements OrganizationRuntimeRepository {
 
 class MemoryAccessRepository implements AlphaAccessRecordRepository {
   grants = 0;
+  lifecycleEvents = 0;
+  records: Awaited<ReturnType<AlphaAccessRecordRepository["grantAccess"]>>[] = [];
 
   async findAccessRecordsForConsumer() {
     return [];
   }
   async findAccessRecords() {
-    return [];
+    return this.records;
   }
   async grantAccess(input: GrantAlphaAccessInput) {
     this.grants += 1;
-    return {
+    this.lifecycleEvents += 1;
+    const record = {
       accessRecordId: input.accessRecordId,
       policyId: "alpha-explicit-allowlist-disclosure" as const,
       policyVersion: "1" as const,
@@ -96,6 +99,8 @@ class MemoryAccessRepository implements AlphaAccessRecordRepository {
       status: "active" as const,
       createdAt: input.grantedAt,
     };
+    this.records.push(record);
+    return record;
   }
   async revokeAccess(): Promise<never> {
     throw new Error("not used");
@@ -136,8 +141,29 @@ async function main(): Promise<void> {
   });
   assert.equal(gate6.result, "ACCESS_PROVISIONED");
   assert.equal(accessRepository.grants, 1);
+  assert.equal(accessRepository.lifecycleEvents, 1);
   assert.equal(runtimeRepository.writes, writesBeforeAccess);
   assert.equal(isYourOrganizationAlphaActivationEnabled({}), false);
+
+  const gate6Replay = await provisionAlphaAccess({
+    organizationId: ORGANIZATION_ID,
+    consumerId: CONSUMER_ID,
+    actor: OPERATOR_ID,
+    idempotencyKey: "validate-gate6-access-only",
+    repository: runtimeRepository,
+    accessRepository,
+    now: "2026-07-27T00:00:00.000Z",
+  });
+  assert.equal(gate6Replay.accessRecordId, gate6.accessRecordId);
+  assert.equal(accessRepository.grants, 1);
+  assert.equal(accessRepository.lifecycleEvents, 1);
+  assert.equal(
+    accessRepository.records.some(
+      (record) => record.consumerId === "user_3UnrelatedExactUser00000000000",
+    ),
+    false,
+  );
+  assert.equal(runtimeRepository.writes, writesBeforeAccess);
 
   const writesBeforeActivation = runtimeRepository.writes;
   const grantsBeforeActivation = accessRepository.grants;
@@ -174,7 +200,7 @@ async function main(): Promise<void> {
   console.log(JSON.stringify({
     validation: "staged-alpha-provisioning-operations",
     result: "PASS",
-    checks: 21,
+    checks: 28,
     gate5: {
       runtimeUploaded: true,
       accessWrites: 0,
@@ -182,6 +208,9 @@ async function main(): Promise<void> {
     },
     gate6: {
       accessGranted: true,
+      duplicateGrantIdempotent: true,
+      lifecycleEventTransactionalWithGrant: true,
+      unrelatedUsersUnchanged: true,
       runtimeWrites: 0,
       activationChanged: false,
     },

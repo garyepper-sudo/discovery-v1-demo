@@ -12,7 +12,7 @@ import { provisionDesignPartner } from "../../lib/alpha-provisioning/provisionDe
 import { boundedVercelOidcEvidence } from "../../lib/alpha-provisioning/vercelOidcEvidence";
 
 const ORGANIZATION_ID = "atlas-manufacturing-simulation";
-const CONSUMER_ID = "user_3H5yQgEI6LpgRv7CeNoZsRGvu3p";
+const CONSUMER_ID = "user_3H7HZOeAHXJ3Hi8MNjmgmHBmDsG";
 const OPERATOR_ID = "discovery-alpha-operator";
 const FROZEN_RUNTIME =
   ".local-provisioning/atlas-manufacturing-simulation.runtime.json";
@@ -172,8 +172,12 @@ async function main(): Promise<void> {
     operation: "runtime" | "access",
     authorized = false,
     validScope = false,
+    overrides: Record<string, string | undefined> = {},
+    mode?: string,
   ) => new Request(
-    "https://discovery.invalid/api/internal/provision-atlas-runtime",
+    `https://discovery.invalid/api/internal/provision-atlas-runtime${
+      mode ? `?mode=${mode}` : ""
+    }`,
     {
       method: "POST",
       headers: {
@@ -185,10 +189,16 @@ async function main(): Promise<void> {
         ...(validScope ? {
           "x-discovery-organization-id": ORGANIZATION_ID,
           "x-discovery-consumer-id": CONSUMER_ID,
+          "x-discovery-access-relationship": "allowed_alpha_user",
           "x-discovery-operator-id": OPERATOR_ID,
           "x-discovery-runtime-sha256": digest,
           "x-discovery-idempotency-key": `validate-${operation}-authority`,
         } : {}),
+        ...Object.fromEntries(
+          Object.entries(overrides).filter((entry): entry is [string, string] =>
+            entry[1] !== undefined
+          ),
+        ),
       },
     },
   );
@@ -214,6 +224,69 @@ async function main(): Promise<void> {
   assert.equal(
     (await route.POST(routeRequest("access", true, false))).status,
     400,
+  );
+  assert.equal(
+    (await route.POST(routeRequest("access", true, true, {}, "dry-run"))).status,
+    200,
+  );
+  for (const consumerId of [
+    "",
+    "user_short",
+    "*",
+    "user_*",
+    "person@example.com",
+    "user_one,user_two",
+  ]) {
+    assert.equal(
+      (await route.POST(routeRequest(
+        "access",
+        true,
+        true,
+        { "x-discovery-consumer-id": consumerId },
+        "dry-run",
+      ))).status,
+      400,
+    );
+  }
+  assert.equal(
+    (await route.POST(routeRequest(
+      "access",
+      true,
+      true,
+      { "x-discovery-organization-id": "another-organization" },
+      "dry-run",
+    ))).status,
+    400,
+  );
+  assert.equal(
+    (await route.POST(routeRequest(
+      "access",
+      true,
+      true,
+      { "x-discovery-access-relationship": "organization_admin" },
+      "dry-run",
+    ))).status,
+    400,
+  );
+  assert.equal(
+    (await route.POST(routeRequest(
+      "access",
+      false,
+      true,
+      {},
+      "dry-run",
+    ))).status,
+    401,
+  );
+  assert.equal(
+    (await route.POST(routeRequest(
+      "access",
+      true,
+      true,
+      { "x-discovery-provisioning-secret": "wrong-secret" },
+      "dry-run",
+    ))).status,
+    401,
   );
 
   process.env.DISCOVERY_RUNTIME_PROVISIONING_ENABLED = "true";
@@ -311,7 +384,7 @@ async function main(): Promise<void> {
   console.log(JSON.stringify({
     validation: "protected-production-provisioning-operation",
     result: "PASS",
-    checks: 31,
+    checks: 43,
     frozenRuntimeSha256: digest,
     disabledByDefault: true,
     productionEnvironmentOnly: true,
@@ -328,6 +401,11 @@ async function main(): Promise<void> {
     rawOidcTokenExcluded: true,
     digestMismatchBeforeWrite: true,
     accessConflictBeforeWrite: true,
+    approvedExplicitUserDryRunAccepted: true,
+    malformedMissingWildcardBulkAndEmailConsumersRejected: true,
+    wrongOrganizationRejected: true,
+    wrongRelationshipRejected: true,
+    invalidOrMissingSecretRejected: true,
     overwriteDisabled: true,
     runtimeContentsLogged: false,
   }, null, 2));
