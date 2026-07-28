@@ -27,96 +27,7 @@ import {
   provisionOnboardingTestOrganization,
 } from "../../../lib/onboarding/testing";
 import { buildOnboardingInvestigationInput } from "../../../lib/onboarding/testing/buildOnboardingInvestigationInput";
-
-type InitialUnderstandingResponse = {
-  finding: string;
-  uncertainty: string;
-  nextEvidence: string[];
-  confidence: {
-    state: "unavailable";
-    label: string;
-  };
-};
-
-type EvidenceRecoveryResponse = {
-  uncertainty: string;
-  nextEvidence: string[];
-};
-
-function initialUnderstanding(
-  runtime: ReturnType<typeof runOrganizationInvestigation>["runtime"],
-): InitialUnderstandingResponse | null {
-  const completedExplanationIds = new Set(
-    runtime.memory.organizationalExplanations.map((explanation) => explanation.id),
-  );
-  const disclosedConditions = runtime.memory.organizationalConditions.filter(
-    (condition) =>
-      (condition.supportingExplanationIds?.length ?? 0) > 0 &&
-      condition.supportingExplanationIds?.every((id) =>
-        completedExplanationIds.has(id)
-      ),
-  );
-  const memory = runtime.memory as typeof runtime.memory & {
-    executiveAssessment?: {
-      primaryJudgment?: {
-        dominantConditionId?: string;
-        supportingConditionIds?: string[];
-      };
-    };
-  };
-  const judgment = memory.executiveAssessment?.primaryJudgment;
-  const prioritizedIds = [
-    ...(judgment?.dominantConditionId ? [judgment.dominantConditionId] : []),
-    ...(judgment?.supportingConditionIds ?? []),
-  ];
-  const condition =
-    prioritizedIds.flatMap((id) => {
-      const match = disclosedConditions.find((candidate) => candidate.id === id);
-      return match ? [match] : [];
-    })[0] ??
-    disclosedConditions[0];
-  if (!condition?.summary.trim()) return null;
-  const summarySentences =
-    condition.summary.match(/[^.!?]+[.!?]+/g)?.map((sentence) =>
-      sentence.trim()
-    ) ?? [];
-  const boundedFinding =
-    summarySentences.slice(0, 2).join(" ") || condition.summary.trim();
-
-  return {
-    finding: boundedFinding,
-    uncertainty:
-      condition.confidenceLimiters?.filter((item) => item.trim()).join(" ") ||
-      "Discovery does not yet have enough evidence to estimate how persistent or widespread this pattern is.",
-    nextEvidence:
-      condition.missingEvidence?.filter((item) => item.trim()).slice(0, 3) ?? [],
-    confidence: {
-      state: "unavailable",
-      label: "Confidence cannot yet be estimated from the disclosed initial understanding.",
-    },
-  };
-}
-
-function evidenceRecovery(
-  runtime: ReturnType<typeof runOrganizationInvestigation>["runtime"],
-): EvidenceRecoveryResponse {
-  const condition = runtime.memory.organizationalConditions.find(
-    (candidate) =>
-      (candidate.confidenceLimiters?.length ?? 0) > 0 ||
-      (candidate.missingEvidence?.length ?? 0) > 0,
-  );
-  return {
-    uncertainty:
-      condition?.confidenceLimiters?.filter((item) => item.trim()).join(" ") ||
-      "The current observations do not yet support a stable organizational pattern.",
-    nextEvidence:
-      condition?.missingEvidence?.filter((item) => item.trim()).slice(0, 3) ??
-      [
-        "A recent concrete example with people, timing, and outcome.",
-        "An operating note or measure connected to the question.",
-      ],
-  };
-}
+import { translateProductUnderstanding } from "../../../components/product-shell/communication/productUnderstanding";
 
 export async function POST(
   req: Request,
@@ -284,37 +195,24 @@ export async function POST(
       return NextResponse.json(body, { status });
     };
 
+    const productUnderstanding = onboardingEnvironment
+      ? translateProductUnderstanding({
+          organizationId,
+          result: investigation.result,
+          runtime: investigation.runtime,
+        })
+      : null;
+
     if (
       onboardingEnvironment &&
-      (
-        investigation.runtime.memory.organizationalExplanations.length === 0 ||
-        (
-          investigation.runtime.memory.organizationalUnderstandingState
-            .canonicalCompositions ?? []
-        ).length === 0
-      )
+      productUnderstanding?.status === "insufficient"
     ) {
       return respond(
         {
           status: "insufficient-evidence",
-          message:
-            "Discovery needs more specific organizational evidence before it can form an initial understanding.",
+          message: productUnderstanding.headline,
           organizationId,
-          recovery: evidenceRecovery(investigation.runtime),
-        },
-        422,
-      );
-    }
-
-    const understanding = initialUnderstanding(investigation.runtime);
-    if (onboardingEnvironment && !understanding) {
-      return respond(
-        {
-          status: "insufficient-evidence",
-          message:
-            "Discovery needs evidence that supports a presentable initial understanding.",
-          organizationId,
-          recovery: evidenceRecovery(investigation.runtime),
+          understanding: productUnderstanding,
         },
         422,
       );
@@ -328,14 +226,19 @@ export async function POST(
       compositionCount:
         investigation.runtime.memory.organizationalUnderstandingState
           .canonicalCompositions?.length ?? 0,
-      initialUnderstandingAvailable: Boolean(understanding),
+      productUnderstandingStatus: productUnderstanding?.status ?? null,
     }));
 
     return respond({
-      status: "complete",
+      status:
+        productUnderstanding?.status === "provisional"
+          ? "provisional"
+          : "complete",
       organizationId,
       executiveProjection: investigation.executiveProjection,
-      ...(understanding ? { initialUnderstanding: understanding } : {}),
+      ...(productUnderstanding
+        ? { understanding: productUnderstanding }
+        : {}),
     }, 200);
   } catch (
     error

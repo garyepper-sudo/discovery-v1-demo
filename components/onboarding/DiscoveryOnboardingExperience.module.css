@@ -476,6 +476,25 @@
   font-size: 22px;
 }
 
+.finding {
+  display: grid;
+  gap: 4px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--alpha-line);
+  color: var(--alpha-body);
+  font-size: 14px;
+}
+
+.finding small {
+  color: var(--alpha-muted);
+  line-height: 1.5;
+}
+
+.wideResult {
+  grid-column: 1 / -1;
+}
+
 .provisional {
   margin: 18px 0 26px;
   font-size: 13px;

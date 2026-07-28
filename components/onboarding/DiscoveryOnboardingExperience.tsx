@@ -28,30 +28,42 @@ type OnboardingStage =
   | "processing"
   | "first-understanding";
 
-type InitialUnderstanding = {
-  finding: string;
-  uncertainty: string;
-  nextEvidence: string[];
-  confidence: {
-    state: "unavailable";
+type ProductUnderstanding = {
+  status: "supported" | "provisional" | "insufficient";
+  headline: string;
+  supportedFindings: Array<{
+    statement: string;
+    basis: string;
+  }>;
+  candidateExplanations: Array<{
+    statement: string;
+    basis: string;
+    status: "plausible" | "competing" | "weakly-supported";
+  }>;
+  uncertainties: string[];
+  nextEvidence: Array<{
     label: string;
+    whyItHelps: string;
+    priority: "highest-value" | "recommended" | "optional";
+  }>;
+  confidence: {
+    state: "available" | "limited" | "unavailable";
+    label: string;
+    explanation: string;
   };
 };
 
 type DiscoveryLabSuccess = {
-  status: "complete";
+  status: "complete" | "provisional";
   organizationId: string;
-  initialUnderstanding: InitialUnderstanding;
+  understanding: ProductUnderstanding;
 };
 
 type DiscoveryLabFailure = {
   status: "validation-failed" | "insufficient-evidence" | "access-denied" | "idempotency-conflict" | "investigation-in-progress" | "failed";
   message: string;
   organizationId?: string;
-  recovery?: {
-    uncertainty: string;
-    nextEvidence: string[];
-  };
+  understanding?: ProductUnderstanding;
 };
 
 type EvidenceRecommendation = {
@@ -246,10 +258,10 @@ export default function DiscoveryOnboardingExperience({
   const [pastedEvidence, setPastedEvidence] = useState("");
   const [evidenceError, setEvidenceError] = useState<string | null>(null);
   const [recovery, setRecovery] =
-    useState<DiscoveryLabFailure["recovery"]>(undefined);
+    useState<ProductUnderstanding | undefined>(undefined);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<InitialUnderstanding | null>(null);
+  const [result, setResult] = useState<ProductUnderstanding | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [draftReady, setDraftReady] = useState(false);
   const stageHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -478,21 +490,27 @@ export default function DiscoveryOnboardingExperience({
         | DiscoveryLabSuccess
         | DiscoveryLabFailure
         | null;
-      if (!response.ok || !body || body.status !== "complete") {
-        if (body && body.status !== "complete") {
-          setRecovery(body.recovery);
+      if (
+        !response.ok ||
+        !body ||
+        (body.status !== "complete" && body.status !== "provisional")
+      ) {
+        const failure =
+          body && "message" in body ? body : null;
+        if (failure) {
+          setRecovery(failure.understanding);
         }
         throw {
           userMessage: safeFailure(
             response.status,
-            body && body.status !== "complete" ? body : null,
+            failure,
           ),
           organizationId:
             body && "organizationId" in body ? body.organizationId : undefined,
         };
       }
       setOrganizationId(body.organizationId);
-      setResult(body.initialUnderstanding);
+      setResult(body.understanding);
       window.sessionStorage.removeItem(draftStorageKey);
       setStage("first-understanding");
     } catch (caught) {
@@ -852,14 +870,20 @@ export default function DiscoveryOnboardingExperience({
             {error ? (
               <div role="alert">
                 <Panel className={styles.safeError} tone="orange">
-                  <strong>More evidence is needed</strong>
+                  <strong>I need a little more to give you a useful answer</strong>
                   <p>{error}</p>
                   {recovery ? (
                     <>
-                      <p><b>What remains uncertain:</b> {recovery.uncertainty}</p>
+                      {recovery.uncertainties.map((item) => (
+                        <p key={item}><b>What remains uncertain:</b> {item}</p>
+                      ))}
                       {recovery.nextEvidence.length ? (
                         <ul>
-                          {recovery.nextEvidence.map((item) => <li key={item}>{item}</li>)}
+                          {recovery.nextEvidence.map((item) => (
+                            <li key={item.label}>
+                              <b>{item.label}:</b> {item.whyItHelps}
+                            </li>
+                          ))}
                         </ul>
                       ) : null}
                     </>
@@ -924,32 +948,67 @@ export default function DiscoveryOnboardingExperience({
 
         {stage === "first-understanding" && result ? (
           <section className={styles.stage}>
-            <Eyebrow tone="green">Current understanding</Eyebrow>
-            <h1 ref={stageHeadingRef} tabIndex={-1}>Here is what Discovery can support.</h1>
+            <Eyebrow tone={result.status === "provisional" ? "orange" : "green"}>
+              {result.status === "provisional"
+                ? "Working explanation"
+                : "Current understanding"}
+            </Eyebrow>
+            <h1 ref={stageHeadingRef} tabIndex={-1}>
+              Here’s what I can support so far
+            </h1>
             <div className={styles.resultGrid}>
               <Panel className={styles.primaryResult} tone="blue">
-                <span>What Discovery can support</span>
-                <p>{result.finding}</p>
+                <span>What the evidence suggests</span>
+                <p>{result.headline}</p>
+                {result.supportedFindings.map((finding) => (
+                  <div className={styles.finding} key={finding.statement}>
+                    <b>{finding.statement}</b>
+                    <small>{finding.basis}</small>
+                  </div>
+                ))}
               </Panel>
               <Panel>
                 <span>What remains uncertain</span>
-                <p>{result.uncertainty}</p>
-              </Panel>
-              <Panel>
-                <span>Most useful next evidence</span>
                 <ul>
-                  {result.nextEvidence.map((item) => <li key={item}>{item}</li>)}
+                  {result.uncertainties.map((item) => <li key={item}>{item}</li>)}
                 </ul>
               </Panel>
               <Panel>
+                <span>What would sharpen the answer</span>
+                <ul>
+                  {result.nextEvidence.map((item) => (
+                    <li key={item.label}>
+                      <b>{item.label}:</b> {item.whyItHelps}
+                    </li>
+                  ))}
+                </ul>
+              </Panel>
+              {result.candidateExplanations.length ? (
+                <Panel className={styles.wideResult}>
+                  <span>Other plausible explanations</span>
+                  <ul>
+                    {result.candidateExplanations.map((item) => (
+                      <li key={item.statement}>
+                        <b>{item.statement}</b> {item.basis}
+                      </li>
+                    ))}
+                  </ul>
+                </Panel>
+              ) : null}
+              <Panel>
                 <span>Confidence</span>
-                <p>{result.confidence.label}</p>
+                <p>
+                  <b>{result.confidence.label}.</b>{" "}
+                  {result.confidence.explanation}
+                </p>
               </Panel>
             </div>
-            <p className={styles.provisional}>
-              This is an initial, provisional understanding built from the
-              evidence you provided. Discovery will revise it as evidence grows.
-            </p>
+            {result.status === "provisional" ? (
+              <p className={styles.provisional}>
+                This is a provisional understanding, not a final causal
+                conclusion. Discovery will revise it as evidence grows.
+              </p>
+            ) : null}
             <Action arrow onClick={openDiscovery}>Open Discovery</Action>
           </section>
         ) : null}
