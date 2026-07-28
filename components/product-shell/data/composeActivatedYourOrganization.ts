@@ -47,31 +47,42 @@ function prioritySignals(
 ): UpstreamPrioritySignal[] {
   const memory = runtime.memory as unknown as {
     executiveAssessment?: {
-      primaryJudgment?: { dominantConditionId?: string };
+      primaryJudgment?: {
+        dominantConditionId?: string;
+        supportingConditionIds?: string[];
+      };
     };
   };
-  const dominantConditionId =
-    memory.executiveAssessment?.primaryJudgment?.dominantConditionId;
-  if (!dominantConditionId) return [];
-  const condition = projection.conditions.find(
-    (candidate) => candidate.id === dominantConditionId,
-  );
-  if (!condition) return [];
-  return [{
-    signalId: `alpha-executive-priority:${encodeURIComponent(
-      JSON.stringify([
-        projection.disclosureDecisionId,
-        condition.id,
-      ]),
-    )}`,
-    subjectRef: { ...condition.canonicalRef },
-    producer: "executive_priority",
-    objective: "preserve-existing-executive-priority",
-    generatedAt: resolvedAt,
-    supportingRefs: condition.supportingRefs.map((reference) => ({
-      ...reference,
-    })),
-  }];
+  const judgment = memory.executiveAssessment?.primaryJudgment;
+  const prioritizedConditionIds = [
+    ...(judgment?.dominantConditionId
+      ? [judgment.dominantConditionId]
+      : []),
+    ...(judgment?.supportingConditionIds ?? []),
+  ];
+  return prioritizedConditionIds.flatMap((conditionId, rank) => {
+    const condition = projection.conditions.find(
+      (candidate) => candidate.id === conditionId,
+    );
+    return condition
+      ? [{
+          signalId: `alpha-executive-priority:${encodeURIComponent(
+            JSON.stringify([
+              projection.disclosureDecisionId,
+              condition.id,
+            ]),
+          )}`,
+          subjectRef: { ...condition.canonicalRef },
+          producer: "executive_priority" as const,
+          objective: "preserve-existing-executive-priority",
+          rank,
+          generatedAt: resolvedAt,
+          supportingRefs: condition.supportingRefs.map((reference) => ({
+            ...reference,
+          })),
+        }]
+      : [];
+  });
 }
 
 export function composeActivatedYourOrganization(input: {

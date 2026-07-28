@@ -65,6 +65,7 @@ export function runOrganizationInvestigation(
     industry,
     question,
     context,
+    evidenceSources,
   } = params;
 
   const currentRuntime =
@@ -78,6 +79,7 @@ export function runOrganizationInvestigation(
     industry,
     question,
     context,
+    ...(evidenceSources ? { evidenceSources } : {}),
   };
 
   const result =

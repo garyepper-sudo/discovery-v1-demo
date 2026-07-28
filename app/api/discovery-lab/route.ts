@@ -19,6 +19,7 @@ import {
   isOnboardingTestOrganizationId,
   provisionOnboardingTestOrganization,
 } from "../../../lib/onboarding/testing";
+import { buildOnboardingInvestigationInput } from "../../../lib/onboarding/testing/buildOnboardingInvestigationInput";
 
 export async function POST(
   req: Request,
@@ -80,31 +81,39 @@ export async function POST(
       organizationId = resolveOrganizationId(body.organizationId);
     }
 
-    const investigation =
-      runOrganizationInvestigation({
-        organizationId,
+    const investigationInput = onboardingTestEnvironmentEnabled()
+      ? buildOnboardingInvestigationInput(body)
+      : {
+          company: body.company || "",
+          website: body.website || "",
+          industry: body.industry || "",
+          question: body.question || "",
+          context: body.messyInput || body.context || "",
+        };
+    const investigation = runOrganizationInvestigation({
+      organizationId,
+      ...investigationInput,
+    });
 
-        company:
-          body.company ||
-          "",
-
-        website:
-          body.website ||
-          "",
-
-        industry:
-          body.industry ||
-          "",
-
-        question:
-          body.question ||
-          "",
-
-        context:
-          body.messyInput ||
-          body.context ||
-          "",
-      });
+    if (
+      onboardingTestEnvironmentEnabled() &&
+      (
+        investigation.runtime.memory.organizationalExplanations.length === 0 ||
+        (
+          investigation.runtime.memory.organizationalUnderstandingState
+            .canonicalCompositions ?? []
+        ).length === 0
+      )
+    ) {
+      return NextResponse.json(
+        {
+          error:
+            "Discovery needs more specific organizational evidence before it can form an initial understanding.",
+          organizationId,
+        },
+        { status: 422 },
+      );
+    }
 
     return NextResponse.json({
       organizationId,
