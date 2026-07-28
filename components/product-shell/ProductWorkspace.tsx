@@ -131,7 +131,7 @@ export default async function ProductWorkspace({
           </p>
           <Link
             href={buildProductHref(
-              "/discovery-v1",
+              "/onboarding",
               organization.organizationId,
             )}
           >

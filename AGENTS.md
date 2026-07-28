@@ -265,6 +265,26 @@ Avoid adding features that do not strengthen executive judgment.
 
 ---
 
+# Canonical Product Routing
+
+Before changing product routes or shells, read
+`docs/Product/CANONICAL_PRODUCT_ROUTES.md`.
+
+- `/` is a Routing Controller only.
+- `/onboarding` owns the canonical Onboarding Experience.
+- `/your-organization` owns the canonical primary product Experience.
+- `/organizations` owns organization selection.
+- `/discovery-v1` is a Legacy Compatibility Layer only.
+- Do not add features to legacy routes, redirect users into legacy UI as a
+  shortcut, or create a duplicate Product Shell.
+- Reuse the canonical Product Shell at
+  `components/product-shell/DiscoveryShell.tsx`.
+- Use Routing Controller, Product Shell, Experience, and Legacy Compatibility
+  Layer according to the canonical document; do not use “wrapper” as an
+  ambiguous architectural designation.
+
+---
+
 # Benchmarks
 
 Everything under:

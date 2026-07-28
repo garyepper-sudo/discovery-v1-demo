@@ -38,6 +38,6 @@ export function buildOrganizationsExperienceView(
         organization.organizationId,
       ),
     })),
-    createDestination: "/discovery-v1",
+    createDestination: "/onboarding",
   };
 }
