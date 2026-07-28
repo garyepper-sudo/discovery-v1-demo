@@ -9,11 +9,18 @@ import { PostgresAlphaAccessRecordRepository } from "../../../db/governance/post
 import {
   runOrganizationInvestigation,
 } from "../../../engine/v3/investigation/runOrganizationInvestigation";
+import {
+  InvestigationIdempotencyConflictError,
+  InvestigationInProgressError,
+} from "../../../engine/v3/investigation/investigationIdempotency";
 
 import {
   createOrganizationRuntimeRepository,
   resolveOrganizationId,
 } from "../../../engine/v3/runtime";
+import {
+  persistOrganizationInvestigationResponse,
+} from "../../../engine/v3/runtime/organizationStateStore";
 import { onboardingTestEnvironmentEnabled } from "../../../lib/environment/discoveryEnvironment";
 import {
   isOnboardingTestOrganizationId,
@@ -29,6 +36,11 @@ type InitialUnderstandingResponse = {
     state: "unavailable";
     label: string;
   };
+};
+
+type EvidenceRecoveryResponse = {
+  uncertainty: string;
+  nextEvidence: string[];
 };
 
 function initialUnderstanding(
@@ -85,12 +97,34 @@ function initialUnderstanding(
   };
 }
 
+function evidenceRecovery(
+  runtime: ReturnType<typeof runOrganizationInvestigation>["runtime"],
+): EvidenceRecoveryResponse {
+  const condition = runtime.memory.organizationalConditions.find(
+    (candidate) =>
+      (candidate.confidenceLimiters?.length ?? 0) > 0 ||
+      (candidate.missingEvidence?.length ?? 0) > 0,
+  );
+  return {
+    uncertainty:
+      condition?.confidenceLimiters?.filter((item) => item.trim()).join(" ") ||
+      "The current observations do not yet support a stable organizational pattern.",
+    nextEvidence:
+      condition?.missingEvidence?.filter((item) => item.trim()).slice(0, 3) ??
+      [
+        "A recent concrete example with people, timing, and outcome.",
+        "An operating note or measure connected to the question.",
+      ],
+  };
+}
+
 export async function POST(
   req: Request,
 ) {
   try {
     const body =
       await req.json();
+    const onboardingEnvironment = onboardingTestEnvironmentEnabled();
     if (
       typeof body !== "object" ||
       body === null ||
@@ -110,8 +144,38 @@ export async function POST(
       );
     }
 
+    let investigationInput;
+    if (!onboardingEnvironment && body.evidenceSources !== undefined) {
+      return NextResponse.json(
+        {
+          status: "access-denied",
+          message: "Onboarding evidence submission is development-only.",
+        },
+        { status: 403 },
+      );
+    }
+    try {
+      investigationInput = onboardingEnvironment
+        ? buildOnboardingInvestigationInput(body)
+        : {
+            company: body.company || "",
+            website: body.website || "",
+            industry: body.industry || "",
+            question: body.question || "",
+            context: body.messyInput || body.context || "",
+          };
+    } catch {
+      return NextResponse.json(
+        {
+          status: "validation-failed",
+          message: "One or more evidence sources could not be validated.",
+        },
+        { status: 400 },
+      );
+    }
+
     let organizationId: string;
-    if (onboardingTestEnvironmentEnabled()) {
+    if (onboardingEnvironment) {
       const authentication = await auth();
       if (!authentication.userId) {
         return NextResponse.json(
@@ -177,22 +241,51 @@ export async function POST(
       organizationId = resolveOrganizationId(body.organizationId);
     }
 
-    const investigationInput = onboardingTestEnvironmentEnabled()
-      ? buildOnboardingInvestigationInput(body)
-      : {
-          company: body.company || "",
-          website: body.website || "",
-          industry: body.industry || "",
-          question: body.question || "",
-          context: body.messyInput || body.context || "",
-        };
+    const investigationRequestId =
+      typeof body.investigationRequestId === "string"
+        ? body.investigationRequestId
+        : "";
+    if (
+      onboardingEnvironment &&
+      !/^onboarding-investigation-[a-f0-9]{64}$/.test(investigationRequestId)
+    ) {
+      return NextResponse.json(
+        {
+          status: "validation-failed",
+          message: "A valid investigation request identity is required.",
+        },
+        { status: 400 },
+      );
+    }
+
     const investigation = runOrganizationInvestigation({
       organizationId,
+      ...(onboardingEnvironment ? { investigationRequestId } : {}),
       ...investigationInput,
     });
+    if (onboardingEnvironment && investigation.canonicalResponse !== undefined) {
+      const canonical = investigation.canonicalResponse as {
+        body: unknown;
+        status: number;
+      };
+      return NextResponse.json(canonical.body, { status: canonical.status });
+    }
+
+    const respond = (body: unknown, status: number) => {
+      if (onboardingEnvironment) {
+        persistOrganizationInvestigationResponse({
+          organizationId,
+          requestId:
+            investigation.idempotencyReceiptRequestId ??
+            investigationRequestId,
+          canonicalResponse: { body, status },
+        });
+      }
+      return NextResponse.json(body, { status });
+    };
 
     if (
-      onboardingTestEnvironmentEnabled() &&
+      onboardingEnvironment &&
       (
         investigation.runtime.memory.organizationalExplanations.length === 0 ||
         (
@@ -201,27 +294,29 @@ export async function POST(
         ).length === 0
       )
     ) {
-      return NextResponse.json(
+      return respond(
         {
           status: "insufficient-evidence",
           message:
             "Discovery needs more specific organizational evidence before it can form an initial understanding.",
           organizationId,
+          recovery: evidenceRecovery(investigation.runtime),
         },
-        { status: 422 },
+        422,
       );
     }
 
     const understanding = initialUnderstanding(investigation.runtime);
-    if (onboardingTestEnvironmentEnabled() && !understanding) {
-      return NextResponse.json(
+    if (onboardingEnvironment && !understanding) {
+      return respond(
         {
           status: "insufficient-evidence",
           message:
             "Discovery needs evidence that supports a presentable initial understanding.",
           organizationId,
+          recovery: evidenceRecovery(investigation.runtime),
         },
-        { status: 422 },
+        422,
       );
     }
 
@@ -236,15 +331,33 @@ export async function POST(
       initialUnderstandingAvailable: Boolean(understanding),
     }));
 
-    return NextResponse.json({
+    return respond({
       status: "complete",
       organizationId,
       executiveProjection: investigation.executiveProjection,
       ...(understanding ? { initialUnderstanding: understanding } : {}),
-    });
+    }, 200);
   } catch (
     error
   ) {
+    if (error instanceof InvestigationIdempotencyConflictError) {
+      return NextResponse.json(
+        {
+          status: "idempotency-conflict",
+          message: "This investigation request identity was already used.",
+        },
+        { status: 409 },
+      );
+    }
+    if (error instanceof InvestigationInProgressError) {
+      return NextResponse.json(
+        {
+          status: "investigation-in-progress",
+          message: "This investigation is already being processed.",
+        },
+        { status: 409 },
+      );
+    }
     console.error(
       "Discovery investigation failed:",
       error,

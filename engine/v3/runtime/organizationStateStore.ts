@@ -43,6 +43,11 @@ export function normalizeOrganizationRuntime(
   return {
     ...runtime,
 
+    metadata: {
+      ...runtime.metadata,
+      investigationReceipts: runtime.metadata.investigationReceipts ?? [],
+    },
+
     memory: {
       ...runtime.memory,
 
@@ -69,6 +74,33 @@ export function normalizeOrganizationRuntime(
       })),
     },
   };
+}
+
+export function persistOrganizationInvestigationResponse(params: {
+  organizationId: OrganizationId;
+  requestId: string;
+  canonicalResponse: unknown;
+}): void {
+  const runtime = loadOrganizationRuntimeState(params.organizationId);
+  const receipts = runtime.metadata.investigationReceipts ?? [];
+  const receiptIndex = receipts.findIndex(
+    (receipt) => receipt.requestId === params.requestId,
+  );
+  if (receiptIndex < 0) {
+    throw new Error("Investigation receipt not found.");
+  }
+  const nextReceipts = [...receipts];
+  nextReceipts[receiptIndex] = {
+    ...nextReceipts[receiptIndex],
+    canonicalResponse: params.canonicalResponse,
+  };
+  persistOrganizationRuntimeState({
+    ...runtime,
+    metadata: {
+      ...runtime.metadata,
+      investigationReceipts: nextReceipts,
+    },
+  });
 }
 
 function writeOrganizationRuntimeState(

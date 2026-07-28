@@ -54,6 +54,8 @@
     "validate:onboarding-test-environment": "tsx scripts/product/validateOnboardingTestEnvironment.ts",
     "validate:onboarding-to-alpha-replay": "tsx scripts/product/validateOnboardingToAlphaReplay.ts",
     "validate:question-first-onboarding": "tsx scripts/product/validateQuestionFirstOnboarding.ts",
+    "validate:onboarding-evidence-experience": "tsx scripts/product/validateOnboardingEvidenceExperience.ts",
+    "validate:onboarding-investigation-idempotency": "tsx scripts/product/validateOnboardingInvestigationIdempotency.ts",
     "validate:canonical-product-routes": "tsx scripts/product/validateCanonicalProductRoutes.ts",
     "onboarding:test:reset": "tsx --env-file=.env.local scripts/development/resetOnboardingTestUser.ts",
     "onboarding:test:dev": "tsx --env-file=.env.local scripts/development/printOnboardingTestEnvironment.ts && next dev",

@@ -78,6 +78,16 @@ export type V3Evidence = {
    */
   reliability?: number;
 
+  /** Bounded onboarding provenance retained with extracted evidence. */
+  sourceName?: string;
+  sourceRole?: string;
+  organizationScope?: string;
+  ingestionMethod?: "onboarding-form" | "file" | "paste";
+  originalFilename?: string;
+  mimeType?: string;
+  contentDigest?: string;
+  extractionStatus?: "extracted";
+
   polarity?: V3Polarity;
   strength?: V3SignalStrength;
   confidenceBand?: V3ConfidenceBand;

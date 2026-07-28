@@ -21,6 +21,9 @@ import {
 import { evolveOrganizationRuntime } from "../../engine/v3/runtime/evolveOrganizationRuntime";
 import { buildOnboardingInvestigationInput } from "../../lib/onboarding/testing/buildOnboardingInvestigationInput";
 import { provisionOnboardingTestOrganization } from "../../lib/onboarding/testing/onboardingTestOrganization";
+import {
+  isYourOrganizationAlphaPresentationEnabled,
+} from "../../lib/alpha-activation/config";
 
 const now = "2026-07-28T00:00:00.000Z";
 const consumerId = "user_onboardingreplayvalidation0001";
@@ -127,6 +130,10 @@ async function main(): Promise<void> {
     DISCOVERY_RUNTIME_PROVISIONING_ENABLED: "false",
     DISCOVERY_ACCESS_PROVISIONING_ENABLED: "false",
   };
+  assert.equal(
+    isYourOrganizationAlphaPresentationEnabled(environment),
+    true,
+  );
   const receipt = await provisionOnboardingTestOrganization({
     environment,
     consumerId,

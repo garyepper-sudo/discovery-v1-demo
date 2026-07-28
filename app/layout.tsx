@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import "../styles/sprint19.css";
-import { isYourOrganizationAlphaActivationEnabled } from "../lib/alpha-activation/config";
+import {
+  isYourOrganizationAlphaPresentationEnabled,
+} from "../lib/alpha-activation/config";
 
 export const metadata: Metadata = {
   title: {
@@ -18,7 +20,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const content = isYourOrganizationAlphaActivationEnabled()
+  const content = isYourOrganizationAlphaPresentationEnabled()
     ? <ClerkProvider>{children}</ClerkProvider>
     : children;
 

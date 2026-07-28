@@ -73,6 +73,7 @@ export function evolveOrganizationRuntime(params: {
     question: string;
     context: string;
   };
+  nonTemporalEvidenceRecovery?: boolean;
 }): OrganizationRuntime {
   const { runtime, result: investigationResult, input } = params;
 
@@ -659,8 +660,12 @@ export function evolveOrganizationRuntime(params: {
         organizationalCapabilitiesState.capabilities,
       memoryMaturity,
       previousConditions:
-        memory.organizationalConditions ?? [],
-      previousState: memory.organizationalState,
+        params.nonTemporalEvidenceRecovery
+          ? []
+          : memory.organizationalConditions ?? [],
+      previousState: params.nonTemporalEvidenceRecovery
+        ? null
+        : memory.organizationalState,
       now,
     });
 

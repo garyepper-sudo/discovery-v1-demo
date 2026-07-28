@@ -202,6 +202,14 @@ type EvidenceProvenance = {
   sourceType: string;
   observedAt?: string;
   reliability?: number;
+  sourceName?: string;
+  sourceRole?: string;
+  organizationScope?: string;
+  ingestionMethod?: "onboarding-form" | "file" | "paste";
+  originalFilename?: string;
+  mimeType?: string;
+  contentDigest?: string;
+  extractionStatus?: "extracted";
 };
 
 function validObservedAt(value: string | undefined): string | undefined {
@@ -235,6 +243,22 @@ function provenanceFrom(
     sourceType,
     ...(observedAt === undefined ? {} : { observedAt }),
     ...(reliability === undefined ? {} : { reliability }),
+    ...(source.sourceName ? { sourceName: source.sourceName } : {}),
+    ...(source.sourceRole ? { sourceRole: source.sourceRole } : {}),
+    ...(source.organizationScope
+      ? { organizationScope: source.organizationScope }
+      : {}),
+    ...(source.ingestionMethod
+      ? { ingestionMethod: source.ingestionMethod }
+      : {}),
+    ...(source.originalFilename
+      ? { originalFilename: source.originalFilename }
+      : {}),
+    ...(source.mimeType ? { mimeType: source.mimeType } : {}),
+    ...(source.contentDigest ? { contentDigest: source.contentDigest } : {}),
+    ...(source.extractionStatus
+      ? { extractionStatus: source.extractionStatus }
+      : {}),
   };
 }
 

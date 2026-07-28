@@ -3,7 +3,22 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import alphaStyles from "../alpha/AlphaExperience.module.css";
+import {
+  Action,
+  Eyebrow,
+  Panel,
+  QuietHeader,
+} from "../alpha/AlphaPrimitives";
 import { buildProductHref } from "../product-shell/data/productOrganization";
+import {
+  evidenceDigest,
+  ONBOARDING_EVIDENCE_MAX_FILES,
+  type OnboardingEvidenceSubmission,
+  sanitizeEvidenceName,
+  validateEvidenceContent,
+  validateEvidenceFileMetadata,
+} from "../../lib/onboarding/evidence/onboardingEvidence";
 import styles from "./DiscoveryOnboardingExperience.module.css";
 
 type OnboardingStage =
@@ -30,12 +45,17 @@ type DiscoveryLabSuccess = {
 };
 
 type DiscoveryLabFailure = {
-  status: "validation-failed" | "insufficient-evidence" | "access-denied" | "failed";
+  status: "validation-failed" | "insufficient-evidence" | "access-denied" | "idempotency-conflict" | "investigation-in-progress" | "failed";
   message: string;
   organizationId?: string;
+  recovery?: {
+    uncertainty: string;
+    nextEvidence: string[];
+  };
 };
 
 type EvidenceRecommendation = {
+  id: string;
   title: string;
   purpose: string;
   importance: "Recommended" | "Optional";
@@ -50,6 +70,8 @@ type OnboardingDraft = {
   industry: string;
   website: string;
   observations: string;
+  evidenceSources: OnboardingEvidenceSubmission[];
+  skippedEvidenceRoles: string[];
 };
 
 const draftStorageKey = "discovery:onboarding-question-first:v1";
@@ -75,16 +97,19 @@ function recommendationsFor(question: string): EvidenceRecommendation[] {
   if (/(sales|pipeline|revenue|growth)/.test(normalized)) {
     return [
       {
+        id: "sales-trend",
         title: "Sales trend or pipeline report",
         purpose: "Clarifies when performance changed and where momentum was lost.",
         importance: "Recommended",
       },
       {
+        id: "customer-loss",
         title: "Customer loss reasons",
         purpose: "Helps distinguish demand, product, pricing, and execution explanations.",
         importance: "Recommended",
       },
       {
+        id: "commercial-change",
         title: "Pricing or promotion changes",
         purpose: "Tests whether commercial changes align with the slowdown.",
         importance: "Optional",
@@ -94,16 +119,19 @@ function recommendationsFor(question: string): EvidenceRecommendation[] {
   if (/(project|delay|delivery|release|execution)/.test(normalized)) {
     return [
       {
+        id: "delivery-timeline",
         title: "Delivery timeline or work log",
         purpose: "Shows where work waits, changes direction, or misses a handoff.",
         importance: "Recommended",
       },
       {
+        id: "approval-notes",
         title: "Decision and approval notes",
         purpose: "Clarifies ownership, escalation, and approval dependencies.",
         importance: "Recommended",
       },
       {
+        id: "retrospective",
         title: "Recent retrospective",
         purpose: "Adds the team’s explanation of recurring delivery friction.",
         importance: "Optional",
@@ -113,16 +141,19 @@ function recommendationsFor(question: string): EvidenceRecommendation[] {
   if (/(retention|customer|churn)/.test(normalized)) {
     return [
       {
+        id: "retention-trend",
         title: "Retention trend",
         purpose: "Clarifies which customers changed behavior and when.",
         importance: "Recommended",
       },
       {
+        id: "customer-feedback",
         title: "Customer feedback or loss notes",
         purpose: "Adds direct evidence about why customers stay or leave.",
         importance: "Recommended",
       },
       {
+        id: "experience-change",
         title: "Product or service changes",
         purpose: "Tests whether experience changes align with retention movement.",
         importance: "Optional",
@@ -132,16 +163,19 @@ function recommendationsFor(question: string): EvidenceRecommendation[] {
   if (/(decision|approval|stuck|authority)/.test(normalized)) {
     return [
       {
+        id: "decision-log",
         title: "Decision log or approval path",
         purpose: "Shows where authority sits and where decisions wait.",
         importance: "Recommended",
       },
       {
+        id: "ownership-notes",
         title: "Role and ownership notes",
         purpose: "Clarifies expected ownership across the people involved.",
         importance: "Recommended",
       },
       {
+        id: "decision-example",
         title: "A recent decision example",
         purpose: "Adds a concrete case that can confirm or challenge the pattern.",
         importance: "Optional",
@@ -150,16 +184,19 @@ function recommendationsFor(question: string): EvidenceRecommendation[] {
   }
   return [
     {
+      id: "concrete-example",
       title: "A recent concrete example",
       purpose: "Helps Discovery distinguish a recurring pattern from a general concern.",
       importance: "Recommended",
     },
     {
+      id: "operating-notes",
       title: "Relevant operating notes or measures",
       purpose: "Adds observable evidence connected to your question.",
       importance: "Recommended",
     },
     {
+      id: "different-perspective",
       title: "A different perspective",
       purpose: "Could challenge assumptions and expose an alternative explanation.",
       importance: "Optional",
@@ -196,6 +233,20 @@ export default function DiscoveryOnboardingExperience({
   const [industry, setIndustry] = useState("");
   const [website, setWebsite] = useState("");
   const [observations, setObservations] = useState("");
+  const [evidenceSources, setEvidenceSources] = useState<
+    OnboardingEvidenceSubmission[]
+  >([]);
+  const [skippedEvidenceRoles, setSkippedEvidenceRoles] = useState<string[]>([]);
+  const [evidenceEditor, setEvidenceEditor] = useState<{
+    sourceRole: string;
+    displayName: string;
+    mode: "paste" | "file";
+    replacingId?: string;
+  } | null>(null);
+  const [pastedEvidence, setPastedEvidence] = useState("");
+  const [evidenceError, setEvidenceError] = useState<string | null>(null);
+  const [recovery, setRecovery] =
+    useState<DiscoveryLabFailure["recovery"]>(undefined);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<InitialUnderstanding | null>(null);
@@ -203,6 +254,7 @@ export default function DiscoveryOnboardingExperience({
   const [draftReady, setDraftReady] = useState(false);
   const stageHeadingRef = useRef<HTMLHeadingElement>(null);
   const requestController = useRef<AbortController | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const recommendations = useMemo(
     () => recommendationsFor(question),
     [question],
@@ -226,6 +278,8 @@ export default function DiscoveryOnboardingExperience({
           setIndustry(draft.industry);
           setWebsite(draft.website);
           setObservations(draft.observations);
+          setEvidenceSources(draft.evidenceSources ?? []);
+          setSkippedEvidenceRoles(draft.skippedEvidenceRoles ?? []);
         } else {
           window.sessionStorage.removeItem(draftStorageKey);
           setOrganizationId(initialOrganizationId ?? null);
@@ -250,6 +304,8 @@ export default function DiscoveryOnboardingExperience({
       industry,
       website,
       observations,
+      evidenceSources,
+      skippedEvidenceRoles,
     };
     window.sessionStorage.setItem(draftStorageKey, JSON.stringify(draft));
   }, [
@@ -257,9 +313,11 @@ export default function DiscoveryOnboardingExperience({
     draftReady,
     industry,
     observations,
+    evidenceSources,
     onboardingRequestId,
     organizationId,
     question,
+    skippedEvidenceRoles,
     stage,
     website,
   ]);
@@ -301,6 +359,84 @@ export default function DiscoveryOnboardingExperience({
     }
   }
 
+  function openEvidenceEditor(
+    sourceRole: string,
+    displayName: string,
+    mode: "paste" | "file",
+    replacingId?: string,
+  ) {
+    setEvidenceError(null);
+    setPastedEvidence("");
+    setEvidenceEditor({ sourceRole, displayName, mode, replacingId });
+    if (mode === "file") {
+      window.setTimeout(() => fileInputRef.current?.click(), 0);
+    }
+  }
+
+  async function addEvidence(
+    editor: NonNullable<typeof evidenceEditor>,
+    content: string,
+    metadata: { originalFilename?: string; mimeType?: string } = {},
+  ) {
+    if (
+      !editor.replacingId &&
+      evidenceSources.length >= ONBOARDING_EVIDENCE_MAX_FILES
+    ) {
+      setEvidenceError("You can add up to three evidence sources.");
+      return;
+    }
+    const contentError = validateEvidenceContent(content);
+    if (contentError) {
+      setEvidenceError(contentError);
+      return;
+    }
+    const entry: OnboardingEvidenceSubmission = {
+      id: crypto.randomUUID(),
+      sourceRole: editor.sourceRole,
+      displayName: sanitizeEvidenceName(editor.displayName),
+      ingestionMethod: editor.mode,
+      ...(metadata.originalFilename
+        ? { originalFilename: sanitizeEvidenceName(metadata.originalFilename) }
+        : {}),
+      ...(metadata.mimeType ? { mimeType: metadata.mimeType } : {}),
+      contentDigest: await evidenceDigest(content.trim()),
+      extractionStatus: "extracted",
+      content: content.trim(),
+    };
+    setEvidenceSources((current) => [
+      ...current.filter((item) => item.id !== editor.replacingId),
+      entry,
+    ]);
+    setSkippedEvidenceRoles((current) =>
+      current.filter((role) => role !== editor.sourceRole)
+    );
+    setEvidenceEditor(null);
+    setPastedEvidence("");
+    setEvidenceError(null);
+  }
+
+  async function handleFile(file: File | undefined) {
+    if (!file || !evidenceEditor) return;
+    const metadataError = validateEvidenceFileMetadata(file);
+    if (metadataError) {
+      setEvidenceError(metadataError);
+      return;
+    }
+    try {
+      await addEvidence(evidenceEditor, await file.text(), {
+        originalFilename: file.name,
+        mimeType: file.type,
+      });
+    } catch {
+      setEvidenceError("This file could not be read safely as plain text.");
+    }
+  }
+
+  function removeEvidence(id: string) {
+    setEvidenceSources((current) => current.filter((item) => item.id !== id));
+    setEvidenceError(null);
+  }
+
   async function runInvestigation() {
     if (submitting) return;
     requestController.current?.abort();
@@ -308,9 +444,20 @@ export default function DiscoveryOnboardingExperience({
     requestController.current = controller;
     setSubmitting(true);
     setError(null);
+    setRecovery(undefined);
     setStage("processing");
 
     try {
+      const requestMaterial = JSON.stringify({
+        company: company.trim(),
+        website: website.trim(),
+        industry: industry.trim(),
+        question: question.trim(),
+        context: observations.trim(),
+        evidenceSources,
+      });
+      const investigationRequestId =
+        `onboarding-investigation-${await evidenceDigest(requestMaterial)}`;
       const response = await fetch("/api/discovery-lab", {
         method: "POST",
         signal: controller.signal,
@@ -318,11 +465,13 @@ export default function DiscoveryOnboardingExperience({
         body: JSON.stringify({
           organizationId,
           onboardingRequestId,
+          investigationRequestId,
           company: company.trim(),
           website: website.trim(),
           industry: industry.trim(),
           question: question.trim(),
           messyInput: observations.trim(),
+          evidenceSources,
         }),
       });
       const body = await response.json().catch(() => null) as
@@ -330,6 +479,9 @@ export default function DiscoveryOnboardingExperience({
         | DiscoveryLabFailure
         | null;
       if (!response.ok || !body || body.status !== "complete") {
+        if (body && body.status !== "complete") {
+          setRecovery(body.recovery);
+        }
         throw {
           userMessage: safeFailure(
             response.status,
@@ -375,16 +527,9 @@ export default function DiscoveryOnboardingExperience({
   }
 
   return (
-    <main className={styles.page}>
-      <header className={styles.header}>
-        <div className={styles.brand}>
-          <span className={styles.brandMark} aria-hidden="true">✦</span>
-          <span>Discovery</span>
-        </div>
-        <p>Evidence-backed organizational understanding</p>
-      </header>
-
-      <section className={styles.experience} aria-live="polite">
+    <main className={`${alphaStyles.alphaRoot} ${styles.page}`}>
+      <QuietHeader helpLabel="About onboarding" />
+      <section className={styles.experience}>
         <nav className={styles.progress} aria-label="Onboarding progress">
           {["Question", "Context", "Evidence", "Understanding"].map((label, index) => {
             const stageIndex = {
@@ -407,7 +552,7 @@ export default function DiscoveryOnboardingExperience({
 
         {stage === "intent" ? (
           <section className={styles.stage}>
-            <p className={styles.eyebrow}>Begin with what matters now</p>
+            <Eyebrow tone="violet">Begin with what matters now</Eyebrow>
             <h1 ref={stageHeadingRef}>What are you trying to understand?</h1>
             <p className={styles.lead}>
               Discovery builds an evidence-backed understanding of your
@@ -439,15 +584,13 @@ export default function DiscoveryOnboardingExperience({
                 </button>
               ))}
             </div>
-            <button className={styles.primaryAction} type="button" onClick={advanceIntent}>
-              Investigate this <span aria-hidden="true">→</span>
-            </button>
+            <Action arrow onClick={advanceIntent}>Investigate this</Action>
           </section>
         ) : null}
 
         {stage === "organization-context" ? (
           <section className={styles.stage}>
-            <p className={styles.eyebrow}>A little context</p>
+            <Eyebrow tone="violet">A little context</Eyebrow>
             <h1 ref={stageHeadingRef} tabIndex={-1}>I can help investigate this.</h1>
             <blockquote>{question}</blockquote>
             <p className={styles.lead}>
@@ -496,71 +639,274 @@ export default function DiscoveryOnboardingExperience({
               </label>
             </div>
             <div className={styles.actions}>
-              <button className={styles.textAction} type="button" onClick={() => setStage("intent")}>
-                Back
-              </button>
-              <button className={styles.primaryAction} type="button" onClick={advanceContext}>
-                Continue <span aria-hidden="true">→</span>
-              </button>
+              <Action tone="text" onClick={() => setStage("intent")}>Back</Action>
+              <Action arrow onClick={advanceContext}>Continue</Action>
             </div>
           </section>
         ) : null}
 
         {stage === "evidence-plan" ? (
           <section className={styles.stage}>
-            <p className={styles.eyebrow}>Evidence plan</p>
+            <Eyebrow tone="violet">Evidence plan</Eyebrow>
             <h1 ref={stageHeadingRef} tabIndex={-1}>What would sharpen the answer?</h1>
             <p className={styles.lead}>
               You can begin with what you provided. These sources would help
               Discovery test and refine its understanding of “{question}”
             </p>
             <div className={styles.recommendations}>
-              {recommendations.map((recommendation) => (
-                <article key={recommendation.title}>
-                  <div>
-                    <strong>{recommendation.title}</strong>
-                    <span>{recommendation.importance}</span>
-                  </div>
-                  <p>{recommendation.purpose}</p>
-                </article>
-              ))}
+              {recommendations.map((recommendation) => {
+                const added = evidenceSources.find(
+                  (item) => item.sourceRole === recommendation.id,
+                );
+                const skipped = skippedEvidenceRoles.includes(recommendation.id);
+                return (
+                  <Panel key={recommendation.id} className={styles.recommendation}>
+                    <div className={styles.recommendationHeading}>
+                      <div>
+                        <strong>{recommendation.title}</strong>
+                        <p>{recommendation.purpose}</p>
+                      </div>
+                      <span>{recommendation.importance}</span>
+                    </div>
+                    {added ? (
+                      <div className={styles.evidenceReceipt}>
+                        <span>
+                          <b aria-hidden="true">✓</b>
+                          {added.originalFilename ?? added.displayName}
+                        </span>
+                        <div>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              openEvidenceEditor(
+                                recommendation.id,
+                                recommendation.title,
+                                added.ingestionMethod,
+                                added.id,
+                              )
+                            }
+                          >
+                            Replace
+                          </button>
+                          <button type="button" onClick={() => removeEvidence(added.id)}>
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className={styles.evidenceActions}>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            openEvidenceEditor(
+                              recommendation.id,
+                              recommendation.title,
+                              "file",
+                            )
+                          }
+                          disabled={evidenceSources.length >= ONBOARDING_EVIDENCE_MAX_FILES}
+                        >
+                          Upload file
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            openEvidenceEditor(
+                              recommendation.id,
+                              recommendation.title,
+                              "paste",
+                            )
+                          }
+                          disabled={evidenceSources.length >= ONBOARDING_EVIDENCE_MAX_FILES}
+                        >
+                          Paste information
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setSkippedEvidenceRoles((current) =>
+                              current.includes(recommendation.id)
+                                ? current.filter((role) => role !== recommendation.id)
+                                : [...current, recommendation.id]
+                            )
+                          }
+                        >
+                          {skipped ? "Skipped — undo" : "Skip"}
+                        </button>
+                      </div>
+                    )}
+                  </Panel>
+                );
+              })}
+              <Panel className={styles.addAnother} tone="soft">
+                <div>
+                  <strong>Add something else</strong>
+                  <p>Add another relevant plain-text source in your own terms.</p>
+                </div>
+                <div className={styles.evidenceActions}>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      openEvidenceEditor("additional-evidence", "Additional evidence", "file")
+                    }
+                    disabled={evidenceSources.length >= ONBOARDING_EVIDENCE_MAX_FILES}
+                  >
+                    Upload file
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      openEvidenceEditor("additional-evidence", "Additional evidence", "paste")
+                    }
+                    disabled={evidenceSources.length >= ONBOARDING_EVIDENCE_MAX_FILES}
+                  >
+                    Paste information
+                  </button>
+                </div>
+              </Panel>
+              {evidenceSources
+                .filter((item) => item.sourceRole === "additional-evidence")
+                .map((item) => (
+                  <Panel key={item.id} className={styles.additionalReceipt}>
+                    <div className={styles.evidenceReceipt}>
+                      <span>
+                        <b aria-hidden="true">✓</b>
+                        {item.originalFilename ?? item.displayName}
+                      </span>
+                      <div>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            openEvidenceEditor(
+                              item.sourceRole,
+                              item.displayName,
+                              item.ingestionMethod,
+                              item.id,
+                            )
+                          }
+                        >
+                          Replace
+                        </button>
+                        <button type="button" onClick={() => removeEvidence(item.id)}>
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  </Panel>
+                ))}
             </div>
+
+            <input
+              ref={fileInputRef}
+              className={styles.srOnly}
+              type="file"
+              accept=".txt,.md,.markdown,.csv,text/plain,text/markdown,text/csv"
+              onChange={(event) => {
+                void handleFile(event.target.files?.[0]);
+                event.currentTarget.value = "";
+              }}
+            />
+
+            {evidenceEditor?.mode === "paste" ? (
+              <Panel className={styles.evidenceEditor} tone="blue">
+                <label htmlFor="onboarding-pasted-evidence">
+                  <strong>Paste {evidenceEditor.displayName.toLowerCase()}</strong>
+                  <span>Plain text only. Include dates, examples, measures, or direct observations where available.</span>
+                </label>
+                <textarea
+                  id="onboarding-pasted-evidence"
+                  autoFocus
+                  value={pastedEvidence}
+                  onChange={(event) => {
+                    setPastedEvidence(event.target.value);
+                    setEvidenceError(null);
+                  }}
+                />
+                <div className={styles.editorActions}>
+                  <Action
+                    tone="text"
+                    onClick={() => {
+                      setEvidenceEditor(null);
+                      setEvidenceError(null);
+                    }}
+                  >
+                    Cancel
+                  </Action>
+                  <Action
+                    onClick={() => void addEvidence(evidenceEditor, pastedEvidence)}
+                  >
+                    Add evidence
+                  </Action>
+                </div>
+              </Panel>
+            ) : null}
+
+            {evidenceError ? (
+              <div className={styles.inlineError} role="alert">{evidenceError}</div>
+            ) : null}
+
             <p className={styles.connectionNote}>
-              Document connection will be available later. You can begin with
-              the context you provided.
+              Supported now: TXT, Markdown, CSV, or pasted text. Up to three
+              sources, 512 KB each. PDF and DOCX require a future bounded parser.
             </p>
             {error ? (
-              <div className={styles.safeError} role="alert">
-                <strong>More context is needed</strong>
-                <p>{error}</p>
+              <div role="alert">
+                <Panel className={styles.safeError} tone="orange">
+                  <strong>More evidence is needed</strong>
+                  <p>{error}</p>
+                  {recovery ? (
+                    <>
+                      <p><b>What remains uncertain:</b> {recovery.uncertainty}</p>
+                      {recovery.nextEvidence.length ? (
+                        <ul>
+                          {recovery.nextEvidence.map((item) => <li key={item}>{item}</li>)}
+                        </ul>
+                      ) : null}
+                    </>
+                  ) : null}
+                  <div className={styles.recoveryActions}>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        openEvidenceEditor("additional-evidence", "Additional evidence", "paste")
+                      }
+                    >
+                      Add pasted evidence
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        openEvidenceEditor("additional-evidence", "Additional evidence", "file")
+                      }
+                    >
+                      Upload evidence
+                    </button>
+                    <button type="button" onClick={() => setStage("organization-context")}>
+                      Return to observations
+                    </button>
+                  </div>
+                </Panel>
               </div>
             ) : null}
             <div className={styles.actions}>
-              <button
-                className={styles.textAction}
-                type="button"
+              <Action
+                tone="text"
                 onClick={() => setStage("organization-context")}
                 disabled={submitting}
               >
                 Back
-              </button>
-              <button
-                className={styles.primaryAction}
-                type="button"
-                onClick={runInvestigation}
-                disabled={submitting}
-              >
-                {error ? "Try again" : "Build initial understanding"}
-                <span aria-hidden="true">→</span>
-              </button>
+              </Action>
+              <Action arrow onClick={runInvestigation} disabled={submitting}>
+                {error ? "Retry with current evidence" : "Continue with current context"}
+              </Action>
             </div>
           </section>
         ) : null}
 
         {stage === "processing" ? (
-          <section className={`${styles.stage} ${styles.processing}`}>
+          <section className={`${styles.stage} ${styles.processing}`} aria-live="polite">
             <span className={styles.processingMark} aria-hidden="true">✦</span>
-            <p className={styles.eyebrow}>Working with your evidence</p>
+            <Eyebrow tone="violet">Working with your evidence</Eyebrow>
             <h1 ref={stageHeadingRef} tabIndex={-1}>Building an initial understanding</h1>
             <p className={styles.lead}>
               Discovery is looking only for patterns your current evidence can support.
@@ -578,35 +924,33 @@ export default function DiscoveryOnboardingExperience({
 
         {stage === "first-understanding" && result ? (
           <section className={styles.stage}>
-            <p className={styles.eyebrow}>Current understanding</p>
+            <Eyebrow tone="green">Current understanding</Eyebrow>
             <h1 ref={stageHeadingRef} tabIndex={-1}>Here is what Discovery can support.</h1>
             <div className={styles.resultGrid}>
-              <article className={styles.primaryResult}>
+              <Panel className={styles.primaryResult} tone="blue">
                 <span>What Discovery can support</span>
                 <p>{result.finding}</p>
-              </article>
-              <article>
+              </Panel>
+              <Panel>
                 <span>What remains uncertain</span>
                 <p>{result.uncertainty}</p>
-              </article>
-              <article>
+              </Panel>
+              <Panel>
                 <span>Most useful next evidence</span>
                 <ul>
                   {result.nextEvidence.map((item) => <li key={item}>{item}</li>)}
                 </ul>
-              </article>
-              <article>
+              </Panel>
+              <Panel>
                 <span>Confidence</span>
                 <p>{result.confidence.label}</p>
-              </article>
+              </Panel>
             </div>
             <p className={styles.provisional}>
               This is an initial, provisional understanding built from the
               evidence you provided. Discovery will revise it as evidence grows.
             </p>
-            <button className={styles.primaryAction} type="button" onClick={openDiscovery}>
-              Open Discovery <span aria-hidden="true">→</span>
-            </button>
+            <Action arrow onClick={openDiscovery}>Open Discovery</Action>
           </section>
         ) : null}
       </section>

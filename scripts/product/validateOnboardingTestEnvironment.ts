@@ -6,7 +6,15 @@ import {
   provisionOnboardingTestOrganization,
   resolveOnboardingRouteState,
 } from "../../lib/onboarding/testing";
-import { validateOnboardingTestEnvironment } from "../../lib/environment/discoveryEnvironment";
+import {
+  isValidatedLocalOnboardingTestEnvironment,
+  validateOnboardingTestEnvironment,
+} from "../../lib/environment/discoveryEnvironment";
+import {
+  isLocalOnboardingAlphaPresentationEnabled,
+  isYourOrganizationAlphaActivationEnabled,
+  isYourOrganizationAlphaPresentationEnabled,
+} from "../../lib/alpha-activation/config";
 
 const baseEnvironment = {
   DISCOVERY_ENV: "development",
@@ -35,6 +43,14 @@ function refuses(changes: Record<string, string>): void {
 
 async function main(): Promise<void> {
   validateOnboardingTestEnvironment(baseEnvironment);
+  assert.equal(isValidatedLocalOnboardingTestEnvironment(baseEnvironment), true);
+  assert.equal(isLocalOnboardingAlphaPresentationEnabled(baseEnvironment), true);
+  assert.equal(isYourOrganizationAlphaActivationEnabled(baseEnvironment), false);
+  assert.equal(
+    isYourOrganizationAlphaPresentationEnabled(baseEnvironment),
+    true,
+    "A fully validated local onboarding sandbox renders Hosted Alpha without the Production rollout flag",
+  );
   assert.throws(
     () => validateOnboardingTestEnvironment({
       ...baseEnvironment,
@@ -56,6 +72,54 @@ async function main(): Promise<void> {
   refuses({ DISCOVERY_RUNTIME_STORAGE_BACKEND: "vercel-blob" });
   refuses({ DISCOVERY_ALPHA_ORGANIZATION_ID: "atlas-manufacturing-simulation" });
   refuses({ NEXT_PUBLIC_DISCOVERY_ONBOARDING_TEST_ENABLED: "false" });
+  for (const unsafeEnvironment of [
+    { DISCOVERY_DATABASE_URL: "postgresql://remote.example/onboarding" },
+    { CLERK_SECRET_KEY: "sk_live_forbidden" },
+    { DISCOVERY_RUNTIME_STORAGE_BACKEND: "vercel-blob" },
+    { DISCOVERY_ALPHA_ORGANIZATION_ID: "atlas-manufacturing-simulation" },
+    { DISCOVERY_RUNTIME_PROVISIONING_ENABLED: "true" },
+    { DISCOVERY_ACCESS_PROVISIONING_ENABLED: "true" },
+  ]) {
+    assert.equal(
+      isYourOrganizationAlphaPresentationEnabled({
+        ...baseEnvironment,
+        ...unsafeEnvironment,
+      }),
+      false,
+    );
+  }
+  assert.equal(
+    isYourOrganizationAlphaPresentationEnabled({
+      DISCOVERY_ENV: "development",
+      DISCOVERY_ALPHA_YOUR_ORGANIZATION_ENABLED: "false",
+    }),
+    false,
+    "Generic development does not activate Hosted Alpha",
+  );
+  assert.equal(
+    isYourOrganizationAlphaPresentationEnabled({
+      DISCOVERY_ENV: "staging",
+      DISCOVERY_ALPHA_YOUR_ORGANIZATION_ENABLED: "false",
+    }),
+    false,
+    "Preview or staging does not activate Hosted Alpha by default",
+  );
+  assert.equal(
+    isYourOrganizationAlphaPresentationEnabled({
+      DISCOVERY_ENV: "production",
+      DISCOVERY_ALPHA_YOUR_ORGANIZATION_ENABLED: "false",
+    }),
+    false,
+    "Production retains the flag-off rollback branch",
+  );
+  assert.equal(
+    isYourOrganizationAlphaPresentationEnabled({
+      DISCOVERY_ENV: "production",
+      DISCOVERY_ALPHA_YOUR_ORGANIZATION_ENABLED: "true",
+    }),
+    true,
+    "Production activation still requires its explicit rollout flag",
+  );
 
 const [rootRouteSource, onboardingRouteSource, compatibilityRouteSource] =
   await Promise.all([

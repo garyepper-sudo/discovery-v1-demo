@@ -71,6 +71,16 @@ export type OrganizationRuntimeMetadata = {
   createdAt: string;
   updatedAt: string;
   investigationCount: number;
+  investigationReceipts?: Array<{
+    requestId: string;
+    fingerprint: string;
+    status: "in-progress" | "completed" | "failed";
+    investigationCount: number;
+    startedAt: string;
+    completedAt?: string;
+    safeToRetry?: boolean;
+    canonicalResponse?: unknown;
+  }>;
 };
 
 export type OrganizationRuntimeMemory = {

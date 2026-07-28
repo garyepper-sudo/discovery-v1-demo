@@ -60,6 +60,13 @@ async function main(): Promise<void> {
   );
 
   assert.match(sources.yourOrganization, /DiscoveryShell|ProductWorkspace/);
+  assert.match(
+    sources.yourOrganization,
+    /isYourOrganizationAlphaPresentationEnabled/,
+  );
+  assert.match(sources.yourOrganization, /loadActivatedYourOrganization/);
+  assert.match(sources.yourOrganization, /<AlphaExperience/);
+  assert.doesNotMatch(sources.yourOrganization, /alphaFixture/);
   assert.match(sources.organizations, /OrganizationsExperience/);
   assert.match(sources.shell, /export default function DiscoveryShell/);
   assert.match(sources.workspace, /import DiscoveryShell from ["']\.\/DiscoveryShell["']/);

@@ -592,6 +592,7 @@ function inferHealthReason(params: {
   support: ConditionSupport;
   hasWeakeningSignal: boolean;
   hasImprovingSignal: boolean;
+  hasPriorObservation: boolean;
 }): string {
   const {
     definition,
@@ -602,6 +603,7 @@ function inferHealthReason(params: {
     support,
     hasWeakeningSignal,
     hasImprovingSignal,
+    hasPriorObservation,
   } = params;
 
   const breadth = evidenceBreadthLabel(support);
@@ -609,7 +611,7 @@ function inferHealthReason(params: {
   const strengthText = `${Math.round(strength * 100)}% condition strength`;
 
   if (status === "deteriorating") {
-    return `${definition.name} is deteriorating because multiple weakening signals point to ${definition.constrainedDescription.toLowerCase()} Discovery sees ${breadth || "several organizational signals"} behind this assessment, with ${confidenceText} and ${strengthText}.`;
+    return `${definition.name} ${hasPriorObservation ? "is deteriorating" : "is materially constrained"} because multiple weakening signals point to ${definition.constrainedDescription.toLowerCase()} Discovery sees ${breadth || "several organizational signals"} behind this assessment, with ${confidenceText} and ${strengthText}.`;
   }
 
   if (status === "constrained") {
@@ -772,6 +774,7 @@ function synthesizeConditionAssessment(params: {
     support,
     hasWeakeningSignal,
     hasImprovingSignal,
+    hasPriorObservation: Boolean(previousCondition),
   });
 
   const trendReason = inferTrendReason({
@@ -789,7 +792,9 @@ function synthesizeConditionAssessment(params: {
 
   const statusSentence =
     status === "deteriorating"
-      ? `${definition.name} is getting worse.`
+      ? previousCondition
+        ? `${definition.name} is getting worse.`
+        : `${definition.name} is materially constrained.`
       : status === "constrained"
         ? `${definition.name} is limiting organizational performance.`
         : status === "improving"

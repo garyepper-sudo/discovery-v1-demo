@@ -11,7 +11,9 @@ import styles from "../../../components/product-shell/ProductWorkspace.module.cs
 import { loadActivatedYourOrganization } from "../../../components/product-shell/data/loadActivatedYourOrganization";
 import { buildProductHref } from "../../../components/product-shell/data/productOrganization";
 import { buildDiscoveryExperienceView } from "../../../components/product-shell/data/buildDiscoveryExperienceView";
-import { isYourOrganizationAlphaActivationEnabled } from "../../../lib/alpha-activation/config";
+import {
+  isYourOrganizationAlphaPresentationEnabled,
+} from "../../../lib/alpha-activation/config";
 import {
   alphaScenes,
   type AlphaScene,
@@ -61,7 +63,7 @@ export default async function YourOrganizationPage({
   }>;
 }) {
   const resolvedSearchParams = await searchParams;
-  if (!isYourOrganizationAlphaActivationEnabled()) {
+  if (!isYourOrganizationAlphaPresentationEnabled()) {
     return (
       <ProductWorkspace
         organizationId={resolvedSearchParams.organizationId}

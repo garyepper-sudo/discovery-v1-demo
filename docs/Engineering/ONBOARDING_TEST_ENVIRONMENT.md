@@ -29,6 +29,13 @@ that passes the isolation checks. `production` is always refused.
 The production route policy, Atlas provisioner, disclosure contracts, immutable
 audit records, and canonical Runtime architecture are unchanged.
 
+`DISCOVERY_ALPHA_YOUR_ORGANIZATION_ENABLED` remains the Production Hosted Alpha
+rollout and rollback control. The isolated local onboarding environment keeps
+that flag disabled. After the complete environment contract above validates,
+the local sandbox may use the same Hosted Alpha presentation through its
+separate fail-closed presentation predicate. This is not a general development
+default and grants no provisioning authority or Atlas access.
+
 ## Local development setup
 
 1. Create or select a Clerk development instance. In its dashboard, create a
@@ -106,6 +113,28 @@ Limit the preview to one exact onboarding-owned organization:
 ```bash
 npm run onboarding:test:reset -- --email person@example.com --organization onb-dev-...
 ```
+
+## Investigation retry integrity
+
+The local onboarding API derives a canonical SHA-256 fingerprint from the
+organization identity, normalized investigation fields, and canonically
+ordered evidence provenance and content. Runtime metadata records the
+request identity and fingerprint before cognition begins.
+
+- An identical or normalization-equivalent retry reuses the completed
+  canonical response without rerunning cognition or advancing Runtime history.
+- Reusing one request identity for materially different input fails closed.
+- A currently in-progress identical request does not start a second mutation.
+- A recoverable pre-persistence failure may retry the same request identity.
+- Added or changed evidence produces a new fingerprint and exactly one new
+  investigation.
+- Evidence added after an insufficient first attempt is treated as completion
+  of the initial evidence set, not by itself as a later organizational
+  observation.
+
+The browser-generated investigation request identity is content-derived for
+safe interrupted replay. Enforcement remains authoritative in
+`runOrganizationInvestigation()`; client state is not trusted for idempotency.
 
 After reviewing the JSON plan, apply the same command with `--apply`.
 

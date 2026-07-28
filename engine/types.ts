@@ -25,6 +25,16 @@ export type InvestigationEvidenceSource = {
    */
   reliability?: number;
 
+  /** Bounded onboarding provenance retained with extracted evidence. */
+  sourceName?: string;
+  sourceRole?: string;
+  organizationScope?: string;
+  ingestionMethod?: "onboarding-form" | "file" | "paste";
+  originalFilename?: string;
+  mimeType?: string;
+  contentDigest?: string;
+  extractionStatus?: "extracted";
+
   /**
    * Source content. Each non-empty line becomes a distinct evidence record
    * while retaining the shared source identity.

@@ -164,3 +164,15 @@ export function onboardingTestEnvironmentEnabled(
   validateOnboardingTestEnvironment(environment);
   return true;
 }
+
+export function isValidatedLocalOnboardingTestEnvironment(
+  environment: Readonly<Record<string, string | undefined>> = process.env,
+): boolean {
+  if (environment.DISCOVERY_ENV !== "development") return false;
+  try {
+    validateOnboardingTestEnvironment(environment);
+    return true;
+  } catch {
+    return false;
+  }
+}
