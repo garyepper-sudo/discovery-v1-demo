@@ -1073,3 +1073,229 @@ hosted verification confirmed:
 - active Neon transactions 0.
 
 The exact continuation point is a fresh Gate 7 activation retry.
+
+## Gate 7 Final Activation Retry — Logout Failure and Safe Rollback
+
+The final pre-activation audit passed with health ready, exact active Atlas
+access, 1/1/0 governance, zero active transactions, and all activation and
+provisioning authorities disabled.
+
+Production activation deployment `dpl_9RCbNW4xzWgHeEibi5gumWYjs8fA` reached
+READY at `2026-07-27T16:13:45-0700`. Only the governed Alpha flag was enabled.
+Health remained ready and Runtime/access provisioning remained 404.
+
+Hosted evidence before the failure:
+
+- unauthenticated users received bounded denial boundaries and no Atlas data;
+- the approved Clerk user authenticated successfully;
+- `/your-organization` resolved Atlas without a query parameter;
+- authorization preceded private Runtime retrieval;
+- Atlas identity, organizational explanations, conditions, state, projection,
+  and Product Communication output rendered;
+- wrong and malformed organization selections failed closed;
+- denied selections created no disclosure;
+- direct entry, refresh, and internal navigation preserved Atlas.
+
+The mandatory logout control failed. Two attempts through the visible Sign out
+button left the Clerk session authenticated and protected Atlas content
+accessible. Return-login verification therefore could not proceed.
+
+The Alpha flag was removed immediately. Rollback deployment
+`dpl_kt8cDJXWxWj16mWVpTyH9ZmUu6j2` reached READY. Final safe state:
+
+- health ready;
+- Alpha disabled;
+- product route 404;
+- Runtime provisioning route 404;
+- access provisioning route 404;
+- access 1;
+- lifecycle 1;
+- disclosure 5;
+- active transactions 0.
+
+All five historical disclosure events are bounded `disclosed` events for the
+single approved user and Atlas organization. They were created by successful
+authorized renders during the required product and persistence replay. Denied
+requests added none. Runtime, access, lifecycle, schema, and Blob state were
+not changed.
+
+The exact continuation point is a bounded Clerk sign-out/session invalidation
+correction with Alpha remaining disabled.
+
+## Gate 7A — Clerk Session Termination Correction
+
+The failed logout path was isolated to the client session control. The prior
+`SignOutButton` integration delegated session destruction and its default `/`
+redirect entirely to Clerk, without an application-owned pending state,
+explicit await boundary, or history replacement after completion.
+
+The product now uses a dedicated client control with this bounded sequence:
+
+1. reject duplicate logout attempts;
+2. await `clerk.signOut()`;
+3. replace browser history with `/your-organization`;
+4. allow the existing Clerk middleware to reject the now-unauthenticated
+   protected request.
+
+This change does not alter middleware authorization, organization resolution,
+Runtime retrieval, disclosure, product navigation, or activation policy.
+
+Production deployment `dpl_7ayjQeJE8tGM3GJFzBqS9hdQM4UQ` reached READY while
+Alpha and both provisioning authorities remained disabled. Health was ready
+with configuration, database, and Runtime checks true. The product, Runtime
+provisioning, and access provisioning routes returned 404.
+
+Validation evidence:
+
+- Clerk identity shadow: PASS, 28 checks;
+- Production reachability: PASS, 38 checks;
+- typecheck: PASS;
+- build: PASS with the same six historical React Hook warnings;
+- governance: access 1, lifecycle 1, disclosure 5;
+- idle-in-transaction connections: 0;
+- Runtime and Blob writes: 0.
+
+The database-dependent activation validator could not run in the local shell
+because no database URL was loaded there; hosted health independently proved
+database and Runtime readiness. The browser client blocked direct navigation
+to the deployment, while HTTP checks proved the disabled route boundary.
+
+Alpha was not enabled, so no authenticated product render, logout, refresh,
+back-navigation, or login-again replay occurred during Gate 7A. Consequently,
+no Runtime retrieval or disclosure occurred after logout, and access,
+lifecycle, and disclosure counts remained unchanged.
+
+The exact continuation point is the final hosted Alpha activation replay.
+
+## Discovery Acceptance Test 001 — Failed Logout Replay
+
+The complete hosted replay began from health ready, governance 1/1/5, and zero
+idle-in-transaction connections. Activation deployment
+`dpl_7gpVTTpcFNGa6JMwhK6ig5G55Fro` reached READY after only the Alpha enable
+flag was added.
+
+Observed passing evidence:
+
+- unauthenticated access reached Clerk's signed-out protection boundary;
+- no Atlas information or disclosure was produced by that denied request;
+- the approved Clerk user authenticated;
+- durable authority automatically resolved Atlas;
+- the Runtime-backed Organization Model and authority-qualified product
+  content rendered;
+- the first approved render produced one disclosure;
+- refresh preserved Atlas;
+- internal Insights navigation preserved Atlas organization identity.
+
+Replay step 8 failed. Clicking Sign out changed the corrected control to
+`Signing out…`, proving the React handler ran, but the awaited
+`clerk.signOut()` call did not settle within 30 seconds. The protected Atlas
+page remained visible. Later logout, back, direct-route, re-login, and negative
+identity assertions were therefore not claimed.
+
+The Alpha flag was removed immediately and rollback deployment
+`dpl_7krFceNovEpWnNFfmpKxH3d5Auoq` reached READY. Final safe state:
+
+- health, configuration, database, and Runtime ready;
+- Alpha disabled;
+- Runtime provisioning disabled;
+- access provisioning disabled;
+- product and provisioning routes 404;
+- access 1;
+- lifecycle 1;
+- disclosure 9;
+- idle-in-transaction connections 0.
+
+Runtime, Blob, access, and lifecycle state remained unchanged. Acceptance Test
+001 stopped at the mandatory logout step and Discovery Hosted Alpha was not
+declared operational.
+
+## Clerk Sign-Out Hang Classification
+
+Static tracing confirmed that the production session control is inside the
+correct activation-gated `ClerkProvider`, uses the Clerk client associated
+with the middleware-authenticated application, prevents duplicate attempts,
+and performs no navigation before awaiting `clerk.signOut()`. The button is
+not a form submit control, and no surrounding event path interrupts the
+promise.
+
+The same production path was reproduced in a clean Google Chrome 150 incognito
+session. Activation deployment `dpl_3eVj4Vxht9dw95yJFbqrz1aVfAsT` reached
+READY, the approved user authenticated, and Atlas rendered. Clicking Sign out
+completed successfully in Chrome and landed on the bounded `Not found` page.
+Direct navigation to `/your-organization` then returned to Clerk sign-in,
+confirming session invalidation and middleware denial.
+
+This result classifies the earlier unresolved promise as an in-app browser
+limitation, not a reproduced Production Clerk defect. Successful session
+invalidation proves the Clerk operation was issued and completed. Exact
+request method/status instrumentation was not added because the normal browser
+did not reproduce the hang, so Phase 3 was not authorized.
+
+The reproduction changed governance from 1/1/9 to 1/1/12 through approved
+authenticated render/reload activity. Access and lifecycle remained unchanged.
+No Runtime, Blob, or governance administration mutation occurred.
+
+Alpha was removed immediately. Rollback deployment
+`dpl_6aG14yJfMjKeKixtAf1Ndmuzg4nQ` reached READY with health, configuration,
+database, and Runtime ready; product and provisioning routes 404; provisioning
+authorities disabled; and zero idle-in-transaction connections.
+
+## Canonical Experience Promotion
+
+The canonical Discovery Experience Alpha is now the available-state
+presentation beneath `/your-organization`. The hosted journey contains Home,
+Orient, Ask, Understand, Plan, Learn, Respond, Follow, and Return while
+preserving the authorized organization identity. The legacy dashboard shell is
+no longer the primary approved-user presentation.
+
+The integration preserves the validated boundary:
+
+Clerk identity → durable access → authorized organization resolution →
+Runtime retrieval → canonical projection → disclosure → product view →
+Discovery Experience Alpha.
+
+The pure `buildDiscoveryExperienceView` adapter consumes the existing
+disclosure-qualified product view. It cannot retrieve or write Runtime state,
+perform cognition, authorize a tenant, or create disclosure. Hosted scenes do
+not read the deterministic prototype fixture; that fixture remains the
+password-gated `/alpha/*` visual-development reference.
+
+Production capability labeling is bounded. Organizational understanding,
+explanations, uncertainty, contradictions, relationships, changes, and
+available learning history are read-only. Ask and Respond are provisional.
+Plan and Follow do not claim durable scheduling or subscription persistence.
+Undisclosed scalar confidence and trend are identified as such.
+
+The promoted sidebar retains the corrected Clerk session-termination control.
+Scene navigation is local beneath the authorized page, preserves the
+server-resolved organization, and introduces no Runtime writes,
+access/lifecycle operations, raw Runtime delivery, or alternate disclosure
+producer.
+
+All nine scenes passed local desktop and narrower-width visual review. Focus
+visibility, reduced-motion parity, responsive navigation, and readable
+overflow behavior were retained. Clean-tree validation passed typecheck,
+build, the full benchmark suite, authorized organization resolution,
+Production reachability, Clerk identity, projection and compatibility,
+structured communication and its adapter, Organization Experience, dependency
+reporting, and the focused 19-check promotion validator. Architecture remains
+at 295/302 with the seven accepted historical findings; the six historical
+React Hook warnings are unchanged.
+
+Alpha and both provisioning authorities remained disabled throughout
+implementation and validation. The exact continuation point after the
+disabled-state deployment is the final hosted Alpha acceptance replay using
+the promoted canonical experience.
+
+Disabled-state deployment `dpl_8W9DYatbJRXA4yeDjXKurYSHb4wV` reached READY.
+Health reported configuration, database, and Runtime ready. The product and
+both provisioning routes returned 404, and the enable/provisioning flags and
+operation secret remained absent.
+
+Final governance was 1 access, 1 lifecycle, 13 disclosure, and zero
+idle-in-transaction connections. The thirteenth disclosure was an authorized
+Atlas event at `2026-07-28T00:54:48.558Z`, which predates deployment creation
+at `2026-07-28T01:00:05.191Z`; the disabled deployment and route checks added
+none. Hosted Runtime storage validation passed 28 checks. No Runtime or Blob
+write authority was enabled, and the existing Atlas Runtime remained
+unchanged.

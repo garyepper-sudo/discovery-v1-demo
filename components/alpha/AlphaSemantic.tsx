@@ -41,14 +41,14 @@ export function ConfidenceSummary({
         <Eyebrow>Confidence</Eyebrow>
         <p className={styles.confidenceValue}>
           <strong>{confidence.qualitative}</strong>
-          <b>{confidence.value}%</b>
-          <span>↑ {confidence.change} pts</span>
+          <b>{confidence.value === null ? "Not quantified" : `${confidence.value}%`}</b>
+          <span>{confidence.change === null ? "No authorized trend" : `↑ ${confidence.change} pts`}</span>
         </p>
       </div>
       <div
         className={styles.confidenceArc}
         role="img"
-        aria-label={`${confidence.qualitative} confidence at ${confidence.value} percent, increased by ${confidence.change} points. ${confidence.rationale} ${confidence.limitation}`}
+        aria-label={`${confidence.qualitative} confidence${confidence.value === null ? ", not quantitatively disclosed" : ` at ${confidence.value} percent`}${confidence.change === null ? "" : `, increased by ${confidence.change} points`}. ${confidence.rationale} ${confidence.limitation}`}
       >
         <i />
         <i />

@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { SignOutButton, SignedIn } from "@clerk/nextjs";
+import { SignedIn } from "@clerk/nextjs";
 
+import AlphaExperience from "../../../components/alpha/AlphaExperience";
+import ClerkSessionTerminationControl from "../../../components/product-shell/ClerkSessionTerminationControl";
 import UnifiedExecutiveWorkspace from "../../../components/product-shell/unified/UnifiedExecutiveWorkspace";
 import ProductWorkspace from "../../../components/product-shell/ProductWorkspace";
 import DiscoveryShell from "../../../components/product-shell/DiscoveryShell";
 import styles from "../../../components/product-shell/ProductWorkspace.module.css";
 import { loadActivatedYourOrganization } from "../../../components/product-shell/data/loadActivatedYourOrganization";
 import { buildProductHref } from "../../../components/product-shell/data/productOrganization";
+import { buildDiscoveryExperienceView } from "../../../components/product-shell/data/buildDiscoveryExperienceView";
 import { isYourOrganizationAlphaActivationEnabled } from "../../../lib/alpha-activation/config";
+import {
+  alphaScenes,
+  type AlphaScene,
+} from "../../../product/alpha/viewModels";
 
 export const metadata: Metadata = {
   title: "Your Organization",
@@ -48,7 +55,10 @@ const stateMessage = {
 export default async function YourOrganizationPage({
   searchParams,
 }: {
-  searchParams: Promise<{ organizationId?: string | string[] }>;
+  searchParams: Promise<{
+    organizationId?: string | string[];
+    scene?: string | string[];
+  }>;
 }) {
   const resolvedSearchParams = await searchParams;
   if (!isYourOrganizationAlphaActivationEnabled()) {
@@ -66,29 +76,25 @@ export default async function YourOrganizationPage({
     requestHeaders.get("x-discovery-request-id") ?? crypto.randomUUID(),
   );
   if (activated.status === "available") {
+    const requestedScene =
+      typeof resolvedSearchParams.scene === "string" &&
+      alphaScenes.includes(resolvedSearchParams.scene as AlphaScene)
+        ? resolvedSearchParams.scene as AlphaScene
+        : "home";
     return (
-      <DiscoveryShell
-        organization={{
-          organizationId: activated.runtime.metadata.organizationId,
-          organizationName:
-            activated.runtime.metadata.name || "Your organization",
-          runtimeAvailable: true,
-          coherence: activated.view.model.coherence,
-          coherenceLabel: activated.view.model.coherenceLabel,
-          confidence: null,
-          primaryConstraint: activated.view.summary.primaryConstraint,
-        }}
-        showSessionImpact={false}
+      <AlphaExperience
+        initialScene={requestedScene}
+        experience={buildDiscoveryExperienceView({
+          runtime: activated.runtime,
+          view: activated.view,
+        })}
+        hosted
         sessionControl={(
           <SignedIn>
-            <SignOutButton>
-              <button type="button">Sign out</button>
-            </SignOutButton>
+            <ClerkSessionTerminationControl />
           </SignedIn>
         )}
-      >
-        <UnifiedExecutiveWorkspace view={activated.view} />
-      </DiscoveryShell>
+      />
     );
   }
 
@@ -106,9 +112,7 @@ export default async function YourOrganizationPage({
       showSessionImpact={false}
       sessionControl={(
         <SignedIn>
-          <SignOutButton>
-            <button type="button">Sign out</button>
-          </SignOutButton>
+          <ClerkSessionTerminationControl />
         </SignedIn>
       )}
     >

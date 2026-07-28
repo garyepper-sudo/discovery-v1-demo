@@ -14,8 +14,8 @@ export type AlphaScene = (typeof alphaScenes)[number];
 
 export type ConfidenceViewModel = {
   qualitative: "Early" | "Moderate" | "High";
-  value: number;
-  change: number;
+  value: number | null;
+  change: number | null;
   rationale: string;
   limitation: string;
 };
@@ -85,4 +85,5 @@ export type AlphaFixture = {
   relationships: RelationshipViewModel[];
   responsePaths: ResponsePathViewModel[];
   changes: MeaningfulChangeViewModel[];
+  productionMode?: boolean;
 };

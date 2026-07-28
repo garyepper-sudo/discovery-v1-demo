@@ -27,11 +27,18 @@ import {
   Users,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 
 import { alphaFixture } from "../../product/alpha/fixtures";
 import type {
   AlphaScene,
+  AlphaFixture,
   ResponsePathViewModel,
   SourceViewModel,
 } from "../../product/alpha/viewModels";
@@ -56,6 +63,19 @@ import {
   Sparkline,
 } from "./AlphaSemantic";
 import styles from "./AlphaExperience.module.css";
+
+const AlphaExperienceContext = createContext<{
+  experience: AlphaFixture;
+  hosted: boolean;
+  sessionControl?: ReactNode;
+}>({
+  experience: alphaFixture,
+  hosted: false,
+});
+
+function useAlphaExperience() {
+  return useContext(AlphaExperienceContext);
+}
 
 const sceneLabels: Record<AlphaScene, { label: string; description: string }> = {
   ask: { label: "Ask", description: "Begin with a question" },
@@ -105,6 +125,7 @@ function AlphaSidebar({
   scene: AlphaScene;
   navigate: (scene: AlphaScene) => void;
 }) {
+  const { experience, hosted, sessionControl } = useAlphaExperience();
   return (
     <aside className={styles.sidebar}>
       <DiscoveryMark />
@@ -160,21 +181,28 @@ function AlphaSidebar({
           </button>
         ))}
       </nav>
+      {sessionControl && (
+        <div className={styles.hostedSessionControl}>{sessionControl}</div>
+      )}
       <div className={styles.sidebarProfile}>
         <span className={styles.avatar} aria-hidden="true">SR</span>
-        <span><strong>{alphaFixture.user.name}</strong><small>{alphaFixture.user.role}</small></span>
+        <span><strong>{experience.user.name}</strong><small>{experience.user.role}</small></span>
         <ChevronDown size={16} aria-hidden="true" />
       </div>
       <div className={styles.sidebarConfidence}>
         <span>Confidence in this Understanding</span>
-        <strong>Moderate</strong>
-        <small>81% · increased by 7 points</small>
+        <strong>{experience.understanding.confidence.qualitative}</strong>
+        <small>
+          {experience.understanding.confidence.value === null
+            ? "Not quantitatively disclosed"
+            : `${experience.understanding.confidence.value}%`}
+        </small>
       </div>
       <p className={styles.sidebarPrivacy}>
         <ShieldCheck size={16} aria-hidden="true" />
-        Alpha prototype · deterministic fixture
+        {hosted ? "Hosted Alpha · authorized projection" : "Alpha prototype · deterministic fixture"}
       </p>
-      <LockPrototypeAction />
+      {!hosted && <LockPrototypeAction />}
     </aside>
   );
 }
@@ -254,8 +282,9 @@ function AskScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
 }
 
 function OrientScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
+  const { experience } = useAlphaExperience();
   const [editing, setEditing] = useState(false);
-  const [objective, setObjective] = useState(alphaFixture.understanding.objective);
+  const [objective, setObjective] = useState(experience.understanding.objective);
   return (
     <main className={`${styles.scene} ${styles.lightScene}`}>
       <QuietHeader helpLabel="How orientation works" back={() => navigate("ask")} />
@@ -268,7 +297,7 @@ function OrientScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
           <span className={styles.quoteMark} aria-hidden="true">“</span>
           <div>
             <Eyebrow>Your question</Eyebrow>
-            <h2>{alphaFixture.understanding.originalQuestion}</h2>
+            <h2>{experience.understanding.originalQuestion}</h2>
           </div>
         </Panel>
         <Panel tone="blue" className={styles.objectivePanel}>
@@ -301,13 +330,13 @@ function OrientScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
           </button>
         </Panel>
         <SemanticCallout title="The biggest thing I don’t understand yet" tone="orange" icon="unknown">
-          <h2>{alphaFixture.understanding.primaryUnknown}</h2>
+          <h2>{experience.understanding.primaryUnknown}</h2>
           <p>Understanding this could change how we think about the real constraint.</p>
         </SemanticCallout>
         <section className={styles.strategySummary} aria-labelledby="strategy-title">
           <Eyebrow><span id="strategy-title">To answer this, I’ll start by examining</span></Eyebrow>
           <div>
-            {alphaFixture.sources.map((source) => (
+            {experience.sources.map((source) => (
               <span key={source.id}>
                 <FileText size={18} aria-hidden="true" />
                 {source.title}
@@ -327,7 +356,8 @@ function OrientScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
 }
 
 function PlanScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
-  const [sources, setSources] = useState(alphaFixture.sources);
+  const { experience, hosted } = useAlphaExperience();
+  const [sources, setSources] = useState(experience.sources);
   const cycleSource = (id: string) => {
     setSources((current) =>
       current.map((source) =>
@@ -340,7 +370,7 @@ function PlanScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
       <QuietHeader helpLabel="How learning plans work" back={() => navigate("orient")} />
       <div className={`${styles.centeredScene} ${styles.planScene}`}>
         <header className={styles.sceneIntro}>
-          <Eyebrow>{alphaFixture.understanding.title} · Living Understanding</Eyebrow>
+          <Eyebrow>{experience.understanding.title} · Living Understanding</Eyebrow>
           <h1 data-scene-heading tabIndex={-1}>Here’s how I’ll learn.</h1>
           <p>The smallest set of information I expect will most improve my understanding.</p>
         </header>
@@ -353,7 +383,7 @@ function PlanScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
           <CircleHelp size={25} aria-hidden="true" />
           <div>
             <Eyebrow>The biggest thing I still don’t understand</Eyebrow>
-            <h2>{alphaFixture.understanding.primaryUnknown}</h2>
+            <h2>{experience.understanding.primaryUnknown}</h2>
             <p>Answering this will most improve the current Understanding.</p>
           </div>
         </section>
@@ -392,7 +422,7 @@ function PlanScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
           <Panel className={styles.protectionPanel}>
             <ShieldCheck size={22} aria-hidden="true" />
             <h3>Your information is bounded</h3>
-            <p>This prototype uses only its deterministic fixture and your local selections.</p>
+            <p>{hosted ? "This read-only plan uses only authority-qualified projected content." : "This prototype uses only its deterministic fixture and your local selections."}</p>
           </Panel>
         </div>
         <footer className={styles.planFooter}>
@@ -406,8 +436,9 @@ function PlanScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
 }
 
 function LearnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
+  const { experience, hosted } = useAlphaExperience();
   const [visibleEvents, setVisibleEvents] = useState(3);
-  const events = alphaFixture.events.slice(0, visibleEvents);
+  const events = experience.events.slice(0, visibleEvents);
   return (
     <SceneFrame scene="learn" navigate={navigate}>
       <MobileSceneHeader scene="learn" onBack={() => navigate("plan")} />
@@ -417,23 +448,32 @@ function LearnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
             <button className={styles.textAction} type="button" onClick={() => navigate("plan")}>
               <ArrowLeft size={16} aria-hidden="true" /> Back to plan
             </button>
-            <h1 data-scene-heading tabIndex={-1}>Discovery is learning <span className={styles.liveState}>● In progress</span></h1>
-            <p>I’m reviewing the approved fixture and updating the Understanding through meaningful events.</p>
+            <h1 data-scene-heading tabIndex={-1}>
+              Discovery is learning{" "}
+              <span className={styles.liveState}>
+                {hosted ? "Authorized history" : "● In progress"}
+              </span>
+            </h1>
+            <p>{hosted ? "Review the authorized learning history available in this Alpha." : "I’m reviewing the approved fixture and updating the Understanding through meaningful events."}</p>
           </div>
           <Action tone="secondary">How learning works</Action>
         </header>
         <Panel tone="blue" className={styles.learningCanvas}>
           <div className={styles.learningCanvasHead}>
-            <Eyebrow>{alphaFixture.understanding.title} · The Understanding is evolving</Eyebrow>
-            <span>Live view <ChevronDown size={15} aria-hidden="true" /></span>
+            <Eyebrow>{experience.understanding.title} · The Understanding is evolving</Eyebrow>
+            <span>{hosted ? "Read-only view" : "Live view"} <ChevronDown size={15} aria-hidden="true" /></span>
           </div>
           <div className={styles.liveSynthesis}>
             <span>Current synthesis</span>
-            <h2>{alphaFixture.understanding.synthesis}</h2>
-            <p className={styles.currentExplanation}>{alphaFixture.understanding.explanation}</p>
+            <h2>{experience.understanding.synthesis}</h2>
+            <p className={styles.currentExplanation}>{experience.understanding.explanation}</p>
             <p className={styles.learningConfidence}>
-              <strong>Moderate confidence</strong>
-              <span>74% · increased by 12 points since learning started</span>
+              <strong>{experience.understanding.confidence.qualitative}</strong>
+              <span>
+                {experience.understanding.confidence.value === null
+                  ? "A scalar score and trend are not disclosed"
+                  : `${experience.understanding.confidence.value}%`}
+              </span>
             </p>
           </div>
           <EvolutionGraph />
@@ -443,7 +483,9 @@ function LearnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
           <section className={styles.eventsPanel} aria-labelledby="events-title">
             <div className={styles.sectionHeading}>
               <h2 id="events-title">Recent learning events</h2>
-              <span className={styles.liveState}>● Fixture sequence</span>
+              <span className={styles.liveState}>
+                {hosted ? "Authorized history" : "● Fixture sequence"}
+              </span>
             </div>
             <ol>
               {events.map((event) => (
@@ -454,25 +496,34 @@ function LearnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
                 </li>
               ))}
             </ol>
-            {visibleEvents < alphaFixture.events.length && (
-              <Action tone="secondary" arrow onClick={() => setVisibleEvents(alphaFixture.events.length)}>
-                View all events ({alphaFixture.events.length})
+            {visibleEvents < experience.events.length && (
+              <Action tone="secondary" arrow onClick={() => setVisibleEvents(experience.events.length)}>
+                View all events ({experience.events.length})
               </Action>
             )}
           </section>
           <Panel className={styles.nextLearning}>
-            <h2><Sparkles size={20} aria-hidden="true" /> What I’m doing next</h2>
-            <p>I’m continuing to deepen the evidence around ownership ambiguity after commitment.</p>
-            <ul>
-              <li>Reviewing project history <span>In progress</span></li>
-              <li>Examining team conversations <span>Queued</span></li>
-              <li>Comparing planning documents <span>Queued</span></li>
-            </ul>
+            <h2><Sparkles size={20} aria-hidden="true" /> {hosted ? "Learning availability" : "What I’m doing next"}</h2>
+            {hosted ? (
+              <p>Future learning operations are not yet available in this Alpha. This view does not start or queue work.</p>
+            ) : (
+              <>
+                <p>I’m continuing to deepen the evidence around ownership ambiguity after commitment.</p>
+                <ul>
+                  <li>Reviewing project history <span>In progress</span></li>
+                  <li>Examining team conversations <span>Queued</span></li>
+                  <li>Comparing planning documents <span>Queued</span></li>
+                </ul>
+              </>
+            )}
           </Panel>
         </div>
         <Panel tone="blue" className={styles.readyBanner}>
           <Sparkles size={24} aria-hidden="true" />
-          <div><h2>I’m forming the first useful synthesis.</h2><p>I’ll continue refining it as learning progresses.</p></div>
+          <div>
+            <h2>{hosted ? "Review the current authorized synthesis." : "I’m forming the first useful synthesis."}</h2>
+            <p>{hosted ? "Nothing durable changes from this read-only scene." : "I’ll continue refining it as learning progresses."}</p>
+          </div>
           <Action arrow onClick={() => navigate("understand")}>View the Understanding</Action>
         </Panel>
       </div>
@@ -481,12 +532,13 @@ function LearnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
 }
 
 function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
+  const { experience } = useAlphaExperience();
   const [openDetail, setOpenDetail] = useState<string | null>(null);
   const details = [
-    ["why", "Why this matters", alphaFixture.understanding.whyItMatters, "green"],
-    ["strongest", "Strongest explanation", alphaFixture.understanding.strongestExplanation, "violet"],
-    ["unknown", "Largest remaining unknown", alphaFixture.understanding.primaryUnknown, "blue"],
-    ["contradiction", "Key contradiction", alphaFixture.understanding.contradiction, "orange"],
+    ["why", "Why this matters", experience.understanding.whyItMatters, "green"],
+    ["strongest", "Strongest explanation", experience.understanding.strongestExplanation, "violet"],
+    ["unknown", "Largest remaining unknown", experience.understanding.primaryUnknown, "blue"],
+    ["contradiction", "Key contradiction", experience.understanding.contradiction, "orange"],
   ] as const;
   return (
     <SceneFrame scene="understand" navigate={navigate}>
@@ -499,9 +551,9 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
           <div>
             <span className={styles.titleIcon}><TrendingUp size={32} aria-hidden="true" /></span>
             <div>
-              <h1 data-scene-heading tabIndex={-1}>{alphaFixture.understanding.title}</h1>
+              <h1 data-scene-heading tabIndex={-1}>{experience.understanding.title}</h1>
               <span className={styles.livingBadge}>Living Understanding</span>
-              <p>Original question: <button type="button">{alphaFixture.understanding.originalQuestion}</button></p>
+              <p>Original question: <button type="button">{experience.understanding.originalQuestion}</button></p>
             </div>
           </div>
           <Action tone="secondary" onClick={() => navigate("follow")}>Follow this Understanding</Action>
@@ -509,14 +561,14 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
         <Panel tone="green" className={styles.synthesisPanel}>
           <div className={styles.synthesisCopy}>
             <Eyebrow>Current synthesis</Eyebrow>
-            <h2>{alphaFixture.understanding.synthesis}</h2>
-            <p>{alphaFixture.understanding.explanation}</p>
+            <h2>{experience.understanding.synthesis}</h2>
+            <p>{experience.understanding.explanation}</p>
             <span>Updated today · 8:12 AM</span>
             <button className={styles.inlineLink} type="button" onClick={() => setOpenDetail("strongest")}>
               See why Discovery believes this <ArrowRight size={16} aria-hidden="true" />
             </button>
           </div>
-          <ConfidenceSummary confidence={alphaFixture.understanding.confidence} />
+          <ConfidenceSummary confidence={experience.understanding.confidence} />
         </Panel>
         <div className={styles.detailGrid}>
           {details.map(([id, title, copy, tone]) => (
@@ -544,7 +596,7 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
           </Panel>
           <Panel className={styles.relationshipsPanel}>
             <div className={styles.sectionHeading}><h2>Related Understandings</h2><button type="button">View all</button></div>
-            {alphaFixture.relationships.slice(0, 3).map((relationship) => <RelationshipRow key={relationship.id} relationship={relationship} />)}
+            {experience.relationships.slice(0, 3).map((relationship) => <RelationshipRow key={relationship.id} relationship={relationship} />)}
           </Panel>
           <Panel tone="violet" className={styles.recommendedLearning}>
             <Eyebrow tone="violet">Next recommended learning</Eyebrow>
@@ -566,10 +618,11 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
 }
 
 function RespondScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
+  const { experience } = useAlphaExperience();
   const [selected, setSelected] = useState<ResponsePathViewModel["id"]>("agree");
   const [context, setContext] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const selectedPath = alphaFixture.responsePaths.find((path) => path.id === selected)!;
+  const selectedPath = experience.responsePaths.find((path) => path.id === selected)!;
   return (
     <SceneFrame scene="respond" navigate={navigate}>
       <MobileSceneHeader scene="respond" onBack={() => navigate("understand")} />
@@ -579,7 +632,7 @@ function RespondScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
             <button className={styles.textAction} type="button" onClick={() => navigate("understand")}>
               <ArrowLeft size={16} aria-hidden="true" /> Back to understand
             </button>
-            <Eyebrow>{alphaFixture.understanding.title} · Living Understanding</Eyebrow>
+            <Eyebrow>{experience.understanding.title} · Living Understanding</Eyebrow>
             <h1 data-scene-heading tabIndex={-1}>Help Discovery get this right</h1>
             <p>Your perspective can qualify or deepen this Understanding.</p>
           </div>
@@ -588,7 +641,7 @@ function RespondScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
           <h2>How does this Understanding compare with what you’ve seen?</h2>
           <p>Choose the response that best represents your perspective.</p>
           <div className={styles.responsePaths} role="radiogroup" aria-label="Response path">
-            {alphaFixture.responsePaths.map((path) => (
+            {experience.responsePaths.map((path) => (
               <button
                 key={path.id}
                 type="button"
@@ -648,6 +701,7 @@ function RespondScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
 }
 
 function FollowScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
+  const { experience, hosted } = useAlphaExperience();
   const [paused, setPaused] = useState(false);
   const notifications = [
     "Confidence changes significantly",
@@ -664,8 +718,8 @@ function FollowScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
           <button className={styles.textAction} type="button" onClick={() => navigate("respond")}>
             <ArrowLeft size={16} aria-hidden="true" /> Back to respond
           </button>
-          <h1 data-scene-heading tabIndex={-1}>Following Engineering Productivity <span className={styles.livingBadge}>{paused ? "Paused" : "Active"}</span></h1>
-          <p>Discovery will keep learning through this deterministic prototype and surface only meaningful change.</p>
+          <h1 data-scene-heading tabIndex={-1}>Following {experience.understanding.title} <span className={styles.livingBadge}>{paused ? "Paused" : hosted ? "Read-only" : "Active"}</span></h1>
+          <p>{hosted ? "Follow persistence is not yet available in this Alpha." : "Discovery will keep learning through this deterministic prototype and surface only meaningful change."}</p>
         </header>
         <Panel tone="violet" className={styles.followMeaning}>
           <span className={styles.followOrb} aria-hidden="true">✦</span>
@@ -681,7 +735,7 @@ function FollowScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
           </Panel>
           <Panel>
             <h2>Discovery is currently watching</h2>
-            {alphaFixture.relationships.map((relationship) => <RelationshipRow key={relationship.id} relationship={relationship} />)}
+            {experience.relationships.map((relationship) => <RelationshipRow key={relationship.id} relationship={relationship} />)}
           </Panel>
         </div>
         <Panel className={styles.nextLikely}>
@@ -700,17 +754,18 @@ function FollowScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
 }
 
 function ReturnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
+  const { experience } = useAlphaExperience();
   return (
     <SceneFrame scene="return" navigate={navigate}>
       <MobileSceneHeader scene="return" onBack={() => navigate("follow")} />
       <div className={styles.appScene}>
         <header className={styles.returnHeader}>
           <span className={styles.sunMark} aria-hidden="true">☼</span>
-          <div><h1 data-scene-heading tabIndex={-1}>Good morning, Alex.</h1><p>Discovery learned <strong>3 meaningful things</strong> while you were away.</p></div>
+          <div><h1 data-scene-heading tabIndex={-1}>{experience.organization.name}</h1><p>Review the meaningful changes currently available.</p></div>
         </header>
         <section className={styles.returnChanges} aria-label="What Discovery learned">
           <h2 className={styles.srOnly}>What Discovery learned</h2>
-          {alphaFixture.changes.slice(0, 3).map((change) => (
+          {experience.changes.slice(0, 3).map((change) => (
             <ChangeCard
               key={change.id}
               change={change}
@@ -721,7 +776,7 @@ function ReturnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
         <section className={styles.followedSection} aria-labelledby="followed-return-title">
           <Eyebrow><span id="followed-return-title">Understandings you’re following</span></Eyebrow>
           <div>
-            {alphaFixture.relationships.slice(0, 3).map((relationship, index) => (
+            {experience.relationships.slice(0, 3).map((relationship, index) => (
               <RelationshipRow
                 key={relationship.id}
                 relationship={{
@@ -743,13 +798,14 @@ function ReturnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
 }
 
 function HomeScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
+  const { experience } = useAlphaExperience();
   return (
     <SceneFrame scene="home" navigate={navigate}>
       <MobileSceneHeader scene="home" />
       <div className={styles.appScene}>
         <header className={styles.homeHeader}>
           <span className={styles.sunMark} aria-hidden="true">☼</span>
-          <div><h1 data-scene-heading tabIndex={-1}>Good morning, Shalini.</h1><p>Discovery learned <strong>3 meaningful things</strong> while you were away.</p></div>
+          <div><h1 data-scene-heading tabIndex={-1}>{experience.organization.name}</h1><p>Your authorized Organization Understanding is ready.</p></div>
           <Action tone="secondary"><Settings size={17} aria-hidden="true" /> Customize home</Action>
         </header>
         <div className={styles.homeLead}>
@@ -757,17 +813,17 @@ function HomeScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
             <Eyebrow tone="violet">Most important learning</Eyebrow>
             <div>
               <span className={`${styles.changeIcon} ${styles.tone_green}`}><TrendingUp size={30} aria-hidden="true" /></span>
-              <div><h2>Engineering Productivity<br />Confidence increased.</h2><p>Ownership ambiguity now appears across 12 additional initiatives.</p><Action tone="secondary" arrow onClick={() => navigate("return")}>See what changed</Action></div>
-              <Sparkline tone="green" label="Engineering Productivity confidence strengthened" />
+              <div><h2>{experience.understanding.title}</h2><p>{experience.understanding.synthesis}</p><Action tone="secondary" arrow onClick={() => navigate("return")}>See what changed</Action></div>
+              <Sparkline tone="green" label={`${experience.understanding.title} trend`} />
             </div>
             <footer>
               <span>Impact on Understanding <strong>High</strong></span>
-              <span><strong>Moderate confidence</strong> · 81% · increased by 7 points</span>
+              <span><strong>{experience.understanding.confidence.qualitative} confidence</strong> · {experience.understanding.confidence.value === null ? "not quantitatively disclosed" : `${experience.understanding.confidence.value}%`}</span>
             </footer>
           </article>
           <Panel className={styles.recentChanges}>
             <div className={styles.sectionHeading}><Eyebrow>Recent changes</Eyebrow><button type="button" onClick={() => navigate("return")}>View all</button></div>
-            <p><TrendingUp size={17} aria-hidden="true" /> Confidence increased in Engineering Productivity</p>
+            <p><TrendingUp size={17} aria-hidden="true" /> {experience.changes[0]?.headline ?? "No meaningful change is currently available"}</p>
             <p><AlertTriangle size={17} aria-hidden="true" /> New contradiction emerged</p>
             <p><GitBranch size={17} aria-hidden="true" /> Product Prioritization became strongly related</p>
           </Panel>
@@ -775,7 +831,7 @@ function HomeScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
         <section className={styles.homeSecondary} aria-labelledby="other-learning-title">
           <h2 className={styles.sectionLabel} id="other-learning-title">Other key learnings</h2>
           <div>
-            {alphaFixture.changes.slice(1, 4).map((change) => (
+            {experience.changes.slice(1, 4).map((change) => (
               <ChangeCard key={change.id} change={change} compact onAction={() => navigate(change.kind === "learning" ? "plan" : "understand")} />
             ))}
           </div>
@@ -783,7 +839,7 @@ function HomeScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
         <section className={styles.followedSection} aria-labelledby="followed-home-title">
           <div className={styles.sectionHeading}><Eyebrow><span id="followed-home-title">Understandings you’re following</span></Eyebrow><button type="button">View all</button></div>
           <div className={styles.followedCards}>
-            {alphaFixture.relationships.slice(0, 3).map((relationship, index) => (
+            {experience.relationships.slice(0, 3).map((relationship, index) => (
               <article key={relationship.id}>
                 <div><span className={`${styles.semanticIcon} ${styles[`tone_${relationship.tone}`]}`}><GitBranch size={18} aria-hidden="true" /></span><strong>{relationship.title}</strong></div>
                 <span><b>{["Moderate", "Early", "Early"][index]}</b> confidence · {[81, 64, 58][index]}% · +{[7, 4, 2][index]} pts</span>
@@ -820,22 +876,46 @@ function SceneFrame({
   );
 }
 
-export default function AlphaExperience({ initialScene }: { initialScene: AlphaScene }) {
+export default function AlphaExperience({
+  initialScene,
+  experience = alphaFixture,
+  hosted = false,
+  sessionControl,
+}: {
+  initialScene: AlphaScene;
+  experience?: AlphaFixture;
+  hosted?: boolean;
+  sessionControl?: ReactNode;
+}) {
   const router = useRouter();
+  const [activeScene, setActiveScene] = useState(initialScene);
   const [announcement, setAnnouncement] = useState("");
 
   const navigate = (scene: AlphaScene) => {
+    if (hosted) {
+      setActiveScene(scene);
+      window.history.replaceState(
+        null,
+        "",
+        `/your-organization?scene=${scene}`,
+      );
+      return;
+    }
     router.push(`/alpha/${scene}`);
   };
 
   useEffect(() => {
-    const heading = document.querySelector<HTMLElement>("[data-scene-heading]");
-    heading?.focus();
-    setAnnouncement(`${sceneLabels[initialScene].label}: ${sceneLabels[initialScene].description}`);
+    setActiveScene(initialScene);
   }, [initialScene]);
 
+  useEffect(() => {
+    const heading = document.querySelector<HTMLElement>("[data-scene-heading]");
+    heading?.focus();
+    setAnnouncement(`${sceneLabels[activeScene].label}: ${sceneLabels[activeScene].description}`);
+  }, [activeScene]);
+
   const scene = (() => {
-    switch (initialScene) {
+    switch (activeScene) {
       case "ask": return <AskScene navigate={navigate} />;
       case "orient": return <OrientScene navigate={navigate} />;
       case "plan": return <PlanScene navigate={navigate} />;
@@ -849,9 +929,11 @@ export default function AlphaExperience({ initialScene }: { initialScene: AlphaS
   })();
 
   return (
-    <div className={styles.alphaRoot}>
-      <p className={styles.srOnly} aria-live="polite">{announcement}</p>
-      {scene}
-    </div>
+    <AlphaExperienceContext.Provider value={{ experience, hosted, sessionControl }}>
+      <div className={styles.alphaRoot}>
+        <p className={styles.srOnly} aria-live="polite">{announcement}</p>
+        {scene}
+      </div>
+    </AlphaExperienceContext.Provider>
   );
 }

@@ -863,6 +863,28 @@
   padding: 14px 8px;
 }
 
+.hostedSessionControl button {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.hostedSessionControl button:focus-visible {
+  outline: 3px solid #8da2ff;
+  outline-offset: 3px;
+}
+
+.hostedSessionControl button:disabled {
+  cursor: wait;
+  opacity: .64;
+}
+
 .avatar {
   width: 38px;
   height: 38px;
@@ -2110,7 +2132,7 @@
   }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 980px) {
   .lightScene,
   .askScene {
     padding: 0;
