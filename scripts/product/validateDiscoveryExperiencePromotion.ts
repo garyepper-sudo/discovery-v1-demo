@@ -46,6 +46,10 @@ assert.equal(experience.understanding.contradiction, "Authorized contradiction")
 assert.equal(experience.understanding.confidence.value, null);
 assert.ok(!JSON.stringify(experience).includes("Runtime not yet available"));
 assert.deepEqual(alphaScenes, [
+  "home",
+  "questions",
+  "decisions",
+  "history",
   "ask",
   "orient",
   "plan",
@@ -54,7 +58,6 @@ assert.deepEqual(alphaScenes, [
   "respond",
   "follow",
   "return",
-  "home",
 ]);
 
 const route = fs.readFileSync(
@@ -72,7 +75,8 @@ const experienceSource = fs.readFileSync(
   "utf8",
 );
 assert.ok(experienceSource.includes("hosted"));
-assert.ok(experienceSource.includes("/your-organization?scene="));
+assert.ok(experienceSource.includes("organizationId: experience.organization.id"));
+assert.ok(experienceSource.includes("router.push(`/your-organization?${search.toString()}`)"));
 assert.ok(experienceSource.includes("Not quantitatively disclosed"));
 assert.ok(experienceSource.includes("Future learning operations are not yet available in this Alpha"));
 assert.ok(experienceSource.includes("ClerkSessionTerminationControl") === false);

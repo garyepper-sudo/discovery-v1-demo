@@ -1,4 +1,8 @@
 export const alphaScenes = [
+  "home",
+  "questions",
+  "decisions",
+  "history",
   "ask",
   "orient",
   "plan",
@@ -7,7 +11,6 @@ export const alphaScenes = [
   "respond",
   "follow",
   "return",
-  "home",
 ] as const;
 
 export type AlphaScene = (typeof alphaScenes)[number];

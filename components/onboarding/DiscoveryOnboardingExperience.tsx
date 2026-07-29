@@ -533,7 +533,21 @@ export default function DiscoveryOnboardingExperience({
       setOrganizationId(body.organizationId);
       setResult(body.understanding);
       setUtility(body.utility);
-      window.sessionStorage.removeItem(draftStorageKey);
+      window.sessionStorage.setItem(
+        draftStorageKey,
+        JSON.stringify({
+          stage: "evidence-plan",
+          organizationId: body.organizationId,
+          onboardingRequestId,
+          question,
+          company,
+          industry,
+          website,
+          observations,
+          evidenceSources,
+          skippedEvidenceRoles,
+        } satisfies OnboardingDraft),
+      );
       setStage("first-understanding");
     } catch (caught) {
       if (caught instanceof DOMException && caught.name === "AbortError") {
@@ -688,9 +702,9 @@ export default function DiscoveryOnboardingExperience({
         {stage === "evidence-plan" ? (
           <section className={styles.stage}>
             <Eyebrow tone="violet">Evidence plan</Eyebrow>
-            <h1 ref={stageHeadingRef} tabIndex={-1}>What would sharpen the answer?</h1>
+            <h1 ref={stageHeadingRef} tabIndex={-1}>Tell Discovery what you already know.</h1>
             <p className={styles.lead}>
-              You can begin with what you provided. These sources would help
+              You can begin with what you provided. These suggested sources would help
               Discovery test and refine its understanding of “{question}”
             </p>
             <div className={styles.recommendations}>
@@ -889,6 +903,10 @@ export default function DiscoveryOnboardingExperience({
               Supported now: TXT, Markdown, CSV, or pasted text. Up to three
               sources, 512 KB each. PDF and DOCX require a future bounded parser.
             </p>
+            <p className={styles.connectionNote}>
+              You can add more information at any time to improve this
+              understanding.
+            </p>
             {error ? (
               <div role="alert">
                 <Panel className={styles.safeError} tone="orange">
@@ -978,10 +996,33 @@ export default function DiscoveryOnboardingExperience({
             <h1 ref={stageHeadingRef} tabIndex={-1}>
               Here’s what I can support so far
             </h1>
-            <div className={styles.resultGrid}>
-              <Panel className={styles.primaryResult} tone="blue">
-                <span>What Discovery can support</span>
-                <p>{utility.immediateInsight?.statement ?? result.headline}</p>
+            <Panel className={styles.primaryResult} tone="blue">
+              <span>Your question</span>
+              <blockquote>{question}</blockquote>
+              <span>Current understanding</span>
+              <p>{utility.immediateInsight?.statement ?? result.headline}</p>
+              <span>Confidence boundary</span>
+              <p>
+                <b>{result.confidence.label}.</b>{" "}
+                {result.confidence.explanation}
+              </p>
+              <span>Remaining uncertainty</span>
+              <p>{result.uncertainties[0] ?? "No additional uncertainty is currently available."}</p>
+              {result.nextEvidence[0] ? (
+                <>
+                  <span>Highest-value next information</span>
+                  <p>
+                    <b>{result.nextEvidence[0].label}:</b>{" "}
+                    {result.nextEvidence[0].whyItHelps}
+                  </p>
+                </>
+              ) : null}
+            </Panel>
+            <details className={styles.resultDetails}>
+              <summary>Review supporting analysis</summary>
+              <div className={styles.resultGrid}>
+              <Panel>
+                <span>Why Discovery thinks this</span>
                 {utility.whyDiscoveryThinksThis.map((finding) => (
                   <div className={styles.finding} key={finding.statement}>
                     <b>{finding.statement}</b>
@@ -1058,14 +1099,27 @@ export default function DiscoveryOnboardingExperience({
                   {result.confidence.explanation}
                 </p>
               </Panel>
-            </div>
+              </div>
+            </details>
             {result.status === "provisional" ? (
               <p className={styles.provisional}>
                 This is a provisional understanding, not a final causal
                 conclusion. Discovery will revise it as evidence grows.
               </p>
             ) : null}
-            <Action arrow onClick={openDiscovery}>Open Discovery</Action>
+            <div className={styles.actions}>
+              <Action
+                onClick={() => {
+                  setError(null);
+                  setStage("evidence-plan");
+                }}
+              >
+                Improve this understanding
+              </Action>
+              <Action tone="secondary" arrow onClick={openDiscovery}>
+                Continue to Discovery
+              </Action>
+            </div>
           </section>
         ) : null}
       </section>

@@ -11,8 +11,16 @@ import { resolveOnboardingRouteState } from "../../lib/onboarding/testing";
 
 export const dynamic = "force-dynamic";
 
-export default async function OnboardingEntryPage() {
+export default async function OnboardingEntryPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    mode?: string | string[];
+    organizationId?: string | string[];
+  }>;
+}) {
   validateOnboardingTestEnvironment();
+  const resolvedSearchParams = await searchParams;
   const authentication = await auth();
   if (!authentication.userId) {
     throw new Error("Authenticated Clerk development user is required.");
@@ -26,14 +34,26 @@ export default async function OnboardingEntryPage() {
       accessRepository: new PostgresAlphaAccessRecordRepository(sql),
       runtimeRepository: createOrganizationRuntimeRepository(),
     });
-    if (state.status === "active" ||
-        state.status === "organization-selection-required") {
+    const requestedOrganizationId =
+      typeof resolvedSearchParams.organizationId === "string"
+        ? resolvedSearchParams.organizationId
+        : null;
+    const improveExisting =
+      state.status === "active" &&
+      resolvedSearchParams.mode === "improve" &&
+      requestedOrganizationId === state.organizationId;
+    if (
+      (state.status === "active" && !improveExisting) ||
+      state.status === "organization-selection-required"
+    ) {
       redirect(state.destination);
     }
     return (
       <DiscoveryOnboardingExperience
         initialOrganizationId={
-          state.status === "interrupted" ? state.organizationId : undefined
+          state.status === "interrupted" || improveExisting
+            ? state.organizationId
+            : undefined
         }
       />
     );

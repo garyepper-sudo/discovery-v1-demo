@@ -468,12 +468,37 @@
 
 .primaryResult {
   grid-row: span 2;
+  display: grid;
+  gap: 8px;
+  margin-top: 24px;
+  padding: 24px;
 }
 
 .primaryResult p {
+  margin: 0 0 10px;
   color: var(--alpha-ink);
   font-family: Georgia, "Times New Roman", serif;
   font-size: 22px;
+}
+
+.primaryResult blockquote {
+  margin: 0 0 10px;
+  color: var(--alpha-body);
+  font-size: 15px;
+}
+
+.resultDetails {
+  margin: 18px 0 24px;
+}
+
+.resultDetails summary {
+  cursor: pointer;
+  color: var(--alpha-violet);
+  font-weight: 700;
+}
+
+.resultDetails .resultGrid {
+  margin-top: 14px;
 }
 
 .finding {

@@ -9,6 +9,7 @@ import {
   Check,
   ChevronDown,
   CircleHelp,
+  Clock3,
   FileText,
   GitBranch,
   Home,
@@ -96,6 +97,10 @@ function boundedCurrentAnswer(synthesis: string): string {
 }
 
 const sceneLabels: Record<AlphaScene, { label: string; description: string }> = {
+  home: { label: "Home", description: "Open the active question" },
+  questions: { label: "Questions", description: "Review organizational questions" },
+  decisions: { label: "Decisions", description: "Evaluate possible decisions" },
+  history: { label: "History", description: "Review what changed" },
   ask: { label: "Ask", description: "Begin with a question" },
   orient: { label: "Orient", description: "Review objective and scope" },
   plan: { label: "Plan", description: "Review learning plan" },
@@ -104,8 +109,18 @@ const sceneLabels: Record<AlphaScene, { label: string; description: string }> = 
   respond: { label: "Respond", description: "Share your perspective" },
   follow: { label: "Follow", description: "Keep learning" },
   return: { label: "Return", description: "See what changed" },
-  home: { label: "Home", description: "What matters now" },
 };
+
+const primaryNavigation: Array<{
+  scene: AlphaScene;
+  label: string;
+  icon: typeof Home;
+}> = [
+  { scene: "home", label: "Home", icon: Home },
+  { scene: "questions", label: "Questions", icon: MessageCircleQuestion },
+  { scene: "decisions", label: "Decisions", icon: ListChecks },
+  { scene: "history", label: "History", icon: Clock3 },
+];
 
 const journeyNavigation: Array<{
   scene: AlphaScene;
@@ -148,32 +163,51 @@ function AlphaSidebar({
     <aside className={styles.sidebar}>
       <DiscoveryMark />
       <nav aria-label="Alpha journey">
-        <button
-          type="button"
-          className={scene === "home" ? styles.navActive : ""}
-          onClick={() => navigate("home")}
-        >
-          <Home size={19} aria-hidden="true" />
-          <span>Home</span>
-        </button>
-        <button
-          type="button"
-          className={scene === "understand" ? styles.navActive : ""}
-          onClick={() => navigate("understand")}
-        >
-          <Target size={19} aria-hidden="true" />
-          <span>Understandings</span>
-        </button>
-        <button
-          type="button"
-          className={scene === "ask" ? styles.navActive : ""}
-          onClick={() => navigate("ask")}
-        >
-          <MessageCircleQuestion size={19} aria-hidden="true" />
-          <span>Ask Discovery</span>
-        </button>
-        <span className={styles.navDivider} />
-        {journeyNavigation.map((item) => (
+        {(hosted ? primaryNavigation : []).map((item) => {
+          const Icon = item.icon;
+          return (
+            <button
+              key={item.scene}
+              type="button"
+              className={scene === item.scene ? styles.navActive : ""}
+              aria-current={scene === item.scene ? "page" : undefined}
+              onClick={() => navigate(item.scene)}
+            >
+              <Icon size={19} aria-hidden="true" />
+              <span>{item.label}</span>
+            </button>
+          );
+        })}
+        {!hosted && (
+          <>
+            <button
+              type="button"
+              className={scene === "home" ? styles.navActive : ""}
+              onClick={() => navigate("home")}
+            >
+              <Home size={19} aria-hidden="true" />
+              <span>Home</span>
+            </button>
+            <button
+              type="button"
+              className={scene === "understand" ? styles.navActive : ""}
+              onClick={() => navigate("understand")}
+            >
+              <Target size={19} aria-hidden="true" />
+              <span>Understandings</span>
+            </button>
+            <button
+              type="button"
+              className={scene === "ask" ? styles.navActive : ""}
+              onClick={() => navigate("ask")}
+            >
+              <MessageCircleQuestion size={19} aria-hidden="true" />
+              <span>Ask Discovery</span>
+            </button>
+            <span className={styles.navDivider} />
+          </>
+        )}
+        {!hosted && journeyNavigation.map((item) => (
           <button
             key={`${item.label}-${item.index}`}
             type="button"
@@ -208,11 +242,16 @@ function AlphaSidebar({
         <ChevronDown size={16} aria-hidden="true" />
       </div>
       <div className={styles.sidebarConfidence}>
-        <span>Confidence in this Understanding</span>
-        <strong>{experience.understanding.confidence.qualitative ?? "Unavailable"}</strong>
+        <span>Confidence boundary</span>
+        <strong>
+          {experience.understanding.confidence.qualitative ??
+            (hosted ? "Authority-qualified" : "Unavailable")}
+        </strong>
         <small>
           {experience.understanding.confidence.value === null
-            ? "Not quantitatively disclosed"
+            ? hosted
+              ? "See the active question"
+              : "Not quantitatively disclosed"
             : `${experience.understanding.confidence.value}%`}
         </small>
       </div>
@@ -253,7 +292,7 @@ function MobileSceneHeader({
           value={scene}
           onChange={(event) => navigate(event.target.value as AlphaScene)}
         >
-          {alphaScenes.map((item) => (
+          {(hosted ? primaryNavigation.map((item) => item.scene) : alphaScenes).map((item) => (
             <option key={item} value={item}>
               {item === "home" ? "Discovery Home" : sceneLabels[item].label}
             </option>
@@ -1032,6 +1071,147 @@ function ReturnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
   );
 }
 
+function AddInformationPanel() {
+  const { experience } = useAlphaExperience();
+  const router = useRouter();
+  const operational = experience.organization.id.startsWith("onb-dev-");
+
+  return (
+    <Panel tone="violet" className={styles.addInformationPanel}>
+      <div>
+        <Eyebrow>Improve understanding</Eyebrow>
+        <h2>Add information</h2>
+        <p>
+          Add an observation, another perspective, a measurement, or an
+          outcome to the same question.
+        </p>
+      </div>
+      {!operational ? (
+        <p className={styles.readOnlyNotice}>
+          Adding information is available only in the isolated onboarding
+          sandbox. This organization remains read-only.
+        </p>
+      ) : (
+        <Action
+          onClick={() => {
+            const search = new URLSearchParams({
+              mode: "improve",
+              organizationId: experience.organization.id,
+            });
+            router.push(`/onboarding?${search.toString()}`);
+          }}
+        >
+          Add information
+        </Action>
+      )}
+      <small>
+        Connected systems, surveys, reports, and stakeholder requests are
+        coming later.
+      </small>
+    </Panel>
+  );
+}
+
+function QuestionsScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
+  const { experience } = useAlphaExperience();
+  const currentAnswer = boundedCurrentAnswer(experience.understanding.synthesis);
+  return (
+    <SceneFrame scene="questions" navigate={navigate}>
+      <MobileSceneHeader scene="questions" navigate={navigate} />
+      <div className={styles.appScene}>
+        <header className={styles.baselineHeader}>
+          <Eyebrow>Questions</Eyebrow>
+          <h1 data-scene-heading tabIndex={-1}>What are we trying to understand?</h1>
+          <p>The active question is the center of Discovery’s learning loop.</p>
+        </header>
+        <Panel className={styles.questionListItem}>
+          <div>
+            <Eyebrow>Active question</Eyebrow>
+            <h2>{experience.understanding.originalQuestion}</h2>
+            <p>{currentAnswer}</p>
+            <small>
+              {experience.understanding.confidence.qualitative
+                ? `${experience.understanding.confidence.qualitative} confidence`
+                : experience.understanding.confidence.limitation}
+            </small>
+          </div>
+          <Action onClick={() => navigate("home")}>Open question</Action>
+        </Panel>
+        <Panel className={styles.truthfulState}>
+          <h2>Ask a new question</h2>
+          <p>
+            Creating another durable question is not yet available from this
+            active product view. The current question and organization remain
+            unchanged.
+          </p>
+        </Panel>
+      </div>
+    </SceneFrame>
+  );
+}
+
+function DecisionsScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
+  const { experience } = useAlphaExperience();
+  return (
+    <SceneFrame scene="decisions" navigate={navigate}>
+      <MobileSceneHeader scene="decisions" navigate={navigate} />
+      <div className={styles.appScene}>
+        <header className={styles.baselineHeader}>
+          <Eyebrow>Decisions</Eyebrow>
+          <h1 data-scene-heading tabIndex={-1}>What could we do?</h1>
+          <p>{experience.understanding.originalQuestion}</p>
+        </header>
+        <Panel className={styles.truthfulState}>
+          <Eyebrow>Current decision state</Eyebrow>
+          <h2>No decisions have been connected to this understanding yet.</h2>
+          <p>
+            Discovery does not yet have enough authorized supported
+            information in this view to recommend a decision.
+          </p>
+          <Action onClick={() => navigate("home")}>Improve understanding</Action>
+        </Panel>
+        <Action tone="secondary" onClick={() => navigate("understand")}>
+          Review the understanding behind this decision
+        </Action>
+      </div>
+    </SceneFrame>
+  );
+}
+
+function HistoryScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
+  const { experience } = useAlphaExperience();
+  return (
+    <SceneFrame scene="history" navigate={navigate}>
+      <MobileSceneHeader scene="history" navigate={navigate} />
+      <div className={styles.appScene}>
+        <header className={styles.baselineHeader}>
+          <Eyebrow>History</Eyebrow>
+          <h1 data-scene-heading tabIndex={-1}>How has the understanding changed?</h1>
+          <p>{experience.understanding.originalQuestion}</p>
+        </header>
+        <section className={styles.historyList} aria-label="Understanding history">
+          {experience.changes.length ? (
+            experience.changes.map((change) => (
+              <Panel key={change.id}>
+                <Eyebrow>{change.eyebrow}</Eyebrow>
+                <h2>{change.headline}</h2>
+                <p>{change.detail}</p>
+              </Panel>
+            ))
+          ) : (
+            <Panel className={styles.truthfulState}>
+              <h2>No meaningful understanding change is available yet.</h2>
+            </Panel>
+          )}
+        </section>
+        <Action tone="secondary" onClick={() => navigate("understand")}>
+          Review full organizational analysis
+        </Action>
+      </div>
+    </SceneFrame>
+  );
+}
+
 function HomeScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
   const { experience, hosted } = useAlphaExperience();
   const currentAnswer = boundedCurrentAnswer(experience.understanding.synthesis);
@@ -1068,7 +1248,7 @@ function HomeScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
             </footer>
           </article>
           <Panel className={styles.recentChanges}>
-            <div className={styles.sectionHeading}><Eyebrow>Recent changes</Eyebrow><button type="button" onClick={() => navigate("return")}>View all</button></div>
+            <div className={styles.sectionHeading}><Eyebrow>Recent changes</Eyebrow><button type="button" onClick={() => navigate(hosted ? "history" : "return")}>View all</button></div>
             {hosted ? experience.changes.slice(0, 3).map((change) => (
               <p key={change.id}><Lightbulb size={17} aria-hidden="true" /> {change.headline}</p>
             )) : (
@@ -1084,6 +1264,7 @@ function HomeScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
             </small>
           </Panel>
         </div>
+        {hosted && <AddInformationPanel />}
         <section className={styles.homeSecondary} aria-labelledby="other-learning-title">
           <h2 className={styles.sectionLabel} id="other-learning-title">{hosted ? "Additional available learnings" : "Other key learnings"}</h2>
           <div>
@@ -1115,11 +1296,13 @@ function HomeScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
             ))}
           </div>
         </section>
-        <Panel tone="violet" className={styles.askBanner}>
-          <Sparkles size={28} aria-hidden="true" />
-          <div><h2>What should we understand next?</h2><p>Ask Discovery anything about your organization.</p></div>
-          <Action onClick={() => navigate("ask")}>Ask Discovery <Plus size={18} aria-hidden="true" /></Action>
-        </Panel>
+        {!hosted && (
+          <Panel tone="violet" className={styles.askBanner}>
+            <Sparkles size={28} aria-hidden="true" />
+            <div><h2>What should we understand next?</h2><p>Ask Discovery anything about your organization.</p></div>
+            <Action onClick={() => navigate("ask")}>Ask Discovery <Plus size={18} aria-hidden="true" /></Action>
+          </Panel>
+        )}
       </div>
     </SceneFrame>
   );
@@ -1161,11 +1344,11 @@ export default function AlphaExperience({
   const navigate = (scene: AlphaScene) => {
     if (hosted) {
       setActiveScene(scene);
-      window.history.replaceState(
-        null,
-        "",
-        `/your-organization?scene=${scene}`,
-      );
+      const search = new URLSearchParams({
+        organizationId: experience.organization.id,
+        scene,
+      });
+      router.push(`/your-organization?${search.toString()}`);
       return;
     }
     router.push(`/alpha/${scene}`);
@@ -1183,6 +1366,9 @@ export default function AlphaExperience({
 
   const scene = (() => {
     switch (activeScene) {
+      case "questions": return <QuestionsScene navigate={navigate} />;
+      case "decisions": return <DecisionsScene navigate={navigate} />;
+      case "history": return <HistoryScene navigate={navigate} />;
       case "ask": return <AskScene navigate={navigate} />;
       case "orient": return <OrientScene navigate={navigate} />;
       case "plan": return <PlanScene navigate={navigate} />;

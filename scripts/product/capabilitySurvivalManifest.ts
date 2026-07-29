@@ -116,6 +116,7 @@ export const CAPABILITY_SURVIVAL_CONTRACTS: CapabilitySurvivalContract[] = [
       "validate:canonical-product-composition",
       "validate:why-discovery-believes-this",
       "validate:minimal-reading-experience",
+      "validate:question-centered-flow",
     ],
   },
   {
@@ -135,6 +136,7 @@ export const CAPABILITY_SURVIVAL_CONTRACTS: CapabilitySurvivalContract[] = [
       "validate:customer-readable-driver-labels",
       "validate:canonical-product-composition",
       "validate:minimal-reading-experience",
+      "validate:simplified-product-navigation",
     ],
   },
   {
@@ -191,7 +193,10 @@ export const CAPABILITY_SURVIVAL_CONTRACTS: CapabilitySurvivalContract[] = [
       "fabricate a change reason",
       "treat evidence arrival as understanding revision",
     ],
-    validations: ["validate:what-changed-and-why"],
+    validations: [
+      "validate:what-changed-and-why",
+      "validate:iterative-understanding-loop",
+    ],
   },
   {
     capabilityId: "CAP-LRN-002",
@@ -202,7 +207,10 @@ export const CAPABILITY_SURVIVAL_CONTRACTS: CapabilitySurvivalContract[] = [
     ],
     permittedTransformations: PRESENTATION_LABELS,
     prohibitedTransformations: ["infer a revision reason without exact linkage"],
-    validations: ["validate:what-changed-and-why"],
+    validations: [
+      "validate:what-changed-and-why",
+      "validate:iterative-understanding-loop",
+    ],
   },
   {
     capabilityId: "CAP-MEM-001",
