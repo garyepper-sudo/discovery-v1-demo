@@ -53,10 +53,29 @@ type ProductUnderstanding = {
   };
 };
 
+type ProductUtility = {
+  immediateInsight: ProductUnderstanding["supportedFindings"][number] | null;
+  likelyExplanations: ProductUnderstanding["candidateExplanations"];
+  alternativeExplanations: ProductUnderstanding["candidateExplanations"];
+  whyDiscoveryThinksThis: ProductUnderstanding["supportedFindings"];
+  decisionImplications: ProductUnderstanding["supportedFindings"];
+  investigateNext: ProductUnderstanding["nextEvidence"][number] | null;
+  watchNext: Array<{
+    label: string;
+    whyItMatters: string;
+  }>;
+  evidenceStrength: {
+    alreadyStrong: ProductUnderstanding["supportedFindings"];
+    stillWeak: string[];
+  };
+  confidence: ProductUnderstanding["confidence"];
+};
+
 type DiscoveryLabSuccess = {
   status: "complete" | "provisional";
   organizationId: string;
   understanding: ProductUnderstanding;
+  utility: ProductUtility;
 };
 
 type DiscoveryLabFailure = {
@@ -64,6 +83,7 @@ type DiscoveryLabFailure = {
   message: string;
   organizationId?: string;
   understanding?: ProductUnderstanding;
+  utility?: ProductUtility;
 };
 
 type EvidenceRecommendation = {
@@ -262,6 +282,7 @@ export default function DiscoveryOnboardingExperience({
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ProductUnderstanding | null>(null);
+  const [utility, setUtility] = useState<ProductUtility | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [draftReady, setDraftReady] = useState(false);
   const stageHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -511,6 +532,7 @@ export default function DiscoveryOnboardingExperience({
       }
       setOrganizationId(body.organizationId);
       setResult(body.understanding);
+      setUtility(body.utility);
       window.sessionStorage.removeItem(draftStorageKey);
       setStage("first-understanding");
     } catch (caught) {
@@ -946,7 +968,7 @@ export default function DiscoveryOnboardingExperience({
           </section>
         ) : null}
 
-        {stage === "first-understanding" && result ? (
+        {stage === "first-understanding" && result && utility ? (
           <section className={styles.stage}>
             <Eyebrow tone={result.status === "provisional" ? "orange" : "green"}>
               {result.status === "provisional"
@@ -958,23 +980,57 @@ export default function DiscoveryOnboardingExperience({
             </h1>
             <div className={styles.resultGrid}>
               <Panel className={styles.primaryResult} tone="blue">
-                <span>What the evidence suggests</span>
-                <p>{result.headline}</p>
-                {result.supportedFindings.map((finding) => (
+                <span>What Discovery can support</span>
+                <p>{utility.immediateInsight?.statement ?? result.headline}</p>
+                {utility.whyDiscoveryThinksThis.map((finding) => (
                   <div className={styles.finding} key={finding.statement}>
                     <b>{finding.statement}</b>
                     <small>{finding.basis}</small>
                   </div>
                 ))}
               </Panel>
+              {utility.likelyExplanations.length ? (
+                <Panel>
+                  <span>Likely explanations</span>
+                  <ul>
+                    {utility.likelyExplanations.map((item) => (
+                      <li key={item.statement}>
+                        <b>{item.statement}</b> {item.basis}
+                      </li>
+                    ))}
+                  </ul>
+                </Panel>
+              ) : null}
+              {utility.alternativeExplanations.length ? (
+                <Panel>
+                  <span>Alternative explanations</span>
+                  <ul>
+                    {utility.alternativeExplanations.map((item) => (
+                      <li key={item.statement}>
+                        <b>{item.statement}</b> {item.basis}
+                      </li>
+                    ))}
+                  </ul>
+                </Panel>
+              ) : null}
+              {utility.decisionImplications.length ? (
+                <Panel>
+                  <span>Decision implications</span>
+                  {utility.decisionImplications.map((item) => (
+                    <p key={item.statement}>{item.statement}</p>
+                  ))}
+                </Panel>
+              ) : null}
               <Panel>
-                <span>What remains uncertain</span>
+                <span>Evidence still weak</span>
                 <ul>
-                  {result.uncertainties.map((item) => <li key={item}>{item}</li>)}
+                  {utility.evidenceStrength.stillWeak.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
                 </ul>
               </Panel>
               <Panel>
-                <span>What would sharpen the answer</span>
+                <span>What Discovery would investigate next</span>
                 <ul>
                   {result.nextEvidence.map((item) => (
                     <li key={item.label}>
@@ -983,13 +1039,13 @@ export default function DiscoveryOnboardingExperience({
                   ))}
                 </ul>
               </Panel>
-              {result.candidateExplanations.length ? (
-                <Panel className={styles.wideResult}>
-                  <span>Other plausible explanations</span>
+              {utility.watchNext.length ? (
+                <Panel>
+                  <span>What Discovery would watch next</span>
                   <ul>
-                    {result.candidateExplanations.map((item) => (
-                      <li key={item.statement}>
-                        <b>{item.statement}</b> {item.basis}
+                    {utility.watchNext.map((item) => (
+                      <li key={item.label}>
+                        <b>{item.label}:</b> {item.whyItMatters}
                       </li>
                     ))}
                   </ul>

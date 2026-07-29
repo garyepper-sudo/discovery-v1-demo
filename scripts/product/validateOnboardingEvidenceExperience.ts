@@ -226,7 +226,8 @@ for (const contract of [
   /buildOnboardingInvestigationInput\(body\)/,
   /status: "validation-failed"/,
   /translateProductUnderstanding/,
-  /understanding: productUnderstanding/,
+  /optimizeTruthfulUtility/,
+  /understanding: productUtility\.understanding/,
   /status: "insufficient-evidence"/,
 ]) {
   assert.match(route, contract);

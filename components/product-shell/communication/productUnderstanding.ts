@@ -13,7 +13,7 @@ export type ProductUnderstandingLineage = {
   observationIds: string[];
 };
 
-type GroundedProductStatement = {
+export type GroundedProductStatement = {
   statement: string;
   basis: string;
   lineage: ProductUnderstandingLineage;

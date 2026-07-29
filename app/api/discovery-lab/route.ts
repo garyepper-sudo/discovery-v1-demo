@@ -28,6 +28,7 @@ import {
 } from "../../../lib/onboarding/testing";
 import { buildOnboardingInvestigationInput } from "../../../lib/onboarding/testing/buildOnboardingInvestigationInput";
 import { translateProductUnderstanding } from "../../../components/product-shell/communication/productUnderstanding";
+import { optimizeTruthfulUtility } from "../../../components/product-shell/communication/truthfulUtility";
 
 export async function POST(
   req: Request,
@@ -202,17 +203,27 @@ export async function POST(
           runtime: investigation.runtime,
         })
       : null;
+    const productUtility =
+      onboardingEnvironment && productUnderstanding
+        ? optimizeTruthfulUtility({
+            organizationId,
+            result: investigation.result,
+            runtime: investigation.runtime,
+            understanding: productUnderstanding,
+          })
+        : null;
 
     if (
       onboardingEnvironment &&
-      productUnderstanding?.status === "insufficient"
+      productUtility?.status === "insufficient"
     ) {
       return respond(
         {
           status: "insufficient-evidence",
-          message: productUnderstanding.headline,
+          message: productUtility.understanding.headline,
           organizationId,
-          understanding: productUnderstanding,
+          understanding: productUtility.understanding,
+          utility: productUtility,
         },
         422,
       );
@@ -227,17 +238,21 @@ export async function POST(
         investigation.runtime.memory.organizationalUnderstandingState
           .canonicalCompositions?.length ?? 0,
       productUnderstandingStatus: productUnderstanding?.status ?? null,
+      productUtilityStatus: productUtility?.status ?? null,
     }));
 
     return respond({
       status:
-        productUnderstanding?.status === "provisional"
+        productUtility?.status === "provisional"
           ? "provisional"
           : "complete",
       organizationId,
       executiveProjection: investigation.executiveProjection,
-      ...(productUnderstanding
-        ? { understanding: productUnderstanding }
+      ...(productUtility
+        ? {
+            understanding: productUtility.understanding,
+            utility: productUtility,
+          }
         : {}),
     }, 200);
   } catch (
