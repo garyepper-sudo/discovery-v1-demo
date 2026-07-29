@@ -8,6 +8,9 @@ import {
   buildDiscoveryExperienceView,
 } from "../../components/product-shell/data/buildDiscoveryExperienceView";
 import {
+  buildRuntimeOrganizationView,
+} from "../../components/product-shell/data/buildRuntimeOrganizationView";
+import {
   compileOrganizationalUnderstandingProjection,
   ORGANIZATIONAL_UNDERSTANDING_PROJECTION_VERSION,
 } from "../../engine/v3/projection/organizationalUnderstandingProjection";
@@ -183,6 +186,7 @@ function activatedView(input: {
   });
   return {
     runtime: runtimeValue,
+    view: activated,
     experience: buildDiscoveryExperienceView({
       runtime: runtimeValue,
       view: activated,
@@ -211,6 +215,46 @@ const isolated = activatedView({
 
 assert.equal(first.experience.understanding.originalQuestion, QUESTION);
 assert.notEqual(first.experience.understanding.originalQuestion, INQUIRY);
+assert.equal(
+  first.experience.understanding.whyItMatters,
+  "No additional impact explanation is available.",
+  "An active Runtime must describe missing impact content without implying Runtime failure.",
+);
+assert.equal(
+  first.experience.understanding.whyItMatters.includes(
+    "Runtime not yet available",
+  ),
+  false,
+);
+assert.equal(
+  buildRuntimeOrganizationView(
+    createEmptyOrganizationRuntime({
+      organizationId: "org-runtime-unavailable",
+    }),
+  ).organizationalState.summary,
+  "Runtime not yet available",
+  "A genuinely unavailable Runtime section must retain its distinct compatibility state.",
+);
+const availableImpact = buildDiscoveryExperienceView({
+  runtime: first.runtime,
+  view: {
+    ...first.view,
+    runtimeSections: {
+      ...first.view.runtimeSections,
+      organizationalState: {
+        ...first.view.runtimeSections.organizationalState,
+        available: true,
+        summary: "Authorized impact explanation.",
+        items: ["Authorized impact explanation."],
+      },
+    },
+  },
+});
+assert.equal(
+  availableImpact.understanding.whyItMatters,
+  "Authorized impact explanation.",
+  "Existing authorized impact content must remain unchanged.",
+);
 assert.deepEqual(
   first.experience.understanding.beliefBasis?.evidenceCategories,
   [
@@ -307,6 +351,8 @@ console.log(JSON.stringify({
   expectedValueConsistency: true,
   investigationConsistency: true,
   unavailableSubstitutionWhenDataExists: false,
+  activeRuntimeMissingImpactLanguageTruthful: true,
+  unavailableRuntimeStatePreserved: true,
   deterministic: true,
   organizationIsolated: true,
   authorizationFailsClosed: true,

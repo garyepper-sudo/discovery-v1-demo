@@ -3,6 +3,8 @@ import type { AlphaFixture } from "../../../product/alpha/viewModels";
 import type { buildActivatedYourOrganizationView } from "./buildActivatedYourOrganizationView";
 
 const NOT_YET_AVAILABLE = "Not yet available in this Alpha";
+const IMPACT_EXPLANATION_UNAVAILABLE =
+  "No additional impact explanation is available.";
 
 type ActivatedView = ReturnType<typeof buildActivatedYourOrganizationView>;
 
@@ -64,7 +66,9 @@ export function buildDiscoveryExperienceView(input: {
   const explanation = availableText(sections.explanations.summary);
   const uncertainty = availableText(sections.uncertainty.summary);
   const condition = availableText(sections.conditions.summary);
-  const state = availableText(sections.organizationalState.summary);
+  const state = sections.organizationalState.available
+    ? availableText(sections.organizationalState.summary)
+    : IMPACT_EXPLANATION_UNAVAILABLE;
   const canonicalInquiry =
     view.evidenceRequestDisclosure?.request?.question.trim() || null;
   const investigations = items(
