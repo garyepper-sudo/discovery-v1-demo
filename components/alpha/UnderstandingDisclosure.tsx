@@ -440,8 +440,12 @@ export default function UnderstandingDisclosure({
               {id === "why" ? <Users size={20} aria-hidden="true" /> : id === "unknown" ? <CircleHelp size={20} aria-hidden="true" /> : id === "contradiction" ? <AlertTriangle size={20} aria-hidden="true" /> : <Lightbulb size={20} aria-hidden="true" />}
             </span>
             <strong>{title}</strong>
-            <p>{copy}</p>
-            {openDetail === id && <small>{id === "contradiction" ? "This limits where the current explanation applies." : "This remains part of the current, historically traceable synthesis."}</small>}
+            {openDetail === id && (
+              <>
+                <p>{copy}</p>
+                <small>{id === "contradiction" ? "This limits where the current explanation applies." : "This remains part of the current, historically traceable synthesis."}</small>
+              </>
+            )}
           </button>
         ))}
       </div>

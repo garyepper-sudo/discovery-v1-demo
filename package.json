@@ -75,6 +75,7 @@
     "validate:user-ready-alpha-presentation": "tsx scripts/product/validateUserReadyAlphaPresentation.ts",
     "validate:lead-coherent-understanding": "tsx scripts/product/validateLeadCoherentUnderstanding.ts",
     "validate:customer-readable-driver-labels": "tsx scripts/product/validateCustomerReadableDriverLabels.ts",
+    "validate:minimal-reading-experience": "tsx scripts/product/validateMinimalReadingExperience.ts",
     "storage:migrate": "tsx scripts/storage/migrateAlphaGovernance.ts up",
     "storage:status": "tsx scripts/storage/migrateAlphaGovernance.ts status",
     "storage:reset:local": "tsx scripts/storage/migrateAlphaGovernance.ts reset",

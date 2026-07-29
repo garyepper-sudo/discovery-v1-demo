@@ -115,6 +115,7 @@ export const CAPABILITY_SURVIVAL_CONTRACTS: CapabilitySurvivalContract[] = [
       "validate:lead-coherent-understanding",
       "validate:canonical-product-composition",
       "validate:why-discovery-believes-this",
+      "validate:minimal-reading-experience",
     ],
   },
   {
@@ -133,6 +134,7 @@ export const CAPABILITY_SURVIVAL_CONTRACTS: CapabilitySurvivalContract[] = [
       "validate:lead-coherent-understanding",
       "validate:customer-readable-driver-labels",
       "validate:canonical-product-composition",
+      "validate:minimal-reading-experience",
     ],
   },
   {

@@ -319,6 +319,7 @@ function OrientScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
   const { experience, hosted } = useAlphaExperience();
   const [editing, setEditing] = useState(false);
   const [objective, setObjective] = useState(experience.understanding.objective);
+  const currentAnswer = boundedCurrentAnswer(objective);
   return (
     <main className={`${styles.scene} ${styles.lightScene}`}>
       <QuietHeader helpLabel="How orientation works" back={() => navigate("ask")} />
@@ -348,7 +349,7 @@ function OrientScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
                 />
               </label>
             ) : (
-              <h2>{objective}</h2>
+              <h2>{hosted ? currentAnswer : objective}</h2>
             )}
             <p>
               {hosted
@@ -506,6 +507,9 @@ function LearnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
   const { experience, hosted } = useAlphaExperience();
   const [visibleEvents, setVisibleEvents] = useState(3);
   const events = experience.events.slice(0, visibleEvents);
+  const currentAnswer = boundedCurrentAnswer(
+    experience.understanding.synthesis,
+  );
   return (
     <SceneFrame scene="learn" navigate={navigate}>
       <MobileSceneHeader scene="learn" navigate={navigate} onBack={() => navigate("plan")} />
@@ -537,9 +541,17 @@ function LearnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
             <span>{hosted ? "Read-only view" : "Live view"} <ChevronDown size={15} aria-hidden="true" /></span>
           </div>
           <div className={styles.liveSynthesis}>
-            <span>Current synthesis</span>
-            <h2>{experience.understanding.synthesis}</h2>
-            <p className={styles.currentExplanation}>{experience.understanding.explanation}</p>
+            <span>Current answer</span>
+            <h2>
+              {hosted
+                ? currentAnswer
+                : experience.understanding.synthesis}
+            </h2>
+            {!hosted && (
+              <p className={styles.currentExplanation}>
+                {experience.understanding.explanation}
+              </p>
+            )}
             <p className={styles.learningConfidence}>
               <strong>{experience.understanding.confidence.qualitative ?? "Unavailable"}</strong>
               <span>
@@ -705,21 +717,16 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
               {changeDisclosure}
               {evidenceRequestDisclosure}
               {fullSynthesisDisclosure}
-              <Panel className={styles.supportingSummary}>
-                <div>
-                  <Eyebrow>Supporting detail</Eyebrow>
-                  <p>{experience.understanding.explanation}</p>
-                  <span>{hosted ? "Update timing unavailable" : "Updated today · 8:12 AM"}</span>
-                </div>
-                {hosted ? (
-                  <div className={styles.confidenceAvailability}>
-                    <Eyebrow>Confidence availability</Eyebrow>
-                    <p>Quantitative confidence and trend are not available for this understanding.</p>
+              {!hosted && (
+                <Panel className={styles.supportingSummary}>
+                  <div>
+                    <Eyebrow>Supporting detail</Eyebrow>
+                    <p>{experience.understanding.explanation}</p>
+                    <span>Updated today · 8:12 AM</span>
                   </div>
-                ) : (
                   <ConfidenceSummary confidence={experience.understanding.confidence} />
-                )}
-              </Panel>
+                </Panel>
+              )}
               {detailGrid}
               <div className={styles.understandingLower}>
                 <Panel className={styles.beforeAfter}>
@@ -735,8 +742,28 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
                 </Panel>
                 <Panel className={styles.relationshipsPanel}>
                   <div className={styles.sectionHeading}><h2>Related Understandings</h2><button type="button">View all</button></div>
-                  {experience.relationships.slice(0, 3).map((relationship) => (
-                    <RelationshipRow key={relationship.id} relationship={relationship} showTrend={!hosted} />
+                  {experience.relationships
+                    .filter(
+                      (relationship) =>
+                        !hosted ||
+                        boundedCurrentAnswer(relationship.title) !==
+                          currentAnswer,
+                    )
+                    .slice(0, 3)
+                    .map((relationship) => (
+                    <RelationshipRow
+                      key={relationship.id}
+                      relationship={
+                        hosted
+                          ? {
+                              ...relationship,
+                              title: boundedCurrentAnswer(relationship.title),
+                              description: "Related projected understanding",
+                            }
+                          : relationship
+                      }
+                      showTrend={!hosted}
+                    />
                   ))}
                 </Panel>
                 <Panel tone="violet" className={styles.recommendedLearning}>
@@ -811,35 +838,38 @@ function RespondScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
                   {path.id === "agree" ? <Check aria-hidden="true" /> : path.id === "missing" ? <AlertTriangle aria-hidden="true" /> : path.id === "different" ? <GitBranch aria-hidden="true" /> : <Search aria-hidden="true" />}
                 </span>
                 <strong>{path.title}</strong>
-                <p>{path.description}</p>
+                {(!hosted || selected === path.id) && (
+                  <p>{path.description}</p>
+                )}
               </button>
             ))}
           </div>
         </Panel>
-        <Panel className={styles.contributionPanel}>
-          <div>
-            <h2>What you can tell Discovery <span>(optional)</span></h2>
-            <p>Add context, examples, or evidence that helps qualify this Understanding.</p>
-            <label className={styles.srOnly} htmlFor="alpha-contribution">Share your perspective</label>
-            <div className={styles.contributionField}>
-              <textarea
-                id="alpha-contribution"
-                value={context}
-                maxLength={2000}
-                onChange={(event) => { setContext(event.target.value); setSubmitted(false); }}
-                placeholder="Share your perspective…"
-                disabled={hosted}
-              />
-              <span>{context.length}/2000</span>
+        {!hosted && (
+          <Panel className={styles.contributionPanel}>
+            <div>
+              <h2>What you can tell Discovery <span>(optional)</span></h2>
+              <p>Add context, examples, or evidence that helps qualify this Understanding.</p>
+              <label className={styles.srOnly} htmlFor="alpha-contribution">Share your perspective</label>
+              <div className={styles.contributionField}>
+                <textarea
+                  id="alpha-contribution"
+                  value={context}
+                  maxLength={2000}
+                  onChange={(event) => { setContext(event.target.value); setSubmitted(false); }}
+                  placeholder="Share your perspective…"
+                />
+                <span>{context.length}/2000</span>
+              </div>
             </div>
-          </div>
-          <aside>
-            <h3>Examples of helpful context</h3>
-            <p>What’s happening that isn’t reflected here?</p>
-            <p>Are there specific teams or time periods to examine?</p>
-            <p>What may be driving different outcomes?</p>
-          </aside>
-        </Panel>
+            <aside>
+              <h3>Examples of helpful context</h3>
+              <p>What’s happening that isn’t reflected here?</p>
+              <p>Are there specific teams or time periods to examine?</p>
+              <p>What may be driving different outcomes?</p>
+            </aside>
+          </Panel>
+        )}
         {hosted ? (
           <Panel tone="violet" className={styles.responseEffect}>
             <span className={styles.semanticIcon}>
@@ -906,7 +936,19 @@ function FollowScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
           <Panel>
             <h2>Discovery is currently watching</h2>
             {experience.relationships.map((relationship) => (
-              <RelationshipRow key={relationship.id} relationship={relationship} showTrend={!hosted} />
+              <RelationshipRow
+                key={relationship.id}
+                relationship={
+                  hosted
+                    ? {
+                        ...relationship,
+                        title: boundedCurrentAnswer(relationship.title),
+                        description: "Related projected understanding",
+                      }
+                    : relationship
+                }
+                showTrend={!hosted}
+              />
             ))}
           </Panel>
         </div>
@@ -968,8 +1010,11 @@ function ReturnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
                 key={relationship.id}
                 relationship={{
                   ...relationship,
+                  title: hosted
+                    ? boundedCurrentAnswer(relationship.title)
+                    : relationship.title,
                   description: hosted
-                    ? `${relationship.description} · Confidence unavailable`
+                    ? "Related projected understanding · Confidence unavailable"
                     : `${["Moderate", "Early", "Early"][index]} confidence · ${[81, 64, 58][index]}%`,
                 }}
                 showTrend={!hosted}
@@ -1050,7 +1095,14 @@ function HomeScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
         <section className={styles.followedSection} aria-labelledby="followed-home-title">
             <div className={styles.sectionHeading}><Eyebrow><span id="followed-home-title">Related understandings</span></Eyebrow></div>
           <div className={styles.followedCards}>
-            {experience.relationships.slice(0, 3).map((relationship, index) => (
+            {experience.relationships
+              .filter(
+                (relationship) =>
+                  !hosted ||
+                  boundedCurrentAnswer(relationship.title) !== currentAnswer,
+              )
+              .slice(0, 3)
+              .map((relationship, index) => (
               <article key={relationship.id}>
                 <div><span className={`${styles.semanticIcon} ${styles[`tone_${relationship.tone}`]}`}><GitBranch size={18} aria-hidden="true" /></span><strong>{hosted ? boundedCurrentAnswer(relationship.title) : relationship.title}</strong></div>
                 <span>
