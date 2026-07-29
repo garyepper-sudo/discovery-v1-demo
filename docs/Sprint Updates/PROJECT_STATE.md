@@ -11,6 +11,16 @@ is `docs/Architecture/Canon/DISCOVERY_ALPHA_V1_OPERATIONAL_BASELINE.md`.
 This proves operational readiness, not product-market fit, scalable
 onboarding, or commercial validation.
 
+The current product communication architecture is now canonical:
+
+- question-first onboarding is complete;
+- Product Translation is deterministic and non-authoritative;
+- Product Understanding communicates Supported, Provisional, or Insufficient;
+- Truthful Utility is complete at the current product boundary;
+- product-owned Evidence Roles are complete;
+- Organizational Functions Experiment 001 is complete and remains
+  benchmark-only.
+
 ## Production State
 
 - Health: READY; configuration, database, and Runtime true
@@ -46,6 +56,20 @@ Verified Clerk identity
 Durable access is authoritative. Authorization precedes Runtime retrieval.
 Denied and ambiguous requests fail closed. Logout protects refresh, browser
 Back, and direct routes; re-login reuses existing access and lifecycle state.
+
+```text
+user question
+→ admitted canonical Evidence
+→ canonical cognition
+→ Product Translation
+→ Product Understanding
+→ Truthful Utility
+→ canonical Discovery Experience
+```
+
+Production cognition and Runtime remain unchanged. Evidence Roles are
+product-owned and non-authoritative. Organizational Functions have no
+production consumer.
 
 ## Truthfulness and Capability State
 
@@ -83,6 +107,10 @@ Activation**. Subsequent priorities are AI-guided onboarding, goal-directed
 incremental retrieval, the longitudinal Atlas demonstration organization,
 understanding quality, fine-grained disclosure, and design-partner readiness.
 Broad infrastructure rebuilding is deprioritized unless evidence requires it.
+
+The next recommended research is Evidence acquisition as a second independent
+consumer of the benchmark-only Organizational Function projection. This work
+must remain shadow-only and cannot imply canonical promotion.
 
 ## Documentation and Repository Maintenance
 

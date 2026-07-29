@@ -62,6 +62,23 @@ The boundary exists to provide:
 
 ## 4. Architectural Position
 
+The view-model boundary sits downstream of canonical Product Translation:
+
+```text
+canonical cognition
+→ Product Translation
+→ Product Understanding
+→ Truthful Utility
+→ scene adapter
+→ view model
+→ component
+```
+
+View models expose user-facing understanding, not the internal cognitive
+object graph. Product Understanding state is Supported, Provisional, or
+Insufficient. Evidence Roles remain product-owned inputs to Product
+Translation and are not view-model authority.
+
 ```text
 Cognitive producers
         ↓

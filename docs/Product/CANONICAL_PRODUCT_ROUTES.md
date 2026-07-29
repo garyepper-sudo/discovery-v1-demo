@@ -52,6 +52,11 @@ policy.
 
 ### `/onboarding`
 
+The canonical onboarding route is question-first. It asks what the user is
+trying to understand before requesting supporting Evidence. It does not
+present Operating Model construction, organization setup, or document upload
+as the product objective.
+
 `/onboarding` owns the canonical Onboarding Experience for new and interrupted
 users. It authenticates through the existing Clerk boundary, resolves access
 and Runtime state, renders

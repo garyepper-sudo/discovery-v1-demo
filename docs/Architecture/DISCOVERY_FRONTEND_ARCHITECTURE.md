@@ -288,6 +288,23 @@ entire scene merely because one disclosure or input is interactive.
 
 ## 10. Data Flow
 
+The frontend consumes truthful product communication rather than raw
+canonical cognition:
+
+```text
+canonical cognition
+→ Product Translation
+→ Product Understanding
+→ Truthful Utility
+→ scene adapter
+→ view model
+→ component
+```
+
+Ordinary scenes should not expose Mechanisms, Beliefs, Theories, or Conditions
+as internal object types. Supported, Provisional, and Insufficient are the
+canonical user-facing understanding states.
+
 ```text
 Runtime or fixture
   → product projection

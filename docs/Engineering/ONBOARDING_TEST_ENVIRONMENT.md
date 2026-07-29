@@ -2,6 +2,22 @@
 
 ## Purpose
 
+The sandbox validates the canonical question-first experience:
+
+```text
+fresh development user
+→ “What are you trying to understand?”
+→ bounded Evidence acquisition
+→ isolated onb-dev-* organization
+→ Product Translation
+→ truthful Alpha product communication
+→ exact reset
+```
+
+The sandbox does not ask the user to build an Operating Model. Product
+Understanding may be Supported, Provisional, or Insufficient, and Evidence
+Roles remain product-owned with no Runtime or cognitive authority.
+
 This environment exercises Discovery onboarding without production data,
 production Clerk identities, Atlas, or the production Runtime. It composes the
 existing Clerk authentication, governance access records, Organization Runtime,

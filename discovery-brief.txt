@@ -1,7 +1,23 @@
+# Discovery Startup Brief — Product Communication Architecture
 
-> discovery-alpha-v7@0.1.0 sprint:start
-> npm run discovery:brief
+Current canonical product boundary:
 
+```text
+user question
+→ admitted canonical Evidence
+→ canonical cognition
+→ Product Translation
+→ Supported | Provisional | Insufficient Product Understanding
+→ Maximum Truthful Utility
+→ user-facing experience
+```
+
+Question-first onboarding, Product Translation, Truthful Utility, and
+product-owned Evidence Roles are complete. Evidence Roles remain
+non-authoritative and outside canonical cognition. Organizational Functions
+Experiment 001 remains benchmark-only; its current recommendation is a
+reusable non-authoritative interpretation layer. Next research: Evidence
+acquisition as a second independent consumer.
 
 > discovery-alpha-v7@0.1.0 discovery:brief
 > npm run cognition:validate && npm run audit:executive-capabilities && npm run architecture:state && npm run architecture:handoff && npm run sprint:brief

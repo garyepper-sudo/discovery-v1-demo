@@ -137,7 +137,19 @@ The application exists to expose the lifecycle—not individual reasoning object
 
 ---
 
-## 4. MVP_PRODUCT_SPECIFICATION.md
+## 4. PRODUCT_COMMUNICATION_ARCHITECTURE.md
+
+Defines the question-first product, Product Translation, Product
+Understanding states, Maximum Truthful Utility, product-owned Evidence Roles,
+lineage requirements, and the benchmark-only Organizational Functions
+boundary.
+
+This document governs how canonical cognition becomes user-facing
+understanding.
+
+---
+
+## 5. MVP_PRODUCT_SPECIFICATION.md
 
 Defines the currently locked Sprint 79 MVP experience.
 
@@ -153,7 +165,7 @@ When older product workflows conflict with this specification, this specificatio
 
 ---
 
-## 5. ORGANIZATION_PAGE_SPEC.md
+## 6. ORGANIZATION_PAGE_SPEC.md
 
 Defines the canonical **Your Organization** page and its five maturity states:
 
@@ -167,7 +179,7 @@ This is the canonical first-use and mature Organization experience. It is not a 
 
 ---
 
-## 6. MVP_PRODUCT.md
+## 7. MVP_PRODUCT.md
 
 Defines the scope of the MVP.
 
@@ -184,7 +196,7 @@ This document remains useful background. `MVP_PRODUCT_SPECIFICATION.md` governs 
 
 ---
 
-## 7. PRODUCT_BENCHMARK.md
+## 8. PRODUCT_BENCHMARK.md
 
 Defines the executable benchmark for validating the MVP.
 

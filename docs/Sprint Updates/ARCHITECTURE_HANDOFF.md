@@ -8,6 +8,30 @@ This document is the canonical architecture handoff for beginning a new Discover
 
 Before proposing a new capability, use this document to verify whether the responsibility, cognitive object, canonical producer, Runtime destination, or executive destination already exists.
 
+## Canonical Product Communication Boundary
+
+The current product architecture is question-first:
+
+```text
+user question
+→ admitted canonical Evidence
+→ canonical cognition
+→ deterministic, non-authoritative Product Translation
+→ Supported | Provisional | Insufficient Product Understanding
+→ Maximum Truthful Utility
+→ user-facing experience
+```
+
+Product-owned Evidence Roles preserve lineage, confidence, ordering, and
+organization isolation while creating no engine or Runtime authority.
+Discovery exposes understanding rather than raw Mechanisms, Beliefs, Theories,
+or Conditions.
+
+Organizational Functions Experiment 001 is complete. Its recommendation is a
+reusable non-authoritative interpretation layer, but Organizational Functions
+remain benchmark-only and non-canonical. The next recommended research is
+Evidence acquisition as a second independent consumer.
+
 ## Permanent Development Rule
 
 Before adding any new cognitive capability:

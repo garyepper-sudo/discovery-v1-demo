@@ -48,6 +48,14 @@ Every completed organizational cycle should leave both the organization and Disc
 
 Discovery is a **shared organizational intelligence platform**.
 
+Discovery is a question-first product. A user begins with:
+
+> **What are you trying to understand?**
+
+Discovery learns the objective before requesting additional Evidence. Building
+an Operating Model, configuring the organization, and uploading documents are
+not the user's onboarding objective.
+
 Its first major application is the **Executive Operating System**, which remains the current product focus and helps organizations continuously evolve through better executive understanding, decisions, simulation, communication, and learning.
 
 Its purpose is to help organizations continuously evolve.
@@ -308,6 +316,34 @@ The objective is better organizations.
 ---
 
 # Executive Experience
+
+## Product communication boundary
+
+Canonical cognition is not the ordinary user interface. Discovery exposes
+understanding through a deterministic, non-authoritative Product Translation
+layer:
+
+```text
+canonical cognition
+→ Product Translation
+→ Product Understanding
+→ Truthful Utility
+→ user-facing experience
+```
+
+Product Understanding is **Supported**, **Provisional**, or **Insufficient**.
+Supported requires completed canonical authority. Provisional communicates
+bounded Evidence-backed understanding without creating authority. Insufficient
+is reserved for genuinely insufficient Evidence.
+
+Discovery optimizes for **Maximum Truthful Utility**. Utility and confidence
+are independent. Product-owned Evidence Roles preserve lineage, confidence,
+determinism, and organization isolation while creating no cognition or Runtime
+state. They are canonical product-layer architecture, not canonical cognition.
+
+Users should not see Mechanisms, Beliefs, Theories, or Conditions in ordinary
+product communication. See
+`docs/Product/PRODUCT_COMMUNICATION_ARCHITECTURE.md`.
 
 Discovery should always answer the next executive question.
 

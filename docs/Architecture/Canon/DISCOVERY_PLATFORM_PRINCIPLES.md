@@ -243,6 +243,15 @@ must not expose protected provenance to an unauthorized audience.
 
 ### 18. Applications own utility and interaction
 
+Applications translate canonical cognition rather than presenting it
+directly. Product Translation must be deterministic, lineage-preserving,
+confidence-preserving, and non-authoritative. Applications may communicate
+Supported, Provisional, or Insufficient understanding and should optimize for
+Maximum Truthful Utility without changing cognition or thresholds.
+
+Product-owned Evidence Roles may classify the semantic purpose of admitted
+Evidence for communication. They remain outside canonical cognition.
+
 Applications turn shared intelligence into first-class work: understanding,
 conversation, research, decisions, experiments, execution, review,
 communication, and learning.

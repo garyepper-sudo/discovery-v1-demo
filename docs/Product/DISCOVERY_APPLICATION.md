@@ -26,6 +26,10 @@ The interface exists to guide executives through one continuous organizational l
 
 # Application Identity
 
+Discovery is question-first. The user begins with an objective—“What are you
+trying to understand?”—and the application requests additional Evidence only
+after that objective is known.
+
 The current Discovery application is one continuously running Executive Operating System built on the shared organizational intelligence platform.
 
 It is not a collection of pages.
@@ -147,6 +151,23 @@ It never performs reasoning.
 ---
 
 # Canonical Flow
+
+The canonical communication flow is:
+
+```text
+user question
+→ governed Evidence acquisition
+→ canonical cognition
+→ Product Translation
+→ Supported | Provisional | Insufficient Product Understanding
+→ Truthful Utility
+→ product view model
+→ Discovery Experience
+```
+
+The application exposes organizational understanding rather than raw
+Mechanisms, Beliefs, Theories, or Conditions. Product communication cannot
+create canonical authority or alter confidence.
 
 The application exists to move organizations through the Organizational Lifecycle.
 

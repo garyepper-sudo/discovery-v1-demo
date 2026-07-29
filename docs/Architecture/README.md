@@ -14,6 +14,11 @@ Defines Discovery's permanent architecture, including:
 
 Start with `Canon/COGNITIVE_ARCHITECTURE_INDEX.md` to locate the document that owns each architectural question.
 
+Canonical product communication is governed by
+`../Product/PRODUCT_COMMUNICATION_ARCHITECTURE.md`. Product Translation and
+product-owned Evidence Roles are downstream of cognition and own no cognitive
+or Runtime authority.
+
 `Canon/ORGANIZATIONAL_MECHANISM_LIFECYCLE.md` defines how mechanism identity persists, when understanding is revised rather than treated as new, lifecycle semantics, and longitudinal invariants. Only immediate-previous identity reconciliation is currently implemented; full lifecycle history remains deferred.
 
 ## Cognitive Operating Systems

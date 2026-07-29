@@ -1,6 +1,6 @@
 # Discovery Startup Snapshot
 
-**Milestone:** Discovery Alpha v1.0 operational baseline established.
+**Milestone:** Discovery Product Communication Architecture canonized.
 
 Read
 `docs/Architecture/Canon/DISCOVERY_ALPHA_V1_OPERATIONAL_BASELINE.md` as the
@@ -38,6 +38,12 @@ Disclosure is append-only; future counts must explain deltas rather than treat
   Projection, Authorized Disclosure, View Model, and UI.
 - The accepted architecture is frozen unless evidence and reviewed governance
   explicitly revise it.
+- Onboarding begins with the user's question.
+- Canonical cognition is translated, not exposed directly.
+- Product Understanding is Supported, Provisional, or Insufficient.
+- Truthful Utility is independent of confidence and completion.
+- Evidence Roles remain product-owned and non-authoritative.
+- Organizational Functions remain benchmark-only.
 
 Acceptance Replay 001 passed the nine-scene experience, authentication,
 automatic organization resolution, refresh, navigation, logout, browser Back,
@@ -55,6 +61,8 @@ warnings may remain only while unchanged.
 
 The platform-construction and Production-activation phase is complete. The
 next phase is **Discovery Phase 2 — Customer Value and Organizational
-Understanding**. The immediate next step is **Phase 2.1 — Repeatable
-Organization Activation**. Infrastructure redesign is deprioritized unless
-evidence requires it.
+Understanding**. Question-first onboarding, Product Translation, Truthful
+Utility, and Evidence Roles are complete at the current boundary. The next
+recommended research is Evidence acquisition as a second independent consumer
+of the benchmark-only Organizational Function projection. Infrastructure
+redesign is deprioritized unless evidence requires it.

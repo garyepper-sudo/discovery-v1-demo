@@ -8,7 +8,8 @@
 4. `docs/Sprint Updates/PROJECT_STATE.md`
 5. `docs/Sprint Updates/NEXT_PHASE_PROGRAM.md`
 6. `docs/Product/PRODUCT_CANON.md`
-7. `docs/Architecture/Canon/COGNITIVE_ARCHITECTURE_INDEX.md`
+7. `docs/Product/PRODUCT_COMMUNICATION_ARCHITECTURE.md`
+8. `docs/Architecture/Canon/COGNITIVE_ARCHITECTURE_INDEX.md`
 
 Inspect `git status --short` before acting. Preserve unrelated work and do not
 stage, clean, rename, or inspect the duplicate untracked ` 2` and ` 3` files
@@ -22,6 +23,10 @@ access-authorized Atlas organization. Quantitative truthfulness is active and
 the accepted Production architecture is frozen by default.
 
 Operationally proven does not mean commercially validated.
+
+Question-first onboarding, Product Translation, Truthful Utility, and
+product-owned Evidence Roles are complete. Organizational Functions Experiment
+001 is complete but remains benchmark-only and non-canonical.
 
 ## Current Production Boundary
 
@@ -54,7 +59,10 @@ create organization
 → issue receipt
 ```
 
-Reuse existing infrastructure and preserve default-disabled controls. Do not
+Reuse existing infrastructure and preserve default-disabled controls. For
+product research, the next bounded question is whether Evidence acquisition
+provides a second independent consumer for the non-authoritative
+Organizational Function projection. Keep that work shadow-only. Do not
 resume broad infrastructure construction or redesign Runtime, governance,
 authorization, organization resolution, projection, disclosure, health,
 provisioning, or product boundaries without demonstrated evidence and an

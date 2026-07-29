@@ -6,6 +6,20 @@
 
 # Purpose
 
+This index governs canonical cognition. It does not make internal cognitive
+objects the product interface. User-facing communication is governed by
+`docs/Product/PRODUCT_COMMUNICATION_ARCHITECTURE.md`:
+
+```text
+canonical cognition
+→ non-authoritative Product Translation
+→ Product Understanding
+→ Truthful Utility
+```
+
+Product-owned Evidence Roles are not canonical cognition. Organizational
+Functions remain benchmark-only research and are not part of this index.
+
 This document is the entry point for Discovery's cognitive architecture within the shared organizational intelligence platform.
 
 It explains how Discovery's architectural documents relate to one another and which document answers which architectural question.

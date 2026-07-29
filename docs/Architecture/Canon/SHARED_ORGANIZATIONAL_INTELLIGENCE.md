@@ -114,6 +114,27 @@ No `OrganizationalIntelligence` persistence object, alternate Runtime, or parall
 
 # Core Product Philosophy
 
+Discovery is question-first. It learns what an authorized participant is
+trying to understand before acquiring additional Evidence. The Operating Model
+remains an internal representation and capability, not the onboarding
+objective.
+
+Shared Organizational Intelligence is exposed through a product communication
+boundary:
+
+```text
+canonical cognition
+→ Product Translation
+→ Product Understanding
+→ Truthful Utility
+→ user-facing experience
+```
+
+Product Translation and product-owned Evidence Roles preserve lineage,
+confidence, determinism, and organization scope while creating no canonical
+authority. Organizational Functions are not canonical and remain
+benchmark-only research.
+
 Organizations are adaptive systems. They continuously receive information, coordinate people, make decisions, execute work, create value, learn, and adapt. Discovery exists to improve the shared understanding of those systems.
 
 Intelligence compounds:

@@ -4,6 +4,16 @@
 
 ## Purpose
 
+The user-facing onboarding experience is question-first. It begins with
+“What are you trying to understand?” and acquires additional Evidence only
+after the objective is known. Operating Model construction, organization
+configuration, and file upload remain supporting system capabilities rather
+than onboarding objectives.
+
+Completed onboarding communicates through Product Translation and Truthful
+Utility. It may produce Supported, Provisional, or Insufficient Product
+Understanding without changing canonical authority.
+
 Discovery organization onboarding is a bounded orchestration capability that
 turns independently authorized operator operations into one deterministic,
 observable, restartable lifecycle. It composes the accepted Alpha

@@ -43,6 +43,32 @@ the canonical technical persistence boundary.
 
 # Product Philosophy
 
+Discovery is question-first. The user's first objective is:
+
+> What are you trying to understand?
+
+Do not make Operating Model construction, organization configuration, or
+document upload the onboarding objective. Acquire additional Evidence only
+after the objective is understood.
+
+Canonical cognition is never presented directly in the ordinary product:
+
+```text
+canonical cognition
+→ Product Translation
+→ Product Understanding
+→ Truthful Utility
+→ user-facing experience
+```
+
+Product Translation and product-owned Evidence Roles are deterministic,
+lineage-preserving, confidence-preserving, non-authoritative layers. Product
+Understanding may be Supported, Provisional, or Insufficient. Optimize for
+Maximum Truthful Utility rather than maximum certainty or completion.
+
+Organizational Functions remain benchmark-only research. They are not a
+canonical cognitive layer or production dependency.
+
 Organizations continuously generate:
 
 - evidence
@@ -251,6 +277,10 @@ Never redesign systems simply because another implementation seems cleaner.
 # Product Principles
 
 Executive Work is the center of the product.
+
+Discovery exposes understanding, not internal cognition. Mechanisms, Beliefs,
+Theories, and Conditions remain internal unless a future expert/debug
+experience intentionally and safely exposes them.
 
 Avoid introducing dashboard-style experiences.
 

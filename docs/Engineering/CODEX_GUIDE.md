@@ -233,6 +233,17 @@ Prefer the solution that:
 
 # Product Rules
 
+- Begin product experiences with the user's question, not Operating Model
+  construction, organization configuration, or document upload.
+- Preserve the boundary from canonical cognition through Product Translation
+  to user-facing Product Understanding and Truthful Utility.
+- Treat Evidence Roles as product-owned, deterministic, lineage-preserving,
+  confidence-preserving, and non-authoritative.
+- Do not expose Mechanisms, Beliefs, Theories, or Conditions in ordinary
+  product communication.
+- Keep Organizational Functions benchmark-only unless a separate reviewed
+  promotion decision changes their status.
+
 Do not introduce features outside the current product roadmap.
 
 Current MVP focuses on:
