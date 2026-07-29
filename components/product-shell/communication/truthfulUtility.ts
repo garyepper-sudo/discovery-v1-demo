@@ -3,6 +3,7 @@ import type {
   DiscoveryV3Result,
   V3Evidence,
 } from "../../../engine/v3/types";
+import type { CanonicalEvidenceRoleAssignment } from "./evidenceRoles";
 import type {
   GroundedProductStatement,
   ProductUnderstanding,
@@ -43,14 +44,19 @@ type UtilityInput = {
   understanding: ProductUnderstanding;
 };
 
+type RoleGroundedFact = {
+  finding: GroundedProductStatement;
+  assignment?: CanonicalEvidenceRoleAssignment;
+};
+
 type UtilityProfile = {
   domain: UtilityDomain;
   question: RegExp;
-  relevantEvidence: RegExp;
   requiredEvidence: readonly {
     role: string;
     direction: "increase" | "decrease" | "friction";
-    pattern: RegExp;
+    matches: (assignment: CanonicalEvidenceRoleAssignment) => boolean;
+    fallbackPattern: RegExp;
   }[];
   insight: string;
   implication: string;
@@ -62,19 +68,27 @@ type UtilityProfile = {
 const PROFILES: readonly UtilityProfile[] = [
   {
     domain: "sales",
-    question: /\b(sales|revenue|pipeline|conversion|close rate|growth)\b/i,
-    relevantEvidence:
-      /\b(sales|revenue|pipeline|conversion|close rate|win percentage|sales cycle|commission\w*|incentive|outreach|opportunit\w*|customer|pricing|competition|product fit)\b/i,
+    question: /\b(sales|revenue|pipeline|conversion|close rates?|growth)\b/i,
     requiredEvidence: [
       {
         role: "sales-effort-or-incentive",
         direction: "increase",
-        pattern: /\b(?:sales activity|sales effort|outreach|commission|incentive compensation|incentive).*\b(?:increas\w*|rais\w*|rose|grew|higher|more)\b/i,
+        matches: (assignment) =>
+          assignment.roles.includes("execution-signal") &&
+          assignment.direction === "increasing",
+        fallbackPattern: /\b(?:sales activity|sales effort|outreach|commission|incentive compensation|incentive).*\b(?:increas\w*|rais\w*|rose|grew|higher|more)\b/i,
       },
       {
         role: "conversion-or-cycle-performance",
         direction: "decrease",
-        pattern: /\b(?:conversion|close rate|win percentage|sales cycle|opportunit\w*).*\b(?:declin\w*|decreas\w*|fell|drop\w*|longer|increas\w*|rose|slow\w*|took longer)\b/i,
+        matches: (assignment) =>
+          assignment.roles.includes("demand-signal") &&
+          (
+            assignment.roles.includes("weakens") ||
+            assignment.direction === "decreasing" ||
+            assignment.direction === "friction"
+          ),
+        fallbackPattern: /\b(?:conversion|close rate|win percentage|sales cycle|opportunit\w*).*\b(?:declin\w*|decreas\w*|fell|drop\w*|longer|increas\w*|rose|slow\w*|took longer)\b/i,
       },
     ],
     insight:
@@ -119,18 +133,26 @@ const PROFILES: readonly UtilityProfile[] = [
   {
     domain: "execution",
     question: /\b(project|delivery|release|execution|delay\w*|deadline)\b/i,
-    relevantEvidence:
-      /\b(project|delivery|release|committed work|delay|deadline|approval|rework|handoff|dependenc\w*|blocked|waiting|cycle time)\b/i,
     requiredEvidence: [
       {
         role: "delivery-performance",
         direction: "decrease",
-        pattern: /\b(?:delivery|release|project|deadline|committed work|cycle time).*\b(?:delay\w*|miss\w*|late|later|longer|increas\w*|slow\w*)\b/i,
+        matches: (assignment) =>
+          assignment.roles.includes("execution-signal") &&
+          (
+            assignment.roles.includes("weakens") ||
+            assignment.direction === "decreasing" ||
+            assignment.direction === "friction"
+          ),
+        fallbackPattern: /\b(?:delivery|release|project|deadline|committed work|cycle time).*\b(?:delay\w*|miss\w*|late|later|longer|increas\w*|slow\w*)\b/i,
       },
       {
         role: "dependency-or-rework-friction",
         direction: "friction",
-        pattern: /\b(?:approval|rework|handoff|dependenc\w*|blocked|waiting|wait\w*).*\b(?:increas\w*|delay\w*|longer|unresolved|blocked|wait\w*)\b/i,
+        matches: (assignment) =>
+          assignment.roles.includes("constraint-signal") &&
+          assignment.direction === "friction",
+        fallbackPattern: /\b(?:approval|rework|handoff|dependenc\w*|blocked|waiting|wait\w*).*\b(?:increas\w*|delay\w*|longer|unresolved|blocked|wait\w*)\b/i,
       },
     ],
     insight:
@@ -169,18 +191,26 @@ const PROFILES: readonly UtilityProfile[] = [
   {
     domain: "hiring",
     question: /\b(hiring|headcount|recruit|staffing|capacity|open roles?)\b/i,
-    relevantEvidence:
-      /\b(hiring|headcount|recruit|candidate|staffing|capacity|open roles?|approved openings?|time to fill|vacan|workload|understaff)\b/i,
     requiredEvidence: [
       {
         role: "staffing-demand-or-shortfall",
         direction: "increase",
-        pattern: /\b(?:capacity|open roles?|approved openings?|vacanc\w*|workload|demand|understaff\w*).*\b(?:increas\w*|rose|grew|higher|exceed\w*|short\w*|remain\w*)\b/i,
+        matches: (assignment) =>
+          assignment.roles.includes("capacity-signal") &&
+          (
+            assignment.roles.includes("demand-signal") &&
+            assignment.direction === "increasing" ||
+            assignment.roles.includes("weakens")
+          ),
+        fallbackPattern: /\b(?:capacity|open roles?|approved openings?|vacanc\w*|workload|demand|understaff\w*).*\b(?:increas\w*|rose|grew|higher|exceed\w*|short\w*|remain\w*)\b/i,
       },
       {
         role: "hiring-throughput",
         direction: "decrease",
-        pattern: /\b(?:time to fill|fill roles?|hiring|recruit\w*|candidate).*\b(?:increas\w*|lengthen\w*|longer|slow\w*|declin\w*|decreas\w*|fell)\b/i,
+        matches: (assignment) =>
+          assignment.roles.includes("capacity-signal") &&
+          assignment.direction === "friction",
+        fallbackPattern: /\b(?:time to fill|fill roles?|hiring|recruit\w*|candidate).*\b(?:increas\w*|lengthen\w*|longer|slow\w*|declin\w*|decreas\w*|fell)\b/i,
       },
     ],
     insight:
@@ -218,19 +248,27 @@ const PROFILES: readonly UtilityProfile[] = [
   },
   {
     domain: "decisions",
-    question: /\b(decision|approval|authority|stuck|escalat)\b/i,
-    relevantEvidence:
-      /\b(decision|approval|authority|stuck|escalat|waiting|review|owner|sign[- ]?offs?)\b/i,
+    question: /\b(decisions?|approvals?|authority|stuck|escalat\w*)\b/i,
     requiredEvidence: [
       {
         role: "decision-latency",
         direction: "increase",
-        pattern: /\b(?:decision|approval).*\b(?:delay\w*|slow\w*|longer|increas\w*|waiting|elapsed time|more time)\b/i,
+        matches: (assignment) =>
+          assignment.roles.includes("decision-signal") &&
+          assignment.roles.includes("temporal-trend") &&
+          assignment.direction === "friction",
+        fallbackPattern: /\b(?:decision|approval).*\b(?:delay\w*|slow\w*|longer|increas\w*|waiting|elapsed time|more time)\b/i,
       },
       {
         role: "approval-or-escalation-dependency",
         direction: "friction",
-        pattern: /\b(?:approval|escalat\w*|authority|sign[- ]off).*\b(?:requir\w*|increas\w*|concentrat\w*|senior|executive|\d|%)\b/i,
+        matches: (assignment) =>
+          assignment.roles.includes("decision-signal") &&
+          (
+            assignment.roles.includes("leadership-observation") ||
+            assignment.roles.includes("constraint-signal")
+          ),
+        fallbackPattern: /\b(?:approval|escalat\w*|authority|sign[- ]off).*\b(?:requir\w*|increas\w*|concentrat\w*|senior|executive|\d|%)\b/i,
       },
     ],
     insight:
@@ -268,19 +306,23 @@ const PROFILES: readonly UtilityProfile[] = [
   },
   {
     domain: "retention",
-    question: /\b(retention|churn|renewal|customer loss|customers leaving)\b/i,
-    relevantEvidence:
-      /\b(retention|churn|renewal|customer|usage|adoption|support|complaint|cancel\w*|loss reason)\b/i,
+    question: /\b(retention|churn|renewals?|customer loss|customers leaving)\b/i,
     requiredEvidence: [
       {
         role: "retention-performance",
         direction: "decrease",
-        pattern: /\b(?:customer retention|renewal|churn).*\b(?:declin\w*|decreas\w*|fell|increas\w*|weaken\w*|loss|drop\w*)\b/i,
+        matches: (assignment) =>
+          assignment.roles.includes("retention-signal") &&
+          assignment.roles.includes("weakens"),
+        fallbackPattern: /\b(?:customer retention|renewal|churn).*\b(?:declin\w*|decreas\w*|fell|increas\w*|weaken\w*|loss|drop\w*)\b/i,
       },
       {
         role: "customer-behavior-or-experience",
         direction: "friction",
-        pattern: /\b(?:usage|adoption|support|complaint|customer experience|cancellation reason).*\b(?:declin\w*|decreas\w*|fell|increas\w*|chang\w*|wors\w*|drop\w*)\b/i,
+        matches: (assignment) =>
+          assignment.roles.includes("customer-observation") &&
+          assignment.roles.includes("weakens"),
+        fallbackPattern: /\b(?:usage|adoption|support|complaint|customer experience|cancellation reason).*\b(?:declin\w*|decreas\w*|fell|increas\w*|chang\w*|wors\w*|drop\w*)\b/i,
       },
     ],
     insight:
@@ -375,13 +417,21 @@ function lineageFor(
 function admittedFacts(
   profile: UtilityProfile,
   input: UtilityInput,
-): GroundedProductStatement[] {
+): RoleGroundedFact[] {
   const admittedIds = new Set(input.understanding.lineage.evidenceIds);
+  const rolesByEvidenceId = new Map(
+    (input.understanding.evidenceRoles ?? []).map((assignment) => [
+      assignment.evidenceId,
+      assignment,
+    ])
+  );
+  const rolesAvailable = rolesByEvidenceId.size > 0;
   const byText = new Map<string, V3Evidence>();
   for (const evidence of [...input.result.evidence].sort((left, right) =>
     compare(left.id, right.id)
   )) {
     const statement = clean(evidence.text);
+    const assignment = rolesByEvidenceId.get(evidence.id);
     if (
       !admittedIds.has(evidence.id) ||
       evidence.type === "question" ||
@@ -392,7 +442,16 @@ function admittedFacts(
       NON_OBSERVATION.test(statement) ||
       NEGATED_OR_REVERSED.test(statement) ||
       IRRELEVANT_CONTEXT.test(statement) ||
-      !profile.relevantEvidence.test(statement)
+      (
+        rolesAvailable
+          ? !assignment ||
+            !profile.requiredEvidence.some(({ matches }) =>
+              matches(assignment)
+            )
+          : !profile.requiredEvidence.some(({ fallbackPattern }) =>
+              fallbackPattern.test(statement)
+            )
+      )
     ) {
       continue;
     }
@@ -405,23 +464,33 @@ function admittedFacts(
   return [...byText.values()]
     .sort((left, right) => compare(normalized(left.text), normalized(right.text)))
     .slice(0, 4)
-    .map((evidence) => {
+    .map((evidence): RoleGroundedFact => {
       const statement = clean(evidence.text);
       return {
-        statement,
-        basis: `This is directly reported in the submitted evidence: “${statement}”`,
-        lineage: lineageFor(evidence, input.result),
+        finding: {
+          statement,
+          basis: `This is directly reported in the submitted evidence: “${statement}”`,
+          lineage: lineageFor(evidence, input.result),
+        },
+        assignment: rolesByEvidenceId.get(evidence.id),
       };
     });
 }
 
 function satisfiesRequiredEvidence(
   profile: UtilityProfile,
-  facts: readonly GroundedProductStatement[],
+  facts: readonly RoleGroundedFact[],
 ): boolean {
-  const matches = profile.requiredEvidence.map(({ pattern }) =>
+  const rolesAvailable = facts.some((fact) => Boolean(fact.assignment));
+  const matches = profile.requiredEvidence.map((requirement) =>
     facts.flatMap((fact, index) =>
-      pattern.test(fact.statement) ? [index] : []
+      (
+          rolesAvailable && fact.assignment
+            ? requirement.matches(fact.assignment)
+            : requirement.fallbackPattern.test(fact.finding.statement)
+        )
+        ? [index]
+        : []
     )
   );
   function assign(roleIndex: number, used: ReadonlySet<number>): boolean {
@@ -495,11 +564,12 @@ export function optimizeTruthfulUtility(input: UtilityInput): ProductUtility {
     throw new Error("Truthful utility organization mismatch.");
   }
   const profile = domainProfile(input.result);
-  const facts = profile ? admittedFacts(profile, input) : [];
+  const roleFacts = profile ? admittedFacts(profile, input) : [];
+  const facts = roleFacts.map((item) => item.finding);
   const canAddUtility = Boolean(
     profile &&
     facts.length >= 2 &&
-    satisfiesRequiredEvidence(profile, facts)
+    satisfiesRequiredEvidence(profile, roleFacts)
   );
   const insight: GroundedProductStatement | null =
     profile && canAddUtility

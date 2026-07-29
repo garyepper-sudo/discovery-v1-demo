@@ -58,6 +58,7 @@
     "validate:onboarding-investigation-idempotency": "tsx scripts/product/validateOnboardingInvestigationIdempotency.ts",
     "validate:product-understanding-translation": "tsx scripts/product/validateProductUnderstandingTranslation.ts",
     "validate:truthful-utility": "tsx scripts/product/validateTruthfulUtility.ts",
+    "validate:evidence-roles": "tsx scripts/product/validateEvidenceRoles.ts",
     "experiment:organizational-functions": "tsx engine/benchmark/research/organizational-functions-experiment-001/runOrganizationalFunctionsExperiment001.ts",
     "validate:canonical-product-routes": "tsx scripts/product/validateCanonicalProductRoutes.ts",
     "onboarding:test:reset": "tsx --env-file=.env.local scripts/development/resetOnboardingTestUser.ts",

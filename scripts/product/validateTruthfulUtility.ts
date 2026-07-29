@@ -192,7 +192,7 @@ function assertNoDomainUtility(comparison: Comparison): void {
   assert.equal(
     comparison.utility.decisionImplications.length,
     0,
-    `${comparison.name} must not synthesize a decision implication`,
+    `${comparison.name} must not synthesize a decision implication; roles: ${JSON.stringify(comparison.old.evidenceRoles)}`,
   );
   assert.equal(
     comparison.utility.watchNext.length,
@@ -634,6 +634,13 @@ console.info(JSON.stringify({
     boundedUtilityAdded:
       comparison.utility.decisionImplications.length > 0,
   })),
+}, null, 2));
+console.info(JSON.stringify({
+  unrecoveredIndependentParaphrases: paraphraseComparisons
+    .filter((comparison) =>
+      comparison.utility.decisionImplications.length === 0
+    )
+    .map((comparison) => comparison.name),
 }, null, 2));
 console.info(
   `Truthful utility validation passed: exact grammar ${comparisons.length}/${comparisons.length}; independent paraphrases ${paraphraseRecoveryCount}/${paraphraseCases.length}; near-miss precision ${nearMissCases.length}/${nearMissCases.length}; negation/reversal ${negationAndReversalCases.length}/${negationAndReversalCases.length}; hypotheses ${hypotheticalCases.length}/${hypotheticalCases.length}; cross-domain precision 1/1. Structural proxy scores are deterministic coverage indicators, not measured user utility.`,

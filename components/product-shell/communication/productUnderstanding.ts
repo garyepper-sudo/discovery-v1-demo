@@ -4,6 +4,11 @@ import type {
   V3Evidence,
   V3Observation,
 } from "../../../engine/v3/types";
+import {
+  classifyCanonicalEvidenceRoles,
+  type CanonicalEvidenceRole,
+  type CanonicalEvidenceRoleAssignment,
+} from "./evidenceRoles";
 
 export type ProductUnderstandingLineage = {
   explanationIds: string[];
@@ -39,6 +44,7 @@ export type ProductUnderstanding = {
     label: string;
     explanation: string;
   };
+  evidenceRoles?: CanonicalEvidenceRoleAssignment[];
   lineage: ProductUnderstandingLineage;
 };
 
@@ -138,13 +144,44 @@ function matchingObservation(
     .sort((left, right) => compare(left.id, right.id))[0];
 }
 
-function isSpecificFinding(evidence: V3Evidence): boolean {
+function hasRole(
+  assignment: CanonicalEvidenceRoleAssignment | undefined,
+  role: CanonicalEvidenceRole,
+): boolean {
+  return assignment?.roles.includes(role) ?? false;
+}
+
+function isSpecificFinding(
+  evidence: V3Evidence,
+  assignment: CanonicalEvidenceRoleAssignment | undefined,
+): boolean {
   const text = cleanSentence(evidence.text);
+  const semanticRole = [
+    "customer-observation",
+    "leadership-observation",
+    "constraint-signal",
+    "execution-signal",
+    "demand-signal",
+    "capacity-signal",
+    "decision-signal",
+    "retention-signal",
+  ].some((role) =>
+    hasRole(assignment, role as CanonicalEvidenceRole)
+  );
+  const roleAdmitted =
+    semanticRole &&
+    (
+      hasRole(assignment, "temporal-trend") ||
+      (
+        hasRole(assignment, "constraint-signal") &&
+        assignment?.direction === "friction"
+      )
+    );
   return (
     !ALTERNATIVE_PREFIX.test(text) &&
     !UNRESOLVED_CAUSE.test(text) &&
     !/\b(?:because|caused by|due to|the reason is)\b/i.test(text) &&
-    (QUANTIFIED.test(text) || SPECIFIC_CHANGE.test(text))
+    (roleAdmitted || QUANTIFIED.test(text) || SPECIFIC_CHANGE.test(text))
   );
 }
 
@@ -177,25 +214,36 @@ function directFinding(
 function salesContrast(
   evidence: readonly V3Evidence[],
   observations: readonly V3Observation[],
+  rolesByEvidenceId: ReadonlyMap<string, CanonicalEvidenceRoleAssignment>,
 ): GroundedProductStatement | null {
   const activity = evidence.find((item) =>
-    /\bsales activity\b.*\bincreas/i.test(item.text)
+    hasRole(rolesByEvidenceId.get(item.id), "execution-signal") &&
+    rolesByEvidenceId.get(item.id)?.direction === "increasing"
   );
-  const closeRate = evidence.find((item) =>
-    /\bclose rates?\b.*\b(declin|decreas|fell)/i.test(item.text)
-  );
-  const cycle = evidence.find((item) =>
-    /\bsales(?:-| )cycle\b.*\b(increas|longer|rose)/i.test(item.text)
-  );
-  if (!activity || (!closeRate && !cycle)) return null;
-  const weakening = [closeRate, cycle].filter(
-    (item): item is V3Evidence => Boolean(item),
-  );
-  const statements = weakening.map((item) =>
+  const weakening = evidence.filter((item) => {
+    const assignment = rolesByEvidenceId.get(item.id);
+    return (
+      hasRole(assignment, "demand-signal") &&
+      (
+        hasRole(assignment, "weakens") ||
+        assignment?.direction === "decreasing" ||
+        assignment?.direction === "friction"
+      )
+    );
+  }).slice(0, 2);
+  if (!activity || weakening.length === 0) {
+    return null;
+  }
+  const weakeningStatements = weakening.map((item) =>
     cleanSentence(item.text).replace(/[.]$/, "")
   );
+  const leadingStatement = /\b(?:sales activity|outreach)\b/i.test(
+    activity.text,
+  )
+    ? "Sales activity increased"
+    : "Sales effort or incentives increased";
   const statement =
-    `Sales activity increased while ${statements.join(" and ").replace(
+    `${leadingStatement} while ${weakeningStatements.join(" and ").replace(
       /^./,
       (character) => character.toLowerCase(),
     )}.`;
@@ -399,6 +447,13 @@ export function translateProductUnderstanding(
   }
 
   const evidence = productEvidence(input.result);
+  const evidenceRoles = classifyCanonicalEvidenceRoles(input);
+  const rolesByEvidenceId = new Map(
+    evidenceRoles.map((assignment) => [
+      assignment.evidenceId,
+      assignment,
+    ])
+  );
   const observations = [...input.result.observations].sort((left, right) =>
     compare(left.id, right.id)
   );
@@ -408,9 +463,11 @@ export function translateProductUnderstanding(
   );
   const question = questionEvidence?.text.replace(/^question:\s*/i, "") ?? "";
   const isSales = SALES_QUESTION.test(question);
-  const specificEvidence = evidence.filter(isSpecificFinding);
+  const specificEvidence = evidence.filter((item) =>
+    isSpecificFinding(item, rolesByEvidenceId.get(item.id))
+  );
   const contrast = isSales
-    ? salesContrast(specificEvidence, observations)
+    ? salesContrast(specificEvidence, observations, rolesByEvidenceId)
     : null;
   const directFindings = specificEvidence
     .filter((item) =>
@@ -479,6 +536,7 @@ export function translateProductUnderstanding(
         explanation:
           "A useful interpretation requires at least two concrete observations connected to the question.",
       },
+      evidenceRoles,
       lineage: overallLineage,
     };
   }
@@ -519,6 +577,7 @@ export function translateProductUnderstanding(
           explanation:
             "This is a provisional interpretation of the submitted evidence, not an established causal conclusion.",
         },
+    evidenceRoles,
     lineage: overallLineage,
   };
 }
