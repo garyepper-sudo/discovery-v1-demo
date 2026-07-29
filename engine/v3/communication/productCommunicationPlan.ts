@@ -476,11 +476,16 @@ function exactSourceText(
     const condition = projection.conditions.find(
       (item) => referenceIdentity(item.canonicalRef) === referenceIdentity(reference),
     );
-    if (condition?.value.summary) {
+    const conditionText =
+      area === "uncertainty"
+        ? condition?.value.uncertaintySummary
+        : condition?.value.summary;
+    if (condition && conditionText) {
       return {
-        text: condition.value.summary,
+        text: conditionText,
         sourceRef: copyReference(condition.canonicalRef),
-        sourceField: "summary",
+        sourceField:
+          area === "uncertainty" ? "uncertaintySummary" : "summary",
         sourceOwner: "canonical_cognition",
       };
     }
@@ -572,8 +577,13 @@ function item(
   supportingRefs: readonly CanonicalObjectReference[],
   priority: CommunicationPriorityProvenance,
   area: ProductCommunicationAvailabilityArea,
+  source?: {
+    itemId: string;
+    sourceText?: SourcePassThroughText;
+  },
 ): CommunicationPlanItem {
-  const sourceText = exactSourceText(projection, subjectRef, area);
+  const sourceText =
+    source?.sourceText ?? exactSourceText(projection, subjectRef, area);
   const evolution = area === "changes"
     ? projection.evolution.find(
         (entry) =>
@@ -597,7 +607,9 @@ function item(
       ),
   );
   return {
-    itemId: `communication-item:${encodeURIComponent(referenceIdentity(subjectRef))}`,
+    itemId:
+      source?.itemId ??
+      `communication-item:${encodeURIComponent(referenceIdentity(subjectRef))}`,
     subjectRef: copyReference(subjectRef),
     ...(sourceText ? { sourceText } : {}),
     supportingRefs: normalizeReferences(supportingRefs),
@@ -771,7 +783,44 @@ export function compileProductCommunicationPlan(
     ),
   );
 
-  const uncertainty = [...projection.uncertainty]
+  const projectedUncertainty = [...projection.uncertainty]
+    .sort((left, right) => compare(left.id, right.id))
+    .map((entry) => {
+      const sourceText =
+        entry.value.owner === "organizational-explanation"
+          ? {
+              text: entry.value.statement,
+              sourceRef: copyReference(entry.canonicalRef),
+              sourceField: "uncertainty.statement",
+              sourceOwner: "canonical_cognition" as const,
+            }
+          : entry.value.owner === "organizational-uncertainty"
+            ? {
+                text: entry.value.driver.description,
+                sourceRef: copyReference(entry.canonicalRef),
+                sourceField: "driver.description",
+                sourceOwner: "canonical_cognition" as const,
+              }
+            : undefined;
+      return item(
+        projection,
+        entry.canonicalRef,
+        entry.supportingRefs,
+        {
+          source: "experience_requirement",
+          ruleId: "unresolved-uncertainty-required",
+          subjectRef: copyReference(entry.canonicalRef),
+          explanation: { code: "unresolved_uncertainty_required" },
+        },
+        "uncertainty",
+        {
+          itemId: `communication-item:uncertainty:${encodeURIComponent(entry.id)}`,
+          ...(sourceText ? { sourceText } : {}),
+        },
+      );
+    });
+  const conditionUncertainty = [...projection.conditions]
+    .filter((entry) => entry.value.uncertaintySummary?.trim())
     .sort((left, right) => compare(left.id, right.id))
     .map((entry) =>
       item(
@@ -787,6 +836,7 @@ export function compileProductCommunicationPlan(
         "uncertainty",
       ),
     );
+  const uncertainty = [...projectedUncertainty, ...conditionUncertainty];
   const changes = [...projection.evolution]
     .sort((left, right) => compare(left.id, right.id))
     .map((entry) =>

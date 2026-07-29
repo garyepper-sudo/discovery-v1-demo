@@ -69,6 +69,7 @@
     "validate:why-discovery-believes-this": "tsx scripts/product/validateWhyDiscoveryBelievesThis.ts",
     "validate:what-changed-and-why": "tsx scripts/product/validateWhatChangedAndWhy.ts",
     "validate:why-this-evidence-matters": "tsx scripts/product/validateWhyThisEvidenceMatters.ts",
+    "validate:canonical-product-composition": "tsx scripts/product/validateCanonicalProductComposition.ts",
     "storage:migrate": "tsx scripts/storage/migrateAlphaGovernance.ts up",
     "storage:status": "tsx scripts/storage/migrateAlphaGovernance.ts status",
     "storage:reset:local": "tsx scripts/storage/migrateAlphaGovernance.ts reset",

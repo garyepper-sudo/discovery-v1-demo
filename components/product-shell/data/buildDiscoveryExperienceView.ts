@@ -23,6 +23,37 @@ function items(
   return selected.length ? selected : [fallback];
 }
 
+function originalInvestigationQuestion(runtime: OrganizationRuntime): string {
+  const memory = runtime.memory as unknown as {
+    understandingSnapshots?: Array<{
+      question?: string;
+      timestamp?: string;
+    }>;
+    events?: Array<{
+      question?: string;
+      timestamp?: string;
+    }>;
+  };
+  const candidates = [
+    ...(memory.understandingSnapshots ?? []),
+    ...(memory.events ?? []),
+  ]
+    .flatMap((entry) =>
+      entry.question?.trim()
+        ? [{
+            question: entry.question.trim(),
+            timestamp: entry.timestamp?.trim() ?? "",
+          }]
+        : [],
+    )
+    .sort((left, right) =>
+      `${left.timestamp}\0${left.question}`.localeCompare(
+        `${right.timestamp}\0${right.question}`,
+      ),
+    );
+  return candidates[0]?.question ?? "Original question unavailable";
+}
+
 export function buildDiscoveryExperienceView(input: {
   runtime: OrganizationRuntime;
   view: ActivatedView;
@@ -34,8 +65,12 @@ export function buildDiscoveryExperienceView(input: {
   const uncertainty = availableText(sections.uncertainty.summary);
   const condition = availableText(sections.conditions.summary);
   const state = availableText(sections.organizationalState.summary);
+  const canonicalInquiry =
+    view.evidenceRequestDisclosure?.request?.question.trim() || null;
   const investigations = items(
-    sections.investigations.items,
+    canonicalInquiry
+      ? [canonicalInquiry]
+      : sections.investigations.items,
     "No additional inquiry is currently authorized.",
   );
   const changeItems = items(
@@ -63,7 +98,7 @@ export function buildDiscoveryExperienceView(input: {
     understanding: {
       id: view.insights[0]?.id ?? "authorized-organizational-understanding",
       title: "Current Organizational Understanding",
-      originalQuestion: investigations[0],
+      originalQuestion: originalInvestigationQuestion(runtime),
       objective: understanding,
       synthesis: understanding,
       explanation,

@@ -78,6 +78,12 @@ function useAlphaExperience() {
   return useContext(AlphaExperienceContext);
 }
 
+function expectedContribution(experience: AlphaFixture): string {
+  const gain = experience.understanding.evidenceRequestDisclosure?.request
+    ?.expectedConfidenceGain;
+  return typeof gain === "number" ? `${gain} points` : "Unavailable";
+}
+
 const sceneLabels: Record<AlphaScene, { label: string; description: string }> = {
   ask: { label: "Ask", description: "Begin with a question" },
   orient: { label: "Orient", description: "Review objective and scope" },
@@ -412,7 +418,11 @@ function PlanScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
                   </div>
                   <div className={styles.contribution}>
                     <small>Expected contribution</small>
-                    <b>{source.contribution ?? "Unavailable"}</b>
+                    <b>
+                      {hosted
+                        ? expectedContribution(experience)
+                        : source.contribution ?? "Unavailable"}
+                    </b>
                   </div>
                   <button type="button" onClick={() => cycleSource(source.id)}>
                     {source.state} <ChevronDown size={15} aria-hidden="true" />
@@ -627,11 +637,7 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
                     Expected contribution:{" "}
                     <strong>
                       {hosted
-                        ? typeof experience.understanding
-                              .evidenceRequestDisclosure?.request
-                              ?.expectedConfidenceGain === "number"
-                          ? "Estimated"
-                          : "Unavailable"
+                        ? expectedContribution(experience)
                         : "High"}
                     </strong>
                   </p>
@@ -781,7 +787,12 @@ function FollowScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
         <Panel className={styles.nextLikely}>
           <Target size={30} aria-hidden="true" />
           <div><Eyebrow>{hosted ? "Available next inquiry" : "Next likely learning"}</Eyebrow><h2>{hosted ? experience.sources[0]?.title ?? "Not yet available in this Alpha" : "Compare the consistently delivering team with the rest of Engineering."}</h2><p>{hosted ? "This inquiry is available from the authorized projection." : "This comparison could materially qualify the current explanation."}</p></div>
-          <div><small>Expected contribution</small><strong>{hosted ? "Unavailable" : "High"}</strong></div>
+          <div>
+            <small>Expected contribution</small>
+            <strong>
+              {hosted ? expectedContribution(experience) : "High"}
+            </strong>
+          </div>
         </Panel>
         <FollowConfirmation paused={paused} onToggle={() => setPaused((value) => !value)} />
         <footer className={styles.followFooter}>
