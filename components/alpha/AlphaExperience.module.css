@@ -1314,7 +1314,8 @@
   display: inline;
   margin: 0;
   font-family: Georgia, serif;
-  font-size: clamp(35px, 4vw, 52px);
+  font-size: clamp(26px, 2.8vw, 36px);
+  line-height: 1.2;
   font-weight: 400;
 }
 
@@ -1349,6 +1350,81 @@
   grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr);
   gap: 28px;
   padding: 32px 40px;
+}
+
+.answerFirst {
+  display: grid;
+  gap: 16px;
+}
+
+.currentAnswerPanel {
+  padding: 30px 40px;
+}
+
+.currentAnswerPanel h2 {
+  max-width: 880px;
+  margin: 16px 0 0;
+  font-family: Georgia, serif;
+  font-size: clamp(30px, 3.4vw, 44px);
+  line-height: 1.2;
+  font-weight: 400;
+}
+
+.answerFirstContext {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.answerFirstContext > div {
+  padding: 24px 30px;
+}
+
+.answerFirstContext > div + div {
+  border-left: 1px solid var(--alpha-line);
+}
+
+.answerFirstContext p {
+  margin: 10px 0 0;
+  font-family: Georgia, serif;
+  font-size: 21px;
+  line-height: 1.4;
+}
+
+.answerFirstContext small {
+  display: block;
+  margin-top: 12px;
+  color: var(--alpha-muted);
+}
+
+.answerFirstDisclosures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  padding: 0 6px;
+}
+
+.supportingSummary {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr);
+  gap: 28px;
+  padding: 28px 40px;
+}
+
+.supportingSummary > div:first-child {
+  padding-right: 24px;
+  border-right: 1px solid #dfe6e3;
+}
+
+.supportingSummary p {
+  line-height: 1.65;
+}
+
+.supportingSummary span {
+  color: var(--alpha-muted);
+  font-size: 12px;
 }
 
 .synthesisCopy {
@@ -2535,6 +2611,22 @@
     padding: 20px;
   }
 
+  .answerFirstContext,
+  .supportingSummary {
+    grid-template-columns: 1fr;
+  }
+
+  .answerFirstContext > div + div {
+    border-left: 0;
+    border-top: 1px solid var(--alpha-line);
+  }
+
+  .supportingSummary > div:first-child {
+    padding: 0 0 18px;
+    border-right: 0;
+    border-bottom: 1px solid #dfe6e3;
+  }
+
   .synthesisCopy {
     padding: 0 0 18px;
     border: 0;
@@ -2815,6 +2907,12 @@
 
   .synthesisPanel {
     padding: 16px;
+  }
+
+  .currentAnswerPanel,
+  .answerFirstContext > div,
+  .supportingSummary {
+    padding: 18px;
   }
 
   .synthesisCopy h2 {

@@ -84,6 +84,16 @@ function expectedContribution(experience: AlphaFixture): string {
   return typeof gain === "number" ? `${gain} points` : "Unavailable";
 }
 
+function boundedCurrentAnswer(synthesis: string): string {
+  const sentenceEnd = [". ", "? ", "! "]
+    .map((separator) => synthesis.indexOf(separator))
+    .filter((index) => index >= 0)
+    .sort((left, right) => left - right)[0];
+  return sentenceEnd === undefined
+    ? synthesis
+    : synthesis.slice(0, sentenceEnd + 1);
+}
+
 const sceneLabels: Record<AlphaScene, { label: string; description: string }> = {
   ask: { label: "Ask", description: "Begin with a question" },
   orient: { label: "Orient", description: "Review objective and scope" },
@@ -554,6 +564,9 @@ function LearnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
 
 function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
   const { experience, hosted } = useAlphaExperience();
+  const currentAnswer = boundedCurrentAnswer(
+    experience.understanding.synthesis,
+  );
   const details = [
     ["why", "Why this matters", experience.understanding.whyItMatters, "green"],
     ["strongest", hosted ? "Current explanation" : "Strongest explanation", experience.understanding.strongestExplanation, "violet"],
@@ -573,9 +586,12 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
               {hosted ? <Lightbulb size={32} aria-hidden="true" /> : <TrendingUp size={32} aria-hidden="true" />}
             </span>
             <div>
-              <h1 data-scene-heading tabIndex={-1}>{experience.understanding.title}</h1>
+              <Eyebrow>Original question</Eyebrow>
+              <h1 data-scene-heading tabIndex={-1}>
+                {experience.understanding.originalQuestion}
+              </h1>
               <span className={styles.livingBadge}>Living Understanding</span>
-              <p>Original question: <button type="button">{experience.understanding.originalQuestion}</button></p>
+              <p>{experience.understanding.title}</p>
             </div>
           </div>
           <Action tone="secondary" onClick={() => navigate("follow")}>Follow this Understanding</Action>
@@ -586,6 +602,7 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
           evidenceRequestDisclosure={
             experience.understanding.evidenceRequestDisclosure
           }
+          fullSynthesis={experience.understanding.synthesis}
           details={details}
         >
           {({
@@ -595,20 +612,55 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
             changeDisclosure,
             evidenceRequestTrigger,
             evidenceRequestDisclosure,
+            fullSynthesisTrigger,
+            fullSynthesisDisclosure,
             detailGrid,
           }) => (
             <>
-              <Panel tone="green" className={styles.synthesisPanel}>
-                <div className={styles.synthesisCopy}>
-                  <Eyebrow>Current synthesis</Eyebrow>
-                  <h2>{experience.understanding.synthesis}</h2>
+              <section
+                className={styles.answerFirst}
+                aria-label="Current organizational understanding"
+              >
+                <Panel tone="green" className={styles.currentAnswerPanel}>
+                  <Eyebrow>Current answer</Eyebrow>
+                  <h2>{currentAnswer}</h2>
+                </Panel>
+                <Panel className={styles.answerFirstContext}>
+                  <div>
+                    <Eyebrow>Remaining uncertainty</Eyebrow>
+                    <p>{experience.understanding.primaryUnknown}</p>
+                  </div>
+                  <div>
+                    <Eyebrow tone="violet">Next learning opportunity</Eyebrow>
+                    <p>
+                      {experience.sources[0]?.title ??
+                        "No additional inquiry is currently authorized."}
+                    </p>
+                    <small>
+                      Expected contribution:{" "}
+                      <strong>{expectedContribution(experience)}</strong>
+                    </small>
+                  </div>
+                </Panel>
+                <div className={styles.answerFirstDisclosures}>
+                  {trigger}
+                  {hosted && changeTrigger}
+                  {hosted && evidenceRequestTrigger}
+                  {fullSynthesisTrigger}
+                </div>
+              </section>
+              {disclosure}
+              {changeDisclosure}
+              {evidenceRequestDisclosure}
+              {fullSynthesisDisclosure}
+              <Panel className={styles.supportingSummary}>
+                <div>
+                  <Eyebrow>Supporting detail</Eyebrow>
                   <p>{experience.understanding.explanation}</p>
                   <span>{hosted ? "Update timing unavailable" : "Updated today · 8:12 AM"}</span>
-                  {trigger}
                 </div>
                 <ConfidenceSummary confidence={experience.understanding.confidence} />
               </Panel>
-              {disclosure}
               {detailGrid}
               <div className={styles.understandingLower}>
                 <Panel className={styles.beforeAfter}>
@@ -616,8 +668,6 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
                   {hosted ? (
                     <>
                       <p>{experience.changes[0]?.headline ?? "Evolution availability is described in the disclosure."}</p>
-                      {changeTrigger}
-                      {changeDisclosure}
                     </>
                   ) : (
                     <div><span><small>Before</small>Planning and execution appeared equally plausible.</span><ArrowRight aria-hidden="true" /><span><small>Now</small>Ownership ambiguity is the strongest explanation.</span></div>
@@ -641,10 +691,8 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
                         : "High"}
                     </strong>
                   </p>
-                  {hosted && evidenceRequestTrigger}
                   <button className={styles.inlineLink} type="button" onClick={() => navigate("plan")}>See learning plan <ArrowRight size={16} aria-hidden="true" /></button>
                 </Panel>
-                {hosted && evidenceRequestDisclosure}
               </div>
             </>
           )}

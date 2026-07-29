@@ -286,12 +286,14 @@ export default function UnderstandingDisclosure({
   basis,
   changeDisclosure,
   evidenceRequestDisclosure,
+  fullSynthesis,
   details,
   children,
 }: {
   basis: BeliefBasis | undefined;
   changeDisclosure: ChangeDisclosure | undefined;
   evidenceRequestDisclosure: EvidenceRequestDisclosure | undefined;
+  fullSynthesis: string;
   details: ReadonlyArray<readonly [
     id: string,
     title: string,
@@ -305,6 +307,8 @@ export default function UnderstandingDisclosure({
     changeDisclosure: ReactNode;
     evidenceRequestTrigger: ReactNode;
     evidenceRequestDisclosure: ReactNode;
+    fullSynthesisTrigger: ReactNode;
+    fullSynthesisDisclosure: ReactNode;
     detailGrid: ReactNode;
   }) => ReactNode;
 }) {
@@ -348,6 +352,19 @@ export default function UnderstandingDisclosure({
       Why this evidence matters <ArrowRight size={16} aria-hidden="true" />
     </button>
   );
+  const fullSynthesisExpanded = openDetail === "full-synthesis";
+  const fullSynthesisTrigger = (
+    <button
+      className={styles.inlineLink}
+      type="button"
+      onClick={() =>
+        setOpenDetail(fullSynthesisExpanded ? null : "full-synthesis")
+      }
+      aria-expanded={fullSynthesisExpanded}
+    >
+      Full organizational analysis <ArrowRight size={16} aria-hidden="true" />
+    </button>
+  );
 
   return children({
     trigger,
@@ -365,6 +382,22 @@ export default function UnderstandingDisclosure({
             <EvidenceRequestDisclosureContent
               disclosure={evidenceRequestDisclosure}
             />
+          )
+        : null,
+    fullSynthesisTrigger,
+    fullSynthesisDisclosure:
+      fullSynthesisExpanded
+        ? (
+            <section
+              className={styles.beliefBasis}
+              aria-labelledby="full-synthesis-title"
+            >
+              <header>
+                <Eyebrow>Authorized Product Communication</Eyebrow>
+                <h2 id="full-synthesis-title">Full organizational analysis</h2>
+                <p>{fullSynthesis}</p>
+              </header>
+            </section>
           )
         : null,
     detailGrid: (
