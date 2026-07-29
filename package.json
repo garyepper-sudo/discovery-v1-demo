@@ -70,6 +70,7 @@
     "validate:what-changed-and-why": "tsx scripts/product/validateWhatChangedAndWhy.ts",
     "validate:why-this-evidence-matters": "tsx scripts/product/validateWhyThisEvidenceMatters.ts",
     "validate:canonical-product-composition": "tsx scripts/product/validateCanonicalProductComposition.ts",
+    "validate:capability-survival": "tsx scripts/product/validateCapabilitySurvival.ts",
     "storage:migrate": "tsx scripts/storage/migrateAlphaGovernance.ts up",
     "storage:status": "tsx scripts/storage/migrateAlphaGovernance.ts status",
     "storage:reset:local": "tsx scripts/storage/migrateAlphaGovernance.ts reset",
