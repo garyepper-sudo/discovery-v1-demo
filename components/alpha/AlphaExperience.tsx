@@ -62,6 +62,7 @@ import {
   SemanticCallout,
   Sparkline,
 } from "./AlphaSemantic";
+import UnderstandingDisclosure from "./UnderstandingDisclosure";
 import styles from "./AlphaExperience.module.css";
 
 const AlphaExperienceContext = createContext<{
@@ -543,7 +544,6 @@ function LearnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
 
 function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
   const { experience, hosted } = useAlphaExperience();
-  const [openDetail, setOpenDetail] = useState<string | null>(null);
   const details = [
     ["why", "Why this matters", experience.understanding.whyItMatters, "green"],
     ["strongest", hosted ? "Current explanation" : "Strongest explanation", experience.understanding.strongestExplanation, "violet"],
@@ -570,36 +570,27 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
           </div>
           <Action tone="secondary" onClick={() => navigate("follow")}>Follow this Understanding</Action>
         </header>
-        <Panel tone="green" className={styles.synthesisPanel}>
-          <div className={styles.synthesisCopy}>
-            <Eyebrow>Current synthesis</Eyebrow>
-            <h2>{experience.understanding.synthesis}</h2>
-            <p>{experience.understanding.explanation}</p>
-            <span>{hosted ? "Update timing unavailable" : "Updated today · 8:12 AM"}</span>
-            <button className={styles.inlineLink} type="button" onClick={() => setOpenDetail("strongest")}>
-              See why Discovery believes this <ArrowRight size={16} aria-hidden="true" />
-            </button>
-          </div>
-          <ConfidenceSummary confidence={experience.understanding.confidence} />
-        </Panel>
-        <div className={styles.detailGrid}>
-          {details.map(([id, title, copy, tone]) => (
-            <button
-              key={id}
-              type="button"
-              className={`${styles.detailCard} ${openDetail === id ? styles.detailOpen : ""}`}
-              onClick={() => setOpenDetail(openDetail === id ? null : id)}
-              aria-expanded={openDetail === id}
-            >
-              <span className={`${styles.semanticIcon} ${styles[`tone_${tone}`]}`}>
-                {id === "why" ? <Users size={20} aria-hidden="true" /> : id === "unknown" ? <CircleHelp size={20} aria-hidden="true" /> : id === "contradiction" ? <AlertTriangle size={20} aria-hidden="true" /> : <Lightbulb size={20} aria-hidden="true" />}
-              </span>
-              <strong>{title}</strong>
-              <p>{copy}</p>
-              {openDetail === id && <small>{id === "contradiction" ? "This limits where the current explanation applies." : "This remains part of the current, historically traceable synthesis."}</small>}
-            </button>
-          ))}
-        </div>
+        <UnderstandingDisclosure
+          basis={experience.understanding.beliefBasis}
+          details={details}
+        >
+          {({ trigger, disclosure, detailGrid }) => (
+            <>
+              <Panel tone="green" className={styles.synthesisPanel}>
+                <div className={styles.synthesisCopy}>
+                  <Eyebrow>Current synthesis</Eyebrow>
+                  <h2>{experience.understanding.synthesis}</h2>
+                  <p>{experience.understanding.explanation}</p>
+                  <span>{hosted ? "Update timing unavailable" : "Updated today · 8:12 AM"}</span>
+                  {trigger}
+                </div>
+                <ConfidenceSummary confidence={experience.understanding.confidence} />
+              </Panel>
+              {disclosure}
+              {detailGrid}
+            </>
+          )}
+        </UnderstandingDisclosure>
         <div className={styles.understandingLower}>
           <Panel className={styles.beforeAfter}>
             <h2>How this Understanding changed</h2>

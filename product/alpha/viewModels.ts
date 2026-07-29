@@ -32,6 +32,26 @@ export type UnderstandingViewModel = {
   primaryUnknown: string;
   contradiction: string;
   confidence: ConfidenceViewModel;
+  beliefBasis?: {
+    summaryExplanation: string;
+    evidenceCategories: Array<{
+      role: "supports" | "opposes" | "shared";
+      count: number;
+    }>;
+    uncertainty: string[];
+    alternatives: Array<{
+      id: string;
+      disposition: "supported" | "plausible" | "unresolved" | "weakened";
+      summary: string | null;
+    }>;
+    nextInquiry: {
+      question: string;
+      rationale:
+        | "investigation-information-gain"
+        | "investigation-opportunity-available"
+        | "authorized-next-inquiry";
+    } | null;
+  };
 };
 
 export type SourceViewModel = {

@@ -66,6 +66,7 @@
     "onboarding:test:dev": "tsx --env-file=.env.local scripts/development/printOnboardingTestEnvironment.ts && next dev",
     "validate:discovery-experience-promotion": "tsx scripts/product/validateDiscoveryExperiencePromotion.ts",
     "validate:discovery-quantitative-truthfulness": "tsx scripts/product/validateDiscoveryQuantitativeTruthfulness.ts",
+    "validate:why-discovery-believes-this": "tsx scripts/product/validateWhyDiscoveryBelievesThis.ts",
     "storage:migrate": "tsx scripts/storage/migrateAlphaGovernance.ts up",
     "storage:status": "tsx scripts/storage/migrateAlphaGovernance.ts status",
     "storage:reset:local": "tsx scripts/storage/migrateAlphaGovernance.ts reset",

@@ -963,7 +963,7 @@ scenario("61-reversible-active-path", "Your Organization activation retains the 
     "utf8",
   );
   assert.equal(
-    route.includes("isYourOrganizationAlphaActivationEnabled"),
+    route.includes("isYourOrganizationAlphaPresentationEnabled"),
     true,
   );
   assert.equal(route.includes("<ProductWorkspace"), true);

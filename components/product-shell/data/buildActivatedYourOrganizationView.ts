@@ -5,6 +5,46 @@ import { buildOrganizationExperienceFromProjection } from "./buildOrganizationEx
 import { buildUnifiedExecutiveWorkspaceView } from "./buildUnifiedExecutiveWorkspaceView";
 
 const UNAVAILABLE = "Runtime not yet available";
+const EXPLANATION_TEXT_UNAVAILABLE =
+  "Explanation text is not available through Product Communication.";
+
+type BeliefBasis = {
+  summaryExplanation: string;
+  evidenceCategories: Array<{
+    role: "supports" | "opposes" | "shared";
+    count: number;
+  }>;
+  uncertainty: string[];
+  alternatives: Array<{
+    id: string;
+    disposition: "supported" | "plausible" | "unresolved" | "weakened";
+    summary: string | null;
+  }>;
+  nextInquiry: {
+    question: string;
+    rationale:
+      | "investigation-information-gain"
+      | "investigation-opportunity-available"
+      | "authorized-next-inquiry";
+  } | null;
+};
+
+type ActivatedYourOrganizationView =
+  ReturnType<typeof buildUnifiedExecutiveWorkspaceView> & {
+    beliefBasis: BeliefBasis;
+  };
+
+function referenceIdentity(reference: {
+  objectType: string;
+  objectId: string;
+  revisionId?: string;
+}): string {
+  return JSON.stringify([
+    reference.objectType,
+    reference.objectId,
+    reference.revisionId ?? null,
+  ]);
+}
 
 function sourceTexts(
   items: ReadonlyArray<{ sourceText?: { text: string } }>,
@@ -28,7 +68,7 @@ export function buildActivatedYourOrganizationView(input: {
   runtime: OrganizationRuntime;
   projection: OrganizationalUnderstandingProjection;
   communication: YourOrganizationCommunicationView;
-}): ReturnType<typeof buildUnifiedExecutiveWorkspaceView> {
+}): ActivatedYourOrganizationView {
   const { runtime, projection, communication } = input;
   const legacyShape = buildUnifiedExecutiveWorkspaceView(runtime);
   const projectedSections = buildOrganizationExperienceFromProjection({
@@ -84,6 +124,40 @@ export function buildActivatedYourOrganizationView(input: {
     ...(leadText ? [leadText] : []),
     ...supportText,
   ])].slice(0, 3);
+  const supportBySubject = new Map(
+    communication.support.flatMap((item) =>
+      item.sourceText?.text.trim()
+        ? [[referenceIdentity(item.subjectRef), item.sourceText.text.trim()] as const]
+        : [],
+    ),
+  );
+  const evidenceCategories = (["supports", "opposes", "shared"] as const)
+    .map((role) => ({
+      role,
+      count: communication.evidenceRoles.filter((entry) => entry.role === role)
+        .length,
+    }));
+  const alternatives = communication.alternatives
+    .flatMap((group, groupIndex) =>
+      group.alternatives.map((alternative, alternativeIndex) => ({
+        id: `authorized-alternative-${groupIndex + 1}-${alternativeIndex + 1}`,
+        disposition: alternative.disposition,
+        summary:
+          supportBySubject.get(referenceIdentity(alternative.explanationRef)) ??
+          null,
+      })),
+    );
+  const nextInquiry = communication.nextInquiries.find(
+    (item) => item.sourceText?.text.trim(),
+  );
+  const nextInquiryRationale = nextInquiry?.priority.source === "upstream_signal" &&
+      nextInquiry.priority.explanation.code ===
+        "investigation_information_gain_signal"
+    ? "investigation-information-gain" as const
+    : nextInquiry?.priority.explanation.code ===
+        "investigation_opportunity_available"
+      ? "investigation-opportunity-available" as const
+      : "authorized-next-inquiry" as const;
 
   return {
     ...legacyShape,
@@ -111,6 +185,19 @@ export function buildActivatedYourOrganizationView(input: {
       uncertainty,
       investigations,
       recentChanges,
+    },
+    beliefBasis: {
+      summaryExplanation:
+        supportText[0] ?? EXPLANATION_TEXT_UNAVAILABLE,
+      evidenceCategories,
+      uncertainty: uncertaintyText,
+      alternatives,
+      nextInquiry: nextInquiry?.sourceText?.text.trim()
+        ? {
+            question: nextInquiry.sourceText.text.trim(),
+            rationale: nextInquiryRationale,
+          }
+        : null,
     },
     model: {
       coherence: null,

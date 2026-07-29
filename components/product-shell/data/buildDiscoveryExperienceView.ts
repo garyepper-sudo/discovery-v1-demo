@@ -81,6 +81,23 @@ export function buildDiscoveryExperienceView(input: {
         limitation:
           "A scalar confidence value is not available through the approved disclosure contract.",
       },
+      ...(view.beliefBasis
+        ? {
+            beliefBasis: {
+              summaryExplanation: view.beliefBasis.summaryExplanation,
+              evidenceCategories: view.beliefBasis.evidenceCategories.map(
+                (category) => ({ ...category }),
+              ),
+              uncertainty: [...view.beliefBasis.uncertainty],
+              alternatives: view.beliefBasis.alternatives.map(
+                (alternative) => ({ ...alternative }),
+              ),
+              nextInquiry: view.beliefBasis.nextInquiry
+                ? { ...view.beliefBasis.nextInquiry }
+                : null,
+            },
+          }
+        : {}),
     },
     sources: investigations.map((title, index) => ({
       id: `authorized-source-${index + 1}`,
