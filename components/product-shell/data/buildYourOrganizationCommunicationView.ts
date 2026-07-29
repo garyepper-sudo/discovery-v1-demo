@@ -20,6 +20,8 @@ export type YourOrganizationCommunicationItem = {
   supportingRefs: CanonicalObjectReference[];
   priority: CommunicationPriorityProvenance;
   availability: ProductCommunicationAvailability;
+  leadRelationship?: CommunicationPlanItem["leadRelationship"];
+  leadRelationshipLabel?: CommunicationPlanItem["leadRelationshipLabel"];
   change?: CommunicationPlanItem["change"];
   inquiry?: CommunicationPlanItem["inquiry"];
 };
@@ -126,6 +128,12 @@ function item(
       ),
     priority: copyPriority(source.priority),
     availability: { ...source.availability },
+    ...(source.leadRelationship
+      ? { leadRelationship: source.leadRelationship }
+      : {}),
+    ...(source.leadRelationshipLabel
+      ? { leadRelationshipLabel: source.leadRelationshipLabel }
+      : {}),
     ...(source.change ? { change: { ...source.change } } : {}),
     ...(source.inquiry
       ? {

@@ -34,11 +34,13 @@ export type UnderstandingViewModel = {
   confidence: ConfidenceViewModel;
   beliefBasis?: {
     summaryExplanation: string;
+    broaderSupport: string[];
     evidenceCategories: Array<{
       role: "supports" | "opposes" | "shared";
       count: number;
     }>;
     uncertainty: string[];
+    broaderUncertainty: string[];
     alternatives: Array<{
       id: string;
       disposition: "supported" | "plausible" | "unresolved" | "weakened";
@@ -46,6 +48,9 @@ export type UnderstandingViewModel = {
     }>;
     nextInquiry: {
       question: string;
+      scope: "lead-specific" | "multi-condition" | "broader-context";
+      scopeLabel: string;
+      affectedConditions: string[];
       rationale:
         | "investigation-information-gain"
         | "investigation-opportunity-available"

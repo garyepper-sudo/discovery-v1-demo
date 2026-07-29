@@ -175,6 +175,11 @@ export type CommunicationPlanItem = {
   supportingRefs: CanonicalObjectReference[];
   priority: CommunicationPriorityProvenance;
   availability: ProductCommunicationAvailability;
+  leadRelationship?: "lead-specific" | "multi-condition" | "broader-context";
+  leadRelationshipLabel?:
+    | "Directly linked to the current answer."
+    | "This inquiry addresses multiple organizational conditions."
+    | "A broader organizational context.";
   change?: {
     direction:
       | "emerged"
@@ -581,7 +586,16 @@ function item(
     itemId: string;
     sourceText?: SourcePassThroughText;
   },
+  leadRelationship?: CommunicationPlanItem["leadRelationship"],
 ): CommunicationPlanItem {
+  const leadRelationshipLabel =
+    leadRelationship === "lead-specific"
+      ? "Directly linked to the current answer." as const
+      : leadRelationship === "multi-condition"
+        ? "This inquiry addresses multiple organizational conditions." as const
+        : leadRelationship === "broader-context"
+          ? "A broader organizational context." as const
+          : undefined;
   const sourceText =
     source?.sourceText ?? exactSourceText(projection, subjectRef, area);
   const evolution = area === "changes"
@@ -620,6 +634,8 @@ function item(
         ? "available-with-source-text"
         : "available-structurally-without-text",
     ),
+    ...(leadRelationship ? { leadRelationship } : {}),
+    ...(leadRelationshipLabel ? { leadRelationshipLabel } : {}),
     ...(evolution
       ? {
           change: {
@@ -759,6 +775,31 @@ export function compileProductCommunicationPlan(
     : undefined;
 
   const leadIdentity = leadRef ? referenceIdentity(leadRef) : undefined;
+  const leadCondition =
+    leadRef?.objectType === "organizational-condition"
+      ? projection.conditions.find(
+          (entry) =>
+            referenceIdentity(entry.canonicalRef) === leadIdentity,
+        )
+      : undefined;
+  const leadLinkedIdentities = new Set([
+    ...(leadIdentity ? [leadIdentity] : []),
+    ...(leadCondition?.supportingRefs ?? []).map(referenceIdentity),
+  ]);
+  const relationshipToLead = (
+    reference: CanonicalObjectReference,
+    supportingRefs: readonly CanonicalObjectReference[],
+  ): CommunicationPlanItem["leadRelationship"] => {
+    const references = [reference, ...supportingRefs];
+    const linkedCount = references.filter((candidate) =>
+      leadLinkedIdentities.has(referenceIdentity(candidate)),
+    ).length;
+    if (linkedCount === 0) return "broader-context";
+    const conditionRefs = supportingRefs.filter(
+      (candidate) => candidate.objectType === "organizational-condition",
+    );
+    return conditionRefs.length > 1 ? "multi-condition" : "lead-specific";
+  };
   const supportRefs = normalizeReferences([
     ...projection.understandings.map((entry) => entry.canonicalRef),
     ...projection.explanations.map((entry) => entry.canonicalRef),
@@ -767,7 +808,7 @@ export function compileProductCommunicationPlan(
       ? [projection.organizationalState.canonicalRef]
       : []),
     ...projection.evidence.map((entry) => entry.canonicalRef),
-  ]).filter((reference) => referenceIdentity(reference) !== leadIdentity);
+  ]);
   const support = supportRefs.map((reference) =>
     item(
       projection,
@@ -780,6 +821,8 @@ export function compileProductCommunicationPlan(
         explanation: { code: "supporting_disclosed_reference" },
       },
       "support",
+      undefined,
+      relationshipToLead(reference, []),
     ),
   );
 
@@ -817,6 +860,7 @@ export function compileProductCommunicationPlan(
           itemId: `communication-item:uncertainty:${encodeURIComponent(entry.id)}`,
           ...(sourceText ? { sourceText } : {}),
         },
+        relationshipToLead(entry.canonicalRef, entry.supportingRefs),
       );
     });
   const conditionUncertainty = [...projection.conditions]
@@ -834,6 +878,8 @@ export function compileProductCommunicationPlan(
           explanation: { code: "unresolved_uncertainty_required" },
         },
         "uncertainty",
+        undefined,
+        relationshipToLead(entry.canonicalRef, entry.supportingRefs),
       ),
     );
   const uncertainty = [...projectedUncertainty, ...conditionUncertainty];
@@ -871,6 +917,8 @@ export function compileProductCommunicationPlan(
           explanation: { code: "investigation_opportunity_available" },
         },
         "next-inquiries",
+        undefined,
+        relationshipToLead(entry.canonicalRef, entry.supportingRefs),
       ),
     );
 

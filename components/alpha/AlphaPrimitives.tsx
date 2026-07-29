@@ -39,11 +39,12 @@ export function QuietHeader({
       <button
         className={styles.helpAction}
         type="button"
-        aria-label={helpLabel ?? "About this scene"}
-        title={helpLabel ?? "About this scene"}
+        aria-label={`${helpLabel ?? "About this scene"} — not yet available`}
+        title="Help content is not yet available in this sandbox"
+        disabled
       >
         <CircleHelp size={18} aria-hidden="true" />
-        {helpLabel && <span>{helpLabel}</span>}
+        {helpLabel && <span>{helpLabel} · Not yet available</span>}
       </button>
     </header>
   );

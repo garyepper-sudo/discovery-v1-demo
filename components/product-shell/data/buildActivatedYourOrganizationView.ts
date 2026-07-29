@@ -10,11 +10,13 @@ const EXPLANATION_TEXT_UNAVAILABLE =
 
 type BeliefBasis = {
   summaryExplanation: string;
+  broaderSupport: string[];
   evidenceCategories: Array<{
     role: "supports" | "opposes" | "shared";
     count: number;
   }>;
   uncertainty: string[];
+  broaderUncertainty: string[];
   alternatives: Array<{
     id: string;
     disposition: "supported" | "plausible" | "unresolved" | "weakened";
@@ -22,6 +24,9 @@ type BeliefBasis = {
   }>;
   nextInquiry: {
     question: string;
+    scope: "lead-specific" | "multi-condition" | "broader-context";
+    scopeLabel: string;
+    affectedConditions: string[];
     rationale:
       | "investigation-information-gain"
       | "investigation-opportunity-available"
@@ -115,8 +120,26 @@ export function buildActivatedYourOrganizationView(input: {
     projection,
   });
   const leadText = communication.headline.sourceText?.text.trim() || null;
-  const supportText = sourceTexts(communication.support);
-  const uncertaintyText = sourceTexts(communication.uncertainty);
+  const leadSupportText = sourceTexts(
+    communication.support.filter(
+      (item) => item.leadRelationship === "lead-specific",
+    ),
+  );
+  const broaderSupportText = sourceTexts(
+    communication.support.filter(
+      (item) => item.leadRelationship !== "lead-specific",
+    ),
+  );
+  const leadUncertaintyText = sourceTexts(
+    communication.uncertainty.filter(
+      (item) => item.leadRelationship === "lead-specific",
+    ),
+  );
+  const broaderUncertaintyText = sourceTexts(
+    communication.uncertainty.filter(
+      (item) => item.leadRelationship !== "lead-specific",
+    ),
+  );
   const inquiryText = sourceTexts(communication.nextInquiries);
   const changeText = sourceTexts(communication.changes);
   const changeAvailability = communication.availability?.find(
@@ -140,16 +163,16 @@ export function buildActivatedYourOrganizationView(input: {
   };
   const support = {
     ...projectedSections.explanations,
-    available: supportText.length > 0,
-    summary: supportText[0] ?? UNAVAILABLE,
-    items: supportText,
+    available: leadSupportText.length > 0,
+    summary: leadSupportText[0] ?? EXPLANATION_TEXT_UNAVAILABLE,
+    items: leadSupportText,
     owner: "Product Communication Plan supporting references",
   };
   const uncertainty = {
     ...projectedSections.uncertainty,
-    available: uncertaintyText.length > 0,
-    summary: uncertaintyText[0] ?? UNAVAILABLE,
-    items: uncertaintyText,
+    available: leadUncertaintyText.length > 0,
+    summary: leadUncertaintyText[0] ?? UNAVAILABLE,
+    items: leadUncertaintyText,
     owner: "Product Communication Plan uncertainty",
   };
   const investigations = {
@@ -168,7 +191,7 @@ export function buildActivatedYourOrganizationView(input: {
   };
   const insightTexts = [...new Set([
     ...(leadText ? [leadText] : []),
-    ...supportText,
+    ...leadSupportText,
   ])].slice(0, 3);
   const supportBySubject = new Map(
     communication.support.flatMap((item) =>
@@ -285,7 +308,10 @@ export function buildActivatedYourOrganizationView(input: {
       (headline, index) => ({
         id: `authorized-insight-${index + 1}`,
         headline,
-        implication: uncertaintyText[index] ?? uncertaintyText[0] ?? UNAVAILABLE,
+        implication:
+          leadUncertaintyText[index] ??
+          leadUncertaintyText[0] ??
+          UNAVAILABLE,
         activeAreaIds: conditionAreas[index]
           ? [conditionAreas[index].id]
           : [],
@@ -301,13 +327,21 @@ export function buildActivatedYourOrganizationView(input: {
     },
     beliefBasis: {
       summaryExplanation:
-        supportText[0] ?? EXPLANATION_TEXT_UNAVAILABLE,
+        leadSupportText[0] ?? EXPLANATION_TEXT_UNAVAILABLE,
+      broaderSupport: broaderSupportText,
       evidenceCategories,
-      uncertainty: uncertaintyText,
+      uncertainty: leadUncertaintyText,
+      broaderUncertainty: broaderUncertaintyText,
       alternatives,
       nextInquiry: nextInquiry?.sourceText?.text.trim()
-        ? {
+          ? {
             question: nextInquiry.sourceText.text.trim(),
+            scope: nextInquiry.leadRelationship ?? "broader-context",
+            scopeLabel:
+              nextInquiry.leadRelationshipLabel ??
+              "A broader organizational context.",
+            affectedConditions:
+              nextInquiry.inquiry?.clarificationTargets ?? [],
             rationale: nextInquiryRationale,
           }
         : null,

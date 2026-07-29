@@ -23,6 +23,7 @@ export type CapabilitySurvivalClassification =
 
 export type CapabilitySurvivalContract = {
   capabilityId:
+    | "CAP-UND-004"
     | "CAP-UND-006"
     | "CAP-COM-001"
     | "CAP-SELF-001"
@@ -81,6 +82,24 @@ const PRESENTATION_LABELS = [
 
 export const CAPABILITY_SURVIVAL_CONTRACTS: CapabilitySurvivalContract[] = [
   {
+    capabilityId: "CAP-UND-004",
+    requiredBoundaries: ["projection", "communication", "presentation"],
+    requiredSemantics: [
+      "condition identity survives lead, support, uncertainty, and inquiry composition",
+      "cross-condition context is explicitly classified",
+      "canonical condition summaries use profile-owned readable driver labels",
+    ],
+    permittedTransformations: PRESENTATION_LABELS,
+    prohibitedTransformations: [
+      "substitute first-available condition content for lead-linked content",
+      "join conditions by text similarity",
+    ],
+    validations: [
+      "validate:lead-coherent-understanding",
+      "validate:customer-readable-driver-labels",
+    ],
+  },
+  {
     capabilityId: "CAP-UND-006",
     requiredBoundaries: [...CAPABILITY_SURVIVAL_BOUNDARIES],
     requiredSemantics: [
@@ -93,6 +112,7 @@ export const CAPABILITY_SURVIVAL_CONTRACTS: CapabilitySurvivalContract[] = [
       "synthesize a new understanding in presentation",
     ],
     validations: [
+      "validate:lead-coherent-understanding",
       "validate:canonical-product-composition",
       "validate:why-discovery-believes-this",
     ],
@@ -110,6 +130,8 @@ export const CAPABILITY_SURVIVAL_CONTRACTS: CapabilitySurvivalContract[] = [
     ],
     validations: [
       "validate:structured-product-communication-shadow",
+      "validate:lead-coherent-understanding",
+      "validate:customer-readable-driver-labels",
       "validate:canonical-product-composition",
     ],
   },
@@ -127,6 +149,7 @@ export const CAPABILITY_SURVIVAL_CONTRACTS: CapabilitySurvivalContract[] = [
       "silently substitute another field",
     ],
     validations: [
+      "validate:lead-coherent-understanding",
       "validate:canonical-product-composition",
       "validate:why-discovery-believes-this",
     ],
@@ -148,6 +171,7 @@ export const CAPABILITY_SURVIVAL_CONTRACTS: CapabilitySurvivalContract[] = [
       "recompute expected confidence gain",
     ],
     validations: [
+      "validate:lead-coherent-understanding",
       "validate:why-this-evidence-matters",
       "validate:canonical-product-composition",
     ],

@@ -384,6 +384,7 @@ function objectText(object: any): string {
 
 function labelOf(object: any): string {
   return (
+    object?.executiveName ??
     object?.statement ??
     object?.title ??
     object?.name ??

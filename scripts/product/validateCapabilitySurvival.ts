@@ -17,6 +17,7 @@ const EXPECTED_CAPABILITY_IDS = [
   "CAP-MEM-001",
   "CAP-SELF-001",
   "CAP-SELF-002",
+  "CAP-UND-004",
   "CAP-UND-006",
 ];
 

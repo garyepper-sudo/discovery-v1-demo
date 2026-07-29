@@ -149,6 +149,12 @@
   background: transparent;
 }
 
+.scene button:disabled,
+.sidebar button:disabled {
+  cursor: not-allowed;
+  opacity: .58;
+}
+
 .inlineLink {
   min-height: 44px;
   display: inline-flex;
@@ -1427,6 +1433,15 @@
   font-size: 12px;
 }
 
+.confidenceAvailability {
+  align-self: start;
+}
+
+.confidenceAvailability p {
+  max-width: 420px;
+  color: var(--alpha-muted);
+}
+
 .synthesisCopy {
   padding-right: 24px;
   border-right: 1px solid #dfe6e3;
@@ -1686,8 +1701,10 @@
 .beforeAfter,
 .relationshipsPanel,
 .recommendedLearning {
+  min-width: 0;
   min-height: 300px;
   padding: 20px;
+  overflow-wrap: anywhere;
 }
 
 .beforeAfter > div {
@@ -1943,7 +1960,9 @@
 }
 
 .followGrid > .panel {
+  min-width: 0;
   padding: 22px;
+  overflow-wrap: anywhere;
 }
 
 .notificationList {
@@ -2124,6 +2143,27 @@
   gap: 24px;
 }
 
+.hostedHeroLearning > div {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.hostedHeroLearning footer {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.hostedHeroLearning footer span {
+  display: grid;
+  gap: 8px;
+  line-height: 1.45;
+}
+
+.hostedHeroLearning footer strong {
+  margin-left: 0;
+  color: var(--alpha-ink);
+  font-weight: 500;
+}
+
 .heroLearning h2 {
   margin: 0;
   font-family: Georgia, serif;
@@ -2166,6 +2206,13 @@
   border-bottom: 1px solid #e8eaf0;
   font-size: 12px;
   line-height: 1.45;
+}
+
+.changeAvailability {
+  display: block;
+  margin-top: 16px;
+  color: var(--alpha-muted);
+  line-height: 1.4;
 }
 
 .homeSecondary {
@@ -2490,8 +2537,26 @@
     background: transparent;
   }
 
-  .mobileHeader strong {
-    text-align: center;
+  .mobileMenuMark {
+    min-width: 44px;
+    min-height: 44px;
+    display: grid;
+    place-items: center;
+  }
+
+  .mobileHeader label {
+    justify-self: center;
+  }
+
+  .mobileHeader select {
+    max-width: 180px;
+    min-height: 44px;
+    padding: 0 28px 0 12px;
+    border: 1px solid var(--alpha-line);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--alpha-ink);
+    font: inherit;
   }
 
   .appScene {

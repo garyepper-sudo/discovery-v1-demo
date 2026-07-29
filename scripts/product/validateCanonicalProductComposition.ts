@@ -96,6 +96,7 @@ function activatedView(input: {
         sourceText: {
           text: "Approval loops are slowing routine operating decisions.",
         },
+        leadRelationship: "lead-specific",
       },
       {
         subjectRef: ref(
@@ -105,10 +106,12 @@ function activatedView(input: {
         sourceText: {
           text: "Capacity pressure remains a plausible alternative.",
         },
+        leadRelationship: "broader-context",
       },
     ],
     uncertainty: [{
       sourceText: { text: UNCERTAINTY },
+      leadRelationship: "lead-specific",
     }],
     nextInquiries: [{
       sourceText: { text: input.inquiry },
@@ -132,6 +135,7 @@ function activatedView(input: {
         outcomeCaveat:
           "The result could strengthen, weaken, or redirect the current understanding.",
       },
+      leadRelationship: "lead-specific",
     }],
     changes: [],
     alternatives: [{

@@ -36,12 +36,15 @@ const communication = {
       sourceText: {
         text: "Escalation patterns support decision ownership as a constraint.",
       },
+      leadRelationship: "lead-specific",
+      leadRelationshipLabel: "Directly linked to the current answer.",
     },
     {
       subjectRef: ref("organizational-explanation", "explanation-alternative"),
       sourceText: {
         text: "Capacity pressure remains a plausible alternative.",
       },
+      leadRelationship: "broader-context",
     },
   ],
   uncertainty: [
@@ -49,6 +52,7 @@ const communication = {
       sourceText: {
         text: "Independent outcome evidence remains incomplete.",
       },
+      leadRelationship: "lead-specific",
     },
   ],
   nextInquiries: [
@@ -62,6 +66,8 @@ const communication = {
           code: "investigation_information_gain_signal",
         },
       },
+      leadRelationship: "lead-specific",
+      leadRelationshipLabel: "Directly linked to the current answer.",
     },
   ],
   changes: [],
@@ -178,6 +184,9 @@ assert.deepEqual(basis.alternatives, [
 ]);
 assert.deepEqual(basis.nextInquiry, {
   question: "Which decisions still require escalation?",
+  scope: "lead-specific",
+  scopeLabel: "Directly linked to the current answer.",
+  affectedConditions: [],
   rationale: "investigation-information-gain",
 });
 assert.equal(

@@ -124,15 +124,24 @@ export function buildDiscoveryExperienceView(input: {
         ? {
             beliefBasis: {
               summaryExplanation: view.beliefBasis.summaryExplanation,
+              broaderSupport: [...view.beliefBasis.broaderSupport],
               evidenceCategories: view.beliefBasis.evidenceCategories.map(
                 (category) => ({ ...category }),
               ),
               uncertainty: [...view.beliefBasis.uncertainty],
+              broaderUncertainty: [
+                ...view.beliefBasis.broaderUncertainty,
+              ],
               alternatives: view.beliefBasis.alternatives.map(
                 (alternative) => ({ ...alternative }),
               ),
               nextInquiry: view.beliefBasis.nextInquiry
-                ? { ...view.beliefBasis.nextInquiry }
+                ? {
+                    ...view.beliefBasis.nextInquiry,
+                    affectedConditions: [
+                      ...view.beliefBasis.nextInquiry.affectedConditions,
+                    ],
+                  }
                 : null,
             },
           }
@@ -170,7 +179,11 @@ export function buildDiscoveryExperienceView(input: {
     sources: investigations.map((title, index) => ({
       id: `authorized-source-${index + 1}`,
       title,
-      rationale: "Authorized next inquiry from the projected organization view.",
+      rationale:
+        index === 0
+          ? view.beliefBasis?.nextInquiry?.scopeLabel ??
+            "A broader organizational context."
+          : "A broader organizational context.",
       contribution: null,
       state: "Included",
       tone: (["green", "blue", "violet", "orange"] as const)[index % 4],
@@ -219,7 +232,7 @@ export function buildDiscoveryExperienceView(input: {
       id: `authorized-change-${index + 1}`,
       eyebrow: index === 0 ? "Meaningful change" : "Understanding evolution",
       headline,
-      detail: "Available from the authority-qualified projected organization view.",
+      detail: "Available in this organization’s learning history.",
       action: "Review understanding",
       kind: index === 0 ? "learning" : "relationship",
       impact: null,

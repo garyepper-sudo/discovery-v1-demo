@@ -36,6 +36,7 @@ import {
 } from "react";
 
 import { alphaFixture } from "../../product/alpha/fixtures";
+import { alphaScenes } from "../../product/alpha/viewModels";
 import type {
   AlphaScene,
   AlphaFixture,
@@ -203,7 +204,7 @@ function AlphaSidebar({
       )}
       <div className={styles.sidebarProfile}>
         <span className={styles.avatar} aria-hidden="true">SR</span>
-        <span><strong>{experience.user.name}</strong><small>{experience.user.role}</small></span>
+        <span><strong>{experience.user.name}</strong><small>{hosted ? "Organization member" : experience.user.role}</small></span>
         <ChevronDown size={16} aria-hidden="true" />
       </div>
       <div className={styles.sidebarConfidence}>
@@ -217,7 +218,7 @@ function AlphaSidebar({
       </div>
       <p className={styles.sidebarPrivacy}>
         <ShieldCheck size={16} aria-hidden="true" />
-        {hosted ? "Hosted Alpha · authorized projection" : "Alpha prototype · deterministic fixture"}
+        {hosted ? "Discovery sandbox · read-only" : "Alpha prototype · deterministic fixture"}
       </p>
       {!hosted && <LockPrototypeAction />}
     </aside>
@@ -226,11 +227,14 @@ function AlphaSidebar({
 
 function MobileSceneHeader({
   scene,
+  navigate,
   onBack,
 }: {
   scene: AlphaScene;
+  navigate: (scene: AlphaScene) => void;
   onBack?: () => void;
 }) {
+  const { hosted } = useAlphaExperience();
   return (
     <header className={styles.mobileHeader}>
       {onBack ? (
@@ -238,12 +242,25 @@ function MobileSceneHeader({
           <ArrowLeft size={20} aria-hidden="true" />
         </button>
       ) : (
-        <button type="button" aria-label="Open navigation">
-          <Menu size={20} aria-hidden="true" />
-        </button>
+        <span className={styles.mobileMenuMark} aria-hidden="true">
+          <Menu size={20} />
+        </span>
       )}
-      <strong>{scene === "home" ? "Discovery Home" : sceneLabels[scene].label}</strong>
-      <LockPrototypeAction compact />
+      <label>
+        <span className={styles.srOnly}>Discovery scene</span>
+        <select
+          aria-label="Discovery scene"
+          value={scene}
+          onChange={(event) => navigate(event.target.value as AlphaScene)}
+        >
+          {alphaScenes.map((item) => (
+            <option key={item} value={item}>
+              {item === "home" ? "Discovery Home" : sceneLabels[item].label}
+            </option>
+          ))}
+        </select>
+      </label>
+      {hosted ? <DiscoveryMark compact /> : <LockPrototypeAction compact />}
     </header>
   );
 }
@@ -299,7 +316,7 @@ function AskScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
 }
 
 function OrientScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
-  const { experience } = useAlphaExperience();
+  const { experience, hosted } = useAlphaExperience();
   const [editing, setEditing] = useState(false);
   const [objective, setObjective] = useState(experience.understanding.objective);
   return (
@@ -321,7 +338,7 @@ function OrientScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
           <span className={styles.orbitIcon} aria-hidden="true">✦</span>
           <div>
             <Eyebrow>My current understanding</Eyebrow>
-            {editing ? (
+            {editing && !hosted ? (
               <label>
                 <span className={styles.srOnly}>Understanding objective</span>
                 <textarea
@@ -334,17 +351,20 @@ function OrientScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
               <h2>{objective}</h2>
             )}
             <p>
-              This focuses on the factors limiting delivery speed and consistency
-              across teams and projects.
+              {hosted
+                ? "This is the current answer available for your organization."
+                : "This focuses on the factors limiting delivery speed and consistency across teams and projects."}
             </p>
           </div>
-          <button
-            className={styles.inlineLink}
-            type="button"
-            onClick={() => setEditing((value) => !value)}
-          >
-            {editing ? "Save" : "Edit"}
-          </button>
+          {!hosted && (
+            <button
+              className={styles.inlineLink}
+              type="button"
+              onClick={() => setEditing((value) => !value)}
+            >
+              {editing ? "Save" : "Edit"}
+            </button>
+          )}
         </Panel>
         <SemanticCallout title="The biggest thing I don’t understand yet" tone="orange" icon="unknown">
           <h2>{experience.understanding.primaryUnknown}</h2>
@@ -365,7 +385,9 @@ function OrientScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
           <ShieldCheck size={17} aria-hidden="true" />
           This is my current interpretation. You can refine it before learning begins.
         </p>
-        <Action arrow onClick={() => navigate("plan")}>Begin Learning</Action>
+        <Action arrow onClick={() => navigate("plan")}>
+          {hosted ? "Review learning plan" : "Begin Learning"}
+        </Action>
         <PrivacyNote />
       </div>
     </main>
@@ -434,28 +456,46 @@ function PlanScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
                         : source.contribution ?? "Unavailable"}
                     </b>
                   </div>
-                  <button type="button" onClick={() => cycleSource(source.id)}>
+                  <button
+                    type="button"
+                    onClick={() => cycleSource(source.id)}
+                    disabled={hosted}
+                    title={hosted ? "Source changes are not yet supported in this sandbox" : undefined}
+                  >
                     {source.state} <ChevronDown size={15} aria-hidden="true" />
                   </button>
                 </article>
               ))}
-              <button className={styles.addSource} type="button">
+              <button
+                className={styles.addSource}
+                type="button"
+                disabled={hosted}
+                title={hosted ? "Adding information is not yet supported in this sandbox" : undefined}
+              >
                 <Plus size={20} aria-hidden="true" />
                 <span><strong>Something Discovery should also consider?</strong><small>Add a source, context, or file.</small></span>
-                <span>Add information</span>
+                <span>{hosted ? "Not yet available" : "Add information"}</span>
               </button>
             </div>
           </section>
           <Panel className={styles.protectionPanel}>
             <ShieldCheck size={22} aria-hidden="true" />
             <h3>Your information is bounded</h3>
-            <p>{hosted ? "This read-only plan uses only authority-qualified projected content." : "This prototype uses only its deterministic fixture and your local selections."}</p>
+            <p>{hosted ? "This read-only plan uses only information currently available for this organization." : "This prototype uses only its deterministic fixture and your local selections."}</p>
           </Panel>
         </div>
         <footer className={styles.planFooter}>
-          <Action tone="secondary">Save plan for later</Action>
+          <Action
+            tone="secondary"
+            disabled={hosted}
+            title={hosted ? "Saving plans is not yet supported in this sandbox" : undefined}
+          >
+            {hosted ? "Save plan · Not yet available" : "Save plan for later"}
+          </Action>
           <span><ShieldCheck size={15} aria-hidden="true" /> You approve each source state.</span>
-          <Action arrow onClick={() => navigate("learn")}>Start learning</Action>
+          <Action arrow onClick={() => navigate("learn")}>
+            {hosted ? "Review learning history" : "Start learning"}
+          </Action>
         </footer>
       </div>
     </main>
@@ -468,7 +508,7 @@ function LearnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
   const events = experience.events.slice(0, visibleEvents);
   return (
     <SceneFrame scene="learn" navigate={navigate}>
-      <MobileSceneHeader scene="learn" onBack={() => navigate("plan")} />
+      <MobileSceneHeader scene="learn" navigate={navigate} onBack={() => navigate("plan")} />
       <div className={styles.appScene}>
         <header className={styles.appSceneHeader}>
           <div>
@@ -478,16 +518,22 @@ function LearnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
             <h1 data-scene-heading tabIndex={-1}>
               Discovery is learning{" "}
               <span className={styles.liveState}>
-                {hosted ? "Authorized history" : "● In progress"}
+                {hosted ? "Available history" : "● In progress"}
               </span>
             </h1>
-            <p>{hosted ? "Review the authorized learning history available in this Alpha." : "I’m reviewing the approved fixture and updating the Understanding through meaningful events."}</p>
+            <p>{hosted ? "Review the learning history currently available for this organization." : "I’m reviewing the approved fixture and updating the Understanding through meaningful events."}</p>
           </div>
-          <Action tone="secondary">How learning works</Action>
+          <Action
+            tone="secondary"
+            disabled={hosted}
+            title={hosted ? "Learning guidance is not yet available in this sandbox" : undefined}
+          >
+            {hosted ? "Learning guidance · Not yet available" : "How learning works"}
+          </Action>
         </header>
         <Panel tone="blue" className={styles.learningCanvas}>
           <div className={styles.learningCanvasHead}>
-            <Eyebrow>{experience.understanding.title} · The Understanding is evolving</Eyebrow>
+            <Eyebrow>{experience.understanding.title} · Learning history</Eyebrow>
             <span>{hosted ? "Read-only view" : "Live view"} <ChevronDown size={15} aria-hidden="true" /></span>
           </div>
           <div className={styles.liveSynthesis}>
@@ -515,7 +561,7 @@ function LearnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
             <div className={styles.sectionHeading}>
               <h2 id="events-title">Recent learning events</h2>
               <span className={styles.liveState}>
-                {hosted ? "Authorized history" : "● Fixture sequence"}
+                {hosted ? "Available history" : "● Fixture sequence"}
               </span>
             </div>
             <ol>
@@ -552,7 +598,7 @@ function LearnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
         <Panel tone="blue" className={styles.readyBanner}>
           <Sparkles size={24} aria-hidden="true" />
           <div>
-            <h2>{hosted ? "Review the current authorized synthesis." : "I’m forming the first useful synthesis."}</h2>
+            <h2>{hosted ? "Review the current understanding." : "I’m forming the first useful synthesis."}</h2>
             <p>{hosted ? "Nothing durable changes from this read-only scene." : "I’ll continue refining it as learning progresses."}</p>
           </div>
           <Action arrow onClick={() => navigate("understand")}>View the Understanding</Action>
@@ -575,7 +621,7 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
   ] as const;
   return (
     <SceneFrame scene="understand" navigate={navigate}>
-      <MobileSceneHeader scene="understand" onBack={() => navigate("learn")} />
+      <MobileSceneHeader scene="understand" navigate={navigate} onBack={() => navigate("learn")} />
       <div className={styles.appScene}>
         <header className={styles.understandingTitle}>
           <button className={styles.textAction} type="button" onClick={() => navigate("home")}>
@@ -636,6 +682,12 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
                       {experience.sources[0]?.title ??
                         "No additional inquiry is currently authorized."}
                     </p>
+                    {experience.understanding.beliefBasis?.nextInquiry && (
+                      <small>
+                        {experience.understanding.beliefBasis.nextInquiry
+                          .scopeLabel}
+                      </small>
+                    )}
                     <small>
                       Expected contribution:{" "}
                       <strong>{expectedContribution(experience)}</strong>
@@ -659,7 +711,14 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
                   <p>{experience.understanding.explanation}</p>
                   <span>{hosted ? "Update timing unavailable" : "Updated today · 8:12 AM"}</span>
                 </div>
-                <ConfidenceSummary confidence={experience.understanding.confidence} />
+                {hosted ? (
+                  <div className={styles.confidenceAvailability}>
+                    <Eyebrow>Confidence availability</Eyebrow>
+                    <p>Quantitative confidence and trend are not available for this understanding.</p>
+                  </div>
+                ) : (
+                  <ConfidenceSummary confidence={experience.understanding.confidence} />
+                )}
               </Panel>
               {detailGrid}
               <div className={styles.understandingLower}>
@@ -710,14 +769,14 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
 }
 
 function RespondScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
-  const { experience } = useAlphaExperience();
+  const { experience, hosted } = useAlphaExperience();
   const [selected, setSelected] = useState<ResponsePathViewModel["id"]>("agree");
   const [context, setContext] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const selectedPath = experience.responsePaths.find((path) => path.id === selected)!;
   return (
     <SceneFrame scene="respond" navigate={navigate}>
-      <MobileSceneHeader scene="respond" onBack={() => navigate("understand")} />
+      <MobileSceneHeader scene="respond" navigate={navigate} onBack={() => navigate("understand")} />
       <div className={styles.appScene}>
         <header className={styles.appSceneHeader}>
           <div>
@@ -725,8 +784,14 @@ function RespondScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
               <ArrowLeft size={16} aria-hidden="true" /> Back to understand
             </button>
             <Eyebrow>{experience.understanding.title} · Living Understanding</Eyebrow>
-            <h1 data-scene-heading tabIndex={-1}>Help Discovery get this right</h1>
-            <p>Your perspective can qualify or deepen this Understanding.</p>
+            <h1 data-scene-heading tabIndex={-1}>
+              {hosted ? "Review ways to respond" : "Help Discovery get this right"}
+            </h1>
+            <p>
+              {hosted
+                ? "Response options are shown for review. This sandbox does not submit or retain a response."
+                : "Your perspective can qualify or deepen this Understanding."}
+            </p>
           </div>
         </header>
         <Panel tone="violet" className={styles.responsePanel}>
@@ -763,6 +828,7 @@ function RespondScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
                 maxLength={2000}
                 onChange={(event) => { setContext(event.target.value); setSubmitted(false); }}
                 placeholder="Share your perspective…"
+                disabled={hosted}
               />
               <span>{context.length}/2000</span>
             </div>
@@ -774,17 +840,29 @@ function RespondScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
             <p>What may be driving different outcomes?</p>
           </aside>
         </Panel>
-        <ResponseEffect submitted={submitted} pathTitle={selectedPath.title} />
+        {hosted ? (
+          <Panel tone="violet" className={styles.responseEffect}>
+            <span className={styles.semanticIcon}>
+              <Search size={22} aria-hidden="true" />
+            </span>
+            <div>
+              <h3>Response submission is not yet supported</h3>
+              <p>Your selection remains in this page only and does not change organizational understanding.</p>
+            </div>
+          </Panel>
+        ) : (
+          <ResponseEffect submitted={submitted} pathTitle={selectedPath.title} />
+        )}
         <footer className={styles.responseFooter}>
           <button className={styles.inlineLink} type="button" onClick={() => navigate("follow")}>Skip for now</button>
           <Action
             arrow
             onClick={() => {
-              if (submitted) navigate("follow");
+              if (hosted || submitted) navigate("follow");
               else setSubmitted(true);
             }}
           >
-            {submitted ? "Continue to Follow" : "Submit my response"}
+            {hosted ? "Continue" : submitted ? "Continue to Follow" : "Submit my response"}
           </Action>
         </footer>
       </div>
@@ -804,7 +882,7 @@ function FollowScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
   ];
   return (
     <SceneFrame scene="follow" navigate={navigate}>
-      <MobileSceneHeader scene="follow" onBack={() => navigate("respond")} />
+      <MobileSceneHeader scene="follow" navigate={navigate} onBack={() => navigate("respond")} />
       <div className={styles.appScene}>
         <header className={styles.followHeader}>
           <button className={styles.textAction} type="button" onClick={() => navigate("respond")}>
@@ -834,7 +912,7 @@ function FollowScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
         </div>
         <Panel className={styles.nextLikely}>
           <Target size={30} aria-hidden="true" />
-          <div><Eyebrow>{hosted ? "Available next inquiry" : "Next likely learning"}</Eyebrow><h2>{hosted ? experience.sources[0]?.title ?? "Not yet available in this Alpha" : "Compare the consistently delivering team with the rest of Engineering."}</h2><p>{hosted ? "This inquiry is available from the authorized projection." : "This comparison could materially qualify the current explanation."}</p></div>
+          <div><Eyebrow>{hosted ? "Available next inquiry" : "Next likely learning"}</Eyebrow><h2>{hosted ? experience.sources[0]?.title ?? "No additional inquiry is currently available." : "Compare the consistently delivering team with the rest of Engineering."}</h2><p>{hosted ? "This is the next learning opportunity currently available for this organization." : "This comparison could materially qualify the current explanation."}</p></div>
           <div>
             <small>Expected contribution</small>
             <strong>
@@ -842,7 +920,17 @@ function FollowScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
             </strong>
           </div>
         </Panel>
-        <FollowConfirmation paused={paused} onToggle={() => setPaused((value) => !value)} />
+        {hosted ? (
+          <Panel tone="green" className={styles.followConfirmation}>
+            <span className={styles.followCheck}><PauseCircle size={24} aria-hidden="true" /></span>
+            <div>
+              <strong>Follow controls are not yet available</strong>
+              <p>This read-only scene does not create notifications or change a saved follow state.</p>
+            </div>
+          </Panel>
+        ) : (
+          <FollowConfirmation paused={paused} onToggle={() => setPaused((value) => !value)} />
+        )}
         <footer className={styles.followFooter}>
           <span>{hosted ? "Creation and change timing unavailable" : "First created May 1, 2025 · Last meaningful change 8 min ago"}</span>
           <Action arrow onClick={() => navigate("return")}>See what changed</Action>
@@ -856,7 +944,7 @@ function ReturnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
   const { experience, hosted } = useAlphaExperience();
   return (
     <SceneFrame scene="return" navigate={navigate}>
-      <MobileSceneHeader scene="return" onBack={() => navigate("follow")} />
+      <MobileSceneHeader scene="return" navigate={navigate} onBack={() => navigate("follow")} />
       <div className={styles.appScene}>
         <header className={styles.returnHeader}>
           <span className={styles.sunMark} aria-hidden="true">☼</span>
@@ -901,28 +989,37 @@ function ReturnScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
 
 function HomeScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
   const { experience, hosted } = useAlphaExperience();
+  const currentAnswer = boundedCurrentAnswer(experience.understanding.synthesis);
+  const nextLearning =
+    experience.sources[0]?.title ??
+    "No additional inquiry is currently available.";
   return (
     <SceneFrame scene="home" navigate={navigate}>
-      <MobileSceneHeader scene="home" />
+      <MobileSceneHeader scene="home" navigate={navigate} />
       <div className={styles.appScene}>
         <header className={styles.homeHeader}>
           <span className={styles.sunMark} aria-hidden="true">☼</span>
-          <div><h1 data-scene-heading tabIndex={-1}>{experience.organization.name}</h1><p>Your authorized Organization Understanding is ready.</p></div>
-          <Action tone="secondary"><Settings size={17} aria-hidden="true" /> Customize home</Action>
+          <div><h1 data-scene-heading tabIndex={-1}>{experience.organization.name}</h1><p>Your organizational understanding is ready.</p></div>
+          <Action tone="secondary" disabled title="Home customization is not yet available in this sandbox"><Settings size={17} aria-hidden="true" /> Customize home · Not yet available</Action>
         </header>
         <div className={styles.homeLead}>
-          <article className={styles.heroLearning}>
-            <Eyebrow tone="violet">{hosted ? "Available learning" : "Most important learning"}</Eyebrow>
+          <article className={`${styles.heroLearning} ${hosted ? styles.hostedHeroLearning : ""}`}>
+            <Eyebrow tone="violet">{hosted ? "Original question" : "Most important learning"}</Eyebrow>
             <div>
               <span className={`${styles.changeIcon} ${styles.tone_green}`}>
                 {hosted ? <Lightbulb size={30} aria-hidden="true" /> : <TrendingUp size={30} aria-hidden="true" />}
               </span>
-              <div><h2>{experience.understanding.title}</h2><p>{experience.understanding.synthesis}</p><Action tone="secondary" arrow onClick={() => navigate("return")}>See what changed</Action></div>
+              <div>
+                <h2>{hosted ? experience.understanding.originalQuestion : experience.understanding.title}</h2>
+                <Eyebrow>Current answer</Eyebrow>
+                <p>{hosted ? currentAnswer : experience.understanding.synthesis}</p>
+                <Action tone="secondary" arrow onClick={() => navigate("understand")}>Open this understanding</Action>
+              </div>
               {!hosted && <Sparkline tone="green" label={`${experience.understanding.title} trend`} />}
             </div>
             <footer>
-              <span>Impact on Understanding <strong>{experience.changes[0]?.impact ?? "Unavailable"}</strong></span>
-              <span><strong>{experience.understanding.confidence.qualitative ?? "Unavailable"} confidence</strong> · {experience.understanding.confidence.value === null ? "undisclosed" : `${experience.understanding.confidence.value}%`}</span>
+              <span>Remaining uncertainty <strong>{experience.understanding.primaryUnknown}</strong></span>
+              <span>Next learning <strong>{nextLearning}</strong></span>
             </footer>
           </article>
           <Panel className={styles.recentChanges}>
@@ -936,6 +1033,10 @@ function HomeScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
                 <p><GitBranch size={17} aria-hidden="true" /> Product Prioritization became strongly related</p>
               </>
             )}
+            <small className={styles.changeAvailability}>
+              Impact on understanding:{" "}
+              <strong>{experience.changes[0]?.impact ?? "Unavailable"}</strong>
+            </small>
           </Panel>
         </div>
         <section className={styles.homeSecondary} aria-labelledby="other-learning-title">
@@ -947,11 +1048,11 @@ function HomeScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
           </div>
         </section>
         <section className={styles.followedSection} aria-labelledby="followed-home-title">
-          <div className={styles.sectionHeading}><Eyebrow><span id="followed-home-title">Understandings you’re following</span></Eyebrow><button type="button">View all</button></div>
+            <div className={styles.sectionHeading}><Eyebrow><span id="followed-home-title">Related understandings</span></Eyebrow></div>
           <div className={styles.followedCards}>
             {experience.relationships.slice(0, 3).map((relationship, index) => (
               <article key={relationship.id}>
-                <div><span className={`${styles.semanticIcon} ${styles[`tone_${relationship.tone}`]}`}><GitBranch size={18} aria-hidden="true" /></span><strong>{relationship.title}</strong></div>
+                <div><span className={`${styles.semanticIcon} ${styles[`tone_${relationship.tone}`]}`}><GitBranch size={18} aria-hidden="true" /></span><strong>{hosted ? boundedCurrentAnswer(relationship.title) : relationship.title}</strong></div>
                 <span>
                   {hosted
                     ? <><b>Confidence unavailable</b> · Trend unavailable</>

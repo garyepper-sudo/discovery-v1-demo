@@ -30,22 +30,31 @@ const evidenceRoleLabels = {
   shared: "Evidence shared across explanations",
 } as const;
 
+// Product Communication remains the sole source of every disclosure value.
 const inquiryRationale = {
   "investigation-information-gain":
-    "Product Communication prioritizes this inquiry using an authorized information-gain signal.",
+    "Discovery prioritizes this inquiry because it may reduce an important remaining uncertainty.",
   "investigation-opportunity-available":
-    "Product Communication includes this as an available investigation opportunity.",
+    "Discovery has identified this as an available learning opportunity.",
   "authorized-next-inquiry":
-    "This is the next inquiry available through the authorized communication plan.",
+    "This is the next inquiry currently available for this organization.",
 } as const;
 
 function BeliefBasisDisclosure({ basis }: { basis: BeliefBasis }) {
   return (
     <section className={styles.beliefBasis} aria-labelledby="belief-basis-title">
       <header>
-        <Eyebrow>Authorized Product Communication</Eyebrow>
+        <Eyebrow>Discovery’s current understanding</Eyebrow>
         <h2 id="belief-basis-title">Why Discovery currently believes this</h2>
         <p>{basis.summaryExplanation}</p>
+        {basis.broaderSupport.length > 0 && (
+          <div>
+            <h3>A related organizational issue</h3>
+            <ul>
+              {basis.broaderSupport.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </div>
+        )}
       </header>
       <div className={styles.beliefBasisGrid}>
         <div>
@@ -75,6 +84,16 @@ function BeliefBasisDisclosure({ basis }: { basis: BeliefBasis }) {
           ) : (
             <p>No additional uncertainty text is available.</p>
           )}
+          {basis.broaderUncertainty.length > 0 && (
+            <>
+              <h3>A broader issue Discovery is still investigating</h3>
+              <ul>
+                {basis.broaderUncertainty.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </>
+          )}
         </div>
         <div>
           <h3>Alternative explanations not yet eliminated</h3>
@@ -88,7 +107,7 @@ function BeliefBasisDisclosure({ basis }: { basis: BeliefBasis }) {
               ))}
             </ul>
           ) : (
-            <p>No unresolved alternative is available through Product Communication.</p>
+            <p>No unresolved alternative is currently available.</p>
           )}
         </div>
         <div>
@@ -96,6 +115,13 @@ function BeliefBasisDisclosure({ basis }: { basis: BeliefBasis }) {
           {basis.nextInquiry ? (
             <>
               <strong>{basis.nextInquiry.question}</strong>
+              <p>{basis.nextInquiry.scopeLabel}</p>
+              {basis.nextInquiry.affectedConditions.length > 0 && (
+                <p>
+                  Affected conditions:{" "}
+                  {basis.nextInquiry.affectedConditions.join(", ")}.
+                </p>
+              )}
               <p>{inquiryRationale[basis.nextInquiry.rationale]}</p>
             </>
           ) : (
@@ -116,7 +142,7 @@ const changeAvailabilityMessage: Record<
   "history-not-authorized":
     "Prior history exists but is not authorized for this view.",
   "change-reason-unavailable":
-    "A canonical change exists, but no supported reason is available.",
+    "A supported change exists, but its reason is not available.",
   "no-meaningful-change":
     "No meaningful change to this understanding is currently recorded.",
   "projection-data-unavailable":
@@ -146,7 +172,7 @@ function ChangeDisclosureContent({
   return (
     <section className={styles.beliefBasis} aria-labelledby="change-disclosure-title">
       <header>
-        <Eyebrow>Authorized Product Communication</Eyebrow>
+        <Eyebrow>Discovery’s learning history</Eyebrow>
         <h2 id="change-disclosure-title">What changed and why</h2>
       </header>
       {disclosure.changes.length > 0 ? (
@@ -158,7 +184,7 @@ function ChangeDisclosureContent({
               </strong>
               <p>
                 {change.reason ??
-                  "A canonical change exists, but no supported reason is available."}
+                  "A supported change exists, but its reason is not available."}
               </p>
               <span>
                 {change.previousRevisionAvailable
@@ -209,7 +235,7 @@ function EvidenceRequestDisclosureContent({
   return (
     <section className={styles.beliefBasis} aria-labelledby="evidence-request-disclosure-title">
       <header>
-        <Eyebrow>Authorized Product Communication</Eyebrow>
+        <Eyebrow>Discovery’s next learning opportunity</Eyebrow>
         <h2 id="evidence-request-disclosure-title">Why this evidence matters</h2>
       </header>
       {request ? (
@@ -393,7 +419,7 @@ export default function UnderstandingDisclosure({
               aria-labelledby="full-synthesis-title"
             >
               <header>
-                <Eyebrow>Authorized Product Communication</Eyebrow>
+                <Eyebrow>Discovery’s current understanding</Eyebrow>
                 <h2 id="full-synthesis-title">Full organizational analysis</h2>
                 <p>{fullSynthesis}</p>
               </header>
