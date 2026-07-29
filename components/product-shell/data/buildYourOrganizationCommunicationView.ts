@@ -20,6 +20,7 @@ export type YourOrganizationCommunicationItem = {
   supportingRefs: CanonicalObjectReference[];
   priority: CommunicationPriorityProvenance;
   availability: ProductCommunicationAvailability;
+  change?: CommunicationPlanItem["change"];
 };
 
 export type YourOrganizationCommunicationView = {
@@ -124,6 +125,7 @@ function item(
       ),
     priority: copyPriority(source.priority),
     availability: { ...source.availability },
+    ...(source.change ? { change: { ...source.change } } : {}),
   };
 }
 

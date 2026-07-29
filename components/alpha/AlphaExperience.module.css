@@ -1540,6 +1540,31 @@
   text-transform: capitalize;
 }
 
+.changeDisclosureList {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.changeDisclosureList article {
+  display: grid;
+  gap: 7px;
+  padding: 18px;
+  border: 1px solid #e1e5ed;
+  border-radius: 9px;
+  background: #f8f9fb;
+}
+
+.changeDisclosureList article p {
+  margin: 0;
+}
+
+.changeDisclosureList article span,
+.changeDisclosureList article time {
+  color: var(--alpha-muted);
+  font-size: 12px;
+}
+
 .detailCard {
   min-height: 210px;
   display: grid;

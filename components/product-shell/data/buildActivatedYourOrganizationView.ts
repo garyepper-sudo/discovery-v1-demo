@@ -32,6 +32,24 @@ type BeliefBasis = {
 type ActivatedYourOrganizationView =
   ReturnType<typeof buildUnifiedExecutiveWorkspaceView> & {
     beliefBasis: BeliefBasis;
+    changeDisclosure: {
+      state:
+        | "available"
+        | "first-supported-understanding"
+        | "history-not-authorized"
+        | "change-reason-unavailable"
+        | "no-meaningful-change"
+        | "projection-data-unavailable";
+      changes: Array<{
+        id: string;
+        direction: NonNullable<
+          YourOrganizationCommunicationView["changes"][number]["change"]
+        >["direction"];
+        reason: string | null;
+        occurredAt: string;
+        previousRevisionAvailable: boolean;
+      }>;
+    };
   };
 
 function referenceIdentity(reference: {
@@ -79,6 +97,9 @@ export function buildActivatedYourOrganizationView(input: {
   const uncertaintyText = sourceTexts(communication.uncertainty);
   const inquiryText = sourceTexts(communication.nextInquiries);
   const changeText = sourceTexts(communication.changes);
+  const changeAvailability = communication.availability?.find(
+    (entry) => entry.area === "changes",
+  )?.state;
   const conditionAreas = projection.conditions.map((condition) => ({
     id: condition.id,
     label: condition.value.name || "Organizational condition",
@@ -158,6 +179,31 @@ export function buildActivatedYourOrganizationView(input: {
         "investigation_opportunity_available"
       ? "investigation-opportunity-available" as const
       : "authorized-next-inquiry" as const;
+  const authorizedChanges = communication.changes.flatMap((change, index) =>
+    change.change
+      ? [{
+          id: `authorized-change-detail-${index + 1}`,
+          direction: change.change.direction,
+          reason: change.sourceText?.text.trim() || null,
+          occurredAt: change.change.occurredAt,
+          previousRevisionAvailable:
+            change.change.previousRevisionAvailable,
+        }]
+      : [],
+  );
+  const changeDisclosureState =
+    authorizedChanges.length > 0 &&
+    authorizedChanges.every((change) => change.reason)
+      ? "available" as const
+      : changeAvailability === "history-not-authorized"
+        ? "history-not-authorized" as const
+        : changeAvailability === "first-supported-understanding"
+          ? "first-supported-understanding" as const
+          : changeAvailability === "no-meaningful-change"
+            ? "no-meaningful-change" as const
+            : changeAvailability === "projection-data-unavailable"
+              ? "projection-data-unavailable" as const
+              : "change-reason-unavailable" as const;
 
   return {
     ...legacyShape,
@@ -198,6 +244,10 @@ export function buildActivatedYourOrganizationView(input: {
             rationale: nextInquiryRationale,
           }
         : null,
+    },
+    changeDisclosure: {
+      state: changeDisclosureState,
+      changes: authorizedChanges,
     },
     model: {
       coherence: null,

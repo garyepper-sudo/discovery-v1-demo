@@ -129,7 +129,11 @@ export type ProductCommunicationAvailabilityState =
   | "organization-mismatch"
   | "consumer-mismatch"
   | "historical-compatibility-unavailable"
-  | "unsupported-application-input";
+  | "unsupported-application-input"
+  | "first-supported-understanding"
+  | "history-not-authorized"
+  | "change-reason-unavailable"
+  | "no-meaningful-change";
 
 export type ProductCommunicationAvailabilityArea =
   | "communication"
@@ -164,6 +168,21 @@ export type CommunicationPlanItem = {
   supportingRefs: CanonicalObjectReference[];
   priority: CommunicationPriorityProvenance;
   availability: ProductCommunicationAvailability;
+  change?: {
+    direction:
+      | "emerged"
+      | "strengthened"
+      | "weakened"
+      | "revised"
+      | "contradicted"
+      | "retired"
+      | "merged"
+      | "resolved"
+      | "unresolved";
+    occurredAt: string;
+    previousRevisionAvailable: boolean;
+    reasonAvailability: "available" | "unavailable";
+  };
 };
 
 export type CommunicationAlternativeGroup = {
@@ -482,7 +501,51 @@ function exactSourceText(
       };
     }
   }
+  if (
+    area === "changes" &&
+    reference.objectType === "organizational-evolution"
+  ) {
+    const evolution = projection.evolution.find(
+      (item) =>
+        referenceIdentity(item.canonicalRef) === referenceIdentity(reference),
+    );
+    if (evolution?.value.reason) {
+      return {
+        text: evolution.value.reason,
+        sourceRef: copyReference(evolution.canonicalRef),
+        sourceField: "reason",
+        sourceOwner: "canonical_cognition",
+      };
+    }
+  }
   return undefined;
+}
+
+function changeDirection(
+  changeType: string | undefined,
+): NonNullable<CommunicationPlanItem["change"]>["direction"] {
+  switch (changeType) {
+    case "new":
+      return "emerged";
+    case "strengthening":
+    case "strengthened":
+      return "strengthened";
+    case "weakening":
+    case "weakened":
+      return "weakened";
+    case "contradicted":
+      return "contradicted";
+    case "retired":
+      return "retired";
+    case "merged":
+      return "merged";
+    case "resolved":
+      return "resolved";
+    case "unresolved":
+      return "unresolved";
+    default:
+      return "revised";
+  }
 }
 
 function item(
@@ -493,6 +556,13 @@ function item(
   area: ProductCommunicationAvailabilityArea,
 ): CommunicationPlanItem {
   const sourceText = exactSourceText(projection, subjectRef, area);
+  const evolution = area === "changes"
+    ? projection.evolution.find(
+        (entry) =>
+          referenceIdentity(entry.canonicalRef) ===
+          referenceIdentity(subjectRef),
+      )
+    : undefined;
   return {
     itemId: `communication-item:${encodeURIComponent(referenceIdentity(subjectRef))}`,
     subjectRef: copyReference(subjectRef),
@@ -505,6 +575,20 @@ function item(
         ? "available-with-source-text"
         : "available-structurally-without-text",
     ),
+    ...(evolution
+      ? {
+          change: {
+            direction: changeDirection(evolution.value.changeType),
+            occurredAt: evolution.value.occurredAt,
+            previousRevisionAvailable: Boolean(
+              evolution.value.previousRevisionId,
+            ),
+            reasonAvailability: evolution.value.reason
+              ? "available" as const
+              : "unavailable" as const,
+          },
+        }
+      : {}),
   };
 }
 
@@ -763,8 +847,20 @@ export function compileProductCommunicationPlan(
       availability(
         "changes",
         changes.length > 0
-          ? "available-structurally-without-text"
-          : "available-empty",
+          ? changes.some((entry) => !entry.sourceText)
+            ? "change-reason-unavailable"
+            : "available-with-source-text"
+          : projection.availability.find((entry) => entry.area === "evolution")
+                ?.state === "referenced-data-missing"
+            ? "history-not-authorized"
+            : projection.availability.find((entry) => entry.area === "evolution")
+                  ?.state === "runtime-data-unavailable"
+              ? "projection-data-unavailable"
+              : projection.understandings.every(
+                    (entry) => entry.value.previousRevisionId === null,
+                  )
+                ? "first-supported-understanding"
+                : "no-meaningful-change",
       ),
       availability(
         "next-inquiries",

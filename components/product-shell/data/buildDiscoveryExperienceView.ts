@@ -98,6 +98,16 @@ export function buildDiscoveryExperienceView(input: {
             },
           }
         : {}),
+      ...(view.changeDisclosure
+        ? {
+            changeDisclosure: {
+              state: view.changeDisclosure.state,
+              changes: view.changeDisclosure.changes.map((change) => ({
+                ...change,
+              })),
+            },
+          }
+        : {}),
     },
     sources: investigations.map((title, index) => ({
       id: `authorized-source-${index + 1}`,

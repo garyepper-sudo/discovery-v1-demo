@@ -52,6 +52,31 @@ export type UnderstandingViewModel = {
         | "authorized-next-inquiry";
     } | null;
   };
+  changeDisclosure?: {
+    state:
+      | "available"
+      | "first-supported-understanding"
+      | "history-not-authorized"
+      | "change-reason-unavailable"
+      | "no-meaningful-change"
+      | "projection-data-unavailable";
+    changes: Array<{
+      id: string;
+      direction:
+        | "emerged"
+        | "strengthened"
+        | "weakened"
+        | "revised"
+        | "contradicted"
+        | "retired"
+        | "merged"
+        | "resolved"
+        | "unresolved";
+      reason: string | null;
+      occurredAt: string;
+      previousRevisionAvailable: boolean;
+    }>;
+  };
 };
 
 export type SourceViewModel = {

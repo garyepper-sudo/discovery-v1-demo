@@ -17,6 +17,9 @@ import { Eyebrow } from "./AlphaPrimitives";
 import styles from "./AlphaExperience.module.css";
 
 type BeliefBasis = NonNullable<UnderstandingViewModel["beliefBasis"]>;
+type ChangeDisclosure = NonNullable<
+  UnderstandingViewModel["changeDisclosure"]
+>;
 
 const evidenceRoleLabels = {
   supports: "Supporting evidence",
@@ -101,6 +104,79 @@ function BeliefBasisDisclosure({ basis }: { basis: BeliefBasis }) {
   );
 }
 
+const changeAvailabilityMessage: Record<
+  Exclude<ChangeDisclosure["state"], "available">,
+  string
+> = {
+  "first-supported-understanding":
+    "This is the first supported understanding, so no prior revision exists.",
+  "history-not-authorized":
+    "Prior history exists but is not authorized for this view.",
+  "change-reason-unavailable":
+    "A canonical change exists, but no supported reason is available.",
+  "no-meaningful-change":
+    "No meaningful change to this understanding is currently recorded.",
+  "projection-data-unavailable":
+    "Evolution data is not yet available through the authorized projection.",
+};
+
+const changeDirectionLabels: Record<
+  ChangeDisclosure["changes"][number]["direction"],
+  string
+> = {
+  emerged: "Emerged",
+  strengthened: "Strengthened",
+  weakened: "Weakened",
+  revised: "Revised",
+  contradicted: "Contradicted",
+  retired: "Retired",
+  merged: "Merged",
+  resolved: "Resolved",
+  unresolved: "Became unresolved",
+};
+
+function ChangeDisclosureContent({
+  disclosure,
+}: {
+  disclosure: ChangeDisclosure;
+}) {
+  return (
+    <section className={styles.beliefBasis} aria-labelledby="change-disclosure-title">
+      <header>
+        <Eyebrow>Authorized Product Communication</Eyebrow>
+        <h2 id="change-disclosure-title">What changed and why</h2>
+      </header>
+      {disclosure.changes.length > 0 ? (
+        <div className={styles.changeDisclosureList}>
+          {disclosure.changes.map((change) => (
+            <article key={change.id}>
+              <strong>
+                Recorded change: {changeDirectionLabels[change.direction]}.
+              </strong>
+              <p>
+                {change.reason ??
+                  "A canonical change exists, but no supported reason is available."}
+              </p>
+              <span>
+                {change.previousRevisionAvailable
+                  ? "This change continues from a previous authorized revision."
+                  : "This is the first supported version of this understanding."}
+              </span>
+              <time dateTime={change.occurredAt}>{change.occurredAt}</time>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p>{changeAvailabilityMessage[
+          disclosure.state === "available"
+            ? "no-meaningful-change"
+            : disclosure.state
+        ]}</p>
+      )}
+    </section>
+  );
+}
+
 /**
  * Presentation-only progressive disclosure boundary.
  *
@@ -111,10 +187,12 @@ function BeliefBasisDisclosure({ basis }: { basis: BeliefBasis }) {
  */
 export default function UnderstandingDisclosure({
   basis,
+  changeDisclosure,
   details,
   children,
 }: {
   basis: BeliefBasis | undefined;
+  changeDisclosure: ChangeDisclosure | undefined;
   details: ReadonlyArray<readonly [
     id: string,
     title: string,
@@ -124,6 +202,8 @@ export default function UnderstandingDisclosure({
   children: (parts: {
     trigger: ReactNode;
     disclosure: ReactNode;
+    changeTrigger: ReactNode;
+    changeDisclosure: ReactNode;
     detailGrid: ReactNode;
   }) => ReactNode;
 }) {
@@ -139,11 +219,29 @@ export default function UnderstandingDisclosure({
       See why Discovery believes this <ArrowRight size={16} aria-hidden="true" />
     </button>
   );
+  const changeExpanded = openDetail === "change-disclosure";
+  const changeTrigger = (
+    <button
+      className={styles.inlineLink}
+      type="button"
+      onClick={() =>
+        setOpenDetail(changeExpanded ? null : "change-disclosure")
+      }
+      aria-expanded={changeExpanded}
+    >
+      What changed and why <ArrowRight size={16} aria-hidden="true" />
+    </button>
+  );
 
   return children({
     trigger,
     disclosure:
       expanded && basis ? <BeliefBasisDisclosure basis={basis} /> : null,
+    changeTrigger,
+    changeDisclosure:
+      changeExpanded && changeDisclosure
+        ? <ChangeDisclosureContent disclosure={changeDisclosure} />
+        : null,
     detailGrid: (
       <div className={styles.detailGrid}>
         {details.map(([id, title, copy, tone]) => (

@@ -7,6 +7,7 @@ import {
   ORGANIZATIONAL_UNDERSTANDING_PROJECTION_VERSION,
   compileOrganizationalUnderstandingProjection,
   type OrganizationalUnderstandingProjection,
+  type CanonicalEvolutionReference,
 } from "../../../engine/v3/projection/organizationalUnderstandingProjection";
 import {
   ORGANIZATION_PRODUCT_COMMUNICATION_POLICY,
@@ -17,6 +18,124 @@ import {
 import type { OrganizationRuntime } from "../../../engine/v3/runtime";
 import { buildYourOrganizationCommunicationView } from "./buildYourOrganizationCommunicationView";
 import { buildActivatedYourOrganizationView } from "./buildActivatedYourOrganizationView";
+
+type PersistedLearningEvent = {
+  id: string;
+  timestamp: string;
+  objectType: string;
+  objectId: string;
+  changeType: string;
+  reason: string;
+};
+
+const meaningfulChangeTypes = new Set([
+  "new",
+  "strengthening",
+  "strengthened",
+  "weakening",
+  "weakened",
+  "contradicted",
+  "retired",
+  "merged",
+  "resolved",
+  "unresolved",
+]);
+
+export function buildActivatedEvolutionCandidates(
+  runtime: OrganizationRuntime,
+): CanonicalEvolutionReference[] {
+  const memory = runtime.memory as unknown as {
+    learningEvents?: PersistedLearningEvent[];
+  };
+  const explanationsById = new Map(
+    runtime.memory.organizationalExplanations.map((explanation) => [
+      explanation.id,
+      explanation,
+    ]),
+  );
+  const events = (memory.learningEvents ?? [])
+    .filter(
+      (event) =>
+        (event.objectType === "belief" || event.objectType === "theory") &&
+        meaningfulChangeTypes.has(event.changeType) &&
+        event.timestamp.trim().length > 0,
+    )
+    .sort((left, right) =>
+      `${left.timestamp}\0${left.id}`.localeCompare(
+        `${right.timestamp}\0${right.id}`,
+      ),
+    );
+  const candidates: CanonicalEvolutionReference[] = [];
+
+  for (
+    const composition of
+      runtime.memory.organizationalUnderstandingState.canonicalCompositions ??
+      []
+  ) {
+    if (!composition.previousRevisionId) {
+      continue;
+    }
+    const explanations = composition.explanationIds.flatMap(
+      (id) => explanationsById.get(id) ?? [],
+    );
+    const linkedEvents = events.filter(
+      (event) =>
+        event.timestamp === composition.updatedAt &&
+        explanations.some((explanation) =>
+          event.objectType === "belief"
+            ? explanation.beliefIds.includes(event.objectId)
+            : explanation.theoryIds.includes(event.objectId),
+        ),
+    );
+    const supportingRefs = [
+      {
+        objectType: "organizational-understanding" as const,
+        objectId: composition.id,
+        revisionId: composition.revisionId,
+      },
+      ...explanations.map((explanation) => ({
+        objectType: "organizational-explanation" as const,
+        objectId: explanation.id,
+      })),
+    ];
+
+    for (const event of linkedEvents) {
+      candidates.push({
+        id: `organizational-evolution:${encodeURIComponent(
+          JSON.stringify([composition.id, event.id]),
+        )}`,
+        organizationId: composition.organizationId,
+        occurredAt: event.timestamp,
+        objectType: "organizational-understanding",
+        objectId: composition.id,
+        revisionId: composition.revisionId,
+        previousRevisionId: composition.previousRevisionId,
+        changeType: event.changeType as
+          CanonicalEvolutionReference["changeType"],
+        ...(event.reason.trim() ? { reason: event.reason.trim() } : {}),
+        supportingRefs,
+      });
+    }
+
+    if (composition.previousRevisionId && linkedEvents.length === 0) {
+      candidates.push({
+        id: `organizational-evolution:${encodeURIComponent(
+          JSON.stringify([composition.id, composition.revisionId]),
+        )}`,
+        organizationId: composition.organizationId,
+        occurredAt: composition.updatedAt,
+        objectType: "organizational-understanding",
+        objectId: composition.id,
+        revisionId: composition.revisionId,
+        previousRevisionId: composition.previousRevisionId,
+        changeType: "revised",
+        supportingRefs,
+      });
+    }
+  }
+
+  return candidates;
+}
 
 export type ActivatedYourOrganizationState =
   | {
@@ -116,7 +235,7 @@ export function composeActivatedYourOrganization(input: {
       ? { uncertainty: runtime.memory.organizationalUncertainty }
       : {}),
     investigations: extendedMemory.investigationOpportunities ?? [],
-    evolution: [],
+    evolution: buildActivatedEvolutionCandidates(runtime),
   });
   const projectionState = projection.availability.find(
     (entry) => entry.area === "projection",

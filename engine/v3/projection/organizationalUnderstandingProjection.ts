@@ -62,6 +62,20 @@ export type CanonicalEvolutionReference = {
   objectType: CanonicalObjectReference["objectType"];
   objectId: string;
   revisionId?: string;
+  previousRevisionId?: string | null;
+  changeType?:
+    | "new"
+    | "strengthening"
+    | "strengthened"
+    | "weakening"
+    | "weakened"
+    | "contradicted"
+    | "retired"
+    | "merged"
+    | "resolved"
+    | "revised"
+    | "unresolved";
+  reason?: string;
   supportingRefs: CanonicalObjectReference[];
 };
 
@@ -770,7 +784,13 @@ export function compileOrganizationalUnderstandingProjection(
           ? "referenced-data-missing"
           : "available-empty",
       ),
-      availability("evolution", projectedEvolution.length),
+      availability(
+        "evolution",
+        projectedEvolution.length,
+        source.evolution.length > 0
+          ? "referenced-data-missing"
+          : "available-empty",
+      ),
     ],
     depth: {
       summary: normalizeReferences(understandingReferences),

@@ -572,9 +572,16 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
         </header>
         <UnderstandingDisclosure
           basis={experience.understanding.beliefBasis}
+          changeDisclosure={experience.understanding.changeDisclosure}
           details={details}
         >
-          {({ trigger, disclosure, detailGrid }) => (
+          {({
+            trigger,
+            disclosure,
+            changeTrigger,
+            changeDisclosure,
+            detailGrid,
+          }) => (
             <>
               <Panel tone="green" className={styles.synthesisPanel}>
                 <div className={styles.synthesisCopy}>
@@ -588,32 +595,36 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
               </Panel>
               {disclosure}
               {detailGrid}
+              <div className={styles.understandingLower}>
+                <Panel className={styles.beforeAfter}>
+                  <h2>How this Understanding changed</h2>
+                  {hosted ? (
+                    <>
+                      <p>{experience.changes[0]?.headline ?? "Evolution availability is described in the disclosure."}</p>
+                      {changeTrigger}
+                      {changeDisclosure}
+                    </>
+                  ) : (
+                    <div><span><small>Before</small>Planning and execution appeared equally plausible.</span><ArrowRight aria-hidden="true" /><span><small>Now</small>Ownership ambiguity is the strongest explanation.</span></div>
+                  )}
+                  {hosted ? <p>Quantitative evolution is unavailable.</p> : <EvolutionGraph early={62} current={74} />}
+                </Panel>
+                <Panel className={styles.relationshipsPanel}>
+                  <div className={styles.sectionHeading}><h2>Related Understandings</h2><button type="button">View all</button></div>
+                  {experience.relationships.slice(0, 3).map((relationship) => (
+                    <RelationshipRow key={relationship.id} relationship={relationship} showTrend={!hosted} />
+                  ))}
+                </Panel>
+                <Panel tone="violet" className={styles.recommendedLearning}>
+                  <Eyebrow tone="violet">Next recommended learning</Eyebrow>
+                  <h2>{hosted ? experience.sources[0]?.title ?? "Not yet available in this Alpha" : "Compare decision practices in the consistently delivering team."}</h2>
+                  <p>Expected contribution: <strong>{hosted ? "Unavailable" : "High"}</strong></p>
+                  <button className={styles.inlineLink} type="button" onClick={() => navigate("plan")}>See learning plan <ArrowRight size={16} aria-hidden="true" /></button>
+                </Panel>
+              </div>
             </>
           )}
         </UnderstandingDisclosure>
-        <div className={styles.understandingLower}>
-          <Panel className={styles.beforeAfter}>
-            <h2>How this Understanding changed</h2>
-            {hosted ? (
-              <p>{experience.changes[0]?.headline ?? "No meaningful change is currently available."}</p>
-            ) : (
-              <div><span><small>Before</small>Planning and execution appeared equally plausible.</span><ArrowRight aria-hidden="true" /><span><small>Now</small>Ownership ambiguity is the strongest explanation.</span></div>
-            )}
-            {hosted ? <p>Quantitative evolution is unavailable.</p> : <EvolutionGraph early={62} current={74} />}
-          </Panel>
-          <Panel className={styles.relationshipsPanel}>
-            <div className={styles.sectionHeading}><h2>Related Understandings</h2><button type="button">View all</button></div>
-            {experience.relationships.slice(0, 3).map((relationship) => (
-              <RelationshipRow key={relationship.id} relationship={relationship} showTrend={!hosted} />
-            ))}
-          </Panel>
-          <Panel tone="violet" className={styles.recommendedLearning}>
-            <Eyebrow tone="violet">Next recommended learning</Eyebrow>
-            <h2>{hosted ? experience.sources[0]?.title ?? "Not yet available in this Alpha" : "Compare decision practices in the consistently delivering team."}</h2>
-            <p>Expected contribution: <strong>{hosted ? "Unavailable" : "High"}</strong></p>
-            <button className={styles.inlineLink} type="button" onClick={() => navigate("plan")}>See learning plan <ArrowRight size={16} aria-hidden="true" /></button>
-          </Panel>
-        </div>
         <footer className={styles.understandingFooter}>
           <span>{hosted ? "Creation and change timing unavailable" : "First created May 1, 2025 · Last meaningful change today · 8:12 AM"}</span>
           <div>
