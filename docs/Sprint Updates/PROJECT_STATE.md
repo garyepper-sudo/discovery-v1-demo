@@ -21,6 +21,13 @@ The current product communication architecture is now canonical:
 - Organizational Functions Experiment 001 is complete and remains
   benchmark-only.
 
+The Discovery Intelligence Evaluation Framework now defines the canonical
+fitness function: increase Truthful Organizational Understanding over time.
+Truthful Utility, Evidence acquisition, communication, learning, and
+longitudinal understanding are supporting capabilities. Truthfulness and Model
+Stewardship—including governance, permissions, determinism, and system
+sustainability—are hard promotion constraints.
+
 ## Production State
 
 - Health: READY; configuration, database, and Runtime true

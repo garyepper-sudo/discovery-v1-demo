@@ -42,6 +42,25 @@ It improves executive decision-making by helping organizations better understand
 
 Every completed organizational cycle should leave both the organization and Discovery more capable than before.
 
+## Canonical fitness function
+
+Discovery optimizes for one outcome:
+
+> **Increasing Truthful Organizational Understanding over time.**
+
+Organizational Understanding is the quality, completeness, calibration,
+usefulness, and durability of Discovery's current understanding of an
+organization. Truthful Utility, Evidence acquisition, communication, learning,
+and longitudinal understanding support that outcome. They are not competing
+objectives.
+
+Truthfulness, Model Stewardship, governance, permissions, determinism,
+historical truth, and system sustainability are hard constraints. Discovery
+cannot improve understanding by weakening any of them.
+
+The canonical evaluation contract is
+`docs/Evaluation/DISCOVERY_INTELLIGENCE_EVALUATION_FRAMEWORK.md`.
+
 ---
 
 # Product Identity

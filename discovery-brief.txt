@@ -19,6 +19,13 @@ Experiment 001 remains benchmark-only; its current recommendation is a
 reusable non-authoritative interpretation layer. Next research: Evidence
 acquisition as a second independent consumer.
 
+Canonical fitness function: increase Truthful Organizational Understanding
+over time. Decision utility, Evidence acquisition, communication, learning,
+and longitudinal understanding support that single objective. Truthfulness,
+Model Stewardship, governance, permissions, determinism, and system
+sustainability are hard constraints. Expected Understanding Gain and
+Understanding Opportunity remain conceptual and unimplemented.
+
 > discovery-alpha-v7@0.1.0 discovery:brief
 > npm run cognition:validate && npm run audit:executive-capabilities && npm run architecture:state && npm run architecture:handoff && npm run sprint:brief
 

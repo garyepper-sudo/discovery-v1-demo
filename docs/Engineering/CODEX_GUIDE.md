@@ -233,6 +233,14 @@ Prefer the solution that:
 
 # Product Rules
 
+- Treat increasing Truthful Organizational Understanding over time as the
+  single optimization target.
+- Treat decision utility, Evidence acquisition, communication, learning, and
+  longitudinal understanding as supporting capabilities, not peer objectives.
+- Treat truthfulness, Model Stewardship, governance, permissions, determinism,
+  and system sustainability as non-compensable promotion gates.
+- Do not implement Expected Understanding Gain or Understanding Opportunities
+  without a separately reviewed production contract.
 - Begin product experiences with the user's question, not Operating Model
   construction, organization configuration, or document upload.
 - Preserve the boundary from canonical cognition through Product Translation

@@ -9,7 +9,8 @@
 5. `docs/Sprint Updates/NEXT_PHASE_PROGRAM.md`
 6. `docs/Product/PRODUCT_CANON.md`
 7. `docs/Product/PRODUCT_COMMUNICATION_ARCHITECTURE.md`
-8. `docs/Architecture/Canon/COGNITIVE_ARCHITECTURE_INDEX.md`
+8. `docs/Evaluation/DISCOVERY_INTELLIGENCE_EVALUATION_FRAMEWORK.md`
+9. `docs/Architecture/Canon/COGNITIVE_ARCHITECTURE_INDEX.md`
 
 Inspect `git status --short` before acting. Preserve unrelated work and do not
 stage, clean, rename, or inspect the duplicate untracked ` 2` and ` 3` files
@@ -27,6 +28,11 @@ Operationally proven does not mean commercially validated.
 Question-first onboarding, Product Translation, Truthful Utility, and
 product-owned Evidence Roles are complete. Organizational Functions Experiment
 001 is complete but remains benchmark-only and non-canonical.
+
+Discovery's single optimization target is increasing Truthful Organizational
+Understanding over time. Supporting capabilities cannot compensate for weak
+understanding, and hard truthfulness or stewardship constraints cannot be
+traded away.
 
 ## Current Production Boundary
 
@@ -59,10 +65,10 @@ create organization
 → issue receipt
 ```
 
-Reuse existing infrastructure and preserve default-disabled controls. For
-product research, the next bounded question is whether Evidence acquisition
-provides a second independent consumer for the non-authoritative
-Organizational Function projection. Keep that work shadow-only. Do not
+Reuse existing infrastructure and preserve default-disabled controls. Future
+evaluation and research should declare how it improves Organizational
+Understanding. Expected Understanding Gain and Understanding Opportunity are
+conceptual only; do not implement them without separate review. Do not
 resume broad infrastructure construction or redesign Runtime, governance,
 authorization, organization resolution, projection, disclosure, health,
 provisioning, or product boundaries without demonstrated evidence and an

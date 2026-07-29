@@ -32,6 +32,20 @@ reusable non-authoritative interpretation layer, but Organizational Functions
 remain benchmark-only and non-canonical. The next recommended research is
 Evidence acquisition as a second independent consumer.
 
+## Canonical Fitness Function
+
+Discovery optimizes for one outcome: increasing Truthful Organizational
+Understanding over time. Decision utility, Evidence acquisition,
+communication, learning, and longitudinal understanding are supporting
+capabilities. Truthfulness and Model Stewardship—including governance,
+permissions, determinism, historical truth, and system sustainability—are
+non-compensable constraints.
+
+Understanding Freshness and Understanding Evolution are the two canonical
+parts of Longitudinal Understanding. Expected Understanding Gain and
+Understanding Opportunity are future concepts only; neither authorizes
+production implementation.
+
 ## Permanent Development Rule
 
 Before adding any new cognitive capability:

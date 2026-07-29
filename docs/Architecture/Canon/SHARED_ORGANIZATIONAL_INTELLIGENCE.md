@@ -86,6 +86,17 @@ This hierarchy evolves the product framing without rejecting the Executive Opera
 
 Organizational Intelligence is Discovery's continuously evolving, persistent understanding of how one organization functions, changes, learns, coordinates, creates value, and adapts.
 
+Discovery's canonical fitness function is increasing Truthful Organizational
+Understanding over time. Organizational Understanding means the quality,
+completeness, calibration, usefulness, and durability of the current
+understanding. Supporting capabilities may improve its acquisition,
+communication, decision relevance, learning, freshness, or evolution, but they
+do not become independent optimization targets.
+
+Truthfulness, Model Stewardship, governance, permissions, determinism, and
+system sustainability are non-compensable constraints. Apparent improvement
+that violates one of these constraints is not intelligence improvement.
+
 It may include evidence, entities, observations, signals, contradictions, phenomena, mechanisms, beliefs, concepts, theories, organizational conditions, organizational state, assessments, decisions, simulations, outcomes, historical learning, confidence, uncertainty, provenance, and organizational memory.
 
 These concepts collectively create Organizational Intelligence through the existing cognitive pipeline and Runtime. This definition does not require a new cognitive object or architectural layer. The model represents Discovery's current best understanding; it does not claim absolute truth.
@@ -97,6 +108,19 @@ The Operating Model remains canonical. It is a primary representation of Organiz
 It represents roles, workflows, coordination, decision rights, execution, organizational conditions, causal relationships, and operational behavior. It is not the entirety of Organizational Intelligence: decisions, simulations, outcomes, memory, uncertainty, and other forms of learning may extend beyond that operational representation.
 
 No migration or replacement architecture is implied.
+
+# Future Understanding Acquisition Concepts
+
+**Expected Understanding Gain** is the estimated increase in Organizational
+Understanding produced by acquiring one additional piece of Evidence. It is a
+future objective for Evidence acquisition and investigation recommendation,
+not a new cognitive layer or evaluation dimension.
+
+An **Understanding Opportunity** is a future product representation combining
+current understanding, current uncertainty, freshness, Expected Understanding
+Gain, recommended acquisition, estimated effort, decision relevance, and
+governance considerations. Neither concept authorizes implementation,
+persistence, or a recommendation algorithm.
 
 # Runtime Relationship
 

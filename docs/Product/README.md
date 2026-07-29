@@ -149,7 +149,16 @@ understanding.
 
 ---
 
-## 5. MVP_PRODUCT_SPECIFICATION.md
+## 5. Discovery Intelligence Evaluation Framework
+
+`../Evaluation/DISCOVERY_INTELLIGENCE_EVALUATION_FRAMEWORK.md` defines how
+Discovery measures truthful organizational understanding, decision utility,
+Evidence acquisition, communication, learning, stewardship, and longitudinal
+improvement without changing production architecture.
+
+---
+
+## 6. MVP_PRODUCT_SPECIFICATION.md
 
 Defines the currently locked Sprint 79 MVP experience.
 
@@ -165,7 +174,7 @@ When older product workflows conflict with this specification, this specificatio
 
 ---
 
-## 6. ORGANIZATION_PAGE_SPEC.md
+## 7. ORGANIZATION_PAGE_SPEC.md
 
 Defines the canonical **Your Organization** page and its five maturity states:
 
@@ -179,7 +188,7 @@ This is the canonical first-use and mature Organization experience. It is not a 
 
 ---
 
-## 7. MVP_PRODUCT.md
+## 8. MVP_PRODUCT.md
 
 Defines the scope of the MVP.
 
@@ -196,7 +205,7 @@ This document remains useful background. `MVP_PRODUCT_SPECIFICATION.md` governs 
 
 ---
 
-## 8. PRODUCT_BENCHMARK.md
+## 9. PRODUCT_BENCHMARK.md
 
 Defines the executable benchmark for validating the MVP.
 

@@ -1,6 +1,6 @@
 # Discovery Startup Snapshot
 
-**Milestone:** Discovery Product Communication Architecture canonized.
+**Milestone:** Discovery fitness function canonized.
 
 Read
 `docs/Architecture/Canon/DISCOVERY_ALPHA_V1_OPERATIONAL_BASELINE.md` as the
@@ -44,6 +44,9 @@ Disclosure is append-only; future counts must explain deltas rather than treat
 - Truthful Utility is independent of confidence and completion.
 - Evidence Roles remain product-owned and non-authoritative.
 - Organizational Functions remain benchmark-only.
+- The single optimization target is increasing Truthful Organizational
+  Understanding over time.
+- Truthfulness and Model Stewardship are non-compensable promotion gates.
 
 Acceptance Replay 001 passed the nine-scene experience, authentication,
 automatic organization resolution, refresh, navigation, logout, browser Back,
@@ -62,7 +65,9 @@ warnings may remain only while unchanged.
 The platform-construction and Production-activation phase is complete. The
 next phase is **Discovery Phase 2 — Customer Value and Organizational
 Understanding**. Question-first onboarding, Product Translation, Truthful
-Utility, and Evidence Roles are complete at the current boundary. The next
-recommended research is Evidence acquisition as a second independent consumer
-of the benchmark-only Organizational Function projection. Infrastructure
-redesign is deprioritized unless evidence requires it.
+Utility, and Evidence Roles are complete at the current boundary. Future
+research should improve or evaluate Organizational Understanding without
+weakening its constraints. Expected Understanding Gain and Understanding
+Opportunity are defined for future Evidence-acquisition research but are not
+implemented. Infrastructure redesign is deprioritized unless evidence
+requires it.

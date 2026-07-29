@@ -20,6 +20,11 @@ canonical cognition
 Product-owned Evidence Roles are not canonical cognition. Organizational
 Functions remain benchmark-only research and are not part of this index.
 
+Architecture fitness is governed by
+`docs/Evaluation/DISCOVERY_INTELLIGENCE_EVALUATION_FRAMEWORK.md`. Discovery
+optimizes for increasing Truthful Organizational Understanding over time.
+Evaluation is read-only and creates no cognitive authority.
+
 This document is the entry point for Discovery's cognitive architecture within the shared organizational intelligence platform.
 
 It explains how Discovery's architectural documents relate to one another and which document answers which architectural question.
