@@ -50,6 +50,28 @@ type ActivatedYourOrganizationView =
         previousRevisionAvailable: boolean;
       }>;
     };
+    evidenceRequestDisclosure: {
+      state:
+        | "available"
+        | "no-additional-evidence-recommended"
+        | "inquiry-rationale-unavailable"
+        | "gap-known-request-not-authorized"
+        | "expected-gain-unavailable"
+        | "supporting-references-unavailable"
+        | "investigation-data-unavailable"
+        | "organizational-context-not-authorized";
+      request: {
+        id: string;
+        question: string;
+        gaps: string[];
+        clarificationTargets: string[];
+        rationale: string | null;
+        expectedConfidenceGain: number | null;
+        expectedGainUnit: "canonical-confidence-gain-points";
+        supportingReferencesAvailable: boolean;
+        outcomeCaveat: string;
+      } | null;
+    };
   };
 
 function referenceIdentity(reference: {
@@ -99,6 +121,9 @@ export function buildActivatedYourOrganizationView(input: {
   const changeText = sourceTexts(communication.changes);
   const changeAvailability = communication.availability?.find(
     (entry) => entry.area === "changes",
+  )?.state;
+  const inquiryAvailability = communication.availability?.find(
+    (entry) => entry.area === "next-inquiries",
   )?.state;
   const conditionAreas = projection.conditions.map((condition) => ({
     id: condition.id,
@@ -204,6 +229,48 @@ export function buildActivatedYourOrganizationView(input: {
             : changeAvailability === "projection-data-unavailable"
               ? "projection-data-unavailable" as const
               : "change-reason-unavailable" as const;
+  const inquiryRequest =
+    nextInquiry?.sourceText?.text.trim() && nextInquiry.inquiry
+      ? {
+          id: "authorized-evidence-request-1",
+          question: nextInquiry.sourceText.text.trim(),
+          gaps: [...nextInquiry.inquiry.gaps],
+          clarificationTargets: [
+            ...nextInquiry.inquiry.clarificationTargets,
+          ],
+          rationale: nextInquiry.inquiry.rationale,
+          expectedConfidenceGain:
+            nextInquiry.inquiry.expectedConfidenceGain,
+          expectedGainUnit: nextInquiry.inquiry.expectedGainUnit,
+          supportingReferencesAvailable:
+            nextInquiry.inquiry.supportingReferencesAvailability ===
+            "available",
+          outcomeCaveat: nextInquiry.inquiry.outcomeCaveat,
+        }
+      : null;
+  const evidenceRequestDisclosureState =
+    inquiryRequest &&
+    inquiryRequest.rationale &&
+    inquiryRequest.expectedConfidenceGain !== null &&
+    inquiryRequest.supportingReferencesAvailable
+      ? "available" as const
+      : inquiryAvailability === "inquiry-rationale-unavailable"
+        ? "inquiry-rationale-unavailable" as const
+        : inquiryAvailability === "gap-known-request-not-authorized"
+          ? "gap-known-request-not-authorized" as const
+          : inquiryAvailability === "expected-gain-unavailable"
+            ? "expected-gain-unavailable" as const
+            : inquiryAvailability === "supporting-references-unavailable"
+              ? "supporting-references-unavailable" as const
+              : inquiryAvailability === "investigation-data-unavailable"
+                ? "investigation-data-unavailable" as const
+                : inquiryAvailability === "withheld" ||
+                    inquiryAvailability === "revoked" ||
+                    inquiryAvailability === "organization-mismatch" ||
+                    inquiryAvailability === "consumer-mismatch" ||
+                    inquiryAvailability === "invalid-authority"
+                  ? "organizational-context-not-authorized" as const
+                  : "no-additional-evidence-recommended" as const;
 
   return {
     ...legacyShape,
@@ -248,6 +315,10 @@ export function buildActivatedYourOrganizationView(input: {
     changeDisclosure: {
       state: changeDisclosureState,
       changes: authorizedChanges,
+    },
+    evidenceRequestDisclosure: {
+      state: evidenceRequestDisclosureState,
+      request: inquiryRequest,
     },
     model: {
       coherence: null,

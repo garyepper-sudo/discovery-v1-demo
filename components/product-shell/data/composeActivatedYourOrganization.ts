@@ -235,6 +235,14 @@ export function composeActivatedYourOrganization(input: {
       ? { uncertainty: runtime.memory.organizationalUncertainty }
       : {}),
     investigations: extendedMemory.investigationOpportunities ?? [],
+    investigationsAvailable: Array.isArray(
+      extendedMemory.investigationOpportunities,
+    ),
+    investigationPriorityRanks: Object.fromEntries(
+      (extendedMemory.investigationOpportunities ?? []).map(
+        (investigation, rank) => [investigation.id, rank],
+      ),
+    ),
     evolution: buildActivatedEvolutionCandidates(runtime),
   });
   const projectionState = projection.availability.find(

@@ -77,6 +77,28 @@ export type UnderstandingViewModel = {
       previousRevisionAvailable: boolean;
     }>;
   };
+  evidenceRequestDisclosure?: {
+    state:
+      | "available"
+      | "no-additional-evidence-recommended"
+      | "inquiry-rationale-unavailable"
+      | "gap-known-request-not-authorized"
+      | "expected-gain-unavailable"
+      | "supporting-references-unavailable"
+      | "investigation-data-unavailable"
+      | "organizational-context-not-authorized";
+    request: {
+      id: string;
+      question: string;
+      gaps: string[];
+      clarificationTargets: string[];
+      rationale: string | null;
+      expectedConfidenceGain: number | null;
+      expectedGainUnit: "canonical-confidence-gain-points";
+      supportingReferencesAvailable: boolean;
+      outcomeCaveat: string;
+    } | null;
+  };
 };
 
 export type SourceViewModel = {

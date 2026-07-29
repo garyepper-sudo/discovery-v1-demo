@@ -21,6 +21,7 @@ export type YourOrganizationCommunicationItem = {
   priority: CommunicationPriorityProvenance;
   availability: ProductCommunicationAvailability;
   change?: CommunicationPlanItem["change"];
+  inquiry?: CommunicationPlanItem["inquiry"];
 };
 
 export type YourOrganizationCommunicationView = {
@@ -126,6 +127,15 @@ function item(
     priority: copyPriority(source.priority),
     availability: { ...source.availability },
     ...(source.change ? { change: { ...source.change } } : {}),
+    ...(source.inquiry
+      ? {
+          inquiry: {
+            ...source.inquiry,
+            gaps: [...source.inquiry.gaps],
+            clarificationTargets: [...source.inquiry.clarificationTargets],
+          },
+        }
+      : {}),
   };
 }
 
@@ -266,6 +276,8 @@ export function buildYourOrganizationCommunicationView(input: {
     alternatives: copyAlternatives(plan.alternatives),
     nextInquiries: [...plan.nextInquiries]
       .sort((left, right) =>
+        (left.inquiry?.priorityRank ?? Number.MAX_SAFE_INTEGER) -
+          (right.inquiry?.priorityRank ?? Number.MAX_SAFE_INTEGER) ||
         compare(itemIdentity(left), itemIdentity(right)),
       )
       .map(item),

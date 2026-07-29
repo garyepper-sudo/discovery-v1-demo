@@ -573,6 +573,9 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
         <UnderstandingDisclosure
           basis={experience.understanding.beliefBasis}
           changeDisclosure={experience.understanding.changeDisclosure}
+          evidenceRequestDisclosure={
+            experience.understanding.evidenceRequestDisclosure
+          }
           details={details}
         >
           {({
@@ -580,6 +583,8 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
             disclosure,
             changeTrigger,
             changeDisclosure,
+            evidenceRequestTrigger,
+            evidenceRequestDisclosure,
             detailGrid,
           }) => (
             <>
@@ -618,9 +623,22 @@ function UnderstandScene({ navigate }: { navigate: (scene: AlphaScene) => void }
                 <Panel tone="violet" className={styles.recommendedLearning}>
                   <Eyebrow tone="violet">Next recommended learning</Eyebrow>
                   <h2>{hosted ? experience.sources[0]?.title ?? "Not yet available in this Alpha" : "Compare decision practices in the consistently delivering team."}</h2>
-                  <p>Expected contribution: <strong>{hosted ? "Unavailable" : "High"}</strong></p>
+                  <p>
+                    Expected contribution:{" "}
+                    <strong>
+                      {hosted
+                        ? typeof experience.understanding
+                              .evidenceRequestDisclosure?.request
+                              ?.expectedConfidenceGain === "number"
+                          ? "Estimated"
+                          : "Unavailable"
+                        : "High"}
+                    </strong>
+                  </p>
+                  {hosted && evidenceRequestTrigger}
                   <button className={styles.inlineLink} type="button" onClick={() => navigate("plan")}>See learning plan <ArrowRight size={16} aria-hidden="true" /></button>
                 </Panel>
+                {hosted && evidenceRequestDisclosure}
               </div>
             </>
           )}

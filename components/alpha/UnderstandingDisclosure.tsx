@@ -20,6 +20,9 @@ type BeliefBasis = NonNullable<UnderstandingViewModel["beliefBasis"]>;
 type ChangeDisclosure = NonNullable<
   UnderstandingViewModel["changeDisclosure"]
 >;
+type EvidenceRequestDisclosure = NonNullable<
+  UnderstandingViewModel["evidenceRequestDisclosure"]
+>;
 
 const evidenceRoleLabels = {
   supports: "Supporting evidence",
@@ -177,6 +180,100 @@ function ChangeDisclosureContent({
   );
 }
 
+const evidenceRequestAvailabilityMessage: Record<
+  Exclude<EvidenceRequestDisclosure["state"], "available">,
+  string
+> = {
+  "no-additional-evidence-recommended":
+    "No additional evidence is currently recommended.",
+  "inquiry-rationale-unavailable":
+    "An inquiry is available, but its rationale is not available.",
+  "gap-known-request-not-authorized":
+    "A gap is known, but no authorized evidence request can be shown.",
+  "expected-gain-unavailable":
+    "The expected improvement estimate is not available.",
+  "supporting-references-unavailable":
+    "The inquiry is authorized, but its supporting references are not available.",
+  "investigation-data-unavailable":
+    "Investigation data is not available through the active projection.",
+  "organizational-context-not-authorized":
+    "The relevant organizational context is not authorized for this view.",
+};
+
+function EvidenceRequestDisclosureContent({
+  disclosure,
+}: {
+  disclosure: EvidenceRequestDisclosure;
+}) {
+  const request = disclosure.request;
+  return (
+    <section className={styles.beliefBasis} aria-labelledby="evidence-request-disclosure-title">
+      <header>
+        <Eyebrow>Authorized Product Communication</Eyebrow>
+        <h2 id="evidence-request-disclosure-title">Why this evidence matters</h2>
+      </header>
+      {request ? (
+        <div className={styles.beliefBasisGrid}>
+          <div>
+            <h3>What Discovery is asking for</h3>
+            <p>{request.question}</p>
+          </div>
+          <div>
+            <h3>What gap it addresses</h3>
+            {request.gaps.length > 0 ? (
+              <ul>{request.gaps.map((gap) => <li key={gap}>{gap}</li>)}</ul>
+            ) : (
+              <p>The specific gap is not available.</p>
+            )}
+          </div>
+          <div>
+            <h3>What it may clarify</h3>
+            {request.clarificationTargets.length > 0 ? (
+              <ul>
+                {request.clarificationTargets.map((target) => (
+                  <li key={target}>{target}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>The clarification target is not available.</p>
+            )}
+          </div>
+          <div>
+            <h3>Why it is prioritized now</h3>
+            <p>
+              {request.rationale ??
+                "The inquiry rationale is not available."}
+            </p>
+          </div>
+          <div>
+            <h3>Expected improvement</h3>
+            <p>
+              {request.expectedConfidenceGain === null
+                ? "The expected confidence-gain estimate is not available."
+                : `Discovery estimates a confidence-gain signal of ${request.expectedConfidenceGain} points on its existing scale. This is an estimate, not a guarantee.`}
+            </p>
+          </div>
+          <div>
+            <h3>What remains uncertain</h3>
+            <p>{request.outcomeCaveat}</p>
+            <small>
+              {request.supportingReferencesAvailable
+                ? "Authorized supporting context is available."
+                : "Supporting references are not available for this inquiry."}
+            </small>
+          </div>
+        </div>
+      ) : (
+        <p>{evidenceRequestAvailabilityMessage[
+          disclosure.state === "available"
+            ? "no-additional-evidence-recommended"
+            : disclosure.state
+        ]}</p>
+      )}
+    </section>
+  );
+}
+
 /**
  * Presentation-only progressive disclosure boundary.
  *
@@ -188,11 +285,13 @@ function ChangeDisclosureContent({
 export default function UnderstandingDisclosure({
   basis,
   changeDisclosure,
+  evidenceRequestDisclosure,
   details,
   children,
 }: {
   basis: BeliefBasis | undefined;
   changeDisclosure: ChangeDisclosure | undefined;
+  evidenceRequestDisclosure: EvidenceRequestDisclosure | undefined;
   details: ReadonlyArray<readonly [
     id: string,
     title: string,
@@ -204,6 +303,8 @@ export default function UnderstandingDisclosure({
     disclosure: ReactNode;
     changeTrigger: ReactNode;
     changeDisclosure: ReactNode;
+    evidenceRequestTrigger: ReactNode;
+    evidenceRequestDisclosure: ReactNode;
     detailGrid: ReactNode;
   }) => ReactNode;
 }) {
@@ -232,6 +333,21 @@ export default function UnderstandingDisclosure({
       What changed and why <ArrowRight size={16} aria-hidden="true" />
     </button>
   );
+  const evidenceRequestExpanded = openDetail === "evidence-request-disclosure";
+  const evidenceRequestTrigger = (
+    <button
+      className={styles.inlineLink}
+      type="button"
+      onClick={() =>
+        setOpenDetail(
+          evidenceRequestExpanded ? null : "evidence-request-disclosure",
+        )
+      }
+      aria-expanded={evidenceRequestExpanded}
+    >
+      Why this evidence matters <ArrowRight size={16} aria-hidden="true" />
+    </button>
+  );
 
   return children({
     trigger,
@@ -241,6 +357,15 @@ export default function UnderstandingDisclosure({
     changeDisclosure:
       changeExpanded && changeDisclosure
         ? <ChangeDisclosureContent disclosure={changeDisclosure} />
+        : null,
+    evidenceRequestTrigger,
+    evidenceRequestDisclosure:
+      evidenceRequestExpanded && evidenceRequestDisclosure
+        ? (
+            <EvidenceRequestDisclosureContent
+              disclosure={evidenceRequestDisclosure}
+            />
+          )
         : null,
     detailGrid: (
       <div className={styles.detailGrid}>

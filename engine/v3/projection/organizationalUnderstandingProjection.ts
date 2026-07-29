@@ -88,6 +88,8 @@ export type ProjectionSource = {
   organizationalState?: OrganizationalState;
   uncertainty?: OrganizationalUncertainty;
   investigations: InvestigationOpportunity[];
+  investigationsAvailable?: boolean;
+  investigationPriorityRanks?: Record<string, number>;
   evolution: CanonicalEvolutionReference[];
 };
 
@@ -179,7 +181,11 @@ export type OrganizationalUnderstandingProjection = {
   uncertainty: Array<ProjectedReference<ProjectedUncertaintyValue>>;
   conditions: Array<ProjectedReference<OrganizationalCondition>>;
   organizationalState?: ProjectedReference<OrganizationalState>;
-  investigations: Array<ProjectedReference<InvestigationOpportunity>>;
+  investigations: Array<
+    ProjectedReference<InvestigationOpportunity> & {
+      priorityRank?: number;
+    }
+  >;
   evolution: Array<ProjectedReference<CanonicalEvolutionReference>>;
   availability: ProjectionAvailability[];
   depth: ProjectionDepth;
@@ -611,6 +617,13 @@ export function compileOrganizationalUnderstandingProjection(
   const disclosedConditionIds = new Set(
     projectedConditions.map((condition) => condition.id),
   );
+  const disclosedConditionId = (identity: string): string | undefined => {
+    if (disclosedConditionIds.has(identity)) return identity;
+    const nameMatches = projectedConditions.filter(
+      (condition) => condition.value.name === identity,
+    );
+    return nameMatches.length === 1 ? nameMatches[0]?.id : undefined;
+  };
 
   const stateConditionIds = source.organizationalState
     ? [
@@ -644,16 +657,25 @@ export function compileOrganizationalUnderstandingProjection(
       : undefined;
 
   const projectedInvestigations = source.investigations
+    .map((investigation) => ({
+      investigation,
+      priorityRank: source.investigationPriorityRanks?.[investigation.id],
+    }))
     .filter(
-      (investigation) =>
+      ({ investigation }) =>
         investigation.affectedConditions.length > 0 &&
-        investigation.affectedConditions.every((id) =>
-          disclosedConditionIds.has(id),
+        investigation.affectedConditions.every((identity) =>
+          Boolean(disclosedConditionId(identity)),
         ),
     )
-    .sort((left, right) => compare(left.id, right.id))
-    .map((investigation) => ({
+    .sort((left, right) =>
+      (left.priorityRank ?? Number.MAX_SAFE_INTEGER) -
+        (right.priorityRank ?? Number.MAX_SAFE_INTEGER) ||
+      compare(left.investigation.id, right.investigation.id),
+    )
+    .map(({ investigation, priorityRank }, fallbackRank) => ({
       id: investigation.id,
+      priorityRank: priorityRank ?? fallbackRank,
       canonicalRef: {
         objectType: "investigation-opportunity" as const,
         objectId: investigation.id,
@@ -661,7 +683,7 @@ export function compileOrganizationalUnderstandingProjection(
       value: structuredClone(investigation),
       supportingRefs: normalizeReferences(
         investigation.affectedConditions
-          .filter((id) => disclosedConditionIds.has(id))
+          .flatMap((identity) => disclosedConditionId(identity) ?? [])
           .map((objectId) => ({
             objectType: "organizational-condition" as const,
             objectId,
@@ -780,9 +802,11 @@ export function compileOrganizationalUnderstandingProjection(
       availability(
         "investigations",
         projectedInvestigations.length,
-        source.investigations.length > 0
-          ? "referenced-data-missing"
-          : "available-empty",
+        source.investigationsAvailable === false
+          ? "runtime-data-unavailable"
+          : source.investigations.length > 0
+            ? "referenced-data-missing"
+            : "available-empty",
       ),
       availability(
         "evolution",

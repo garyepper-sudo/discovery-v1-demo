@@ -133,7 +133,14 @@ export type ProductCommunicationAvailabilityState =
   | "first-supported-understanding"
   | "history-not-authorized"
   | "change-reason-unavailable"
-  | "no-meaningful-change";
+  | "no-meaningful-change"
+  | "no-additional-evidence-recommended"
+  | "inquiry-rationale-unavailable"
+  | "gap-known-request-not-authorized"
+  | "expected-gain-unavailable"
+  | "supporting-references-unavailable"
+  | "investigation-data-unavailable"
+  | "organizational-context-not-authorized";
 
 export type ProductCommunicationAvailabilityArea =
   | "communication"
@@ -182,6 +189,17 @@ export type CommunicationPlanItem = {
     occurredAt: string;
     previousRevisionAvailable: boolean;
     reasonAvailability: "available" | "unavailable";
+  };
+  inquiry?: {
+    priorityRank: number;
+    rationale: string | null;
+    gaps: string[];
+    clarificationTargets: string[];
+    expectedConfidenceGain: number | null;
+    expectedGainUnit: "canonical-confidence-gain-points";
+    supportingReferencesAvailability: "available" | "unavailable";
+    outcomeCaveat:
+      "The result could strengthen, weaken, or redirect the current understanding.";
   };
 };
 
@@ -563,6 +581,21 @@ function item(
           referenceIdentity(subjectRef),
       )
     : undefined;
+  const investigation = area === "next-inquiries"
+    ? projection.investigations.find(
+        (entry) =>
+          referenceIdentity(entry.canonicalRef) ===
+          referenceIdentity(subjectRef),
+      )
+    : undefined;
+  const investigationDetailsAvailable = Boolean(
+    investigation &&
+      (
+        typeof investigation.value.reason === "string" ||
+        Array.isArray(investigation.value.missingEvidence) ||
+        Number.isFinite(investigation.value.expectedConfidenceGain)
+      ),
+  );
   return {
     itemId: `communication-item:${encodeURIComponent(referenceIdentity(subjectRef))}`,
     subjectRef: copyReference(subjectRef),
@@ -586,6 +619,40 @@ function item(
             reasonAvailability: evolution.value.reason
               ? "available" as const
               : "unavailable" as const,
+          },
+        }
+      : {}),
+    ...(investigation && investigationDetailsAvailable
+      ? {
+          inquiry: {
+            priorityRank:
+              investigation.priorityRank ?? Number.MAX_SAFE_INTEGER,
+            rationale:
+              typeof investigation.value.reason === "string" &&
+                investigation.value.reason.trim()
+                ? investigation.value.reason.trim()
+                : null,
+            gaps: Array.isArray(investigation.value.missingEvidence)
+              ? [...investigation.value.missingEvidence]
+              : [],
+            clarificationTargets: Array.isArray(
+                investigation.value.affectedConditions,
+              )
+              ? [...investigation.value.affectedConditions]
+              : [],
+            expectedConfidenceGain: Number.isFinite(
+                investigation.value.expectedConfidenceGain,
+              )
+              ? investigation.value.expectedConfidenceGain
+              : null,
+            expectedGainUnit:
+              "canonical-confidence-gain-points" as const,
+            supportingReferencesAvailability:
+              investigation.supportingRefs.length > 0
+                ? "available" as const
+                : "unavailable" as const,
+            outcomeCaveat:
+              "The result could strengthen, weaken, or redirect the current understanding." as const,
           },
         }
       : {}),
@@ -737,7 +804,11 @@ export function compileProductCommunicationPlan(
       ),
     );
   const nextInquiries = [...projection.investigations]
-    .sort((left, right) => compare(left.id, right.id))
+    .sort((left, right) =>
+      (left.priorityRank ?? Number.MAX_SAFE_INTEGER) -
+        (right.priorityRank ?? Number.MAX_SAFE_INTEGER) ||
+      compare(left.id, right.id),
+    )
     .map((entry) =>
       item(
         projection,
@@ -865,10 +936,25 @@ export function compileProductCommunicationPlan(
       availability(
         "next-inquiries",
         nextInquiries.length > 0
-          ? nextInquiries.some((entry) => entry.sourceText)
-            ? "available-with-source-text"
-            : "source-text-unavailable"
-          : "available-empty",
+          ? nextInquiries[0]?.inquiry?.rationale === null
+            ? "inquiry-rationale-unavailable"
+            : nextInquiries[0]?.inquiry?.expectedConfidenceGain === null
+              ? "expected-gain-unavailable"
+              : nextInquiries[0]?.inquiry
+                    ?.supportingReferencesAvailability === "unavailable"
+                ? "supporting-references-unavailable"
+                : nextInquiries.some((entry) => entry.sourceText)
+                  ? "available-with-source-text"
+                  : "source-text-unavailable"
+          : projection.availability.find(
+                (entry) => entry.area === "investigations",
+              )?.state === "referenced-data-missing"
+            ? "gap-known-request-not-authorized"
+            : projection.availability.find(
+                  (entry) => entry.area === "investigations",
+                )?.state === "runtime-data-unavailable"
+              ? "investigation-data-unavailable"
+              : "available-empty",
       ),
       availability(
         "alternatives",

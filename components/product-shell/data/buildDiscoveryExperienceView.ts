@@ -108,6 +108,25 @@ export function buildDiscoveryExperienceView(input: {
             },
           }
         : {}),
+      ...(view.evidenceRequestDisclosure
+        ? {
+            evidenceRequestDisclosure: {
+              state: view.evidenceRequestDisclosure.state,
+              request: view.evidenceRequestDisclosure.request
+                ? {
+                    ...view.evidenceRequestDisclosure.request,
+                    gaps: [
+                      ...view.evidenceRequestDisclosure.request.gaps,
+                    ],
+                    clarificationTargets: [
+                      ...view.evidenceRequestDisclosure.request
+                        .clarificationTargets,
+                    ],
+                  }
+                : null,
+            },
+          }
+        : {}),
     },
     sources: investigations.map((title, index) => ({
       id: `authorized-source-${index + 1}`,
