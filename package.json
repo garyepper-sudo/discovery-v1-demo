@@ -78,6 +78,7 @@
     "validate:minimal-reading-experience": "tsx scripts/product/validateMinimalReadingExperience.ts",
     "validate:question-centered-flow": "tsx scripts/product/validateQuestionCenteredFlow.ts",
     "validate:iterative-understanding-loop": "tsx scripts/product/validateIterativeUnderstandingLoop.ts",
+    "validate:iterative-evidence-batches": "tsx scripts/product/validateIterativeEvidenceBatches.ts",
     "validate:simplified-product-navigation": "tsx scripts/product/validateSimplifiedProductNavigation.ts",
     "storage:migrate": "tsx scripts/storage/migrateAlphaGovernance.ts up",
     "storage:status": "tsx scripts/storage/migrateAlphaGovernance.ts status",

@@ -360,6 +360,17 @@
   line-height: 1.55;
 }
 
+.batchReady {
+  margin: 12px 0 0;
+  padding: 12px 14px;
+  border: 1px solid #d8d2ff;
+  border-radius: 10px;
+  color: var(--alpha-ink);
+  background: #f6f4ff;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 .safeError {
   margin-top: 18px;
   padding: 18px;

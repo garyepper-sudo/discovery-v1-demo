@@ -42,8 +42,9 @@ assert.ok(
 assert.ok(
   onboarding.includes("window.sessionStorage.setItem(") &&
     onboarding.includes('stage: "evidence-plan"') &&
-    onboarding.includes("organizationId: body.organizationId"),
-  "Successful investigations must retain the cumulative question and evidence draft.",
+    onboarding.includes("organizationId: body.organizationId") &&
+    onboarding.includes("evidenceSources: []"),
+  "Successful investigations must retain the question while opening a fresh evidence batch.",
 );
 assert.ok(
   onboardingRoute.includes("improveExisting") &&
@@ -67,5 +68,5 @@ console.log(JSON.stringify({
   canonicalInvestigationReused: true,
   authorizationFailsClosed: true,
   duplicateOrganizationCreated: false,
-  cumulativeEvidencePreserved: true,
+  completedBatchClearedFromDraft: true,
 }, null, 2));

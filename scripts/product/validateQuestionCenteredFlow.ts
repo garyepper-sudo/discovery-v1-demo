@@ -10,8 +10,8 @@ const onboarding = readFileSync(
 for (const text of [
   "What are you trying to understand?",
   "Tell Discovery what you already know",
-  "You can add more information at any time",
-  "Improve this understanding",
+  "Add up to three sources in this update",
+  "Add more information",
   "Continue to Discovery",
 ]) {
   assert.ok(onboarding.includes(text), `Onboarding must preserve: ${text}`);

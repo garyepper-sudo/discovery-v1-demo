@@ -124,6 +124,28 @@ const intentExamples = [
   "What should we understand before making this decision?",
 ];
 
+function evidencePresentationName(params: {
+  displayName: string;
+  content: string;
+  ingestionMethod: "file" | "paste";
+  originalFilename?: string;
+  sequence: number;
+}): string {
+  if (params.originalFilename) {
+    return sanitizeEvidenceName(params.originalFilename);
+  }
+  if (params.displayName !== "Additional evidence") {
+    return sanitizeEvidenceName(params.displayName);
+  }
+  const firstLine = params.content
+    .split(/\r?\n/, 1)[0]
+    ?.replace(/\s+/g, " ")
+    .trim();
+  const preview = sanitizeEvidenceName(firstLine ?? "").slice(0, 72);
+  return preview ||
+    `${params.ingestionMethod === "paste" ? "Pasted information" : "Uploaded information"} ${params.sequence}`;
+}
+
 function recommendationsFor(question: string): EvidenceRecommendation[] {
   const normalized = question.toLowerCase();
   if (/(sales|pipeline|revenue|growth)/.test(normalized)) {
@@ -426,7 +448,13 @@ export default function DiscoveryOnboardingExperience({
     const entry: OnboardingEvidenceSubmission = {
       id: crypto.randomUUID(),
       sourceRole: editor.sourceRole,
-      displayName: sanitizeEvidenceName(editor.displayName),
+      displayName: evidencePresentationName({
+        displayName: editor.displayName,
+        content: content.trim(),
+        ingestionMethod: editor.mode,
+        originalFilename: metadata.originalFilename,
+        sequence: evidenceSources.length + 1,
+      }),
       ingestionMethod: editor.mode,
       ...(metadata.originalFilename
         ? { originalFilename: sanitizeEvidenceName(metadata.originalFilename) }
@@ -533,6 +561,8 @@ export default function DiscoveryOnboardingExperience({
       setOrganizationId(body.organizationId);
       setResult(body.understanding);
       setUtility(body.utility);
+      setEvidenceSources([]);
+      setSkippedEvidenceRoles([]);
       window.sessionStorage.setItem(
         draftStorageKey,
         JSON.stringify({
@@ -544,8 +574,8 @@ export default function DiscoveryOnboardingExperience({
           industry,
           website,
           observations,
-          evidenceSources,
-          skippedEvidenceRoles,
+          evidenceSources: [],
+          skippedEvidenceRoles: [],
         } satisfies OnboardingDraft),
       );
       setStage("first-understanding");
@@ -704,8 +734,8 @@ export default function DiscoveryOnboardingExperience({
             <Eyebrow tone="violet">Evidence plan</Eyebrow>
             <h1 ref={stageHeadingRef} tabIndex={-1}>Tell Discovery what you already know.</h1>
             <p className={styles.lead}>
-              You can begin with what you provided. These suggested sources would help
-              Discovery test and refine its understanding of “{question}”
+              Add up to three sources in this update. After Discovery updates
+              the understanding, you can add another batch.
             </p>
             <div className={styles.recommendations}>
               {recommendations.map((recommendation) => {
@@ -833,7 +863,7 @@ export default function DiscoveryOnboardingExperience({
                           onClick={() =>
                             openEvidenceEditor(
                               item.sourceRole,
-                              item.displayName,
+                              "Additional evidence",
                               item.ingestionMethod,
                               item.id,
                             )
@@ -900,13 +930,13 @@ export default function DiscoveryOnboardingExperience({
             ) : null}
 
             <p className={styles.connectionNote}>
-              Supported now: TXT, Markdown, CSV, or pasted text. Up to three
-              sources, 512 KB each. PDF and DOCX require a future bounded parser.
+              Supported now: TXT, Markdown, CSV, and pasted text.
             </p>
-            <p className={styles.connectionNote}>
-              You can add more information at any time to improve this
-              understanding.
-            </p>
+            {evidenceSources.length === ONBOARDING_EVIDENCE_MAX_FILES ? (
+              <p className={styles.batchReady} role="status">
+                This update is ready. Submit these sources, then you can add more.
+              </p>
+            ) : null}
             {error ? (
               <div role="alert">
                 <Panel className={styles.safeError} tone="orange">
@@ -961,7 +991,11 @@ export default function DiscoveryOnboardingExperience({
                 Back
               </Action>
               <Action arrow onClick={runInvestigation} disabled={submitting}>
-                {error ? "Retry with current evidence" : "Continue with current context"}
+                {error
+                  ? "Retry with current evidence"
+                  : evidenceSources.length
+                    ? "Update understanding"
+                    : "Continue with current context"}
               </Action>
             </div>
           </section>
@@ -1114,12 +1148,16 @@ export default function DiscoveryOnboardingExperience({
                   setStage("evidence-plan");
                 }}
               >
-                Improve this understanding
+                Add more information
               </Action>
               <Action tone="secondary" arrow onClick={openDiscovery}>
                 Continue to Discovery
               </Action>
             </div>
+            <p className={styles.connectionNote}>
+              You can keep improving this understanding as new information
+              becomes available.
+            </p>
           </section>
         ) : null}
       </section>

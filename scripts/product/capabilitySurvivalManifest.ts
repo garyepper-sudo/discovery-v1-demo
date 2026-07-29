@@ -196,6 +196,7 @@ export const CAPABILITY_SURVIVAL_CONTRACTS: CapabilitySurvivalContract[] = [
     validations: [
       "validate:what-changed-and-why",
       "validate:iterative-understanding-loop",
+      "validate:iterative-evidence-batches",
     ],
   },
   {
@@ -210,6 +211,7 @@ export const CAPABILITY_SURVIVAL_CONTRACTS: CapabilitySurvivalContract[] = [
     validations: [
       "validate:what-changed-and-why",
       "validate:iterative-understanding-loop",
+      "validate:iterative-evidence-batches",
     ],
   },
   {
