@@ -1,0 +1,9 @@
+{
+  "contractVersion": "1",
+  "state": "question-created",
+  "validation": "PASS",
+  "canonicalSources": [
+    "ProductQuestion",
+    "OrganizationRuntime.metadata"
+  ]
+}

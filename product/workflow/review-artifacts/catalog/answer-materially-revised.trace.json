@@ -1,0 +1,9 @@
+{
+  "contractVersion": "1",
+  "state": "answer-materially-revised",
+  "validation": "PASS",
+  "canonicalSources": [
+    "ProductChangeReceipt",
+    "understanding revision"
+  ]
+}

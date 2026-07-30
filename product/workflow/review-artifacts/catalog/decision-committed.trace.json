@@ -1,0 +1,10 @@
+{
+  "contractVersion": "1",
+  "state": "decision-committed",
+  "validation": "PASS",
+  "canonicalSources": [
+    "ProductDecisionDraft",
+    "ExecutiveDecisionRecord",
+    "ExecutiveWork"
+  ]
+}

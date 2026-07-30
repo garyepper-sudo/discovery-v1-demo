@@ -1,0 +1,11 @@
+{
+  "contractVersion": "1",
+  "state": "decision-escalation",
+  "validation": "PASS",
+  "canonicalSources": [
+    "case-002",
+    "DiscoveryV3Result",
+    "admitted Evidence",
+    "selected causal or explanation object"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "contractVersion": "1",
+  "state": "improve-upload",
+  "validation": "PASS",
+  "canonicalSources": [
+    "ProductImprovementAction",
+    "Evidence admission"
+  ]
+}

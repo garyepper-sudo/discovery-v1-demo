@@ -1,0 +1,9 @@
+{
+  "contractVersion": "1",
+  "state": "alternatives-unresolved",
+  "validation": "PASS",
+  "canonicalSources": [
+    "ProductAnswerAbstention",
+    "OrganizationalExplanation"
+  ]
+}

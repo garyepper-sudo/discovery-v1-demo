@@ -1,0 +1,168 @@
+{
+  "contractVersion": "1",
+  "question": {
+    "id": "product-question-f02145aebc8ea79f",
+    "organizationId": "product-fixture-organization",
+    "text": "What is preventing reliable delivery?",
+    "title": "What is preventing reliable delivery?",
+    "status": "created",
+    "createdAt": "2026-07-29T12:00:00.000Z",
+    "updatedAt": "2026-07-29T12:00:00.000Z",
+    "currentAnswerId": null,
+    "currentDecisionId": null,
+    "currentConfidence": null,
+    "revision": 0,
+    "searchHistory": [],
+    "answerHistory": [],
+    "decisionHistory": [],
+    "outcomeHistory": [],
+    "insightHistory": [],
+    "improvementHistory": [],
+    "timeline": []
+  },
+  "searchPlan": {
+    "questionId": "product-question-f02145aebc8ea79f",
+    "purpose": "Acquire evidence that can answer: What is preventing reliable delivery?",
+    "status": "ready",
+    "requestedSources": [
+      {
+        "id": "manual-upload",
+        "type": "manual_upload",
+        "label": "Authorized uploaded documents",
+        "authorized": true,
+        "executable": true
+      },
+      {
+        "id": "paste",
+        "type": "paste",
+        "label": "Authorized pasted observations",
+        "authorized": true,
+        "executable": true
+      },
+      {
+        "id": "authorized-records",
+        "type": "authorized_records",
+        "label": "Connected organizational records",
+        "authorized": false,
+        "executable": false
+      }
+    ],
+    "limitations": [
+      "This review includes information people added directly. Connected organizational records were not searched."
+    ]
+  },
+  "latestSearchReceipt": null,
+  "answer": {
+    "kind": "abstention",
+    "questionId": "product-question-f02145aebc8ea79f",
+    "reason": "no_evidence",
+    "explanation": "Discovery has not admitted evidence that can support an answer to this question.",
+    "principalLimiter": "More independent evidence would make this answer more certain.",
+    "bestNextImprovement": {
+      "id": "question-aligned-improvement-07be0bbf262b16a5",
+      "type": "add_observation",
+      "title": "Which evidence would directly answer “What is preventing reliable delivery” and distinguish the leading plausible causes?",
+      "reason": "Test the missing relationship in “What is preventing reliable delivery” and distinguish it from plausible alternatives.",
+      "expectedGain": "unknown",
+      "target": null,
+      "executable": true,
+      "limitation": "The expected improvement is an estimate, not a guarantee."
+    },
+    "generatedAt": "2026-07-29T12:00:00.000Z"
+  },
+  "improvementPlan": null,
+  "decisionDraft": null,
+  "activeDecision": null,
+  "latestOutcomeReview": {
+    "decisionId": "decision-1",
+    "status": "inconclusive",
+    "comparisons": [],
+    "interpretation": "The observed outcome is inconclusive.",
+    "modelEffect": {
+      "answerRevised": false,
+      "confidenceChanged": false,
+      "assumptionsValidated": [],
+      "assumptionsWeakened": [],
+      "newEvidenceAdmitted": false
+    },
+    "nextReviewDate": null
+  },
+  "modelState": {
+    "organizationId": "product-fixture-organization",
+    "revision": 0,
+    "developmentalState": "fragmented",
+    "dimensions": {
+      "coverage": {
+        "value": 0,
+        "status": "weak",
+        "meaning": "How much of this question is supported by current evidence.",
+        "limiter": null
+      },
+      "coherence": {
+        "value": 0,
+        "status": "weak",
+        "meaning": "How consistently the current evidence fits together.",
+        "limiter": null
+      },
+      "freshness": {
+        "value": null,
+        "status": "unknown",
+        "meaning": "Whether the supporting evidence is current enough for this question.",
+        "limiter": null
+      },
+      "trustworthiness": {
+        "value": null,
+        "status": "unknown",
+        "meaning": "How much the answer is limited by disagreement and uncertainty.",
+        "limiter": null
+      }
+    },
+    "tensions": [],
+    "latestMeaningfulGrowth": [],
+    "projectedAt": "2026-07-29T12:00:00.000Z"
+  },
+  "latestChange": {
+    "questionId": "product-question-f02145aebc8ea79f",
+    "previousAnswerRevision": null,
+    "currentAnswerRevision": null,
+    "primaryChange": "underdetermined",
+    "summary": "The current evidence does not support a sufficiently specific answer.",
+    "changedFields": [
+      "modelState"
+    ],
+    "occurredAt": "2026-07-29T12:00:00.000Z"
+  },
+  "proactiveInsights": [],
+  "permittedActions": [
+    {
+      "type": "search_records",
+      "label": "Search connected records",
+      "enabled": false,
+      "reason": "Connected record search is not available."
+    },
+    {
+      "type": "add_information",
+      "label": "Add information",
+      "enabled": true,
+      "reason": null
+    },
+    {
+      "type": "create_decision",
+      "label": "Create decision",
+      "enabled": false,
+      "reason": "No intervention-specific decision implication clears the evidence gate."
+    },
+    {
+      "type": "review_outcome",
+      "label": "Review outcome",
+      "enabled": false,
+      "reason": "No committed decision is active."
+    },
+    {
+      "type": "ask_followup",
+      "label": "Ask a follow-up",
+      "enabled": true,
+      "reason": null
+    }
+  ]
+}

@@ -1,0 +1,268 @@
+{
+  "contractVersion": "1",
+  "question": {
+    "id": "product-question-c82bf7668c2de12b",
+    "organizationId": "organization-case-001",
+    "text": "Why do sales exceptions lead to product customization?",
+    "title": "Why do sales exceptions lead to product customization?",
+    "status": "answered",
+    "createdAt": "2026-07-24T20:00:00.000Z",
+    "updatedAt": "2026-07-24T20:00:00.000Z",
+    "currentAnswerId": null,
+    "currentDecisionId": null,
+    "currentConfidence": null,
+    "revision": 0,
+    "searchHistory": [],
+    "answerHistory": [],
+    "decisionHistory": [],
+    "outcomeHistory": [],
+    "insightHistory": [],
+    "improvementHistory": [],
+    "timeline": []
+  },
+  "searchPlan": {
+    "questionId": "product-question-c82bf7668c2de12b",
+    "purpose": "Acquire evidence that can answer: Why do sales exceptions lead to product customization?",
+    "status": "completed",
+    "requestedSources": [
+      {
+        "id": "manual-upload",
+        "type": "manual_upload",
+        "label": "Authorized uploaded documents",
+        "authorized": true,
+        "executable": true
+      },
+      {
+        "id": "paste",
+        "type": "paste",
+        "label": "Authorized pasted observations",
+        "authorized": true,
+        "executable": true
+      },
+      {
+        "id": "authorized-records",
+        "type": "authorized_records",
+        "label": "Connected organizational records",
+        "authorized": false,
+        "executable": false
+      }
+    ],
+    "limitations": [
+      "This review includes information people added directly. Connected organizational records were not searched."
+    ]
+  },
+  "latestSearchReceipt": {
+    "questionId": "product-question-c82bf7668c2de12b",
+    "searchedAt": "2026-07-24T20:00:00.000Z",
+    "sourceScopes": [
+      {
+        "sourceId": "a1",
+        "sourceType": "Leadership",
+        "organizationId": "organization-case-001"
+      },
+      {
+        "sourceId": "r1",
+        "sourceType": "Sales",
+        "organizationId": "organization-case-001"
+      },
+      {
+        "sourceId": "r2",
+        "sourceType": "Product",
+        "organizationId": "organization-case-001"
+      },
+      {
+        "sourceId": "r3",
+        "sourceType": "Operations",
+        "organizationId": "organization-case-001"
+      },
+      {
+        "sourceId": "r4",
+        "sourceType": "Finance",
+        "organizationId": "organization-case-001"
+      }
+    ],
+    "recordsConsidered": 5,
+    "evidenceAdmitted": 10,
+    "limitations": [
+      "This review includes information people added directly. Connected organizational records were not searched."
+    ]
+  },
+  "answer": {
+    "kind": "answer",
+    "id": "product-answer-00ddb2a1085de4f3",
+    "questionId": "product-question-c82bf7668c2de12b",
+    "revision": 1,
+    "conclusion": "sales exceptions lead to product customization when exception approvals remain decentralized.",
+    "whyItMatters": "Important uncertainty remains, so the answer should be improved before making a high-consequence decision.",
+    "confidence": {
+      "level": "high",
+      "score": 0.88,
+      "meaning": "How strongly the current evidence supports this answer.",
+      "principalLimiter": "Current evidence contains unresolved disagreement or mixed signals.",
+      "authoritativeSource": "causal-chain:CC1:E7"
+    },
+    "discriminatingEvidence": [
+      {
+        "id": "E10",
+        "statement": "Evidence indicates that specialist dependency leads to services margin erosion when specialist effort remains unpriced.",
+        "sourceLabel": "Finance",
+        "role": "discriminates"
+      },
+      {
+        "id": "E7",
+        "statement": "Evidence indicates that sales exceptions leads to product customization when exception approvals remain decentralized.",
+        "sourceLabel": "Sales",
+        "role": "supports"
+      },
+      {
+        "id": "E8",
+        "statement": "Evidence indicates that product customization leads to delivery variability when custom workflows bypass the standard roadmap.",
+        "sourceLabel": "Product",
+        "role": "supports"
+      }
+    ],
+    "weakenedAlternatives": [],
+    "unresolvedAlternatives": [
+      {
+        "id": "evidence-alternative:E6",
+        "explanation": "weak operations execution causes services margin erosion",
+        "status": "unresolved",
+        "basis": "Current admitted evidence identifies this as a plausible alternative that has not been eliminated."
+      }
+    ],
+    "principalLimiter": "Current evidence contains unresolved disagreement or mixed signals.",
+    "bestNextImprovement": {
+      "id": "question-aligned-improvement-b75d20381eab6251",
+      "type": "add_observation",
+      "title": "What evidence directly connects “sales exceptions lead to product customization when exception approvals remain decentralized” to the outcome in “Why do sales exceptions lead to product customization”?",
+      "reason": "Test the missing relationship in “Why do sales exceptions lead to product customization” and distinguish it from plausible alternatives.",
+      "expectedGain": "unknown",
+      "target": {
+        "label": "product customization",
+        "sourceType": "not_resolved"
+      },
+      "executable": true,
+      "limitation": "The expected improvement is an estimate, not a guarantee."
+    },
+    "decisionImplication": null,
+    "generatedAt": "2026-07-24T20:00:00.000Z"
+  },
+  "improvementPlan": {
+    "questionId": "product-question-c82bf7668c2de12b",
+    "currentConfidence": {
+      "level": "high",
+      "score": 0.88,
+      "meaning": "How strongly the current evidence supports this answer.",
+      "principalLimiter": "Current evidence contains unresolved disagreement or mixed signals.",
+      "authoritativeSource": "causal-chain:CC1:E7"
+    },
+    "bestNextAction": {
+      "id": "question-aligned-improvement-b75d20381eab6251",
+      "type": "add_observation",
+      "title": "What evidence directly connects “sales exceptions lead to product customization when exception approvals remain decentralized” to the outcome in “Why do sales exceptions lead to product customization”?",
+      "reason": "Test the missing relationship in “Why do sales exceptions lead to product customization” and distinguish it from plausible alternatives.",
+      "expectedGain": "unknown",
+      "target": {
+        "label": "product customization",
+        "sourceType": "not_resolved"
+      },
+      "executable": true,
+      "limitation": "The expected improvement is an estimate, not a guarantee."
+    },
+    "alternatives": []
+  },
+  "decisionDraft": null,
+  "activeDecision": null,
+  "latestOutcomeReview": null,
+  "modelState": {
+    "organizationId": "organization-case-001",
+    "revision": 1,
+    "developmentalState": "forming",
+    "dimensions": {
+      "coverage": {
+        "value": 0.23,
+        "status": "weak",
+        "meaning": "How much of this question is supported by current evidence.",
+        "limiter": null
+      },
+      "coherence": {
+        "value": 0.55,
+        "status": "developing",
+        "meaning": "How consistently the current evidence fits together.",
+        "limiter": "Conflicting evidence reduces consistency."
+      },
+      "freshness": {
+        "value": null,
+        "status": "unknown",
+        "meaning": "Whether the supporting evidence is current enough for this question.",
+        "limiter": null
+      },
+      "trustworthiness": {
+        "value": 0.6633494047619048,
+        "status": "healthy",
+        "meaning": "How much the answer is limited by disagreement and uncertainty.",
+        "limiter": "Current evidence contains unresolved disagreement or mixed signals."
+      }
+    },
+    "tensions": [
+      {
+        "id": "C1",
+        "statement": "The input contains an explicit open question, which means Discovery should avoid treating the current understanding as fully settled.",
+        "effect": "reduces_coherence"
+      }
+    ],
+    "latestMeaningfulGrowth": [
+      "New evidence produced a supported explanation.",
+      "Evidence strengthened the organization’s current understanding.",
+      "Evidence strengthened the organization’s current understanding."
+    ],
+    "projectedAt": "2026-07-24T20:00:00.000Z"
+  },
+  "latestChange": {
+    "questionId": "product-question-c82bf7668c2de12b",
+    "previousAnswerRevision": null,
+    "currentAnswerRevision": 1,
+    "primaryChange": "answer_created",
+    "summary": "Discovery formed an answer from the latest authorized evidence.",
+    "changedFields": [
+      "answer",
+      "confidence",
+      "improvementPlan",
+      "modelState"
+    ],
+    "occurredAt": "2026-07-24T20:00:00.000Z"
+  },
+  "proactiveInsights": [],
+  "permittedActions": [
+    {
+      "type": "search_records",
+      "label": "Search connected records",
+      "enabled": false,
+      "reason": "Connected record search is not available."
+    },
+    {
+      "type": "add_information",
+      "label": "Add information",
+      "enabled": true,
+      "reason": null
+    },
+    {
+      "type": "create_decision",
+      "label": "Create decision",
+      "enabled": false,
+      "reason": "No intervention-specific decision implication clears the evidence gate."
+    },
+    {
+      "type": "review_outcome",
+      "label": "Review outcome",
+      "enabled": false,
+      "reason": "No committed decision is active."
+    },
+    {
+      "type": "ask_followup",
+      "label": "Ask a follow-up",
+      "enabled": true,
+      "reason": null
+    }
+  ]
+}

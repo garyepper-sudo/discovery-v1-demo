@@ -1,0 +1,11 @@
+{
+  "contractVersion": "1",
+  "state": "commercial-complexity",
+  "validation": "PASS",
+  "canonicalSources": [
+    "case-001",
+    "DiscoveryV3Result",
+    "admitted Evidence",
+    "selected causal or explanation object"
+  ]
+}

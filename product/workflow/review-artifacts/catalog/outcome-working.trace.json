@@ -1,0 +1,10 @@
+{
+  "contractVersion": "1",
+  "state": "outcome-working",
+  "validation": "PASS",
+  "canonicalSources": [
+    "ExecutiveReview",
+    "ExecutiveLearning",
+    "ProductOutcomeReview"
+  ]
+}

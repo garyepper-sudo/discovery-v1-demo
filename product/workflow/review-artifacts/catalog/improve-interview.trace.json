@@ -1,0 +1,8 @@
+{
+  "contractVersion": "1",
+  "state": "improve-interview",
+  "validation": "PASS",
+  "canonicalSources": [
+    "InvestigationOpportunity"
+  ]
+}

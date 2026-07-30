@@ -1,0 +1,14 @@
+{
+  "contractVersion": "1",
+  "state": "full-vertical-proof",
+  "validation": "PASS",
+  "canonicalSources": [
+    "ProductQuestion",
+    "DiscoveryV3Result",
+    "ExecutiveDecisionRecord",
+    "ExecutiveWork",
+    "ExecutiveReview",
+    "ExecutiveLearning",
+    "OperatingModelImprovement"
+  ]
+}

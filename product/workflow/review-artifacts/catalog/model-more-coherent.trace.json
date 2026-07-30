@@ -1,0 +1,8 @@
+{
+  "contractVersion": "1",
+  "state": "model-more-coherent",
+  "validation": "PASS",
+  "canonicalSources": [
+    "OrganizationalUnderstandingState.health"
+  ]
+}

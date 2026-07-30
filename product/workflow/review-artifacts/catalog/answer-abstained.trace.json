@@ -1,0 +1,8 @@
+{
+  "contractVersion": "1",
+  "state": "answer-abstained",
+  "validation": "PASS",
+  "canonicalSources": [
+    "ProductAnswerAbstention"
+  ]
+}

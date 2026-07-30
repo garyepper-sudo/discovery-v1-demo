@@ -1,0 +1,268 @@
+{
+  "contractVersion": "1",
+  "question": {
+    "id": "product-question-22541c911ea01ee9",
+    "organizationId": "organization-case-003",
+    "text": "Why does operational variability lead to missed commitments?",
+    "title": "Why does operational variability lead to missed commitments?",
+    "status": "answered",
+    "createdAt": "2026-07-24T20:00:00.000Z",
+    "updatedAt": "2026-07-24T20:00:00.000Z",
+    "currentAnswerId": null,
+    "currentDecisionId": null,
+    "currentConfidence": null,
+    "revision": 0,
+    "searchHistory": [],
+    "answerHistory": [],
+    "decisionHistory": [],
+    "outcomeHistory": [],
+    "insightHistory": [],
+    "improvementHistory": [],
+    "timeline": []
+  },
+  "searchPlan": {
+    "questionId": "product-question-22541c911ea01ee9",
+    "purpose": "Acquire evidence that can answer: Why does operational variability lead to missed commitments?",
+    "status": "completed",
+    "requestedSources": [
+      {
+        "id": "manual-upload",
+        "type": "manual_upload",
+        "label": "Authorized uploaded documents",
+        "authorized": true,
+        "executable": true
+      },
+      {
+        "id": "paste",
+        "type": "paste",
+        "label": "Authorized pasted observations",
+        "authorized": true,
+        "executable": true
+      },
+      {
+        "id": "authorized-records",
+        "type": "authorized_records",
+        "label": "Connected organizational records",
+        "authorized": false,
+        "executable": false
+      }
+    ],
+    "limitations": [
+      "This review includes information people added directly. Connected organizational records were not searched."
+    ]
+  },
+  "latestSearchReceipt": {
+    "questionId": "product-question-22541c911ea01ee9",
+    "searchedAt": "2026-07-24T20:00:00.000Z",
+    "sourceScopes": [
+      {
+        "sourceId": "a1",
+        "sourceType": "Planning",
+        "organizationId": "organization-case-003"
+      },
+      {
+        "sourceId": "r1",
+        "sourceType": "Procurement",
+        "organizationId": "organization-case-003"
+      },
+      {
+        "sourceId": "r2",
+        "sourceType": "Operations",
+        "organizationId": "organization-case-003"
+      },
+      {
+        "sourceId": "r3",
+        "sourceType": "Sales",
+        "organizationId": "organization-case-003"
+      },
+      {
+        "sourceId": "r4",
+        "sourceType": "Finance",
+        "organizationId": "organization-case-003"
+      }
+    ],
+    "recordsConsidered": 5,
+    "evidenceAdmitted": 10,
+    "limitations": [
+      "This review includes information people added directly. Connected organizational records were not searched."
+    ]
+  },
+  "answer": {
+    "kind": "answer",
+    "id": "product-answer-cac091436dded4f0",
+    "questionId": "product-question-22541c911ea01ee9",
+    "revision": 1,
+    "conclusion": "operational variability leads to missed commitments when commitment dates remain fixed.",
+    "whyItMatters": "Important uncertainty remains, so the answer should be improved before making a high-consequence decision.",
+    "confidence": {
+      "level": "high",
+      "score": 0.88,
+      "meaning": "How strongly the current evidence supports this answer.",
+      "principalLimiter": "Current evidence contains unresolved disagreement or mixed signals.",
+      "authoritativeSource": "causal-chain:CC1:E9"
+    },
+    "discriminatingEvidence": [
+      {
+        "id": "E10",
+        "statement": "Evidence indicates that missed commitments leads to expedite and inventory costs when service targets remain binding.",
+        "sourceLabel": "Finance",
+        "role": "supports"
+      },
+      {
+        "id": "E7",
+        "statement": "Evidence indicates that unit-cost optimization leads to longer lead times when selection rewards unit price.",
+        "sourceLabel": "Procurement",
+        "role": "discriminates"
+      },
+      {
+        "id": "E8",
+        "statement": "Evidence indicates that longer lead times leads to operational variability when buffer capacity is scarce.",
+        "sourceLabel": "Operations",
+        "role": "supports"
+      }
+    ],
+    "weakenedAlternatives": [],
+    "unresolvedAlternatives": [
+      {
+        "id": "evidence-alternative:E6",
+        "explanation": "poor forecasting causes missed commitments",
+        "status": "unresolved",
+        "basis": "Current admitted evidence identifies this as a plausible alternative that has not been eliminated."
+      }
+    ],
+    "principalLimiter": "Current evidence contains unresolved disagreement or mixed signals.",
+    "bestNextImprovement": {
+      "id": "question-aligned-improvement-0cce31093fb67891",
+      "type": "add_observation",
+      "title": "What evidence directly connects “operational variability leads to missed commitments when commitment dates remain fixed” to the outcome in “Why does operational variability lead to missed commitments”?",
+      "reason": "Test the missing relationship in “Why does operational variability lead to missed commitments” and distinguish it from plausible alternatives.",
+      "expectedGain": "unknown",
+      "target": {
+        "label": "missed commitments",
+        "sourceType": "not_resolved"
+      },
+      "executable": true,
+      "limitation": "The expected improvement is an estimate, not a guarantee."
+    },
+    "decisionImplication": null,
+    "generatedAt": "2026-07-24T20:00:00.000Z"
+  },
+  "improvementPlan": {
+    "questionId": "product-question-22541c911ea01ee9",
+    "currentConfidence": {
+      "level": "high",
+      "score": 0.88,
+      "meaning": "How strongly the current evidence supports this answer.",
+      "principalLimiter": "Current evidence contains unresolved disagreement or mixed signals.",
+      "authoritativeSource": "causal-chain:CC1:E9"
+    },
+    "bestNextAction": {
+      "id": "question-aligned-improvement-0cce31093fb67891",
+      "type": "add_observation",
+      "title": "What evidence directly connects “operational variability leads to missed commitments when commitment dates remain fixed” to the outcome in “Why does operational variability lead to missed commitments”?",
+      "reason": "Test the missing relationship in “Why does operational variability lead to missed commitments” and distinguish it from plausible alternatives.",
+      "expectedGain": "unknown",
+      "target": {
+        "label": "missed commitments",
+        "sourceType": "not_resolved"
+      },
+      "executable": true,
+      "limitation": "The expected improvement is an estimate, not a guarantee."
+    },
+    "alternatives": []
+  },
+  "decisionDraft": null,
+  "activeDecision": null,
+  "latestOutcomeReview": null,
+  "modelState": {
+    "organizationId": "organization-case-003",
+    "revision": 1,
+    "developmentalState": "forming",
+    "dimensions": {
+      "coverage": {
+        "value": 0,
+        "status": "weak",
+        "meaning": "How much of this question is supported by current evidence.",
+        "limiter": null
+      },
+      "coherence": {
+        "value": 0.41666666666666663,
+        "status": "developing",
+        "meaning": "How consistently the current evidence fits together.",
+        "limiter": "Conflicting evidence reduces consistency."
+      },
+      "freshness": {
+        "value": null,
+        "status": "unknown",
+        "meaning": "Whether the supporting evidence is current enough for this question.",
+        "limiter": null
+      },
+      "trustworthiness": {
+        "value": 0.6622065476190477,
+        "status": "healthy",
+        "meaning": "How much the answer is limited by disagreement and uncertainty.",
+        "limiter": "Current evidence contains unresolved disagreement or mixed signals."
+      }
+    },
+    "tensions": [
+      {
+        "id": "C1",
+        "statement": "The input contains an explicit open question, which means Discovery should avoid treating the current understanding as fully settled.",
+        "effect": "reduces_coherence"
+      }
+    ],
+    "latestMeaningfulGrowth": [
+      "New evidence produced a supported explanation.",
+      "Evidence strengthened the organization’s current understanding.",
+      "Evidence strengthened the organization’s current understanding."
+    ],
+    "projectedAt": "2026-07-24T20:00:00.000Z"
+  },
+  "latestChange": {
+    "questionId": "product-question-22541c911ea01ee9",
+    "previousAnswerRevision": null,
+    "currentAnswerRevision": 1,
+    "primaryChange": "answer_created",
+    "summary": "Discovery formed an answer from the latest authorized evidence.",
+    "changedFields": [
+      "answer",
+      "confidence",
+      "improvementPlan",
+      "modelState"
+    ],
+    "occurredAt": "2026-07-24T20:00:00.000Z"
+  },
+  "proactiveInsights": [],
+  "permittedActions": [
+    {
+      "type": "search_records",
+      "label": "Search connected records",
+      "enabled": false,
+      "reason": "Connected record search is not available."
+    },
+    {
+      "type": "add_information",
+      "label": "Add information",
+      "enabled": true,
+      "reason": null
+    },
+    {
+      "type": "create_decision",
+      "label": "Create decision",
+      "enabled": false,
+      "reason": "No intervention-specific decision implication clears the evidence gate."
+    },
+    {
+      "type": "review_outcome",
+      "label": "Review outcome",
+      "enabled": false,
+      "reason": "No committed decision is active."
+    },
+    {
+      "type": "ask_followup",
+      "label": "Ask a follow-up",
+      "enabled": true,
+      "reason": null
+    }
+  ]
+}

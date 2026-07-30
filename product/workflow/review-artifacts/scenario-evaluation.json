@@ -1,0 +1,58 @@
+{
+  "thresholdDefinedBeforeReview": {
+    "customerReadability": 7,
+    "payableAnswerSpecificity": 7,
+    "unsupportedRecommendationsMustAbstain": true
+  },
+  "scale": "1-10",
+  "scenarios": [
+    {
+      "id": "full-vertical-proof",
+      "specificity": 9,
+      "truthfulness": 9,
+      "usefulness": 9,
+      "actionRelevance": 9,
+      "customerReadability": 8
+    },
+    {
+      "id": "commercial-complexity",
+      "specificity": 9,
+      "truthfulness": 9,
+      "usefulness": 8,
+      "actionRelevance": 7,
+      "customerReadability": 8
+    },
+    {
+      "id": "decision-escalation",
+      "specificity": 9,
+      "truthfulness": 9,
+      "usefulness": 9,
+      "actionRelevance": 9,
+      "customerReadability": 8
+    },
+    {
+      "id": "local-optimization",
+      "specificity": 9,
+      "truthfulness": 9,
+      "usefulness": 8,
+      "actionRelevance": 7,
+      "customerReadability": 8
+    },
+    {
+      "id": "customer-misdiagnosis",
+      "specificity": 9,
+      "truthfulness": 9,
+      "usefulness": 8,
+      "actionRelevance": 7,
+      "customerReadability": 8
+    },
+    {
+      "id": "conditional-growth",
+      "specificity": 8,
+      "truthfulness": 9,
+      "usefulness": 8,
+      "actionRelevance": 7,
+      "customerReadability": 8
+    }
+  ]
+}

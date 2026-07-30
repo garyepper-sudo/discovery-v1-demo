@@ -1,0 +1,11 @@
+{
+  "contractVersion": "1",
+  "state": "customer-misdiagnosis",
+  "validation": "PASS",
+  "canonicalSources": [
+    "case-004",
+    "DiscoveryV3Result",
+    "admitted Evidence",
+    "selected causal or explanation object"
+  ]
+}

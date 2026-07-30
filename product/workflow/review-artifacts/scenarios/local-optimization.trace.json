@@ -1,0 +1,11 @@
+{
+  "contractVersion": "1",
+  "state": "local-optimization",
+  "validation": "PASS",
+  "canonicalSources": [
+    "case-003",
+    "DiscoveryV3Result",
+    "admitted Evidence",
+    "selected causal or explanation object"
+  ]
+}

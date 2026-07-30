@@ -1,0 +1,8 @@
+{
+  "contractVersion": "1",
+  "state": "proactive-insight-abstained",
+  "validation": "PASS",
+  "canonicalSources": [
+    "ProductInsight quality gate"
+  ]
+}

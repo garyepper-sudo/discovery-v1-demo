@@ -1,0 +1,321 @@
+{
+  "contractVersion": "1",
+  "question": {
+    "id": "product-question-319f5d3695588a4e",
+    "organizationId": "organization-case-002",
+    "text": "Why does manager escalation lead to an executive bottleneck?",
+    "title": "Why does manager escalation lead to an executive bottleneck?",
+    "status": "decision_in_progress",
+    "createdAt": "2026-07-24T20:00:00.000Z",
+    "updatedAt": "2026-07-24T20:00:00.000Z",
+    "currentAnswerId": null,
+    "currentDecisionId": "vertical-decision-record",
+    "currentConfidence": null,
+    "revision": 0,
+    "searchHistory": [],
+    "answerHistory": [],
+    "decisionHistory": [],
+    "outcomeHistory": [],
+    "insightHistory": [],
+    "improvementHistory": [],
+    "timeline": []
+  },
+  "searchPlan": {
+    "questionId": "product-question-319f5d3695588a4e",
+    "purpose": "Acquire evidence that can answer: Why does manager escalation lead to an executive bottleneck?",
+    "status": "completed",
+    "requestedSources": [
+      {
+        "id": "manual-upload",
+        "type": "manual_upload",
+        "label": "Authorized uploaded documents",
+        "authorized": true,
+        "executable": true
+      },
+      {
+        "id": "paste",
+        "type": "paste",
+        "label": "Authorized pasted observations",
+        "authorized": true,
+        "executable": true
+      },
+      {
+        "id": "authorized-records",
+        "type": "authorized_records",
+        "label": "Connected organizational records",
+        "authorized": false,
+        "executable": false
+      }
+    ],
+    "limitations": [
+      "This review includes information people added directly. Connected organizational records were not searched."
+    ]
+  },
+  "latestSearchReceipt": {
+    "questionId": "product-question-319f5d3695588a4e",
+    "searchedAt": "2026-08-29T12:03:00.000Z",
+    "sourceScopes": [
+      {
+        "sourceId": "a1",
+        "sourceType": "Operations",
+        "organizationId": "organization-case-002"
+      },
+      {
+        "sourceId": "r1",
+        "sourceType": "HR",
+        "organizationId": "organization-case-002"
+      },
+      {
+        "sourceId": "r2",
+        "sourceType": "Information",
+        "organizationId": "organization-case-002"
+      },
+      {
+        "sourceId": "r3",
+        "sourceType": "Management",
+        "organizationId": "organization-case-002"
+      },
+      {
+        "sourceId": "r4",
+        "sourceType": "Leadership",
+        "organizationId": "organization-case-002"
+      }
+    ],
+    "recordsConsidered": 5,
+    "evidenceAdmitted": 10,
+    "limitations": [
+      "This review includes information people added directly. Connected organizational records were not searched."
+    ]
+  },
+  "answer": {
+    "kind": "answer",
+    "id": "product-answer-4540487bebcfcbc7",
+    "questionId": "product-question-319f5d3695588a4e",
+    "revision": 1,
+    "conclusion": "manager escalation leads to executive bottleneck when executives continue accepting routine escalations.",
+    "whyItMatters": "Additional evidence could still change this answer.",
+    "confidence": {
+      "level": "high",
+      "score": 0.87,
+      "meaning": "How strongly the current evidence supports this answer.",
+      "principalLimiter": "Current evidence contains unresolved disagreement or mixed signals.",
+      "authoritativeSource": "causal-chain:CC1:E10"
+    },
+    "discriminatingEvidence": [
+      {
+        "id": "E10",
+        "statement": "Evidence indicates that manager escalation leads to executive bottleneck when executives continue accepting routine escalations.",
+        "sourceLabel": "Leadership",
+        "role": "supports"
+      },
+      {
+        "id": "E7",
+        "statement": "Evidence indicates that risk-sensitive incentives leads to perceived cost of independent action when visible mistakes remain penalized.",
+        "sourceLabel": "HR",
+        "role": "discriminates"
+      },
+      {
+        "id": "E8",
+        "statement": "Evidence indicates that executive information concentration leads to perceived cost of independent action when trade-off data remains concentrated.",
+        "sourceLabel": "Information",
+        "role": "supports"
+      }
+    ],
+    "weakenedAlternatives": [],
+    "unresolvedAlternatives": [
+      {
+        "id": "evidence-alternative:E6",
+        "explanation": "manager inexperience causes executive bottlenecks",
+        "status": "unresolved",
+        "basis": "Current admitted evidence identifies this as a plausible alternative that has not been eliminated."
+      }
+    ],
+    "principalLimiter": "Current evidence contains unresolved disagreement or mixed signals.",
+    "bestNextImprovement": {
+      "id": "question-aligned-improvement-d396e0492c46365f",
+      "type": "add_observation",
+      "title": "What evidence directly connects “manager escalation leads to executive bottleneck when executives continue accepting routine escalations” to the outcome in “Why does manager escalation lead to an executive bottleneck”?",
+      "reason": "Test the missing relationship in “Why does manager escalation lead to an executive bottleneck” and distinguish it from plausible alternatives.",
+      "expectedGain": "unknown",
+      "target": {
+        "label": "an executive bottleneck",
+        "sourceType": "not_resolved"
+      },
+      "executable": true,
+      "limitation": "The expected improvement is an estimate, not a guarantee."
+    },
+    "decisionImplication": "Delegate routine decision authority.",
+    "generatedAt": "2026-08-29T12:03:00.000Z"
+  },
+  "improvementPlan": {
+    "questionId": "product-question-319f5d3695588a4e",
+    "currentConfidence": {
+      "level": "high",
+      "score": 0.87,
+      "meaning": "How strongly the current evidence supports this answer.",
+      "principalLimiter": "Current evidence contains unresolved disagreement or mixed signals.",
+      "authoritativeSource": "causal-chain:CC1:E10"
+    },
+    "bestNextAction": {
+      "id": "question-aligned-improvement-d396e0492c46365f",
+      "type": "add_observation",
+      "title": "What evidence directly connects “manager escalation leads to executive bottleneck when executives continue accepting routine escalations” to the outcome in “Why does manager escalation lead to an executive bottleneck”?",
+      "reason": "Test the missing relationship in “Why does manager escalation lead to an executive bottleneck” and distinguish it from plausible alternatives.",
+      "expectedGain": "unknown",
+      "target": {
+        "label": "an executive bottleneck",
+        "sourceType": "not_resolved"
+      },
+      "executable": true,
+      "limitation": "The expected improvement is an estimate, not a guarantee."
+    },
+    "alternatives": []
+  },
+  "decisionDraft": null,
+  "activeDecision": {
+    "id": "product-decision-ff4ba2cdd42dcd89",
+    "organizationId": "organization-case-002",
+    "sourceQuestionId": "product-question-319f5d3695588a4e",
+    "sourceAnswerId": "product-answer-4540487bebcfcbc7",
+    "intervention": "Delegate one bounded class of routine approvals and compare cycle time and quality.",
+    "assumptions": [
+      "Decision quality can be measured consistently."
+    ],
+    "expectedOutcomes": [
+      {
+        "id": "vertical-outcome",
+        "description": "Routine approval cycle time declines without lower decision quality.",
+        "timeHorizon": "30 days"
+      }
+    ],
+    "successCriteria": [
+      {
+        "id": "vertical-measure",
+        "name": "Routine approval cycle time",
+        "baseline": 9,
+        "target": 4,
+        "unit": "days"
+      }
+    ],
+    "owner": {
+      "id": null,
+      "label": "Operating leader"
+    },
+    "reviewDate": "2026-08-29T12:00:00.000Z",
+    "status": "completed",
+    "decisionRecordId": "vertical-decision-record",
+    "workId": "executive-work-vertical-decision-record"
+  },
+  "latestOutcomeReview": {
+    "decisionId": "product-decision-ff4ba2cdd42dcd89",
+    "status": "working",
+    "comparisons": [
+      {
+        "expectedOutcomeId": "vertical-outcome",
+        "expected": "Routine approval cycle time declines without lower decision quality.",
+        "observed": "Median approval time declined to four days and measured quality did not decline.",
+        "result": "working"
+      }
+    ],
+    "interpretation": "Observed outcomes currently support the decision.",
+    "modelEffect": {
+      "answerRevised": false,
+      "confidenceChanged": true,
+      "assumptionsValidated": [],
+      "assumptionsWeakened": [],
+      "newEvidenceAdmitted": false
+    },
+    "nextReviewDate": null
+  },
+  "modelState": {
+    "organizationId": "organization-case-002",
+    "revision": 1,
+    "developmentalState": "coherent",
+    "dimensions": {
+      "coverage": {
+        "value": 0.79,
+        "status": "healthy",
+        "meaning": "How much of this question is supported by current evidence.",
+        "limiter": null
+      },
+      "coherence": {
+        "value": 0.6833333333333332,
+        "status": "healthy",
+        "meaning": "How consistently the current evidence fits together.",
+        "limiter": "Conflicting evidence reduces consistency."
+      },
+      "freshness": {
+        "value": null,
+        "status": "unknown",
+        "meaning": "Whether the supporting evidence is current enough for this question.",
+        "limiter": null
+      },
+      "trustworthiness": {
+        "value": 0.6626636904761904,
+        "status": "healthy",
+        "meaning": "How much the answer is limited by disagreement and uncertainty.",
+        "limiter": "Current evidence contains unresolved disagreement or mixed signals."
+      }
+    },
+    "tensions": [
+      {
+        "id": "C1",
+        "statement": "The input contains an explicit open question, which means Discovery should avoid treating the current understanding as fully settled.",
+        "effect": "reduces_coherence"
+      }
+    ],
+    "latestMeaningfulGrowth": [
+      "New evidence produced a supported explanation.",
+      "Evidence strengthened the organization’s current understanding.",
+      "Evidence strengthened the organization’s current understanding."
+    ],
+    "projectedAt": "2026-08-29T12:03:00.000Z"
+  },
+  "latestChange": {
+    "questionId": "product-question-319f5d3695588a4e",
+    "previousAnswerRevision": null,
+    "currentAnswerRevision": 1,
+    "primaryChange": "answer_created",
+    "summary": "Discovery formed an answer from the latest authorized evidence.",
+    "changedFields": [
+      "answer",
+      "confidence",
+      "improvementPlan",
+      "modelState"
+    ],
+    "occurredAt": "2026-08-29T12:03:00.000Z"
+  },
+  "proactiveInsights": [],
+  "permittedActions": [
+    {
+      "type": "search_records",
+      "label": "Search connected records",
+      "enabled": false,
+      "reason": "Connected record search is not available."
+    },
+    {
+      "type": "add_information",
+      "label": "Add information",
+      "enabled": true,
+      "reason": null
+    },
+    {
+      "type": "create_decision",
+      "label": "Create decision",
+      "enabled": true,
+      "reason": null
+    },
+    {
+      "type": "review_outcome",
+      "label": "Review outcome",
+      "enabled": true,
+      "reason": null
+    },
+    {
+      "type": "ask_followup",
+      "label": "Ask a follow-up",
+      "enabled": true,
+      "reason": null
+    }
+  ]
+}

@@ -1,0 +1,273 @@
+{
+  "contractVersion": "1",
+  "question": {
+    "id": "product-question-4fd799811141d7f6",
+    "organizationId": "organization-case-004",
+    "text": "Why does workflow confusion lead to weak feature adoption?",
+    "title": "Why does workflow confusion lead to weak feature adoption?",
+    "status": "answered",
+    "createdAt": "2026-07-24T20:00:00.000Z",
+    "updatedAt": "2026-07-24T20:00:00.000Z",
+    "currentAnswerId": null,
+    "currentDecisionId": null,
+    "currentConfidence": null,
+    "revision": 0,
+    "searchHistory": [],
+    "answerHistory": [],
+    "decisionHistory": [],
+    "outcomeHistory": [],
+    "insightHistory": [],
+    "improvementHistory": [],
+    "timeline": []
+  },
+  "searchPlan": {
+    "questionId": "product-question-4fd799811141d7f6",
+    "purpose": "Acquire evidence that can answer: Why does workflow confusion lead to weak feature adoption?",
+    "status": "completed",
+    "requestedSources": [
+      {
+        "id": "manual-upload",
+        "type": "manual_upload",
+        "label": "Authorized uploaded documents",
+        "authorized": true,
+        "executable": true
+      },
+      {
+        "id": "paste",
+        "type": "paste",
+        "label": "Authorized pasted observations",
+        "authorized": true,
+        "executable": true
+      },
+      {
+        "id": "authorized-records",
+        "type": "authorized_records",
+        "label": "Connected organizational records",
+        "authorized": false,
+        "executable": false
+      }
+    ],
+    "limitations": [
+      "This review includes information people added directly. Connected organizational records were not searched."
+    ]
+  },
+  "latestSearchReceipt": {
+    "questionId": "product-question-4fd799811141d7f6",
+    "searchedAt": "2026-07-24T20:00:00.000Z",
+    "sourceScopes": [
+      {
+        "sourceId": "a1",
+        "sourceType": "Marketing",
+        "organizationId": "organization-case-004"
+      },
+      {
+        "sourceId": "r1",
+        "sourceType": "Support",
+        "organizationId": "organization-case-004"
+      },
+      {
+        "sourceId": "r2",
+        "sourceType": "Product",
+        "organizationId": "organization-case-004"
+      },
+      {
+        "sourceId": "r3",
+        "sourceType": "Success",
+        "organizationId": "organization-case-004"
+      }
+    ],
+    "recordsConsidered": 4,
+    "evidenceAdmitted": 9,
+    "limitations": [
+      "This review includes information people added directly. Connected organizational records were not searched."
+    ]
+  },
+  "answer": {
+    "kind": "answer",
+    "id": "product-answer-100d78f154e44df4",
+    "questionId": "product-question-4fd799811141d7f6",
+    "revision": 1,
+    "conclusion": "workflow confusion leads to weak feature adoption when workflow guidance remains unchanged.",
+    "whyItMatters": "Some evidence weakens or complicates this belief, so it should not be treated as fully settled.",
+    "confidence": {
+      "level": "high",
+      "score": 0.84,
+      "meaning": "How strongly the current evidence supports this answer.",
+      "principalLimiter": "Current evidence contains unresolved disagreement or mixed signals.",
+      "authoritativeSource": "causal-chain:CC1:E7"
+    },
+    "discriminatingEvidence": [
+      {
+        "id": "E6",
+        "statement": "A plausible alternative is that weak awareness causes poor retention.",
+        "sourceLabel": "Marketing",
+        "role": "weakens"
+      },
+      {
+        "id": "E7",
+        "statement": "Evidence indicates that workflow confusion leads to weak feature adoption when workflow guidance remains unchanged.",
+        "sourceLabel": "Support",
+        "role": "supports"
+      },
+      {
+        "id": "E8",
+        "statement": "Evidence indicates that weak feature adoption leads to increased training requests when customers must complete advanced workflows.",
+        "sourceLabel": "Product",
+        "role": "supports"
+      }
+    ],
+    "weakenedAlternatives": [],
+    "unresolvedAlternatives": [
+      {
+        "id": "evidence-alternative:E6",
+        "explanation": "weak awareness causes poor retention",
+        "status": "unresolved",
+        "basis": "Current admitted evidence identifies this as a plausible alternative that has not been eliminated."
+      }
+    ],
+    "principalLimiter": "Current evidence contains unresolved disagreement or mixed signals.",
+    "bestNextImprovement": {
+      "id": "question-aligned-improvement-3089a9ce0d5c6c01",
+      "type": "add_observation",
+      "title": "What evidence directly connects “workflow confusion leads to weak feature adoption when workflow guidance remains unchanged” to the outcome in “Why does workflow confusion lead to weak feature adoption”?",
+      "reason": "Test the missing relationship in “Why does workflow confusion lead to weak feature adoption” and distinguish it from plausible alternatives.",
+      "expectedGain": "unknown",
+      "target": {
+        "label": "weak feature adoption",
+        "sourceType": "not_resolved"
+      },
+      "executable": true,
+      "limitation": "The expected improvement is an estimate, not a guarantee."
+    },
+    "decisionImplication": null,
+    "generatedAt": "2026-07-24T20:00:00.000Z"
+  },
+  "improvementPlan": {
+    "questionId": "product-question-4fd799811141d7f6",
+    "currentConfidence": {
+      "level": "high",
+      "score": 0.84,
+      "meaning": "How strongly the current evidence supports this answer.",
+      "principalLimiter": "Current evidence contains unresolved disagreement or mixed signals.",
+      "authoritativeSource": "causal-chain:CC1:E7"
+    },
+    "bestNextAction": {
+      "id": "question-aligned-improvement-3089a9ce0d5c6c01",
+      "type": "add_observation",
+      "title": "What evidence directly connects “workflow confusion leads to weak feature adoption when workflow guidance remains unchanged” to the outcome in “Why does workflow confusion lead to weak feature adoption”?",
+      "reason": "Test the missing relationship in “Why does workflow confusion lead to weak feature adoption” and distinguish it from plausible alternatives.",
+      "expectedGain": "unknown",
+      "target": {
+        "label": "weak feature adoption",
+        "sourceType": "not_resolved"
+      },
+      "executable": true,
+      "limitation": "The expected improvement is an estimate, not a guarantee."
+    },
+    "alternatives": []
+  },
+  "decisionDraft": null,
+  "activeDecision": null,
+  "latestOutcomeReview": null,
+  "modelState": {
+    "organizationId": "organization-case-004",
+    "revision": 1,
+    "developmentalState": "fragmented",
+    "dimensions": {
+      "coverage": {
+        "value": 0,
+        "status": "weak",
+        "meaning": "How much of this question is supported by current evidence.",
+        "limiter": null
+      },
+      "coherence": {
+        "value": 0.33333333333333337,
+        "status": "weak",
+        "meaning": "How consistently the current evidence fits together.",
+        "limiter": "Conflicting evidence reduces consistency."
+      },
+      "freshness": {
+        "value": null,
+        "status": "unknown",
+        "meaning": "Whether the supporting evidence is current enough for this question.",
+        "limiter": null
+      },
+      "trustworthiness": {
+        "value": 0.32684124999999997,
+        "status": "weak",
+        "meaning": "How much the answer is limited by disagreement and uncertainty.",
+        "limiter": "Current evidence contains unresolved disagreement or mixed signals."
+      }
+    },
+    "tensions": [
+      {
+        "id": "C3",
+        "statement": "The same theme contains both positive and negative evidence, suggesting the pattern may not be fully resolved.",
+        "effect": "reduces_coherence"
+      },
+      {
+        "id": "C2",
+        "statement": "The company appears to be pursuing multiple growth bets, but the evidence does not yet show which ones are actually improving retention.",
+        "effect": "reduces_coherence"
+      },
+      {
+        "id": "C4",
+        "statement": "The same theme contains both positive and negative evidence, suggesting the pattern may not be fully resolved.",
+        "effect": "reduces_coherence"
+      }
+    ],
+    "latestMeaningfulGrowth": [
+      "Evidence strengthened the organization’s current understanding.",
+      "Evidence strengthened the organization’s current understanding.",
+      "Evidence strengthened the organization’s current understanding."
+    ],
+    "projectedAt": "2026-07-24T20:00:00.000Z"
+  },
+  "latestChange": {
+    "questionId": "product-question-4fd799811141d7f6",
+    "previousAnswerRevision": null,
+    "currentAnswerRevision": 1,
+    "primaryChange": "answer_created",
+    "summary": "Discovery formed an answer from the latest authorized evidence.",
+    "changedFields": [
+      "answer",
+      "confidence",
+      "improvementPlan",
+      "modelState"
+    ],
+    "occurredAt": "2026-07-24T20:00:00.000Z"
+  },
+  "proactiveInsights": [],
+  "permittedActions": [
+    {
+      "type": "search_records",
+      "label": "Search connected records",
+      "enabled": false,
+      "reason": "Connected record search is not available."
+    },
+    {
+      "type": "add_information",
+      "label": "Add information",
+      "enabled": true,
+      "reason": null
+    },
+    {
+      "type": "create_decision",
+      "label": "Create decision",
+      "enabled": false,
+      "reason": "No intervention-specific decision implication clears the evidence gate."
+    },
+    {
+      "type": "review_outcome",
+      "label": "Review outcome",
+      "enabled": false,
+      "reason": "No committed decision is active."
+    },
+    {
+      "type": "ask_followup",
+      "label": "Ask a follow-up",
+      "enabled": true,
+      "reason": null
+    }
+  ]
+}

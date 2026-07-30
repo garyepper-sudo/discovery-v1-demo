@@ -1,0 +1,10 @@
+{
+  "answerConclusion": "customer-ready",
+  "evidenceStatement": "customer-ready",
+  "confidenceMeaning": "engine-oriented-but-deterministically-translatable",
+  "investigationReason": "engine-oriented-but-deterministically-translatable",
+  "confidenceGainScale": "engine-oriented-but-deterministically-translatable",
+  "runtimeFreshness": "unavailable-and-omitted",
+  "authoritativeSourceId": "unsuitable-for-customer-presentation",
+  "internalObjectCounts": "unsuitable-for-customer-presentation"
+}

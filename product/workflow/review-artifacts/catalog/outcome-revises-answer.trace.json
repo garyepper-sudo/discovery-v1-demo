@@ -1,0 +1,10 @@
+{
+  "contractVersion": "1",
+  "state": "outcome-revises-answer",
+  "validation": "PASS",
+  "canonicalSources": [
+    "ExecutiveReview",
+    "ExecutiveLearning",
+    "OperatingModelImprovement"
+  ]
+}

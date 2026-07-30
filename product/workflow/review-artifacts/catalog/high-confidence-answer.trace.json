@@ -1,0 +1,10 @@
+{
+  "contractVersion": "1",
+  "state": "high-confidence-answer",
+  "validation": "PASS",
+  "canonicalSources": [
+    "ProductAnswer",
+    "completed OrganizationalExplanation",
+    "admitted Evidence"
+  ]
+}

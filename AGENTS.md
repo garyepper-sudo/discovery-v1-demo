@@ -12,6 +12,43 @@ When uncertain, preserve existing architecture and ask for clarification rather 
 
 ---
 
+# Canonical Product Governance
+
+Before any product implementation, read:
+
+1. `docs/Product/CANONICAL_PRODUCT_ARCHITECTURE.md`
+2. `docs/Product/PRODUCT_GAPS.md`
+3. `docs/Product/PRODUCT_ROADMAP.md`
+4. `docs/Product/PRODUCT_DECISIONS.md`
+5. `docs/Product/PRODUCT_GOVERNANCE.md`
+
+Every product implementation must identify the registered Gap ID and roadmap
+phase it addresses, declare whether architecture changes, and reuse existing
+owners wherever possible. If architecture changes, provide evidence that the
+current canonical architecture cannot support the required workflow.
+
+Mandatory product boundaries:
+
+- `ProductQuestion` is the canonical long-lived product object.
+- `ProductQuestionWorkspace` is the canonical frontend boundary.
+- Frontends render product contracts and never interpret engine or Runtime
+  internals.
+- Prefer composition through existing Runtime, cognition, authorization,
+  persistence, and Product Workflow.
+- Do not create duplicate persistence, organization identity, product meaning,
+  confidence ownership, or lineage.
+- Every new capability declares ownership, persistence, lineage, confidence
+  ownership, authorization, fixture coverage, and validator coverage.
+- Every product contract change requires version, fixture, validation,
+  migration, and governance-document review.
+- Deferred work belongs in `PRODUCT_GAPS.md`, not only in prompts, handoffs,
+  comments, or agent memory.
+
+Run `npm run validate:product-governance` for every product architecture or
+contract change.
+
+---
+
 # Discovery Identity
 
 Discovery is a shared organizational intelligence platform.

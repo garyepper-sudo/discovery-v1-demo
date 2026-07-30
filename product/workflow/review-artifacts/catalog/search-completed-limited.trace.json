@@ -1,0 +1,9 @@
+{
+  "contractVersion": "1",
+  "state": "search-completed-limited",
+  "validation": "PASS",
+  "canonicalSources": [
+    "ProductSearchPlan",
+    "ProductSearchReceipt"
+  ]
+}

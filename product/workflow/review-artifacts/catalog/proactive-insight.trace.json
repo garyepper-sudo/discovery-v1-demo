@@ -1,0 +1,10 @@
+{
+  "contractVersion": "1",
+  "state": "proactive-insight",
+  "validation": "PASS",
+  "canonicalSources": [
+    "ProductInsight",
+    "completed OrganizationalExplanation",
+    "admitted Evidence"
+  ]
+}

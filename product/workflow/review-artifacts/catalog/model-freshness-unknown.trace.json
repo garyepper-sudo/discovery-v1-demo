@@ -1,0 +1,9 @@
+{
+  "contractVersion": "1",
+  "state": "model-freshness-unknown",
+  "validation": "PASS",
+  "canonicalSources": [
+    "ProductQuestion",
+    "OrganizationRuntime.metadata"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "contractVersion": "1",
+  "state": "model-less-coherent",
+  "validation": "PASS",
+  "canonicalSources": [
+    "OrganizationalUncertainty",
+    "V3Contradiction"
+  ]
+}
