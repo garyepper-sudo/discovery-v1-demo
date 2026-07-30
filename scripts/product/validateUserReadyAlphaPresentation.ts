@@ -28,7 +28,9 @@ assert.ok(alpha.includes("Follow controls are not yet available"));
 assert.ok(alpha.includes("does not create notifications or change a saved follow state"));
 assert.ok(
   alpha.includes("This organization remains read-only.") &&
-    alpha.includes("disabled={!operational}"),
+    alpha.includes("{operational ? (") &&
+    alpha.includes("<DiscoveryOnboardingExperience") &&
+    alpha.includes("inlineComposer"),
   "The persistent workspace must disclose and enforce read-only teaching state.",
 );
 assert.ok(alpha.includes("Organization member"));

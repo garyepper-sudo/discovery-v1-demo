@@ -11,6 +11,10 @@ const communicationView = readFileSync(
   "components/product-shell/data/buildDiscoveryExperienceView.ts",
   "utf8",
 );
+const hostedWorkspace = alpha.slice(
+  alpha.indexOf("function HostedUnderstandingWorkspace"),
+  alpha.indexOf("function HomeScene"),
+);
 
 for (const label of [
   "New Understanding",
@@ -21,10 +25,8 @@ for (const label of [
   "Discovery’s Current Understanding",
   "Why Discovery Believes This",
   "Discovery Still Needs To Understand",
-  "Improve This Understanding",
   "Teach Discovery something new",
   "Next Best Improvement",
-  "Evidence Basis",
 ]) {
   assert.ok(alpha.includes(label), `Missing workspace label: ${label}`);
 }
@@ -49,14 +51,16 @@ assert.ok(
   "Future workspace controls must remain explicitly unavailable.",
 );
 assert.ok(
-  alpha.includes('understanding.confidence.qualitative ?? "Authority-qualified"') &&
-    alpha.includes("understanding.confidence.limitation"),
-  "Confidence must preserve the authorized boundary without fabrication.",
+  alpha.includes("understandingSupportState(") &&
+    alpha.includes("understanding.confidence.qualitative") &&
+    !hostedWorkspace.includes("understanding.confidence.value"),
+  "Current support must preserve the authorized qualitative boundary without fabricating a scalar.",
 );
 assert.ok(
-  alpha.includes("basis.evidenceCategories.map") &&
-    alpha.includes("category.count"),
-  "Evidence context must use authorized role counts rather than invented evidence.",
+  hostedWorkspace.includes("basis={basis}") &&
+    hostedWorkspace.includes("basis ? trigger : null") &&
+    !hostedWorkspace.includes("category.count"),
+  "Evidence context must remain available through authorized disclosure without invented or empty counts.",
 );
 assert.ok(
   alpha.includes("UnderstandingDisclosure") &&

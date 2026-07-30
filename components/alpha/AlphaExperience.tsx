@@ -30,7 +30,6 @@ import {
 import { useRouter } from "next/navigation";
 import {
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -69,6 +68,8 @@ import {
 } from "./AlphaSemantic";
 import {
   classifyTruthfulLearningOutcome,
+  understandingSupportState,
+  visibleUnderstandingDelta,
   type AuthorizedLearningSnapshot,
 } from "./classifyTeachDiscoveryLearning";
 import UnderstandingDisclosure from "./UnderstandingDisclosure";
@@ -105,6 +106,36 @@ function boundedCurrentAnswer(synthesis: string): string {
   return sentenceEnd === undefined
     ? synthesis
     : synthesis.slice(0, sentenceEnd + 1);
+}
+
+function boundedSentences(text: string, maximum: number): string {
+  const sentences = text.match(/.*?[.!?](?=\s|$)/g);
+  return sentences?.slice(0, maximum).join(" ").trim() || text.trim();
+}
+
+function conciseAuthorizedUnderstanding(
+  understanding: AlphaFixture["understanding"],
+): string {
+  const sentences = [
+    boundedSentences(understanding.synthesis, 2),
+    boundedCurrentAnswer(understanding.strongestExplanation),
+    boundedCurrentAnswer(understanding.explanation),
+    boundedCurrentAnswer(understanding.whyItMatters),
+  ].filter(
+    (sentence, index, all) =>
+      sentence.trim().length > 0 &&
+      !sentence.trim().toLowerCase().startsWith("no additional ") &&
+      !all.slice(0, index).some((candidate) =>
+        candidate.trim().toLowerCase().includes(sentence.trim().toLowerCase()),
+      ),
+  );
+  const selected: string[] = [];
+  for (const sentence of sentences) {
+    const candidate = [...selected, sentence].join(" ");
+    if (candidate.split(/\s+/).filter(Boolean).length > 100) break;
+    selected.push(sentence);
+  }
+  return selected.join(" ");
 }
 
 const sceneLabels: Record<AlphaScene, { label: string; description: string }> = {
@@ -1282,15 +1313,18 @@ function HostedUnderstandingWorkspace({
   const basis = understanding.beliefBasis;
   const request = understanding.evidenceRequestDisclosure?.request;
   const currentAnswer = boundedCurrentAnswer(understanding.synthesis);
-  const [teachOpen, setTeachOpen] = useState(false);
+  const conciseUnderstanding = conciseAuthorizedUnderstanding(understanding);
+  const currentSupport = understandingSupportState(
+    understanding.confidence.qualitative,
+  );
   const [learningFeedback, setLearningFeedback] =
     useState<TeachDiscoveryLearningFeedback | null>(null);
-  const [drawerCycle, setDrawerCycle] = useState(0);
+  const [changeEmphasized, setChangeEmphasized] = useState(false);
   const [refreshRequested, setRefreshRequested] = useState(false);
   const [refreshObserved, setRefreshObserved] = useState(false);
   const [isRefreshing, startRefresh] = useTransition();
-  const previousFocus = useRef<HTMLElement | null>(null);
   const beforeLearningSnapshot = useRef<AuthorizedLearningSnapshot | null>(null);
+  const beforeSupportState = useRef(currentSupport);
   const pendingEvidenceResult = useRef<TeachDiscoveryEvidenceResult | null>(null);
   const latestRevision =
     understanding.changeDisclosure?.changes[0]?.occurredAt ?? null;
@@ -1298,40 +1332,21 @@ function HostedUnderstandingWorkspace({
     ? `Updated ${latestRevision.slice(0, 10)}`
     : null;
   const operational = experience.organization.id.startsWith("onb-dev-");
-  const teachDiscovery = () => {
-    if (!operational) return;
-    previousFocus.current =
-      document.activeElement instanceof HTMLElement
-        ? document.activeElement
-        : null;
-    window.history.pushState(
-      {
-        ...window.history.state,
-        discoveryTeachOpen: true,
-      },
-      "",
-      window.location.href,
-    );
-    setTeachOpen(true);
+  const viewWhatChanged = () => {
+    const details = document.getElementById("understanding-details");
+    const trigger = Array.from(
+      details?.querySelectorAll<HTMLButtonElement>("button") ?? [],
+    ).find((button) => button.textContent?.includes("What changed"));
+    trigger?.click();
+    details?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-  const finishClosingTeachDiscovery = useCallback(() => {
-    setTeachOpen(false);
-    setLearningFeedback(null);
-    window.requestAnimationFrame(() => previousFocus.current?.focus());
-  }, []);
-  const closeTeachDiscovery = useCallback(() => {
-    if (window.history.state?.discoveryTeachOpen) {
-      window.history.back();
-      return;
-    }
-    finishClosingTeachDiscovery();
-  }, [finishClosingTeachDiscovery]);
   const evidenceProcessed = (result: TeachDiscoveryEvidenceResult) => {
     if (result.outcome === "underdetermined") {
       const nextEvidence = result.understanding.nextEvidence[0] ?? null;
       setLearningFeedback({
         outcome: "underdetermined",
         changedFields: [],
+        supportStateChange: null,
         currentUnderstanding: currentAnswer,
         uncertainty:
           result.understanding.uncertainties[0] ??
@@ -1354,6 +1369,7 @@ function HostedUnderstandingWorkspace({
       return;
     }
     beforeLearningSnapshot.current = authorizedLearningSnapshot(understanding);
+    beforeSupportState.current = currentSupport;
     pendingEvidenceResult.current = result;
     setRefreshRequested(true);
     setRefreshObserved(false);
@@ -1385,6 +1401,13 @@ function HostedUnderstandingWorkspace({
     setLearningFeedback({
       outcome: classification.outcome,
       changedFields: classification.changedFields,
+      supportStateChange:
+        beforeSupportState.current === currentSupport
+          ? null
+          : {
+              before: beforeSupportState.current,
+              after: currentSupport,
+            },
       currentUnderstanding: boundedCurrentAnswer(understanding.synthesis),
       uncertainty,
       nextEvidence: processedNextEvidence
@@ -1406,47 +1429,21 @@ function HostedUnderstandingWorkspace({
     setRefreshRequested(false);
     setRefreshObserved(false);
   }, [
+    currentSupport,
     isRefreshing,
     refreshObserved,
     refreshRequested,
     understanding,
   ]);
   useEffect(() => {
-    if (!teachOpen) return;
-    const closeOnHistoryBack = () => finishClosingTeachDiscovery();
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && !refreshRequested) closeTeachDiscovery();
-    };
-    window.addEventListener("popstate", closeOnHistoryBack);
-    window.addEventListener("keydown", closeOnEscape);
-    return () => {
-      window.removeEventListener("popstate", closeOnHistoryBack);
-      window.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [
-    closeTeachDiscovery,
-    finishClosingTeachDiscovery,
-    refreshRequested,
-    teachOpen,
-  ]);
-  const trapDrawerFocus = (event: React.KeyboardEvent<HTMLElement>) => {
-    if (event.key !== "Tab") return;
-    const focusable = Array.from(
-      event.currentTarget.querySelectorAll<HTMLElement>(
-        'button:not(:disabled), input:not(:disabled), textarea:not(:disabled), [href], [tabindex]:not([tabindex="-1"])',
-      ),
-    ).filter((element) => !element.hidden);
-    if (!focusable.length) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
-  };
+    if (!learningFeedback) return;
+    setChangeEmphasized(true);
+    const timer = window.setTimeout(() => setChangeEmphasized(false), 4500);
+    return () => window.clearTimeout(timer);
+  }, [learningFeedback]);
+  const latestChange = learningFeedback
+    ? visibleUnderstandingDelta(learningFeedback)
+    : null;
   const disclosureDetails = [
     ["why", "Why this matters", understanding.whyItMatters, "green"],
     ["strongest", "Current explanation", understanding.strongestExplanation, "violet"],
@@ -1493,9 +1490,43 @@ function HostedUnderstandingWorkspace({
                   </span>
                   <div>
                     <h2 id="current-understanding-title">Discovery’s Current Understanding</h2>
-                    <p className={styles.workspaceLead}>{currentAnswer}</p>
+                    <p className={styles.workspaceLead}>{conciseUnderstanding}</p>
+                    <p className={styles.currentSupport}>
+                      <span>Current support</span>
+                      <strong>{currentSupport}</strong>
+                    </p>
                   </div>
                 </section>
+
+                {latestChange ? (
+                  <section
+                    className={`${styles.workspaceSection} ${styles.latestChange} ${
+                      changeEmphasized ? styles.latestChangeEmphasized : ""
+                    }`}
+                    aria-labelledby="latest-change-title"
+                    aria-live="polite"
+                  >
+                    <span className={`${styles.workspaceSectionIcon} ${styles.tone_green}`}>
+                      <GitBranch size={21} aria-hidden="true" />
+                    </span>
+                    <div>
+                      <div className={styles.latestChangeHeading}>
+                        <h2 id="latest-change-title">Latest Change</h2>
+                        {changeEmphasized ? <span>Updated</span> : null}
+                      </div>
+                      <strong>{latestChange.headline}</strong>
+                      <p>{latestChange.detail}</p>
+                      {learningFeedback?.supportStateChange ? (
+                        <p>
+                          Current support:{" "}
+                          <b>{learningFeedback.supportStateChange.before}</b>
+                          {" → "}
+                          <b>{learningFeedback.supportStateChange.after}</b>
+                        </p>
+                      ) : null}
+                    </div>
+                  </section>
+                ) : null}
 
                 <section className={styles.workspaceSection} aria-labelledby="why-understanding-title">
                   <span className={`${styles.workspaceSectionIcon} ${styles.tone_green}`}>
@@ -1503,12 +1534,21 @@ function HostedUnderstandingWorkspace({
                   </span>
                   <div>
                     <h2 id="why-understanding-title">Why Discovery Believes This</h2>
-                    <p>{basis?.summaryExplanation ?? understanding.explanation}</p>
                     {basis?.broaderSupport.length ? (
                       <ul>
-                        {basis.broaderSupport.slice(0, 3).map((item) => <li key={item}>{item}</li>)}
+                        {basis.broaderSupport
+                          .slice(0, 3)
+                          .map((item) => (
+                            <li key={item}>{boundedCurrentAnswer(item)}</li>
+                          ))}
                       </ul>
-                    ) : null}
+                    ) : (
+                      <p>
+                        {boundedCurrentAnswer(
+                          basis?.summaryExplanation ?? understanding.explanation,
+                        )}
+                      </p>
+                    )}
                     {basis ? trigger : null}
                   </div>
                 </section>
@@ -1523,7 +1563,11 @@ function HostedUnderstandingWorkspace({
                       {(basis?.uncertainty.length
                         ? basis.uncertainty
                         : [understanding.primaryUnknown]
-                      ).slice(0, 3).map((item) => <li key={item}>{item}</li>)}
+                      )
+                        .slice(0, 3)
+                        .map((item) => (
+                          <li key={item}>{boundedCurrentAnswer(item)}</li>
+                        ))}
                     </ul>
                   </div>
                 </section>
@@ -1533,15 +1577,10 @@ function HostedUnderstandingWorkspace({
                     <TrendingUp size={21} aria-hidden="true" />
                   </span>
                   <div>
-                    <h2 id="improve-understanding-title">Improve This Understanding</h2>
+                    <h2 id="improve-understanding-title">Next Best Improvement</h2>
                     {request ? (
                       <>
                         <strong>{request.question}</strong>
-                        <p>
-                          {request.rationale ??
-                            basis?.nextInquiry?.scopeLabel ??
-                            "This is the next authorized learning opportunity."}
-                        </p>
                         {request.expectedConfidenceGain !== null ? (
                           <small>
                             Estimated confidence-gain signal: {request.expectedConfidenceGain} points on Discovery’s existing scale.
@@ -1557,7 +1596,37 @@ function HostedUnderstandingWorkspace({
                   </div>
                 </section>
 
-                <section className={styles.workspaceDisclosure} aria-label="Understanding details">
+                {operational ? (
+                  <DiscoveryOnboardingExperience
+                    embedded
+                    inlineComposer
+                    initialOrganizationId={experience.organization.id}
+                    initialQuestion={understanding.originalQuestion}
+                    initialCompany={experience.organization.name}
+                    processing={refreshRequested}
+                    learningFeedback={learningFeedback}
+                    onSubmissionStarted={() => setLearningFeedback(null)}
+                    onEvidenceProcessed={evidenceProcessed}
+                    onViewWhatChanged={viewWhatChanged}
+                  />
+                ) : (
+                  <section
+                    className={styles.teachDiscoveryBar}
+                    aria-labelledby="teach-discovery-title"
+                  >
+                    <span className={styles.teachMark} aria-hidden="true">✦</span>
+                    <div>
+                      <h2 id="teach-discovery-title">Teach Discovery something new…</h2>
+                      <p>This organization remains read-only.</p>
+                    </div>
+                  </section>
+                )}
+
+                <section
+                  id="understanding-details"
+                  className={styles.workspaceDisclosure}
+                  aria-label="Understanding details"
+                >
                   <h2>Explore the full understanding</h2>
                   <div>
                     {understanding.changeDisclosure ? changeTrigger : null}
@@ -1569,53 +1638,13 @@ function HostedUnderstandingWorkspace({
                 {changeDisclosure}
                 {evidenceRequestDisclosure}
                 {fullSynthesisDisclosure}
-
-                <section className={styles.teachDiscoveryBar} aria-labelledby="teach-discovery-title">
-                  <span className={styles.teachMark} aria-hidden="true">✦</span>
-                  <div>
-                    <h2 id="teach-discovery-title">Teach Discovery something new…</h2>
-                    <p>Add notes, paste text, upload a supported file, or share an observation.</p>
-                  </div>
-                  <Action onClick={teachDiscovery} disabled={!operational}>
-                    Teach Discovery
-                  </Action>
-                  {!operational ? (
-                    <small>This organization remains read-only.</small>
-                  ) : null}
-                </section>
               </div>
 
               <aside className={styles.workspaceContext} aria-label="Understanding context">
                 <section>
-                  <h2>Confidence</h2>
-                  <strong>
-                    {understanding.confidence.qualitative ?? "Authority-qualified"}
-                  </strong>
-                  <p>{understanding.confidence.limitation}</p>
-                </section>
-                <section>
-                  <h2>Next Best Improvement</h2>
-                  <strong>{request?.question ?? "No additional improvement is currently authorized."}</strong>
-                  {operational && request ? (
-                    <button type="button" onClick={teachDiscovery}>
-                      Start this improvement <ArrowRight size={15} aria-hidden="true" />
-                    </button>
-                  ) : null}
-                </section>
-                <section>
-                  <h2>Evidence Basis</h2>
-                  {basis?.evidenceCategories.length ? (
-                    <ul>
-                      {basis.evidenceCategories.map((category) => (
-                        <li key={category.role}>
-                          <span>{category.role === "supports" ? "Supporting" : category.role === "opposes" ? "Opposing" : "Shared"}</span>
-                          <strong>{category.count}</strong>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p>No authorized evidence-role counts are available.</p>
-                  )}
+                  <h2>Current Support</h2>
+                  <strong>{currentSupport}</strong>
+                  <p>No unsupported percentage is shown.</p>
                 </section>
                 <section className={styles.workspaceStewardship}>
                   <ShieldCheck size={19} aria-hidden="true" />
@@ -1629,57 +1658,6 @@ function HostedUnderstandingWorkspace({
           )}
         </UnderstandingDisclosure>
       </div>
-      {teachOpen ? (
-        <div className={styles.teachOverlay}>
-          <button
-            type="button"
-            className={styles.teachOverlayBackdrop}
-            aria-label="Close Teach Discovery"
-            disabled={refreshRequested}
-            onClick={closeTeachDiscovery}
-          />
-          <section
-            className={styles.teachDrawer}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="teach-drawer-title"
-            onKeyDown={trapDrawerFocus}
-          >
-            <header>
-              <div>
-                <Eyebrow>Current understanding</Eyebrow>
-                <h2 id="teach-drawer-title">Teach Discovery</h2>
-                <p>{understanding.originalQuestion}</p>
-              </div>
-              <button
-                type="button"
-                autoFocus
-                aria-label="Close Teach Discovery"
-                disabled={refreshRequested}
-                onClick={closeTeachDiscovery}
-              >
-                <span aria-hidden="true">×</span>
-              </button>
-            </header>
-            <div className={styles.teachDrawerBody}>
-              <DiscoveryOnboardingExperience
-                key={drawerCycle}
-                embedded
-                initialOrganizationId={experience.organization.id}
-                initialQuestion={understanding.originalQuestion}
-                initialCompany={experience.organization.name}
-                learningFeedback={learningFeedback}
-                onEvidenceProcessed={evidenceProcessed}
-                onReturnToUnderstanding={closeTeachDiscovery}
-                onContinueTeaching={() => {
-                  setLearningFeedback(null);
-                  setDrawerCycle((current) => current + 1);
-                }}
-              />
-            </div>
-          </section>
-        </div>
-      ) : null}
     </SceneFrame>
   );
 }

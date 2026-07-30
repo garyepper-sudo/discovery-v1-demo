@@ -95,6 +95,10 @@ export type TeachDiscoveryEvidenceResult = {
 export type TeachDiscoveryLearningFeedback = {
   outcome: "changed" | "strengthened" | "underdetermined";
   changedFields: string[];
+  supportStateChange: {
+    before: "Emerging" | "Working" | "Supported";
+    after: "Emerging" | "Working" | "Supported";
+  } | null;
   currentUnderstanding: string;
   uncertainty: string | null;
   nextEvidence: {
@@ -293,8 +297,12 @@ export default function DiscoveryOnboardingExperience({
   initialQuestion = "",
   initialCompany = "",
   embedded = false,
+  inlineComposer = false,
+  processing = false,
   learningFeedback,
+  onSubmissionStarted,
   onEvidenceProcessed,
+  onViewWhatChanged,
   onReturnToUnderstanding,
   onContinueTeaching,
 }: {
@@ -302,14 +310,22 @@ export default function DiscoveryOnboardingExperience({
   initialQuestion?: string;
   initialCompany?: string;
   embedded?: boolean;
+  inlineComposer?: boolean;
+  processing?: boolean;
   learningFeedback?: TeachDiscoveryLearningFeedback | null;
+  onSubmissionStarted?: () => void;
   onEvidenceProcessed?: (result: TeachDiscoveryEvidenceResult) => void;
+  onViewWhatChanged?: () => void;
   onReturnToUnderstanding?: () => void;
   onContinueTeaching?: () => void;
 }) {
   const router = useRouter();
   const [stage, setStage] = useState<OnboardingStage>(
-    embedded && initialOrganizationId ? "organization-context" : "intent",
+    embedded && initialOrganizationId
+      ? inlineComposer
+        ? "evidence-plan"
+        : "organization-context"
+      : "intent",
   );
   const [organizationId, setOrganizationId] =
     useState<string | null>(initialOrganizationId ?? null);
@@ -341,6 +357,7 @@ export default function DiscoveryOnboardingExperience({
   const [submitting, setSubmitting] = useState(false);
   const [draftReady, setDraftReady] = useState(false);
   const stageHeadingRef = useRef<HTMLHeadingElement>(null);
+  const inlineInputRef = useRef<HTMLTextAreaElement>(null);
   const requestController = useRef<AbortController | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const recommendations = useMemo(
@@ -358,7 +375,7 @@ export default function DiscoveryOnboardingExperience({
           (initialOrganizationId &&
             draft.organizationId === initialOrganizationId);
         if (canRestore) {
-          setStage(draft.stage);
+          setStage(inlineComposer ? "evidence-plan" : draft.stage);
           setOrganizationId(draft.organizationId);
           setOnboardingRequestId(draft.onboardingRequestId);
           setQuestion(embedded ? initialQuestion : draft.question);
@@ -375,7 +392,9 @@ export default function DiscoveryOnboardingExperience({
           setCompany(initialCompany);
           setStage(
             embedded && initialOrganizationId
-              ? "organization-context"
+              ? inlineComposer
+                ? "evidence-plan"
+                : "organization-context"
               : "intent",
           );
         }
@@ -389,6 +408,7 @@ export default function DiscoveryOnboardingExperience({
     initialCompany,
     initialOrganizationId,
     initialQuestion,
+    inlineComposer,
   ]);
 
   useEffect(() => {
@@ -427,6 +447,12 @@ export default function DiscoveryOnboardingExperience({
       stageHeadingRef.current?.focus();
     }
   }, [stage]);
+
+  useEffect(() => {
+    if (inlineComposer && learningFeedback) {
+      inlineInputRef.current?.focus();
+    }
+  }, [inlineComposer, learningFeedback]);
 
   useEffect(
     () => () => {
@@ -545,6 +571,9 @@ export default function DiscoveryOnboardingExperience({
 
   async function runInvestigation() {
     if (submitting) return;
+    if (embedded) {
+      onSubmissionStarted?.();
+    }
     requestController.current?.abort();
     const controller = new AbortController();
     requestController.current = controller;
@@ -593,6 +622,7 @@ export default function DiscoveryOnboardingExperience({
         setOrganizationId(body.organizationId ?? organizationId);
         setResult(body.understanding);
         setUtility(body.utility ?? null);
+        setObservations("");
         setEvidenceSources([]);
         setSkippedEvidenceRoles([]);
         window.sessionStorage.setItem(
@@ -605,7 +635,7 @@ export default function DiscoveryOnboardingExperience({
             company,
             industry,
             website,
-            observations,
+            observations: "",
             evidenceSources: [],
             skippedEvidenceRoles: [],
           } satisfies OnboardingDraft),
@@ -639,6 +669,10 @@ export default function DiscoveryOnboardingExperience({
       setOrganizationId(body.organizationId);
       setResult(body.understanding);
       setUtility(body.utility);
+      if (embedded) {
+        setObservations("");
+        setStage("evidence-plan");
+      }
       setEvidenceSources([]);
       setSkippedEvidenceRoles([]);
       window.sessionStorage.setItem(
@@ -651,7 +685,7 @@ export default function DiscoveryOnboardingExperience({
           company,
           industry,
           website,
-          observations,
+          observations: embedded ? "" : observations,
           evidenceSources: [],
           skippedEvidenceRoles: [],
         } satisfies OnboardingDraft),
@@ -697,6 +731,211 @@ export default function DiscoveryOnboardingExperience({
   }
 
   const Root = embedded ? "div" : "main";
+  if (embedded && inlineComposer) {
+    const feedbackHeading =
+      learningFeedback?.outcome === "changed"
+        ? "Discovery learned something new."
+        : learningFeedback?.outcome === "strengthened"
+          ? "Discovery incorporated what you shared."
+          : learningFeedback?.outcome === "underdetermined"
+            ? "Discovery preserved what you shared, but still cannot distinguish among the leading explanations."
+            : null;
+    return (
+      <section
+        className={styles.inlineComposer}
+        aria-labelledby="inline-teach-discovery-title"
+      >
+        <div className={styles.inlineComposerHeading}>
+          <span className={styles.inlineComposerMark} aria-hidden="true">✦</span>
+          <div>
+            <h2 id="inline-teach-discovery-title">Teach Discovery something new…</h2>
+            <p>Add an observation, note, example, metric, conversation, or document.</p>
+          </div>
+        </div>
+
+        {learningFeedback && feedbackHeading ? (
+          <div className={styles.inlineLearningReceipt} aria-live="polite">
+            <strong>{feedbackHeading}</strong>
+            {learningFeedback.outcome === "strengthened" ? (
+              <p>The current understanding remains the strongest supported explanation.</p>
+            ) : null}
+            {learningFeedback.outcome === "changed" && onViewWhatChanged ? (
+              <button type="button" onClick={onViewWhatChanged}>
+                View what changed
+              </button>
+            ) : null}
+          </div>
+        ) : null}
+
+        <label className={styles.inlineWritingArea}>
+          <span>Information for Discovery</span>
+          <textarea
+            ref={inlineInputRef}
+            id="inline-teach-discovery-input"
+            value={observations}
+            disabled={submitting || processing}
+            onChange={(event) => {
+              setObservations(event.target.value);
+              setError(null);
+            }}
+            placeholder="Type or paste what you learned…"
+          />
+        </label>
+
+        {evidenceSources.length ? (
+          <ul className={styles.inlineSourceList} aria-label="Sources in this update">
+            {evidenceSources.map((item) => (
+              <li key={item.id}>
+                <span>{item.originalFilename ?? item.displayName}</span>
+                <div>
+                  <button
+                    type="button"
+                    disabled={submitting || processing}
+                    onClick={() =>
+                      openEvidenceEditor(
+                        item.sourceRole,
+                        item.displayName,
+                        item.ingestionMethod,
+                        item.id,
+                      )
+                    }
+                  >
+                    Replace
+                  </button>
+                  <button
+                    type="button"
+                    disabled={submitting || processing}
+                    onClick={() => removeEvidence(item.id)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
+        <input
+          ref={fileInputRef}
+          className={styles.srOnly}
+          type="file"
+          accept=".txt,.md,.markdown,.csv,text/plain,text/markdown,text/csv"
+          onChange={(event) => {
+            void handleFile(event.target.files?.[0]);
+            event.currentTarget.value = "";
+          }}
+        />
+
+        {evidenceEditor?.mode === "paste" ? (
+          <div className={styles.inlineSourceEditor}>
+            <label htmlFor="inline-pasted-evidence">
+              <span>Add another source</span>
+              <textarea
+                id="inline-pasted-evidence"
+                autoFocus
+                value={pastedEvidence}
+                onChange={(event) => {
+                  setPastedEvidence(event.target.value);
+                  setEvidenceError(null);
+                }}
+              />
+            </label>
+            <div>
+              <button
+                type="button"
+                onClick={() => {
+                  setEvidenceEditor(null);
+                  setEvidenceError(null);
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={() => void addEvidence(evidenceEditor, pastedEvidence)}
+              >
+                Add source
+              </button>
+            </div>
+          </div>
+        ) : null}
+
+        {evidenceError ? (
+          <p className={styles.inlineError} role="alert">{evidenceError}</p>
+        ) : null}
+        {error ? (
+          <div className={styles.inlineError} role="alert">
+            <strong>Discovery could not safely process this update.</strong>
+            <p>{error}</p>
+          </div>
+        ) : null}
+
+        <div className={styles.inlineComposerActions}>
+          <button
+            type="button"
+            disabled={
+              submitting ||
+              processing ||
+              evidenceSources.length >= ONBOARDING_EVIDENCE_MAX_FILES
+            }
+            onClick={() =>
+              openEvidenceEditor(
+                "additional-evidence",
+                "Additional evidence",
+                "file",
+              )
+            }
+          >
+            Upload file
+          </button>
+          <button
+            type="button"
+            disabled={
+              submitting ||
+              processing ||
+              evidenceSources.length >= ONBOARDING_EVIDENCE_MAX_FILES
+            }
+            onClick={() =>
+              openEvidenceEditor(
+                "additional-evidence",
+                "Additional evidence",
+                "paste",
+              )
+            }
+          >
+            Add source
+          </button>
+          <button type="button" disabled aria-disabled="true" title="Not available yet">
+            Connect source
+          </button>
+          <button
+            type="button"
+            className={styles.inlineSubmit}
+            disabled={
+              submitting ||
+              processing ||
+              (!observations.trim() && evidenceSources.length === 0)
+            }
+            onClick={runInvestigation}
+          >
+            Add to understanding
+          </button>
+        </div>
+        <p className={styles.inlineSourceHelp}>
+          Up to three sources per update. Supported: TXT, Markdown, CSV, and pasted text.
+        </p>
+
+        <div className={styles.inlineProcessing} aria-live="polite">
+          {submitting || processing ? (
+            <>
+              <strong>Reading what you shared…</strong>
+              <span>Connecting it to the current understanding and updating safely.</span>
+            </>
+          ) : null}
+        </div>
+      </section>
+    );
+  }
   if (embedded && learningFeedback) {
     const changed = learningFeedback.outcome === "changed";
     const strengthened = learningFeedback.outcome === "strengthened";

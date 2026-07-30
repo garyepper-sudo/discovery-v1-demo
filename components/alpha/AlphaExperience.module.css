@@ -1239,6 +1239,59 @@
   line-height: 1.55 !important;
 }
 
+.currentSupport {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  width: fit-content;
+  margin: 2px 0 0 !important;
+  padding: 5px 9px;
+  border-radius: 999px;
+  color: #4c4560 !important;
+  background: #f1eff8;
+  font-size: 11px !important;
+  line-height: 1.2 !important;
+}
+
+.currentSupport strong {
+  color: #35239b;
+}
+
+.latestChange {
+  margin: 8px 0;
+  border: 1px solid #dcd6fb;
+  border-radius: 14px;
+  background: #fbfaff;
+  transition:
+    background-color 320ms ease,
+    border-color 320ms ease,
+    box-shadow 320ms ease;
+}
+
+.latestChangeEmphasized {
+  border-color: #9d8cf2;
+  background: #f4f1ff;
+  box-shadow: 0 10px 26px rgba(65, 42, 169, 0.09);
+}
+
+.latestChangeHeading {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.latestChangeHeading > span {
+  padding: 4px 7px;
+  border-radius: 999px;
+  color: #3f2aab;
+  background: #e9e4ff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .workspaceSectionIcon {
   width: 42px;
   height: 42px;

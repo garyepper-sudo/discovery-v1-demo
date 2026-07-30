@@ -607,6 +607,180 @@
   border: 0 !important;
 }
 
+.inlineComposer {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+  border: 1px solid rgba(72, 57, 151, 0.18);
+  border-radius: 18px;
+  background: linear-gradient(135deg, #fff 0%, #faf9ff 100%);
+  box-shadow: 0 10px 32px rgba(35, 24, 90, 0.06);
+}
+
+.inlineComposerHeading {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.inlineComposerHeading h2 {
+  margin: 0;
+  color: #17132f;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.25rem;
+}
+
+.inlineComposerHeading p,
+.inlineSourceHelp {
+  margin: 4px 0 0;
+  color: #666079;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.inlineComposerMark {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  color: #4d32cb;
+  background: #f0edff;
+}
+
+.inlineWritingArea {
+  display: grid;
+  gap: 8px;
+  color: #302a4d;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.inlineWritingArea textarea,
+.inlineSourceEditor textarea {
+  width: 100%;
+  min-height: 112px;
+  resize: vertical;
+  padding: 14px;
+  border: 1px solid #d8d4e8;
+  border-radius: 12px;
+  color: #1d1835;
+  background: #fff;
+  font: inherit;
+  line-height: 1.55;
+}
+
+.inlineWritingArea textarea:focus,
+.inlineSourceEditor textarea:focus {
+  outline: 3px solid rgba(84, 54, 239, 0.14);
+  border-color: #6348dd;
+}
+
+.inlineSourceList {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.inlineSourceList li {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #f5f3fc;
+  color: #302a4d;
+  font-size: 0.82rem;
+}
+
+.inlineSourceList li > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inlineSourceList li div,
+.inlineComposerActions,
+.inlineSourceEditor > div {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.inlineComposer button,
+.inlineSourceEditor button {
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid #d8d4e8;
+  border-radius: 9px;
+  color: #332a66;
+  background: #fff;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.inlineComposer button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.inlineComposer .inlineSubmit {
+  margin-left: auto;
+  border-color: #3d27a8;
+  color: #fff;
+  background: #3d27a8;
+}
+
+.inlineSourceEditor {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 12px;
+  background: #f4f1ff;
+}
+
+.inlineSourceEditor label {
+  display: grid;
+  gap: 8px;
+  color: #302a4d;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.inlineLearningReceipt {
+  display: grid;
+  gap: 8px;
+  padding: 14px 16px;
+  border-left: 3px solid #5536ef;
+  border-radius: 10px;
+  color: #302a4d;
+  background: #f3f0ff;
+}
+
+.inlineLearningReceipt p,
+.inlineLearningReceipt ul {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.inlineProcessing {
+  min-height: 22px;
+  color: #4c417e;
+  font-size: 0.82rem;
+}
+
+.inlineProcessing span {
+  margin-left: 8px;
+  color: #77708d;
+}
+
 @keyframes reveal {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
@@ -666,6 +840,26 @@
 
   .actions button {
     width: 100%;
+  }
+
+  .inlineComposer {
+    padding: 16px;
+  }
+
+  .inlineComposerActions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .inlineComposer .inlineSubmit {
+    grid-column: 1 / -1;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .inlineSourceList li {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 
