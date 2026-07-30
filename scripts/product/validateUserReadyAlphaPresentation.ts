@@ -26,7 +26,11 @@ assert.ok(alpha.includes("Response submission is not yet supported"));
 assert.ok(alpha.includes("This sandbox does not submit or retain a response."));
 assert.ok(alpha.includes("Follow controls are not yet available"));
 assert.ok(alpha.includes("does not create notifications or change a saved follow state"));
-assert.ok(alpha.includes("Discovery sandbox · read-only"));
+assert.ok(
+  alpha.includes("This organization remains read-only.") &&
+    alpha.includes("disabled={!operational}"),
+  "The persistent workspace must disclose and enforce read-only teaching state.",
+);
 assert.ok(alpha.includes("Organization member"));
 assert.ok(alpha.includes("disabled={hosted}"));
 assert.ok(alpha.includes("hosted ? <DiscoveryMark compact />"));

@@ -273,17 +273,27 @@ function safeFailure(status: number, body: DiscoveryLabFailure | null): string {
 
 export default function DiscoveryOnboardingExperience({
   initialOrganizationId,
+  initialQuestion = "",
+  initialCompany = "",
+  embedded = false,
+  onUnderstandingUpdated,
 }: {
   initialOrganizationId?: string;
+  initialQuestion?: string;
+  initialCompany?: string;
+  embedded?: boolean;
+  onUnderstandingUpdated?: () => void;
 }) {
   const router = useRouter();
-  const [stage, setStage] = useState<OnboardingStage>("intent");
+  const [stage, setStage] = useState<OnboardingStage>(
+    embedded && initialOrganizationId ? "organization-context" : "intent",
+  );
   const [organizationId, setOrganizationId] =
     useState<string | null>(initialOrganizationId ?? null);
   const [onboardingRequestId, setOnboardingRequestId] =
     useState(() => crypto.randomUUID());
-  const [question, setQuestion] = useState("");
-  const [company, setCompany] = useState("");
+  const [question, setQuestion] = useState(initialQuestion);
+  const [company, setCompany] = useState(initialCompany);
   const [industry, setIndustry] = useState("");
   const [website, setWebsite] = useState("");
   const [observations, setObservations] = useState("");
@@ -328,8 +338,8 @@ export default function DiscoveryOnboardingExperience({
           setStage(draft.stage);
           setOrganizationId(draft.organizationId);
           setOnboardingRequestId(draft.onboardingRequestId);
-          setQuestion(draft.question);
-          setCompany(draft.company);
+          setQuestion(embedded ? initialQuestion : draft.question);
+          setCompany(embedded ? initialCompany : draft.company);
           setIndustry(draft.industry);
           setWebsite(draft.website);
           setObservations(draft.observations);
@@ -338,13 +348,25 @@ export default function DiscoveryOnboardingExperience({
         } else {
           window.sessionStorage.removeItem(draftStorageKey);
           setOrganizationId(initialOrganizationId ?? null);
+          setQuestion(initialQuestion);
+          setCompany(initialCompany);
+          setStage(
+            embedded && initialOrganizationId
+              ? "organization-context"
+              : "intent",
+          );
         }
       } catch {
         window.sessionStorage.removeItem(draftStorageKey);
       }
     }
     setDraftReady(true);
-  }, [initialOrganizationId]);
+  }, [
+    embedded,
+    initialCompany,
+    initialOrganizationId,
+    initialQuestion,
+  ]);
 
   useEffect(() => {
     if (!draftReady || stage === "processing" || stage === "first-understanding") {
@@ -578,6 +600,10 @@ export default function DiscoveryOnboardingExperience({
           skippedEvidenceRoles: [],
         } satisfies OnboardingDraft),
       );
+      if (embedded && onUnderstandingUpdated) {
+        onUnderstandingUpdated();
+        return;
+      }
       setStage("first-understanding");
     } catch (caught) {
       if (caught instanceof DOMException && caught.name === "AbortError") {
@@ -610,11 +636,14 @@ export default function DiscoveryOnboardingExperience({
     router.push(buildProductHref("/your-organization", organizationId));
   }
 
+  const Root = embedded ? "div" : "main";
   return (
-    <main className={`${alphaStyles.alphaRoot} ${styles.page}`}>
-      <QuietHeader helpLabel="About onboarding" />
+    <Root
+      className={`${alphaStyles.alphaRoot} ${styles.page} ${embedded ? styles.embedded : ""}`}
+    >
+      {!embedded ? <QuietHeader helpLabel="About onboarding" /> : null}
       <section className={styles.experience}>
-        <nav className={styles.progress} aria-label="Onboarding progress">
+        {!embedded ? <nav className={styles.progress} aria-label="Onboarding progress">
           {["Question", "Context", "Evidence", "Understanding"].map((label, index) => {
             const stageIndex = {
               intent: 0,
@@ -632,7 +661,7 @@ export default function DiscoveryOnboardingExperience({
               </span>
             );
           })}
-        </nav>
+        </nav> : null}
 
         {stage === "intent" ? (
           <section className={styles.stage}>
@@ -1005,12 +1034,21 @@ export default function DiscoveryOnboardingExperience({
           <section className={`${styles.stage} ${styles.processing}`} aria-live="polite">
             <span className={styles.processingMark} aria-hidden="true">✦</span>
             <Eyebrow tone="violet">Working with your evidence</Eyebrow>
-            <h1 ref={stageHeadingRef} tabIndex={-1}>Building an initial understanding</h1>
+            <h1 ref={stageHeadingRef} tabIndex={-1}>
+              {embedded ? "Updating this understanding" : "Building an initial understanding"}
+            </h1>
             <p className={styles.lead}>
               Discovery is looking only for patterns your current evidence can support.
             </p>
             <ol>
-              {processingSteps.map((step, index) => (
+              {(embedded
+                ? [
+                    "Reading what you shared",
+                    "Connecting it to existing evidence",
+                    "Updating Discovery’s understanding",
+                  ]
+                : processingSteps
+              ).map((step, index) => (
                 <li key={step}>
                   <span>{index + 1}</span>
                   {step}
@@ -1162,10 +1200,10 @@ export default function DiscoveryOnboardingExperience({
         ) : null}
       </section>
 
-      <footer className={styles.footer}>
+      {!embedded ? <footer className={styles.footer}>
         <span>Your evidence remains isolated to this organization.</span>
         <span>Discovery distinguishes what is supported from what remains unknown.</span>
-      </footer>
-    </main>
+      </footer> : null}
+    </Root>
   );
 }

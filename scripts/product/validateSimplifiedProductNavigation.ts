@@ -7,15 +7,20 @@ const route = readFileSync("app/(product)/your-organization/page.tsx", "utf8");
 
 for (const scene of ["home", "questions", "decisions", "history"]) {
   assert.ok(
-    alpha.includes(`scene: "${scene}"`) &&
-      viewModels.includes(`"${scene}"`),
-    `${scene} must be registered in primary and compatible scene contracts.`,
+    viewModels.includes(`"${scene}"`) &&
+      (scene === "home"
+        ? alpha.includes('scene: "home", label: "Understanding"')
+        : alpha.includes(`case "${scene}"`)),
+    `${scene} must remain registered in the active or compatible scene contracts.`,
   );
 }
 assert.ok(
-  alpha.includes("hosted ? primaryNavigation") &&
+  alpha.includes('label: "Understanding"') &&
+    alpha.includes(">Explore</span>") &&
+    alpha.includes(">Settings</span>") &&
+    alpha.includes("hosted ? primaryNavigation") &&
     alpha.includes("!hosted && journeyNavigation"),
-  "Hosted desktop and mobile navigation must use the simplified model.",
+  "Hosted navigation must use the persistent understanding workspace model.",
 );
 for (const legacy of [
   "ask",
@@ -56,7 +61,8 @@ assert.ok(
 console.log(JSON.stringify({
   validation: "simplified-product-navigation",
   result: "PASS",
-  primaryNavigation: ["Home", "Questions", "Decisions", "History"],
+  primaryNavigation: ["Understanding", "Explore", "Settings"],
+  unavailableNavigation: ["Explore", "Settings", "New Understanding"],
   legacyScenesRetained: 8,
   organizationIdentityPreserved: true,
   browserHistoryPreserved: true,

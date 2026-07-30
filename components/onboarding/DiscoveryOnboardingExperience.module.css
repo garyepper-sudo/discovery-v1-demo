@@ -5,6 +5,28 @@
     var(--alpha-canvas);
 }
 
+.embedded {
+  min-height: 0;
+  background: transparent;
+}
+
+.embedded .experience {
+  width: 100%;
+  padding: 0;
+}
+
+.embedded .stage {
+  width: 100%;
+}
+
+.embedded .stage h1 {
+  font-size: clamp(2rem, 4vw, 3.35rem);
+}
+
+.embedded .recommendations {
+  margin-top: 28px;
+}
+
 .page input,
 .page textarea {
   font: inherit;

@@ -30,9 +30,12 @@ import {
 import { useRouter } from "next/navigation";
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
+  useTransition,
   type ReactNode,
 } from "react";
 
@@ -65,6 +68,7 @@ import {
   Sparkline,
 } from "./AlphaSemantic";
 import UnderstandingDisclosure from "./UnderstandingDisclosure";
+import DiscoveryOnboardingExperience from "../onboarding/DiscoveryOnboardingExperience";
 import styles from "./AlphaExperience.module.css";
 
 const AlphaExperienceContext = createContext<{
@@ -116,10 +120,7 @@ const primaryNavigation: Array<{
   label: string;
   icon: typeof Home;
 }> = [
-  { scene: "home", label: "Home", icon: Home },
-  { scene: "questions", label: "Questions", icon: MessageCircleQuestion },
-  { scene: "decisions", label: "Decisions", icon: ListChecks },
-  { scene: "history", label: "History", icon: Clock3 },
+  { scene: "home", label: "Understanding", icon: Target },
 ];
 
 const journeyNavigation: Array<{
@@ -159,26 +160,37 @@ function AlphaSidebar({
   navigate: (scene: AlphaScene) => void;
 }) {
   const { experience, hosted, sessionControl } = useAlphaExperience();
+  const latestRevision =
+    experience.understanding.changeDisclosure?.changes[0]?.occurredAt ?? null;
   return (
-    <aside className={styles.sidebar}>
+    <aside className={`${styles.sidebar} ${hosted ? styles.workspaceSidebar : ""}`}>
       <DiscoveryMark />
       <nav aria-label="Alpha journey">
-        {(hosted ? primaryNavigation : []).map((item) => {
-          const Icon = item.icon;
-          return (
-            <button
-              key={item.scene}
-              type="button"
-              className={scene === item.scene ? styles.navActive : ""}
-              aria-current={scene === item.scene ? "page" : undefined}
-              onClick={() => navigate(item.scene)}
-            >
-              <Icon size={19} aria-hidden="true" />
-              <span>{item.label}</span>
+        {hosted ? (
+          <>
+            <button type="button" disabled title="New Understanding is not available in this sprint">
+              <Plus size={19} aria-hidden="true" />
+              <span>New Understanding</span>
             </button>
-          );
-        })}
-        {!hosted && (
+            <button
+              type="button"
+              className={styles.navActive}
+              aria-current="page"
+              onClick={() => navigate("home")}
+            >
+              <Target size={19} aria-hidden="true" />
+              <span>Understanding</span>
+            </button>
+            <button type="button" disabled title="Explore is planned for a future sprint">
+              <Search size={19} aria-hidden="true" />
+              <span>Explore</span>
+            </button>
+            <button type="button" disabled title="Settings are not available in this sprint">
+              <Settings size={19} aria-hidden="true" />
+              <span>Settings</span>
+            </button>
+          </>
+        ) : (
           <>
             <button
               type="button"
@@ -233,6 +245,28 @@ function AlphaSidebar({
           </button>
         ))}
       </nav>
+      {hosted && (
+        <section className={styles.activeUnderstandings} aria-labelledby="active-understandings-title">
+          <header>
+            <span id="active-understandings-title">Active Understandings</span>
+          </header>
+          <button type="button" className={styles.activeUnderstanding} onClick={() => navigate("home")}>
+            <span className={styles.understandingStatus} aria-hidden="true" />
+            <span>
+              <strong>{experience.understanding.originalQuestion}</strong>
+              <small>
+                {latestRevision
+                  ? `Updated ${latestRevision.slice(0, 10)}`
+                  : "Update time unavailable"}
+              </small>
+            </span>
+          </button>
+          <details>
+            <summary>Archived Understandings</summary>
+            <p>No archived understanding is available.</p>
+          </details>
+        </section>
+      )}
       {sessionControl && (
         <div className={styles.hostedSessionControl}>{sessionControl}</div>
       )}
@@ -257,7 +291,7 @@ function AlphaSidebar({
       </div>
       <p className={styles.sidebarPrivacy}>
         <ShieldCheck size={16} aria-hidden="true" />
-        {hosted ? "Discovery sandbox · read-only" : "Alpha prototype · deterministic fixture"}
+        {hosted ? "You decide what to share and what to explore." : "Alpha prototype · deterministic fixture"}
       </p>
       {!hosted && <LockPrototypeAction />}
     </aside>
@@ -1212,8 +1246,365 @@ function HistoryScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
   );
 }
 
+function HostedUnderstandingWorkspace({
+  navigate,
+}: {
+  navigate: (scene: AlphaScene) => void;
+}) {
+  const { experience } = useAlphaExperience();
+  const router = useRouter();
+  const understanding = experience.understanding;
+  const basis = understanding.beliefBasis;
+  const request = understanding.evidenceRequestDisclosure?.request;
+  const currentAnswer = boundedCurrentAnswer(understanding.synthesis);
+  const [teachOpen, setTeachOpen] = useState(false);
+  const [updateNotice, setUpdateNotice] = useState(false);
+  const [refreshRequested, setRefreshRequested] = useState(false);
+  const [refreshObserved, setRefreshObserved] = useState(false);
+  const [isRefreshing, startRefresh] = useTransition();
+  const previousFocus = useRef<HTMLElement | null>(null);
+  const latestRevision =
+    understanding.changeDisclosure?.changes[0]?.occurredAt ?? null;
+  const updatedLabel = latestRevision
+    ? `Updated ${latestRevision.slice(0, 10)}`
+    : null;
+  const operational = experience.organization.id.startsWith("onb-dev-");
+  const teachDiscovery = () => {
+    if (!operational) return;
+    previousFocus.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    window.history.pushState(
+      {
+        ...window.history.state,
+        discoveryTeachOpen: true,
+      },
+      "",
+      window.location.href,
+    );
+    setTeachOpen(true);
+  };
+  const finishClosingTeachDiscovery = useCallback(() => {
+    setTeachOpen(false);
+    window.requestAnimationFrame(() => previousFocus.current?.focus());
+  }, []);
+  const closeTeachDiscovery = useCallback(() => {
+    if (window.history.state?.discoveryTeachOpen) {
+      window.history.back();
+      return;
+    }
+    finishClosingTeachDiscovery();
+  }, [finishClosingTeachDiscovery]);
+  const understandingUpdated = () => {
+    setRefreshRequested(true);
+    setRefreshObserved(false);
+    startRefresh(() => router.refresh());
+  };
+  useEffect(() => {
+    if (refreshRequested && isRefreshing) setRefreshObserved(true);
+  }, [isRefreshing, refreshRequested]);
+  useEffect(() => {
+    if (!refreshRequested || !refreshObserved || isRefreshing) return;
+    setRefreshRequested(false);
+    setRefreshObserved(false);
+    closeTeachDiscovery();
+    setUpdateNotice(true);
+  }, [
+    closeTeachDiscovery,
+    isRefreshing,
+    refreshObserved,
+    refreshRequested,
+  ]);
+  useEffect(() => {
+    if (!updateNotice) return;
+    const timeout = window.setTimeout(() => setUpdateNotice(false), 6500);
+    return () => window.clearTimeout(timeout);
+  }, [updateNotice]);
+  useEffect(() => {
+    if (!teachOpen) return;
+    const closeOnHistoryBack = () => finishClosingTeachDiscovery();
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && !refreshRequested) closeTeachDiscovery();
+    };
+    window.addEventListener("popstate", closeOnHistoryBack);
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      window.removeEventListener("popstate", closeOnHistoryBack);
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [
+    closeTeachDiscovery,
+    finishClosingTeachDiscovery,
+    refreshRequested,
+    teachOpen,
+  ]);
+  const trapDrawerFocus = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (event.key !== "Tab") return;
+    const focusable = Array.from(
+      event.currentTarget.querySelectorAll<HTMLElement>(
+        'button:not(:disabled), input:not(:disabled), textarea:not(:disabled), [href], [tabindex]:not([tabindex="-1"])',
+      ),
+    ).filter((element) => !element.hidden);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+  const disclosureDetails = [
+    ["why", "Why this matters", understanding.whyItMatters, "green"],
+    ["strongest", "Current explanation", understanding.strongestExplanation, "violet"],
+    ["unknown", "Largest remaining unknown", understanding.primaryUnknown, "blue"],
+    ["contradiction", "Key contradiction", understanding.contradiction, "orange"],
+  ] as const;
+
+  return (
+    <SceneFrame scene="home" navigate={navigate}>
+      <MobileSceneHeader scene="home" navigate={navigate} />
+      <div className={styles.understandingWorkspace}>
+        <header className={styles.workspaceHeader}>
+          <Eyebrow>Living organizational understanding</Eyebrow>
+          <h1 data-scene-heading tabIndex={-1}>
+            {understanding.originalQuestion}
+          </h1>
+          <div className={styles.workspaceMetadata}>
+            {updatedLabel ? <span><Clock3 size={15} aria-hidden="true" />{updatedLabel}</span> : null}
+            <span><Sparkles size={15} aria-hidden="true" />Learning</span>
+          </div>
+        </header>
+        {updateNotice ? (
+          <div className={styles.understandingUpdateNotice} role="status">
+            <Check size={18} aria-hidden="true" />
+            <div>
+              <strong>Discovery finished reviewing what you shared.</strong>
+              <span>
+                The workspace now reflects every supported change to the
+                understanding, uncertainty, confidence boundary, and next improvement.
+              </span>
+            </div>
+          </div>
+        ) : null}
+
+        <UnderstandingDisclosure
+          basis={basis}
+          changeDisclosure={understanding.changeDisclosure}
+          evidenceRequestDisclosure={understanding.evidenceRequestDisclosure}
+          fullSynthesis={understanding.synthesis}
+          details={disclosureDetails}
+        >
+          {({
+            trigger,
+            disclosure,
+            changeTrigger,
+            changeDisclosure,
+            evidenceRequestTrigger,
+            evidenceRequestDisclosure,
+            fullSynthesisTrigger,
+            fullSynthesisDisclosure,
+          }) => (
+            <div className={styles.workspaceColumns}>
+              <div className={styles.workspaceCanvas}>
+                <section className={styles.workspaceSection} aria-labelledby="current-understanding-title">
+                  <span className={`${styles.workspaceSectionIcon} ${styles.tone_violet}`}>
+                    <Sparkles size={21} aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h2 id="current-understanding-title">Discovery’s Current Understanding</h2>
+                    <p className={styles.workspaceLead}>{currentAnswer}</p>
+                  </div>
+                </section>
+
+                <section className={styles.workspaceSection} aria-labelledby="why-understanding-title">
+                  <span className={`${styles.workspaceSectionIcon} ${styles.tone_green}`}>
+                    <BookOpen size={21} aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h2 id="why-understanding-title">Why Discovery Believes This</h2>
+                    <p>{basis?.summaryExplanation ?? understanding.explanation}</p>
+                    {basis?.broaderSupport.length ? (
+                      <ul>
+                        {basis.broaderSupport.slice(0, 3).map((item) => <li key={item}>{item}</li>)}
+                      </ul>
+                    ) : null}
+                    {basis ? trigger : null}
+                  </div>
+                </section>
+
+                <section className={styles.workspaceSection} aria-labelledby="uncertainty-title">
+                  <span className={`${styles.workspaceSectionIcon} ${styles.tone_blue}`}>
+                    <CircleHelp size={21} aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h2 id="uncertainty-title">Discovery Still Needs To Understand</h2>
+                    <ul>
+                      {(basis?.uncertainty.length
+                        ? basis.uncertainty
+                        : [understanding.primaryUnknown]
+                      ).slice(0, 3).map((item) => <li key={item}>{item}</li>)}
+                    </ul>
+                  </div>
+                </section>
+
+                <section className={styles.workspaceSection} aria-labelledby="improve-understanding-title">
+                  <span className={`${styles.workspaceSectionIcon} ${styles.tone_violet}`}>
+                    <TrendingUp size={21} aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h2 id="improve-understanding-title">Improve This Understanding</h2>
+                    {request ? (
+                      <>
+                        <strong>{request.question}</strong>
+                        <p>
+                          {request.rationale ??
+                            basis?.nextInquiry?.scopeLabel ??
+                            "This is the next authorized learning opportunity."}
+                        </p>
+                        {request.expectedConfidenceGain !== null ? (
+                          <small>
+                            Estimated confidence-gain signal: {request.expectedConfidenceGain} points on Discovery’s existing scale.
+                          </small>
+                        ) : null}
+                      </>
+                    ) : (
+                      <p>No additional learning opportunity is currently authorized.</p>
+                    )}
+                    {understanding.evidenceRequestDisclosure
+                      ? evidenceRequestTrigger
+                      : null}
+                  </div>
+                </section>
+
+                <section className={styles.workspaceDisclosure} aria-label="Understanding details">
+                  <h2>Explore the full understanding</h2>
+                  <div>
+                    {understanding.changeDisclosure ? changeTrigger : null}
+                    {fullSynthesisTrigger}
+                  </div>
+                </section>
+
+                {disclosure}
+                {changeDisclosure}
+                {evidenceRequestDisclosure}
+                {fullSynthesisDisclosure}
+
+                <section className={styles.teachDiscoveryBar} aria-labelledby="teach-discovery-title">
+                  <span className={styles.teachMark} aria-hidden="true">✦</span>
+                  <div>
+                    <h2 id="teach-discovery-title">Teach Discovery something new…</h2>
+                    <p>Add notes, paste text, upload a supported file, or share an observation.</p>
+                  </div>
+                  <Action onClick={teachDiscovery} disabled={!operational}>
+                    Teach Discovery
+                  </Action>
+                  {!operational ? (
+                    <small>This organization remains read-only.</small>
+                  ) : null}
+                </section>
+              </div>
+
+              <aside className={styles.workspaceContext} aria-label="Understanding context">
+                <section>
+                  <h2>Confidence</h2>
+                  <strong>
+                    {understanding.confidence.qualitative ?? "Authority-qualified"}
+                  </strong>
+                  <p>{understanding.confidence.limitation}</p>
+                </section>
+                <section>
+                  <h2>Next Best Improvement</h2>
+                  <strong>{request?.question ?? "No additional improvement is currently authorized."}</strong>
+                  {operational && request ? (
+                    <button type="button" onClick={teachDiscovery}>
+                      Start this improvement <ArrowRight size={15} aria-hidden="true" />
+                    </button>
+                  ) : null}
+                </section>
+                <section>
+                  <h2>Evidence Basis</h2>
+                  {basis?.evidenceCategories.length ? (
+                    <ul>
+                      {basis.evidenceCategories.map((category) => (
+                        <li key={category.role}>
+                          <span>{category.role === "supports" ? "Supporting" : category.role === "opposes" ? "Opposing" : "Shared"}</span>
+                          <strong>{category.count}</strong>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>No authorized evidence-role counts are available.</p>
+                  )}
+                </section>
+                <section className={styles.workspaceStewardship}>
+                  <ShieldCheck size={19} aria-hidden="true" />
+                  <div>
+                    <h2>You’re in control</h2>
+                    <p>You decide what to share and what to explore.</p>
+                  </div>
+                </section>
+              </aside>
+            </div>
+          )}
+        </UnderstandingDisclosure>
+      </div>
+      {teachOpen ? (
+        <div className={styles.teachOverlay}>
+          <button
+            type="button"
+            className={styles.teachOverlayBackdrop}
+            aria-label="Close Teach Discovery"
+            disabled={refreshRequested}
+            onClick={closeTeachDiscovery}
+          />
+          <section
+            className={styles.teachDrawer}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="teach-drawer-title"
+            onKeyDown={trapDrawerFocus}
+          >
+            <header>
+              <div>
+                <Eyebrow>Current understanding</Eyebrow>
+                <h2 id="teach-drawer-title">Teach Discovery</h2>
+                <p>{understanding.originalQuestion}</p>
+              </div>
+              <button
+                type="button"
+                autoFocus
+                aria-label="Close Teach Discovery"
+                disabled={refreshRequested}
+                onClick={closeTeachDiscovery}
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </header>
+            <div className={styles.teachDrawerBody}>
+              <DiscoveryOnboardingExperience
+                embedded
+                initialOrganizationId={experience.organization.id}
+                initialQuestion={understanding.originalQuestion}
+                initialCompany={experience.organization.name}
+                onUnderstandingUpdated={understandingUpdated}
+              />
+            </div>
+          </section>
+        </div>
+      ) : null}
+    </SceneFrame>
+  );
+}
+
 function HomeScene({ navigate }: { navigate: (scene: AlphaScene) => void }) {
   const { experience, hosted } = useAlphaExperience();
+  if (hosted) {
+    return <HostedUnderstandingWorkspace navigate={navigate} />;
+  }
   const currentAnswer = boundedCurrentAnswer(experience.understanding.synthesis);
   const nextLearning =
     experience.sources[0]?.title ??
@@ -1317,8 +1708,9 @@ function SceneFrame({
   navigate: (scene: AlphaScene) => void;
   children: React.ReactNode;
 }) {
+  const { hosted } = useAlphaExperience();
   return (
-    <div className={styles.appFrame}>
+    <div className={`${styles.appFrame} ${hosted ? styles.workspaceFrame : ""}`}>
       <a className={styles.skipLink} href="#alpha-main">Skip to main content</a>
       <AlphaSidebar scene={scene} navigate={navigate} />
       <main id="alpha-main" className={styles.appMain}>{children}</main>

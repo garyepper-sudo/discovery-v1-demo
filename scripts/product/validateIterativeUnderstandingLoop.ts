@@ -11,19 +11,29 @@ const onboarding = readFileSync(
   "components/onboarding/DiscoveryOnboardingExperience.tsx",
   "utf8",
 );
+const hostedWorkspace = alpha.slice(
+  alpha.indexOf("function HostedUnderstandingWorkspace"),
+  alpha.indexOf("function HomeScene"),
+);
 
 assert.ok(
   alpha.includes('experience.organization.id.startsWith("onb-dev-")'),
   "Active evidence addition must remain isolated to onboarding sandboxes.",
 );
 assert.ok(
-  alpha.includes('mode: "improve"') &&
-    alpha.includes("router.push(`/onboarding?${search.toString()}`)"),
-  "Active evidence addition must return to the canonical onboarding evidence experience.",
+  alpha.includes("<DiscoveryOnboardingExperience") &&
+    alpha.includes("embedded") &&
+    alpha.includes("onUnderstandingUpdated={understandingUpdated}"),
+  "Active evidence addition must embed the canonical onboarding evidence experience.",
 );
 assert.ok(
-  alpha.includes("organizationId: experience.organization.id"),
+  alpha.includes("initialOrganizationId={experience.organization.id}"),
   "Evidence addition must target the exact existing organization.",
+);
+assert.equal(
+  hostedWorkspace.includes("router.push(`/onboarding?${search.toString()}`)"),
+  false,
+  "The active understanding loop must not leave the workspace.",
 );
 assert.ok(
   route.includes("isOnboardingTestOrganizationId(organizationId)") &&
