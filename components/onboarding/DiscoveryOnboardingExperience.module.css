@@ -27,6 +27,31 @@
   margin-top: 28px;
 }
 
+.learningFeedback {
+  display: grid;
+  gap: 18px;
+}
+
+.learningFeedback .lead {
+  margin-top: 0;
+}
+
+.learningOutcomePanel {
+  display: grid;
+  gap: 9px;
+}
+
+.learningOutcomePanel p,
+.learningOutcomePanel ul {
+  margin: 0;
+  color: var(--alpha-body);
+  line-height: 1.6;
+}
+
+.learningOutcomePanel ul {
+  padding-left: 20px;
+}
+
 .page input,
 .page textarea {
   font: inherit;

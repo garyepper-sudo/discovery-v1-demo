@@ -67,8 +67,15 @@ import {
   SemanticCallout,
   Sparkline,
 } from "./AlphaSemantic";
+import {
+  classifyTruthfulLearningOutcome,
+  type AuthorizedLearningSnapshot,
+} from "./classifyTeachDiscoveryLearning";
 import UnderstandingDisclosure from "./UnderstandingDisclosure";
-import DiscoveryOnboardingExperience from "../onboarding/DiscoveryOnboardingExperience";
+import DiscoveryOnboardingExperience, {
+  type TeachDiscoveryEvidenceResult,
+  type TeachDiscoveryLearningFeedback,
+} from "../onboarding/DiscoveryOnboardingExperience";
 import styles from "./AlphaExperience.module.css";
 
 const AlphaExperienceContext = createContext<{
@@ -150,6 +157,24 @@ function nextSourceState(state: SourceViewModel["state"]): SourceViewModel["stat
   if (state === "Included") return "Limited";
   if (state === "Limited") return "Excluded";
   return "Included";
+}
+
+function authorizedLearningSnapshot(
+  understanding: AlphaFixture["understanding"],
+): AuthorizedLearningSnapshot {
+  return {
+    currentUnderstanding: understanding.synthesis,
+    confidence: JSON.stringify(understanding.confidence),
+    uncertainty: JSON.stringify(
+      understanding.beliefBasis?.uncertainty ?? [understanding.primaryUnknown],
+    ),
+    evidenceBasis: JSON.stringify(
+      understanding.beliefBasis?.evidenceCategories ?? [],
+    ),
+    nextImprovement: JSON.stringify(
+      understanding.evidenceRequestDisclosure?.request ?? null,
+    ),
+  };
 }
 
 function AlphaSidebar({
@@ -1258,11 +1283,15 @@ function HostedUnderstandingWorkspace({
   const request = understanding.evidenceRequestDisclosure?.request;
   const currentAnswer = boundedCurrentAnswer(understanding.synthesis);
   const [teachOpen, setTeachOpen] = useState(false);
-  const [updateNotice, setUpdateNotice] = useState(false);
+  const [learningFeedback, setLearningFeedback] =
+    useState<TeachDiscoveryLearningFeedback | null>(null);
+  const [drawerCycle, setDrawerCycle] = useState(0);
   const [refreshRequested, setRefreshRequested] = useState(false);
   const [refreshObserved, setRefreshObserved] = useState(false);
   const [isRefreshing, startRefresh] = useTransition();
   const previousFocus = useRef<HTMLElement | null>(null);
+  const beforeLearningSnapshot = useRef<AuthorizedLearningSnapshot | null>(null);
+  const pendingEvidenceResult = useRef<TeachDiscoveryEvidenceResult | null>(null);
   const latestRevision =
     understanding.changeDisclosure?.changes[0]?.occurredAt ?? null;
   const updatedLabel = latestRevision
@@ -1287,6 +1316,7 @@ function HostedUnderstandingWorkspace({
   };
   const finishClosingTeachDiscovery = useCallback(() => {
     setTeachOpen(false);
+    setLearningFeedback(null);
     window.requestAnimationFrame(() => previousFocus.current?.focus());
   }, []);
   const closeTeachDiscovery = useCallback(() => {
@@ -1296,7 +1326,35 @@ function HostedUnderstandingWorkspace({
     }
     finishClosingTeachDiscovery();
   }, [finishClosingTeachDiscovery]);
-  const understandingUpdated = () => {
+  const evidenceProcessed = (result: TeachDiscoveryEvidenceResult) => {
+    if (result.outcome === "underdetermined") {
+      const nextEvidence = result.understanding.nextEvidence[0] ?? null;
+      setLearningFeedback({
+        outcome: "underdetermined",
+        changedFields: [],
+        currentUnderstanding: currentAnswer,
+        uncertainty:
+          result.understanding.uncertainties[0] ??
+          understanding.primaryUnknown ??
+          null,
+        nextEvidence: nextEvidence
+          ? {
+              label: nextEvidence.label,
+              whyItHelps: nextEvidence.whyItHelps,
+            }
+          : request
+            ? {
+                label: request.question,
+                whyItHelps:
+                  request.rationale ??
+                  "This is the next authorized learning opportunity.",
+              }
+            : null,
+      });
+      return;
+    }
+    beforeLearningSnapshot.current = authorizedLearningSnapshot(understanding);
+    pendingEvidenceResult.current = result;
     setRefreshRequested(true);
     setRefreshObserved(false);
     startRefresh(() => router.refresh());
@@ -1306,21 +1364,53 @@ function HostedUnderstandingWorkspace({
   }, [isRefreshing, refreshRequested]);
   useEffect(() => {
     if (!refreshRequested || !refreshObserved || isRefreshing) return;
+    const before = beforeLearningSnapshot.current;
+    const processed = pendingEvidenceResult.current;
+    const after = authorizedLearningSnapshot(understanding);
+    const classification = classifyTruthfulLearningOutcome({
+      evidenceOutcome: processed?.outcome ?? "supported",
+      before: before ?? after,
+      after,
+    });
+    const uncertainty =
+      processed?.outcome === "underdetermined"
+        ? processed.understanding.uncertainties[0] ?? understanding.primaryUnknown
+        : understanding.beliefBasis?.uncertainty[0] ??
+          understanding.primaryUnknown ??
+          null;
+    const processedNextEvidence =
+      processed?.understanding.nextEvidence[0] ?? null;
+    const refreshedRequest =
+      understanding.evidenceRequestDisclosure?.request ?? null;
+    setLearningFeedback({
+      outcome: classification.outcome,
+      changedFields: classification.changedFields,
+      currentUnderstanding: boundedCurrentAnswer(understanding.synthesis),
+      uncertainty,
+      nextEvidence: processedNextEvidence
+        ? {
+            label: processedNextEvidence.label,
+            whyItHelps: processedNextEvidence.whyItHelps,
+          }
+        : refreshedRequest
+          ? {
+              label: refreshedRequest.question,
+              whyItHelps:
+                refreshedRequest.rationale ??
+                "This is the next authorized learning opportunity.",
+            }
+          : null,
+    });
+    beforeLearningSnapshot.current = null;
+    pendingEvidenceResult.current = null;
     setRefreshRequested(false);
     setRefreshObserved(false);
-    closeTeachDiscovery();
-    setUpdateNotice(true);
   }, [
-    closeTeachDiscovery,
     isRefreshing,
     refreshObserved,
     refreshRequested,
+    understanding,
   ]);
-  useEffect(() => {
-    if (!updateNotice) return;
-    const timeout = window.setTimeout(() => setUpdateNotice(false), 6500);
-    return () => window.clearTimeout(timeout);
-  }, [updateNotice]);
   useEffect(() => {
     if (!teachOpen) return;
     const closeOnHistoryBack = () => finishClosingTeachDiscovery();
@@ -1378,19 +1468,6 @@ function HostedUnderstandingWorkspace({
             <span><Sparkles size={15} aria-hidden="true" />Learning</span>
           </div>
         </header>
-        {updateNotice ? (
-          <div className={styles.understandingUpdateNotice} role="status">
-            <Check size={18} aria-hidden="true" />
-            <div>
-              <strong>Discovery finished reviewing what you shared.</strong>
-              <span>
-                The workspace now reflects every supported change to the
-                understanding, uncertainty, confidence boundary, and next improvement.
-              </span>
-            </div>
-          </div>
-        ) : null}
-
         <UnderstandingDisclosure
           basis={basis}
           changeDisclosure={understanding.changeDisclosure}
@@ -1586,11 +1663,18 @@ function HostedUnderstandingWorkspace({
             </header>
             <div className={styles.teachDrawerBody}>
               <DiscoveryOnboardingExperience
+                key={drawerCycle}
                 embedded
                 initialOrganizationId={experience.organization.id}
                 initialQuestion={understanding.originalQuestion}
                 initialCompany={experience.organization.name}
-                onUnderstandingUpdated={understandingUpdated}
+                learningFeedback={learningFeedback}
+                onEvidenceProcessed={evidenceProcessed}
+                onReturnToUnderstanding={closeTeachDiscovery}
+                onContinueTeaching={() => {
+                  setLearningFeedback(null);
+                  setDrawerCycle((current) => current + 1);
+                }}
               />
             </div>
           </section>

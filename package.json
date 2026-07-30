@@ -82,6 +82,7 @@
     "validate:simplified-product-navigation": "tsx scripts/product/validateSimplifiedProductNavigation.ts",
     "validate:persistent-understanding-workspace": "tsx scripts/product/validatePersistentUnderstandingWorkspace.ts",
     "validate:continuous-understanding-loop": "tsx scripts/product/validateContinuousUnderstandingLoop.ts",
+    "validate:truthful-learning-feedback": "tsx scripts/product/validateTruthfulLearningFeedback.ts",
     "storage:migrate": "tsx scripts/storage/migrateAlphaGovernance.ts up",
     "storage:status": "tsx scripts/storage/migrateAlphaGovernance.ts status",
     "storage:reset:local": "tsx scripts/storage/migrateAlphaGovernance.ts reset",

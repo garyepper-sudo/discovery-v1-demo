@@ -86,6 +86,23 @@ type DiscoveryLabFailure = {
   utility?: ProductUtility;
 };
 
+export type TeachDiscoveryEvidenceResult = {
+  outcome: "supported" | "underdetermined";
+  understanding: ProductUnderstanding;
+  utility: ProductUtility | null;
+};
+
+export type TeachDiscoveryLearningFeedback = {
+  outcome: "changed" | "strengthened" | "underdetermined";
+  changedFields: string[];
+  currentUnderstanding: string;
+  uncertainty: string | null;
+  nextEvidence: {
+    label: string;
+    whyItHelps: string;
+  } | null;
+};
+
 type EvidenceRecommendation = {
   id: string;
   title: string;
@@ -276,13 +293,19 @@ export default function DiscoveryOnboardingExperience({
   initialQuestion = "",
   initialCompany = "",
   embedded = false,
-  onUnderstandingUpdated,
+  learningFeedback,
+  onEvidenceProcessed,
+  onReturnToUnderstanding,
+  onContinueTeaching,
 }: {
   initialOrganizationId?: string;
   initialQuestion?: string;
   initialCompany?: string;
   embedded?: boolean;
-  onUnderstandingUpdated?: () => void;
+  learningFeedback?: TeachDiscoveryLearningFeedback | null;
+  onEvidenceProcessed?: (result: TeachDiscoveryEvidenceResult) => void;
+  onReturnToUnderstanding?: () => void;
+  onContinueTeaching?: () => void;
 }) {
   const router = useRouter();
   const [stage, setStage] = useState<OnboardingStage>(
@@ -562,6 +585,39 @@ export default function DiscoveryOnboardingExperience({
         | DiscoveryLabFailure
         | null;
       if (
+        embedded &&
+        response.status === 422 &&
+        body?.status === "insufficient-evidence" &&
+        body.understanding
+      ) {
+        setOrganizationId(body.organizationId ?? organizationId);
+        setResult(body.understanding);
+        setUtility(body.utility ?? null);
+        setEvidenceSources([]);
+        setSkippedEvidenceRoles([]);
+        window.sessionStorage.setItem(
+          draftStorageKey,
+          JSON.stringify({
+            stage: "evidence-plan",
+            organizationId: body.organizationId ?? organizationId,
+            onboardingRequestId,
+            question,
+            company,
+            industry,
+            website,
+            observations,
+            evidenceSources: [],
+            skippedEvidenceRoles: [],
+          } satisfies OnboardingDraft),
+        );
+        onEvidenceProcessed?.({
+          outcome: "underdetermined",
+          understanding: body.understanding,
+          utility: body.utility ?? null,
+        });
+        return;
+      }
+      if (
         !response.ok ||
         !body ||
         (body.status !== "complete" && body.status !== "provisional")
@@ -600,8 +656,12 @@ export default function DiscoveryOnboardingExperience({
           skippedEvidenceRoles: [],
         } satisfies OnboardingDraft),
       );
-      if (embedded && onUnderstandingUpdated) {
-        onUnderstandingUpdated();
+      if (embedded && onEvidenceProcessed) {
+        onEvidenceProcessed({
+          outcome: "supported",
+          understanding: body.understanding,
+          utility: body.utility,
+        });
         return;
       }
       setStage("first-understanding");
@@ -637,6 +697,80 @@ export default function DiscoveryOnboardingExperience({
   }
 
   const Root = embedded ? "div" : "main";
+  if (embedded && learningFeedback) {
+    const changed = learningFeedback.outcome === "changed";
+    const strengthened = learningFeedback.outcome === "strengthened";
+    const heading = changed
+      ? "Discovery learned something new"
+      : strengthened
+        ? "Discovery incorporated what you shared"
+        : "Discovery needs more evidence to distinguish what is happening";
+    return (
+      <div className={`${alphaStyles.alphaRoot} ${styles.page} ${styles.embedded}`}>
+        <section className={styles.experience}>
+          <section className={`${styles.stage} ${styles.learningFeedback}`} aria-live="polite">
+            <Eyebrow tone={changed ? "green" : "violet"}>Learning update</Eyebrow>
+            <h1 ref={stageHeadingRef} tabIndex={-1}>{heading}</h1>
+            <p className={styles.lead}>
+              {changed
+                ? "The authorized understanding now reflects supported changes from what you shared."
+                : strengthened
+                  ? "The current understanding remains the strongest supported explanation. Your new information has been preserved and will contribute as more evidence arrives."
+                  : "What you shared has been preserved, but Discovery cannot yet determine which explanation is best supported."}
+            </p>
+            {changed && learningFeedback.changedFields.length ? (
+              <Panel tone="green" className={styles.learningOutcomePanel}>
+                <strong>What changed</strong>
+                <ul>
+                  {learningFeedback.changedFields.map((field) => (
+                    <li key={field}>{field}</li>
+                  ))}
+                </ul>
+              </Panel>
+            ) : null}
+            {strengthened ? (
+              <Panel tone="soft" className={styles.learningOutcomePanel}>
+                <strong>Current understanding</strong>
+                <p>{learningFeedback.currentUnderstanding}</p>
+              </Panel>
+            ) : null}
+            {learningFeedback.uncertainty ? (
+              <Panel tone="blue" className={styles.learningOutcomePanel}>
+                <strong>What remains unresolved</strong>
+                <p>{learningFeedback.uncertainty}</p>
+              </Panel>
+            ) : null}
+            {learningFeedback.nextEvidence ? (
+              <Panel tone="violet" className={styles.learningOutcomePanel}>
+                <strong>Most valuable next evidence</strong>
+                <p>
+                  <b>{learningFeedback.nextEvidence.label}:</b>{" "}
+                  {learningFeedback.nextEvidence.whyItHelps}
+                </p>
+              </Panel>
+            ) : null}
+            <div className={styles.actions}>
+              {learningFeedback.outcome === "underdetermined" ? (
+                <>
+                  <Action onClick={onContinueTeaching}>Add another perspective</Action>
+                  <Action tone="secondary" onClick={onReturnToUnderstanding}>
+                    Return to understanding
+                  </Action>
+                </>
+              ) : (
+                <>
+                  <Action onClick={onReturnToUnderstanding}>Return to understanding</Action>
+                  <Action tone="secondary" onClick={onContinueTeaching}>
+                    {changed ? "Keep teaching Discovery" : "Add another perspective"}
+                  </Action>
+                </>
+              )}
+            </div>
+          </section>
+        </section>
+      </div>
+    );
+  }
   return (
     <Root
       className={`${alphaStyles.alphaRoot} ${styles.page} ${embedded ? styles.embedded : ""}`}
@@ -969,7 +1103,11 @@ export default function DiscoveryOnboardingExperience({
             {error ? (
               <div role="alert">
                 <Panel className={styles.safeError} tone="orange">
-                  <strong>I need a little more to give you a useful answer</strong>
+                  <strong>
+                    {embedded
+                      ? "Discovery could not safely process this update"
+                      : "I need a little more to give you a useful answer"}
+                  </strong>
                   <p>{error}</p>
                   {recovery ? (
                     <>
@@ -1021,7 +1159,9 @@ export default function DiscoveryOnboardingExperience({
               </Action>
               <Action arrow onClick={runInvestigation} disabled={submitting}>
                 {error
-                  ? "Retry with current evidence"
+                  ? embedded
+                    ? "Try again"
+                    : "Retry with current evidence"
                   : evidenceSources.length
                     ? "Update understanding"
                     : "Continue with current context"}

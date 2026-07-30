@@ -33,7 +33,7 @@ assert.ok(
 assert.ok(
   alpha.includes("startRefresh(() => router.refresh())") &&
     alpha.includes("refreshObserved") &&
-    alpha.includes("setUpdateNotice(true)"),
+    alpha.includes("setLearningFeedback({"),
   "The drawer must remain open until the refreshed authorized view settles.",
 );
 assert.ok(
@@ -48,25 +48,20 @@ assert.ok(
     alpha.includes("window.history.back()"),
   "Browser Back must dismiss the same-URL drawer without leaving the workspace.",
 );
-assert.ok(
-  alpha.includes("every supported change") &&
-    alpha.includes("understanding, uncertainty, confidence boundary, and next improvement"),
-  "Update messaging must describe only supported downstream changes.",
-);
 assert.equal(
   hostedWorkspace.includes("router.push(`/onboarding?${search.toString()}`)"),
   false,
   "Teach Discovery must not navigate to onboarding.",
 );
 assert.ok(
-  onboarding.includes("onUnderstandingUpdated?: () => void") &&
+  onboarding.includes("onEvidenceProcessed?: (result: TeachDiscoveryEvidenceResult)") &&
     onboarding.includes('"organization-context"') &&
     onboarding.includes("setQuestion(embedded ? initialQuestion : draft.question)") &&
     onboarding.includes("setCompany(embedded ? initialCompany : draft.company)") &&
     onboarding.includes("setQuestion(initialQuestion)") &&
     onboarding.includes("setCompany(initialCompany)") &&
-    onboarding.includes("if (embedded && onUnderstandingUpdated)") &&
-    onboarding.includes("onUnderstandingUpdated();"),
+    onboarding.includes("if (embedded && onEvidenceProcessed)") &&
+    onboarding.includes("onEvidenceProcessed({"),
   "The embedded component must reuse canonical context collection and expose a bounded completion callback.",
 );
 assert.ok(

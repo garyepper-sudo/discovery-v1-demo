@@ -23,7 +23,7 @@ assert.ok(
 assert.ok(
   alpha.includes("<DiscoveryOnboardingExperience") &&
     alpha.includes("embedded") &&
-    alpha.includes("onUnderstandingUpdated={understandingUpdated}"),
+    alpha.includes("onEvidenceProcessed={evidenceProcessed}"),
   "Active evidence addition must embed the canonical onboarding evidence experience.",
 );
 assert.ok(
