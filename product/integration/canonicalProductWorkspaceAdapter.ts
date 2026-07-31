@@ -90,6 +90,7 @@ export type CanonicalProductWorkspaceAdapterDependencies = {
     organizationId: string;
     scope: ProductObjectiveScope;
     requestedAuthorityScopeRef: string;
+    operation: "objective:create" | "objective:revise" | "context:create" | "context:revise" | "read";
   }): Promise<ProductObjectiveAuthorityGrant>;
   validateObjectiveReferences?(input: {
     userId: string;
@@ -544,6 +545,7 @@ export class CanonicalProductWorkspaceAdapter {
     organizationId: string;
     scope: ProductObjectiveScope;
     requestedAuthorityScopeRef: string;
+    operation: "objective:create" | "objective:revise" | "context:create" | "context:revise" | "read";
   }): Promise<ProductObjectiveAuthorityGrant> {
     if (!this.dependencies.authorizeObjectiveScope) throw new Error("Objective scope authority resolver is unavailable.");
     const grant = await this.dependencies.authorizeObjectiveScope(input);
@@ -576,7 +578,10 @@ export class CanonicalProductWorkspaceAdapter {
     const stored = await this.authorizedRuntime(input);
     const requestedAuthorityScopeRef = input.objective.authority.authorityScopeRef
       ?? (input.objective.scope.kind === "organization" ? "organization" : JSON.stringify(input.objective.scope));
-    const grant = await this.objectiveGrant({ ...input, scope: input.objective.scope, requestedAuthorityScopeRef });
+    const grant = await this.objectiveGrant({
+      ...input, scope: input.objective.scope, requestedAuthorityScopeRef,
+      operation: input.expectedCurrentVersion === null ? "objective:create" : "objective:revise",
+    });
     const references = await this.objectiveReferences({ ...input, runtime: stored.runtime, objective: input.objective });
     const recorded = recordOrganizationalObjectiveVersion({
       runtime: stored.runtime, objective: input.objective,
@@ -597,7 +602,10 @@ export class CanonicalProductWorkspaceAdapter {
     operation: RuntimeStorageOperationMetadata;
   }): Promise<CanonicalOptimizationContextMutationResult> {
     const stored = await this.authorizedRuntime(input);
-    const grant = await this.objectiveGrant({ ...input, requestedAuthorityScopeRef: input.optimizationContext.authorityScopeRef });
+    const grant = await this.objectiveGrant({
+      ...input, requestedAuthorityScopeRef: input.optimizationContext.authorityScopeRef,
+      operation: input.expectedCurrentVersion === null ? "context:create" : "context:revise",
+    });
     const references = await this.objectiveReferences({ ...input, runtime: stored.runtime, optimizationContext: input.optimizationContext });
     const recorded = recordOptimizationContextVersion({
       runtime: stored.runtime, context: input.optimizationContext,
@@ -616,7 +624,11 @@ export class CanonicalProductWorkspaceAdapter {
     governanceProhibition?: string | null;
   }): Promise<CanonicalObjectiveContextResolutionResult> {
     const stored = await this.authorizedRuntime(input);
-    await this.objectiveGrant({ ...input, requestedAuthorityScopeRef: input.scope.kind === "organization" ? "organization" : JSON.stringify(input.scope) });
+    await this.objectiveGrant({
+      ...input,
+      requestedAuthorityScopeRef: input.scope.kind === "organization" ? "organization" : JSON.stringify(input.scope),
+      operation: "read",
+    });
     return { resolution: resolveProductObjectiveContext({ runtime: stored.runtime, scope: input.scope, evaluationAt: input.evaluationAt, governanceProhibition: input.governanceProhibition }), runtimeRevision: stored.revision };
   }
 

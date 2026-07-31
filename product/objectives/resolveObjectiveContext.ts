@@ -51,7 +51,10 @@ export function resolveProductObjectiveContext(input: {
   if (!Number.isFinite(Date.parse(input.evaluationAt))) return fail("unsupported-scope");
   const all = listOrganizationalObjectiveVersions(input.runtime);
   const latestByRoot = new Map<string, ProductOrganizationalObjective>();
-  for (const item of all) latestByRoot.set(item.objectiveId, item);
+  for (const item of all) {
+    const current = latestByRoot.get(item.objectiveId);
+    if (!current || item.version > current.version) latestByRoot.set(item.objectiveId, item);
+  }
   const applicable = [...latestByRoot.values()].filter((item) => applies(item, input.scope));
   if (applicable.length === 0) return fail("missing-objective");
   const exact = applicable.filter((item) => scopeKey(item.scope) === scopeKey(input.scope));
@@ -67,7 +70,10 @@ export function resolveProductObjectiveContext(input: {
   const versionRef = objectiveVersionRef(objective.organizationId, objective.objectiveId, objective.version);
   const allContexts = listOptimizationContextVersions(input.runtime);
   const latestContexts = new Map<string, (typeof allContexts)[number]>();
-  for (const context of allContexts) latestContexts.set(context.optimizationContextId, context);
+  for (const context of allContexts) {
+    const current = latestContexts.get(context.optimizationContextId);
+    if (!current || context.version > current.version) latestContexts.set(context.optimizationContextId, context);
+  }
   const contexts = [...latestContexts.values()].filter((context) => context.objectiveVersionRef === versionRef);
   if (contexts.length === 0) {
     const stale = [...latestContexts.values()].some((context) => all.some((item) =>

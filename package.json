@@ -142,6 +142,7 @@
     "experiment:expected-explanation-discrimination-001": "tsx engine/benchmark/research/expected-explanation-discrimination-experiment-001/runExperiment.ts",
     "validate:organizational-objective-optimization-context-001": "tsx engine/benchmark/research/organizational-objective-optimization-context-experiment-001/validate.ts",
     "validate:organizational-objective-optimization-context-contract": "tsx scripts/product/validateOrganizationalObjectiveContext.ts",
+    "validate:organizational-objective-context-backend-acceptance-001": "tsx scripts/product/validateOrganizationalObjectiveContextBackendAcceptance001.ts",
     "validate:organizational-objective-discovery-001": "tsx engine/benchmark/research/organizational-objective-discovery-experiment-001/validate.ts",
     "validate:material-information-acquisition-001": "tsx engine/benchmark/research/material-information-acquisition-experiment-001/validate.ts",
     "validate:material-information-acquisition-calibration-001": "tsx engine/benchmark/research/material-information-acquisition-calibration-experiment-001/validate.ts",

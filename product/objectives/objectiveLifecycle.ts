@@ -155,6 +155,13 @@ export const listOrganizationalObjectiveVersions = (runtime: OrganizationRuntime
 export const listOptimizationContextVersions = (runtime: OrganizationRuntime): ProductOptimizationContext[] =>
   optimizationContextEvents(runtime).map((event) => event.context);
 
+const latestObjectiveEvent = (events: ProductObjectiveVersionEvent[]): ProductObjectiveVersionEvent | undefined =>
+  events.reduce<ProductObjectiveVersionEvent | undefined>((latest, event) =>
+    !latest || event.objective.version > latest.objective.version ? event : latest, undefined);
+const latestContextEvent = (events: ProductOptimizationContextVersionEvent[]): ProductOptimizationContextVersionEvent | undefined =>
+  events.reduce<ProductOptimizationContextVersionEvent | undefined>((latest, event) =>
+    !latest || event.context.version > latest.context.version ? event : latest, undefined);
+
 export function validateRuntimeObjectiveReferences(input: {
   runtime: OrganizationRuntime;
   objective?: ProductOrganizationalObjective;
@@ -228,7 +235,7 @@ export function recordOrganizationalObjectiveVersion(input: {
     return { runtime: input.runtime, objectiveVersionRef: versionRef, idempotent: true };
   }
   const versions = events.filter((event) => event.objective.objectiveId === input.objective.objectiveId);
-  const current = versions.at(-1);
+  const current = latestObjectiveEvent(versions);
   if ((current?.objective.version ?? null) !== input.expectedCurrentVersion) throw new Error("Objective current version changed.");
   if (input.objective.version !== (input.expectedCurrentVersion ?? 0) + 1) throw new Error("Objective version is not sequential.");
   if (input.objective.version === 1 && input.objective.supersedesObjectiveVersionRef !== null) throw new Error("Initial Objective cannot supersede a version.");
@@ -274,7 +281,7 @@ export function recordOptimizationContextVersion(input: {
     return { runtime: input.runtime, optimizationContextVersionRef: versionRef, idempotent: true };
   }
   const versions = events.filter((event) => event.context.optimizationContextId === input.context.optimizationContextId);
-  const current = versions.at(-1);
+  const current = latestContextEvent(versions);
   if ((current?.context.version ?? null) !== input.expectedCurrentVersion) throw new Error("Optimization Context current version changed.");
   if (input.context.version !== (input.expectedCurrentVersion ?? 0) + 1) throw new Error("Optimization Context version is not sequential.");
   if (input.context.version === 1 && input.context.supersedesOptimizationContextVersionRef !== null) throw new Error("Initial Context cannot supersede a version.");

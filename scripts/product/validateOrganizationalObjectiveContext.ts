@@ -132,6 +132,22 @@ function validateContextBindingAndNoCarryForward(): void {
   assert.throws(() => createContext(created.runtime, context("foreign-objective-version")), /Objective version was not found/);
 }
 
+function validateCurrentContextUsesExplicitVersion(): void {
+  const created = createObjective();
+  const first = context(created.objectiveVersionRef);
+  const firstRecorded = createContext(created.runtime, first, "context-v1");
+  const second = context(created.objectiveVersionRef, {
+    version: 2,
+    priorityMode: "maximize-learning",
+    supersedesOptimizationContextVersionRef: firstRecorded.optimizationContextVersionRef,
+  });
+  const secondRecorded = createContext(firstRecorded.runtime, second, "context-v2-reaffirm");
+  const resolved = resolveProductObjectiveContext({ runtime: secondRecorded.runtime, scope, evaluationAt: now });
+  assert.equal(resolved.status, "resolved");
+  assert.equal(resolved.optimizationContext?.version, 2);
+  assert.equal(resolved.optimizationContext?.priorityMode, "maximize-learning");
+}
+
 function validateSemanticAndAuthorityControls(): void {
   assert.throws(() => createObjective(undefined, objective({ successCriteria: [], status: "active" })), /success criterion/);
   assert.doesNotThrow(() => createObjective(undefined, objective({
@@ -283,6 +299,7 @@ function validateSerializedBenchmarkReplay(): void {
 
 async function main(): Promise<void> {
   validateIdentityVersionAndReplay(); validateContextBindingAndNoCarryForward();
+  validateCurrentContextUsesExplicitVersion();
   validateSemanticAndAuthorityControls(); validateResolution();
   validateLegacyAndReadDisableCompatibility();
   await validateAdapterAuthorizationAndConcurrency(); validateSerializedBenchmarkReplay();
