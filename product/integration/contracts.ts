@@ -22,6 +22,11 @@ import type {
   ProductAnswerConfidence,
   ProductQuestionWorkspace,
 } from "../workflow/contracts";
+import type {
+  ProductObjectiveContextResolution,
+  ProductOptimizationContext,
+  ProductOrganizationalObjective,
+} from "../objectives";
 
 export type ProductQuestionSummary = {
   id: string;
@@ -116,6 +121,25 @@ export type CanonicalUnderstandingRecommendationResult = {
 
 export type CanonicalObjectiveRecommendationEligibilityResult = {
   eligibility: ProductObjectiveRecommendationEligibility;
+  runtimeRevision: string;
+};
+
+export type CanonicalObjectiveMutationResult = {
+  objective: ProductOrganizationalObjective;
+  objectiveVersionRef: string;
+  idempotent: boolean;
+  runtimeRevision: string;
+};
+
+export type CanonicalOptimizationContextMutationResult = {
+  optimizationContext: ProductOptimizationContext;
+  optimizationContextVersionRef: string;
+  idempotent: boolean;
+  runtimeRevision: string;
+};
+
+export type CanonicalObjectiveContextResolutionResult = {
+  resolution: ProductObjectiveContextResolution;
   runtimeRevision: string;
 };
 

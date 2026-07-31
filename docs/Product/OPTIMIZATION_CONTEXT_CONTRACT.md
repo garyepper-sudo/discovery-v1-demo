@@ -1,6 +1,6 @@
 # Discovery Optimization Context Contract
 
-**Status:** Designed; benchmark-supported; not implemented
+**Status:** Implemented at the governed Product Workflow boundary; not frontend-exposed
 **Phase:** 2D
 **Governed by:** [PRODUCT_GOVERNANCE.md](./PRODUCT_GOVERNANCE.md)
 
@@ -84,8 +84,13 @@ could change eligibility, ranking, disclosure, or governance.
 
 ## Ownership and persistence
 
-The proposed owner is Product Workflow alongside the Objective version it
-qualifies. No Runtime schema, repository, event version, migration, or write API
-is implemented. Benchmark results support designing both contracts together,
-but persistence must be implemented only after the versioned Objective owner is
-approved.
+Product Workflow owns Optimization Context alongside the exact Objective
+version it qualifies. Immutable Context versions are additive schema-version-1
+product events in the existing Organization Runtime `memory.events` collection.
+The existing Runtime repository owns optimistic concurrency; exact scope
+authority and references are validated server-side and fail closed. Existing
+Runtimes require no migration or backfill.
+
+The implementation is in `product/objectives/`. It provides no silent Context
+default, Objective Recommendation generation, frontend exposure, cognition
+mutation, or autonomous action.

@@ -308,9 +308,9 @@ Recommendation. A high-confidence inferred objective supports only disclosed,
 conditional, reversible eligibility. High-stakes or irreversible action
 requires a confirmed Objective.
 
-### Phase 2D design record
+### Phase 2D implementation record
 
-**Status:** DESIGNED AND BENCHMARK-SUPPORTED; NOT IMPLEMENTED
+**Status:** CONTRACT IMPLEMENTATION COMPLETE; NOT FRONTEND-EXPOSED
 
 The minimum sufficient model is Organizational Understanding plus a versioned,
 authoritative Organizational Objective plus Objective-specific Optimization
@@ -321,8 +321,15 @@ Risk appetite, horizon, urgency preference, reversibility preference, resource
 and governance references, tradeoff precedence, evidence standard, and
 alternatives requirements belong in Optimization Context.
 
-No universal silent default, Objective Recommendation generator, persistence,
-Runtime migration, or frontend behavior is authorized by this design.
+Objective and Context now persist as separate immutable version histories in
+the existing Runtime product-event collection. Deterministic identities,
+idempotency, optimistic concurrency, supersession, historical replay, exact
+Objective-version Context binding, authority/reference gates, and pure
+resolution are validated. Existing Runtimes load without migration or backfill.
+
+No universal silent default, Objective discovery, Objective Recommendation
+generator, frontend behavior, cognition mutation, or autonomous action is
+authorized by this implementation.
 
 ## 10. Decision Lifecycle
 

@@ -116,9 +116,9 @@ remain open.
 Phase 2C.2 adds the product-facing Understanding Recommendation projection and
 the read-only Objective Recommendation eligibility boundary. The existing
 operation events, identities, authorization, and persistence remain unchanged.
-Objective Recommendation generation, Organizational Objective persistence,
-Optimization Context persistence, and the broader Recommendation lifecycle
-remain open.
+Objective Recommendation generation and the broader Recommendation lifecycle
+remain open. Organizational Objective and Optimization Context persistence are
+implemented together under Phase 2D.1.
 
 ### Phase 2D — Organizational Objective and Optimization Context design: COMPLETE
 
@@ -128,6 +128,16 @@ Organizational Objective, and Optimization Context—outperformed the Phase 2C.2
 placeholder boundary. A separate Operating Context object added no benchmark
 accuracy. The next gate is implementing the two versioned contracts together;
 Objective Recommendation generation remains later work.
+
+### Phase 2D.1 — Organizational Objective and Optimization Context implementation: COMPLETE
+
+Separate immutable Objective and Context version histories now reuse Runtime
+`memory.events`, optimistic repository replacement, exact server-side scope
+authority, reference validation, and the canonical adapter. Pure resolution
+returns one material clarification or abstains. Existing Runtimes load without
+migration or legacy-objective backfill. No Objective discovery, Recommendation
+generation, frontend exposure, cognition mutation, or external action was
+introduced.
 
 ### Post-Phase 2C research-to-product — Material acquisition selection: DESIGNED
 

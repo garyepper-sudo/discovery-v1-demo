@@ -1,6 +1,6 @@
 # Discovery Organizational Objective Contract
 
-**Status:** Designed; benchmark-supported; not implemented
+**Status:** Implemented at the governed Product Workflow boundary; not frontend-exposed
 **Phase:** 2D
 **Governed by:** [PRODUCT_GOVERNANCE.md](./PRODUCT_GOVERNANCE.md)
 
@@ -87,11 +87,16 @@ type ProductOrganizationalObjective = {
 
 ## Ownership and persistence
 
-The proposed owner is Product Workflow, composed through the canonical product
-adapter. No Runtime location, event schema, repository, migration, or write API
-is authorized by this design. Persistence is the next gated implementation
-decision because correction, supersession, authority, and reload require a
-durable versioned owner.
+Product Workflow is the owner, composed through the canonical product adapter.
+Immutable Objective versions are additive schema-version-1 product events in
+the existing Organization Runtime `memory.events` collection. The existing
+Runtime repository replacement contract owns optimistic concurrency. Exact
+scope authority and reference validation are injected server-side and fail
+closed before a write. Existing Runtimes require no migration or backfill.
+
+The implementation is in `product/objectives/`. It does not discover an
+Objective, infer authority, generate an Objective Recommendation, alter
+Organizational Understanding, or expose Objective state to the frontend.
 
 ## Eligibility boundary
 

@@ -85,8 +85,8 @@ to every governed connector.
 | `ProductUnderstandingRecommendation` | Product Workflow | Product-facing projection of an exact Confidence-Improvement proposal with primary understanding purpose | Derived projection; no independent persistence |
 | `MaterialInformationAcquisitionResult` | Product Workflow | Read-only comparison selecting one eligible information-producing action, preserving a material tie, stopping, or abstaining | Derived projection; existing action-specific receipts retain lifecycle authority |
 | `ProductObjectiveRecommendationEligibility` | Product Workflow | Read-only determination that Objective and Optimization inputs permit future business Recommendation generation | Derived result; no Recommendation generation or persistence |
-| `ProductOrganizationalObjective` | Product Workflow (designed) | Versioned authoritative desired organizational change | Benchmark-supported design; persistence not implemented |
-| `ProductOptimizationContext` | Product Workflow (designed) | Objective-specific governed action preferences and criteria | Benchmark-supported design; persistence not implemented |
+| `ProductOrganizationalObjective` | Product Workflow | Versioned authoritative desired organizational change | Immutable additive product events in Runtime `memory.events` |
+| `ProductOptimizationContext` | Product Workflow | Objective-version-specific governed action preferences and criteria | Immutable additive product events in Runtime `memory.events` |
 | `ProductDecisionDraft` | Product Workflow | Readiness-bounded draft that references Question and Answer | Projection of existing decision capability |
 | `ProductDecision` | Executive Decision pipeline | Committed intervention and ancestry | Existing Runtime decision/work objects |
 | `ProductOutcomeReview` | Executive Review/Learning | Comparison of expected and observed outcomes | Existing Runtime review and learning objects |

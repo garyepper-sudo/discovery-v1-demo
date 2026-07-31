@@ -439,13 +439,17 @@ Changing one requires the process in
   Operating Context; objective-first; understanding-first; universal defaults.
 - **Why rejected:** They omitted authority, conflict, alternatives, governance,
   information value, or duplicated evidence-grounded state.
-- **Consequences:** Both prerequisite contracts are designed together.
-  Persistence, write APIs, migration, real authority mapping, and Objective
-  Recommendation generation remain unimplemented. Adaptive elicitation is the
-  preferred future interaction, subject to live validation.
+- **Consequences:** Both prerequisite contracts are designed and implemented
+  together as separate immutable version histories in existing Runtime product
+  events. The canonical adapter enforces organization authorization before
+  Runtime access and requires injected exact-scope authority and reference
+  resolution for writes. Existing Runtimes require no migration or backfill.
+  Live authority-policy mapping, Objective discovery, Objective Recommendation
+  generation, and frontend interaction remain unimplemented. Adaptive
+  elicitation remains subject to live validation.
 - **Affected phase:** Phase 2D and later Recommendation work.
 - **Affected gaps:** `GAP-A-011`, `GAP-A-018`.
-- **Status:** Active design decision; implementation pending.
+- **Status:** Active; Phase 2D.1 contract implementation complete.
 
 ## DEC-PROD-028 — Organizational Objective discovery is governed, hybrid, and adaptive
 
