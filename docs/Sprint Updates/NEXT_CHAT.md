@@ -30,7 +30,18 @@ Reality → Evidence → Organizational Understanding → Material Uncertainty
 → Updated Organizational Understanding
 ```
 
-Implemented capability stops after the authorized Understanding Recommendation/Unknown-targeting boundary. Governed Drive retrieval, Answer, Confidence, Unknown, and Phase 2C operations are committed. Objective/Optimization persistence, Objective Discovery, Objective Recommendation generation, complete Decision/Outcome/Learning, and Insight lifecycle remain unimplemented.
+Governed Drive retrieval, Answer, Confidence, Unknown, and Phase 2C operations
+are committed. Organizational Objective and Optimization Context are distinct
+immutable Product Workflow event families, and Backend Acceptance 001 passed
+Classification A. Objective Discovery, Objective Recommendation generation,
+complete Decision/Outcome/Learning, and Insight lifecycle remain unimplemented.
+
+Material Information Acquisition has an inactive, read-only, non-persistent
+ordinal/Pareto shadow selector. Live calibration remains Classification B with
+zero complete live cases. Candidate Envelope and Outcome Readiness 001 passed
+Classification A through Product Confidence Improvement as the initial
+canonical information-operation owner. Historical v2 receipts remain readable
+but incomplete and are not backfilled. `GAP-B-018` remains Open.
 
 ## Critical decisions
 
@@ -40,7 +51,8 @@ Implemented capability stops after the authorized Understanding Recommendation/U
 - Risk appetite belongs to Optimization Context; risk and execution capacity remain Organizational Understanding.
 - Objective and Optimization Context persistence must be implemented together.
 - Understanding and Objective Recommendations have different primary purposes.
-- Material Information Acquisition is read-only, non-persistent, governed, and not yet production calibrated.
+- Material Information Acquisition is read-only, non-persistent, governed,
+  inactive, and not production calibrated.
 - No universal utility score, automatic Decision, or autonomous external action.
 
 ## Environment and frontend boundaries
@@ -49,9 +61,11 @@ Local Clerk, PostgreSQL, filesystem Runtime, OAuth, connector, and recovery stat
 
 ## Exact next Codex task
 
-Implement Organizational Objective and Optimization Context contracts together as Phase 2D.1, using existing Product Workflow, Runtime repository, authorization, lineage, versioning, and idempotency owners. Do not generate Objective Recommendations in that task.
-
-Parallel validation task: design and run read-only Material Information Acquisition live shadow calibration without initiating actions.
+Run Material Information Acquisition — Independent Live Outcome Calibration
+002. Freeze complete owner-produced v3 candidate envelopes, persist real human
+choices before revealing the shadow result, and observe only separately
+authorized outcomes that already occur. Do not optimize selector logic against
+the evaluation cases.
 
 ## Prohibited shortcuts
 
@@ -63,4 +77,11 @@ Run focused validators for every changed contract plus Product Governance, Workf
 
 ## Copy-paste startup prompt
 
-> Continue Discovery from the implementation phase. Do not reopen foundational architecture unless benchmark or implementation evidence reveals a genuine gap. Begin by reviewing the canonical handoff and planning implementation of Organizational Objective and Optimization Context contracts together. Preserve the complete workflow vision and do not begin final frontend wiring prematurely. Treat Material Information Acquisition as benchmark-supported but blocked on read-only live shadow calibration. Preserve authorization, governance, evidence integrity, organization isolation, truthful uncertainty, immutable history, and no autonomous external action.
+> Continue Discovery from the independent evidence-calibration phase. Do not
+> reopen foundational architecture unless empirical execution reveals a genuine
+> invariant the accepted contracts cannot express. Run Material Information
+> Acquisition Independent Live Outcome Calibration 002 with the selector frozen,
+> hidden until after human choice, and read-only. Preserve authorization,
+> governance, Evidence ownership, organization isolation, immutable history,
+> truthful outcome absence, and zero autonomous external action. Do not activate
+> the selector, execute a connector, begin final frontend wiring, or deploy.

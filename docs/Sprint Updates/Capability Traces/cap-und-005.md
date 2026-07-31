@@ -1,6 +1,6 @@
 # Capability Trace — Executive Assessment
 
-Generated: 2026-07-31T16:33:11.631Z
+Generated: 2026-07-31T20:42:01.298Z
 
 ## Verified Architecture
 

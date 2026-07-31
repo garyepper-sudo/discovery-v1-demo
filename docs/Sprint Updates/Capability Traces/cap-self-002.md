@@ -1,6 +1,6 @@
 # Capability Trace — Investigation Opportunity Generation
 
-Generated: 2026-07-31T16:33:17.544Z
+Generated: 2026-07-31T20:42:07.112Z
 
 ## Verified Architecture
 

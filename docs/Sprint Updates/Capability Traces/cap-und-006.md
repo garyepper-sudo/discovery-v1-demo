@@ -1,6 +1,6 @@
 # Capability Trace — Executive Understanding Synthesis
 
-Generated: 2026-07-31T16:33:14.045Z
+Generated: 2026-07-31T20:42:03.692Z
 
 ## Verified Architecture
 

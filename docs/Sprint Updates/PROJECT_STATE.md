@@ -9,8 +9,10 @@
 ## Current Milestone
 
 The governed Question-to-Understanding backend is implemented through explicit
-Understanding Recommendation authorization. Remaining Objective, Decision,
-Outcome, Learning, and Insight operations are sequenced for implementation.
+Understanding Recommendation authorization. Organizational Objective and
+Optimization Context are now distinct immutable Product Workflow event
+families, and Objective/Context Backend Acceptance 001 passed Classification A.
+Candidate Envelope and Outcome Readiness 001 also passed Classification A.
 
 ## Current Phase
 
@@ -19,13 +21,12 @@ substantially complete for the complete backend workflow vision.
 
 ## Current Objective
 
-Implement Organizational Objective and Optimization Context contracts together
-without beginning Objective Recommendation generation or final frontend wiring.
+Collect independent live human-choice and outcome evidence without activating
+the Material Information Acquisition selector or beginning frontend wiring.
 
 ## Next Priority
 
-Phase 2D.1 Objective and Optimization Context persistence. In parallel, run
-read-only Material Information Acquisition live shadow calibration.
+Material Information Acquisition — Independent Live Outcome Calibration 002.
 
 ## Product identity
 
@@ -40,7 +41,18 @@ Question → authorized retrieval → Evidence admission
 → explicit authorization receipt → Unknown targeted
 ```
 
-Governed Google Drive retrieval is live-proven except final controlled revocation. Answer, Unknown, Confidence-Improvement, and dual Recommendation-purpose contracts are committed. Authorization precedes Runtime and connector access; organization isolation and exact lineage fail closed.
+Governed Google Drive retrieval is live-proven except final controlled
+revocation. Answer, Unknown, Confidence-Improvement, dual
+Recommendation-purpose, Organizational Objective, and Optimization Context
+contracts are committed. Authorization precedes Runtime and connector access;
+organization isolation and exact lineage fail closed.
+
+Product Confidence Improvement is the initial canonical information-operation
+owner. Future governed v3 events preserve complete candidate envelopes and
+canonical digests. Outcome observations preserve exact observed references;
+operation completion, information production, Evidence candidacy, canonical
+Evidence admission, Unknown change, Answer change, and Understanding change
+remain separate facts. Historical v2 receipts remain readable but incomplete.
 
 ## Designed remaining backend
 
@@ -49,9 +61,16 @@ Objective Discovery → governed Objective + Optimization Context
 → Objective Recommendation → Decision → Outcome → Learning → Insight
 ```
 
-Objective and Optimization Context contracts, Objective Discovery, and Material Information Acquisition are benchmark-supported designs only. Objective Recommendation generation, bounded forecasting, complete Decision/Outcome/Learning operations, and Insight lifecycle remain unimplemented.
+Objective Discovery, Objective Recommendation generation, bounded forecasting,
+complete Decision/Outcome/Learning operations, and Insight lifecycle remain
+unimplemented.
 
-Material Information Acquisition synthetic calibration supports the contract but not production selection. The next evidence gate is read-only live shadow calibration against independently chosen, owner-executed actions.
+Material Information Acquisition has an inactive, read-only, non-persistent
+ordinal/Pareto shadow selector. Live calibration remains Classification B with
+zero complete live cases. Candidate-envelope and outcome-readiness
+infrastructure is complete, but `GAP-B-018` remains Open. The next evidence gate
+is independent live calibration against human choices persisted before hidden
+shadow selection and against truthfully observable owner outcomes.
 
 ## Frontend
 
@@ -69,11 +88,13 @@ Material Information Acquisition synthetic calibration supports the contract but
 
 ## Next implementation order
 
-1. Phase 2D.1 — Objective and Optimization Context persistence together.
-2. Phase 2D.2 — Objective Discovery operation.
+1. Material Information Acquisition — Independent Live Outcome Calibration 002.
+2. Phase 2D.2 — Objective Discovery operation, after its own governed acceptance.
 3. Phase 2D.3 — Objective Recommendation candidates.
 4. Phase 2E — Decision operation completion.
 5. Phase 2F — Outcome and Learning completion.
 6. Phase 2G — Insight lifecycle.
 
-Parallel track: Material Information Acquisition live shadow calibration. Final frontend track begins only after the required backend operations are available and accepted.
+The selector remains inactive. External action, connector execution, durable
+selector-owned receipts, Production activation, and final frontend wiring are
+not authorized by this milestone.

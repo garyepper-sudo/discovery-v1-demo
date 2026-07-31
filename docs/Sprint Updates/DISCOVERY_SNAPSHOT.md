@@ -26,11 +26,27 @@ Understanding Recommendations improve what the organization knows. Objective Rec
 
 ## Status
 
-Implemented and committed: governed Google Drive retrieval; durable Questions; Answer lifecycle and Answer-owned Confidence; Unknown identity/lifecycle; Confidence-Improvement authorization and receipts; Understanding Recommendations; dual Recommendation purpose and Objective Recommendation eligibility.
+Implemented and committed: governed Google Drive retrieval; durable Questions;
+Answer lifecycle and Answer-owned Confidence; Unknown identity/lifecycle;
+Confidence-Improvement authorization and receipts; Understanding
+Recommendations; dual Recommendation purpose and Objective Recommendation
+eligibility; and distinct immutable Organizational Objective and Optimization
+Context Product Workflow event families. Objective/Context Backend Acceptance
+001 passed Classification A.
 
-Designed and benchmark-supported, not implemented: Objective and Optimization Context persistence; Objective Discovery; Objective Recommendation generation; Material Information Acquisition; bounded Recommendation forecasting.
+Candidate Envelope and Outcome Readiness 001 passed Classification A. Product
+Confidence Improvement is the initial canonical information-operation owner.
+Governed v3 events preserve complete owner-produced candidate envelopes and
+canonical digests; separate outcome-observation events preserve exact observed
+before/after references without manufacturing cognition. Historical v2
+receipts remain readable, incomplete, and unbackfilled.
 
-Material Information Acquisition passed synthetic calibration but requires read-only live shadow calibration before implementation. Generalized burden, value, reliability, cost, delay, and stopping remain uncalibrated in real workflows.
+Material Information Acquisition has an inactive, read-only, non-persistent
+ordinal/Pareto shadow selector. Its live calibration remains Classification B
+with zero complete live cases. `GAP-B-018` remains Open because independent
+human-choice and outcome evidence is insufficient. Objective Discovery,
+Objective Recommendation generation, complete Decision/Outcome/Learning,
+Insight lifecycle, and bounded Recommendation forecasting remain unimplemented.
 
 `/product-alpha` is an isolated fixture/live development sandbox through the canonical adapter. It is not the final UX, not daily-use ready, and not promoted. `/your-organization` remains the existing compatibility experience. Final frontend wiring follows completion and acceptance of the backend workflow.
 
@@ -38,6 +54,6 @@ Local OAuth credentials, connector state, development Runtime, Clerk state, and 
 
 ## Immediate work
 
-1. Implement Organizational Objective and Optimization Context contracts together.
-2. In parallel, run read-only Material Information Acquisition live shadow calibration.
-3. Do not begin Objective Recommendation generation or final frontend wiring yet.
+1. Run Material Information Acquisition — Independent Live Outcome Calibration 002.
+2. Keep the selector frozen and hidden until independent human choices are persisted.
+3. Do not activate selection, execute connectors or external actions, generate Objective Recommendations, or begin final frontend wiring.
