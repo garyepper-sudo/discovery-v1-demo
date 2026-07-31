@@ -17,7 +17,7 @@ const activatedYourOrganizationPath = /^\/your-organization(?:\/|$)/;
 const inactiveDesignPartnerSurface =
   /^\/(?:ask|brief|decisions|experiment|organizations|research|discovery-v1|executive-decision|api\/(?:analyze|discovery-lab|executive-decision|executive-decision-record|executive-scenario|product-interaction))(?:\/|$)/;
 const onboardingTestSurface =
-  /^\/(?:onboarding|discovery-v1|your-organization|organizations|api\/discovery-lab)(?:\/|$)/;
+  /^\/(?:onboarding|discovery-v1|your-organization|organizations|api\/(?:discovery-lab|development\/(?:google-drive|current-identity)))(?:\/|$)/;
 
 function protectedHeaders(response: NextResponse): NextResponse {
   response.headers.set("Cache-Control", "private, no-store, max-age=0");
@@ -162,6 +162,8 @@ export const config = {
     "/api/executive-decision-record/:path*",
     "/api/executive-scenario/:path*",
     "/api/product-interaction/:path*",
+    "/api/development/google-drive/:path*",
+    "/api/development/current-identity",
     "/_next/static/chunks/app/alpha/:path*",
     "/_next/static/css/app/alpha/:path*",
   ],

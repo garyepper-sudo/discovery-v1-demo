@@ -43,6 +43,15 @@ Search includes manual contribution until a governed connector is available.
 Evidence admission and cognition remain authoritative upstream. Product
 contracts project that authority; they do not recreate it.
 
+Canonical organizational Evidence is content-addressed within its authorized
+organization/source scope. External repository revisions remain separate
+provenance, accessibility, freshness, and source-version lineage. A newer
+repository revision with the same deterministically normalized extracted
+content must not create another canonical Evidence item or inflate
+corroboration. Material content changes may create a new Evidence version while
+preserving prior source-version and citation history. This invariant applies
+to every governed connector.
+
 ## Canonical product objects
 
 | Object | Owner | Responsibility | Persistence |
@@ -174,6 +183,7 @@ presentation code.
 
 ## Related canonical documents
 
+- [WORKFLOW_ACCEPTANCE_SPEC.md](./WORKFLOW_ACCEPTANCE_SPEC.md)
 - [PRODUCT_GAPS.md](./PRODUCT_GAPS.md)
 - [PRODUCT_ROADMAP.md](./PRODUCT_ROADMAP.md)
 - [PRODUCT_DECISIONS.md](./PRODUCT_DECISIONS.md)
@@ -181,3 +191,17 @@ presentation code.
 - [PRODUCT_CANON.md](./PRODUCT_CANON.md)
 - [PRODUCT_COMMUNICATION_ARCHITECTURE.md](./PRODUCT_COMMUNICATION_ARCHITECTURE.md)
 - [CANONICAL_PRODUCT_ROUTES.md](./CANONICAL_PRODUCT_ROUTES.md)
+
+## Governed connector boundary
+
+External-source credentials are not organizational cognition and do not belong
+in Organization Runtime. A product-owned connector owns encrypted credentials
+and bounded connection metadata. It authorizes the exact user and organization
+before source retrieval, admits selected source passages only through the
+canonical evidence pipeline, records Question search lineage in Runtime, and
+returns the unchanged version-1 `ProductQuestionWorkspace`.
+
+Source removal or revocation removes current retrieval authority while
+preserving historical Evidence ancestry. Source modification and
+synchronization timestamps may support bounded Question freshness; Runtime
+update time may not.

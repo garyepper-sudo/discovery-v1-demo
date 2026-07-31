@@ -203,3 +203,63 @@ Changing one requires the process in
   and permanent route naming remain separate review decisions.
 - **Affected phase:** Phase 3.0.
 - **Status:** Active.
+
+## DEC-PROD-019 — External credentials have a dedicated secure owner
+
+- **Decision:** Product-owned connectors persist encrypted OAuth credentials
+  outside Organization Runtime. Product-safe connection metadata is separate
+  from tokens; exact source passages enter cognition only through canonical
+  evidence admission.
+- **Reason:** Credentials are operational authority, not organizational memory.
+  Runtime must preserve Evidence ancestry without becoming a secret store.
+- **Alternatives considered:** Store tokens in Runtime; trust client tokens;
+  create a connector-specific Answer path.
+- **Why rejected:** They expose secrets, authorize too late, or duplicate
+  cognition and Product Workflow.
+- **Consequences:** Authorization precedes retrieval, revocation deletes local
+  credentials and disables current access, historical lineage remains, and
+  `ProductQuestionWorkspace` version 1 does not change.
+- **Affected gaps:** `GAP-A-006`–`GAP-A-010`, `GAP-A-016`, `GAP-B-001`,
+  `GAP-B-004`, `GAP-B-010`.
+- **Status:** Active.
+
+## DEC-PROD-020 — Development Runtime recovery restores identity, not history
+
+- **Decision:** A validated onboarding-development operation may restore one
+  missing filesystem Runtime shell for an exact existing authorized
+  `onb-dev-*` organization using explicit operator-supplied organization
+  metadata and separately persisted operational recovery lineage.
+- **Reason:** The historical onboarding request ID establishes onboarding
+  lineage but is not a permanent prerequisite of an already-created canonical
+  organization identity. Ephemeral local Runtime loss must not require a new
+  organization or fabricated history.
+- **Alternatives considered:** Reconstruct the onboarding request ID; infer
+  metadata from connector records; manually write Runtime JSON; create a new
+  organization.
+- **Why rejected:** These alternatives are unavailable, transfer authority to
+  the wrong store, bypass canonical persistence, or change identity.
+- **Consequences:** Recovery is development-only, authorization-first,
+  filesystem-only, idempotent, and empty. It restores no Evidence, Questions,
+  cognition, decisions, outcomes, learning, or insights. Production and
+  onboarding behavior remain unchanged.
+- **Affected gap:** `GAP-A-017`.
+- **Status:** Active.
+
+## DEC-PROD-021 — Connector Evidence identity is content-addressed
+
+- **Decision:** Governed connectors separate stable external-source identity,
+  repository source-version identity, bounded passage identity, canonical
+  content-addressed Evidence identity, and organization/Question-scoped
+  admission identity.
+- **Reason:** Repository-native revisions can change without a material
+  extracted-content change. Treating revision identity as Evidence identity
+  duplicates cognition and inflates apparent corroboration.
+- **Alternatives considered:** Ignore repository revisions; admit every
+  revision and filter downstream; merge distinct external source records.
+- **Why rejected:** They lose provenance, permit duplicate authority, or erase
+  distinct source lineage.
+- **Consequences:** New revisions remain visible to freshness and citations.
+  Unchanged normalized content is not readmitted. Material changes create a
+  new content version without deleting historical source-version lineage.
+- **Affected gaps:** `GAP-A-008`, `GAP-A-010`, `GAP-B-004`, `GAP-B-010`.
+- **Status:** Active.

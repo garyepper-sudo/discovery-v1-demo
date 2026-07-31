@@ -57,10 +57,11 @@ export type CanonicalWorkspaceReadResult = {
 
 export type CanonicalEvidenceContribution = {
   sourceId: string;
-  sourceType: "manual_upload" | "paste";
+  sourceType: "manual_upload" | "paste" | "authorized_records";
   content: string;
   contributedAt: string;
   idempotencyKey: string;
+  priorIdempotencyKeys?: string[];
 };
 
 export type CanonicalInvestigationResult = {

@@ -106,6 +106,22 @@ Additive TypeScript compatibility alone does not waive version review.
 - Roadmap work must reference registered Gap IDs.
 - Research gaps remain non-production until a decision records promotion.
 
+## Connector governance
+
+- OAuth credentials have one encrypted server-side owner outside Runtime.
+- Connector metadata never contains access or refresh tokens.
+- Exact user and organization authorization occurs before credential or source
+  retrieval.
+- Users select explicit source scope; client-supplied tokens or authorization
+  claims are never trusted.
+- Retrieved content acquires product authority only after exact-Question
+  selection and canonical evidence admission.
+- Revocation removes current retrieval authority and credentials while
+  preserving historical lineage and truthful accessibility state.
+- Deterministic fakes are required for regression tests. Promotion additionally
+  requires safe live authorization, synchronization, search, reload, and
+  revocation.
+
 ## Validation and review
 
 Every product phase must run:

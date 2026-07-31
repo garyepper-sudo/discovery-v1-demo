@@ -7,6 +7,56 @@
 Roadmap phases are promotion gates, not date commitments. Work may enter a
 phase only when its dependencies and validations are explicit.
 
+## Ordered pre-wireframe backend program
+
+No additional wireframe or frontend implementation begins until this sequence
+passes the binding replay in
+[`WORKFLOW_ACCEPTANCE_SPEC.md`](./WORKFLOW_ACCEPTANCE_SPEC.md).
+
+1. **Phase 0 — Scope lock:** `GAP-A-005`; acceptance authority, metrics, and
+   exact replay are canonical.
+2. **Phase 1A — Governed source:** `GAP-A-006`, `GAP-A-007`, `GAP-A-016`;
+   least-privilege Google authorization, encrypted credential ownership,
+   explicit folders, revocation, safe diagnostics, and bounded recovery of a
+   missing ephemeral development Runtime under `GAP-A-017`.
+3. **Phase 1B — Source material:** `GAP-A-008`, `GAP-A-009`, `GAP-B-004`,
+   `GAP-B-010`; incremental synchronization, bounded extraction,
+   deduplication, and source-backed freshness.
+4. **Phase 2 — Question-relative evidence intelligence:** `GAP-A-010`,
+   `GAP-B-001`, controlled portions of `GAP-B-017`; exact-Question retrieval,
+   canonical evidence admission, Answer/abstention, citations, and reload.
+5. **Phase 3 — Confidence improvement:** `GAP-A-011`; one specific action
+   causes further acquisition and an Answer revision or explicit no-change.
+6. **Phase 4 — Decision completion:** `GAP-A-012`; draft and commit through the
+   existing canonical decision pipeline.
+7. **Phase 5 — Outcome and learning:** `GAP-A-013`, `GAP-A-014`; manual
+   observed outcomes, canonical review, learning, and model-state revision.
+8. **Phase 6 — Insight completion:** `GAP-A-015`; source-backed insight or
+   qualified abstention with duplicate suppression and full reload.
+
+Each phase must close its permanent gaps with live evidence before the next
+phase is promoted. Deterministic fakes protect regression behavior but never
+replace live connector proof.
+
+### Phase 1.1 — Governed Google Drive Retrieval: COMPLETE
+
+Accepted on 2026-07-30. One exact authorized development user and organization
+proved encrypted OAuth credential persistence, selected-folder scope,
+incremental synchronization, bounded Docs/Sheets/Slides/PDF extraction,
+content-addressed Evidence identity, source-version and citation lineage,
+Question-relative retrieval, canonical admission, targeted abstention,
+null-confidence protection, freshness, idempotent replay, and restart/reload
+survival.
+
+The controlled onboarding Question remains an abstention because ownership
+timing and credential readiness are competing explanations. Live revocation was
+intentionally deferred to preserve the reusable connection; its fail-closed
+boundary remains deterministically validated and is not represented as
+live-proven.
+
+The next implementation phase is **Phase 2 — Complete
+Confidence-Improvement and Recommendation Operations**.
+
 ## Completed foundation — Phases 0–2
 
 Phases 0–2 established the canonical Product architecture, customer-readable

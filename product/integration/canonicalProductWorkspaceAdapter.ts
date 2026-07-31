@@ -172,8 +172,16 @@ export class CanonicalProductWorkspaceAdapter {
     const question = buildDurableProductQuestion({ runtime: stored.runtime, questionId: input.questionId });
     if (!question) throw new Error("Product Question was not found in this organization.");
     const marker = stableId("product-contribution", input.organizationId, input.contribution.idempotencyKey);
+    const acceptedMarkers = new Set([
+      marker,
+      ...(input.contribution.priorIdempotencyKeys ?? []).map((key) =>
+        stableId("product-contribution", input.organizationId, key)
+      ),
+    ]);
     if (stored.runtime.memory.events.some((event) =>
-      event && typeof event === "object" && (event as { id?: unknown }).id === marker
+      event
+      && typeof event === "object"
+      && acceptedMarkers.has(String((event as { id?: unknown }).id ?? ""))
     )) return this.getQuestionWorkspace(input);
     const investigated = await this.dependencies.investigate({
       runtime: stored.runtime,
@@ -218,6 +226,54 @@ export class CanonicalProductWorkspaceAdapter {
       }),
       runtimeRevision: persisted.revision,
     };
+  }
+
+  async recordSearch(input: {
+    userId: string;
+    organizationId: string;
+    questionId: string;
+    searchedAt: string;
+    sourceIds: string[];
+    scope: string;
+    limitations: string[];
+    changeProduced: boolean;
+    operation: RuntimeStorageOperationMetadata;
+  }): Promise<CanonicalWorkspaceReadResult> {
+    const stored = await this.authorizedRuntime(input);
+    const question = buildDurableProductQuestion({
+      runtime: stored.runtime,
+      questionId: input.questionId,
+    });
+    if (!question) throw new Error("Product Question was not found in this organization.");
+    const searchId = stableId(
+      "product-search",
+      input.organizationId,
+      input.questionId,
+      input.searchedAt,
+      ...input.sourceIds,
+    );
+    if (question.searchHistory.some((entry) => entry.id === searchId)) {
+      return this.getQuestionWorkspace(input);
+    }
+    const runtime = appendProductQuestionEvent(
+      stored.runtime,
+      {
+        type: "search_completed",
+        questionId: input.questionId,
+        organizationId: input.organizationId,
+        occurredAt: input.searchedAt,
+        search: {
+          id: searchId,
+          timestamp: input.searchedAt,
+          scope: input.scope,
+          sourceIds: [...input.sourceIds].sort(),
+          limitations: [...input.limitations],
+          changeProduced: input.changeProduced,
+        },
+      },
+    );
+    const persisted = await this.replace({ stored, runtime, operation: input.operation });
+    return this.getQuestionWorkspace(input);
   }
 
   async archiveQuestion(input: {
