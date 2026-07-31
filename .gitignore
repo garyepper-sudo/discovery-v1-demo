@@ -6,4 +6,5 @@ node_modules
 tsconfig.tsbuildinfo
 .discovery-runtime/organizations/org_*.json
 .discovery-runtime/onboarding-google-drive/
+.discovery-runtime/development-runtime-recovery/
 provider-benchmark.txt

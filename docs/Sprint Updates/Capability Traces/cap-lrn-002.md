@@ -1,6 +1,6 @@
 # Capability Trace — Organizational Learning Profile
 
-Generated: 2026-07-25T18:39:00.918Z
+Generated: 2026-07-31T16:33:15.165Z
 
 ## Verified Architecture
 
@@ -96,6 +96,9 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/v3/scenarios/buildExecutiveDecisionContext.ts`
 - `scripts/cognition/planArchitecture.mjs`
 - `scripts/cognition/reviewCognitiveDomain.mjs`
+- `scripts/product/capabilitySurvivalManifest.ts`
+- `scripts/product/validateCapabilitySurvival.ts`
+- `scripts/product/validateWhyThisEvidenceMatters.ts`
 
 ## Structural Search
 
@@ -130,7 +133,7 @@ This section records source-code references. It supplements, but does not replac
 | API | ❌ Not found | 0 |
 | Simulation | ❌ Not found | 0 |
 | Benchmark | ✅ Found | 36 |
-| Other | ✅ Found | 7 |
+| Other | ✅ Found | 11 |
 
 ### Detailed Matches
 
@@ -228,43 +231,43 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 23 · **import** · matched `organizationalLearningProfile`
   - `import { computeOrganizationalLearningProfile } from "../model/learning/computeOrganizationalLearningProfile";`
-- Line 127 · **type** · matched `organizationalLearningProfile`
+- Line 128 · **type** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile?: any;`
-- Line 737 · **read** · matched `organizationalLearningProfile`
+- Line 742 · **read** · matched `organizationalLearningProfile`
   - `memory.organizationalLearningProfile,`
-- Line 791 · **unknown** · matched `Organizational Learning Profile`
+- Line 796 · **unknown** · matched `Organizational Learning Profile`
   - `* - feed prediction performance into the Organizational Learning Profile`
-- Line 838 · **read** · matched `organizationalLearningProfile`
+- Line 843 · **read** · matched `organizationalLearningProfile`
   - `memory.organizationalLearningProfile,`
-- Line 1155 · **definition** · matched `organizationalLearningProfile`
+- Line 1160 · **definition** · matched `organizationalLearningProfile`
   - `const organizationalLearningProfile =`
-- Line 1156 · **unknown** · matched `organizationalLearningProfile`
+- Line 1161 · **unknown** · matched `organizationalLearningProfile`
   - `computeOrganizationalLearningProfile({`
-- Line 1173 · **unknown** · matched `organizationalLearningProfile`
+- Line 1178 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1205 · **unknown** · matched `Organizational Learning Profile`
+- Line 1210 · **unknown** · matched `Organizational Learning Profile`
   - `"Organizational Learning Profile",`
-- Line 1206 · **unknown** · matched `organizationalLearningProfile`
+- Line 1211 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1351 · **unknown** · matched `organizationalLearningProfile`
+- Line 1356 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1401 · **unknown** · matched `organizationalLearningProfile`
+- Line 1406 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1513 · **unknown** · matched `organizationalLearningProfile`
+- Line 1518 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1536 · **unknown** · matched `organizationalLearningProfile`
+- Line 1541 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile,`
-- Line 1679 · **unknown** · matched `organizationalLearningProfile`
+- Line 1684 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile.learningVelocity,`
-- Line 1682 · **unknown** · matched `organizationalLearningProfile`
+- Line 1687 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile.learningVelocityScore,`
-- Line 1685 · **unknown** · matched `organizationalLearningProfile`
+- Line 1690 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile.understandingGrowth,`
-- Line 1688 · **unknown** · matched `organizationalLearningProfile`
+- Line 1693 · **unknown** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile.memoryGrowth,`
-- Line 1776 · **type** · matched `organizationalLearningProfile`
+- Line 1781 · **type** · matched `organizationalLearningProfile`
   - `organizationalLearningProfile:`
-- Line 1777 · **unknown** · matched `organizationalLearningProfile`
+- Line 1782 · **unknown** · matched `organizationalLearningProfile`
   - `typeof organizationalLearningProfile;`
 
 #### Executive
@@ -523,6 +526,23 @@ This section records source-code references. It supplements, but does not replac
   - `"CAP-LRN-002",`
 - Line 250 · **unknown** · matched `organizationalLearningProfile`
   - `"OrganizationalLearningProfile",`
+
+##### `scripts/product/capabilitySurvivalManifest.ts`
+
+- Line 32 · **unknown** · matched `CAP-LRN-002`
+  - `\| "CAP-LRN-002"`
+- Line 203 · **unknown** · matched `CAP-LRN-002`
+  - `capabilityId: "CAP-LRN-002",`
+
+##### `scripts/product/validateCapabilitySurvival.ts`
+
+- Line 16 · **unknown** · matched `CAP-LRN-002`
+  - `"CAP-LRN-002",`
+
+##### `scripts/product/validateWhyThisEvidenceMatters.ts`
+
+- Line 437 · **unknown** · matched `CAP-LRN-002`
+  - `"CAP-LRN-002",`
 
 ## Interpretation
 

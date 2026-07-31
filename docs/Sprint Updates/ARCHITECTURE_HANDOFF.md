@@ -1,50 +1,12 @@
 # Discovery Architecture Handoff
 
-Generated: 2026-07-25T18:39:04.185Z
+Generated: 2026-07-31T16:33:57.909Z
 
 ## Purpose
 
 This document is the canonical architecture handoff for beginning a new Discovery sprint or chat.
 
 Before proposing a new capability, use this document to verify whether the responsibility, cognitive object, canonical producer, Runtime destination, or executive destination already exists.
-
-## Canonical Product Communication Boundary
-
-The current product architecture is question-first:
-
-```text
-user question
-→ admitted canonical Evidence
-→ canonical cognition
-→ deterministic, non-authoritative Product Translation
-→ Supported | Provisional | Insufficient Product Understanding
-→ Maximum Truthful Utility
-→ user-facing experience
-```
-
-Product-owned Evidence Roles preserve lineage, confidence, ordering, and
-organization isolation while creating no engine or Runtime authority.
-Discovery exposes understanding rather than raw Mechanisms, Beliefs, Theories,
-or Conditions.
-
-Organizational Functions Experiment 001 is complete. Its recommendation is a
-reusable non-authoritative interpretation layer, but Organizational Functions
-remain benchmark-only and non-canonical. The next recommended research is
-Evidence acquisition as a second independent consumer.
-
-## Canonical Fitness Function
-
-Discovery optimizes for one outcome: increasing Truthful Organizational
-Understanding over time. Decision utility, Evidence acquisition,
-communication, learning, and longitudinal understanding are supporting
-capabilities. Truthfulness and Model Stewardship—including governance,
-permissions, determinism, historical truth, and system sustainability—are
-non-compensable constraints.
-
-Understanding Freshness and Understanding Evolution are the two canonical
-parts of Longitudinal Understanding. Expected Understanding Gain and
-Understanding Opportunity are future concepts only; neither authorizes
-production implementation.
 
 ## Permanent Development Rule
 

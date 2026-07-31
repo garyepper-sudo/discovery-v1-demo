@@ -1,6 +1,6 @@
 # Capability Trace — Executive Assessment
 
-Generated: 2026-07-25T18:38:56.562Z
+Generated: 2026-07-31T16:33:11.631Z
 
 ## Verified Architecture
 
@@ -66,7 +66,6 @@ None declared.
 
 Review these files to determine whether they should be registered as consumers, validators, projections, simulations, or supporting implementations.
 
-- `app/discovery-v1/page.tsx`
 - `components/executive-v2/assessment/ExecutiveAssessmentCard.tsx`
 - `components/executive-v2/briefing/ExecutiveBriefing.tsx`
 - `components/executive-v2/capabilities/ExecutiveCapabilityDefinition.tsx`
@@ -84,6 +83,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `components/product-shell/data/buildOrganizationExperienceView.ts`
 - `components/product-shell/data/buildOrganizationModelContext.ts`
 - `components/product-shell/data/buildResearchExperienceView.ts`
+- `components/product-shell/data/composeActivatedYourOrganization.ts`
 - `engine/benchmark/auditCapability.ts`
 - `engine/benchmark/auditUnderstandingLayers.ts`
 - `engine/benchmark/benchmarkReporter.ts`
@@ -168,6 +168,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `scripts/cognition/generateCognitiveRegistry.mjs`
 - `scripts/cognition/renderSprintStartup.mjs`
 - `scripts/cognition/reviewCognitiveDomain.mjs`
+- `scripts/product/validateAlphaYourOrganizationActivation.ts`
 - `scripts/product/validateAskExperience.ts`
 - `scripts/product/validateLivingInteractionLoop.ts`
 - `scripts/product/validateOrganizationExperience.ts`
@@ -201,11 +202,11 @@ This section records source-code references. It supplements, but does not replac
 | Runtime | ✅ Found | 23 |
 | Executive | ✅ Found | 9 |
 | Projection | ✅ Found | 42 |
-| UI | ✅ Found | 34 |
+| UI | ✅ Found | 35 |
 | API | ❌ Not found | 0 |
 | Simulation | ✅ Found | 21 |
 | Benchmark | ✅ Found | 311 |
-| Other | ✅ Found | 16 |
+| Other | ✅ Found | 18 |
 
 ### Detailed Matches
 
@@ -453,7 +454,7 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/types.ts`
 
-- Line 553 · **type** · matched `executiveAssessment`
+- Line 563 · **type** · matched `executiveAssessment`
   - `executiveAssessment?: OrganizationalAssessment;`
 
 ##### `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
@@ -494,50 +495,50 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 15 · **import** · matched `executiveAssessment`
   - `import { buildExecutiveAssessment } from "../model/judgment/buildExecutiveAssessment";`
-- Line 107 · **type** · matched `executiveAssessment`
+- Line 108 · **type** · matched `executiveAssessment`
   - `executiveAssessment?: any;`
-- Line 901 · **definition** · matched `executiveAssessment`
+- Line 906 · **definition** · matched `executiveAssessment`
   - `const executiveAssessment = buildExecutiveAssessment({`
-- Line 915 · **unknown** · matched `executiveAssessment`
+- Line 920 · **unknown** · matched `executiveAssessment`
   - `const runtimeWithExecutiveAssessment:`
-- Line 921 · **unknown** · matched `executiveAssessment`
+- Line 926 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 936 · **unknown** · matched `executiveAssessment`
+- Line 941 · **unknown** · matched `executiveAssessment`
   - `runtimeWithExecutiveAssessment,`
-- Line 943 · **unknown** · matched `executiveAssessment`
+- Line 948 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 967 · **unknown** · matched `executive-assessment`
+- Line 972 · **unknown** · matched `executive-assessment`
   - `understanding.source === "executive-assessment",`
-- Line 1038 · **unknown** · matched `Executive Assessment`
+- Line 1043 · **unknown** · matched `Executive Assessment`
   - `"Executive Assessment",`
-- Line 1039 · **unknown** · matched `executiveAssessment`
+- Line 1044 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 1092 · **unknown** · matched `executiveAssessment`
+- Line 1097 · **unknown** · matched `executiveAssessment`
   - `executiveAssessmentConfidence:`
-- Line 1093 · **unknown** · matched `executiveAssessment`
+- Line 1098 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment.confidence,`
-- Line 1194 · **unknown** · matched `executiveAssessment`
+- Line 1199 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 1387 · **unknown** · matched `executiveAssessment`
+- Line 1392 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 1449 · **unknown** · matched `executiveAssessment`
+- Line 1454 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 1663 · **unknown** · matched `executiveAssessment`
+- Line 1668 · **unknown** · matched `executiveAssessment`
   - `executiveAssessmentConfidence:`
-- Line 1664 · **unknown** · matched `executiveAssessment`
+- Line 1669 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment.confidence,`
-- Line 1710 · **type** · matched `executiveAssessment`
+- Line 1715 · **type** · matched `executiveAssessment`
   - `executiveAssessment:`
-- Line 1711 · **unknown** · matched `executiveAssessment`
+- Line 1716 · **unknown** · matched `executiveAssessment`
   - `typeof executiveAssessment;`
 
 ##### `engine/v3/runtime/organizationRuntime.ts`
 
-- Line 187 · **unknown** · matched `Executive Assessment`
+- Line 197 · **unknown** · matched `Executive Assessment`
   - `* Executive Assessment.`
-- Line 196 · **unknown** · matched `Executive Assessment`
+- Line 206 · **unknown** · matched `Executive Assessment`
   - `* Executive Assessment, Executive Recommendation, organizational state,`
-- Line 366 · **unknown** · matched `Executive Assessment`
+- Line 376 · **unknown** · matched `Executive Assessment`
   - `* No canonical recommendation exists until Executive Assessment`
 
 ##### `engine/v3/runtime/organizationalUnderstandingState.ts`
@@ -776,10 +777,12 @@ This section records source-code references. It supplements, but does not replac
 - Line 84 · **read** · matched `executiveAssessment`
   - `const assessment = record(memory.executiveAssessment);`
 
-##### `app/discovery-v1/page.tsx`
+##### `components/product-shell/data/composeActivatedYourOrganization.ts`
 
-- Line 59 · **unknown** · matched `Executive Assessment`
-  - `"Forming the executive assessment",`
+- Line 168 · **type** · matched `executiveAssessment`
+  - `executiveAssessment?: {`
+- Line 175 · **read** · matched `executiveAssessment`
+  - `const judgment = memory.executiveAssessment?.primaryJudgment;`
 
 #### Simulation
 
@@ -1645,6 +1648,13 @@ This section records source-code references. It supplements, but does not replac
   - `"CAP-UND-005",`
 - Line 219 · **unknown** · matched `executiveAssessment`
   - `"ExecutiveAssessment",`
+
+##### `scripts/product/validateAlphaYourOrganizationActivation.ts`
+
+- Line 142 · **type** · matched `executiveAssessment`
+  - `executiveAssessment: {`
+- Line 145 · **assignment** · matched `executiveAssessment`
+  - `}).executiveAssessment = {`
 
 ##### `scripts/product/validateAskExperience.ts`
 

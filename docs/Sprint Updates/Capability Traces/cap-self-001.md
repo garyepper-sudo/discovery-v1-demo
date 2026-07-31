@@ -1,6 +1,6 @@
 # Capability Trace — Theory Validation
 
-Generated: 2026-07-25T18:39:02.274Z
+Generated: 2026-07-31T16:33:16.263Z
 
 ## Verified Architecture
 
@@ -93,6 +93,10 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
 - `scripts/cognition/generateCognitiveRegistry.mjs`
 - `scripts/cognition/reviewCognitiveDomain.mjs`
+- `scripts/product/capabilitySurvivalManifest.ts`
+- `scripts/product/validateCapabilitySurvival.ts`
+- `scripts/product/validateWhyDiscoveryBelievesThis.ts`
+- `scripts/product/validateWhyThisEvidenceMatters.ts`
 
 ## Structural Search
 
@@ -127,7 +131,7 @@ This section records source-code references. It supplements, but does not replac
 | API | ❌ Not found | 0 |
 | Simulation | ❌ Not found | 0 |
 | Benchmark | ✅ Found | 125 |
-| Other | ✅ Found | 6 |
+| Other | ✅ Found | 11 |
 
 ### Detailed Matches
 
@@ -727,6 +731,28 @@ This section records source-code references. It supplements, but does not replac
   - `"CAP-SELF-001",`
 - Line 251 · **unknown** · matched `theoryValidation`
   - `"TheoryValidation",`
+
+##### `scripts/product/capabilitySurvivalManifest.ts`
+
+- Line 29 · **unknown** · matched `CAP-SELF-001`
+  - `\| "CAP-SELF-001"`
+- Line 143 · **unknown** · matched `CAP-SELF-001`
+  - `capabilityId: "CAP-SELF-001",`
+
+##### `scripts/product/validateCapabilitySurvival.ts`
+
+- Line 18 · **unknown** · matched `CAP-SELF-001`
+  - `"CAP-SELF-001",`
+
+##### `scripts/product/validateWhyDiscoveryBelievesThis.ts`
+
+- Line 227 · **unknown** · matched `CAP-SELF-001`
+  - `capabilityIds: ["CAP-UND-006", "CAP-SELF-001", "CAP-SELF-002", "CAP-COM-001"],`
+
+##### `scripts/product/validateWhyThisEvidenceMatters.ts`
+
+- Line 433 · **unknown** · matched `CAP-SELF-001`
+  - `"CAP-SELF-001",`
 
 ## Interpretation
 

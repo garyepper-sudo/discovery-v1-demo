@@ -2,130 +2,78 @@
 
 **Branch:** `main`
 
+**Current phase:** contract implementation and product validation
+
+**Architecture posture:** core architecture stable enough for implementation
+
 ## Current Milestone
 
-Discovery Alpha v1.0 is operational. Acceptance Replay 001 passed and the
-accepted Production architecture is frozen by default. The canonical baseline
-is `docs/Architecture/Canon/DISCOVERY_ALPHA_V1_OPERATIONAL_BASELINE.md`.
-
-This proves operational readiness, not product-market fit, scalable
-onboarding, or commercial validation.
-
-The current product communication architecture is now canonical:
-
-- question-first onboarding is complete;
-- Product Translation is deterministic and non-authoritative;
-- Product Understanding communicates Supported, Provisional, or Insufficient;
-- Truthful Utility is complete at the current product boundary;
-- product-owned Evidence Roles are complete;
-- Organizational Functions Experiment 001 is complete and remains
-  benchmark-only.
-
-The Discovery Intelligence Evaluation Framework now defines the canonical
-fitness function: increase Truthful Organizational Understanding over time.
-Truthful Utility, Evidence acquisition, communication, learning, and
-longitudinal understanding are supporting capabilities. Truthfulness and Model
-Stewardship—including governance, permissions, determinism, and system
-sustainability—are hard promotion constraints.
-
-## Production State
-
-- Health: READY; configuration, database, and Runtime true
-- Canonical entry: `/your-organization`
-- Current organization: `atlas-manufacturing-simulation`
-- Alpha: enabled for the configured organization
-- Runtime provisioning: disabled
-- Access provisioning: disabled
-- Temporary provisioning secret: absent
-- Acceptance governance snapshot: access 1, lifecycle 1, disclosure 21
-- Active transactions at acceptance: 0
-- Runtime: private, organization-scoped, read-only during product rendering
-
-The disclosure count is append-only and may grow through authorized use.
-Every future delta must be attributed.
-
-## Product and Security Boundary
-
-The canonical hosted journey is Home, Orient, Ask, Understand, Plan, Learn,
-Respond, Follow, and Return. The legacy dashboard is not primary.
-
-```text
-Verified Clerk identity
-→ durable access lookup
-→ authorized organization resolution
-→ private Runtime retrieval
-→ canonical projection
-→ disclosure qualification
-→ product view model
-→ canonical Discovery Experience
-```
-
-Durable access is authoritative. Authorization precedes Runtime retrieval.
-Denied and ambiguous requests fail closed. Logout protects refresh, browser
-Back, and direct routes; re-login reuses existing access and lifecycle state.
-
-```text
-user question
-→ admitted canonical Evidence
-→ canonical cognition
-→ Product Translation
-→ Product Understanding
-→ Truthful Utility
-→ canonical Discovery Experience
-```
-
-Production cognition and Runtime remain unchanged. Evidence Roles are
-product-owned and non-authoritative. Organizational Functions have no
-production consumer.
-
-## Truthfulness and Capability State
-
-Quantitative organizational information may appear only through Runtime,
-Projection, Authorized Disclosure, View Model, and UI. Missing values are
-Unavailable, Undisclosed, or Trend unavailable.
-
-Ask and Respond are provisional. Plan and Follow are read-only. These states
-must not imply durable cognition or persistence.
-
-## Architecture and Validation
-
-Runtime, governance, authorization, organization resolution, projection,
-disclosure, health, provisioning, and canonical experience boundaries are
-frozen unless a demonstrated benchmark or Production defect justifies a
-bounded, validated, explicitly documented revision.
-
-- Full validation: 15/15
-- Quantitative truthfulness: 18 checks
-- Experience promotion: 19 checks
-- Architecture: 295/302, 98%
-- Historical architecture findings: 7
-- Historical React Hook warnings: 6
-
-No new failure or silent increase is acceptable.
+The governed Question-to-Understanding backend is implemented through explicit
+Understanding Recommendation authorization. Remaining Objective, Decision,
+Outcome, Learning, and Insight operations are sequenced for implementation.
 
 ## Current Phase
 
-The initial platform-construction and Production-activation phase is complete.
-The current program is **Discovery Phase 2 — Customer Value and
-Organizational Understanding**.
+Contract implementation and product validation. Architecture discovery is
+substantially complete for the complete backend workflow vision.
 
-The immediate next sprint is **Phase 2.1 — Repeatable Organization
-Activation**. Subsequent priorities are AI-guided onboarding, goal-directed
-incremental retrieval, the longitudinal Atlas demonstration organization,
-understanding quality, fine-grained disclosure, and design-partner readiness.
-Broad infrastructure rebuilding is deprioritized unless evidence requires it.
+## Current Objective
 
-The next recommended research is Evidence acquisition as a second independent
-consumer of the benchmark-only Organizational Function projection. This work
-must remain shadow-only and cannot imply canonical promotion.
+Implement Organizational Objective and Optimization Context contracts together
+without beginning Objective Recommendation generation or final frontend wiring.
 
-## Documentation and Repository Maintenance
+## Next Priority
 
-Architecture canon governs deployment evidence, handoffs, operator guides, and
-startup output. A future bounded consolidation may reconcile overlapping
-documentation families without deleting historical research or sprint
-evidence.
+Phase 2D.1 Objective and Optimization Context persistence. In parallel, run
+read-only Material Information Acquisition live shadow calibration.
 
-Approximately 524 duplicate untracked files ending in ` 2` or ` 3` remain a
-separate maintenance task. They must not block this milestone and are not part
-of the operational baseline package.
+## Product identity
+
+Discovery is a governed organizational learning and intelligence system, not a chatbot, dashboard, document repository, generic autonomous agent, or executive-only product. Its persistent state is organizational understanding. Questions, Answers, confidence, Recommendations, Decisions, Outcomes, Learning, and Insights inspect, improve, test, or revise that state.
+
+## Implemented backend boundary
+
+```text
+Question → authorized retrieval → Evidence admission
+→ Answer or targeted abstention → Answer-owned Confidence
+→ Unknown → Understanding Recommendation
+→ explicit authorization receipt → Unknown targeted
+```
+
+Governed Google Drive retrieval is live-proven except final controlled revocation. Answer, Unknown, Confidence-Improvement, and dual Recommendation-purpose contracts are committed. Authorization precedes Runtime and connector access; organization isolation and exact lineage fail closed.
+
+## Designed remaining backend
+
+```text
+Objective Discovery → governed Objective + Optimization Context
+→ Objective Recommendation → Decision → Outcome → Learning → Insight
+```
+
+Objective and Optimization Context contracts, Objective Discovery, and Material Information Acquisition are benchmark-supported designs only. Objective Recommendation generation, bounded forecasting, complete Decision/Outcome/Learning operations, and Insight lifecycle remain unimplemented.
+
+Material Information Acquisition synthetic calibration supports the contract but not production selection. The next evidence gate is read-only live shadow calibration against independently chosen, owner-executed actions.
+
+## Frontend
+
+`/product-alpha` is retained as an isolated fixture and authenticated local-sandbox acceptance surface. It consumes `ProductQuestionWorkspace` through approved adapters. It is not canonical final UX, not daily-use ready, not promoted, and does not replace `/your-organization`. Final frontend wireframes and wiring follow backend workflow completion.
+
+## Invariants
+
+- Authorization and governance are hard gates.
+- Evidence and confidence retain exact ownership and lineage.
+- History is immutable; corrections supersede rather than overwrite.
+- No unsupported forecast certainty or fabricated Confidence.
+- No automatic Decision creation.
+- No autonomous external action without authority and consent.
+- Frontends render Product contracts and never interpret Runtime or cognition.
+
+## Next implementation order
+
+1. Phase 2D.1 — Objective and Optimization Context persistence together.
+2. Phase 2D.2 — Objective Discovery operation.
+3. Phase 2D.3 — Objective Recommendation candidates.
+4. Phase 2E — Decision operation completion.
+5. Phase 2F — Outcome and Learning completion.
+6. Phase 2G — Insight lifecycle.
+
+Parallel track: Material Information Acquisition live shadow calibration. Final frontend track begins only after the required backend operations are available and accepted.
