@@ -111,7 +111,12 @@ function searchProjection(
   question: ProductQuestion,
 ): { plan: ProductSearchPlan; receipt: ProductSearchReceipt | null } {
   const current = result(runtime);
-  const sources = current?.evidence ?? [];
+  const durableQuestion = productQuestionEvents(runtime).some(
+    (event) => event.questionId === question.id,
+  );
+  const sources = durableQuestion && question.searchHistory.length === 0
+    ? []
+    : current?.evidence ?? [];
   const sourceScopes = [...new Map(sources
     .filter((item) => item.sourceId)
     .map((item) => [item.sourceId!, {
@@ -335,6 +340,16 @@ export function buildProductQuestionWorkspace(input: {
   const answered = answer.kind === "answer" ? answer : null;
   const decision = projectDecision(input.runtime, question, answered);
   const outcome = projectOutcome(input.runtime, decision.active);
+  const explicitDurableQuestion = Boolean(
+    input.questionId
+    && productQuestionEvents(input.runtime).some(
+      (event) => event.questionId === question.id,
+    ),
+  );
+  const questionHasActivity = !explicitDurableQuestion || question.timeline.some(
+    (entry) => entry.type !== "question_created",
+  );
+  const previousAnswer = question.answerHistory.at(-2) ?? null;
   return {
     contractVersion: PRODUCT_CONTRACT_VERSION,
     question,
@@ -351,11 +366,13 @@ export function buildProductQuestionWorkspace(input: {
     activeDecision: decision.active,
     latestOutcomeReview: outcome,
     modelState: modelState(input.runtime),
-    latestChange: {
+    latestChange: !questionHasActivity ? null : {
       questionId: question.id,
-      previousAnswerRevision: input.runtime.metadata.investigationCount > 1 ? input.runtime.metadata.investigationCount - 1 : null,
+      previousAnswerRevision: previousAnswer?.revision ?? null,
       currentAnswerRevision: answered?.revision ?? null,
-      primaryChange: answered ? input.runtime.metadata.investigationCount > 1 ? "answer_revised" : "answer_created" : "underdetermined",
+      primaryChange: answered
+        ? question.answerHistory.length > 1 ? "answer_revised" : "answer_created"
+        : "underdetermined",
       summary: answered ? "Discovery formed an answer from the latest authorized evidence." : "The current evidence does not support a sufficiently specific answer.",
       changedFields: answered ? ["answer", "confidence", "improvementPlan", "modelState"] : ["modelState"],
       occurredAt: input.runtime.metadata.updatedAt,

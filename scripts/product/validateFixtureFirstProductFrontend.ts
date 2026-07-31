@@ -195,7 +195,10 @@ function validateNoDeadActions(): void {
   );
   assert.equal(enabledActionTypes.has("add_information"), true);
   assert.match(component, /onClick=\{\(\) => setComposerOpen\(true\)\}/);
-  assert.match(component, /disabled=\{!contribution\.trim\(\)\}/);
+  assert.match(
+    component,
+    /disabled=\{!contribution\.trim\(\)(?: \|\| mutation !== null)?\}/,
+  );
   assert.doesNotMatch(component, />Connect (Drive|Slack|Email)</);
   assert.doesNotMatch(component, /fake|setTimeout|progress.*%/i);
 }

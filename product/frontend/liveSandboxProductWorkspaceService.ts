@@ -118,3 +118,131 @@ async function investigate(
     }),
   };
 }
+
+function unavailableHistory(workspace: ProductQuestionWorkspace): ProductHistoricalAnswerResolution[] {
+  return workspace.question.answerHistory.map((entry) => ({
+    status: "unavailable",
+    answerId: entry.answerId,
+    questionRevision: entry.revision,
+    reason: "source-missing",
+  }));
+}
+
+export async function readLiveSandbox(input: {
+  userId: string;
+  organizationId: string;
+  questionId?: string;
+  adoptLegacy?: boolean;
+}): Promise<LiveSandboxSnapshot> {
+  return withLiveSandboxProductAdapter({
+    ...input,
+    operation: async (adapter) => {
+      if (input.adoptLegacy) {
+        await adapter.adoptLegacyQuestions({
+          userId: input.userId,
+          organizationId: input.organizationId,
+          operation: {
+            requestId: `product-alpha-adopt:${input.organizationId}`,
+            operatorId: input.userId,
+          },
+        });
+      }
+      const questions = await adapter.listQuestions({
+        userId: input.userId,
+        organizationId: input.organizationId,
+      });
+      const questionId = input.questionId && questions.some((item) => item.id === input.questionId)
+        ? input.questionId
+        : questions[0]?.id;
+      const workspace = questionId
+        ? (await adapter.getQuestionWorkspace({
+            userId: input.userId,
+            organizationId: input.organizationId,
+            questionId,
+          })).workspace
+        : null;
+      return {
+        contractVersion: "1",
+        organizationId: input.organizationId,
+        questions,
+        workspace,
+        historicalAnswers: workspace ? unavailableHistory(workspace) : [],
+      };
+    },
+  });
+}
+
+export async function mutateLiveSandbox(input: {
+  userId: string;
+  organizationId: string;
+  command:
+    | { type: "create"; question: string; idempotencyKey: string }
+    | { type: "contribute"; questionId: string; content: string; idempotencyKey: string }
+    | { type: "archive"; questionId: string; idempotencyKey: string };
+}): Promise<LiveSandboxSnapshot> {
+  return withLiveSandboxProductAdapter({
+    ...input,
+    operation: async (adapter) => {
+      const now = new Date().toISOString();
+      const operation = {
+        requestId: input.command.idempotencyKey,
+        operatorId: input.userId,
+      };
+      let questionId: string;
+      if (input.command.type === "create") {
+        const result = await adapter.createQuestion({
+          userId: input.userId,
+          organizationId: input.organizationId,
+          question: input.command.question,
+          createdAt: now,
+          idempotencyKey: input.command.idempotencyKey,
+          operation,
+        });
+        questionId = result.workspace.question.id;
+      } else if (input.command.type === "contribute") {
+        const result = await adapter.contributeEvidence({
+          userId: input.userId,
+          organizationId: input.organizationId,
+          questionId: input.command.questionId,
+          contribution: {
+            sourceId: `product-alpha:${input.command.idempotencyKey}`,
+            sourceType: "paste",
+            content: input.command.content,
+            contributedAt: now,
+            idempotencyKey: input.command.idempotencyKey,
+          },
+          operation,
+        });
+        questionId = result.workspace.question.id;
+      } else {
+        await adapter.archiveQuestion({
+          userId: input.userId,
+          organizationId: input.organizationId,
+          questionId: input.command.questionId,
+          archivedAt: now,
+          operation,
+        });
+        questionId = "";
+      }
+      const questions = await adapter.listQuestions({
+        userId: input.userId,
+        organizationId: input.organizationId,
+      });
+      if (!questionId) questionId = questions[0]?.id ?? "";
+      const workspace = questionId
+        ? (await adapter.getQuestionWorkspace({
+            userId: input.userId,
+            organizationId: input.organizationId,
+            questionId,
+          })).workspace
+        : null;
+      return {
+        contractVersion: "1",
+        organizationId: input.organizationId,
+        questions,
+        workspace,
+        historicalAnswers: workspace ? unavailableHistory(workspace) : [],
+      };
+    },
+  });
+}

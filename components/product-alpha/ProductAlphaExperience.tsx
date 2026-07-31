@@ -1,17 +1,33 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { ProductFrontendFixture } from "../../product/frontend";
+import type {
+  ProductHistoricalAnswerResolution,
+  ProductQuestionSummary,
+} from "../../product/integration";
 import type {
   ProductAnswer,
   ProductImprovementAction,
   ProductModelDimension,
+  ProductQuestionWorkspace,
 } from "../../product/workflow/contracts";
 import styles from "./ProductAlphaExperience.module.css";
 
 type Props = {
-  initialFixtureId: string;
+  mode: "fixture" | "live-sandbox";
+  initialFixtureId?: string;
   fixtures: ProductFrontendFixture[];
+  organizationId?: string;
+  initialQuestionId?: string;
+};
+
+type ProductAlphaSnapshot = {
+  contractVersion: "1";
+  organizationId: string;
+  questions: ProductQuestionSummary[];
+  workspace: ProductQuestionWorkspace | null;
+  historicalAnswers: ProductHistoricalAnswerResolution[];
 };
 
 const statusText: Record<string, string> = {
@@ -36,6 +52,31 @@ function displayDate(value: string): string {
 
 function supportLabel(answer: ProductAnswer): string {
   return `${answer.confidence.level.charAt(0).toUpperCase()}${answer.confidence.level.slice(1)} support`;
+}
+
+async function mutationIdempotencyKey(
+  organizationId: string,
+  command: Record<string, string>,
+): Promise<string> {
+  const normalizedCommand = Object.fromEntries(
+    Object.entries(command).map(([key, value]) => [
+      key,
+      key === "content" || key === "question"
+        ? value.trim().replace(/\s+/g, " ")
+        : value,
+    ]),
+  );
+  const canonical = JSON.stringify(
+    Object.entries({ organizationId, ...normalizedCommand })
+      .sort(([left], [right]) => left.localeCompare(right)),
+  );
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(canonical),
+  );
+  return `product-alpha:${Array.from(new Uint8Array(digest))
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("")}`;
 }
 
 function ModelDimension({ name, dimension }: {
@@ -87,39 +128,181 @@ function Improvement({ action, onUse }: {
   );
 }
 
-export function ProductAlphaExperience({ initialFixtureId, fixtures }: Props) {
+export function ProductAlphaExperience({
+  mode,
+  initialFixtureId,
+  fixtures,
+  organizationId,
+  initialQuestionId,
+}: Props) {
   const fixtureMap = useMemo(
     () => new Map(fixtures.map((fixture) => [fixture.id, fixture])),
     [fixtures],
   );
-  const [fixtureId, setFixtureId] = useState(initialFixtureId);
+  const [fixtureId, setFixtureId] = useState(initialFixtureId ?? fixtures[0]?.id ?? "");
+  const initialFixture = fixtureMap.get(initialFixtureId ?? "") ?? fixtures[0];
+  const [liveSnapshot, setLiveSnapshot] = useState<ProductAlphaSnapshot | null>(null);
+  const [loading, setLoading] = useState(mode === "live-sandbox");
+  const [mutation, setMutation] = useState<"create" | "contribute" | "archive" | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [composerOpen, setComposerOpen] = useState(false);
+  const [newQuestionOpen, setNewQuestionOpen] = useState(false);
   const [questionPickerOpen, setQuestionPickerOpen] = useState(false);
   const [contribution, setContribution] = useState("");
-  const fixture = fixtureMap.get(fixtureId) ?? fixtures[0]!;
-  const { workspace } = fixture;
+  const [newQuestion, setNewQuestion] = useState("");
+  const fixture = fixtureMap.get(fixtureId) ?? initialFixture;
+  const snapshot: ProductAlphaSnapshot | null = mode === "live-sandbox"
+    ? liveSnapshot
+    : fixture
+      ? {
+          contractVersion: "1",
+          organizationId: fixture.workspace.question.organizationId,
+          questions: fixture.questions,
+          workspace: fixture.workspace,
+          historicalAnswers: fixture.historicalAnswers,
+        }
+      : null;
+  const workspace = snapshot?.workspace ?? null;
+  const questions = snapshot?.questions ?? [];
+  const historicalAnswers = snapshot?.historicalAnswers ?? [];
+  const activeQuestions = questions.filter((question) => question.status !== "archived");
+  const archivedQuestions = questions.filter((question) => question.status === "archived");
+
+  async function loadLive(questionId?: string) {
+    if (!organizationId) return;
+    setLoading(true);
+    setError(null);
+    const parameters = new URLSearchParams({ organizationId });
+    if (questionId) parameters.set("questionId", questionId);
+    try {
+      const response = await fetch(`/api/product-alpha?${parameters}`, {
+        cache: "no-store",
+      });
+      const body = await response.json() as ProductAlphaSnapshot & { error?: string };
+      if (!response.ok) throw new Error(body.error || "Discovery could not load this understanding.");
+      setLiveSnapshot(body);
+      const selected = body.workspace?.question.id;
+      const url = new URL(window.location.href);
+      if (selected) url.searchParams.set("questionId", selected);
+      else url.searchParams.delete("questionId");
+      window.history.replaceState(null, "", url);
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Discovery could not load this understanding.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    if (mode === "live-sandbox") void loadLive(initialQuestionId);
+    // The route identity is fixed for the mounted workspace.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, organizationId, initialQuestionId]);
+
+  async function mutate(command: Record<string, string>) {
+    if (!organizationId) return;
+    setError(null);
+    const kind = command.type as "create" | "contribute" | "archive";
+    setMutation(kind);
+    try {
+      const idempotencyKey = await mutationIdempotencyKey(
+        organizationId,
+        command,
+      );
+      const response = await fetch("/api/product-alpha", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...command,
+          organizationId,
+          idempotencyKey,
+        }),
+      });
+      const body = await response.json() as ProductAlphaSnapshot & { error?: string };
+      if (!response.ok) throw new Error(body.error || "Discovery could not save this update.");
+      setLiveSnapshot(body);
+      const selected = body.workspace?.question.id;
+      const url = new URL(window.location.href);
+      if (selected) url.searchParams.set("questionId", selected);
+      else url.searchParams.delete("questionId");
+      window.history.replaceState(null, "", url);
+      return true;
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Discovery could not save this update.");
+      return false;
+    } finally {
+      setMutation(null);
+    }
+  }
+
+  if (!workspace && loading) {
+    return <main className={styles.app}><section className={styles.workspace}><p>Loading Questions…</p></section></main>;
+  }
+
+  if (!workspace && mode === "live-sandbox") {
+    return (
+      <main className={styles.app} data-mode={mode}>
+        <aside className={styles.sidebar} aria-label="Question navigation">
+          <div className={styles.brand}><span className={styles.brandMark}>◌</span><span>Discovery</span></div>
+        </aside>
+        <section className={styles.workspace}>
+          <header className={styles.workspaceHeader}>
+            <div><span className={styles.eyebrow}>Live sandbox</span><h1>Start with a Question</h1></div>
+          </header>
+          {error ? <div role="alert" className={styles.boundedMessage}>{error}</div> : null}
+          <section className={styles.composer}>
+            <label htmlFor="new-question">What do you want Discovery to understand?</label>
+            <textarea id="new-question" value={newQuestion} onChange={(event) => setNewQuestion(event.target.value)} />
+            <button
+              type="button"
+              className={styles.primaryButton}
+              disabled={!newQuestion.trim() || mutation !== null}
+              onClick={async () => {
+                if (await mutate({ type: "create", question: newQuestion })) setNewQuestion("");
+              }}
+            >
+              {mutation === "create" ? "Creating Question…" : "Create Question"}
+            </button>
+          </section>
+        </section>
+      </main>
+    );
+  }
+
+  if (!workspace || !fixture && mode === "fixture") return null;
   const answer = workspace.answer?.kind === "answer" ? workspace.answer : null;
   const abstention = workspace.answer?.kind === "abstention" ? workspace.answer : null;
-  const activeQuestions = fixture.questions.filter((question) => question.status !== "archived");
-  const archivedQuestions = fixture.questions.filter((question) => question.status === "archived");
   const primaryImprovement = answer?.bestNextImprovement
     ?? abstention?.bestNextImprovement
     ?? workspace.improvementPlan?.bestNextAction
     ?? null;
+  const actionEnabled = (type: string) =>
+    workspace?.permittedActions.some((action) => action.type === type && action.enabled) ?? false;
 
   function transition(action: string, fallback: string) {
+    if (mode === "live-sandbox" || !fixture) return;
     const target = fixture.transitions[action] ?? fallback;
     if (fixtureMap.has(target)) setFixtureId(target);
   }
 
-  function submitContribution() {
-    transition("add_information", answer ? "answer-revised" : "moderate-confidence-answer");
+  async function submitContribution() {
+    if (!workspace) return;
+    if (mode === "live-sandbox") {
+      const saved = await mutate({
+        type: "contribute",
+        questionId: workspace.question.id,
+        content: contribution,
+      });
+      if (!saved) return;
+    } else {
+      transition("add_information", answer ? "answer-revised" : "moderate-confidence-answer");
+    }
     setContribution("");
     setComposerOpen(false);
   }
 
   return (
-    <main className={styles.app} data-fixture={fixture.id}>
+    <main className={styles.app} data-mode={mode} data-fixture={mode === "fixture" ? fixture?.id : undefined}>
       <aside className={styles.sidebar} aria-label="Question navigation">
         <div className={styles.brand}>
           <span className={styles.brandMark} aria-hidden="true">◌</span>
@@ -130,7 +313,7 @@ export function ProductAlphaExperience({ initialFixtureId, fixtures }: Props) {
           <button
             type="button"
             aria-label="Review new Question state"
-            onClick={() => setFixtureId("new-question")}
+            onClick={() => mode === "live-sandbox" ? setNewQuestionOpen(true) : setFixtureId("new-question")}
           >
             +
           </button>
@@ -142,15 +325,17 @@ export function ProductAlphaExperience({ initialFixtureId, fixtures }: Props) {
                 <button
                   type="button"
                   className={question.id === workspace.question.id ? styles.questionActive : ""}
-                  onClick={() => setFixtureId(
-                    question.id === "question-retention"
-                      ? "answer-abstention"
-                      : question.id === "question-approval"
-                        ? "decision-committed"
-                        : question.id === "question-cycle-time"
-                          ? "outcome-working"
-                          : "high-confidence-answer"
-                  )}
+                  onClick={() => mode === "live-sandbox"
+                    ? void loadLive(question.id)
+                    : setFixtureId(
+                        question.id === "question-retention"
+                          ? "answer-abstention"
+                          : question.id === "question-approval"
+                            ? "decision-committed"
+                            : question.id === "question-cycle-time"
+                              ? "outcome-working"
+                              : "high-confidence-answer"
+                      )}
                 >
                   <span>{question.title}</span>
                   <small>
@@ -165,21 +350,21 @@ export function ProductAlphaExperience({ initialFixtureId, fixtures }: Props) {
             <details className={styles.archived}>
               <summary>Archived ({archivedQuestions.length})</summary>
               {archivedQuestions.map((question) => (
-                <button key={question.id} type="button" onClick={() => setFixtureId("archived-question")}>
+                <button key={question.id} type="button" onClick={() => mode === "live-sandbox" ? void loadLive(question.id) : setFixtureId("archived-question")}>
                   {question.title}
                 </button>
               ))}
             </details>
           ) : null}
         </nav>
-        <label className={styles.fixtureSelect}>
+        {mode === "fixture" && fixture ? <label className={styles.fixtureSelect}>
           <span>Review fixture</span>
           <select value={fixture.id} onChange={(event) => setFixtureId(event.target.value)}>
             {fixtures.map((item) => (
               <option value={item.id} key={item.id}>{item.label}</option>
             ))}
           </select>
-        </label>
+        </label> : <span className={styles.fixtureSelect}>Local sandbox</span>}
       </aside>
 
       <section className={styles.workspace}>
@@ -190,7 +375,7 @@ export function ProductAlphaExperience({ initialFixtureId, fixtures }: Props) {
             aria-expanded={questionPickerOpen}
             aria-controls="mobile-question-picker"
             onClick={() => {
-              if (fixture.questions.length === 1) setFixtureId("multiple-questions");
+              if (mode === "fixture" && questions.length === 1) setFixtureId("multiple-questions");
               setQuestionPickerOpen((open) => !open);
             }}
           >
@@ -209,27 +394,38 @@ export function ProductAlphaExperience({ initialFixtureId, fixtures }: Props) {
             <button type="button" className={styles.primaryButton} onClick={() => setComposerOpen(true)}>
               Add information
             </button>
+            {mode === "live-sandbox" ? (
+              <button
+                type="button"
+                className={styles.secondaryButton}
+                disabled={mutation !== null}
+                onClick={() => void mutate({ type: "archive", questionId: workspace.question.id })}
+              >
+                {mutation === "archive" ? "Archiving…" : "Archive"}
+              </button>
+            ) : null}
           </div>
         </header>
 
         {questionPickerOpen ? (
           <nav id="mobile-question-picker" className={styles.mobilePicker} aria-label="Select a Question">
-            {fixture.questions.map((question) => (
+            {questions.map((question) => (
               <button
                 type="button"
                 key={question.id}
                 onClick={() => {
-                  setFixtureId(
-                    question.id === "question-retention"
-                      ? "answer-abstention"
-                      : question.id === "question-approval"
-                        ? "decision-committed"
-                        : question.id === "question-cycle-time"
-                          ? "outcome-working"
-                          : question.status === "archived"
-                            ? "archived-question"
-                            : "high-confidence-answer",
-                  );
+                  if (mode === "live-sandbox") void loadLive(question.id);
+                  else setFixtureId(
+                      question.id === "question-retention"
+                        ? "answer-abstention"
+                        : question.id === "question-approval"
+                          ? "decision-committed"
+                          : question.id === "question-cycle-time"
+                            ? "outcome-working"
+                            : question.status === "archived"
+                              ? "archived-question"
+                              : "high-confidence-answer",
+                    );
                   setQuestionPickerOpen(false);
                 }}
               >
@@ -242,6 +438,37 @@ export function ProductAlphaExperience({ initialFixtureId, fixtures }: Props) {
 
         <div className={styles.contentGrid}>
           <div className={styles.primaryColumn}>
+            {error ? (
+              <div role="alert" className={styles.boundedMessage}>
+                {error} <button type="button" onClick={() => void loadLive(workspace.question.id)}>Reload</button>
+              </div>
+            ) : null}
+            {newQuestionOpen ? (
+              <section className={styles.composer} aria-labelledby="new-question-heading">
+                <h2 id="new-question-heading">Create a Question</h2>
+                <textarea
+                  value={newQuestion}
+                  onChange={(event) => setNewQuestion(event.target.value)}
+                  aria-label="New Question"
+                />
+                <div className={styles.fixtureActions}>
+                  <button type="button" onClick={() => setNewQuestionOpen(false)}>Cancel</button>
+                  <button
+                    type="button"
+                    className={styles.primaryButton}
+                    disabled={!newQuestion.trim() || mutation !== null}
+                    onClick={async () => {
+                      if (await mutate({ type: "create", question: newQuestion })) {
+                        setNewQuestion("");
+                        setNewQuestionOpen(false);
+                      }
+                    }}
+                  >
+                    {mutation === "create" ? "Creating Question…" : "Create Question"}
+                  </button>
+                </div>
+              </section>
+            ) : null}
             <section className={styles.answerBlock} aria-labelledby="current-understanding">
               <span className={styles.eyebrow}>Current understanding</span>
               {answer ? (
@@ -303,15 +530,15 @@ export function ProductAlphaExperience({ initialFixtureId, fixtures }: Props) {
                   aria-label="Information to add"
                 />
                 <div className={styles.fixtureActions}>
-                  <button type="button" onClick={() => setContribution("Release-review notes show approval waiting before each missed commitment.")}>
+                  {mode === "fixture" ? <button type="button" onClick={() => setContribution("Release-review notes show approval waiting before each missed commitment.")}>
                     Use upload fixture
-                  </button>
-                  <button type="button" onClick={() => setContribution("The release approver described where handoffs wait and why.")}>
+                  </button> : null}
+                  {mode === "fixture" ? <button type="button" onClick={() => setContribution("The release approver described where handoffs wait and why.")}>
                     Use interview fixture
-                  </button>
+                  </button> : null}
                   <button type="button" onClick={() => setComposerOpen(false)}>Cancel</button>
-                  <button type="button" className={styles.primaryButton} disabled={!contribution.trim()} onClick={submitContribution}>
-                    Add to this Question
+                  <button type="button" className={styles.primaryButton} disabled={!contribution.trim() || mutation !== null} onClick={() => void submitContribution()}>
+                    {mutation === "contribute" ? "Updating this understanding…" : "Add to this Question"}
                   </button>
                 </div>
               </section>
@@ -333,7 +560,7 @@ export function ProductAlphaExperience({ initialFixtureId, fixtures }: Props) {
                   <p>{workspace.decisionDraft.rationale}</p>
                   <strong>{workspace.decisionDraft.readiness.replaceAll("_", " ")}</strong>
                   {workspace.decisionDraft.readinessLimiter ? <small>{workspace.decisionDraft.readinessLimiter}</small> : null}
-                  {workspace.decisionDraft.readiness !== "not_ready" ? (
+                  {mode === "fixture" && actionEnabled("create_decision") ? (
                     <button type="button" className={styles.secondaryButton} onClick={() => transition("create_decision", "decision-committed")}>
                       Review commitment fixture
                     </button>
@@ -351,7 +578,7 @@ export function ProductAlphaExperience({ initialFixtureId, fixtures }: Props) {
                   {workspace.activeDecision.expectedOutcomes.map((outcome) => (
                     <p key={outcome.id}>Expected: {outcome.description}</p>
                   ))}
-                  {!workspace.latestOutcomeReview ? (
+                  {mode === "fixture" && !workspace.latestOutcomeReview && actionEnabled("review_outcome") ? (
                     <button type="button" className={styles.secondaryButton} onClick={() => transition("review_outcome", "outcome-too-early")}>
                       Review outcome fixture
                     </button>
@@ -402,7 +629,7 @@ export function ProductAlphaExperience({ initialFixtureId, fixtures }: Props) {
                 </section>
                 <section>
                   <h3>History</h3>
-                  {fixture.historicalAnswers.map((historical) => historical.status === "resolved" ? (
+                  {historicalAnswers.map((historical) => historical.status === "resolved" ? (
                     <article key={historical.answerId}>
                       <strong>Revision {historical.questionRevision}</strong>
                       <p>{historical.conclusion}</p>
