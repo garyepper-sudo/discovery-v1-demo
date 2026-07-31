@@ -14,6 +14,10 @@ import type {
   ProductConfidenceImprovementResult,
 } from "../improvements/contracts";
 import type {
+  ProductObjectiveRecommendationEligibility,
+  ProductUnderstandingRecommendation,
+} from "../recommendations/contracts";
+import type {
   ProductAnswer,
   ProductAnswerConfidence,
   ProductQuestionWorkspace,
@@ -103,6 +107,17 @@ export type CanonicalImprovementAuthorizationResult = {
 };
 
 export type CanonicalImprovementProposalInput = ProductConfidenceImprovementProposal;
+
+export type CanonicalUnderstandingRecommendationResult = {
+  recommendations: ProductUnderstandingRecommendation[];
+  proposalResult: ProductConfidenceImprovementResult;
+  runtimeRevision: string;
+};
+
+export type CanonicalObjectiveRecommendationEligibilityResult = {
+  eligibility: ProductObjectiveRecommendationEligibility;
+  runtimeRevision: string;
+};
 
 export type CanonicalEvidenceContribution = {
   sourceId: string;

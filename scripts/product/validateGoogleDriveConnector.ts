@@ -226,7 +226,7 @@ function service(
 async function validateSpec() {
   const document = await readFile("docs/Product/WORKFLOW_ACCEPTANCE_SPEC.md", "utf8");
   for (const stage of [
-    "Question", "Search", "Answer", "Confidence", "Improve confidence",
+    "Question", "Search", "Answer", "Confidence", "Understanding Recommendation",
     "Decision", "Outcome", "Model learns", "New insight",
   ]) assert.match(document, new RegExp(`\\| ${stage.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")} \\|`));
   assert.match(document, /Google folder search/);

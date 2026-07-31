@@ -36,6 +36,13 @@ import {
   type ProductConfidenceImprovementProposal,
   type ProductConfidenceImprovementResult,
 } from "../improvements";
+import {
+  evaluateObjectiveRecommendationEligibility as evaluateObjectiveEligibility,
+  projectUnderstandingRecommendation,
+  type ProductObjectiveContext,
+  type ProductOptimizationContextInput,
+  type ProductRecommendationSecondaryEffect,
+} from "../recommendations";
 import { adoptLegacyProductQuestions } from "./adoptLegacyQuestions";
 import type {
   CanonicalEvidenceContribution,
@@ -47,6 +54,8 @@ import type {
   CanonicalUnknownReadResult,
   CanonicalImprovementProposalResult,
   CanonicalImprovementAuthorizationResult,
+  CanonicalUnderstandingRecommendationResult,
+  CanonicalObjectiveRecommendationEligibilityResult,
   ProductQuestionAdoptionReceipt,
   ProductQuestionSummary,
 } from "./contracts";
@@ -446,6 +455,59 @@ export class CanonicalProductWorkspaceAdapter {
       result: generateConfidenceImprovementProposals({
         runtime: stored.runtime, questionId: input.questionId, unknownId: input.unknownId,
         candidates: input.candidates, noSafeOperation: input.noSafeOperation,
+      }),
+      runtimeRevision: stored.revision,
+    };
+  }
+
+  async getUnderstandingRecommendations(input: {
+    userId: string; organizationId: string; questionId: string; unknownId: string;
+    candidates: ProductConfidenceImprovementProposal[];
+    noSafeOperation?: Extract<ProductConfidenceImprovementResult, { kind: "no-safe-operation" }>;
+    secondaryEffects?: Record<string, ProductRecommendationSecondaryEffect[]>;
+  }): Promise<CanonicalUnderstandingRecommendationResult> {
+    const stored = await this.authorizedRuntime(input);
+    const proposalResult = generateConfidenceImprovementProposals({
+      runtime: stored.runtime,
+      questionId: input.questionId,
+      unknownId: input.unknownId,
+      candidates: input.candidates,
+      noSafeOperation: input.noSafeOperation,
+    });
+    if (proposalResult.kind === "no-safe-operation") {
+      return { recommendations: [], proposalResult, runtimeRevision: stored.revision };
+    }
+    const unknown = listCurrentProductUnknowns({ runtime: stored.runtime, questionId: input.questionId })
+      .find((item) => item.unknownId === input.unknownId);
+    if (!unknown) throw new Error("Understanding Recommendation target Unknown is not current.");
+    return {
+      recommendations: proposalResult.proposals.map((proposal) =>
+        projectUnderstandingRecommendation({
+          proposal,
+          unknown,
+          secondaryEffects: input.secondaryEffects?.[proposal.proposalId],
+        })
+      ),
+      proposalResult,
+      runtimeRevision: stored.revision,
+    };
+  }
+
+  async evaluateObjectiveRecommendationEligibility(input: {
+    userId: string; organizationId: string; questionId: string;
+    understandingRevisionRef: string;
+    objectiveContext: ProductObjectiveContext;
+    optimizationContext: ProductOptimizationContextInput | null;
+  }): Promise<CanonicalObjectiveRecommendationEligibilityResult> {
+    const stored = await this.authorizedRuntime(input);
+    if (!buildDurableProductQuestion({ runtime: stored.runtime, questionId: input.questionId })) {
+      throw new Error("Product Question was not found in this organization.");
+    }
+    return {
+      eligibility: evaluateObjectiveEligibility({
+        understandingRevisionRef: input.understandingRevisionRef,
+        objectiveContext: input.objectiveContext,
+        optimizationContext: input.optimizationContext,
       }),
       runtimeRevision: stored.revision,
     };

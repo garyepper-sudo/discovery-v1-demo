@@ -93,6 +93,11 @@ Every contract change requires:
 
 Additive TypeScript compatibility alone does not waive version review.
 
+Product Recommendations must declare exactly one primary purpose: improving
+organizational understanding or advancing an explicit organizational
+objective. Secondary effects cannot bypass the eligibility, authorization,
+lineage, or confidence rules of that primary purpose.
+
 ## Dependency and composition rules
 
 - Prefer composition through existing Product Workflow, Runtime, cognition,

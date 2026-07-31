@@ -372,3 +372,33 @@ Changing one requires the process in
 - **Affected phase:** Phase 2A and later Phase 2 object implementations.
 - **Affected gaps:** `GAP-A-011`–`GAP-A-015`, `GAP-A-018`.
 - **Status:** Active.
+
+## DEC-PROD-026 — Product Recommendations declare one primary purpose
+
+- **Decision:** Discovery has two Product Recommendation purposes:
+  `improve-understanding` and `advance-organizational-objective`. An
+  Understanding Recommendation is the product-facing projection of an exact
+  Phase 2C Confidence-Improvement proposal; its existing operation lifecycle
+  remains execution and persistence authority. An Objective Recommendation
+  requires an eligible Objective and disclosed Optimization Context. Every
+  Recommendation has exactly one primary purpose; other value is represented
+  only through typed secondary effects.
+- **Reason:** Recommendation Optimization Experiment 001 found that safe
+  objective-free actions were reversible understanding improvements, not
+  business actions. Conflating the two purposes would let learning value bypass
+  objective requirements or turn possible business value into an unsupported
+  claim.
+- **Alternatives considered:** Rename all Confidence-Improvement internals;
+  use one ambiguous Product Recommendation category; infer purpose from action
+  wording; introduce a third dual-purpose category.
+- **Why rejected:** Renaming would rewrite stable internal semantics. Ambiguous
+  or wording-derived purpose weakens eligibility. A third category permits
+  secondary value to bypass the primary-purpose boundary.
+- **Consequences:** Understanding Recommendation projection is additive and
+  non-persistent. Objective Recommendation eligibility is read-only and
+  fail-closed. Objective generation, Objective and Optimization Context
+  persistence, Recommendation lifecycle activation, and Decision creation
+  remain unimplemented.
+- **Affected phase:** Phase 2C.2 and later Recommendation work.
+- **Affected gaps:** `GAP-A-011`, `GAP-A-018`.
+- **Status:** Active.

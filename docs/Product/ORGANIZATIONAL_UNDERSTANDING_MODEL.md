@@ -184,6 +184,15 @@ while retaining history. Changing a Recommendation changes action guidance,
 not necessarily understanding. Outcome learning compares expectation with
 reality. An Insight is a material new implication of changed understanding.
 
+Discovery has two Recommendation purposes. An **Understanding Recommendation**
+primarily reduces an Unknown or improves organizational understanding. An
+**Objective Recommendation** primarily advances an explicit organizational
+objective. Every Recommendation declares exactly one primary purpose; learning
+or business value may appear only as a bounded secondary effect. Objective
+Recommendations require an eligible Objective and disclosed Optimization
+Context. Understanding Recommendations do not require an Objective when they
+target a governed actionable Unknown.
+
 Document accumulation alone is not learning.
 
 ## 9. Understanding Improvement
@@ -408,7 +417,8 @@ This section defines their conceptual role and does not override that contract.
 | Competing explanation | Preserves unresolved alternatives | Canonical cognition exists; bounded product projection exists; adjudication remains limited |
 | Unknown | Identifies what prevents stronger understanding | Implemented as a stable Question-scoped lifecycle contract |
 | Confidence-improvement operation | Seeks the highest-value safe next step for one exact Unknown | Phase 2C complete: read-only proposal, deterministic ranking, explicit authorization receipt, and Unknown targeting |
-| Recommendation | Proposes an action from understanding, objectives, and uncertainty | Canonical producer exists; complete product lifecycle deferred |
+| Understanding Recommendation | Projects the highest-value governed action for an actionable Unknown | Implemented as a non-persistent projection of Phase 2C Confidence-Improvement proposals |
+| Objective Recommendation | Proposes action primarily to advance an explicit organizational objective | Eligibility boundary implemented; generation, persistence, and lifecycle deferred |
 | `ProductDecisionDraft` / Decision | Records a proposed or committed intervention | Projection and canonical pipeline exist; complete operation deferred |
 | `ProductOutcomeReview` | Supplies governed observations of what happened | Projection and learning owners exist; complete operation deferred |
 | Learning event | Records how understanding changed or did not change | Canonical learning exists; binding product replay deferred |

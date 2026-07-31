@@ -98,7 +98,7 @@ first adapter operations. Candidate Unknowns remain non-durable until an
 explicit open operation. No Confidence-Improvement Operation, Recommendation,
 or frontend behavior is included.
 
-### Phase 2C — Confidence-Improvement Operation: COMPLETE
+### Phase 2C — Understanding Recommendation and Confidence-Improvement Operation: COMPLETE
 
 Current Unknowns now support read-only typed improvement proposals,
 deterministic inspectable ranking, truthful no-safe-operation results, and
@@ -111,6 +111,13 @@ through read-only generation, explicit authorization, targeting, idempotent and
 conflicting replay, and reload. One authorization receipt and one Unknown
 targeting event were written; external acquisition and downstream object
 creation remained zero. Product Recommendation and all later Phase 2 work
+remain open.
+
+Phase 2C.2 adds the product-facing Understanding Recommendation projection and
+the read-only Objective Recommendation eligibility boundary. The existing
+operation events, identities, authorization, and persistence remain unchanged.
+Objective Recommendation generation, Organizational Objective persistence,
+Optimization Context persistence, and the broader Recommendation lifecycle
 remain open.
 
 ## Completed foundation — Phases 0–2

@@ -379,6 +379,38 @@ competing explanations, organizational objective, constraints, and
 permissions. It is not a Decision, command, raw `ExecutiveRecommendation`, or
 automatic consequence of an Answer.
 
+### Canonical purpose taxonomy
+
+Every Product Recommendation declares one primary purpose:
+
+1. `improve-understanding` — an **Understanding Recommendation** whose primary
+   intended effect is to reduce an actionable Unknown or improve
+   discrimination. It is projected from the exact Phase 2C proposal and adds no
+   persistent object.
+2. `advance-organizational-objective` — an **Objective Recommendation** whose
+   primary intended effect is progress toward an explicit Objective. Only its
+   eligibility boundary is implemented; generation and lifecycle remain open.
+
+Dual-purpose actions retain exactly one primary purpose and represent other
+value as typed secondary effects. Wording never determines purpose. Secondary
+learning value cannot bypass Objective eligibility, and potential business
+value cannot turn an Understanding Recommendation into a business claim.
+
+Example Understanding Recommendation: complete a short weekly onboarding
+survey to discriminate ownership timing from credential readiness. Its primary
+purpose is improved understanding; earlier problem detection is only possible
+secondary value.
+
+Example Objective Recommendation: given a confirmed objective to increase
+sales, evaluate a bounded reversible commission pilot. Its primary purpose is
+sales progress; learning about compensation is secondary. No percentage or
+effect size is authorized without supporting Evidence and Optimization Context.
+
+Later Outcomes evaluate an Understanding Recommendation by Unknown reduction,
+discrimination, canonical Evidence, understanding change, or truthful
+no-change. They evaluate an Objective Recommendation by objective progress,
+tradeoffs, constraints, and forecast behavior, with learning as secondary.
+
 Permitted product types include `investigate`, `acquire_evidence`, `monitor`,
 `communicate`, `decide`, `bounded_test`, `mitigate`, `defer`, and `no_action`.
 

@@ -246,6 +246,20 @@ Answer, Evidence, source, and organization lineage.
 
 ## 9. Recommendation
 
+Discovery has two explicit Recommendation purposes:
+
+- **Understanding Recommendation:** primarily improves organizational
+  understanding by targeting an actionable Unknown. It is the product-facing,
+  non-persistent projection of a governed Phase 2C Confidence-Improvement
+  proposal. Its internal operation lifecycle remains authoritative.
+- **Objective Recommendation:** primarily advances an explicit organizational
+  objective. Generation remains unimplemented. Eligibility requires an active
+  Objective version, disclosed Optimization Context or default, material
+  constraints, alternatives, authorization, and exact understanding ancestry.
+
+Every Recommendation has exactly one primary purpose. Secondary learning or
+objective value cannot bypass the eligibility rules for that primary purpose.
+
 A product Recommendation derives from:
 
 ```text
@@ -267,6 +281,12 @@ A Recommendation must name its supporting understanding, confidence limiter,
 relevant Unknowns, objective relationship, expected effect, risks, and
 conditions. If those relationships are unsupported, Discovery must abstain
 rather than emit generic advice.
+
+With an unknown or low-confidence inferred objective, Discovery may still
+offer an Understanding Recommendation but must not emit an Objective
+Recommendation. A high-confidence inferred objective supports only disclosed,
+conditional, reversible eligibility. High-stakes or irreversible action
+requires a confirmed Objective.
 
 ## 10. Decision Lifecycle
 
