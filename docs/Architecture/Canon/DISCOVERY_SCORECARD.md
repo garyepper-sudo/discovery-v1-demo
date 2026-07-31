@@ -34,6 +34,16 @@ Its six research dimensions and any Local Understanding Utility profile are
 benchmark-level interpretations. They are not additional top-level Discovery
 Scorecard metrics.
 
+The product concept measured by OUI is defined by:
+
+```text
+docs/Product/ORGANIZATIONAL_UNDERSTANDING_MODEL.md
+```
+
+That model defines what organizational understanding is. This Scorecard
+remains authoritative for how Discovery improvement is measured; the model
+does not introduce a sixth score, fixed weighting, or volume-based composite.
+
 ---
 
 # Canonical engineering principle

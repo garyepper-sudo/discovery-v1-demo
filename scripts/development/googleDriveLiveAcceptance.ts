@@ -8,6 +8,7 @@ import {
 import { createDevelopmentGoogleDriveOAuthService } from "../../product/connectors/google-drive/liveOAuthService";
 import { withLiveSandboxProductAdapter } from "../../product/frontend/liveSandboxProductWorkspaceService";
 import { stableId } from "../../product/workflow/text";
+import { deriveProductUnknownCandidate } from "../../product/unknowns";
 
 type Arguments = Record<string, string>;
 
@@ -211,6 +212,30 @@ async function createQuestion() {
   });
 }
 
+async function listQuestions() {
+  const scope = requiredScope();
+  await withLiveSandboxProductAdapter({
+    userId: scope.userId,
+    organizationId: scope.organizationId,
+    operation: async (adapter) => {
+      const questions = await adapter.listQuestions({
+        userId: scope.userId,
+        organizationId: scope.organizationId,
+        includeArchived: false,
+      });
+      await persistReceipt("list-questions", {
+        organizationId: scope.organizationId,
+        questions: questions.map((question) => ({
+          id: question.id,
+          title: question.title,
+          status: question.status,
+          currentSupport: question.currentSupport,
+        })),
+      });
+    },
+  });
+}
+
 async function searchQuestion() {
   const scope = requiredScope();
   const folderId = requireExact(values["folder-id"] ?? "", "connected folder ID");
@@ -267,6 +292,141 @@ async function searchQuestion() {
   });
 }
 
+async function refreshAnswer() {
+  const scope = requiredScope();
+  const questionId = requireExact(values["question-id"] ?? "", "durable Question ID");
+  const operationId = requireExact(values["operation-id"] ?? "", "Answer operation ID");
+  const occurredAt = requireExact(values["occurred-at"] ?? "", "operation time");
+  await withLiveSandboxProductAdapter({
+    userId: scope.userId,
+    organizationId: scope.organizationId,
+    operation: async (adapter) => {
+      const refreshed = await adapter.createOrRefreshAnswer({
+        userId: scope.userId,
+        organizationId: scope.organizationId,
+        questionId,
+        operationId,
+        occurredAt,
+        operation: {
+          requestId: operationId,
+          operatorId: scope.userId,
+        },
+      });
+      await persistReceipt("refresh-answer", {
+        organizationId: scope.organizationId,
+        questionId,
+        result: refreshed.result,
+        receipt: refreshed.receipt,
+        runtimeRevisionPresent: Boolean(refreshed.runtimeRevision),
+      });
+    },
+  });
+}
+
+function unknownCandidate() {
+  const scope = requiredScope();
+  const questionId = requireExact(values["question-id"] ?? "", "durable Question ID");
+  const left = requireExact(values["left-explanation-id"] ?? "", "left explanation ID");
+  const right = requireExact(values["right-explanation-id"] ?? "", "right explanation ID");
+  const answerOperationId = requireExact(
+    values["answer-operation-id"] ?? "",
+    "source Answer operation ID",
+  );
+  const evidenceIds = requireExact(values["evidence-ids"] ?? "", "comma-separated Evidence IDs")
+    .split(",").map((value) => value.trim()).filter(Boolean);
+  if (evidenceIds.length === 0) throw new Error("At least one exact Evidence ID is required.");
+  return deriveProductUnknownCandidate({
+    organizationId: scope.organizationId,
+    questionId,
+    category: "competing-explanation-discrimination",
+    target: {
+      kind: "relationship",
+      subjectRef: left,
+      predicate: "versus",
+      objectRef: right,
+    },
+    summary: requireExact(values.summary ?? "", "bounded Unknown summary"),
+    whyItMatters: requireExact(values["why-it-matters"] ?? "", "bounded Unknown importance"),
+    sourceAncestry: [
+      { kind: "answer-operation", id: answerOperationId },
+      ...evidenceIds.map((id) => ({ kind: "evidence" as const, id })),
+    ],
+  });
+}
+
+async function projectUnknownCandidate() {
+  const scope = requiredScope();
+  const candidate = unknownCandidate();
+  await withLiveSandboxProductAdapter({
+    userId: scope.userId,
+    organizationId: scope.organizationId,
+    operation: async (adapter) => {
+      await adapter.getQuestionWorkspace({
+        userId: scope.userId,
+        organizationId: scope.organizationId,
+        questionId: candidate.questionId,
+      });
+      await persistReceipt("project-unknown-candidate", {
+        candidate,
+        runtimeMutation: false,
+      });
+    },
+  });
+}
+
+async function openUnknown() {
+  const scope = requiredScope();
+  const candidate = unknownCandidate();
+  const operationId = requireExact(values["operation-id"] ?? "", "Unknown operation ID");
+  const occurredAt = requireExact(values["occurred-at"] ?? "", "operation time");
+  await withLiveSandboxProductAdapter({
+    userId: scope.userId,
+    organizationId: scope.organizationId,
+    operation: async (adapter) => {
+      const result = await adapter.mutateUnknown({
+        userId: scope.userId,
+        organizationId: scope.organizationId,
+        questionId: candidate.questionId,
+        operationId,
+        occurredAt,
+        actorRef: scope.userId,
+        candidate,
+        transition: { type: "open" },
+        reason: requireExact(values.reason ?? "", "Unknown opening reason"),
+        operation: { requestId: operationId, operatorId: scope.userId },
+      });
+      await persistReceipt("open-unknown", {
+        unknown: result.unknown,
+        receipt: result.receipt,
+        runtimeRevisionPresent: Boolean(result.runtimeRevision),
+      });
+    },
+  });
+}
+
+async function listUnknowns() {
+  const scope = requiredScope();
+  const questionId = requireExact(values["question-id"] ?? "", "durable Question ID");
+  await withLiveSandboxProductAdapter({
+    userId: scope.userId,
+    organizationId: scope.organizationId,
+    operation: async (adapter) => {
+      const result = await adapter.listUnknowns({
+        userId: scope.userId,
+        organizationId: scope.organizationId,
+        questionId,
+        currentOnly: values["current-only"] !== "false",
+      });
+      await persistReceipt("list-unknowns", {
+        organizationId: scope.organizationId,
+        questionId,
+        unknowns: result.unknowns,
+        runtimeRevisionPresent: Boolean(result.runtimeRevision),
+      });
+    },
+  });
+}
+
 async function showReceipt() {
   const scope = requiredScope();
   const receipt = JSON.parse(await readFile(receiptPath, "utf8")) as {
@@ -301,7 +461,12 @@ const operations: Record<string, () => Promise<void>> = {
   "connect-folder": connectFolder,
   "sync-folder": syncFolder,
   "create-question": createQuestion,
+  "list-questions": listQuestions,
   "search-question": searchQuestion,
+  "refresh-answer": refreshAnswer,
+  "project-unknown-candidate": projectUnknownCandidate,
+  "open-unknown": openUnknown,
+  "list-unknowns": listUnknowns,
   "show-receipt": showReceipt,
   revoke,
 };

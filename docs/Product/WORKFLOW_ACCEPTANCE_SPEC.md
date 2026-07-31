@@ -3,12 +3,17 @@
 **Status:** Canonical product authority beneath Product Governance
 **Version:** 1
 **Roadmap owner:** Pre-wireframe backend program, Phases 0–6
+**Conceptual authority:** [ORGANIZATIONAL_UNDERSTANDING_MODEL.md](./ORGANIZATIONAL_UNDERSTANDING_MODEL.md)
 
 > The eight-stage workflow is the product. Architecture, cognition, Product Workflow, connectors, model state, and frontend presentation are subordinate to making this workflow complete.
 
 Search is an explicit functional stage. The governed workflow is:
 
 `Question → Search → Answer → Confidence → Improve confidence → Decision → Outcome → Model learns → New insight`
+
+These stages are operations that inspect, improve, test, or revise
+organizational understanding. Workflow completion is not itself evidence that
+understanding improved.
 
 ## Global acceptance rules
 
@@ -73,3 +78,12 @@ is required when canonical metadata is unavailable.
 
 OAuth revocation remains deterministically validated but was intentionally not
 executed against the reusable live acceptance connection.
+
+Phase 1.1 governs retrieval through the Answer and confidence gates. Work after
+that boundary is additionally governed by
+[`PHASE_2_PRODUCT_ACCEPTANCE_SPEC.md`](./PHASE_2_PRODUCT_ACCEPTANCE_SPEC.md),
+which defines the required Why, competing-explanation, Unknown, improvement,
+Recommendation, Decision, Outcome, Learning, and Insight behavior before
+implementation begins. Their Phase 2 identity, persistence, lifecycle,
+permission, and replay semantics are governed by
+[`PHASE_2_PRODUCT_OBJECT_CONTRACTS.md`](./PHASE_2_PRODUCT_OBJECT_CONTRACTS.md).

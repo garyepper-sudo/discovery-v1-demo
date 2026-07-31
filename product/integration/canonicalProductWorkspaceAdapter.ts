@@ -14,15 +14,31 @@ import {
   recordProductWorkspaceLifecycle,
 } from "../questions/recordProductWorkspaceLifecycle";
 import {
+  currentProductAnswerVersion,
+  evaluationFromWorkspaceAnswer,
+  projectProductAnswerVersion,
+  recordProductAnswerEvaluation,
+} from "../answers/answerLifecycle";
+import {
   buildProductQuestionWorkspace,
   type ProductQuestionWorkspace,
 } from "../workflow";
 import { stableId } from "../workflow/text";
+import {
+  listCurrentProductUnknowns,
+  listProductUnknowns,
+  recordProductUnknownOperation,
+  type ProductUnknownOperationInput,
+} from "../unknowns";
 import { adoptLegacyProductQuestions } from "./adoptLegacyQuestions";
 import type {
   CanonicalEvidenceContribution,
+  CanonicalAnswerReadResult,
+  CanonicalAnswerRefreshResult,
   CanonicalInvestigationResult,
   CanonicalWorkspaceReadResult,
+  CanonicalUnknownMutationResult,
+  CanonicalUnknownReadResult,
   ProductQuestionAdoptionReceipt,
   ProductQuestionSummary,
 } from "./contracts";
@@ -274,6 +290,142 @@ export class CanonicalProductWorkspaceAdapter {
     );
     const persisted = await this.replace({ stored, runtime, operation: input.operation });
     return this.getQuestionWorkspace(input);
+  }
+
+  async createOrRefreshAnswer(input: {
+    userId: string;
+    organizationId: string;
+    questionId: string;
+    operationId: string;
+    occurredAt: string;
+    operation: RuntimeStorageOperationMetadata;
+  }): Promise<CanonicalAnswerRefreshResult> {
+    const stored = await this.authorizedRuntime(input);
+    const question = buildDurableProductQuestion({
+      runtime: stored.runtime,
+      questionId: input.questionId,
+    });
+    if (!question) throw new Error("Product Question was not found in this organization.");
+    const workspace = buildProductQuestionWorkspace({
+      runtime: stored.runtime,
+      question: question.title,
+      questionId: question.id,
+    });
+    const evidenceConsidered = workspace.latestSearchReceipt?.recordsConsidered ?? 0;
+    const evidenceAdmitted = workspace.latestSearchReceipt?.evidenceAdmitted ?? 0;
+    const recorded = recordProductAnswerEvaluation({
+      runtime: stored.runtime,
+      questionId: question.id,
+      operationId: input.operationId,
+      occurredAt: input.occurredAt,
+      authorizationScopeRef: `organization:${input.organizationId}:question:${question.id}`,
+      understandingRevisionRef:
+        `organization:${input.organizationId}:understanding:${stored.runtime.metadata.investigationCount}`,
+      evaluation: evaluationFromWorkspaceAnswer({
+        answer: workspace.answer,
+        evidenceConsidered,
+        evidenceAdmitted,
+      }),
+      evidenceConsidered,
+      evidenceAdmitted,
+    });
+    const changed = recorded.runtime !== stored.runtime;
+    const persisted = changed
+      ? await this.replace({
+          stored,
+          runtime: recorded.runtime,
+          operation: input.operation,
+        })
+      : stored;
+    return {
+      result: recorded.result,
+      receipt: recorded.receipt,
+      runtimeRevision: persisted.revision,
+    };
+  }
+
+  async getCurrentAnswer(input: {
+    userId: string;
+    organizationId: string;
+    questionId: string;
+  }): Promise<CanonicalAnswerReadResult> {
+    const stored = await this.authorizedRuntime(input);
+    if (!buildDurableProductQuestion({
+      runtime: stored.runtime,
+      questionId: input.questionId,
+    })) {
+      throw new Error("Product Question was not found in this organization.");
+    }
+    const current = currentProductAnswerVersion({
+      runtime: stored.runtime,
+      questionId: input.questionId,
+    });
+    return {
+      answer: current
+        ? projectProductAnswerVersion({
+            version: current,
+            currentAnswerVersionId: current.answerVersionId,
+          })
+        : null,
+      runtimeRevision: stored.revision,
+    };
+  }
+
+  async mutateUnknown(input: {
+    userId: string;
+    organizationId: string;
+    questionId: string;
+    operationId: string;
+    occurredAt: string;
+    actorRef: string;
+    candidate: ProductUnknownOperationInput["candidate"];
+    transition: ProductUnknownOperationInput["transition"];
+    reason: string;
+    operation: RuntimeStorageOperationMetadata;
+  }): Promise<CanonicalUnknownMutationResult> {
+    const stored = await this.authorizedRuntime(input);
+    const recorded = recordProductUnknownOperation({
+      runtime: stored.runtime,
+      questionId: input.questionId,
+      operationId: input.operationId,
+      occurredAt: input.occurredAt,
+      actorRef: input.actorRef,
+      authorizationScopeRef:
+        `organization:${input.organizationId}:question:${input.questionId}`,
+      candidate: input.candidate,
+      transition: input.transition,
+      reason: input.reason,
+    });
+    const persisted = recorded.runtime === stored.runtime
+      ? stored
+      : await this.replace({
+          stored,
+          runtime: recorded.runtime,
+          operation: input.operation,
+        });
+    return {
+      unknown: recorded.projection,
+      receipt: recorded.receipt,
+      runtimeRevision: persisted.revision,
+    };
+  }
+
+  async listUnknowns(input: {
+    userId: string;
+    organizationId: string;
+    questionId: string;
+    currentOnly?: boolean;
+  }): Promise<CanonicalUnknownReadResult> {
+    const stored = await this.authorizedRuntime(input);
+    if (!buildDurableProductQuestion({ runtime: stored.runtime, questionId: input.questionId })) {
+      throw new Error("Product Question was not found in this organization.");
+    }
+    return {
+      unknowns: input.currentOnly === false
+        ? listProductUnknowns({ runtime: stored.runtime, questionId: input.questionId })
+        : listCurrentProductUnknowns({ runtime: stored.runtime, questionId: input.questionId }),
+      runtimeRevision: stored.revision,
+    };
   }
 
   async archiveQuestion(input: {

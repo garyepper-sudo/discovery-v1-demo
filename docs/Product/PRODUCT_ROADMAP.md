@@ -3,6 +3,7 @@
 **Status:** Canonical promotion roadmap
 **Gap register:** [PRODUCT_GAPS.md](./PRODUCT_GAPS.md)
 **Architecture:** [CANONICAL_PRODUCT_ARCHITECTURE.md](./CANONICAL_PRODUCT_ARCHITECTURE.md)
+**Product objective:** [ORGANIZATIONAL_UNDERSTANDING_MODEL.md](./ORGANIZATIONAL_UNDERSTANDING_MODEL.md)
 
 Roadmap phases are promotion gates, not date commitments. Work may enter a
 phase only when its dependencies and validations are explicit.
@@ -56,6 +57,49 @@ live-proven.
 
 The next implementation phase is **Phase 2 — Complete
 Confidence-Improvement and Recommendation Operations**.
+
+All Phase 2 implementation is governed by
+[`ORGANIZATIONAL_UNDERSTANDING_MODEL.md`](./ORGANIZATIONAL_UNDERSTANDING_MODEL.md)
+and
+[`PHASE_2_PRODUCT_ACCEPTANCE_SPEC.md`](./PHASE_2_PRODUCT_ACCEPTANCE_SPEC.md),
+with object identity and lifecycle governed by
+[`PHASE_2_PRODUCT_OBJECT_CONTRACTS.md`](./PHASE_2_PRODUCT_OBJECT_CONTRACTS.md).
+The specification must be satisfied through existing canonical owners unless a
+separately reviewed architecture decision proves that they cannot express a
+required workflow.
+
+The Phase 2 pre-implementation object decisions are complete under
+`DEC-PROD-025`. **Phase 2A — Answer Contract** may begin with the existing
+reference-backed Answer and Answer-owned Confidence contracts. Unknown and
+later object implementation must follow the additive versioning and lifecycle
+gates in the object-contract specification; this readiness statement does not
+mark `GAP-A-018` or any implementation gap resolved.
+
+### Phase 2A — Canonical Answer Contract: COMPLETE
+
+Accepted on 2026-07-30. ProductQuestion history now supports immutable
+version-2 Answer events and operation receipts alongside unchanged version-1
+history. Answer lineage is organization- and Question-scoped; deterministic
+versions supersede rather than overwrite; Confidence is immutable and owned by
+the exact Answer version; abstention creates no Answer and no customer
+Confidence.
+
+All 14 deterministic scenarios passed. The existing connected development
+Question replayed as the expected targeted abstention with no Answer version,
+null Confidence, an identical idempotent receipt, and no duplicate Runtime
+write.
+
+### Phase 2B — Unknown Identity and Lifecycle: COMPLETE
+
+Question-scoped Unknowns now have stable semantic identity, immutable version-2
+ProductQuestion history events, explicit resolution ancestry, deterministic
+current projection, lifecycle replay, idempotent receipts, and authorization-
+first adapter operations. Candidate Unknowns remain non-durable until an
+explicit open operation. No Confidence-Improvement Operation, Recommendation,
+or frontend behavior is included.
+
+The next bounded implementation stage is **Phase 2C — Confidence-Improvement
+Operation**.
 
 ## Completed foundation — Phases 0–2
 

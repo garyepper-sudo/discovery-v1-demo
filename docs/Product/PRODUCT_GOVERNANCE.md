@@ -8,9 +8,12 @@
 Every product implementation begins by reading:
 
 1. [CANONICAL_PRODUCT_ARCHITECTURE.md](./CANONICAL_PRODUCT_ARCHITECTURE.md)
-2. [PRODUCT_GAPS.md](./PRODUCT_GAPS.md)
-3. [PRODUCT_ROADMAP.md](./PRODUCT_ROADMAP.md)
-4. [PRODUCT_DECISIONS.md](./PRODUCT_DECISIONS.md)
+2. [ORGANIZATIONAL_UNDERSTANDING_MODEL.md](./ORGANIZATIONAL_UNDERSTANDING_MODEL.md)
+3. [PRODUCT_GAPS.md](./PRODUCT_GAPS.md)
+4. [PRODUCT_ROADMAP.md](./PRODUCT_ROADMAP.md)
+5. [PRODUCT_DECISIONS.md](./PRODUCT_DECISIONS.md)
+6. [PHASE_2_PRODUCT_ACCEPTANCE_SPEC.md](./PHASE_2_PRODUCT_ACCEPTANCE_SPEC.md)
+7. [PHASE_2_PRODUCT_OBJECT_CONTRACTS.md](./PHASE_2_PRODUCT_OBJECT_CONTRACTS.md)
 
 The implementation plan must state:
 
@@ -40,6 +43,27 @@ Every new product capability declares:
 | Migration | Effect on existing Runtime and deployed contracts |
 
 No capability may create duplicate ownership merely to simplify presentation.
+
+## Product authority hierarchy
+
+Product specifications apply in this order:
+
+1. Product Governance defines mandatory process and ownership rules.
+2. The
+   [Organizational Understanding Model](./ORGANIZATIONAL_UNDERSTANDING_MODEL.md)
+   defines the canonical product objective and conceptual model.
+3. The [Workflow Acceptance Specification](./WORKFLOW_ACCEPTANCE_SPEC.md)
+   defines the binding end-to-end workflow.
+4. Phase-specific acceptance specifications define bounded promotion criteria.
+5. The
+   [Phase 2 Product Object Contracts](./PHASE_2_PRODUCT_OBJECT_CONTRACTS.md)
+   govern Phase 2 identity, persistence, lifecycle, permission, lineage, and
+   failure semantics.
+6. Object-specific architecture contracts define implementation boundaries.
+7. Implementations and presentations remain subordinate to all of the above.
+
+Lower-level specifications may refine a higher-level authority but may not
+contradict it.
 
 ## Question-to-Answer relevance invariant
 
@@ -139,6 +163,14 @@ Any phase that creates, changes, or promotes an Answer must also run the
 Question interpretation, Question-to-Answer relevance, answer coverage,
 relevance-confidence, Question-aligned improvement, alternatives-preservation,
 paraphrase, substitution, and generalization validators.
+
+All work beginning after Phase 1.1 must identify the applicable acceptance
+criteria in
+[PHASE_2_PRODUCT_ACCEPTANCE_SPEC.md](./PHASE_2_PRODUCT_ACCEPTANCE_SPEC.md).
+Completion, activity, document volume, and interface engagement are not
+sufficient acceptance evidence. The review must state whose individual or
+collective organizational understanding improved, what truthful information
+became available, and which canonical owner produced it.
 
 Reviews must explicitly confirm:
 

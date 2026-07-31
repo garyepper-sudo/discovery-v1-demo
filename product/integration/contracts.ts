@@ -1,5 +1,14 @@
 import type { ProductQuestionStatus } from "../questions/contracts";
 import type {
+  ProductAnswerOperationReceipt,
+  ProductAnswerOperationResult,
+  ProductAnswerProjection,
+} from "../answers/contracts";
+import type {
+  ProductUnknownOperationReceipt,
+  ProductUnknownProjection,
+} from "../unknowns/contracts";
+import type {
   ProductAnswer,
   ProductAnswerConfidence,
   ProductQuestionWorkspace,
@@ -52,6 +61,28 @@ export type ProductHistoricalAnswerResolution =
 
 export type CanonicalWorkspaceReadResult = {
   workspace: ProductQuestionWorkspace;
+  runtimeRevision: string;
+};
+
+export type CanonicalAnswerRefreshResult = {
+  result: ProductAnswerOperationResult;
+  receipt: ProductAnswerOperationReceipt;
+  runtimeRevision: string;
+};
+
+export type CanonicalAnswerReadResult = {
+  answer: ProductAnswerProjection | null;
+  runtimeRevision: string;
+};
+
+export type CanonicalUnknownMutationResult = {
+  unknown: ProductUnknownProjection;
+  receipt: ProductUnknownOperationReceipt;
+  runtimeRevision: string;
+};
+
+export type CanonicalUnknownReadResult = {
+  unknowns: ProductUnknownProjection[];
   runtimeRevision: string;
 };
 

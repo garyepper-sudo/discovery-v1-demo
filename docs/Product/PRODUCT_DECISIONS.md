@@ -263,3 +263,112 @@ Changing one requires the process in
   new content version without deleting historical source-version lineage.
 - **Affected gaps:** `GAP-A-008`, `GAP-A-010`, `GAP-B-004`, `GAP-B-010`.
 - **Status:** Active.
+
+## DEC-PROD-022 — Phase 2 optimizes for organizational understanding
+
+- **Decision:** All product work after Phase 1.1 is governed by
+  [PHASE_2_PRODUCT_ACCEPTANCE_SPEC.md](./PHASE_2_PRODUCT_ACCEPTANCE_SPEC.md).
+  It must improve individual or collective organizational understanding rather
+  than optimize for Answer production or workflow completion.
+- **Reason:** Governed retrieval is valuable only when authorized Evidence
+  improves truthful understanding and supports better decisions and learning.
+- **Alternatives considered:** Maximize Answer coverage; optimize engagement;
+  implement each downstream stage independently.
+- **Why rejected:** These alternatives reward fabricated certainty, activity,
+  or disconnected features rather than the product's organizational-learning
+  purpose.
+- **Consequences:** Confidence remains Answer-owned; Unknowns and competing
+  explanations remain lineage-preserving product projections; recommendations,
+  decisions, outcomes, learning, and Insights reuse existing authoritative
+  owners. New or changed contracts still require version and migration review.
+- **Affected phase:** Phase 2 and all later product phases.
+- **Affected gaps:** `GAP-A-005`, `GAP-A-011`–`GAP-A-015`.
+- **Status:** Active.
+
+## DEC-PROD-023 — Organizational understanding has one canonical conceptual model
+
+- **Decision:** Adopt
+  [ORGANIZATIONAL_UNDERSTANDING_MODEL.md](./ORGANIZATIONAL_UNDERSTANDING_MODEL.md)
+  as the canonical conceptual definition of organizational understanding.
+  Questions, Answers, confidence, Recommendations, Decisions, Outcomes,
+  Learning, and Insights inspect, improve, test, or revise that state through
+  their existing authoritative owners.
+- **Reason:** The concept was distributed across the Discovery Scorecard,
+  research framework, product architecture, Runtime compatibility contracts,
+  and workflow specifications. A single model is required to prevent Answer
+  production, content volume, engagement, or a legacy numeric composite from
+  becoming a substitute objective.
+- **Alternatives considered:** Leave the definition distributed; make the
+  legacy Runtime score the governing definition; define a new cognitive or
+  persistence primitive.
+- **Why rejected:** Distribution permits semantic drift. The legacy numeric
+  object is a compatibility representation rather than product authority. A
+  new primitive would duplicate existing canonical owners without evidence.
+- **Consequences:** Product acceptance must identify whose scoped
+  understanding improved and how. The Discovery Scorecard remains measurement
+  authority, Product Architecture remains ownership authority, Runtime remains
+  technical persistence authority, and existing cognition remains unchanged.
+- **Affected phase:** Phase 2 and all later product phases.
+- **Affected gaps:** `GAP-A-018`, `GAP-D-004`, and existing lifecycle,
+  permission, freshness, and learning gaps.
+- **Status:** Active.
+
+## DEC-PROD-024 — Phase 2 product objects reuse mixed canonical persistence
+
+- **Decision:** Adopt
+  [PHASE_2_PRODUCT_OBJECT_CONTRACTS.md](./PHASE_2_PRODUCT_OBJECT_CONTRACTS.md)
+  as the governing Phase 2 object contract. Answer and customer Confidence
+  remain derived current projections backed by immutable ProductQuestion
+  version references and confidence snapshots. Decision, Outcome review, and
+  Learning reuse their existing durable canonical owners. Unknown,
+  Recommendation lifecycle, correction/amendment events, and Insight
+  qualification remain gated where a complete contract or benchmark does not
+  yet exist.
+- **Reason:** Existing architecture deliberately separates durable canonical
+  records, event-backed lineage, operation receipts, and customer projections.
+  Making every Phase 2 concept independently durable would duplicate authority
+  and persistence.
+- **Alternatives considered:** Create one new durable store for all Phase 2
+  objects; treat all objects as recomputed projections; equate similarly named
+  engine artifacts with product contracts.
+- **Why rejected:** A parallel store violates Runtime and product ownership.
+  Projection-only treatment loses required Decision, Outcome, and Learning
+  history. Name equivalence would transfer semantics and confidence across
+  boundaries.
+- **Consequences:** Each object must pass its own identity, lifecycle,
+  permission, lineage, idempotency, replay, and failure gates. No implementation
+  may improvise an unresolved lifecycle. Runtime changes, if later proven
+  necessary, require separate version and migration review.
+- **Affected phase:** Phase 2 object-by-object implementation.
+- **Affected gaps:** `GAP-A-011`–`GAP-A-015`, `GAP-A-018`, `GAP-B-004`,
+  `GAP-B-005`, `GAP-B-012`–`GAP-B-014`, `GAP-D-004`.
+- **Status:** Active.
+
+## DEC-PROD-025 — Phase 2 lifecycle changes are additive and versioned
+
+- **Decision:** Adopt the six lifecycle resolutions in
+  [PHASE_2_PRODUCT_OBJECT_CONTRACTS.md](./PHASE_2_PRODUCT_OBJECT_CONTRACTS.md):
+  Question-owned versioned events for Unknowns and Product Recommendations;
+  additive amendment events for committed Decisions; linked
+  `ExecutiveReview` versions for Outcome correction; a typed
+  `ExecutiveLearning` evaluation result including explicit no-change; and
+  ProductQuestion-linked emission/lifecycle events for Insights.
+- **Reason:** Phase 2 requires stable identity, current projection, historical
+  replay, and permission inheritance without rewriting existing records or
+  creating a universal object store.
+- **Alternatives considered:** Mutate current records in place; add the new
+  event types silently to ProductQuestion schema version 1; create one new
+  Phase 2 database/store; infer lifecycle changes from disappearance in a
+  projection.
+- **Why rejected:** These approaches corrupt history, break version
+  interpretation, duplicate Runtime authority, or make resolution and
+  no-change indistinguishable from omission.
+- **Consequences:** ProductQuestion events require a version-2 dual-reader
+  implementation for Unknown and Recommendation events. Decision amendments
+  use additive Runtime events. Outcome and Learning receive additive versioned
+  contract fields with legacy adapters. Insight emission and lifecycle use
+  ProductQuestion-linked events. Existing records remain readable and require
+  no destructive data migration.
+- **Affected phase:** Phase 2A and later Phase 2 object implementations.
+- **Affected gaps:** `GAP-A-011`–`GAP-A-015`, `GAP-A-018`.
+- **Status:** Active.

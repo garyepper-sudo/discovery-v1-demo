@@ -8,6 +8,8 @@
 
 **Canonical parent:** `docs/Architecture/Canon/DISCOVERY_SCORECARD.md`
 
+**Conceptual subject:** `docs/Product/ORGANIZATIONAL_UNDERSTANDING_MODEL.md`
+
 ---
 
 # Purpose
