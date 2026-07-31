@@ -98,8 +98,20 @@ first adapter operations. Candidate Unknowns remain non-durable until an
 explicit open operation. No Confidence-Improvement Operation, Recommendation,
 or frontend behavior is included.
 
-The next bounded implementation stage is **Phase 2C — Confidence-Improvement
-Operation**.
+### Phase 2C — Confidence-Improvement Operation: COMPLETE
+
+Current Unknowns now support read-only typed improvement proposals,
+deterministic inspectable ranking, truthful no-safe-operation results, and
+durable authorization/lifecycle receipts. Explicit authorization targets the
+Unknown; no external action, Evidence admission, resolution, Confidence
+mutation, Recommendation, or Decision occurs automatically.
+
+Authenticated live acceptance proved the exact development Question and Unknown
+through read-only generation, explicit authorization, targeting, idempotent and
+conflicting replay, and reload. One authorization receipt and one Unknown
+targeting event were written; external acquisition and downstream object
+creation remained zero. Product Recommendation and all later Phase 2 work
+remain open.
 
 ## Completed foundation — Phases 0–2
 

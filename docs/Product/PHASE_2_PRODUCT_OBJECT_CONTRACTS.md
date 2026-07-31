@@ -55,7 +55,7 @@ canonical internal cognitive chain.
 | Answer | `ProductAnswer` / `ProductAnswerAbstention` selection plus version-2 immutable Answer events and operation receipts | `canonical-existing` Phase 2A | Derived current projection and immutable version reference; no independent Answer body store |
 | Confidence | Exact Answer-owned immutable snapshot inside each eligible Answer version | `canonical-existing` Phase 2A | Customer confidence remains Answer-owned and immutable within an Answer version |
 | Unknown | ProductQuestion-history-owned version-2 lifecycle events and derived current projection | `canonical-existing` Phase 2B | Stable Question-scoped identity; additive lifecycle; no independent Unknown store |
-| Confidence-Improvement Operation | `ProductImprovementAction` projection and `ProductQuestionImprovementHistoryEntry` receipt | `partially-implemented` | Preserve upstream investigation authority; complete request/receipt lineage before promotion |
+| Confidence-Improvement Operation | `ProductImprovementAction` projection and version-2 ProductQuestion improvement event/receipt | `canonical-existing` Phase 2C | Read-only proposal generation; explicit authorization owns the durable receipt and exact Unknown targeting |
 | Recommendation | Runtime `ExecutiveRecommendation` and communication projections | `partially-implemented` | A Phase 2 product Recommendation is not the engine artifact and needs Question-scoped lifecycle completion |
 | Decision | Durable `ExecutiveDecisionRecord` and Product Workflow draft/projection | `canonical-existing` engine owner; product composition partial | Reuse the canonical Decision pipeline and complete product operations |
 | Outcome | Durable `ExecutiveReview`; `ProductOutcomeReview` projection | `canonical-existing` engine owner; product composition partial | Outcome observations remain distinct from Learning |
@@ -354,6 +354,20 @@ Evidence does not fabricate completion.
 Acceptance requires preserved ranking, exact target linkage, user
 confirmation, source authorization, idempotent execution, Evidence ancestry,
 no-change receipt, and no autonomous or cross-organization action.
+
+### Phase 2C live acceptance
+
+**Status:** COMPLETE
+
+Authenticated acceptance used one existing authorized development Question and
+its exact durable competing-explanation Unknown. Read-only generation produced
+a deterministically highest-value `inspect-existing-evidence` proposal without
+a Runtime write. Explicit operator authorization appended one durable receipt
+and targeted only that Unknown. Identical replay was idempotent, conflicting
+replay failed closed, and reload preserved both identities. No external
+acquisition, Evidence admission, Answer or Confidence mutation, Recommendation,
+Decision, Outcome, Learning Event, or Insight occurred. Product Recommendation
+and later Phase 2 object work remain open.
 
 ## 8. Recommendation contract
 
@@ -954,7 +968,7 @@ must not be silently introduced under schema version 1.
 | 1. Answer — COMPLETE | Existing Question, Evidence, relevance and historical resolver | 14 deterministic scenarios plus live abstention replay passed | Version-2 Answer events plus mixed reader | No frontend change | Requires duplicate Answer store, relevance weakening, or history substitution |
 | 2. Answer Confidence — Phase 2A minimum COMPLETE | Exact Answer version | ownership, limiter, duplicate/freshness controls passed | Immutable snapshot inside Answer version | No frontend change | Independent confidence authority or confidence without Answer |
 | 3. Unknown — COMPLETE | ProductQuestion event v2 contract | 18 identity, lifecycle, resolution, authorization, replay, and isolation scenarios passed | Versioned ProductQuestion events | No | Generic gaps, cross-Question merge, or inferred resolution |
-| 4. Improvement Operation | Unknown and canonical investigation opportunity | ranking, consent, receipt, no-change | Durable operation receipt | After backend acceptance | Autonomous action or recomputed expected gain |
+| 4. Improvement Operation — COMPLETE | Unknown and canonical investigation opportunity | 24 deterministic scenarios plus authorized live targeting, replay, and reload passed | Version-2 ProductQuestion operation receipts | No frontend change | Autonomous action or recomputed expected gain |
 | 5. Recommendation | Current understanding, constraints, ProductQuestion event v2 | ancestry, expiry, no automatic Decision | Versioned ProductQuestion events | After backend acceptance | Answer-only recommendation or parallel engine owner |
 | 6. Decision | Recommendation optional; canonical Decision owner | human authority, immutable rationale, idempotent commit | Existing durable record | After product operation passes | New Decision store or rationale overwrite |
 | 7. Outcome | Decision and ExecutiveReview v2 correction ancestry | mixed/inconclusive, correction, duplicate, reload | Existing durable review collection | After backend acceptance | Outcome directly mutates understanding |

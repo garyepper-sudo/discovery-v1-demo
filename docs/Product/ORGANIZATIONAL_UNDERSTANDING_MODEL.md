@@ -280,7 +280,12 @@ Understanding objective
 → updated understanding
 ```
 
-Unknown identity and lifecycle remain a pre-Phase 2 product-contract question.
+Unknown identity and lifecycle are implemented as stable Question-scoped
+version-2 events owned by ProductQuestion history. A Confidence-Improvement
+proposal is a read-only projection for one exact current Unknown. Explicit
+proposal-specific authorization records a durable receipt and may target that
+Unknown, but does not resolve it, admit Evidence, execute external work, or
+mutate Confidence.
 
 ## 13. Freshness and Stability
 
@@ -401,8 +406,8 @@ This section defines their conceptual role and does not override that contract.
 | `ProductAnswer` | Presents the current Question-relative conclusion or abstention | Implemented projection; durable identity/lifecycle requires Phase 2 review |
 | `ProductAnswerConfidence` | Expresses justification for the exact selected Answer | Implemented, Answer-owned |
 | Competing explanation | Preserves unresolved alternatives | Canonical cognition exists; bounded product projection exists; adjudication remains limited |
-| Unknown | Identifies what prevents stronger understanding | Conceptually specified; first-class product contract deferred |
-| Confidence-improvement operation | Seeks the highest-value next Evidence | Partially implemented through investigation opportunity and improvement history |
+| Unknown | Identifies what prevents stronger understanding | Implemented as a stable Question-scoped lifecycle contract |
+| Confidence-improvement operation | Seeks the highest-value safe next step for one exact Unknown | Phase 2C complete: read-only proposal, deterministic ranking, explicit authorization receipt, and Unknown targeting |
 | Recommendation | Proposes an action from understanding, objectives, and uncertainty | Canonical producer exists; complete product lifecycle deferred |
 | `ProductDecisionDraft` / Decision | Records a proposed or committed intervention | Projection and canonical pipeline exist; complete operation deferred |
 | `ProductOutcomeReview` | Supplies governed observations of what happened | Projection and learning owners exist; complete operation deferred |

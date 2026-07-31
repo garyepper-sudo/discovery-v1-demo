@@ -30,6 +30,12 @@ import {
   recordProductUnknownOperation,
   type ProductUnknownOperationInput,
 } from "../unknowns";
+import {
+  generateConfidenceImprovementProposals,
+  recordConfidenceImprovementEvent,
+  type ProductConfidenceImprovementProposal,
+  type ProductConfidenceImprovementResult,
+} from "../improvements";
 import { adoptLegacyProductQuestions } from "./adoptLegacyQuestions";
 import type {
   CanonicalEvidenceContribution,
@@ -39,6 +45,8 @@ import type {
   CanonicalWorkspaceReadResult,
   CanonicalUnknownMutationResult,
   CanonicalUnknownReadResult,
+  CanonicalImprovementProposalResult,
+  CanonicalImprovementAuthorizationResult,
   ProductQuestionAdoptionReceipt,
   ProductQuestionSummary,
 } from "./contracts";
@@ -425,6 +433,60 @@ export class CanonicalProductWorkspaceAdapter {
         ? listProductUnknowns({ runtime: stored.runtime, questionId: input.questionId })
         : listCurrentProductUnknowns({ runtime: stored.runtime, questionId: input.questionId }),
       runtimeRevision: stored.revision,
+    };
+  }
+
+  async generateImprovementProposals(input: {
+    userId: string; organizationId: string; questionId: string; unknownId: string;
+    candidates: ProductConfidenceImprovementProposal[];
+    noSafeOperation?: Extract<ProductConfidenceImprovementResult, { kind: "no-safe-operation" }>;
+  }): Promise<CanonicalImprovementProposalResult> {
+    const stored = await this.authorizedRuntime(input);
+    return {
+      result: generateConfidenceImprovementProposals({
+        runtime: stored.runtime, questionId: input.questionId, unknownId: input.unknownId,
+        candidates: input.candidates, noSafeOperation: input.noSafeOperation,
+      }),
+      runtimeRevision: stored.revision,
+    };
+  }
+
+  async authorizeImprovement(input: {
+    userId: string; organizationId: string; questionId: string;
+    proposal: ProductConfidenceImprovementProposal; operationId: string; occurredAt: string;
+    operation: RuntimeStorageOperationMetadata;
+  }): Promise<CanonicalImprovementAuthorizationResult> {
+    const stored = await this.authorizedRuntime(input);
+    const authorized = recordConfidenceImprovementEvent({
+      runtime: stored.runtime, proposal: input.proposal,
+      eventType: "improvement-authorized", operationId: input.operationId,
+      actorRef: input.userId, occurredAt: input.occurredAt,
+    });
+    const unknown = listCurrentProductUnknowns({ runtime: authorized.runtime, questionId: input.questionId })
+      .find(item => item.unknownId === input.proposal.unknownId);
+    if (!unknown) throw new Error("Improvement target Unknown is not current.");
+    const targeted = unknown.status === "targeted" ? null : recordProductUnknownOperation({
+      runtime: authorized.runtime, questionId: input.questionId,
+      operationId: `${input.operationId}:target-unknown`, occurredAt: input.occurredAt,
+      actorRef: input.userId,
+      authorizationScopeRef: `organization:${input.organizationId}:question:${input.questionId}`,
+      candidate: {
+        unknownId: unknown.unknownId, organizationId: unknown.organizationId,
+        questionId: unknown.questionId, category: unknown.category, target: unknown.target,
+        summary: unknown.summary, whyItMatters: unknown.whyItMatters,
+        sourceAncestry: unknown.sourceAncestry,
+      },
+      transition: { type: "target", targetingOperationRef: input.proposal.proposalId },
+      reason: "An authorized improvement proposal targets this exact Unknown.",
+    });
+    const runtime = targeted?.runtime ?? authorized.runtime;
+    const persisted = runtime === stored.runtime ? stored : await this.replace({
+      stored, runtime, operation: input.operation,
+    });
+    return {
+      receipt: authorized.receipt,
+      unknown: targeted?.projection ?? unknown,
+      runtimeRevision: persisted.revision,
     };
   }
 

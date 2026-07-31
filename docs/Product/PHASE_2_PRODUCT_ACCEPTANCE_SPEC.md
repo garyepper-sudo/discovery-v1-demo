@@ -127,6 +127,30 @@ Opening or targeting an Unknown creates no downstream action automatically.
 ProductQuestion history in Runtime `memory.events` remains the sole durable
 owner, and no new Runtime collection exists.
 
+### Phase 2C acceptance record
+
+**Status:** COMPLETE
+
+Phase 2C adds read-only, typed proposals for one exact current Unknown and
+version-2 ProductQuestion operation receipts beginning only with explicit human
+authorization. Deterministic ranking prioritizes discrimination, understanding,
+governance safety, burden, delay, and effort without an opaque scalar.
+Equivalent proposals remain tied rather than receiving a fabricated winner.
+Completion may reference canonically admitted Evidence but never admits it,
+resolves the Unknown, or mutates Confidence. Twenty-four deterministic
+scenarios pass with no connector action, downstream product object, Runtime
+collection, migration, frontend change, or Production activation.
+
+Authenticated live acceptance used one existing authorized development
+Question and its exact durable competing-explanation Unknown. Proposal
+generation preserved the Runtime revision and bytes. Explicit operator
+authorization recorded exactly one `inspect-existing-evidence` receipt and
+targeted the exact Unknown. Identical replay produced no write, conflicting
+replay failed closed, and reload preserved the receipt and targeted state.
+Connector activity, Evidence admission, Answer and Confidence mutation, and
+downstream Product objects remained zero. Product Recommendation and all later
+Phase 2 work remain open.
+
 Every Question resolves to exactly one of these customer-safe states:
 
 - **Supported Answer:** authorized Evidence and canonical understanding

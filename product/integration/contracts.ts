@@ -9,6 +9,11 @@ import type {
   ProductUnknownProjection,
 } from "../unknowns/contracts";
 import type {
+  ProductConfidenceImprovementProposal,
+  ProductConfidenceImprovementReceipt,
+  ProductConfidenceImprovementResult,
+} from "../improvements/contracts";
+import type {
   ProductAnswer,
   ProductAnswerConfidence,
   ProductQuestionWorkspace,
@@ -85,6 +90,19 @@ export type CanonicalUnknownReadResult = {
   unknowns: ProductUnknownProjection[];
   runtimeRevision: string;
 };
+
+export type CanonicalImprovementProposalResult = {
+  result: ProductConfidenceImprovementResult;
+  runtimeRevision: string;
+};
+
+export type CanonicalImprovementAuthorizationResult = {
+  receipt: ProductConfidenceImprovementReceipt;
+  unknown: ProductUnknownProjection;
+  runtimeRevision: string;
+};
+
+export type CanonicalImprovementProposalInput = ProductConfidenceImprovementProposal;
 
 export type CanonicalEvidenceContribution = {
   sourceId: string;
