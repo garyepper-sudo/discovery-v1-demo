@@ -164,6 +164,26 @@ Every Question resolves to exactly one of these customer-safe states:
 - **Unsupported:** no authorized basis exists for an Answer, explanation, or
   improvement claim.
 
+### Material Information Acquisition design boundary
+
+**Status:** DESIGNED; benchmark-supported; not implemented
+
+The general selector extends the Phase 2C read-only proposal boundary. It
+compares eligible action envelopes for one exact current Unknown and returns a
+selected action, material tie, stop, or abstention. Authorization, governance,
+consent, owner availability, exact scope, and material safety are hard gates.
+
+Selection is non-persistent and creates no execution. The existing Phase 2C
+authorization receipt remains authoritative for current proposal targeting;
+connectors, human interactions, Decisions/experiments, Outcome waiting, and
+future survey/measurement owners retain their own execution lifecycles. Every
+candidate becomes stale after an Understanding or Unknown revision.
+
+Production promotion requires the validator scenarios in
+[MATERIAL_INFORMATION_ACQUISITION_CONTRACT.md](./MATERIAL_INFORMATION_ACQUISITION_CONTRACT.md)
+and outcome-backed calibration. Synthetic ordinal estimates cannot be exposed
+as probabilities or guarantees.
+
 Uncertainty must remain visible and source-bounded. Discovery must not emit an
 Answer merely to increase coverage, transfer confidence from adjacent
 cognition, or fabricate certainty.
@@ -287,6 +307,22 @@ offer an Understanding Recommendation but must not emit an Objective
 Recommendation. A high-confidence inferred objective supports only disclosed,
 conditional, reversible eligibility. High-stakes or irreversible action
 requires a confirmed Objective.
+
+### Phase 2D design record
+
+**Status:** DESIGNED AND BENCHMARK-SUPPORTED; NOT IMPLEMENTED
+
+The minimum sufficient model is Organizational Understanding plus a versioned,
+authoritative Organizational Objective plus Objective-specific Optimization
+Context. Objective confidence and authority remain separate. Operating
+conditions, execution capacity, volatility, and risk capacity remain
+evidence-grounded Organizational Understanding; the context references them.
+Risk appetite, horizon, urgency preference, reversibility preference, resource
+and governance references, tradeoff precedence, evidence standard, and
+alternatives requirements belong in Optimization Context.
+
+No universal silent default, Objective Recommendation generator, persistence,
+Runtime migration, or frontend behavior is authorized by this design.
 
 ## 10. Decision Lifecycle
 

@@ -120,6 +120,25 @@ Objective Recommendation generation, Organizational Objective persistence,
 Optimization Context persistence, and the broader Recommendation lifecycle
 remain open.
 
+### Phase 2D — Organizational Objective and Optimization Context design: COMPLETE
+
+The product contracts are designed and synthetically benchmark-supported but
+not implemented. The three-input model—Organizational Understanding,
+Organizational Objective, and Optimization Context—outperformed the Phase 2C.2
+placeholder boundary. A separate Operating Context object added no benchmark
+accuracy. The next gate is implementing the two versioned contracts together;
+Objective Recommendation generation remains later work.
+
+### Post-Phase 2C research-to-product — Material acquisition selection: DESIGNED
+
+The non-persistent Material Information Acquisition contract generalizes the
+existing Phase 2C proposal boundary across search, questions, comparison,
+documents, surveys, measurements, experiments, monitoring, Outcome waiting,
+stopping, and abstention. Product Workflow owns comparison only; existing
+action owners retain execution and receipts. Synthetic calibration is complete;
+`GAP-B-018` now requires read-only live shadow calibration before implementation. Autonomous
+execution remains separate future research under `GAP-D-002`.
+
 ## Completed foundation — Phases 0–2
 
 Phases 0–2 established the canonical Product architecture, customer-readable
@@ -152,6 +171,14 @@ replace `/your-organization`, activate Production behavior, or introduce a
 second product interpretation layer. Live sandbox integration follows only
 after fixture coverage, firewall, responsive, accessibility, and browser
 review pass.
+
+Phase 3.1 retains a validated candidate connection from that same component tree to
+`CanonicalProductWorkspaceAdapter` only in the validated local onboarding
+sandbox. Fixture mode remains the default, live mode requires an exact
+authorized `onb-dev-*` organization, and `/your-organization` remains
+unchanged. It is a development and compatibility sandbox, not the final UX,
+not daily-use ready, and not promoted. Production promotion is not part of
+this phase.
 
 **Capabilities**
 

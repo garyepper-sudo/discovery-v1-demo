@@ -355,6 +355,21 @@ Acceptance requires preserved ranking, exact target linkage, user
 confirmation, source authorization, idempotent execution, Evidence ancestry,
 no-change receipt, and no autonomous or cross-organization action.
 
+### General Material Information Acquisition comparison
+
+The designed
+[Material Information Acquisition contract](./MATERIAL_INFORMATION_ACQUISITION_CONTRACT.md)
+generalizes proposal comparison without replacing this operation lifecycle.
+Product Workflow remains the single read-only selector owner. Action-specific
+owners supply candidate eligibility, execution facts, consent, and receipts.
+Authorization and governance are hard gates; ordinal dominance, material ties,
+stopping, and abstention replace an opaque universal score.
+
+The selector creates no event. The existing authorization receipt remains
+sufficient for current Phase 2C operations. A generic durable selection receipt
+is unjustified unless later replay evidence proves existing proposal and action
+receipts insufficient.
+
 ### Phase 2C live acceptance
 
 **Status:** COMPLETE
@@ -410,6 +425,15 @@ Later Outcomes evaluate an Understanding Recommendation by Unknown reduction,
 discrimination, canonical Evidence, understanding change, or truthful
 no-change. They evaluate an Objective Recommendation by objective progress,
 tradeoffs, constraints, and forecast behavior, with learning as secondary.
+
+Phase 2D design defines `ProductOrganizationalObjective` and
+`ProductOptimizationContext` in their object-specific contracts. Both are
+benchmark-supported designs and remain unimplemented. The Objective owns desired
+change, scope, success criteria, horizon, status, authority, epistemic
+confidence, ancestry, and immutable versioning. Optimization Context owns
+Objective-specific governed preferences and references to material constraints.
+Neither may rewrite Organizational Understanding, and neither authorizes an
+Objective Recommendation generator by itself.
 
 Permitted product types include `investigate`, `acquire_evidence`, `monitor`,
 `communicate`, `decide`, `bounded_test`, `mitigate`, `defer`, and `no_action`.

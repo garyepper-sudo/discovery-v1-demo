@@ -13,6 +13,12 @@ future work must preserve.
 Changes to this architecture require evidence that the current architecture
 cannot support the intended workflow.
 
+The core architecture is stable enough for implementation. Further research
+should primarily evaluate implemented capability, calibration, comparative
+advantage, and demonstrated defects rather than inventing additional objects.
+The current phase is contract implementation and product validation; complete
+the backend workflow before final frontend wiring.
+
 ## Product philosophy
 
 Discovery is a governed organizational learning system. It helps authorized
@@ -43,6 +49,20 @@ Search includes manual contribution until a governed connector is available.
 Evidence admission and cognition remain authoritative upstream. Product
 contracts project that authority; they do not recreate it.
 
+The complete governed learning and action loop is:
+
+```text
+Reality → Evidence → Organizational Understanding → Material Uncertainty
+→ Understanding Recommendation → Information Acquisition
+→ Updated Organizational Understanding → Objective Discovery
+→ Organizational Objective + Optimization Context
+→ Objective Recommendation → Decision → Outcome → Learning
+→ Updated Organizational Understanding
+```
+
+Stages explicitly marked designed, benchmark-supported, blocked, or deferred
+are not production capabilities.
+
 Canonical organizational Evidence is content-addressed within its authorized
 organization/source scope. External repository revisions remain separate
 provenance, accessibility, freshness, and source-version lineage. A newer
@@ -63,7 +83,10 @@ to every governed connector.
 | `ProductUnknown` | Product Workflow | Stable Question-scoped identity for the exact unresolved limiter | Versioned Question events in existing Organization Runtime memory |
 | `ProductConfidenceImprovementProposal` | Product Workflow | Read-only ranked next step for one exact current Unknown | Derived projection; authorization receipt is a versioned Question event |
 | `ProductUnderstandingRecommendation` | Product Workflow | Product-facing projection of an exact Confidence-Improvement proposal with primary understanding purpose | Derived projection; no independent persistence |
+| `MaterialInformationAcquisitionResult` | Product Workflow | Read-only comparison selecting one eligible information-producing action, preserving a material tie, stopping, or abstaining | Derived projection; existing action-specific receipts retain lifecycle authority |
 | `ProductObjectiveRecommendationEligibility` | Product Workflow | Read-only determination that Objective and Optimization inputs permit future business Recommendation generation | Derived result; no Recommendation generation or persistence |
+| `ProductOrganizationalObjective` | Product Workflow (designed) | Versioned authoritative desired organizational change | Benchmark-supported design; persistence not implemented |
+| `ProductOptimizationContext` | Product Workflow (designed) | Objective-specific governed action preferences and criteria | Benchmark-supported design; persistence not implemented |
 | `ProductDecisionDraft` | Product Workflow | Readiness-bounded draft that references Question and Answer | Projection of existing decision capability |
 | `ProductDecision` | Executive Decision pipeline | Committed intervention and ancestry | Existing Runtime decision/work objects |
 | `ProductOutcomeReview` | Executive Review/Learning | Comparison of expected and observed outcomes | Existing Runtime review and learning objects |
@@ -114,6 +137,13 @@ Product Workflow selects and compresses already-authorized canonical outputs
 into versioned product contracts. It owns customer-readable bounded language,
 answer selection gates, abstention, and contract composition. It owns no
 cognition.
+
+Material Information Acquisition generalizes the existing Phase 2C proposal
+boundary without becoming a planner or execution owner. Product Workflow may
+compare candidates supplied by existing owners after authorization and
+governance gates. Action-specific owners retain initiation, cancellation,
+completion, failure, and receipts; canonical Evidence and cognition retain
+admission and Understanding updates.
 
 ### Frontend
 
@@ -184,6 +214,9 @@ presentation code.
 9. Contract changes require version, migration, fixture, validator, and
    documentation review.
 10. Active and historical Questions remain organization-isolated.
+11. Frontend live-data selection occurs at a server-only canonical adapter
+    boundary; Runtime revisions, storage details, and cognition objects never
+    cross into presentation.
 
 ## Related canonical documents
 

@@ -204,6 +204,24 @@ Changing one requires the process in
 - **Affected phase:** Phase 3.0.
 - **Status:** Active.
 
+## DEC-PROD-018 — Bind live frontend proof only through the canonical adapter
+
+- **Decision:** `/product-alpha` may select `live-sandbox` only inside the
+  validated onboarding-development environment. Its server boundary derives
+  Clerk identity, validates exact `onb-dev-*` scope, authorizes before Runtime
+  retrieval, and delegates all reads and writes to
+  `CanonicalProductWorkspaceAdapter`.
+- **Reason:** Real Question persistence and evidence updates must prove the
+  Phase 3.0 component contract without creating a second semantic path.
+- **Alternatives considered:** Client Runtime access; onboarding submission;
+  legacy projection fallback; active-route replacement.
+- **Why rejected:** Each weakens isolation, duplicates workflow ownership, or
+  changes the already active product route.
+- **Consequences:** Fixture remains the default, live failures never fall back,
+  and only product-safe workspace contracts cross the server boundary.
+- **Affected phase:** Phase 3.1.
+- **Status:** Active.
+
 ## DEC-PROD-019 — External credentials have a dedicated secure owner
 
 - **Decision:** Product-owned connectors persist encrypted OAuth credentials
@@ -402,3 +420,90 @@ Changing one requires the process in
 - **Affected phase:** Phase 2C.2 and later Recommendation work.
 - **Affected gaps:** `GAP-A-011`, `GAP-A-018`.
 - **Status:** Active.
+
+## DEC-PROD-027 — Objective and Optimization Context are the minimum business recommendation inputs
+
+- **Decision:** Future Objective Recommendation eligibility composes an exact
+  Organizational Understanding revision, one active authoritative Objective
+  version, and Objective-specific Optimization Context. Objective authority is
+  separate from epistemic confidence. Organizational and environmental facts,
+  including operating condition, execution capacity, volatility, and risk
+  capacity, remain in Organizational Understanding. Optimization Context owns
+  governed preferences and references those facts. No separate Operating
+  Context object is introduced.
+- **Reason:** Phase 2D Experiment 001 covered 41 deterministic scenarios. The
+  structured three-input architecture reached `1.000` synthetic disposition
+  coverage. A separate Operating Context object added zero accuracy and reduced
+  the complexity-adjusted score from `0.800` to `0.600`.
+- **Alternatives considered:** Objective only; loose parameters; separate
+  Operating Context; objective-first; understanding-first; universal defaults.
+- **Why rejected:** They omitted authority, conflict, alternatives, governance,
+  information value, or duplicated evidence-grounded state.
+- **Consequences:** Both prerequisite contracts are designed together.
+  Persistence, write APIs, migration, real authority mapping, and Objective
+  Recommendation generation remain unimplemented. Adaptive elicitation is the
+  preferred future interaction, subject to live validation.
+- **Affected phase:** Phase 2D and later Recommendation work.
+- **Affected gaps:** `GAP-A-011`, `GAP-A-018`.
+- **Status:** Active design decision; implementation pending.
+
+## DEC-PROD-028 — Organizational Objective discovery is governed, hybrid, and adaptive
+
+- **Decision:** Future Objective discovery will compose authorized declarations,
+  admitted evidence, decisions, strategy, metrics, and Organizational
+  Understanding conditions into temporary non-authoritative hypotheses. It
+  will ask only the highest-value material clarification, separate authority
+  from confidence, preserve conflict, and create a governed Objective only
+  after exact scope and authority are confirmed. Material change triggers
+  revalidation, never silent replacement.
+- **Reason:** Objective Discovery Experiment 001 compared seven architectures
+  across 42 deterministic scenarios. The governed hybrid preserved all material
+  hypotheses and eliminated false governance after authority gating, while
+  single-source inference lost conflict, currency, or authority. Adaptive
+  elicitation matched full-questionnaire fixture correctness with substantially
+  lower synthetic burden.
+- **Alternatives considered:** Direct declaration; evidence, decision, strategy,
+  or KPI inference; hypotheses without authority separation; fixed interview;
+  full questionnaire.
+- **Why rejected:** A statement is not necessarily authorized, observed behavior
+  cannot establish authority, KPIs may be proxies, single sources miss conflict,
+  and fixed or exhaustive interviews either miss material ambiguity or impose
+  unnecessary burden.
+- **Consequences:** Declared and observed objective signals are not new durable
+  objects. Hypotheses remain non-authoritative projections. The implementation
+  contract must define exact authority resolution, deterministic question
+  selection, version creation, revalidation, permissions, and fail-closed
+  behavior before persistence or Objective Recommendation generation.
+- **Affected phase:** Phase 2D prerequisite research and later Objective contract
+  implementation.
+- **Affected gaps:** `GAP-A-011`, `GAP-A-018`.
+- **Status:** Active research-backed design decision; implementation pending.
+
+## DEC-PROD-029 — Material Information Acquisition is a non-persistent governed selector
+
+- **Decision:** Product Workflow generalizes the existing Phase 2C proposal
+  boundary into one read-only Material Information Acquisition selector. It
+  compares action envelopes supplied by existing owners after authorization,
+  governance, consent, scope, owner-availability, and safety gates. It returns
+  one selected action, a preserved material tie, stopping, or abstention.
+- **Reason:** Material Information Acquisition Experiment 001 compared ten
+  strategies across 32 deterministic scenarios. The governed hybrid achieved
+  `1.000` bounded choice and governance integrity and outperformed fixed,
+  always-ask/search/measure/survey/experiment, information-gain-only, and
+  organizational-value-only strategies.
+- **Alternatives considered:** Separate selectors by action domain; a universal
+  scalar utility; fixed priority rules; authorization as a score; a persistent
+  planner; selector-owned execution and receipts.
+- **Why rejected:** Separate selectors duplicate comparison logic. A universal
+  scalar hides material tradeoffs. Authorization and governance cannot be
+  compensated by value. Persistence or execution ownership would duplicate
+  existing ProductQuestion, connector, Decision, Outcome, Evidence, and
+  cognition lifecycles.
+- **Consequences:** The selector uses bounded ordinal dimensions, dominance,
+  explicit ties, truthful missing-value behavior, and sequential recomputation.
+  Existing action owners retain initiation, cancellation, completion, failure,
+  and receipts. No Runtime object or generic selection event is introduced.
+  Calibration and focused validators are required before implementation.
+- **Affected phase:** Post-Phase 2C research-to-product calibration.
+- **Affected gaps:** `GAP-B-018`; autonomous execution remains `GAP-D-002`.
+- **Status:** Active design decision; implementation pending calibration.

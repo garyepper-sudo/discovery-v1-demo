@@ -164,7 +164,9 @@ single confidence bands.
 
 ```text
 Question or objective
-→ authorized Evidence acquisition
+→ highest-value material uncertainty
+→ governed information-acquisition selection
+→ action-specific authorized execution
 → Evidence admission
 → canonical interpretation
 → current understanding
@@ -192,6 +194,14 @@ or business value may appear only as a bounded secondary effect. Objective
 Recommendations require an eligible Objective and disclosed Optimization
 Context. Understanding Recommendations do not require an Objective when they
 target a governed actionable Unknown.
+
+An Organizational Objective is a prospective, authoritative desired change;
+it is not part of evidence-grounded Organizational Understanding. Optimization
+Context records governed action preferences and criteria. Changing either may
+change future Recommendation eligibility without changing understanding.
+Operating condition, execution capacity, volatility, and risk capacity remain
+facts in Organizational Understanding. Objective authority and epistemic
+confidence are separate and neither may substitute for the other.
 
 Document accumulation alone is not learning.
 
@@ -284,8 +294,9 @@ could materially reduce it.
 Understanding objective
 → current understanding
 → knowledge gap
-→ expected value of Evidence
-→ targeted acquisition
+→ governed candidate acquisition actions
+→ one net-material-value action, tie, stop, or abstention
+→ action-specific execution and Evidence admission
 → updated understanding
 ```
 
@@ -295,6 +306,12 @@ proposal is a read-only projection for one exact current Unknown. Explicit
 proposal-specific authorization records a durable receipt and may target that
 Unknown, but does not resolve it, admit Evidence, execute external work, or
 mutate Confidence.
+
+Material Information Acquisition is the non-persistent Product Workflow
+comparison boundary for that targeted step. It does not own the Unknown,
+execute acquisition, admit Evidence, or update Understanding. Every selection
+becomes stale when its Understanding or Unknown revision changes, and the
+selector recomputes only after the prior result has been canonically evaluated.
 
 ## 13. Freshness and Stability
 

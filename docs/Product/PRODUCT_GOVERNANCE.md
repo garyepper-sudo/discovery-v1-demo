@@ -14,6 +14,7 @@ Every product implementation begins by reading:
 5. [PRODUCT_DECISIONS.md](./PRODUCT_DECISIONS.md)
 6. [PHASE_2_PRODUCT_ACCEPTANCE_SPEC.md](./PHASE_2_PRODUCT_ACCEPTANCE_SPEC.md)
 7. [PHASE_2_PRODUCT_OBJECT_CONTRACTS.md](./PHASE_2_PRODUCT_OBJECT_CONTRACTS.md)
+8. [MATERIAL_INFORMATION_ACQUISITION_CONTRACT.md](./MATERIAL_INFORMATION_ACQUISITION_CONTRACT.md)
 
 The implementation plan must state:
 
@@ -98,6 +99,23 @@ organizational understanding or advancing an explicit organizational
 objective. Secondary effects cannot bypass the eligibility, authorization,
 lineage, or confidence rules of that primary purpose.
 
+An Organizational Objective's epistemic confidence and authority are distinct.
+Optimization Context may express governed preferences but may not restate or
+mutate evidence-grounded organizational facts. Operating conditions remain in
+Organizational Understanding unless future evidence proves a separate object is
+necessary. Objective Recommendation work requires meaningful alternatives and
+must treat status quo, delay, abstention, and additional learning as eligible
+alternatives where material.
+
+Material Information Acquisition is a non-persistent Product Workflow
+selection capability. Authorization, governance, consent, scope, owner
+availability, and material safety are hard eligibility gates before comparison.
+The selector may compare bounded ordinal information contribution,
+organizational relevance, burden, cost, delay, reliability, evidence quality,
+and reversibility; it may not establish a universal utility scalar, initiate an
+action, admit Evidence, update Understanding, or own an action lifecycle.
+Material ties, stopping, and abstention are canonical results.
+
 ## Dependency and composition rules
 
 - Prefer composition through existing Product Workflow, Runtime, cognition,
@@ -122,6 +140,9 @@ lineage, or confidence rules of that primary purpose.
   canonical adapter through one injected fixture boundary. Fixtures may
   exercise contract states and transitions, but presentation components may
   not import fixture catalogs, legacy composition, Runtime, or cognition.
+- Live frontend proofs are development-only, authorize before Runtime
+  retrieval, accept only exact `onb-dev-*` organization identity, and expose
+  only versioned product contracts through the canonical adapter.
 
 ## Gap governance
 
