@@ -55,7 +55,7 @@ canonical internal cognitive chain.
 | Answer | `ProductAnswer` / `ProductAnswerAbstention` selection plus version-2 immutable Answer events and operation receipts | `canonical-existing` Phase 2A | Derived current projection and immutable version reference; no independent Answer body store |
 | Confidence | Exact Answer-owned immutable snapshot inside each eligible Answer version | `canonical-existing` Phase 2A | Customer confidence remains Answer-owned and immutable within an Answer version |
 | Unknown | ProductQuestion-history-owned version-2 lifecycle events and derived current projection | `canonical-existing` Phase 2B | Stable Question-scoped identity; additive lifecycle; no independent Unknown store |
-| Confidence-Improvement Operation | `ProductImprovementAction` projection and version-2 ProductQuestion improvement event/receipt | `canonical-existing` Phase 2C | Read-only proposal generation; explicit authorization owns the durable receipt and exact Unknown targeting |
+| Confidence-Improvement Operation | `ProductImprovementAction` projection; legacy version-2 and governed version-3 owner events; version-1 owner outcome observations | `canonical-existing` Phase 2C plus calibration readiness | Read-only proposal generation; explicit authorization owns the durable receipt and exact Unknown targeting; future governed receipts retain candidate-envelope lineage and observed outcomes without selector persistence |
 | Recommendation | Runtime `ExecutiveRecommendation` and communication projections | `partially-implemented` | A Phase 2 product Recommendation is not the engine artifact and needs Question-scoped lifecycle completion |
 | Decision | Durable `ExecutiveDecisionRecord` and Product Workflow draft/projection | `canonical-existing` engine owner; product composition partial | Reuse the canonical Decision pipeline and complete product operations |
 | Outcome | Durable `ExecutiveReview`; `ProductOutcomeReview` projection | `canonical-existing` engine owner; product composition partial | Outcome observations remain distinct from Learning |
@@ -365,10 +365,11 @@ owners supply candidate eligibility, execution facts, consent, and receipts.
 Authorization and governance are hard gates; ordinal dominance, material ties,
 stopping, and abstention replace an opaque universal score.
 
-The selector creates no event. The existing authorization receipt remains
-sufficient for current Phase 2C operations. A generic durable selection receipt
-is unjustified unless later replay evidence proves existing proposal and action
-receipts insufficient.
+The selector creates no event. Product Confidence Improvement is the first
+participating action owner: future version-3 choice events retain its immutable
+candidate envelope and version-1 owner outcome observations preserve exact
+before/after references. Historical version-2 receipts remain readable and
+incomplete. A generic durable selection receipt remains unjustified.
 
 ### Phase 2C live acceptance
 

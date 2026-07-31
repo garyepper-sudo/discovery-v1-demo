@@ -32,7 +32,11 @@ import {
 } from "../unknowns";
 import {
   generateConfidenceImprovementProposals,
+  projectConfidenceImprovementCandidateEnvelope,
   recordConfidenceImprovementEvent,
+  recordConfidenceImprovementOutcomeObservation,
+  type ProductConfidenceImprovementEnvelopeContext,
+  type ProductConfidenceImprovementOutcomeObservationInput,
   type ProductConfidenceImprovementProposal,
   type ProductConfidenceImprovementResult,
 } from "../improvements";
@@ -65,6 +69,8 @@ import type {
   CanonicalUnknownReadResult,
   CanonicalImprovementProposalResult,
   CanonicalImprovementAuthorizationResult,
+  CanonicalImprovementEnvelopeResult,
+  CanonicalImprovementOutcomeResult,
   CanonicalUnderstandingRecommendationResult,
   CanonicalObjectiveRecommendationEligibilityResult,
   CanonicalObjectiveMutationResult,
@@ -79,6 +85,18 @@ export type CanonicalProductWorkspaceAdapterDependencies = {
   authorize(input: {
     userId: string;
     organizationId: string;
+  }): Promise<boolean>;
+  authorizeImprovementOperation?(input: {
+    userId: string;
+    organizationId: string;
+    operation:
+      | "candidate:project"
+      | "choice:authorize"
+      | "choice:decline"
+      | "choice:defer"
+      | "choice:correct"
+      | "outcome:observe"
+      | "outcome:correct";
   }): Promise<boolean>;
   investigate(input: {
     runtime: StoredOrganizationRuntime["runtime"];
@@ -100,6 +118,15 @@ export type CanonicalProductWorkspaceAdapterDependencies = {
   }): Promise<ProductObjectiveReferenceValidation>;
 };
 
+type ProductImprovementAuthorizationOperation =
+  | "candidate:project"
+  | "choice:authorize"
+  | "choice:decline"
+  | "choice:defer"
+  | "choice:correct"
+  | "outcome:observe"
+  | "outcome:correct";
+
 export class CanonicalProductWorkspaceAdapter {
   constructor(private readonly dependencies: CanonicalProductWorkspaceAdapterDependencies) {}
 
@@ -113,6 +140,23 @@ export class CanonicalProductWorkspaceAdapter {
     if (!stored) throw new Error("Authorized Organization Runtime is missing.");
     if (stored.runtime.metadata.organizationId !== input.organizationId) {
       throw new Error("Product workspace organization mismatch.");
+    }
+    return stored;
+  }
+
+  private async authorizedImprovementRuntime(input: {
+    userId: string;
+    organizationId: string;
+    operation: ProductImprovementAuthorizationOperation;
+  }): Promise<StoredOrganizationRuntime> {
+    const generallyAuthorized = await this.dependencies.authorize(input);
+    const operationAuthorized = this.dependencies.authorizeImprovementOperation
+      ? await this.dependencies.authorizeImprovementOperation(input)
+      : false;
+    if (!generallyAuthorized || !operationAuthorized) throw new Error("Product improvement operation access denied.");
+    const stored = await this.dependencies.runtimeRepository.read(input.organizationId);
+    if (!stored || stored.runtime.metadata.organizationId !== input.organizationId) {
+      throw new Error("Authorized Organization Runtime is missing or mismatched.");
     }
     return stored;
   }
@@ -669,6 +713,88 @@ export class CanonicalProductWorkspaceAdapter {
       unknown: targeted?.projection ?? unknown,
       runtimeRevision: persisted.revision,
     };
+  }
+
+  async projectImprovementCandidateEnvelope(input: {
+    userId: string; organizationId: string; questionId: string;
+    proposal: ProductConfidenceImprovementProposal;
+    context: ProductConfidenceImprovementEnvelopeContext;
+  }): Promise<CanonicalImprovementEnvelopeResult> {
+    const stored = await this.authorizedImprovementRuntime({ ...input, operation: "candidate:project" });
+    if (input.proposal.questionId !== input.questionId) throw new Error("Improvement candidate Question scope mismatch.");
+    return {
+      envelope: projectConfidenceImprovementCandidateEnvelope({ runtime: stored.runtime, proposal: input.proposal, context: input.context }),
+      runtimeRevision: stored.revision,
+    };
+  }
+
+  async recordGovernedImprovementChoice(input: {
+    userId: string; organizationId: string; questionId: string;
+    proposal: ProductConfidenceImprovementProposal;
+    context: ProductConfidenceImprovementEnvelopeContext;
+    disposition: "authorized" | "declined" | "deferred";
+    operationId: string;
+    expectedCurrentEventVersion: number | null;
+    occurredAt: string;
+    reason?: string | null;
+    operation: RuntimeStorageOperationMetadata;
+  }): Promise<CanonicalImprovementAuthorizationResult> {
+    const stored = await this.authorizedImprovementRuntime({
+      ...input,
+      operation: input.expectedCurrentEventVersion !== null
+        ? "choice:correct"
+        : input.disposition === "authorized" ? "choice:authorize" : input.disposition === "declined" ? "choice:decline" : "choice:defer",
+    });
+    const envelope = projectConfidenceImprovementCandidateEnvelope({ runtime: stored.runtime, proposal: input.proposal, context: input.context });
+    const recorded = recordConfidenceImprovementEvent({
+      runtime: stored.runtime,
+      proposal: input.proposal,
+      eventType: input.disposition === "authorized" ? "improvement-authorized" : input.disposition === "declined" ? "improvement-declined" : "improvement-deferred",
+      operationId: input.operationId,
+      actorRef: input.userId,
+      occurredAt: input.occurredAt,
+      reason: input.reason,
+      candidateEnvelope: envelope,
+      expectedCurrentEventVersion: input.expectedCurrentEventVersion,
+    });
+    const unknown = listCurrentProductUnknowns({ runtime: recorded.runtime, questionId: input.questionId })
+      .find((item) => item.unknownId === input.proposal.unknownId);
+    if (!unknown) throw new Error("Improvement target Unknown is not current.");
+    const targeted = input.disposition === "authorized" && unknown.status !== "targeted" ? recordProductUnknownOperation({
+      runtime: recorded.runtime, questionId: input.questionId,
+      operationId: `${input.operationId}:target-unknown`, occurredAt: input.occurredAt,
+      actorRef: input.userId,
+      authorizationScopeRef: `organization:${input.organizationId}:question:${input.questionId}`,
+      candidate: {
+        unknownId: unknown.unknownId, organizationId: unknown.organizationId,
+        questionId: unknown.questionId, category: unknown.category, target: unknown.target,
+        summary: unknown.summary, whyItMatters: unknown.whyItMatters, sourceAncestry: unknown.sourceAncestry,
+      },
+      transition: { type: "target", targetingOperationRef: input.proposal.proposalId },
+      reason: "An authorized governed improvement proposal targets this exact Unknown.",
+    }) : null;
+    const runtime = targeted?.runtime ?? recorded.runtime;
+    const persisted = runtime === stored.runtime ? stored : await this.replace({ stored, runtime, operation: input.operation });
+    return { receipt: recorded.receipt, unknown: targeted?.projection ?? unknown, runtimeRevision: persisted.revision };
+  }
+
+  async recordImprovementOutcomeObservation(input: {
+    userId: string; organizationId: string;
+    observation: ProductConfidenceImprovementOutcomeObservationInput;
+    expectedCurrentVersion: number | null;
+    operation: RuntimeStorageOperationMetadata;
+  }): Promise<CanonicalImprovementOutcomeResult> {
+    const stored = await this.authorizedImprovementRuntime({
+      ...input,
+      operation: input.expectedCurrentVersion === null ? "outcome:observe" : "outcome:correct",
+    });
+    const recorded = recordConfidenceImprovementOutcomeObservation({
+      runtime: stored.runtime,
+      observation: input.observation,
+      expectedCurrentVersion: input.expectedCurrentVersion,
+    });
+    const persisted = recorded.runtime === stored.runtime ? stored : await this.replace({ stored, runtime: recorded.runtime, operation: input.operation });
+    return { observation: recorded.observation, idempotent: recorded.idempotent, runtimeRevision: persisted.revision };
   }
 
   async archiveQuestion(input: {

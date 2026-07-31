@@ -9,10 +9,12 @@ import type {
   ProductUnknownProjection,
 } from "../unknowns/contracts";
 import type {
+  ProductConfidenceImprovementOutcomeObservation,
   ProductConfidenceImprovementProposal,
   ProductConfidenceImprovementReceipt,
   ProductConfidenceImprovementResult,
-} from "../improvements/contracts";
+} from "../improvements";
+import type { MaterialAcquisitionCandidateEnvelope } from "../acquisition";
 import type {
   ProductObjectiveRecommendationEligibility,
   ProductUnderstandingRecommendation,
@@ -108,6 +110,17 @@ export type CanonicalImprovementProposalResult = {
 export type CanonicalImprovementAuthorizationResult = {
   receipt: ProductConfidenceImprovementReceipt;
   unknown: ProductUnknownProjection;
+  runtimeRevision: string;
+};
+
+export type CanonicalImprovementEnvelopeResult = {
+  envelope: MaterialAcquisitionCandidateEnvelope;
+  runtimeRevision: string;
+};
+
+export type CanonicalImprovementOutcomeResult = {
+  observation: ProductConfidenceImprovementOutcomeObservation;
+  idempotent: boolean;
   runtimeRevision: string;
 };
 

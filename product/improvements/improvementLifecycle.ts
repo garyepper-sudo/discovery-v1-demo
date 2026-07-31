@@ -4,10 +4,14 @@ import { listProductUnknowns } from "../unknowns";
 import { normalize, stableId } from "../workflow/text";
 import {
   PRODUCT_IMPROVEMENT_EVENT_KIND, PRODUCT_IMPROVEMENT_EVENT_SCHEMA_VERSION,
+  PRODUCT_IMPROVEMENT_LEGACY_EVENT_SCHEMA_VERSION,
   type ProductConfidenceImprovementEvent, type ProductConfidenceImprovementEventType,
+  type ProductConfidenceImprovementGovernedEvent,
   type ProductConfidenceImprovementProposal, type ProductConfidenceImprovementReceipt,
   type ProductConfidenceImprovementResult,
 } from "./contracts";
+import type { MaterialAcquisitionCandidateEnvelope } from "../acquisition";
+import { isCompleteMaterialAcquisitionEnvelope, materialAcquisitionEnvelopeDigest } from "./candidateEnvelope";
 
 const value = { low: 0, moderate: 1, high: 2 };
 const delay = { immediate: 0, short: 1, medium: 2, long: 3 };
@@ -55,29 +59,82 @@ export function generateConfidenceImprovementProposals(input: {
 }
 function isEvent(x: unknown): x is ProductConfidenceImprovementEvent {
   const v = x as any;
-  return v?.kind === PRODUCT_IMPROVEMENT_EVENT_KIND && v.schemaVersion === PRODUCT_IMPROVEMENT_EVENT_SCHEMA_VERSION
+  return v?.kind === PRODUCT_IMPROVEMENT_EVENT_KIND
+    && (v.schemaVersion === PRODUCT_IMPROVEMENT_EVENT_SCHEMA_VERSION || v.schemaVersion === PRODUCT_IMPROVEMENT_LEGACY_EVENT_SCHEMA_VERSION)
     && typeof v.eventId === "string" && typeof v.operationFingerprint === "string";
 }
+function validateGovernedHistory(events: ProductConfidenceImprovementEvent[]): void {
+  const byOperation = new Map<string, ProductConfidenceImprovementGovernedEvent[]>();
+  for (const event of events) {
+    if (event.schemaVersion !== "3") continue;
+    if (!Number.isInteger(event.eventVersion) || event.eventVersion < 1
+      || event.candidateEnvelopeDigest !== materialAcquisitionEnvelopeDigest(event.candidateEnvelope)) {
+      throw new Error("Improvement operation contains a malformed governed history.");
+    }
+    const group = byOperation.get(event.operationId) ?? [];
+    group.push(event);
+    byOperation.set(event.operationId, group);
+  }
+  for (const history of byOperation.values()) {
+    history.sort((left, right) => left.eventVersion - right.eventVersion);
+    for (let index = 0; index < history.length; index += 1) {
+      const event = history[index]!;
+      const prior = history[index - 1];
+      if (event.eventVersion !== index + 1
+        || event.supersedesEventId !== (prior?.eventId ?? null)
+        || !Number.isFinite(Date.parse(event.occurredAt))
+        || (prior && Date.parse(event.occurredAt) < Date.parse(prior.occurredAt))
+        || (prior && (event.proposalId !== prior.proposalId
+          || event.candidateEnvelope.envelopeId !== prior.candidateEnvelope.envelopeId
+          || event.candidateEnvelopeDigest !== prior.candidateEnvelopeDigest
+          || event.questionRevision !== prior.questionRevision
+          || event.unknownRevisionRef !== prior.unknownRevisionRef
+          || event.understandingRevisionRef !== prior.understandingRevisionRef))) {
+        throw new Error("Improvement operation contains a contradictory governed history.");
+      }
+    }
+  }
+}
 export function productConfidenceImprovementEvents(runtime: OrganizationRuntime) {
-  return runtime.memory.events.filter(isEvent).filter(e => e.organizationId === runtime.metadata.organizationId);
+  const events = runtime.memory.events.filter(isEvent).filter(e => e.organizationId === runtime.metadata.organizationId);
+  validateGovernedHistory(events);
+  return events;
 }
 export function recordConfidenceImprovementEvent(input: {
   runtime: OrganizationRuntime; proposal: ProductConfidenceImprovementProposal;
   eventType: ProductConfidenceImprovementEventType; operationId: string; actorRef: string; occurredAt: string;
   resultEvidenceIds?: string[]; resultSourceRefs?: string[]; limitationCode?: string | null; reason?: string | null;
+  candidateEnvelope?: MaterialAcquisitionCandidateEnvelope;
+  expectedCurrentEventVersion?: number | null;
 }): { runtime: OrganizationRuntime; receipt: ProductConfidenceImprovementReceipt } {
   if (!input.actorRef || input.eventType === "improvement-authorized" && !input.proposal.requiresHumanAuthorization) throw new Error("Explicit human authorization is required.");
+  const governed = Boolean(input.candidateEnvelope);
+  if (governed && (!isCompleteMaterialAcquisitionEnvelope(input.candidateEnvelope!)
+    || input.candidateEnvelope!.candidate.candidateId !== input.proposal.proposalId
+    || input.candidateEnvelope!.organizationId !== input.proposal.organizationId
+    || input.candidateEnvelope!.question.questionId !== input.proposal.questionId
+    || input.candidateEnvelope!.unknown.unknownId !== input.proposal.unknownId
+    || input.candidateEnvelope!.unknown.unknownVersionRef !== input.proposal.unknownRevisionRef
+    || input.candidateEnvelope!.understandingRevisionRef !== input.proposal.understandingRevisionRef)) {
+    throw new Error("Improvement governed event requires the exact complete candidate envelope.");
+  }
+  const operationEvents = productConfidenceImprovementEvents(input.runtime).filter((event) => event.operationId === input.operationId);
+  const currentGoverned = operationEvents.filter((event): event is ProductConfidenceImprovementGovernedEvent => event.schemaVersion === "3")
+    .reduce<ProductConfidenceImprovementGovernedEvent | undefined>((current, event) => !current || event.eventVersion > current.eventVersion ? event : current, undefined);
+  const eventVersion = governed ? (input.expectedCurrentEventVersion ?? 0) + 1 : null;
   const fingerprint = stableId("product-improvement-operation", input.operationId, input.eventType, input.proposal.proposalId, canonical({
     resultEvidenceIds: input.resultEvidenceIds ?? [], resultSourceRefs: input.resultSourceRefs ?? [], limitationCode: input.limitationCode, reason: input.reason,
+    candidateEnvelope: input.candidateEnvelope ?? null, eventVersion,
   }));
-  const prior = productConfidenceImprovementEvents(input.runtime).find(e => e.operationId === input.operationId);
+  const prior = operationEvents.find(e => e.operationFingerprint === fingerprint);
   if (prior) {
-    if (prior.operationFingerprint !== fingerprint) throw new Error("Improvement operation conflict.");
     const { kind: _k, schemaVersion: _s, operationFingerprint: _f, ...receipt } = prior;
     return { runtime: input.runtime, receipt };
   }
-  const event: ProductConfidenceImprovementEvent = {
-    kind: PRODUCT_IMPROVEMENT_EVENT_KIND, schemaVersion: PRODUCT_IMPROVEMENT_EVENT_SCHEMA_VERSION,
+  if (!governed && operationEvents.length > 0) throw new Error("Improvement operation conflict.");
+  if (governed && (currentGoverned?.eventVersion ?? null) !== input.expectedCurrentEventVersion) throw new Error("Improvement operation current version changed.");
+  const base = {
+    kind: PRODUCT_IMPROVEMENT_EVENT_KIND,
     eventType: input.eventType, eventId: stableId("product-improvement-event", fingerprint),
     operationId: input.operationId, operationFingerprint: fingerprint,
     organizationId: input.proposal.organizationId, questionId: input.proposal.questionId,
@@ -87,6 +144,24 @@ export function recordConfidenceImprovementEvent(input: {
     resultEvidenceIds: [...new Set(input.resultEvidenceIds ?? [])].sort(),
     resultSourceRefs: [...new Set(input.resultSourceRefs ?? [])].sort(),
     limitationCode: input.limitationCode ?? null, reason: input.reason ?? null,
+  };
+  const event: ProductConfidenceImprovementEvent = input.candidateEnvelope ? {
+    ...base,
+    schemaVersion: PRODUCT_IMPROVEMENT_EVENT_SCHEMA_VERSION,
+    eventVersion: eventVersion!,
+    supersedesEventId: currentGoverned?.eventId ?? null,
+    candidateEnvelope: input.candidateEnvelope,
+    candidateEnvelopeDigest: materialAcquisitionEnvelopeDigest(input.candidateEnvelope),
+    questionRevision: input.candidateEnvelope.question.revision,
+    unknownRevisionRef: input.candidateEnvelope.unknown.unknownVersionRef,
+    understandingRevisionRef: input.candidateEnvelope.understandingRevisionRef,
+    objectiveVersionRef: input.candidateEnvelope.objectiveVersionRef,
+    optimizationContextVersionRef: input.candidateEnvelope.optimizationContextVersionRef,
+    authorityRef: input.candidateEnvelope.actionOwner.authorityRef,
+    governanceContextRefs: [...input.candidateEnvelope.governanceContextRefs],
+  } : {
+    ...base,
+    schemaVersion: PRODUCT_IMPROVEMENT_LEGACY_EVENT_SCHEMA_VERSION,
   };
   const runtime = { ...input.runtime, memory: { ...input.runtime.memory, events: [...input.runtime.memory.events, event] } };
   const { kind: _k, schemaVersion: _s, operationFingerprint: _f, ...receipt } = event;

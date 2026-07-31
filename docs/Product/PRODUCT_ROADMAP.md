@@ -139,15 +139,18 @@ migration or legacy-objective backfill. No Objective discovery, Recommendation
 generation, frontend exposure, cognition mutation, or external action was
 introduced.
 
-### Post-Phase 2C research-to-product — Material acquisition selection: DESIGNED
+### Post-Phase 2C research-to-product — Material acquisition readiness: INACTIVE CALIBRATION
 
 The non-persistent Material Information Acquisition contract generalizes the
 existing Phase 2C proposal boundary across search, questions, comparison,
 documents, surveys, measurements, experiments, monitoring, Outcome waiting,
 stopping, and abstention. Product Workflow owns comparison only; existing
-action owners retain execution and receipts. Synthetic calibration is complete;
-`GAP-B-018` now requires read-only live shadow calibration before implementation. Autonomous
-execution remains separate future research under `GAP-D-002`.
+action owners retain execution and receipts. Synthetic calibration and safe
+read-only shadow infrastructure are complete. Product Confidence Improvement
+now supplies the first complete owner-projected envelope and outcome-observation
+readiness path; historical receipts remain incomplete. `GAP-B-018` remains open
+for preregistered, untouched, outcome-backed live calibration. The selector is
+inactive, and autonomous execution remains separate research under `GAP-D-002`.
 
 ## Completed foundation — Phases 0–2
 

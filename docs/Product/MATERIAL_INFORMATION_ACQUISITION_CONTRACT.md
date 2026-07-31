@@ -1,9 +1,9 @@
 # Discovery Material Information Acquisition Contract
 
-**Status:** Designed; benchmark-supported; not implemented
+**Status:** Candidate-envelope and owner outcome-readiness infrastructure implemented; selector remains inactive and calibration-insufficient
 **Contract version:** Design candidate 2
 **Phase:** Research-to-Product, after Phase 2C and before production promotion
-**Owner:** Product Workflow through the existing `ProductImprovementAction` proposal boundary
+**Owner:** Product Workflow comparison; candidate and outcome truth remain with existing action owners
 **Research evidence:** [MATERIAL_INFORMATION_ACQUISITION_RESEARCH_CANON.md](../Research/MATERIAL_INFORMATION_ACQUISITION_RESEARCH_CANON.md)
 
 ## 1. Purpose and canonical definition
@@ -20,10 +20,21 @@ It is not the action, execution service, authorization authority, Evidence
 admission authority, Unknown lifecycle owner, Objective Recommendation,
 Decision, autonomous planner, or universal utility function.
 
-The selector generalizes the read-only proposal responsibility already defined
+The inactive selector generalizes the read-only proposal responsibility already defined
 for Phase 2C `ProductImprovementAction`. Product Workflow is its single owner.
 The result is recomputed from current authorized projections and is never
 persisted independently.
+
+The initial participating owner is Product Confidence Improvement. It now
+projects a complete version-1 candidate envelope from structured owner inputs,
+retains that immutable envelope in future version-3 human-choice events, and
+records separately versioned owner outcome observations. Historical version-2
+receipts remain valid and explicitly incomplete. This readiness infrastructure
+does not activate selection, execution, connectors, or frontend behavior.
+
+No Organization Runtime container, repository, database, or migration schema
+changed. Product Workflow event contracts evolved additively through governed
+v3 and outcome-observation events.
 
 ## 2. Existing-state ownership audit
 
@@ -45,7 +56,7 @@ persisted independently.
 | Cancellation, partial completion, failure | Action-specific lifecycle owner | Partial by action | Selector only marks its projection stale |
 | Evidence admission | Canonical Evidence boundary and cognition | Canonical | Completed information has no authority until admitted |
 | Understanding update | Canonical cognition and Runtime | Canonical | Read only after update; never mutate |
-| Proposal authorization receipt | Phase 2C version-2 ProductQuestion operation event | Implemented | Existing receipt remains sufficient for current action types |
+| Proposal authorization receipt | Product Confidence Improvement operation event | Implemented | Historical version-2 receipts remain incomplete; future governed choices use additive version-3 events with exact envelope lineage |
 | Search/completion/no-change receipts | Connector or action-specific operation owner | Implemented for search and Phase 2C authorization; partial elsewhere | Referenced after execution; not duplicated |
 
 ### Resolved ownership collisions
@@ -388,8 +399,14 @@ consent still required, and stopping condition.
 
 The selector never initiates or cancels work.
 
-- The existing Phase 2C proposal-authorization receipt remains sufficient for
-  current `ProductImprovementAction` authorization and exact Unknown targeting.
+- Historical Phase 2C version-2 authorization receipts remain valid but do not
+  imply a complete candidate envelope. Future governed Product Confidence
+  Improvement choices retain the exact owner-projected envelope in additive
+  version-3 events.
+- Owner-specific outcome observations distinguish authorization, decline,
+  start, cancellation, completion, failure, information production, Evidence
+  admission, and exact Unknown/Answer/Understanding revisions. They make no
+  causal-improvement claim from completion alone.
 - Connector search receipts own source scope, retrieval, citations, and
   completion.
 - Decision/experiment and Outcome/Review owners retain their receipts.

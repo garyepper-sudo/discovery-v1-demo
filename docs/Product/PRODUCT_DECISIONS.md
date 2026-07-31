@@ -510,4 +510,11 @@ Changing one requires the process in
   Calibration and focused validators are required before implementation.
 - **Affected phase:** Post-Phase 2C research-to-product calibration.
 - **Affected gaps:** `GAP-B-018`; autonomous execution remains `GAP-D-002`.
-- **Status:** Active design decision; implementation pending calibration.
+- **Implementation record:** Safe inactive shadow infrastructure and one
+  owner-specific candidate-envelope/outcome-readiness path are implemented.
+  Product Confidence Improvement retains future complete envelopes in its own
+  version-3 events and observed outcomes in its own version-1 event family;
+  historical version-2 receipts remain incomplete. No generic selector receipt,
+  execution port, frontend path, or Production activation was added.
+- **Status:** Active; selector activation remains blocked pending independent,
+  outcome-backed live calibration.
