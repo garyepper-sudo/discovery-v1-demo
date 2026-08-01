@@ -47,6 +47,7 @@
     "validate:organization-experience": "tsx scripts/product/validateOrganizationExperience.ts",
     "validate:organizational-understanding-projection-shadow": "tsx scripts/product/validateOrganizationalUnderstandingProjectionShadow.ts",
     "validate:your-organization-projection-compatibility": "tsx scripts/product/validateYourOrganizationProjectionCompatibility.ts",
+    "validate:organizational-understanding-evaluator-phase-4-study-operations-readiness-001": "tsx engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-study-operations-readiness-001/validatePhase4StudyOperationsReadiness001.ts",
     "validate:structured-product-communication-shadow": "tsx engine/benchmark/product-communication/structuredProductCommunicationShadow.ts",
     "validate:your-organization-communication-adapter": "tsx scripts/product/validateYourOrganizationCommunicationAdapter.ts",
     "validate:alpha-allowlist-disclosure-producer-shadow": "tsx scripts/product/validateAlphaAllowlistDisclosureProducerShadow.ts",

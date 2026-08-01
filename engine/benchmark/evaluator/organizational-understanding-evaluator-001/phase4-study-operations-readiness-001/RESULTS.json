@@ -1,0 +1,433 @@
+{
+  "validation": "organizational-understanding-evaluator-phase-4-study-operations-readiness-001",
+  "classification": "A — PHASE 4 STUDY OPERATIONS AND CORPUS CUSTODY READINESS VALIDATED",
+  "ledgerVersion": "oue-001-phase-4-operations-ledger/v1",
+  "infrastructureVersion": "oue-001-phase-4-study-operations/v1",
+  "componentVersions": {
+    "ACCESS_EVENT_VERSION": "oue-001-phase-4-access-event/v1",
+    "ANSWER_KEY_CUSTODY_VERSION": "oue-001-phase-4-answer-key-custody/v1",
+    "CASE_INVALIDATION_VERSION": "oue-001-phase-4-case-invalidation/v1",
+    "CASE_MANIFEST_VERSION": "oue-001-phase-4-case-manifest/v1",
+    "CONTAMINATION_EVENT_VERSION": "oue-001-phase-4-contamination-event/v1",
+    "CORPUS_PARTITION_VERSION": "oue-001-phase-4-corpus-partition/v1",
+    "CUSTODIAN_APPOINTMENT_VERSION": "oue-001-phase-4-custodian-appointment/v1",
+    "CUSTODIAN_REVOCATION_VERSION": "oue-001-phase-4-custodian-revocation/v1",
+    "EXPOSURE_EVENT_VERSION": "oue-001-phase-4-exposure-event/v1",
+    "INDEPENDENT_RELOAD_VERSION": "oue-001-phase-4-independent-reload/v1",
+    "OPERATIONS_LEDGER_VERSION": "oue-001-phase-4-operations-ledger/v1",
+    "PARTITION_INVALIDATION_VERSION": "oue-001-phase-4-partition-invalidation/v1",
+    "POLICY_APPROVAL_RECEIPT_VERSION": "oue-001-phase-4-policy-approval-receipt/v1",
+    "POLICY_APPROVAL_REQUEST_VERSION": "oue-001-phase-4-policy-approval-request/v1",
+    "QUALIFICATION_PACKET_VERSION": "oue-001-phase-4-qualification-packet/v1",
+    "READINESS_ASSESSMENT_VERSION": "oue-001-phase-4-readiness/v1",
+    "RELEASE_AUTHORIZATION_VERSION": "oue-001-phase-4-release-authorization/v1",
+    "RELEASE_RECEIPT_VERSION": "oue-001-phase-4-release-receipt/v1",
+    "RESPONSE_TRANSPORT_VERSION": "oue-001-phase-4-response-transport/v1",
+    "REVIEWER_ASSIGNMENT_VERSION": "oue-001-phase-4-reviewer-assignment/v1",
+    "STUDY_FREEZE_VERSION": "oue-001-phase-4-study-freeze/v1",
+    "STUDY_OPERATIONS_VERSION": "oue-001-phase-4-study-operations/v1",
+    "STUDY_SEED_CUSTODY_VERSION": "oue-001-phase-4-seed-custody/v1",
+    "TRAINING_PACKET_VERSION": "oue-001-phase-4-training-packet/v1"
+  },
+  "canonicalSerializationVersion": "canonical-serialization/v1",
+  "protocolHash": "e9e989b5ec50a4303bce1fb98949d9c00376398162a5ef190136d3e6625dd07a",
+  "preregistrationHash": "52b255b595abc830dd82fce22e00e7442e6fbb5bc6676bceb13d1bec610a1921",
+  "phase3ResultHash": "5c4ddb823fe9a3b227b0b22a5f9459a1f49b6fd22506f9164a1fbd7944a5033a",
+  "phase4InfrastructureResultHash": "381f88d74a84c336f8ddf1269c6c0200d70daba30f7d5dc8f6c3847e514136d1",
+  "phase4InfrastructureLedgerHash": "8ad40fc64ff2cdd6e8ae33e8974983b5ed3495f3d810c501916f8f7f77b19ad1",
+  "fixtureClassification": {
+    "fixtureClass": "controlled structural fixture",
+    "transportClass": "controlled transport fixture",
+    "humanStatus": "non-human",
+    "modelStatus": "non-model",
+    "evidentiaryStatus": "non-semantic-evidence",
+    "operationalStatus": "not operationally approved",
+    "confirmatoryStatus": "not confirmatory",
+    "goldStatus": "not gold-eligible"
+  },
+  "policyState": "test-only-non-operational-policy-approval",
+  "custodyRoleStatus": "controlled-pseudonymous-fixtures-only",
+  "partitionStatus": "controlled-structural-fixtures-only",
+  "freezeStatus": "test-only-non-operational-study-freeze",
+  "accessEventCount": 2,
+  "exposureEventCount": 3,
+  "caseInvalidationCount": 1,
+  "partitionInvalidationCount": 1,
+  "transportEnvelopeCount": 1,
+  "genuineTransportResponseCount": 0,
+  "artifactChain": [
+    "fbd51173a7a88cdef4b99c298871a4c00746bf03d4c7c71c2119079b4aa17343",
+    "85c63c9097fe75365e830522e7095aaa5a5134b4ec13e30c1c01c3adfefb0d56",
+    "c59885ce89b539859e44f1a001c2d8be5a80194d1a51c89684866eac0fc8d55f",
+    "ea972305cb12835ea6a1ddbd0f51dc76ddcf2efbcafa0bb75ba890f32b18af78",
+    "97f8ae6bdfa3f713effb49985c21a0967d9fd10e01b9ed3043eb0cafc3f6d830",
+    "808d76a7d4959a8b5dcbcc568cf0331746ed8d33d7c91fb3a82a31767b1ed717",
+    "f09c5456764bedb57a5941d9edeb050769b5ed545d869352c914fd259e69e875",
+    "ec70f2582e1e8365240fc70371f10af4afcce27fff08204208942dd3cf2a4bf7",
+    "085e1100b967ceb98f397c34f18e06917ad322cb84623a4fd7fd24876a12a316",
+    "5cc79f0f26bcbc5d4aa081221545ab3d26a82d281bf0c0275fc53eee29b10fd4",
+    "0abab6a51e323b2b5057ac830b0594c195b0ff29d0ca8a6ab4513eaf3463444e",
+    "4a85f216af3c6f555d5d761678cff20b01aa51cec21dc6c9e2e200e6c33fd646",
+    "54ecf48b2913468b864b281cde7e796f04b9421a50377e50ec5c2483de15f80f",
+    "3428757c91298bb73646952863c2c1dc521fbb975ee76147ae61e0698d3e307e",
+    "24619b6bb50ac35952ee565c6d89b7b6c1621d5d7464f6b975d729dab2f2b9b0",
+    "ab70335028104748106230b252ebcd74c86a12a02c3796277c17ff3f64da06eb",
+    "84e430484703738c6bf766cf014f4566816a286412a912e59dd890af18f8f08c",
+    "e0c8e9b900ca7f2f5637303b53782d7f278159a4616b7e93b72cb9bc56b6dcb9",
+    "f48578f76da98d9e5d3361edf92c0c4b8b5b0b011bba8bcdd5e4c7eb26ac8de5",
+    "4742ba47602c7d88b9c0de3aeedfbc6aed324fd596e178302910541469176135",
+    "1eefd1dda7d20cc404da4df96c16f2ed6815f92e939877af70d766f42cf64599",
+    "2696772f5b60a6eb0f0c5c9eaeb05a17e8b06f2ec5050943d51f62433bbd8013",
+    "f684962cf79983fa5c69349f3a82a10666e6b2845711a0f9613e702b98cdaf70",
+    "5fcdc501774d01329f7f894c0b16abd6e8be8c0a060dd07f94349460abb34ad6",
+    "613b9ef3bc22361e764f8b657adc11f29736cbd31037c92f295a01c995665933",
+    "8ee11fa8a083f9cb34f784ff940d01bc086d0945e5ea9a632f9758c68e19fc9a",
+    "edb8dff41294f94bacda43421ce679fdf380ed12feb04c035eb6167ea1af6aed",
+    "d09fa787eba2e03912ed256ef3e0d67ef3452e9b6631686e1b5386fb7988fb9a",
+    "601cddbdb9e2a57ba3e4b11bd9bdf61f1093005c587b918c82b8070eb859924d",
+    "31d6e5f07b4244937b96ef3ce7dd678e6a45670392c46d8ce5e0dad13e1c44bf",
+    "bb8675955b4450b2b3adc2026a4a8e1759f5a9a1001f85a63ca8663763508bbb"
+  ],
+  "readinessAssessmentHash": "29ada9b9c659e89e60d9fe31b793001945888fa69fdba8a795041cdd5047bf1b",
+  "prohibitedOperations": {
+    "genuineCorpusCasesCreated": 0,
+    "genuineAnswerKeyEntriesCreated": 0,
+    "realCustodiansAppointed": 0,
+    "realReviewersRecruited": 0,
+    "genuineTrainingCompletions": 0,
+    "genuineQualificationCompletions": 0,
+    "genuineSemanticReviews": 0,
+    "genuineModelReviews": 0,
+    "genuineSemanticAdjudications": 0,
+    "genuineGoldLabels": 0,
+    "phase2ScoreActivations": 0,
+    "externalComparativeValidationExecutions": 0,
+    "productActivations": 0,
+    "productionActivations": 0,
+    "externalActions": 0
+  },
+  "canonicalArtifactChainHash": "ba5e1eaa5a9c311c6f204495ee7d854cc6a6d4b5cc7a72508843b464bc8a371f",
+  "operationsLedgerHash": "0f3db0b9a4c8bc7dba470c313428837508a7d2f255abfc49377cc4c7d5259ba1",
+  "resultHash": "7d7ed6e3a6c816b4a27bb147650686f741a4712e85d63b19cf50615d4924b9c5",
+  "scenarioCount": 62,
+  "checks": [
+    {
+      "scenario": "A Draft policy cannot authorize operations",
+      "passed": true,
+      "detail": "draft rejected"
+    },
+    {
+      "scenario": "B Test-only policy approval cannot authorize real operations",
+      "passed": true,
+      "detail": "permanently non-operational"
+    },
+    {
+      "scenario": "C Foreign or altered policy receipt fails",
+      "passed": true,
+      "detail": "integrity rejected"
+    },
+    {
+      "scenario": "D Required custodian role missing",
+      "passed": true,
+      "detail": "freeze gate exercises missing role"
+    },
+    {
+      "scenario": "E Prohibited role collision",
+      "passed": true,
+      "detail": "collision rejected"
+    },
+    {
+      "scenario": "F Appointment revocation blocks new operations",
+      "passed": true,
+      "detail": "revocation is immutable and release test rejects it"
+    },
+    {
+      "scenario": "G Training qualification development and confirmatory partitions remain distinct",
+      "passed": true,
+      "detail": "seven distinct partitions"
+    },
+    {
+      "scenario": "H Case cannot appear in training and confirmatory",
+      "passed": true,
+      "detail": "overlap rejected"
+    },
+    {
+      "scenario": "I Previously exposed case cannot enter confirmatory",
+      "passed": true,
+      "detail": "exposure rejected"
+    },
+    {
+      "scenario": "J Corpus manifest identity and hash deterministic",
+      "passed": true,
+      "detail": "ab70335028104748106230b252ebcd74c86a12a02c3796277c17ff3f64da06eb"
+    },
+    {
+      "scenario": "K Answer-key content absent from portable packets",
+      "passed": true,
+      "detail": "no answer content or digest"
+    },
+    {
+      "scenario": "L Answer-key and seed access append-only and auditable",
+      "passed": true,
+      "detail": "31d6e5f07b4244937b96ef3ce7dd678e6a45670392c46d8ce5e0dad13e1c44bf"
+    },
+    {
+      "scenario": "M Study seed value absent from portable packets",
+      "passed": true,
+      "detail": "seed identity only"
+    },
+    {
+      "scenario": "N Seed custody identity and digest verifiable",
+      "passed": true,
+      "detail": "5fcdc501774d01329f7f894c0b16abd6e8be8c0a060dd07f94349460abb34ad6"
+    },
+    {
+      "scenario": "O Training packet deterministic construction",
+      "passed": true,
+      "detail": "31237902fda7299f8f9749c4143fe688009ac175acaae94f6d17f84916d1c0ad"
+    },
+    {
+      "scenario": "P Training case cannot become qualification or confirmatory evidence",
+      "passed": true,
+      "detail": "case sets disjoint"
+    },
+    {
+      "scenario": "Q Qualification packet hides expected answers",
+      "passed": true,
+      "detail": "answers hidden"
+    },
+    {
+      "scenario": "R Qualification case cannot become confirmatory evidence",
+      "passed": true,
+      "detail": "disjoint"
+    },
+    {
+      "scenario": "S Genuine qualification cannot be claimed from fixture transport",
+      "passed": true,
+      "detail": "zero genuine completion"
+    },
+    {
+      "scenario": "T Duplicate reviewer assignment rejected",
+      "passed": true,
+      "detail": "duplicate rejected"
+    },
+    {
+      "scenario": "U Ineligible or revoked reviewer assignment rejected",
+      "passed": true,
+      "detail": "revoked reviewer rejected"
+    },
+    {
+      "scenario": "V Ground-truth author assignment rejected",
+      "passed": true,
+      "detail": "author rejected"
+    },
+    {
+      "scenario": "W Candidate-generator developer cannot be sole confirmatory reviewer",
+      "passed": true,
+      "detail": "candidate developer assignment blocked"
+    },
+    {
+      "scenario": "X Third-review assignment independent",
+      "passed": true,
+      "detail": "4bcb8f7bf2a2801a27458567325e57243d3600406358a824984f5c6070f3513c"
+    },
+    {
+      "scenario": "Y Packet release rejected before valid freeze",
+      "passed": true,
+      "detail": "missing freeze rejected"
+    },
+    {
+      "scenario": "Z Packet release rejected under test-only operational approval",
+      "passed": true,
+      "detail": "operational release rejected"
+    },
+    {
+      "scenario": "AA Packet release rejected after authority revocation",
+      "passed": true,
+      "detail": "revoked release authority rejected"
+    },
+    {
+      "scenario": "AB Packet hash mutation blocks release",
+      "passed": true,
+      "detail": "mutation rejected"
+    },
+    {
+      "scenario": "AC Access log append-only behavior",
+      "passed": true,
+      "detail": "31d6e5f07b4244937b96ef3ce7dd678e6a45670392c46d8ce5e0dad13e1c44bf"
+    },
+    {
+      "scenario": "AD Expected-label exposure creates invalidation",
+      "passed": true,
+      "detail": "case invalidation required"
+    },
+    {
+      "scenario": "AE Retrieval-score exposure creates invalidation where policy requires",
+      "passed": true,
+      "detail": "policy-bound invalidation"
+    },
+    {
+      "scenario": "AF Other-reviewer judgment exposure creates invalidation",
+      "passed": true,
+      "detail": "reviewer invalidation"
+    },
+    {
+      "scenario": "AG Cross-organization access fails closed",
+      "passed": true,
+      "detail": "foreign event rejected from organization ledger"
+    },
+    {
+      "scenario": "AH Contaminated case cannot refresh under same identity",
+      "passed": true,
+      "detail": "new identity required"
+    },
+    {
+      "scenario": "AI Partition invalidation preserves original cases and exposure records",
+      "passed": true,
+      "detail": "beb9cd884861c2ebee6f4f06de0a0a9d9a2e4cc0ac08a2cf9ef3072e1b7e15bc"
+    },
+    {
+      "scenario": "AJ Study freeze rejects missing power analysis",
+      "passed": true,
+      "detail": "missing power analysis rejected"
+    },
+    {
+      "scenario": "AK Study freeze rejects missing custodian",
+      "passed": true,
+      "detail": "missing custodian rejected"
+    },
+    {
+      "scenario": "AL Study freeze rejects role collision",
+      "passed": true,
+      "detail": "role collision rejected"
+    },
+    {
+      "scenario": "AM Study freeze rejects exposed confirmatory partition",
+      "passed": true,
+      "detail": "confirmatory exposure rejected"
+    },
+    {
+      "scenario": "AN Study freeze rejects protocol or implementation hash drift",
+      "passed": true,
+      "detail": "protocol drift rejected"
+    },
+    {
+      "scenario": "AN.1 Study freeze rejects invalid answer-key or seed custody",
+      "passed": true,
+      "detail": "custody drift rejected"
+    },
+    {
+      "scenario": "AN.2 Study freeze rejects source or implementation drift",
+      "passed": true,
+      "detail": "source and implementation drift rejected"
+    },
+    {
+      "scenario": "AO Test-only study freeze remains non-operational",
+      "passed": true,
+      "detail": "613b9ef3bc22361e764f8b657adc11f29736cbd31037c92f295a01c995665933"
+    },
+    {
+      "scenario": "AP Response transport requires valid release receipt",
+      "passed": true,
+      "detail": "invalid release rejected"
+    },
+    {
+      "scenario": "AQ Synthetic transport remains non-human and non-evidentiary",
+      "passed": true,
+      "detail": "synthetic transport only"
+    },
+    {
+      "scenario": "AR Response envelope mutation fails hash validation",
+      "passed": true,
+      "detail": "mutation rejected"
+    },
+    {
+      "scenario": "AS Independent-process artifact reload succeeds",
+      "passed": true,
+      "detail": "5ed8d4d4fd9e3aa39fc81f81ea028f502d6219a0100406c403a876811399cf96"
+    },
+    {
+      "scenario": "AT Stale predecessor digest fails",
+      "passed": true,
+      "detail": "stale release rejected"
+    },
+    {
+      "scenario": "AU Repeated runs byte-stable",
+      "passed": true,
+      "detail": "bb8675955b4450b2b3adc2026a4a8e1759f5a9a1001f85a63ca8663763508bbb"
+    },
+    {
+      "scenario": "AV Object-key and unordered collection permutations stable",
+      "passed": true,
+      "detail": "canonicalized"
+    },
+    {
+      "scenario": "AW Unsupported serialization values fail closed",
+      "passed": true,
+      "detail": "unsupported rejected"
+    },
+    {
+      "scenario": "AX Readiness assessment returns independent-review readiness only",
+      "passed": true,
+      "detail": "29ada9b9c659e89e60d9fe31b793001945888fa69fdba8a795041cdd5047bf1b"
+    },
+    {
+      "scenario": "AY Readiness assessment cannot activate a study",
+      "passed": true,
+      "detail": "no execution authority"
+    },
+    {
+      "scenario": "AZ No genuine corpus answer key reviewer response or semantic judgment",
+      "passed": true,
+      "detail": "all artifacts controlled fixtures"
+    },
+    {
+      "scenario": "BA No Phase 2 assignment scoring or composite activation",
+      "passed": true,
+      "detail": "no scorer imports or calls"
+    },
+    {
+      "scenario": "BB No model call or provider dependency",
+      "passed": true,
+      "detail": "no model dependency"
+    },
+    {
+      "scenario": "BC No unsafe Phase 4 or Phase 5 import",
+      "passed": true,
+      "detail": "unsafe namespaces isolated"
+    },
+    {
+      "scenario": "BD No Product Runtime Scorecard frontend cognition Production connector or action import",
+      "passed": true,
+      "detail": "research-only imports"
+    },
+    {
+      "scenario": "BD.1 No active-path consumer imports namespace",
+      "passed": true,
+      "detail": "no external consumers"
+    },
+    {
+      "scenario": "BE Phase 1–3 and approved Phase 4 hashes unchanged",
+      "passed": true,
+      "detail": "381f88d74a84c336f8ddf1269c6c0200d70daba30f7d5dc8f6c3847e514136d1"
+    },
+    {
+      "scenario": "BE.1 Frozen source files and approved results bind exact hashes",
+      "passed": true,
+      "detail": "e9e989b5ec50a4303bce1fb98949d9c00376398162a5ef190136d3e6625dd07a"
+    },
+    {
+      "scenario": "BF Zero External Comparative Validation execution",
+      "passed": true,
+      "detail": "zero executions"
+    }
+  ],
+  "failures": [],
+  "finalOperationalDisposition": "ready-for-independent-operational-review",
+  "studyExecutionAuthorized": false,
+  "corpusConstructionAuthorized": false,
+  "reviewerRecruitmentAuthorized": false,
+  "semanticAdjudicationAuthorized": false,
+  "goldAdmissionAuthorized": false,
+  "phase2ScoringAuthorized": false
+}
