@@ -1,0 +1,25 @@
+{
+  "benchmark": "discovery-product-workflow-end-to-end-benchmark-002a",
+  "scenarioId": "holdout-11-outcome-discrimination",
+  "baselineMatchesPreregistration": true,
+  "materialOutcomeMatchesPreregistration": true,
+  "unrelatedOutcomeInvariant": true,
+  "inputOrderInvariant": true,
+  "objectivePreserved": true,
+  "contextPreserved": true,
+  "governancePreserved": true,
+  "authorizationPreserved": true,
+  "hardGates": {
+    "unsupportedClaims": 0,
+    "unauthorizedEvidence": 0,
+    "crossOrganizationLeakage": 0,
+    "inputOrderDrift": 0,
+    "staleContextUse": 0,
+    "governanceViolation": 0,
+    "runtimeWritesOutsideTemporarySetup": 0,
+    "connectorCalls": 0,
+    "externalActions": 0,
+    "frontendImports": 0,
+    "productionOperations": 0
+  }
+}

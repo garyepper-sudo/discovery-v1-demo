@@ -1,0 +1,960 @@
+{
+  "benchmark": "discovery-product-workflow-end-to-end-benchmark-002a",
+  "classification": "B-E — CONTROLLED HELD-OUT RECOMMENDATION GENERALIZATION PASSED; HUMAN COMMUNICATION EVIDENCE INSUFFICIENT",
+  "baselineCommit": "e6dc115",
+  "invalidatedScenario": "holdout-06-context-depth",
+  "preservedOriginalValidScenarios": [
+    "holdout-01-aviation",
+    "holdout-02-healthcare",
+    "holdout-03-objective-waste",
+    "holdout-04-objective-reach",
+    "holdout-05-context-rapid",
+    "holdout-07-municipal",
+    "holdout-08-university",
+    "holdout-09-manufacturing",
+    "holdout-10-retail"
+  ],
+  "replacement": {
+    "scenarioId": "holdout-11-outcome-discrimination",
+    "scenarioHash": "8b11bc59073fde6cd18a0f1ee4e86b5fa6669d14ac274e7ccc83c8590f793f0d",
+    "priorExposureCount": 0,
+    "questionReloaded": true,
+    "baseline": {
+      "selection": {
+        "kind": "selected-action",
+        "selectionId": "material-acquisition-shadow-selection-a8ae6d7a0bc0e970",
+        "selected": {
+          "candidateId": "coldchain-door-dwell",
+          "actionType": "compare-existing-evidence",
+          "actionOwnerRef": "held-out-owner:coldchain-analysis",
+          "target": {
+            "kind": "controlled-held-out-information",
+            "targetRef": "target:coldchain-door-dwell",
+            "organizationId": "holdout-coldchain-009"
+          },
+          "uncertaintyRef": "holdout-unknown-coldchain:v1",
+          "materialEffectTargets": [
+            "unknown",
+            "answer"
+          ],
+          "eligibility": {
+            "ownerAvailable": true,
+            "targetAccessible": true,
+            "executionAvailable": true,
+            "authorizationSatisfied": true,
+            "governanceAllowed": true,
+            "consentState": "not-required",
+            "reasonCodes": [
+              "material-effect-confirmed"
+            ]
+          },
+          "expectedInformationContribution": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedOrganizationalRelevance": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedDiscriminationGain": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "burden": {
+            "state": "available",
+            "value": "low",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "cost": {
+            "state": "available",
+            "value": "none",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "delay": {
+            "state": "available",
+            "value": "immediate",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reliability": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "existingEvidenceQuality": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reversibility": {
+            "state": "available",
+            "value": "reversible",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "stoppingCondition": "Stop when overnight excursion mechanisms are materially distinguished.",
+          "expectedEvidenceLineage": {
+            "sourceKind": "controlled-held-out",
+            "sourceScopeRef": "scope:coldchain-door-dwell",
+            "admissionRequired": true
+          }
+        },
+        "alternatives": [
+          {
+            "candidateId": "coldchain-refrigeration",
+            "actionType": "compare-existing-evidence",
+            "actionOwnerRef": "held-out-owner:coldchain-analysis",
+            "target": {
+              "kind": "controlled-held-out-information",
+              "targetRef": "target:coldchain-refrigeration",
+              "organizationId": "holdout-coldchain-009"
+            },
+            "uncertaintyRef": "holdout-unknown-coldchain:v1",
+            "materialEffectTargets": [
+              "unknown",
+              "answer"
+            ],
+            "eligibility": {
+              "ownerAvailable": true,
+              "targetAccessible": true,
+              "executionAvailable": true,
+              "authorizationSatisfied": true,
+              "governanceAllowed": true,
+              "consentState": "not-required",
+              "reasonCodes": [
+                "material-effect-confirmed"
+              ]
+            },
+            "expectedInformationContribution": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "expectedOrganizationalRelevance": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "expectedDiscriminationGain": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "burden": {
+              "state": "available",
+              "value": "low",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "cost": {
+              "state": "available",
+              "value": "none",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "delay": {
+              "state": "available",
+              "value": "immediate",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "reliability": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "existingEvidenceQuality": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "reversibility": {
+              "state": "available",
+              "value": "reversible",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "stoppingCondition": "Stop when overnight excursion mechanisms are materially distinguished.",
+            "expectedEvidenceLineage": {
+              "sourceKind": "controlled-held-out",
+              "sourceScopeRef": "scope:coldchain-refrigeration",
+              "admissionRequired": true
+            }
+          }
+        ],
+        "explanation": {
+          "uncertaintyRef": "holdout-unknown-coldchain:v1",
+          "rationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+          "alternativeCandidateIds": [
+            "coldchain-refrigeration"
+          ],
+          "limitations": [
+            "Shadow-only projection; no action was initiated."
+          ],
+          "stoppingCondition": "Stop when overnight excursion mechanisms are materially distinguished."
+        }
+      },
+      "brief": {
+        "contractVersion": "benchmark-1",
+        "scenarioId": "holdout-11-outcome-discrimination",
+        "audience": "authorized-organizational-leader",
+        "question": "Why are cold-chain temperature excursions increasing during overnight loading?",
+        "directAnswer": "Extended dock-door dwell is the leading supported explanation for overnight excursions.",
+        "currentUnderstanding": "Extended dock-door dwell is the leading supported explanation for overnight excursions.",
+        "claimIds": [
+          "coldchain-e1",
+          "coldchain-e2"
+        ],
+        "evidenceRefs": [
+          "coldchain-e1",
+          "coldchain-e2"
+        ],
+        "objective": "objective-coldchain:v1: Reduce overnight temperature excursions without interrupting safe loading.",
+        "optimizationContext": "context-coldchain:v1: Prefer reversible analysis of authorized operational records.",
+        "disposition": "selected-action",
+        "recommendedOption": "coldchain-door-dwell",
+        "alternatives": [
+          "coldchain-refrigeration"
+        ],
+        "candidateMaterialFields": [
+          {
+            "candidateId": "coldchain-door-dwell",
+            "burden": "low",
+            "cost": "none",
+            "delay": "immediate",
+            "reliability": "high",
+            "reversibility": "reversible",
+            "governanceAllowed": true,
+            "authorizationSatisfied": true,
+            "stoppingCondition": "Stop when overnight excursion mechanisms are materially distinguished."
+          },
+          {
+            "candidateId": "coldchain-refrigeration",
+            "burden": "low",
+            "cost": "none",
+            "delay": "immediate",
+            "reliability": "moderate",
+            "reversibility": "reversible",
+            "governanceAllowed": true,
+            "authorizationSatisfied": true,
+            "stoppingCondition": "Stop when overnight excursion mechanisms are materially distinguished."
+          }
+        ],
+        "mechanismRationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+        "contradictions": [],
+        "uncertainty": "Refrigeration degradation remains plausible but less supported.",
+        "risksAndLimitations": [
+          "Shadow-only projection; no action was initiated.",
+          "The exact refrigeration component remains unlocalized."
+        ],
+        "requestedUserDecision": "Decide whether to authorize coldchain-door-dwell; authorization does not execute it.",
+        "whatWouldChangeTheRecommendation": "Stop when overnight excursion mechanisms are materially distinguished.",
+        "unavailable": [
+          "Outcome-calibrated operation value is unavailable."
+        ],
+        "withheld": [
+          "withheld"
+        ],
+        "requiredDisclosures": [
+          "Controlled benchmark only.",
+          "No action was initiated.",
+          "Ordinal estimates are not calibrated probabilities."
+        ],
+        "prohibitedClaims": [
+          "Treat any Outcome assertion as Evidence without admission."
+        ],
+        "desiredLength": "one-page-progressive-disclosure",
+        "digest": "ee577032339cf1516c96869c5f26a3346a2ec08d02d56f5600e56b41a41152a2"
+      },
+      "presentation": "# Direct answer\nExtended dock-door dwell is the leading supported explanation for overnight excursions.\n\n## Why it matters\nExtended dock-door dwell is the leading supported explanation for overnight excursions.\n\n## Recommendation\nDisposition: selected-action. Recommended information action: coldchain-door-dwell.\n\n## Rationale\nOne eligible candidate materially dominates without converting the comparison into a scalar score.\n\n## Alternatives\ncoldchain-refrigeration\n\n## Uncertainty and limitations\nRefrigeration degradation remains plausible but less supported.\nShadow-only projection; no action was initiated.\nThe exact refrigeration component remains unlocalized.\nControlled benchmark only.\nNo action was initiated.\nOrdinal estimates are not calibrated probabilities.\n\n## What would change Discovery’s view\nStop when overnight excursion mechanisms are materially distinguished.\n\n## Requested user decision\nDecide whether to authorize coldchain-door-dwell; authorization does not execute it.\n\n## Audit detail\nQuestion: Why are cold-chain temperature excursions increasing during overnight loading?\nObjective: objective-coldchain:v1: Reduce overnight temperature excursions without interrupting safe loading.\nOptimization Context: context-coldchain:v1: Prefer reversible analysis of authorized operational records.\nEvidence: coldchain-e1, coldchain-e2\nCandidate material fields: coldchain-door-dwell [burden=low; cost=none; delay=immediate; reliability=high; reversibility=reversible; governance=true; authorization=true; stop=Stop when overnight excursion mechanisms are materially distinguished.] | coldchain-refrigeration [burden=low; cost=none; delay=immediate; reliability=moderate; reversibility=reversible; governance=true; authorization=true; stop=Stop when overnight excursion mechanisms are materially distinguished.]\nUnavailable: Outcome-calibrated operation value is unavailable.\nWithheld: withheld\nBrief digest: ee577032339cf1516c96869c5f26a3346a2ec08d02d56f5600e56b41a41152a2"
+    },
+    "materialOutcome": {
+      "outcome": {
+        "outcomeId": "outcome-coldchain-door-control",
+        "version": 1,
+        "operationRef": "operation:door-control-pilot:v1",
+        "organizationId": "holdout-coldchain-009",
+        "authorized": true,
+        "observedAt": "2026-08-02T18:00:00.000Z",
+        "observation": "After the governed door-control pilot reduced open intervals, overnight excursions persisted while compressor-pressure alarms co-occurred.",
+        "lineage": [
+          "operation:door-control-pilot:v1",
+          "decision:coldchain-pilot:v1",
+          "question:holdout-question-coldchain"
+        ]
+      },
+      "resultingInformation": {
+        "informationId": "information-coldchain-outcome:v1",
+        "sourceOutcomeRef": "outcome-coldchain-door-control:v1",
+        "statement": "Reduced door dwell did not reduce excursions; compressor-pressure alarms tracked the remaining events."
+      },
+      "evidenceCandidacy": {
+        "candidateId": "evidence-candidate-coldchain-outcome:v1",
+        "sourceInformationRef": "information-coldchain-outcome:v1",
+        "status": "candidate"
+      },
+      "admittedEvidence": {
+        "id": "coldchain-e3",
+        "statement": "Excursions persisted after door dwell fell and co-occurred with compressor-pressure alarms.",
+        "role": "opposes",
+        "authorized": true,
+        "sourceOutcomeRef": "outcome-coldchain-door-control:v1",
+        "admissionReceiptRef": "evidence-admission:coldchain-e3:v1"
+      },
+      "revisedUnderstanding": {
+        "revisionRef": "understanding-coldchain:v2",
+        "answer": "Refrigeration degradation is now the leading supported explanation; reduced door dwell did not resolve excursions.",
+        "uncertainty": "The exact refrigeration component remains unresolved.",
+        "mechanisms": [
+          "refrigeration degradation",
+          "dock-door dwell weakened"
+        ]
+      },
+      "selection": {
+        "kind": "selected-action",
+        "selectionId": "material-acquisition-shadow-selection-11ca1425e7a72924",
+        "selected": {
+          "candidateId": "coldchain-refrigeration",
+          "actionType": "compare-existing-evidence",
+          "actionOwnerRef": "held-out-owner:coldchain-analysis",
+          "target": {
+            "kind": "controlled-held-out-information",
+            "targetRef": "target:coldchain-refrigeration",
+            "organizationId": "holdout-coldchain-009"
+          },
+          "uncertaintyRef": "holdout-unknown-coldchain:v1",
+          "materialEffectTargets": [
+            "unknown",
+            "answer"
+          ],
+          "eligibility": {
+            "ownerAvailable": true,
+            "targetAccessible": true,
+            "executionAvailable": true,
+            "authorizationSatisfied": true,
+            "governanceAllowed": true,
+            "consentState": "not-required",
+            "reasonCodes": [
+              "material-effect-confirmed"
+            ]
+          },
+          "expectedInformationContribution": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "outcome-admission:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedOrganizationalRelevance": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "outcome-admission:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedDiscriminationGain": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "outcome-admission:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "burden": {
+            "state": "available",
+            "value": "low",
+            "sourceRef": "outcome-admission:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "cost": {
+            "state": "available",
+            "value": "none",
+            "sourceRef": "outcome-admission:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "delay": {
+            "state": "available",
+            "value": "immediate",
+            "sourceRef": "outcome-admission:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reliability": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "outcome-admission:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "existingEvidenceQuality": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "outcome-admission:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reversibility": {
+            "state": "available",
+            "value": "reversible",
+            "sourceRef": "outcome-admission:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "stoppingCondition": "Stop when overnight excursion mechanisms are materially distinguished.",
+          "expectedEvidenceLineage": {
+            "sourceKind": "controlled-held-out",
+            "sourceScopeRef": "scope:coldchain-refrigeration",
+            "admissionRequired": true
+          }
+        },
+        "alternatives": [
+          {
+            "candidateId": "coldchain-door-dwell",
+            "actionType": "compare-existing-evidence",
+            "actionOwnerRef": "held-out-owner:coldchain-analysis",
+            "target": {
+              "kind": "controlled-held-out-information",
+              "targetRef": "target:coldchain-door-dwell",
+              "organizationId": "holdout-coldchain-009"
+            },
+            "uncertaintyRef": "holdout-unknown-coldchain:v1",
+            "materialEffectTargets": [
+              "unknown",
+              "answer"
+            ],
+            "eligibility": {
+              "ownerAvailable": true,
+              "targetAccessible": true,
+              "executionAvailable": true,
+              "authorizationSatisfied": true,
+              "governanceAllowed": true,
+              "consentState": "not-required",
+              "reasonCodes": [
+                "material-effect-confirmed"
+              ]
+            },
+            "expectedInformationContribution": {
+              "state": "available",
+              "value": "low",
+              "sourceRef": "outcome-admission:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "expectedOrganizationalRelevance": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "outcome-admission:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "expectedDiscriminationGain": {
+              "state": "available",
+              "value": "low",
+              "sourceRef": "outcome-admission:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "burden": {
+              "state": "available",
+              "value": "low",
+              "sourceRef": "outcome-admission:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "cost": {
+              "state": "available",
+              "value": "none",
+              "sourceRef": "outcome-admission:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "delay": {
+              "state": "available",
+              "value": "immediate",
+              "sourceRef": "outcome-admission:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "reliability": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "outcome-admission:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "existingEvidenceQuality": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "outcome-admission:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "reversibility": {
+              "state": "available",
+              "value": "reversible",
+              "sourceRef": "outcome-admission:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "stoppingCondition": "Stop when overnight excursion mechanisms are materially distinguished.",
+            "expectedEvidenceLineage": {
+              "sourceKind": "controlled-held-out",
+              "sourceScopeRef": "scope:coldchain-door-dwell",
+              "admissionRequired": true
+            }
+          }
+        ],
+        "explanation": {
+          "uncertaintyRef": "holdout-unknown-coldchain:v1",
+          "rationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+          "alternativeCandidateIds": [
+            "coldchain-door-dwell"
+          ],
+          "limitations": [
+            "Shadow-only projection; no action was initiated."
+          ],
+          "stoppingCondition": "Stop when overnight excursion mechanisms are materially distinguished."
+        }
+      },
+      "brief": {
+        "contractVersion": "benchmark-1",
+        "scenarioId": "holdout-11-outcome-discrimination",
+        "audience": "authorized-organizational-leader",
+        "question": "Why are cold-chain temperature excursions increasing during overnight loading?",
+        "directAnswer": "Refrigeration degradation is now the leading supported explanation; reduced door dwell did not resolve excursions.",
+        "currentUnderstanding": "Refrigeration degradation is now the leading supported explanation; reduced door dwell did not resolve excursions.",
+        "claimIds": [
+          "coldchain-e1",
+          "coldchain-e2",
+          "coldchain-e3"
+        ],
+        "evidenceRefs": [
+          "coldchain-e1",
+          "coldchain-e2",
+          "coldchain-e3"
+        ],
+        "objective": "objective-coldchain:v1: Reduce overnight temperature excursions without interrupting safe loading.",
+        "optimizationContext": "context-coldchain:v1: Prefer reversible analysis of authorized operational records.",
+        "disposition": "selected-action",
+        "recommendedOption": "coldchain-refrigeration",
+        "alternatives": [
+          "coldchain-door-dwell"
+        ],
+        "candidateMaterialFields": [
+          {
+            "candidateId": "coldchain-door-dwell",
+            "burden": "low",
+            "cost": "none",
+            "delay": "immediate",
+            "reliability": "moderate",
+            "reversibility": "reversible",
+            "governanceAllowed": true,
+            "authorizationSatisfied": true,
+            "stoppingCondition": "Stop when overnight excursion mechanisms are materially distinguished."
+          },
+          {
+            "candidateId": "coldchain-refrigeration",
+            "burden": "low",
+            "cost": "none",
+            "delay": "immediate",
+            "reliability": "high",
+            "reversibility": "reversible",
+            "governanceAllowed": true,
+            "authorizationSatisfied": true,
+            "stoppingCondition": "Stop when overnight excursion mechanisms are materially distinguished."
+          }
+        ],
+        "mechanismRationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+        "contradictions": [
+          "coldchain-e3: Excursions persisted after door dwell fell and co-occurred with compressor-pressure alarms."
+        ],
+        "uncertainty": "The exact refrigeration component remains unresolved.",
+        "risksAndLimitations": [
+          "Shadow-only projection; no action was initiated.",
+          "The exact refrigeration component remains unlocalized."
+        ],
+        "requestedUserDecision": "Decide whether to authorize coldchain-refrigeration; authorization does not execute it.",
+        "whatWouldChangeTheRecommendation": "Stop when overnight excursion mechanisms are materially distinguished.",
+        "unavailable": [
+          "Outcome-calibrated operation value is unavailable."
+        ],
+        "withheld": [
+          "withheld"
+        ],
+        "requiredDisclosures": [
+          "Controlled benchmark only.",
+          "No action was initiated.",
+          "Ordinal estimates are not calibrated probabilities."
+        ],
+        "prohibitedClaims": [
+          "Treat any Outcome assertion as Evidence without admission."
+        ],
+        "desiredLength": "one-page-progressive-disclosure",
+        "digest": "39fe1488d57c4cff5abbff65e599fe625fdbcac0b2e344fdbb2736116802478f"
+      },
+      "presentation": "# Direct answer\nRefrigeration degradation is now the leading supported explanation; reduced door dwell did not resolve excursions.\n\n## Why it matters\nRefrigeration degradation is now the leading supported explanation; reduced door dwell did not resolve excursions.\n\n## Recommendation\nDisposition: selected-action. Recommended information action: coldchain-refrigeration.\n\n## Rationale\nOne eligible candidate materially dominates without converting the comparison into a scalar score.\n\n## Alternatives\ncoldchain-door-dwell\n\n## Uncertainty and limitations\nThe exact refrigeration component remains unresolved.\ncoldchain-e3: Excursions persisted after door dwell fell and co-occurred with compressor-pressure alarms.\nShadow-only projection; no action was initiated.\nThe exact refrigeration component remains unlocalized.\nControlled benchmark only.\nNo action was initiated.\nOrdinal estimates are not calibrated probabilities.\n\n## What would change Discovery’s view\nStop when overnight excursion mechanisms are materially distinguished.\n\n## Requested user decision\nDecide whether to authorize coldchain-refrigeration; authorization does not execute it.\n\n## Audit detail\nQuestion: Why are cold-chain temperature excursions increasing during overnight loading?\nObjective: objective-coldchain:v1: Reduce overnight temperature excursions without interrupting safe loading.\nOptimization Context: context-coldchain:v1: Prefer reversible analysis of authorized operational records.\nEvidence: coldchain-e1, coldchain-e2, coldchain-e3\nCandidate material fields: coldchain-door-dwell [burden=low; cost=none; delay=immediate; reliability=moderate; reversibility=reversible; governance=true; authorization=true; stop=Stop when overnight excursion mechanisms are materially distinguished.] | coldchain-refrigeration [burden=low; cost=none; delay=immediate; reliability=high; reversibility=reversible; governance=true; authorization=true; stop=Stop when overnight excursion mechanisms are materially distinguished.]\nUnavailable: Outcome-calibrated operation value is unavailable.\nWithheld: withheld\nBrief digest: 39fe1488d57c4cff5abbff65e599fe625fdbcac0b2e344fdbb2736116802478f"
+    },
+    "unrelatedOutcome": {
+      "outcome": {
+        "outcomeId": "outcome-cafeteria-waste",
+        "version": 1,
+        "operationRef": "operation:cafeteria-waste:v1",
+        "organizationId": "holdout-coldchain-009",
+        "authorized": true,
+        "observedAt": "2026-08-02T18:00:00.000Z",
+        "observation": "A cafeteria waste-sorting pilot reduced landfill volume.",
+        "lineage": [
+          "operation:cafeteria-waste:v1"
+        ]
+      },
+      "selection": {
+        "kind": "selected-action",
+        "selectionId": "material-acquisition-shadow-selection-a8ae6d7a0bc0e970",
+        "selected": {
+          "candidateId": "coldchain-door-dwell",
+          "actionType": "compare-existing-evidence",
+          "actionOwnerRef": "held-out-owner:coldchain-analysis",
+          "target": {
+            "kind": "controlled-held-out-information",
+            "targetRef": "target:coldchain-door-dwell",
+            "organizationId": "holdout-coldchain-009"
+          },
+          "uncertaintyRef": "holdout-unknown-coldchain:v1",
+          "materialEffectTargets": [
+            "unknown",
+            "answer"
+          ],
+          "eligibility": {
+            "ownerAvailable": true,
+            "targetAccessible": true,
+            "executionAvailable": true,
+            "authorizationSatisfied": true,
+            "governanceAllowed": true,
+            "consentState": "not-required",
+            "reasonCodes": [
+              "material-effect-confirmed"
+            ]
+          },
+          "expectedInformationContribution": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedOrganizationalRelevance": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedDiscriminationGain": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "burden": {
+            "state": "available",
+            "value": "low",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "cost": {
+            "state": "available",
+            "value": "none",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "delay": {
+            "state": "available",
+            "value": "immediate",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reliability": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "existingEvidenceQuality": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reversibility": {
+            "state": "available",
+            "value": "reversible",
+            "sourceRef": "baseline-evidence:v1",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "stoppingCondition": "Stop when overnight excursion mechanisms are materially distinguished.",
+          "expectedEvidenceLineage": {
+            "sourceKind": "controlled-held-out",
+            "sourceScopeRef": "scope:coldchain-door-dwell",
+            "admissionRequired": true
+          }
+        },
+        "alternatives": [
+          {
+            "candidateId": "coldchain-refrigeration",
+            "actionType": "compare-existing-evidence",
+            "actionOwnerRef": "held-out-owner:coldchain-analysis",
+            "target": {
+              "kind": "controlled-held-out-information",
+              "targetRef": "target:coldchain-refrigeration",
+              "organizationId": "holdout-coldchain-009"
+            },
+            "uncertaintyRef": "holdout-unknown-coldchain:v1",
+            "materialEffectTargets": [
+              "unknown",
+              "answer"
+            ],
+            "eligibility": {
+              "ownerAvailable": true,
+              "targetAccessible": true,
+              "executionAvailable": true,
+              "authorizationSatisfied": true,
+              "governanceAllowed": true,
+              "consentState": "not-required",
+              "reasonCodes": [
+                "material-effect-confirmed"
+              ]
+            },
+            "expectedInformationContribution": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "expectedOrganizationalRelevance": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "expectedDiscriminationGain": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "burden": {
+              "state": "available",
+              "value": "low",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "cost": {
+              "state": "available",
+              "value": "none",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "delay": {
+              "state": "available",
+              "value": "immediate",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "reliability": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "existingEvidenceQuality": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "reversibility": {
+              "state": "available",
+              "value": "reversible",
+              "sourceRef": "baseline-evidence:v1",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "stoppingCondition": "Stop when overnight excursion mechanisms are materially distinguished.",
+            "expectedEvidenceLineage": {
+              "sourceKind": "controlled-held-out",
+              "sourceScopeRef": "scope:coldchain-refrigeration",
+              "admissionRequired": true
+            }
+          }
+        ],
+        "explanation": {
+          "uncertaintyRef": "holdout-unknown-coldchain:v1",
+          "rationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+          "alternativeCandidateIds": [
+            "coldchain-refrigeration"
+          ],
+          "limitations": [
+            "Shadow-only projection; no action was initiated."
+          ],
+          "stoppingCondition": "Stop when overnight excursion mechanisms are materially distinguished."
+        }
+      },
+      "brief": {
+        "contractVersion": "benchmark-1",
+        "scenarioId": "holdout-11-outcome-discrimination",
+        "audience": "authorized-organizational-leader",
+        "question": "Why are cold-chain temperature excursions increasing during overnight loading?",
+        "directAnswer": "Extended dock-door dwell is the leading supported explanation for overnight excursions.",
+        "currentUnderstanding": "Extended dock-door dwell is the leading supported explanation for overnight excursions.",
+        "claimIds": [
+          "coldchain-e1",
+          "coldchain-e2"
+        ],
+        "evidenceRefs": [
+          "coldchain-e1",
+          "coldchain-e2"
+        ],
+        "objective": "objective-coldchain:v1: Reduce overnight temperature excursions without interrupting safe loading.",
+        "optimizationContext": "context-coldchain:v1: Prefer reversible analysis of authorized operational records.",
+        "disposition": "selected-action",
+        "recommendedOption": "coldchain-door-dwell",
+        "alternatives": [
+          "coldchain-refrigeration"
+        ],
+        "candidateMaterialFields": [
+          {
+            "candidateId": "coldchain-door-dwell",
+            "burden": "low",
+            "cost": "none",
+            "delay": "immediate",
+            "reliability": "high",
+            "reversibility": "reversible",
+            "governanceAllowed": true,
+            "authorizationSatisfied": true,
+            "stoppingCondition": "Stop when overnight excursion mechanisms are materially distinguished."
+          },
+          {
+            "candidateId": "coldchain-refrigeration",
+            "burden": "low",
+            "cost": "none",
+            "delay": "immediate",
+            "reliability": "moderate",
+            "reversibility": "reversible",
+            "governanceAllowed": true,
+            "authorizationSatisfied": true,
+            "stoppingCondition": "Stop when overnight excursion mechanisms are materially distinguished."
+          }
+        ],
+        "mechanismRationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+        "contradictions": [],
+        "uncertainty": "Refrigeration degradation remains plausible but less supported.",
+        "risksAndLimitations": [
+          "Shadow-only projection; no action was initiated.",
+          "The exact refrigeration component remains unlocalized."
+        ],
+        "requestedUserDecision": "Decide whether to authorize coldchain-door-dwell; authorization does not execute it.",
+        "whatWouldChangeTheRecommendation": "Stop when overnight excursion mechanisms are materially distinguished.",
+        "unavailable": [
+          "Outcome-calibrated operation value is unavailable."
+        ],
+        "withheld": [
+          "withheld"
+        ],
+        "requiredDisclosures": [
+          "Controlled benchmark only.",
+          "No action was initiated.",
+          "Ordinal estimates are not calibrated probabilities."
+        ],
+        "prohibitedClaims": [
+          "Treat any Outcome assertion as Evidence without admission."
+        ],
+        "desiredLength": "one-page-progressive-disclosure",
+        "digest": "ee577032339cf1516c96869c5f26a3346a2ec08d02d56f5600e56b41a41152a2"
+      },
+      "presentation": "# Direct answer\nExtended dock-door dwell is the leading supported explanation for overnight excursions.\n\n## Why it matters\nExtended dock-door dwell is the leading supported explanation for overnight excursions.\n\n## Recommendation\nDisposition: selected-action. Recommended information action: coldchain-door-dwell.\n\n## Rationale\nOne eligible candidate materially dominates without converting the comparison into a scalar score.\n\n## Alternatives\ncoldchain-refrigeration\n\n## Uncertainty and limitations\nRefrigeration degradation remains plausible but less supported.\nShadow-only projection; no action was initiated.\nThe exact refrigeration component remains unlocalized.\nControlled benchmark only.\nNo action was initiated.\nOrdinal estimates are not calibrated probabilities.\n\n## What would change Discovery’s view\nStop when overnight excursion mechanisms are materially distinguished.\n\n## Requested user decision\nDecide whether to authorize coldchain-door-dwell; authorization does not execute it.\n\n## Audit detail\nQuestion: Why are cold-chain temperature excursions increasing during overnight loading?\nObjective: objective-coldchain:v1: Reduce overnight temperature excursions without interrupting safe loading.\nOptimization Context: context-coldchain:v1: Prefer reversible analysis of authorized operational records.\nEvidence: coldchain-e1, coldchain-e2\nCandidate material fields: coldchain-door-dwell [burden=low; cost=none; delay=immediate; reliability=high; reversibility=reversible; governance=true; authorization=true; stop=Stop when overnight excursion mechanisms are materially distinguished.] | coldchain-refrigeration [burden=low; cost=none; delay=immediate; reliability=moderate; reversibility=reversible; governance=true; authorization=true; stop=Stop when overnight excursion mechanisms are materially distinguished.]\nUnavailable: Outcome-calibrated operation value is unavailable.\nWithheld: withheld\nBrief digest: ee577032339cf1516c96869c5f26a3346a2ec08d02d56f5600e56b41a41152a2"
+    },
+    "checks": {
+      "materialChanged": true,
+      "unrelatedInvariant": true,
+      "inputOrderInvariant": true,
+      "objectivePreserved": true,
+      "contextPreserved": true,
+      "governancePreserved": true,
+      "authorizationPreserved": true
+    }
+  },
+  "aggregateValidScenarioCount": 10,
+  "humanEvidence": {
+    "reviewers": 0,
+    "responses": 0,
+    "comprehension": "unmeasured",
+    "preference": "unmeasured",
+    "trustAppropriateness": "unmeasured",
+    "completionTime": "unmeasured",
+    "perceivedConfidenceCalibration": "unmeasured",
+    "preregisteredFloor": "not-met"
+  },
+  "llmArm": "not-executed",
+  "hardGates": {
+    "unsupportedClaims": 0,
+    "unauthorizedEvidence": 0,
+    "crossOrganizationLeakage": 0,
+    "inputOrderDrift": 0,
+    "staleContextUse": 0,
+    "governanceViolation": 0,
+    "runtimeWritesOutsideTemporarySetup": 0,
+    "connectorCalls": 0,
+    "externalActions": 0,
+    "frontendImports": 0,
+    "productionOperations": 0
+  }
+}
