@@ -1,0 +1,442 @@
+[
+  {
+    "scenarioId": "scenario-a",
+    "invariance": [
+      {
+        "perturbation": "evidence-input-order-reversal",
+        "passed": true
+      },
+      {
+        "perturbation": "candidate-input-order-reversal",
+        "passed": true
+      },
+      {
+        "perturbation": "duplicate-evidence-suppression",
+        "passed": true
+      },
+      {
+        "perturbation": "object-key-permutation",
+        "passed": true
+      },
+      {
+        "perturbation": "irrelevant-authorized-evidence",
+        "passed": true
+      },
+      {
+        "perturbation": "unrelated-timestamp-not-used-as-tiebreaker",
+        "passed": true
+      },
+      {
+        "perturbation": "semantically-equivalent-instruction-wording-remains-inert",
+        "passed": true
+      }
+    ],
+    "sensitivity": [
+      {
+        "perturbation": "governance-prohibition",
+        "expected": "abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "authorization-revocation",
+        "expected": "abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "missing-material-preference",
+        "expected": "abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "removal-of-decisive-evidence",
+        "expected": "abstain-or-changed",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "changed-urgency-and-delay-tolerance",
+        "expected": "stable-already-immediate",
+        "actual": "selected-action",
+        "passed": true
+      },
+      {
+        "perturbation": "changed-reversibility-preference",
+        "expected": "changed-or-abstain",
+        "actual": "selected-action",
+        "passed": true
+      },
+      {
+        "perturbation": "stronger-evidence-standard",
+        "expected": "changed-stop-or-abstain",
+        "actual": "selected-action",
+        "passed": true
+      },
+      {
+        "perturbation": "stale-context",
+        "expected": "abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "budget-exhausted",
+        "expected": "stop",
+        "actual": "stop",
+        "passed": true
+      },
+      {
+        "perturbation": "actual-outcome-contradicts-prior-mechanism",
+        "expected": "changed-or-abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "contradictory-evidence",
+        "expected": "changed-or-abstain",
+        "actual": "selected-action",
+        "passed": true
+      },
+      {
+        "perturbation": "changed-risk-appetite",
+        "expected": "changed-or-abstain",
+        "actual": "selected-action",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenarioId": "scenario-b",
+    "invariance": [
+      {
+        "perturbation": "evidence-input-order-reversal",
+        "passed": true
+      },
+      {
+        "perturbation": "candidate-input-order-reversal",
+        "passed": true
+      },
+      {
+        "perturbation": "duplicate-evidence-suppression",
+        "passed": true
+      },
+      {
+        "perturbation": "object-key-permutation",
+        "passed": true
+      },
+      {
+        "perturbation": "irrelevant-authorized-evidence",
+        "passed": true
+      },
+      {
+        "perturbation": "unrelated-timestamp-not-used-as-tiebreaker",
+        "passed": true
+      },
+      {
+        "perturbation": "semantically-equivalent-instruction-wording-remains-inert",
+        "passed": true
+      }
+    ],
+    "sensitivity": [
+      {
+        "perturbation": "governance-prohibition",
+        "expected": "abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "authorization-revocation",
+        "expected": "abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "missing-material-preference",
+        "expected": "abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "removal-of-decisive-evidence",
+        "expected": "abstain-or-changed",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "changed-urgency-and-delay-tolerance",
+        "expected": "changed-or-abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "changed-reversibility-preference",
+        "expected": "changed-or-abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "stronger-evidence-standard",
+        "expected": "changed-stop-or-abstain",
+        "actual": "stop",
+        "passed": true
+      },
+      {
+        "perturbation": "stale-context",
+        "expected": "abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "budget-exhausted",
+        "expected": "stop",
+        "actual": "stop",
+        "passed": true
+      },
+      {
+        "perturbation": "actual-outcome-contradicts-prior-mechanism",
+        "expected": "changed-or-abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "contradictory-evidence",
+        "expected": "changed-or-abstain",
+        "actual": "stop",
+        "passed": true
+      },
+      {
+        "perturbation": "changed-risk-appetite",
+        "expected": "changed-or-abstain",
+        "actual": "abstain",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenarioId": "scenario-c-margin",
+    "invariance": [
+      {
+        "perturbation": "evidence-input-order-reversal",
+        "passed": true
+      },
+      {
+        "perturbation": "candidate-input-order-reversal",
+        "passed": true
+      },
+      {
+        "perturbation": "duplicate-evidence-suppression",
+        "passed": true
+      },
+      {
+        "perturbation": "object-key-permutation",
+        "passed": true
+      },
+      {
+        "perturbation": "irrelevant-authorized-evidence",
+        "passed": true
+      },
+      {
+        "perturbation": "unrelated-timestamp-not-used-as-tiebreaker",
+        "passed": true
+      },
+      {
+        "perturbation": "semantically-equivalent-instruction-wording-remains-inert",
+        "passed": true
+      }
+    ],
+    "sensitivity": [
+      {
+        "perturbation": "governance-prohibition",
+        "expected": "abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "authorization-revocation",
+        "expected": "abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "missing-material-preference",
+        "expected": "abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "removal-of-decisive-evidence",
+        "expected": "abstain-or-changed",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "changed-urgency-and-delay-tolerance",
+        "expected": "changed-or-abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "changed-reversibility-preference",
+        "expected": "changed-or-abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "stronger-evidence-standard",
+        "expected": "changed-stop-or-abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "stale-context",
+        "expected": "abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "budget-exhausted",
+        "expected": "stop",
+        "actual": "stop",
+        "passed": true
+      },
+      {
+        "perturbation": "actual-outcome-contradicts-prior-mechanism",
+        "expected": "changed-or-abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "contradictory-evidence",
+        "expected": "changed-or-abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "changed-risk-appetite",
+        "expected": "changed-or-abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "changed-objective-with-identical-facts",
+        "expected": "candidate-c-growth",
+        "actual": "candidate-c-growth",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenarioId": "scenario-c-growth",
+    "invariance": [
+      {
+        "perturbation": "evidence-input-order-reversal",
+        "passed": true
+      },
+      {
+        "perturbation": "candidate-input-order-reversal",
+        "passed": true
+      },
+      {
+        "perturbation": "duplicate-evidence-suppression",
+        "passed": true
+      },
+      {
+        "perturbation": "object-key-permutation",
+        "passed": true
+      },
+      {
+        "perturbation": "irrelevant-authorized-evidence",
+        "passed": true
+      },
+      {
+        "perturbation": "unrelated-timestamp-not-used-as-tiebreaker",
+        "passed": true
+      },
+      {
+        "perturbation": "semantically-equivalent-instruction-wording-remains-inert",
+        "passed": true
+      }
+    ],
+    "sensitivity": [
+      {
+        "perturbation": "governance-prohibition",
+        "expected": "abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "authorization-revocation",
+        "expected": "abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "missing-material-preference",
+        "expected": "abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "removal-of-decisive-evidence",
+        "expected": "abstain-or-changed",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "changed-urgency-and-delay-tolerance",
+        "expected": "changed-or-abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "changed-reversibility-preference",
+        "expected": "changed-or-abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "stronger-evidence-standard",
+        "expected": "changed-stop-or-abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "stale-context",
+        "expected": "abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "budget-exhausted",
+        "expected": "stop",
+        "actual": "stop",
+        "passed": true
+      },
+      {
+        "perturbation": "actual-outcome-contradicts-prior-mechanism",
+        "expected": "changed-or-abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "contradictory-evidence",
+        "expected": "changed-or-abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "changed-risk-appetite",
+        "expected": "changed-or-abstain",
+        "actual": "abstain",
+        "passed": true
+      },
+      {
+        "perturbation": "changed-objective-with-identical-facts",
+        "expected": "candidate-c-margin",
+        "actual": "candidate-c-margin",
+        "passed": true
+      }
+    ]
+  }
+]
