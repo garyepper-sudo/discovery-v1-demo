@@ -4,7 +4,13 @@
 
 **Decision:** Add deterministic workflow orientation, semantic actions, blocked reasons, and fixture parity as a version-2 projection around the unchanged version-1 workspace. Do not persist a workflow aggregate or let the frontend infer Product meaning from nulls.
 
-**Reason:** Existing canonical owners express the required semantics, while version 1 does not compose later workflow stages for a frontend. The real-operation replay remains blocked because candidate action types are not executors.
+**Reason:** Existing canonical owners express the required semantics, while version 1 does not compose later workflow stages for a frontend. The additive Product Confidence Improvement local-operation result now supplies the previously missing real-operation state without making candidate types executable by themselves.
+
+## Local existing-Evidence inspection remains Product Confidence Improvement work
+
+**Decision:** Implement only `inspect-existing-evidence` as a canonical local read-only operation. It requires an exact current governed V3 authorize receipt and separate execution authority, then records a version-1 immutable result and the existing version-1 Outcome observation.
+
+**Reason:** This closes the bounded Product workflow without activating the selector, broadening `compare-existing-evidence`, creating Evidence from a comparison summary, or introducing another operation store.
 
 **Status:** Canonical decision log
 **Architecture:** [CANONICAL_PRODUCT_ARCHITECTURE.md](./CANONICAL_PRODUCT_ARCHITECTURE.md)

@@ -5,6 +5,8 @@ export const PRODUCT_IMPROVEMENT_EVENT_SCHEMA_VERSION = "3" as const;
 export const PRODUCT_IMPROVEMENT_LEGACY_EVENT_SCHEMA_VERSION = "2" as const;
 export const PRODUCT_IMPROVEMENT_OUTCOME_EVENT_KIND = "product-question-improvement-outcome-event" as const;
 export const PRODUCT_IMPROVEMENT_OUTCOME_EVENT_SCHEMA_VERSION = "1" as const;
+export const PRODUCT_LOCAL_INFORMATION_OPERATION_EVENT_KIND = "product-local-information-operation-result" as const;
+export const PRODUCT_LOCAL_INFORMATION_OPERATION_SCHEMA_VERSION = "1" as const;
 
 export type ProductConfidenceImprovementActionType =
   | "inspect-existing-evidence" | "search-authorized-source" | "request-document"
@@ -130,4 +132,66 @@ export type ProductConfidenceImprovementOutcomeObservation = {
   observerAuthorityRef: string;
   occurredAt: string;
   operationFingerprint: string;
+};
+
+export type ProductLocalInformationOperationResult = {
+  kind: typeof PRODUCT_LOCAL_INFORMATION_OPERATION_EVENT_KIND;
+  schemaVersion: typeof PRODUCT_LOCAL_INFORMATION_OPERATION_SCHEMA_VERSION;
+  resultId: string;
+  operationId: string;
+  organizationId: string;
+  questionId: string;
+  questionRevision: number;
+  unknownId: string;
+  unknownRevisionRef: string;
+  understandingRevisionRef: string;
+  objectiveVersionRef: string | null;
+  optimizationContextVersionRef: string | null;
+  proposalId: string;
+  candidateEnvelopeId: string;
+  candidateEnvelopeDigest: string;
+  humanChoiceEventId: string;
+  completionEventId: string;
+  executionAuthorization: "execute-existing-local-read-only-operation";
+  operationType: "inspect-existing-evidence";
+  actorRef: string;
+  authorityRef: string;
+  sourceEvidenceIds: string[];
+  sourceDigests: string[];
+  information: Array<{ informationId: string; informationClass: "existing-admitted-evidence-inspection"; sourceEvidenceId: string; sourceDigest: string; summary: string }>;
+  informationProduced: boolean;
+  evidenceCandidateRefs: [];
+  admittedEvidenceIds: [];
+  limitations: string[];
+  unavailableFields: string[];
+  withheldFields: string[];
+  startedAt: string;
+  completedAt: string;
+  status: "completed";
+  requestDigest: string;
+  resultDigest: string;
+};
+
+export type ProductLocalInformationOperationRequest = {
+  organizationId: string;
+  actorRef: string;
+  authorityRef: string;
+  humanChoiceReceipt: ProductConfidenceImprovementReceipt;
+  executionAuthorization: "execute-existing-local-read-only-operation" | "do-not-execute" | "defer-execution";
+  proposal: ProductConfidenceImprovementProposal;
+  operationId: string;
+  questionId: string;
+  questionRevision: number;
+  unknownId: string;
+  unknownRevisionRef: string;
+  understandingRevisionRef: string;
+  objectiveVersionRef: string | null;
+  optimizationContextVersionRef: string | null;
+  candidateEnvelopeId: string;
+  candidateEnvelopeDigest: string;
+  operationType: ProductConfidenceImprovementActionType;
+  sourceEvidenceIds: string[];
+  sourceDigests: Array<{ evidenceId: string; digest: string }>;
+  idempotencyKey: string;
+  requestedAt: string;
 };

@@ -18,4 +18,4 @@ Show current task and primary meaning first. Alternatives, secondary blockers, l
 
 The UI/UX sprint may change information hierarchy, labels, layout, navigation, disclosure, interaction/visual design, responsiveness, and accessibility. It may not change Product meaning, disposition, Question/revision semantics, Evidence lineage, Objective/Context semantics, authorization, governance, unavailable/withheld meaning, immutable history, action ownership, or execution authority.
 
-No canonical executor currently owns `compare-existing-evidence` or `inspect-existing-evidence`. UI may render the blocked state but must not implement execution. No React, CSS, route, or final navigation change is part of this handoff.
+Product Confidence Improvement now owns exact local `inspect-existing-evidence` execution. The UI may submit only the enabled semantic action and render the returned operation, Outcome, and Learning states; it must not inspect Evidence, reconstruct eligibility, or execute source logic. `compare-existing-evidence` remains blocked as unimplemented. No React, CSS, route, or final navigation change is part of this backend sprint.

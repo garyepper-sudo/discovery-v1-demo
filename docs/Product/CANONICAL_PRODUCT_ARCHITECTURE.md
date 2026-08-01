@@ -145,6 +145,13 @@ governance gates. Action-specific owners retain initiation, cancellation,
 completion, failure, and receipts; canonical Evidence and cognition retain
 admission and Understanding updates.
 
+Product Confidence Improvement owns the version-1 immutable local information
+operation result for `inspect-existing-evidence`. Execution requires the exact
+current governed V3 authorization receipt plus separate local execution
+authority. The result organizes exact already-admitted Evidence; it does not
+create or admit Evidence, change cognition, or imply learning. Outcome remains
+owned by the existing version-1 outcome-observation lifecycle.
+
 ### Frontend
 
 The frontend is a renderer of `ProductQuestionWorkspace`. It may own layout,

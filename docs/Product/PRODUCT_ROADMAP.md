@@ -2,7 +2,7 @@
 
 ## Frontend readiness checkpoint
 
-The additive `ProductQuestionWorkspace` version-2 projection, semantic action surface, deterministic 24-state fixture pack, state matrix, and UI/UX handoff address the projection and fixture portion of `GAP-A-005`. Final workflow replay remains blocked until a canonical local read-only operation executor exists. Frontend design may render the blocked state but may not implement operation authority.
+The additive `ProductQuestionWorkspace` version-2 projection, semantic action surface, deterministic 24-state fixture pack, state matrix, and UI/UX handoff are joined by one canonical local `inspect-existing-evidence` executor. `GAP-A-005` now passes a real authorization-first operation, immutable result, Outcome observation, truthful no-change Learning, reload, and reset. Dedicated UI/UX design may proceed without moving execution authority into the frontend.
 
 **Status:** Canonical promotion roadmap
 **Gap register:** [PRODUCT_GAPS.md](./PRODUCT_GAPS.md)

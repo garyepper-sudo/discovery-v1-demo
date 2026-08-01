@@ -1,6 +1,6 @@
 # Product Workflow Frontend Readiness Audit
 
-**Status:** Implemented projection; operation replay blocked
+**Status:** Implemented projection; canonical local operation replay validated
 **Gap:** GAP-A-005
 **Roadmap phase:** frontend readiness before wireframes
 **Architecture change:** additive version-2 projection only; no new authority, persistence, Runtime field, or cognition
@@ -9,7 +9,7 @@
 
 Canonical owners express every workflow distinction through existing Product events and projections. Version-1 `ProductQuestionWorkspace` does not orient a frontend across Objective, Context, recommendation, human choice, operation, Outcome, and Learning. Version 2 adds derived orientation and semantic actions while embedding version 1 unchanged.
 
-The repository does not implement a canonical executor for `compare-existing-evidence` or `inspect-existing-evidence`. They are governed candidate types, not executable services. GAP-A-005 remains blocked at operation execution; simulating it would violate Product authority.
+Product Confidence Improvement now implements one exact `inspect-existing-evidence` operation over already-admitted local Evidence. `compare-existing-evidence` remains unsupported because its comparison semantics are materially different. Candidate presence still grants no execution authority.
 
 ## Stage audit
 
@@ -22,9 +22,9 @@ The repository does not implement a canonical executor for `compare-existing-evi
 | Objective / Context | `product/objectives`; immutable product events | existing record/resolve operations | missing, stale, prohibited and resolved remain distinct | Ready |
 | Recommendation | Confidence Improvement, candidate envelope and Material Information Acquisition | existing projections; selection is read-only | select, tie, stop and abstain remain structural | Ready for rendering; inactive |
 | Human decision | Confidence Improvement v3 receipt | governed authorize/decline/defer | distinct immutable dispositions and execution authorization | Ready |
-| Operation | action-specific owner | no canonical local executor found | `operation-owner-unimplemented` | **Blocked** |
-| Outcome | Confidence Improvement Outcome observation | existing outcome observation operation | completion, observation, information and Evidence remain distinct | Contract ready; replay blocked |
-| Learning | canonical Answer/Unknown/Understanding and learning owners | recompute only after admitted Evidence | exact before/after or truthful no-change | Contract ready; replay blocked |
+| Operation | Product Confidence Improvement | exact governed V3 choice plus separately authorized local execution | immutable version-1 result; already-admitted Evidence inspection only | Ready |
+| Outcome | Confidence Improvement Outcome observation | existing outcome observation operation | completion, observation, information and Evidence remain distinct | Ready |
+| Learning | canonical Answer/Unknown/Understanding and learning owners | recompute only after admitted Evidence | exact before/after or truthful no-change | Ready; no-change replay proven |
 
 All reads authorize the exact user and organization before Runtime access. Historical correction and supersession remain append-only. Empty, unavailable, withheld, blocked, and historical states are never collapsed.
 
@@ -40,4 +40,4 @@ All reads authorize the exact user and organization before Runtime access. Histo
 
 `authorized request → readFrontendReadyProductQuestionWorkspace → CanonicalProductWorkspaceAdapter.getQuestionWorkspace → one Runtime read → v1 composition → v2 orientation → frontend`
 
-No new Product primitive, Runtime field, migration, or persisted aggregate is required.
+The operation result is an additive Product Workflow event in existing Runtime history. No Runtime container field, migration, parallel aggregate, connector, or external-action framework is required.

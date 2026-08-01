@@ -12,6 +12,7 @@ import type {
   ProductConfidenceImprovementOutcomeObservation,
   ProductConfidenceImprovementProposal,
   ProductConfidenceImprovementReceipt,
+  ProductLocalInformationOperationResult,
   ProductConfidenceImprovementResult,
 } from "../improvements";
 import type { MaterialAcquisitionCandidateEnvelope } from "../acquisition";
@@ -120,6 +121,12 @@ export type CanonicalImprovementEnvelopeResult = {
 
 export type CanonicalImprovementOutcomeResult = {
   observation: ProductConfidenceImprovementOutcomeObservation;
+  idempotent: boolean;
+  runtimeRevision: string;
+};
+
+export type CanonicalLocalInformationOperationResult = {
+  result: ProductLocalInformationOperationResult;
   idempotent: boolean;
   runtimeRevision: string;
 };

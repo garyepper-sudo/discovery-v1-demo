@@ -1,5 +1,5 @@
 import type { MaterialInformationAcquisitionResult } from "../acquisition";
-import type { ProductConfidenceImprovementOutcomeObservation, ProductConfidenceImprovementReceipt } from "../improvements";
+import type { ProductConfidenceImprovementActionType, ProductConfidenceImprovementOutcomeObservation, ProductConfidenceImprovementReceipt, ProductLocalInformationOperationResult } from "../improvements";
 import type { ProductObjectiveContextResolution } from "../objectives";
 import type { ProductQuestionWorkspace } from "./contracts";
 
@@ -8,7 +8,7 @@ export const PRODUCT_QUESTION_WORKSPACE_FRONTEND_VERSION = "2" as const;
 export type ProductWorkflowStageId = "question" | "understanding" | "answer-or-unknown" | "objective-and-context" | "recommendation" | "human-decision" | "operation" | "outcome" | "learning";
 export type ProductWorkflowStageStatus = "not-started" | "available" | "active" | "complete" | "blocked" | "unavailable";
 export type ProductWorkflowActionId = "revise-question" | "add-authorized-evidence" | "create-objective" | "revise-objective" | "create-optimization-context" | "revise-optimization-context" | "reaffirm-optimization-context" | "authorize-improvement" | "decline-improvement" | "defer-improvement" | "execute-existing-local-read-only-operation" | "record-outcome-reference" | "view-lineage" | "return-to-question";
-export type ProductWorkflowBlockedReason = "missing-evidence" | "missing-objective" | "missing-optimization-context" | "stale-optimization-context" | "material-comparison-unavailable" | "governance-prohibited" | "authorization-required" | "human-decision-required" | "operation-owner-unimplemented" | "outcome-unmeasured" | "evidence-not-admitted" | "no-canonical-change";
+export type ProductWorkflowBlockedReason = "missing-evidence" | "missing-objective" | "missing-optimization-context" | "stale-optimization-context" | "material-comparison-unavailable" | "governance-prohibited" | "authorization-required" | "human-decision-required" | "no-authorized-human-choice" | "execution-not-authorized" | "operation-owner-unimplemented" | "operation-type-not-implemented" | "stale-receipt" | "source-access-unavailable" | "operation-already-completed" | "outcome-pending" | "outcome-unmeasured" | "evidence-not-admitted" | "no-canonical-change";
 
 export type ProductWorkflowStage = {
   id: ProductWorkflowStageId;
@@ -38,6 +38,13 @@ export type ProductWorkflowAction = {
   executesOperation: boolean;
   mayAccessExternalSystem: boolean;
   confirmationRequired: boolean;
+  expectedResultClass?: string | null;
+};
+
+export type ProductWorkflowOperationEligibility = {
+  operationType: ProductConfidenceImprovementActionType;
+  status: "eligible" | "blocked";
+  blockedReason: ProductWorkflowBlockedReason | null;
 };
 
 export type ProductWorkflowOrientation = {
@@ -75,6 +82,7 @@ export type ProductQuestionWorkspaceV2 = {
   recommendation: MaterialInformationAcquisitionResult | null;
   humanDecision: ProductConfidenceImprovementReceipt | null;
   outcome: ProductConfidenceImprovementOutcomeObservation | null;
+  operationResult?: ProductLocalInformationOperationResult | null;
   communication: ProductWorkflowCommunication;
   unavailableFields: string[];
   withheldFields: string[];
@@ -87,6 +95,8 @@ export type ProductQuestionWorkspaceV2ProjectionInput = {
   recommendation?: MaterialInformationAcquisitionResult | null;
   humanDecision?: ProductConfidenceImprovementReceipt | null;
   outcome?: ProductConfidenceImprovementOutcomeObservation | null;
+  operationResult?: ProductLocalInformationOperationResult | null;
+  operationEligibility?: ProductWorkflowOperationEligibility | null;
   operationOwnerAvailable?: boolean;
   unavailableFields?: string[];
   withheldFields?: string[];
