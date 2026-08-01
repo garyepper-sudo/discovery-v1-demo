@@ -1,6 +1,6 @@
 # Capability Trace — Executive Understanding Synthesis
 
-Generated: 2026-07-31T20:42:03.692Z
+Generated: 2026-08-01T19:11:22.422Z
 
 ## Verified Architecture
 
@@ -110,6 +110,28 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/RESULTS.json`
 - `engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/productionPathAudit.ts`
 - `engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/runProductionShadowCognition.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/PHASE_1_RESULTS.json`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/PHASE_2_RESULTS.json`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/PHASE_3_RESULTS.json`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/contracts.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/deterministicScoring.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/frozenSemantics.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/generateSemanticCandidates.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase2ValidationFixtures.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase3CandidateFixtures.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase3Contracts.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-protocol-infrastructure-001/RESULTS.json`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-protocol-infrastructure-001/contracts.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-protocol-infrastructure-001/phase4InfrastructureFixtures.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-protocol-infrastructure-001/validatePhase4ProtocolInfrastructure001.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-study-operations-readiness-001/RESULTS.json`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-study-operations-readiness-001/validatePhase4StudyOperationsReadiness001.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/retrievalSignals.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/structuralValidation.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validatePhase1Architecture.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validatePhase2StructuralEvaluator.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validatePhase3CandidateGeneration.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validationFixtures.ts`
 - `engine/benchmark/executive-collaboration-lab/executiveConversationScenarios.ts`
 - `engine/benchmark/executive-collaboration-lab/runExecutiveConversationScenario.ts`
 - `engine/benchmark/executive-decision-lab/runExecutiveDecisionLab.ts`
@@ -147,6 +169,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/benchmark/organizationalUnderstandingScorer.ts`
 - `engine/benchmark/product-communication/structuredProductCommunicationShadow.ts`
 - `engine/benchmark/research/ORGANIZATIONAL_UNDERSTANDING_RESEARCH_FRAMEWORK.md`
+- `engine/benchmark/research/README.md`
 - `engine/benchmark/research/localized-nonlinear-cognition-adapter/RESULT.json`
 - `engine/benchmark/research/localized-nonlinear-cognition-adapter/runLocalizedNonlinearResearchAdapter.ts`
 - `engine/benchmark/research/localized-nonlinear-cognition-adapter/types.ts`
@@ -259,7 +282,7 @@ This section records source-code references. It supplements, but does not replac
 | UI | ✅ Found | 25 |
 | API | ✅ Found | 1 |
 | Simulation | ✅ Found | 7 |
-| Benchmark | ✅ Found | 276 |
+| Benchmark | ✅ Found | 328 |
 | Other | ✅ Found | 99 |
 
 ### Detailed Matches
@@ -1260,6 +1283,174 @@ This section records source-code references. It supplements, but does not replac
 - Line 41 · **unknown** · matched `evolveOrganizationRuntime`
   - `const runtime = evolveOrganizationRuntime({`
 
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/PHASE_1_RESULTS.json`
+
+- Line 2 · **unknown** · matched `organizational-understanding`
+  - `"validation": "organizational-understanding-evaluator-phase-1",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/PHASE_2_RESULTS.json`
+
+- Line 2 · **unknown** · matched `organizational-understanding`
+  - `"validation": "organizational-understanding-evaluator-phase-2",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/PHASE_3_RESULTS.json`
+
+- Line 2 · **unknown** · matched `organizational-understanding`
+  - `"validation": "organizational-understanding-evaluator-phase-3",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/contracts.ts`
+
+- Line 19 · **unknown** · matched `OrganizationalUnderstanding`
+  - `export type OrganizationalUnderstandingProposition = {`
+- Line 49 · **unknown** · matched `OrganizationalUnderstanding`
+  - `propositions: OrganizationalUnderstandingProposition[];`
+- Line 165 · **unknown** · matched `OrganizationalUnderstanding`
+  - `groundTruth: OrganizationalUnderstandingProposition[];`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/deterministicScoring.ts`
+
+- Line 2 · **import** · matched `OrganizationalUnderstanding`
+  - `import type { EvaluationDimension, EvaluationLedger, OrganizationalUnderstandingProposition, RecoveredProposition, SemanticAdjudication } from "./contracts";`
+- Line 25 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const importance = (item: OrganizationalUnderstandingProposition) => (item.importance + item.decisionRelevance) / 2;`
+- Line 37 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const familyRows = (family: OrganizationalUnderstandingProposition["family"]) => input.source.groundTruth.propositions.filter((item) => item.family === family).map((item) => ({ credit: byGroundTruth.has(item.id) ? credit(byGroundTruth.get(item.id)!) : 0, weight: importance(item), ref: item.id }));`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/frozenSemantics.ts`
+
+- Line 31 · **unknown** · matched `organizational-understanding`
+  - `version: "organizational-understanding-semantics/v1",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/generateSemanticCandidates.ts`
+
+- Line 1 · **import** · matched `OrganizationalUnderstanding`
+  - `import type { OrganizationalUnderstandingProposition, RecoveredProposition } from "./contracts";`
+- Line 30 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const normalizedStructure = (item: OrganizationalUnderstandingProposition) => canonicalHash({ family: item.family, subjectRefs: [...item.subjectRefs].sort(), predicate: item.predicate, objectRefs: [...item.objectRefs].sort(), polarity: item.polarity, modality: item.modality, temporality: item.temporality, supportingEvidenceRefs: [...item.supportingEvidenceRefs].sort(), opposingEvidenceRefs: [...item.opposingEvidenceRefs].sort(), contradictionEndpointRefs: [...item.contradictionEndpointRefs].sort(), competingPropositionRefs: [...item.competingPropositionRefs].sort(), authorizationScope: [...item.authorizationScope].sort() });`
+- Line 31 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const canonicalTruth = (item: OrganizationalUnderstandingProposition) => ({ ...item, subjectRefs: [...item.subjectRefs].sort(), objectRefs: [...item.objectRefs].sort(), supportingEvidenceRefs: [...item.supportingEvidenceRefs].sort(), opposingEvidenceRefs: [...item.opposingEvidenceRefs].sort(), contradictionEndpointRefs: [...item.contradictionEndpointRefs].sort(), competingPropositionRefs: [...item.competingPropositionRefs].sort(), authorizationScope: [...item.authorizationScope].sort(), allowedEquivalentMeanings: [...item.allowedEquivalentMeanings].sort(), prohibitedInterpretations: [...item.prohibitedInterpretations].sort() });`
+- Line 33 · **unknown** · matched `OrganizationalUnderstanding`
+  - `export const phase3GroundTruthGraphHash = (items: OrganizationalUnderstandingProposition[]) => canonicalHash([...items].map(canonicalTruth).sort((a, b) => a.id.localeCompare(b.id)));`
+- Line 36 · **unknown** · matched `OrganizationalUnderstanding`
+  - `function collapseGroundTruth(items: OrganizationalUnderstandingProposition[]) {`
+- Line 37 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const retained: OrganizationalUnderstandingProposition[] = [];`
+- Line 38 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const byStructure = new Map<string, OrganizationalUnderstandingProposition>();`
+- Line 85 · **unknown** · matched `OrganizationalUnderstanding`
+  - `function structuralEligibility(recovered: RecoveredProposition, truth: OrganizationalUnderstandingProposition) {`
+- Line 146 · **unknown** · matched `organizational-understanding`
+  - `const receiptContent = { evaluatorId: "organizational-understanding-evaluator-001" as const, structuralEvaluatorVersion: "oue-001-phase-2-structural/v1" as const, structuralComparisonVersion: STRUCTURAL_COMPARISON_VERSION, familyCompatibilityVersion: FAMILY_COMPATIBILITY_VERSION, duplicateCollapseVersion: DUPLICATE_COLLAPSE_VERSION, valid: true as const, organizationId: input.groundTruth.organizationId, caseId: input.groundTruth.caseId, recoveredGraphHash, groundTruthGraphHash };`
+- Line 148 · **unknown** · matched `organizational-understanding`
+  - `return { inputVersion: PHASE_3_INPUT_VERSION, evaluatorId: "organizational-understanding-evaluator-001", organizationId: input.groundTruth.organizationId, caseId: input.groundTruth.caseId, activeAuthorizationScopes: input.activeAuthorizationScopes, groundTruth: { ...input.groundTruth, graphHash: groundTruthGraphHash }, collapsedRecovered, structuralReceipt: { ...receiptContent, receiptId: \`phase2-structural-${receiptHash.slice(0, 24)}\`, receiptHash }, configuration: { version: PHASE_3_CONFIGURATION_VERSION, maximumCandidatesPerRecovered: input.maximumCandidates ?? 10, minimumFeatureScore: 0 }, preregistrationVersion: PHASE_3_PREREGISTRATION_VERSION, preregistrationHash: canonicalHash({ compatibilityOnly: true, version: PHASE_3_PREREGISTRATION_VERSION }), corpusSplitVersion: PHASE_3_CORPUS_SPLIT_VERSION, corpusSplitHash: canonicalHash({ compatibilityOnly: true, version: PHASE_3_CORPUS_SPLIT_VERSION }), evaluatedAt: "2026-07-31T12:00:00.000Z" };`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase2ValidationFixtures.ts`
+
+- Line 2 · **import** · matched `OrganizationalUnderstanding`
+  - `import type { GroundTruthPropositionGraph, OrganizationalUnderstandingProposition, RecoveredProposition, RecoveredPropositionGraph, SemanticAdjudication } from "./contracts";`
+- Line 9 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const mechanismTwo: OrganizationalUnderstandingProposition = {`
+- Line 32 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const recoveredIdFor = (item: OrganizationalUnderstandingProposition) => \`recovered-${item.id}\`;`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase3CandidateFixtures.ts`
+
+- Line 19 · **unknown** · matched `organizational-understanding`
+  - `const content = { evaluatorId: "organizational-understanding-evaluator-001" as const, structuralEvaluatorVersion: "oue-001-phase-2-structural/v1" as const, structuralComparisonVersion: STRUCTURAL_COMPARISON_VERSION, familyCompatibilityVersion: FAMILY_COMPATIBILITY_VERSION, duplicateCollapseVersion: DUPLICATE_COLLAPSE_VERSION, valid: true as const, organizationId, caseId, recoveredGraphHash: recoveredHash, groundTruthGraphHash: groundTruthHash };`
+- Line 30 · **unknown** · matched `organizational-understanding`
+  - `evaluatorId: "organizational-understanding-evaluator-001",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase3Contracts.ts`
+
+- Line 3 · **unknown** · matched `OrganizationalUnderstanding`
+  - `OrganizationalUnderstandingProposition,`
+- Line 25 · **unknown** · matched `organizational-understanding`
+  - `evaluatorId: "organizational-understanding-evaluator-001";`
+- Line 41 · **unknown** · matched `organizational-understanding`
+  - `evaluatorId: "organizational-understanding-evaluator-001";`
+- Line 69 · **unknown** · matched `OrganizationalUnderstanding`
+  - `propositionFamily: OrganizationalUnderstandingProposition["family"];`
+- Line 156 · **unknown** · matched `OrganizationalUnderstanding`
+  - `candidateCountByFamily: Record<OrganizationalUnderstandingProposition["family"], number>;`
+- Line 173 · **unknown** · matched `OrganizationalUnderstanding`
+  - `propositions: OrganizationalUnderstandingProposition[];`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-protocol-infrastructure-001/RESULTS.json`
+
+- Line 2 · **unknown** · matched `organizational-understanding`
+  - `"validation": "organizational-understanding-evaluator-phase-4-protocol-infrastructure-001",`
+- Line 31 · **unknown** · matched `organizational-understanding`
+  - `"phase3ResultIdentity": "organizational-understanding-evaluator-phase-3/authoritative-result",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-protocol-infrastructure-001/contracts.ts`
+
+- Line 22 · **unknown** · matched `organizational-understanding`
+  - `export const EVALUATOR_ID = "organizational-understanding-evaluator-001" as const;`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-protocol-infrastructure-001/phase4InfrastructureFixtures.ts`
+
+- Line 35 · **unknown** · matched `organizational-understanding`
+  - `evaluatorId: "organizational-understanding-evaluator-001",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-protocol-infrastructure-001/validatePhase4ProtocolInfrastructure001.ts`
+
+- Line 139 · **unknown** · matched `organizational-understanding`
+  - `const ledgerBody = { ledgerVersion: INFRASTRUCTURE_LEDGER_VERSION, infrastructureVersion: PHASE_4_INFRASTRUCTURE_VERSION, componentVersions, canonicalSerializationVersion: CANONICAL_SERIALIZATION_VERSION, protocolDocumentIdentity: "PHASE_4_SEMANTIC_ADJUDICATION_PROTOCOL.md@6ded90823361678c706048b555199ec265f80732", protocolDocumentHash, preregistrationDocumentIdentity: "PHASE_4_SEMANTIC_ADJUDICATION_PREREGISTRATION.md@6ded90823361678c706048b555199ec265f80732", preregistrationDocumentHash, phase3ResultIdentity: "organizational-understanding-evaluator-phase-3/authoritative-result", phase3ResultHash: PHASE_3_AUTHORITATIVE_RESULT_HASH, fixtureClassification: CONTROLLED_FIXTURE_CLASSIFICATION, validatorVersion: "oue-001-phase-4-protocol-validator/v1", scenarioCount: 44, safetyGateResults: { labelLeakage: "pass", unsafeDraftIsolation: "pass", productIsolation: "pass", scoreActivation: "pass", externalAction: "pass" }, prohibitedOperations: { genuineHumanReviews: 0, genuineModelReviews: 0, genuineSemanticAdjudications: 0, genuineGoldLabels: 0, phase2ScoreActivations: 0, externalComparativeValidationExecutions: 0, productActivations: 0, productionActivations: 0, externalActions: 0 } };`
+- Line 146 · **unknown** · matched `organizational-understanding`
+  - `const result = { validation: "organizational-understanding-evaluator-phase-4-protocol-infrastructure-001", classification: "A — PHASE 4 DETERMINISTIC PROTOCOL INFRASTRUCTURE VALIDATED", ...ledgerBody, ledgerHash, infrastructureResultHash, scenarioCount: checks.length, checks, failures: [], studyExecutionAuthorized: false, phase4AdjudicationAuthorized: false, phase5Authorized: false, externalComparativeValidation002Authorized: false };`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-study-operations-readiness-001/RESULTS.json`
+
+- Line 2 · **unknown** · matched `organizational-understanding`
+  - `"validation": "organizational-understanding-evaluator-phase-4-study-operations-readiness-001",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-study-operations-readiness-001/validatePhase4StudyOperationsReadiness001.ts`
+
+- Line 212 · **unknown** · matched `organizational-understanding`
+  - `validation: "organizational-understanding-evaluator-phase-4-study-operations-readiness-001",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/retrievalSignals.ts`
+
+- Line 1 · **import** · matched `OrganizationalUnderstanding`
+  - `import type { OrganizationalUnderstandingProposition, RecoveredProposition } from "./contracts";`
+- Line 16 · **unknown** · matched `OrganizationalUnderstanding`
+  - `export function collectPhase3Features(recovered: RecoveredProposition, truth: OrganizationalUnderstandingProposition): Phase3FeatureObservation[] {`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/structuralValidation.ts`
+
+- Line 1 · **import** · matched `OrganizationalUnderstanding`
+  - `import type { EvaluationGateFailure, OrganizationalUnderstandingProposition, RecoveredProposition } from "./contracts";`
+- Line 18 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const propositionRefs = (item: OrganizationalUnderstandingProposition) => [...item.contradictionEndpointRefs, ...item.competingPropositionRefs];`
+- Line 111 · **unknown** · matched `OrganizationalUnderstanding`
+  - `function validateGroundTruthIntegrity(item: OrganizationalUnderstandingProposition, byId: Map<string, OrganizationalUnderstandingProposition>, add: (code: Phase2FailureCode, detail: string, refs?: string[]) => void) {`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validatePhase1Architecture.ts`
+
+- Line 40 · **unknown** · matched `organizational-understanding`
+  - `const result = { validation: "organizational-understanding-evaluator-phase-1", classification: failed.length ? "FAIL — Phase 1 architecture incomplete" : "PASS — Phase 1 architecture complete; evaluator inactive", evaluatorVersion: ORGANIZATIONAL_UNDERSTANDING_EVALUATOR_PHASE_1_VERSION, checks, failures: failed, liveSemanticAdjudicatorImplemented: false, externalComparativeValidation002Executed: false, externalComparativeValidation002Authorized: false };`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validatePhase2StructuralEvaluator.ts`
+
+- Line 103 · **unknown** · matched `organizational-understanding`
+  - `const result = { validation: "organizational-understanding-evaluator-phase-2", classification, metrics: metricResults, summaryMetrics, checks, failures, hardGateFailures, compositeScoreActivation: "active only for structurally valid completed imported adjudications", semanticRecoveryImplemented: false, semanticCandidateGenerationImplemented: false, liveSemanticAdjudicatorImplemented: false, humanReviewExecuted: false, externalComparativeValidation002Executed: false, externalComparativeValidation002Authorized: false, phase3Authorized: failures.length === 0 };`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validatePhase3CandidateGeneration.ts`
+
+- Line 17 · **unknown** · matched `organizational-understanding`
+  - `const content = { evaluatorId: "organizational-understanding-evaluator-001" as const, structuralEvaluatorVersion: "oue-001-phase-2-structural/v1" as const, structuralComparisonVersion: STRUCTURAL_COMPARISON_VERSION, familyCompatibilityVersion: FAMILY_COMPATIBILITY_VERSION, duplicateCollapseVersion: DUPLICATE_COLLAPSE_VERSION, valid: true as const, organizationId: input.organizationId, caseId: input.caseId, recoveredGraphHash: phase3RecoveredGraphHash(input.collapsedRecovered.treatmentRunId, input.collapsedRecovered.propositions), groundTruthGraphHash: input.groundTruth.graphHash };`
+- Line 96 · **unknown** · matched `organizational-understanding`
+  - `const result = { validation: "organizational-understanding-evaluator-phase-3", classification, preregistrationVersion: "oue-001-phase-3-preregistration/v1", corpusSplitHash: canonicalHash(phase3CorpusSplitManifest), metrics, checks, failures, semanticAdjudicationImplemented: false, humanReviewExecuted: false, externalComparativeValidation002Authorized: false, phase4Authorized: false };`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validationFixtures.ts`
+
+- Line 2 · **import** · matched `OrganizationalUnderstanding`
+  - `import type { GroundTruthPropositionGraph, OrganizationalUnderstandingProposition, RecoveredProposition, RecoveredPropositionGraph, SemanticAdjudication } from "./contracts";`
+- Line 6 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const proposition = (input: Partial<OrganizationalUnderstandingProposition> & Pick<OrganizationalUnderstandingProposition, "id" \| "family" \| "canonicalMeaning" \| "predicate">): OrganizationalUnderstandingProposition => ({`
+- Line 12 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const groundTruthPropositions: OrganizationalUnderstandingProposition[] = [`
+
 ##### `engine/benchmark/executive-collaboration-lab/executiveConversationScenarios.ts`
 
 - Line 11 · **unknown** · matched `OrganizationalUnderstanding`
@@ -1778,6 +1969,11 @@ This section records source-code references. It supplements, but does not replac
   - `interface OrganizationalUnderstandingExperimentResult {`
 - Line 404 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstanding: "++" \| "+" \| "=" \| "-" \| "--" \| "?";`
+
+##### `engine/benchmark/research/README.md`
+
+- Line 101 · **unknown** · matched `organizational-understanding`
+  - `../evaluator/organizational-understanding-evaluator-001/`
 
 ##### `engine/benchmark/research/localized-nonlinear-cognition-adapter/RESULT.json`
 

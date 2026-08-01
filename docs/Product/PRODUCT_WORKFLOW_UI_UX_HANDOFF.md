@@ -1,5 +1,7 @@
 # Product Workflow UI/UX Handoff
 
+**Next canonical phase:** DISCOVERY PRODUCT WORKFLOW UI/UX DESIGN 001
+
 Canonical story: Question → Understanding → Answer or Unknown → Objective and Context → Recommendation → Human decision → Operation → Outcome → Learning.
 
 The frontend receives `ProductQuestionWorkspaceV2` through one authorized adapter read. Product Workflow owns stage, status, next action, blockers, unavailable/withheld meaning, disposition, and lineage.

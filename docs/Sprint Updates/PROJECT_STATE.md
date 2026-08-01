@@ -2,131 +2,84 @@
 
 **Branch:** `main`
 
-**Current phase:** contract implementation and product validation
+**Current phase:** frontend-ready Product workflow handoff
 
-**Architecture posture:** core architecture stable enough for implementation
+**Architecture posture:** canonical Product backend complete for UI/UX design;
+recommendation and evaluator development frozen by default
 
 ## Current Milestone
 
-The governed Question-to-Understanding backend is implemented through explicit
-Understanding Recommendation authorization. Organizational Objective and
-Optimization Context are now distinct immutable Product Workflow event
-families, and Objective/Context Backend Acceptance 001 passed Classification A.
-Candidate Envelope and Outcome Readiness 001 also passed Classification A.
+Product Workflow Frontend Readiness is complete and classified
+**A — PRODUCT WORKFLOW FRONTEND READINESS VALIDATED**. GAP-A-005 is closed and
+recorded as `GAP-R-011` after a real canonical local-operation replay.
 
 ## Current Phase
 
-Contract implementation and product validation. Architecture discovery is
-substantially complete for the complete backend workflow vision.
+Frontend-ready Product workflow handoff. The backend architecture required for
+UI/UX design is complete; frontend implementation has not started.
+
+## Current Product State
+
+- Frontend contract: `ProductQuestionWorkspaceV2`, contract version `2`.
+- Workflow stages: 9.
+- Semantic actions: 14.
+- Deterministic fixtures: 24.
+- Authorized repository reads per workspace: 1.
+- Exact fixture reset: validated.
+- Real local-operation replay: passed.
+- `inspect-existing-evidence`: implemented under Product Confidence
+  Improvement.
+- `compare-existing-evidence`: blocked as unimplemented.
+- Replay result: information produced; no Evidence candidate, Evidence
+  admission, Unknown change, Answer change, Understanding change, or
+  recommendation change.
+- Learning: truthful no-change projection.
+- Frontend implementation: not started.
+- External action, connector execution, selector activation, and Production
+  activation: blocked.
 
 ## Current Objective
 
-Begin Discovery Product Workflow End-to-End Benchmark 001 from the frozen Gate
-002B deterministic packet and response-contract baseline. Do not instantiate
-Case 002, activate the Material Information Acquisition selector, or begin
-frontend wiring. Case 001 remains blocked and non-evaluative.
+Prepare the canonical Product Workflow contract and deterministic state system
+for a dedicated UI/UX design sprint without changing Product meaning or
+execution authority.
 
 ## Next Priority
 
-Discovery Product Workflow End-to-End Benchmark 001.
+**DISCOVERY PRODUCT WORKFLOW UI/UX DESIGN 001**
 
-Fail-Closed Independent Calibration Protocol Gate 002B passed bounded validation. The blocked
-Case 002 preflight instantiated no case and contaminated no human decision, so
-the next untouched case may still be Case 002. The deterministic packet now
-includes every material governed field; execution authorization and manifest
-classification use only their exact canonical values; and `ineligible` stops
-before manifest creation. Controlled
-validation proves canonical Product Confidence Improvement v3 receipt binding,
-fresh repository, adapter, and child-process reload, and canonical outcome
-binding or truthful unmeasured status. No genuine live case has completed. The
-packet baseline is frozen for controlled testing. The evaluator remains frozen;
-selector activation, frontend wiring, external action, and Production
-activation remain blocked.
+The sprint may design hierarchy, labels, layout, navigation, progressive
+disclosure, interactions, visual treatment, accessibility, and responsive
+behavior. It must render Product-owned contracts and must not infer workflow
+eligibility, interpret Runtime or cognition, execute source logic, or alter
+canonical semantics.
 
-Organizational Understanding Evaluator infrastructure is frozen at its
-preserved canonical checkpoint. No human semantic study is planned in the
-current Product sequence; evaluator work may resume later from that checkpoint.
-Phase 2 is classified
-**PASS — Deterministic structural evaluator validated**. It can transform
-complete, authorized, explicitly imported semantic adjudications into
-component-versioned, deterministic, auditable frozen-fixture scores. It cannot
-recover propositions, judge semantic meaning, verify imported judgments,
-calibrate confidence against outcomes, or measure observed decision utility.
-
-Semantic or human adjudication, External Comparative Validation 002, Runtime,
-Production, Scorecard, frontend, and route integration remain unauthorized.
-Material Information Acquisition live calibration is again the primary Product
-evidence gate.
-
-## Product identity
-
-Discovery is a governed organizational learning and intelligence system, not a chatbot, dashboard, document repository, generic autonomous agent, or executive-only product. Its persistent state is organizational understanding. Questions, Answers, confidence, Recommendations, Decisions, Outcomes, Learning, and Insights inspect, improve, test, or revise that state.
-
-## Implemented backend boundary
+## Canonical implementation boundary
 
 ```text
-Question → authorized retrieval → Evidence admission
-→ Answer or targeted abstention → Answer-owned Confidence
-→ Unknown → Understanding Recommendation
-→ explicit authorization receipt → Unknown targeted
+authorized server request
+→ CanonicalProductWorkspaceAdapter
+→ ProductQuestionWorkspaceV2
+→ semantic action metadata
+→ frontend presentation
 ```
 
-Governed Google Drive retrieval is live-proven except final controlled
-revocation. Answer, Unknown, Confidence-Improvement, dual
-Recommendation-purpose, Organizational Objective, and Optimization Context
-contracts are committed. Authorization precedes Runtime and connector access;
-organization isolation and exact lineage fail closed.
+The internal local-operation adapter may be called only by a governed server
+command. It is not a direct frontend integration boundary. Operation results,
+Outcome observations, Evidence admission, and cognition remain separate.
 
-Product Confidence Improvement is the initial canonical information-operation
-owner. Future governed v3 events preserve complete candidate envelopes and
-canonical digests. Outcome observations preserve exact observed references;
-operation completion, information production, Evidence candidacy, canonical
-Evidence admission, Unknown change, Answer change, and Understanding change
-remain separate facts. Historical v2 receipts remain readable but incomplete.
+## Frozen work
 
-## Designed remaining backend
+Recommendation development is frozen by default. Material Information
+Acquisition remains inactive. The Organizational Understanding Evaluator is
+frozen at its preserved checkpoint. Human communication feedback resumes only
+after frontend completion. No semantic adjudication, selector activation,
+external action, connector execution, or Production activation is authorized.
 
-```text
-Objective Discovery → governed Objective + Optimization Context
-→ Objective Recommendation → Decision → Outcome → Learning → Insight
-```
+## Worktree boundary
 
-Objective Discovery, Objective Recommendation generation, bounded forecasting,
-complete Decision/Outcome/Learning operations, and Insight lifecycle remain
-unimplemented.
-
-Material Information Acquisition has an inactive, read-only, non-persistent
-ordinal/Pareto shadow selector. Live calibration remains Classification B with
-zero complete live cases. Candidate-envelope and outcome-readiness
-infrastructure is complete, but `GAP-B-018` remains Open. The next evidence gate
-is independent live calibration against human choices persisted before hidden
-shadow selection and against truthfully observable owner outcomes.
-
-## Frontend
-
-`/product-alpha` is retained as an isolated fixture and authenticated local-sandbox acceptance surface. It consumes `ProductQuestionWorkspace` through approved adapters. It is not canonical final UX, not daily-use ready, not promoted, and does not replace `/your-organization`. Final frontend wireframes and wiring follow backend workflow completion.
-
-## Invariants
-
-- Authorization and governance are hard gates.
-- Evidence and confidence retain exact ownership and lineage.
-- History is immutable; corrections supersede rather than overwrite.
-- No unsupported forecast certainty or fabricated Confidence.
-- No automatic Decision creation.
-- No autonomous external action without authority and consent.
-- Frontends render Product contracts and never interpret Runtime or cognition.
-
-## Next implementation order
-
-1. Material Information Acquisition — Independent Live Outcome Calibration 002.
-2. Phase 2D.2 — Objective Discovery operation, after its own governed acceptance.
-3. Phase 2D.3 — Objective Recommendation candidates.
-4. Phase 2E — Decision operation completion.
-5. Phase 2F — Outcome and Learning completion.
-6. Phase 2G — Insight lifecycle.
-
-The selector remains inactive. Case 001 remains permanently blocked and
-non-evaluative, contributes zero completed live cases, and is not a holdout.
-External action, connector execution, durable
-selector-owned receipts, Production activation, and final frontend wiring are
-not authorized by this milestone.
+The original research worktree remains intentionally dirty with unapproved
+evaluator Phase 4–5, external-comparative, observable-output-fidelity,
+scoring-robustness, governance, handoff, package, and related research drafts.
+Do not use it for UI/UX implementation. Start a new branch from `origin/main`
+in the clean Product worktree.

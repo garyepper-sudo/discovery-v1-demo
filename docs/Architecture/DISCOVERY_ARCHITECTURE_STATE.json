@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-31T20:42:07.241Z",
+    "generatedAt": "2026-08-01T19:11:26.087Z",
     "generator": "scripts/cognition/generateArchitectureState.mjs",
     "sourceOfTruthOrder": [
       "Verified source code",
@@ -13,11 +13,11 @@
     ]
   },
   "project": {
-    "currentMilestone": "The governed Question-to-Understanding backend is implemented through explicit\nUnderstanding Recommendation authorization. Organizational Objective and\nOptimization Context are now distinct immutable Product Workflow event\nfamilies, and Objective/Context Backend Acceptance 001 passed Classification A.\nCandidate Envelope and Outcome Readiness 001 also passed Classification A.",
-    "currentPhase": "Contract implementation and product validation. Architecture discovery is\nsubstantially complete for the complete backend workflow vision.",
-    "currentObjective": "Collect independent live human-choice and outcome evidence without activating\nthe Material Information Acquisition selector or beginning frontend wiring.",
+    "currentMilestone": "Product Workflow Frontend Readiness is complete and classified\nA — PRODUCT WORKFLOW FRONTEND READINESS VALIDATED. GAP-A-005 is closed and\nrecorded as `GAP-R-011` after a real canonical local-operation replay.",
+    "currentPhase": "Frontend-ready Product workflow handoff. The backend architecture required for\nUI/UX design is complete; frontend implementation has not started.",
+    "currentObjective": "Prepare the canonical Product Workflow contract and deterministic state system\nfor a dedicated UI/UX design sprint without changing Product meaning or\nexecution authority.",
     "currentSprint": null,
-    "nextPriority": "Material Information Acquisition — Independent Live Outcome Calibration 002.",
+    "nextPriority": "DISCOVERY PRODUCT WORKFLOW UI/UX DESIGN 001\n\nThe sprint may design hierarchy, labels, layout, navigation, progressive\ndisclosure, interactions, visual treatment, accessibility, and responsive\nbehavior. It must render Product-owned contracts and must not infer workflow\neligibility, interpret Runtime or cognition, execute source logic, or alter\ncanonical semantics.",
     "sourceDocuments": [
       "DISCOVERY_SNAPSHOT.md",
       "ENGINE_CAPABILITY_AUDIT.md",
