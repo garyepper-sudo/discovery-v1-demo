@@ -54,14 +54,24 @@ Local OAuth credentials, connector state, development Runtime, Clerk state, and 
 
 ## Immediate work
 
-Fail-Closed Independent Calibration Protocol Gate 002 is ready. Canonical
+Fail-Closed Independent Calibration Protocol Gate 002B passed bounded validation. The attempted
+Case 002 preflight exposed bounded packet-completeness and vocabulary defects;
+it stopped before any case was instantiated or contaminated. The next untouched
+case may still be Case 002. The deterministic human packet now carries every
+material governed decision field, execution authorization uses the exact
+canonical values, manifest classification uses only
+`live-independent-calibration` or `controlled-protocol-fixture`, and
+`ineligible` remains a pre-manifest preparation disposition. Canonical
 Product Confidence Improvement v3 choice-receipt binding, independent
 repository, adapter, and child-process reload, and
 canonical-outcome-or-unmeasured behavior pass controlled validation. Completed
-genuine live cases remain zero.
+genuine live cases remain zero. This deterministic packet and response-contract
+baseline is frozen for the controlled End-to-End Workflow Benchmark. The
+evaluator remains frozen; selector activation, frontend wiring, external
+action, and Production activation remain blocked.
 
-1. Prepare untouched Material Information Acquisition calibration Case 002 through the fail-closed independent calibration protocol.
-2. Keep the selector frozen and hidden until a valid preregistration and independently reloaded human choice exist.
+1. Begin Discovery Product Workflow End-to-End Benchmark 001 from the frozen Gate 002B baseline.
+2. Keep Case 002 uninstantiated; the next untouched live calibration case may still use that identity.
 3. Keep Case 001 permanently blocked and non-evaluative; it contributes zero completed live cases and is not a holdout.
 4. Do not activate selection, execute connectors or external actions, generate Objective Recommendations, or begin final frontend wiring.
 

@@ -21,18 +21,27 @@ substantially complete for the complete backend workflow vision.
 
 ## Current Objective
 
-Use the fail-closed independent calibration protocol to prepare untouched Case
-002 without activating the Material Information Acquisition selector or
-beginning frontend wiring. Case 001 remains blocked and non-evaluative.
+Begin Discovery Product Workflow End-to-End Benchmark 001 from the frozen Gate
+002B deterministic packet and response-contract baseline. Do not instantiate
+Case 002, activate the Material Information Acquisition selector, or begin
+frontend wiring. Case 001 remains blocked and non-evaluative.
 
 ## Next Priority
 
-Material Information Acquisition — Independent Live Outcome Calibration 002.
+Discovery Product Workflow End-to-End Benchmark 001.
 
-Fail-Closed Independent Calibration Protocol Gate 002 is ready. Controlled
+Fail-Closed Independent Calibration Protocol Gate 002B passed bounded validation. The blocked
+Case 002 preflight instantiated no case and contaminated no human decision, so
+the next untouched case may still be Case 002. The deterministic packet now
+includes every material governed field; execution authorization and manifest
+classification use only their exact canonical values; and `ineligible` stops
+before manifest creation. Controlled
 validation proves canonical Product Confidence Improvement v3 receipt binding,
 fresh repository, adapter, and child-process reload, and canonical outcome
-binding or truthful unmeasured status. No genuine live case has completed.
+binding or truthful unmeasured status. No genuine live case has completed. The
+packet baseline is frozen for controlled testing. The evaluator remains frozen;
+selector activation, frontend wiring, external action, and Production
+activation remain blocked.
 
 Organizational Understanding Evaluator infrastructure is frozen at its
 preserved canonical checkpoint. No human semantic study is planned in the

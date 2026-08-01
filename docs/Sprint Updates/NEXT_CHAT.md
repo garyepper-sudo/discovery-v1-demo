@@ -43,11 +43,23 @@ Classification A through Product Confidence Improvement as the initial
 canonical information-operation owner. Historical v2 receipts remain readable
 but incomplete and are not backfilled. `GAP-B-018` remains Open.
 
-Fail-Closed Independent Calibration Protocol Gate 002 is ready. It binds human
+Fail-Closed Independent Calibration Protocol Gate 002B passed bounded validation. The attempted
+Case 002 preflight exposed bounded packet-completeness and vocabulary defects
+but stopped before any case was instantiated or contaminated; the next
+untouched case may still be Case 002. The deterministic packet now includes all
+material governed decision fields. Execution authorization uses exactly
+`do-not-execute`, `execute-existing-local-read-only-operation`, or
+`defer-execution`. Manifest classification uses exactly
+`live-independent-calibration` or `controlled-protocol-fixture`; `ineligible`
+is a pre-manifest preparation disposition. It binds human
 choice to canonical Product Confidence Improvement v3 governed receipts,
 requires fresh repository, adapter, and child-process reload before comparison,
 and permits only canonical outcome observations or truthful unmeasured status.
 Controlled fixtures do not count as genuine live cases.
+The deterministic packet and response-contract baseline is frozen for the
+controlled End-to-End Workflow Benchmark. The evaluator remains frozen;
+selector activation, frontend wiring, external action, and Production
+activation remain blocked.
 
 ## Critical decisions
 
@@ -67,13 +79,13 @@ Local Clerk, PostgreSQL, filesystem Runtime, OAuth, connector, and recovery stat
 
 ## Exact next Codex task
 
-Prepare untouched Material Information Acquisition calibration Case 002 using
-the fail-closed independent calibration protocol. Freeze complete owner-produced
-v3 candidate envelopes, validate the canonical preregistration, persist a real
-human choice before revealing the shadow result, and independently reload that
-choice before comparison. Case 001 remains blocked and non-evaluative with zero
-completed live-case contribution and no holdout status. Do not optimize selector
-logic against evaluation cases.
+Begin Discovery Product Workflow End-to-End Benchmark 001 from the frozen Gate
+002B baseline. Keep the deterministic packet fields, field-state handling,
+neutral ordering, exact response vocabularies, consistency matrix, and
+no-score/no-ranking/no-recommendation/no-selector-output rules unchanged. Do
+not instantiate Case 002 in this task; the next untouched live calibration case
+may still use that identity. Case 001 remains blocked and non-evaluative with
+zero completed live-case contribution and no holdout status.
 
 Organizational Understanding Evaluator infrastructure is frozen at its
 preserved canonical checkpoint. No human semantic study is planned in the
@@ -92,11 +104,11 @@ Run focused validators for every changed contract plus Product Governance, Workf
 
 ## Copy-paste startup prompt
 
-> Continue Discovery from the independent evidence-calibration phase. Do not
-> reopen foundational architecture unless empirical execution reveals a genuine
-> invariant the accepted contracts cannot express. Run Material Information
-> Acquisition Independent Live Outcome Calibration 002 with the selector frozen,
-> hidden until after human choice, and read-only. Preserve authorization,
+> Begin Discovery Product Workflow End-to-End Benchmark 001 from the frozen
+> Gate 002B deterministic packet and response-contract baseline. Do not reopen
+> foundational architecture unless empirical execution reveals a genuine
+> invariant the accepted contracts cannot express. Preserve authorization,
 > governance, Evidence ownership, organization isolation, immutable history,
-> truthful outcome absence, and zero autonomous external action. Do not activate
-> the selector, execute a connector, begin final frontend wiring, or deploy.
+> truthful outcome absence, neutral packet ordering, and zero autonomous
+> external action. Do not instantiate Case 002, activate the selector, execute
+> a connector, begin final frontend wiring, or deploy.

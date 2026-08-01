@@ -2,7 +2,7 @@ import type { CanonicalProductWorkspaceAdapter } from "../../integration/canonic
 import type { ProductConfidenceImprovementEnvelopeContext } from "../../improvements/candidateEnvelope";
 import type { ProductConfidenceImprovementGovernedEvent, ProductConfidenceImprovementProposal } from "../../improvements/contracts";
 import type { CalibrationPreregistrationManifest, CalibrationValidationContext, ExecutionAuthorization, HumanChoiceArtifact, HumanDisposition } from "./contracts";
-import { calibrationDigest, validatePreregistrationManifest } from "./protocol";
+import { assertCalibrationDecisionConsistency, calibrationDigest, validatePreregistrationManifest } from "./protocol";
 
 type GovernedReceipt = Omit<ProductConfidenceImprovementGovernedEvent, "kind" | "schemaVersion" | "operationFingerprint">;
 function governedReceipt(value: unknown): GovernedReceipt {
@@ -22,6 +22,7 @@ export async function recordCalibrationHumanChoice(input: {
   executionAuthorization: ExecutionAuthorization; operationId: string; rationale: string; recordedAt: string;
 }): Promise<HumanChoiceArtifact> {
   validatePreregistrationManifest(input.manifest, input.context);
+  assertCalibrationDecisionConsistency(input.disposition, input.executionAuthorization);
   if (!input.manifest.allowedHumanDispositions.includes(input.disposition) || !input.manifest.executionAuthorizationChoices.includes(input.executionAuthorization) || !input.userId.trim() || !input.operationId.trim() || !input.rationale.trim() || !Number.isFinite(Date.parse(input.recordedAt))) throw new Error("Calibration human choice is invalid.");
   const frozen = input.manifest.candidateEnvelopes.find((item) => item.envelope.candidate.candidateId === input.selectedCandidateId);
   if (!frozen || input.proposal.proposalId !== input.selectedCandidateId || input.proposal.organizationId !== input.manifest.organizationId || input.proposal.questionId !== input.manifest.question.questionId || input.proposal.unknownId !== input.manifest.unknown.unknownId || input.proposal.unknownRevisionRef !== input.manifest.unknown.revisionRef || input.proposal.understandingRevisionRef !== input.manifest.understandingRef || input.envelopeContext.authorityRef !== input.manifest.principal.authorityRef || input.envelopeContext.objectiveVersionRef !== declaredReference(input.manifest.objectiveVersion) || input.envelopeContext.optimizationContextVersionRef !== declaredReference(input.manifest.optimizationContextVersion)) throw new Error("Calibration human choice candidate or manifest state changed.");

@@ -7,15 +7,12 @@ import path from "node:path";
 
 import { createEmptyOrganizationRuntime, type OrganizationRuntime } from "../../engine/v3/runtime/organizationRuntime";
 import { FilesystemOrganizationRuntimeRepository } from "../../engine/v3/runtime/organizationRuntimeRepository";
-import type { MaterialInformationAcquisitionInput } from "../../product/acquisition";
 import {
-  CASE_001_TERMINAL_STATUS, assertCalibrationTransition, calibrationDigest,
-  generateCalibrationOrganizationId, prepareCalibrationManifest, renderCalibrationHumanPacket,
-  verifyCalibrationPreregistration, type CalibrationPreregistrationManifest,
-  type CalibrationValidationContext, type HumanChoiceArtifact,
+  CASE_001_TERMINAL_STATUS, assertCalibrationDecisionConsistency, assertCalibrationTransition, calibrationDigest,
+  generateCalibrationOrganizationId, manifestDigest, prepareCalibrationManifest, renderCalibrationHumanPacket,
+  validatePreregistrationManifest, verifyCalibrationPreregistration, type CalibrationPreregistrationManifest,
+  type CalibrationValidationContext, type HumanChoiceArtifact, type PrepareCalibrationInput,
 } from "../../product/acquisition/calibration";
-import { compareCalibrationSelector } from "../../product/acquisition/calibration/compareSelector";
-import { observeCalibrationOutcome } from "../../product/acquisition/calibration/observeOutcome";
 import { recordCalibrationHumanChoice } from "../../product/acquisition/calibration/recordHumanChoice";
 import { verifyCalibrationHumanChoiceReload, type CalibrationReloadDependencies } from "../../product/acquisition/calibration/verifyHumanChoiceReload";
 import { buildImprovementProposal, productConfidenceImprovementEvents, type ProductConfidenceImprovementEnvelopeContext, type ProductConfidenceImprovementProposal } from "../../product/improvements";
@@ -67,12 +64,13 @@ async function createFixture(caseSeed: string, disposition: "authorize" | "decli
   const adapter = new CanonicalProductWorkspaceAdapter({ runtimeRepository: countedRepository, authorize, authorizeImprovementOperation: operationAllowed, async investigate() { throw new Error("No investigation in calibration fixture."); } });
   const projected = await Promise.all(proposals.map((proposal, index) => adapter.projectImprovementCandidateEnvelope({ userId, organizationId, questionId, proposal, context: contexts[index]! })));
   const validationContext: CalibrationValidationContext = { repositoryCommit: "a6c1eee5f5b18d7b86949d29635c3f15a4830907", sourceHashes, existingQuestions: [{ organizationId, questionId, revision: question.revision }], existingUnknowns: [{ organizationId, questionId, unknownId: candidate.unknownId, revisionRef: unknownRevisionRef }] };
-  const draft = prepareCalibrationManifest({ manifestSchemaVersion: "2", calibrationProgramId: "material-information-acquisition-independent-calibration-002", caseId: `controlled-${caseSeed}`, proposedClassification: "controlled-protocol-fixture", classificationRationale: "Controlled protocol fixture; not a genuine human choice.", repositoryCommit: validationContext.repositoryCommit, selector: { identity: "material-information-acquisition-shadow-selector-v1", sourceHash: sourceHashes["product/acquisition/shadow/selectMaterialInformationAcquisition.ts"]! }, versions: { candidateEnvelopeSchema: "1", candidateEnvelopeProjector: "1", confidenceImprovementEvent: "3", outcomeObservation: "1" }, frozenSourceHashes: sourceHashes, organizationId, principal: { pseudonymousRef: userId, authorityRef }, question: { questionId, revision: question.revision, exactText: question.title }, unknown: { unknownId: candidate.unknownId, revisionRef: unknownRevisionRef, exactText: candidate.summary, whyItMatters: candidate.whyItMatters }, understandingRef: `organization:${organizationId}:understanding:1`, authorizedUnderstandingSummary: "The controlled Understanding retains two plausible constraints.", objectiveVersion: { state: "not-applicable" }, optimizationContextVersion: { state: "not-applicable" }, evidenceBoundaryDigest: calibrationDigest([]), sourceReferenceDigests: [calibrationDigest("controlled-source-boundary")], candidateEnvelopes: projected.map((item, index) => ({ envelope: item.envelope, candidateType: item.envelope.candidate.actionType, neutralDescription: proposals[index]!.summary, limitations: ["Controlled fixture only."] })), allowedHumanDispositions: ["authorize", "decline", "defer"], executionAuthorizationChoices: ["execute-existing-local-read-only-operation", "do-not-execute", "defer-execution"], plannedComparisonMeasures: ["human-selector agreement"], plannedDisagreementClassifications: ["candidate-envelope insufficiency"], holdoutStatus: "not-applicable", priorExposureStatus: "none", outcomeAvailability: "unmeasured", missingOutcomeFields: ["observed understanding change"], hardSafetyGates: { validatedDevelopmentEnvironment: true, exactOrganizationAuthorization: true, canonicalQuestionAndUnknown: true, sameOrganizationReferences: true, selectorImportDeferred: true, runtimeWritesForbidden: true, connectorAndExternalActionForbidden: true, productionForbidden: true }, preregisteredAt: fixed });
+  const manifestInput: PrepareCalibrationInput = { manifestSchemaVersion: "2", calibrationProgramId: "material-information-acquisition-independent-calibration-002", caseId: `controlled-${caseSeed}`, proposedClassification: "controlled-protocol-fixture", classificationRationale: "Controlled protocol fixture; not a genuine human choice.", repositoryCommit: validationContext.repositoryCommit, selector: { identity: "material-information-acquisition-shadow-selector-v1", sourceHash: sourceHashes["product/acquisition/shadow/selectMaterialInformationAcquisition.ts"]! }, versions: { candidateEnvelopeSchema: "1", candidateEnvelopeProjector: "1", confidenceImprovementEvent: "3", outcomeObservation: "1" }, frozenSourceHashes: sourceHashes, organizationId, principal: { pseudonymousRef: userId, authorityRef }, question: { questionId, revision: question.revision, exactText: question.title }, unknown: { unknownId: candidate.unknownId, revisionRef: unknownRevisionRef, exactText: candidate.summary, whyItMatters: candidate.whyItMatters }, understandingRef: `organization:${organizationId}:understanding:1`, authorizedUnderstandingSummary: "The controlled Understanding retains two plausible constraints.", objectiveVersion: { state: "not-applicable" }, optimizationContextVersion: { state: "not-applicable" }, evidenceBoundaryDigest: calibrationDigest([]), sourceReferenceDigests: [calibrationDigest("controlled-source-boundary")], candidateEnvelopes: projected.map((item, index) => ({ envelope: item.envelope, candidateType: item.envelope.candidate.actionType, neutralDescription: proposals[index]!.summary, limitations: ["Controlled fixture only."] })), allowedHumanDispositions: ["authorize", "decline", "defer"], executionAuthorizationChoices: ["execute-existing-local-read-only-operation", "do-not-execute", "defer-execution"], plannedComparisonMeasures: ["human-selector agreement"], plannedDisagreementClassifications: ["candidate-envelope insufficiency"], holdoutStatus: "not-applicable", priorExposureStatus: "none", outcomeAvailability: "unmeasured", missingOutcomeFields: ["observed understanding change"], hardSafetyGates: { validatedDevelopmentEnvironment: true, exactOrganizationAuthorization: true, canonicalQuestionAndUnknown: true, sameOrganizationReferences: true, selectorImportDeferred: true, runtimeWritesForbidden: true, connectorAndExternalActionForbidden: true, productionForbidden: true }, preregisteredAt: fixed };
+  const draft = prepareCalibrationManifest(manifestInput, { status: "eligible-controlled-protocol-fixture", manifestClassification: "controlled-protocol-fixture" });
   const manifest = verifyCalibrationPreregistration(draft, validationContext).manifest;
   const dependencies: CalibrationReloadDependencies = { createRepository: () => new FilesystemOrganizationRuntimeRepository(directory), authorize, authorizeImprovementOperation: async () => true };
   const selectedIndex = 0;
-  const record = (operationId = `choice-${caseSeed}`, overrideDisposition = disposition) => recordCalibrationHumanChoice({ adapter, manifest, context: validationContext, userId, selectedCandidateId: proposals[selectedIndex]!.proposalId, proposal: proposals[selectedIndex]!, envelopeContext: contexts[selectedIndex]!, disposition: overrideDisposition, executionAuthorization: "do-not-execute", operationId, rationale: "Controlled fixture disposition.", recordedAt: fixed });
-  return { directory, organizationId, questionId, runtime, repository, adapter, manifest, validationContext, proposals, contexts, selectedIndex, unknownRevisionRef, candidate, dependencies, record, setAuthorized(value: boolean) { authorized = value; }, get protectedReads() { return protectedReads; } };
+  const record = (operationId = `choice-${caseSeed}`, overrideDisposition = disposition, executionAuthorization: "execute-existing-local-read-only-operation" | "do-not-execute" | "defer-execution" = overrideDisposition === "defer" ? "defer-execution" : "do-not-execute") => recordCalibrationHumanChoice({ adapter, manifest, context: validationContext, userId, selectedCandidateId: proposals[selectedIndex]!.proposalId, proposal: proposals[selectedIndex]!, envelopeContext: contexts[selectedIndex]!, disposition: overrideDisposition, executionAuthorization, operationId, rationale: "Controlled fixture disposition.", recordedAt: fixed });
+  return { directory, organizationId, questionId, runtime, repository, adapter, manifest, manifestInput, validationContext, proposals, contexts, selectedIndex, unknownRevisionRef, candidate, dependencies, record, setAuthorized(value: boolean) { authorized = value; }, get protectedReads() { return protectedReads; } };
 }
 
 async function countEvents(fixture: Fixture, operationId: string) {
@@ -89,13 +87,26 @@ async function main() {
     const authorizeFixture = await createFixture("authorize", "authorize"); fixtures.push(authorizeFixture);
     const declineFixture = await createFixture("decline", "decline"); fixtures.push(declineFixture);
     const deferFixture = await createFixture("defer", "defer"); fixtures.push(deferFixture);
+    const executeFixture = await createFixture("authorize-execute", "authorize"); fixtures.push(executeFixture);
+    const deferExecutionFixture = await createFixture("authorize-defer", "authorize"); fixtures.push(deferExecutionFixture);
 
     const authorizeChoice = await authorizeFixture.record();
     const declineChoice = await declineFixture.record();
     const deferChoice = await deferFixture.record();
+    const executeChoice = await executeFixture.record(undefined, "authorize", "execute-existing-local-read-only-operation");
+    const authorizeDeferredChoice = await deferExecutionFixture.record(undefined, "authorize", "defer-execution");
     assert.equal(authorizeChoice.canonicalReceiptSnapshot.eventType, "improvement-authorized");
     assert.equal(declineChoice.canonicalReceiptSnapshot.eventType, "improvement-declined");
     assert.equal(deferChoice.canonicalReceiptSnapshot.eventType, "improvement-deferred");
+    assert.equal(authorizeChoice.executionAuthorization, "do-not-execute");
+    assert.equal(executeChoice.executionAuthorization, "execute-existing-local-read-only-operation");
+    assert.equal(authorizeDeferredChoice.executionAuthorization, "defer-execution");
+    assert.equal(deferChoice.executionAuthorization, "defer-execution");
+    assert.throws(() => assertCalibrationDecisionConsistency("authorize", "record-choice-only" as never), /vocabulary is invalid/);
+    assert.throws(() => assertCalibrationDecisionConsistency("decline", "execute-existing-local-read-only-operation"), /inconsistent/);
+    assert.throws(() => assertCalibrationDecisionConsistency("decline", "defer-execution"), /inconsistent/);
+    assert.throws(() => assertCalibrationDecisionConsistency("defer", "execute-existing-local-read-only-operation"), /inconsistent/);
+    assert.throws(() => assertCalibrationDecisionConsistency("defer", "do-not-execute"), /inconsistent/);
     assert.equal(authorizeChoice.canonicalEventSchemaVersion, "3");
     assert.equal(authorizeChoice.canonicalReceiptSnapshot.candidateEnvelopeDigest, authorizeFixture.manifest.candidateEnvelopes[0]!.digest);
     assert.doesNotMatch(JSON.stringify(authorizeChoice.canonicalReceiptSnapshot), /selectorResult|expectedWinner|predictedSelector/i);
@@ -140,60 +151,63 @@ async function main() {
     assert.equal(child.status, 0, child.stderr);
     assert.match(child.stdout, /CHILD_RELOAD_PASS/);
 
-    const selectorInput: MaterialInformationAcquisitionInput = { contractVersion: "1", organizationId: authorizeFixture.organizationId, questionId: authorizeFixture.questionId, understandingRevisionRef: authorizeFixture.manifest.understandingRef, materialUncertainty: { unknownId: authorizeFixture.candidate.unknownId, unknownVersionRef: authorizeFixture.unknownRevisionRef, status: "open", investigationOpportunityRef: null }, purpose: "improve-understanding", candidates: authorizeFixture.manifest.candidateEnvelopes.map((item) => item.envelope.candidate), budgetContext: { maxBurden: "moderate", maxCost: "low", maxDelay: "short", irreversibleActionAllowed: false, materialPreferencesComplete: true, budgetExhausted: false, userDeclined: false }, authorizationContextRef: authorizeFixture.manifest.principal.authorityRef, governanceContextRefs: [], evaluatedAt: fixed };
-    await assert.rejects(() => compareCalibrationSelector({ manifest: authorizeFixture.manifest, context: authorizeFixture.validationContext, choice: authorizeChoice, reload: { ...reload, independentlyReloaded: false as true }, selectorInput, userId, dependencies: authorizeFixture.dependencies, comparedAt: fixed }), /independently reloaded/);
-    const receiptBefore = calibrationDigest(authorizeChoice.canonicalReceiptSnapshot);
-    const comparison = await compareCalibrationSelector({ manifest: authorizeFixture.manifest, context: authorizeFixture.validationContext, choice: authorizeChoice, reload, selectorInput, userId, dependencies: authorizeFixture.dependencies, comparedAt: fixed });
-    assert.equal(comparison.runtimeWriteCount, 0);
-    assert.equal(calibrationDigest(authorizeChoice.canonicalReceiptSnapshot), receiptBefore);
-
-    const unmeasured = await observeCalibrationOutcome({ comparison, choice: authorizeChoice, userId, dependencies: authorizeFixture.dependencies, outcome: { state: "unmeasured", reason: "No canonical observation exists.", missingOutcomeFields: ["understanding change"] }, observedAt: fixed });
-    assert.equal(unmeasured.outcome.state, "unmeasured");
-    await assert.rejects(() => observeCalibrationOutcome({ comparison, choice: authorizeChoice, userId, dependencies: authorizeFixture.dependencies, outcome: { state: "canonical-observation", observationId: "locally-declared" }, observedAt: fixed }), /missing/);
-
-    const observationBase = {
-      operationId: authorizeChoice.canonicalReceiptSnapshot.operationId,
-      operationEventId: authorizeChoice.canonicalReceiptSnapshot.eventId,
-      organizationId: authorizeFixture.organizationId,
-      questionId: authorizeFixture.questionId,
-      unknownId: authorizeFixture.candidate.unknownId,
-      proposalId: authorizeChoice.selectedCandidateId,
-      state: "authorized" as const,
-      completedAt: null,
-      actualBurden: "unknown" as const,
-      actualDirectCost: { state: "unknown" as const },
-      actualDelay: "unknown" as const,
-      resultArtifactRefs: [], informationRefs: [], evidenceCandidateRefs: [], admittedEvidenceIds: [],
-      evidenceAdmissionDisposition: "not-evaluated" as const,
-      before: { unknownVersionRef: authorizeFixture.unknownRevisionRef, answerVersionRef: null, understandingRevisionRef: authorizeFixture.manifest.understandingRef },
-      after: { unknownVersionRef: null, answerVersionRef: null, understandingRevisionRef: null },
-      observedChange: { unknown: "unmeasured" as const, answer: "unmeasured" as const, understanding: "unmeasured" as const },
-      limitations: ["No outcome has occurred."],
-      observationSourceRef: `organization:${authorizeFixture.organizationId}:observer:controlled`,
-      observerRef: userId,
-      observerAuthorityRef: authorizeFixture.manifest.principal.authorityRef,
-      occurredAt: "2026-08-02T12:02:00.000Z",
-    };
-    await assert.rejects(() => authorizeFixture.adapter.recordImprovementOutcomeObservation({ userId, organizationId: authorizeFixture.organizationId, observation: { ...observationBase, evidenceAdmissionDisposition: "admitted", admittedEvidenceIds: ["evidence:fake"] }, expectedCurrentVersion: null, operation: { requestId: "fake-evidence", operatorId: userId } }), /Evidence is unavailable/);
-    await assert.rejects(() => authorizeFixture.adapter.recordImprovementOutcomeObservation({ userId, organizationId: authorizeFixture.organizationId, observation: { ...observationBase, before: { ...observationBase.before, understandingRevisionRef: `organization:${authorizeFixture.organizationId}:understanding:99` } }, expectedCurrentVersion: null, operation: { requestId: "fake-history", operatorId: userId } }), /revision is unavailable/);
-    const observed = await authorizeFixture.adapter.recordImprovementOutcomeObservation({ userId, organizationId: authorizeFixture.organizationId, observation: observationBase, expectedCurrentVersion: null, operation: { requestId: "canonical-outcome", operatorId: userId } });
-    const wrappedOutcome = await observeCalibrationOutcome({ comparison, choice: authorizeChoice, userId, dependencies: authorizeFixture.dependencies, outcome: { state: "canonical-observation", observationId: observed.observation.observationId }, observedAt: "2026-08-02T12:03:00.000Z" });
-    assert.equal(wrappedOutcome.outcome.state, "canonical-observation");
-    await assert.rejects(() => observeCalibrationOutcome({ comparison, choice: authorizeChoice, userId, dependencies: authorizeFixture.dependencies, outcome: { state: "unmeasured", reason: "Local claim.", missingOutcomeFields: ["outcome"] }, observedAt: fixed }), /canonical observation exists/);
-
-    const locallyVerified = { ...reload, canonicalReceiptDigest: "local-only" };
-    const { artifactDigest: _reloadDigest, ...localUnsigned } = locallyVerified;
-    await assert.rejects(() => compareCalibrationSelector({ manifest: authorizeFixture.manifest, context: authorizeFixture.validationContext, choice: authorizeChoice, reload: { ...locallyVerified, artifactDigest: calibrationDigest(localUnsigned) }, selectorInput, userId, dependencies: authorizeFixture.dependencies, comparedAt: fixed }), /canonical choice/);
-    const snapshotMutation = { ...authorizeChoice, canonicalReceiptSnapshot: { ...authorizeChoice.canonicalReceiptSnapshot, authorityRef: "organization:foreign:authority" } };
-    const { artifactDigest: _choiceDigest, ...snapshotUnsigned } = snapshotMutation;
-    await assert.rejects(() => verifyCalibrationHumanChoiceReload({ manifest: authorizeFixture.manifest, context: authorizeFixture.validationContext, reloadedChoice: { ...snapshotMutation, artifactDigest: calibrationDigest(snapshotUnsigned) }, userId, dependencies: authorizeFixture.dependencies, verifiedAt: fixed }), /mutated or stale/);
+    const liveUnsigned = { ...authorizeFixture.manifest, proposedClassification: "live-independent-calibration" as const };
+    const { manifestDigest: _liveDigest, ...liveFields } = liveUnsigned;
+    const liveManifest = { ...liveFields, manifestDigest: manifestDigest(liveFields) };
+    validatePreregistrationManifest(liveManifest, authorizeFixture.validationContext);
+    for (const invalid of ["live-development", "controlled-development", "ineligible", "live"] as const) {
+      const { manifestDigest: _oldDigest, ...invalidFields } = { ...authorizeFixture.manifest, proposedClassification: invalid };
+      const invalidManifest = { ...invalidFields, manifestDigest: manifestDigest(invalidFields as never) } as unknown as CalibrationPreregistrationManifest;
+      assert.throws(() => validatePreregistrationManifest(invalidManifest, authorizeFixture.validationContext), /classification is invalid/);
+    }
+    const fixtureCountBeforeIneligible = fixtures.length;
+    const eventsBeforeIneligible = (await authorizeFixture.repository.read(authorizeFixture.organizationId))!.runtime.memory.events.length;
+    assert.throws(() => prepareCalibrationManifest(authorizeFixture.manifestInput, { status: "ineligible", reason: "No eligible untouched case." }), /cannot create a manifest/);
+    assert.throws(() => prepareCalibrationManifest(authorizeFixture.manifestInput, { status: "blocked", reason: "Fail-closed condition." }), /cannot create a manifest/);
+    assert.equal(fixtures.length, fixtureCountBeforeIneligible);
+    assert.equal((await authorizeFixture.repository.read(authorizeFixture.organizationId))!.runtime.memory.events.length, eventsBeforeIneligible);
+    assert.equal(fixtures.some((fixture) => fixture.manifest.caseId.includes("case-002")), false);
 
     const packet = renderCalibrationHumanPacket(authorizeFixture.manifest);
-    assert.doesNotMatch(JSON.stringify(packet), /\b(score|rank|winner|recommendation|selector)\b/i);
+    const packetBytes = JSON.stringify(packet);
+    assert.equal(JSON.stringify(renderCalibrationHumanPacket(authorizeFixture.manifest)), packetBytes);
+    const reversedDraft = prepareCalibrationManifest({ ...authorizeFixture.manifestInput, candidateEnvelopes: [...authorizeFixture.manifestInput.candidateEnvelopes].reverse() }, { status: "eligible-controlled-protocol-fixture", manifestClassification: "controlled-protocol-fixture" });
+    const reversedManifest = verifyCalibrationPreregistration(reversedDraft, authorizeFixture.validationContext).manifest;
+    assert.deepEqual(reversedManifest.neutralDisplayOrder, authorizeFixture.manifest.neutralDisplayOrder);
+    assert.equal(JSON.stringify(renderCalibrationHumanPacket(reversedManifest)), packetBytes);
+    const { manifestDigest: reorderedDigest, ...reorderedFields } = authorizeFixture.manifest;
+    assert.equal(JSON.stringify(renderCalibrationHumanPacket({ manifestDigest: reorderedDigest, ...reorderedFields })), packetBytes);
+    for (const action of packet.availableInformationActions) {
+      assert.ok(action.candidateId && action.actionType && action.whatTheActionWouldExamine && action.whatTheActionMayHelpDiscoveryLearn);
+      for (const field of [action.expectedRelevance, action.expectedInformationContribution, action.expectedDiscriminationGain, action.humanBurden, action.organizationalBurden, action.expectedDirectCost, action.expectedDelay, action.expectedReliability, action.reversibility]) assert.ok(field.state);
+      assert.ok(action.cancellation.characteristics && typeof action.cancellation.supported === "boolean");
+      assert.equal(action.governance.allowed, true);
+      assert.equal(action.authorization.satisfied, true);
+      assert.ok(action.requiredSourceAccess.length);
+      assert.ok(action.privacyOrDisclosureConstraints.length && action.resourceConstraints.length && action.materialAssumptions.length);
+      assert.ok(action.unavailableFields.length && action.withheldFields.length && action.stoppingCondition);
+      assert.equal(action.truthfulLimitation, "No result, Evidence admission, Unknown reduction, confidence improvement, or organizational improvement is guaranteed.");
+    }
+    const baseItem = authorizeFixture.manifest.candidateEnvelopes[0]!;
+    const boundedEnvelope = { ...baseItem.envelope, candidate: { ...baseItem.envelope.candidate, expectedOrganizationalRelevance: { state: "unknown" as const, reason: "Not established." }, reversibility: { state: "permission-withheld" as const } }, unavailableFields: ["candidate.expectedOrganizationalRelevance", "candidate.reversibility"], withheldFields: ["candidate.reversibility"] };
+    const boundedManifest = { ...authorizeFixture.manifest, candidateEnvelopes: [{ ...baseItem, envelope: boundedEnvelope }, ...authorizeFixture.manifest.candidateEnvelopes.slice(1)] };
+    const boundedPacket = renderCalibrationHumanPacket(boundedManifest);
+    const boundedAction = boundedPacket.availableInformationActions.find((item) => item.candidateId === boundedEnvelope.candidate.candidateId)!;
+    assert.equal(boundedAction.expectedRelevance.state, "unavailable");
+    assert.equal(boundedAction.reversibility.state, "withheld");
+    assert.deepEqual(boundedAction.withheldFields, ["withheld"]);
+    assert.doesNotMatch(JSON.stringify(boundedAction), /policyRef|permission-withheld/);
+    assert.match(packet.independentHumanResponse, /Execution authorization:\n- do-not-execute\n- execute-existing-local-read-only-operation\n- defer-execution/);
+    assert.match(packet.independentHumanResponse, /reversible under its existing owner/);
+    assert.match(packet.independentHumanResponse, /Preserve the human disposition but defer operation execution/);
+    assert.doesNotMatch(packet.independentHumanResponse, /record-choice-only/);
+    assert.doesNotMatch(packetBytes, /\b(score|rank|winner|recommendation|selector)\b/i);
+    const humanPacketSource = await readFile(path.join(process.cwd(), "product/acquisition/calibration/humanPacket.ts"), "utf8");
+    assert.doesNotMatch(humanPacketSource, /openai|anthropic|generateText|\bLLM\b/i);
     const calibrationFiles = ["prepare.ts", "verifyPreregistration.ts", "recordHumanChoice.ts", "verifyHumanChoiceReload.ts", "observeOutcome.ts", "humanPacket.ts", "protocol.ts", "index.ts"];
     for (const file of calibrationFiles) assert.doesNotMatch(await readFile(path.join(process.cwd(), "product/acquisition/calibration", file), "utf8"), /shadow\/selectMaterialInformationAcquisition|runReadOnlyMaterialAcquisitionShadow/);
     assert.match(await readFile(path.join(process.cwd(), "product/acquisition/calibration/compareSelector.ts"), "utf8"), /await import\("\.\.\/shadow\/selectMaterialInformationAcquisition"\)/);
-    console.log(JSON.stringify({ validation: "material-information-acquisition-calibration-protocol-gate-002", result: "PASS", classification: "A — FAIL-CLOSED INDEPENDENT CALIBRATION PROTOCOL READY", controlledFixtures: 4, liveCases: 0, case001: "blocked-non-evaluative", canonicalChoiceReceiptBinding: true, freshRepositoryAdapterReload: true, childProcessReload: true, selectorRuntimeWrites: 0, connectors: 0, externalActions: 0, frontendChanges: 0, productionActions: 0 }, null, 2));
+    console.log(JSON.stringify({ validation: "material-information-acquisition-calibration-protocol-gate-002", result: "PASS", classification: "A — FAIL-CLOSED INDEPENDENT CALIBRATION PROTOCOL READY", controlledFixtures: fixtures.length, liveCases: 0, case001: "blocked-non-evaluative", case002Instantiated: false, canonicalChoiceReceiptBinding: true, freshRepositoryAdapterReload: true, childProcessReload: true, packetMaterialFieldsComplete: true, exactExecutionVocabulary: true, exactManifestClassificationVocabulary: true, selectorExecutions: 0, selectorRuntimeWrites: 0, connectors: 0, externalActions: 0, frontendChanges: 0, productionActions: 0 }, null, 2));
   } finally {
     await Promise.all(fixtures.map((fixture) => rm(fixture.directory, { recursive: true, force: true })));
   }

@@ -10,6 +10,12 @@ export type CalibrationPhase =
 export type DeclaredValue = string | { state: "not-applicable" | "unavailable" | "withheld" | "unmeasured" };
 export type HumanDisposition = "authorize" | "decline" | "defer";
 export type ExecutionAuthorization = "execute-existing-local-read-only-operation" | "do-not-execute" | "defer-execution";
+export type CalibrationManifestClassification = "controlled-protocol-fixture" | "live-independent-calibration";
+export type CalibrationPreparationResult =
+  | { status: "eligible-live-independent-calibration"; manifestClassification: "live-independent-calibration" }
+  | { status: "eligible-controlled-protocol-fixture"; manifestClassification: "controlled-protocol-fixture" }
+  | { status: "ineligible"; reason: string }
+  | { status: "blocked"; reason: string };
 
 export type CalibrationSafetyGates = {
   validatedDevelopmentEnvironment: true;
@@ -26,7 +32,7 @@ export type CalibrationPreregistrationManifest = {
   manifestSchemaVersion: typeof CALIBRATION_MANIFEST_SCHEMA_VERSION;
   calibrationProgramId: typeof CALIBRATION_PROGRAM_ID;
   caseId: string;
-  proposedClassification: "controlled-protocol-fixture" | "live-independent-calibration";
+  proposedClassification: CalibrationManifestClassification;
   classificationRationale: string;
   phase: "preregistered";
   repositoryCommit: string;
