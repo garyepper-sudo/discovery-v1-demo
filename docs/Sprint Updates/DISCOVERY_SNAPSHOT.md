@@ -54,13 +54,23 @@ Local OAuth credentials, connector state, development Runtime, Clerk state, and 
 
 ## Immediate work
 
-1. Run Material Information Acquisition — Independent Live Outcome Calibration 002.
-2. Keep the selector frozen and hidden until independent human choices are persisted.
-3. Do not activate selection, execute connectors or external actions, generate Objective Recommendations, or begin final frontend wiring.
+Fail-Closed Independent Calibration Protocol Gate 002 is ready. Canonical
+Product Confidence Improvement v3 choice-receipt binding, independent
+repository, adapter, and child-process reload, and
+canonical-outcome-or-unmeasured behavior pass controlled validation. Completed
+genuine live cases remain zero.
+
+1. Prepare untouched Material Information Acquisition calibration Case 002 through the fail-closed independent calibration protocol.
+2. Keep the selector frozen and hidden until a valid preregistration and independently reloaded human choice exist.
+3. Keep Case 001 permanently blocked and non-evaluative; it contributes zero completed live cases and is not a holdout.
+4. Do not activate selection, execute connectors or external actions, generate Objective Recommendations, or begin final frontend wiring.
 
 ## Parallel evaluator research
 
-Organizational Understanding Evaluator 001 Phase 1 freezes the inactive,
+Organizational Understanding Evaluator infrastructure is frozen at its
+preserved canonical checkpoint. No human semantic study is planned in the
+current Product sequence. Its work may resume later from that checkpoint.
+Phase 1 freezes the inactive,
 architecture-neutral proposition, adjudication, scoring, ledger, and audit
 contracts. Phase 2 passes deterministic structural validation for complete,
 authorized, explicitly imported semantic adjudications. Component versions,
@@ -70,5 +80,6 @@ hashes are auditable.
 These are frozen-fixture structural results, not semantic accuracy,
 outcome-calibrated confidence, or observed decision utility. Phase 3
 candidate-generation research is authorized as a parallel benchmark track.
-Material Information Acquisition Independent Live Outcome Calibration 002
-remains the canonical product evidence gate and product priority.
+Material Information Acquisition live calibration is again the canonical
+product evidence gate and product priority. Selector activation, frontend
+wiring, external action, and Production activation remain blocked.

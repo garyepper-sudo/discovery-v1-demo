@@ -32,6 +32,7 @@ import {
 } from "../unknowns";
 import {
   generateConfidenceImprovementProposals,
+  productConfidenceImprovementEvents,
   projectConfidenceImprovementCandidateEnvelope,
   recordConfidenceImprovementEvent,
   recordConfidenceImprovementOutcomeObservation,
@@ -117,6 +118,49 @@ export type CanonicalProductWorkspaceAdapterDependencies = {
     optimizationContext?: ProductOptimizationContext;
   }): Promise<ProductObjectiveReferenceValidation>;
 };
+
+function canonicalReplayValue(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map(canonicalReplayValue).sort().join(",")}]`;
+  if (value && typeof value === "object") return `{${Object.keys(value).sort().map((key) => `${key}:${canonicalReplayValue((value as Record<string, unknown>)[key])}`).join(",")}}`;
+  return JSON.stringify(value);
+}
+
+function governedChoiceContextMatches(input: {
+  proposal: ProductConfidenceImprovementProposal;
+  context: ProductConfidenceImprovementEnvelopeContext;
+  envelope: ReturnType<typeof projectConfidenceImprovementCandidateEnvelope>;
+}): boolean {
+  const { proposal, context, envelope } = input;
+  const expectedLineage = [...new Set([`proposal:${proposal.proposalId}`, `unknown:${proposal.unknownRevisionRef}`, ...context.lineage])].sort();
+  return envelope.actionOwner.authorityRef === context.authorityRef
+    && envelope.objectiveVersionRef === context.objectiveVersionRef
+    && envelope.optimizationContextVersionRef === context.optimizationContextVersionRef
+    && envelope.expectedInformationClass === context.expectedInformationClass
+    && envelope.candidate.eligibility.authorizationSatisfied === context.authorizationSatisfied
+    && envelope.candidate.eligibility.governanceAllowed === context.governanceAllowed
+    && envelope.candidate.eligibility.consentState === context.consentState
+    && envelope.candidate.eligibility.targetAccessible === context.targetAccessible
+    && envelope.candidate.eligibility.executionAvailable === context.executionAvailable
+    && envelope.candidate.eligibility.ownerAvailable === context.ownerAvailable
+    && canonicalReplayValue(envelope.candidate.expectedOrganizationalRelevance) === canonicalReplayValue(context.expectedOrganizationalRelevance)
+    && canonicalReplayValue(envelope.relevanceToUnknown) === canonicalReplayValue(context.relevanceToUnknown)
+    && canonicalReplayValue(envelope.candidate.reliability) === canonicalReplayValue(context.reliability)
+    && canonicalReplayValue(envelope.candidate.existingEvidenceQuality) === canonicalReplayValue(context.existingEvidenceQuality)
+    && canonicalReplayValue(envelope.candidate.cost) === canonicalReplayValue(context.directCost)
+    && canonicalReplayValue(envelope.candidate.reversibility) === canonicalReplayValue(context.reversibility)
+    && canonicalReplayValue(envelope.organizationalBurden) === canonicalReplayValue(context.organizationalBurden)
+    && canonicalReplayValue(envelope.requiredSourceAccess) === canonicalReplayValue(context.requiredSourceAccess)
+    && canonicalReplayValue(envelope.privacyConstraints) === canonicalReplayValue(context.privacyConstraints)
+    && canonicalReplayValue(envelope.cancellation) === canonicalReplayValue(context.cancellation)
+    && canonicalReplayValue(envelope.resourceConstraintRefs) === canonicalReplayValue(context.resourceConstraintRefs)
+    && canonicalReplayValue(envelope.governanceContextRefs) === canonicalReplayValue(context.governanceContextRefs)
+    && canonicalReplayValue(envelope.assumptions) === canonicalReplayValue(context.assumptions)
+    && canonicalReplayValue(envelope.lineage) === canonicalReplayValue(expectedLineage)
+    && envelope.candidate.stoppingCondition === context.stoppingCondition
+    && canonicalReplayValue(envelope.candidate.expectedEvidenceLineage) === canonicalReplayValue(context.expectedEvidenceLineage)
+    && canonicalReplayValue(envelope.candidate.materialEffectTargets) === canonicalReplayValue(context.materialEffectTargets)
+    && envelope.projectedAt === context.projectedAt;
+}
 
 type ProductImprovementAuthorizationOperation =
   | "candidate:project"
@@ -745,7 +789,29 @@ export class CanonicalProductWorkspaceAdapter {
         ? "choice:correct"
         : input.disposition === "authorized" ? "choice:authorize" : input.disposition === "declined" ? "choice:decline" : "choice:defer",
     });
-    const envelope = projectConfidenceImprovementCandidateEnvelope({ runtime: stored.runtime, proposal: input.proposal, context: input.context });
+    const existingOperation = input.expectedCurrentEventVersion === null
+      ? productConfidenceImprovementEvents(stored.runtime).find((event) =>
+          event.schemaVersion === "3" && event.operationId === input.operationId)
+      : undefined;
+    const expectedEventType = input.disposition === "authorized"
+      ? "improvement-authorized"
+      : input.disposition === "declined"
+        ? "improvement-declined"
+        : "improvement-deferred";
+    if (existingOperation?.schemaVersion === "3" && (
+      existingOperation.actorRef !== input.userId
+      || existingOperation.eventType !== expectedEventType
+      || existingOperation.occurredAt !== input.occurredAt
+      || existingOperation.reason !== (input.reason ?? null)
+    )) {
+      throw new Error("Improvement operation replay payload changed.");
+    }
+    if (existingOperation?.schemaVersion === "3" && !governedChoiceContextMatches({ proposal: input.proposal, context: input.context, envelope: existingOperation.candidateEnvelope })) {
+      throw new Error("Improvement operation replay context changed.");
+    }
+    const envelope = existingOperation?.schemaVersion === "3"
+      ? existingOperation.candidateEnvelope
+      : projectConfidenceImprovementCandidateEnvelope({ runtime: stored.runtime, proposal: input.proposal, context: input.context });
     const recorded = recordConfidenceImprovementEvent({
       runtime: stored.runtime,
       proposal: input.proposal,

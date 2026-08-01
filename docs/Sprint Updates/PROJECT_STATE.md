@@ -21,24 +21,33 @@ substantially complete for the complete backend workflow vision.
 
 ## Current Objective
 
-Collect independent live human-choice and outcome evidence without activating
-the Material Information Acquisition selector or beginning frontend wiring.
+Use the fail-closed independent calibration protocol to prepare untouched Case
+002 without activating the Material Information Acquisition selector or
+beginning frontend wiring. Case 001 remains blocked and non-evaluative.
 
 ## Next Priority
 
 Material Information Acquisition — Independent Live Outcome Calibration 002.
 
-In parallel, Organizational Understanding Evaluator 001 Phase 2 is classified
+Fail-Closed Independent Calibration Protocol Gate 002 is ready. Controlled
+validation proves canonical Product Confidence Improvement v3 receipt binding,
+fresh repository, adapter, and child-process reload, and canonical outcome
+binding or truthful unmeasured status. No genuine live case has completed.
+
+Organizational Understanding Evaluator infrastructure is frozen at its
+preserved canonical checkpoint. No human semantic study is planned in the
+current Product sequence; evaluator work may resume later from that checkpoint.
+Phase 2 is classified
 **PASS — Deterministic structural evaluator validated**. It can transform
 complete, authorized, explicitly imported semantic adjudications into
 component-versioned, deterministic, auditable frozen-fixture scores. It cannot
 recover propositions, judge semantic meaning, verify imported judgments,
 calibrate confidence against outcomes, or measure observed decision utility.
 
-Only Phase 3 candidate-generation research is newly authorized. Semantic or
-human adjudication, External Comparative Validation 002, Runtime, Production,
-Scorecard, frontend, and route integration remain unauthorized. This parallel
-research does not displace the Material Information Acquisition product gate.
+Semantic or human adjudication, External Comparative Validation 002, Runtime,
+Production, Scorecard, frontend, and route integration remain unauthorized.
+Material Information Acquisition live calibration is again the primary Product
+evidence gate.
 
 ## Product identity
 
@@ -107,6 +116,8 @@ shadow selection and against truthfully observable owner outcomes.
 5. Phase 2F — Outcome and Learning completion.
 6. Phase 2G — Insight lifecycle.
 
-The selector remains inactive. External action, connector execution, durable
+The selector remains inactive. Case 001 remains permanently blocked and
+non-evaluative, contributes zero completed live cases, and is not a holdout.
+External action, connector execution, durable
 selector-owned receipts, Production activation, and final frontend wiring are
 not authorized by this milestone.

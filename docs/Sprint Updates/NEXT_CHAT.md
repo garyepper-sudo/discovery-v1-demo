@@ -43,6 +43,12 @@ Classification A through Product Confidence Improvement as the initial
 canonical information-operation owner. Historical v2 receipts remain readable
 but incomplete and are not backfilled. `GAP-B-018` remains Open.
 
+Fail-Closed Independent Calibration Protocol Gate 002 is ready. It binds human
+choice to canonical Product Confidence Improvement v3 governed receipts,
+requires fresh repository, adapter, and child-process reload before comparison,
+and permits only canonical outcome observations or truthful unmeasured status.
+Controlled fixtures do not count as genuine live cases.
+
 ## Critical decisions
 
 - Objective confidence and authority are separate.
@@ -61,18 +67,20 @@ Local Clerk, PostgreSQL, filesystem Runtime, OAuth, connector, and recovery stat
 
 ## Exact next Codex task
 
-Run Material Information Acquisition — Independent Live Outcome Calibration
-002. Freeze complete owner-produced v3 candidate envelopes, persist real human
-choices before revealing the shadow result, and observe only separately
-authorized outcomes that already occur. Do not optimize selector logic against
-the evaluation cases.
+Prepare untouched Material Information Acquisition calibration Case 002 using
+the fail-closed independent calibration protocol. Freeze complete owner-produced
+v3 candidate envelopes, validate the canonical preregistration, persist a real
+human choice before revealing the shadow result, and independently reload that
+choice before comparison. Case 001 remains blocked and non-evaluative with zero
+completed live-case contribution and no holdout status. Do not optimize selector
+logic against evaluation cases.
 
-Parallel benchmark research may begin Phase 3 candidate generation for the
-inactive Organizational Understanding Evaluator 001. Phase 2 proves only that
-complete authorized imported adjudications can be structurally validated and
-scored deterministically. It does not authorize semantic adjudication, human
-review, External Comparative Validation 002, Production integration, or a
-change to the Material Information Acquisition product priority.
+Organizational Understanding Evaluator infrastructure is frozen at its
+preserved canonical checkpoint. No human semantic study is planned in the
+current Product sequence; work may resume later from that checkpoint. It does
+not authorize semantic adjudication, human review, External Comparative
+Validation 002, Production integration, or a change to the Material Information
+Acquisition product priority.
 
 ## Prohibited shortcuts
 
