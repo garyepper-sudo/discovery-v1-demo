@@ -24,6 +24,7 @@ UI/UX design is complete; frontend implementation has not started.
 - Workflow stages: 9.
 - Semantic actions: 14.
 - Deterministic fixtures: 24.
+- Semantic fixture coverage: 24/24; canonical nested state and orientation coherence validated.
 - Authorized repository reads per workspace: 1.
 - Exact fixture reset: validated.
 - Real local-operation replay: passed.
@@ -53,6 +54,10 @@ disclosure, interactions, visual treatment, accessibility, and responsive
 behavior. It must render Product-owned contracts and must not infer workflow
 eligibility, interpret Runtime or cognition, execute source logic, or alter
 canonical semantics.
+
+The twenty-four V2 fixtures are approved as this design and future frontend
+acceptance surface. Their orientation is derived from coherent canonical
+nested state; it is not fixture-authored substitute meaning.
 
 ## Canonical implementation boundary
 

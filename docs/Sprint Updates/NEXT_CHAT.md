@@ -30,6 +30,7 @@ acting. Use the clean Product worktree and create a new branch from
 - Product Workflow Frontend Readiness is Classification A.
 - `ProductQuestionWorkspaceV2` contract version `2` is the frontend boundary.
 - It contains 9 stages, 14 semantic actions, and 24 deterministic fixtures.
+- All 24 fixtures instantiate their claimed canonical nested V2 state; semantic coherence and exact reset pass.
 - Workspace loading performs 1 authorized repository read.
 - Exact fixture reset and real-operation replay pass.
 - `inspect-existing-evidence` is implemented.
@@ -38,6 +39,10 @@ acting. Use the clean Product worktree and create a new branch from
   no Unknown, Answer, Understanding, or recommendation change.
 - Learning truthfully reports no cognitive change.
 - Frontend wiring has not started.
+
+The twenty-four fixtures are approved as the UI/UX design and frontend
+acceptance coverage surface. Do not replace their Product-owned state with
+frontend inference or orientation-only display logic.
 
 ## Design authority
 

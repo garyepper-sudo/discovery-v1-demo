@@ -11,6 +11,8 @@ Canonical owners express every workflow distinction through existing Product eve
 
 Product Confidence Improvement now implements one exact `inspect-existing-evidence` operation over already-admitted local Evidence. `compare-existing-evidence` remains unsupported because its comparison semantics are materially different. Candidate presence still grants no execution authority.
 
+The deterministic twenty-four-fixture pack now constructs the canonical nested V2 state named by every fixture. Objective/Context prerequisites, recommendation dispositions, immutable choice receipts, operation results, Outcomes, Evidence admission, explicit no-change/changed Learning, disclosures, and historical revisions are present where claimed. Orientation is derived from or reconciled with the coherent stage/action surface rather than overwriting absent state. The focused validator enforces these semantic invariants with fixture-specific failure messages and exact reset.
+
 ## Stage audit
 
 | Stage | Owner / persistence | Read and mutation | Frontend semantics | Readiness |
@@ -34,6 +36,7 @@ All reads authorize the exact user and organization before Runtime access. Histo
 - Legacy and active surfaces still contain Runtime and Executive projection imports; they are not the new supported path and were not modified.
 - Benchmark communication remains benchmark-only and is not imported by frontend code.
 - The version-2 fixture adapter returns the same contract as the canonical read rather than a display-prose contract.
+- The twenty-four semantically coherent V2 fixtures are approved for UI/UX design and frontend acceptance coverage.
 - Existing live-sandbox mutations use canonical adapter methods. Historical route/Executive mutations are not promoted by this sprint.
 
 ## Supported path

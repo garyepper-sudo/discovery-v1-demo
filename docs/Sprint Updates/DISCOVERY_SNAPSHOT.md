@@ -17,6 +17,14 @@ deterministic fixtures, one authorized repository read per workspace, and an
 exact fixture reset. It remains derived, non-persistent, Product-owned, and
 free of raw Runtime and cognition.
 
+The twenty-four fixtures now instantiate canonical nested V2 state rather than
+using orientation as a substitute for missing Product state. Semantic
+validation covers exact Objective/Context prerequisites, recommendation
+dispositions, immutable choices and operation results, Outcomes, Evidence and
+Learning lineage, disclosure non-leakage, retained revisions, blocked
+mutations, deterministic ordering, and exact reset. They are approved as the
+UI/UX design and frontend acceptance coverage surface.
+
 The real GAP-A-005 replay passed through the canonical repository and internal
 server-side operation adapter. Product Confidence Improvement owns the one
 implemented local operation, `inspect-existing-evidence`. It organizes exact
