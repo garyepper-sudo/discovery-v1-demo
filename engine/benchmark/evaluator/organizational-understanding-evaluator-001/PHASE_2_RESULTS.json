@@ -1,0 +1,436 @@
+{
+  "validation": "organizational-understanding-evaluator-phase-2",
+  "classification": "PASS — Deterministic structural evaluator validated",
+  "metrics": {
+    "structural-validation": {
+      "passed": 1,
+      "total": 1,
+      "rate": 1
+    },
+    "dimension-scoring": {
+      "passed": 2,
+      "total": 2,
+      "rate": 1
+    },
+    "audit-lineage": {
+      "passed": 4,
+      "total": 4,
+      "rate": 1
+    },
+    "confidence-normalization": {
+      "passed": 4,
+      "total": 4,
+      "rate": 1
+    },
+    "invalid-confidence": {
+      "passed": 5,
+      "total": 5,
+      "rate": 1
+    },
+    "determinism": {
+      "passed": 6,
+      "total": 6,
+      "rate": 1
+    },
+    "family-compatibility": {
+      "passed": 2,
+      "total": 2,
+      "rate": 1
+    },
+    "polarity": {
+      "passed": 2,
+      "total": 2,
+      "rate": 1
+    },
+    "modality": {
+      "passed": 2,
+      "total": 2,
+      "rate": 1
+    },
+    "temporal": {
+      "passed": 2,
+      "total": 2,
+      "rate": 1
+    },
+    "duplicate-collapse": {
+      "passed": 3,
+      "total": 3,
+      "rate": 1
+    },
+    "duplicate-inflation": {
+      "passed": 1,
+      "total": 1,
+      "rate": 1
+    },
+    "organization-isolation": {
+      "passed": 1,
+      "total": 1,
+      "rate": 1
+    },
+    "blocking-failures": {
+      "passed": 1,
+      "total": 1,
+      "rate": 1
+    },
+    "case-isolation": {
+      "passed": 1,
+      "total": 1,
+      "rate": 1
+    },
+    "cross-run-isolation": {
+      "passed": 1,
+      "total": 1,
+      "rate": 1
+    },
+    "authorization": {
+      "passed": 1,
+      "total": 1,
+      "rate": 1
+    },
+    "adjudication-completeness": {
+      "passed": 2,
+      "total": 2,
+      "rate": 1
+    },
+    "one-to-one-assignment": {
+      "passed": 1,
+      "total": 1,
+      "rate": 1
+    },
+    "graph-integrity": {
+      "passed": 6,
+      "total": 6,
+      "rate": 1
+    },
+    "cross-version": {
+      "passed": 1,
+      "total": 1,
+      "rate": 1
+    }
+  },
+  "summaryMetrics": {
+    "structuralValidationPrecision": 1,
+    "invalidInputRejectionRate": 1,
+    "organizationIsolation": 1,
+    "caseIsolation": 1,
+    "crossRunIsolation": 1,
+    "authorizationCompliance": 1,
+    "confidenceNormalizationAccuracy": 1,
+    "duplicateInflationRate": 0,
+    "polarityValidationAccuracy": 1,
+    "modalityValidationAccuracy": 1,
+    "temporalValidationAccuracy": 1,
+    "assignmentDeterminism": 1,
+    "graphIntegrityAccuracy": 1,
+    "scoringDeterminism": 1,
+    "ledgerDeterminism": 1,
+    "canonicalSerializationStability": 1,
+    "crossVersionContamination": 0
+  },
+  "checks": [
+    {
+      "name": "valid completed adjudications score",
+      "passed": true,
+      "metric": "structural-validation",
+      "detail": "composite=1"
+    },
+    {
+      "name": "all dimensions independently scored",
+      "passed": true,
+      "metric": "dimension-scoring",
+      "detail": "{\"correctness\":{\"score\":1,\"numerator\":8.9,\"denominator\":8.9,\"propositionRefs\":[\"conclusion-1\",\"condition-1\",\"constraint-1\",\"contradiction-1\",\"finding-1\",\"gap-1\",\"implication-1\",\"mechanism-1\",\"mechanism-2\",\"prediction-1\",\"uncertainty-1\"]},\"materialCoverage\":{\"score\":1,\"numerator\":8.9,\"denominator\":8.9,\"propositionRefs\":[\"conclusion-1\",\"condition-1\",\"constraint-1\",\"contradiction-1\",\"finding-1\",\"gap-1\",\"implication-1\",\"mechanism-1\",\"mechanism-2\",\"prediction-1\",\"uncertainty-1\"]},\"contradictionQuality\":{\"score\":1,\"numerator\":0.8,\"denominator\":0.8,\"propositionRefs\":[\"contradiction-1\"]},\"causalQuality\":{\"score\":1,\"numerator\":1.6,\"denominator\":1.6,\"propositionRefs\":[\"mechanism-1\",\"mechanism-2\"]},\"confidenceCalibration\":{\"score\":1,\"numerator\":1.6,\"denominator\":1.6,\"propositionRefs\":[\"mechanism-1\",\"mechanism-2\"],\"limitation\":\"Justified-range agreement only; outcome-based calibration is inactive.\"},\"uncertaintyDiscipline\":{\"score\":1,\"numerator\":0.8,\"denominator\":0.8,\"propositionRefs\":[\"uncertainty-1\"]},\"evidenceGapQuality\":{\"score\":1,\"numerator\":0.8,\"denominator\":0.8,\"propositionRefs\":[\"gap-1\"],\"limitation\":\"Relevance and utility are imported adjudications; no semantic utility judgment occurs here.\"},\"decisionRelevantUtility\":{\"score\":1,\"numerator\":0.9,\"denominator\":0.9,\"propositionRefs\":[\"implication-1\"],\"limitation\":\"Deterministic aggregation of imported rubric judgments only.\"}}"
+    },
+    {
+      "name": "composite active only for completed imported adjudications",
+      "passed": true,
+      "metric": "dimension-scoring",
+      "detail": "1"
+    },
+    {
+      "name": "Phase 2 ledger identifies every component version",
+      "passed": true,
+      "metric": "audit-lineage",
+      "detail": "{\"structuralValidator\":\"oue-001-phase-2-structural/v1\",\"confidenceNormalization\":\"confidence-normalization/v1\",\"duplicateCollapse\":\"duplicate-collapse/v1\",\"familyCompatibility\":\"proposition-family-compatibility/v1\",\"assignment\":\"one-to-one-assignment/v1\",\"graphIntegrity\":\"graph-integrity-validation/v1\",\"importedRubric\":\"imported-rubric-judgment/v1\",\"componentScorers\":{\"correctness\":\"correctness-scorer/v1\",\"materialCoverage\":\"material-coverage-scorer/v1\",\"contradictionQuality\":\"contradiction-quality-scorer/v1\",\"causalQuality\":\"causal-quality-scorer/v1\",\"confidenceCalibration\":\"confidence-representation-fidelity-scorer/v1\",\"uncertaintyDiscipline\":\"uncertainty-discipline-scorer/v1\",\"evidenceGapQuality\":\"evidence-gap-quality-scorer/v1\",\"decisionRelevantUtility\":\"imported-decision-utility-rubric-aggregator/v1\"},\"compositeWeights\":\"couu-scoring-decomposition/v1\",\"serialization\":\"canonical-serialization/v1\"}"
+    },
+    {
+      "name": "imported rubric provenance explicit and hashed",
+      "passed": true,
+      "metric": "audit-lineage",
+      "detail": "[\"13f3b65d83b5b5dd2f6a83298bb061fe186052ebc7dcb52e57ccf318ad16a517\",\"1b290ee0a5d4e214d19899a80ec219164742a5ca37b073accc81da77e77d9c7f\",\"66aa414c14a2ebe262a27f494a87a52bfe2caa58588836ff10cc5080e25d1880\",\"7ab7aa5e08b953155436921e6e2a93d48158569d2f42e7bf4c00dca5bdeec781\",\"7bc29899d10ba499cd9a7bb6fdb68f5b5c02736cbd754759d9f9ed1be537a6a0\",\"8212dd4651421df676c6afba5e5fbef7144ba435b6083237b2a5b28f6476a975\",\"85706cb68592fd3e1c0c550547d578e0bbfb720c8976b3b5a0014c06d3a63c7e\",\"868f90565c93c08e4869bb38a368d5d8f60ddd48cf8141029dc522b35d7d7a20\",\"a233fe02883db2e70fe639a8ec81fa0affe7be4652b6f9de6d2c3a6c91f246b0\",\"c341c0fba37dca71ec1eda53123a1cc9d90b03c189ea67a0091110be986a5ec8\",\"e5cf8540fa54a50d9c535798392e95350023ff40b083026908be13a039d01c96\"]"
+    },
+    {
+      "name": "numeric and percentage confidence equivalent",
+      "passed": true,
+      "metric": "confidence-normalization",
+      "detail": "{\"minimum\":0.82,\"maximum\":0.82,\"representation\":\"numeric\"} / {\"minimum\":0.82,\"maximum\":0.82,\"representation\":\"percentage\"}"
+    },
+    {
+      "name": "qualitative confidence remains interval",
+      "passed": true,
+      "metric": "confidence-normalization",
+      "detail": "likely => [0.6,0.8]"
+    },
+    {
+      "name": "absent confidence remains absent",
+      "passed": true,
+      "metric": "confidence-normalization",
+      "detail": "null"
+    },
+    {
+      "name": "confidence interval calculations",
+      "passed": true,
+      "metric": "confidence-normalization",
+      "detail": "overlap and direction preserved"
+    },
+    {
+      "name": "invalid confidence rejected: numeric",
+      "passed": true,
+      "metric": "invalid-confidence",
+      "detail": "{\"kind\":\"numeric\",\"value\":1.1}"
+    },
+    {
+      "name": "invalid confidence rejected: percentage",
+      "passed": true,
+      "metric": "invalid-confidence",
+      "detail": "{\"kind\":\"percentage\",\"value\":101}"
+    },
+    {
+      "name": "invalid confidence rejected: interval",
+      "passed": true,
+      "metric": "invalid-confidence",
+      "detail": "{\"kind\":\"interval\",\"minimum\":0.8,\"maximum\":0.2}"
+    },
+    {
+      "name": "invalid confidence rejected: qualitative",
+      "passed": true,
+      "metric": "invalid-confidence",
+      "detail": "{\"kind\":\"qualitative\",\"label\":\"pretty sure\"}"
+    },
+    {
+      "name": "canonical serializer rejects undefined",
+      "passed": true,
+      "metric": "determinism",
+      "detail": "undefined"
+    },
+    {
+      "name": "canonical serializer rejects NaN",
+      "passed": true,
+      "metric": "determinism",
+      "detail": "NaN"
+    },
+    {
+      "name": "canonical serializer rejects Infinity",
+      "passed": true,
+      "metric": "determinism",
+      "detail": "Infinity"
+    },
+    {
+      "name": "canonical serializer rejects negative zero",
+      "passed": true,
+      "metric": "determinism",
+      "detail": "negative zero"
+    },
+    {
+      "name": "family matrix frozen and diagonal",
+      "passed": true,
+      "metric": "family-compatibility",
+      "detail": "only identical families compatible in v1"
+    },
+    {
+      "name": "polarity controls",
+      "passed": true,
+      "metric": "polarity",
+      "detail": "affirmed/denied conflict; mixed and unresolved not exact"
+    },
+    {
+      "name": "modality controls",
+      "passed": true,
+      "metric": "modality",
+      "detail": "causal, predictive, and unknown distinct"
+    },
+    {
+      "name": "temporal controls",
+      "passed": true,
+      "metric": "temporal",
+      "detail": "historical/current distinct; future preserved"
+    },
+    {
+      "name": "duplicate collapsed",
+      "passed": true,
+      "metric": "duplicate-collapse",
+      "detail": "[\"recovered-finding-duplicate\"]"
+    },
+    {
+      "name": "duplicate audit ancestry retained",
+      "passed": true,
+      "metric": "duplicate-collapse",
+      "detail": "[{\"canonicalRecoveredPropositionId\":\"recovered-finding-1\",\"memberRecoveredPropositionId\":\"recovered-finding-duplicate\",\"basis\":\"explicit-group\",\"canonicalSourceClaimRefs\":[\"claim-finding-1\"],\"memberSourceClaimRefs\":[\"duplicate-claim\"],\"canonicalPropositionHash\":\"386b9c1a39f7916c0d7210d92855ad798029c1b4938bee370ac722806a329caa\",\"memberPropositionHash\":\"6aba6eaf517413c4b33e9a181aec1506818d8bbf81a4638e2a2c2eb6d6eff129\"}]"
+    },
+    {
+      "name": "zero duplicate score inflation",
+      "passed": true,
+      "metric": "duplicate-inflation",
+      "detail": "1 === 1"
+    },
+    {
+      "name": "contradictory duplicate not collapsed",
+      "passed": true,
+      "metric": "duplicate-collapse",
+      "detail": "graph-integrity-failure, missing-audit-lineage"
+    },
+    {
+      "name": "cross organization rejected",
+      "passed": true,
+      "metric": "organization-isolation",
+      "detail": "missing-audit-lineage, organization-contamination"
+    },
+    {
+      "name": "blocking failure disables composite",
+      "passed": true,
+      "metric": "blocking-failures",
+      "detail": "[{\"code\":\"missing-audit-lineage\",\"blocking\":true,\"justification\":\"Recovered graph input hash does not match its propositions.\",\"propositionRefs\":[]},{\"code\":\"organization-contamination\",\"blocking\":true,\"justification\":\"Recovered proposition crosses organization boundary.\",\"propositionRefs\":[\"recovered-conclusion-1\"]}]"
+    },
+    {
+      "name": "cross case rejected",
+      "passed": true,
+      "metric": "case-isolation",
+      "detail": "case-contamination, case-contamination, case-contamination, case-contamination, case-contamination, case-contamination, case-contamination, case-contamination, case-contamination, case-contamination, case-contamination, case-contamination"
+    },
+    {
+      "name": "cross run rejected",
+      "passed": true,
+      "metric": "cross-run-isolation",
+      "detail": "cross-run-contamination"
+    },
+    {
+      "name": "permission leakage rejected",
+      "passed": true,
+      "metric": "authorization",
+      "detail": "permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage, permission-leakage"
+    },
+    {
+      "name": "malformed recovered confidence rejected",
+      "passed": true,
+      "metric": "invalid-confidence",
+      "detail": "invalid-confidence, missing-audit-lineage"
+    },
+    {
+      "name": "unresolved ambiguity rejected",
+      "passed": true,
+      "metric": "adjudication-completeness",
+      "detail": "invalid-one-to-one-assignment, unresolved-material-ambiguity"
+    },
+    {
+      "name": "conflicting assignment rejected",
+      "passed": true,
+      "metric": "one-to-one-assignment",
+      "detail": "invalid-family, invalid-one-to-one-assignment"
+    },
+    {
+      "name": "contradiction endpoints required",
+      "passed": true,
+      "metric": "graph-integrity",
+      "detail": "graph-integrity-failure"
+    },
+    {
+      "name": "mechanism causal modality required",
+      "passed": true,
+      "metric": "graph-integrity",
+      "detail": "graph-integrity-failure, invalid-modality, missing-audit-lineage"
+    },
+    {
+      "name": "evidence gap affected reference required",
+      "passed": true,
+      "metric": "graph-integrity",
+      "detail": "graph-integrity-failure, missing-audit-lineage"
+    },
+    {
+      "name": "broken lineage rejected",
+      "passed": true,
+      "metric": "graph-integrity",
+      "detail": "invalid-reference, missing-audit-lineage"
+    },
+    {
+      "name": "incomplete audit record rejected",
+      "passed": true,
+      "metric": "audit-lineage",
+      "detail": "missing-audit-lineage"
+    },
+    {
+      "name": "missing family rubric rejected",
+      "passed": true,
+      "metric": "adjudication-completeness",
+      "detail": "incomplete-adjudication, incomplete-adjudication"
+    },
+    {
+      "name": "non-imported rubric provenance rejected",
+      "passed": true,
+      "metric": "audit-lineage",
+      "detail": "incomplete-adjudication"
+    },
+    {
+      "name": "missing graph metadata rejected",
+      "passed": true,
+      "metric": "graph-integrity",
+      "detail": "graph-integrity-failure"
+    },
+    {
+      "name": "cross version rejected",
+      "passed": true,
+      "metric": "cross-version",
+      "detail": "incompatible-evaluator-version"
+    },
+    {
+      "name": "unfrozen graph rejected",
+      "passed": true,
+      "metric": "graph-integrity",
+      "detail": "unfrozen-ground-truth"
+    },
+    {
+      "name": "family mismatch rejected",
+      "passed": true,
+      "metric": "family-compatibility",
+      "detail": "graph-integrity-failure, invalid-family, missing-audit-lineage"
+    },
+    {
+      "name": "polarity mismatch rejected",
+      "passed": true,
+      "metric": "polarity",
+      "detail": "invalid-polarity, missing-audit-lineage"
+    },
+    {
+      "name": "modality mismatch rejected",
+      "passed": true,
+      "metric": "modality",
+      "detail": "invalid-modality, missing-audit-lineage"
+    },
+    {
+      "name": "temporal mismatch rejected",
+      "passed": true,
+      "metric": "temporal",
+      "detail": "graph-integrity-failure, invalid-temporality, missing-audit-lineage"
+    },
+    {
+      "name": "reordered input invariant",
+      "passed": true,
+      "metric": "determinism",
+      "detail": "0e6cc40480e272c868b1ff97206cd92442b27924cd15cf4ace91a3427316b4a8 === 0e6cc40480e272c868b1ff97206cd92442b27924cd15cf4ace91a3427316b4a8"
+    },
+    {
+      "name": "repeated ledger deterministic",
+      "passed": true,
+      "metric": "determinism",
+      "detail": "0e6cc40480e272c868b1ff97206cd92442b27924cd15cf4ace91a3427316b4a8"
+    }
+  ],
+  "failures": [],
+  "hardGateFailures": [],
+  "compositeScoreActivation": "active only for structurally valid completed imported adjudications",
+  "semanticRecoveryImplemented": false,
+  "semanticCandidateGenerationImplemented": false,
+  "liveSemanticAdjudicatorImplemented": false,
+  "humanReviewExecuted": false,
+  "externalComparativeValidation002Executed": false,
+  "externalComparativeValidation002Authorized": false,
+  "phase3Authorized": true
+}

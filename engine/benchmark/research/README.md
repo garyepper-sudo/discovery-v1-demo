@@ -92,3 +92,25 @@ Localized nonlinear research: replicate
 ```
 
 No benchmark result may be represented as completed production work.
+
+### Organizational Understanding Evaluator 001 — Phases 1–2
+
+Path:
+
+```text
+../evaluator/organizational-understanding-evaluator-001/
+```
+
+Phase 1 defines architecture-neutral proposition, recovery, adjudication,
+confidence, scoring, ledger, and audit contracts plus frozen semantics and
+fail-closed ports. Phase 2 adds deterministic structural validation,
+confidence normalization, duplicate collapse with audit ancestry, frozen
+family/polarity/modality/temporal checks, graph integrity, one-to-one
+assignment, dimension scoring from explicitly imported adjudications, blocking
+gates, component-versioned ledgers, canonical serialization, and hashing.
+
+The frozen-fixture results do not establish semantic accuracy, outcome-based
+confidence calibration, or observed decision utility. Semantic recovery and
+adjudication remain unimplemented. Phase 3 candidate-generation research is
+authorized in parallel; External Comparative Validation 002 remains
+unauthorized.

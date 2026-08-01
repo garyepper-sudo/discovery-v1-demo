@@ -67,6 +67,13 @@ choices before revealing the shadow result, and observe only separately
 authorized outcomes that already occur. Do not optimize selector logic against
 the evaluation cases.
 
+Parallel benchmark research may begin Phase 3 candidate generation for the
+inactive Organizational Understanding Evaluator 001. Phase 2 proves only that
+complete authorized imported adjudications can be structurally validated and
+scored deterministically. It does not authorize semantic adjudication, human
+review, External Comparative Validation 002, Production integration, or a
+change to the Material Information Acquisition product priority.
+
 ## Prohibited shortcuts
 
 Do not reopen foundational architecture without benchmark or implementation evidence. Do not create duplicate persistence, organization identity, confidence, history, Recommendation, or Runtime owners. Do not infer authority from confidence. Do not silently default material Optimization Context. Do not wire the final frontend, deploy, modify Production/Atlas, or automate external action.

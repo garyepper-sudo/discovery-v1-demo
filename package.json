@@ -39,6 +39,8 @@
     "benchmark:explicit-authority-transitions": "tsx engine/benchmark/judgment-lab/explicitAuthorityTransitionsGate.ts",
     "benchmark:disclosure-eligibility-revocation": "tsx engine/benchmark/judgment-lab/disclosureEligibilityRevocationContractGate.ts",
     "benchmark:research:localized-nonlinear-adapter": "tsx engine/benchmark/research/localized-nonlinear-cognition-adapter/runLocalizedNonlinearResearchAdapter.ts",
+    "validate:organizational-understanding-evaluator-phase-1": "tsx engine/benchmark/evaluator/organizational-understanding-evaluator-001/validatePhase1Architecture.ts",
+    "validate:organizational-understanding-evaluator-phase-2": "tsx engine/benchmark/evaluator/organizational-understanding-evaluator-001/validatePhase2StructuralEvaluator.ts",
     "validate:executive-conversation": "tsx scripts/product/validateExecutiveConversationIntelligence.ts",
     "validate:organization-experience": "tsx scripts/product/validateOrganizationExperience.ts",
     "validate:organizational-understanding-projection-shadow": "tsx scripts/product/validateOrganizationalUnderstandingProjectionShadow.ts",

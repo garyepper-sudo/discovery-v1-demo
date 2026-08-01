@@ -1,0 +1,111 @@
+{
+  "validation": "organizational-understanding-evaluator-phase-1",
+  "classification": "PASS — Phase 1 architecture complete; evaluator inactive",
+  "evaluatorVersion": "oue-001-phase-1",
+  "checks": [
+    {
+      "name": "version frozen",
+      "passed": true,
+      "detail": "oue-001-phase-1"
+    },
+    {
+      "name": "critical components independently versioned",
+      "passed": true,
+      "detail": "{\"groundTruthPropositionSchema\":\"ground-truth-proposition-graph/v1\",\"recoverySchema\":\"recovered-proposition-graph/v1\",\"semanticAdjudicationRubric\":\"semantic-adjudication-rubric/v1\",\"confidenceNormalizationMap\":\"confidence-normalization/v1\",\"scoringWeights\":\"couu-scoring-decomposition/v1\",\"adjudicatorPrompt\":\"not-implemented\",\"adjudicatorModel\":\"not-implemented\",\"deterministicScorer\":\"not-implemented\",\"humanReviewProtocol\":\"blinded-human-review/v1\"}"
+    },
+    {
+      "name": "ten proposition families",
+      "passed": true,
+      "detail": "finding, condition, constraint, conclusion, prediction, contradiction, mechanism, uncertainty, evidence-gap, implication"
+    },
+    {
+      "name": "ten match classifications",
+      "passed": true,
+      "detail": "exact, equivalent, partial, overgeneralized, undergeneralized, contradictory, unsupported, irrelevant, ambiguous, missing"
+    },
+    {
+      "name": "confidence ranges bounded",
+      "passed": true,
+      "detail": "[{\"minimum\":0,\"maximum\":0.2},{\"minimum\":0.2,\"maximum\":0.4},{\"minimum\":0.4,\"maximum\":0.6},{\"minimum\":0.6,\"maximum\":0.8},{\"minimum\":0.8,\"maximum\":0.95},{\"minimum\":0.95,\"maximum\":1}]"
+    },
+    {
+      "name": "confidence range continuum",
+      "passed": true,
+      "detail": "0 through 1 without gaps"
+    },
+    {
+      "name": "scoring weights sum to one",
+      "passed": true,
+      "detail": "1"
+    },
+    {
+      "name": "scoring decomposed",
+      "passed": true,
+      "detail": "eight independently reportable components"
+    },
+    {
+      "name": "scoring semantics deeply frozen",
+      "passed": true,
+      "detail": "weights, formulas, and prohibited-credit rules immutable"
+    },
+    {
+      "name": "strict pre-comparative gates",
+      "passed": true,
+      "detail": "{\"semanticEquivalenceRecallMinimum\":0.95,\"semanticDistinctionPrecisionMinimum\":0.98,\"falseEquivalenceRateMaximum\":0.02,\"falseDistinctionRateMaximum\":0.05,\"duplicateScoreInflationMaximum\":0,\"orderingBiasMaximum\":0,\"formattingBiasMaximum\":0,\"treatmentIdentityLeakageMaximum\":0,\"organizationLeakageMaximum\":0,\"permissionLeakageMaximum\":0,\"humanConsensusAgreementMinimum\":0.9}"
+    },
+    {
+      "name": "ground truth frozen before treatment",
+      "passed": true,
+      "detail": "3c6db4ad1abfe238715862cfebdfc8389309f728a153d8e8463c5316cd7ee7d1"
+    },
+    {
+      "name": "fixture identity aligned",
+      "passed": true,
+      "detail": "evaluator-fixture-org/evaluator-fixture-case"
+    },
+    {
+      "name": "all proposition families fixture-covered",
+      "passed": true,
+      "detail": "10/10 families"
+    },
+    {
+      "name": "equivalence and distinction fixtures",
+      "passed": true,
+      "detail": "13 fixtures"
+    },
+    {
+      "name": "ambiguity requires human review",
+      "passed": true,
+      "detail": "all ambiguous fixtures routed to review"
+    },
+    {
+      "name": "duplicates retained without credit semantics",
+      "passed": true,
+      "detail": "[{\"canonicalRecoveredPropositionId\":\"recovered-finding-1\",\"duplicateCount\":2,\"duplicatedSurfaceForms\":[\"Approval ownership starts late.\",\"The approval owner is assigned after handoff.\"]}]"
+    },
+    {
+      "name": "missing adjudication fails closed",
+      "passed": true,
+      "detail": "required propositions cannot be scored without adjudications"
+    },
+    {
+      "name": "unresolved ambiguity fails closed",
+      "passed": true,
+      "detail": "ambiguous material adjudication cannot be scored"
+    },
+    {
+      "name": "unknown adjudication references fail closed",
+      "passed": true,
+      "detail": "unrecognized ground-truth or recovered references cannot be scored"
+    },
+    {
+      "name": "live implementations absent",
+      "passed": true,
+      "detail": "{\"propositionRecovery\":\"not-implemented\",\"semanticCandidateGeneration\":\"not-implemented\",\"liveSemanticAdjudication\":\"not-implemented\",\"deterministicScoring\":\"not-implemented\",\"comparativeExecution\":\"prohibited\"}"
+    }
+  ],
+  "failures": [],
+  "liveSemanticAdjudicatorImplemented": false,
+  "externalComparativeValidation002Executed": false,
+  "externalComparativeValidation002Authorized": false
+}

@@ -28,6 +28,18 @@ the Material Information Acquisition selector or beginning frontend wiring.
 
 Material Information Acquisition — Independent Live Outcome Calibration 002.
 
+In parallel, Organizational Understanding Evaluator 001 Phase 2 is classified
+**PASS — Deterministic structural evaluator validated**. It can transform
+complete, authorized, explicitly imported semantic adjudications into
+component-versioned, deterministic, auditable frozen-fixture scores. It cannot
+recover propositions, judge semantic meaning, verify imported judgments,
+calibrate confidence against outcomes, or measure observed decision utility.
+
+Only Phase 3 candidate-generation research is newly authorized. Semantic or
+human adjudication, External Comparative Validation 002, Runtime, Production,
+Scorecard, frontend, and route integration remain unauthorized. This parallel
+research does not displace the Material Information Acquisition product gate.
+
 ## Product identity
 
 Discovery is a governed organizational learning and intelligence system, not a chatbot, dashboard, document repository, generic autonomous agent, or executive-only product. Its persistent state is organizational understanding. Questions, Answers, confidence, Recommendations, Decisions, Outcomes, Learning, and Insights inspect, improve, test, or revise that state.

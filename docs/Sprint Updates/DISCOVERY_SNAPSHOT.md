@@ -57,3 +57,18 @@ Local OAuth credentials, connector state, development Runtime, Clerk state, and 
 1. Run Material Information Acquisition — Independent Live Outcome Calibration 002.
 2. Keep the selector frozen and hidden until independent human choices are persisted.
 3. Do not activate selection, execute connectors or external actions, generate Objective Recommendations, or begin final frontend wiring.
+
+## Parallel evaluator research
+
+Organizational Understanding Evaluator 001 Phase 1 freezes the inactive,
+architecture-neutral proposition, adjudication, scoring, ledger, and audit
+contracts. Phase 2 passes deterministic structural validation for complete,
+authorized, explicitly imported semantic adjudications. Component versions,
+duplicate ancestry, imported-rubric provenance, blocking gates, and canonical
+hashes are auditable.
+
+These are frozen-fixture structural results, not semantic accuracy,
+outcome-calibrated confidence, or observed decision utility. Phase 3
+candidate-generation research is authorized as a parallel benchmark track.
+Material Information Acquisition Independent Live Outcome Calibration 002
+remains the canonical product evidence gate and product priority.
