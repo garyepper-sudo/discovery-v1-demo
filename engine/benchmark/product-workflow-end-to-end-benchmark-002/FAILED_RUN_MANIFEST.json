@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1",
+  "classification": "B-R — HELD-OUT PROMOTION INCOMPLETE; ONE SENSITIVITY TEST INVALIDATED BY PERTURBATION DESIGN",
+  "baselineCommit": "dfe9905dff3e202d7138f1f0fdadbe63eed396c9",
+  "preregistrationPrecededExecution": true,
+  "expectedResultsModifiedAfterExecution": false,
+  "failedRunRerun": false,
+  "behavioralComparisons": { "passed": 10, "total": 10 },
+  "invarianceChecks": { "passed": 60, "total": 60 },
+  "sensitivityChecks": { "passed": 39, "total": 40 },
+  "hardSafetyFailures": 0,
+  "invalidatedScenario": {
+    "scenarioId": "holdout-06-context-depth",
+    "classification": "invalidated-held-out-scenario",
+    "check": "contradictory-outcome",
+    "baseline": "abstain:none:support-account,support-routing",
+    "perturbed": "abstain:none:support-account,support-routing",
+    "reason": "The perturbation did not materially discriminate the competing candidates and therefore could not validly test recommendation sensitivity."
+  },
+  "humanResponses": 0,
+  "llmArm": "not-executed",
+  "originalArtifactHashes": {
+    "HELD_OUT_PREREGISTRATION.md": "edd731eb409f1d27df630dfab528fca284d4bfa7dde2f820cf2dff5d9f04dd14",
+    "HELD_OUT_RESULTS.json": "97f69183afde491e06155e9a6cce0bc6a2b29c3f642576217b19c05670b9752a",
+    "HELD_OUT_ROBUSTNESS_MATRIX.json": "affa02b81c2478823dc3bf364011cc2fff679771cb204d1b0256ff87aff97b65",
+    "HELD_OUT_REPORT.md": "7c37fdc9e436596a27d17510cd55f58ad865d7f13ee987ba3686e73f898aa984",
+    "HELD_OUT_EXPERIENCE_PACKETS.md": "cce16182a81e629f06b79a570c0ac0bb941077c43b29726d1abf3a66ed743306",
+    "heldOutInputs.ts": "e87b89cd08687b6e488f4958e60c066a8fcb03d7d40e7bec32e304f65ad54722",
+    "heldOutExpectations.ts": "c697bc1c0fe6746f7812f112d58139f4a719c65e069fbe1cd7160e50935be7fb",
+    "runHeldOutBenchmark.ts": "53cfac12dbe19cd662b7450210ac8c822179bfc5dc150f7bb7dc609a30e242b5"
+  }
+}

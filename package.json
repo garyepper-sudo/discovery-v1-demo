@@ -152,6 +152,8 @@
     "validate:material-information-acquisition-candidate-outcome-readiness-001": "tsx scripts/product/validateMaterialInformationAcquisitionCandidateOutcomeReadiness001.ts",
     "validate:material-information-acquisition-calibration-protocol-gate-002": "tsx scripts/product/validateMaterialInformationAcquisitionCalibrationProtocolGate002.ts",
     "validate:product-workflow-end-to-end-benchmark-001": "tsx scripts/product/validateProductWorkflowEndToEndBenchmark001.ts",
+    "validate:product-workflow-end-to-end-benchmark-002": "tsx scripts/product/validateProductWorkflowEndToEndBenchmark002.ts",
+    "validate:product-workflow-end-to-end-benchmark-002-failed-run": "tsx scripts/product/validateProductWorkflowEndToEndBenchmark002FailedRun.ts",
     "validate:organizational-objective-discovery-001": "tsx engine/benchmark/research/organizational-objective-discovery-experiment-001/validate.ts",
     "validate:material-information-acquisition-001": "tsx engine/benchmark/research/material-information-acquisition-experiment-001/validate.ts",
     "validate:material-information-acquisition-calibration-001": "tsx engine/benchmark/research/material-information-acquisition-calibration-experiment-001/validate.ts",

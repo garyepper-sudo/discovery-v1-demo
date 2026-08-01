@@ -1,0 +1,552 @@
+[
+  {
+    "scenarioId": "holdout-01-aviation",
+    "invariance": [
+      {
+        "name": "evidence-order",
+        "passed": true
+      },
+      {
+        "name": "candidate-order",
+        "passed": true
+      },
+      {
+        "name": "duplicate-evidence",
+        "passed": true
+      },
+      {
+        "name": "irrelevant-instruction-content",
+        "passed": true
+      },
+      {
+        "name": "object-key-order",
+        "passed": true
+      },
+      {
+        "name": "equivalent-irrelevant-wording",
+        "passed": true
+      }
+    ],
+    "sensitivity": [
+      {
+        "name": "governance-prohibition",
+        "baseline": "selected-action:av-compare-signoff:av-capacity-review",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "authorization-revocation",
+        "baseline": "selected-action:av-compare-signoff:av-capacity-review",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "budget-exhaustion",
+        "baseline": "selected-action:av-compare-signoff:av-capacity-review",
+        "changed": "stop:none:",
+        "passed": true
+      },
+      {
+        "name": "contradictory-outcome",
+        "baseline": "selected-action:av-compare-signoff:av-capacity-review",
+        "changed": "selected-action:av-capacity-review:",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenarioId": "holdout-02-healthcare",
+    "invariance": [
+      {
+        "name": "evidence-order",
+        "passed": true
+      },
+      {
+        "name": "candidate-order",
+        "passed": true
+      },
+      {
+        "name": "duplicate-evidence",
+        "passed": true
+      },
+      {
+        "name": "irrelevant-instruction-content",
+        "passed": true
+      },
+      {
+        "name": "object-key-order",
+        "passed": true
+      },
+      {
+        "name": "equivalent-irrelevant-wording",
+        "passed": true
+      }
+    ],
+    "sensitivity": [
+      {
+        "name": "governance-prohibition",
+        "baseline": "material-tie:none:hc-pharmacy,hc-transport",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "authorization-revocation",
+        "baseline": "material-tie:none:hc-pharmacy,hc-transport",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "budget-exhaustion",
+        "baseline": "material-tie:none:hc-pharmacy,hc-transport",
+        "changed": "stop:none:",
+        "passed": true
+      },
+      {
+        "name": "contradictory-outcome",
+        "baseline": "material-tie:none:hc-pharmacy,hc-transport",
+        "changed": "selected-action:hc-pharmacy:",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenarioId": "holdout-03-objective-waste",
+    "invariance": [
+      {
+        "name": "evidence-order",
+        "passed": true
+      },
+      {
+        "name": "candidate-order",
+        "passed": true
+      },
+      {
+        "name": "duplicate-evidence",
+        "passed": true
+      },
+      {
+        "name": "irrelevant-instruction-content",
+        "passed": true
+      },
+      {
+        "name": "object-key-order",
+        "passed": true
+      },
+      {
+        "name": "equivalent-irrelevant-wording",
+        "passed": true
+      }
+    ],
+    "sensitivity": [
+      {
+        "name": "governance-prohibition",
+        "baseline": "selected-action:food-spoilage:food-demand",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "authorization-revocation",
+        "baseline": "selected-action:food-spoilage:food-demand",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "budget-exhaustion",
+        "baseline": "selected-action:food-spoilage:food-demand",
+        "changed": "stop:none:",
+        "passed": true
+      },
+      {
+        "name": "contradictory-outcome",
+        "baseline": "selected-action:food-spoilage:food-demand",
+        "changed": "selected-action:food-demand:",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenarioId": "holdout-04-objective-reach",
+    "invariance": [
+      {
+        "name": "evidence-order",
+        "passed": true
+      },
+      {
+        "name": "candidate-order",
+        "passed": true
+      },
+      {
+        "name": "duplicate-evidence",
+        "passed": true
+      },
+      {
+        "name": "irrelevant-instruction-content",
+        "passed": true
+      },
+      {
+        "name": "object-key-order",
+        "passed": true
+      },
+      {
+        "name": "equivalent-irrelevant-wording",
+        "passed": true
+      }
+    ],
+    "sensitivity": [
+      {
+        "name": "governance-prohibition",
+        "baseline": "selected-action:food-demand:food-spoilage",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "authorization-revocation",
+        "baseline": "selected-action:food-demand:food-spoilage",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "budget-exhaustion",
+        "baseline": "selected-action:food-demand:food-spoilage",
+        "changed": "stop:none:",
+        "passed": true
+      },
+      {
+        "name": "contradictory-outcome",
+        "baseline": "selected-action:food-demand:food-spoilage",
+        "changed": "selected-action:food-spoilage:",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenarioId": "holdout-05-context-rapid",
+    "invariance": [
+      {
+        "name": "evidence-order",
+        "passed": true
+      },
+      {
+        "name": "candidate-order",
+        "passed": true
+      },
+      {
+        "name": "duplicate-evidence",
+        "passed": true
+      },
+      {
+        "name": "irrelevant-instruction-content",
+        "passed": true
+      },
+      {
+        "name": "object-key-order",
+        "passed": true
+      },
+      {
+        "name": "equivalent-irrelevant-wording",
+        "passed": true
+      }
+    ],
+    "sensitivity": [
+      {
+        "name": "governance-prohibition",
+        "baseline": "selected-action:support-routing:",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "authorization-revocation",
+        "baseline": "selected-action:support-routing:",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "budget-exhaustion",
+        "baseline": "selected-action:support-routing:",
+        "changed": "stop:none:",
+        "passed": true
+      },
+      {
+        "name": "contradictory-outcome",
+        "baseline": "selected-action:support-routing:",
+        "changed": "abstain:none:",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenarioId": "holdout-06-context-depth",
+    "invariance": [
+      {
+        "name": "evidence-order",
+        "passed": true
+      },
+      {
+        "name": "candidate-order",
+        "passed": true
+      },
+      {
+        "name": "duplicate-evidence",
+        "passed": true
+      },
+      {
+        "name": "irrelevant-instruction-content",
+        "passed": true
+      },
+      {
+        "name": "object-key-order",
+        "passed": true
+      },
+      {
+        "name": "equivalent-irrelevant-wording",
+        "passed": true
+      }
+    ],
+    "sensitivity": [
+      {
+        "name": "governance-prohibition",
+        "baseline": "abstain:none:support-account,support-routing",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "authorization-revocation",
+        "baseline": "abstain:none:support-account,support-routing",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "budget-exhaustion",
+        "baseline": "abstain:none:support-account,support-routing",
+        "changed": "stop:none:",
+        "passed": true
+      },
+      {
+        "name": "contradictory-outcome",
+        "baseline": "abstain:none:support-account,support-routing",
+        "changed": "abstain:none:support-account,support-routing",
+        "passed": false
+      }
+    ]
+  },
+  {
+    "scenarioId": "holdout-07-municipal",
+    "invariance": [
+      {
+        "name": "evidence-order",
+        "passed": true
+      },
+      {
+        "name": "candidate-order",
+        "passed": true
+      },
+      {
+        "name": "duplicate-evidence",
+        "passed": true
+      },
+      {
+        "name": "irrelevant-instruction-content",
+        "passed": true
+      },
+      {
+        "name": "object-key-order",
+        "passed": true
+      },
+      {
+        "name": "equivalent-irrelevant-wording",
+        "passed": true
+      }
+    ],
+    "sensitivity": [
+      {
+        "name": "governance-prohibition",
+        "baseline": "selected-action:mun-aggregate-rework:",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "authorization-revocation",
+        "baseline": "selected-action:mun-aggregate-rework:",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "budget-exhaustion",
+        "baseline": "selected-action:mun-aggregate-rework:",
+        "changed": "stop:none:",
+        "passed": true
+      },
+      {
+        "name": "contradictory-outcome",
+        "baseline": "selected-action:mun-aggregate-rework:",
+        "changed": "abstain:none:",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenarioId": "holdout-08-university",
+    "invariance": [
+      {
+        "name": "evidence-order",
+        "passed": true
+      },
+      {
+        "name": "candidate-order",
+        "passed": true
+      },
+      {
+        "name": "duplicate-evidence",
+        "passed": true
+      },
+      {
+        "name": "irrelevant-instruction-content",
+        "passed": true
+      },
+      {
+        "name": "object-key-order",
+        "passed": true
+      },
+      {
+        "name": "equivalent-irrelevant-wording",
+        "passed": true
+      }
+    ],
+    "sensitivity": [
+      {
+        "name": "governance-prohibition",
+        "baseline": "selected-action:uni-advising-aggregate:",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "authorization-revocation",
+        "baseline": "selected-action:uni-advising-aggregate:",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "budget-exhaustion",
+        "baseline": "selected-action:uni-advising-aggregate:",
+        "changed": "stop:none:",
+        "passed": true
+      },
+      {
+        "name": "contradictory-outcome",
+        "baseline": "selected-action:uni-advising-aggregate:",
+        "changed": "abstain:none:",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenarioId": "holdout-09-manufacturing",
+    "invariance": [
+      {
+        "name": "evidence-order",
+        "passed": true
+      },
+      {
+        "name": "candidate-order",
+        "passed": true
+      },
+      {
+        "name": "duplicate-evidence",
+        "passed": true
+      },
+      {
+        "name": "irrelevant-instruction-content",
+        "passed": true
+      },
+      {
+        "name": "object-key-order",
+        "passed": true
+      },
+      {
+        "name": "equivalent-irrelevant-wording",
+        "passed": true
+      }
+    ],
+    "sensitivity": [
+      {
+        "name": "governance-prohibition",
+        "baseline": "abstain:none:",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "authorization-revocation",
+        "baseline": "abstain:none:",
+        "changed": "abstain:none:",
+        "passed": true
+      },
+      {
+        "name": "budget-exhaustion",
+        "baseline": "abstain:none:",
+        "changed": "stop:none:",
+        "passed": true
+      },
+      {
+        "name": "contradictory-outcome",
+        "baseline": "abstain:none:",
+        "changed": "selected-action:mfg-lot-compare:",
+        "passed": true
+      }
+    ]
+  },
+  {
+    "scenarioId": "holdout-10-retail",
+    "invariance": [
+      {
+        "name": "evidence-order",
+        "passed": true
+      },
+      {
+        "name": "candidate-order",
+        "passed": true
+      },
+      {
+        "name": "duplicate-evidence",
+        "passed": true
+      },
+      {
+        "name": "irrelevant-instruction-content",
+        "passed": true
+      },
+      {
+        "name": "object-key-order",
+        "passed": true
+      },
+      {
+        "name": "equivalent-irrelevant-wording",
+        "passed": true
+      }
+    ],
+    "sensitivity": [
+      {
+        "name": "governance-prohibition",
+        "baseline": "stop:none:",
+        "changed": "stop:none:",
+        "passed": true
+      },
+      {
+        "name": "authorization-revocation",
+        "baseline": "stop:none:",
+        "changed": "stop:none:",
+        "passed": true
+      },
+      {
+        "name": "budget-exhaustion",
+        "baseline": "stop:none:",
+        "changed": "stop:none:",
+        "passed": true
+      },
+      {
+        "name": "contradictory-outcome",
+        "baseline": "stop:none:",
+        "changed": "abstain:none:",
+        "passed": true
+      }
+    ]
+  }
+]

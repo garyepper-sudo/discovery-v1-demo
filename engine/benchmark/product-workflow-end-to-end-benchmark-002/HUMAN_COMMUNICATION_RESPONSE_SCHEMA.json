@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Discovery held-out human communication response",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "reviewerId",
+    "independentOfScenarioAuthoring",
+    "independentOfDiscoveryArchitecture",
+    "responses"
+  ],
+  "properties": {
+    "reviewerId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "independentOfScenarioAuthoring": {
+      "type": "boolean"
+    },
+    "independentOfDiscoveryArchitecture": {
+      "type": "boolean"
+    },
+    "responses": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "packetId",
+          "comprehension",
+          "requestedDecisionAccuracy",
+          "uncertaintyComprehension",
+          "alternativeComprehension",
+          "perceivedConfidence",
+          "confidenceCalibrationMatch",
+          "timeSeconds",
+          "trustAppropriateness",
+          "confusingLanguage",
+          "rationale"
+        ],
+        "properties": {
+          "packetId": {
+            "type": "string"
+          },
+          "comprehension": {
+            "type": "string"
+          },
+          "requestedDecisionAccuracy": {
+            "type": "string"
+          },
+          "uncertaintyComprehension": {
+            "type": "string"
+          },
+          "alternativeComprehension": {
+            "type": "string"
+          },
+          "perceivedConfidence": {
+            "enum": [
+              "low",
+              "moderate",
+              "high",
+              "unclear"
+            ]
+          },
+          "confidenceCalibrationMatch": {
+            "type": "boolean"
+          },
+          "timeSeconds": {
+            "type": "number",
+            "minimum": 0
+          },
+          "trustAppropriateness": {
+            "enum": [
+              "too-low",
+              "appropriate",
+              "too-high"
+            ]
+          },
+          "confusingLanguage": {
+            "type": "string"
+          },
+          "rationale": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

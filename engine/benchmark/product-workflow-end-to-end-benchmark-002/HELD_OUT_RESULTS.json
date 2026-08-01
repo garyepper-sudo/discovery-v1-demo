@@ -1,0 +1,2598 @@
+{
+  "benchmark": "discovery-product-workflow-end-to-end-benchmark-002",
+  "frozenBaseline": "dfe9905dff3e202d7138f1f0fdadbe63eed396c9",
+  "classification": "B-R — HELD-OUT RECOMMENDATION GENERALIZATION INSUFFICIENT",
+  "comparisons": [
+    {
+      "scenarioId": "holdout-01-aviation",
+      "expectationHash": "def30548a3dec5d3e90d14a414db5a9df5eb3cb8eb13561755746fc769e24a8d",
+      "expectedKind": "selected-action",
+      "actualKind": "selected-action",
+      "expectedCandidateId": "av-compare-signoff",
+      "actualCandidateId": "av-compare-signoff",
+      "passed": true
+    },
+    {
+      "scenarioId": "holdout-02-healthcare",
+      "expectationHash": "a575f11e200401f609a36b6f2aeeac1637008fde1aa1ac61f9bdd4dc6f2573ac",
+      "expectedKind": "material-tie",
+      "actualKind": "material-tie",
+      "expectedCandidateId": null,
+      "actualCandidateId": null,
+      "passed": true
+    },
+    {
+      "scenarioId": "holdout-03-objective-waste",
+      "expectationHash": "ac7813b7be38a4e7caabc915909db442fd009f3b6c56780a8ab622a62ef0e479",
+      "expectedKind": "selected-action",
+      "actualKind": "selected-action",
+      "expectedCandidateId": "food-spoilage",
+      "actualCandidateId": "food-spoilage",
+      "passed": true
+    },
+    {
+      "scenarioId": "holdout-04-objective-reach",
+      "expectationHash": "71dc7f1f008526ac6b8804e9d3f1949c07ba0b64faa11993b00c7c7bd26686da",
+      "expectedKind": "selected-action",
+      "actualKind": "selected-action",
+      "expectedCandidateId": "food-demand",
+      "actualCandidateId": "food-demand",
+      "passed": true
+    },
+    {
+      "scenarioId": "holdout-05-context-rapid",
+      "expectationHash": "49039b0789e4a7f23b2be39e3be39b96c0adbf93c9dd25a4fc1440169fbbc1af",
+      "expectedKind": "selected-action",
+      "actualKind": "selected-action",
+      "expectedCandidateId": "support-routing",
+      "actualCandidateId": "support-routing",
+      "passed": true
+    },
+    {
+      "scenarioId": "holdout-06-context-depth",
+      "expectationHash": "f57f2ecd2b35b2c46fafcf8a59a116b68ff0a724adc4d126191c57d182893e45",
+      "expectedKind": "abstain",
+      "actualKind": "abstain",
+      "expectedCandidateId": null,
+      "actualCandidateId": null,
+      "passed": true
+    },
+    {
+      "scenarioId": "holdout-07-municipal",
+      "expectationHash": "f78ee0c139535876f996704c90f6081f01baa66ed9b4369ca5c5e4e551ce26ca",
+      "expectedKind": "selected-action",
+      "actualKind": "selected-action",
+      "expectedCandidateId": "mun-aggregate-rework",
+      "actualCandidateId": "mun-aggregate-rework",
+      "passed": true
+    },
+    {
+      "scenarioId": "holdout-08-university",
+      "expectationHash": "0e42d35c2304645b489be583491ca8e15d0d1bb62f2b2ebd4e1c338119c0fe46",
+      "expectedKind": "selected-action",
+      "actualKind": "selected-action",
+      "expectedCandidateId": "uni-advising-aggregate",
+      "actualCandidateId": "uni-advising-aggregate",
+      "passed": true
+    },
+    {
+      "scenarioId": "holdout-09-manufacturing",
+      "expectationHash": "7a09387a0a3c113af6d61ed73dfecfbcc5f908271fe78ae3e12cb33338c05eda",
+      "expectedKind": "abstain",
+      "actualKind": "abstain",
+      "expectedCandidateId": null,
+      "actualCandidateId": null,
+      "passed": true
+    },
+    {
+      "scenarioId": "holdout-10-retail",
+      "expectationHash": "69f1fe3c119fc4af7ee6142bfe742076b399147ae65da5ebe511c2c845701311",
+      "expectedKind": "stop",
+      "actualKind": "stop",
+      "expectedCandidateId": null,
+      "actualCandidateId": null,
+      "passed": true
+    }
+  ],
+  "executions": [
+    {
+      "scenarioId": "holdout-01-aviation",
+      "inputHash": "9e867650d2c99a24976b9f71657aba95865ff2d63fa146f9b7e6305f4c5b40f2",
+      "status": "untouched-controlled-holdout",
+      "coverage": [
+        "dominant-mechanism",
+        "contradictory-outcome"
+      ],
+      "questionReloaded": true,
+      "selection": {
+        "kind": "selected-action",
+        "selectionId": "material-acquisition-shadow-selection-bb97bc8f74f1657e",
+        "selected": {
+          "candidateId": "av-compare-signoff",
+          "actionType": "compare-existing-evidence",
+          "actionOwnerRef": "held-out-owner:compare-existing-evidence",
+          "target": {
+            "kind": "controlled-held-out-information",
+            "targetRef": "target:av-compare-signoff",
+            "organizationId": "holdout-aviation-001"
+          },
+          "uncertaintyRef": "hu-aviation:v1",
+          "materialEffectTargets": [
+            "unknown",
+            "answer"
+          ],
+          "eligibility": {
+            "ownerAvailable": true,
+            "targetAccessible": true,
+            "executionAvailable": true,
+            "authorizationSatisfied": true,
+            "governanceAllowed": true,
+            "consentState": "not-required",
+            "reasonCodes": [
+              "material-effect-confirmed"
+            ]
+          },
+          "expectedInformationContribution": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedOrganizationalRelevance": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedDiscriminationGain": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "burden": {
+            "state": "available",
+            "value": "low",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "cost": {
+            "state": "available",
+            "value": "none",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "delay": {
+            "state": "available",
+            "value": "immediate",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reliability": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "existingEvidenceQuality": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reversibility": {
+            "state": "available",
+            "value": "reversible",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved.",
+          "expectedEvidenceLineage": {
+            "sourceKind": "controlled-held-out",
+            "sourceScopeRef": "scope:av-compare-signoff",
+            "admissionRequired": true
+          }
+        },
+        "alternatives": [
+          {
+            "candidateId": "av-capacity-review",
+            "actionType": "compare-existing-evidence",
+            "actionOwnerRef": "held-out-owner:compare-existing-evidence",
+            "target": {
+              "kind": "controlled-held-out-information",
+              "targetRef": "target:av-capacity-review",
+              "organizationId": "holdout-aviation-001"
+            },
+            "uncertaintyRef": "hu-aviation:v1",
+            "materialEffectTargets": [
+              "unknown",
+              "answer"
+            ],
+            "eligibility": {
+              "ownerAvailable": true,
+              "targetAccessible": true,
+              "executionAvailable": true,
+              "authorizationSatisfied": true,
+              "governanceAllowed": true,
+              "consentState": "not-required",
+              "reasonCodes": [
+                "material-effect-confirmed"
+              ]
+            },
+            "expectedInformationContribution": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "expectedOrganizationalRelevance": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "expectedDiscriminationGain": {
+              "state": "available",
+              "value": "low",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "burden": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "cost": {
+              "state": "available",
+              "value": "low",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "delay": {
+              "state": "available",
+              "value": "short",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "reliability": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "existingEvidenceQuality": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "reversibility": {
+              "state": "available",
+              "value": "reversible",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved.",
+            "expectedEvidenceLineage": {
+              "sourceKind": "controlled-held-out",
+              "sourceScopeRef": "scope:av-capacity-review",
+              "admissionRequired": true
+            }
+          }
+        ],
+        "explanation": {
+          "uncertaintyRef": "hu-aviation:v1",
+          "rationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+          "alternativeCandidateIds": [
+            "av-capacity-review"
+          ],
+          "limitations": [
+            "Shadow-only projection; no action was initiated."
+          ],
+          "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+        }
+      },
+      "brief": {
+        "contractVersion": "benchmark-1",
+        "scenarioId": "holdout-01-aviation",
+        "audience": "authorized-organizational-leader",
+        "question": "Why are aircraft returning to service late after routine inspections?",
+        "directAnswer": "Late independent sign-off, not mechanic capacity, is the leading supported constraint.",
+        "currentUnderstanding": "Late independent sign-off, not mechanic capacity, is the leading supported constraint.",
+        "claimIds": [
+          "av-e1",
+          "av-e2"
+        ],
+        "evidenceRefs": [
+          "av-e1",
+          "av-e2"
+        ],
+        "objective": "objective-aviation:v1: Improve return-to-service reliability without weakening safety controls.",
+        "optimizationContext": "context-aviation:v1: Prefer existing-record comparison before operational change.",
+        "disposition": "selected-action",
+        "recommendedOption": "av-compare-signoff",
+        "alternatives": [
+          "av-capacity-review"
+        ],
+        "candidateMaterialFields": [
+          {
+            "candidateId": "av-capacity-review",
+            "burden": "moderate",
+            "cost": "low",
+            "delay": "short",
+            "reliability": "moderate",
+            "reversibility": "reversible",
+            "governanceAllowed": true,
+            "authorizationSatisfied": true,
+            "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+          },
+          {
+            "candidateId": "av-compare-signoff",
+            "burden": "low",
+            "cost": "none",
+            "delay": "immediate",
+            "reliability": "high",
+            "reversibility": "reversible",
+            "governanceAllowed": true,
+            "authorizationSatisfied": true,
+            "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+          }
+        ],
+        "mechanismRationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+        "contradictions": [
+          "av-e2: Wrench-time capacity stayed below the staffed ceiling."
+        ],
+        "uncertainty": "Night-shift cases remain thinly observed.",
+        "risksAndLimitations": [
+          "Night-shift coverage is limited.",
+          "Shadow-only projection; no action was initiated."
+        ],
+        "requestedUserDecision": "Decide whether to authorize av-compare-signoff; authorization does not execute it.",
+        "whatWouldChangeTheRecommendation": "Stop when the exact held-out uncertainty is materially resolved.",
+        "unavailable": [
+          "Outcome-calibrated operation value is unavailable."
+        ],
+        "withheld": [
+          "withheld"
+        ],
+        "requiredDisclosures": [
+          "Controlled benchmark only.",
+          "No action was initiated.",
+          "Ordinal estimates are not calibrated probabilities."
+        ],
+        "prohibitedClaims": [
+          "Dispatch without required sign-off."
+        ],
+        "desiredLength": "one-page-progressive-disclosure",
+        "digest": "38fd800767e17de79b075f6665a70fe2fa7979739c82a925368ec59ddb5e724f"
+      },
+      "presentation": "# Direct answer\nLate independent sign-off, not mechanic capacity, is the leading supported constraint.\n\n## Why it matters\nLate independent sign-off, not mechanic capacity, is the leading supported constraint.\n\n## Recommendation\nDisposition: selected-action. Recommended information action: av-compare-signoff.\n\n## Rationale\nOne eligible candidate materially dominates without converting the comparison into a scalar score.\n\n## Alternatives\nav-capacity-review\n\n## Uncertainty and limitations\nNight-shift cases remain thinly observed.\nav-e2: Wrench-time capacity stayed below the staffed ceiling.\nNight-shift coverage is limited.\nShadow-only projection; no action was initiated.\nControlled benchmark only.\nNo action was initiated.\nOrdinal estimates are not calibrated probabilities.\n\n## What would change Discovery’s view\nStop when the exact held-out uncertainty is materially resolved.\n\n## Requested user decision\nDecide whether to authorize av-compare-signoff; authorization does not execute it.\n\n## Audit detail\nQuestion: Why are aircraft returning to service late after routine inspections?\nObjective: objective-aviation:v1: Improve return-to-service reliability without weakening safety controls.\nOptimization Context: context-aviation:v1: Prefer existing-record comparison before operational change.\nEvidence: av-e1, av-e2\nCandidate material fields: av-capacity-review [burden=moderate; cost=low; delay=short; reliability=moderate; reversibility=reversible; governance=true; authorization=true; stop=Stop when the exact held-out uncertainty is materially resolved.] | av-compare-signoff [burden=low; cost=none; delay=immediate; reliability=high; reversibility=reversible; governance=true; authorization=true; stop=Stop when the exact held-out uncertainty is materially resolved.]\nUnavailable: Outcome-calibrated operation value is unavailable.\nWithheld: withheld\nBrief digest: 38fd800767e17de79b075f6665a70fe2fa7979739c82a925368ec59ddb5e724f",
+      "claimFidelity": {
+        "passed": true,
+        "unsupportedClaims": [],
+        "withheldValuesExposed": false
+      },
+      "invariance": [
+        {
+          "name": "evidence-order",
+          "passed": true
+        },
+        {
+          "name": "candidate-order",
+          "passed": true
+        },
+        {
+          "name": "duplicate-evidence",
+          "passed": true
+        },
+        {
+          "name": "irrelevant-instruction-content",
+          "passed": true
+        },
+        {
+          "name": "object-key-order",
+          "passed": true
+        },
+        {
+          "name": "equivalent-irrelevant-wording",
+          "passed": true
+        }
+      ],
+      "sensitivity": [
+        {
+          "name": "governance-prohibition",
+          "baseline": "selected-action:av-compare-signoff:av-capacity-review",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "authorization-revocation",
+          "baseline": "selected-action:av-compare-signoff:av-capacity-review",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "budget-exhaustion",
+          "baseline": "selected-action:av-compare-signoff:av-capacity-review",
+          "changed": "stop:none:",
+          "passed": true
+        },
+        {
+          "name": "contradictory-outcome",
+          "baseline": "selected-action:av-compare-signoff:av-capacity-review",
+          "changed": "selected-action:av-capacity-review:",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "scenarioId": "holdout-02-healthcare",
+      "inputHash": "e4bd3502c0d91aa5d39b90e568701c82969956a4b38806b7c5c5c8ef7b9b7412",
+      "status": "untouched-controlled-holdout",
+      "coverage": [
+        "competing-explanations"
+      ],
+      "questionReloaded": true,
+      "selection": {
+        "kind": "material-tie",
+        "selectionId": "material-acquisition-shadow-selection-03edba900ffd6310",
+        "candidates": [
+          {
+            "candidateId": "hc-pharmacy",
+            "actionType": "compare-existing-evidence",
+            "actionOwnerRef": "held-out-owner:compare-existing-evidence",
+            "target": {
+              "kind": "controlled-held-out-information",
+              "targetRef": "target:hc-pharmacy",
+              "organizationId": "holdout-healthcare-002"
+            },
+            "uncertaintyRef": "hu-healthcare:v1",
+            "materialEffectTargets": [
+              "unknown",
+              "answer"
+            ],
+            "eligibility": {
+              "ownerAvailable": true,
+              "targetAccessible": true,
+              "executionAvailable": true,
+              "authorizationSatisfied": true,
+              "governanceAllowed": true,
+              "consentState": "not-required",
+              "reasonCodes": [
+                "material-effect-confirmed"
+              ]
+            },
+            "expectedInformationContribution": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "expectedOrganizationalRelevance": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "expectedDiscriminationGain": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "burden": {
+              "state": "available",
+              "value": "low",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "cost": {
+              "state": "available",
+              "value": "none",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "delay": {
+              "state": "available",
+              "value": "short",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "reliability": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "existingEvidenceQuality": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "reversibility": {
+              "state": "available",
+              "value": "reversible",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved.",
+            "expectedEvidenceLineage": {
+              "sourceKind": "controlled-held-out",
+              "sourceScopeRef": "scope:hc-pharmacy",
+              "admissionRequired": true
+            }
+          },
+          {
+            "candidateId": "hc-transport",
+            "actionType": "compare-existing-evidence",
+            "actionOwnerRef": "held-out-owner:compare-existing-evidence",
+            "target": {
+              "kind": "controlled-held-out-information",
+              "targetRef": "target:hc-transport",
+              "organizationId": "holdout-healthcare-002"
+            },
+            "uncertaintyRef": "hu-healthcare:v1",
+            "materialEffectTargets": [
+              "unknown",
+              "answer"
+            ],
+            "eligibility": {
+              "ownerAvailable": true,
+              "targetAccessible": true,
+              "executionAvailable": true,
+              "authorizationSatisfied": true,
+              "governanceAllowed": true,
+              "consentState": "not-required",
+              "reasonCodes": [
+                "material-effect-confirmed"
+              ]
+            },
+            "expectedInformationContribution": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "expectedOrganizationalRelevance": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "expectedDiscriminationGain": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "burden": {
+              "state": "available",
+              "value": "low",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "cost": {
+              "state": "available",
+              "value": "none",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "delay": {
+              "state": "available",
+              "value": "short",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "reliability": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "existingEvidenceQuality": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "reversibility": {
+              "state": "available",
+              "value": "reversible",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved.",
+            "expectedEvidenceLineage": {
+              "sourceKind": "controlled-held-out",
+              "sourceScopeRef": "scope:hc-transport",
+              "admissionRequired": true
+            }
+          }
+        ],
+        "discriminatingQuestion": "Which governed constraint should decide between these equally supported actions?",
+        "explanation": {
+          "uncertaintyRef": "hu-healthcare:v1",
+          "rationale": "The candidates remain materially tied; identifier and input order did not choose a winner.",
+          "alternativeCandidateIds": [
+            "hc-pharmacy",
+            "hc-transport"
+          ],
+          "limitations": [
+            "Shadow-only projection; no action was initiated."
+          ],
+          "stoppingCondition": null
+        }
+      },
+      "brief": {
+        "contractVersion": "benchmark-1",
+        "scenarioId": "holdout-02-healthcare",
+        "audience": "authorized-organizational-leader",
+        "question": "Why do medically cleared patients remain in beds after noon?",
+        "directAnswer": "Discovery does not yet have a supported answer to “Why do medically cleared patients remain in beds after noon?”",
+        "currentUnderstanding": "The authorized observations do not discriminate between transport and pharmacy completion.",
+        "claimIds": [
+          "hc-e1",
+          "hc-e2"
+        ],
+        "evidenceRefs": [
+          "hc-e1",
+          "hc-e2"
+        ],
+        "objective": "objective-healthcare:v1: Reduce discharge delay without compromising medication safety.",
+        "optimizationContext": "context-healthcare:v1: Require direct discrimination and preserve patient privacy.",
+        "disposition": "material-tie",
+        "recommendedOption": null,
+        "alternatives": [
+          "hc-pharmacy",
+          "hc-transport"
+        ],
+        "candidateMaterialFields": [
+          {
+            "candidateId": "hc-pharmacy",
+            "burden": "low",
+            "cost": "none",
+            "delay": "short",
+            "reliability": "moderate",
+            "reversibility": "reversible",
+            "governanceAllowed": true,
+            "authorizationSatisfied": true,
+            "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+          },
+          {
+            "candidateId": "hc-transport",
+            "burden": "low",
+            "cost": "none",
+            "delay": "short",
+            "reliability": "moderate",
+            "reversibility": "reversible",
+            "governanceAllowed": true,
+            "authorizationSatisfied": true,
+            "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+          }
+        ],
+        "mechanismRationale": "The candidates remain materially tied; identifier and input order did not choose a winner.",
+        "contradictions": [
+          "hc-e2: Medication completion was late in a different subset."
+        ],
+        "uncertainty": "The authorized observations do not discriminate between transport and pharmacy completion.",
+        "risksAndLimitations": [
+          "Case-mix distribution remains unavailable.",
+          "Shadow-only projection; no action was initiated."
+        ],
+        "requestedUserDecision": "Review the preserved alternatives or decline further information acquisition.",
+        "whatWouldChangeTheRecommendation": "Material Evidence, Objective, Context, governance, authorization, or observed Outcome change.",
+        "unavailable": [
+          "Outcome-calibrated operation value is unavailable."
+        ],
+        "withheld": [
+          "withheld"
+        ],
+        "requiredDisclosures": [
+          "Controlled benchmark only.",
+          "No action was initiated.",
+          "Ordinal estimates are not calibrated probabilities."
+        ],
+        "prohibitedClaims": [
+          "Treat transport as the proven sole cause."
+        ],
+        "desiredLength": "one-page-progressive-disclosure",
+        "digest": "4707a4513cf4db9cc59eaae610e00cedf800386f96e14e8cf7bd2e9dc0f10031"
+      },
+      "presentation": "# Direct answer\nDiscovery does not yet have a supported answer to “Why do medically cleared patients remain in beds after noon?”\n\n## Why it matters\nThe authorized observations do not discriminate between transport and pharmacy completion.\n\n## Recommendation\nDisposition: material-tie. No single option is presented as superior.\n\n## Rationale\nThe candidates remain materially tied; identifier and input order did not choose a winner.\n\n## Alternatives\nhc-pharmacy\nhc-transport\n\n## Uncertainty and limitations\nThe authorized observations do not discriminate between transport and pharmacy completion.\nhc-e2: Medication completion was late in a different subset.\nCase-mix distribution remains unavailable.\nShadow-only projection; no action was initiated.\nControlled benchmark only.\nNo action was initiated.\nOrdinal estimates are not calibrated probabilities.\n\n## What would change Discovery’s view\nMaterial Evidence, Objective, Context, governance, authorization, or observed Outcome change.\n\n## Requested user decision\nReview the preserved alternatives or decline further information acquisition.\n\n## Audit detail\nQuestion: Why do medically cleared patients remain in beds after noon?\nObjective: objective-healthcare:v1: Reduce discharge delay without compromising medication safety.\nOptimization Context: context-healthcare:v1: Require direct discrimination and preserve patient privacy.\nEvidence: hc-e1, hc-e2\nCandidate material fields: hc-pharmacy [burden=low; cost=none; delay=short; reliability=moderate; reversibility=reversible; governance=true; authorization=true; stop=Stop when the exact held-out uncertainty is materially resolved.] | hc-transport [burden=low; cost=none; delay=short; reliability=moderate; reversibility=reversible; governance=true; authorization=true; stop=Stop when the exact held-out uncertainty is materially resolved.]\nUnavailable: Outcome-calibrated operation value is unavailable.\nWithheld: withheld\nBrief digest: 4707a4513cf4db9cc59eaae610e00cedf800386f96e14e8cf7bd2e9dc0f10031",
+      "claimFidelity": {
+        "passed": true,
+        "unsupportedClaims": [],
+        "withheldValuesExposed": false
+      },
+      "invariance": [
+        {
+          "name": "evidence-order",
+          "passed": true
+        },
+        {
+          "name": "candidate-order",
+          "passed": true
+        },
+        {
+          "name": "duplicate-evidence",
+          "passed": true
+        },
+        {
+          "name": "irrelevant-instruction-content",
+          "passed": true
+        },
+        {
+          "name": "object-key-order",
+          "passed": true
+        },
+        {
+          "name": "equivalent-irrelevant-wording",
+          "passed": true
+        }
+      ],
+      "sensitivity": [
+        {
+          "name": "governance-prohibition",
+          "baseline": "material-tie:none:hc-pharmacy,hc-transport",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "authorization-revocation",
+          "baseline": "material-tie:none:hc-pharmacy,hc-transport",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "budget-exhaustion",
+          "baseline": "material-tie:none:hc-pharmacy,hc-transport",
+          "changed": "stop:none:",
+          "passed": true
+        },
+        {
+          "name": "contradictory-outcome",
+          "baseline": "material-tie:none:hc-pharmacy,hc-transport",
+          "changed": "selected-action:hc-pharmacy:",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "scenarioId": "holdout-03-objective-waste",
+      "inputHash": "75a7268cf5697f116d0f83a682cf31ff52f01bc2c1c0dc24ec00e24a8e2caee3",
+      "status": "untouched-controlled-holdout",
+      "coverage": [
+        "objective-reversal"
+      ],
+      "questionReloaded": true,
+      "selection": {
+        "kind": "selected-action",
+        "selectionId": "material-acquisition-shadow-selection-74438394fafde05f",
+        "selected": {
+          "candidateId": "food-spoilage",
+          "actionType": "compare-existing-evidence",
+          "actionOwnerRef": "held-out-owner:compare-existing-evidence",
+          "target": {
+            "kind": "controlled-held-out-information",
+            "targetRef": "target:food-spoilage",
+            "organizationId": "holdout-food-003"
+          },
+          "uncertaintyRef": "heldout-unknown-food:v1",
+          "materialEffectTargets": [
+            "unknown",
+            "answer"
+          ],
+          "eligibility": {
+            "ownerAvailable": true,
+            "targetAccessible": true,
+            "executionAvailable": true,
+            "authorizationSatisfied": true,
+            "governanceAllowed": true,
+            "consentState": "not-required",
+            "reasonCodes": [
+              "material-effect-confirmed"
+            ]
+          },
+          "expectedInformationContribution": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedOrganizationalRelevance": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedDiscriminationGain": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "burden": {
+            "state": "available",
+            "value": "low",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "cost": {
+            "state": "available",
+            "value": "none",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "delay": {
+            "state": "available",
+            "value": "immediate",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reliability": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "existingEvidenceQuality": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reversibility": {
+            "state": "available",
+            "value": "reversible",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved.",
+          "expectedEvidenceLineage": {
+            "sourceKind": "controlled-held-out",
+            "sourceScopeRef": "scope:food-spoilage",
+            "admissionRequired": true
+          }
+        },
+        "alternatives": [
+          {
+            "candidateId": "food-demand",
+            "actionType": "compare-existing-evidence",
+            "actionOwnerRef": "held-out-owner:compare-existing-evidence",
+            "target": {
+              "kind": "controlled-held-out-information",
+              "targetRef": "target:food-demand",
+              "organizationId": "holdout-food-003"
+            },
+            "uncertaintyRef": "heldout-unknown-food:v1",
+            "materialEffectTargets": [
+              "unknown",
+              "answer"
+            ],
+            "eligibility": {
+              "ownerAvailable": true,
+              "targetAccessible": true,
+              "executionAvailable": true,
+              "authorizationSatisfied": true,
+              "governanceAllowed": true,
+              "consentState": "not-required",
+              "reasonCodes": [
+                "material-effect-confirmed"
+              ]
+            },
+            "expectedInformationContribution": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "expectedOrganizationalRelevance": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "expectedDiscriminationGain": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "burden": {
+              "state": "available",
+              "value": "low",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "cost": {
+              "state": "available",
+              "value": "none",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "delay": {
+              "state": "available",
+              "value": "immediate",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "reliability": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "existingEvidenceQuality": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "reversibility": {
+              "state": "available",
+              "value": "reversible",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved.",
+            "expectedEvidenceLineage": {
+              "sourceKind": "controlled-held-out",
+              "sourceScopeRef": "scope:food-demand",
+              "admissionRequired": true
+            }
+          }
+        ],
+        "explanation": {
+          "uncertaintyRef": "heldout-unknown-food:v1",
+          "rationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+          "alternativeCandidateIds": [
+            "food-demand"
+          ],
+          "limitations": [
+            "Shadow-only projection; no action was initiated."
+          ],
+          "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+        }
+      },
+      "brief": {
+        "contractVersion": "benchmark-1",
+        "scenarioId": "holdout-03-objective-waste",
+        "audience": "authorized-organizational-leader",
+        "question": "Which information should guide the food network's next operating choice?",
+        "directAnswer": "Both spoilage and neighborhood demand mismatch constrain useful distribution.",
+        "currentUnderstanding": "Both spoilage and neighborhood demand mismatch constrain useful distribution.",
+        "claimIds": [
+          "food-e1",
+          "food-e2"
+        ],
+        "evidenceRefs": [
+          "food-e1",
+          "food-e2"
+        ],
+        "objective": "objective-food-waste:v1: Reduce avoidable food loss this quarter.",
+        "optimizationContext": "context-food-waste:v1: Use low-cost existing records within two weeks.",
+        "disposition": "selected-action",
+        "recommendedOption": "food-spoilage",
+        "alternatives": [
+          "food-demand"
+        ],
+        "candidateMaterialFields": [
+          {
+            "candidateId": "food-demand",
+            "burden": "low",
+            "cost": "none",
+            "delay": "immediate",
+            "reliability": "high",
+            "reversibility": "reversible",
+            "governanceAllowed": true,
+            "authorizationSatisfied": true,
+            "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+          },
+          {
+            "candidateId": "food-spoilage",
+            "burden": "low",
+            "cost": "none",
+            "delay": "immediate",
+            "reliability": "high",
+            "reversibility": "reversible",
+            "governanceAllowed": true,
+            "authorizationSatisfied": true,
+            "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+          }
+        ],
+        "mechanismRationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+        "contradictions": [],
+        "uncertainty": "Their relative importance depends on the authorized Objective.",
+        "risksAndLimitations": [
+          "Neither mechanism is globally dominant.",
+          "Shadow-only projection; no action was initiated."
+        ],
+        "requestedUserDecision": "Decide whether to authorize food-spoilage; authorization does not execute it.",
+        "whatWouldChangeTheRecommendation": "Stop when the exact held-out uncertainty is materially resolved.",
+        "unavailable": [
+          "Outcome-calibrated operation value is unavailable."
+        ],
+        "withheld": [],
+        "requiredDisclosures": [
+          "Controlled benchmark only.",
+          "No action was initiated.",
+          "Ordinal estimates are not calibrated probabilities."
+        ],
+        "prohibitedClaims": [
+          "Treat an Objective as evidence."
+        ],
+        "desiredLength": "one-page-progressive-disclosure",
+        "digest": "e186f58324fbff6fb9b75dacc41ae23b0707870c66637d7479d10a4361149743"
+      },
+      "presentation": "# Direct answer\nBoth spoilage and neighborhood demand mismatch constrain useful distribution.\n\n## Why it matters\nBoth spoilage and neighborhood demand mismatch constrain useful distribution.\n\n## Recommendation\nDisposition: selected-action. Recommended information action: food-spoilage.\n\n## Rationale\nOne eligible candidate materially dominates without converting the comparison into a scalar score.\n\n## Alternatives\nfood-demand\n\n## Uncertainty and limitations\nTheir relative importance depends on the authorized Objective.\nNeither mechanism is globally dominant.\nShadow-only projection; no action was initiated.\nControlled benchmark only.\nNo action was initiated.\nOrdinal estimates are not calibrated probabilities.\n\n## What would change Discovery’s view\nStop when the exact held-out uncertainty is materially resolved.\n\n## Requested user decision\nDecide whether to authorize food-spoilage; authorization does not execute it.\n\n## Audit detail\nQuestion: Which information should guide the food network's next operating choice?\nObjective: objective-food-waste:v1: Reduce avoidable food loss this quarter.\nOptimization Context: context-food-waste:v1: Use low-cost existing records within two weeks.\nEvidence: food-e1, food-e2\nCandidate material fields: food-demand [burden=low; cost=none; delay=immediate; reliability=high; reversibility=reversible; governance=true; authorization=true; stop=Stop when the exact held-out uncertainty is materially resolved.] | food-spoilage [burden=low; cost=none; delay=immediate; reliability=high; reversibility=reversible; governance=true; authorization=true; stop=Stop when the exact held-out uncertainty is materially resolved.]\nUnavailable: Outcome-calibrated operation value is unavailable.\nWithheld: none\nBrief digest: e186f58324fbff6fb9b75dacc41ae23b0707870c66637d7479d10a4361149743",
+      "claimFidelity": {
+        "passed": true,
+        "unsupportedClaims": [],
+        "withheldValuesExposed": false
+      },
+      "invariance": [
+        {
+          "name": "evidence-order",
+          "passed": true
+        },
+        {
+          "name": "candidate-order",
+          "passed": true
+        },
+        {
+          "name": "duplicate-evidence",
+          "passed": true
+        },
+        {
+          "name": "irrelevant-instruction-content",
+          "passed": true
+        },
+        {
+          "name": "object-key-order",
+          "passed": true
+        },
+        {
+          "name": "equivalent-irrelevant-wording",
+          "passed": true
+        }
+      ],
+      "sensitivity": [
+        {
+          "name": "governance-prohibition",
+          "baseline": "selected-action:food-spoilage:food-demand",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "authorization-revocation",
+          "baseline": "selected-action:food-spoilage:food-demand",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "budget-exhaustion",
+          "baseline": "selected-action:food-spoilage:food-demand",
+          "changed": "stop:none:",
+          "passed": true
+        },
+        {
+          "name": "contradictory-outcome",
+          "baseline": "selected-action:food-spoilage:food-demand",
+          "changed": "selected-action:food-demand:",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "scenarioId": "holdout-04-objective-reach",
+      "inputHash": "1365b8822b6a7e52d45d6444b00657405e848e47799e84518f40314b71eb430c",
+      "status": "untouched-controlled-holdout",
+      "coverage": [
+        "objective-reversal"
+      ],
+      "questionReloaded": true,
+      "selection": {
+        "kind": "selected-action",
+        "selectionId": "material-acquisition-shadow-selection-44cf461b6203b304",
+        "selected": {
+          "candidateId": "food-demand",
+          "actionType": "compare-existing-evidence",
+          "actionOwnerRef": "held-out-owner:compare-existing-evidence",
+          "target": {
+            "kind": "controlled-held-out-information",
+            "targetRef": "target:food-demand",
+            "organizationId": "holdout-food-003"
+          },
+          "uncertaintyRef": "heldout-unknown-food:v1",
+          "materialEffectTargets": [
+            "unknown",
+            "answer"
+          ],
+          "eligibility": {
+            "ownerAvailable": true,
+            "targetAccessible": true,
+            "executionAvailable": true,
+            "authorizationSatisfied": true,
+            "governanceAllowed": true,
+            "consentState": "not-required",
+            "reasonCodes": [
+              "material-effect-confirmed"
+            ]
+          },
+          "expectedInformationContribution": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedOrganizationalRelevance": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedDiscriminationGain": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "burden": {
+            "state": "available",
+            "value": "low",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "cost": {
+            "state": "available",
+            "value": "none",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "delay": {
+            "state": "available",
+            "value": "immediate",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reliability": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "existingEvidenceQuality": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reversibility": {
+            "state": "available",
+            "value": "reversible",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved.",
+          "expectedEvidenceLineage": {
+            "sourceKind": "controlled-held-out",
+            "sourceScopeRef": "scope:food-demand",
+            "admissionRequired": true
+          }
+        },
+        "alternatives": [
+          {
+            "candidateId": "food-spoilage",
+            "actionType": "compare-existing-evidence",
+            "actionOwnerRef": "held-out-owner:compare-existing-evidence",
+            "target": {
+              "kind": "controlled-held-out-information",
+              "targetRef": "target:food-spoilage",
+              "organizationId": "holdout-food-003"
+            },
+            "uncertaintyRef": "heldout-unknown-food:v1",
+            "materialEffectTargets": [
+              "unknown",
+              "answer"
+            ],
+            "eligibility": {
+              "ownerAvailable": true,
+              "targetAccessible": true,
+              "executionAvailable": true,
+              "authorizationSatisfied": true,
+              "governanceAllowed": true,
+              "consentState": "not-required",
+              "reasonCodes": [
+                "material-effect-confirmed"
+              ]
+            },
+            "expectedInformationContribution": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "expectedOrganizationalRelevance": {
+              "state": "available",
+              "value": "moderate",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "expectedDiscriminationGain": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "burden": {
+              "state": "available",
+              "value": "low",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "cost": {
+              "state": "available",
+              "value": "none",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "delay": {
+              "state": "available",
+              "value": "immediate",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "reliability": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "existingEvidenceQuality": {
+              "state": "available",
+              "value": "high",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "reversibility": {
+              "state": "available",
+              "value": "reversible",
+              "sourceRef": "held-out-owner",
+              "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+              "maturity": "synthetic"
+            },
+            "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved.",
+            "expectedEvidenceLineage": {
+              "sourceKind": "controlled-held-out",
+              "sourceScopeRef": "scope:food-spoilage",
+              "admissionRequired": true
+            }
+          }
+        ],
+        "explanation": {
+          "uncertaintyRef": "heldout-unknown-food:v1",
+          "rationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+          "alternativeCandidateIds": [
+            "food-spoilage"
+          ],
+          "limitations": [
+            "Shadow-only projection; no action was initiated."
+          ],
+          "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+        }
+      },
+      "brief": {
+        "contractVersion": "benchmark-1",
+        "scenarioId": "holdout-04-objective-reach",
+        "audience": "authorized-organizational-leader",
+        "question": "Which information should guide the food network's next operating choice?",
+        "directAnswer": "Both spoilage and neighborhood demand mismatch constrain useful distribution.",
+        "currentUnderstanding": "Both spoilage and neighborhood demand mismatch constrain useful distribution.",
+        "claimIds": [
+          "food-e1",
+          "food-e2"
+        ],
+        "evidenceRefs": [
+          "food-e1",
+          "food-e2"
+        ],
+        "objective": "objective-food-reach:v1: Increase equitable neighborhood reach this quarter.",
+        "optimizationContext": "context-food-reach:v1: Use low-cost existing records within two weeks.",
+        "disposition": "selected-action",
+        "recommendedOption": "food-demand",
+        "alternatives": [
+          "food-spoilage"
+        ],
+        "candidateMaterialFields": [
+          {
+            "candidateId": "food-demand",
+            "burden": "low",
+            "cost": "none",
+            "delay": "immediate",
+            "reliability": "high",
+            "reversibility": "reversible",
+            "governanceAllowed": true,
+            "authorizationSatisfied": true,
+            "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+          },
+          {
+            "candidateId": "food-spoilage",
+            "burden": "low",
+            "cost": "none",
+            "delay": "immediate",
+            "reliability": "high",
+            "reversibility": "reversible",
+            "governanceAllowed": true,
+            "authorizationSatisfied": true,
+            "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+          }
+        ],
+        "mechanismRationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+        "contradictions": [],
+        "uncertainty": "Their relative importance depends on the authorized Objective.",
+        "risksAndLimitations": [
+          "Neither mechanism is globally dominant.",
+          "Shadow-only projection; no action was initiated."
+        ],
+        "requestedUserDecision": "Decide whether to authorize food-demand; authorization does not execute it.",
+        "whatWouldChangeTheRecommendation": "Stop when the exact held-out uncertainty is materially resolved.",
+        "unavailable": [
+          "Outcome-calibrated operation value is unavailable."
+        ],
+        "withheld": [],
+        "requiredDisclosures": [
+          "Controlled benchmark only.",
+          "No action was initiated.",
+          "Ordinal estimates are not calibrated probabilities."
+        ],
+        "prohibitedClaims": [
+          "Treat an Objective as evidence."
+        ],
+        "desiredLength": "one-page-progressive-disclosure",
+        "digest": "7e16a64ab1a3595ecf4e0957aa0ac7d9d44e78f669d16252012dcd4fe14d7d42"
+      },
+      "presentation": "# Direct answer\nBoth spoilage and neighborhood demand mismatch constrain useful distribution.\n\n## Why it matters\nBoth spoilage and neighborhood demand mismatch constrain useful distribution.\n\n## Recommendation\nDisposition: selected-action. Recommended information action: food-demand.\n\n## Rationale\nOne eligible candidate materially dominates without converting the comparison into a scalar score.\n\n## Alternatives\nfood-spoilage\n\n## Uncertainty and limitations\nTheir relative importance depends on the authorized Objective.\nNeither mechanism is globally dominant.\nShadow-only projection; no action was initiated.\nControlled benchmark only.\nNo action was initiated.\nOrdinal estimates are not calibrated probabilities.\n\n## What would change Discovery’s view\nStop when the exact held-out uncertainty is materially resolved.\n\n## Requested user decision\nDecide whether to authorize food-demand; authorization does not execute it.\n\n## Audit detail\nQuestion: Which information should guide the food network's next operating choice?\nObjective: objective-food-reach:v1: Increase equitable neighborhood reach this quarter.\nOptimization Context: context-food-reach:v1: Use low-cost existing records within two weeks.\nEvidence: food-e1, food-e2\nCandidate material fields: food-demand [burden=low; cost=none; delay=immediate; reliability=high; reversibility=reversible; governance=true; authorization=true; stop=Stop when the exact held-out uncertainty is materially resolved.] | food-spoilage [burden=low; cost=none; delay=immediate; reliability=high; reversibility=reversible; governance=true; authorization=true; stop=Stop when the exact held-out uncertainty is materially resolved.]\nUnavailable: Outcome-calibrated operation value is unavailable.\nWithheld: none\nBrief digest: 7e16a64ab1a3595ecf4e0957aa0ac7d9d44e78f669d16252012dcd4fe14d7d42",
+      "claimFidelity": {
+        "passed": true,
+        "unsupportedClaims": [],
+        "withheldValuesExposed": false
+      },
+      "invariance": [
+        {
+          "name": "evidence-order",
+          "passed": true
+        },
+        {
+          "name": "candidate-order",
+          "passed": true
+        },
+        {
+          "name": "duplicate-evidence",
+          "passed": true
+        },
+        {
+          "name": "irrelevant-instruction-content",
+          "passed": true
+        },
+        {
+          "name": "object-key-order",
+          "passed": true
+        },
+        {
+          "name": "equivalent-irrelevant-wording",
+          "passed": true
+        }
+      ],
+      "sensitivity": [
+        {
+          "name": "governance-prohibition",
+          "baseline": "selected-action:food-demand:food-spoilage",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "authorization-revocation",
+          "baseline": "selected-action:food-demand:food-spoilage",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "budget-exhaustion",
+          "baseline": "selected-action:food-demand:food-spoilage",
+          "changed": "stop:none:",
+          "passed": true
+        },
+        {
+          "name": "contradictory-outcome",
+          "baseline": "selected-action:food-demand:food-spoilage",
+          "changed": "selected-action:food-spoilage:",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "scenarioId": "holdout-05-context-rapid",
+      "inputHash": "6cd43d659ea76d78f33042736fb8b1d085ea840dfe37a77c2014d67baa885319",
+      "status": "untouched-controlled-holdout",
+      "coverage": [
+        "context-reversal"
+      ],
+      "questionReloaded": true,
+      "selection": {
+        "kind": "selected-action",
+        "selectionId": "material-acquisition-shadow-selection-b347e6ce1a0edc04",
+        "selected": {
+          "candidateId": "support-routing",
+          "actionType": "compare-existing-evidence",
+          "actionOwnerRef": "held-out-owner:compare-existing-evidence",
+          "target": {
+            "kind": "controlled-held-out-information",
+            "targetRef": "target:support-routing",
+            "organizationId": "holdout-saas-004"
+          },
+          "uncertaintyRef": "heldout-unknown-support:v1",
+          "materialEffectTargets": [
+            "unknown",
+            "answer"
+          ],
+          "eligibility": {
+            "ownerAvailable": true,
+            "targetAccessible": true,
+            "executionAvailable": true,
+            "authorizationSatisfied": true,
+            "governanceAllowed": true,
+            "consentState": "not-required",
+            "reasonCodes": [
+              "material-effect-confirmed"
+            ]
+          },
+          "expectedInformationContribution": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedOrganizationalRelevance": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedDiscriminationGain": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "burden": {
+            "state": "available",
+            "value": "low",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "cost": {
+            "state": "available",
+            "value": "none",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "delay": {
+            "state": "available",
+            "value": "immediate",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reliability": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "existingEvidenceQuality": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reversibility": {
+            "state": "available",
+            "value": "reversible",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved.",
+          "expectedEvidenceLineage": {
+            "sourceKind": "controlled-held-out",
+            "sourceScopeRef": "scope:support-routing",
+            "admissionRequired": true
+          }
+        },
+        "alternatives": [],
+        "explanation": {
+          "uncertaintyRef": "heldout-unknown-support:v1",
+          "rationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+          "alternativeCandidateIds": [],
+          "limitations": [
+            "Shadow-only projection; no action was initiated."
+          ],
+          "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+        }
+      },
+      "brief": {
+        "contractVersion": "benchmark-1",
+        "scenarioId": "holdout-05-context-rapid",
+        "audience": "authorized-organizational-leader",
+        "question": "What should we learn next about premium support escalations?",
+        "directAnswer": "Discovery does not yet have a supported answer to “What should we learn next about premium support escalations?”",
+        "currentUnderstanding": "Both routing metadata and account context remain plausible.",
+        "claimIds": [
+          "support-e1",
+          "support-e2"
+        ],
+        "evidenceRefs": [
+          "support-e1",
+          "support-e2"
+        ],
+        "objective": "objective-support:v1: Reduce repeat premium-support escalation.",
+        "optimizationContext": "context-support-rapid:v1: Require an immediate, low-burden diagnostic.",
+        "disposition": "selected-action",
+        "recommendedOption": "support-routing",
+        "alternatives": [],
+        "candidateMaterialFields": [
+          {
+            "candidateId": "support-routing",
+            "burden": "low",
+            "cost": "none",
+            "delay": "immediate",
+            "reliability": "high",
+            "reversibility": "reversible",
+            "governanceAllowed": true,
+            "authorizationSatisfied": true,
+            "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+          }
+        ],
+        "mechanismRationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+        "contradictions": [
+          "support-e2: Some repeat escalations began after account-context changes."
+        ],
+        "uncertainty": "Both routing metadata and account context remain plausible.",
+        "risksAndLimitations": [
+          "Shadow-only projection; no action was initiated.",
+          "The causal contribution remains unresolved."
+        ],
+        "requestedUserDecision": "Decide whether to authorize support-routing; authorization does not execute it.",
+        "whatWouldChangeTheRecommendation": "Stop when the exact held-out uncertainty is materially resolved.",
+        "unavailable": [
+          "Outcome-calibrated operation value is unavailable."
+        ],
+        "withheld": [],
+        "requiredDisclosures": [
+          "Controlled benchmark only.",
+          "No action was initiated.",
+          "Ordinal estimates are not calibrated probabilities."
+        ],
+        "prohibitedClaims": [
+          "Contact customers automatically."
+        ],
+        "desiredLength": "one-page-progressive-disclosure",
+        "digest": "12c67baf9b8ba4f45bfff97a01ba4d13440ed6e243b613eda13da4ec087a49d4"
+      },
+      "presentation": "# Direct answer\nDiscovery does not yet have a supported answer to “What should we learn next about premium support escalations?”\n\n## Why it matters\nBoth routing metadata and account context remain plausible.\n\n## Recommendation\nDisposition: selected-action. Recommended information action: support-routing.\n\n## Rationale\nOne eligible candidate materially dominates without converting the comparison into a scalar score.\n\n## Alternatives\nNo eligible alternative is currently available.\n\n## Uncertainty and limitations\nBoth routing metadata and account context remain plausible.\nsupport-e2: Some repeat escalations began after account-context changes.\nShadow-only projection; no action was initiated.\nThe causal contribution remains unresolved.\nControlled benchmark only.\nNo action was initiated.\nOrdinal estimates are not calibrated probabilities.\n\n## What would change Discovery’s view\nStop when the exact held-out uncertainty is materially resolved.\n\n## Requested user decision\nDecide whether to authorize support-routing; authorization does not execute it.\n\n## Audit detail\nQuestion: What should we learn next about premium support escalations?\nObjective: objective-support:v1: Reduce repeat premium-support escalation.\nOptimization Context: context-support-rapid:v1: Require an immediate, low-burden diagnostic.\nEvidence: support-e1, support-e2\nCandidate material fields: support-routing [burden=low; cost=none; delay=immediate; reliability=high; reversibility=reversible; governance=true; authorization=true; stop=Stop when the exact held-out uncertainty is materially resolved.]\nUnavailable: Outcome-calibrated operation value is unavailable.\nWithheld: none\nBrief digest: 12c67baf9b8ba4f45bfff97a01ba4d13440ed6e243b613eda13da4ec087a49d4",
+      "claimFidelity": {
+        "passed": true,
+        "unsupportedClaims": [],
+        "withheldValuesExposed": false
+      },
+      "invariance": [
+        {
+          "name": "evidence-order",
+          "passed": true
+        },
+        {
+          "name": "candidate-order",
+          "passed": true
+        },
+        {
+          "name": "duplicate-evidence",
+          "passed": true
+        },
+        {
+          "name": "irrelevant-instruction-content",
+          "passed": true
+        },
+        {
+          "name": "object-key-order",
+          "passed": true
+        },
+        {
+          "name": "equivalent-irrelevant-wording",
+          "passed": true
+        }
+      ],
+      "sensitivity": [
+        {
+          "name": "governance-prohibition",
+          "baseline": "selected-action:support-routing:",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "authorization-revocation",
+          "baseline": "selected-action:support-routing:",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "budget-exhaustion",
+          "baseline": "selected-action:support-routing:",
+          "changed": "stop:none:",
+          "passed": true
+        },
+        {
+          "name": "contradictory-outcome",
+          "baseline": "selected-action:support-routing:",
+          "changed": "abstain:none:",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "scenarioId": "holdout-06-context-depth",
+      "inputHash": "b864ad9ad7c1695c72932e98569239f865c7fb35c88eae69f4e80f4eed6dd3e3",
+      "status": "untouched-controlled-holdout",
+      "coverage": [
+        "context-reversal"
+      ],
+      "questionReloaded": true,
+      "selection": {
+        "kind": "abstain",
+        "selectionId": "material-acquisition-shadow-selection-0fb29204b6e075d2",
+        "reason": "incomparable-actions",
+        "explanation": {
+          "uncertaintyRef": "heldout-unknown-support:v1",
+          "rationale": "The non-dominated actions require different material tradeoffs and remain incomparable.",
+          "alternativeCandidateIds": [
+            "support-account",
+            "support-routing"
+          ],
+          "limitations": [
+            "Shadow-only projection; no action was initiated."
+          ],
+          "stoppingCondition": null
+        }
+      },
+      "brief": {
+        "contractVersion": "benchmark-1",
+        "scenarioId": "holdout-06-context-depth",
+        "audience": "authorized-organizational-leader",
+        "question": "What should we learn next about premium support escalations?",
+        "directAnswer": "Discovery does not yet have a supported answer to “What should we learn next about premium support escalations?”",
+        "currentUnderstanding": "Both routing metadata and account context remain plausible.",
+        "claimIds": [
+          "support-e1",
+          "support-e2"
+        ],
+        "evidenceRefs": [
+          "support-e1",
+          "support-e2"
+        ],
+        "objective": "objective-support:v1: Reduce repeat premium-support escalation.",
+        "optimizationContext": "context-support-depth:v1: Allow a short review for higher-reliability account context.",
+        "disposition": "abstain",
+        "recommendedOption": null,
+        "alternatives": [
+          "support-account",
+          "support-routing"
+        ],
+        "candidateMaterialFields": [],
+        "mechanismRationale": "The non-dominated actions require different material tradeoffs and remain incomparable.",
+        "contradictions": [
+          "support-e2: Some repeat escalations began after account-context changes."
+        ],
+        "uncertainty": "Both routing metadata and account context remain plausible.",
+        "risksAndLimitations": [
+          "Shadow-only projection; no action was initiated.",
+          "The causal contribution remains unresolved."
+        ],
+        "requestedUserDecision": "Review the preserved alternatives or decline further information acquisition.",
+        "whatWouldChangeTheRecommendation": "Material Evidence, Objective, Context, governance, authorization, or observed Outcome change.",
+        "unavailable": [
+          "Outcome-calibrated operation value is unavailable."
+        ],
+        "withheld": [],
+        "requiredDisclosures": [
+          "Controlled benchmark only.",
+          "No action was initiated.",
+          "Ordinal estimates are not calibrated probabilities."
+        ],
+        "prohibitedClaims": [
+          "Contact customers automatically."
+        ],
+        "desiredLength": "one-page-progressive-disclosure",
+        "digest": "4ce3374b691234ac1a71e75523049069587e7ff0d75e96d0496bc6ffc7fdf4a0"
+      },
+      "presentation": "# Direct answer\nDiscovery does not yet have a supported answer to “What should we learn next about premium support escalations?”\n\n## Why it matters\nBoth routing metadata and account context remain plausible.\n\n## Recommendation\nDisposition: abstain. No single option is presented as superior.\n\n## Rationale\nThe non-dominated actions require different material tradeoffs and remain incomparable.\n\n## Alternatives\nsupport-account\nsupport-routing\n\n## Uncertainty and limitations\nBoth routing metadata and account context remain plausible.\nsupport-e2: Some repeat escalations began after account-context changes.\nShadow-only projection; no action was initiated.\nThe causal contribution remains unresolved.\nControlled benchmark only.\nNo action was initiated.\nOrdinal estimates are not calibrated probabilities.\n\n## What would change Discovery’s view\nMaterial Evidence, Objective, Context, governance, authorization, or observed Outcome change.\n\n## Requested user decision\nReview the preserved alternatives or decline further information acquisition.\n\n## Audit detail\nQuestion: What should we learn next about premium support escalations?\nObjective: objective-support:v1: Reduce repeat premium-support escalation.\nOptimization Context: context-support-depth:v1: Allow a short review for higher-reliability account context.\nEvidence: support-e1, support-e2\nCandidate material fields: \nUnavailable: Outcome-calibrated operation value is unavailable.\nWithheld: none\nBrief digest: 4ce3374b691234ac1a71e75523049069587e7ff0d75e96d0496bc6ffc7fdf4a0",
+      "claimFidelity": {
+        "passed": true,
+        "unsupportedClaims": [],
+        "withheldValuesExposed": false
+      },
+      "invariance": [
+        {
+          "name": "evidence-order",
+          "passed": true
+        },
+        {
+          "name": "candidate-order",
+          "passed": true
+        },
+        {
+          "name": "duplicate-evidence",
+          "passed": true
+        },
+        {
+          "name": "irrelevant-instruction-content",
+          "passed": true
+        },
+        {
+          "name": "object-key-order",
+          "passed": true
+        },
+        {
+          "name": "equivalent-irrelevant-wording",
+          "passed": true
+        }
+      ],
+      "sensitivity": [
+        {
+          "name": "governance-prohibition",
+          "baseline": "abstain:none:support-account,support-routing",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "authorization-revocation",
+          "baseline": "abstain:none:support-account,support-routing",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "budget-exhaustion",
+          "baseline": "abstain:none:support-account,support-routing",
+          "changed": "stop:none:",
+          "passed": true
+        },
+        {
+          "name": "contradictory-outcome",
+          "baseline": "abstain:none:support-account,support-routing",
+          "changed": "abstain:none:support-account,support-routing",
+          "passed": false
+        }
+      ]
+    },
+    {
+      "scenarioId": "holdout-07-municipal",
+      "inputHash": "6dbcdae91dbc0ae253483789d9eefa47fca8cfcf5208dd3f02d750d59a017796",
+      "status": "untouched-controlled-holdout",
+      "coverage": [
+        "governance-prohibition"
+      ],
+      "questionReloaded": true,
+      "selection": {
+        "kind": "selected-action",
+        "selectionId": "material-acquisition-shadow-selection-b37eb54ff52281f3",
+        "selected": {
+          "candidateId": "mun-aggregate-rework",
+          "actionType": "compare-existing-evidence",
+          "actionOwnerRef": "held-out-owner:compare-existing-evidence",
+          "target": {
+            "kind": "controlled-held-out-information",
+            "targetRef": "target:mun-aggregate-rework",
+            "organizationId": "holdout-municipal-005"
+          },
+          "uncertaintyRef": "hu-municipal:v1",
+          "materialEffectTargets": [
+            "unknown",
+            "answer"
+          ],
+          "eligibility": {
+            "ownerAvailable": true,
+            "targetAccessible": true,
+            "executionAvailable": true,
+            "authorizationSatisfied": true,
+            "governanceAllowed": true,
+            "consentState": "not-required",
+            "reasonCodes": [
+              "material-effect-confirmed"
+            ]
+          },
+          "expectedInformationContribution": {
+            "state": "available",
+            "value": "moderate",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedOrganizationalRelevance": {
+            "state": "available",
+            "value": "moderate",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedDiscriminationGain": {
+            "state": "available",
+            "value": "moderate",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "burden": {
+            "state": "available",
+            "value": "low",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "cost": {
+            "state": "available",
+            "value": "none",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "delay": {
+            "state": "available",
+            "value": "immediate",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reliability": {
+            "state": "available",
+            "value": "moderate",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "existingEvidenceQuality": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reversibility": {
+            "state": "available",
+            "value": "reversible",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved.",
+          "expectedEvidenceLineage": {
+            "sourceKind": "controlled-held-out",
+            "sourceScopeRef": "scope:mun-aggregate-rework",
+            "admissionRequired": true
+          }
+        },
+        "alternatives": [],
+        "explanation": {
+          "uncertaintyRef": "hu-municipal:v1",
+          "rationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+          "alternativeCandidateIds": [],
+          "limitations": [
+            "Shadow-only projection; no action was initiated."
+          ],
+          "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+        }
+      },
+      "brief": {
+        "contractVersion": "benchmark-1",
+        "scenarioId": "holdout-07-municipal",
+        "audience": "authorized-organizational-leader",
+        "question": "Why are small-business permits missing the published service window?",
+        "directAnswer": "Discovery does not yet have a supported answer to “Why are small-business permits missing the published service window?”",
+        "currentUnderstanding": "Intake rework and specialist review both remain plausible.",
+        "claimIds": [
+          "mun-e1"
+        ],
+        "evidenceRefs": [
+          "mun-e1"
+        ],
+        "objective": "objective-municipal:v1: Improve permit timeliness within applicant-data policy.",
+        "optimizationContext": "context-municipal:v1: Protected applicant records are not eligible for this review.",
+        "disposition": "selected-action",
+        "recommendedOption": "mun-aggregate-rework",
+        "alternatives": [],
+        "candidateMaterialFields": [
+          {
+            "candidateId": "mun-aggregate-rework",
+            "burden": "low",
+            "cost": "none",
+            "delay": "immediate",
+            "reliability": "moderate",
+            "reversibility": "reversible",
+            "governanceAllowed": true,
+            "authorizationSatisfied": true,
+            "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+          }
+        ],
+        "mechanismRationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+        "contradictions": [],
+        "uncertainty": "Intake rework and specialist review both remain plausible.",
+        "risksAndLimitations": [
+          "Shadow-only projection; no action was initiated.",
+          "Specialist-review timing is incomplete."
+        ],
+        "requestedUserDecision": "Decide whether to authorize mun-aggregate-rework; authorization does not execute it.",
+        "whatWouldChangeTheRecommendation": "Stop when the exact held-out uncertainty is materially resolved.",
+        "unavailable": [
+          "Outcome-calibrated operation value is unavailable."
+        ],
+        "withheld": [
+          "withheld"
+        ],
+        "requiredDisclosures": [
+          "Controlled benchmark only.",
+          "No action was initiated.",
+          "Ordinal estimates are not calibrated probabilities."
+        ],
+        "prohibitedClaims": [
+          "Inspect protected applicant records."
+        ],
+        "desiredLength": "one-page-progressive-disclosure",
+        "digest": "013369975c98999c5a2a7a4b5cb06cbaab42890292f044fce75fa0e83fa9aecd"
+      },
+      "presentation": "# Direct answer\nDiscovery does not yet have a supported answer to “Why are small-business permits missing the published service window?”\n\n## Why it matters\nIntake rework and specialist review both remain plausible.\n\n## Recommendation\nDisposition: selected-action. Recommended information action: mun-aggregate-rework.\n\n## Rationale\nOne eligible candidate materially dominates without converting the comparison into a scalar score.\n\n## Alternatives\nNo eligible alternative is currently available.\n\n## Uncertainty and limitations\nIntake rework and specialist review both remain plausible.\nShadow-only projection; no action was initiated.\nSpecialist-review timing is incomplete.\nControlled benchmark only.\nNo action was initiated.\nOrdinal estimates are not calibrated probabilities.\n\n## What would change Discovery’s view\nStop when the exact held-out uncertainty is materially resolved.\n\n## Requested user decision\nDecide whether to authorize mun-aggregate-rework; authorization does not execute it.\n\n## Audit detail\nQuestion: Why are small-business permits missing the published service window?\nObjective: objective-municipal:v1: Improve permit timeliness within applicant-data policy.\nOptimization Context: context-municipal:v1: Protected applicant records are not eligible for this review.\nEvidence: mun-e1\nCandidate material fields: mun-aggregate-rework [burden=low; cost=none; delay=immediate; reliability=moderate; reversibility=reversible; governance=true; authorization=true; stop=Stop when the exact held-out uncertainty is materially resolved.]\nUnavailable: Outcome-calibrated operation value is unavailable.\nWithheld: withheld\nBrief digest: 013369975c98999c5a2a7a4b5cb06cbaab42890292f044fce75fa0e83fa9aecd",
+      "claimFidelity": {
+        "passed": true,
+        "unsupportedClaims": [],
+        "withheldValuesExposed": false
+      },
+      "invariance": [
+        {
+          "name": "evidence-order",
+          "passed": true
+        },
+        {
+          "name": "candidate-order",
+          "passed": true
+        },
+        {
+          "name": "duplicate-evidence",
+          "passed": true
+        },
+        {
+          "name": "irrelevant-instruction-content",
+          "passed": true
+        },
+        {
+          "name": "object-key-order",
+          "passed": true
+        },
+        {
+          "name": "equivalent-irrelevant-wording",
+          "passed": true
+        }
+      ],
+      "sensitivity": [
+        {
+          "name": "governance-prohibition",
+          "baseline": "selected-action:mun-aggregate-rework:",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "authorization-revocation",
+          "baseline": "selected-action:mun-aggregate-rework:",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "budget-exhaustion",
+          "baseline": "selected-action:mun-aggregate-rework:",
+          "changed": "stop:none:",
+          "passed": true
+        },
+        {
+          "name": "contradictory-outcome",
+          "baseline": "selected-action:mun-aggregate-rework:",
+          "changed": "abstain:none:",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "scenarioId": "holdout-08-university",
+      "inputHash": "d7019d28b3285585e760da60f44fb5c37e6f2b4500766047ef2f5f2fb6dffe4d",
+      "status": "untouched-controlled-holdout",
+      "coverage": [
+        "authorization-revocation"
+      ],
+      "questionReloaded": true,
+      "selection": {
+        "kind": "selected-action",
+        "selectionId": "material-acquisition-shadow-selection-01776944c81d6c73",
+        "selected": {
+          "candidateId": "uni-advising-aggregate",
+          "actionType": "compare-existing-evidence",
+          "actionOwnerRef": "held-out-owner:compare-existing-evidence",
+          "target": {
+            "kind": "controlled-held-out-information",
+            "targetRef": "target:uni-advising-aggregate",
+            "organizationId": "holdout-university-006"
+          },
+          "uncertaintyRef": "hu-university:v1",
+          "materialEffectTargets": [
+            "unknown",
+            "answer"
+          ],
+          "eligibility": {
+            "ownerAvailable": true,
+            "targetAccessible": true,
+            "executionAvailable": true,
+            "authorizationSatisfied": true,
+            "governanceAllowed": true,
+            "consentState": "not-required",
+            "reasonCodes": [
+              "material-effect-confirmed"
+            ]
+          },
+          "expectedInformationContribution": {
+            "state": "available",
+            "value": "moderate",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedOrganizationalRelevance": {
+            "state": "available",
+            "value": "moderate",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "expectedDiscriminationGain": {
+            "state": "available",
+            "value": "moderate",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "burden": {
+            "state": "available",
+            "value": "low",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "cost": {
+            "state": "available",
+            "value": "none",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "delay": {
+            "state": "available",
+            "value": "immediate",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reliability": {
+            "state": "available",
+            "value": "moderate",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "existingEvidenceQuality": {
+            "state": "available",
+            "value": "high",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "reversibility": {
+            "state": "available",
+            "value": "reversible",
+            "sourceRef": "held-out-owner",
+            "qualification": "Frozen controlled holdout estimate; not outcome calibrated.",
+            "maturity": "synthetic"
+          },
+          "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved.",
+          "expectedEvidenceLineage": {
+            "sourceKind": "controlled-held-out",
+            "sourceScopeRef": "scope:uni-advising-aggregate",
+            "admissionRequired": true
+          }
+        },
+        "alternatives": [],
+        "explanation": {
+          "uncertaintyRef": "hu-university:v1",
+          "rationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+          "alternativeCandidateIds": [],
+          "limitations": [
+            "Shadow-only projection; no action was initiated."
+          ],
+          "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+        }
+      },
+      "brief": {
+        "contractVersion": "benchmark-1",
+        "scenarioId": "holdout-08-university",
+        "audience": "authorized-organizational-leader",
+        "question": "Why are accepted students failing to complete enrollment?",
+        "directAnswer": "Discovery does not yet have a supported answer to “Why are accepted students failing to complete enrollment?”",
+        "currentUnderstanding": "The accessible evidence does not resolve the handoff.",
+        "claimIds": [
+          "uni-e1"
+        ],
+        "evidenceRefs": [
+          "uni-e1"
+        ],
+        "objective": "objective-university:v1: Improve enrollment completion without accessing revoked aid records.",
+        "optimizationContext": "context-university:v1: Use only currently authorized aggregate sources.",
+        "disposition": "selected-action",
+        "recommendedOption": "uni-advising-aggregate",
+        "alternatives": [],
+        "candidateMaterialFields": [
+          {
+            "candidateId": "uni-advising-aggregate",
+            "burden": "low",
+            "cost": "none",
+            "delay": "immediate",
+            "reliability": "moderate",
+            "reversibility": "reversible",
+            "governanceAllowed": true,
+            "authorizationSatisfied": true,
+            "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+          }
+        ],
+        "mechanismRationale": "One eligible candidate materially dominates without converting the comparison into a scalar score.",
+        "contradictions": [],
+        "uncertainty": "The accessible evidence does not resolve the handoff.",
+        "risksAndLimitations": [
+          "Aid verification is permission-withheld.",
+          "Shadow-only projection; no action was initiated."
+        ],
+        "requestedUserDecision": "Decide whether to authorize uni-advising-aggregate; authorization does not execute it.",
+        "whatWouldChangeTheRecommendation": "Stop when the exact held-out uncertainty is materially resolved.",
+        "unavailable": [
+          "Outcome-calibrated operation value is unavailable."
+        ],
+        "withheld": [
+          "withheld"
+        ],
+        "requiredDisclosures": [
+          "Controlled benchmark only.",
+          "No action was initiated.",
+          "Ordinal estimates are not calibrated probabilities."
+        ],
+        "prohibitedClaims": [
+          "Use revoked aid records."
+        ],
+        "desiredLength": "one-page-progressive-disclosure",
+        "digest": "f6023b58a551e5313de80de525cde2d009107f213f11afbb2d7eb29ffa7f472e"
+      },
+      "presentation": "# Direct answer\nDiscovery does not yet have a supported answer to “Why are accepted students failing to complete enrollment?”\n\n## Why it matters\nThe accessible evidence does not resolve the handoff.\n\n## Recommendation\nDisposition: selected-action. Recommended information action: uni-advising-aggregate.\n\n## Rationale\nOne eligible candidate materially dominates without converting the comparison into a scalar score.\n\n## Alternatives\nNo eligible alternative is currently available.\n\n## Uncertainty and limitations\nThe accessible evidence does not resolve the handoff.\nAid verification is permission-withheld.\nShadow-only projection; no action was initiated.\nControlled benchmark only.\nNo action was initiated.\nOrdinal estimates are not calibrated probabilities.\n\n## What would change Discovery’s view\nStop when the exact held-out uncertainty is materially resolved.\n\n## Requested user decision\nDecide whether to authorize uni-advising-aggregate; authorization does not execute it.\n\n## Audit detail\nQuestion: Why are accepted students failing to complete enrollment?\nObjective: objective-university:v1: Improve enrollment completion without accessing revoked aid records.\nOptimization Context: context-university:v1: Use only currently authorized aggregate sources.\nEvidence: uni-e1\nCandidate material fields: uni-advising-aggregate [burden=low; cost=none; delay=immediate; reliability=moderate; reversibility=reversible; governance=true; authorization=true; stop=Stop when the exact held-out uncertainty is materially resolved.]\nUnavailable: Outcome-calibrated operation value is unavailable.\nWithheld: withheld\nBrief digest: f6023b58a551e5313de80de525cde2d009107f213f11afbb2d7eb29ffa7f472e",
+      "claimFidelity": {
+        "passed": true,
+        "unsupportedClaims": [],
+        "withheldValuesExposed": false
+      },
+      "invariance": [
+        {
+          "name": "evidence-order",
+          "passed": true
+        },
+        {
+          "name": "candidate-order",
+          "passed": true
+        },
+        {
+          "name": "duplicate-evidence",
+          "passed": true
+        },
+        {
+          "name": "irrelevant-instruction-content",
+          "passed": true
+        },
+        {
+          "name": "object-key-order",
+          "passed": true
+        },
+        {
+          "name": "equivalent-irrelevant-wording",
+          "passed": true
+        }
+      ],
+      "sensitivity": [
+        {
+          "name": "governance-prohibition",
+          "baseline": "selected-action:uni-advising-aggregate:",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "authorization-revocation",
+          "baseline": "selected-action:uni-advising-aggregate:",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "budget-exhaustion",
+          "baseline": "selected-action:uni-advising-aggregate:",
+          "changed": "stop:none:",
+          "passed": true
+        },
+        {
+          "name": "contradictory-outcome",
+          "baseline": "selected-action:uni-advising-aggregate:",
+          "changed": "abstain:none:",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "scenarioId": "holdout-09-manufacturing",
+      "inputHash": "d24c4a29fb689eb5cc69c7cb6811a7c1a07d6f18eb860737e0892a6a1ff91212",
+      "status": "untouched-controlled-holdout",
+      "coverage": [
+        "stale-context",
+        "insufficient-evidence"
+      ],
+      "questionReloaded": true,
+      "selection": {
+        "kind": "abstain",
+        "selectionId": "material-acquisition-shadow-selection-68929a366b28600b",
+        "reason": "missing-material-input",
+        "explanation": {
+          "uncertaintyRef": "hu-manufacturing:v1",
+          "rationale": "A material comparison preference is unavailable; no default was invented.",
+          "alternativeCandidateIds": [],
+          "limitations": [
+            "Shadow-only projection; no action was initiated."
+          ],
+          "stoppingCondition": null
+        }
+      },
+      "brief": {
+        "contractVersion": "benchmark-1",
+        "scenarioId": "holdout-09-manufacturing",
+        "audience": "authorized-organizational-leader",
+        "question": "Why did first-pass yield fall on the night shift?",
+        "directAnswer": "Discovery does not yet have a supported answer to “Why did first-pass yield fall on the night shift?”",
+        "currentUnderstanding": "Evidence is insufficient to distinguish material variation from setup drift.",
+        "claimIds": [
+          "mfg-e1"
+        ],
+        "evidenceRefs": [
+          "mfg-e1"
+        ],
+        "objective": "objective-manufacturing-superseded:v1: Superseded: maximize volume irrespective of rework.",
+        "optimizationContext": "context-manufacturing-stale:v1: Context is stale relative to the superseding quality Objective.",
+        "disposition": "abstain",
+        "recommendedOption": null,
+        "alternatives": [],
+        "candidateMaterialFields": [],
+        "mechanismRationale": "A material comparison preference is unavailable; no default was invented.",
+        "contradictions": [],
+        "uncertainty": "Evidence is insufficient to distinguish material variation from setup drift.",
+        "risksAndLimitations": [
+          "Shadow-only projection; no action was initiated.",
+          "The active governed preference is unavailable."
+        ],
+        "requestedUserDecision": "Review the preserved alternatives or decline further information acquisition.",
+        "whatWouldChangeTheRecommendation": "Material Evidence, Objective, Context, governance, authorization, or observed Outcome change.",
+        "unavailable": [
+          "Outcome-calibrated operation value is unavailable."
+        ],
+        "withheld": [],
+        "requiredDisclosures": [
+          "Controlled benchmark only.",
+          "No action was initiated.",
+          "Ordinal estimates are not calibrated probabilities."
+        ],
+        "prohibitedClaims": [
+          "Reuse the superseded Objective."
+        ],
+        "desiredLength": "one-page-progressive-disclosure",
+        "digest": "4393277ddd783b380f7ab90880d10d7258226296bd339745f87de20ef9c09eeb"
+      },
+      "presentation": "# Direct answer\nDiscovery does not yet have a supported answer to “Why did first-pass yield fall on the night shift?”\n\n## Why it matters\nEvidence is insufficient to distinguish material variation from setup drift.\n\n## Recommendation\nDisposition: abstain. No single option is presented as superior.\n\n## Rationale\nA material comparison preference is unavailable; no default was invented.\n\n## Alternatives\nNo eligible alternative is currently available.\n\n## Uncertainty and limitations\nEvidence is insufficient to distinguish material variation from setup drift.\nShadow-only projection; no action was initiated.\nThe active governed preference is unavailable.\nControlled benchmark only.\nNo action was initiated.\nOrdinal estimates are not calibrated probabilities.\n\n## What would change Discovery’s view\nMaterial Evidence, Objective, Context, governance, authorization, or observed Outcome change.\n\n## Requested user decision\nReview the preserved alternatives or decline further information acquisition.\n\n## Audit detail\nQuestion: Why did first-pass yield fall on the night shift?\nObjective: objective-manufacturing-superseded:v1: Superseded: maximize volume irrespective of rework.\nOptimization Context: context-manufacturing-stale:v1: Context is stale relative to the superseding quality Objective.\nEvidence: mfg-e1\nCandidate material fields: \nUnavailable: Outcome-calibrated operation value is unavailable.\nWithheld: none\nBrief digest: 4393277ddd783b380f7ab90880d10d7258226296bd339745f87de20ef9c09eeb",
+      "claimFidelity": {
+        "passed": true,
+        "unsupportedClaims": [],
+        "withheldValuesExposed": false
+      },
+      "invariance": [
+        {
+          "name": "evidence-order",
+          "passed": true
+        },
+        {
+          "name": "candidate-order",
+          "passed": true
+        },
+        {
+          "name": "duplicate-evidence",
+          "passed": true
+        },
+        {
+          "name": "irrelevant-instruction-content",
+          "passed": true
+        },
+        {
+          "name": "object-key-order",
+          "passed": true
+        },
+        {
+          "name": "equivalent-irrelevant-wording",
+          "passed": true
+        }
+      ],
+      "sensitivity": [
+        {
+          "name": "governance-prohibition",
+          "baseline": "abstain:none:",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "authorization-revocation",
+          "baseline": "abstain:none:",
+          "changed": "abstain:none:",
+          "passed": true
+        },
+        {
+          "name": "budget-exhaustion",
+          "baseline": "abstain:none:",
+          "changed": "stop:none:",
+          "passed": true
+        },
+        {
+          "name": "contradictory-outcome",
+          "baseline": "abstain:none:",
+          "changed": "selected-action:mfg-lot-compare:",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "scenarioId": "holdout-10-retail",
+      "inputHash": "07527af4ed7ab602bcf7314afe48abcdd7fc69b59d78f2a5967b4352c6a263f3",
+      "status": "untouched-controlled-holdout",
+      "coverage": [
+        "understanding-sufficient"
+      ],
+      "questionReloaded": true,
+      "selection": {
+        "kind": "stop",
+        "selectionId": "material-acquisition-shadow-selection-6f11ad4acbcdb704",
+        "reason": "understanding-sufficient",
+        "explanation": {
+          "uncertaintyRef": "hu-retail:v1",
+          "rationale": "The authorized owner reports that current understanding is sufficient.",
+          "alternativeCandidateIds": [],
+          "limitations": [
+            "Shadow-only projection; no action was initiated."
+          ],
+          "stoppingCondition": "Stop when the exact held-out uncertainty is materially resolved."
+        }
+      },
+      "brief": {
+        "contractVersion": "benchmark-1",
+        "scenarioId": "holdout-10-retail",
+        "audience": "authorized-organizational-leader",
+        "question": "Why did weekend shelf availability recover?",
+        "directAnswer": "The governed replenishment-window change accounts for the observed recovery within the measured stores.",
+        "currentUnderstanding": "The governed replenishment-window change accounts for the observed recovery within the measured stores.",
+        "claimIds": [
+          "ret-e1"
+        ],
+        "evidenceRefs": [
+          "ret-e1"
+        ],
+        "objective": "objective-retail:v1: Maintain weekend shelf availability.",
+        "optimizationContext": "context-retail:v1: Stop when current understanding is sufficient for the bounded question.",
+        "disposition": "stop",
+        "recommendedOption": null,
+        "alternatives": [],
+        "candidateMaterialFields": [],
+        "mechanismRationale": "The authorized owner reports that current understanding is sufficient.",
+        "contradictions": [],
+        "uncertainty": "The conclusion is limited to the measured stores.",
+        "risksAndLimitations": [
+          "Shadow-only projection; no action was initiated.",
+          "Unmeasured stores remain outside scope."
+        ],
+        "requestedUserDecision": "Review the preserved alternatives or decline further information acquisition.",
+        "whatWouldChangeTheRecommendation": "Stop when the exact held-out uncertainty is materially resolved.",
+        "unavailable": [
+          "Outcome-calibrated operation value is unavailable."
+        ],
+        "withheld": [],
+        "requiredDisclosures": [
+          "Controlled benchmark only.",
+          "No action was initiated.",
+          "Ordinal estimates are not calibrated probabilities."
+        ],
+        "prohibitedClaims": [
+          "Claim universal recovery."
+        ],
+        "desiredLength": "one-page-progressive-disclosure",
+        "digest": "94b67281c20d8770114f8bb3fea27989423687539966d93c11c2ed8a168eb6bb"
+      },
+      "presentation": "# Direct answer\nThe governed replenishment-window change accounts for the observed recovery within the measured stores.\n\n## Why it matters\nThe governed replenishment-window change accounts for the observed recovery within the measured stores.\n\n## Recommendation\nDisposition: stop. No single option is presented as superior.\n\n## Rationale\nThe authorized owner reports that current understanding is sufficient.\n\n## Alternatives\nNo eligible alternative is currently available.\n\n## Uncertainty and limitations\nThe conclusion is limited to the measured stores.\nShadow-only projection; no action was initiated.\nUnmeasured stores remain outside scope.\nControlled benchmark only.\nNo action was initiated.\nOrdinal estimates are not calibrated probabilities.\n\n## What would change Discovery’s view\nStop when the exact held-out uncertainty is materially resolved.\n\n## Requested user decision\nReview the preserved alternatives or decline further information acquisition.\n\n## Audit detail\nQuestion: Why did weekend shelf availability recover?\nObjective: objective-retail:v1: Maintain weekend shelf availability.\nOptimization Context: context-retail:v1: Stop when current understanding is sufficient for the bounded question.\nEvidence: ret-e1\nCandidate material fields: \nUnavailable: Outcome-calibrated operation value is unavailable.\nWithheld: none\nBrief digest: 94b67281c20d8770114f8bb3fea27989423687539966d93c11c2ed8a168eb6bb",
+      "claimFidelity": {
+        "passed": true,
+        "unsupportedClaims": [],
+        "withheldValuesExposed": false
+      },
+      "invariance": [
+        {
+          "name": "evidence-order",
+          "passed": true
+        },
+        {
+          "name": "candidate-order",
+          "passed": true
+        },
+        {
+          "name": "duplicate-evidence",
+          "passed": true
+        },
+        {
+          "name": "irrelevant-instruction-content",
+          "passed": true
+        },
+        {
+          "name": "object-key-order",
+          "passed": true
+        },
+        {
+          "name": "equivalent-irrelevant-wording",
+          "passed": true
+        }
+      ],
+      "sensitivity": [
+        {
+          "name": "governance-prohibition",
+          "baseline": "stop:none:",
+          "changed": "stop:none:",
+          "passed": true
+        },
+        {
+          "name": "authorization-revocation",
+          "baseline": "stop:none:",
+          "changed": "stop:none:",
+          "passed": true
+        },
+        {
+          "name": "budget-exhaustion",
+          "baseline": "stop:none:",
+          "changed": "stop:none:",
+          "passed": true
+        },
+        {
+          "name": "contradictory-outcome",
+          "baseline": "stop:none:",
+          "changed": "abstain:none:",
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "hardGates": {
+    "unsupportedClaims": 0,
+    "unauthorizedEvidenceUse": 0,
+    "crossOrganizationLeakage": 0,
+    "inputOrderSemanticDrift": 0,
+    "staleContextUse": 0,
+    "governanceProhibitedSelection": 0,
+    "selectorRendererRuntimeWrites": 0,
+    "llmRecommendationChanges": 0,
+    "llmAddedFacts": 0,
+    "withheldValueExposure": 0,
+    "connectorCalls": 0,
+    "externalActions": 0,
+    "frontendImports": 0,
+    "productionOperations": 0
+  },
+  "llmArm": {
+    "status": "not-executed",
+    "reason": "No frozen benchmark-safe configured Communication Brief model boundary exists."
+  },
+  "humanEvidence": {
+    "genuineResponses": 0,
+    "reviewerCount": 0,
+    "comprehension": "unmeasured",
+    "preference": "unmeasured",
+    "perceivedConfidenceCalibration": "unmeasured"
+  }
+}
