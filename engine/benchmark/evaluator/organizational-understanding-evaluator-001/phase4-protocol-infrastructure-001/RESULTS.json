@@ -1,0 +1,283 @@
+{
+  "validation": "organizational-understanding-evaluator-phase-4-protocol-infrastructure-001",
+  "classification": "A — PHASE 4 DETERMINISTIC PROTOCOL INFRASTRUCTURE VALIDATED",
+  "ledgerVersion": "oue-001-phase-4-infrastructure-ledger/v1",
+  "infrastructureVersion": "oue-001-phase-4-protocol-infrastructure/v1",
+  "componentVersions": {
+    "ADJUDICATION_CORRECTION_VERSION": "oue-001-phase-4-adjudication-correction/v1",
+    "ADJUDICATION_RECORD_VERSION": "oue-001-phase-4-adjudication-record/v1",
+    "CONFLICT_ATTESTATION_VERSION": "oue-001-phase-4-conflict/v1",
+    "CORPUS_CUSTODY_VERSION": "oue-001-phase-4-corpus-custody/v1",
+    "DISAGREEMENT_RECORD_VERSION": "oue-001-phase-4-disagreement/v1",
+    "ESCALATION_RECORD_VERSION": "oue-001-phase-4-escalation/v1",
+    "GOLD_DECISION_REFERENCE_VERSION": "oue-001-phase-4-gold-decision-reference/v1",
+    "GOLD_ELIGIBILITY_VERSION": "oue-001-phase-4-gold-eligibility/v1",
+    "INDEPENDENCE_ATTESTATION_VERSION": "oue-001-phase-4-independence/v1",
+    "INFRASTRUCTURE_LEDGER_VERSION": "oue-001-phase-4-infrastructure-ledger/v1",
+    "PACKET_RELEASE_VERSION": "oue-001-phase-4-packet-release/v1",
+    "PHASE_4_INFRASTRUCTURE_VERSION": "oue-001-phase-4-protocol-infrastructure/v1",
+    "PROSPECTIVE_PHASE_2_IMPORT_VERSION": "oue-001-phase-4-prospective-phase-2-import/v1",
+    "RELIABILITY_RECEIPT_VERSION": "oue-001-phase-4-reliability-receipt/v1",
+    "REVIEWER_ELIGIBILITY_VERSION": "oue-001-phase-4-reviewer-eligibility/v1",
+    "REVIEWER_PACKET_VERSION": "oue-001-phase-4-reviewer-packet/v1",
+    "REVIEWER_QUALIFICATION_VERSION": "oue-001-phase-4-reviewer-qualification/v1",
+    "STUDY_POLICY_VERSION": "oue-001-phase-4-study-policy/v1"
+  },
+  "canonicalSerializationVersion": "canonical-serialization/v1",
+  "protocolDocumentIdentity": "PHASE_4_SEMANTIC_ADJUDICATION_PROTOCOL.md@6ded90823361678c706048b555199ec265f80732",
+  "protocolDocumentHash": "e9e989b5ec50a4303bce1fb98949d9c00376398162a5ef190136d3e6625dd07a",
+  "preregistrationDocumentIdentity": "PHASE_4_SEMANTIC_ADJUDICATION_PREREGISTRATION.md@6ded90823361678c706048b555199ec265f80732",
+  "preregistrationDocumentHash": "52b255b595abc830dd82fce22e00e7442e6fbb5bc6676bceb13d1bec610a1921",
+  "phase3ResultIdentity": "organizational-understanding-evaluator-phase-3/authoritative-result",
+  "phase3ResultHash": "5c4ddb823fe9a3b227b0b22a5f9459a1f49b6fd22506f9164a1fbd7944a5033a",
+  "fixtureClassification": "controlled structural fixture / non-human / non-model / non-evidentiary",
+  "validatorVersion": "oue-001-phase-4-protocol-validator/v1",
+  "scenarioCount": 44,
+  "safetyGateResults": {
+    "labelLeakage": "pass",
+    "unsafeDraftIsolation": "pass",
+    "productIsolation": "pass",
+    "scoreActivation": "pass",
+    "externalAction": "pass"
+  },
+  "prohibitedOperations": {
+    "genuineHumanReviews": 0,
+    "genuineModelReviews": 0,
+    "genuineSemanticAdjudications": 0,
+    "genuineGoldLabels": 0,
+    "phase2ScoreActivations": 0,
+    "externalComparativeValidationExecutions": 0,
+    "productActivations": 0,
+    "productionActivations": 0,
+    "externalActions": 0
+  },
+  "ledgerHash": "8ad40fc64ff2cdd6e8ae33e8974983b5ed3495f3d810c501916f8f7f77b19ad1",
+  "infrastructureResultHash": "381f88d74a84c336f8ddf1269c6c0200d70daba30f7d5dc8f6c3847e514136d1",
+  "checks": [
+    {
+      "scenario": "A valid frozen candidate-edge binding",
+      "passed": true,
+      "detail": "4c16329d9a550becf2c39daed222b11d91ebb0901208c7aac9a23a8498166b52"
+    },
+    {
+      "scenario": "B foreign evaluator rejection",
+      "passed": true,
+      "detail": "failed closed"
+    },
+    {
+      "scenario": "C foreign organization rejection",
+      "passed": true,
+      "detail": "failed closed"
+    },
+    {
+      "scenario": "D foreign case rejection",
+      "passed": true,
+      "detail": "failed closed"
+    },
+    {
+      "scenario": "E foreign graph and structural-receipt rejection",
+      "passed": true,
+      "detail": "failed closed"
+    },
+    {
+      "scenario": "F foreign generator, configuration, and result rejection",
+      "passed": true,
+      "detail": "failed closed"
+    },
+    {
+      "scenario": "G deterministic packet identity and hash",
+      "passed": true,
+      "detail": "0f18a7ee8097c4d66504e5f16d3695a2654357895df1711cf5f13afcbc3069f2"
+    },
+    {
+      "scenario": "H deterministic Side A/Side B assignment",
+      "passed": true,
+      "detail": "A"
+    },
+    {
+      "scenario": "I packet stability under permutations",
+      "passed": true,
+      "detail": "0f18a7ee8097c4d66504e5f16d3695a2654357895df1711cf5f13afcbc3069f2"
+    },
+    {
+      "scenario": "J prohibited packet fields absent",
+      "passed": true,
+      "detail": "retrieval and score fields absent"
+    },
+    {
+      "scenario": "K authorization before packet construction",
+      "passed": true,
+      "detail": "authorization fails closed"
+    },
+    {
+      "scenario": "L withheld context remains withheld",
+      "passed": true,
+      "detail": "withholding preserved"
+    },
+    {
+      "scenario": "M unavailable and withheld distinct",
+      "passed": true,
+      "detail": "distinct fields"
+    },
+    {
+      "scenario": "N Stage 2 rejected before sealed Stage 1",
+      "passed": true,
+      "detail": "release rejected"
+    },
+    {
+      "scenario": "O packet mutation invalidates downstream records",
+      "passed": true,
+      "detail": "mutation rejected"
+    },
+    {
+      "scenario": "P pairwise missing rejected",
+      "passed": true,
+      "detail": "missing rejected"
+    },
+    {
+      "scenario": "Q ineligible reviewer rejection",
+      "passed": true,
+      "detail": "qualification-incomplete"
+    },
+    {
+      "scenario": "R ground-truth author conflict",
+      "passed": true,
+      "detail": "author rejected"
+    },
+    {
+      "scenario": "S generator developer sole authority rejected",
+      "passed": true,
+      "detail": "sole authority rejected"
+    },
+    {
+      "scenario": "T duplicate reviewer rejection",
+      "passed": true,
+      "detail": "duplicate rejected"
+    },
+    {
+      "scenario": "U immutable correction and stale-write rejection",
+      "passed": true,
+      "detail": "f5f649c1a011c9c06d181b6949e916640f99f411a3fa6f5b8390ee3922d48b03"
+    },
+    {
+      "scenario": "V categorical disagreement triggers escalation",
+      "passed": true,
+      "detail": "categorical"
+    },
+    {
+      "scenario": "W abstention and insufficient context import-ineligible",
+      "passed": true,
+      "detail": "no semantic credit"
+    },
+    {
+      "scenario": "X third reviewer receives no prior judgments",
+      "passed": true,
+      "detail": "19d61f1e23c1d2f8e4e9e7f7d9ce3f7cb288cfd8b47addfd68a517bc1ebd23f6"
+    },
+    {
+      "scenario": "Y third review may remain unresolved",
+      "passed": true,
+      "detail": "fceb39c4fe284e6bc1e121ef8667ef747041f06205c1ee0b74c98d805fff8421"
+    },
+    {
+      "scenario": "Z two-of-three eligibility conditions",
+      "passed": true,
+      "detail": "ca543809a0f7837629c2b0c7dca9f59b05e5649a376e7e5ed5ee9bee4d69aa33"
+    },
+    {
+      "scenario": "AA Arm H method eligibility",
+      "passed": true,
+      "detail": "eligible for independent review only"
+    },
+    {
+      "scenario": "AB Arm M gold-ineligible",
+      "passed": true,
+      "detail": "ineligible"
+    },
+    {
+      "scenario": "AC Arm HM gold-ineligible",
+      "passed": true,
+      "detail": "ineligible"
+    },
+    {
+      "scenario": "AD human-model records distinct",
+      "passed": true,
+      "detail": "three immutable references"
+    },
+    {
+      "scenario": "AE draft policy cannot authorize execution",
+      "passed": true,
+      "detail": "draft blocked"
+    },
+    {
+      "scenario": "AF test-only reliability cannot authorize gold",
+      "passed": true,
+      "detail": "non-evidentiary-reliability-receipt"
+    },
+    {
+      "scenario": "AG custody collision fails closed",
+      "passed": true,
+      "detail": "collision rejected"
+    },
+    {
+      "scenario": "AH duplicate prospective import rejected",
+      "passed": true,
+      "detail": "duplicate rejected"
+    },
+    {
+      "scenario": "AI cross-organization Phase 2 import rejected",
+      "passed": true,
+      "detail": "cross-organization record rejected"
+    },
+    {
+      "scenario": "AJ prospective mapping has no score or assignment",
+      "passed": true,
+      "detail": "8adeb619cf5af7c5ad4567de2ebe849060821283d56522283015096ccaf195de"
+    },
+    {
+      "scenario": "AK no Phase 2 score activation",
+      "passed": true,
+      "detail": "zero activation"
+    },
+    {
+      "scenario": "AL no direct or transitive label leakage",
+      "passed": true,
+      "detail": "runtime path contains no fixture truth"
+    },
+    {
+      "scenario": "AM unsafe Phase 4-5 drafts not imported",
+      "passed": true,
+      "detail": "isolated namespace"
+    },
+    {
+      "scenario": "AN no Product Runtime frontend or cognition import",
+      "passed": true,
+      "detail": "no external consumers"
+    },
+    {
+      "scenario": "AO canonical serialization rejects unsupported values",
+      "passed": true,
+      "detail": "unsupported rejected"
+    },
+    {
+      "scenario": "AP repeated runs byte-stable",
+      "passed": true,
+      "detail": "8ad40fc64ff2cdd6e8ae33e8974983b5ed3495f3d810c501916f8f7f77b19ad1"
+    },
+    {
+      "scenario": "AQ Phase 1-3 preserved",
+      "passed": true,
+      "detail": "5c4ddb823fe9a3b227b0b22a5f9459a1f49b6fd22506f9164a1fbd7944a5033a"
+    },
+    {
+      "scenario": "AR zero prohibited operations",
+      "passed": true,
+      "detail": "{\"genuineHumanReviews\":0,\"genuineModelReviews\":0,\"genuineSemanticAdjudications\":0,\"genuineGoldLabels\":0,\"phase2ScoreActivations\":0,\"externalComparativeValidationExecutions\":0,\"productActivations\":0,\"productionActivations\":0,\"externalActions\":0}"
+    }
+  ],
+  "failures": [],
+  "studyExecutionAuthorized": false,
+  "phase4AdjudicationAuthorized": false,
+  "phase5Authorized": false,
+  "externalComparativeValidation002Authorized": false
+}
