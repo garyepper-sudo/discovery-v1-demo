@@ -13,7 +13,8 @@ import human judgments, compute a benchmark score, or execute a treatment.
 
 1. Phase 2 complete: deterministic identity, authorization, reference, polarity,
    family, confidence, duplicate, graph, assignment, scoring, and ledger behavior.
-2. Implement and validate a high-recall candidate generator that cannot assign correctness.
+2. Phase 3 candidate generation is independently preregistered and validated
+   as retrieval-only infrastructure that cannot assign correctness or credit.
 3. Design a blinded adjudication import or independently versioned model port.
 4. Run semantic-equivalence, distinction, anti-gaming, style-neutrality,
    consistency, and negative-control suites.

@@ -1,0 +1,186 @@
+{
+  "validation": "organizational-understanding-evaluator-phase-3",
+  "classification": "A — DETERMINISTIC CANDIDATE GENERATION VALIDATED",
+  "preregistrationVersion": "oue-001-phase-3-preregistration/v1",
+  "corpusSplitHash": "511b98232b91a96812e97fbb1c384564c395e52089e8aaca22fe84c09bac8a6e",
+  "metrics": {
+    "developmentRecall": 1,
+    "holdoutRecall": 1,
+    "familyRecall": {
+      "conclusion": 1,
+      "condition": 1,
+      "constraint": 1,
+      "contradiction": 1,
+      "finding": 1,
+      "evidence-gap": 1,
+      "implication": 1,
+      "mechanism": 1,
+      "prediction": 1,
+      "uncertainty": 1
+    },
+    "falseExclusionRate": 0,
+    "averageCandidateCount": 1.1818181818181819,
+    "cartesianReduction": 0.892562,
+    "ambiguityRate": 0,
+    "tieRate": 0,
+    "overflowRate": 0,
+    "noCandidateRate": 1
+  },
+  "checks": [
+    {
+      "scenario": "A exact candidate",
+      "passed": true,
+      "detail": "recall=1"
+    },
+    {
+      "scenario": "B paraphrased holdout candidate",
+      "passed": true,
+      "detail": "holdout recall=1"
+    },
+    {
+      "scenario": "C cross-family prohibition",
+      "passed": true,
+      "detail": "incompatible families rejected before candidacy"
+    },
+    {
+      "scenario": "D polarity incompatibility",
+      "passed": true,
+      "detail": "opposite polarity rejected"
+    },
+    {
+      "scenario": "E modality incompatibility",
+      "passed": true,
+      "detail": "modality conflict rejected"
+    },
+    {
+      "scenario": "F temporal incompatibility",
+      "passed": true,
+      "detail": "temporal conflict rejected"
+    },
+    {
+      "scenario": "G duplicate collapse",
+      "passed": true,
+      "detail": "ancestry retained without candidate inflation"
+    },
+    {
+      "scenario": "H organization isolation",
+      "passed": true,
+      "detail": "cross-organization input failed closed"
+    },
+    {
+      "scenario": "I case isolation",
+      "passed": true,
+      "detail": "cross-case input failed closed"
+    },
+    {
+      "scenario": "J authorization",
+      "passed": true,
+      "detail": "withheld propositions cannot reach output"
+    },
+    {
+      "scenario": "K candidate ambiguity",
+      "passed": true,
+      "detail": "materially equal candidates remain tied"
+    },
+    {
+      "scenario": "L candidate cap tie",
+      "passed": true,
+      "detail": "cap preserves the full tied group"
+    },
+    {
+      "scenario": "M no-candidate disposition",
+      "passed": true,
+      "detail": "explicit no-candidate result emitted"
+    },
+    {
+      "scenario": "N graph-specific metadata",
+      "passed": true,
+      "detail": "conclusion,condition,constraint,contradiction,finding,evidence-gap,implication,mechanism,prediction,uncertainty"
+    },
+    {
+      "scenario": "O input permutations",
+      "passed": true,
+      "detail": "result and ledger hashes stable"
+    },
+    {
+      "scenario": "P label leakage",
+      "passed": true,
+      "detail": "generator and transitive retrieval feature module import no fixtures, adjudications, rubrics, or labels"
+    },
+    {
+      "scenario": "Q holdout isolation",
+      "passed": true,
+      "detail": "511b98232b91a96812e97fbb1c384564c395e52089e8aaca22fe84c09bac8a6e"
+    },
+    {
+      "scenario": "preregistration content binding",
+      "passed": true,
+      "detail": "69fe9e7713f711e2610a3c0454ab9fc54ff74bbd355752989e0891e6af96d9c4"
+    },
+    {
+      "scenario": "R canonical serialization",
+      "passed": true,
+      "detail": "unsupported values rejected and hashes stable"
+    },
+    {
+      "scenario": "S cross-version isolation",
+      "passed": true,
+      "detail": "Phase 3 separately versioned and references Phase 2"
+    },
+    {
+      "scenario": "T no semantic credit",
+      "passed": true,
+      "detail": "no adjudication, assignment, or score output"
+    },
+    {
+      "scenario": "malformed graph rejection",
+      "passed": true,
+      "detail": "dangling reference failed closed"
+    },
+    {
+      "scenario": "receipt evaluator binding",
+      "passed": true,
+      "detail": "foreign or altered Phase 2 receipt failed closed"
+    },
+    {
+      "scenario": "receipt organization binding",
+      "passed": true,
+      "detail": "foreign or altered Phase 2 receipt failed closed"
+    },
+    {
+      "scenario": "receipt case binding",
+      "passed": true,
+      "detail": "foreign or altered Phase 2 receipt failed closed"
+    },
+    {
+      "scenario": "receipt graph binding",
+      "passed": true,
+      "detail": "foreign or altered Phase 2 receipt failed closed"
+    },
+    {
+      "scenario": "receipt component-version binding",
+      "passed": true,
+      "detail": "foreign or altered Phase 2 receipt failed closed"
+    },
+    {
+      "scenario": "receipt identity binding",
+      "passed": true,
+      "detail": "foreign or altered Phase 2 receipt failed closed"
+    },
+    {
+      "scenario": "result and ledger provenance",
+      "passed": true,
+      "detail": "scope, preregistration, split, receipt, and serialization identities preserved"
+    },
+    {
+      "scenario": "repeated-run and ledger determinism",
+      "passed": true,
+      "detail": "5c4ddb823fe9a3b227b0b22a5f9459a1f49b6fd22506f9164a1fbd7944a5033a"
+    }
+  ],
+  "failures": [],
+  "semanticAdjudicationImplemented": false,
+  "humanReviewExecuted": false,
+  "externalComparativeValidation002Authorized": false,
+  "phase4Authorized": false
+}
