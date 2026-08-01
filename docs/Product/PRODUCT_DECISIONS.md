@@ -1,5 +1,11 @@
 # Discovery Product Decisions
 
+## ProductQuestionWorkspace version 2 is derived and non-persistent
+
+**Decision:** Add deterministic workflow orientation, semantic actions, blocked reasons, and fixture parity as a version-2 projection around the unchanged version-1 workspace. Do not persist a workflow aggregate or let the frontend infer Product meaning from nulls.
+
+**Reason:** Existing canonical owners express the required semantics, while version 1 does not compose later workflow stages for a frontend. The real-operation replay remains blocked because candidate action types are not executors.
+
 **Status:** Canonical decision log
 **Architecture:** [CANONICAL_PRODUCT_ARCHITECTURE.md](./CANONICAL_PRODUCT_ARCHITECTURE.md)
 

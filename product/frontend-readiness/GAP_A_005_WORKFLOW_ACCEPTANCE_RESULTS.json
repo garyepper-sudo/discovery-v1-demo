@@ -1,0 +1,19 @@
+{
+  "classification": "B-O — REAL-OPERATION WORKFLOW REPLAY BLOCKED",
+  "organizationId": "onb-dev-frontend-readiness-001",
+  "questionCreated": true,
+  "independentlyReloaded": true,
+  "authorizedWorkspaceRead": true,
+  "operationRan": false,
+  "blocker": "No canonical local read-only operation executor exists. Candidate action types and action-owner references do not constitute an executor.",
+  "informationProduced": false,
+  "evidenceAdmitted": false,
+  "unknownChanged": false,
+  "answerChanged": false,
+  "understandingChanged": false,
+  "learningRecorded": false,
+  "connectorCalls": 0,
+  "externalActions": 0,
+  "productionOperations": 0,
+  "temporaryRuntimeRemoved": true
+}

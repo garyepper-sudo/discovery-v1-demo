@@ -77,7 +77,7 @@ to every governed connector.
 | Object | Owner | Responsibility | Persistence |
 |---|---|---|---|
 | `ProductQuestion` | `product/questions/` | Stable product identity, lifecycle, current references, histories, timeline | Versioned Question events in existing Organization Runtime memory |
-| `ProductQuestionWorkspace` | `product/workflow/contracts.ts` | Complete frontend boundary for one Question | Projection; not an independent store |
+| `ProductQuestionWorkspace` | `product/workflow/contracts.ts` plus additive version-2 frontend projection | Complete frontend boundary for one Question, including deterministic workflow orientation and semantic actions | Projection; not an independent store |
 | `ProductAnswer` | Product Workflow | Selected specific answer, evidence, uncertainty, improvement, optional decision implication | Referenced by durable Question history |
 | `ProductAnswerConfidence` | Selected answer | Confidence in that exact answer and its principal limiter | Preserved with answer revision reference |
 | `ProductUnknown` | Product Workflow | Stable Question-scoped identity for the exact unresolved limiter | Versioned Question events in existing Organization Runtime memory |

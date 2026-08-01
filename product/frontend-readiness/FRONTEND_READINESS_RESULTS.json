@@ -1,0 +1,48 @@
+{
+  "validation": "product-workflow-frontend-readiness-001",
+  "result": "PASS-WITH-BLOCK",
+  "classification": "B-O — REAL-OPERATION WORKFLOW REPLAY BLOCKED",
+  "contractVersion": "2",
+  "fixtures": 24,
+  "authorizationChecks": 1,
+  "repositoryReads": 1,
+  "payloadBytes": 14064,
+  "disclosedObjectCounts": {
+    "stages": 9,
+    "actions": 14
+  },
+  "unavailableCount": 3,
+  "withheldCount": 0,
+  "deterministicSerializationDigest": "41a67cb3b942b83132ac82a5f599083d5f095cf3dba862ebc078a0c5585405e2",
+  "exactReset": true,
+  "unsupportedSerializationRejected": true,
+  "candidateTypesAreNotExecutors": true,
+  "executorFilesInspected": 388,
+  "replay": {
+    "classification": "B-O — REAL-OPERATION WORKFLOW REPLAY BLOCKED",
+    "organizationId": "onb-dev-frontend-readiness-001",
+    "questionCreated": true,
+    "independentlyReloaded": true,
+    "authorizedWorkspaceRead": true,
+    "operationRan": false,
+    "blocker": "No canonical local read-only operation executor exists. Candidate action types and action-owner references do not constitute an executor.",
+    "informationProduced": false,
+    "evidenceAdmitted": false,
+    "unknownChanged": false,
+    "answerChanged": false,
+    "understandingChanged": false,
+    "learningRecorded": false,
+    "connectorCalls": 0,
+    "externalActions": 0,
+    "productionOperations": 0,
+    "temporaryRuntimeRemoved": true
+  },
+  "hashes": {
+    "selector": "b3b188e3babfaba189b75401804b98017f64671d920d71f042533061a428e25b",
+    "candidateEnvelope": "7de708140a9401e47d6b94ea5029f30340852b58b1dd2951bc515ef3728bcc6d",
+    "confidenceImprovement": "32b3a98fdb65ca55b09ea83bf250f3bd23c1e8b34541d29f5900cea0225cdb8e",
+    "objectiveResolution": "5790b454d15c40f91a1c1b98758fcbcf018a077e4e76830bad2ab675f28976a0",
+    "benchmark001": "6dad658849600abc8fd6a7bd6436a10829767a156813a2c89f0bd42c598af47c",
+    "benchmark002a": "a0a5bdbde1c7ad83a70c2a8c33fbd4f6cb5f4fdd2bd54a70f1ff20752c176778"
+  }
+}

@@ -1,0 +1,21 @@
+# Product Workflow UI/UX Handoff
+
+Canonical story: Question → Understanding → Answer or Unknown → Objective and Context → Recommendation → Human decision → Operation → Outcome → Learning.
+
+The frontend receives `ProductQuestionWorkspaceV2` through one authorized adapter read. Product Workflow owns stage, status, next action, blockers, unavailable/withheld meaning, disposition, and lineage.
+
+## Inputs
+
+- Read: `readFrontendReadyProductQuestionWorkspace` over `CanonicalProductWorkspaceAdapter.getQuestionWorkspace`
+- Fixtures/reset: `workflowReadinessFixtureAdapter`
+- Contract: `product/workflow/frontendReadinessContracts.ts`
+- Catalog: `FRONTEND_WORKFLOW_FIXTURE_CATALOG.md`
+- Matrix: `PRODUCT_WORKFLOW_FRONTEND_STATE_MATRIX.md`
+- Integration: `PRODUCT_WORKFLOW_FRONTEND_INTEGRATION_SPEC.md`
+- Validation: `npm run validate:product-workflow-frontend-readiness-001`
+
+Show current task and primary meaning first. Alternatives, secondary blockers, limitations, source refs, and immutable audit detail use progressive disclosure. Structured meaning is authoritative; optional deterministic presentation is never parsed.
+
+The UI/UX sprint may change information hierarchy, labels, layout, navigation, disclosure, interaction/visual design, responsiveness, and accessibility. It may not change Product meaning, disposition, Question/revision semantics, Evidence lineage, Objective/Context semantics, authorization, governance, unavailable/withheld meaning, immutable history, action ownership, or execution authority.
+
+No canonical executor currently owns `compare-existing-evidence` or `inspect-existing-evidence`. UI may render the blocked state but must not implement execution. No React, CSS, route, or final navigation change is part of this handoff.
