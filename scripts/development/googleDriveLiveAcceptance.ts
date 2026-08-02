@@ -1,4 +1,5 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import os from "node:os";
 import { join } from "node:path";
 
 import {
@@ -9,6 +10,8 @@ import { createDevelopmentGoogleDriveOAuthService } from "../../product/connecto
 import { withLiveSandboxProductAdapter } from "../../product/frontend/liveSandboxProductWorkspaceService";
 import { stableId } from "../../product/workflow/text";
 import { deriveProductUnknownCandidate } from "../../product/unknowns";
+import { synchronizeSandboxDriveCorpus } from "../../product/simulations/living-organization-sandbox/googleDriveCorpus";
+import { SANDBOX_ORGANIZATION_ID, sandboxManifest, type SandboxBatchId } from "../../product/simulations/living-organization-sandbox/manifest";
 
 type Arguments = Record<string, string>;
 
@@ -178,6 +181,63 @@ async function syncFolder() {
     })),
     duplicateContentCandidates,
   });
+}
+
+async function syncSandboxCorpus() {
+  const scope = requiredScope();
+  if (scope.organizationId !== SANDBOX_ORGANIZATION_ID) {
+    throw new Error("Living Organization corpus synchronization requires the exact sandbox organization.");
+  }
+  const connectedFolderId = requireExact(
+    process.env.DISCOVERY_SANDBOX_GOOGLE_DRIVE_CONNECTED_FOLDER_ID ?? "",
+    "DISCOVERY_SANDBOX_GOOGLE_DRIVE_CONNECTED_FOLDER_ID configuration",
+  );
+  const googleFolderId = requireExact(
+    process.env.DISCOVERY_SANDBOX_GOOGLE_DRIVE_FOLDER_ID ?? "",
+    "DISCOVERY_SANDBOX_GOOGLE_DRIVE_FOLDER_ID configuration",
+  );
+  const throughBatch = requireExact(values["through-batch"] ?? "", "manifest batch") as SandboxBatchId;
+  if (!sandboxManifest.batchOrder.includes(throughBatch)) throw new Error("Unknown sandbox corpus batch.");
+  const service = createDevelopmentGoogleDriveOAuthService();
+  const metadataBefore = await metadataRepository.read();
+  const folder = metadataBefore.folders.find(item => item.id === connectedFolderId);
+  if (!folder || folder.sourceId !== scope.sourceId || folder.organizationId !== scope.organizationId || folder.revokedAt) {
+    throw new Error("Exact connected sandbox folder access denied.");
+  }
+  if (folder.googleFolderId !== googleFolderId || folder.includeNested) {
+    throw new Error("Sandbox folder must match the configured non-recursive Google folder exactly.");
+  }
+  const receipt = await service.synchronizeFolder({
+    ...scope,
+    folderId: connectedFolderId,
+    limits: {
+      maxFiles: 32,
+      maxTotalExtractedBytes: 2 * 1024 * 1024,
+      allowedMimeTypes: ["application/vnd.google-apps.document", "text/markdown", "text/plain"],
+    },
+  });
+  const metadata = await metadataRepository.read();
+  const transportFiles = metadata.files.filter(file => file.folderId === connectedFolderId && file.status === "accessible").map(file => {
+    const passages = metadata.passages.filter(passage => passage.googleFileId === file.googleFileId).sort((a,b) => a.location.localeCompare(b.location));
+    if (passages.length !== 1) throw new Error(`Strict sandbox corpus file must extract to exactly one bounded passage: ${file.name}.`);
+    return { driveFileId:file.googleFileId, driveRevisionId:file.revisionId, name:file.name, mimeType:file.mimeType, retrievedAt:file.extractedAt ?? receipt.synchronizedAt, content:passages[0]!.content };
+  });
+  const sandboxRoot = await mkdtemp(join(os.tmpdir(), "discovery-living-organization-sandbox-drive-live-"));
+  let oracleRoot: string | null = null;
+  try {
+    oracleRoot = await mkdtemp(join(os.tmpdir(), "discovery-living-organization-sandbox-drive-oracle-"));
+    const result = await synchronizeSandboxDriveCorpus({
+      environment: process.env.DISCOVERY_ENV ?? "", ...scope,
+      configuredFolderId: googleFolderId, requestedFolderId: googleFolderId,
+      connectedFolderId, includeNested:false, throughBatch, files:transportFiles,
+      sandboxRoot, localOracleRoot:oracleRoot,
+      owner:{ synchronizeFolder: async () => receipt },
+    });
+    await persistReceipt("sync-sandbox-corpus", result);
+  } finally {
+    await rm(sandboxRoot,{recursive:true,force:true});
+    if (oracleRoot) await rm(oracleRoot,{recursive:true,force:true});
+  }
 }
 
 async function createQuestion() {
@@ -460,6 +520,7 @@ const operations: Record<string, () => Promise<void>> = {
   "verify-folder": verifyFolder,
   "connect-folder": connectFolder,
   "sync-folder": syncFolder,
+  "sync-sandbox-corpus": syncSandboxCorpus,
   "create-question": createQuestion,
   "list-questions": listQuestions,
   "search-question": searchQuestion,

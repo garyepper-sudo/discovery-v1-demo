@@ -18,4 +18,16 @@ Commands:
 
 Commands default to an isolated temporary root. A persistent local root requires `--root=/tmp/discovery-living-organization-sandbox-<name>` and remains subject to the same fail-closed checks.
 
-This foundation proves deterministic local corpus identity, bounded reset, canonical local replay, authorized projection, longitudinal checkpoints, negative controls, and exact cleanup. It does not validate Google Drive, organizational recommendation or decision integration, decision review/supersession, report snapshots, PDF export, final UI, autonomous action, or Production readiness. A later Drive task can map the same manifest document identities, versions, hashes, and batches onto the existing governed connector without changing acceptance semantics.
+This foundation proves deterministic local corpus identity, bounded reset, canonical local replay, authorized projection, longitudinal checkpoints, negative controls, and exact cleanup.
+
+## Google Drive acceptance
+
+The same corpus can be transported through the existing governed Google Drive connector in development or sandbox mode. `googleDriveCorpus.ts` adds only a strict sandbox binding and acceptance result; OAuth, encrypted credentials, exact-folder authorization, retrieval, extraction, source versioning, and synchronization receipts remain owned by `product/connectors/google-drive`.
+
+The folder must be one exact configured, non-root, non-recursive folder. Supported acceptance MIME types are `text/plain`, `text/markdown`, and native Google Docs exported as text. A binding uses the logical manifest identity, logical version, normalized-content digest, Drive file and revision identities, retrieval time, manifest effective date, and exact authorization scope. A filename is never sufficient by itself.
+
+Upload Batch 0 and Batch 1 first, then add Batches 2, 3, 4, and the negative controls in manifest order. Strict acceptance rejects unexpected files, digest mismatches, unsupported MIME types, missing documents, broad scope, cross-organization access, more than 32 files, or more than 2 MiB of extracted corpus content. An unchanged synchronization remains read-only and is compared with the local replay using transport-independent checkpoints.
+
+The manual live operation is `npm run google-drive:sync-sandbox-corpus -- --user-id <development-user> --organization-id sandbox-northstar-implementation-services-001 --source-id <connected-source> --through-batch <batch-id>`. It requires the existing development-only `.env.local` connector configuration plus `DISCOVERY_SANDBOX_GOOGLE_DRIVE_CONNECTED_FOLDER_ID` and `DISCOVERY_SANDBOX_GOOGLE_DRIVE_FOLDER_ID`. It emits only the bounded local diagnostic receipt and never prints either configured folder value.
+
+Local Runtime reset remains separate from Drive: it does not upload, modify, move, rename, or delete Drive content. Automatic monitoring, Drive folder reset, multiple-folder synchronization, arbitrary shared-drive support, decision integration, reports, PDF export, final UI, and Production readiness remain unvalidated and deferred.

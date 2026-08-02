@@ -15,12 +15,12 @@ export type SandboxCheckpoint = { batchId: SandboxBatchId; replayTimestamp: stri
 export type SandboxNegativeControlResult = { documentId: string; classification: NonNullable<(typeof sandboxManifest.documents)[number]["negativeControl"]>; contentDuplicate: boolean; candidateCreated: boolean; admitted: boolean; materialChange: boolean };
 export type SandboxReplayResult = { manifestDigest: string; checkpoints: SandboxCheckpoint[]; negativeControls: SandboxNegativeControlResult[]; connectorCalls: 0; networkCalls: 0; externalActions: 0 };
 
-async function sources(batchId: SandboxBatchId, seen: Set<string>) {
+async function sources(batchId: SandboxBatchId, seen: Set<string>, documentContents?: ReadonlyMap<string,string>) {
   const documents = sandboxManifest.documents.filter((item) => item.batchId === batchId);
   const candidates: InvestigationEvidenceSource[] = []; const negativeControls: SandboxNegativeControlResult[] = [];
   let duplicates = 0;
   for (const document of documents) {
-    const content = await readFile(path.join(root,document.relativePath),"utf8");
+    const content = documentContents?.get(document.id) ?? await readFile(path.join(root,document.relativePath),"utf8");
     const contentKey = digest(normalizedContent(content));
     const contentDuplicate = seen.has(contentKey);
     if (document.negativeControl) {
@@ -34,7 +34,7 @@ async function sources(batchId: SandboxBatchId, seen: Set<string>) {
   return { documents, candidates: candidates.sort((left,right)=>left.sourceId.localeCompare(right.sourceId)), duplicates, negativeControls };
 }
 
-export async function runLivingOrganizationSandbox(input: { sandboxRoot: string; throughBatch?: SandboxBatchId }): Promise<SandboxReplayResult> {
+export async function runLivingOrganizationSandbox(input: { sandboxRoot: string; throughBatch?: SandboxBatchId; documentContents?: ReadonlyMap<string,string> }): Promise<SandboxReplayResult> {
   await resetLivingOrganizationSandbox({environment:"sandbox",organizationId:SANDBOX_ORGANIZATION_ID,sandboxRoot:input.sandboxRoot});
   const runtimeDirectory = path.join(input.sandboxRoot,"runtime"); await mkdir(runtimeDirectory,{recursive:true});
   process.env.DISCOVERY_RUNTIME_ORGANIZATIONS_DIRECTORY = runtimeDirectory;
@@ -42,7 +42,7 @@ export async function runLivingOrganizationSandbox(input: { sandboxRoot: string;
   const seen = new Set<string>(); const checkpoints: SandboxCheckpoint[] = []; const negativeControls: SandboxNegativeControlResult[] = [];
   const order = input.throughBatch ? sandboxManifest.batchOrder.slice(0,sandboxManifest.batchOrder.indexOf(input.throughBatch)+1) : sandboxManifest.batchOrder;
   for (const batchId of order) {
-    const batchIndex = sandboxManifest.batchOrder.indexOf(batchId); const loaded = await sources(batchId,seen);
+    const batchIndex = sandboxManifest.batchOrder.indexOf(batchId); const loaded = await sources(batchId,seen,input.documentContents);
     let runtime;
     let result;
     if (loaded.candidates.length) {

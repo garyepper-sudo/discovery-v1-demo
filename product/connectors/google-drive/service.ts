@@ -495,6 +495,7 @@ export class GoogleDriveConnectorService {
     drive: GoogleDriveClient,
     googleFolderId: string,
     includeNested: boolean,
+    maxFiles?: number,
   ): Promise<GoogleDriveFile[]> {
     const result: GoogleDriveFile[] = [];
     const queue = [googleFolderId];
@@ -509,12 +510,17 @@ export class GoogleDriveConnectorService {
           supportsAllDrives: true,
           includeItemsFromAllDrives: true,
           pageToken,
-          pageSize: 1000,
+          pageSize: maxFiles ? Math.min(1000, maxFiles + 1) : 1000,
         });
         for (const file of response.data.files ?? []) {
           if (file.mimeType === "application/vnd.google-apps.folder") {
             if (includeNested && file.id) queue.push(file.id);
-          } else result.push(file);
+          } else {
+            result.push(file);
+            if (maxFiles && result.length > maxFiles) {
+              throw new Error("Google Drive synchronization file-count limit exceeded.");
+            }
+          }
         }
         pageToken = response.data.nextPageToken ?? undefined;
       } while (pageToken);
@@ -527,6 +533,11 @@ export class GoogleDriveConnectorService {
     organizationId: string;
     sourceId: string;
     folderId: string;
+    limits?: {
+      maxFiles: number;
+      maxTotalExtractedBytes: number;
+      allowedMimeTypes: readonly string[];
+    };
   }): Promise<GoogleDriveSynchronizationReceipt> {
     const { metadata, drive } = await this.source(input);
     const folder = metadata.folders.find((item) => item.id === input.folderId);
@@ -535,7 +546,15 @@ export class GoogleDriveConnectorService {
     }
     if (folder.revokedAt) throw new Error("Google Drive folder is disconnected.");
     const synchronizedAt = this.dependencies.now();
-    const files = await this.folderFiles(drive, folder.googleFolderId, folder.includeNested);
+    const files = await this.folderFiles(
+      drive,
+      folder.googleFolderId,
+      folder.includeNested,
+      input.limits?.maxFiles,
+    );
+    if (input.limits && files.length > input.limits.maxFiles) {
+      throw new Error("Google Drive synchronization file-count limit exceeded.");
+    }
     const previous = metadata.files.filter((item) => item.folderId === folder.id);
     const previousById = new Map(previous.map((item) => [item.googleFileId, item]));
     const globalById = new Map(metadata.files.map((item) => [item.googleFileId, item]));
@@ -563,6 +582,7 @@ export class GoogleDriveConnectorService {
       !previous.some((file) => file.googleFileId === item.googleFileId)
     );
     const nextSourceVersions = [...(metadata.sourceVersions ?? [])];
+    let totalExtractedBytes = 0;
     for (const file of files) {
       if (!file.id) continue;
       seen.add(file.id);
@@ -584,6 +604,17 @@ export class GoogleDriveConnectorService {
         nextPassages.push(...metadata.passages.filter((item) => item.googleFileId === file.id));
         continue;
       }
+      if (input.limits && !input.limits.allowedMimeTypes.includes(file.mimeType ?? "")) {
+        receipt.unsupportedFiles.push(file.id);
+        nextFiles.push({
+          sourceIdentity, googleFileId:file.id, folderId:folder.id,
+          name:file.name ?? "Untitled", mimeType:file.mimeType ?? "application/octet-stream",
+          revisionId, modifiedAt:file.modifiedTime ?? synchronizedAt,
+          digest:file.md5Checksum ?? null, status:"unsupported", lastSeenAt:synchronizedAt,
+          extractedAt:null, extractionDigest:null, passageCount:0,
+        });
+        continue;
+      }
       try {
         if (file.mimeType === "application/vnd.google-apps.shortcut") {
           receipt.unsupportedFiles.push(file.id);
@@ -603,6 +634,13 @@ export class GoogleDriveConnectorService {
           extractedAt: synchronizedAt,
           sourceIdentity,
         });
+        totalExtractedBytes += extracted.passages.reduce(
+          (sum, passage) => sum + Buffer.byteLength(passage.content),
+          0,
+        );
+        if (input.limits && totalExtractedBytes > input.limits.maxTotalExtractedBytes) {
+          throw new Error("Google Drive synchronization total extracted-byte limit exceeded.");
+        }
         const extractionDigest = sha256(
           extracted.passages.map((item) => item.contentDigest).join(":"),
         );
@@ -660,6 +698,9 @@ export class GoogleDriveConnectorService {
           nextSourceVersions.push(sourceVersion);
         }
       } catch (error) {
+        if ((error as Error).message === "Google Drive synchronization total extracted-byte limit exceeded.") {
+          throw error;
+        }
         receipt.inaccessibleFiles.push(file.id);
         nextFiles.push({
           sourceIdentity, googleFileId: file.id, folderId: folder.id, name: file.name ?? "Untitled",
