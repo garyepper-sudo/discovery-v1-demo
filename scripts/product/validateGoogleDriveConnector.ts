@@ -346,6 +346,7 @@ async function validateAuth() {
     expired: false,
     userMatch: true,
     organizationMatch: true,
+    purposeMatch: true,
     alreadyConsumed: false,
     finalResult: "valid",
     reason: null,

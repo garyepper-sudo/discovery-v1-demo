@@ -15,6 +15,7 @@ const authorize = read(authorizePath);
 const callback = read(callbackPath);
 const liveDiagnostic = read(diagnosticPath);
 const liveService = read("product/connectors/google-drive/liveOAuthService.ts");
+const eligibility = read("product/connectors/google-drive/developmentEligibility.ts");
 const connector = read("product/connectors/google-drive/service.ts");
 const repositories = read("product/connectors/google-drive/repositories.ts");
 const diagnostic = read("scripts/development/printGoogleDriveLiveConfiguration.ts");
@@ -53,7 +54,7 @@ function validateRoutes(): void {
   assert.match(authorize, /await auth\(\)/);
   assert.match(callback, /await auth\(\)/);
   assert.match(liveDiagnostic, /await auth\(\)/);
-  assert.match(authorize, /isOnboardingTestOrganizationId/);
+  assert.match(authorize, /isGoogleDriveDevelopmentOrganizationEligible/);
   assert.match(authorize, /beginAuthorization/);
   assert.match(callback, /inspectAuthorizationState/);
   assert.match(callback, /completeAuthorization/);
@@ -91,8 +92,8 @@ function validateRoutes(): void {
 
 function validateStart(): void {
   const authIndex = authorize.indexOf("await auth()");
-  const organizationIndex = authorize.indexOf("if (!isOnboardingTestOrganizationId");
-  const connectorIndex = authorize.indexOf("authorization = await createDevelopmentGoogleDriveOAuthService()");
+  const organizationIndex = authorize.indexOf("if (!isGoogleDriveDevelopmentOrganizationEligible");
+  const connectorIndex = authorize.indexOf("authorization = await createDevelopmentGoogleDriveOAuthService(");
   assert.ok(authIndex >= 0 && organizationIndex > authIndex && connectorIndex > organizationIndex);
   assert.match(connector, /expiresAt[\s\S]*10 \* 60_000/);
   assert.match(connector, /GOOGLE_DRIVE_SCOPES/);
@@ -115,7 +116,10 @@ function validateEnvironmentSafety(): void {
   assert.match(liveService, /validateOnboardingTestEnvironment/);
   assert.match(liveService, /environment\.environment !== "development"/);
   assert.match(liveService, /environment\.runtimeStorage !== "filesystem"/);
-  assert.match(liveService, /isOnboardingTestOrganizationId/);
+  assert.match(liveService, /isGoogleDriveDevelopmentOrganizationEligible/);
+  assert.match(liveService, /isGoogleDriveSandboxAcceptanceScope/);
+  assert.match(eligibility, /isOnboardingTestOrganizationId/);
+  assert.match(eligibility, /DISCOVERY_GOOGLE_DRIVE_SANDBOX_ACCEPTANCE_ENABLED/);
   assert.match(liveService, /PostgresAlphaAccessRecordRepository/);
   assert.match(liveService, /findAccessRecords/);
   assert.match(liveService, /EncryptedFileGoogleDriveCredentialRepository/);

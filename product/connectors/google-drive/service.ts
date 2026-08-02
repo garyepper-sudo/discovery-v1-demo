@@ -31,6 +31,11 @@ import {
   googleDriveQuestionAdmissionIdentity,
   googleDriveSourceVersionIdentity,
 } from "./identity";
+import {
+  GOOGLE_DRIVE_DEVELOPMENT_PURPOSE,
+  GOOGLE_DRIVE_SANDBOX_ACCEPTANCE_PURPOSE,
+  type GoogleDriveDevelopmentPurpose,
+} from "./developmentEligibility";
 
 type OperationMetadata = {
   requestId: string;
@@ -68,7 +73,12 @@ export type GoogleDriveConnectorDependencies = {
   credentials: GoogleDriveCredentialRepository;
   metadata: GoogleDriveMetadataRepository;
   productAdapter: GoogleDriveProductAdapter;
-  authorize(input: { userId: string; organizationId: string }): Promise<boolean>;
+  authorize(input: {
+    userId: string;
+    organizationId: string;
+    purpose: GoogleDriveDevelopmentPurpose;
+  }): Promise<boolean>;
+  authorizationPurpose?: GoogleDriveDevelopmentPurpose;
   stateSigningSecret: string;
   authorizationStates: GoogleDriveAuthorizationStateRepository;
   now(): string;
@@ -81,6 +91,7 @@ export type GoogleDriveOAuthStateReason =
   | "expired"
   | "user-mismatch"
   | "organization-mismatch"
+  | "purpose-mismatch"
   | "already-consumed";
 
 export class GoogleDriveOAuthStateError extends Error {
@@ -96,6 +107,7 @@ export type GoogleDriveOAuthStateDiagnostic = {
   expired: boolean;
   userMatch: boolean;
   organizationMatch: boolean;
+  purposeMatch: boolean;
   alreadyConsumed: boolean;
   finalResult: "valid" | "invalid";
   reason: GoogleDriveOAuthStateReason | null;
@@ -158,8 +170,15 @@ export class GoogleDriveConnectorService {
     }
   }
 
+  private authorizationPurpose(): GoogleDriveDevelopmentPurpose {
+    return this.dependencies.authorizationPurpose ?? GOOGLE_DRIVE_DEVELOPMENT_PURPOSE;
+  }
+
   private async authorized(input: { userId: string; organizationId: string }): Promise<void> {
-    if (!await this.dependencies.authorize(input)) {
+    if (!await this.dependencies.authorize({
+      ...input,
+      purpose: this.authorizationPurpose(),
+    })) {
       throw new Error("Google Drive connector access denied.");
     }
   }
@@ -167,6 +186,7 @@ export class GoogleDriveConnectorService {
   inspectAuthorizationState(stateValue: string): {
     userId: string;
     organizationId: string;
+    purpose: GoogleDriveDevelopmentPurpose;
     expiresAt: string;
   } {
     const [payload, signature, ...additional] = stateValue.split(".");
@@ -180,7 +200,7 @@ export class GoogleDriveConnectorService {
     if (!validStateSignature(this.dependencies.stateSigningSecret, payload, signature)) {
       throw new GoogleDriveOAuthStateError("signature-invalid");
     }
-    let state: { userId?: unknown; organizationId?: unknown; expiresAt?: unknown };
+    let state: { userId?: unknown; organizationId?: unknown; purpose?: unknown; expiresAt?: unknown };
     try {
       state = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as typeof state;
     } catch {
@@ -189,6 +209,8 @@ export class GoogleDriveConnectorService {
     if (
       typeof state.userId !== "string"
       || typeof state.organizationId !== "string"
+      || (state.purpose !== undefined && state.purpose !== GOOGLE_DRIVE_DEVELOPMENT_PURPOSE
+        && state.purpose !== GOOGLE_DRIVE_SANDBOX_ACCEPTANCE_PURPOSE)
       || typeof state.expiresAt !== "string"
     ) throw new GoogleDriveOAuthStateError("encoding-invalid");
     if (Date.parse(state.expiresAt) < Date.parse(this.dependencies.now())) {
@@ -197,6 +219,7 @@ export class GoogleDriveConnectorService {
     return {
       userId: state.userId,
       organizationId: state.organizationId,
+      purpose: state.purpose ?? GOOGLE_DRIVE_DEVELOPMENT_PURPOSE,
       expiresAt: state.expiresAt,
     };
   }
@@ -213,6 +236,7 @@ export class GoogleDriveConnectorService {
       expired: false,
       userMatch: false,
       organizationMatch: false,
+      purposeMatch: false,
       alreadyConsumed: false,
       finalResult: "invalid",
       reason: input.state ? "encoding-invalid" : "missing",
@@ -238,11 +262,15 @@ export class GoogleDriveConnectorService {
       && (!stored || stored.userId === input.userId);
     const organizationMatch = state.organizationId === input.organizationId
       && (!stored || stored.organizationId === input.organizationId);
+    const purposeMatch = state.purpose === this.authorizationPurpose()
+      && (!stored || (stored.purpose ?? GOOGLE_DRIVE_DEVELOPMENT_PURPOSE) === this.authorizationPurpose());
     const alreadyConsumed = Boolean(stored?.consumedAt);
     const reason: GoogleDriveOAuthStateReason | null = !userMatch
       ? "user-mismatch"
       : !organizationMatch
         ? "organization-mismatch"
+        : !purposeMatch
+          ? "purpose-mismatch"
         : !stored
           ? "missing"
           : alreadyConsumed
@@ -255,6 +283,7 @@ export class GoogleDriveConnectorService {
       expired: false,
       userMatch,
       organizationMatch,
+      purposeMatch,
       alreadyConsumed,
       finalResult: reason ? "invalid" : "valid",
       reason,
@@ -270,6 +299,7 @@ export class GoogleDriveConnectorService {
     const payload = Buffer.from(JSON.stringify({
       userId: input.userId,
       organizationId: input.organizationId,
+      purpose: this.authorizationPurpose(),
       expiresAt,
       nonce: randomBytes(18).toString("base64url"),
     })).toString("base64url");
@@ -278,6 +308,7 @@ export class GoogleDriveConnectorService {
       stateDigest: sha256(state),
       userId: input.userId,
       organizationId: input.organizationId,
+      purpose: this.authorizationPurpose(),
       issuedAt: this.dependencies.now(),
       expiresAt,
       consumedAt: null,
@@ -301,11 +332,17 @@ export class GoogleDriveConnectorService {
     if (state.organizationId !== input.organizationId) {
       throw new GoogleDriveOAuthStateError("organization-mismatch");
     }
+    if (state.purpose !== this.authorizationPurpose()) {
+      throw new GoogleDriveOAuthStateError("purpose-mismatch");
+    }
     const stored = await this.dependencies.authorizationStates.inspect(sha256(input.state));
     if (!stored) throw new GoogleDriveOAuthStateError("missing");
     if (stored.userId !== input.userId) throw new GoogleDriveOAuthStateError("user-mismatch");
     if (stored.organizationId !== input.organizationId) {
       throw new GoogleDriveOAuthStateError("organization-mismatch");
+    }
+    if ((stored.purpose ?? GOOGLE_DRIVE_DEVELOPMENT_PURPOSE) !== this.authorizationPurpose()) {
+      throw new GoogleDriveOAuthStateError("purpose-mismatch");
     }
     const consumption = await this.dependencies.authorizationStates.consume(
       sha256(input.state),
@@ -359,8 +396,18 @@ export class GoogleDriveConnectorService {
     if (state.organizationId !== input.organizationId) {
       throw new GoogleDriveOAuthStateError("organization-mismatch");
     }
+    if (state.purpose !== this.authorizationPurpose()) {
+      throw new GoogleDriveOAuthStateError("purpose-mismatch");
+    }
     const stored = await this.dependencies.authorizationStates.inspect(sha256(input.state));
     if (!stored) throw new GoogleDriveOAuthStateError("missing");
+    if (stored.userId !== input.userId) throw new GoogleDriveOAuthStateError("user-mismatch");
+    if (stored.organizationId !== input.organizationId) {
+      throw new GoogleDriveOAuthStateError("organization-mismatch");
+    }
+    if ((stored.purpose ?? GOOGLE_DRIVE_DEVELOPMENT_PURPOSE) !== this.authorizationPurpose()) {
+      throw new GoogleDriveOAuthStateError("purpose-mismatch");
+    }
     const consumption = await this.dependencies.authorizationStates.consume(
       sha256(input.state),
       this.dependencies.now(),

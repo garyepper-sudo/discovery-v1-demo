@@ -1,7 +1,11 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-import { isOnboardingTestOrganizationId } from "../../../../../lib/onboarding/testing";
+import {
+  GOOGLE_DRIVE_DEVELOPMENT_PURPOSE,
+  isGoogleDriveDevelopmentOrganizationEligible,
+  type GoogleDriveDevelopmentPurpose,
+} from "../../../../../product/connectors/google-drive/developmentEligibility";
 import { createDevelopmentGoogleDriveOAuthService } from "../../../../../product/connectors/google-drive/liveOAuthService";
 
 export const dynamic = "force-dynamic";
@@ -12,14 +16,20 @@ export async function GET(request: Request): Promise<NextResponse> {
     if (!authentication.userId) {
       return NextResponse.json({ status: "denied", message: "Authentication required." }, { status: 401 });
     }
-    const organizationId = new URL(request.url).searchParams.get("organizationId") ?? "";
-    if (!isOnboardingTestOrganizationId(organizationId)) {
+    const url = new URL(request.url);
+    const organizationId = url.searchParams.get("organizationId") ?? "";
+    const purpose = (url.searchParams.get("purpose") ?? GOOGLE_DRIVE_DEVELOPMENT_PURPOSE) as GoogleDriveDevelopmentPurpose;
+    if (!isGoogleDriveDevelopmentOrganizationEligible({
+      organizationId,
+      userId: authentication.userId,
+      purpose,
+    })) {
       return NextResponse.json(
-        { status: "denied", message: "An exact onboarding development organization is required." },
+        { status: "denied", message: "Exact development connector scope is required." },
         { status: 400 },
       );
     }
-    const authorization = await createDevelopmentGoogleDriveOAuthService()
+    const authorization = await createDevelopmentGoogleDriveOAuthService(undefined, { purpose })
       .beginAuthorization({ userId: authentication.userId, organizationId });
     return NextResponse.redirect(authorization.authorizationUrl, 302);
   } catch (error) {

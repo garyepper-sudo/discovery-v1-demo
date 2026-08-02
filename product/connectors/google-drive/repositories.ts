@@ -33,6 +33,7 @@ export type GoogleDriveAuthorizationStateRecord = {
   stateDigest: string;
   userId: string;
   organizationId: string;
+  purpose?: string;
   issuedAt: string;
   expiresAt: string;
   consumedAt: string | null;
@@ -227,6 +228,7 @@ implements GoogleDriveAuthorizationStateRepository {
               stateDigest: digest,
               userId: "",
               organizationId: "",
+              purpose: "development-connector",
               issuedAt: record,
               expiresAt: record,
               consumedAt: record,

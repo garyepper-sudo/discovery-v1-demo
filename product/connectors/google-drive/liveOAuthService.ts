@@ -6,7 +6,12 @@ import postgres from "postgres";
 import { requireDiscoveryDatabaseUrl } from "../../../db/config";
 import { PostgresAlphaAccessRecordRepository } from "../../../db/governance/postgresRepositories";
 import { validateOnboardingTestEnvironment } from "../../../lib/environment/discoveryEnvironment";
-import { isOnboardingTestOrganizationId } from "../../../lib/onboarding/testing";
+import {
+  GOOGLE_DRIVE_DEVELOPMENT_PURPOSE,
+  isGoogleDriveDevelopmentOrganizationEligible,
+  isGoogleDriveSandboxAcceptanceScope,
+  type GoogleDriveDevelopmentPurpose,
+} from "./developmentEligibility";
 import { GoogleDriveApi } from "./googleApi";
 import { requireGoogleDriveLiveConfiguration } from "./liveConfiguration";
 import {
@@ -31,14 +36,19 @@ const unavailableProductAdapter: GoogleDriveProductAdapter = {
   },
 };
 
-async function authorized(userId: string, organizationId: string): Promise<boolean> {
-  if (!isOnboardingTestOrganizationId(organizationId)) return false;
+async function authorized(input: {
+  userId: string;
+  organizationId: string;
+  purpose: GoogleDriveDevelopmentPurpose;
+}): Promise<boolean> {
+  if (!isGoogleDriveDevelopmentOrganizationEligible(input)) return false;
+  if (isGoogleDriveSandboxAcceptanceScope(input)) return true;
   const sql = postgres(requireDiscoveryDatabaseUrl("application"), { max: 1 });
   try {
     const repository = new PostgresAlphaAccessRecordRepository(sql);
     const records = await repository.findAccessRecords({
-      consumerId: userId,
-      organizationId,
+      consumerId: input.userId,
+      organizationId: input.organizationId,
       experience: "organization",
       resolvedAt: new Date().toISOString(),
     });
@@ -54,6 +64,7 @@ async function authorized(userId: string, organizationId: string): Promise<boole
 
 export function createDevelopmentGoogleDriveOAuthService(
   productAdapter: GoogleDriveProductAdapter = unavailableProductAdapter,
+  options: { purpose?: GoogleDriveDevelopmentPurpose } = {},
 ): GoogleDriveConnectorService {
   const environment = validateOnboardingTestEnvironment();
   if (environment.environment !== "development" || environment.runtimeStorage !== "filesystem") {
@@ -78,7 +89,8 @@ export function createDevelopmentGoogleDriveOAuthService(
       join(storageRoot, "oauth-states.json"),
     ),
     productAdapter,
-    authorize: ({ userId, organizationId }) => authorized(userId, organizationId),
+    authorize: authorized,
+    authorizationPurpose: options.purpose ?? GOOGLE_DRIVE_DEVELOPMENT_PURPOSE,
     stateSigningSecret: configuration.stateSigningSecret,
     now: () => new Date().toISOString(),
   });

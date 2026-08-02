@@ -6,6 +6,7 @@ import {
   FileGoogleDriveMetadataRepository,
   assessGoogleDriveQuestionFreshness,
 } from "../../product/connectors/google-drive";
+import { GOOGLE_DRIVE_SANDBOX_ACCEPTANCE_PURPOSE } from "../../product/connectors/google-drive/developmentEligibility";
 import { createDevelopmentGoogleDriveOAuthService } from "../../product/connectors/google-drive/liveOAuthService";
 import { withLiveSandboxProductAdapter } from "../../product/frontend/liveSandboxProductWorkspaceService";
 import { stableId } from "../../product/workflow/text";
@@ -29,6 +30,14 @@ const sourceId = values["source-id"] ?? "";
 const storageRoot = join(process.cwd(), ".discovery-runtime", "onboarding-google-drive");
 const metadataRepository = new FileGoogleDriveMetadataRepository(join(storageRoot, "metadata.json"));
 const receiptPath = join(storageRoot, "live-acceptance-receipt.json");
+
+function googleDriveService(adapter?: Parameters<typeof createDevelopmentGoogleDriveOAuthService>[0]) {
+  return createDevelopmentGoogleDriveOAuthService(adapter, {
+    purpose: organizationId === SANDBOX_ORGANIZATION_ID
+      ? GOOGLE_DRIVE_SANDBOX_ACCEPTANCE_PURPOSE
+      : undefined,
+  });
+}
 
 function requireExact(value: string, name: string): string {
   if (!value.trim()) throw new Error(`Exact ${name} is required.`);
@@ -56,7 +65,7 @@ async function persistReceipt(operation: string, result: unknown) {
 
 async function status() {
   const scope = requiredScope();
-  const folders = await createDevelopmentGoogleDriveOAuthService().listAuthorizedFolders({
+  const folders = await googleDriveService().listAuthorizedFolders({
     ...scope,
     exactFolderName: values["folder-name"],
   });
@@ -80,7 +89,7 @@ async function status() {
 async function listFolders() {
   const scope = requiredScope();
   const exactFolderName = requireExact(values["folder-name"] ?? "", "folder name");
-  const folders = await createDevelopmentGoogleDriveOAuthService().listAuthorizedFolders({
+  const folders = await googleDriveService().listAuthorizedFolders({
     ...scope,
     exactFolderName,
   });
@@ -105,7 +114,7 @@ async function connectFolder() {
   if (googleFolderId.includes("?") || googleFolderId.includes("&")) {
     throw new Error("Google folder ID must be the opaque identifier without URL query parameters.");
   }
-  const folder = await createDevelopmentGoogleDriveOAuthService().connectFolder({
+  const folder = await googleDriveService().connectFolder({
     ...scope,
     googleFolderId,
     includeNested: values["include-nested"] === "true",
@@ -127,7 +136,7 @@ async function verifyFolder() {
   if (googleFolderId.includes("?") || googleFolderId.includes("&")) {
     throw new Error("Google folder ID must be the opaque identifier without URL query parameters.");
   }
-  const folder = await createDevelopmentGoogleDriveOAuthService().inspectAuthorizedFolder({
+  const folder = await googleDriveService().inspectAuthorizedFolder({
     ...scope,
     googleFolderId,
   });
@@ -143,7 +152,7 @@ async function verifyFolder() {
 async function syncFolder() {
   const scope = requiredScope();
   const folderId = requireExact(values["folder-id"] ?? "", "connected folder ID");
-  const receipt = await createDevelopmentGoogleDriveOAuthService().synchronizeFolder({
+  const receipt = await googleDriveService().synchronizeFolder({
     ...scope,
     folderId,
   });
@@ -198,7 +207,7 @@ async function syncSandboxCorpus() {
   );
   const throughBatch = requireExact(values["through-batch"] ?? "", "manifest batch") as SandboxBatchId;
   if (!sandboxManifest.batchOrder.includes(throughBatch)) throw new Error("Unknown sandbox corpus batch.");
-  const service = createDevelopmentGoogleDriveOAuthService();
+  const service = googleDriveService();
   const metadataBefore = await metadataRepository.read();
   const folder = metadataBefore.folders.find(item => item.id === connectedFolderId);
   if (!folder || folder.sourceId !== scope.sourceId || folder.organizationId !== scope.organizationId || folder.revokedAt) {
@@ -304,7 +313,7 @@ async function searchQuestion() {
     userId: scope.userId,
     organizationId: scope.organizationId,
     operation: async (adapter) => {
-      const result = await createDevelopmentGoogleDriveOAuthService(adapter).searchFolder({
+      const result = await googleDriveService(adapter).searchFolder({
         ...scope,
         folderIds: [folderId],
         questionId,
@@ -510,7 +519,7 @@ async function revoke() {
   if (values.confirm !== "REVOKE") {
     throw new Error("Revocation requires --confirm REVOKE.");
   }
-  const receipt = await createDevelopmentGoogleDriveOAuthService().disconnectFolder(scope);
+  const receipt = await googleDriveService().disconnectFolder(scope);
   await persistReceipt("revoke", receipt);
 }
 

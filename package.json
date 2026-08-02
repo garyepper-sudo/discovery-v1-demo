@@ -171,6 +171,7 @@
     "validate:workflow-acceptance-spec": "tsx scripts/product/validateGoogleDriveConnector.ts spec",
     "validate:pre-wireframe-gap-roadmap": "tsx scripts/product/validateGoogleDriveConnector.ts roadmap",
     "validate:google-drive-auth-boundary": "tsx scripts/product/validateGoogleDriveConnector.ts auth",
+    "validate:google-drive-organization-binding": "node --conditions=react-server --import tsx scripts/product/validateGoogleDriveOrganizationBinding.ts",
     "validate:google-drive-folder-scope": "tsx scripts/product/validateGoogleDriveConnector.ts scope",
     "validate:google-drive-token-security": "tsx scripts/product/validateGoogleDriveConnector.ts security",
     "validate:google-drive-sync": "tsx scripts/product/validateGoogleDriveConnector.ts sync",

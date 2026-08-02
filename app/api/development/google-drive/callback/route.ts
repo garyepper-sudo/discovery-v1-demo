@@ -48,8 +48,9 @@ export async function GET(request: Request): Promise<NextResponse> {
           { status: 400 },
         );
       }
-      const service = createDevelopmentGoogleDriveOAuthService();
-      const state = service.inspectAuthorizationState(stateValue);
+      const inspector = createDevelopmentGoogleDriveOAuthService();
+      const state = inspector.inspectAuthorizationState(stateValue);
+      const service = createDevelopmentGoogleDriveOAuthService(undefined, { purpose: state.purpose });
       stateDiagnostic = await service.diagnoseAuthorizationState({
         userId: authentication.userId,
         organizationId: state.organizationId,
@@ -72,8 +73,9 @@ export async function GET(request: Request): Promise<NextResponse> {
         { status: 400 },
       );
     }
-    const service = createDevelopmentGoogleDriveOAuthService();
-    const state = service.inspectAuthorizationState(stateValue);
+    const inspector = createDevelopmentGoogleDriveOAuthService();
+    const state = inspector.inspectAuthorizationState(stateValue);
+    const service = createDevelopmentGoogleDriveOAuthService(undefined, { purpose: state.purpose });
     stateDiagnostic = await service.diagnoseAuthorizationState({
       userId: authentication.userId,
       organizationId: state.organizationId,
@@ -113,6 +115,7 @@ export async function GET(request: Request): Promise<NextResponse> {
         expired: stateDiagnostic?.expired ?? error.reason === "expired",
         userMatch: stateDiagnostic?.userMatch ?? false,
         organizationMatch: stateDiagnostic?.organizationMatch ?? false,
+        purposeMatch: stateDiagnostic?.purposeMatch ?? false,
         alreadyConsumed: stateDiagnostic?.alreadyConsumed ?? error.reason === "already-consumed",
         finalResult: "invalid",
         reason: error.reason,
