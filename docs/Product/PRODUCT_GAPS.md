@@ -93,12 +93,14 @@ single-user Google Drive replay does not require them:
   authorization beyond the exact-user acceptance replay.
 - `GAP-B-015`, `GAP-B-016`: broader answer and industry validation.
 
-The live-validated Living Organization Drive slice does not close
-`GAP-B-012`–`GAP-B-014`. The next synthetic, benchmark-only multi-role scoped
-Understanding and governance task investigates those gaps using one canonical
-governed model with permission-safe role projections. It must distinguish a
-bounded missing implementation from an architecture mismatch before any
-production correction is authorized.
+The live-validated Living Organization Drive slice did not close
+`GAP-B-012`–`GAP-B-014`. The canonical multi-role benchmark preserved one
+governed model and identified six bounded dependencies. Foundational contracts
+now represent scoped disclosure (`GAP-MR-001`), current-policy historical
+visibility (`GAP-MR-002`), and scoped contribution before Evidence
+candidate/admission (`GAP-MR-003`). Role Product projection (`GAP-MR-004`),
+authorized metric lineage (`GAP-MR-005`), and scoped decision-calibration
+projection (`GAP-MR-006`) remain open; role-aware frontend work remains blocked.
 
 Production and research gaps retain their existing classifications. Connector
 retrieval does not silently promote autonomous reevaluation, notification,

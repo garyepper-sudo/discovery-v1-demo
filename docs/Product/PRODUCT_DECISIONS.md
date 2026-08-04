@@ -530,3 +530,32 @@ Changing one requires the process in
   execution port, frontend path, or Production activation was added.
 - **Status:** Active; selector activation remains blocked pending independent,
   outcome-backed live calibration.
+
+## DEC-PROD-030 — Scoped governance is shared context, not role-owned truth
+
+- **Decision:** Direct and derived Understanding disclosure, current-policy
+  historical visibility, and Product Evidence contribution share one
+  deterministic server-resolved governance context. It binds exact
+  organization, subject, scope, operation/purpose, sensitivity, time, temporal
+  mode, and current authority. Role labels and reporting hierarchy do not
+  authorize access, promote contributions, or establish Evidence quality.
+- **Reason:** The canonical multi-role benchmark supported one-model/multiple
+  projection architecture but found incomplete scoped disclosure, historical
+  visibility, and contribution contracts (GAP-MR-001 through GAP-MR-003).
+- **Alternatives considered:** Role-specific models; frontend filtering;
+  creation-time historical authorization; cached projection IDs as access;
+  contribution that directly appends Evidence; hierarchy-based promotion.
+- **Why rejected:** Each alternative duplicates truth or authorization,
+  permits derived leakage, weakens revocation, or bypasses canonical Evidence
+  and Runtime owners.
+- **Consequences:** Scoped disclosure evaluates safe lineage before
+  serialization. Historical reads re-evaluate current authority without
+  rewriting history. Contribution evaluation creates no Evidence candidate,
+  performs no admission, and causes no autonomous propagation. No Runtime
+  migration is required. Product projection, authorized metric lineage, and
+  decision-calibration projection remain separate open work.
+- **Affected phase:** Discovery 2 production integration.
+- **Affected gaps:** GAP-B-012 through GAP-B-014 and benchmark dependencies
+  GAP-MR-001 through GAP-MR-006.
+- **Status:** Active; foundational contracts implemented, downstream projection
+  work blocked.

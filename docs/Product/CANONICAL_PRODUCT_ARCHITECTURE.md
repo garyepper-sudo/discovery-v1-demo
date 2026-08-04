@@ -206,6 +206,29 @@ Canonical Evidence + Organization Runtime + Understanding history
 Role-specific disclosure must not create separate truth, cognition, Runtime,
 confidence, lineage, history, persistence, or organization-identity owners.
 
+## Shared scoped governance boundary
+
+Scoped disclosure, historical visibility, and contribution use one versioned,
+server-resolved governance context. It binds exact organization and subject
+identity to an exact requested scope, operation/purpose, sensitivity,
+evaluation time, temporal mode, and current authority/policy references.
+Role labels and reporting hierarchy are not authorization and do not determine
+Evidence quality.
+
+The canonical Understanding disclosure owner evaluates direct and derived
+support lineage before serialization and distinguishes disclosed, safely
+abstracted, withheld, unavailable, and insufficient-authorized-information
+results. Restricted support identifiers are absent from withheld decisions.
+Historical reads re-evaluate current authority before loading retained content;
+creation-time authority and cached projection identifiers are not access
+tokens, and immutable canonical history is not rewritten.
+
+Scoped Product contribution evaluation remains separate from Evidence
+candidacy, canonical Evidence admission, and Organizational Understanding.
+Contribution results may retain content locally or mark it eligible for
+governed consideration, but create no Evidence, perform no admission, propagate
+nothing autonomously, and change no canonical Understanding.
+
 ## Answer and confidence ownership
 
 - The backend selects one current Answer or explicitly abstains.
