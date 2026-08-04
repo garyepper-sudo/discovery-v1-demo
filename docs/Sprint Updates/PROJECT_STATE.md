@@ -1,22 +1,25 @@
 # Discovery Project State
 
-**Branch:** `main`
+**Drive integration baseline:**
+`39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** frontend-ready Product workflow handoff
+**Current phase:** live-validated Living Organization vertical slice; scoped
+multi-role governance benchmark readiness
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
 
 ## Current Milestone
 
-Product Workflow Frontend Readiness is complete and classified
-**A — PRODUCT WORKFLOW FRONTEND READINESS VALIDATED**. GAP-A-005 is closed and
-recorded as `GAP-R-011` after a real canonical local-operation replay.
+The Living Organization Google Drive corpus integration is complete,
+live-validated, and integrated into `origin/main`. The retained sandbox uses
+organization `sandbox-northstar-implementation-services-001`, six semantic
+batches, sixteen documents, and five negative controls.
 
 ## Current Phase
 
-Frontend-ready Product workflow handoff. The backend architecture required for
-UI/UX design is complete; frontend implementation has not started.
+Benchmark readiness for multi-role scoped Understanding and governance.
+Frontend implementation remains not started.
 
 ## Current Product State
 
@@ -36,28 +39,35 @@ UI/UX design is complete; frontend implementation has not started.
   recommendation change.
 - Learning: truthful no-change projection.
 - Frontend implementation: not started.
-- External action, connector execution, selector activation, and Production
-  activation: blocked.
+- Governed Drive integration: one exact private/non-root/non-recursive folder;
+  manual incremental synchronization; read-only connector; strict MIME,
+  file-count, byte, and digest validation.
+- Live sequence: `5/5/0`, `7/2/5`, `9/2/7`, `16/7/9`, `16/0/16`
+  (`files/new/unchanged`); parity passed and mismatch lists were empty.
+- Validate-before-persist, exact identity binding, recursive OAuth/log
+  redaction, negative controls, and unchanged retry: validated.
+- Final 16-file sandbox Runtime and semantic state: retained.
+- Automatic watching, recursive/multiple folders, connector writes, other
+  connectors, selector activation, and Production activation: blocked.
 
 ## Current Objective
 
-Prepare the canonical Product Workflow contract and deterministic state system
-for a dedicated UI/UX design sprint without changing Product meaning or
-execution authority.
+Evaluate whether the existing backend supports one shared canonical governed
+Organizational Understanding model with materially different, permission-safe
+role projections, without changing production behavior.
 
 ## Next Priority
 
-**DISCOVERY PRODUCT WORKFLOW UI/UX DESIGN 001**
+**DISCOVERY MULTI-ROLE SCOPED UNDERSTANDING AND GOVERNANCE BENCHMARK 001**
 
-The sprint may design hierarchy, labels, layout, navigation, progressive
-disclosure, interactions, visual treatment, accessibility, and responsive
-behavior. It must render Product-owned contracts and must not infer workflow
-eligibility, interpret Runtime or cognition, execute source logic, or alter
-canonical semantics.
+Use a separate branch/worktree and only synthetic users, scopes, Evidence,
+decisions, and permissions. Connector calls, Drive reads/writes, network calls,
+Production access, deployment, and canonical backend corrections remain zero.
+Classify bounded missing implementation separately from architecture mismatch.
 
-The twenty-four V2 fixtures are approved as this design and future frontend
-acceptance surface. Their orientation is derived from coherent canonical
-nested state; it is not fixture-authored substitute meaning.
+After the benchmark and any proven narrow correction, resume Product work with
+**DISCOVERY LIVING ORGANIZATION MODEL, INSIGHT, AND INFORMATION REQUEST PRODUCT
+PROJECTION 001**.
 
 ## Canonical implementation boundary
 

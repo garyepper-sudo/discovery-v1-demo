@@ -93,6 +93,13 @@ single-user Google Drive replay does not require them:
   authorization beyond the exact-user acceptance replay.
 - `GAP-B-015`, `GAP-B-016`: broader answer and industry validation.
 
+The live-validated Living Organization Drive slice does not close
+`GAP-B-012`–`GAP-B-014`. The next synthetic, benchmark-only multi-role scoped
+Understanding and governance task investigates those gaps using one canonical
+governed model with permission-safe role projections. It must distinguish a
+bounded missing implementation from an architecture mismatch before any
+production correction is authorized.
+
 Production and research gaps retain their existing classifications. Connector
 retrieval does not silently promote autonomous reevaluation, notification,
 monitoring, enterprise authorization, or experimental cognition.

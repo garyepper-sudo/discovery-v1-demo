@@ -6,6 +6,27 @@ Generated: 2026-07-31T20:42:07.380Z
 
 This document is the canonical architecture handoff for beginning a new Discovery sprint or chat.
 
+## Current Living Organization integration handoff
+
+The read-only Google Drive vertical slice is live-validated and integrated at
+baseline `39420f200e5789f223795d8f4b918d9814d16e04`. It binds one exact
+development user, organization, source, and non-recursive folder to sandbox
+`sandbox-northstar-implementation-services-001`; validates before persistence;
+and preserves source identity separately from transport identity. Six semantic
+batches, sixteen documents, five negative controls, deterministic reset/replay,
+exact cleanup, retained final state, and transport-independent parity passed.
+
+The integration composes existing owners: `CAP-PER-001` for Evidence,
+`CAP-UND-006` for governed Understanding, `CAP-MEM-001` for Runtime
+persistence, `CAP-LRN-001`/`CAP-LRN-002` for learning and history, and
+`CAP-SELF-002` for investigation opportunities. It creates no second cognition,
+Runtime, history, confidence, lineage, organization-identity, or Product owner.
+
+The next task is **DISCOVERY MULTI-ROLE SCOPED UNDERSTANDING AND GOVERNANCE
+BENCHMARK 001**. It must test one canonical governed model with materially
+different permission-safe role projections, benchmark-only with synthetic data
+and zero Drive, connector, network, Production, or deployment access.
+
 Before proposing a new capability, use this document to verify whether the responsibility, cognitive object, canonical producer, Runtime destination, or executive destination already exists.
 
 ## Permanent Development Rule

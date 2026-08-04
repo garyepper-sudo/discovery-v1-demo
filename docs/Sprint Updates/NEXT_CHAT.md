@@ -2,83 +2,81 @@
 
 ## Exact next task
 
-Begin **DISCOVERY PRODUCT WORKFLOW UI/UX DESIGN 001**.
+Begin **DISCOVERY MULTI-ROLE SCOPED UNDERSTANDING AND GOVERNANCE BENCHMARK
+001** from the exact synchronized `origin/main`, in a separate branch and
+worktree.
 
-Do not begin frontend implementation until the design is reviewed. Do not
-change Product meaning, backend contracts, Runtime, cognition, authorization,
-governance, action ownership, or execution authority.
+This is a synthetic, benchmark-only investigation. Connector calls, live
+Google Drive access, network calls, Production access, deployment, and
+production corrections remain zero. Distinguish a bounded implementation gap
+from an architecture mismatch; do not assume either in advance.
 
 ## Read first
 
 1. `AGENTS.md`
 2. `docs/Product/PRODUCT_GOVERNANCE.md`
-3. `docs/Product/CANONICAL_PRODUCT_ARCHITECTURE.md`
-4. `docs/Product/PRODUCT_WORKFLOW_FRONTEND_STATE_MATRIX.md`
-5. `docs/Product/PRODUCT_WORKFLOW_FRONTEND_INTEGRATION_SPEC.md`
-6. `docs/Product/PRODUCT_WORKFLOW_UI_UX_HANDOFF.md`
-7. `docs/Product/FRONTEND_WORKFLOW_FIXTURE_CATALOG.md`
-8. `docs/Sprint Updates/DISCOVERY_SNAPSHOT.md`
-9. `docs/Sprint Updates/PROJECT_STATE.md`
+3. `docs/Product/PRODUCT_CANON.md`
+4. `docs/Product/CANONICAL_PRODUCT_ARCHITECTURE.md`
+5. `docs/Product/PRODUCT_GAPS.md`
+6. `docs/Architecture/Cognitive Capability Registry.md`
+7. `docs/Sprint Updates/DISCOVERY_SNAPSHOT.md`
+8. `docs/Sprint Updates/PROJECT_STATE.md`
 
 Inspect branch, HEAD, upstream, staging, and complete working-tree state before
-acting. Use the clean Product worktree and create a new branch from
-`origin/main`.
+acting. Do not consume or modify the preserved research worktree.
 
 ## Canonical current state
 
-- GAP-A-005 is closed as `GAP-R-011`.
-- Product Workflow Frontend Readiness is Classification A.
-- `ProductQuestionWorkspaceV2` contract version `2` is the frontend boundary.
-- It contains 9 stages, 14 semantic actions, and 24 deterministic fixtures.
-- All 24 fixtures instantiate their claimed canonical nested V2 state; semantic coherence and exact reset pass.
-- Workspace loading performs 1 authorized repository read.
-- Exact fixture reset and real-operation replay pass.
-- `inspect-existing-evidence` is implemented.
-- `compare-existing-evidence` remains blocked.
-- The replay produced information but no Evidence candidate or admission and
-  no Unknown, Answer, Understanding, or recommendation change.
-- Learning truthfully reports no cognitive change.
-- Frontend wiring has not started.
+- The Living Organization Drive slice was integrated at baseline
+  `39420f200e5789f223795d8f4b918d9814d16e04`.
+- Its exact sandbox is `sandbox-northstar-implementation-services-001`.
+- Six semantic batches contain sixteen canonical Markdown documents and five
+  negative controls.
+- Reset, replay, exact cleanup, retained state, validate-before-persist, exact
+  development identity binding, and recursive credential/log redaction pass.
+- Live sync rows were `5/5/0`, `7/2/5`, `9/2/7`, `16/7/9`, and `16/0/16`
+  (`files/new/unchanged`). Every transport-independent parity check passed and
+  every mismatch list was empty.
+- Sync 5 retained the Sync 4 checkpoint. Drive writes, Production access, raw
+  Runtime disclosure, and credential leakage were zero.
+- The retained final sandbox contains all sixteen files and its canonical
+  Evidence, Runtime, Understanding history, contradictions, investigation
+  opportunities, receipt, and checkpoint.
 
-The twenty-four fixtures are approved as the UI/UX design and frontend
-acceptance coverage surface. Do not replace their Product-owned state with
-frontend inference or orientation-only display logic.
+## Benchmark governing principle
 
-## Design authority
+Discovery has one canonical governed Organizational Understanding model, not
+one truth model per role. Authorized role and scope projections may disclose
+materially different bounded views of that model:
 
-The UI/UX sprint may change information hierarchy, labels, layout, navigation,
-progressive disclosure, interaction and visual design, accessibility, and
-responsive behavior.
+```text
+Canonical Evidence + Organization Runtime + Understanding history
+→ authorization before retrieval
+→ role/scope-safe Product projection
+```
 
-It may not change ProductQuestion semantics, Product meaning, Evidence
-lineage, Answer or Unknown truthfulness, Objective or Optimization Context
-semantics, recommendation disposition, authorization, governance, unavailable
-or withheld meaning, immutable history, action ownership, or execution
-authority.
+Reuse the existing identity, authorization, Evidence, Runtime, Understanding,
+history, confidence, and lineage owners. Do not create duplicate persistence,
+organization identity, product meaning, confidence ownership, lineage, or a
+parallel cognitive pipeline.
 
-The frontend must consume the Product-owned V2 contract and server-owned
-semantic action surface. It must not inspect Runtime or cognition, infer
-eligibility from candidate presence, call the internal operation adapter
-directly, or execute source logic.
+## Benchmark boundaries
 
-## Frozen and prohibited work
+Use only synthetic users, roles, scopes, Evidence, decisions, permissions, and
+expected disclosures. Test contribution attribution, non-influence by
+unauthorized Evidence, distinct authorized perspectives, revocation, withheld
+meaning, deterministic replay, and idempotency. Preserve canonical cognition
+and benchmark behavior unless evidence proves a narrow correction is required.
 
-Recommendation and Organizational Understanding Evaluator development are
-frozen by default. Human communication feedback is deferred until frontend
-completion. Selector activation, connector execution, external action,
-autonomous behavior, Production activation, and deployment remain prohibited.
+## Subsequent Product task
 
-The original research worktree contains preserved unapproved evaluator Phase
-4–5 and related research drafts. Do not clean, merge, or consume it.
+After benchmark closure and any evidence-proven narrow correction, begin
+**DISCOVERY LIVING ORGANIZATION MODEL, INSIGHT, AND INFORMATION REQUEST PRODUCT
+PROJECTION 001**.
 
-## Copy-paste startup prompt
+## Explicitly deferred
 
-> Begin DISCOVERY PRODUCT WORKFLOW UI/UX DESIGN 001 from the clean Product
-> worktree and current `origin/main`. Design the information hierarchy,
-> navigation, progressive disclosure, interactions, visual system,
-> accessibility, and responsive behavior for `ProductQuestionWorkspaceV2`.
-> Preserve all Product-owned semantics, exact unavailable/withheld states,
-> immutable lineage, server-owned eligibility, and action authority. Use the
-> twenty-four deterministic fixtures and exact reset. Do not implement React,
-> change backend contracts, activate selectors or connectors, perform external
-> action, modify Production, deploy, or consume the dirty research worktree.
+Automatic Drive watching, recursive or multiple folders, Drive writes, Slack
+and other connectors, Production, recommendation/decision integration,
+decision-impact review, frozen report snapshots, PDF export, and final frontend
+implementation remain deferred.

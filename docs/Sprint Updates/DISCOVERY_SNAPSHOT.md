@@ -1,8 +1,9 @@
 # Discovery Startup Snapshot
 
-**Current milestone:** Product Workflow Frontend Readiness is complete and
-validated. GAP-A-005 is closed and retained as resolved ledger entry
-`GAP-R-011`.
+**Current milestone:** The Living Organization Google Drive vertical slice is
+complete, live-validated, and integrated at the Drive integration baseline
+`39420f200e5789f223795d8f4b918d9814d16e04`. Product Workflow Frontend
+Readiness remains complete; GAP-A-005 remains closed as `GAP-R-011`.
 
 Discovery is a governed organizational learning and intelligence system. Its
 persistent state is organizational understanding; Product Workflow operations
@@ -40,30 +41,56 @@ and read-only; recommendation development is frozen by default.
 ## Current boundaries
 
 - Frontend implementation and wiring have not started.
-- External action and connector execution are prohibited.
+- The governed Google Drive owner supports one manually synchronized, exact,
+  non-recursive, read-only folder in local development. Discovery performs no
+  Drive writes.
 - Selector activation and Production activation remain blocked.
 - Human communication feedback is deferred until the frontend is complete.
 - The Organizational Understanding Evaluator is frozen at its preserved
   checkpoint; no semantic adjudication or score activation is current work.
-- No remaining backend architecture work blocks the dedicated UI/UX design
-  phase.
+- Automatic watching, recursive or multiple-folder synchronization, Slack or
+  other connectors, Production readiness, recommendation/decision integration,
+  decision-impact review, frozen report snapshots, PDF export, and the final
+  frontend remain deferred.
+
+## Live-validated Living Organization slice
+
+The canonical sandbox organization is
+`sandbox-northstar-implementation-services-001`. Its six semantic batches
+contain sixteen canonical Markdown documents and five negative controls.
+Deterministic reset/replay, exact cleanup, transport-independent semantic
+parity, and strict validate-before-persist behavior are proven. The retained
+final sandbox contains all sixteen files plus its canonical Runtime, Evidence,
+Understanding history, contradictions, investigation opportunities, receipt,
+and checkpoint.
+
+| Sync | Files | New | Unchanged | Parity |
+|---|---:|---:|---:|---|
+| 1 | 5 | 5 | 0 | PASS |
+| 2 | 7 | 2 | 5 | PASS |
+| 3 | 9 | 2 | 7 | PASS |
+| 4 | 16 | 7 | 9 | PASS |
+| 5 | 16 | 0 | 16 | PASS |
+
+Every mismatch list was empty, all five negative controls passed, Sync 5
+retained the Sync 4 checkpoint, Drive writes and Production access were zero,
+and no raw Runtime or credential value was disclosed.
 
 ## Next canonical phase
 
-**DISCOVERY PRODUCT WORKFLOW UI/UX DESIGN 001**
+**DISCOVERY MULTI-ROLE SCOPED UNDERSTANDING AND GOVERNANCE BENCHMARK 001**
 
-The sprint may change information hierarchy, labels, layout, navigation,
-progressive disclosure, interaction and visual design, accessibility, and
-responsive behavior. It may not change Product meaning, ProductQuestion
-semantics, Evidence lineage, Answer or Unknown truthfulness, Objective or
-Optimization Context semantics, recommendation disposition, authorization,
-governance, unavailable or withheld meaning, immutable history, action
-ownership, or execution authority.
+Run it benchmark-only in a separate branch/worktree from the exact synchronized
+`origin/main`, using synthetic users, scopes, Evidence, decisions, and
+permissions with zero connector, live Drive, network, or Production access.
+It must test one canonical governed Organizational Understanding model with
+materially different permission-safe projections and distinguish bounded
+implementation gaps from architecture mismatch.
 
-Start from `ProductQuestionWorkspaceV2`, the canonical Product workspace read,
-the server-owned semantic action surface, the twenty-four fixtures, exact
-reset, the frontend state matrix, integration specification, UI/UX handoff,
-and fixture catalog.
+After the benchmark and any evidence-proven narrow correction, Product work
+resumes with **DISCOVERY LIVING ORGANIZATION MODEL, INSIGHT, AND INFORMATION
+REQUEST PRODUCT PROJECTION 001**. No production correction is authorized in
+advance of benchmark evidence.
 
 ## Worktree boundary
 

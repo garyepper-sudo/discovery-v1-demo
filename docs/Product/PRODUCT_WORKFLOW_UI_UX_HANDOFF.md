@@ -1,6 +1,10 @@
 # Product Workflow UI/UX Handoff
 
-**Next canonical phase:** DISCOVERY PRODUCT WORKFLOW UI/UX DESIGN 001
+**Current sequence:** First run **DISCOVERY MULTI-ROLE SCOPED UNDERSTANDING AND
+GOVERNANCE BENCHMARK 001**. Then, after benchmark closure and any proven narrow
+correction, run **DISCOVERY LIVING ORGANIZATION MODEL, INSIGHT, AND INFORMATION
+REQUEST PRODUCT PROJECTION 001**. Final frontend implementation remains
+deferred.
 
 Canonical story: Question → Understanding → Answer or Unknown → Objective and Context → Recommendation → Human decision → Operation → Outcome → Learning.
 
@@ -24,4 +28,7 @@ The UI/UX sprint may change information hierarchy, labels, layout, navigation, d
 
 Product Confidence Improvement now owns exact local `inspect-existing-evidence` execution. The UI may submit only the enabled semantic action and render the returned operation, Outcome, and Learning states; it must not inspect Evidence, reconstruct eligibility, or execute source logic. `compare-existing-evidence` remains blocked as unimplemented. No React, CSS, route, or final navigation change is part of this backend sprint.
 
-V2 React implementation remains not started. The next canonical phase remains **DISCOVERY PRODUCT WORKFLOW UI/UX DESIGN 001**.
+V2 React implementation remains not started. This handoff and its twenty-four
+fixtures remain the preserved frontend readiness contract; they do not
+authorize frontend implementation ahead of the scoped governance benchmark and
+Living Organization Product projection.

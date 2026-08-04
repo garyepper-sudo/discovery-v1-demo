@@ -45,7 +45,10 @@ flowchart TD
   I --> Q
 ```
 
-Search includes manual contribution until a governed connector is available.
+Search supports manual contribution and one governed Google Drive connector
+for an exact development user, sandbox organization, source, and
+private/non-root/non-recursive folder. Synchronization is manual, incremental,
+read-only, and validate-before-persist; it performs no Drive writes.
 Evidence admission and cognition remain authoritative upstream. Product
 contracts project that authority; they do not recreate it.
 
@@ -192,6 +195,17 @@ Canonical cognition and Runtime
 Dependencies must never point back from engine or Runtime into product or
 presentation code.
 
+All authorized people and roles project from one canonical governed model:
+
+```text
+Canonical Evidence + Organization Runtime + Understanding history
+→ authorization before retrieval
+→ role/scope-safe Product projection
+```
+
+Role-specific disclosure must not create separate truth, cognition, Runtime,
+confidence, lineage, history, persistence, or organization-identity owners.
+
 ## Answer and confidence ownership
 
 - The backend selects one current Answer or explicitly abstains.
@@ -252,3 +266,12 @@ Source removal or revocation removes current retrieval authority while
 preserving historical Evidence ancestry. Source modification and
 synchronization timestamps may support bounded Question freshness; Runtime
 update time may not.
+
+The current Google Drive implementation keeps stable source identity separate
+from transport-specific file identity and requires exact user, organization,
+source, and folder binding. It validates folder shape, non-recursion, MIME
+types, counts, byte bounds, content digests, and all staged semantic results
+before replacing canonical state. Failure leaves the prior Runtime,
+Understanding history, receipt, and checkpoint unchanged. OAuth callback and
+log redaction is recursive; credentials and raw Runtime are never report
+content.

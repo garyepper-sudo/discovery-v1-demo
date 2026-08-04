@@ -67,6 +67,23 @@ The canonical evaluation contract is
 
 Discovery is a **shared organizational intelligence platform**.
 
+## One governed model, many authorized projections
+
+Discovery maintains one canonical governed Organizational Understanding model.
+People, teams, functions, and roles may receive materially different
+permission-safe Product projections, but they do not receive separate truth
+models. Authorization constrains retrieval and disclosure before projection;
+it does not fork cognition, confidence, lineage, history, or persistence.
+
+```text
+Canonical Evidence + Organization Runtime + Understanding history
+→ authorization before retrieval
+→ scope-safe Product projection
+```
+
+New experiences reuse the existing identity, authorization, Evidence, Runtime,
+Understanding, confidence, lineage, and history owners.
+
 Discovery is a question-first product. A user begins with:
 
 > **What are you trying to understand?**
@@ -616,3 +633,24 @@ The existing workspace and interaction model remain intact. Missing canonical
 display prose, persisted Evidence bodies, canonical Understanding confidence,
 and activated disclosure decisions are shown as unavailable rather than
 reconstructed in the product.
+
+## Living Organization Google Drive vertical-slice status
+
+The first governed connector path is live-validated for one exact development
+user, sandbox organization, source, and private/non-root/non-recursive Google
+Drive folder. Manual incremental synchronization is read-only and admits source
+content through canonical Evidence, Runtime, Understanding, and history owners.
+Source identity remains distinct from transport identity; strict MIME, count,
+byte, digest, binding, and pre-persistence validation fail closed.
+
+The accepted sandbox `sandbox-northstar-implementation-services-001` contains
+six semantic batches, sixteen documents, and five negative controls. Five live
+syncs (`5/5/0`, `7/2/5`, `9/2/7`, `16/7/9`, `16/0/16`) achieved exact
+transport-independent semantic parity with empty mismatch lists; the unchanged
+sync preserved its checkpoint. Drive writes, Production access, raw Runtime
+disclosure, and credential leakage were zero, and the final sixteen-file state
+is retained.
+
+Automatic watching, recursive or multiple folders, connector writes, other
+connectors, Production, recommendation/decision integration, impact review,
+snapshots, PDF export, and final frontend implementation remain deferred.
