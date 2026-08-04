@@ -12,7 +12,7 @@ import { createDevelopmentGoogleDriveOAuthService } from "../../product/connecto
 import { withLiveSandboxProductAdapter } from "../../product/frontend/liveSandboxProductWorkspaceService";
 import { stableId } from "../../product/workflow/text";
 import { deriveProductUnknownCandidate } from "../../product/unknowns";
-import { resetSandboxGoogleDriveSynchronizationState, synchronizeSandboxDriveCorpus } from "../../product/simulations/living-organization-sandbox/googleDriveCorpus";
+import { resetSandboxGoogleDriveSynchronizationState, StagedGoogleDriveMetadataRepository, synchronizeSandboxDriveCorpus, validateAndCommitSandboxDriveSynchronization } from "../../product/simulations/living-organization-sandbox/googleDriveCorpus";
 import { SANDBOX_ORGANIZATION_ID, sandboxManifest, type SandboxBatchId } from "../../product/simulations/living-organization-sandbox/manifest";
 
 type Arguments = Record<string, string>;
@@ -32,11 +32,12 @@ const storageRoot = join(process.cwd(), ".discovery-runtime", "onboarding-google
 const metadataRepository = new FileGoogleDriveMetadataRepository(join(storageRoot, "metadata.json"));
 const receiptPath = join(storageRoot, "live-acceptance-receipt.json");
 
-function googleDriveService(adapter?: Parameters<typeof createDevelopmentGoogleDriveOAuthService>[0]) {
+function googleDriveService(adapter?: Parameters<typeof createDevelopmentGoogleDriveOAuthService>[0], stagedMetadata?: StagedGoogleDriveMetadataRepository) {
   return createDevelopmentGoogleDriveOAuthService(adapter, {
     purpose: organizationId === SANDBOX_ORGANIZATION_ID
       ? GOOGLE_DRIVE_SANDBOX_ACCEPTANCE_PURPOSE
       : undefined,
+    metadataRepository: stagedMetadata,
   });
 }
 
@@ -208,7 +209,6 @@ async function syncSandboxCorpus() {
   );
   const throughBatch = requireExact(values["through-batch"] ?? "", "manifest batch") as SandboxBatchId;
   if (!sandboxManifest.batchOrder.includes(throughBatch)) throw new Error("Unknown sandbox corpus batch.");
-  const service = googleDriveService();
   const metadataBefore = await metadataRepository.read();
   const folder = metadataBefore.folders.find(item => item.id === connectedFolderId);
   if (!folder || folder.sourceId !== scope.sourceId || folder.organizationId !== scope.organizationId || folder.revokedAt) {
@@ -217,6 +217,8 @@ async function syncSandboxCorpus() {
   if (folder.googleFolderId !== googleFolderId || folder.includeNested) {
     throw new Error("Sandbox folder must match the configured non-recursive Google folder exactly.");
   }
+  const stagedMetadata = new StagedGoogleDriveMetadataRepository(metadataBefore);
+  const service = googleDriveService(undefined, stagedMetadata);
   const receipt = await service.synchronizeFolder({
     ...scope,
     folderId: connectedFolderId,
@@ -226,11 +228,11 @@ async function syncSandboxCorpus() {
       allowedMimeTypes: ["application/vnd.google-apps.document", "text/markdown", "text/plain"],
     },
   });
-  const metadata = await metadataRepository.read();
-  const transportFiles = metadata.files.filter(file => file.folderId === connectedFolderId && file.status === "accessible").map(file => {
-    const passages = metadata.passages.filter(passage => passage.googleFileId === file.googleFileId).sort((a,b) => a.location.localeCompare(b.location));
-    if (passages.length !== 1) throw new Error(`Strict sandbox corpus file must extract to exactly one bounded passage: ${file.name}.`);
-    return { driveFileId:file.googleFileId, driveRevisionId:file.revisionId, name:file.name, mimeType:file.mimeType, retrievedAt:file.extractedAt ?? receipt.synchronizedAt, content:passages[0]!.content };
+  const candidateMetadata = await stagedMetadata.read();
+  const transportFiles = await validateAndCommitSandboxDriveSynchronization({
+    environment:process.env.DISCOVERY_ENV??"",...scope,configuredFolderId:googleFolderId,
+    requestedFolderId:googleFolderId,connectedFolderId,includeNested:false,throughBatch,
+    receipt,candidate:candidateMetadata,metadata:metadataRepository,
   });
   const sandboxRoot = await mkdtemp(join(os.tmpdir(), "discovery-living-organization-sandbox-drive-live-"));
   let oracleRoot: string | null = null;

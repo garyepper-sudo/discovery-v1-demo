@@ -18,6 +18,7 @@
     "living-organization-sandbox:replay-all": "tsx scripts/product/livingOrganizationSandbox.ts replay",
     "validate:living-organization-sandbox-foundation": "tsx scripts/product/livingOrganizationSandbox.ts validate",
     "validate:living-organization-google-drive": "tsx scripts/product/validateLivingOrganizationGoogleDrive.ts",
+    "validate:google-drive-transactional-acceptance": "tsx scripts/product/validateGoogleDriveTransactionalAcceptance.ts",
     "projection:001": "tsx engine/benchmark/executive-projection/executiveProjectionExperiment001.ts",
     "communication:002": "tsx engine/benchmark/executive-communication/executiveCommunicationExperiment002.ts",
     "benchmark:executive-learning-calibration": "tsx engine/benchmark/executive-work/executiveLearningCalibrationBenchmark001.ts",

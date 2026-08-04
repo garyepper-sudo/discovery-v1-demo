@@ -18,6 +18,7 @@ import {
   EncryptedFileGoogleDriveCredentialRepository,
   FileGoogleDriveAuthorizationStateRepository,
   FileGoogleDriveMetadataRepository,
+  type GoogleDriveMetadataRepository,
 } from "./repositories";
 import {
   GoogleDriveConnectorService,
@@ -64,7 +65,10 @@ async function authorized(input: {
 
 export function createDevelopmentGoogleDriveOAuthService(
   productAdapter: GoogleDriveProductAdapter = unavailableProductAdapter,
-  options: { purpose?: GoogleDriveDevelopmentPurpose } = {},
+  options: {
+    purpose?: GoogleDriveDevelopmentPurpose;
+    metadataRepository?: GoogleDriveMetadataRepository;
+  } = {},
 ): GoogleDriveConnectorService {
   const environment = validateOnboardingTestEnvironment();
   if (environment.environment !== "development" || environment.runtimeStorage !== "filesystem") {
@@ -82,7 +86,7 @@ export function createDevelopmentGoogleDriveOAuthService(
       join(storageRoot, "credentials.enc.json"),
       configuration.credentialEncryptionKey,
     ),
-    metadata: new FileGoogleDriveMetadataRepository(
+    metadata: options.metadataRepository ?? new FileGoogleDriveMetadataRepository(
       join(storageRoot, "metadata.json"),
     ),
     authorizationStates: new FileGoogleDriveAuthorizationStateRepository(

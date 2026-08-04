@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import type { GoogleDriveSynchronizationReceipt } from "../../connectors/google-drive/contracts";
+import type { GoogleDriveConnectorMetadata, GoogleDriveSynchronizationReceipt } from "../../connectors/google-drive/contracts";
 import { normalizeExtractedContent } from "../../connectors/google-drive/identity";
 import type { GoogleDriveMetadataRepository } from "../../connectors/google-drive/repositories";
 import { SANDBOX_ORGANIZATION_ID, sandboxManifest, type SandboxBatchId, type SandboxDocument } from "./manifest";
@@ -66,6 +66,22 @@ export type SandboxDriveCanonicalOwner = { synchronizeFolder(input: {
   userId: string; organizationId: string; sourceId: string; folderId: string;
 }): Promise<GoogleDriveSynchronizationReceipt> };
 export type SandboxGoogleDriveResetReceipt={version:"1";organizationId:typeof SANDBOX_ORGANIZATION_ID;sourceId:string;folderId:string;filesRemoved:number;passagesRemoved:number;sourceVersionsRemoved:number;folderSynchronizationReset:true;driveWrites:0;digest:string};
+
+export class StagedGoogleDriveMetadataRepository implements GoogleDriveMetadataRepository {
+  private candidate: GoogleDriveConnectorMetadata;
+
+  constructor(baseline: GoogleDriveConnectorMetadata) {
+    this.candidate = structuredClone(baseline);
+  }
+
+  async read(): Promise<GoogleDriveConnectorMetadata> {
+    return structuredClone(this.candidate);
+  }
+
+  async replace(metadata: GoogleDriveConnectorMetadata): Promise<void> {
+    this.candidate = structuredClone(metadata);
+  }
+}
 
 const corpusRoot = path.dirname(new URL(import.meta.url).pathname);
 const digest = (value: string) => createHash("sha256").update(value).digest("hex");
@@ -138,6 +154,23 @@ export async function bindSandboxDriveFiles(input: {
   const missing=expected.filter(document=>!filesByLogicalId.has(document.id));
   if(missing.length) throw new Error(`Sandbox Google Drive corpus is incomplete: ${missing.map(item=>item.id).join(", ")}.`);
   return {bindings:bindings.sort((a,b)=>a.logicalDocumentId.localeCompare(b.logicalDocumentId)),contents:new Map([...filesByLogicalId].map(([id,file])=>[id,file.content]))};
+}
+
+export async function validateAndCommitSandboxDriveSynchronization(input:{
+  environment:string;organizationId:string;sourceId:string;configuredFolderId:string;requestedFolderId:string;
+  connectedFolderId:string;includeNested:boolean;throughBatch:SandboxBatchId;receipt:GoogleDriveSynchronizationReceipt;
+  candidate:GoogleDriveConnectorMetadata;metadata:GoogleDriveMetadataRepository;
+}):Promise<SandboxDriveTransportFile[]>{
+  if(input.receipt.organizationId!==input.organizationId||input.receipt.folderId!==input.connectedFolderId||input.receipt.sourceId!==input.sourceId) throw new Error("Canonical Google Drive synchronization receipt scope mismatch.");
+  if(input.receipt.inaccessibleFiles.length||input.receipt.unsupportedFiles.length) throw new Error("Canonical Google Drive synchronization reported unsupported or failed corpus files.");
+  const files=input.candidate.files.filter(file=>file.folderId===input.connectedFolderId&&file.status==="accessible").map(file=>{
+    const passages=input.candidate.passages.filter(passage=>passage.googleFileId===file.googleFileId).sort((a,b)=>a.location.localeCompare(b.location));
+    if(passages.length!==1) throw new Error(`Strict sandbox corpus file must extract to exactly one bounded passage: ${file.name}.`);
+    return {driveFileId:file.googleFileId,driveRevisionId:file.revisionId,name:file.name,mimeType:file.mimeType,retrievedAt:file.extractedAt??input.receipt.synchronizedAt,content:passages[0]!.content};
+  });
+  await bindSandboxDriveFiles({...input,files});
+  await input.metadata.replace(input.candidate);
+  return files;
 }
 
 function semanticShape(result:SandboxReplayResult){

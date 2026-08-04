@@ -3,6 +3,9 @@ export const SANDBOX_MANIFEST_VERSION = "1";
 export const SANDBOX_VALIDATOR_VERSION = "1";
 export const SANDBOX_PRIMARY_QUESTION = "Why are customer implementations taking longer?";
 export const SANDBOX_CONTROL_AREA = "Community science volunteering participation";
+export const SANDBOX_LIVE_ACCEPTANCE_STAGES = [
+  "batch-1", "batch-2", "batch-3", "negative", "negative",
+] as const;
 
 export type SandboxBatchId = "batch-0" | "batch-1" | "batch-2" | "batch-3" | "batch-4" | "negative";
 export type SandboxDocument = {
