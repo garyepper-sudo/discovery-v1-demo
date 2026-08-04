@@ -417,16 +417,19 @@ legacy command-center visuals are not canonical.
 
 ## First implementation slice
 
-Build one role-neutral shell with exact Scope Context; Home/Attention; one
-Understanding detail; one Decision detail; one Evidence Gap/Investigation;
-one Change/History view; and all six disposition patterns. Use fixture IDs
+The first slice now implements one role-neutral shell with exact Scope Context;
+Home/Attention; one Understanding detail; one Decision detail; one Evidence
+Gap/Investigation; one Change/History view; and all six disposition patterns.
+Use fixture IDs
 `RA-01`, `RA-02`, `RA-07`, `RA-08`, `RA-11`, `RA-12`, `RA-14`, `RA-22`,
 `RA-23`, and `RA-24`. This proves two materially different roles, useful
 attention, decision nuance, longitudinal truth, and safe blocked states.
 
-Defer remaining role breadth, all decision classifications, full Question
-workflow redesign (none is authorized), live adapter swap, notifications,
-high-fidelity motion, new metrics, and Production.
+All 24 fixtures are semantically validated and the ten named fixtures render
+through the isolated development route `/role-aware-alpha/[fixtureId]`. The
+canonical `/your-organization` route remains unchanged. Defer remaining role
+breadth, full Question workflow redesign (none is authorized), live adapter
+swap, notifications, high-fidelity motion, new metrics, and Production.
 
 ## Contract-gap assessment
 
@@ -437,6 +440,7 @@ Learning collection. The design does not invent them: Home uses bounded
 section ordering, notification is deferred, contradiction/support appear only
 through disclosed Product items/calibration safe lineage, and Outcome/Learning
 appear only where present in calibration/history. These are **no gap** for the
-required slice. The 24 fixtures themselves do not yet exist as frontend data;
-that is the explicit next-task **fixture implementation gap**, not a backend
-contract gap.
+required slice. The 24 frontend fixtures now exist and validate through the
+existing projection shape, so the former fixture implementation gap is closed.
+The live adapter swap and multi-user account provisioning remain deferred and
+do not constitute a Product contract gap.

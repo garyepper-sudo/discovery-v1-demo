@@ -3,8 +3,8 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** multi-role backend complete; role-aware scoped frontend
-experience architecture ready to begin
+**Current phase:** multi-role backend and role-aware frontend first slice
+complete; multi-user sandbox access is next
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
@@ -20,7 +20,7 @@ batches, sixteen documents, and five negative controls.
 
 All six multi-role benchmark gaps have focused production-owner traceability.
 One canonical model serves five permission-safe role projections through one
-scoped Product adapter. Frontend implementation remains not started.
+scoped Product adapter. The first fixture-backed frontend slice is implemented.
 
 ## Current Product State
 
@@ -39,7 +39,15 @@ scoped Product adapter. Frontend implementation remains not started.
   admission, Unknown change, Answer change, Understanding change, or
   recommendation change.
 - Learning: truthful no-change projection.
-- Frontend implementation: not started.
+- Frontend implementation: role-neutral first slice implemented at
+  `/role-aware-alpha/[fixtureId]`; 24 fixtures semantically validated and ten
+  approved first-slice fixtures rendered.
+- Frontend foundations: shell/navigation, Home, Understanding, Decision,
+  Investigation, History, and six distinct semantic dispositions.
+- Live scoped Product adapter: not wired.
+- Multi-user account provisioning and account-to-scope assignment: not
+  implemented.
+- Canonical `/your-organization`: unchanged.
 - Governed Drive integration: one exact private/non-root/non-recursive folder;
   manual incremental synchronization; read-only connector; strict MIME,
   file-count, byte, and digest validation.
@@ -53,19 +61,19 @@ scoped Product adapter. Frontend implementation remains not started.
 
 ## Current Objective
 
-Design the role-aware Living Organization frontend around the canonical scoped
-Product projection without duplicating Product meaning or authorization.
+Provision separate development identities and explicit server-side scope and
+authority records for the shared sandbox organization without changing Product
+meaning or authorization ownership.
 
 ## Next Priority
 
-**DISCOVERY ROLE-AWARE LIVING ORGANIZATION FRONTEND EXPERIENCE ARCHITECTURE
+**DISCOVERY MULTI-USER SANDBOX ORGANIZATION ACCESS AND ROLE-SCOPED SIGN-IN
 001**
 
-Use the same adapter and producer for all five roles. Build fixture-first from
-the production contracts. Render distinct disclosed, abstracted, withheld,
-unavailable, insufficient, and unsupported states. Supported metrics remain
-coherence and learning velocity. Never recompute authorization, metric lineage,
-or decision calibration in the frontend.
+Create or resolve CEO, director, and manager development identities in the same
+sandbox organization using explicit server-side scope and authority records.
+Titles remain descriptive only. Keep live scoped Product adapter wiring for the
+following task. Supported metrics remain coherence and learning velocity.
 
 ## Canonical implementation boundary
 

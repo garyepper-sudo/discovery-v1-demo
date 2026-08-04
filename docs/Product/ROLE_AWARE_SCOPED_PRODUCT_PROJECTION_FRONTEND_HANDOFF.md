@@ -125,7 +125,17 @@ Fixtures must instantiate the actual nested production contracts:
 
 Orientation-only and label-only fixtures do not satisfy these states.
 
-## Frontend implementation sequence
+## Frontend implementation status and remaining sequence
+
+The fixture-backed first slice is implemented at
+`/role-aware-alpha/[fixtureId]`. All 24 fixtures are semantically validated;
+the approved ten-fixture first slice renders through one role-neutral shell,
+navigation, presentation mapper, and semantic component system. Home,
+Understanding, Decision, Investigation, History, and all six dispositions are
+present. Only coherence and learning velocity are supported. No backend
+semantics changed, `/your-organization` remains unchanged, multi-user account
+provisioning is not implemented, and the live scoped Product adapter is not
+wired.
 
 1. Add the typed read boundary and serialized-contract validation.
 2. Build a role-neutral fixture adapter from production contract types.
@@ -140,7 +150,8 @@ Orientation-only and label-only fixtures do not satisfy these states.
 11. Validate responsive behavior and accessibility.
 12. Swap fixtures for the canonical server read without changing semantics.
 
-No frontend component was implemented by this handoff.
+Steps 1–11 are represented by the validated first slice. Multi-user sandbox
+access is the next task; the live server read swap remains the following task.
 
 ## Six-gap closure matrix
 

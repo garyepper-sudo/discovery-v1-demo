@@ -2,8 +2,8 @@
 
 ## Exact next task
 
-Begin **DISCOVERY ROLE-AWARE LIVING ORGANIZATION FRONTEND EXPERIENCE
-ARCHITECTURE 001** from the exact resulting `origin/main`.
+Begin **DISCOVERY MULTI-USER SANDBOX ORGANIZATION ACCESS AND ROLE-SCOPED
+SIGN-IN 001** from the exact resulting `origin/main`.
 
 ## Read first
 
@@ -26,17 +26,22 @@ ARCHITECTURE 001** from the exact resulting `origin/main`.
 - Supported metrics are coherence and learning velocity only.
 - Decision calibration uses eight independent governed axes and distinguishes
   all ten canonical cases without an alignment score or hierarchy-as-truth.
-- The frontend has not been implemented.
+- The first fixture-backed frontend slice is implemented at
+  `/role-aware-alpha/[fixtureId]` with all 24 fixtures semantically validated
+  and ten approved first-slice fixtures rendered.
+- One role-neutral shell and navigation system render Home, Understanding,
+  Decision, Investigation, History, and all six semantic dispositions.
+- `/your-organization` remains unchanged; the live scoped Product adapter is
+  not wired; multi-user account provisioning is not implemented.
 
 ## Frontend boundary
 
-Build fixture-first and use the canonical scoped Product projection as the only
-meaning boundary. Define the simplest high-utility navigation and information
-hierarchy. Cover all five role scenarios and all required disclosure,
-calibration, metric, historical, insufficient, withheld, and unavailable
-states. Do not reconstruct authorization, metrics, calibration, Runtime, or
-cognition in the frontend. Make no backend semantic change unless a concrete
-unrepresentable contract gap is proven.
+Create or resolve separate CEO, director, and manager development identities,
+assign all three to the same sandbox organization, and use explicit server-side
+scope and authority records. Treat titles as descriptive only and preserve one
+canonical organization and model. Provide deterministic development
+provisioning, inspection, revocation, restoration, and reset. Do not wire the
+live scoped Product adapter in the same task; that follows multi-user access.
 
 ## Explicitly deferred
 

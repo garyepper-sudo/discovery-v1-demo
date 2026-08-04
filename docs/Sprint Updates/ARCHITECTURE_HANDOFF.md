@@ -29,13 +29,17 @@ authorized metric lineage, and the Product-owned scoped decision-calibration
 producer. One canonical model serves all five roles; role labels grant no
 authority. Supported metrics remain coherence and learning velocity only.
 
-The next task is **DISCOVERY ROLE-AWARE LIVING ORGANIZATION FRONTEND EXPERIENCE
-ARCHITECTURE 001**. The frontend must use
-`readScopedOrganizationalProductProjection` as its sole organization-level
-meaning boundary, render rather than recompute authorization/metrics/
-calibration, and build fixture-first from
-`docs/Product/ROLE_AWARE_SCOPED_PRODUCT_PROJECTION_FRONTEND_HANDOFF.md`. No
-frontend implementation has begun.
+The first fixture-backed role-aware frontend slice is implemented at
+`/role-aware-alpha/[fixtureId]`. All 24 fixtures are semantically validated and
+ten approved first-slice fixtures render through one role-neutral shell,
+navigation, presentation mapper, and semantic component system. Home,
+Understanding, Decision, Investigation, History, and six disposition
+foundations exist. Only coherence and learning velocity are supported. No
+backend semantics changed; `/your-organization` remains unchanged; the live
+scoped Product adapter is not wired; multi-user provisioning is not
+implemented. The next task is **DISCOVERY MULTI-USER SANDBOX ORGANIZATION
+ACCESS AND ROLE-SCOPED SIGN-IN 001**. Live scoped Product adapter wiring follows
+that task.
 
 Before proposing a new capability, use this document to verify whether the responsibility, cognitive object, canonical producer, Runtime destination, or executive destination already exists.
 

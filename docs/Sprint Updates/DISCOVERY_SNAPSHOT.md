@@ -1,7 +1,7 @@
 # Discovery Startup Snapshot
 
-**Current milestone:** The multi-role scoped Product backend is complete and
-ready for role-aware frontend experience architecture. GAP-MR-001 through
+**Current milestone:** The multi-role scoped Product backend and first
+fixture-backed role-aware frontend slice are complete. GAP-MR-001 through
 GAP-MR-006 all have focused production-owner traceability while the frozen
 benchmark remains the historical oracle. The Living Organization Drive slice
 and Product Workflow frontend readiness remain complete.
@@ -41,7 +41,9 @@ and read-only; recommendation development is frozen by default.
 
 ## Current boundaries
 
-- Frontend implementation and wiring have not started.
+- The first fixture-backed frontend slice is implemented at
+  `/role-aware-alpha/[fixtureId]`; the live scoped Product adapter is not yet
+  wired and `/your-organization` remains unchanged.
 - The governed Google Drive owner supports one manually synchronized, exact,
   non-recursive, read-only folder in local development. Discovery performs no
   Drive writes.
@@ -86,10 +88,13 @@ Product adapter. Supported metrics remain coherence and learning velocity
 only. Decision calibration distinguishes all ten canonical cases through eight
 independent axes; authority remains separate from strategic correctness.
 
-The frontend must render the canonical scoped projection and must not
-reconstruct authorization, metric lineage, or calibration. No React work has
-begun. The next task is **DISCOVERY ROLE-AWARE LIVING ORGANIZATION FRONTEND
-EXPERIENCE ARCHITECTURE 001** using the dedicated Product handoff.
+The role-neutral shell, Home, Understanding, Decision, Investigation, History,
+and six disposition foundations now render from 24 semantically validated
+fixtures; the approved first slice renders ten fixtures. The frontend does not
+reconstruct authorization, metric lineage, or calibration. Multi-user account
+provisioning and account-to-scope assignment are not implemented. The next
+task is **DISCOVERY MULTI-USER SANDBOX ORGANIZATION ACCESS AND ROLE-SCOPED
+SIGN-IN 001**; live scoped Product adapter wiring follows that task.
 
 ## Worktree boundary
 
