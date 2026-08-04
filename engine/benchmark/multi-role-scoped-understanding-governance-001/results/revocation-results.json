@@ -1,0 +1,57 @@
+[
+  {
+    "id": "revocation:future-disclosure",
+    "result": "pass",
+    "canonicalOwner": "canonical Understanding disclosure",
+    "observation": "Revoked decisions suppress future disclosure without rewriting canonical history.",
+    "fieldFailures": []
+  },
+  {
+    "id": "revocation:historical-visibility",
+    "result": "unsupported",
+    "canonicalOwner": "disclosure/historical projection policy",
+    "observation": "Current access revocation is represented; historical projection, cache, export, and now-restricted derived-content visibility policy is unassigned.",
+    "fieldFailures": [
+      "historicalRequest.asOf",
+      "historicalVisibilityDisposition",
+      "cacheInvalidationPolicy",
+      "exportRetentionPolicy"
+    ]
+  },
+  {
+    "id": "revocation:cached-projection",
+    "result": "unsupported",
+    "canonicalOwner": "projection policy",
+    "observation": "No canonical cache contract exists; request fails closed in benchmark.",
+    "fieldFailures": [
+      "cachedProjection.currentAuthorizationReceipt"
+    ]
+  },
+  {
+    "id": "revocation:derived-content",
+    "result": "unsupported",
+    "canonicalOwner": "projection policy",
+    "observation": "No canonical per-derived-content revocation lineage contract exists.",
+    "fieldFailures": [
+      "derivedField.authorizedSupportingRefs"
+    ]
+  },
+  {
+    "id": "revocation:immutable-history",
+    "result": "unsupported",
+    "canonicalOwner": "Runtime + disclosure owner",
+    "observation": "History is immutable, but recipient-specific historical visibility is not resolved.",
+    "fieldFailures": [
+      "historicalVisibilityDecision"
+    ]
+  },
+  {
+    "id": "revocation:earlier-identifier",
+    "result": "unsupported",
+    "canonicalOwner": "projection policy",
+    "observation": "An earlier projection identifier has no canonical current-authorization resolver.",
+    "fieldFailures": [
+      "projectionId.currentAccessDecisionId"
+    ]
+  }
+]

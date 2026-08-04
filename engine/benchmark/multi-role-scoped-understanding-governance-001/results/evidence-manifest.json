@@ -1,0 +1,403 @@
+[
+  {
+    "id": "evidence:01:strategy",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "strategy",
+    "scopeId": "scope:organization",
+    "sensitivity": "standard",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:strategy",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:strategy"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [
+      "claim:delivery"
+    ],
+    "contradicts": []
+  },
+  {
+    "id": "evidence:02:engineering-objectives",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "engineering-objectives",
+    "scopeId": "scope:function:engineering",
+    "sensitivity": "standard",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:engineering-objectives",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:engineering-objectives"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [],
+    "contradicts": [
+      "claim:delivery"
+    ]
+  },
+  {
+    "id": "evidence:03:sales-objectives",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "sales-objectives",
+    "scopeId": "scope:function:sales",
+    "sensitivity": "standard",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:sales-objectives",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:sales-objectives"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [
+      "claim:delivery"
+    ],
+    "contradicts": []
+  },
+  {
+    "id": "evidence:04:platform-plan",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "platform-plan",
+    "scopeId": "scope:department:platform",
+    "sensitivity": "standard",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:platform-plan",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:platform-plan"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [],
+    "contradicts": [
+      "claim:delivery"
+    ]
+  },
+  {
+    "id": "evidence:05:product-plan",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "product-plan",
+    "scopeId": "scope:department:product",
+    "sensitivity": "standard",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:product-plan",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:product-plan"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [
+      "claim:delivery"
+    ],
+    "contradicts": []
+  },
+  {
+    "id": "evidence:06:team-priorities",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "team-priorities",
+    "scopeId": "scope:team:delivery",
+    "sensitivity": "standard",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:team-priorities",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:team-priorities"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [],
+    "contradicts": [
+      "claim:delivery"
+    ]
+  },
+  {
+    "id": "evidence:07:customer-feedback",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "customer-feedback",
+    "scopeId": "scope:initiative:northstar",
+    "sensitivity": "standard",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:customer-feedback",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:customer-feedback"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [
+      "claim:delivery"
+    ],
+    "contradicts": []
+  },
+  {
+    "id": "evidence:08:product-requirements",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "product-requirements",
+    "scopeId": "scope:initiative:northstar",
+    "sensitivity": "standard",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:product-requirements",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:product-requirements"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [],
+    "contradicts": [
+      "claim:delivery"
+    ]
+  },
+  {
+    "id": "evidence:09:delivery-risk",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "delivery-risk",
+    "scopeId": "scope:team:delivery",
+    "sensitivity": "standard",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:delivery-risk",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:delivery-risk"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [
+      "claim:delivery"
+    ],
+    "contradicts": []
+  },
+  {
+    "id": "evidence:10:capacity-constraint",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "capacity-constraint",
+    "scopeId": "scope:department:platform",
+    "sensitivity": "standard",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:capacity-constraint",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:capacity-constraint"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [],
+    "contradicts": [
+      "claim:delivery"
+    ]
+  },
+  {
+    "id": "evidence:11:financial-constraint",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "financial-constraint",
+    "scopeId": "scope:organization",
+    "sensitivity": "restricted",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:financial-constraint",
+    "sourceAuthorityRoleId": "role:people-authority",
+    "lineageIds": [
+      "source:financial-constraint"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [
+      "claim:delivery"
+    ],
+    "contradicts": [],
+    "canaryDigest": "9df1a17ba0d5e3ae54a56349f960eb7f41dc8721d437dec17dc11578827e9a0a"
+  },
+  {
+    "id": "evidence:12:cross-team-dependency",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "cross-team-dependency",
+    "scopeId": "scope:initiative:northstar",
+    "sensitivity": "standard",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:cross-team-dependency",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:cross-team-dependency"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [],
+    "contradicts": [
+      "claim:delivery"
+    ]
+  },
+  {
+    "id": "evidence:13:decision-record",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "decision-record",
+    "scopeId": "scope:function:engineering",
+    "sensitivity": "standard",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:decision-record",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:decision-record"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [
+      "claim:delivery"
+    ],
+    "contradicts": []
+  },
+  {
+    "id": "evidence:14:decision-outcome",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "decision-outcome",
+    "scopeId": "scope:function:engineering",
+    "sensitivity": "standard",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:decision-outcome",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:decision-outcome"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [],
+    "contradicts": [
+      "claim:delivery"
+    ]
+  },
+  {
+    "id": "evidence:15:stale-assumption",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "stale-assumption",
+    "scopeId": "scope:team:delivery",
+    "sensitivity": "standard",
+    "effectiveAt": "2025-01-01T00:00:00.000Z",
+    "sourceId": "source:stale-assumption",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:stale-assumption"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [
+      "claim:delivery"
+    ],
+    "contradicts": []
+  },
+  {
+    "id": "evidence:16:conflicting-explanation",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "conflicting-explanation",
+    "scopeId": "scope:department:platform",
+    "sensitivity": "standard",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:conflicting-explanation",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:conflicting-explanation"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [],
+    "contradicts": [
+      "claim:delivery"
+    ]
+  },
+  {
+    "id": "evidence:17:updated-local-evidence",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "updated-local-evidence",
+    "scopeId": "scope:team:delivery",
+    "sensitivity": "standard",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:updated-local-evidence",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:updated-local-evidence"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [
+      "claim:delivery"
+    ],
+    "contradicts": []
+  },
+  {
+    "id": "evidence:18:executive-discussion",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "executive-discussion",
+    "scopeId": "scope:organization",
+    "sensitivity": "restricted",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:executive-discussion",
+    "sourceAuthorityRoleId": "role:people-authority",
+    "lineageIds": [
+      "source:executive-discussion"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [],
+    "contradicts": [
+      "claim:delivery"
+    ],
+    "canaryDigest": "12f7814fea1a75204ad33e767f30a0cc97ef80693d3b681e26db52c581a58516"
+  },
+  {
+    "id": "evidence:19:people-compensation",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "people-compensation",
+    "scopeId": "scope:restricted:people",
+    "sensitivity": "restricted",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:people-compensation",
+    "sourceAuthorityRoleId": "role:people-authority",
+    "lineageIds": [
+      "source:people-compensation"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [
+      "claim:delivery"
+    ],
+    "contradicts": [],
+    "canaryDigest": "651b8496c55f856015c970f9b7ce9526fcb916091e18abce4b74176015feec3c"
+  },
+  {
+    "id": "evidence:20:private-manager-note",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "private-manager-note",
+    "scopeId": "scope:private:engineering-manager",
+    "sensitivity": "private",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:private-manager-note",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:private-manager-note"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [],
+    "contradicts": [
+      "claim:delivery"
+    ],
+    "canaryDigest": "6cdc7b7613abd32011ede56d47f21ea2087f3ea9f6db092f05e2110c734770b9"
+  },
+  {
+    "id": "evidence:21:negative-control-foreign",
+    "organizationId": "synthetic-multi-role-governance-other-001",
+    "category": "negative-control-foreign",
+    "scopeId": "scope:organization",
+    "sensitivity": "standard",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:negative-control-foreign",
+    "sourceAuthorityRoleId": "role:initiative-owner",
+    "lineageIds": [
+      "source:negative-control-foreign"
+    ],
+    "admissionDisposition": "admitted",
+    "supports": [
+      "claim:delivery"
+    ],
+    "contradicts": []
+  },
+  {
+    "id": "evidence:22:negative-control-unauthorized",
+    "organizationId": "synthetic-multi-role-governance-001",
+    "category": "negative-control-unauthorized",
+    "scopeId": "scope:restricted:people",
+    "sensitivity": "restricted",
+    "effectiveAt": "2026-08-04T12:00:00.000Z",
+    "sourceId": "source:negative-control-unauthorized",
+    "sourceAuthorityRoleId": "role:people-authority",
+    "lineageIds": [
+      "source:negative-control-unauthorized"
+    ],
+    "admissionDisposition": "rejected",
+    "supports": [],
+    "contradicts": [
+      "claim:delivery"
+    ],
+    "canaryDigest": "b89c8844d5a078cea20c36067fa03b7f0f00e67887934225fcf842460a616f79"
+  }
+]

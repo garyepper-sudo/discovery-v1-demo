@@ -1,0 +1,27 @@
+[
+  {
+    "role": "team-lead",
+    "passed": false,
+    "reason": "Safe but intentionally empty: current contracts cannot prove role/scope-safe usefulness."
+  },
+  {
+    "role": "manager",
+    "passed": false,
+    "reason": "Safe but intentionally empty: current contracts cannot prove role/scope-safe usefulness."
+  },
+  {
+    "role": "director",
+    "passed": false,
+    "reason": "Safe but intentionally empty: current contracts cannot prove role/scope-safe usefulness."
+  },
+  {
+    "role": "functional-executive",
+    "passed": false,
+    "reason": "Safe but intentionally empty: current contracts cannot prove role/scope-safe usefulness."
+  },
+  {
+    "role": "organization-executive",
+    "passed": false,
+    "reason": "Safe but intentionally empty: current contracts cannot prove role/scope-safe usefulness."
+  }
+]

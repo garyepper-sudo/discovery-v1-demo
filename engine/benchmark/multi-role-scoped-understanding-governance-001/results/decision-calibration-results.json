@@ -1,0 +1,112 @@
+[
+  {
+    "id": "decision:1",
+    "result": "unsupported",
+    "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+    "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: aligned and well-supported local decision.",
+    "fieldFailures": [
+      "decision.recipientScope",
+      "decision.evidenceAuthority",
+      "decision.calibrationDisposition"
+    ]
+  },
+  {
+    "id": "decision:2",
+    "result": "unsupported",
+    "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+    "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: aligned decision based on stale Evidence.",
+    "fieldFailures": [
+      "decision.recipientScope",
+      "decision.evidenceAuthority",
+      "decision.calibrationDisposition"
+    ]
+  },
+  {
+    "id": "decision:3",
+    "result": "unsupported",
+    "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+    "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: evidence-backed local divergence.",
+    "fieldFailures": [
+      "decision.recipientScope",
+      "decision.evidenceAuthority",
+      "decision.calibrationDisposition"
+    ]
+  },
+  {
+    "id": "decision:4",
+    "result": "unsupported",
+    "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+    "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: unsupported local divergence.",
+    "fieldFailures": [
+      "decision.recipientScope",
+      "decision.evidenceAuthority",
+      "decision.calibrationDisposition"
+    ]
+  },
+  {
+    "id": "decision:5",
+    "result": "unsupported",
+    "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+    "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: apparent divergence caused by ambiguous strategic intent.",
+    "fieldFailures": [
+      "decision.recipientScope",
+      "decision.evidenceAuthority",
+      "decision.calibrationDisposition"
+    ]
+  },
+  {
+    "id": "decision:6",
+    "result": "unsupported",
+    "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+    "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: locally beneficial but globally harmful decision.",
+    "fieldFailures": [
+      "decision.recipientScope",
+      "decision.evidenceAuthority",
+      "decision.calibrationDisposition"
+    ]
+  },
+  {
+    "id": "decision:7",
+    "result": "unsupported",
+    "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+    "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: globally aligned but locally infeasible decision.",
+    "fieldFailures": [
+      "decision.recipientScope",
+      "decision.evidenceAuthority",
+      "decision.calibrationDisposition"
+    ]
+  },
+  {
+    "id": "decision:8",
+    "result": "unsupported",
+    "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+    "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: local Evidence that should challenge higher-level strategy.",
+    "fieldFailures": [
+      "decision.recipientScope",
+      "decision.evidenceAuthority",
+      "decision.calibrationDisposition"
+    ]
+  },
+  {
+    "id": "decision:9",
+    "result": "unsupported",
+    "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+    "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: legitimate experimental divergence within authorized bounds.",
+    "fieldFailures": [
+      "decision.recipientScope",
+      "decision.evidenceAuthority",
+      "decision.calibrationDisposition"
+    ]
+  },
+  {
+    "id": "decision:10",
+    "result": "unsupported",
+    "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+    "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: action outside the user's authority even when strategically aligned.",
+    "fieldFailures": [
+      "decision.recipientScope",
+      "decision.evidenceAuthority",
+      "decision.calibrationDisposition"
+    ]
+  }
+]

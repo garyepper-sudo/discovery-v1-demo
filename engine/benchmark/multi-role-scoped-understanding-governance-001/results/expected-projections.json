@@ -1,0 +1,117 @@
+[
+  {
+    "role": "team-lead",
+    "recipientRoleId": "role:team-lead",
+    "status": "unsupported",
+    "authorizedScopeIds": [
+      "scope:team:delivery"
+    ],
+    "categories": [],
+    "withheldCategories": [
+      "material-changes",
+      "priorities",
+      "blockers",
+      "dependencies",
+      "decisions-requiring-attention",
+      "uncertainty",
+      "evidence-gaps",
+      "strategic-context",
+      "escalation-opportunities",
+      "justified-divergence"
+    ],
+    "explanation": "Current canonical disclosure input has no role, recursive scope, purpose, sensitivity, or per-derived-field policy semantics; benchmark fails closed.",
+    "lineage": []
+  },
+  {
+    "role": "manager",
+    "recipientRoleId": "role:engineering-manager",
+    "status": "unsupported",
+    "authorizedScopeIds": [
+      "scope:team:delivery"
+    ],
+    "categories": [],
+    "withheldCategories": [
+      "material-changes",
+      "priorities",
+      "blockers",
+      "dependencies",
+      "decisions-requiring-attention",
+      "uncertainty",
+      "evidence-gaps",
+      "strategic-context",
+      "escalation-opportunities",
+      "justified-divergence"
+    ],
+    "explanation": "Current canonical disclosure input has no role, recursive scope, purpose, sensitivity, or per-derived-field policy semantics; benchmark fails closed.",
+    "lineage": []
+  },
+  {
+    "role": "director",
+    "recipientRoleId": "role:director-platform",
+    "status": "unsupported",
+    "authorizedScopeIds": [
+      "scope:department:platform"
+    ],
+    "categories": [],
+    "withheldCategories": [
+      "material-changes",
+      "priorities",
+      "blockers",
+      "dependencies",
+      "decisions-requiring-attention",
+      "uncertainty",
+      "evidence-gaps",
+      "strategic-context",
+      "escalation-opportunities",
+      "justified-divergence"
+    ],
+    "explanation": "Current canonical disclosure input has no role, recursive scope, purpose, sensitivity, or per-derived-field policy semantics; benchmark fails closed.",
+    "lineage": []
+  },
+  {
+    "role": "functional-executive",
+    "recipientRoleId": "role:vp-engineering",
+    "status": "unsupported",
+    "authorizedScopeIds": [
+      "scope:function:engineering"
+    ],
+    "categories": [],
+    "withheldCategories": [
+      "material-changes",
+      "priorities",
+      "blockers",
+      "dependencies",
+      "decisions-requiring-attention",
+      "uncertainty",
+      "evidence-gaps",
+      "strategic-context",
+      "escalation-opportunities",
+      "justified-divergence"
+    ],
+    "explanation": "Current canonical disclosure input has no role, recursive scope, purpose, sensitivity, or per-derived-field policy semantics; benchmark fails closed.",
+    "lineage": []
+  },
+  {
+    "role": "organization-executive",
+    "recipientRoleId": "role:ceo",
+    "status": "unsupported",
+    "authorizedScopeIds": [
+      "scope:organization"
+    ],
+    "categories": [],
+    "withheldCategories": [
+      "material-changes",
+      "priorities",
+      "blockers",
+      "dependencies",
+      "decisions-requiring-attention",
+      "uncertainty",
+      "evidence-gaps",
+      "strategic-context",
+      "escalation-opportunities",
+      "justified-divergence"
+    ],
+    "explanation": "Current canonical disclosure input has no role, recursive scope, purpose, sensitivity, or per-derived-field policy semantics; benchmark fails closed.",
+    "lineage": []
+  }
+]

@@ -1,0 +1,525 @@
+{
+  "gaps": [
+    {
+      "id": "GAP-MR-001",
+      "classification": "incomplete-contract",
+      "owner": "organizational authorization and Understanding disclosure",
+      "description": "Disclosure decisions lack recursive scope, role, purpose, sensitivity, per-composition and per-derived-field dispositions.",
+      "smallestFutureBoundary": [
+        "canonical access/disclosure policy input",
+        "resolved scoped disclosure decision",
+        "field-level authorized lineage"
+      ]
+    },
+    {
+      "id": "GAP-MR-002",
+      "classification": "incomplete-contract",
+      "owner": "historical projection and disclosure policy",
+      "description": "Revocation covers future canonical disclosure, but historical request, cached projection, export retention, and derived-content visibility semantics are unassigned.",
+      "smallestFutureBoundary": [
+        "historical visibility decision",
+        "current authorization receipt for retained projection"
+      ]
+    },
+    {
+      "id": "GAP-MR-003",
+      "classification": "incomplete-contract",
+      "owner": "Contribution Validation and Evidence admission",
+      "description": "Canonical scoped contribution and promotion authority is not represented for role/scope scenarios.",
+      "smallestFutureBoundary": [
+        "contributor authority receipt",
+        "scope-aware admission disposition"
+      ]
+    },
+    {
+      "id": "GAP-MR-004",
+      "classification": "missing-implementation",
+      "owner": "authorized Organizational Understanding Product projection",
+      "description": "No adapter composes recursive scope authorization into materially different role projections.",
+      "smallestFutureBoundary": [
+        "scoped policy resolver",
+        "existing projection compiler input adapter"
+      ]
+    },
+    {
+      "id": "GAP-MR-005",
+      "classification": "incomplete-contract",
+      "owner": "metric-specific projection owners",
+      "description": "Requested governed metrics lack recipient-authorized input lineage and derived-disclosure dispositions.",
+      "smallestFutureBoundary": [
+        "authorized metric input references",
+        "metric disclosure decision"
+      ]
+    },
+    {
+      "id": "GAP-MR-006",
+      "classification": "missing-implementation",
+      "owner": "CAP-DEC-001..007 and Product Objective/Optimization Context integration",
+      "description": "Existing decision owners cannot classify the ten scoped alignment/divergence cases as a Product projection without fabricating semantics.",
+      "smallestFutureBoundary": [
+        "scoped decision calibration projection contract"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "id": "direct:recursive-scope",
+      "result": "unsupported",
+      "canonicalOwner": "authorization/disclosure policy",
+      "observation": "No canonical recursive scope decision input exists.",
+      "fieldFailures": [
+        "decision.scopeIds",
+        "decision.purpose",
+        "composition.scopeId",
+        "composition.sensitivity"
+      ]
+    },
+    {
+      "id": "derived:summary",
+      "result": "unsupported",
+      "canonicalOwner": "authorized Organizational Understanding projection",
+      "observation": "Derived summary safety cannot be resolved per field from current disclosure input.",
+      "fieldFailures": [
+        "recipient.role",
+        "recipient.scope",
+        "purpose",
+        "sensitivity",
+        "derivedField.supportingAuthorizedRefs"
+      ]
+    },
+    {
+      "id": "derived:confidence",
+      "result": "unsupported",
+      "canonicalOwner": "authorized Organizational Understanding projection",
+      "observation": "Derived confidence safety cannot be resolved per field from current disclosure input.",
+      "fieldFailures": [
+        "recipient.role",
+        "recipient.scope",
+        "purpose",
+        "sensitivity",
+        "derivedField.supportingAuthorizedRefs"
+      ]
+    },
+    {
+      "id": "derived:contradiction",
+      "result": "unsupported",
+      "canonicalOwner": "authorized Organizational Understanding projection",
+      "observation": "Derived contradiction safety cannot be resolved per field from current disclosure input.",
+      "fieldFailures": [
+        "recipient.role",
+        "recipient.scope",
+        "purpose",
+        "sensitivity",
+        "derivedField.supportingAuthorizedRefs"
+      ]
+    },
+    {
+      "id": "derived:recommendation",
+      "result": "unsupported",
+      "canonicalOwner": "authorized Organizational Understanding projection",
+      "observation": "Derived recommendation safety cannot be resolved per field from current disclosure input.",
+      "fieldFailures": [
+        "recipient.role",
+        "recipient.scope",
+        "purpose",
+        "sensitivity",
+        "derivedField.supportingAuthorizedRefs"
+      ]
+    },
+    {
+      "id": "derived:metric",
+      "result": "unsupported",
+      "canonicalOwner": "authorized Organizational Understanding projection",
+      "observation": "Derived metric safety cannot be resolved per field from current disclosure input.",
+      "fieldFailures": [
+        "recipient.role",
+        "recipient.scope",
+        "purpose",
+        "sensitivity",
+        "derivedField.supportingAuthorizedRefs"
+      ]
+    },
+    {
+      "id": "derived:combination",
+      "result": "unsupported",
+      "canonicalOwner": "authorized Organizational Understanding projection",
+      "observation": "Derived combination safety cannot be resolved per field from current disclosure input.",
+      "fieldFailures": [
+        "recipient.role",
+        "recipient.scope",
+        "purpose",
+        "sensitivity",
+        "derivedField.supportingAuthorizedRefs"
+      ]
+    },
+    {
+      "id": "derived:inferred-relationship",
+      "result": "unsupported",
+      "canonicalOwner": "authorized Organizational Understanding projection",
+      "observation": "Derived inferred-relationship safety cannot be resolved per field from current disclosure input.",
+      "fieldFailures": [
+        "recipient.role",
+        "recipient.scope",
+        "purpose",
+        "sensitivity",
+        "derivedField.supportingAuthorizedRefs"
+      ]
+    },
+    {
+      "id": "revocation:historical-visibility",
+      "result": "unsupported",
+      "canonicalOwner": "disclosure/historical projection policy",
+      "observation": "Current access revocation is represented; historical projection, cache, export, and now-restricted derived-content visibility policy is unassigned.",
+      "fieldFailures": [
+        "historicalRequest.asOf",
+        "historicalVisibilityDisposition",
+        "cacheInvalidationPolicy",
+        "exportRetentionPolicy"
+      ]
+    },
+    {
+      "id": "revocation:cached-projection",
+      "result": "unsupported",
+      "canonicalOwner": "projection policy",
+      "observation": "No canonical cache contract exists; request fails closed in benchmark.",
+      "fieldFailures": [
+        "cachedProjection.currentAuthorizationReceipt"
+      ]
+    },
+    {
+      "id": "revocation:derived-content",
+      "result": "unsupported",
+      "canonicalOwner": "projection policy",
+      "observation": "No canonical per-derived-content revocation lineage contract exists.",
+      "fieldFailures": [
+        "derivedField.authorizedSupportingRefs"
+      ]
+    },
+    {
+      "id": "revocation:immutable-history",
+      "result": "unsupported",
+      "canonicalOwner": "Runtime + disclosure owner",
+      "observation": "History is immutable, but recipient-specific historical visibility is not resolved.",
+      "fieldFailures": [
+        "historicalVisibilityDecision"
+      ]
+    },
+    {
+      "id": "revocation:earlier-identifier",
+      "result": "unsupported",
+      "canonicalOwner": "projection policy",
+      "observation": "An earlier projection identifier has no canonical current-authorization resolver.",
+      "fieldFailures": [
+        "projectionId.currentAccessDecisionId"
+      ]
+    },
+    {
+      "id": "scope:upward",
+      "result": "unsupported",
+      "canonicalOwner": "authorization + canonical Understanding composition",
+      "observation": "Governed upward composition lacks recursive scope and authority-transition inputs.",
+      "fieldFailures": [
+        "scope.parentId",
+        "composition.scopeId",
+        "contributionAuthority",
+        "abstractionDisposition"
+      ]
+    },
+    {
+      "id": "scope:downward",
+      "result": "unsupported",
+      "canonicalOwner": "authorization + canonical Understanding composition",
+      "observation": "Governed downward composition lacks recursive scope and authority-transition inputs.",
+      "fieldFailures": [
+        "scope.parentId",
+        "composition.scopeId",
+        "contributionAuthority",
+        "abstractionDisposition"
+      ]
+    },
+    {
+      "id": "scope:lateral",
+      "result": "unsupported",
+      "canonicalOwner": "authorization + canonical Understanding composition",
+      "observation": "Governed lateral composition lacks recursive scope and authority-transition inputs.",
+      "fieldFailures": [
+        "scope.parentId",
+        "composition.scopeId",
+        "contributionAuthority",
+        "abstractionDisposition"
+      ]
+    },
+    {
+      "id": "scope:local-retention",
+      "result": "unsupported",
+      "canonicalOwner": "authorization + canonical Understanding composition",
+      "observation": "Governed local-retention composition lacks recursive scope and authority-transition inputs.",
+      "fieldFailures": [
+        "scope.parentId",
+        "composition.scopeId",
+        "contributionAuthority",
+        "abstractionDisposition"
+      ]
+    },
+    {
+      "id": "scope:aggregation",
+      "result": "unsupported",
+      "canonicalOwner": "authorization + canonical Understanding composition",
+      "observation": "Governed aggregation composition lacks recursive scope and authority-transition inputs.",
+      "fieldFailures": [
+        "scope.parentId",
+        "composition.scopeId",
+        "contributionAuthority",
+        "abstractionDisposition"
+      ]
+    },
+    {
+      "id": "scope:cross-scope-contamination",
+      "result": "unsupported",
+      "canonicalOwner": "authorization + canonical Understanding composition",
+      "observation": "Governed cross-scope-contamination composition lacks recursive scope and authority-transition inputs.",
+      "fieldFailures": [
+        "scope.parentId",
+        "composition.scopeId",
+        "contributionAuthority",
+        "abstractionDisposition"
+      ]
+    },
+    {
+      "id": "metric:coherence",
+      "result": "unsupported",
+      "canonicalOwner": "metric-specific canonical owner",
+      "observation": "Recipient-authorized input lineage for coherence is not a canonical projection input.",
+      "fieldFailures": [
+        "metric.authorizedInputRefs",
+        "metric.disclosureDecisionId"
+      ]
+    },
+    {
+      "id": "metric:confidence",
+      "result": "unsupported",
+      "canonicalOwner": "metric-specific canonical owner",
+      "observation": "Recipient-authorized input lineage for confidence is not a canonical projection input.",
+      "fieldFailures": [
+        "metric.authorizedInputRefs",
+        "metric.disclosureDecisionId"
+      ]
+    },
+    {
+      "id": "metric:freshness",
+      "result": "unsupported",
+      "canonicalOwner": "metric-specific canonical owner",
+      "observation": "Recipient-authorized input lineage for freshness is not a canonical projection input.",
+      "fieldFailures": [
+        "metric.authorizedInputRefs",
+        "metric.disclosureDecisionId"
+      ]
+    },
+    {
+      "id": "metric:understanding-health",
+      "result": "unsupported",
+      "canonicalOwner": "metric-specific canonical owner",
+      "observation": "Recipient-authorized input lineage for understanding-health is not a canonical projection input.",
+      "fieldFailures": [
+        "metric.authorizedInputRefs",
+        "metric.disclosureDecisionId"
+      ]
+    },
+    {
+      "id": "metric:learning-velocity",
+      "result": "unsupported",
+      "canonicalOwner": "metric-specific canonical owner",
+      "observation": "Recipient-authorized input lineage for learning-velocity is not a canonical projection input.",
+      "fieldFailures": [
+        "metric.authorizedInputRefs",
+        "metric.disclosureDecisionId"
+      ]
+    },
+    {
+      "id": "metric:trend-ranking",
+      "result": "unsupported",
+      "canonicalOwner": "metric-specific canonical owner",
+      "observation": "Recipient-authorized input lineage for trend-ranking is not a canonical projection input.",
+      "fieldFailures": [
+        "metric.authorizedInputRefs",
+        "metric.disclosureDecisionId"
+      ]
+    },
+    {
+      "id": "contribution:outside-authority",
+      "result": "unsupported",
+      "canonicalOwner": "Evidence admission + Contribution Validation",
+      "observation": "Scoped contribution case outside-authority cannot be adjudicated by a canonical role/scope contribution policy.",
+      "fieldFailures": [
+        "contributor.authority",
+        "evidence.scopeId",
+        "admission.scopeDisposition"
+      ]
+    },
+    {
+      "id": "contribution:private-note-promotion",
+      "result": "unsupported",
+      "canonicalOwner": "Evidence admission + Contribution Validation",
+      "observation": "Scoped contribution case private-note-promotion cannot be adjudicated by a canonical role/scope contribution policy.",
+      "fieldFailures": [
+        "contributor.authority",
+        "evidence.scopeId",
+        "admission.scopeDisposition"
+      ]
+    },
+    {
+      "id": "contribution:manager-belief-promotion",
+      "result": "unsupported",
+      "canonicalOwner": "Evidence admission + Contribution Validation",
+      "observation": "Scoped contribution case manager-belief-promotion cannot be adjudicated by a canonical role/scope contribution policy.",
+      "fieldFailures": [
+        "contributor.authority",
+        "evidence.scopeId",
+        "admission.scopeDisposition"
+      ]
+    },
+    {
+      "id": "contribution:hierarchy-vs-evidence",
+      "result": "unsupported",
+      "canonicalOwner": "Evidence admission + Contribution Validation",
+      "observation": "Scoped contribution case hierarchy-vs-evidence cannot be adjudicated by a canonical role/scope contribution policy.",
+      "fieldFailures": [
+        "contributor.authority",
+        "evidence.scopeId",
+        "admission.scopeDisposition"
+      ]
+    },
+    {
+      "id": "contribution:local-challenge-path",
+      "result": "unsupported",
+      "canonicalOwner": "Evidence admission + Contribution Validation",
+      "observation": "Scoped contribution case local-challenge-path cannot be adjudicated by a canonical role/scope contribution policy.",
+      "fieldFailures": [
+        "contributor.authority",
+        "evidence.scopeId",
+        "admission.scopeDisposition"
+      ]
+    },
+    {
+      "id": "contribution:contamination",
+      "result": "unsupported",
+      "canonicalOwner": "Evidence admission + Contribution Validation",
+      "observation": "Scoped contribution case contamination cannot be adjudicated by a canonical role/scope contribution policy.",
+      "fieldFailures": [
+        "contributor.authority",
+        "evidence.scopeId",
+        "admission.scopeDisposition"
+      ]
+    },
+    {
+      "id": "decision:1",
+      "result": "unsupported",
+      "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+      "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: aligned and well-supported local decision.",
+      "fieldFailures": [
+        "decision.recipientScope",
+        "decision.evidenceAuthority",
+        "decision.calibrationDisposition"
+      ]
+    },
+    {
+      "id": "decision:2",
+      "result": "unsupported",
+      "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+      "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: aligned decision based on stale Evidence.",
+      "fieldFailures": [
+        "decision.recipientScope",
+        "decision.evidenceAuthority",
+        "decision.calibrationDisposition"
+      ]
+    },
+    {
+      "id": "decision:3",
+      "result": "unsupported",
+      "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+      "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: evidence-backed local divergence.",
+      "fieldFailures": [
+        "decision.recipientScope",
+        "decision.evidenceAuthority",
+        "decision.calibrationDisposition"
+      ]
+    },
+    {
+      "id": "decision:4",
+      "result": "unsupported",
+      "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+      "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: unsupported local divergence.",
+      "fieldFailures": [
+        "decision.recipientScope",
+        "decision.evidenceAuthority",
+        "decision.calibrationDisposition"
+      ]
+    },
+    {
+      "id": "decision:5",
+      "result": "unsupported",
+      "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+      "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: apparent divergence caused by ambiguous strategic intent.",
+      "fieldFailures": [
+        "decision.recipientScope",
+        "decision.evidenceAuthority",
+        "decision.calibrationDisposition"
+      ]
+    },
+    {
+      "id": "decision:6",
+      "result": "unsupported",
+      "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+      "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: locally beneficial but globally harmful decision.",
+      "fieldFailures": [
+        "decision.recipientScope",
+        "decision.evidenceAuthority",
+        "decision.calibrationDisposition"
+      ]
+    },
+    {
+      "id": "decision:7",
+      "result": "unsupported",
+      "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+      "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: globally aligned but locally infeasible decision.",
+      "fieldFailures": [
+        "decision.recipientScope",
+        "decision.evidenceAuthority",
+        "decision.calibrationDisposition"
+      ]
+    },
+    {
+      "id": "decision:8",
+      "result": "unsupported",
+      "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+      "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: local Evidence that should challenge higher-level strategy.",
+      "fieldFailures": [
+        "decision.recipientScope",
+        "decision.evidenceAuthority",
+        "decision.calibrationDisposition"
+      ]
+    },
+    {
+      "id": "decision:9",
+      "result": "unsupported",
+      "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+      "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: legitimate experimental divergence within authorized bounds.",
+      "fieldFailures": [
+        "decision.recipientScope",
+        "decision.evidenceAuthority",
+        "decision.calibrationDisposition"
+      ]
+    },
+    {
+      "id": "decision:10",
+      "result": "unsupported",
+      "canonicalOwner": "CAP-DEC-001..007 + Objective/Optimization Context",
+      "observation": "Existing decision owners do not produce a scoped decision-calibration disposition for: action outside the user's authority even when strategically aligned.",
+      "fieldFailures": [
+        "decision.recipientScope",
+        "decision.evidenceAuthority",
+        "decision.calibrationDisposition"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "cycles": 2,
+  "cycleDigests": [
+    "ea146604b59386ed4151fb99af69b1586fce0bac6f1ec39da8e0d2801a5f117b",
+    "ea146604b59386ed4151fb99af69b1586fce0bac6f1ec39da8e0d2801a5f117b"
+  ],
+  "inputOrderInvariant": true,
+  "duplicateEvidenceInvariant": true,
+  "temporaryRootsRemoved": true,
+  "finalBenchmarkDigest": "f8bffbb631474d5799d875e56ca4964fa302f49b74d5f834ec171c4c90d80b0e"
+}

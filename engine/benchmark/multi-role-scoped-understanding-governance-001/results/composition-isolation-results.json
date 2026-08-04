@@ -1,0 +1,99 @@
+{
+  "crossScope": [
+    {
+      "id": "scope:upward",
+      "result": "unsupported",
+      "canonicalOwner": "authorization + canonical Understanding composition",
+      "observation": "Governed upward composition lacks recursive scope and authority-transition inputs.",
+      "fieldFailures": [
+        "scope.parentId",
+        "composition.scopeId",
+        "contributionAuthority",
+        "abstractionDisposition"
+      ]
+    },
+    {
+      "id": "scope:downward",
+      "result": "unsupported",
+      "canonicalOwner": "authorization + canonical Understanding composition",
+      "observation": "Governed downward composition lacks recursive scope and authority-transition inputs.",
+      "fieldFailures": [
+        "scope.parentId",
+        "composition.scopeId",
+        "contributionAuthority",
+        "abstractionDisposition"
+      ]
+    },
+    {
+      "id": "scope:lateral",
+      "result": "unsupported",
+      "canonicalOwner": "authorization + canonical Understanding composition",
+      "observation": "Governed lateral composition lacks recursive scope and authority-transition inputs.",
+      "fieldFailures": [
+        "scope.parentId",
+        "composition.scopeId",
+        "contributionAuthority",
+        "abstractionDisposition"
+      ]
+    },
+    {
+      "id": "scope:local-retention",
+      "result": "unsupported",
+      "canonicalOwner": "authorization + canonical Understanding composition",
+      "observation": "Governed local-retention composition lacks recursive scope and authority-transition inputs.",
+      "fieldFailures": [
+        "scope.parentId",
+        "composition.scopeId",
+        "contributionAuthority",
+        "abstractionDisposition"
+      ]
+    },
+    {
+      "id": "scope:aggregation",
+      "result": "unsupported",
+      "canonicalOwner": "authorization + canonical Understanding composition",
+      "observation": "Governed aggregation composition lacks recursive scope and authority-transition inputs.",
+      "fieldFailures": [
+        "scope.parentId",
+        "composition.scopeId",
+        "contributionAuthority",
+        "abstractionDisposition"
+      ]
+    },
+    {
+      "id": "scope:cross-scope-contamination",
+      "result": "unsupported",
+      "canonicalOwner": "authorization + canonical Understanding composition",
+      "observation": "Governed cross-scope-contamination composition lacks recursive scope and authority-transition inputs.",
+      "fieldFailures": [
+        "scope.parentId",
+        "composition.scopeId",
+        "contributionAuthority",
+        "abstractionDisposition"
+      ]
+    }
+  ],
+  "crossOrganization": [
+    {
+      "id": "isolation:foreign-organization",
+      "result": "pass",
+      "canonicalOwner": "canonical Understanding disclosure",
+      "observation": "A foreign-organization decision fails closed.",
+      "fieldFailures": []
+    },
+    {
+      "id": "isolation:evidence-foreign",
+      "result": "pass",
+      "canonicalOwner": "Evidence/organization identity",
+      "observation": "Foreign synthetic Evidence remains excluded by exact organization identity in the benchmark manifest.",
+      "fieldFailures": []
+    },
+    {
+      "id": "isolation:projection-foreign",
+      "result": "pass",
+      "canonicalOwner": "authorized projection",
+      "observation": "Foreign decision mismatch produces no projection authority.",
+      "fieldFailures": []
+    }
+  ]
+}

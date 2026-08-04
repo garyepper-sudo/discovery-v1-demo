@@ -1,0 +1,164 @@
+[
+  {
+    "id": "projection:team-lead",
+    "category": "projection",
+    "description": "Materially useful team-lead projection",
+    "expected": "unsupported"
+  },
+  {
+    "id": "projection:manager",
+    "category": "projection",
+    "description": "Materially useful manager projection",
+    "expected": "unsupported"
+  },
+  {
+    "id": "projection:director",
+    "category": "projection",
+    "description": "Materially useful director projection",
+    "expected": "unsupported"
+  },
+  {
+    "id": "projection:functional-executive",
+    "category": "projection",
+    "description": "Materially useful functional-executive projection",
+    "expected": "unsupported"
+  },
+  {
+    "id": "projection:organization-executive",
+    "category": "projection",
+    "description": "Materially useful organization-executive projection",
+    "expected": "unsupported"
+  },
+  {
+    "id": "decision:1",
+    "category": "decision",
+    "description": "aligned and well-supported local decision",
+    "expected": "unsupported"
+  },
+  {
+    "id": "decision:2",
+    "category": "decision",
+    "description": "aligned decision based on stale Evidence",
+    "expected": "unsupported"
+  },
+  {
+    "id": "decision:3",
+    "category": "decision",
+    "description": "evidence-backed local divergence",
+    "expected": "unsupported"
+  },
+  {
+    "id": "decision:4",
+    "category": "decision",
+    "description": "unsupported local divergence",
+    "expected": "unsupported"
+  },
+  {
+    "id": "decision:5",
+    "category": "decision",
+    "description": "apparent divergence caused by ambiguous strategic intent",
+    "expected": "unsupported"
+  },
+  {
+    "id": "decision:6",
+    "category": "decision",
+    "description": "locally beneficial but globally harmful decision",
+    "expected": "unsupported"
+  },
+  {
+    "id": "decision:7",
+    "category": "decision",
+    "description": "globally aligned but locally infeasible decision",
+    "expected": "unsupported"
+  },
+  {
+    "id": "decision:8",
+    "category": "decision",
+    "description": "local Evidence that should challenge higher-level strategy",
+    "expected": "unsupported"
+  },
+  {
+    "id": "decision:9",
+    "category": "decision",
+    "description": "legitimate experimental divergence within authorized bounds",
+    "expected": "unsupported"
+  },
+  {
+    "id": "decision:10",
+    "category": "decision",
+    "description": "action outside the user's authority even when strategically aligned",
+    "expected": "unsupported"
+  },
+  {
+    "id": "adversarial:1",
+    "category": "adversarial",
+    "description": "manager broad query targeting HR",
+    "expected": "fail-closed"
+  },
+  {
+    "id": "adversarial:2",
+    "category": "adversarial",
+    "description": "restricted employee Evidence changes metric",
+    "expected": "fail-closed"
+  },
+  {
+    "id": "adversarial:3",
+    "category": "adversarial",
+    "description": "revoked user requests earlier projection",
+    "expected": "fail-closed"
+  },
+  {
+    "id": "adversarial:4",
+    "category": "adversarial",
+    "description": "recommendation leaks executive discussion",
+    "expected": "fail-closed"
+  },
+  {
+    "id": "adversarial:5",
+    "category": "adversarial",
+    "description": "harmless facts combine into protected fact",
+    "expected": "fail-closed"
+  },
+  {
+    "id": "adversarial:6",
+    "category": "adversarial",
+    "description": "contradiction reveals protected-source identity",
+    "expected": "fail-closed"
+  },
+  {
+    "id": "adversarial:7",
+    "category": "adversarial",
+    "description": "Evidence contribution outside authority",
+    "expected": "fail-closed"
+  },
+  {
+    "id": "adversarial:8",
+    "category": "adversarial",
+    "description": "manager promotes local belief organization-wide",
+    "expected": "fail-closed"
+  },
+  {
+    "id": "adversarial:9",
+    "category": "adversarial",
+    "description": "intent change rewrites lower-level history",
+    "expected": "fail-closed"
+  },
+  {
+    "id": "adversarial:10",
+    "category": "adversarial",
+    "description": "unsupported local interpretation contaminates executive projection",
+    "expected": "fail-closed"
+  },
+  {
+    "id": "adversarial:11",
+    "category": "adversarial",
+    "description": "strategy overrides stronger local Evidence",
+    "expected": "fail-closed"
+  },
+  {
+    "id": "adversarial:12",
+    "category": "adversarial",
+    "description": "cross-functional projection exceeds initiative relationship",
+    "expected": "fail-closed"
+  }
+]

@@ -1,0 +1,65 @@
+{
+  "id": "synthetic-multi-role-governance-001",
+  "canonicalModelCount": 1,
+  "scopes": [
+    {
+      "id": "scope:organization",
+      "kind": "organization",
+      "organizationId": "synthetic-multi-role-governance-001"
+    },
+    {
+      "id": "scope:function:engineering",
+      "kind": "function",
+      "parentId": "scope:organization",
+      "organizationId": "synthetic-multi-role-governance-001"
+    },
+    {
+      "id": "scope:function:sales",
+      "kind": "function",
+      "parentId": "scope:organization",
+      "organizationId": "synthetic-multi-role-governance-001"
+    },
+    {
+      "id": "scope:department:platform",
+      "kind": "department",
+      "parentId": "scope:function:engineering",
+      "organizationId": "synthetic-multi-role-governance-001"
+    },
+    {
+      "id": "scope:department:product",
+      "kind": "department",
+      "parentId": "scope:function:engineering",
+      "organizationId": "synthetic-multi-role-governance-001"
+    },
+    {
+      "id": "scope:team:delivery",
+      "kind": "team",
+      "parentId": "scope:department:platform",
+      "organizationId": "synthetic-multi-role-governance-001"
+    },
+    {
+      "id": "scope:team:sales",
+      "kind": "team",
+      "parentId": "scope:function:sales",
+      "organizationId": "synthetic-multi-role-governance-001"
+    },
+    {
+      "id": "scope:initiative:northstar",
+      "kind": "initiative",
+      "parentId": "scope:organization",
+      "organizationId": "synthetic-multi-role-governance-001"
+    },
+    {
+      "id": "scope:private:engineering-manager",
+      "kind": "private-manager",
+      "parentId": "scope:department:platform",
+      "organizationId": "synthetic-multi-role-governance-001"
+    },
+    {
+      "id": "scope:restricted:people",
+      "kind": "restricted-people",
+      "parentId": "scope:organization",
+      "organizationId": "synthetic-multi-role-governance-001"
+    }
+  ]
+}

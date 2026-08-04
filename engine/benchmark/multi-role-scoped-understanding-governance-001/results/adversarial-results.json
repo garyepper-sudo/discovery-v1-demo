@@ -1,0 +1,86 @@
+[
+  {
+    "id": "adversarial:1",
+    "result": "fail-closed",
+    "canonicalOwner": "benchmark gate over existing disclosure owner",
+    "observation": "No role/scope semantics are fabricated for manager broad query targeting HR; projection is withheld.",
+    "fieldFailures": []
+  },
+  {
+    "id": "adversarial:2",
+    "result": "fail-closed",
+    "canonicalOwner": "benchmark gate over existing disclosure owner",
+    "observation": "No role/scope semantics are fabricated for restricted employee Evidence changes metric; projection is withheld.",
+    "fieldFailures": []
+  },
+  {
+    "id": "adversarial:3",
+    "result": "fail-closed",
+    "canonicalOwner": "benchmark gate over existing disclosure owner",
+    "observation": "No role/scope semantics are fabricated for revoked user requests earlier projection; projection is withheld.",
+    "fieldFailures": []
+  },
+  {
+    "id": "adversarial:4",
+    "result": "fail-closed",
+    "canonicalOwner": "benchmark gate over existing disclosure owner",
+    "observation": "No role/scope semantics are fabricated for recommendation leaks executive discussion; projection is withheld.",
+    "fieldFailures": []
+  },
+  {
+    "id": "adversarial:5",
+    "result": "fail-closed",
+    "canonicalOwner": "benchmark gate over existing disclosure owner",
+    "observation": "No role/scope semantics are fabricated for harmless facts combine into protected fact; projection is withheld.",
+    "fieldFailures": []
+  },
+  {
+    "id": "adversarial:6",
+    "result": "fail-closed",
+    "canonicalOwner": "benchmark gate over existing disclosure owner",
+    "observation": "No role/scope semantics are fabricated for contradiction reveals protected-source identity; projection is withheld.",
+    "fieldFailures": []
+  },
+  {
+    "id": "adversarial:7",
+    "result": "fail-closed",
+    "canonicalOwner": "benchmark gate over existing disclosure owner",
+    "observation": "No role/scope semantics are fabricated for Evidence contribution outside authority; projection is withheld.",
+    "fieldFailures": []
+  },
+  {
+    "id": "adversarial:8",
+    "result": "fail-closed",
+    "canonicalOwner": "benchmark gate over existing disclosure owner",
+    "observation": "No role/scope semantics are fabricated for manager promotes local belief organization-wide; projection is withheld.",
+    "fieldFailures": []
+  },
+  {
+    "id": "adversarial:9",
+    "result": "fail-closed",
+    "canonicalOwner": "benchmark gate over existing disclosure owner",
+    "observation": "No role/scope semantics are fabricated for intent change rewrites lower-level history; projection is withheld.",
+    "fieldFailures": []
+  },
+  {
+    "id": "adversarial:10",
+    "result": "fail-closed",
+    "canonicalOwner": "benchmark gate over existing disclosure owner",
+    "observation": "No role/scope semantics are fabricated for unsupported local interpretation contaminates executive projection; projection is withheld.",
+    "fieldFailures": []
+  },
+  {
+    "id": "adversarial:11",
+    "result": "fail-closed",
+    "canonicalOwner": "benchmark gate over existing disclosure owner",
+    "observation": "No role/scope semantics are fabricated for strategy overrides stronger local Evidence; projection is withheld.",
+    "fieldFailures": []
+  },
+  {
+    "id": "adversarial:12",
+    "result": "fail-closed",
+    "canonicalOwner": "benchmark gate over existing disclosure owner",
+    "observation": "No role/scope semantics are fabricated for cross-functional projection exceeds initiative relationship; projection is withheld.",
+    "fieldFailures": []
+  }
+]

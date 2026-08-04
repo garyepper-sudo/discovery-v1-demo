@@ -1,0 +1,130 @@
+{
+  "direct": [
+    {
+      "id": "direct:exact-consumer-organization",
+      "result": "pass",
+      "canonicalOwner": "alpha allowlist + canonical Understanding disclosure",
+      "observation": "Exact organization and consumer decisions are enforced before disclosure.",
+      "fieldFailures": []
+    },
+    {
+      "id": "revocation:future-disclosure",
+      "result": "pass",
+      "canonicalOwner": "canonical Understanding disclosure",
+      "observation": "Revoked decisions suppress future disclosure without rewriting canonical history.",
+      "fieldFailures": []
+    },
+    {
+      "id": "isolation:foreign-organization",
+      "result": "pass",
+      "canonicalOwner": "canonical Understanding disclosure",
+      "observation": "A foreign-organization decision fails closed.",
+      "fieldFailures": []
+    },
+    {
+      "id": "direct:recursive-scope",
+      "result": "unsupported",
+      "canonicalOwner": "authorization/disclosure policy",
+      "observation": "No canonical recursive scope decision input exists.",
+      "fieldFailures": [
+        "decision.scopeIds",
+        "decision.purpose",
+        "composition.scopeId",
+        "composition.sensitivity"
+      ]
+    }
+  ],
+  "derived": [
+    {
+      "id": "derived:summary",
+      "result": "unsupported",
+      "canonicalOwner": "authorized Organizational Understanding projection",
+      "observation": "Derived summary safety cannot be resolved per field from current disclosure input.",
+      "fieldFailures": [
+        "recipient.role",
+        "recipient.scope",
+        "purpose",
+        "sensitivity",
+        "derivedField.supportingAuthorizedRefs"
+      ]
+    },
+    {
+      "id": "derived:confidence",
+      "result": "unsupported",
+      "canonicalOwner": "authorized Organizational Understanding projection",
+      "observation": "Derived confidence safety cannot be resolved per field from current disclosure input.",
+      "fieldFailures": [
+        "recipient.role",
+        "recipient.scope",
+        "purpose",
+        "sensitivity",
+        "derivedField.supportingAuthorizedRefs"
+      ]
+    },
+    {
+      "id": "derived:contradiction",
+      "result": "unsupported",
+      "canonicalOwner": "authorized Organizational Understanding projection",
+      "observation": "Derived contradiction safety cannot be resolved per field from current disclosure input.",
+      "fieldFailures": [
+        "recipient.role",
+        "recipient.scope",
+        "purpose",
+        "sensitivity",
+        "derivedField.supportingAuthorizedRefs"
+      ]
+    },
+    {
+      "id": "derived:recommendation",
+      "result": "unsupported",
+      "canonicalOwner": "authorized Organizational Understanding projection",
+      "observation": "Derived recommendation safety cannot be resolved per field from current disclosure input.",
+      "fieldFailures": [
+        "recipient.role",
+        "recipient.scope",
+        "purpose",
+        "sensitivity",
+        "derivedField.supportingAuthorizedRefs"
+      ]
+    },
+    {
+      "id": "derived:metric",
+      "result": "unsupported",
+      "canonicalOwner": "authorized Organizational Understanding projection",
+      "observation": "Derived metric safety cannot be resolved per field from current disclosure input.",
+      "fieldFailures": [
+        "recipient.role",
+        "recipient.scope",
+        "purpose",
+        "sensitivity",
+        "derivedField.supportingAuthorizedRefs"
+      ]
+    },
+    {
+      "id": "derived:combination",
+      "result": "unsupported",
+      "canonicalOwner": "authorized Organizational Understanding projection",
+      "observation": "Derived combination safety cannot be resolved per field from current disclosure input.",
+      "fieldFailures": [
+        "recipient.role",
+        "recipient.scope",
+        "purpose",
+        "sensitivity",
+        "derivedField.supportingAuthorizedRefs"
+      ]
+    },
+    {
+      "id": "derived:inferred-relationship",
+      "result": "unsupported",
+      "canonicalOwner": "authorized Organizational Understanding projection",
+      "observation": "Derived inferred-relationship safety cannot be resolved per field from current disclosure input.",
+      "fieldFailures": [
+        "recipient.role",
+        "recipient.scope",
+        "purpose",
+        "sensitivity",
+        "derivedField.supportingAuthorizedRefs"
+      ]
+    }
+  ]
+}

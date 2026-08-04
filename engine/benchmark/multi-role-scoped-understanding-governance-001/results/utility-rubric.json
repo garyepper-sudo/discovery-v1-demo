@@ -1,0 +1,18 @@
+{
+  "version": "1",
+  "frozenBeforeProjection": true,
+  "volumeNeutral": true,
+  "categories": [
+    "material-changes",
+    "priorities",
+    "blockers",
+    "dependencies",
+    "decisions-requiring-attention",
+    "uncertainty",
+    "evidence-gaps",
+    "strategic-context",
+    "escalation-opportunities",
+    "justified-divergence"
+  ],
+  "passRule": "At least four authorized responsibility-relevant categories, explicit uncertainty, and no direct or derived restricted disclosure."
+}

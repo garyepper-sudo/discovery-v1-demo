@@ -1,0 +1,105 @@
+{
+  "direct": [
+    {
+      "id": "direct:exact-consumer-organization",
+      "result": "pass",
+      "canonicalOwner": "alpha allowlist + canonical Understanding disclosure",
+      "observation": "Exact organization and consumer decisions are enforced before disclosure.",
+      "fieldFailures": []
+    },
+    {
+      "id": "revocation:future-disclosure",
+      "result": "pass",
+      "canonicalOwner": "canonical Understanding disclosure",
+      "observation": "Revoked decisions suppress future disclosure without rewriting canonical history.",
+      "fieldFailures": []
+    },
+    {
+      "id": "isolation:foreign-organization",
+      "result": "pass",
+      "canonicalOwner": "canonical Understanding disclosure",
+      "observation": "A foreign-organization decision fails closed.",
+      "fieldFailures": []
+    },
+    {
+      "id": "direct:recursive-scope",
+      "result": "unsupported",
+      "canonicalOwner": "authorization/disclosure policy",
+      "observation": "No canonical recursive scope decision input exists.",
+      "fieldFailures": [
+        "decision.scopeIds",
+        "decision.purpose",
+        "composition.scopeId",
+        "composition.sensitivity"
+      ]
+    }
+  ],
+  "contribution": [
+    {
+      "id": "contribution:outside-authority",
+      "result": "unsupported",
+      "canonicalOwner": "Evidence admission + Contribution Validation",
+      "observation": "Scoped contribution case outside-authority cannot be adjudicated by a canonical role/scope contribution policy.",
+      "fieldFailures": [
+        "contributor.authority",
+        "evidence.scopeId",
+        "admission.scopeDisposition"
+      ]
+    },
+    {
+      "id": "contribution:private-note-promotion",
+      "result": "unsupported",
+      "canonicalOwner": "Evidence admission + Contribution Validation",
+      "observation": "Scoped contribution case private-note-promotion cannot be adjudicated by a canonical role/scope contribution policy.",
+      "fieldFailures": [
+        "contributor.authority",
+        "evidence.scopeId",
+        "admission.scopeDisposition"
+      ]
+    },
+    {
+      "id": "contribution:manager-belief-promotion",
+      "result": "unsupported",
+      "canonicalOwner": "Evidence admission + Contribution Validation",
+      "observation": "Scoped contribution case manager-belief-promotion cannot be adjudicated by a canonical role/scope contribution policy.",
+      "fieldFailures": [
+        "contributor.authority",
+        "evidence.scopeId",
+        "admission.scopeDisposition"
+      ]
+    },
+    {
+      "id": "contribution:hierarchy-vs-evidence",
+      "result": "unsupported",
+      "canonicalOwner": "Evidence admission + Contribution Validation",
+      "observation": "Scoped contribution case hierarchy-vs-evidence cannot be adjudicated by a canonical role/scope contribution policy.",
+      "fieldFailures": [
+        "contributor.authority",
+        "evidence.scopeId",
+        "admission.scopeDisposition"
+      ]
+    },
+    {
+      "id": "contribution:local-challenge-path",
+      "result": "unsupported",
+      "canonicalOwner": "Evidence admission + Contribution Validation",
+      "observation": "Scoped contribution case local-challenge-path cannot be adjudicated by a canonical role/scope contribution policy.",
+      "fieldFailures": [
+        "contributor.authority",
+        "evidence.scopeId",
+        "admission.scopeDisposition"
+      ]
+    },
+    {
+      "id": "contribution:contamination",
+      "result": "unsupported",
+      "canonicalOwner": "Evidence admission + Contribution Validation",
+      "observation": "Scoped contribution case contamination cannot be adjudicated by a canonical role/scope contribution policy.",
+      "fieldFailures": [
+        "contributor.authority",
+        "evidence.scopeId",
+        "admission.scopeDisposition"
+      ]
+    }
+  ]
+}

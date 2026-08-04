@@ -1,0 +1,345 @@
+[
+  {
+    "id": "role:ceo",
+    "personId": "person:ceo",
+    "title": "CEO",
+    "level": "organization-executive",
+    "scopeIds": [
+      "scope:organization"
+    ],
+    "contributionScopeIds": [
+      "scope:organization"
+    ],
+    "evidenceAdmissionScopeIds": [
+      "scope:organization"
+    ],
+    "retrievalScopeIds": [
+      "scope:organization"
+    ],
+    "projectionScopeIds": [
+      "scope:organization"
+    ],
+    "decisionScopeIds": [
+      "scope:organization"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "role:coo",
+    "personId": "person:coo",
+    "title": "COO",
+    "level": "organization-executive",
+    "scopeIds": [
+      "scope:organization"
+    ],
+    "contributionScopeIds": [
+      "scope:organization"
+    ],
+    "evidenceAdmissionScopeIds": [
+      "scope:organization"
+    ],
+    "retrievalScopeIds": [
+      "scope:organization"
+    ],
+    "projectionScopeIds": [
+      "scope:organization"
+    ],
+    "decisionScopeIds": [
+      "scope:organization"
+    ],
+    "status": "active",
+    "reportsToRoleId": "role:ceo"
+  },
+  {
+    "id": "role:vp-engineering",
+    "personId": "person:vp-engineering",
+    "title": "VP Engineering",
+    "level": "functional-executive",
+    "scopeIds": [
+      "scope:function:engineering"
+    ],
+    "contributionScopeIds": [
+      "scope:function:engineering"
+    ],
+    "evidenceAdmissionScopeIds": [
+      "scope:function:engineering"
+    ],
+    "retrievalScopeIds": [
+      "scope:function:engineering"
+    ],
+    "projectionScopeIds": [
+      "scope:function:engineering"
+    ],
+    "decisionScopeIds": [
+      "scope:function:engineering"
+    ],
+    "status": "active",
+    "reportsToRoleId": "role:coo"
+  },
+  {
+    "id": "role:vp-sales",
+    "personId": "person:vp-sales",
+    "title": "VP Sales",
+    "level": "functional-executive",
+    "scopeIds": [
+      "scope:function:sales"
+    ],
+    "contributionScopeIds": [
+      "scope:function:sales"
+    ],
+    "evidenceAdmissionScopeIds": [
+      "scope:function:sales"
+    ],
+    "retrievalScopeIds": [
+      "scope:function:sales"
+    ],
+    "projectionScopeIds": [
+      "scope:function:sales"
+    ],
+    "decisionScopeIds": [
+      "scope:function:sales"
+    ],
+    "status": "active",
+    "reportsToRoleId": "role:coo"
+  },
+  {
+    "id": "role:director-platform",
+    "personId": "person:director-platform",
+    "title": "Director Platform Engineering",
+    "level": "director",
+    "scopeIds": [
+      "scope:department:platform"
+    ],
+    "contributionScopeIds": [
+      "scope:department:platform"
+    ],
+    "evidenceAdmissionScopeIds": [
+      "scope:department:platform"
+    ],
+    "retrievalScopeIds": [
+      "scope:department:platform"
+    ],
+    "projectionScopeIds": [
+      "scope:department:platform"
+    ],
+    "decisionScopeIds": [
+      "scope:department:platform"
+    ],
+    "status": "active",
+    "reportsToRoleId": "role:vp-engineering"
+  },
+  {
+    "id": "role:director-product",
+    "personId": "person:director-product",
+    "title": "Director Product Engineering",
+    "level": "director",
+    "scopeIds": [
+      "scope:department:product"
+    ],
+    "contributionScopeIds": [
+      "scope:department:product"
+    ],
+    "evidenceAdmissionScopeIds": [
+      "scope:department:product"
+    ],
+    "retrievalScopeIds": [
+      "scope:department:product"
+    ],
+    "projectionScopeIds": [
+      "scope:department:product"
+    ],
+    "decisionScopeIds": [
+      "scope:department:product"
+    ],
+    "status": "active",
+    "reportsToRoleId": "role:vp-engineering"
+  },
+  {
+    "id": "role:engineering-manager",
+    "personId": "person:engineering-manager",
+    "title": "Engineering Manager",
+    "level": "manager",
+    "scopeIds": [
+      "scope:team:delivery",
+      "scope:private:engineering-manager"
+    ],
+    "contributionScopeIds": [
+      "scope:team:delivery",
+      "scope:private:engineering-manager"
+    ],
+    "evidenceAdmissionScopeIds": [
+      "scope:team:delivery"
+    ],
+    "retrievalScopeIds": [
+      "scope:team:delivery",
+      "scope:private:engineering-manager"
+    ],
+    "projectionScopeIds": [
+      "scope:team:delivery"
+    ],
+    "decisionScopeIds": [
+      "scope:team:delivery"
+    ],
+    "status": "active",
+    "reportsToRoleId": "role:director-platform"
+  },
+  {
+    "id": "role:sales-manager",
+    "personId": "person:sales-manager",
+    "title": "Sales Manager",
+    "level": "manager",
+    "scopeIds": [
+      "scope:team:sales"
+    ],
+    "contributionScopeIds": [
+      "scope:team:sales"
+    ],
+    "evidenceAdmissionScopeIds": [
+      "scope:team:sales"
+    ],
+    "retrievalScopeIds": [
+      "scope:team:sales"
+    ],
+    "projectionScopeIds": [
+      "scope:team:sales"
+    ],
+    "decisionScopeIds": [
+      "scope:team:sales"
+    ],
+    "status": "active",
+    "reportsToRoleId": "role:vp-sales"
+  },
+  {
+    "id": "role:team-lead",
+    "personId": "person:team-lead",
+    "title": "Team Lead",
+    "level": "team-lead",
+    "scopeIds": [
+      "scope:team:delivery"
+    ],
+    "contributionScopeIds": [
+      "scope:team:delivery"
+    ],
+    "evidenceAdmissionScopeIds": [],
+    "retrievalScopeIds": [
+      "scope:team:delivery"
+    ],
+    "projectionScopeIds": [
+      "scope:team:delivery"
+    ],
+    "decisionScopeIds": [],
+    "status": "active",
+    "reportsToRoleId": "role:engineering-manager"
+  },
+  {
+    "id": "role:engineering-ic",
+    "personId": "person:engineering-ic",
+    "title": "Engineer",
+    "level": "individual-contributor",
+    "scopeIds": [
+      "scope:team:delivery"
+    ],
+    "contributionScopeIds": [
+      "scope:team:delivery"
+    ],
+    "evidenceAdmissionScopeIds": [],
+    "retrievalScopeIds": [
+      "scope:team:delivery"
+    ],
+    "projectionScopeIds": [
+      "scope:team:delivery"
+    ],
+    "decisionScopeIds": [],
+    "status": "active",
+    "reportsToRoleId": "role:team-lead"
+  },
+  {
+    "id": "role:sales-ic",
+    "personId": "person:sales-ic",
+    "title": "Sales Representative",
+    "level": "individual-contributor",
+    "scopeIds": [
+      "scope:team:sales"
+    ],
+    "contributionScopeIds": [
+      "scope:team:sales"
+    ],
+    "evidenceAdmissionScopeIds": [],
+    "retrievalScopeIds": [
+      "scope:team:sales"
+    ],
+    "projectionScopeIds": [
+      "scope:team:sales"
+    ],
+    "decisionScopeIds": [],
+    "status": "active",
+    "reportsToRoleId": "role:sales-manager"
+  },
+  {
+    "id": "role:initiative-owner",
+    "personId": "person:initiative-owner",
+    "title": "Northstar Initiative Owner",
+    "level": "manager",
+    "scopeIds": [
+      "scope:initiative:northstar"
+    ],
+    "contributionScopeIds": [
+      "scope:initiative:northstar"
+    ],
+    "evidenceAdmissionScopeIds": [
+      "scope:initiative:northstar"
+    ],
+    "retrievalScopeIds": [
+      "scope:initiative:northstar"
+    ],
+    "projectionScopeIds": [
+      "scope:initiative:northstar"
+    ],
+    "decisionScopeIds": [
+      "scope:initiative:northstar"
+    ],
+    "status": "active",
+    "reportsToRoleId": "role:coo"
+  },
+  {
+    "id": "role:people-authority",
+    "personId": "person:people-authority",
+    "title": "People Authority",
+    "level": "restricted-authority",
+    "scopeIds": [
+      "scope:restricted:people"
+    ],
+    "contributionScopeIds": [
+      "scope:restricted:people"
+    ],
+    "evidenceAdmissionScopeIds": [
+      "scope:restricted:people"
+    ],
+    "retrievalScopeIds": [
+      "scope:restricted:people"
+    ],
+    "projectionScopeIds": [
+      "scope:restricted:people"
+    ],
+    "decisionScopeIds": [
+      "scope:restricted:people"
+    ],
+    "status": "active",
+    "reportsToRoleId": "role:ceo"
+  },
+  {
+    "id": "role:revoked-manager",
+    "personId": "person:revoked-manager",
+    "title": "Former Manager",
+    "level": "manager",
+    "scopeIds": [
+      "scope:team:delivery"
+    ],
+    "contributionScopeIds": [],
+    "evidenceAdmissionScopeIds": [],
+    "retrievalScopeIds": [],
+    "projectionScopeIds": [],
+    "decisionScopeIds": [],
+    "status": "revoked"
+  }
+]
