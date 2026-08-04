@@ -528,7 +528,7 @@ scenario("28-conflicting-records-deny", "Unrelated active records fail closed.",
   assert.equal(output.disposition, "invalid");
 });
 
-scenario("29-reactivation-denies", "An active successor after revocation is not silently accepted.", () => {
+scenario("29-explicit-restoration-succeeds", "An exact active successor restores its revoked predecessor.", () => {
   const original = accessRecord({ accessRecordId: "access:original" });
   const revoked = accessRecord({
     accessRecordId: "access:revoked",
@@ -544,7 +544,52 @@ scenario("29-reactivation-denies", "An active successor after revocation is not 
     { identity: identity(), organizationId: ORGANIZATION_ID, experience: "organization", resolvedAt: NOW },
     new InjectedReader([original, revoked, reactivated]),
   );
-  assert.equal(output.disposition, "invalid");
+  assert.equal(output.disposition, "eligible");
+  assert.equal(output.accessRecord?.accessRecordId, reactivated.accessRecordId);
+});
+
+scenario("29a-restoration-order-invariant", "Restoration resolution is input-order invariant.", () => {
+  const original = accessRecord({ accessRecordId: "restore:original" });
+  const revoked = accessRecord({ accessRecordId: "restore:revoked", status: "revoked", revokedAt: NOW, supersedesAccessRecordId: original.accessRecordId });
+  const restored = accessRecord({ accessRecordId: "restore:active", supersedesAccessRecordId: revoked.accessRecordId });
+  const request = { identity: identity(), organizationId: ORGANIZATION_ID, experience: "organization", resolvedAt: NOW };
+  assert.equal(stable(preflightAlphaOrganizationAccess(request, new InjectedReader([original, revoked, restored]))), stable(preflightAlphaOrganizationAccess(request, new InjectedReader([restored, original, revoked]))));
+});
+
+scenario("29b-restoration-forks-deny", "Forked restoration successors fail closed.", () => {
+  const original = accessRecord({ accessRecordId: "fork:original" });
+  const revoked = accessRecord({ accessRecordId: "fork:revoked", status: "revoked", revokedAt: NOW, supersedesAccessRecordId: original.accessRecordId });
+  const one = accessRecord({ accessRecordId: "fork:one", supersedesAccessRecordId: revoked.accessRecordId });
+  const two = accessRecord({ accessRecordId: "fork:two", supersedesAccessRecordId: revoked.accessRecordId });
+  assert.equal(preflightAlphaOrganizationAccess({ identity: identity(), organizationId: ORGANIZATION_ID, experience: "organization", resolvedAt: NOW }, new InjectedReader([original, revoked, one, two])).disposition, "invalid");
+});
+
+scenario("29c-restoration-identity-escalation-denies", "Cross-user and cross-organization restoration fail closed.", () => {
+  const original = accessRecord({ accessRecordId: "identity:original" });
+  const revoked = accessRecord({ accessRecordId: "identity:revoked", status: "revoked", revokedAt: NOW, supersedesAccessRecordId: original.accessRecordId });
+  for (const restored of [accessRecord({ accessRecordId: "identity:user", consumerId: "consumer:other", supersedesAccessRecordId: revoked.accessRecordId }), accessRecord({ accessRecordId: "identity:org", organizationId: "organization:other", scope: { type: "organization", organizationId: "organization:other" }, supersedesAccessRecordId: revoked.accessRecordId })]) {
+    assert.equal(preflightAlphaOrganizationAccess({ identity: identity(), organizationId: ORGANIZATION_ID, experience: "organization", resolvedAt: NOW }, new InjectedReader([original, revoked, restored])).disposition, "invalid");
+  }
+});
+
+scenario("29d-restoration-cycle-denies", "Cyclic restoration lineage fails closed.", () => {
+  const one = accessRecord({ accessRecordId: "cycle:one", supersedesAccessRecordId: "cycle:two" });
+  const two = accessRecord({ accessRecordId: "cycle:two", status: "revoked", revokedAt: NOW, supersedesAccessRecordId: "cycle:one" });
+  assert.equal(preflightAlphaOrganizationAccess({ identity: identity(), organizationId: ORGANIZATION_ID, experience: "organization", resolvedAt: NOW }, new InjectedReader([one, two])).disposition, "invalid");
+});
+
+scenario("29e-future-restoration-denies", "A future-effective restoration cannot authorize current access.", () => {
+  const original = accessRecord({ accessRecordId: "future:original" });
+  const revoked = accessRecord({ accessRecordId: "future:revoked", status: "revoked", revokedAt: EARLIER, supersedesAccessRecordId: original.accessRecordId });
+  const restored = accessRecord({ accessRecordId: "future:active", createdAt: "2099-01-01T00:00:00.000Z", supersedesAccessRecordId: revoked.accessRecordId });
+  assert.notEqual(preflightAlphaOrganizationAccess({ identity: identity(), organizationId: ORGANIZATION_ID, experience: "organization", resolvedAt: NOW }, new InjectedReader([original, revoked, restored])).disposition, "eligible");
+});
+
+scenario("29f-restored-access-revokes-again", "A restored chain head can be revoked again.", () => {
+  const original = accessRecord({ accessRecordId: "again:original" });
+  const revoked = accessRecord({ accessRecordId: "again:revoked", status: "revoked", revokedAt: EARLIER, supersedesAccessRecordId: original.accessRecordId });
+  const restoredThenRevoked = accessRecord({ accessRecordId: "again:restored", status: "revoked", revokedAt: NOW, supersedesAccessRecordId: revoked.accessRecordId });
+  assert.equal(preflightAlphaOrganizationAccess({ identity: identity(), organizationId: ORGANIZATION_ID, experience: "organization", resolvedAt: NOW }, new InjectedReader([original, revoked, restoredThenRevoked])).disposition, "revoked");
 });
 
 scenario("30-expired-access-denies", "Expired bounded access fails closed.", () => {

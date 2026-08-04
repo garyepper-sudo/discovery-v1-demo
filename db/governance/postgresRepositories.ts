@@ -19,6 +19,8 @@ import {
   type AlphaDisclosureAuditRepository,
   type GrantAlphaAccessInput,
   type RevokeAlphaAccessInput,
+  type RestoreAlphaAccessInput,
+  type RestorableAlphaAccessRecordRepository,
   type SupersedeAlphaAccessInput,
 } from "./types";
 
@@ -49,7 +51,7 @@ function stable(value: unknown): string {
 }
 
 export class PostgresAlphaAccessRecordRepository
-  implements AlphaAccessRecordRepository
+  implements AlphaAccessRecordRepository, RestorableAlphaAccessRecordRepository
 {
   constructor(private readonly sql: GovernanceSql) {}
 
@@ -282,6 +284,49 @@ export class PostgresAlphaAccessRecordRepository
         previous: mapAlphaAccessRow(transitioned),
         next: mapAlphaAccessRow(nextRows[0]),
       };
+    });
+  }
+
+  async restoreAccess(input: RestoreAlphaAccessInput): Promise<{ previous: AlphaOrganizationAccessRecord; next: AlphaOrganizationAccessRecord }> {
+    for (const [value, label] of [[input.previousAccessRecordId, "previousAccessRecordId"], [input.nextAccessRecordId, "nextAccessRecordId"], [input.actor, "actor"], [input.reasonCode, "reasonCode"], [input.idempotencyKey, "idempotencyKey"]] as const) validateIdentity(value, label);
+    if (!Number.isFinite(Date.parse(input.restoredAt))) throw new AlphaStorageError("integrity-failure", "Invalid restoration time");
+    return this.serializable(async (tx) => {
+      const existing = await tx<{ predecessor_access_record_id: string | null; successor_access_record_id: string | null }[]>`SELECT predecessor_access_record_id, successor_access_record_id FROM alpha_access_lifecycle_events WHERE idempotency_key = ${input.idempotencyKey}`;
+      if (existing.length === 1) {
+        if (existing[0].predecessor_access_record_id !== input.previousAccessRecordId || existing[0].successor_access_record_id !== input.nextAccessRecordId) throw new AlphaStorageError("conflict", "Restoration idempotency identity conflict");
+        return { previous: mapAlphaAccessRow(await this.loadById(tx, input.previousAccessRecordId)), next: mapAlphaAccessRow(await this.loadById(tx, input.nextAccessRecordId)) };
+      }
+      const previous = await this.loadById(tx, input.previousAccessRecordId, true);
+      if (previous.status !== "revoked") throw new AlphaStorageError("invalid-transition", "Only the revoked chain head may be restored");
+      await tx`SELECT pg_advisory_xact_lock(hashtextextended(${`${previous.consumer_id}:${previous.organization_id}:${previous.experience}`}, 0))`;
+      if (!previous.revoked_at || Date.parse(input.restoredAt) < new Date(previous.revoked_at).getTime()) {
+        throw new AlphaStorageError("invalid-transition", "Restoration cannot become effective before revocation");
+      }
+      const terminals = await tx<{ access_record_id: string }[]>`
+        SELECT candidate.access_record_id
+        FROM alpha_access_records candidate
+        WHERE candidate.policy_id = ${previous.policy_id}
+          AND candidate.policy_version = ${previous.policy_version}
+          AND candidate.consumer_id = ${previous.consumer_id}
+          AND candidate.organization_id = ${previous.organization_id}
+          AND candidate.experience = ${previous.experience}
+          AND NOT EXISTS (
+            SELECT 1 FROM alpha_access_records successor
+            WHERE successor.supersedes_access_record_id = candidate.access_record_id
+          )
+      `;
+      if (terminals.length !== 1 || terminals[0].access_record_id !== input.previousAccessRecordId) {
+        throw new AlphaStorageError("invalid-transition", "Only the exact current chain head may be restored");
+      }
+      const successors = await tx<{ access_record_id: string }[]>`SELECT access_record_id FROM alpha_access_records WHERE supersedes_access_record_id = ${input.previousAccessRecordId}`;
+      if (successors.length !== 0) throw new AlphaStorageError("invalid-transition", "Stale or forked restoration refused");
+      const rows = await tx<AlphaAccessDatabaseRow[]>`
+        INSERT INTO alpha_access_records (access_record_id, policy_id, policy_version, consumer_id, organization_id, relationship, experience, scope_type, scope_id, status, granted_at, granted_by, expires_at, supersedes_access_record_id, administrative_idempotency_key, created_at, updated_at)
+        VALUES (${input.nextAccessRecordId}, ${previous.policy_id}, ${previous.policy_version}, ${previous.consumer_id}, ${previous.organization_id}, ${previous.relationship}, ${previous.experience}, ${previous.scope_type}, ${previous.scope_id}, 'active', ${input.restoredAt}, ${input.actor}, ${previous.expires_at}, ${input.previousAccessRecordId}, ${input.idempotencyKey}, ${input.restoredAt}, ${input.restoredAt})
+        RETURNING access_record_id, policy_id, policy_version, consumer_id, organization_id, relationship, experience, scope_type, scope_id, status, granted_at, expires_at, revoked_at, supersedes_access_record_id
+      `;
+      await tx`INSERT INTO alpha_access_lifecycle_events (event_id, access_record_id, actor, action, reason_code, idempotency_key, occurred_at, predecessor_access_record_id, successor_access_record_id) VALUES (${eventId("grant", input.idempotencyKey)}, ${input.nextAccessRecordId}, ${input.actor}, 'grant', ${input.reasonCode}, ${input.idempotencyKey}, ${input.restoredAt}, ${input.previousAccessRecordId}, ${input.nextAccessRecordId})`;
+      return { previous: mapAlphaAccessRow(previous), next: mapAlphaAccessRow(rows[0]) };
     });
   }
 

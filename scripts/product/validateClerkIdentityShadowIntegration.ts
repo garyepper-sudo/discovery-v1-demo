@@ -219,8 +219,8 @@ check(
 );
 check(
   layoutSource.includes("<ClerkProvider>") &&
-    layoutSource.includes("isYourOrganizationAlphaActivationEnabled"),
-  "ClerkProvider is active only inside the bounded activation",
+    layoutSource.includes("isYourOrganizationAlphaPresentationEnabled"),
+  "ClerkProvider is active only inside the bounded presentation environment",
 );
 
 const clientImportSearch = spawnSync(

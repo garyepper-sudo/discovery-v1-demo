@@ -40,6 +40,15 @@ export type RevokeAlphaAccessInput = {
   revokedAt: string;
 };
 
+export type RestoreAlphaAccessInput = {
+  previousAccessRecordId: string;
+  nextAccessRecordId: string;
+  actor: string;
+  reasonCode: string;
+  idempotencyKey: string;
+  restoredAt: string;
+};
+
 export type SupersedeAlphaAccessInput = {
   previousAccessRecordId: string;
   nextAccessRecordId: string;
@@ -65,6 +74,13 @@ export interface AlphaAccessRecordRepository {
   grantAccess(input: GrantAlphaAccessInput): Promise<AlphaOrganizationAccessRecord>;
   revokeAccess(input: RevokeAlphaAccessInput): Promise<AlphaOrganizationAccessRecord>;
   supersedeAccess(input: SupersedeAlphaAccessInput): Promise<{
+    previous: AlphaOrganizationAccessRecord;
+    next: AlphaOrganizationAccessRecord;
+  }>;
+}
+
+export interface RestorableAlphaAccessRecordRepository extends AlphaAccessRecordRepository {
+  restoreAccess(input: RestoreAlphaAccessInput): Promise<{
     previous: AlphaOrganizationAccessRecord;
     next: AlphaOrganizationAccessRecord;
   }>;

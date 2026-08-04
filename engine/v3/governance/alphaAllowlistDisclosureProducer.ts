@@ -300,6 +300,19 @@ function terminalAccessRecord(
       return { conflict: true };
     }
     superseded.add(record.supersedesAccessRecordId);
+    const predecessor = byId.get(record.supersedesAccessRecordId);
+    if (
+      !predecessor ||
+      predecessor.consumerId !== record.consumerId ||
+      predecessor.organizationId !== record.organizationId ||
+      predecessor.relationship !== record.relationship ||
+      predecessor.supportedExperiences.join("\0") !== record.supportedExperiences.join("\0") ||
+      predecessor.scope.type !== record.scope.type ||
+      predecessor.scope.organizationId !== record.scope.organizationId ||
+      predecessor.policyId !== record.policyId ||
+      predecessor.policyVersion !== record.policyVersion ||
+      Date.parse(record.createdAt) < Date.parse(predecessor.createdAt)
+    ) return { conflict: true };
   }
 
   const terminals = records.filter(
@@ -319,12 +332,6 @@ function terminalAccessRecord(
   if (visited.size !== records.length) return { conflict: true };
 
   const terminal = terminals[0];
-  if (
-    terminal.status === "active" &&
-    records.some((record) => record.status === "revoked")
-  ) {
-    return { conflict: true };
-  }
   return { record: terminal, conflict: false };
 }
 

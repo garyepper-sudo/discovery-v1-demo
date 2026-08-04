@@ -8,7 +8,7 @@ import {
 } from "./lib/alpha-access/session";
 import { isYourOrganizationAlphaActivationEnabled } from "./lib/alpha-activation/config";
 import { onboardingTestEnvironmentEnabled } from "./lib/environment/discoveryEnvironment";
-import { productionRouteDisposition } from "./lib/production-route-policy";
+import { isHostedDiscoveryEnvironment, productionRouteDisposition } from "./lib/production-route-policy";
 
 const protectedAlphaPath = /^\/alpha(?:\/|$)/;
 const protectedAlphaAsset =
@@ -17,7 +17,7 @@ const activatedYourOrganizationPath = /^\/your-organization(?:\/|$)/;
 const inactiveDesignPartnerSurface =
   /^\/(?:ask|brief|decisions|experiment|organizations|research|discovery-v1|executive-decision|api\/(?:analyze|discovery-lab|executive-decision|executive-decision-record|executive-scenario|product-interaction))(?:\/|$)/;
 const onboardingTestSurface =
-  /^\/(?:onboarding|discovery-v1|your-organization|organizations|product-alpha|api\/(?:discovery-lab|product-alpha|development\/(?:google-drive|current-identity)))(?:\/|$)/;
+  /^\/(?:onboarding|development\/sandbox-access|discovery-v1|your-organization|organizations|product-alpha|api\/(?:discovery-lab|product-alpha|development\/(?:google-drive|current-identity|sandbox-access)))(?:\/|$)/;
 
 function protectedHeaders(response: NextResponse): NextResponse {
   response.headers.set("Cache-Control", "private, no-store, max-age=0");
@@ -80,6 +80,7 @@ export async function middleware(
 ): Promise<NextResponse> {
   const activationEnabled = isYourOrganizationAlphaActivationEnabled();
   if (
+    !isHostedDiscoveryEnvironment() &&
     onboardingTestEnvironmentEnabled() &&
     onboardingTestSurface.test(request.nextUrl.pathname)
   ) {
@@ -154,6 +155,7 @@ export const config = {
     "/research/:path*",
     "/discovery-v1/:path*",
     "/product-alpha/:path*",
+    "/development/sandbox-access/:path*",
     "/executive-decision/:path*",
     "/cognition-lab/:path*",
     "/discovery-lab/:path*",
@@ -166,6 +168,7 @@ export const config = {
     "/api/product-alpha/:path*",
     "/api/development/google-drive/:path*",
     "/api/development/current-identity",
+    "/api/development/sandbox-access",
     "/_next/static/chunks/app/alpha/:path*",
     "/_next/static/css/app/alpha/:path*",
   ],
