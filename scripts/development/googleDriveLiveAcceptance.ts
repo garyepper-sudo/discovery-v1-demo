@@ -7,11 +7,12 @@ import {
   assessGoogleDriveQuestionFreshness,
 } from "../../product/connectors/google-drive";
 import { GOOGLE_DRIVE_SANDBOX_ACCEPTANCE_PURPOSE } from "../../product/connectors/google-drive/developmentEligibility";
+import { redactGoogleDriveOAuthLogValue } from "../../product/connectors/google-drive/logRedaction";
 import { createDevelopmentGoogleDriveOAuthService } from "../../product/connectors/google-drive/liveOAuthService";
 import { withLiveSandboxProductAdapter } from "../../product/frontend/liveSandboxProductWorkspaceService";
 import { stableId } from "../../product/workflow/text";
 import { deriveProductUnknownCandidate } from "../../product/unknowns";
-import { synchronizeSandboxDriveCorpus } from "../../product/simulations/living-organization-sandbox/googleDriveCorpus";
+import { resetSandboxGoogleDriveSynchronizationState, synchronizeSandboxDriveCorpus } from "../../product/simulations/living-organization-sandbox/googleDriveCorpus";
 import { SANDBOX_ORGANIZATION_ID, sandboxManifest, type SandboxBatchId } from "../../product/simulations/living-organization-sandbox/manifest";
 
 type Arguments = Record<string, string>;
@@ -53,12 +54,12 @@ function requiredScope() {
 }
 
 async function persistReceipt(operation: string, result: unknown) {
-  const receipt = {
+  const receipt = redactGoogleDriveOAuthLogValue({
     diagnosticVersion: "1",
     operation,
     recordedAt: new Date().toISOString(),
     result,
-  };
+  });
   await writeFile(receiptPath, JSON.stringify(receipt, null, 2), { mode: 0o600 });
   console.log(JSON.stringify(receipt, null, 2));
 }
@@ -247,6 +248,14 @@ async function syncSandboxCorpus() {
     await rm(sandboxRoot,{recursive:true,force:true});
     if (oracleRoot) await rm(oracleRoot,{recursive:true,force:true});
   }
+}
+
+async function resetSandboxCorpusState() {
+  const scope=requiredScope();
+  const folderId=requireExact(process.env.DISCOVERY_SANDBOX_GOOGLE_DRIVE_CONNECTED_FOLDER_ID??"","DISCOVERY_SANDBOX_GOOGLE_DRIVE_CONNECTED_FOLDER_ID configuration");
+  const googleFolderId=requireExact(process.env.DISCOVERY_SANDBOX_GOOGLE_DRIVE_FOLDER_ID??"","DISCOVERY_SANDBOX_GOOGLE_DRIVE_FOLDER_ID configuration");
+  const result=await resetSandboxGoogleDriveSynchronizationState({environment:process.env.DISCOVERY_ENV??"",...scope,folderId,googleFolderId,metadata:metadataRepository});
+  await persistReceipt("reset-sandbox-corpus-state",result);
 }
 
 async function createQuestion() {
@@ -530,6 +539,7 @@ const operations: Record<string, () => Promise<void>> = {
   "connect-folder": connectFolder,
   "sync-folder": syncFolder,
   "sync-sandbox-corpus": syncSandboxCorpus,
+  "reset-sandbox-corpus-state": resetSandboxCorpusState,
   "create-question": createQuestion,
   "list-questions": listQuestions,
   "search-question": searchQuestion,
@@ -548,10 +558,10 @@ async function main() {
 }
 
 void main().catch((error) => {
-  console.error(JSON.stringify({
+  console.error(JSON.stringify(redactGoogleDriveOAuthLogValue({
     status: "failed",
     operation: command,
     message: error instanceof Error ? error.message : "Google Drive diagnostic failed.",
-  }));
+  })));
   process.exitCode = 1;
 });

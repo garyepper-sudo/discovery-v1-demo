@@ -10,9 +10,11 @@ const mode = process.argv[2] ?? "all";
 const read = (path: string) => readFileSync(path, "utf8");
 const authorizePath = "app/api/development/google-drive/authorize/route.ts";
 const callbackPath = "app/api/development/google-drive/callback/route.ts";
+const callbackResultPath = "app/api/development/google-drive/callback/result/route.ts";
 const diagnosticPath = "app/api/development/google-drive/diagnostic/route.ts";
 const authorize = read(authorizePath);
 const callback = read(callbackPath);
+const callbackResult = read(callbackResultPath);
 const liveDiagnostic = read(diagnosticPath);
 const liveService = read("product/connectors/google-drive/liveOAuthService.ts");
 const eligibility = read("product/connectors/google-drive/developmentEligibility.ts");
@@ -48,9 +50,11 @@ function validateConfig(): void {
 function validateRoutes(): void {
   assert.equal(existsSync(authorizePath), true);
   assert.equal(existsSync(callbackPath), true);
+  assert.equal(existsSync(callbackResultPath), true);
   assert.equal(existsSync(diagnosticPath), true);
   assert.match(authorize, /export const dynamic = "force-dynamic"/);
   assert.match(callback, /export const dynamic = "force-dynamic"/);
+  assert.match(callbackResult, /export const dynamic = "force-dynamic"/);
   assert.match(authorize, /await auth\(\)/);
   assert.match(callback, /await auth\(\)/);
   assert.match(liveDiagnostic, /await auth\(\)/);
@@ -84,6 +88,9 @@ function validateRoutes(): void {
     );
   }
   assert.doesNotMatch(`${authorize}\n${callback}`, /accessToken|refreshToken|clientSecret/);
+  assert.match(callback, /NextResponse\.redirect/);
+  assert.match(callback, /callback\/result/);
+  assert.doesNotMatch(callbackResult, /searchParams\.get\("code"\)|searchParams\.get\("state"\)/);
   assert.doesNotMatch(liveDiagnostic, /accessToken|refreshToken|clientSecret|credential|authorizationCode/);
   assert.match(liveDiagnostic, /listAuthorizedFolders/);
   assert.match(liveDiagnostic, /isOnboardingTestOrganizationId/);
@@ -135,6 +142,8 @@ function validateSecretSafety(): void {
     authorize, callback, liveService, connector, repositories, diagnostic,
   ].join("\n");
   assert.doesNotMatch(changed, /AIza[0-9A-Za-z_-]{20,}|-----BEGIN (?:RSA |EC )?PRIVATE KEY-----/);
+  assert.match(read("scripts/development/startRedactedDevelopmentServer.ts"), /createGoogleDriveOAuthLogSanitizer/);
+  assert.match(read("scripts/development/googleDriveLiveAcceptance.ts"), /redactGoogleDriveOAuthLogValue/);
 }
 
 const validations: Record<string, () => void> = {

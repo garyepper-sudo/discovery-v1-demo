@@ -87,23 +87,15 @@ export async function GET(request: Request): Promise<NextResponse> {
         { status: 400 },
       );
     }
-    const source = await service.completeAuthorization({
+    await service.completeAuthorization({
       userId: authentication.userId,
       organizationId: state.organizationId,
       state: stateValue,
       code,
     });
-    return NextResponse.json({
-      status: "connected",
-      source: {
-        id: source.id,
-        organizationId: source.organizationId,
-        accountLabel: source.accountLabel,
-        authorizationStatus: source.status,
-        grantedScopes: source.grantedScopes,
-        authorizationExpiresAt: source.authorizationExpiresAt,
-      },
-    });
+    const cleanResultUrl = new URL("/api/development/google-drive/callback/result", url.origin);
+    cleanResultUrl.searchParams.set("status", "connected");
+    return NextResponse.redirect(cleanResultUrl, 303);
   } catch (error) {
     if (error instanceof GoogleDriveOAuthStateError) {
       console.warn(JSON.stringify({

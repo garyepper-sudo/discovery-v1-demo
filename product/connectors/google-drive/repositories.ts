@@ -133,11 +133,11 @@ export class FileGoogleDriveMetadataRepository implements GoogleDriveMetadataRep
           connectedSourceId: folder.sourceId,
           googleFileId: file.googleFileId,
         });
-        const content = normalizeExtractedContent(passage.content);
-        const contentDigest = sha256(content);
+        const normalizedContent = normalizeExtractedContent(passage.content);
+        const contentDigest = sha256(normalizedContent);
         return {
           ...passage,
-          content,
+          content: passage.content,
           contentDigest,
           ...(contentDigest !== passage.contentDigest
             ? { legacyContentDigest: passage.contentDigest }

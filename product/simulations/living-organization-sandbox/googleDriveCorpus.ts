@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { GoogleDriveSynchronizationReceipt } from "../../connectors/google-drive/contracts";
 import { normalizeExtractedContent } from "../../connectors/google-drive/identity";
+import type { GoogleDriveMetadataRepository } from "../../connectors/google-drive/repositories";
 import { SANDBOX_ORGANIZATION_ID, sandboxManifest, type SandboxBatchId, type SandboxDocument } from "./manifest";
 import { runLivingOrganizationSandbox, type SandboxReplayResult } from "./replay";
 
@@ -18,6 +19,7 @@ export type SandboxDriveTransportFile = {
 };
 export type SandboxDriveBinding = {
   logicalDocumentId: string; logicalDocumentVersion: string; normalizedContentDigest: string;
+  passageContentDigest: string; passageContentLength: number;
   driveFileId: string; driveRevisionId: string; driveMimeType: string; retrievedAt: string;
   effectiveAt: string; sourceAuthorizationScope: string;
 };
@@ -31,15 +33,52 @@ export type SandboxDriveSynchronizationResult = {
   understandingRevisionIds: string[]; contradictionCount: number;
   investigationOpportunityCount: number; checkpointDigest: string;
   semanticParity: boolean; warnings: string[];
+  semanticParityDiagnostic: SandboxSemanticParityDiagnostic;
   nextOperatorAction: string; driveWrites: 0; rawRuntimeReturned: false;
 };
+export type SandboxSemanticParityDifference = {
+  field: string;
+  expected: unknown;
+  observed: unknown;
+  classification: "canonical-mismatch";
+  transportOnly: false;
+  firstResponsibleBoundary: "manifest-binding" | "evidence-admission" | "runtime-evolution" | "authorized-projection" | "checkpoint-construction";
+};
+export type SandboxSemanticParityDiagnostic = {
+  passed: boolean;
+  differences: SandboxSemanticParityDifference[];
+  expectedDigest: string;
+  observedDigest: string;
+  transportFieldsExcluded: string[];
+  canonicalFieldsExcluded: [];
+};
+export type SandboxSemanticDocument = { logicalDocumentId:string;logicalDocumentVersion:string;normalizedContentDigest:string;passageContentDigest?:string;passageContentLength?:number;effectiveAt:string };
 export type SandboxDriveCanonicalOwner = { synchronizeFolder(input: {
   userId: string; organizationId: string; sourceId: string; folderId: string;
 }): Promise<GoogleDriveSynchronizationReceipt> };
+export type SandboxGoogleDriveResetReceipt={version:"1";organizationId:typeof SANDBOX_ORGANIZATION_ID;sourceId:string;folderId:string;filesRemoved:number;passagesRemoved:number;sourceVersionsRemoved:number;folderSynchronizationReset:true;driveWrites:0;digest:string};
 
 const corpusRoot = path.dirname(new URL(import.meta.url).pathname);
 const digest = (value: string) => createHash("sha256").update(value).digest("hex");
 const normalizedDigest = (value: string) => digest(normalizeExtractedContent(value));
+
+export async function resetSandboxGoogleDriveSynchronizationState(input:{environment:string;organizationId:string;sourceId:string;folderId:string;googleFolderId:string;metadata:GoogleDriveMetadataRepository}):Promise<SandboxGoogleDriveResetReceipt>{
+  if(!["development","sandbox","test"].includes(input.environment)) throw new Error("Sandbox Google Drive synchronization reset refused outside development, sandbox, or test.");
+  if(input.organizationId!==SANDBOX_ORGANIZATION_ID) throw new Error("Sandbox Google Drive synchronization reset organization mismatch.");
+  const metadata=await input.metadata.read();
+  const source=metadata.sources.find(item=>item.id===input.sourceId);
+  const folder=metadata.folders.find(item=>item.id===input.folderId);
+  if(!source||source.organizationId!==input.organizationId||source.revokedAt) throw new Error("Exact sandbox Google Drive source reset access denied.");
+  if(!folder||folder.sourceId!==source.id||folder.organizationId!==input.organizationId||folder.revokedAt||folder.includeNested||folder.googleFolderId!==input.googleFolderId) throw new Error("Exact sandbox Google Drive folder reset access denied.");
+  const removedFiles=metadata.files.filter(item=>item.folderId===folder.id);
+  const removedFileIds=new Set(removedFiles.map(item=>item.googleFileId));
+  const removedSourceIdentities=new Set(removedFiles.map(item=>item.sourceIdentity));
+  const passages=metadata.passages.filter(item=>removedFileIds.has(item.googleFileId));
+  const sourceVersions=(metadata.sourceVersions??[]).filter(item=>removedSourceIdentities.has(item.sourceIdentity));
+  await input.metadata.replace({...metadata,folders:metadata.folders.map(item=>item.id===folder.id?{...item,lastSynchronizedAt:null,synchronizationCursor:null}:item),files:metadata.files.filter(item=>item.folderId!==folder.id),passages:metadata.passages.filter(item=>!removedFileIds.has(item.googleFileId)),sourceVersions:(metadata.sourceVersions??[]).filter(item=>!removedSourceIdentities.has(item.sourceIdentity))});
+  const base={version:"1" as const,organizationId:SANDBOX_ORGANIZATION_ID as typeof SANDBOX_ORGANIZATION_ID,sourceId:source.id,folderId:folder.id,filesRemoved:removedFiles.length,passagesRemoved:passages.length,sourceVersionsRemoved:sourceVersions.length,folderSynchronizationReset:true as const,driveWrites:0 as const};
+  return {...base,digest:digest(JSON.stringify(base))};
+}
 
 function exactOpaqueId(value: string, label: string): string {
   const exact = value.trim();
@@ -84,7 +123,8 @@ export async function bindSandboxDriveFiles(input: {
     if(filesByLogicalId.has(match.logicalDocumentId)) throw new Error(`Duplicate Drive transport binding for ${match.logicalDocumentId}.`);
     const document=sandboxManifest.documents.find(item=>item.id===match.logicalDocumentId)!;
     filesByLogicalId.set(match.logicalDocumentId,file);
-    bindings.push({logicalDocumentId:document.id,logicalDocumentVersion:document.version,normalizedContentDigest:match.normalizedContentDigest,driveFileId:file.driveFileId,driveRevisionId:file.driveRevisionId,driveMimeType:file.mimeType,retrievedAt:file.retrievedAt,effectiveAt:document.effectiveAt,sourceAuthorizationScope:`organization:${SANDBOX_ORGANIZATION_ID}:google-drive-binding:${digest(`${sourceId}\u001f${configuredFolderId}`)}`});
+    const passageContent=normalizeExtractedContent(file.content);
+    bindings.push({logicalDocumentId:document.id,logicalDocumentVersion:document.version,normalizedContentDigest:match.normalizedContentDigest,passageContentDigest:digest(passageContent),passageContentLength:passageContent.length,driveFileId:file.driveFileId,driveRevisionId:file.driveRevisionId,driveMimeType:file.mimeType,retrievedAt:file.retrievedAt,effectiveAt:document.effectiveAt,sourceAuthorizationScope:`organization:${SANDBOX_ORGANIZATION_ID}:google-drive-binding:${digest(`${sourceId}\u001f${configuredFolderId}`)}`});
   }
   const missing=expected.filter(document=>!filesByLogicalId.has(document.id));
   if(missing.length) throw new Error(`Sandbox Google Drive corpus is incomplete: ${missing.map(item=>item.id).join(", ")}.`);
@@ -92,10 +132,37 @@ export async function bindSandboxDriveFiles(input: {
 }
 
 function semanticShape(result:SandboxReplayResult){
-  return {checkpoints:result.checkpoints.map(item=>({batchId:item.batchId,sourceCount:item.sourceCount,newSourceCount:item.newSourceCount,updatedSourceCount:item.updatedSourceCount,duplicateCount:item.duplicateCount,unsupportedOrFailedCount:item.unsupportedOrFailedCount,evidenceCandidateCount:item.evidenceCandidateCount,admittedEvidenceCount:item.admittedEvidenceCount,admittedEvidenceDigests:item.admittedEvidenceDigests,currentUnderstandingIds:item.currentUnderstandingIds,currentUnderstandingRevisionIds:item.currentUnderstandingRevisionIds,currentUnderstandingCount:item.currentUnderstandingCount,evolutionHistoryCount:item.evolutionHistoryCount,materialChange:item.materialChange,contradictionCount:item.contradictionCount,uncertainty:item.uncertainty,investigationOpportunityCount:item.investigationOpportunityCount,unrelatedControlDigest:item.unrelatedControlDigest})),negativeControls:result.negativeControls};
+  return {checkpoints:result.checkpoints.map(item=>({batchId:item.batchId,sourceCount:item.sourceCount,newSourceCount:item.newSourceCount,updatedSourceCount:item.updatedSourceCount,duplicateCount:item.duplicateCount,unsupportedOrFailedCount:item.unsupportedOrFailedCount,evidenceCandidateCount:item.evidenceCandidateCount,admittedEvidenceCount:item.admittedEvidenceCount,admittedEvidenceDigests:[...item.admittedEvidenceDigests].sort(),currentUnderstandingIds:[...item.currentUnderstandingIds].sort(),currentUnderstandingRevisionIds:[...item.currentUnderstandingRevisionIds].sort(),currentUnderstandingCount:item.currentUnderstandingCount,evolutionHistoryCount:item.evolutionHistoryCount,materialChange:item.materialChange,contradictionCount:item.contradictionCount,uncertainty:item.uncertainty,investigationOpportunityCount:item.investigationOpportunityCount,unrelatedControlDigest:item.unrelatedControlDigest})),negativeControls:[...result.negativeControls].sort((a,b)=>a.documentId.localeCompare(b.documentId))};
+}
+const transportFieldsExcluded = ["driveFileId","driveRevisionId","connectorRequestId","oauthIdentity","retrievedAt","temporaryPath","googleAccountMetadata"];
+function responsibleBoundary(field:string):SandboxSemanticParityDifference["firstResponsibleBoundary"]{
+  if(field.startsWith("documents")) return "manifest-binding";
+  if(field.includes("evidence")) return "evidence-admission";
+  if(field.includes("Understanding")) return "authorized-projection";
+  if(field.includes("evolutionHistory")||field.includes("materialChange")||field.includes("contradiction")||field.includes("uncertainty")||field.includes("investigation")) return "runtime-evolution";
+  return "checkpoint-construction";
+}
+function fieldDifferences(expected:unknown,observed:unknown,prefix=""):SandboxSemanticParityDifference[]{
+  if(JSON.stringify(expected)===JSON.stringify(observed)) return [];
+  if(Array.isArray(expected)&&Array.isArray(observed)) return Array.from({length:Math.max(expected.length,observed.length)},(_,index)=>fieldDifferences(expected[index],observed[index],`${prefix}[${index}]`)).flat();
+  if(expected&&observed&&typeof expected==="object"&&typeof observed==="object"){
+    const left=expected as Record<string,unknown>,right=observed as Record<string,unknown>;
+    return [...new Set([...Object.keys(left),...Object.keys(right)])].sort().flatMap(key=>fieldDifferences(left[key],right[key],prefix?`${prefix}.${key}`:key));
+  }
+  return [{field:prefix,expected,observed,classification:"canonical-mismatch",transportOnly:false,firstResponsibleBoundary:responsibleBoundary(prefix)}];
+}
+function observedDocumentSemantics(bindings:readonly SandboxDriveBinding[],comparePassageContent:boolean){
+  return bindings.map(binding=>({logicalDocumentId:binding.logicalDocumentId,logicalDocumentVersion:binding.logicalDocumentVersion,normalizedContentDigest:binding.normalizedContentDigest,...(comparePassageContent?{passageContentDigest:binding.passageContentDigest,passageContentLength:binding.passageContentLength}:{}),effectiveAt:binding.effectiveAt})).sort((a,b)=>a.logicalDocumentId.localeCompare(b.logicalDocumentId));
+}
+export function compareSandboxSemanticParity(input:{expected:SandboxReplayResult;observed:SandboxReplayResult;expectedDocuments?:readonly SandboxSemanticDocument[];observedBindings?:readonly SandboxDriveBinding[]}):SandboxSemanticParityDiagnostic{
+  const expected={...(input.expectedDocuments?{documents:[...input.expectedDocuments].sort((a,b)=>a.logicalDocumentId.localeCompare(b.logicalDocumentId))}:{}),replay:semanticShape(input.expected)};
+  const comparePassageContent=input.expectedDocuments?.some(document=>document.passageContentDigest!==undefined||document.passageContentLength!==undefined)??false;
+  const observed={...(input.observedBindings?{documents:observedDocumentSemantics(input.observedBindings,comparePassageContent)}:{}),replay:semanticShape(input.observed)};
+  const differences=fieldDifferences(expected,observed);
+  return {passed:differences.length===0,differences,expectedDigest:digest(JSON.stringify(expected)),observedDigest:digest(JSON.stringify(observed)),transportFieldsExcluded:[...transportFieldsExcluded],canonicalFieldsExcluded:[]};
 }
 export function semanticCheckpointsEqual(drive:SandboxReplayResult,local:SandboxReplayResult):boolean {
-  return JSON.stringify(semanticShape(drive))===JSON.stringify(semanticShape(local));
+  return compareSandboxSemanticParity({expected:local,observed:drive}).passed;
 }
 
 export async function synchronizeSandboxDriveCorpus(input:{
@@ -112,5 +179,8 @@ export async function synchronizeSandboxDriveCorpus(input:{
   // Reuse the same exact acceptance root; replay reset makes the oracle run clean.
   const localReplay=await runLivingOrganizationSandbox({sandboxRoot:input.sandboxRoot,throughBatch:input.throughBatch});
   const checkpoint=driveReplay.checkpoints.at(-1)!; const semanticCheckpointDigest=digest(JSON.stringify(semanticShape(driveReplay)));
-  return {version:"1",organizationId:SANDBOX_ORGANIZATION_ID,folderBindingIdentity:digest(`${input.sourceId}\u001f${input.configuredFolderId}`),synchronizedAt:receipt.synchronizedAt,filesInspected:input.files.length,newFiles:receipt.newFiles.length,updatedFiles:receipt.changedFiles.length,unchangedFiles:receipt.unchangedFiles.length+receipt.unchangedContentRevisionFiles.length,duplicateFiles:checkpoint.duplicateCount,unsupportedFiles:receipt.unsupportedFiles.length,failedFiles:receipt.inaccessibleFiles.length,evidenceCandidates:checkpoint.evidenceCandidateCount,evidenceAdmitted:checkpoint.admittedEvidenceCount,bindings:bound.bindings,runtimeRevisionBefore:null,runtimeRevisionAfter:null,materialChange:checkpoint.materialChange,understandingRevisionIds:[...checkpoint.currentUnderstandingRevisionIds],contradictionCount:checkpoint.contradictionCount,investigationOpportunityCount:checkpoint.investigationOpportunityCount,checkpointDigest:semanticCheckpointDigest,semanticParity:semanticCheckpointsEqual(driveReplay,localReplay),warnings:["Runtime repository revisions are not exposed by the canonical sandbox replay owner.",...receipt.limitations],nextOperatorAction:"Add only the next declared corpus batch, or rerun unchanged synchronization.",driveWrites:0,rawRuntimeReturned:false};
+  const canonicalInventory=await sandboxDriveUploadInventory();
+  const expectedSemanticDocuments=await Promise.all(expectedDocuments(input.throughBatch).map(async document=>{const content=normalizeExtractedContent(await readFile(path.join(corpusRoot,document.relativePath),"utf8"));return {logicalDocumentId:document.id,logicalDocumentVersion:document.version,normalizedContentDigest:canonicalInventory.find(item=>item.logicalDocumentId===document.id)!.normalizedContentDigest,passageContentDigest:digest(content),passageContentLength:content.length,effectiveAt:document.effectiveAt};}));
+  const semanticParityDiagnostic=compareSandboxSemanticParity({expected:localReplay,observed:driveReplay,expectedDocuments:expectedSemanticDocuments,observedBindings:bound.bindings});
+  return {version:"1",organizationId:SANDBOX_ORGANIZATION_ID,folderBindingIdentity:digest(`${input.sourceId}\u001f${input.configuredFolderId}`),synchronizedAt:receipt.synchronizedAt,filesInspected:input.files.length,newFiles:receipt.newFiles.length,updatedFiles:receipt.changedFiles.length,unchangedFiles:receipt.unchangedFiles.length+receipt.unchangedContentRevisionFiles.length,duplicateFiles:checkpoint.duplicateCount,unsupportedFiles:receipt.unsupportedFiles.length,failedFiles:receipt.inaccessibleFiles.length,evidenceCandidates:checkpoint.evidenceCandidateCount,evidenceAdmitted:checkpoint.admittedEvidenceCount,bindings:bound.bindings,runtimeRevisionBefore:null,runtimeRevisionAfter:null,materialChange:checkpoint.materialChange,understandingRevisionIds:[...checkpoint.currentUnderstandingRevisionIds],contradictionCount:checkpoint.contradictionCount,investigationOpportunityCount:checkpoint.investigationOpportunityCount,checkpointDigest:semanticCheckpointDigest,semanticParity:semanticParityDiagnostic.passed,semanticParityDiagnostic,warnings:["Runtime repository revisions are not exposed by the canonical sandbox replay owner.",...receipt.limitations],nextOperatorAction:"Add only the next declared corpus batch, or rerun unchanged synchronization.",driveWrites:0,rawRuntimeReturned:false};
 }
