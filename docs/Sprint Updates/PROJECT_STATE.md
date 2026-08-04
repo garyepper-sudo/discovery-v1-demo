@@ -3,8 +3,8 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** live-validated Living Organization vertical slice; scoped
-multi-role governance benchmark readiness
+**Current phase:** multi-role backend complete; role-aware scoped frontend
+experience architecture ready to begin
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
@@ -18,8 +18,9 @@ batches, sixteen documents, and five negative controls.
 
 ## Current Phase
 
-Benchmark readiness for multi-role scoped Understanding and governance.
-Frontend implementation remains not started.
+All six multi-role benchmark gaps have focused production-owner traceability.
+One canonical model serves five permission-safe role projections through one
+scoped Product adapter. Frontend implementation remains not started.
 
 ## Current Product State
 
@@ -52,22 +53,19 @@ Frontend implementation remains not started.
 
 ## Current Objective
 
-Evaluate whether the existing backend supports one shared canonical governed
-Organizational Understanding model with materially different, permission-safe
-role projections, without changing production behavior.
+Design the role-aware Living Organization frontend around the canonical scoped
+Product projection without duplicating Product meaning or authorization.
 
 ## Next Priority
 
-**DISCOVERY MULTI-ROLE SCOPED UNDERSTANDING AND GOVERNANCE BENCHMARK 001**
+**DISCOVERY ROLE-AWARE LIVING ORGANIZATION FRONTEND EXPERIENCE ARCHITECTURE
+001**
 
-Use a separate branch/worktree and only synthetic users, scopes, Evidence,
-decisions, and permissions. Connector calls, Drive reads/writes, network calls,
-Production access, deployment, and canonical backend corrections remain zero.
-Classify bounded missing implementation separately from architecture mismatch.
-
-After the benchmark and any proven narrow correction, resume Product work with
-**DISCOVERY LIVING ORGANIZATION MODEL, INSIGHT, AND INFORMATION REQUEST PRODUCT
-PROJECTION 001**.
+Use the same adapter and producer for all five roles. Build fixture-first from
+the production contracts. Render distinct disclosed, abstracted, withheld,
+unavailable, insufficient, and unsupported states. Supported metrics remain
+coherence and learning velocity. Never recompute authorization, metric lineage,
+or decision calibration in the frontend.
 
 ## Canonical implementation boundary
 

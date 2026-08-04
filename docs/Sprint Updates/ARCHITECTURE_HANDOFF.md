@@ -22,10 +22,20 @@ persistence, `CAP-LRN-001`/`CAP-LRN-002` for learning and history, and
 `CAP-SELF-002` for investigation opportunities. It creates no second cognition,
 Runtime, history, confidence, lineage, organization-identity, or Product owner.
 
-The next task is **DISCOVERY MULTI-ROLE SCOPED UNDERSTANDING AND GOVERNANCE
-BENCHMARK 001**. It must test one canonical governed model with materially
-different permission-safe role projections, benchmark-only with synthetic data
-and zero Drive, connector, network, Production, or deployment access.
+The multi-role benchmark and six focused production corrections are complete.
+GAP-MR-001 through GAP-MR-006 now trace to scoped disclosure, historical
+visibility, scoped contribution/admission, the one-read scoped Product adapter,
+authorized metric lineage, and the Product-owned scoped decision-calibration
+producer. One canonical model serves all five roles; role labels grant no
+authority. Supported metrics remain coherence and learning velocity only.
+
+The next task is **DISCOVERY ROLE-AWARE LIVING ORGANIZATION FRONTEND EXPERIENCE
+ARCHITECTURE 001**. The frontend must use
+`readScopedOrganizationalProductProjection` as its sole organization-level
+meaning boundary, render rather than recompute authorization/metrics/
+calibration, and build fixture-first from
+`docs/Product/ROLE_AWARE_SCOPED_PRODUCT_PROJECTION_FRONTEND_HANDOFF.md`. No
+frontend implementation has begun.
 
 Before proposing a new capability, use this document to verify whether the responsibility, cognitive object, canonical producer, Runtime destination, or executive destination already exists.
 

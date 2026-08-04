@@ -1,9 +1,10 @@
 # Discovery Startup Snapshot
 
-**Current milestone:** The Living Organization Google Drive vertical slice is
-complete, live-validated, and integrated at the Drive integration baseline
-`39420f200e5789f223795d8f4b918d9814d16e04`. Product Workflow Frontend
-Readiness remains complete; GAP-A-005 remains closed as `GAP-R-011`.
+**Current milestone:** The multi-role scoped Product backend is complete and
+ready for role-aware frontend experience architecture. GAP-MR-001 through
+GAP-MR-006 all have focused production-owner traceability while the frozen
+benchmark remains the historical oracle. The Living Organization Drive slice
+and Product Workflow frontend readiness remain complete.
 
 Discovery is a governed organizational learning and intelligence system. Its
 persistent state is organizational understanding; Product Workflow operations
@@ -76,21 +77,19 @@ Every mismatch list was empty, all five negative controls passed, Sync 5
 retained the Sync 4 checkpoint, Drive writes and Production access were zero,
 and no raw Runtime or credential value was disclosed.
 
-## Next canonical phase
+## Multi-role backend readiness
 
-**DISCOVERY MULTI-ROLE SCOPED UNDERSTANDING AND GOVERNANCE BENCHMARK 001**
+One canonical Organizational Understanding model now supports useful,
+permission-safe projections for team lead, manager, director, functional
+executive, and organization-wide executive through the same one-read scoped
+Product adapter. Supported metrics remain coherence and learning velocity
+only. Decision calibration distinguishes all ten canonical cases through eight
+independent axes; authority remains separate from strategic correctness.
 
-Run it benchmark-only in a separate branch/worktree from the exact synchronized
-`origin/main`, using synthetic users, scopes, Evidence, decisions, and
-permissions with zero connector, live Drive, network, or Production access.
-It must test one canonical governed Organizational Understanding model with
-materially different permission-safe projections and distinguish bounded
-implementation gaps from architecture mismatch.
-
-After the benchmark and any evidence-proven narrow correction, Product work
-resumes with **DISCOVERY LIVING ORGANIZATION MODEL, INSIGHT, AND INFORMATION
-REQUEST PRODUCT PROJECTION 001**. No production correction is authorized in
-advance of benchmark evidence.
+The frontend must render the canonical scoped projection and must not
+reconstruct authorization, metric lineage, or calibration. No React work has
+begun. The next task is **DISCOVERY ROLE-AWARE LIVING ORGANIZATION FRONTEND
+EXPERIENCE ARCHITECTURE 001** using the dedicated Product handoff.
 
 ## Worktree boundary
 
