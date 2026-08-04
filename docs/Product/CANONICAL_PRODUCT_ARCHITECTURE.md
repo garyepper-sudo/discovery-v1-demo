@@ -229,6 +229,28 @@ Contribution results may retain content locally or mark it eligible for
 governed consideration, but create no Evidence, perform no admission, propagate
 nothing autonomously, and change no canonical Understanding.
 
+Authorized metric lineage is evaluated server-side before a canonical metric
+value enters a Product projection. The evaluator accepts only a
+server-resolved canonical producer, producer version, exact scoped inputs, and
+complete safe lineage; every input passes the shared scoped-disclosure owner
+before a precomputed canonical value may be released. It never computes a
+global metric and filters it afterward, changes a metric formula, or exposes a
+hidden value, count, delta, trend, rank, or input identity. Coherence from the
+Organizational Understanding state owner and learning velocity from the
+Organizational Learning Profile owner are currently supported only when all
+canonical inputs and the result side channel are authorized. Freshness,
+universal confidence, composite health, growth, and trend ranking remain
+unsupported where no safely scopable canonical producer contract exists.
+
+One Product-owned server adapter composes scoped Understanding items and
+authorized metric-lineage results for every recipient. Material differences
+derive from exact scope, authority, purpose, sensitivity, lineage, and temporal
+mode rather than role-name branches. Authorization occurs before the single
+bounded repository read; cross-organization denial performs no canonical read.
+The adapter returns no raw Runtime, cognition, unrestricted Evidence, or
+role-specific state. Decision calibration remains outside this adapter and is
+reported as unsupported under `GAP-MR-006`.
+
 ## Answer and confidence ownership
 
 - The backend selects one current Answer or explicitly abstains.

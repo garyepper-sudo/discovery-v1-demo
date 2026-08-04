@@ -98,9 +98,14 @@ The live-validated Living Organization Drive slice did not close
 governed model and identified six bounded dependencies. Foundational contracts
 now represent scoped disclosure (`GAP-MR-001`), current-policy historical
 visibility (`GAP-MR-002`), and scoped contribution before Evidence
-candidate/admission (`GAP-MR-003`). Role Product projection (`GAP-MR-004`),
-authorized metric lineage (`GAP-MR-005`), and scoped decision-calibration
-projection (`GAP-MR-006`) remain open; role-aware frontend work remains blocked.
+candidate/admission (`GAP-MR-003`). The same governance owners now also support
+the backend scoped Product projection adapter (`GAP-MR-004`) after authorized
+metric-lineage evaluation (`GAP-MR-005`). Only canonically produced coherence
+and learning-velocity values with complete authorized input lineage are
+supported; unscopable metrics remain explicitly unsupported rather than
+invented. Scoped decision-calibration projection (`GAP-MR-006`) remains open,
+so decision drift, justified divergence, strategic alignment, and
+authority-calibration frontend work remains blocked.
 
 Production and research gaps retain their existing classifications. Connector
 retrieval does not silently promote autonomous reevaluation, notification,

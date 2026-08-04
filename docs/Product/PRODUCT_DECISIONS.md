@@ -559,3 +559,40 @@ Changing one requires the process in
   GAP-MR-001 through GAP-MR-006.
 - **Status:** Active; foundational contracts implemented, downstream projection
   work blocked.
+
+## DEC-PROD-031 — Metric inputs are authorized before scoped Product projection
+
+- **Decision:** Product projection may disclose a precomputed canonical metric
+  only after a server-resolved producer/version and every semantic input pass
+  the shared scoped-governance and disclosure owners. The bounded metric result
+  retains safe input lineage and separately evaluates value, count, delta,
+  trend, rank, absence, and combination side channels. One Product-owned
+  server adapter composes authorized Understanding items and metric results for
+  every recipient without role-name authorization branches.
+- **Reason:** The canonical multi-role benchmark identified incomplete
+  recipient-authorized metric lineage (`GAP-MR-005`) as the dependency blocking
+  a useful scoped Product projection (`GAP-MR-004`).
+- **Alternatives considered:** Compute global metrics then filter; expose raw
+  Runtime for frontend filtering; add role-specific formulas or models; treat
+  missing lineage as unavailable; implement decision calibration in the same
+  adapter.
+- **Why rejected:** Those approaches permit restricted side channels, duplicate
+  truth or metric ownership, collapse withheld into unavailable, or make the
+  frontend responsible for governance and decision meaning.
+- **Consequences:** Existing Organizational Understanding coherence and
+  Organizational Learning Profile learning velocity are supported only when
+  their exact canonical inputs and result side channels are authorized.
+  Freshness, universal confidence, composite health, growth, and trend-ranking
+  remain unsupported where the existing producer cannot safely accept scoped
+  lineage without changing meaning. The adapter performs authorization before
+  one bounded repository read, returns no raw Runtime, and records decision
+  calibration as unsupported.
+- **Ownership:** Canonical metric producers retain formulas and values; shared
+  scoped governance owns eligibility; Product integration owns the
+  non-persistent projection contract.
+- **Persistence:** None. Existing Runtime remains canonical and no migration is
+  required.
+- **Affected phase:** Discovery 2 production integration.
+- **Affected gaps:** GAP-MR-004 and GAP-MR-005 are production-closed by focused
+  validation; GAP-MR-006 remains open.
+- **Status:** Active backend contract; frontend implementation deferred.
