@@ -34,13 +34,19 @@ async function sources(batchId: SandboxBatchId, seen: Set<string>, documentConte
   return { documents, candidates: candidates.sort((left,right)=>left.sourceId.localeCompare(right.sourceId)), duplicates, negativeControls };
 }
 
-export async function runLivingOrganizationSandbox(input: { sandboxRoot: string; throughBatch?: SandboxBatchId; documentContents?: ReadonlyMap<string,string> }): Promise<SandboxReplayResult> {
-  await resetLivingOrganizationSandbox({environment:"sandbox",organizationId:SANDBOX_ORGANIZATION_ID,sandboxRoot:input.sandboxRoot});
+export async function runLivingOrganizationSandbox(input: { sandboxRoot: string; throughBatch?: SandboxBatchId; startAtBatch?: SandboxBatchId; reset?: boolean; documentContents?: ReadonlyMap<string,string> }): Promise<SandboxReplayResult> {
+  if(input.reset!==false) await resetLivingOrganizationSandbox({environment:"sandbox",organizationId:SANDBOX_ORGANIZATION_ID,sandboxRoot:input.sandboxRoot});
   const runtimeDirectory = path.join(input.sandboxRoot,"runtime"); await mkdir(runtimeDirectory,{recursive:true});
   process.env.DISCOVERY_RUNTIME_ORGANIZATIONS_DIRECTORY = runtimeDirectory;
   const { runOrganizationInvestigation } = await import("../../../engine/v3/investigation/runOrganizationInvestigation");
   const seen = new Set<string>(); const checkpoints: SandboxCheckpoint[] = []; const negativeControls: SandboxNegativeControlResult[] = [];
-  const order = input.throughBatch ? sandboxManifest.batchOrder.slice(0,sandboxManifest.batchOrder.indexOf(input.throughBatch)+1) : sandboxManifest.batchOrder;
+  const startIndex=input.startAtBatch?sandboxManifest.batchOrder.indexOf(input.startAtBatch):0;
+  if(startIndex<0) throw new Error("Unknown sandbox replay start batch.");
+  for(const document of sandboxManifest.documents.filter(item=>sandboxManifest.batchOrder.indexOf(item.batchId)<startIndex)){
+    const content=input.documentContents?.get(document.id)??await readFile(path.join(root,document.relativePath),"utf8");seen.add(digest(normalizedContent(content)));
+  }
+  const finalIndex=input.throughBatch?sandboxManifest.batchOrder.indexOf(input.throughBatch):sandboxManifest.batchOrder.length-1;
+  const order=sandboxManifest.batchOrder.slice(startIndex,finalIndex+1);
   for (const batchId of order) {
     const batchIndex = sandboxManifest.batchOrder.indexOf(batchId); const loaded = await sources(batchId,seen,input.documentContents);
     let runtime;

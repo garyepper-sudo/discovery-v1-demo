@@ -219,6 +219,8 @@
     "validate:google-drive-oauth-callback": "tsx scripts/product/validateGoogleDriveOAuthBoundary.ts callback",
     "validate:google-drive-log-redaction": "tsx scripts/product/validateGoogleDriveLogRedaction.ts",
     "validate:google-drive-semantic-parity-correction": "tsx scripts/product/validateGoogleDriveSemanticParityCorrection.ts",
+    "validate:google-drive-cumulative-semantic-parity": "tsx scripts/product/validateGoogleDriveCumulativeSemanticParity.ts",
+    "diagnose:google-drive-cumulative-semantic-parity": "tsx scripts/product/buildGoogleDriveCumulativeParityDiagnostic.ts",
     "validate:google-drive-oauth-state-security": "tsx scripts/product/validateGoogleDriveOAuthBoundary.ts state",
     "validate:google-drive-oauth-environment-safety": "tsx scripts/product/validateGoogleDriveOAuthBoundary.ts environment",
     "validate:google-drive-oauth-secret-safety": "tsx scripts/product/validateGoogleDriveOAuthBoundary.ts secrets",

@@ -255,7 +255,9 @@ async function resetSandboxCorpusState() {
   const folderId=requireExact(process.env.DISCOVERY_SANDBOX_GOOGLE_DRIVE_CONNECTED_FOLDER_ID??"","DISCOVERY_SANDBOX_GOOGLE_DRIVE_CONNECTED_FOLDER_ID configuration");
   const googleFolderId=requireExact(process.env.DISCOVERY_SANDBOX_GOOGLE_DRIVE_FOLDER_ID??"","DISCOVERY_SANDBOX_GOOGLE_DRIVE_FOLDER_ID configuration");
   const result=await resetSandboxGoogleDriveSynchronizationState({environment:process.env.DISCOVERY_ENV??"",...scope,folderId,googleFolderId,metadata:metadataRepository});
-  await persistReceipt("reset-sandbox-corpus-state",result);
+  const { resetOrganizationRuntimeState } = await import("../../engine/v3/runtime/organizationStateStore");
+  resetOrganizationRuntimeState(SANDBOX_ORGANIZATION_ID);
+  await persistReceipt("reset-sandbox-corpus-state",{...result,runtimeReset:true,semanticCheckpointCleared:true});
 }
 
 async function createQuestion() {

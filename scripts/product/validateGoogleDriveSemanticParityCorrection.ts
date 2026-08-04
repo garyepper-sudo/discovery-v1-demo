@@ -24,8 +24,9 @@ async function main(){
     const changedTransport=files.map((file,index)=>({...file,driveFileId:`other-${index}`,driveRevisionId:`other-revision-${index}`,retrievedAt:"2030-01-01T00:00:00.000Z"}));
     const rebound=await bindSandboxDriveFiles({environment:"sandbox",organizationId:SANDBOX_ORGANIZATION_ID,configuredFolderId:"folder-001",requestedFolderId:"folder-001",sourceId:"source-001",includeNested:false,files:changedTransport,throughBatch:"batch-1"});
     check(compareSandboxSemanticParity({expected,observed,expectedDocuments,observedBindings:rebound.bindings}).passed,"transport-only changes must preserve parity");
-    const reordered=structuredClone(observed);for(const checkpoint of reordered.checkpoints){checkpoint.admittedEvidenceDigests.reverse();checkpoint.currentUnderstandingIds.reverse();checkpoint.currentUnderstandingRevisionIds.reverse();}
+    const reordered=structuredClone(observed);for(const checkpoint of reordered.checkpoints){checkpoint.currentUnderstandingIds.reverse();checkpoint.currentUnderstandingRevisionIds.reverse();}
     check(compareSandboxSemanticParity({expected,observed:reordered}).passed,"non-semantic collection order must preserve parity");
+    const reorderedAdmissions=structuredClone(observed);reorderedAdmissions.checkpoints[0]!.admittedEvidenceDigests.reverse();check(!compareSandboxSemanticParity({expected,observed:reorderedAdmissions}).passed,"canonical admission order must remain semantic");
     const expectField=(mutate:(value:typeof observed)=>void,field:string)=>{const changed=structuredClone(observed);mutate(changed);const diff=compareSandboxSemanticParity({expected,observed:changed});check(!diff.passed);check(diff.differences.some(item=>item.field.includes(field)),field);};
     expectField(value=>{value.checkpoints[0]!.admittedEvidenceDigests[0]="changed";},"admittedEvidenceDigests");
     expectField(value=>{value.checkpoints[0]!.currentUnderstandingIds[0]="changed";},"currentUnderstandingIds");

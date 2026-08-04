@@ -5,7 +5,8 @@ import type { GoogleDriveSynchronizationReceipt } from "../../connectors/google-
 import { normalizeExtractedContent } from "../../connectors/google-drive/identity";
 import type { GoogleDriveMetadataRepository } from "../../connectors/google-drive/repositories";
 import { SANDBOX_ORGANIZATION_ID, sandboxManifest, type SandboxBatchId, type SandboxDocument } from "./manifest";
-import { runLivingOrganizationSandbox, type SandboxReplayResult } from "./replay";
+import { runLivingOrganizationSandboxIsolated } from "./isolatedReplay";
+import type { SandboxReplayResult } from "./replay";
 
 export const SANDBOX_DRIVE_MAX_FILES = 32;
 export const SANDBOX_DRIVE_MAX_TOTAL_BYTES = 2 * 1024 * 1024;
@@ -51,6 +52,14 @@ export type SandboxSemanticParityDiagnostic = {
   observedDigest: string;
   transportFieldsExcluded: string[];
   canonicalFieldsExcluded: [];
+};
+export type SandboxSemanticFirstDivergence = {
+  firstDivergentOwner: SandboxSemanticParityDifference["firstResponsibleBoundary"] | null;
+  firstDivergentField: string | null;
+  independentMismatchCount: number;
+  dependentDownstreamMismatchCount: number;
+  expectedSafeDigest: string | null;
+  observedSafeDigest: string | null;
 };
 export type SandboxSemanticDocument = { logicalDocumentId:string;logicalDocumentVersion:string;normalizedContentDigest:string;passageContentDigest?:string;passageContentLength?:number;effectiveAt:string };
 export type SandboxDriveCanonicalOwner = { synchronizeFolder(input: {
@@ -132,14 +141,15 @@ export async function bindSandboxDriveFiles(input: {
 }
 
 function semanticShape(result:SandboxReplayResult){
-  return {checkpoints:result.checkpoints.map(item=>({batchId:item.batchId,sourceCount:item.sourceCount,newSourceCount:item.newSourceCount,updatedSourceCount:item.updatedSourceCount,duplicateCount:item.duplicateCount,unsupportedOrFailedCount:item.unsupportedOrFailedCount,evidenceCandidateCount:item.evidenceCandidateCount,admittedEvidenceCount:item.admittedEvidenceCount,admittedEvidenceDigests:[...item.admittedEvidenceDigests].sort(),currentUnderstandingIds:[...item.currentUnderstandingIds].sort(),currentUnderstandingRevisionIds:[...item.currentUnderstandingRevisionIds].sort(),currentUnderstandingCount:item.currentUnderstandingCount,evolutionHistoryCount:item.evolutionHistoryCount,materialChange:item.materialChange,contradictionCount:item.contradictionCount,uncertainty:item.uncertainty,investigationOpportunityCount:item.investigationOpportunityCount,unrelatedControlDigest:item.unrelatedControlDigest})),negativeControls:[...result.negativeControls].sort((a,b)=>a.documentId.localeCompare(b.documentId))};
+  return {checkpoints:result.checkpoints.map(item=>({batchId:item.batchId,sourceCount:item.sourceCount,newSourceCount:item.newSourceCount,updatedSourceCount:item.updatedSourceCount,duplicateCount:item.duplicateCount,unsupportedOrFailedCount:item.unsupportedOrFailedCount,evidenceCandidateCount:item.evidenceCandidateCount,admittedEvidenceCount:item.admittedEvidenceCount,admittedEvidenceDigests:[...item.admittedEvidenceDigests],currentUnderstandingIds:[...item.currentUnderstandingIds].sort(),currentUnderstandingRevisionIds:[...item.currentUnderstandingRevisionIds].sort(),currentUnderstandingCount:item.currentUnderstandingCount,evolutionHistoryCount:item.evolutionHistoryCount,materialChange:item.materialChange,contradictionCount:item.contradictionCount,uncertainty:item.uncertainty,investigationOpportunityCount:item.investigationOpportunityCount,unrelatedControlDigest:item.unrelatedControlDigest})),negativeControls:[...result.negativeControls].sort((a,b)=>a.documentId.localeCompare(b.documentId))};
 }
 const transportFieldsExcluded = ["driveFileId","driveRevisionId","connectorRequestId","oauthIdentity","retrievedAt","temporaryPath","googleAccountMetadata"];
 function responsibleBoundary(field:string):SandboxSemanticParityDifference["firstResponsibleBoundary"]{
-  if(field.startsWith("documents")) return "manifest-binding";
-  if(field.includes("evidence")) return "evidence-admission";
-  if(field.includes("Understanding")) return "authorized-projection";
-  if(field.includes("evolutionHistory")||field.includes("materialChange")||field.includes("contradiction")||field.includes("uncertainty")||field.includes("investigation")) return "runtime-evolution";
+  const normalized=field.toLowerCase();
+  if(normalized.startsWith("documents")) return "manifest-binding";
+  if(normalized.includes("evidence")) return "evidence-admission";
+  if(normalized.includes("understanding")) return "authorized-projection";
+  if(normalized.includes("evolutionhistory")||normalized.includes("materialchange")||normalized.includes("contradiction")||normalized.includes("uncertainty")||normalized.includes("investigation")) return "runtime-evolution";
   return "checkpoint-construction";
 }
 function fieldDifferences(expected:unknown,observed:unknown,prefix=""):SandboxSemanticParityDifference[]{
@@ -161,6 +171,11 @@ export function compareSandboxSemanticParity(input:{expected:SandboxReplayResult
   const differences=fieldDifferences(expected,observed);
   return {passed:differences.length===0,differences,expectedDigest:digest(JSON.stringify(expected)),observedDigest:digest(JSON.stringify(observed)),transportFieldsExcluded:[...transportFieldsExcluded],canonicalFieldsExcluded:[]};
 }
+export function summarizeSandboxSemanticFirstDivergence(diagnostic:SandboxSemanticParityDiagnostic):SandboxSemanticFirstDivergence{
+  const first=diagnostic.differences[0];
+  if(!first) return {firstDivergentOwner:null,firstDivergentField:null,independentMismatchCount:0,dependentDownstreamMismatchCount:0,expectedSafeDigest:null,observedSafeDigest:null};
+  return {firstDivergentOwner:first.firstResponsibleBoundary,firstDivergentField:first.field,independentMismatchCount:1,dependentDownstreamMismatchCount:diagnostic.differences.length-1,expectedSafeDigest:digest(JSON.stringify(first.expected)),observedSafeDigest:digest(JSON.stringify(first.observed))};
+}
 export function semanticCheckpointsEqual(drive:SandboxReplayResult,local:SandboxReplayResult):boolean {
   return compareSandboxSemanticParity({expected:local,observed:drive}).passed;
 }
@@ -169,15 +184,14 @@ export async function synchronizeSandboxDriveCorpus(input:{
   environment:string;userId:string;organizationId:string;sourceId:string;configuredFolderId:string;
   requestedFolderId:string;connectedFolderId:string;includeNested:boolean;throughBatch:SandboxBatchId;
   files:readonly SandboxDriveTransportFile[];sandboxRoot:string;localOracleRoot:string;owner:SandboxDriveCanonicalOwner;
+  replayStartAtBatch?:SandboxBatchId;resetReplay?:boolean;
 }):Promise<SandboxDriveSynchronizationResult>{
   const bound=await bindSandboxDriveFiles(input);
   const receipt=await input.owner.synchronizeFolder({userId:input.userId,organizationId:input.organizationId,sourceId:input.sourceId,folderId:input.connectedFolderId});
   if(receipt.organizationId!==SANDBOX_ORGANIZATION_ID||receipt.folderId!==input.connectedFolderId) throw new Error("Canonical Google Drive synchronization receipt scope mismatch.");
   if(receipt.inaccessibleFiles.length||receipt.unsupportedFiles.length) throw new Error("Canonical Google Drive synchronization reported unsupported or failed corpus files.");
-  const driveReplay=await runLivingOrganizationSandbox({sandboxRoot:input.sandboxRoot,throughBatch:input.throughBatch,documentContents:bound.contents});
-  // The canonical Runtime store resolves its configured directory once per process.
-  // Reuse the same exact acceptance root; replay reset makes the oracle run clean.
-  const localReplay=await runLivingOrganizationSandbox({sandboxRoot:input.sandboxRoot,throughBatch:input.throughBatch});
+  const driveReplay=await runLivingOrganizationSandboxIsolated({role:"synthetic-drive",sandboxRoot:input.sandboxRoot,startAtBatch:input.replayStartAtBatch,reset:input.resetReplay,throughBatch:input.throughBatch,documentContents:bound.contents});
+  const localReplay=await runLivingOrganizationSandboxIsolated({role:"local-expected",sandboxRoot:input.localOracleRoot,startAtBatch:input.replayStartAtBatch,reset:input.resetReplay,throughBatch:input.throughBatch});
   const checkpoint=driveReplay.checkpoints.at(-1)!; const semanticCheckpointDigest=digest(JSON.stringify(semanticShape(driveReplay)));
   const canonicalInventory=await sandboxDriveUploadInventory();
   const expectedSemanticDocuments=await Promise.all(expectedDocuments(input.throughBatch).map(async document=>{const content=normalizeExtractedContent(await readFile(path.join(corpusRoot,document.relativePath),"utf8"));return {logicalDocumentId:document.id,logicalDocumentVersion:document.version,normalizedContentDigest:canonicalInventory.find(item=>item.logicalDocumentId===document.id)!.normalizedContentDigest,passageContentDigest:digest(content),passageContentLength:content.length,effectiveAt:document.effectiveAt};}));

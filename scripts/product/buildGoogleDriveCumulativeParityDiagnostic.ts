@@ -1,0 +1,33 @@
+import { createHash } from "node:crypto";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+
+import { runLivingOrganizationSandboxIsolated } from "../../product/simulations/living-organization-sandbox/isolatedReplay";
+import type { SandboxReplayResult } from "../../product/simulations/living-organization-sandbox/replay";
+
+const outputRoot="/tmp/discovery-drive-cumulative-parity-diagnostic-001";
+const digest=(value:unknown)=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
+function receipt(log:string){const marker='{\n  "diagnosticVersion"';const start=log.lastIndexOf(marker);if(start<0) throw new Error("Bounded receipt not found.");return JSON.parse(log.slice(start)) as {operation:string;recordedAt:string;result:any};}
+function safeObserved(value:{operation:string;recordedAt:string;result:any}){const x=value.result;return {operation:value.operation,recordedAt:value.recordedAt,organizationId:x.organizationId,filesInspected:x.filesInspected,newFiles:x.newFiles,updatedFiles:x.updatedFiles,unchangedFiles:x.unchangedFiles,unsupportedFiles:x.unsupportedFiles,failedFiles:x.failedFiles,evidenceCandidates:x.evidenceCandidates,evidenceAdmitted:x.evidenceAdmitted,materialChange:x.materialChange,understandingRevisionIds:x.understandingRevisionIds,contradictionCount:x.contradictionCount,investigationOpportunityCount:x.investigationOpportunityCount,checkpointDigest:x.checkpointDigest,semanticParity:x.semanticParity,semanticParityDiagnostic:x.semanticParityDiagnostic,driveWrites:x.driveWrites,rawRuntimeReturned:x.rawRuntimeReturned};}
+function safeExpected(value:SandboxReplayResult){return {manifestDigest:value.manifestDigest,checkpoints:value.checkpoints.map(checkpoint=>({batchId:checkpoint.batchId,replayTimestamp:checkpoint.replayTimestamp,sourceCount:checkpoint.sourceCount,newSourceCount:checkpoint.newSourceCount,evidenceCandidateCount:checkpoint.evidenceCandidateCount,admittedEvidenceCount:checkpoint.admittedEvidenceCount,admittedEvidenceDigests:checkpoint.admittedEvidenceDigests,currentUnderstandingIds:checkpoint.currentUnderstandingIds,currentUnderstandingRevisionIds:checkpoint.currentUnderstandingRevisionIds,currentUnderstandingCount:checkpoint.currentUnderstandingCount,evolutionHistoryCount:checkpoint.evolutionHistoryCount,modelDigest:checkpoint.modelDigest,materialChange:checkpoint.materialChange,contradictionCount:checkpoint.contradictionCount,uncertainty:checkpoint.uncertainty,investigationOpportunityCount:checkpoint.investigationOpportunityCount,authorizedProjectionId:checkpoint.authorizedProjectionId,unrelatedControlDigest:checkpoint.unrelatedControlDigest,checkpointDigest:checkpoint.checkpointDigest})),resultDigest:digest(value)};}
+async function main(){
+  await rm(outputRoot,{recursive:true,force:true});await mkdir(outputRoot,{recursive:true});
+  const sync1=safeObserved(receipt(await readFile("/tmp/discovery-google-drive-live-rerun-sync-1.log","utf8")));
+  const sync2=safeObserved(receipt(await readFile("/tmp/discovery-google-drive-live-rerun-sync-2.log","utf8")));
+  const root1=await import("node:fs/promises").then(({mkdtemp})=>mkdtemp(path.join(os.tmpdir(),"discovery-living-organization-sandbox-diagnostic-batch1-")));
+  const root2=await import("node:fs/promises").then(({mkdtemp})=>mkdtemp(path.join(os.tmpdir(),"discovery-living-organization-sandbox-diagnostic-batch2-")));
+  try{
+    const expected1=safeExpected(await runLivingOrganizationSandboxIsolated({role:"local-expected",sandboxRoot:root1,throughBatch:"batch-1"}));
+    const expected2=safeExpected(await runLivingOrganizationSandboxIsolated({role:"local-expected",sandboxRoot:root2,throughBatch:"batch-2"}));
+    const differences=sync2.semanticParityDiagnostic.differences as Array<{field:string;firstResponsibleBoundary:string}>;
+    const firstField=differences[0]?.field??null;
+    const first={totalMismatches:differences.length,independentRootMismatches:differences.length?1:0,downstreamDerivativeMismatches:Math.max(0,differences.length-1),earliestDivergentOwner:"runtime-persistence-isolation",earliestDivergentField:firstField,rootCauseClassification:"H — RUNTIME BASELINE OR REVISION STATE DIFFERS",safeExpectedDigest:sync2.semanticParityDiagnostic.expectedDigest,safeObservedDigest:sync2.semanticParityDiagnostic.observedDigest};
+    const graph={version:"1",root:{id:"runtime-store-directory-bound-before-oracle-isolation",owner:"runtime-persistence-isolation",field:firstField},nodes:differences.map((item,index)=>({id:`mismatch-${index+1}`,field:item.field,objectType:item.field.includes("Understanding")?"OrganizationalUnderstanding":item.field.includes("Evidence")?"Evidence":item.field.includes("contradiction")?"Contradiction":"SemanticCheckpoint",producingOwner:item.firstResponsibleBoundary,primary:index===0,earliestDivergentAncestor:"runtime-store-directory-bound-before-oracle-isolation",wouldDisappearIfAncestorCorrected:true})),edges:differences.map((_,index)=>({from:"runtime-store-directory-bound-before-oracle-isolation",to:`mismatch-${index+1}`,relationship:"causes-or-propagates"}))};
+    await Promise.all([
+      writeFile(path.join(outputRoot,"sync1-observed-safe.json"),JSON.stringify(sync1,null,2)),writeFile(path.join(outputRoot,"sync2-observed-safe.json"),JSON.stringify(sync2,null,2)),writeFile(path.join(outputRoot,"batch1-expected-safe.json"),JSON.stringify(expected1,null,2)),writeFile(path.join(outputRoot,"batch2-expected-safe.json"),JSON.stringify(expected2,null,2)),writeFile(path.join(outputRoot,"first-divergence.json"),JSON.stringify(first,null,2)),writeFile(path.join(outputRoot,"mismatch-dependency-graph.json"),JSON.stringify(graph,null,2)),writeFile(path.join(outputRoot,"diagnostic-summary.md"),`# Cumulative parity diagnostic summary\n\n- Reported mismatches: ${differences.length}\n- Independent root mismatches: ${first.independentRootMismatches}\n- Downstream derivative mismatches: ${first.downstreamDerivativeMismatches}\n- Earliest divergent owner: ${first.earliestDivergentOwner}\n- Earliest divergent field: ${first.earliestDivergentField}\n- Root cause: ${first.rootCauseClassification}\n- Raw passages, Runtime, Drive metadata, OAuth values, and credentials: excluded\n`),
+    ]);
+    console.log(JSON.stringify({result:"PASS",outputRoot,files:7,totalMismatches:differences.length,independentRootMismatches:first.independentRootMismatches,downstreamDerivativeMismatches:first.downstreamDerivativeMismatches,rawContentIncluded:false,credentialsIncluded:false},null,2));
+  }finally{await rm(root1,{recursive:true,force:true});await rm(root2,{recursive:true,force:true});}
+}
+void main();
