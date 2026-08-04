@@ -103,9 +103,12 @@ the backend scoped Product projection adapter (`GAP-MR-004`) after authorized
 metric-lineage evaluation (`GAP-MR-005`). Only canonically produced coherence
 and learning-velocity values with complete authorized input lineage are
 supported; unscopable metrics remain explicitly unsupported rather than
-invented. Scoped decision-calibration projection (`GAP-MR-006`) remains open,
-so decision drift, justified divergence, strategic alignment, and
-authority-calibration frontend work remains blocked.
+invented. Scoped decision-calibration projection (`GAP-MR-006`) is now closed
+by a distinct non-persistent Product projection producer and focused production
+validation. The producer separates authority from strategic relationship,
+evaluates eight governed axes, distinguishes all ten benchmark cases, and
+fails closed for insufficient, withheld, or unavailable inputs. The same
+one-read scoped Product adapter consumes the result without recomputing it.
 
 Production and research gaps retain their existing classifications. Connector
 retrieval does not silently promote autonomous reevaluation, notification,
@@ -118,6 +121,7 @@ remain permanent and must not be reused.
 
 | ID | Original problem | Solution implemented | Repository location | Date resolved | Validation proving resolution |
 |---|---|---|---|---|---|
+| GAP-MR-006 | Existing decision owners could not classify the ten scoped alignment/divergence cases as a Product projection without fabricating semantics. | Added a deterministic, permission-aware, non-authoritative scoped decision-calibration Product projection with independent governed axes, safe precedence, complete disclosed lineage, and one-read adapter integration. | `product/integration/scopedDecisionCalibrationProjection.ts`; `product/integration/scopedOrganizationalProductProjection.ts`; `scripts/product/validateScopedDecisionCalibrationProjection.ts` | 2026-08-04 | Focused production validation distinguishes all ten canonical cases plus insufficient, withheld, unavailable, historical, isolation, role-neutrality, ordering, duplicate, lineage, and combination-leakage controls. |
 | GAP-R-011 | GAP-A-005: the complete Product workflow lacked a real canonical local information operation between governed human authorization and Outcome/Learning. | Added an authorization-first, idempotent Product Confidence Improvement executor for exact already-admitted Evidence inspection, with immutable result, existing Outcome observation, truthful no-change learning, reload, and cleanup. | `product/improvements/localInformationOperation.ts`; `product/integration/canonicalLocalInformationOperationAdapter.ts`; `scripts/product/validateGapA005LocalInformationOperationExecutor001.ts` | 2026-08-01 | `validate:gap-a-005-local-operation-executor-001`; `validate:gap-a-005-workflow-acceptance` |
 | GAP-R-001 | Questions were transient investigation inputs and could not accumulate durable product history. | Added a stable, organization-scoped `ProductQuestion` aggregate with append-only lifecycle events, references, histories, deterministic state, and Runtime-repository persistence. | `product/questions/contracts.ts`; `product/questions/questionLifecycle.ts`; `product/questions/recordProductWorkspaceLifecycle.ts` | 2026-07-29 | `validate:question-lifecycle`; `validate:question-runtime`; `validate:question-history`; `validate:question-timeline` |
 | GAP-R-002 | Customer confidence could be confused with condition, recommendation, prediction, or workspace confidence. | Made confidence an explicit property of the exact selected `ProductAnswer`, preserving authoritative source and principal limiter. | `product/workflow/contracts.ts`; `product/workflow/selectProductAnswer.ts` | 2026-07-29 | `validate:product-answer-confidence`; `validate:vertical-product-proof` |

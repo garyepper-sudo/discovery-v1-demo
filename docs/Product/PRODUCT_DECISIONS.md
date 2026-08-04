@@ -596,3 +596,42 @@ Changing one requires the process in
 - **Affected gaps:** GAP-MR-004 and GAP-MR-005 are production-closed by focused
   validation; GAP-MR-006 remains open.
 - **Status:** Active backend contract; frontend implementation deferred.
+
+## DEC-PROD-032 — Decision calibration is a governed advisory Product projection
+
+- **Decision:** One distinct Product-owned producer projects an exact decision
+  against exact server-resolved Objective and Optimization Context revisions,
+  authority, Evidence, constraints, dependencies, experiment authority, and
+  Outcome through the shared scoped-disclosure owner. It evaluates authority,
+  strategic relationship, Evidence support, local feasibility, cross-scope
+  effect, strategy-challenge potential, experiment status, and Outcome status
+  independently before deriving a bounded calibration classification.
+- **Reason:** `GAP-MR-006` showed that existing decision orchestration,
+  comparison, ranking, recommendation, recording, lifecycle, and longitudinal
+  judgment owners did not own recipient-safe scoped calibration meaning.
+- **Alternatives considered:** A role-specific decision engine; a global
+  analysis filtered after computation; an alignment score; hierarchy as truth;
+  adding calibration logic to the adapter; changing decision ranking or
+  recommendation semantics.
+- **Why rejected:** Those alternatives duplicate canonical meaning, permit
+  derived disclosure leakage, conflate authority with correctness, or make a
+  transport boundary responsible for decision semantics.
+- **Consequences:** The projection truthfully distinguishes aligned support,
+  explicit staleness, justified divergence, sufficiently established
+  unexplained drift, ambiguous intent, cross-scope conflict, local
+  infeasibility, possible strategy invalidation, bounded experiment, and
+  unauthorized action. Missing or protected meaning remains insufficient,
+  withheld, or unavailable. It never scores, approves, rejects, executes,
+  escalates, recommends, or mutates. Historical evaluation reuses current
+  authorization and exact immutable revision references.
+- **Ownership:** Existing decision, Objective, Optimization Context, Evidence,
+  Outcome, Understanding, constraint, and authority owners retain canonical
+  meaning. Product integration owns only the non-authoritative projection;
+  the scoped Product adapter is its unchanged consumer.
+- **Persistence:** None. No Runtime contract or migration changes.
+- **Affected phase:** Discovery 2 production integration.
+- **Affected gaps:** GAP-MR-006 production-closed; GAP-MR-001 through
+  GAP-MR-005 remain closed. All six benchmark gaps have production-owner
+  traceability.
+- **Status:** Active backend contract; role-aware frontend may render this
+  projection but must not recompute calibration.

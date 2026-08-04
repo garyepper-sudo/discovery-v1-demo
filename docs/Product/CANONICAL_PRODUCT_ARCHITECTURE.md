@@ -248,8 +248,15 @@ derive from exact scope, authority, purpose, sensitivity, lineage, and temporal
 mode rather than role-name branches. Authorization occurs before the single
 bounded repository read; cross-organization denial performs no canonical read.
 The adapter returns no raw Runtime, cognition, unrestricted Evidence, or
-role-specific state. Decision calibration remains outside this adapter and is
-reported as unsupported under `GAP-MR-006`.
+role-specific state. A distinct Product-owned decision-calibration producer
+now evaluates exact server-resolved decision, Objective, Optimization Context,
+authority, Evidence, constraint, experiment, and Outcome inputs through direct
+and derived scoped disclosure before returning independent authority,
+strategic-relationship, Evidence-support, feasibility, cross-scope,
+strategy-challenge, experiment, and Outcome axes. Only then does it derive a
+bounded advisory classification. It adds no alignment score, treats neither
+hierarchy nor authority as evidential truth, performs no approval or mutation,
+and is consumed unchanged by the same one-read adapter for every recipient.
 
 ## Answer and confidence ownership
 

@@ -15,6 +15,11 @@ import {
   type ScopedDisclosureDerivedKind,
   type ScopedDisclosureSupport,
 } from "../../engine/v3/understanding/scopedOrganizationalUnderstandingDisclosure";
+import {
+  projectScopedDecisionCalibration,
+  type ScopedDecisionCalibrationProjection,
+  type ServerResolvedDecisionCalibrationInput,
+} from "./scopedDecisionCalibrationProjection";
 
 export const SCOPED_ORGANIZATIONAL_PRODUCT_PROJECTION_VERSION = "1";
 
@@ -59,6 +64,7 @@ export type ScopedProjectionRepositorySource = {
     safeAbstractionAllowed: boolean;
     policyRef: string;
   }>;
+  decisionCalibration?: ServerResolvedDecisionCalibrationInput;
 };
 
 export interface ScopedProjectionRepository {
@@ -97,6 +103,10 @@ export type ScopedProductProjection = {
   disposition: "available" | "withheld" | "unavailable" | "insufficient-authorized-information";
   items: ScopedProductProjectionItem[];
   metrics: AuthorizedMetricResult[];
+  decisionCalibration: ScopedDecisionCalibrationProjection | {
+    disposition: "unavailable";
+    reason: "canonical-input-unavailable";
+  } | null;
   unavailableKinds: ScopedProductItemKind[];
   withheldItemCount: number | null;
   unsupportedCapabilities: Array<{
@@ -144,6 +154,7 @@ function emptyProjection(
     disposition,
     items: [],
     metrics: [],
+    decisionCalibration: null,
     unavailableKinds: [],
     withheldItemCount: null,
     unsupportedCapabilities: [{ capability: "decision-calibration" as const, gapId: "GAP-MR-006" as const, disposition: "unsupported-capability" as const }],
@@ -262,6 +273,14 @@ export function readScopedOrganizationalProductProjection(input: {
     };
   });
   const availableKinds = new Set(disclosedItems.map((item) => item.kind));
+  const decisionCalibration: ScopedProductProjection["decisionCalibration"] = source.decisionCalibration
+    ? projectScopedDecisionCalibration({
+      authenticatedUserId: input.authenticatedUserId,
+      organizationId: input.organizationId,
+      context,
+      serverResolved: source.decisionCalibration,
+    })
+    : { disposition: "unavailable", reason: "canonical-input-unavailable" };
   const requestedKinds: ScopedProductItemKind[] = [
     "understanding",
     "material-change",
@@ -278,6 +297,7 @@ export function readScopedOrganizationalProductProjection(input: {
   const auditRefs = [...new Set([
     ...disclosedItems.flatMap((item) => item.auditRefs),
     ...metrics.flatMap((metric) => metric.lineage?.auditRefs ?? []),
+    ...(decisionCalibration && "auditRefs" in decisionCalibration ? decisionCalibration.auditRefs : []),
   ])].sort(compare);
   const safe = {
     contractVersion: SCOPED_ORGANIZATIONAL_PRODUCT_PROJECTION_VERSION as typeof SCOPED_ORGANIZATIONAL_PRODUCT_PROJECTION_VERSION,
@@ -288,12 +308,13 @@ export function readScopedOrganizationalProductProjection(input: {
     evaluatedAt: context.evaluatedAt,
     temporalMode: context.temporal.mode,
     sourceRevisionRef: source.sourceRevisionRef,
-    disposition: disclosedItems.length || metrics.some((metric) => metric.disposition === "disclosed") ? "available" as const : "insufficient-authorized-information" as const,
+    disposition: disclosedItems.length || metrics.some((metric) => metric.disposition === "disclosed") || decisionCalibration ? "available" as const : "insufficient-authorized-information" as const,
     items: disclosedItems,
     metrics,
+    decisionCalibration,
     unavailableKinds,
     withheldItemCount: withheld > 0 ? null : 0,
-    unsupportedCapabilities: [{ capability: "decision-calibration" as const, gapId: "GAP-MR-006" as const, disposition: "unsupported-capability" as const }],
+    unsupportedCapabilities: [],
     auditRefs,
   };
   return { projectionId: identity(safe), ...safe };

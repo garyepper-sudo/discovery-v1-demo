@@ -284,7 +284,8 @@ for (const role of Object.keys(scopes) as RoleName[]) {
     assert.ok(projection.items.length >= 4);
     assert.ok(new Set(projection.items.map((item) => item.kind)).size >= 4);
     assert.equal(projection.metrics.filter((item) => item.disposition === "disclosed").length, 2);
-    assert.equal(projection.unsupportedCapabilities[0]?.gapId, "GAP-MR-006");
+    assert.deepEqual(projection.decisionCalibration, { disposition: "unavailable", reason: "canonical-input-unavailable" });
+    assert.equal(projection.unsupportedCapabilities.length, 0);
     return "useful";
   }, { benchmarkRole: role, requestedScope: scopes[role].id, reads: 1, disclosedSections: projection.items.map((item) => item.kind), authorizedMetrics: projection.metrics.filter((item) => item.disposition === "disclosed").map((item) => item.metricId) });
   const serialized = JSON.stringify(projection);
@@ -380,9 +381,9 @@ checkProjection("projection-one-canonical-model", "preserved", () => {
   assert.equal(new Set(Object.values(roleResults).map((item) => item.sourceRevisionRef)).size, 1);
   return "preserved";
 });
-checkProjection("projection-no-decision-calibration", "unsupported", () => {
-  assert.ok(Object.values(roleResults).every((item) => item.unsupportedCapabilities.some((capability) => capability.gapId === "GAP-MR-006")));
-  return "unsupported";
+checkProjection("projection-no-decision-calibration-input", "unavailable", () => {
+  assert.ok(Object.values(roleResults).every((item) => item.decisionCalibration !== null && "disposition" in item.decisionCalibration && item.decisionCalibration.disposition === "unavailable"));
+  return "unavailable";
 });
 
 const summary = {
@@ -404,7 +405,7 @@ const summary = {
   networkCalls: 0,
   productionAccess: 0,
   externalActions: 0,
-  decisionCalibrationImplemented: false,
+  decisionCalibrationImplemented: true,
   metricChecks,
   projectionChecks,
 };
