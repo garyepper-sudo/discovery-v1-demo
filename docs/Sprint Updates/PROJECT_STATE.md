@@ -3,8 +3,8 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** multi-role backend and role-aware frontend first slice
-complete; multi-user sandbox access is next
+**Current phase:** multi-role backend, role-aware frontend first slice, and
+multi-user sandbox access complete; live scoped Product adapter wiring is next
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
@@ -45,8 +45,12 @@ scoped Product adapter. The first fixture-backed frontend slice is implemented.
 - Frontend foundations: shell/navigation, Home, Understanding, Decision,
   Investigation, History, and six distinct semantic dispositions.
 - Live scoped Product adapter: not wired.
-- Multi-user account provisioning and account-to-scope assignment: not
-  implemented.
+- Multi-user sandbox access: three distinct Clerk development identities are
+  provisioned as CEO, Director, and Manager in the same organization through
+  explicit server-side scopes and operations; titles grant no authority.
+- Access acceptance: deterministic inspection, three isolated sign-in/sign-out
+  sessions, copied-URL/cache isolation, Manager revocation, canonical
+  append-only restoration, and exact idempotent reset passed.
 - Canonical `/your-organization`: unchanged.
 - Governed Drive integration: one exact private/non-root/non-recursive folder;
   manual incremental synchronization; read-only connector; strict MIME,
@@ -61,19 +65,19 @@ scoped Product adapter. The first fixture-backed frontend slice is implemented.
 
 ## Current Objective
 
-Provision separate development identities and explicit server-side scope and
-authority records for the shared sandbox organization without changing Product
-meaning or authorization ownership.
+Wire the canonical scoped Product adapter to the role-aware experience and
+validate it with the three sandbox accounts without changing Product meaning,
+authorization ownership, or the canonical `/your-organization` route.
 
 ## Next Priority
 
-**DISCOVERY MULTI-USER SANDBOX ORGANIZATION ACCESS AND ROLE-SCOPED SIGN-IN
+**DISCOVERY LIVE SCOPED PRODUCT ADAPTER WIRING AND THREE-ACCOUNT ACCEPTANCE
 001**
 
-Create or resolve CEO, director, and manager development identities in the same
-sandbox organization using explicit server-side scope and authority records.
-Titles remain descriptive only. Keep live scoped Product adapter wiring for the
-following task. Supported metrics remain coherence and learning velocity.
+Replace the isolated role-aware fixture read with the canonical server-side
+scoped Product read while preserving the serialized contract and frontend
+semantics. Validate CEO, Director, and Manager disclosure and denial behavior
+in isolated sessions. Supported metrics remain coherence and learning velocity.
 
 ## Canonical implementation boundary
 

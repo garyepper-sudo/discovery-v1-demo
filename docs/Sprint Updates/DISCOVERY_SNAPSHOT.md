@@ -91,10 +91,14 @@ independent axes; authority remains separate from strategic correctness.
 The role-neutral shell, Home, Understanding, Decision, Investigation, History,
 and six disposition foundations now render from 24 semantically validated
 fixtures; the approved first slice renders ten fixtures. The frontend does not
-reconstruct authorization, metric lineage, or calibration. Multi-user account
-provisioning and account-to-scope assignment are not implemented. The next
-task is **DISCOVERY MULTI-USER SANDBOX ORGANIZATION ACCESS AND ROLE-SCOPED
-SIGN-IN 001**; live scoped Product adapter wiring follows that task.
+reconstruct authorization, metric lineage, or calibration. Three distinct
+Clerk development identities are provisioned as CEO, Director, and Manager in
+the same sandbox organization through explicit server-side scopes and
+operations; titles grant no authority. Deterministic inspection, revocation,
+append-only restoration, reset, three isolated sign-in/sign-out sessions, and
+copied-URL/cache isolation passed. The live scoped Product adapter remains
+unwired. The next task is **DISCOVERY LIVE SCOPED PRODUCT ADAPTER WIRING AND
+THREE-ACCOUNT ACCEPTANCE 001**.
 
 ## Worktree boundary
 

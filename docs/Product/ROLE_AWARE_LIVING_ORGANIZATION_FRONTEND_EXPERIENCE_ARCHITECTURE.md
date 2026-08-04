@@ -442,5 +442,6 @@ through disclosed Product items/calibration safe lineage, and Outcome/Learning
 appear only where present in calibration/history. These are **no gap** for the
 required slice. The 24 frontend fixtures now exist and validate through the
 existing projection shape, so the former fixture implementation gap is closed.
-The live adapter swap and multi-user account provisioning remain deferred and
-do not constitute a Product contract gap.
+Multi-user sandbox account provisioning and role-scoped sign-in are complete.
+The live adapter swap remains deferred and does not constitute a Product
+contract gap.

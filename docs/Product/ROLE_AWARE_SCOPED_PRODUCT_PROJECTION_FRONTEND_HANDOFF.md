@@ -133,9 +133,11 @@ the approved ten-fixture first slice renders through one role-neutral shell,
 navigation, presentation mapper, and semantic component system. Home,
 Understanding, Decision, Investigation, History, and all six dispositions are
 present. Only coherence and learning velocity are supported. No backend
-semantics changed, `/your-organization` remains unchanged, multi-user account
-provisioning is not implemented, and the live scoped Product adapter is not
-wired.
+semantics changed and `/your-organization` remains unchanged. Three distinct
+Clerk development identities are provisioned as CEO, Director, and Manager in
+the same sandbox organization through explicit server-side scopes and
+operations; role titles grant no authority. The live scoped Product adapter is
+not wired.
 
 1. Add the typed read boundary and serialized-contract validation.
 2. Build a role-neutral fixture adapter from production contract types.
@@ -151,7 +153,9 @@ wired.
 12. Swap fixtures for the canonical server read without changing semantics.
 
 Steps 1–11 are represented by the validated first slice. Multi-user sandbox
-access is the next task; the live server read swap remains the following task.
+access, deterministic revocation/restoration/reset, and three-account session
+isolation are complete. The live server read swap with three-account acceptance
+is the next task.
 
 ## Six-gap closure matrix
 

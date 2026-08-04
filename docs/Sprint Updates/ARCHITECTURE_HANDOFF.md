@@ -35,11 +35,14 @@ ten approved first-slice fixtures render through one role-neutral shell,
 navigation, presentation mapper, and semantic component system. Home,
 Understanding, Decision, Investigation, History, and six disposition
 foundations exist. Only coherence and learning velocity are supported. No
-backend semantics changed; `/your-organization` remains unchanged; the live
-scoped Product adapter is not wired; multi-user provisioning is not
-implemented. The next task is **DISCOVERY MULTI-USER SANDBOX ORGANIZATION
-ACCESS AND ROLE-SCOPED SIGN-IN 001**. Live scoped Product adapter wiring follows
-that task.
+backend semantics changed and `/your-organization` remains unchanged. Three
+distinct Clerk development identities are provisioned as CEO, Director, and
+Manager in the same sandbox organization through explicit server-side scopes
+and operations; titles grant no authority. Deterministic inspection,
+revocation/append-only restoration, exact reset, three isolated sessions, and
+copied-URL/cache isolation passed. The live scoped Product adapter remains
+unwired. The next task is **DISCOVERY LIVE SCOPED PRODUCT ADAPTER WIRING AND
+THREE-ACCOUNT ACCEPTANCE 001**.
 
 Before proposing a new capability, use this document to verify whether the responsibility, cognitive object, canonical producer, Runtime destination, or executive destination already exists.
 

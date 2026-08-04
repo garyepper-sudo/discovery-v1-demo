@@ -2,8 +2,8 @@
 
 ## Exact next task
 
-Begin **DISCOVERY MULTI-USER SANDBOX ORGANIZATION ACCESS AND ROLE-SCOPED
-SIGN-IN 001** from the exact resulting `origin/main`.
+Begin **DISCOVERY LIVE SCOPED PRODUCT ADAPTER WIRING AND THREE-ACCOUNT
+ACCEPTANCE 001** from the exact resulting `origin/main`.
 
 ## Read first
 
@@ -31,17 +31,22 @@ SIGN-IN 001** from the exact resulting `origin/main`.
   and ten approved first-slice fixtures rendered.
 - One role-neutral shell and navigation system render Home, Understanding,
   Decision, Investigation, History, and all six semantic dispositions.
-- `/your-organization` remains unchanged; the live scoped Product adapter is
-  not wired; multi-user account provisioning is not implemented.
+- Three distinct Clerk development identities are provisioned as CEO,
+  Director, and Manager in the same sandbox organization using explicit
+  server-side scopes and operations; titles grant no authority.
+- Deterministic inspection, append-only revocation/restoration, exact reset,
+  three isolated sign-in/sign-out sessions, and copied-URL/cache isolation
+  passed.
+- `/your-organization` remains unchanged and the live scoped Product adapter
+  is not wired.
 
 ## Frontend boundary
 
-Create or resolve separate CEO, director, and manager development identities,
-assign all three to the same sandbox organization, and use explicit server-side
-scope and authority records. Treat titles as descriptive only and preserve one
-canonical organization and model. Provide deterministic development
-provisioning, inspection, revocation, restoration, and reset. Do not wire the
-live scoped Product adapter in the same task; that follows multi-user access.
+Wire the canonical server-side scoped Product read to the isolated role-aware
+experience without changing its contract or presentation semantics. Validate
+CEO, Director, and Manager disclosure and denial behavior in isolated sessions,
+including copied-URL and cache isolation. Preserve one canonical organization,
+model, authorization owner, and Product projection owner.
 
 ## Explicitly deferred
 
