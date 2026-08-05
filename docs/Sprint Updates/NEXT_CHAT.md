@@ -2,8 +2,8 @@
 
 ## Exact next task
 
-Begin **DISCOVERY NORTHSTAR RETAINED RUNTIME SOURCE-TO-SCOPE BINDING
-CORRECTION 001** from the exact resulting `origin/main`.
+Begin **DISCOVERY NORTHSTAR SOURCE-TO-SCOPE BINDING AND RETAINED RUNTIME
+REPLAY 001** from the exact resulting `origin/main`.
 
 ## Read first
 
@@ -47,6 +47,9 @@ CORRECTION 001** from the exact resulting `origin/main`.
 - `/your-organization` remains unchanged. Material role differentiation is
   blocked by missing retained Northstar source-scope metadata and scoped Product
   inputs, not by frontend, authorization, Product contract, or architecture.
+- Canonical topology, multi-scope source binding, immutable Evidence
+  attribution, Runtime-derived lineage, and producer-backed Product input
+  selection are implemented without identity changes or migration.
 
 ## Frontend boundary
 

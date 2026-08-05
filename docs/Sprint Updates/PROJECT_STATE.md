@@ -3,8 +3,8 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** development live scoped Product adapter and three-account
-acceptance complete; Northstar source-to-scope binding correction is next
+**Current phase:** canonical source/Evidence scope-lineage propagation
+complete; Northstar binding and retained Runtime replay are next
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
@@ -66,17 +66,17 @@ scoped Product adapter. The first fixture-backed frontend slice is implemented.
 
 ## Current Objective
 
-Add canonical Northstar source-to-scope provenance and scoped Product inputs
-without changing the reviewed adapter, frontend semantics, authorization, or
-the canonical `/your-organization` route.
+Populate Northstar through the canonical source-binding, Evidence-attribution,
+Runtime-lineage, and scoped Product input owners without changing frontend,
+authorization, or `/your-organization` semantics.
 
 ## Next Priority
 
-**DISCOVERY NORTHSTAR RETAINED RUNTIME SOURCE-TO-SCOPE BINDING CORRECTION 001**
+**DISCOVERY NORTHSTAR SOURCE-TO-SCOPE BINDING AND RETAINED RUNTIME REPLAY 001**
 
-Bind accepted source/Evidence/Product inputs to canonical organization,
-function, team, and initiative scopes through reviewed persistence and replay
-owners. The retained Runtime currently has six domains but zero current
+Create the exact topology and sixteen-source binding package, admit and evolve
+it through the canonical production owners, and replace the retained Runtime
+transactionally. The retained Runtime currently has six domains but zero current
 Understandings, canonical compositions, observations, explanations, or scope
 references, so the live UI truthfully renders bounded absence. Route promotion
 remains deferred until renewed three-account material-differentiation acceptance.

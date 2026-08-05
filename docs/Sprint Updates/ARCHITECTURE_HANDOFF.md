@@ -46,10 +46,12 @@ organization, retained Runtime, scoped Product adapter, mapper, and component
 tree; authorized requests read Runtime once and denied/revoked/cross-org paths
 produce no projection and read Runtime zero times. Fixture fallback is absent,
 Manager live revocation/restoration passed, Runtime and Drive are unchanged,
-and Production returns 404. Material differentiation remains blocked by the
-retained Runtime's absent source-scope references and scoped Product inputs.
-The next task is **DISCOVERY NORTHSTAR RETAINED RUNTIME SOURCE-TO-SCOPE BINDING
-CORRECTION 001**; route promotion remains deferred.
+and Production returns 404. Canonical topology, multi-scope source binding,
+immutable Evidence attribution, Runtime-derived lineage, and producer-backed
+scoped Product input selection now exist without identity changes or migration.
+Material differentiation remains blocked by absent Northstar bindings and
+replay. The next task is **DISCOVERY NORTHSTAR SOURCE-TO-SCOPE BINDING AND
+RETAINED RUNTIME REPLAY 001**; route promotion remains deferred.
 
 Before proposing a new capability, use this document to verify whether the responsibility, cognitive object, canonical producer, Runtime destination, or executive destination already exists.
 

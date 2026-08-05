@@ -101,10 +101,12 @@ copied-URL/cache isolation passed. CEO, Director, and Manager also rendered the
 development live route through the same one-read adapter, mapper, and component
 tree; denied, revoked, and cross-organization requests used zero Runtime reads.
 Manager live revocation/restoration passed, Runtime and Drive remained
-unchanged, and no fixture fallback occurred. Material role differentiation is
-still blocked because the retained Northstar Runtime contains no canonical
-source-to-scope references or scoped Product inputs. The next task is
-**DISCOVERY NORTHSTAR RETAINED RUNTIME SOURCE-TO-SCOPE BINDING CORRECTION 001**.
+unchanged, and no fixture fallback occurred. Canonical topology, multi-scope
+source binding, immutable Evidence attribution, Runtime-derived lineage, and
+producer-backed scoped Product input selection are now implemented without
+identity changes or migration. Material differentiation remains blocked only
+because Northstar has not been bound or replayed. The next task is **DISCOVERY
+NORTHSTAR SOURCE-TO-SCOPE BINDING AND RETAINED RUNTIME REPLAY 001**.
 
 ## Worktree boundary
 
