@@ -15,6 +15,8 @@ All collections are canonicalized and deterministically digested. Current and hi
 
 Existing source content identity, normalized digest, Evidence identity, admission identity, investigation fingerprint, and cognitive-object identity exclude the new lineage objects. A scope-only correction therefore creates a new binding or attribution revision while retaining earlier history; it is not new Evidence or cognitive change.
 
+Investigation-local Evidence labels such as `E1` are qualified at admission by the version-2 canonical Evidence identity contract documented in `CANONICAL_EVIDENCE_IDENTITY.md`. Attributions persist the canonical Evidence/admission pair and retain local labels only as provenance. Runtime lineage translates local support to canonical identity and rejects ambiguous legacy ancestry.
+
 Legacy free-form `organizationScope` remains compatibility metadata, not structured authority. Compatibility is explicit, requires the exact organization, resolves only to the organization root, and is marked as missing structured lineage. Non-root Product input requires structured lineage.
 
 The scoped Product input resolver may use exact derived lineage to select candidates before the existing authorization, sensitivity, purpose, historical-policy, and disclosure owners evaluate them. Parent/child and initiative relationships never imply access. Role names, personas, and user IDs never infer scope.

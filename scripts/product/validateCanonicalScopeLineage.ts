@@ -103,14 +103,14 @@ const productionResult=runDiscoveryV3(productionInput,{organizationId:ORG,effect
 check("attribution",productionResult.scopeLineageAdmission?.evidenceAttributions.length===1,"actual Evidence admission produces attribution");
 const admittedEvidence=productionResult.evidence.find(value=>value.sourceId===source.sourceId)!;
 const producedAttribution=productionResult.scopeLineageAdmission!.evidenceAttributions[0]!;
-check("attribution",producedAttribution.evidenceId===admittedEvidence.id&&producedAttribution.evidenceAdmissionId.length>0,"actual admission retains exact Evidence and admission identities");
+check("attribution",producedAttribution.localEvidenceIds?.includes(admittedEvidence.id)&&producedAttribution.evidenceId.startsWith("canonical-evidence:v2:")&&producedAttribution.evidenceAdmissionId.startsWith("evidence-admission:v2:"),"actual admission qualifies local Evidence with exact canonical identities");
 check("attribution",producedAttribution.sourceBindingIds[0]===binding.bindingId,"actual admission retains exact source binding");
 const savedLog=console.log; console.log=()=>{};
 let producedRuntime;
 try{producedRuntime=evolveOrganizationRuntime({runtime:createEmptyOrganizationRuntime({organizationId:ORG}),result:productionResult,input:{company:productionInput.company,website:productionInput.website,industry:productionInput.industry,question:productionInput.question,context:productionInput.context}});}finally{console.log=savedLog;}
 const producedIndex=producedRuntime.memory.canonicalScopeLineageIndex;
 check("runtime",producedIndex?.evidenceAttributions[0]?.attributionId===producedAttribution.attributionId,"actual Runtime evolution retains admission attribution");
-const producedLineage=producedIndex?.derivedLineages.find(value=>value.supportingEvidenceIds.includes(admittedEvidence.id)&&value.completeness==="complete");
+const producedLineage=producedIndex?.derivedLineages.find(value=>value.supportingEvidenceIds.includes(producedAttribution.evidenceId)&&value.completeness==="complete");
 check("runtime",Boolean(producedLineage),"actual Runtime evolution produces derived lineage from support ancestry");
 check("runtime",producedIndex?.derivedLineages.every(value=>!value.assertions.some(assertion=>assertion.scope.type==="organization"))===true,"structured evolution does not broaden to organization root");
 check("runtime",canonicalScopeLineageDigest(producedIndex)===canonicalScopeLineageDigest(createCanonicalScopeLineageIndex({organizationId:ORG,topology,sourceBindings:productionResult.scopeLineageAdmission!.sourceBindings,evidenceAttributions:productionResult.scopeLineageAdmission!.evidenceAttributions,derivedLineages:producedIndex!.derivedLineages})),"producer Runtime index is deterministic");

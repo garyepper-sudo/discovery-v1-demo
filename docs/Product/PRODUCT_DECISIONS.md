@@ -658,3 +658,23 @@ Changing one requires the process in
   Evidence admission resolves immutable attribution; Runtime evolution derives
   and persists lineage; scoped Product selection consumes producer output.
   Northstar population and replay remain deferred.
+
+## DEC-PROD-034 — Investigation-local Evidence labels are qualified before canonical admission
+
+- **Decision:** Preserve V3 investigation-local Evidence IDs unchanged, but
+  derive an organization-bound, normalized-content `canonical-evidence:v2`
+  identity before canonical scope admission. Version-2 admission identity uses
+  that canonical identity rather than the local label.
+- **Reason:** Separate investigations can both emit `E1`; using that label as
+  organization-wide identity creates false admission and Runtime ancestry.
+- **Deduplication:** Exact and formatting-only equivalent Evidence content
+  retains one canonical identity; materially changed content and the same
+  content in different organizations remain distinct. Multiple legitimate
+  sources retain separate binding provenance.
+- **Compatibility:** Historical v1 objects remain immutable. Ambiguous legacy
+  local-label resolution fails closed, with no automatic rewrite or migration.
+- **Boundary:** Investigation fingerprints, source/version identity, Evidence
+  meaning, cognition, scope, authorization, disclosure, metrics, calibration,
+  recommendations, and Product meaning do not change.
+- **Status:** Implemented and synthetic-validated; Northstar replay remains a
+  separate task after review and main integration.

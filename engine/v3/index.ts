@@ -195,7 +195,7 @@ ${input.context}
 
   const result=workspaceToResult(workspace);
   if(!scopeLineage)return result;
-  const scopeLineageAdmission=admitCanonicalEvidenceScopeLineage({lineage:scopeLineage,evidence:result.evidence.map(item=>({evidenceId:item.id,...(item.sourceId?{sourceId:item.sourceId}:{}),...(item.contentDigest?{contentDigest:item.contentDigest}:{})}))});
+  const scopeLineageAdmission=admitCanonicalEvidenceScopeLineage({lineage:scopeLineage,evidence:result.evidence.map(item=>({evidenceId:item.id,evidenceText:item.text,...(item.sourceId?{sourceId:item.sourceId}:{}),...(item.contentDigest?{contentDigest:item.contentDigest}:{})}))});
   return {...result,scopeLineageAdmission};
 }
 
