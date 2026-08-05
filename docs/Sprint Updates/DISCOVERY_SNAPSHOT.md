@@ -14,7 +14,9 @@ references, or Runtime revisions. The versioned
 orphaned report-only `30a16f0b…` digest. Repository-corpus and retained local
 metadata derivations are byte-identical at `1c6577ab…`; a disposable combined
 Northstar candidate produced three byte-identical Runtimes at revision
-`824a4c2e…`. No retained Runtime was reconstructed or modified.
+`824a4c2e…`. The durable Northstar Runtime was then atomically reconstructed
+from the canonical local package and independently reloaded at the same exact
+revision. It is newly reconstructed state, not the temporary Sync 5 Runtime.
 
 Discovery is a governed organizational learning and intelligence system. Its
 persistent state is organizational understanding; Product Workflow operations
@@ -74,8 +76,9 @@ contain sixteen canonical Markdown documents and five negative controls.
 Deterministic reset/replay, exact cleanup, transport-independent semantic
 parity, and strict validate-before-persist behavior are proven. The folder,
 local metadata, extracted passages, source versions, receipt, and checkpoint
-survive; the complete accepted Runtime existed only in temporary replay roots.
-The canonical retained organization Runtime is an empty shell.
+survive. The canonical retained organization Runtime is now the independently
+verified reconstruction at `824a4c2e…`; reconstruction used no Drive or
+connector operation and performed no synchronization.
 
 | Sync | Files | New | Unchanged | Parity |
 |---|---:|---:|---:|---|
@@ -119,9 +122,13 @@ label remains distinct; exact and formatting-normalized duplicates remain
 deduplicated; later same-content sources retain complete provenance. Ambiguous
 v1 ancestry fails closed, unambiguous v1 remains readable, focused unauthorized
 canaries returned zero occurrences, and no migration was required. Material differentiation remains blocked only
-because Northstar has not been reconstructed into retained state. The next task
-is **DISCOVERY NORTHSTAR RUNTIME RECONSTRUCTION FROM VERSIONED CANONICAL LOCAL
-SOURCE PACKAGE 003** in a new worktree from the resulting `origin/main`.
+because the live adapter's retained-Runtime source owner still returns zero
+scoped Product items. Canonical cognition and lineage exist upstream; selection,
+disclosure, and presentation receive no candidates. Protected sign-out,
+Back/reload/copied-URL isolation, account switching, and Manager
+revocation/restoration pass, but an independent live two-tab witness remains a
+pre-promotion gate. The next task is **DISCOVERY NORTHSTAR SOURCE-TO-PRODUCT
+PROJECTION POPULATION AND MATERIAL ROLE DIFFERENTIATION 001**.
 
 ## Worktree boundary
 

@@ -49,4 +49,11 @@ The prior digest `30a16f0b…` is orphaned diagnostic evidence: its bytes, field
 
 For the Northstar corpus, independent repository-corpus and retained-filesystem-metadata derivations produce byte-identical version-1 packages with authoritative digest `1c6577ab69236f84d9b5011e40c069e8130a941f6f8865431dfe1d43b37535e2`.
 
+Three isolated canonical replay cycles from that package produced byte-identical
+Runtime bytes. The durable Northstar Runtime was atomically reconstructed and
+independently reloaded at revision
+`824a4c2e3f86cf000e3f8442d2bf38a97b4281e545959a49bf2bc6f41bb8b047`.
+This acceptance does not make the snapshot a persistence owner and used no
+Drive or connector operation.
+
 Changing included fields, normalization, ordering, serialization, or digest algorithm requires a new contract version and compatibility review.

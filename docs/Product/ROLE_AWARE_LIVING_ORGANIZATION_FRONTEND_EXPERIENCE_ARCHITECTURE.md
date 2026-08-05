@@ -446,6 +446,8 @@ required slice. The 24 frontend fixtures now exist and validate through the
 existing projection shape, so the former fixture implementation gap is closed.
 Multi-user sandbox account provisioning and role-scoped sign-in are complete.
 The development live adapter swap is complete and does not constitute a Product
-contract gap. The retained Northstar Runtime lacks canonical source-scope
-references and populated scoped Product inputs; this separate data/binding gap
-must be corrected and reaccepted before route promotion.
+contract gap. The retained Northstar Runtime is reconstructed with canonical
+source bindings and derived scope lineage, but the live adapter currently
+constructs an authorized Product source with no items. Material role
+differentiation therefore remains truthfully unavailable until the focused
+source-to-Product population seam is diagnosed. Route promotion remains blocked.

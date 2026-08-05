@@ -282,6 +282,13 @@ and outcomes while remaining user-governed.
 
 **Promotion gates**
 
+- Reconstructed canonical cognition must populate scoped Product inputs before
+  selection and disclosure; role labels, broader grants, or fabricated content
+  cannot substitute for missing population.
+- Useful three-account differentiation, independent two-tab isolation, and the
+  dedicated live unauthorized-disclosure/inference stress test must pass before
+  route promotion.
+
 - Connected Evidence improves specific Answer recovery without weaker negative
   controls.
 - Collaboration never manufactures consensus.

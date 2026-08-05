@@ -2,8 +2,8 @@
 
 ## Exact next task
 
-Begin **DISCOVERY NORTHSTAR RUNTIME RECONSTRUCTION FROM VERSIONED CANONICAL
-LOCAL SOURCE PACKAGE 003** from the exact resulting `origin/main` in a new
+Begin **DISCOVERY NORTHSTAR SOURCE-TO-PRODUCT PROJECTION POPULATION AND MATERIAL
+ROLE DIFFERENTIATION 001** from the exact resulting `origin/main` in a new
 branch and worktree.
 
 ## Read first
@@ -46,14 +46,16 @@ branch and worktree.
   revocation/restoration and session/cache isolation passed, Runtime and Drive
   remained unchanged, and Production returns 404.
 - `/your-organization` remains unchanged. Material role differentiation is
-  blocked by missing retained Northstar source-scope metadata and scoped Product
-  inputs, not by frontend, authorization, Product contract, or architecture.
+  blocked because the live adapter constructs an authorized retained-Runtime
+  source with zero Product items. Canonical cognition and scope lineage are
+  present; Product input population is the earliest observed seam.
 - Canonical replay now excludes processing time from identities, history,
   references, and Runtime revisions. Snapshot contract
   `living-organization-reconstruction-input/v1` is reproducible from both the
   repository corpus and retained local metadata at digest `1c6577ab…`.
-  Three disposable combined Northstar cycles produced identical full Runtime
-  bytes at revision `824a4c2e…`; no retained Runtime was touched.
+  Three combined Northstar cycles produced identical full Runtime bytes at
+  revision `824a4c2e…`; the retained Runtime was atomically reconstructed and
+  independently reloaded at that exact revision.
 - Canonical topology, multi-scope source binding, immutable Evidence
   attribution, Runtime-derived lineage, and producer-backed Product input
   selection are implemented. Investigation-local Evidence labels are not
@@ -63,17 +65,18 @@ branch and worktree.
   Attribution and Runtime support reference exact canonical ancestry;
   ambiguous v1 ancestry fails closed and unambiguous v1 remains readable.
 - The focused unauthorized-disclosure canaries returned zero unauthorized
-  occurrences. Northstar topology/source bindings have not been added, the
-  retained Runtime is untouched, and Drive, Clerk, browsers, and Production
-  were not accessed during identity correction and review.
+  occurrences. Northstar topology/source bindings and cumulative derived
+  lineage are present. Reconstruction used no Drive, connector, Production, or
+  deployment activity.
 
 ## Frontend boundary
 
-Explicitly port the preserved five candidate responsibilities onto the new
-baseline, reconstruct through existing source, Evidence, Understanding,
-Runtime, and replay owners, and use transactional replacement. Do not rebase or
-repurpose the preserved `-002` worktree. Rerun three-account live acceptance
-and prove material differences come from scoped source lineage before promotion.
+Trace canonical cognition production → scoped Product input population →
+scoped selection → disclosure → presentation mapping, beginning at the current
+zero-item source population. Do not change source content, infer access from
+role, broaden permissions, weaken unavailable/withheld semantics, or repurpose
+the preserved `-002` worktree. Prove material differences come from authorized
+canonical inputs before promotion.
 
 ## Explicitly deferred
 

@@ -657,7 +657,8 @@ Changing one requires the process in
 - **Status:** Canonical contracts and production propagation are implemented.
   Evidence admission resolves immutable attribution; Runtime evolution derives
   and persists lineage; scoped Product selection consumes producer output.
-  Northstar population and replay remain deferred.
+  Northstar replay and retained-Runtime reconstruction now pass. Populating the
+  live adapter's scoped Product source from that canonical state remains deferred.
 
 ## DEC-PROD-034 — Investigation-local Evidence labels are qualified before canonical admission
 
@@ -676,5 +677,5 @@ Changing one requires the process in
 - **Boundary:** Investigation fingerprints, source/version identity, Evidence
   meaning, cognition, scope, authorization, disclosure, metrics, calibration,
   recommendations, and Product meaning do not change.
-- **Status:** Implemented and synthetic-validated; Northstar replay remains a
-  separate task after review and main integration.
+- **Status:** Implemented, synthetic-validated, and preserved through the
+  deterministic Northstar reconstruction and retained-Runtime reload.

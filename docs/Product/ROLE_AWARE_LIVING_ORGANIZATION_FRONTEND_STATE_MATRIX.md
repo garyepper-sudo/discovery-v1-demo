@@ -104,6 +104,6 @@ all six dispositions, responsive states, and keyboard/focus validation.
 | General Outcome/Learning feed | only calibration/history when represented | no gap; do not fabricate |
 | Concrete 24 fixture objects | implemented through the existing frontend-safe projection shape | closed; 24/24 semantically validated |
 | Development live server swap | `/development/role-aware-live` through the same mapper/components | closed; three-account acceptance passed, Production 404 |
-| Northstar material scope differentiation | retained Runtime has no canonical scope refs or populated scoped Product inputs | separate source-to-scope data correction required before promotion |
+| Northstar material scope differentiation | retained Runtime has canonical lineage, but the live adapter supplies zero scoped Product source items | diagnose canonical Product input population before promotion; do not fabricate content or broaden access |
 
 No genuine Product contract gap blocks the required experience architecture.

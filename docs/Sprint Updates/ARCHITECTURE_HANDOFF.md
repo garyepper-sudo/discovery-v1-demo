@@ -15,8 +15,9 @@ development user, organization, source, and non-recursive folder to sandbox
 and preserves source identity separately from transport identity. Six semantic
 batches, sixteen documents, five negative controls, deterministic reset/replay,
 exact cleanup, retained source metadata/receipt, and transport-independent
-parity passed. Complete accepted replay Runtime state was temporary and was
-removed; the canonical retained Northstar Runtime is an empty shell.
+parity passed. The earlier Sync 5 replay Runtime was temporary and removed; the
+canonical retained Northstar Runtime has since been newly reconstructed from
+the versioned local package at revision `824a4c2e3f86cf000e3f8442d2bf38a97b4281e545959a49bf2bc6f41bb8b047`.
 
 The integration composes existing owners: `CAP-PER-001` for Evidence,
 `CAP-UND-006` for governed Understanding, `CAP-MEM-001` for Runtime
@@ -55,20 +56,22 @@ are qualified at admission by canonical Evidence/admission identity v2;
 different content with a reused label remains distinct, valid normalized-content
 deduplication and cumulative multi-source provenance remain intact, and
 ambiguous v1 ancestry fails closed without migration. Focused unauthorized
-canaries returned zero occurrences. Northstar topology and bindings remain
-absent, and the retained Runtime remains untouched.
+canaries returned zero occurrences. Northstar topology, bindings, cumulative
+attribution, and derived lineage are now present in the reconstructed Runtime.
 Canonical replay determinism is now implemented: semantic time remains
 canonical while processing time is excluded from identities, history,
 references, and Runtime revisions. The versioned reconstruction-input snapshot
 contract supersedes the orphaned `30a16f0b…` digest; independent derivations
 match at `1c6577ab…`, and three disposable composite cycles produced identical
 full Runtime bytes at revision `824a4c2e…`. Historical identities remain
-readable; no migration or retained Runtime write occurred. The preserved
+readable; no migration occurred, and one guarded atomic replacement created the
+durable reconstruction. The preserved
 Northstar `-002` candidate remains unchanged and unintegrated.
 
-Material differentiation remains blocked by retained-state reconstruction.
-The next task is **DISCOVERY NORTHSTAR RUNTIME RECONSTRUCTION FROM VERSIONED
-CANONICAL LOCAL SOURCE PACKAGE 003** from a new worktree. After it closes,
+Material differentiation remains blocked because the live adapter supplies no
+scoped Product source items despite canonical cognition and lineage upstream.
+The next task is **DISCOVERY NORTHSTAR SOURCE-TO-PRODUCT PROJECTION POPULATION
+AND MATERIAL ROLE DIFFERENTIATION 001** from a new worktree. After it closes,
 **DISCOVERY LIVE MULTI-ROLE
 UNAUTHORIZED DISCLOSURE AND INFERENCE STRESS TEST 001** remains mandatory;
 route promotion stays deferred until both pass.

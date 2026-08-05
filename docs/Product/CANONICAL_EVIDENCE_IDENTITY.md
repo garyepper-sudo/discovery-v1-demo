@@ -12,4 +12,4 @@ An immutable Evidence scope attribution records the v2 identity version, exact c
 
 Historical v1 attribution IDs remain immutable and readable when unambiguous. Ambiguous legacy local-ID resolution fails closed; there is no in-place upgrade or migration. Investigation-local IDs, investigation fingerprints, source identities, source versions, Evidence meaning, cognition, scope, authorization, disclosure, metrics, calibration, and recommendations are unchanged.
 
-The focused validator includes cross-investigation, duplicate, formatting-only, multi-source, cross-organization, changed-content, malformed-local-ID, Runtime ancestry, scope-isolation, and protected-canary cases. Northstar bindings and replay are not part of this correction.
+The focused validator includes cross-investigation, duplicate, formatting-only, multi-source, cross-organization, changed-content, malformed-local-ID, Runtime ancestry, scope-isolation, and protected-canary cases. Northstar reconstruction now consumes these identities through the canonical replay path; three byte-identical candidates and the retained reconstructed Runtime preserve version-2 Evidence/admission ancestry.
