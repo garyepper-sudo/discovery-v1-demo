@@ -52,6 +52,7 @@ export function runOrganizationCognition(params: {
       sourceId: `${eventId}:observation:${index}`,
       sourceType: "observation",
       text,
+      now,
     });
   });
 
@@ -59,6 +60,7 @@ export function runOrganizationCognition(params: {
     organizationModel: runtime.organizationModel,
     organizationId: runtime.metadata.organizationId,
     entityMentions,
+    now,
   });
 
   const observationEvolution = evolveObservations({

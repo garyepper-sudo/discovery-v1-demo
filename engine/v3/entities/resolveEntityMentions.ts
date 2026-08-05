@@ -79,7 +79,7 @@ function resolveAlias(text: string, type: OrganizationalEntityType): {
   };
 }
 
-function mentionToEntity(mention: EntityMention) {
+function mentionToEntity(mention: EntityMention, now?: string) {
   const resolved = resolveAlias(mention.text, mention.candidateType);
 
   const entity = createOrganizationalEntity({
@@ -87,6 +87,7 @@ function mentionToEntity(mention: EntityMention) {
     canonicalName: resolved.canonicalName,
     type: resolved.type,
     evidenceId: mention.sourceId,
+    now,
   });
 
   return {
@@ -98,13 +99,14 @@ function mentionToEntity(mention: EntityMention) {
 export function resolveEntityMentions(params: {
   organizationModel: OrganizationModel;
   mentions: EntityMention[];
+  now?: string;
 }): OrganizationModel {
   const { organizationModel, mentions } = params;
 
   const entities = [...organizationModel.entities];
 
   for (const mention of mentions) {
-    const incoming = mentionToEntity(mention);
+    const incoming = mentionToEntity(mention, params.now);
 
     const existingIndex = entities.findIndex((entity) => {
       if (entity.type !== incoming.type && entity.type !== "unknown") {
@@ -127,7 +129,8 @@ export function resolveEntityMentions(params: {
     if (existingIndex >= 0) {
       entities[existingIndex] = mergeOrganizationalEntities(
         entities[existingIndex],
-        incoming
+        incoming,
+        params.now,
       );
     } else {
       entities.push(incoming);
@@ -137,6 +140,6 @@ export function resolveEntityMentions(params: {
   return {
     ...organizationModel,
     entities,
-    updatedAt: new Date().toISOString(),
+    updatedAt: params.now ?? new Date().toISOString(),
   };
 }

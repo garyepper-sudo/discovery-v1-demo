@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import type { DiscoveryV3Result } from "../types";
 import { detectContradictions } from "../contradictions";
 import type { OrganizationRuntime } from "./organizationRuntime";
@@ -75,6 +76,7 @@ export function evolveOrganizationRuntime(params: {
     context: string;
   };
   nonTemporalEvidenceRecovery?: boolean;
+  semanticTime?: string;
 }): OrganizationRuntime {
   const { runtime, result: investigationResult, input } = params;
 
@@ -153,7 +155,11 @@ export function evolveOrganizationRuntime(params: {
     simulatedOrganizationStates?: any[];
   };
 
-  const now = new Date().toISOString();
+  const now = params.semanticTime ?? new Date().toISOString();
+  const deterministicEvolutionId = (kind: string, value: unknown) =>
+    `${kind}-${createHash("sha256")
+      .update(JSON.stringify(value))
+      .digest("hex")}`;
   const eventId = `event-${memory.events.length + 1}`;
 
   const existingOrganizationalUnderstandingState:
@@ -195,6 +201,7 @@ export function evolveOrganizationRuntime(params: {
   const consolidationResult = consolidateUnderstanding(
     baseOrganizationalUnderstandingState,
     candidateUnderstandings,
+    now,
   );
 
   const updatedOrganizationalUnderstandingState:
@@ -205,9 +212,12 @@ export function evolveOrganizationRuntime(params: {
     evolutionHistory: [
       ...baseOrganizationalUnderstandingState.evolutionHistory,
       ...consolidationResult.changes.map((change) => ({
-        id: `understanding-change-${Date.now()}-${Math.random()
-          .toString(36)
-          .slice(2)}`,
+        id: deterministicEvolutionId("understanding-change", {
+          organizationId: runtime.metadata.organizationId,
+          eventId,
+          now,
+          change,
+        }),
         date: now,
         type: change.type,
         title: change.title,
@@ -270,14 +280,16 @@ export function evolveOrganizationRuntime(params: {
 
   const synchronizedOrganizationModel = synchronizeOrganizationModel(
     cognitivelyUpdatedRuntime,
+    now,
   );
 
   const organizationModel = inferOrganizationRelationships(
     synchronizedOrganizationModel,
+    now,
   );
 
   const preliminaryReasoningGraph =
-    buildOrganizationReasoningGraph(organizationModel);
+    buildOrganizationReasoningGraph(organizationModel, now);
 
   const understandingClusters = buildUnderstandingClusters({
     understandings:
@@ -336,7 +348,7 @@ export function evolveOrganizationRuntime(params: {
     buildOrganizationReasoningGraph({
       ...organizationModel,
       organizationalPhenomena: organizationalPhenomenaState,
-    });
+    }, now);
 
   const organizationReasoningRelationships =
     inferReasoningRelationships(organizationReasoningGraph);
@@ -929,6 +941,7 @@ export function evolveOrganizationRuntime(params: {
     investigationOpportunities,
     predictionReflection,
     canonicalOrganizationalUnderstanding,
+    generatedAt: now,
   });
 
   const runtimeWithExecutiveAssessment:
@@ -996,6 +1009,7 @@ export function evolveOrganizationRuntime(params: {
     consolidateUnderstanding(
       compatibilityUnderstandingBase,
       executiveUnderstandingCandidates,
+      now,
     );
 
   const finalOrganizationalUnderstandingState =
@@ -1014,9 +1028,12 @@ export function evolveOrganizationRuntime(params: {
 
           ...finalUnderstandingConsolidation.changes.map(
             (change) => ({
-              id: `executive-understanding-change-${Date.now()}-${Math.random()
-                .toString(36)
-                .slice(2)}`,
+              id: deterministicEvolutionId("executive-understanding-change", {
+                organizationId: runtime.metadata.organizationId,
+                eventId,
+                now,
+                change,
+              }),
               date: now,
               type: change.type,
               title: change.title,

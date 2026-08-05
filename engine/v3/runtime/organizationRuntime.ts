@@ -287,8 +287,9 @@ export function createEmptyOrganizationRuntime(params: {
   name?: string;
   industry?: string;
   website?: string;
+  now?: string;
 }): OrganizationRuntime {
-  const now = new Date().toISOString();
+  const now = params.now ?? new Date().toISOString();
 
   return {
     metadata: {
@@ -301,9 +302,7 @@ export function createEmptyOrganizationRuntime(params: {
       investigationCount: 0,
     },
 
-    organizationModel: createOrganizationModel(
-      params.organizationId,
-    ),
+    organizationModel: createOrganizationModel(params.organizationId, now),
 
     memory: {
       /**

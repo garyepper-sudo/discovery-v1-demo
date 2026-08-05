@@ -75,6 +75,13 @@ corroboration. Material content changes may create a new Evidence version while
 preserving prior source-version and citation history. This invariant applies
 to every governed connector.
 
+Bounded Runtime reconstruction inputs use the versioned
+[Canonical Reconstruction Input Snapshot](./CANONICAL_RECONSTRUCTION_INPUT_SNAPSHOT.md).
+The snapshot records semantic replay arguments with stable serialization; it
+does not own Evidence admission, Runtime persistence, authorization, scope, or
+Product meaning. Report-only digests without their package contract are not
+canonical acceptance oracles.
+
 ## Canonical product objects
 
 | Object | Owner | Responsibility | Persistence |

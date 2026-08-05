@@ -4,10 +4,9 @@ import type {
 } from "./organizationModel";
 
 export function inferOrganizationRelationships(
-  model: OrganizationModel
+  model: OrganizationModel,
+  now = new Date().toISOString(),
 ): OrganizationModel {
-  const now = new Date().toISOString();
-
   const edges: OrganizationModelEdge[] = [];
 
   const observations = model.nodes.filter(

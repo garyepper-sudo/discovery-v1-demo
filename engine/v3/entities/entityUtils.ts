@@ -25,8 +25,9 @@ export function createOrganizationalEntity(input: {
   canonicalName: string;
   type?: OrganizationalEntityType;
   evidenceId?: string;
+  now?: string;
 }): OrganizationalEntity {
-  const now = new Date().toISOString();
+  const now = input.now ?? new Date().toISOString();
   const type = input.type ?? "unknown";
   const normalizedName = normalizeEntityName(input.canonicalName);
 
@@ -79,10 +80,9 @@ export function entityNamesMatch(
 
 export function mergeOrganizationalEntities(
   existing: OrganizationalEntity,
-  incoming: OrganizationalEntity
+  incoming: OrganizationalEntity,
+  now = new Date().toISOString(),
 ): OrganizationalEntity {
-  const now = new Date().toISOString();
-
   const aliases = new Set([
     ...existing.aliases,
     ...incoming.aliases,

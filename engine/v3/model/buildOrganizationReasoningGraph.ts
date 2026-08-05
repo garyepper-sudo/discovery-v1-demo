@@ -273,10 +273,9 @@ function buildPhenomenonRelationshipEdges(
 }
 
 export function buildOrganizationReasoningGraph(
-  organizationModel: any
+  organizationModel: any,
+  now = new Date().toISOString(),
 ): OrganizationReasoningGraph {
-  const now = new Date().toISOString();
-
   const entities = Array.isArray(organizationModel?.entities)
     ? organizationModel.entities
     : [];

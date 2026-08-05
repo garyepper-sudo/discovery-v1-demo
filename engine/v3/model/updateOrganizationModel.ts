@@ -10,10 +10,9 @@ function clampConfidence(value: number): number {
 
 export function upsertOrganizationModelNode(
   model: OrganizationModel,
-  node: OrganizationModelNode
+  node: OrganizationModelNode,
+  now = new Date().toISOString(),
 ): OrganizationModel {
-  const now = new Date().toISOString();
-
   const existingIndex = model.nodes.findIndex((item) => item.id === node.id);
 
   const nextNodes =
@@ -48,10 +47,9 @@ export function upsertOrganizationModelNode(
 
 export function upsertOrganizationModelEdge(
   model: OrganizationModel,
-  edge: OrganizationModelEdge
+  edge: OrganizationModelEdge,
+  now = new Date().toISOString(),
 ): OrganizationModel {
-  const now = new Date().toISOString();
-
   const existingIndex = model.edges.findIndex((item) => item.id === edge.id);
 
   const nextEdges =

@@ -405,9 +405,9 @@ function deriveExplanatoryPower(params: {
   );
 }
 
-function createId(statement: string): string {
+function createId(statement: string, now: string): string {
   const normalized = normalizeText(statement).slice(0, 56).replace(/\s+/g, "-");
-  return `understanding-${normalized}-${Date.now()}`;
+  return `understanding-${normalized}-${Date.parse(now)}`;
 }
 
 function mergeIds(existing: string[], incoming?: string[]): string[] {
@@ -506,9 +506,9 @@ function completeCanonicalUnderstanding(
 
 export function consolidateUnderstanding(
   currentState: OrganizationalUnderstandingState,
-  candidates: UnderstandingCandidate[]
+  candidates: UnderstandingCandidate[],
+  now = new Date().toISOString(),
 ): ConsolidationResult {
-  const now = new Date().toISOString();
   const updatedUnderstandings = currentState.currentUnderstandings.map(
     completeCanonicalUnderstanding
   );
@@ -677,7 +677,7 @@ export function consolidateUnderstanding(
     });
 
     const newUnderstanding: OrganizationalUnderstandingItem = {
-      id: candidate.id ?? createId(normalizedStatement),
+      id: candidate.id ?? createId(normalizedStatement, now),
       source: candidate.source ?? "unknown",
 
       title: createUnderstandingTitle(normalizedStatement),

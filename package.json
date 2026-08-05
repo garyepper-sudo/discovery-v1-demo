@@ -17,6 +17,8 @@
     "living-organization-sandbox:replay": "tsx scripts/product/livingOrganizationSandbox.ts batch",
     "living-organization-sandbox:replay-all": "tsx scripts/product/livingOrganizationSandbox.ts replay",
     "validate:living-organization-sandbox-foundation": "tsx scripts/product/livingOrganizationSandbox.ts validate",
+    "validate:canonical-replay-clock-determinism": "tsx scripts/product/validateCanonicalReplayClockDeterminism.ts",
+    "validate:reconstruction-input-snapshot": "tsx scripts/product/validateReconstructionInputSnapshot.ts",
     "validate:multi-user-sandbox-access": "tsx scripts/product/validateMultiUserSandboxAccess.ts",
     "validate:live-scoped-role-aware-adapter": "tsx scripts/product/validateLiveScopedRoleAwareAdapter.ts",
     "validate:canonical-scope-lineage": "tsx scripts/product/validateCanonicalScopeLineage.ts",

@@ -9,8 +9,8 @@ import {
   type OrganizationalUnderstandingState,
 } from "./organizationalUnderstandingState";
 
-function makeUnderstandingId(index: number): string {
-  return `understanding-${Date.now()}-${index}`;
+function makeUnderstandingId(now: string, index: number): string {
+  return `understanding-${Date.parse(now)}-${index}`;
 }
 
 function clamp(value: number): number {
@@ -40,7 +40,7 @@ export function updateOrganizationalUnderstandingState(params: {
       const summary = belief.explanation || belief.headline;
 
       return {
-        id: makeUnderstandingId(index),
+        id: makeUnderstandingId(now, index),
         source: "legacy",
 
         title: createUnderstandingTitle(statement),

@@ -121,6 +121,7 @@ export function extractEntityMentions(input: {
   sourceId: string;
   sourceType: EntityMention["sourceType"];
   text: string;
+  now?: string;
 }): EntityMention[] {
   const mentions: EntityMention[] = [];
   const seen = new Set<string>();
@@ -149,6 +150,7 @@ export function extractEntityMentions(input: {
             context: input.text,
             candidateType: rule.type,
             confidence: rule.type === "unknown" ? 0.5 : 0.7,
+            now: input.now,
           })
         );
       }

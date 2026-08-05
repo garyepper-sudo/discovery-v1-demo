@@ -14,8 +14,9 @@ import {
   evolveOrganizationRuntime,
 } from "../runtime/evolveOrganizationRuntime";
 
-import type {
-  OrganizationRuntime,
+import {
+  createEmptyOrganizationRuntime,
+  type OrganizationRuntime,
 } from "../runtime/organizationRuntime";
 import type { CanonicalScopeLineageAdmissionInput } from "../governance/canonicalScopeLineage";
 
@@ -81,10 +82,22 @@ export function runOrganizationInvestigation(
     scopeLineage,
   } = params;
 
-  const currentRuntime =
-    loadOrganizationRuntimeState(
-      organizationId,
-    );
+  const evidenceTimes = (evidenceSources ?? [])
+    .map((source) => source.observedAt)
+    .filter((value): value is string =>
+      typeof value === "string" && !Number.isNaN(Date.parse(value)))
+    .sort();
+  const semanticTime = evidenceTimes.at(-1) ?? new Date().toISOString();
+  const loadedRuntime = loadOrganizationRuntimeState(organizationId);
+  const currentRuntime = loadedRuntime.metadata.investigationCount === 0
+    ? createEmptyOrganizationRuntime({
+        organizationId,
+        name: loadedRuntime.metadata.name,
+        industry: loadedRuntime.metadata.industry,
+        website: loadedRuntime.metadata.website,
+        now: semanticTime,
+      })
+    : loadedRuntime;
 
   const input: InvestigationInput = {
     company,
@@ -92,7 +105,12 @@ export function runOrganizationInvestigation(
     industry,
     question,
     context,
-    ...(evidenceSources ? { evidenceSources } : {}),
+    ...(evidenceSources
+      ? {
+          evidenceSources: [...evidenceSources].sort((left, right) =>
+            left.sourceId < right.sourceId ? -1 : left.sourceId > right.sourceId ? 1 : 0),
+        }
+      : {}),
   };
 
   const fingerprint = canonicalInvestigationFingerprint({
@@ -137,7 +155,7 @@ export function runOrganizationInvestigation(
     }
   }
 
-  const startedAt = new Date().toISOString();
+  const startedAt = semanticTime;
   const nonTemporalEvidenceRecovery = receipts.some((receipt) => {
     if (receipt.status !== "completed" || !receipt.canonicalResponse) {
       return false;
@@ -181,6 +199,7 @@ export function runOrganizationInvestigation(
 
         input,
         nonTemporalEvidenceRecovery,
+        semanticTime,
       });
 
     const completedAt = evolvedRuntime.metadata.updatedAt;

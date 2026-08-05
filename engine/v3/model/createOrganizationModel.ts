@@ -1,10 +1,9 @@
 import type { OrganizationModel } from "./organizationModel";
 
 export function createOrganizationModel(
-  organizationId: string
+  organizationId: string,
+  now = new Date().toISOString(),
 ): OrganizationModel {
-  const now = new Date().toISOString();
-
   return {
     organizationId,
     version: 1,

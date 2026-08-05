@@ -31,6 +31,7 @@ export function syncOrganizationEntities(params: {
   organizationModel?: OrganizationModel;
   organizationId: string;
   entityMentions: EntityMention[];
+  now?: string;
 }): OrganizationModel {
   const organizationModel = ensureOrganizationModel({
     organizationModel: params.organizationModel,
@@ -44,5 +45,6 @@ export function syncOrganizationEntities(params: {
   return resolveEntityMentions({
     organizationModel,
     mentions: params.entityMentions,
+    now: params.now,
   });
 }

@@ -10,8 +10,9 @@ export function createEntityMention(input: {
   context: string;
   candidateType?: OrganizationalEntityType;
   confidence?: number;
+  now?: string;
 }): EntityMention {
-  const now = new Date().toISOString();
+  const now = input.now ?? new Date().toISOString();
   const normalizedText = normalizeEntityName(input.text);
 
   return {

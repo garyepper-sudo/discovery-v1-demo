@@ -3,11 +3,10 @@ import { upsertOrganizationModelNode } from "./updateOrganizationModel";
 import type { OrganizationModel } from "./organizationModel";
 
 export function synchronizeOrganizationModel(
-  runtime: OrganizationRuntime
+  runtime: OrganizationRuntime,
+  now = new Date().toISOString(),
 ): OrganizationModel {
   let model = runtime.organizationModel;
-
-  const now = new Date().toISOString();
 
   //
   // Observations
@@ -21,7 +20,7 @@ export function synchronizeOrganizationModel(
       confidence: observation.confidence ?? 0.5,
       createdAt: observation.firstSeenAt ?? now,
       updatedAt: observation.lastSeenAt ?? now,
-    });
+    }, now);
   }
 
   //
@@ -36,7 +35,7 @@ export function synchronizeOrganizationModel(
       confidence: belief.confidence ?? 0.5,
       createdAt: now,
       updatedAt: now,
-    });
+    }, now);
   }
 
   return model;
