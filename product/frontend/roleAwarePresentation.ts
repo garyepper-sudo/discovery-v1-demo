@@ -29,7 +29,13 @@ export type PresentationItem = {
 };
 
 export type RoleAwarePresentation = {
-  fixtureId: RoleAwareFixture["fixtureId"];
+  fixtureId?: RoleAwareFixture["fixtureId"];
+  routePath?: string;
+  liveDiagnostic?: {
+    organizationId: string;
+    requestedScope: string;
+    sourceRevisionDigest: string | null;
+  };
   description: string;
   roleDescription: string;
   scopeLabel: string;
@@ -51,13 +57,21 @@ export type RoleAwarePresentation = {
   auditRefs: string[];
 };
 
-export function mapRoleAwarePresentation(fixture: RoleAwareFixture): RoleAwarePresentation {
+type RoleAwarePresentationSource = Omit<RoleAwareFixture, "fixtureId"> & {
+  fixtureId?: RoleAwareFixture["fixtureId"];
+  routePath?: string;
+  liveDiagnostic?: RoleAwarePresentation["liveDiagnostic"];
+};
+
+export function mapRoleAwarePresentation(fixture: RoleAwarePresentationSource): RoleAwarePresentation {
   const { projection } = fixture;
   const decisionCalibration = projection.decisionCalibration && "classification" in projection.decisionCalibration
     ? projection.decisionCalibration
     : null;
   return {
-    fixtureId: fixture.fixtureId,
+    ...(fixture.fixtureId ? { fixtureId: fixture.fixtureId } : {}),
+    ...(fixture.routePath ? { routePath: fixture.routePath } : {}),
+    ...(fixture.liveDiagnostic ? { liveDiagnostic: structuredClone(fixture.liveDiagnostic) } : {}),
     description: fixture.description,
     roleDescription: fixture.roleDescription,
     scopeLabel: fixture.scopeLabel,

@@ -22,6 +22,8 @@ const styles = new Proxy<Record<string, string>>({}, {
   get: (_target, property) => `ra_${String(property)}`,
 });
 
+const routeFor = (view: RoleAwarePresentation, query = "") => `${view.routePath ?? (view.fixtureId ? `/role-aware-alpha/${view.fixtureId}` : "/development/role-aware-live")}${query}`;
+
 const dispositionCopy: Record<SemanticDisposition, { label: string; description: string }> = {
   disclosed: { label: "Available", description: "Authorized information is available to this view." },
   "safely-abstracted": { label: "Limited view", description: "Only the approved abstraction can be shown." },
@@ -132,7 +134,7 @@ function AxisRow({ axis }: { axis: ScopedDecisionCalibrationAxisResult }) {
 function DecisionDetail({ view }: { view: RoleAwarePresentation }) {
   const decision = view.decisionCalibration;
   if (!decision) return <section className={styles.detail}><h1>{view.primaryHeading}</h1><DisclosureState disposition="unavailable" /></section>;
-  if (decision.classification === "withheld") return <section className={styles.detail}><p className={styles.eyebrow}>Decision calibration</p><h1>{view.primaryHeading}</h1><DisclosureState disposition="withheld" />{view.primaryAction && <div className={styles.actions}><Link href={`/role-aware-alpha/${view.fixtureId}`}>{view.primaryAction}</Link></div>}</section>;
+  if (decision.classification === "withheld") return <section className={styles.detail}><p className={styles.eyebrow}>Decision calibration</p><h1>{view.primaryHeading}</h1><DisclosureState disposition="withheld" />{view.primaryAction && <div className={styles.actions}><Link href={routeFor(view)}>{view.primaryAction}</Link></div>}</section>;
   return (
     <section className={styles.detail} aria-labelledby="decision-title">
       <p className={styles.eyebrow}>{view.primaryHeading}</p>
@@ -166,7 +168,7 @@ function UnderstandingDetail({ view }: { view: RoleAwarePresentation }) {
       {understanding?.uncertainty && <div className={styles.callout}><strong>This remains uncertain because</strong><br />{understanding.uncertainty}</div>}
       {limited && <DisclosureState disposition="safely-abstracted" />}
       <details className={styles.disclosurePanel}><summary>See safe support and contradiction</summary><p>{understanding ? "Authorized support is available through safe lineage. Any protected source identity remains absent." : "No additional detail is available."}</p></details>
-      <div className={styles.actions}><Link href="/ask">{view.primaryAction ?? "Explore as a Question"}</Link><Link href={`/role-aware-alpha/${view.fixtureId}?view=history`}>View authorized history</Link></div>
+      <div className={styles.actions}><Link href="/ask">{view.primaryAction ?? "Explore as a Question"}</Link><Link href={routeFor(view, "?view=history")}>View authorized history</Link></div>
       <AuditDetail view={view} />
     </section>
   );
@@ -202,7 +204,7 @@ function HistoryDetail({ view }: { view: RoleAwarePresentation }) {
         </ol>
       ) : <EmptyState />}
       {outcome?.disposition === "unavailable" && <DisclosureState disposition="unavailable" explanation="The decision can be assessed; an Outcome is not available." />}
-      {view.primaryAction && <div className={styles.actions}><Link href={`/role-aware-alpha/${view.fixtureId}`}>{view.primaryAction}</Link></div>}
+      {view.primaryAction && <div className={styles.actions}><Link href={routeFor(view)}>{view.primaryAction}</Link></div>}
       <AuditDetail view={view} />
     </section>
   );
@@ -240,7 +242,7 @@ function Home({ view }: { view: RoleAwarePresentation }) {
           : undefined;
         return (
           <section key={section.id} id={section.id} className={`${styles.homeSection} ${index === 0 ? styles.leadSection : ""}`} aria-labelledby={`${section.id}-title`}>
-            <div className={styles.sectionHeading}><div><p>{section.question}</p><h2 id={`${section.id}-title`}>{section.title}</h2></div>{index > 0 && <Link href={`/role-aware-alpha/${view.fixtureId}?view=${section.id}`}>View detail</Link>}</div>
+            <div className={styles.sectionHeading}><div><p>{section.question}</p><h2 id={`${section.id}-title`}>{section.title}</h2></div>{index > 0 && <Link href={routeFor(view, `?view=${section.id}`)}>View detail</Link>}</div>
             {isDecisions && view.decisionCalibration ? <div className={styles.decisionSummary}><Scale size={20} aria-hidden="true" /><div><strong>{classificationLabels[view.decisionCalibration.classification]}</strong><span>Review the producer-owned calibration and independent axes.</span></div><ArrowRight size={17} aria-hidden="true" /></div>
               : isMeasures ? (view.metrics.length ? <ul className={styles.rows}>{view.metrics.map((entry) => <MetricRow key={entry.resultId} metric={entry} />)}</ul> : <EmptyState />)
               : isLearning && outcome?.disposition === "disclosed" ? <ul className={styles.rows}><li className={styles.row}><div className={styles.rowCopy}><strong>Decision outcome status</strong><p>{outcome.value?.replaceAll("-", " ")}</p></div></li></ul>
@@ -278,24 +280,25 @@ function FixtureHarness({ fixtureId }: { fixtureId: RoleAwareFixtureId }) {
 }
 
 export default function RoleAwareExperience({ view, fixtureMode = false }: { view: RoleAwarePresentation; fixtureMode?: boolean }) {
+  const routePath = view.routePath ?? (view.fixtureId ? `/role-aware-alpha/${view.fixtureId}` : "/development/role-aware-live");
   return (
     <div className={styles.shell}>
       <a className={styles.skipLink} href="#main-content">Skip to content</a>
       <header className={styles.topbar}>
-        <Link href={`/role-aware-alpha/${view.fixtureId}`} className={styles.brand} aria-label="Discovery role-aware Home"><Sparkles size={19} aria-hidden="true" /><span><strong>Discovery</strong><small>Living Organization</small></span></Link>
+        <Link href={routePath} className={styles.brand} aria-label="Discovery role-aware Home"><Sparkles size={19} aria-hidden="true" /><span><strong>Discovery</strong><small>Living Organization</small></span></Link>
         <div className={styles.scopeContext} aria-label="Current scope context"><span>{view.scopeLabel}</span><strong>{view.scopeType} · {view.temporalMode}</strong><small>{view.roleDescription} · descriptive orientation</small></div>
         {fixtureMode && <span className={styles.fixtureBadge}>Prototype · {view.fixtureId}</span>}
       </header>
       <nav className={styles.navigation} aria-label="Primary navigation">
         {ROLE_AWARE_NAVIGATION.map((label) => {
           const active = label.toLowerCase() === (view.workspace === "home" ? "home" : view.workspace === "decision" ? "decisions" : view.workspace === "investigation" ? "investigations" : view.workspace);
-          const href = label === "Questions" ? "/ask" : `/role-aware-alpha/${view.fixtureId}?view=${label.toLowerCase()}`;
+          const href = label === "Questions" ? "/ask" : `${routePath}?view=${label.toLowerCase()}`;
           return <Link key={label} href={href} aria-current={active ? "page" : undefined}>{label}</Link>;
         })}
       </nav>
       <main id="main-content" className={styles.main} tabIndex={-1}><Workspace view={view} /></main>
-      {fixtureMode && <FixtureHarness fixtureId={view.fixtureId} />}
-      <footer className={styles.footer}><BookOpen size={15} aria-hidden="true" /><span>Rendered from a validated scoped Product projection fixture. No live source is connected.</span></footer>
+      {fixtureMode && view.fixtureId && <FixtureHarness fixtureId={view.fixtureId} />}
+      <footer className={styles.footer}><BookOpen size={15} aria-hidden="true" /><span>{fixtureMode ? "Rendered from a validated scoped Product projection fixture. No live source is connected." : "Rendered from the retained organization through the canonical scoped Product projection."}</span>{view.liveDiagnostic && <span> · {view.liveDiagnostic.organizationId} · {view.liveDiagnostic.requestedScope} · revision {view.liveDiagnostic.sourceRevisionDigest?.slice(0, 12) ?? "unavailable"}</span>}</footer>
     </div>
   );
 }

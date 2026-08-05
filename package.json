@@ -18,6 +18,7 @@
     "living-organization-sandbox:replay-all": "tsx scripts/product/livingOrganizationSandbox.ts replay",
     "validate:living-organization-sandbox-foundation": "tsx scripts/product/livingOrganizationSandbox.ts validate",
     "validate:multi-user-sandbox-access": "tsx scripts/product/validateMultiUserSandboxAccess.ts",
+    "validate:live-scoped-role-aware-adapter": "tsx scripts/product/validateLiveScopedRoleAwareAdapter.ts",
     "sandbox:provision-multi-user-access": "tsx --env-file=.env.local scripts/development/sandboxMultiUserAccess.ts provision",
     "sandbox:inspect-multi-user-access": "tsx --env-file=.env.local scripts/development/sandboxMultiUserAccess.ts inspect",
     "sandbox:revoke-multi-user-access": "tsx --env-file=.env.local scripts/development/sandboxMultiUserAccess.ts revoke",

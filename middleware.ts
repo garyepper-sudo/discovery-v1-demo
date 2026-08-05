@@ -17,7 +17,7 @@ const activatedYourOrganizationPath = /^\/your-organization(?:\/|$)/;
 const inactiveDesignPartnerSurface =
   /^\/(?:ask|brief|decisions|experiment|organizations|research|discovery-v1|executive-decision|api\/(?:analyze|discovery-lab|executive-decision|executive-decision-record|executive-scenario|product-interaction))(?:\/|$)/;
 const onboardingTestSurface =
-  /^\/(?:onboarding|development\/sandbox-access|discovery-v1|your-organization|organizations|product-alpha|api\/(?:discovery-lab|product-alpha|development\/(?:google-drive|current-identity|sandbox-access)))(?:\/|$)/;
+  /^\/(?:onboarding|development\/(?:sandbox-access|role-aware-live)|discovery-v1|your-organization|organizations|product-alpha|api\/(?:discovery-lab|product-alpha|development\/(?:google-drive|current-identity|sandbox-access)))(?:\/|$)/;
 
 function protectedHeaders(response: NextResponse): NextResponse {
   response.headers.set("Cache-Control", "private, no-store, max-age=0");
@@ -156,6 +156,7 @@ export const config = {
     "/discovery-v1/:path*",
     "/product-alpha/:path*",
     "/development/sandbox-access/:path*",
+    "/development/role-aware-live/:path*",
     "/executive-decision/:path*",
     "/cognition-lab/:path*",
     "/discovery-lab/:path*",
