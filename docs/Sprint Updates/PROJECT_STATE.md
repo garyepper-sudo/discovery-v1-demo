@@ -21,6 +21,11 @@ batches, sixteen documents, and five negative controls.
 All six multi-role benchmark gaps have focused production-owner traceability.
 One canonical model serves five permission-safe role projections through one
 scoped Product adapter. The first fixture-backed frontend slice is implemented.
+Cross-investigation Evidence/admission identity is reviewed at v2: local
+Evidence labels remain investigation-local, canonical attribution and Runtime
+support ancestry are unambiguous, valid normalized-content deduplication and
+multi-source provenance remain intact, and ambiguous v1 ancestry fails closed.
+The retained Northstar Runtime remains untouched.
 
 ## Current Product State
 
@@ -79,7 +84,9 @@ it through the canonical production owners, and replace the retained Runtime
 transactionally. The retained Runtime currently has six domains but zero current
 Understandings, canonical compositions, observations, explanations, or scope
 references, so the live UI truthfully renders bounded absence. Route promotion
-remains deferred until renewed three-account material-differentiation acceptance.
+remains deferred until renewed three-account material-differentiation acceptance
+and the later **DISCOVERY LIVE MULTI-ROLE UNAUTHORIZED DISCLOSURE AND INFERENCE
+STRESS TEST 001** both pass.
 
 ## Canonical implementation boundary
 

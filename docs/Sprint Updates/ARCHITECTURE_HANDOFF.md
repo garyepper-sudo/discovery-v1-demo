@@ -48,10 +48,18 @@ produce no projection and read Runtime zero times. Fixture fallback is absent,
 Manager live revocation/restoration passed, Runtime and Drive are unchanged,
 and Production returns 404. Canonical topology, multi-scope source binding,
 immutable Evidence attribution, Runtime-derived lineage, and producer-backed
-scoped Product input selection now exist without identity changes or migration.
+scoped Product input selection now exist. Investigation-local Evidence labels
+are qualified at admission by canonical Evidence/admission identity v2;
+different content with a reused label remains distinct, valid normalized-content
+deduplication and cumulative multi-source provenance remain intact, and
+ambiguous v1 ancestry fails closed without migration. Focused unauthorized
+canaries returned zero occurrences. Northstar topology and bindings remain
+absent, and the retained Runtime remains untouched.
 Material differentiation remains blocked by absent Northstar bindings and
 replay. The next task is **DISCOVERY NORTHSTAR SOURCE-TO-SCOPE BINDING AND
-RETAINED RUNTIME REPLAY 001**; route promotion remains deferred.
+RETAINED RUNTIME REPLAY 001**. After it closes, **DISCOVERY LIVE MULTI-ROLE
+UNAUTHORIZED DISCLOSURE AND INFERENCE STRESS TEST 001** remains mandatory;
+route promotion stays deferred until both pass.
 
 Before proposing a new capability, use this document to verify whether the responsibility, cognitive object, canonical producer, Runtime destination, or executive destination already exists.
 

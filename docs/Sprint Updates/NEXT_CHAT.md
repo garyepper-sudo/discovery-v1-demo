@@ -49,7 +49,16 @@ REPLAY 001** from the exact resulting `origin/main`.
   inputs, not by frontend, authorization, Product contract, or architecture.
 - Canonical topology, multi-scope source binding, immutable Evidence
   attribution, Runtime-derived lineage, and producer-backed Product input
-  selection are implemented without identity changes or migration.
+  selection are implemented. Investigation-local Evidence labels are not
+  canonical identity. Canonical Evidence/admission identity v2 keeps different
+  content with reused local labels distinct while preserving exact and
+  formatting-normalized deduplication and complete multi-source provenance.
+  Attribution and Runtime support reference exact canonical ancestry;
+  ambiguous v1 ancestry fails closed and unambiguous v1 remains readable.
+- The focused unauthorized-disclosure canaries returned zero unauthorized
+  occurrences. Northstar topology/source bindings have not been added, the
+  retained Runtime is untouched, and Drive, Clerk, browsers, and Production
+  were not accessed during identity correction and review.
 
 ## Frontend boundary
 
@@ -63,3 +72,7 @@ prove material differences come from scoped source lineage before promotion.
 Production, deployment, Drive writes, automatic connector watching, new metric
 formulas, decision ranking/recommendation changes, role-specific truth models,
 alignment scoring, and autonomous approval remain outside scope.
+
+After successful Northstar replay and closure, run **DISCOVERY LIVE MULTI-ROLE
+UNAUTHORIZED DISCLOSURE AND INFERENCE STRESS TEST 001**. No live-alpha route
+promotion may occur before that dedicated stress test passes.

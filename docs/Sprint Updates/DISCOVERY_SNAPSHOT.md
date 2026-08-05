@@ -103,8 +103,13 @@ tree; denied, revoked, and cross-organization requests used zero Runtime reads.
 Manager live revocation/restoration passed, Runtime and Drive remained
 unchanged, and no fixture fallback occurred. Canonical topology, multi-scope
 source binding, immutable Evidence attribution, Runtime-derived lineage, and
-producer-backed scoped Product input selection are now implemented without
-identity changes or migration. Material differentiation remains blocked only
+producer-backed scoped Product input selection are implemented. Investigation-local
+Evidence labels are now qualified at admission through organization-bound
+canonical Evidence/admission identity v2. Different content with a reused local
+label remains distinct; exact and formatting-normalized duplicates remain
+deduplicated; later same-content sources retain complete provenance. Ambiguous
+v1 ancestry fails closed, unambiguous v1 remains readable, focused unauthorized
+canaries returned zero occurrences, and no migration was required. Material differentiation remains blocked only
 because Northstar has not been bound or replayed. The next task is **DISCOVERY
 NORTHSTAR SOURCE-TO-SCOPE BINDING AND RETAINED RUNTIME REPLAY 001**.
 
