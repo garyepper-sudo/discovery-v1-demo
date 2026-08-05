@@ -3,6 +3,8 @@
 import { useClerk } from "@clerk/nextjs";
 import { useState } from "react";
 
+import { veilProtectedPage } from "./ProtectedPageLifecycleGuard";
+
 const SIGNED_OUT_DESTINATION = "/your-organization";
 
 export default function ClerkSessionTerminationControl() {
@@ -15,11 +17,12 @@ export default function ClerkSessionTerminationControl() {
     }
 
     setIsSigningOut(true);
+    veilProtectedPage();
     try {
       await clerk.signOut();
       window.location.replace(SIGNED_OUT_DESTINATION);
     } catch {
-      setIsSigningOut(false);
+      window.location.replace(window.location.href);
     }
   }
 

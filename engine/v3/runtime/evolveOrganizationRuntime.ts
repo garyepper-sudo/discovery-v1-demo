@@ -107,7 +107,16 @@ export function evolveOrganizationRuntime(params: {
     ...(result.understanding??[]).map(item=>({ref:item.id,evidenceIds:item.evidenceIds??[]})),
   ]:[];
   const derivedScopeLineages=scopeAdmission&&scopeLineageEffectiveAt?derivedScopeInputs.map(item=>createCanonicalDerivedScopeLineage({organizationId:runtime.metadata.organizationId,derivedObjectRef:item.ref,supportingEvidenceIds:item.evidenceIds,attributions:scopeAdmission.evidenceAttributions,topology:scopeAdmission.topology,effectiveAt:scopeLineageEffectiveAt})):[];
-  const canonicalScopeLineageIndex=scopeAdmission?createCanonicalScopeLineageIndex({organizationId:runtime.metadata.organizationId,topology:scopeAdmission.topology,sourceBindings:scopeAdmission.sourceBindings,evidenceAttributions:scopeAdmission.evidenceAttributions,derivedLineages:derivedScopeLineages}):runtime.memory.canonicalScopeLineageIndex;
+  const existingScopeLineageIndex=runtime.memory.canonicalScopeLineageIndex;
+  if(scopeAdmission&&existingScopeLineageIndex&&existingScopeLineageIndex.topologyId!==scopeAdmission.topology.topologyId)throw new Error("Runtime scope-lineage topology mismatch.");
+  const unionById=<T>(prior:readonly T[],current:readonly T[],identity:(value:T)=>string):T[]=>[...new Map([...prior,...current].map(value=>[identity(value),value])).values()];
+  const canonicalScopeLineageIndex=scopeAdmission?createCanonicalScopeLineageIndex({
+    organizationId:runtime.metadata.organizationId,
+    topology:scopeAdmission.topology,
+    sourceBindings:unionById(existingScopeLineageIndex?.sourceBindings??[],scopeAdmission.sourceBindings,item=>item.bindingId),
+    evidenceAttributions:unionById(existingScopeLineageIndex?.evidenceAttributions??[],scopeAdmission.evidenceAttributions,item=>item.attributionId),
+    derivedLineages:unionById(existingScopeLineageIndex?.derivedLineages??[],derivedScopeLineages,item=>item.derivedObjectRef),
+  }):existingScopeLineageIndex;
 
   const memory = runtime.memory as typeof runtime.memory & {
     functionalInterpretationState?: any;
@@ -466,7 +475,7 @@ export function evolveOrganizationRuntime(params: {
                 ...linkedSeeds.flatMap((seed) => seed.reasoningPathIds),
               ]),
             ).sort(),
-            ...(scopeAdmission ? {} : { scopeRef: organizationScope }),
+            scopeRef: organizationScope,
             outcomeRefs: linkedSeeds
               .flatMap((seed) => seed.outcomeRefs)
               .filter(

@@ -6,6 +6,7 @@ import { discloseCanonicalOrganizationalUnderstanding } from "../../../engine/v3
 import { compileOrganizationalUnderstandingProjection, ORGANIZATIONAL_UNDERSTANDING_PROJECTION_VERSION, type CanonicalEvolutionReference } from "../../../engine/v3/projection/organizationalUnderstandingProjection";
 import { SANDBOX_CONTROL_AREA, SANDBOX_ORGANIZATION_ID, sandboxManifest, type SandboxBatchId } from "./manifest";
 import { resetLivingOrganizationSandbox } from "./reset";
+import { northstarScopeTopology, northstarSourceScopeBindings } from "./sourceScopeBindings";
 
 const root = path.dirname(new URL(import.meta.url).pathname);
 const digest = (value: unknown) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
@@ -52,7 +53,26 @@ export async function runLivingOrganizationSandbox(input: { sandboxRoot: string;
     let runtime;
     let result;
     if (loaded.candidates.length) {
-      const investigation = runOrganizationInvestigation({ organizationId:SANDBOX_ORGANIZATION_ID, company:sandboxManifest.organization.name, website:sandboxManifest.organization.website, industry:sandboxManifest.organization.industry, question:sandboxManifest.primaryQuestion, context:`Bounded local sandbox batch ${batchId}.`, evidenceSources:loaded.candidates, investigationRequestId:`living-organization-${batchId}-v1` });
+      const { loadOrganizationRuntimeState } = await import("../../../engine/v3/runtime/organizationStateStore");
+      const before = loadOrganizationRuntimeState(SANDBOX_ORGANIZATION_ID);
+      const investigation = runOrganizationInvestigation({
+        organizationId: SANDBOX_ORGANIZATION_ID,
+        company: sandboxManifest.organization.name,
+        website: sandboxManifest.organization.website,
+        industry: sandboxManifest.organization.industry,
+        question: sandboxManifest.primaryQuestion,
+        context: `Bounded local sandbox batch ${batchId}.`,
+        evidenceSources: loaded.candidates,
+        investigationRequestId: `living-organization-${batchId}-v1`,
+        scopeLineage: {
+          organizationId: SANDBOX_ORGANIZATION_ID,
+          effectiveAt: sandboxManifest.replayTimestamps[batchIndex]!,
+          topologyRevisions: [northstarScopeTopology],
+          sourceBindingRevisions: northstarSourceScopeBindings,
+          existingEvidenceAttributions:
+            before.memory.canonicalScopeLineageIndex?.evidenceAttributions ?? [],
+        },
+      });
       runtime=investigation.runtime; result=investigation.result;
     } else {
       const { loadOrganizationRuntimeState } = await import("../../../engine/v3/runtime/organizationStateStore"); runtime=loadOrganizationRuntimeState(SANDBOX_ORGANIZATION_ID); result=runtime.memory.understandingState as any;

@@ -6,6 +6,7 @@ import postgres from "postgres";
 
 import RoleAwareExperience from "../../../components/role-aware/RoleAwareExperience";
 import ClerkSessionTerminationControl from "../../../components/product-shell/ClerkSessionTerminationControl";
+import ProtectedPageLifecycleGuard from "../../../components/product-shell/ProtectedPageLifecycleGuard";
 import { requireDiscoveryDatabaseUrl } from "../../../db/config";
 import { PostgresAlphaAccessRecordRepository } from "../../../db/governance/postgresRepositories";
 import { FilesystemOrganizationRuntimeRepository } from "../../../engine/v3/runtime/organizationRuntimeRepository";
@@ -48,6 +49,6 @@ export default async function RoleAwareLivePage({ searchParams }: { searchParams
       liveDiagnostic: { organizationId: SANDBOX_ORGANIZATION_ID, requestedScope: live.scopeLabel, sourceRevisionDigest: live.sourceRevisionDigest },
     });
     assertFrontendSafeSerialization(view);
-    return <><RoleAwareExperience view={view} /><aside aria-label="Development session control"><ClerkSessionTerminationControl /></aside></>;
+    return <ProtectedPageLifecycleGuard><RoleAwareExperience view={view} /><aside aria-label="Development session control"><ClerkSessionTerminationControl /></aside></ProtectedPageLifecycleGuard>;
   } finally { await sql.end(); }
 }
