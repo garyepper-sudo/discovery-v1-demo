@@ -103,5 +103,7 @@ all six dispositions, responsive states, and keyboard/focus validation.
 | Separate contradicting-reference list | safe contradiction items and disclosed safe lineage only | no gap; content design constraint |
 | General Outcome/Learning feed | only calibration/history when represented | no gap; do not fabricate |
 | Concrete 24 fixture objects | implemented through the existing frontend-safe projection shape | closed; 24/24 semantically validated |
+| Development live server swap | `/development/role-aware-live` through the same mapper/components | closed; three-account acceptance passed, Production 404 |
+| Northstar material scope differentiation | retained Runtime has no canonical scope refs or populated scoped Product inputs | separate source-to-scope data correction required before promotion |
 
 No genuine Product contract gap blocks the required experience architecture.

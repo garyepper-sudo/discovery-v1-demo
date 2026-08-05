@@ -3,8 +3,8 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** multi-role backend, role-aware frontend first slice, and
-multi-user sandbox access complete; live scoped Product adapter wiring is next
+**Current phase:** development live scoped Product adapter and three-account
+acceptance complete; Northstar source-to-scope binding correction is next
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
@@ -44,7 +44,8 @@ scoped Product adapter. The first fixture-backed frontend slice is implemented.
   approved first-slice fixtures rendered.
 - Frontend foundations: shell/navigation, Home, Understanding, Decision,
   Investigation, History, and six distinct semantic dispositions.
-- Live scoped Product adapter: not wired.
+- Live scoped Product adapter: wired at `/development/role-aware-live`; exact
+  development only, authenticated, private/no-store, and Production 404.
 - Multi-user sandbox access: three distinct Clerk development identities are
   provisioned as CEO, Director, and Manager in the same organization through
   explicit server-side scopes and operations; titles grant no authority.
@@ -65,19 +66,20 @@ scoped Product adapter. The first fixture-backed frontend slice is implemented.
 
 ## Current Objective
 
-Wire the canonical scoped Product adapter to the role-aware experience and
-validate it with the three sandbox accounts without changing Product meaning,
-authorization ownership, or the canonical `/your-organization` route.
+Add canonical Northstar source-to-scope provenance and scoped Product inputs
+without changing the reviewed adapter, frontend semantics, authorization, or
+the canonical `/your-organization` route.
 
 ## Next Priority
 
-**DISCOVERY LIVE SCOPED PRODUCT ADAPTER WIRING AND THREE-ACCOUNT ACCEPTANCE
-001**
+**DISCOVERY NORTHSTAR RETAINED RUNTIME SOURCE-TO-SCOPE BINDING CORRECTION 001**
 
-Replace the isolated role-aware fixture read with the canonical server-side
-scoped Product read while preserving the serialized contract and frontend
-semantics. Validate CEO, Director, and Manager disclosure and denial behavior
-in isolated sessions. Supported metrics remain coherence and learning velocity.
+Bind accepted source/Evidence/Product inputs to canonical organization,
+function, team, and initiative scopes through reviewed persistence and replay
+owners. The retained Runtime currently has six domains but zero current
+Understandings, canonical compositions, observations, explanations, or scope
+references, so the live UI truthfully renders bounded absence. Route promotion
+remains deferred until renewed three-account material-differentiation acceptance.
 
 ## Canonical implementation boundary
 

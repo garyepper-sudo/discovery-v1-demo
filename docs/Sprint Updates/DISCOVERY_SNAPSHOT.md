@@ -1,7 +1,8 @@
 # Discovery Startup Snapshot
 
-**Current milestone:** The multi-role scoped Product backend and first
-fixture-backed role-aware frontend slice are complete. GAP-MR-001 through
+**Current milestone:** The multi-role scoped Product backend, first
+fixture-backed role-aware frontend slice, and development-only live scoped
+adapter are complete. GAP-MR-001 through
 GAP-MR-006 all have focused production-owner traceability while the frozen
 benchmark remains the historical oracle. The Living Organization Drive slice
 and Product Workflow frontend readiness remain complete.
@@ -41,9 +42,9 @@ and read-only; recommendation development is frozen by default.
 
 ## Current boundaries
 
-- The first fixture-backed frontend slice is implemented at
-  `/role-aware-alpha/[fixtureId]`; the live scoped Product adapter is not yet
-  wired and `/your-organization` remains unchanged.
+- The fixture slice remains at `/role-aware-alpha/[fixtureId]`; the authenticated
+  live adapter is isolated at `/development/role-aware-live`, returns 404 in
+  Production, and leaves `/your-organization` unchanged.
 - The governed Google Drive owner supports one manually synchronized, exact,
   non-recursive, read-only folder in local development. Discovery performs no
   Drive writes.
@@ -96,9 +97,14 @@ Clerk development identities are provisioned as CEO, Director, and Manager in
 the same sandbox organization through explicit server-side scopes and
 operations; titles grant no authority. Deterministic inspection, revocation,
 append-only restoration, reset, three isolated sign-in/sign-out sessions, and
-copied-URL/cache isolation passed. The live scoped Product adapter remains
-unwired. The next task is **DISCOVERY LIVE SCOPED PRODUCT ADAPTER WIRING AND
-THREE-ACCOUNT ACCEPTANCE 001**.
+copied-URL/cache isolation passed. CEO, Director, and Manager also rendered the
+development live route through the same one-read adapter, mapper, and component
+tree; denied, revoked, and cross-organization requests used zero Runtime reads.
+Manager live revocation/restoration passed, Runtime and Drive remained
+unchanged, and no fixture fallback occurred. Material role differentiation is
+still blocked because the retained Northstar Runtime contains no canonical
+source-to-scope references or scoped Product inputs. The next task is
+**DISCOVERY NORTHSTAR RETAINED RUNTIME SOURCE-TO-SCOPE BINDING CORRECTION 001**.
 
 ## Worktree boundary
 

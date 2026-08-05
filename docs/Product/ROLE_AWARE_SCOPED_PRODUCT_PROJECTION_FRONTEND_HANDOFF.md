@@ -136,8 +136,11 @@ present. Only coherence and learning velocity are supported. No backend
 semantics changed and `/your-organization` remains unchanged. Three distinct
 Clerk development identities are provisioned as CEO, Director, and Manager in
 the same sandbox organization through explicit server-side scopes and
-operations; role titles grant no authority. The live scoped Product adapter is
-not wired.
+operations; role titles grant no authority. The authenticated development live
+adapter is wired at `/development/role-aware-live`, with one Runtime read for
+authorized requests and zero projection/Runtime reads for denied, revoked, or
+cross-organization requests. It uses the same mapper and component system,
+contains no fixture fallback, and returns 404 in Production.
 
 1. Add the typed read boundary and serialized-contract validation.
 2. Build a role-neutral fixture adapter from production contract types.
@@ -152,10 +155,12 @@ not wired.
 11. Validate responsive behavior and accessibility.
 12. Swap fixtures for the canonical server read without changing semantics.
 
-Steps 1–11 are represented by the validated first slice. Multi-user sandbox
-access, deterministic revocation/restoration/reset, and three-account session
-isolation are complete. The live server read swap with three-account acceptance
-is the next task.
+Steps 1–12 are represented by the validated fixture and development-live
+slices. Multi-user access, live Manager revocation/restoration/reset, and
+three-account session isolation are complete. The retained Northstar Runtime
+has no canonical scope references or populated scoped Product inputs, so the UI
+correctly renders bounded absence. Source-to-scope correction and renewed
+material-differentiation acceptance are next; route promotion remains deferred.
 
 ## Six-gap closure matrix
 

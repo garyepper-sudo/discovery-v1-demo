@@ -40,9 +40,16 @@ distinct Clerk development identities are provisioned as CEO, Director, and
 Manager in the same sandbox organization through explicit server-side scopes
 and operations; titles grant no authority. Deterministic inspection,
 revocation/append-only restoration, exact reset, three isolated sessions, and
-copied-URL/cache isolation passed. The live scoped Product adapter remains
-unwired. The next task is **DISCOVERY LIVE SCOPED PRODUCT ADAPTER WIRING AND
-THREE-ACCOUNT ACCEPTANCE 001**.
+copied-URL/cache isolation passed. The authenticated development live adapter
+now exists at `/development/role-aware-live`: all three accounts use one
+organization, retained Runtime, scoped Product adapter, mapper, and component
+tree; authorized requests read Runtime once and denied/revoked/cross-org paths
+produce no projection and read Runtime zero times. Fixture fallback is absent,
+Manager live revocation/restoration passed, Runtime and Drive are unchanged,
+and Production returns 404. Material differentiation remains blocked by the
+retained Runtime's absent source-scope references and scoped Product inputs.
+The next task is **DISCOVERY NORTHSTAR RETAINED RUNTIME SOURCE-TO-SCOPE BINDING
+CORRECTION 001**; route promotion remains deferred.
 
 Before proposing a new capability, use this document to verify whether the responsibility, cognitive object, canonical producer, Runtime destination, or executive destination already exists.
 

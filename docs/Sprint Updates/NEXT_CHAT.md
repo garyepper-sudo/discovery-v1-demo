@@ -2,8 +2,8 @@
 
 ## Exact next task
 
-Begin **DISCOVERY LIVE SCOPED PRODUCT ADAPTER WIRING AND THREE-ACCOUNT
-ACCEPTANCE 001** from the exact resulting `origin/main`.
+Begin **DISCOVERY NORTHSTAR RETAINED RUNTIME SOURCE-TO-SCOPE BINDING
+CORRECTION 001** from the exact resulting `origin/main`.
 
 ## Read first
 
@@ -37,16 +37,23 @@ ACCEPTANCE 001** from the exact resulting `origin/main`.
 - Deterministic inspection, append-only revocation/restoration, exact reset,
   three isolated sign-in/sign-out sessions, and copied-URL/cache isolation
   passed.
-- `/your-organization` remains unchanged and the live scoped Product adapter
-  is not wired.
+- The authenticated development live adapter exists at
+  `/development/role-aware-live`; CEO, Director, and Manager passed live
+  acceptance through one organization, Runtime, adapter, mapper, and component
+  tree. Authorized requests use one Runtime read; denied, revoked, and
+  cross-organization requests use zero. Fixture fallback is absent, Manager
+  revocation/restoration and session/cache isolation passed, Runtime and Drive
+  remained unchanged, and Production returns 404.
+- `/your-organization` remains unchanged. Material role differentiation is
+  blocked by missing retained Northstar source-scope metadata and scoped Product
+  inputs, not by frontend, authorization, Product contract, or architecture.
 
 ## Frontend boundary
 
-Wire the canonical server-side scoped Product read to the isolated role-aware
-experience without changing its contract or presentation semantics. Validate
-CEO, Director, and Manager disclosure and denial behavior in isolated sessions,
-including copied-URL and cache isolation. Preserve one canonical organization,
-model, authorization owner, and Product projection owner.
+Add canonical source-to-scope provenance through existing source, Evidence,
+Understanding, Runtime, and replay owners. Do not infer scope from role names or
+edit retained Runtime JSON directly. Rerun three-account live acceptance and
+prove material differences come from scoped source lineage before promotion.
 
 ## Explicitly deferred
 

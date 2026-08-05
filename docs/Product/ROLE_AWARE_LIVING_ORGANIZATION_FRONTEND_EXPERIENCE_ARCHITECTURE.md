@@ -427,9 +427,11 @@ attention, decision nuance, longitudinal truth, and safe blocked states.
 
 All 24 fixtures are semantically validated and the ten named fixtures render
 through the isolated development route `/role-aware-alpha/[fixtureId]`. The
-canonical `/your-organization` route remains unchanged. Defer remaining role
-breadth, full Question workflow redesign (none is authorized), live adapter
-swap, notifications, high-fidelity motion, new metrics, and Production.
+canonical `/your-organization` route remains unchanged. The same component tree
+now renders the authenticated development live route at
+`/development/role-aware-live`; Production returns 404. Defer route promotion,
+remaining role breadth, full Question workflow redesign (none is authorized),
+notifications, high-fidelity motion, new metrics, and Production.
 
 ## Contract-gap assessment
 
@@ -443,5 +445,7 @@ appear only where present in calibration/history. These are **no gap** for the
 required slice. The 24 frontend fixtures now exist and validate through the
 existing projection shape, so the former fixture implementation gap is closed.
 Multi-user sandbox account provisioning and role-scoped sign-in are complete.
-The live adapter swap remains deferred and does not constitute a Product
-contract gap.
+The development live adapter swap is complete and does not constitute a Product
+contract gap. The retained Northstar Runtime lacks canonical source-scope
+references and populated scoped Product inputs; this separate data/binding gap
+must be corrected and reaccepted before route promotion.
