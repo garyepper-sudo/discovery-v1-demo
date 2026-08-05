@@ -20,6 +20,7 @@ import {
   type ScopedDecisionCalibrationProjection,
   type ServerResolvedDecisionCalibrationInput,
 } from "./scopedDecisionCalibrationProjection";
+import { lineageSupportsRequestedScope, type CanonicalScopeLineageIndex } from "../../engine/v3/governance/canonicalScopeLineage";
 
 export const SCOPED_ORGANIZATIONAL_PRODUCT_PROJECTION_VERSION = "1";
 
@@ -72,6 +73,29 @@ export interface ScopedProjectionRepository {
     organizationId: string;
     sourceRevisionRef?: string;
   }): ScopedProjectionRepositorySource | undefined;
+}
+
+/**
+ * Canonical input-selection seam for Runtime-derived Product candidates.
+ * Scope lineage filters candidates before projection; authority and disclosure
+ * remain owned by the existing scoped governance/projection path.
+ */
+export function selectScopedProductItemsFromCanonicalLineage(input: {
+  organizationId: string;
+  requestedScope: GovernedScopeRef;
+  items: readonly ServerResolvedScopedProductItem[];
+  lineageIndex: CanonicalScopeLineageIndex | undefined;
+}): ServerResolvedScopedProductItem[] {
+  if (input.requestedScope.organizationId !== input.organizationId || !input.lineageIndex || input.lineageIndex.organizationId !== input.organizationId) return [];
+  const lineageByRef = new Map(input.lineageIndex.derivedLineages.map(item => [item.derivedObjectRef, item]));
+  return input.items
+    .filter(item => item.organizationId === input.organizationId)
+    .filter(item => {
+      const lineage = lineageByRef.get(item.safeRef);
+      return Boolean(lineage && lineageSupportsRequestedScope(lineage, input.requestedScope));
+    })
+    .map(item => structuredClone(item))
+    .sort((left,right) => left.safeRef.localeCompare(right.safeRef));
 }
 
 export type ScopedProductProjectionItem = {

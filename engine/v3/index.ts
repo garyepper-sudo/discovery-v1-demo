@@ -23,6 +23,7 @@ import { buildReasoningGraph } from "./reasoningGraph";
 import { detectSignals } from "./signals";
 import { detectThemes } from "./themes";
 import { DiscoveryV3Result } from "./types";
+import { admitCanonicalEvidenceScopeLineage, type CanonicalScopeLineageAdmissionInput } from "./governance/canonicalScopeLineage";
 import { buildUnderstanding } from "./understanding";
 import { runUnderstandingEngine } from "./understanding/index";
 import { buildUnderstandingObject } from "./understandingObject";
@@ -31,7 +32,7 @@ import {
   workspaceToResult,
 } from "./workspace";
 
-export function runDiscoveryV3(input: InvestigationInput): DiscoveryV3Result {
+export function runDiscoveryV3(input: InvestigationInput, scopeLineage?: CanonicalScopeLineageAdmissionInput): DiscoveryV3Result {
   const rawText = `
 Company: ${input.company}
 Website: ${input.website}
@@ -192,7 +193,10 @@ ${input.context}
 
   workspace.metadata.stage = "complete";
 
-  return workspaceToResult(workspace);
+  const result=workspaceToResult(workspace);
+  if(!scopeLineage)return result;
+  const scopeLineageAdmission=admitCanonicalEvidenceScopeLineage({lineage:scopeLineage,evidence:result.evidence.map(item=>({evidenceId:item.id,...(item.sourceId?{sourceId:item.sourceId}:{}),...(item.contentDigest?{contentDigest:item.contentDigest}:{})}))});
+  return {...result,scopeLineageAdmission};
 }
 
 export { buildUnderstandingObject } from "./understandingObject";

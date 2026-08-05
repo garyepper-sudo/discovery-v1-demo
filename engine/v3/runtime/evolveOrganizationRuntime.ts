@@ -59,6 +59,7 @@ import {
 import {
   runExecutiveCommunicationOperatingSystem,
 } from "../operating-systems/communication/runExecutiveCommunicationOperatingSystem";
+import { createCanonicalDerivedScopeLineage, createCanonicalScopeLineageIndex } from "../governance/canonicalScopeLineage";
 
 
 export function evolveOrganizationRuntime(params: {
@@ -92,6 +93,19 @@ export function evolveOrganizationRuntime(params: {
       },
     ),
   };
+  const scopeAdmission=result.scopeLineageAdmission;
+  const scopeLineageEffectiveAt=scopeAdmission?.evidenceAttributions.map(item=>item.effectiveAt).sort().at(-1)??scopeAdmission?.topology.effectiveAt;
+  const derivedScopeInputs:Array<{ref:string;evidenceIds:readonly string[]}>=scopeAdmission?[
+    ...(result.observations??[]).map(item=>({ref:item.id,evidenceIds:item.evidenceIds??[]})),
+    ...(result.signals??[]).map(item=>({ref:item.id,evidenceIds:item.evidenceIds??[]})),
+    ...(result.themes??[]).map(item=>({ref:item.id,evidenceIds:item.evidenceIds??[]})),
+    ...(result.contradictions??[]).map(item=>({ref:item.id,evidenceIds:item.evidenceIds??[]})),
+    ...(result.mechanisms??[]).map(item=>({ref:item.id,evidenceIds:[...(item.evidenceIds??[]),...(item.supportingEvidenceIds??[])]})),
+    ...(result.beliefs??[]).map(item=>({ref:item.id,evidenceIds:item.supportingEvidenceIds??[]})),
+    ...(result.understanding??[]).map(item=>({ref:item.id,evidenceIds:item.evidenceIds??[]})),
+  ]:[];
+  const derivedScopeLineages=scopeAdmission&&scopeLineageEffectiveAt?derivedScopeInputs.map(item=>createCanonicalDerivedScopeLineage({organizationId:runtime.metadata.organizationId,derivedObjectRef:item.ref,supportingEvidenceIds:item.evidenceIds,attributions:scopeAdmission.evidenceAttributions,topology:scopeAdmission.topology,effectiveAt:scopeLineageEffectiveAt})):[];
+  const canonicalScopeLineageIndex=scopeAdmission?createCanonicalScopeLineageIndex({organizationId:runtime.metadata.organizationId,topology:scopeAdmission.topology,sourceBindings:scopeAdmission.sourceBindings,evidenceAttributions:scopeAdmission.evidenceAttributions,derivedLineages:derivedScopeLineages}):runtime.memory.canonicalScopeLineageIndex;
 
   const memory = runtime.memory as typeof runtime.memory & {
     functionalInterpretationState?: any;
@@ -440,7 +454,7 @@ export function evolveOrganizationRuntime(params: {
                 ...linkedSeeds.flatMap((seed) => seed.reasoningPathIds),
               ]),
             ).sort(),
-            scopeRef: organizationScope,
+            ...(scopeAdmission ? {} : { scopeRef: organizationScope }),
             outcomeRefs: linkedSeeds
               .flatMap((seed) => seed.outcomeRefs)
               .filter(
@@ -1441,6 +1455,7 @@ const {
 
 const updatedMemory = {
     ...runtimeWithExecutiveCommunication.memory,
+    ...(canonicalScopeLineageIndex?{canonicalScopeLineageIndex}:{}),
 
     organizationReasoningGraph,
     organizationReasoningRelationships,

@@ -17,6 +17,7 @@ import {
 import type {
   OrganizationRuntime,
 } from "../runtime/organizationRuntime";
+import type { CanonicalScopeLineageAdmissionInput } from "../governance/canonicalScopeLineage";
 
 import {
   loadOrganizationRuntimeState,
@@ -36,6 +37,7 @@ export type OrganizationInvestigationInput =
   InvestigationInput & {
     organizationId: string;
     investigationRequestId?: string;
+    scopeLineage?: CanonicalScopeLineageAdmissionInput;
   };
 
 export type OrganizationInvestigationResult = {
@@ -76,6 +78,7 @@ export function runOrganizationInvestigation(
     context,
     evidenceSources,
     investigationRequestId,
+    scopeLineage,
   } = params;
 
   const currentRuntime =
@@ -167,9 +170,7 @@ export function runOrganizationInvestigation(
 
   try {
     const result =
-      runDiscoveryV3(
-        input,
-      );
+      runDiscoveryV3(input,scopeLineage);
 
     const evolvedRuntime =
       evolveOrganizationRuntime({

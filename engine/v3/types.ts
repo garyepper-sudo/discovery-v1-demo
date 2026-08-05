@@ -532,6 +532,7 @@ export type V3OrganismState = {
 };
 
 export type DiscoveryV3Result = {
+  scopeLineageAdmission?: import("./governance/canonicalScopeLineage").CanonicalEvidenceScopeAdmission;
   evidence: V3Evidence[];
   observations: V3Observation[];
   evidenceRelationships: V3EvidenceRelationship[];

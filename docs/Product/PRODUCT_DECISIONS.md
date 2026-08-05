@@ -635,3 +635,26 @@ Changing one requires the process in
   traceability.
 - **Status:** Active backend contract; role-aware frontend may render this
   projection but must not recompute calibration.
+
+## DEC-PROD-033 — Scope lineage is separate, immutable provenance
+
+- **Decision:** Represent scope with a versioned organization topology,
+  append-only source bindings, immutable Evidence attributions, and an additive
+  derived-lineage index. Keep these objects outside existing source, Evidence,
+  admission, investigation-fingerprint, and cognitive-object identities.
+- **Reason:** `GAP-B-014` requires scope-aware Product inputs, while the legacy
+  free-form source/Evidence scope string cannot retain typed multi-scope or
+  revision lineage.
+- **Boundary:** Scope grants no authority, changes no sensitivity, and does not
+  imply containment-based disclosure. Existing scoped governance and
+  disclosure remain authoritative.
+- **Compatibility:** Explicit legacy compatibility can resolve only to the
+  exact organization root. Non-root use fails closed without structured
+  lineage.
+- **Persistence:** The Runtime memory contract gains one optional additive
+  index. No migration or identity rewrite is required.
+- **Affected phase:** Discovery 2 production integration.
+- **Status:** Canonical contracts and production propagation are implemented.
+  Evidence admission resolves immutable attribution; Runtime evolution derives
+  and persists lineage; scoped Product selection consumes producer output.
+  Northstar population and replay remain deferred.
