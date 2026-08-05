@@ -3,8 +3,8 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** canonical source/Evidence scope-lineage propagation
-complete; Northstar binding and retained Runtime replay are next
+**Current phase:** canonical replay determinism and versioned reconstruction
+input are complete; Northstar retained-state reconstruction is next
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
@@ -25,7 +25,10 @@ Cross-investigation Evidence/admission identity is reviewed at v2: local
 Evidence labels remain investigation-local, canonical attribution and Runtime
 support ancestry are unambiguous, valid normalized-content deduplication and
 multi-source provenance remain intact, and ambiguous v1 ancestry fails closed.
-The retained Northstar Runtime remains untouched.
+The canonical retained Northstar Runtime remains an untouched empty shell.
+Canonical replay is byte-deterministic across fresh processes, and the
+versioned reconstruction-input snapshot is independently reproducible from
+the repository corpus and retained local metadata.
 
 ## Current Product State
 
@@ -65,7 +68,9 @@ The retained Northstar Runtime remains untouched.
   (`files/new/unchanged`); parity passed and mismatch lists were empty.
 - Validate-before-persist, exact identity binding, recursive OAuth/log
   redaction, negative controls, and unchanged retry: validated.
-- Final 16-file sandbox Runtime and semantic state: retained.
+- Final 16-file source metadata, passages, versions, receipt, and checkpoint:
+  retained. Complete replay Runtime: temporary and removed; canonical retained
+  Runtime: empty shell.
 - Automatic watching, recursive/multiple folders, connector writes, other
   connectors, selector activation, and Production activation: blocked.
 
@@ -77,13 +82,13 @@ authorization, or `/your-organization` semantics.
 
 ## Next Priority
 
-**DISCOVERY NORTHSTAR SOURCE-TO-SCOPE BINDING AND RETAINED RUNTIME REPLAY 001**
+**DISCOVERY NORTHSTAR RUNTIME RECONSTRUCTION FROM VERSIONED CANONICAL LOCAL
+SOURCE PACKAGE 003**
 
-Create the exact topology and sixteen-source binding package, admit and evolve
-it through the canonical production owners, and replace the retained Runtime
-transactionally. The retained Runtime currently has six domains but zero current
-Understandings, canonical compositions, observations, explanations, or scope
-references, so the live UI truthfully renders bounded absence. Route promotion
+Begin from the resulting `origin/main` in a new branch/worktree, explicitly
+port the five preserved candidate responsibilities, reconstruct two identical
+candidates from snapshot contract v1, and replace the empty shell only after
+every transactional gate passes. Route promotion
 remains deferred until renewed three-account material-differentiation acceptance
 and the later **DISCOVERY LIVE MULTI-ROLE UNAUTHORIZED DISCLOSURE AND INFERENCE
 STRESS TEST 001** both pass.

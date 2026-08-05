@@ -2,8 +2,9 @@
 
 ## Exact next task
 
-Begin **DISCOVERY NORTHSTAR SOURCE-TO-SCOPE BINDING AND RETAINED RUNTIME
-REPLAY 001** from the exact resulting `origin/main`.
+Begin **DISCOVERY NORTHSTAR RUNTIME RECONSTRUCTION FROM VERSIONED CANONICAL
+LOCAL SOURCE PACKAGE 003** from the exact resulting `origin/main` in a new
+branch and worktree.
 
 ## Read first
 
@@ -47,6 +48,12 @@ REPLAY 001** from the exact resulting `origin/main`.
 - `/your-organization` remains unchanged. Material role differentiation is
   blocked by missing retained Northstar source-scope metadata and scoped Product
   inputs, not by frontend, authorization, Product contract, or architecture.
+- Canonical replay now excludes processing time from identities, history,
+  references, and Runtime revisions. Snapshot contract
+  `living-organization-reconstruction-input/v1` is reproducible from both the
+  repository corpus and retained local metadata at digest `1c6577ab…`.
+  Three disposable combined Northstar cycles produced identical full Runtime
+  bytes at revision `824a4c2e…`; no retained Runtime was touched.
 - Canonical topology, multi-scope source binding, immutable Evidence
   attribution, Runtime-derived lineage, and producer-backed Product input
   selection are implemented. Investigation-local Evidence labels are not
@@ -62,10 +69,11 @@ REPLAY 001** from the exact resulting `origin/main`.
 
 ## Frontend boundary
 
-Add canonical source-to-scope provenance through existing source, Evidence,
-Understanding, Runtime, and replay owners. Do not infer scope from role names or
-edit retained Runtime JSON directly. Rerun three-account live acceptance and
-prove material differences come from scoped source lineage before promotion.
+Explicitly port the preserved five candidate responsibilities onto the new
+baseline, reconstruct through existing source, Evidence, Understanding,
+Runtime, and replay owners, and use transactional replacement. Do not rebase or
+repurpose the preserved `-002` worktree. Rerun three-account live acceptance
+and prove material differences come from scoped source lineage before promotion.
 
 ## Explicitly deferred
 

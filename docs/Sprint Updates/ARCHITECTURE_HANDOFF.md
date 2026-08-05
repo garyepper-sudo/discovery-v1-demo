@@ -14,7 +14,9 @@ development user, organization, source, and non-recursive folder to sandbox
 `sandbox-northstar-implementation-services-001`; validates before persistence;
 and preserves source identity separately from transport identity. Six semantic
 batches, sixteen documents, five negative controls, deterministic reset/replay,
-exact cleanup, retained final state, and transport-independent parity passed.
+exact cleanup, retained source metadata/receipt, and transport-independent
+parity passed. Complete accepted replay Runtime state was temporary and was
+removed; the canonical retained Northstar Runtime is an empty shell.
 
 The integration composes existing owners: `CAP-PER-001` for Evidence,
 `CAP-UND-006` for governed Understanding, `CAP-MEM-001` for Runtime
@@ -55,9 +57,19 @@ deduplication and cumulative multi-source provenance remain intact, and
 ambiguous v1 ancestry fails closed without migration. Focused unauthorized
 canaries returned zero occurrences. Northstar topology and bindings remain
 absent, and the retained Runtime remains untouched.
-Material differentiation remains blocked by absent Northstar bindings and
-replay. The next task is **DISCOVERY NORTHSTAR SOURCE-TO-SCOPE BINDING AND
-RETAINED RUNTIME REPLAY 001**. After it closes, **DISCOVERY LIVE MULTI-ROLE
+Canonical replay determinism is now implemented: semantic time remains
+canonical while processing time is excluded from identities, history,
+references, and Runtime revisions. The versioned reconstruction-input snapshot
+contract supersedes the orphaned `30a16f0b…` digest; independent derivations
+match at `1c6577ab…`, and three disposable composite cycles produced identical
+full Runtime bytes at revision `824a4c2e…`. Historical identities remain
+readable; no migration or retained Runtime write occurred. The preserved
+Northstar `-002` candidate remains unchanged and unintegrated.
+
+Material differentiation remains blocked by retained-state reconstruction.
+The next task is **DISCOVERY NORTHSTAR RUNTIME RECONSTRUCTION FROM VERSIONED
+CANONICAL LOCAL SOURCE PACKAGE 003** from a new worktree. After it closes,
+**DISCOVERY LIVE MULTI-ROLE
 UNAUTHORIZED DISCLOSURE AND INFERENCE STRESS TEST 001** remains mandatory;
 route promotion stays deferred until both pass.
 

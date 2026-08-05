@@ -7,6 +7,15 @@ GAP-MR-006 all have focused production-owner traceability while the frozen
 benchmark remains the historical oracle. The Living Organization Drive slice
 and Product Workflow frontend readiness remain complete.
 
+Canonical Runtime replay determinism is now closed. Processing time no longer
+enters canonical semantic identities, Understanding/Learning history, support
+references, or Runtime revisions. The versioned
+`living-organization-reconstruction-input/v1` snapshot contract supersedes the
+orphaned report-only `30a16f0b…` digest. Repository-corpus and retained local
+metadata derivations are byte-identical at `1c6577ab…`; a disposable combined
+Northstar candidate produced three byte-identical Runtimes at revision
+`824a4c2e…`. No retained Runtime was reconstructed or modified.
+
 Discovery is a governed organizational learning and intelligence system. Its
 persistent state is organizational understanding; Product Workflow operations
 inspect, improve, test, or revise that state without moving product meaning or
@@ -63,10 +72,10 @@ The canonical sandbox organization is
 `sandbox-northstar-implementation-services-001`. Its six semantic batches
 contain sixteen canonical Markdown documents and five negative controls.
 Deterministic reset/replay, exact cleanup, transport-independent semantic
-parity, and strict validate-before-persist behavior are proven. The retained
-final sandbox contains all sixteen files plus its canonical Runtime, Evidence,
-Understanding history, contradictions, investigation opportunities, receipt,
-and checkpoint.
+parity, and strict validate-before-persist behavior are proven. The folder,
+local metadata, extracted passages, source versions, receipt, and checkpoint
+survive; the complete accepted Runtime existed only in temporary replay roots.
+The canonical retained organization Runtime is an empty shell.
 
 | Sync | Files | New | Unchanged | Parity |
 |---|---:|---:|---:|---|
@@ -110,8 +119,9 @@ label remains distinct; exact and formatting-normalized duplicates remain
 deduplicated; later same-content sources retain complete provenance. Ambiguous
 v1 ancestry fails closed, unambiguous v1 remains readable, focused unauthorized
 canaries returned zero occurrences, and no migration was required. Material differentiation remains blocked only
-because Northstar has not been bound or replayed. The next task is **DISCOVERY
-NORTHSTAR SOURCE-TO-SCOPE BINDING AND RETAINED RUNTIME REPLAY 001**.
+because Northstar has not been reconstructed into retained state. The next task
+is **DISCOVERY NORTHSTAR RUNTIME RECONSTRUCTION FROM VERSIONED CANONICAL LOCAL
+SOURCE PACKAGE 003** in a new worktree from the resulting `origin/main`.
 
 ## Worktree boundary
 
