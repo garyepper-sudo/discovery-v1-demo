@@ -75,6 +75,21 @@ actionable-root and strict-superset dominance rules, a boundedness evaluator,
 and a fail-closed task registry. Negative controls prove different findings
 change or null the selected owner and task. `GAP-B-014` remains open with no
 Runtime, grant, disclosure, projection, or live Product behavior change.
+
+Field audience-requirement governance refinement: classification C selects a
+separately versioned field-family policy with exact target-version-bound
+overrides, revision-bound approval acts, a separately reconstructable issuance
+receipt, and an independent
+`manage-field-audience-requirements` authority revision. Corrected dual control
+covers organization-wide policies and topology-proven broadening overrides.
+The executable oracle replaces the rejected hardcoded/manual candidate. The
+approval threshold is internally derived rather than caller-selected; T3
+separates current new-issuance authority from historical validation and retains opaque
+target-version integrity as an upstream dependency. The contract and pure resolver are shadow-only, recipient-neutral,
+unpersisted, and unwired. No current field, grant, assignment, Runtime, or live
+behavior changed. Completed Explanation immutable-version ownership is now the
+next derived upstream owner; audience-lineage production and nested disclosure
+remain blocked.
 | GAP-B-015 | B | Answer specificity expansion | Current precision is high but coverage is narrow. | Unsupported scenarios abstain. | More domains produce specific answers without weaker precision. | Precision is preferred to generic coverage. | Benchmark expansion, evidence quality | Broader payable utility | P1 | Beta | L | Domain-balanced recovery improves while negative controls remain unchanged. | Open |
 | GAP-B-016 | B | Industry validation | Product outputs lack broad industry validation. | Synthetic and bounded organizational scenarios dominate. | Realistic cross-industry evaluation supports claims. | Design-partner evidence unavailable. | Evaluation framework, privacy | Market confidence | P1 | Beta | M | Approved industries clear specificity, truthfulness, and utility gates. | Open |
 | GAP-B-017 | B | Large-scale retrieval validation | Retrieval has not been tested at organizational scale. | Manual bounded evidence sets. | Large corpora preserve latency, precision, lineage, and isolation. | Governed connector absent. | Connector, performance harness | Enterprise retrieval | P2 | Beta | L | Scale test passes defined recall, precision, latency, and cost limits. | Open |

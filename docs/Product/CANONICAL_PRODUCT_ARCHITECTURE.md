@@ -236,6 +236,21 @@ Canonical Evidence + Organization Runtime + Understanding history
 Role-specific disclosure must not create separate truth, cognition, Runtime,
 confidence, lineage, history, persistence, or organization-identity owners.
 
+Field audience requirements are owned by a shadow-only versioned governance
+contract, not cognition or presentation. A governed field-family policy may be
+refined by one exact target-version-bound override. Issuance uses immutable,
+revision-bound approval acts and a separately reconstructable issuance receipt;
+new-issuance authorization, receipt construction, and historical validation
+are distinct pure operations. Approval-time plus issuance-time authority blocks
+pending issuance after revocation without rewriting historical receipts. Authority possession is
+not approval. Dual control covers explicit organization-wide family policies
+and topology-proven broadening overrides. The pure resolver accepts no recipient, access assignment,
+audience grant, role, title, hierarchy, default/display scope, or browser state.
+The approval threshold is derived internally from governed proposal semantics
+and validated topology; callers cannot select or lower it.
+It is unpersisted and unwired; current disclosure behavior is unchanged. See
+[FIELD_AUDIENCE_REQUIREMENT_GOVERNANCE.md](./FIELD_AUDIENCE_REQUIREMENT_GOVERNANCE.md).
+
 ## Shared scoped governance boundary
 
 Scoped disclosure, historical visibility, and contribution use one versioned,

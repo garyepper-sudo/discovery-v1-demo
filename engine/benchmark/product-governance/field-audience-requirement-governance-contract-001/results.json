@@ -1,0 +1,4688 @@
+{
+  "benchmark": "field-audience-requirement-governance-contract-001",
+  "status": "PASS",
+  "decision": {
+    "selectedModel": "D",
+    "canonicalOwner": "field-policy-plus-exact-override",
+    "primaryClassification": "C",
+    "secondaryClassifications": [
+      "shadow-only-activation-blocked"
+    ],
+    "contractReadiness": "PASS",
+    "activationReadiness": "BLOCKED",
+    "recommendation": "READY FOR NEXT DERIVED UPSTREAM TASK",
+    "ownerGraph": {
+      "roots": [
+        "completed-explanation-immutable-version"
+      ],
+      "nextOwner": "completed-explanation-immutable-version",
+      "nextTask": "DISCOVERY COMPLETED ORGANIZATIONAL EXPLANATION IMMUTABLE-VERSION OWNERSHIP CONTRACT 001"
+    }
+  },
+  "selectedTemporalModel": "T3",
+  "selectedDualControlModel": "organization-wide-and-broadening",
+  "approvalPolicies": {
+    "organizationWide": {
+      "kind": "field-audience-approval-policy",
+      "schemaVersion": "1",
+      "policyId": "field-audience-approval-policy:1",
+      "organizationId": "sandbox-northstar-implementation-services-001",
+      "proposalRevisionId": "field-audience-proposal-revision:90904afda36ae5ab5095cb92a6568d238a4ce3c79a8b05c27f375b65312b443c",
+      "disposition": "dual-approval-required",
+      "requiredDistinctPrincipalCount": 2,
+      "reason": "organization-wide-family-policy",
+      "comparison": null,
+      "revisionId": "field-audience-approval-policy-revision:a6b5e124d52c1721b8706d4c3504019adfe4354a80328da98b712796daf42cb9",
+      "digest": "1dfdf800014845cc5a09229e6106378bde71010aeff0fdcf238ae35ec8fa4435"
+    },
+    "equal": {
+      "kind": "field-audience-approval-policy",
+      "schemaVersion": "1",
+      "policyId": "field-audience-approval-policy:1",
+      "organizationId": "sandbox-northstar-implementation-services-001",
+      "proposalRevisionId": "field-audience-proposal-revision:122601d287b741de89c647570b0fd267e043333c9626922b03f63e14a37d3148",
+      "disposition": "single-approval-required",
+      "requiredDistinctPrincipalCount": 1,
+      "reason": "equal-exact-override",
+      "comparison": "equal",
+      "revisionId": "field-audience-approval-policy-revision:43dbd98b903365ef6499302785a57c774c15f3ec8f7a25c642b856461357987b",
+      "digest": "9c1b0251528955607156a0134ab8c85aeac950e91c149bbb080731f86cfa9b74"
+    },
+    "narrower": {
+      "kind": "field-audience-approval-policy",
+      "schemaVersion": "1",
+      "policyId": "field-audience-approval-policy:1",
+      "organizationId": "sandbox-northstar-implementation-services-001",
+      "proposalRevisionId": "field-audience-proposal-revision:958779ef8e7c468696539d96d4fb617cb16b46ea356d33aaa61c72863187e4d7",
+      "disposition": "single-approval-required",
+      "requiredDistinctPrincipalCount": 1,
+      "reason": "narrower-exact-override",
+      "comparison": "narrower",
+      "revisionId": "field-audience-approval-policy-revision:e41badbf3a1f6f70e9c933083b8537d550a1dd1b33a1a654caad8060b10c4ae3",
+      "digest": "f674b610bbcc88782dd44acb6d29cfc7ae364688d5b445e3a57ada6df782ec90"
+    },
+    "broader": {
+      "kind": "field-audience-approval-policy",
+      "schemaVersion": "1",
+      "policyId": "field-audience-approval-policy:1",
+      "organizationId": "sandbox-northstar-implementation-services-001",
+      "proposalRevisionId": "field-audience-proposal-revision:3b2a478175c351fd16d25a015a46d39d8ba22a853d816dce7c526b730cef0718",
+      "disposition": "dual-approval-required",
+      "requiredDistinctPrincipalCount": 2,
+      "reason": "broader-exact-override",
+      "comparison": "broader",
+      "revisionId": "field-audience-approval-policy-revision:e4365c13f6bd7e85153a6ddff4ae266744cac1bbbaced0db2b4e744ca1021d91",
+      "digest": "b49a1699dc7e01ce7827a3138898dc2189f7f1a5f53ecd937a5148fb67f393e4"
+    },
+    "incomparable": {
+      "kind": "field-audience-approval-policy",
+      "schemaVersion": "1",
+      "policyId": "field-audience-approval-policy:1",
+      "organizationId": "sandbox-northstar-implementation-services-001",
+      "proposalRevisionId": "field-audience-proposal-revision:d241593734b152e53337a0fec0b49fc0dde93b719b9b7ceeda91d019bb954ab9",
+      "disposition": "unresolved",
+      "requiredDistinctPrincipalCount": null,
+      "reason": "incomparable-exact-override",
+      "comparison": "incomparable",
+      "revisionId": "field-audience-approval-policy-revision:41ac10ae8245c1356f4b9a85c61a48810e356539cddb56714bf0fa03995b84cd",
+      "digest": "9718fa59b563b631d083ffbb8238bc61194cbf4a0fad8949011051c0a576b9c7"
+    },
+    "invalidTopology": {
+      "kind": "field-audience-approval-policy",
+      "schemaVersion": "1",
+      "policyId": "field-audience-approval-policy:1",
+      "organizationId": "sandbox-northstar-implementation-services-001",
+      "proposalRevisionId": "field-audience-proposal-revision:3739f3b8a7f23575b5814842cc87a8a6d5b3037e65a339db26390f0380bbc660",
+      "disposition": "invalid",
+      "requiredDistinctPrincipalCount": null,
+      "reason": "invalid-proposal-or-topology",
+      "comparison": "invalid-topology",
+      "revisionId": "field-audience-approval-policy-revision:01292e861237d84fa615346f37c553307b1c9807ae1cc92bc685c24a588a418d",
+      "digest": "7af5520fcae66410b404812dde463e884c2b45c3d5f886248c5cdcdcc76b603b"
+    }
+  },
+  "modelFindings": [
+    {
+      "modelId": "A",
+      "owner": "canonical-field",
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "determinism": {
+        "identityStable": true,
+        "revisionStable": true,
+        "integrityStable": true,
+        "fixedClockReplay": true,
+        "orderInvariant": true
+      },
+      "eligible": false,
+      "operationalCompleteness": 6,
+      "administrativeOperations": 22
+    },
+    {
+      "modelId": "B",
+      "owner": "exact-field-record",
+      "securityViolations": [],
+      "operationalGaps": [
+        "FAMILY_COVERAGE",
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "determinism": {
+        "identityStable": true,
+        "revisionStable": true,
+        "integrityStable": true,
+        "fixedClockReplay": true,
+        "orderInvariant": true
+      },
+      "eligible": true,
+      "operationalCompleteness": 5,
+      "administrativeOperations": 24
+    },
+    {
+      "modelId": "C",
+      "owner": "field-family-policy",
+      "securityViolations": [],
+      "operationalGaps": [
+        "EXACT_EXCEPTION"
+      ],
+      "determinism": {
+        "identityStable": true,
+        "revisionStable": true,
+        "integrityStable": true,
+        "fixedClockReplay": true,
+        "orderInvariant": true
+      },
+      "eligible": true,
+      "operationalCompleteness": 6,
+      "administrativeOperations": 22
+    },
+    {
+      "modelId": "D",
+      "owner": "field-policy-plus-exact-override",
+      "securityViolations": [],
+      "operationalGaps": [],
+      "determinism": {
+        "identityStable": true,
+        "revisionStable": true,
+        "integrityStable": true,
+        "fixedClockReplay": true,
+        "orderInvariant": true
+      },
+      "eligible": true,
+      "operationalCompleteness": 7,
+      "administrativeOperations": 31
+    },
+    {
+      "modelId": "E",
+      "owner": "scope-provenance-derivation",
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "determinism": {
+        "identityStable": true,
+        "revisionStable": true,
+        "integrityStable": true,
+        "fixedClockReplay": true,
+        "orderInvariant": true
+      },
+      "eligible": false,
+      "operationalCompleteness": 6,
+      "administrativeOperations": 22
+    },
+    {
+      "modelId": "F",
+      "owner": "explicit-manual-administration",
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "determinism": {
+        "identityStable": true,
+        "revisionStable": true,
+        "integrityStable": true,
+        "fixedClockReplay": true,
+        "orderInvariant": true
+      },
+      "eligible": true,
+      "operationalCompleteness": 6,
+      "administrativeOperations": 506
+    }
+  ],
+  "temporalModels": [
+    {
+      "id": "T1",
+      "operationCalls": [
+        "issue",
+        "revoke",
+        "validate-against-current-heads"
+      ],
+      "historicalBeforeRevocation": true,
+      "historicalAfterRevocation": false,
+      "postRevocationIssuance": false,
+      "requirementLifecycleIndependent": false,
+      "outputDigest": "f2406ddacebf4868fd41852dd92de5728e5e42b9b45940cbce301d5260bedbfc",
+      "eligible": false
+    },
+    {
+      "id": "T2",
+      "operationCalls": [
+        "approve",
+        "revoke",
+        "reuse-approval-time-authorization",
+        "issue"
+      ],
+      "historicalBeforeRevocation": true,
+      "historicalAfterRevocation": true,
+      "postRevocationIssuance": true,
+      "requirementLifecycleIndependent": true,
+      "outputDigest": "17ddbbbe7889423d6094b24cd698f95ad66582ec1ce2fdabf05222c479c0b3e0",
+      "eligible": false
+    },
+    {
+      "id": "T3",
+      "operationCalls": [
+        "approve",
+        "authorize-current",
+        "issue",
+        "revoke",
+        "validate-historical",
+        "resolve-lifecycle"
+      ],
+      "historicalBeforeRevocation": true,
+      "historicalAfterRevocation": true,
+      "postRevocationIssuance": false,
+      "requirementLifecycleIndependent": true,
+      "outputDigest": "7dc98c5664b253ae627d3959f44677cd753fbbf4abef48571864c2d8051c13cb",
+      "eligible": true
+    }
+  ],
+  "counts": {
+    "behavioralScenarios": 22,
+    "models": 6,
+    "expectedMatrixCells": 132,
+    "actualMatrixCells": 132,
+    "approvalValidations": 2,
+    "issuanceValidations": 2,
+    "historicalReceiptValidations": 2,
+    "revocationValidations": 4,
+    "topologyValidations": 2,
+    "targetVersionValidations": 3,
+    "tamperValidations": 8,
+    "dynamicControls": 20,
+    "neutralityInvariants": 8,
+    "repeatedNormalizedInputGroups": 22,
+    "duplicateCells": 0,
+    "missingCells": 0,
+    "unexpectedCells": 0,
+    "noOpTransformations": 0
+  },
+  "invariants": 30,
+  "controls": [
+    {
+      "id": "model-d-approval-threshold-bypass",
+      "passed": true
+    },
+    {
+      "id": "model-d-correct-derivation",
+      "passed": true
+    },
+    {
+      "id": "t1-historical-instability",
+      "passed": true
+    },
+    {
+      "id": "t2-post-revocation-issuance",
+      "passed": true
+    },
+    {
+      "id": "t3-correct-behavior",
+      "passed": true
+    },
+    {
+      "id": "model-b-sufficiency-changes-selection",
+      "passed": true
+    },
+    {
+      "id": "model-c-no-exceptions-changes-selection",
+      "passed": true
+    },
+    {
+      "id": "model-d-exact-overrides-removed",
+      "passed": true
+    },
+    {
+      "id": "receipt-reconstruction-execution",
+      "passed": true
+    },
+    {
+      "id": "revoked-authority-execution",
+      "passed": true
+    },
+    {
+      "id": "no-valid-issuance-owner",
+      "passed": true
+    },
+    {
+      "id": "no-valid-issuance-owner",
+      "passed": true
+    },
+    {
+      "id": "persistence-readiness-dynamic",
+      "passed": true
+    },
+    {
+      "id": "target-version-owner-change",
+      "passed": true
+    },
+    {
+      "id": "topology-readiness-dynamic",
+      "passed": true
+    },
+    {
+      "id": "incomparable-roots",
+      "passed": true
+    },
+    {
+      "id": "missing-registry",
+      "passed": true
+    },
+    {
+      "id": "dominant-owner",
+      "passed": true
+    },
+    {
+      "id": "all-upstream-resolved",
+      "passed": true
+    },
+    {
+      "id": "static-hardcoding-guard",
+      "passed": true
+    }
+  ],
+  "repeatedNormalizedInputGroups": [
+    {
+      "normalizedResolverInputDigest": "307a16f161b3d1139b1734d5bc02d127f6ed7e755122cda9137b43e642b265fa",
+      "rawResolverInputDigests": [
+        "140d7a186e3b434f7b2e9d4d2b990924af8fba8383c8f81c754286d89e3ac697"
+      ],
+      "scenarioIds": [
+        "baseline-policy"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "baseline-policy:A",
+        "baseline-policy:B",
+        "baseline-policy:C",
+        "baseline-policy:D",
+        "baseline-policy:E",
+        "baseline-policy:F"
+      ],
+      "transformationClasses": [
+        "semantic-input-mutation"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "cf5b3a42340b100c4b54b4a8c0c7882740ca1d2051ba76bb59a6efe4f834e654"
+        },
+        {
+          "modelId": "B",
+          "digest": "cf5b3a42340b100c4b54b4a8c0c7882740ca1d2051ba76bb59a6efe4f834e654"
+        },
+        {
+          "modelId": "C",
+          "digest": "c64b7bc3de1e58af455f6fb0485202ce000b75f3d06ef950d13088033d095f0b"
+        },
+        {
+          "modelId": "D",
+          "digest": "c64b7bc3de1e58af455f6fb0485202ce000b75f3d06ef950d13088033d095f0b"
+        },
+        {
+          "modelId": "E",
+          "digest": "cf5b3a42340b100c4b54b4a8c0c7882740ca1d2051ba76bb59a6efe4f834e654"
+        },
+        {
+          "modelId": "F",
+          "digest": "cf5b3a42340b100c4b54b4a8c0c7882740ca1d2051ba76bb59a6efe4f834e654"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "e30895df291a730a98eaad2c2f9fbfaaa7c5b49436931811454d927ea79fa1a5",
+      "rawResolverInputDigests": [
+        "bf6da394a6194c7601ecc3d93f70c42b2946c0e18a8f321a7164ff870cfa8548"
+      ],
+      "scenarioIds": [
+        "missing-policy"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "missing-policy:A",
+        "missing-policy:B",
+        "missing-policy:C",
+        "missing-policy:D",
+        "missing-policy:E",
+        "missing-policy:F"
+      ],
+      "transformationClasses": [
+        "semantic-input-mutation"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "da2a454bc81fe414fe3dae2f2f0bb621e0ac1d5118cdef11182b6e42dc7da99d"
+        },
+        {
+          "modelId": "B",
+          "digest": "da2a454bc81fe414fe3dae2f2f0bb621e0ac1d5118cdef11182b6e42dc7da99d"
+        },
+        {
+          "modelId": "C",
+          "digest": "da2a454bc81fe414fe3dae2f2f0bb621e0ac1d5118cdef11182b6e42dc7da99d"
+        },
+        {
+          "modelId": "D",
+          "digest": "da2a454bc81fe414fe3dae2f2f0bb621e0ac1d5118cdef11182b6e42dc7da99d"
+        },
+        {
+          "modelId": "E",
+          "digest": "da2a454bc81fe414fe3dae2f2f0bb621e0ac1d5118cdef11182b6e42dc7da99d"
+        },
+        {
+          "modelId": "F",
+          "digest": "da2a454bc81fe414fe3dae2f2f0bb621e0ac1d5118cdef11182b6e42dc7da99d"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "25019bbf7c93ed123a756f675f5a21c79ca6e917d6d1c2612e7acc146cb26c31",
+      "rawResolverInputDigests": [
+        "d03d819b300f7d3fb263928a4f4d5b5b7791939159851d52b0caf4607deca5a6"
+      ],
+      "scenarioIds": [
+        "organization-policy-dual-control"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "organization-policy-dual-control:A",
+        "organization-policy-dual-control:B",
+        "organization-policy-dual-control:C",
+        "organization-policy-dual-control:D",
+        "organization-policy-dual-control:E",
+        "organization-policy-dual-control:F"
+      ],
+      "transformationClasses": [
+        "approval-mutation"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "dfb67a6a7fa6f7339bd1146b9cee22dc5a1d8b993ad014a9c673812fb3c65593"
+        },
+        {
+          "modelId": "B",
+          "digest": "dfb67a6a7fa6f7339bd1146b9cee22dc5a1d8b993ad014a9c673812fb3c65593"
+        },
+        {
+          "modelId": "C",
+          "digest": "3d7e987c6b631d0858675aa880e0a3784cc76a0d9483480441068c4db12c814b"
+        },
+        {
+          "modelId": "D",
+          "digest": "3d7e987c6b631d0858675aa880e0a3784cc76a0d9483480441068c4db12c814b"
+        },
+        {
+          "modelId": "E",
+          "digest": "dfb67a6a7fa6f7339bd1146b9cee22dc5a1d8b993ad014a9c673812fb3c65593"
+        },
+        {
+          "modelId": "F",
+          "digest": "dfb67a6a7fa6f7339bd1146b9cee22dc5a1d8b993ad014a9c673812fb3c65593"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "960c542f6f631d7f4fa78e2931523272c96a899cb522556e6db20bcfcc23ca0a",
+      "rawResolverInputDigests": [
+        "966697afc236e275dea4d4e5a9edf9f59045e49e446953e8b1c95efbfadcd8dc"
+      ],
+      "scenarioIds": [
+        "exact-equal"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "exact-equal:A",
+        "exact-equal:B",
+        "exact-equal:C",
+        "exact-equal:D",
+        "exact-equal:E",
+        "exact-equal:F"
+      ],
+      "transformationClasses": [
+        "semantic-input-mutation"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "b7660be842e8a4ef1285d91ff22001704db4d3e31bb01ceb4a41fbcf287b2f7f"
+        },
+        {
+          "modelId": "B",
+          "digest": "f6f8bcec6a8415af19e06682cdc42a3f7ba47c9316c227a8a265872c897189ee"
+        },
+        {
+          "modelId": "C",
+          "digest": "3bc85eccbe62f948ff79ef1762f5252eaea2e6335b137e86e3fa75b332001f17"
+        },
+        {
+          "modelId": "D",
+          "digest": "3f89a74527a06f6ed84b528691cc1b31ca69160430dc663c66cc84461c92438d"
+        },
+        {
+          "modelId": "E",
+          "digest": "b7660be842e8a4ef1285d91ff22001704db4d3e31bb01ceb4a41fbcf287b2f7f"
+        },
+        {
+          "modelId": "F",
+          "digest": "9eaf9e2809586c8a45cf569a8a66d81cad221deec74fbbd0aa89712a288f61d0"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "58be318651f2b9ed9d6a5ecc6c00d88abf329b2c231c016a4283351d77591a85",
+      "rawResolverInputDigests": [
+        "e212615e02a60f93fbadc0c7664ba62db2ed8424eaaf09b73f4aa7880f0b9817"
+      ],
+      "scenarioIds": [
+        "exact-narrower"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "exact-narrower:A",
+        "exact-narrower:B",
+        "exact-narrower:C",
+        "exact-narrower:D",
+        "exact-narrower:E",
+        "exact-narrower:F"
+      ],
+      "transformationClasses": [
+        "semantic-input-mutation"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "7ee81b19cefb004323b3cddbc70ba1da3e1aab28d4388ea20731433558a63892"
+        },
+        {
+          "modelId": "B",
+          "digest": "0346ade1cc06fd2cbe60184e945df8b1066afd84097db1c709bbadda2e74a052"
+        },
+        {
+          "modelId": "C",
+          "digest": "35f48d510e96404bb583f355ca0d6ebcda05da41734517c129bfd6a6c3ee79f8"
+        },
+        {
+          "modelId": "D",
+          "digest": "182f49c060d2b62b49a917d08a6fdb403dc6af773c7bc4b23a438f9becec9ca2"
+        },
+        {
+          "modelId": "E",
+          "digest": "7ee81b19cefb004323b3cddbc70ba1da3e1aab28d4388ea20731433558a63892"
+        },
+        {
+          "modelId": "F",
+          "digest": "78a45eff04979d77215de301894246c7f44b7e743afbb15a654daf5601e9aaf2"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "e74bfd3013c5dcdd2229e5d28d184dec4825bdc2ee4eb8f94286fa19edb69c0e",
+      "rawResolverInputDigests": [
+        "2f3e2099ba2961b5633d6d0078513bb878c2e9954b0823896b1a4d41423036fb"
+      ],
+      "scenarioIds": [
+        "exact-broader-dual-control"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "exact-broader-dual-control:A",
+        "exact-broader-dual-control:B",
+        "exact-broader-dual-control:C",
+        "exact-broader-dual-control:D",
+        "exact-broader-dual-control:E",
+        "exact-broader-dual-control:F"
+      ],
+      "transformationClasses": [
+        "approval-mutation"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "d99eff4b4d6d52aa60f6acaf1c5cdff8568e582be2adad0ee77dce1bc41d9c0c"
+        },
+        {
+          "modelId": "B",
+          "digest": "8f8294e82b4875100697dc1ab42e6d881503031fb360ad3a7fecbce864b82a1f"
+        },
+        {
+          "modelId": "C",
+          "digest": "3e4b2e255e376cb811f5b8700c98215c8c42b359c2f07b1073a4d5aa6d6921f4"
+        },
+        {
+          "modelId": "D",
+          "digest": "efd379eb9d946ceaadbd3b5f8b5c1f0c7ca841b23dad7a48e69b03e23057c1ea"
+        },
+        {
+          "modelId": "E",
+          "digest": "d99eff4b4d6d52aa60f6acaf1c5cdff8568e582be2adad0ee77dce1bc41d9c0c"
+        },
+        {
+          "modelId": "F",
+          "digest": "d42d5c06a43fc799f09ac8c10fe42cbae6ccbb8f01abd2c9e23c1e4d93f7e792"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "bde97c819c05aa40ea852fc3822e829bb1a9a3e3566a1c54a973b26f56d0211d",
+      "rawResolverInputDigests": [
+        "1d2a407c8d1c4209b703765ef5df5006dd01e0514582608301773368c13f7278"
+      ],
+      "scenarioIds": [
+        "exact-incomparable"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "exact-incomparable:A",
+        "exact-incomparable:B",
+        "exact-incomparable:C",
+        "exact-incomparable:D",
+        "exact-incomparable:E",
+        "exact-incomparable:F"
+      ],
+      "transformationClasses": [
+        "semantic-input-mutation"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "c7e1fba1361bd588f06a115a5eec5ef5f31d90d1dbbe2edfcf2d26c1bc1e0170"
+        },
+        {
+          "modelId": "B",
+          "digest": "4affbc243413d8aebff8b66902ee920d687e386fb4e7ca593cd3eb1b7f4dfcd7"
+        },
+        {
+          "modelId": "C",
+          "digest": "a24e12e3fffbfaa768c9c599b1c5efaa79b8ce493dbe6ba33fafcd5f0888a573"
+        },
+        {
+          "modelId": "D",
+          "digest": "0332eaaf43c0ba5d92ade68132fe045b852c1990e2bf17688b76d89ad4fa9ed9"
+        },
+        {
+          "modelId": "E",
+          "digest": "c7e1fba1361bd588f06a115a5eec5ef5f31d90d1dbbe2edfcf2d26c1bc1e0170"
+        },
+        {
+          "modelId": "F",
+          "digest": "0332eaaf43c0ba5d92ade68132fe045b852c1990e2bf17688b76d89ad4fa9ed9"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "0876c7d3949953cfa70e40e23a47a959563977b99a6bbc7e938b3bfad1cd8e36",
+      "rawResolverInputDigests": [
+        "182cea34941d3b89932cb01eecbea1e2efd64b72aa53afbed346b6ef13cdcae2"
+      ],
+      "scenarioIds": [
+        "missing-receipt"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "missing-receipt:A",
+        "missing-receipt:B",
+        "missing-receipt:C",
+        "missing-receipt:D",
+        "missing-receipt:E",
+        "missing-receipt:F"
+      ],
+      "transformationClasses": [
+        "issuance-mutation"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "20567fa981651fd6816a2c991b7ba9466f718617b4253b298a63cc0b9c2f2c43"
+        },
+        {
+          "modelId": "B",
+          "digest": "20567fa981651fd6816a2c991b7ba9466f718617b4253b298a63cc0b9c2f2c43"
+        },
+        {
+          "modelId": "C",
+          "digest": "6d94e1a7deb0cc6f4b179b2afe546691f55dd8b7f284127f8ecdc18f18cd27f0"
+        },
+        {
+          "modelId": "D",
+          "digest": "6d94e1a7deb0cc6f4b179b2afe546691f55dd8b7f284127f8ecdc18f18cd27f0"
+        },
+        {
+          "modelId": "E",
+          "digest": "20567fa981651fd6816a2c991b7ba9466f718617b4253b298a63cc0b9c2f2c43"
+        },
+        {
+          "modelId": "F",
+          "digest": "20567fa981651fd6816a2c991b7ba9466f718617b4253b298a63cc0b9c2f2c43"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "c2496329457d8309c536283ab70b4768949b888e8042149148a4883e7551eb9c",
+      "rawResolverInputDigests": [
+        "1f7f9da3306a98c03540c2aa9c5589ad2275cc4a7dabb7aba3f1898bc46d0709"
+      ],
+      "scenarioIds": [
+        "receipt-other-target"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "receipt-other-target:A",
+        "receipt-other-target:B",
+        "receipt-other-target:C",
+        "receipt-other-target:D",
+        "receipt-other-target:E",
+        "receipt-other-target:F"
+      ],
+      "transformationClasses": [
+        "tamper"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "c20d1b49c92d11b0bd69442cdef2ab99708b0489995fe40979fde72d6a114426"
+        },
+        {
+          "modelId": "B",
+          "digest": "c20d1b49c92d11b0bd69442cdef2ab99708b0489995fe40979fde72d6a114426"
+        },
+        {
+          "modelId": "C",
+          "digest": "89e2ddad55cf6c5f42c36c39e2ece9145fea6f763a619a1663e8c53c6004e967"
+        },
+        {
+          "modelId": "D",
+          "digest": "89e2ddad55cf6c5f42c36c39e2ece9145fea6f763a619a1663e8c53c6004e967"
+        },
+        {
+          "modelId": "E",
+          "digest": "c20d1b49c92d11b0bd69442cdef2ab99708b0489995fe40979fde72d6a114426"
+        },
+        {
+          "modelId": "F",
+          "digest": "c20d1b49c92d11b0bd69442cdef2ab99708b0489995fe40979fde72d6a114426"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "bdf9248e9b9d0b305cacc5a7839fb901e13726a895a4b28f45c71cc059d10436",
+      "rawResolverInputDigests": [
+        "704ae5fc6acc45341b60303f286591cc1f5dd9f74f59341edad9c04d6ee2a785"
+      ],
+      "scenarioIds": [
+        "receipt-other-organization"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "receipt-other-organization:A",
+        "receipt-other-organization:B",
+        "receipt-other-organization:C",
+        "receipt-other-organization:D",
+        "receipt-other-organization:E",
+        "receipt-other-organization:F"
+      ],
+      "transformationClasses": [
+        "tamper"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "a6171672cc7d532dbf3ac20123c304058f79744fa1cc14db83f76ebf0d250897"
+        },
+        {
+          "modelId": "B",
+          "digest": "a6171672cc7d532dbf3ac20123c304058f79744fa1cc14db83f76ebf0d250897"
+        },
+        {
+          "modelId": "C",
+          "digest": "3bbda83979a419bce35416d4e60b67a63b011e5e8a1d90ed381d09207864faff"
+        },
+        {
+          "modelId": "D",
+          "digest": "3bbda83979a419bce35416d4e60b67a63b011e5e8a1d90ed381d09207864faff"
+        },
+        {
+          "modelId": "E",
+          "digest": "a6171672cc7d532dbf3ac20123c304058f79744fa1cc14db83f76ebf0d250897"
+        },
+        {
+          "modelId": "F",
+          "digest": "a6171672cc7d532dbf3ac20123c304058f79744fa1cc14db83f76ebf0d250897"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "1383c6eb626dce9f5a3516980aa33496d7909d57e614032940a30b55db488ffe",
+      "rawResolverInputDigests": [
+        "6162a41800bb621ccb8d64857a47bbde3f38761f06907188eb066b382f76408f"
+      ],
+      "scenarioIds": [
+        "receipt-identity-tamper"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "receipt-identity-tamper:A",
+        "receipt-identity-tamper:B",
+        "receipt-identity-tamper:C",
+        "receipt-identity-tamper:D",
+        "receipt-identity-tamper:E",
+        "receipt-identity-tamper:F"
+      ],
+      "transformationClasses": [
+        "tamper"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "7a30c6193505d4a692a5098823ae4db32a85816c2c433575332078dccedc1760"
+        },
+        {
+          "modelId": "B",
+          "digest": "7a30c6193505d4a692a5098823ae4db32a85816c2c433575332078dccedc1760"
+        },
+        {
+          "modelId": "C",
+          "digest": "22ca71663e86533a247d5de6f0c74e38f28a438e3bb3099fb1fad05ec5a67d38"
+        },
+        {
+          "modelId": "D",
+          "digest": "22ca71663e86533a247d5de6f0c74e38f28a438e3bb3099fb1fad05ec5a67d38"
+        },
+        {
+          "modelId": "E",
+          "digest": "7a30c6193505d4a692a5098823ae4db32a85816c2c433575332078dccedc1760"
+        },
+        {
+          "modelId": "F",
+          "digest": "7a30c6193505d4a692a5098823ae4db32a85816c2c433575332078dccedc1760"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "4b9632264a7b0d6ee73402687dc6852c0b59538fe12059f426c9a6576941bcbb",
+      "rawResolverInputDigests": [
+        "be9d68d2d3d2e49058449fa8940ce01059b913bd4f3ff64bcbfa08feb661dd6a"
+      ],
+      "scenarioIds": [
+        "receipt-revision-tamper"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "receipt-revision-tamper:A",
+        "receipt-revision-tamper:B",
+        "receipt-revision-tamper:C",
+        "receipt-revision-tamper:D",
+        "receipt-revision-tamper:E",
+        "receipt-revision-tamper:F"
+      ],
+      "transformationClasses": [
+        "tamper"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "b1a41c103f8500b38ad8c65b40f009f4a1db099017bd30086a9452407af87e25"
+        },
+        {
+          "modelId": "B",
+          "digest": "b1a41c103f8500b38ad8c65b40f009f4a1db099017bd30086a9452407af87e25"
+        },
+        {
+          "modelId": "C",
+          "digest": "c83a6ee158db062754b4764910a29b4a4adcf1c5a0339ccb6c42d51a664dfbd2"
+        },
+        {
+          "modelId": "D",
+          "digest": "c83a6ee158db062754b4764910a29b4a4adcf1c5a0339ccb6c42d51a664dfbd2"
+        },
+        {
+          "modelId": "E",
+          "digest": "b1a41c103f8500b38ad8c65b40f009f4a1db099017bd30086a9452407af87e25"
+        },
+        {
+          "modelId": "F",
+          "digest": "b1a41c103f8500b38ad8c65b40f009f4a1db099017bd30086a9452407af87e25"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "28d9185665ca0db3a19d053c33c9b81b55f0498639902356948e1e2ab1b9b59b",
+      "rawResolverInputDigests": [
+        "a2a6ebe7eba61dab63d9b204276fe4c9450bef23bacd6933ac0f0bbddb6e9a4a"
+      ],
+      "scenarioIds": [
+        "receipt-integrity-tamper"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "receipt-integrity-tamper:A",
+        "receipt-integrity-tamper:B",
+        "receipt-integrity-tamper:C",
+        "receipt-integrity-tamper:D",
+        "receipt-integrity-tamper:E",
+        "receipt-integrity-tamper:F"
+      ],
+      "transformationClasses": [
+        "tamper"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "14f9919fdd637c8aeb4b79e71cfcf52c3d90a802312cf938343d49cdaca80bc1"
+        },
+        {
+          "modelId": "B",
+          "digest": "14f9919fdd637c8aeb4b79e71cfcf52c3d90a802312cf938343d49cdaca80bc1"
+        },
+        {
+          "modelId": "C",
+          "digest": "81707e1b6377febcbaa6fa9ba6f5a9cc21c9c9a76c41e70842e4e1c3d5748a35"
+        },
+        {
+          "modelId": "D",
+          "digest": "81707e1b6377febcbaa6fa9ba6f5a9cc21c9c9a76c41e70842e4e1c3d5748a35"
+        },
+        {
+          "modelId": "E",
+          "digest": "14f9919fdd637c8aeb4b79e71cfcf52c3d90a802312cf938343d49cdaca80bc1"
+        },
+        {
+          "modelId": "F",
+          "digest": "14f9919fdd637c8aeb4b79e71cfcf52c3d90a802312cf938343d49cdaca80bc1"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "41abab7f29848153a7a97e9799759e2c9a2ecfa14fb0d47db7cbb17dcd694c79",
+      "rawResolverInputDigests": [
+        "5ce39a0826738d144d4fb19a2918695fd0d0903a3e7ea8be9825fb5746b2693d"
+      ],
+      "scenarioIds": [
+        "receipt-approval-set-tamper"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "receipt-approval-set-tamper:A",
+        "receipt-approval-set-tamper:B",
+        "receipt-approval-set-tamper:C",
+        "receipt-approval-set-tamper:D",
+        "receipt-approval-set-tamper:E",
+        "receipt-approval-set-tamper:F"
+      ],
+      "transformationClasses": [
+        "tamper"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "3724067b7ec64715134693a2b70e153448b4f02754af22477a48e9c2a5a9f766"
+        },
+        {
+          "modelId": "B",
+          "digest": "3724067b7ec64715134693a2b70e153448b4f02754af22477a48e9c2a5a9f766"
+        },
+        {
+          "modelId": "C",
+          "digest": "530905d13f1484ff667d55597029b91171e0af915aebe37d9821ab93b43964f8"
+        },
+        {
+          "modelId": "D",
+          "digest": "530905d13f1484ff667d55597029b91171e0af915aebe37d9821ab93b43964f8"
+        },
+        {
+          "modelId": "E",
+          "digest": "3724067b7ec64715134693a2b70e153448b4f02754af22477a48e9c2a5a9f766"
+        },
+        {
+          "modelId": "F",
+          "digest": "3724067b7ec64715134693a2b70e153448b4f02754af22477a48e9c2a5a9f766"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "0dbf2a5612fabda6c8f3e4b84d1e9248cebd1def06fcb86663a0071b9fd74319",
+      "rawResolverInputDigests": [
+        "756d68c882c59a1c0a78f0055eb77cea3a3f3fe970871f1f08e93b7bc6910a38"
+      ],
+      "scenarioIds": [
+        "receipt-requirement-revision-tamper"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "receipt-requirement-revision-tamper:A",
+        "receipt-requirement-revision-tamper:B",
+        "receipt-requirement-revision-tamper:C",
+        "receipt-requirement-revision-tamper:D",
+        "receipt-requirement-revision-tamper:E",
+        "receipt-requirement-revision-tamper:F"
+      ],
+      "transformationClasses": [
+        "tamper"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "5ad9f407bbe759aa222795331a4ba103326ac55ce886799bb10946e7bb9ac380"
+        },
+        {
+          "modelId": "B",
+          "digest": "5ad9f407bbe759aa222795331a4ba103326ac55ce886799bb10946e7bb9ac380"
+        },
+        {
+          "modelId": "C",
+          "digest": "38c9dbc31dbfa3eea9dec22796a5f7156f0e68a5d8ca224d131ab2c8c342cfa3"
+        },
+        {
+          "modelId": "D",
+          "digest": "38c9dbc31dbfa3eea9dec22796a5f7156f0e68a5d8ca224d131ab2c8c342cfa3"
+        },
+        {
+          "modelId": "E",
+          "digest": "5ad9f407bbe759aa222795331a4ba103326ac55ce886799bb10946e7bb9ac380"
+        },
+        {
+          "modelId": "F",
+          "digest": "5ad9f407bbe759aa222795331a4ba103326ac55ce886799bb10946e7bb9ac380"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "003a25959c78e36b64751e06f2fb98b5cc30f8062abcb88b0d77c2d420c3f9ed",
+      "rawResolverInputDigests": [
+        "59ba60c3b9e0c1d45ac7db7a4fe1b9a60151cffcba5fd7608c7c9480df8fc07e"
+      ],
+      "scenarioIds": [
+        "receipt-requirement-integrity-tamper"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "receipt-requirement-integrity-tamper:A",
+        "receipt-requirement-integrity-tamper:B",
+        "receipt-requirement-integrity-tamper:C",
+        "receipt-requirement-integrity-tamper:D",
+        "receipt-requirement-integrity-tamper:E",
+        "receipt-requirement-integrity-tamper:F"
+      ],
+      "transformationClasses": [
+        "tamper"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "eec0d87e68e0482c8cae643ff78ab6788a68912cd8150072c0663e957847b549"
+        },
+        {
+          "modelId": "B",
+          "digest": "eec0d87e68e0482c8cae643ff78ab6788a68912cd8150072c0663e957847b549"
+        },
+        {
+          "modelId": "C",
+          "digest": "ce4c56cdd136f1f14acdb299810b1b39e7949356f8a05a6186e899b845ce2e02"
+        },
+        {
+          "modelId": "D",
+          "digest": "ce4c56cdd136f1f14acdb299810b1b39e7949356f8a05a6186e899b845ce2e02"
+        },
+        {
+          "modelId": "E",
+          "digest": "eec0d87e68e0482c8cae643ff78ab6788a68912cd8150072c0663e957847b549"
+        },
+        {
+          "modelId": "F",
+          "digest": "eec0d87e68e0482c8cae643ff78ab6788a68912cd8150072c0663e957847b549"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "acce94188057698f520c60a241168fc12f662de56c066aed5a1e49279f061a12",
+      "rawResolverInputDigests": [
+        "1fd4e5ce8d7b1db4b5ea8e5f018f7335e8245ce2f966b55ea9c56aaf670c8720"
+      ],
+      "scenarioIds": [
+        "duplicate-identical-receipt"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "duplicate-identical-receipt:A",
+        "duplicate-identical-receipt:B",
+        "duplicate-identical-receipt:C",
+        "duplicate-identical-receipt:D",
+        "duplicate-identical-receipt:E",
+        "duplicate-identical-receipt:F"
+      ],
+      "transformationClasses": [
+        "issuance-mutation"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "dac24e12943dea077e16c66d902543bb1f726ffbd3ac364a0528e9b81e964aa0"
+        },
+        {
+          "modelId": "B",
+          "digest": "dac24e12943dea077e16c66d902543bb1f726ffbd3ac364a0528e9b81e964aa0"
+        },
+        {
+          "modelId": "C",
+          "digest": "17f1b4883e769d165ea0981c8786a21d97c9688b638dc4aa984a5fca519aa6b9"
+        },
+        {
+          "modelId": "D",
+          "digest": "17f1b4883e769d165ea0981c8786a21d97c9688b638dc4aa984a5fca519aa6b9"
+        },
+        {
+          "modelId": "E",
+          "digest": "dac24e12943dea077e16c66d902543bb1f726ffbd3ac364a0528e9b81e964aa0"
+        },
+        {
+          "modelId": "F",
+          "digest": "dac24e12943dea077e16c66d902543bb1f726ffbd3ac364a0528e9b81e964aa0"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "e78dcbb9f1ab5ee9dcde79492e5fd128c2ba14e0c92092f257e031eb7db5a293",
+      "rawResolverInputDigests": [
+        "005887760b79fbc283a3fe51c8efd100943fd08bb1b7d147c168a3402c744a4f"
+      ],
+      "scenarioIds": [
+        "requirement-revoked"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "requirement-revoked:A",
+        "requirement-revoked:B",
+        "requirement-revoked:C",
+        "requirement-revoked:D",
+        "requirement-revoked:E",
+        "requirement-revoked:F"
+      ],
+      "transformationClasses": [
+        "revocation"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "dd166ff7e205dc444ab0dd7bef57391c2ac61202c7ccfd379de62d3cda9586b2"
+        },
+        {
+          "modelId": "B",
+          "digest": "74690ba980f3b9f2538ed9b60ecac9cb17745ab978bd6ed611da2f365bc75b4d"
+        },
+        {
+          "modelId": "C",
+          "digest": "db902682fee67d853f32f6fee5b65b42324f85942481d8eb5656939668791f56"
+        },
+        {
+          "modelId": "D",
+          "digest": "731166d79223ef9cc20a75dc0dfb97a9d16bdea7a441654c0d9cdb06b07c8c46"
+        },
+        {
+          "modelId": "E",
+          "digest": "dd166ff7e205dc444ab0dd7bef57391c2ac61202c7ccfd379de62d3cda9586b2"
+        },
+        {
+          "modelId": "F",
+          "digest": "731166d79223ef9cc20a75dc0dfb97a9d16bdea7a441654c0d9cdb06b07c8c46"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "6957071632ae2edd8654eaf337105350d66c3cdeaa6e94f35175d22fcc46df45",
+      "rawResolverInputDigests": [
+        "f6022d326e1183def113d271ecbbf0f7cefe4864137f097ee46ec70f8828e444"
+      ],
+      "scenarioIds": [
+        "requirement-superseded"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "requirement-superseded:A",
+        "requirement-superseded:B",
+        "requirement-superseded:C",
+        "requirement-superseded:D",
+        "requirement-superseded:E",
+        "requirement-superseded:F"
+      ],
+      "transformationClasses": [
+        "historical-receipt"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "283dc49ddade21c8039e97f3b464273bf87f8692b9ab5d9198ec37d7e6d7d814"
+        },
+        {
+          "modelId": "B",
+          "digest": "2feefb74d373748f7e11fef85716a02383a5554bf7e534c8a2ef3d0fa658f4d7"
+        },
+        {
+          "modelId": "C",
+          "digest": "882de72720c8f26c3897b7a3880eda369ab3e14f5d21703744ff089f25a06a78"
+        },
+        {
+          "modelId": "D",
+          "digest": "bd13fa5bda08520c26394f1a6efc215813a76577258390c51371a8c71b2e334b"
+        },
+        {
+          "modelId": "E",
+          "digest": "283dc49ddade21c8039e97f3b464273bf87f8692b9ab5d9198ec37d7e6d7d814"
+        },
+        {
+          "modelId": "F",
+          "digest": "5f87f690dde92d2835a593a3aec66939c5f0f700c33e9b4354468785f7256669"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "d16fd5a51ec599efdddcebbd9f6a852eb379ff58b2c338d4ef996daf45fbc1a4",
+      "rawResolverInputDigests": [
+        "ccc14c6a405912d88cd289b15a424c6a77771ce8c6f9edb1c0e12dc801f34b74"
+      ],
+      "scenarioIds": [
+        "topology-identity-tamper"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "topology-identity-tamper:A",
+        "topology-identity-tamper:B",
+        "topology-identity-tamper:C",
+        "topology-identity-tamper:D",
+        "topology-identity-tamper:E",
+        "topology-identity-tamper:F"
+      ],
+      "transformationClasses": [
+        "topology-mutation"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "90ba224ca0f2128b12a0e9f4a4594fd8d3cd2beb36fbd010f6659d0dbe00b9ef"
+        },
+        {
+          "modelId": "B",
+          "digest": "90ba224ca0f2128b12a0e9f4a4594fd8d3cd2beb36fbd010f6659d0dbe00b9ef"
+        },
+        {
+          "modelId": "C",
+          "digest": "90ba224ca0f2128b12a0e9f4a4594fd8d3cd2beb36fbd010f6659d0dbe00b9ef"
+        },
+        {
+          "modelId": "D",
+          "digest": "90ba224ca0f2128b12a0e9f4a4594fd8d3cd2beb36fbd010f6659d0dbe00b9ef"
+        },
+        {
+          "modelId": "E",
+          "digest": "90ba224ca0f2128b12a0e9f4a4594fd8d3cd2beb36fbd010f6659d0dbe00b9ef"
+        },
+        {
+          "modelId": "F",
+          "digest": "90ba224ca0f2128b12a0e9f4a4594fd8d3cd2beb36fbd010f6659d0dbe00b9ef"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "0b176890f67cbdcde472ee14afef5eea00b6514133e5b167509ebbf7970f1f40",
+      "rawResolverInputDigests": [
+        "dcf44d2d26f410fbc8631ea664990cf04c05c18dafe9e01652c6ad6510d767e0"
+      ],
+      "scenarioIds": [
+        "topology-cycle"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "topology-cycle:A",
+        "topology-cycle:B",
+        "topology-cycle:C",
+        "topology-cycle:D",
+        "topology-cycle:E",
+        "topology-cycle:F"
+      ],
+      "transformationClasses": [
+        "topology-mutation"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "ce3f2186eda6fcd16addbf8e2baec85468dc547c5e632027c9d9546ff9e45e6d"
+        },
+        {
+          "modelId": "B",
+          "digest": "ce3f2186eda6fcd16addbf8e2baec85468dc547c5e632027c9d9546ff9e45e6d"
+        },
+        {
+          "modelId": "C",
+          "digest": "ce3f2186eda6fcd16addbf8e2baec85468dc547c5e632027c9d9546ff9e45e6d"
+        },
+        {
+          "modelId": "D",
+          "digest": "ce3f2186eda6fcd16addbf8e2baec85468dc547c5e632027c9d9546ff9e45e6d"
+        },
+        {
+          "modelId": "E",
+          "digest": "ce3f2186eda6fcd16addbf8e2baec85468dc547c5e632027c9d9546ff9e45e6d"
+        },
+        {
+          "modelId": "F",
+          "digest": "ce3f2186eda6fcd16addbf8e2baec85468dc547c5e632027c9d9546ff9e45e6d"
+        }
+      ]
+    },
+    {
+      "normalizedResolverInputDigest": "240305d1460c80f19c781e1bbcc7c2228bb34f34f428b6cc41a98ff443c203cd",
+      "rawResolverInputDigests": [
+        "67637fb50ffc97162ea19ee5d76e576f5c5021ec1a6735f112fef8b928fc429d"
+      ],
+      "scenarioIds": [
+        "stale-target"
+      ],
+      "modelIds": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "cellIds": [
+        "stale-target:A",
+        "stale-target:B",
+        "stale-target:C",
+        "stale-target:D",
+        "stale-target:E",
+        "stale-target:F"
+      ],
+      "transformationClasses": [
+        "semantic-input-mutation"
+      ],
+      "reuseReason": "SAME_SCENARIO_ACROSS_MODELS",
+      "outputEqualityExpected": false,
+      "actualOutputDigests": [
+        {
+          "modelId": "A",
+          "digest": "94799b078f7ca479884e693dd852bbeb4fee182a9d836e24cb69610f0ca16f9a"
+        },
+        {
+          "modelId": "B",
+          "digest": "0973376fd0ff1cf8804f93f08904ca1fc75eee5c944daeb552e5ffc8dae02fe6"
+        },
+        {
+          "modelId": "C",
+          "digest": "43ddf7a29a029e7fd2e629aab0bb6f6c32541a3f5d3f35a97f896eea4eef7b26"
+        },
+        {
+          "modelId": "D",
+          "digest": "61915251a0ef29bc92a26403892105adea0879c7b56564ac79ace6fae8d9033b"
+        },
+        {
+          "modelId": "E",
+          "digest": "94799b078f7ca479884e693dd852bbeb4fee182a9d836e24cb69610f0ca16f9a"
+        },
+        {
+          "modelId": "F",
+          "digest": "61915251a0ef29bc92a26403892105adea0879c7b56564ac79ace6fae8d9033b"
+        }
+      ]
+    }
+  ],
+  "temporalResults": {
+    "approvalBeforeRevocationIssuanceAfterRevocation": "DENIED",
+    "issuanceBeforeRevocationValidationAfterRevocation": "VALID",
+    "approvalAfterRevocation": "DENIED",
+    "requirementRevocation": "CURRENT REVOKED; HISTORICAL RECEIPT VALID",
+    "requirementSupersession": "NEW HEAD SELECTED; PRIOR RECEIPT IMMUTABLE"
+  },
+  "sideEffects": {
+    "runtimeReads": 0,
+    "runtimeWrites": 0,
+    "currentPoliciesCreated": 0,
+    "currentExactRequirementsCreated": 0,
+    "currentApprovalsCreated": 0,
+    "currentIssuanceReceiptsCreated": 0,
+    "audienceGrantsChanged": false,
+    "accessAssignmentsChanged": false,
+    "migrations": 0,
+    "liveResolverInvocations": 0,
+    "productionBehaviorChanges": 0
+  },
+  "cells": [
+    {
+      "scenarioId": "baseline-policy",
+      "modelId": "A",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "cf5b3a42340b100c4b54b4a8c0c7882740ca1d2051ba76bb59a6efe4f834e654",
+      "rawResolverInputDigest": "140d7a186e3b434f7b2e9d4d2b990924af8fba8383c8f81c754286d89e3ac697",
+      "normalizedResolverInputDigest": "307a16f161b3d1139b1734d5bc02d127f6ed7e755122cda9137b43e642b265fa",
+      "modelEvaluationInputDigest": "0997126c84e4a976b3d128f4751d5edef5d2da2fb554f52466cd395e065e2fb2",
+      "modelOutputDigest": "3e8e0b64cf34866208f05125eba02e7b993371840bdd57e3f2765ea415d7ccfb"
+    },
+    {
+      "scenarioId": "baseline-policy",
+      "modelId": "B",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "FAMILY_COVERAGE",
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "cf5b3a42340b100c4b54b4a8c0c7882740ca1d2051ba76bb59a6efe4f834e654",
+      "rawResolverInputDigest": "140d7a186e3b434f7b2e9d4d2b990924af8fba8383c8f81c754286d89e3ac697",
+      "normalizedResolverInputDigest": "307a16f161b3d1139b1734d5bc02d127f6ed7e755122cda9137b43e642b265fa",
+      "modelEvaluationInputDigest": "f3e9f0cdad4ffca955dc5a1f6201e06eb318c209cf0c24a9033b303771172ea4",
+      "modelOutputDigest": "308d2d3d928e87e7d6a315d985830a793529b925758e93bbdf079ac37d99f44a"
+    },
+    {
+      "scenarioId": "baseline-policy",
+      "modelId": "C",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "resolved",
+      "basis": "field-family-policy",
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "c64b7bc3de1e58af455f6fb0485202ce000b75f3d06ef950d13088033d095f0b",
+      "rawResolverInputDigest": "140d7a186e3b434f7b2e9d4d2b990924af8fba8383c8f81c754286d89e3ac697",
+      "normalizedResolverInputDigest": "307a16f161b3d1139b1734d5bc02d127f6ed7e755122cda9137b43e642b265fa",
+      "modelEvaluationInputDigest": "616468ac8e2a0baed8b0b9e8c7b89f99ef4cc5c32ca7fa37a0b5a05ad04f4936",
+      "modelOutputDigest": "2f139700f667c59440e96d3d34ff8273afd572a878a9d86a4e4376641775ab6e"
+    },
+    {
+      "scenarioId": "baseline-policy",
+      "modelId": "D",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "resolved",
+      "basis": "field-family-policy",
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "c64b7bc3de1e58af455f6fb0485202ce000b75f3d06ef950d13088033d095f0b",
+      "rawResolverInputDigest": "140d7a186e3b434f7b2e9d4d2b990924af8fba8383c8f81c754286d89e3ac697",
+      "normalizedResolverInputDigest": "307a16f161b3d1139b1734d5bc02d127f6ed7e755122cda9137b43e642b265fa",
+      "modelEvaluationInputDigest": "09765f6db40bfecdff414a2a187872e3bb3b171e69a27b45f5eacf92368fc018",
+      "modelOutputDigest": "c002fa61c45501c6769c79a3869d5997c6f3988be278dd15420afebc576c830c"
+    },
+    {
+      "scenarioId": "baseline-policy",
+      "modelId": "E",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "cf5b3a42340b100c4b54b4a8c0c7882740ca1d2051ba76bb59a6efe4f834e654",
+      "rawResolverInputDigest": "140d7a186e3b434f7b2e9d4d2b990924af8fba8383c8f81c754286d89e3ac697",
+      "normalizedResolverInputDigest": "307a16f161b3d1139b1734d5bc02d127f6ed7e755122cda9137b43e642b265fa",
+      "modelEvaluationInputDigest": "ddbe4fed397e83d051cbf6583f89f95e28c5063fc9350c7e2bb57b1f7e33c6d4",
+      "modelOutputDigest": "9f23b467104ab765fda7101b80c5cc5ae63db61ca26dc4ba5a788cd9c419d04f"
+    },
+    {
+      "scenarioId": "baseline-policy",
+      "modelId": "F",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "cf5b3a42340b100c4b54b4a8c0c7882740ca1d2051ba76bb59a6efe4f834e654",
+      "rawResolverInputDigest": "140d7a186e3b434f7b2e9d4d2b990924af8fba8383c8f81c754286d89e3ac697",
+      "normalizedResolverInputDigest": "307a16f161b3d1139b1734d5bc02d127f6ed7e755122cda9137b43e642b265fa",
+      "modelEvaluationInputDigest": "a609de76d56de039eac2da94ccb21b341a65407342c38f2ef3bea1e4a14e4edc",
+      "modelOutputDigest": "72c9a7ca48799b1bcaf1489e79ede0910e0756152d2b93d24c8e5a759647eda7"
+    },
+    {
+      "scenarioId": "missing-policy",
+      "modelId": "A",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "da2a454bc81fe414fe3dae2f2f0bb621e0ac1d5118cdef11182b6e42dc7da99d",
+      "rawResolverInputDigest": "bf6da394a6194c7601ecc3d93f70c42b2946c0e18a8f321a7164ff870cfa8548",
+      "normalizedResolverInputDigest": "e30895df291a730a98eaad2c2f9fbfaaa7c5b49436931811454d927ea79fa1a5",
+      "modelEvaluationInputDigest": "b2a47320d4bd06da0e307b8fcbdf38f86636e39d02cb56c850016420c81e887f",
+      "modelOutputDigest": "8f80a0ff502122076764a84694721cf48392d4219224120ff8959d4561736f51"
+    },
+    {
+      "scenarioId": "missing-policy",
+      "modelId": "B",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "da2a454bc81fe414fe3dae2f2f0bb621e0ac1d5118cdef11182b6e42dc7da99d",
+      "rawResolverInputDigest": "bf6da394a6194c7601ecc3d93f70c42b2946c0e18a8f321a7164ff870cfa8548",
+      "normalizedResolverInputDigest": "e30895df291a730a98eaad2c2f9fbfaaa7c5b49436931811454d927ea79fa1a5",
+      "modelEvaluationInputDigest": "64798abb6387358988143d72c4307dd1b25652437a3ba65d5ceed730d02c585b",
+      "modelOutputDigest": "160f7e89e48a327ef3a7ec829145b6940bce378b96346430195b250d9d4e70a9"
+    },
+    {
+      "scenarioId": "missing-policy",
+      "modelId": "C",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "da2a454bc81fe414fe3dae2f2f0bb621e0ac1d5118cdef11182b6e42dc7da99d",
+      "rawResolverInputDigest": "bf6da394a6194c7601ecc3d93f70c42b2946c0e18a8f321a7164ff870cfa8548",
+      "normalizedResolverInputDigest": "e30895df291a730a98eaad2c2f9fbfaaa7c5b49436931811454d927ea79fa1a5",
+      "modelEvaluationInputDigest": "8f6b4d8a8f435d29baa1420801b95df19115fb0933639ad3a4be3e11369ea096",
+      "modelOutputDigest": "c27aa5dc955c0167aed3c6efda24d19c4fada998be034053b5139bc1c300577c"
+    },
+    {
+      "scenarioId": "missing-policy",
+      "modelId": "D",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "da2a454bc81fe414fe3dae2f2f0bb621e0ac1d5118cdef11182b6e42dc7da99d",
+      "rawResolverInputDigest": "bf6da394a6194c7601ecc3d93f70c42b2946c0e18a8f321a7164ff870cfa8548",
+      "normalizedResolverInputDigest": "e30895df291a730a98eaad2c2f9fbfaaa7c5b49436931811454d927ea79fa1a5",
+      "modelEvaluationInputDigest": "b551bea70895f8e2fd708fd9d8aa5131ea1989ce6ba028f8a216ee826dc71ee2",
+      "modelOutputDigest": "b39cade833c6bdd2b38dcd8d828509d1a40196d3d96b05cbbb68d94fc42d91d1"
+    },
+    {
+      "scenarioId": "missing-policy",
+      "modelId": "E",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "da2a454bc81fe414fe3dae2f2f0bb621e0ac1d5118cdef11182b6e42dc7da99d",
+      "rawResolverInputDigest": "bf6da394a6194c7601ecc3d93f70c42b2946c0e18a8f321a7164ff870cfa8548",
+      "normalizedResolverInputDigest": "e30895df291a730a98eaad2c2f9fbfaaa7c5b49436931811454d927ea79fa1a5",
+      "modelEvaluationInputDigest": "a32abc12c0ab2209cb250927505846bd77e53f2578fbdfeb1e0472d44b92e471",
+      "modelOutputDigest": "b45d39d1d9c06b107dd08cfaa887fa903c3c2085bd490f23be67254ab9d95e7e"
+    },
+    {
+      "scenarioId": "missing-policy",
+      "modelId": "F",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "da2a454bc81fe414fe3dae2f2f0bb621e0ac1d5118cdef11182b6e42dc7da99d",
+      "rawResolverInputDigest": "bf6da394a6194c7601ecc3d93f70c42b2946c0e18a8f321a7164ff870cfa8548",
+      "normalizedResolverInputDigest": "e30895df291a730a98eaad2c2f9fbfaaa7c5b49436931811454d927ea79fa1a5",
+      "modelEvaluationInputDigest": "39ddba5f1a3ae0296e460de25d8df0b5f3ceaa35ec89c4fb247708f2560dd31c",
+      "modelOutputDigest": "e1925d76b1b8608cc8b69f04098981fb715818315ca7d6f5ed6638cf8ff5cc42"
+    },
+    {
+      "scenarioId": "organization-policy-dual-control",
+      "modelId": "A",
+      "transformation": "approval-mutation",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "dfb67a6a7fa6f7339bd1146b9cee22dc5a1d8b993ad014a9c673812fb3c65593",
+      "rawResolverInputDigest": "d03d819b300f7d3fb263928a4f4d5b5b7791939159851d52b0caf4607deca5a6",
+      "normalizedResolverInputDigest": "25019bbf7c93ed123a756f675f5a21c79ca6e917d6d1c2612e7acc146cb26c31",
+      "modelEvaluationInputDigest": "421a3dc11007e3c64dc735695c5ca59f5382ea0eb2888f850dd982f9a45a04e8",
+      "modelOutputDigest": "f65e5e2f7453680622955b61769c326deb6a960829faef9943c4742209d6201d"
+    },
+    {
+      "scenarioId": "organization-policy-dual-control",
+      "modelId": "B",
+      "transformation": "approval-mutation",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "dfb67a6a7fa6f7339bd1146b9cee22dc5a1d8b993ad014a9c673812fb3c65593",
+      "rawResolverInputDigest": "d03d819b300f7d3fb263928a4f4d5b5b7791939159851d52b0caf4607deca5a6",
+      "normalizedResolverInputDigest": "25019bbf7c93ed123a756f675f5a21c79ca6e917d6d1c2612e7acc146cb26c31",
+      "modelEvaluationInputDigest": "fd76e395b7aa2180a2534029454d033f3fb264e23e335a892b9f3288b3af1dad",
+      "modelOutputDigest": "e10da2f4085b70103a3952e85c7aaabb8706568475ad0894ef2a08e2943b5d3a"
+    },
+    {
+      "scenarioId": "organization-policy-dual-control",
+      "modelId": "C",
+      "transformation": "approval-mutation",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "resolved",
+      "basis": "field-family-policy",
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "3d7e987c6b631d0858675aa880e0a3784cc76a0d9483480441068c4db12c814b",
+      "rawResolverInputDigest": "d03d819b300f7d3fb263928a4f4d5b5b7791939159851d52b0caf4607deca5a6",
+      "normalizedResolverInputDigest": "25019bbf7c93ed123a756f675f5a21c79ca6e917d6d1c2612e7acc146cb26c31",
+      "modelEvaluationInputDigest": "4c061dc89d6afe22428be420dd795d128464f22c0779678cbe38601fc32262ea",
+      "modelOutputDigest": "8343da7ca90a81700d8d02e02a51941e60f27f866e98d2f1e84566795ccd3331"
+    },
+    {
+      "scenarioId": "organization-policy-dual-control",
+      "modelId": "D",
+      "transformation": "approval-mutation",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "resolved",
+      "basis": "field-family-policy",
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "3d7e987c6b631d0858675aa880e0a3784cc76a0d9483480441068c4db12c814b",
+      "rawResolverInputDigest": "d03d819b300f7d3fb263928a4f4d5b5b7791939159851d52b0caf4607deca5a6",
+      "normalizedResolverInputDigest": "25019bbf7c93ed123a756f675f5a21c79ca6e917d6d1c2612e7acc146cb26c31",
+      "modelEvaluationInputDigest": "8fff1a8dddd562b8e7f6efebf8eed8ea2c3c085453a2359cfab8eda89f1d001b",
+      "modelOutputDigest": "f284a54b4abb93ef9a79260d9118bdd55b00d83213622411f530afdfc5443e0d"
+    },
+    {
+      "scenarioId": "organization-policy-dual-control",
+      "modelId": "E",
+      "transformation": "approval-mutation",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "dfb67a6a7fa6f7339bd1146b9cee22dc5a1d8b993ad014a9c673812fb3c65593",
+      "rawResolverInputDigest": "d03d819b300f7d3fb263928a4f4d5b5b7791939159851d52b0caf4607deca5a6",
+      "normalizedResolverInputDigest": "25019bbf7c93ed123a756f675f5a21c79ca6e917d6d1c2612e7acc146cb26c31",
+      "modelEvaluationInputDigest": "fa6978de9eec14f44e88a9826267d471b4b0e10ab1edd0100f1c88b4942d9ee5",
+      "modelOutputDigest": "4b559935f45402cf04f35b3128dc83b2d30b0a43b456889b118dc3be0bd87e89"
+    },
+    {
+      "scenarioId": "organization-policy-dual-control",
+      "modelId": "F",
+      "transformation": "approval-mutation",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "dfb67a6a7fa6f7339bd1146b9cee22dc5a1d8b993ad014a9c673812fb3c65593",
+      "rawResolverInputDigest": "d03d819b300f7d3fb263928a4f4d5b5b7791939159851d52b0caf4607deca5a6",
+      "normalizedResolverInputDigest": "25019bbf7c93ed123a756f675f5a21c79ca6e917d6d1c2612e7acc146cb26c31",
+      "modelEvaluationInputDigest": "cb86b9e3246bfdb23090370ed572a9488e17f4265e7c723e44d71713bcd7381a",
+      "modelOutputDigest": "71df49443c03d8a6c4f4d6f66829ec91e064ce3cd2b88a02fbcb31691838afbb"
+    },
+    {
+      "scenarioId": "exact-equal",
+      "modelId": "A",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "b7660be842e8a4ef1285d91ff22001704db4d3e31bb01ceb4a41fbcf287b2f7f",
+      "rawResolverInputDigest": "966697afc236e275dea4d4e5a9edf9f59045e49e446953e8b1c95efbfadcd8dc",
+      "normalizedResolverInputDigest": "960c542f6f631d7f4fa78e2931523272c96a899cb522556e6db20bcfcc23ca0a",
+      "modelEvaluationInputDigest": "62f06213f401d2b9af94a8aec9812262d3f33b1baa0e505a8dcead2b3d3af25b",
+      "modelOutputDigest": "965873a45087f807838387546708eb2cd737358d0b760ceac2297cc7cf40de1f"
+    },
+    {
+      "scenarioId": "exact-equal",
+      "modelId": "B",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "resolved",
+      "basis": "exact-field-record",
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "f6f8bcec6a8415af19e06682cdc42a3f7ba47c9316c227a8a265872c897189ee",
+      "rawResolverInputDigest": "966697afc236e275dea4d4e5a9edf9f59045e49e446953e8b1c95efbfadcd8dc",
+      "normalizedResolverInputDigest": "960c542f6f631d7f4fa78e2931523272c96a899cb522556e6db20bcfcc23ca0a",
+      "modelEvaluationInputDigest": "3fc7b9defc0ce3ddb3771d0a946f6645cb0772d9ec0fea9db1c4aacff4e1c066",
+      "modelOutputDigest": "8d23f6a9c06c0c0036805e969f60b465fe3eff86245ba9ea9d25afdfa32d8956"
+    },
+    {
+      "scenarioId": "exact-equal",
+      "modelId": "C",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "resolved",
+      "basis": "field-family-policy",
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "3bc85eccbe62f948ff79ef1762f5252eaea2e6335b137e86e3fa75b332001f17",
+      "rawResolverInputDigest": "966697afc236e275dea4d4e5a9edf9f59045e49e446953e8b1c95efbfadcd8dc",
+      "normalizedResolverInputDigest": "960c542f6f631d7f4fa78e2931523272c96a899cb522556e6db20bcfcc23ca0a",
+      "modelEvaluationInputDigest": "cda1137eee9598e25000f0e2f6a8e5beefa7a89a90449d3936035dea8cef56a9",
+      "modelOutputDigest": "ad205ff87e0c300e029925e7b9aa195339a57801f55a1058d65134369eba76ae"
+    },
+    {
+      "scenarioId": "exact-equal",
+      "modelId": "D",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "resolved",
+      "basis": "exact-object-override",
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 2,
+      "operationOutputDigest": "3f89a74527a06f6ed84b528691cc1b31ca69160430dc663c66cc84461c92438d",
+      "rawResolverInputDigest": "966697afc236e275dea4d4e5a9edf9f59045e49e446953e8b1c95efbfadcd8dc",
+      "normalizedResolverInputDigest": "960c542f6f631d7f4fa78e2931523272c96a899cb522556e6db20bcfcc23ca0a",
+      "modelEvaluationInputDigest": "ab40920e7c56266cd0d36b78149431632e6b7968e92ca03de9cf2d9f7bf419fb",
+      "modelOutputDigest": "44a1697b984ce50a0b024370a6da12d33fd276bd47c375a17adbb4d32e7613c4"
+    },
+    {
+      "scenarioId": "exact-equal",
+      "modelId": "E",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "b7660be842e8a4ef1285d91ff22001704db4d3e31bb01ceb4a41fbcf287b2f7f",
+      "rawResolverInputDigest": "966697afc236e275dea4d4e5a9edf9f59045e49e446953e8b1c95efbfadcd8dc",
+      "normalizedResolverInputDigest": "960c542f6f631d7f4fa78e2931523272c96a899cb522556e6db20bcfcc23ca0a",
+      "modelEvaluationInputDigest": "d16d834e9f1dd53b3b9ef1186ef04e451e45847035cb55fa18ead23f023c3692",
+      "modelOutputDigest": "2497b23fc504206bbc8b38a99eff15232ed2f47c735bd1e19c44b64001eb5070"
+    },
+    {
+      "scenarioId": "exact-equal",
+      "modelId": "F",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "9eaf9e2809586c8a45cf569a8a66d81cad221deec74fbbd0aa89712a288f61d0",
+      "rawResolverInputDigest": "966697afc236e275dea4d4e5a9edf9f59045e49e446953e8b1c95efbfadcd8dc",
+      "normalizedResolverInputDigest": "960c542f6f631d7f4fa78e2931523272c96a899cb522556e6db20bcfcc23ca0a",
+      "modelEvaluationInputDigest": "2ff3d163120b6e4c502e89b15fe0b89ca4d8c6633b6993e4259ac80fc13e7f08",
+      "modelOutputDigest": "b141850b0bd8a50c74d595ee6eb9177669d6e561c65aafd74e92f283ef64652f"
+    },
+    {
+      "scenarioId": "exact-narrower",
+      "modelId": "A",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "7ee81b19cefb004323b3cddbc70ba1da3e1aab28d4388ea20731433558a63892",
+      "rawResolverInputDigest": "e212615e02a60f93fbadc0c7664ba62db2ed8424eaaf09b73f4aa7880f0b9817",
+      "normalizedResolverInputDigest": "58be318651f2b9ed9d6a5ecc6c00d88abf329b2c231c016a4283351d77591a85",
+      "modelEvaluationInputDigest": "18ffe3bb3706e0568c85ab85120016b3aa08c9471c88787f0a68c4b7775b5f38",
+      "modelOutputDigest": "395fca870cb9fb09fbd15c3f7754c19d004c31aa7578178fc6d495d691a0183e"
+    },
+    {
+      "scenarioId": "exact-narrower",
+      "modelId": "B",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "resolved",
+      "basis": "exact-field-record",
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "0346ade1cc06fd2cbe60184e945df8b1066afd84097db1c709bbadda2e74a052",
+      "rawResolverInputDigest": "e212615e02a60f93fbadc0c7664ba62db2ed8424eaaf09b73f4aa7880f0b9817",
+      "normalizedResolverInputDigest": "58be318651f2b9ed9d6a5ecc6c00d88abf329b2c231c016a4283351d77591a85",
+      "modelEvaluationInputDigest": "361c1e2e3cab210cfd52403caeb317c539ff5f03d3191e2871be3584ef5f3e61",
+      "modelOutputDigest": "5ca5a4c575763a69dd617c2ae9a48adc9672a76f6c73f34c16a6b115cc8875a5"
+    },
+    {
+      "scenarioId": "exact-narrower",
+      "modelId": "C",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "resolved",
+      "basis": "field-family-policy",
+      "securityViolations": [],
+      "operationalGaps": [
+        "EXACT_EXCEPTION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "35f48d510e96404bb583f355ca0d6ebcda05da41734517c129bfd6a6c3ee79f8",
+      "rawResolverInputDigest": "e212615e02a60f93fbadc0c7664ba62db2ed8424eaaf09b73f4aa7880f0b9817",
+      "normalizedResolverInputDigest": "58be318651f2b9ed9d6a5ecc6c00d88abf329b2c231c016a4283351d77591a85",
+      "modelEvaluationInputDigest": "ad74b84f88ae823cf15df5cf5b2968b380927790d1eed82e03fa1bbe8672d881",
+      "modelOutputDigest": "d3f525329093a9671b58a87bbfb9b24ffa723f0b9040e1bbe956586666a51bb6"
+    },
+    {
+      "scenarioId": "exact-narrower",
+      "modelId": "D",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "resolved",
+      "basis": "exact-object-override",
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 2,
+      "operationOutputDigest": "182f49c060d2b62b49a917d08a6fdb403dc6af773c7bc4b23a438f9becec9ca2",
+      "rawResolverInputDigest": "e212615e02a60f93fbadc0c7664ba62db2ed8424eaaf09b73f4aa7880f0b9817",
+      "normalizedResolverInputDigest": "58be318651f2b9ed9d6a5ecc6c00d88abf329b2c231c016a4283351d77591a85",
+      "modelEvaluationInputDigest": "2718adca09fd0e8a153e89c6e5dc6b5cff215d052afc98a3b545f6f2058ef553",
+      "modelOutputDigest": "fe90408e9d462b48a2268a45bfbdd6ace178d9ecd7b8de30f4c6d03edec46309"
+    },
+    {
+      "scenarioId": "exact-narrower",
+      "modelId": "E",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "7ee81b19cefb004323b3cddbc70ba1da3e1aab28d4388ea20731433558a63892",
+      "rawResolverInputDigest": "e212615e02a60f93fbadc0c7664ba62db2ed8424eaaf09b73f4aa7880f0b9817",
+      "normalizedResolverInputDigest": "58be318651f2b9ed9d6a5ecc6c00d88abf329b2c231c016a4283351d77591a85",
+      "modelEvaluationInputDigest": "83636775e9f34635e215735f1843e4c6f32024b2123bc1fd82e119f85eb41c6a",
+      "modelOutputDigest": "61e66127681b8a9a1a732cd49f2e0b320c5bc5e84af579d5531e24bf9a49f888"
+    },
+    {
+      "scenarioId": "exact-narrower",
+      "modelId": "F",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "78a45eff04979d77215de301894246c7f44b7e743afbb15a654daf5601e9aaf2",
+      "rawResolverInputDigest": "e212615e02a60f93fbadc0c7664ba62db2ed8424eaaf09b73f4aa7880f0b9817",
+      "normalizedResolverInputDigest": "58be318651f2b9ed9d6a5ecc6c00d88abf329b2c231c016a4283351d77591a85",
+      "modelEvaluationInputDigest": "8410c80483728fc679c84cf07bfc2d1e40c1acaf4b39e8158aae8d86fc8a1942",
+      "modelOutputDigest": "fd4ff4ce134a0aa62ea49504c3a36ff48724d71f667fa9aec3c607eadb5946df"
+    },
+    {
+      "scenarioId": "exact-broader-dual-control",
+      "modelId": "A",
+      "transformation": "approval-mutation",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "d99eff4b4d6d52aa60f6acaf1c5cdff8568e582be2adad0ee77dce1bc41d9c0c",
+      "rawResolverInputDigest": "2f3e2099ba2961b5633d6d0078513bb878c2e9954b0823896b1a4d41423036fb",
+      "normalizedResolverInputDigest": "e74bfd3013c5dcdd2229e5d28d184dec4825bdc2ee4eb8f94286fa19edb69c0e",
+      "modelEvaluationInputDigest": "29e3da5aac72fe5e15c10b92d06756f96c8e0f4cb4937a56cf306fbb9c652f4f",
+      "modelOutputDigest": "061550568bf426220e024e14039fbf2b43c128dbc0d2035eaf3c297176c03ef3"
+    },
+    {
+      "scenarioId": "exact-broader-dual-control",
+      "modelId": "B",
+      "transformation": "approval-mutation",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "resolved",
+      "basis": "exact-field-record",
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "8f8294e82b4875100697dc1ab42e6d881503031fb360ad3a7fecbce864b82a1f",
+      "rawResolverInputDigest": "2f3e2099ba2961b5633d6d0078513bb878c2e9954b0823896b1a4d41423036fb",
+      "normalizedResolverInputDigest": "e74bfd3013c5dcdd2229e5d28d184dec4825bdc2ee4eb8f94286fa19edb69c0e",
+      "modelEvaluationInputDigest": "9e8487356523b8b579a3f49c5ad25bbb90695d06ee0e6ad57ffd92f7d7687dff",
+      "modelOutputDigest": "6c5e4729b735a3e1da827806cc2bc73b17f803164d220498e72b454bedc3e6fd"
+    },
+    {
+      "scenarioId": "exact-broader-dual-control",
+      "modelId": "C",
+      "transformation": "approval-mutation",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "resolved",
+      "basis": "field-family-policy",
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "3e4b2e255e376cb811f5b8700c98215c8c42b359c2f07b1073a4d5aa6d6921f4",
+      "rawResolverInputDigest": "2f3e2099ba2961b5633d6d0078513bb878c2e9954b0823896b1a4d41423036fb",
+      "normalizedResolverInputDigest": "e74bfd3013c5dcdd2229e5d28d184dec4825bdc2ee4eb8f94286fa19edb69c0e",
+      "modelEvaluationInputDigest": "b958cb4262125b65da1c9c5541d7a9fe5e2e9f7db91757a8e33f63a422ebcac5",
+      "modelOutputDigest": "844162201781239c9bb0a8c6195695e9495c3708a29e5b00345d44564b4c9dfc"
+    },
+    {
+      "scenarioId": "exact-broader-dual-control",
+      "modelId": "D",
+      "transformation": "approval-mutation",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "resolved",
+      "basis": "exact-object-override",
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 2,
+      "operationOutputDigest": "efd379eb9d946ceaadbd3b5f8b5c1f0c7ca841b23dad7a48e69b03e23057c1ea",
+      "rawResolverInputDigest": "2f3e2099ba2961b5633d6d0078513bb878c2e9954b0823896b1a4d41423036fb",
+      "normalizedResolverInputDigest": "e74bfd3013c5dcdd2229e5d28d184dec4825bdc2ee4eb8f94286fa19edb69c0e",
+      "modelEvaluationInputDigest": "ce3a6782ffbe9a5d20a40f46eee40fd45acb5b045792284802cc3983e264e31d",
+      "modelOutputDigest": "6cbfbde315ffb2343bc116e29269f70646cd529fbe43384ccce32e8c914ba705"
+    },
+    {
+      "scenarioId": "exact-broader-dual-control",
+      "modelId": "E",
+      "transformation": "approval-mutation",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "d99eff4b4d6d52aa60f6acaf1c5cdff8568e582be2adad0ee77dce1bc41d9c0c",
+      "rawResolverInputDigest": "2f3e2099ba2961b5633d6d0078513bb878c2e9954b0823896b1a4d41423036fb",
+      "normalizedResolverInputDigest": "e74bfd3013c5dcdd2229e5d28d184dec4825bdc2ee4eb8f94286fa19edb69c0e",
+      "modelEvaluationInputDigest": "250d6b3bd8927678312d28132f7d989fbc1ba5b066b1c6cca93670696db2f76a",
+      "modelOutputDigest": "f1f0c2f9f78883fe4383f397e5b5cc7b93e29888f3e13c096651fb3ad36bd5c2"
+    },
+    {
+      "scenarioId": "exact-broader-dual-control",
+      "modelId": "F",
+      "transformation": "approval-mutation",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "d42d5c06a43fc799f09ac8c10fe42cbae6ccbb8f01abd2c9e23c1e4d93f7e792",
+      "rawResolverInputDigest": "2f3e2099ba2961b5633d6d0078513bb878c2e9954b0823896b1a4d41423036fb",
+      "normalizedResolverInputDigest": "e74bfd3013c5dcdd2229e5d28d184dec4825bdc2ee4eb8f94286fa19edb69c0e",
+      "modelEvaluationInputDigest": "109417d12936350a76be5a9985f411e4ec17531a68cd8326d95a983ea577c431",
+      "modelOutputDigest": "d68974f229da9812ce72ec1fae6a1dd86e7ed1ab3e0bc7bb1c2531dbace37d21"
+    },
+    {
+      "scenarioId": "exact-incomparable",
+      "modelId": "A",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "c7e1fba1361bd588f06a115a5eec5ef5f31d90d1dbbe2edfcf2d26c1bc1e0170",
+      "rawResolverInputDigest": "1d2a407c8d1c4209b703765ef5df5006dd01e0514582608301773368c13f7278",
+      "normalizedResolverInputDigest": "bde97c819c05aa40ea852fc3822e829bb1a9a3e3566a1c54a973b26f56d0211d",
+      "modelEvaluationInputDigest": "b70d58f5ccd5b1d215e318061cfd4b651e72365866e53914b5bb1f51de55fa05",
+      "modelOutputDigest": "bd0f43fc076545d1cc90edf3b519fb61fcf165bfafa9c80706d10037822e5979"
+    },
+    {
+      "scenarioId": "exact-incomparable",
+      "modelId": "B",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "4affbc243413d8aebff8b66902ee920d687e386fb4e7ca593cd3eb1b7f4dfcd7",
+      "rawResolverInputDigest": "1d2a407c8d1c4209b703765ef5df5006dd01e0514582608301773368c13f7278",
+      "normalizedResolverInputDigest": "bde97c819c05aa40ea852fc3822e829bb1a9a3e3566a1c54a973b26f56d0211d",
+      "modelEvaluationInputDigest": "8970d683d8604671ac32f7414d141661740c12d467d7804945ca669798505a07",
+      "modelOutputDigest": "acf26495c255040d5efdc462b69edbd6148042c16359084f0bb400349acc4745"
+    },
+    {
+      "scenarioId": "exact-incomparable",
+      "modelId": "C",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "resolved",
+      "basis": "field-family-policy",
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "a24e12e3fffbfaa768c9c599b1c5efaa79b8ce493dbe6ba33fafcd5f0888a573",
+      "rawResolverInputDigest": "1d2a407c8d1c4209b703765ef5df5006dd01e0514582608301773368c13f7278",
+      "normalizedResolverInputDigest": "bde97c819c05aa40ea852fc3822e829bb1a9a3e3566a1c54a973b26f56d0211d",
+      "modelEvaluationInputDigest": "704c7e8329dbd6f60fcb88ea4700c53e75007850d2acd58c564327a818867a15",
+      "modelOutputDigest": "873da908d612148cda00249cd6e3fab284bc019c4929c622924f97081131f9a7"
+    },
+    {
+      "scenarioId": "exact-incomparable",
+      "modelId": "D",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 2,
+      "operationOutputDigest": "0332eaaf43c0ba5d92ade68132fe045b852c1990e2bf17688b76d89ad4fa9ed9",
+      "rawResolverInputDigest": "1d2a407c8d1c4209b703765ef5df5006dd01e0514582608301773368c13f7278",
+      "normalizedResolverInputDigest": "bde97c819c05aa40ea852fc3822e829bb1a9a3e3566a1c54a973b26f56d0211d",
+      "modelEvaluationInputDigest": "197bdadaebb50ec271fd3a88571128ef900bb4c2e92d04e8ffdd200678b74948",
+      "modelOutputDigest": "5529d0c3976517b2747ea2d0a0f196fde821248774d34d89a1d5ee73731deb40"
+    },
+    {
+      "scenarioId": "exact-incomparable",
+      "modelId": "E",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "c7e1fba1361bd588f06a115a5eec5ef5f31d90d1dbbe2edfcf2d26c1bc1e0170",
+      "rawResolverInputDigest": "1d2a407c8d1c4209b703765ef5df5006dd01e0514582608301773368c13f7278",
+      "normalizedResolverInputDigest": "bde97c819c05aa40ea852fc3822e829bb1a9a3e3566a1c54a973b26f56d0211d",
+      "modelEvaluationInputDigest": "098586e547f01ab0c282ebd57d989467418f447ac7a8f2afad98ff3c2e459bda",
+      "modelOutputDigest": "8b0df9ff2a92444680caa4a23723a815d57d413c21378680e49cdd2ce0b1145e"
+    },
+    {
+      "scenarioId": "exact-incomparable",
+      "modelId": "F",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "0332eaaf43c0ba5d92ade68132fe045b852c1990e2bf17688b76d89ad4fa9ed9",
+      "rawResolverInputDigest": "1d2a407c8d1c4209b703765ef5df5006dd01e0514582608301773368c13f7278",
+      "normalizedResolverInputDigest": "bde97c819c05aa40ea852fc3822e829bb1a9a3e3566a1c54a973b26f56d0211d",
+      "modelEvaluationInputDigest": "0eae60873b92f26ad6f9a4c2073c810d7a1686adf2eb3554dde5ef3a38ce5f06",
+      "modelOutputDigest": "2c5d5c351d853b2b7ce4114a700eeec443e8f2611c14147a2fb5e1c7c1e3cd4c"
+    },
+    {
+      "scenarioId": "missing-receipt",
+      "modelId": "A",
+      "transformation": "issuance-mutation",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "20567fa981651fd6816a2c991b7ba9466f718617b4253b298a63cc0b9c2f2c43",
+      "rawResolverInputDigest": "182cea34941d3b89932cb01eecbea1e2efd64b72aa53afbed346b6ef13cdcae2",
+      "normalizedResolverInputDigest": "0876c7d3949953cfa70e40e23a47a959563977b99a6bbc7e938b3bfad1cd8e36",
+      "modelEvaluationInputDigest": "4db5e09e48280aa40eb159c5dadd1ae2cda2b73db71f8238769a97ca8168d6ff",
+      "modelOutputDigest": "8b88543ccb03ffee14aa674c6d26483e21b35e2f080e80de3dfe8ca306c2b22a"
+    },
+    {
+      "scenarioId": "missing-receipt",
+      "modelId": "B",
+      "transformation": "issuance-mutation",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "20567fa981651fd6816a2c991b7ba9466f718617b4253b298a63cc0b9c2f2c43",
+      "rawResolverInputDigest": "182cea34941d3b89932cb01eecbea1e2efd64b72aa53afbed346b6ef13cdcae2",
+      "normalizedResolverInputDigest": "0876c7d3949953cfa70e40e23a47a959563977b99a6bbc7e938b3bfad1cd8e36",
+      "modelEvaluationInputDigest": "fe0cb47e91d480b5e06344ea2ad93770226892c54489fd17eff7c7c25eff0768",
+      "modelOutputDigest": "21d3b1cfbbb88dab3288061de8fbb8c1f85c001e2d98937c6bf015fe2c436f12"
+    },
+    {
+      "scenarioId": "missing-receipt",
+      "modelId": "C",
+      "transformation": "issuance-mutation",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "6d94e1a7deb0cc6f4b179b2afe546691f55dd8b7f284127f8ecdc18f18cd27f0",
+      "rawResolverInputDigest": "182cea34941d3b89932cb01eecbea1e2efd64b72aa53afbed346b6ef13cdcae2",
+      "normalizedResolverInputDigest": "0876c7d3949953cfa70e40e23a47a959563977b99a6bbc7e938b3bfad1cd8e36",
+      "modelEvaluationInputDigest": "4cd0508e5c34e4346b7f656d3ffcd9194c0174ccd2bf4f0f2671af96ea6febe2",
+      "modelOutputDigest": "2085fe005d01853a812f0e418e4ca9703b54754c37b41ab5ebdbe661a68a01c1"
+    },
+    {
+      "scenarioId": "missing-receipt",
+      "modelId": "D",
+      "transformation": "issuance-mutation",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "6d94e1a7deb0cc6f4b179b2afe546691f55dd8b7f284127f8ecdc18f18cd27f0",
+      "rawResolverInputDigest": "182cea34941d3b89932cb01eecbea1e2efd64b72aa53afbed346b6ef13cdcae2",
+      "normalizedResolverInputDigest": "0876c7d3949953cfa70e40e23a47a959563977b99a6bbc7e938b3bfad1cd8e36",
+      "modelEvaluationInputDigest": "ed2b97861125d704514950bb3554774ca385092cef87010ee9f7c9c90987efad",
+      "modelOutputDigest": "e60eeb25b04eb7b52728250f93e8a3cc17c685a5da28f1b21c725c5fc4925535"
+    },
+    {
+      "scenarioId": "missing-receipt",
+      "modelId": "E",
+      "transformation": "issuance-mutation",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "20567fa981651fd6816a2c991b7ba9466f718617b4253b298a63cc0b9c2f2c43",
+      "rawResolverInputDigest": "182cea34941d3b89932cb01eecbea1e2efd64b72aa53afbed346b6ef13cdcae2",
+      "normalizedResolverInputDigest": "0876c7d3949953cfa70e40e23a47a959563977b99a6bbc7e938b3bfad1cd8e36",
+      "modelEvaluationInputDigest": "0b2448206d9874dedf0bfd27a0685abfb155bd34e85d62b058ab44e58162ff44",
+      "modelOutputDigest": "4e82c0132dab03a49e02d0b4013c381bd56e0209bdd58dc8ca13230ce201c172"
+    },
+    {
+      "scenarioId": "missing-receipt",
+      "modelId": "F",
+      "transformation": "issuance-mutation",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "20567fa981651fd6816a2c991b7ba9466f718617b4253b298a63cc0b9c2f2c43",
+      "rawResolverInputDigest": "182cea34941d3b89932cb01eecbea1e2efd64b72aa53afbed346b6ef13cdcae2",
+      "normalizedResolverInputDigest": "0876c7d3949953cfa70e40e23a47a959563977b99a6bbc7e938b3bfad1cd8e36",
+      "modelEvaluationInputDigest": "5361b2879f77554cb1531c692789ca3bcd6297d0110e4defe89e0c43dad45dd2",
+      "modelOutputDigest": "0787eeb6335aeab5406efe03c3634ecd8c4d5821de0e2420c36eaca404597df8"
+    },
+    {
+      "scenarioId": "receipt-other-target",
+      "modelId": "A",
+      "transformation": "tamper",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "c20d1b49c92d11b0bd69442cdef2ab99708b0489995fe40979fde72d6a114426",
+      "rawResolverInputDigest": "1f7f9da3306a98c03540c2aa9c5589ad2275cc4a7dabb7aba3f1898bc46d0709",
+      "normalizedResolverInputDigest": "c2496329457d8309c536283ab70b4768949b888e8042149148a4883e7551eb9c",
+      "modelEvaluationInputDigest": "d0d1309c2e32db90a73c00cfb420442d780b30822b20e0279950b039edea106a",
+      "modelOutputDigest": "5de1d3ad737def585ff52dd2e7d098a2d02ea98579e6bf50dbc4f36c3914a1c4"
+    },
+    {
+      "scenarioId": "receipt-other-target",
+      "modelId": "B",
+      "transformation": "tamper",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "c20d1b49c92d11b0bd69442cdef2ab99708b0489995fe40979fde72d6a114426",
+      "rawResolverInputDigest": "1f7f9da3306a98c03540c2aa9c5589ad2275cc4a7dabb7aba3f1898bc46d0709",
+      "normalizedResolverInputDigest": "c2496329457d8309c536283ab70b4768949b888e8042149148a4883e7551eb9c",
+      "modelEvaluationInputDigest": "34ab94f85391f247692d617eccb806a4b22a8cbc9ed272668a179b6a406fbc31",
+      "modelOutputDigest": "8c4a2e22938467c18128f8d7e50f15bcdf7d43ce1e1745b80d522ab5844b4ff8"
+    },
+    {
+      "scenarioId": "receipt-other-target",
+      "modelId": "C",
+      "transformation": "tamper",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "89e2ddad55cf6c5f42c36c39e2ece9145fea6f763a619a1663e8c53c6004e967",
+      "rawResolverInputDigest": "1f7f9da3306a98c03540c2aa9c5589ad2275cc4a7dabb7aba3f1898bc46d0709",
+      "normalizedResolverInputDigest": "c2496329457d8309c536283ab70b4768949b888e8042149148a4883e7551eb9c",
+      "modelEvaluationInputDigest": "94251b4fbbcb6f33d4ff3d225ef266930e876131a241e41f950b1044756feee8",
+      "modelOutputDigest": "14e6f4e1f6018a49c6e8ea0ef1f1c0abff4d71e1ad7e50f56ab5bad0d8f2ad9a"
+    },
+    {
+      "scenarioId": "receipt-other-target",
+      "modelId": "D",
+      "transformation": "tamper",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "89e2ddad55cf6c5f42c36c39e2ece9145fea6f763a619a1663e8c53c6004e967",
+      "rawResolverInputDigest": "1f7f9da3306a98c03540c2aa9c5589ad2275cc4a7dabb7aba3f1898bc46d0709",
+      "normalizedResolverInputDigest": "c2496329457d8309c536283ab70b4768949b888e8042149148a4883e7551eb9c",
+      "modelEvaluationInputDigest": "40c339182001c1cf09250ce9a6669e90a808c94039583f42b13d3f001f596796",
+      "modelOutputDigest": "2ca594cfcf0a3fe971e22f066c0b654332dfd53adcc5001b6ce6f0c0b707e0a3"
+    },
+    {
+      "scenarioId": "receipt-other-target",
+      "modelId": "E",
+      "transformation": "tamper",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "c20d1b49c92d11b0bd69442cdef2ab99708b0489995fe40979fde72d6a114426",
+      "rawResolverInputDigest": "1f7f9da3306a98c03540c2aa9c5589ad2275cc4a7dabb7aba3f1898bc46d0709",
+      "normalizedResolverInputDigest": "c2496329457d8309c536283ab70b4768949b888e8042149148a4883e7551eb9c",
+      "modelEvaluationInputDigest": "3baf9bb61a2e2c14e89faf486d1dce6607b6379d6257bfb7d0147a981d504731",
+      "modelOutputDigest": "030bc603c76335c311fad99ae1b5878860f20d216973f0b863a879c877b0969e"
+    },
+    {
+      "scenarioId": "receipt-other-target",
+      "modelId": "F",
+      "transformation": "tamper",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "c20d1b49c92d11b0bd69442cdef2ab99708b0489995fe40979fde72d6a114426",
+      "rawResolverInputDigest": "1f7f9da3306a98c03540c2aa9c5589ad2275cc4a7dabb7aba3f1898bc46d0709",
+      "normalizedResolverInputDigest": "c2496329457d8309c536283ab70b4768949b888e8042149148a4883e7551eb9c",
+      "modelEvaluationInputDigest": "d3297659ba23835f4a44a5079fa0811837d68721968a99b266b94af9a35df9c7",
+      "modelOutputDigest": "5cde4876e06ad4096d8f5d09357df5b6abba285592335aebbf77ee716425033c"
+    },
+    {
+      "scenarioId": "receipt-other-organization",
+      "modelId": "A",
+      "transformation": "tamper",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "a6171672cc7d532dbf3ac20123c304058f79744fa1cc14db83f76ebf0d250897",
+      "rawResolverInputDigest": "704ae5fc6acc45341b60303f286591cc1f5dd9f74f59341edad9c04d6ee2a785",
+      "normalizedResolverInputDigest": "bdf9248e9b9d0b305cacc5a7839fb901e13726a895a4b28f45c71cc059d10436",
+      "modelEvaluationInputDigest": "75a7111435c08ef33695ed01d75127a5cd9b903e52e065150ffde5ba0fba2541",
+      "modelOutputDigest": "23a381f2ea23af6a092fe49a351cba5881c8b71b6db44cf714cebd1cfd79314b"
+    },
+    {
+      "scenarioId": "receipt-other-organization",
+      "modelId": "B",
+      "transformation": "tamper",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "a6171672cc7d532dbf3ac20123c304058f79744fa1cc14db83f76ebf0d250897",
+      "rawResolverInputDigest": "704ae5fc6acc45341b60303f286591cc1f5dd9f74f59341edad9c04d6ee2a785",
+      "normalizedResolverInputDigest": "bdf9248e9b9d0b305cacc5a7839fb901e13726a895a4b28f45c71cc059d10436",
+      "modelEvaluationInputDigest": "68043d1423063c25bcd4aa7d1b674c27340515feb64cb809ffd2cf4860786a15",
+      "modelOutputDigest": "e76db9c60b7b02a0327265fee48b221999c00d0b696e944200c9eb85011d5fa0"
+    },
+    {
+      "scenarioId": "receipt-other-organization",
+      "modelId": "C",
+      "transformation": "tamper",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "3bbda83979a419bce35416d4e60b67a63b011e5e8a1d90ed381d09207864faff",
+      "rawResolverInputDigest": "704ae5fc6acc45341b60303f286591cc1f5dd9f74f59341edad9c04d6ee2a785",
+      "normalizedResolverInputDigest": "bdf9248e9b9d0b305cacc5a7839fb901e13726a895a4b28f45c71cc059d10436",
+      "modelEvaluationInputDigest": "5d8abf7a609c844f366488938a2853c9763d3f942ad96cb15d357c35e142644b",
+      "modelOutputDigest": "114d05b5213f962fe195f656121352d682773a63dc2ce66f28680b804946e809"
+    },
+    {
+      "scenarioId": "receipt-other-organization",
+      "modelId": "D",
+      "transformation": "tamper",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "3bbda83979a419bce35416d4e60b67a63b011e5e8a1d90ed381d09207864faff",
+      "rawResolverInputDigest": "704ae5fc6acc45341b60303f286591cc1f5dd9f74f59341edad9c04d6ee2a785",
+      "normalizedResolverInputDigest": "bdf9248e9b9d0b305cacc5a7839fb901e13726a895a4b28f45c71cc059d10436",
+      "modelEvaluationInputDigest": "7dc92d1c64d982897270d3b4b63d04c19f7f727bc31615bafc9ffdab38394a1e",
+      "modelOutputDigest": "d198678150dff5ef3d3c510f80a6fb2a87cbc6d10166d86680035ae19792a31f"
+    },
+    {
+      "scenarioId": "receipt-other-organization",
+      "modelId": "E",
+      "transformation": "tamper",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "a6171672cc7d532dbf3ac20123c304058f79744fa1cc14db83f76ebf0d250897",
+      "rawResolverInputDigest": "704ae5fc6acc45341b60303f286591cc1f5dd9f74f59341edad9c04d6ee2a785",
+      "normalizedResolverInputDigest": "bdf9248e9b9d0b305cacc5a7839fb901e13726a895a4b28f45c71cc059d10436",
+      "modelEvaluationInputDigest": "cf0da763aa13805f00e202fc7a4780743797947ff4f87742c35280532465005c",
+      "modelOutputDigest": "a2ae35d4f33fa3102eb476b12614018b74afa15cd2097bd81041f6f77b90ee09"
+    },
+    {
+      "scenarioId": "receipt-other-organization",
+      "modelId": "F",
+      "transformation": "tamper",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "a6171672cc7d532dbf3ac20123c304058f79744fa1cc14db83f76ebf0d250897",
+      "rawResolverInputDigest": "704ae5fc6acc45341b60303f286591cc1f5dd9f74f59341edad9c04d6ee2a785",
+      "normalizedResolverInputDigest": "bdf9248e9b9d0b305cacc5a7839fb901e13726a895a4b28f45c71cc059d10436",
+      "modelEvaluationInputDigest": "9bd5185d8e44a9eff82a9e73452a1574589a185a0fbdbc5c79964ff0b347e897",
+      "modelOutputDigest": "a581afc69f21c7903c88a2759ebba33ba12003c186fa16c9fc665a23b2d55740"
+    },
+    {
+      "scenarioId": "receipt-identity-tamper",
+      "modelId": "A",
+      "transformation": "tamper",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "7a30c6193505d4a692a5098823ae4db32a85816c2c433575332078dccedc1760",
+      "rawResolverInputDigest": "6162a41800bb621ccb8d64857a47bbde3f38761f06907188eb066b382f76408f",
+      "normalizedResolverInputDigest": "1383c6eb626dce9f5a3516980aa33496d7909d57e614032940a30b55db488ffe",
+      "modelEvaluationInputDigest": "0dcfd361b1224167a4b8403c7c07555bfcfccd316083144823eb1d8850c7f459",
+      "modelOutputDigest": "bd047e7efae0cd3587cc23aac30c703b6462101a93001da726af497ff53fc52b"
+    },
+    {
+      "scenarioId": "receipt-identity-tamper",
+      "modelId": "B",
+      "transformation": "tamper",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "7a30c6193505d4a692a5098823ae4db32a85816c2c433575332078dccedc1760",
+      "rawResolverInputDigest": "6162a41800bb621ccb8d64857a47bbde3f38761f06907188eb066b382f76408f",
+      "normalizedResolverInputDigest": "1383c6eb626dce9f5a3516980aa33496d7909d57e614032940a30b55db488ffe",
+      "modelEvaluationInputDigest": "dde73706ab3b5b738516c13b69a627eb604a3df6ca0dceb89ac479c79095d35d",
+      "modelOutputDigest": "e2ee42bd1eb2b4b4facc7e30593c86bd09da829350b6d97c18fb16f3f11c6df1"
+    },
+    {
+      "scenarioId": "receipt-identity-tamper",
+      "modelId": "C",
+      "transformation": "tamper",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "22ca71663e86533a247d5de6f0c74e38f28a438e3bb3099fb1fad05ec5a67d38",
+      "rawResolverInputDigest": "6162a41800bb621ccb8d64857a47bbde3f38761f06907188eb066b382f76408f",
+      "normalizedResolverInputDigest": "1383c6eb626dce9f5a3516980aa33496d7909d57e614032940a30b55db488ffe",
+      "modelEvaluationInputDigest": "0c1737b386ba936bd9cc81e925b6b7b146f1b9ba9e31d1e4e2540323391f3388",
+      "modelOutputDigest": "b50aee0ffda85ddfdd5a473e442fd571cb8b6129667c7648fd17e804205d79ba"
+    },
+    {
+      "scenarioId": "receipt-identity-tamper",
+      "modelId": "D",
+      "transformation": "tamper",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "22ca71663e86533a247d5de6f0c74e38f28a438e3bb3099fb1fad05ec5a67d38",
+      "rawResolverInputDigest": "6162a41800bb621ccb8d64857a47bbde3f38761f06907188eb066b382f76408f",
+      "normalizedResolverInputDigest": "1383c6eb626dce9f5a3516980aa33496d7909d57e614032940a30b55db488ffe",
+      "modelEvaluationInputDigest": "bd051121b5fd658abf7c2ee819f793f605fde1ac58eb9752a8d0523a6d627dfd",
+      "modelOutputDigest": "022960aba62cd2081c56a2231bc25832b30e782863f986f6da90105c3e438624"
+    },
+    {
+      "scenarioId": "receipt-identity-tamper",
+      "modelId": "E",
+      "transformation": "tamper",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "7a30c6193505d4a692a5098823ae4db32a85816c2c433575332078dccedc1760",
+      "rawResolverInputDigest": "6162a41800bb621ccb8d64857a47bbde3f38761f06907188eb066b382f76408f",
+      "normalizedResolverInputDigest": "1383c6eb626dce9f5a3516980aa33496d7909d57e614032940a30b55db488ffe",
+      "modelEvaluationInputDigest": "f4539b470ac1375ccc15b4bb68ef6c170cb39a6ca3688d7972b9bf586c6d0e16",
+      "modelOutputDigest": "dbaf292f2f30ec63f2619059355c49eb5e66c1ee94daf0780db6aa7af3d8f45c"
+    },
+    {
+      "scenarioId": "receipt-identity-tamper",
+      "modelId": "F",
+      "transformation": "tamper",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "7a30c6193505d4a692a5098823ae4db32a85816c2c433575332078dccedc1760",
+      "rawResolverInputDigest": "6162a41800bb621ccb8d64857a47bbde3f38761f06907188eb066b382f76408f",
+      "normalizedResolverInputDigest": "1383c6eb626dce9f5a3516980aa33496d7909d57e614032940a30b55db488ffe",
+      "modelEvaluationInputDigest": "514c2b8f352a0f6e9914d4b0f59b982a01bffda51d5d2e7fd3d9fb1ee0345203",
+      "modelOutputDigest": "69ec5304f3a4d236ca68903cbc27076ba10c4da586ba2856fc7fc1cc8249e8f5"
+    },
+    {
+      "scenarioId": "receipt-revision-tamper",
+      "modelId": "A",
+      "transformation": "tamper",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "b1a41c103f8500b38ad8c65b40f009f4a1db099017bd30086a9452407af87e25",
+      "rawResolverInputDigest": "be9d68d2d3d2e49058449fa8940ce01059b913bd4f3ff64bcbfa08feb661dd6a",
+      "normalizedResolverInputDigest": "4b9632264a7b0d6ee73402687dc6852c0b59538fe12059f426c9a6576941bcbb",
+      "modelEvaluationInputDigest": "9679e0fe77bbbed79f116c899dfe55c8e8e43237d5f4e64ee6ec3ac4ef5d4ac9",
+      "modelOutputDigest": "68909d70957909f75c8b24b51934b0feb0f08b5c07a4680a69ce312bfcb987dc"
+    },
+    {
+      "scenarioId": "receipt-revision-tamper",
+      "modelId": "B",
+      "transformation": "tamper",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "b1a41c103f8500b38ad8c65b40f009f4a1db099017bd30086a9452407af87e25",
+      "rawResolverInputDigest": "be9d68d2d3d2e49058449fa8940ce01059b913bd4f3ff64bcbfa08feb661dd6a",
+      "normalizedResolverInputDigest": "4b9632264a7b0d6ee73402687dc6852c0b59538fe12059f426c9a6576941bcbb",
+      "modelEvaluationInputDigest": "b707910c8965ba211e701df26c185de621b7a0c0995517356ab807b458c8d8b3",
+      "modelOutputDigest": "c6df9ae0d619c2f6fc5fd7de07759f67d791b8866b2d09b8a0ff367889c3c739"
+    },
+    {
+      "scenarioId": "receipt-revision-tamper",
+      "modelId": "C",
+      "transformation": "tamper",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "c83a6ee158db062754b4764910a29b4a4adcf1c5a0339ccb6c42d51a664dfbd2",
+      "rawResolverInputDigest": "be9d68d2d3d2e49058449fa8940ce01059b913bd4f3ff64bcbfa08feb661dd6a",
+      "normalizedResolverInputDigest": "4b9632264a7b0d6ee73402687dc6852c0b59538fe12059f426c9a6576941bcbb",
+      "modelEvaluationInputDigest": "cdef37a5b03a237e6e6b1ecf698133897325200fefded3e25f889a682ff93c7f",
+      "modelOutputDigest": "51a7eec550f0e24e150b4bb6e3fe9f1a9ab4397f7f838437d113400da6737b18"
+    },
+    {
+      "scenarioId": "receipt-revision-tamper",
+      "modelId": "D",
+      "transformation": "tamper",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "c83a6ee158db062754b4764910a29b4a4adcf1c5a0339ccb6c42d51a664dfbd2",
+      "rawResolverInputDigest": "be9d68d2d3d2e49058449fa8940ce01059b913bd4f3ff64bcbfa08feb661dd6a",
+      "normalizedResolverInputDigest": "4b9632264a7b0d6ee73402687dc6852c0b59538fe12059f426c9a6576941bcbb",
+      "modelEvaluationInputDigest": "bb829411fbc77316a530a2c848a1c1969990c4898a5b136d87235f0fb549776b",
+      "modelOutputDigest": "18a20a885c516b1ac7f1d7d6b5fa8d0236f679498e0cc27511fb34b63fc84fe7"
+    },
+    {
+      "scenarioId": "receipt-revision-tamper",
+      "modelId": "E",
+      "transformation": "tamper",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "b1a41c103f8500b38ad8c65b40f009f4a1db099017bd30086a9452407af87e25",
+      "rawResolverInputDigest": "be9d68d2d3d2e49058449fa8940ce01059b913bd4f3ff64bcbfa08feb661dd6a",
+      "normalizedResolverInputDigest": "4b9632264a7b0d6ee73402687dc6852c0b59538fe12059f426c9a6576941bcbb",
+      "modelEvaluationInputDigest": "c19271cc6c31fa99ce6e6aa0be1f2d232eafc48196a1ba7f2d928f374e655147",
+      "modelOutputDigest": "41348920869bffbc15fd5f3a39adcfc02f20742e2846fe73feb295d59c461ae5"
+    },
+    {
+      "scenarioId": "receipt-revision-tamper",
+      "modelId": "F",
+      "transformation": "tamper",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "b1a41c103f8500b38ad8c65b40f009f4a1db099017bd30086a9452407af87e25",
+      "rawResolverInputDigest": "be9d68d2d3d2e49058449fa8940ce01059b913bd4f3ff64bcbfa08feb661dd6a",
+      "normalizedResolverInputDigest": "4b9632264a7b0d6ee73402687dc6852c0b59538fe12059f426c9a6576941bcbb",
+      "modelEvaluationInputDigest": "6e9a296b6ca79fa352d3520fcc089bf2e456be759eaa5d0a93b0b59927801290",
+      "modelOutputDigest": "6c0de85001e091209d35664448eb2fd4a933aaaca8c8a805a2548a4069ab1a40"
+    },
+    {
+      "scenarioId": "receipt-integrity-tamper",
+      "modelId": "A",
+      "transformation": "tamper",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "14f9919fdd637c8aeb4b79e71cfcf52c3d90a802312cf938343d49cdaca80bc1",
+      "rawResolverInputDigest": "a2a6ebe7eba61dab63d9b204276fe4c9450bef23bacd6933ac0f0bbddb6e9a4a",
+      "normalizedResolverInputDigest": "28d9185665ca0db3a19d053c33c9b81b55f0498639902356948e1e2ab1b9b59b",
+      "modelEvaluationInputDigest": "0ddcc5d86756a5be93979e7e560158a987079232dd009b63740bdb76a4131dd0",
+      "modelOutputDigest": "da931c676e0cc9e76c4d41dbd522bb421ba229ed35d2aaeda1641a992dd72332"
+    },
+    {
+      "scenarioId": "receipt-integrity-tamper",
+      "modelId": "B",
+      "transformation": "tamper",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "14f9919fdd637c8aeb4b79e71cfcf52c3d90a802312cf938343d49cdaca80bc1",
+      "rawResolverInputDigest": "a2a6ebe7eba61dab63d9b204276fe4c9450bef23bacd6933ac0f0bbddb6e9a4a",
+      "normalizedResolverInputDigest": "28d9185665ca0db3a19d053c33c9b81b55f0498639902356948e1e2ab1b9b59b",
+      "modelEvaluationInputDigest": "3f33b1ee9ed91265f003174779b801988dbd2b77895217db40c6128f6f86f60e",
+      "modelOutputDigest": "1978eeaf2b8220336bf8884fe0fba3fa6bd77740470a0966a28024d947dd7500"
+    },
+    {
+      "scenarioId": "receipt-integrity-tamper",
+      "modelId": "C",
+      "transformation": "tamper",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "81707e1b6377febcbaa6fa9ba6f5a9cc21c9c9a76c41e70842e4e1c3d5748a35",
+      "rawResolverInputDigest": "a2a6ebe7eba61dab63d9b204276fe4c9450bef23bacd6933ac0f0bbddb6e9a4a",
+      "normalizedResolverInputDigest": "28d9185665ca0db3a19d053c33c9b81b55f0498639902356948e1e2ab1b9b59b",
+      "modelEvaluationInputDigest": "96de0d8d23d8d1ebf10d59411fa91d3308e577c57240d1e9cecf7ddcb693b330",
+      "modelOutputDigest": "f057cec9523f197bc6354d3a61a76ec226a8927f41dabb57f0619c4f89b61782"
+    },
+    {
+      "scenarioId": "receipt-integrity-tamper",
+      "modelId": "D",
+      "transformation": "tamper",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "81707e1b6377febcbaa6fa9ba6f5a9cc21c9c9a76c41e70842e4e1c3d5748a35",
+      "rawResolverInputDigest": "a2a6ebe7eba61dab63d9b204276fe4c9450bef23bacd6933ac0f0bbddb6e9a4a",
+      "normalizedResolverInputDigest": "28d9185665ca0db3a19d053c33c9b81b55f0498639902356948e1e2ab1b9b59b",
+      "modelEvaluationInputDigest": "458f78c0be2a31c81f019ee72f7c192b8124e31b4c5cff3e873e9e46326d0719",
+      "modelOutputDigest": "7932eb9c3abf595fa109e713126d4c9c32740eec02eab598090742a151bc7e58"
+    },
+    {
+      "scenarioId": "receipt-integrity-tamper",
+      "modelId": "E",
+      "transformation": "tamper",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "14f9919fdd637c8aeb4b79e71cfcf52c3d90a802312cf938343d49cdaca80bc1",
+      "rawResolverInputDigest": "a2a6ebe7eba61dab63d9b204276fe4c9450bef23bacd6933ac0f0bbddb6e9a4a",
+      "normalizedResolverInputDigest": "28d9185665ca0db3a19d053c33c9b81b55f0498639902356948e1e2ab1b9b59b",
+      "modelEvaluationInputDigest": "d6af0124d077f502631bad404410fccc93514356c7f92f667d076b13553bac72",
+      "modelOutputDigest": "7cad6eba8f3845f84981c86333f45f709d3ceac782f6f9272e9316f73c01e645"
+    },
+    {
+      "scenarioId": "receipt-integrity-tamper",
+      "modelId": "F",
+      "transformation": "tamper",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "14f9919fdd637c8aeb4b79e71cfcf52c3d90a802312cf938343d49cdaca80bc1",
+      "rawResolverInputDigest": "a2a6ebe7eba61dab63d9b204276fe4c9450bef23bacd6933ac0f0bbddb6e9a4a",
+      "normalizedResolverInputDigest": "28d9185665ca0db3a19d053c33c9b81b55f0498639902356948e1e2ab1b9b59b",
+      "modelEvaluationInputDigest": "f2ae9fd37cdc8fcbeda480570956460d23933f360b2747884f2e058c0a9567f6",
+      "modelOutputDigest": "3c3c9579a58a0e78f816c385b728ad4905ccb55d1e182b2d9dd026b2129e42de"
+    },
+    {
+      "scenarioId": "receipt-approval-set-tamper",
+      "modelId": "A",
+      "transformation": "tamper",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "3724067b7ec64715134693a2b70e153448b4f02754af22477a48e9c2a5a9f766",
+      "rawResolverInputDigest": "5ce39a0826738d144d4fb19a2918695fd0d0903a3e7ea8be9825fb5746b2693d",
+      "normalizedResolverInputDigest": "41abab7f29848153a7a97e9799759e2c9a2ecfa14fb0d47db7cbb17dcd694c79",
+      "modelEvaluationInputDigest": "481f51ed2b15517701aac3318171fdc8bc6b220d39ada4201681194eab013467",
+      "modelOutputDigest": "050bb5be42c414de251f917b69974fa01ee185862a86dc414d8cccb7f5c247bf"
+    },
+    {
+      "scenarioId": "receipt-approval-set-tamper",
+      "modelId": "B",
+      "transformation": "tamper",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "3724067b7ec64715134693a2b70e153448b4f02754af22477a48e9c2a5a9f766",
+      "rawResolverInputDigest": "5ce39a0826738d144d4fb19a2918695fd0d0903a3e7ea8be9825fb5746b2693d",
+      "normalizedResolverInputDigest": "41abab7f29848153a7a97e9799759e2c9a2ecfa14fb0d47db7cbb17dcd694c79",
+      "modelEvaluationInputDigest": "ad73b9683cdc0b18ece2e50096746d32f9354a24ce2540d0f55fb0009c0e3915",
+      "modelOutputDigest": "b35fe69bfb198910ab526183c37225ccecfe5141c76c47f4f9ffb01e04edf890"
+    },
+    {
+      "scenarioId": "receipt-approval-set-tamper",
+      "modelId": "C",
+      "transformation": "tamper",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "530905d13f1484ff667d55597029b91171e0af915aebe37d9821ab93b43964f8",
+      "rawResolverInputDigest": "5ce39a0826738d144d4fb19a2918695fd0d0903a3e7ea8be9825fb5746b2693d",
+      "normalizedResolverInputDigest": "41abab7f29848153a7a97e9799759e2c9a2ecfa14fb0d47db7cbb17dcd694c79",
+      "modelEvaluationInputDigest": "ac8e5b89222a49438e156b26b5abff487440d348384e7137eda5bb9bfe63853f",
+      "modelOutputDigest": "3e1af18a26f5d27c12d09de67318e591e0ce618856a7fb819236215fa8660a25"
+    },
+    {
+      "scenarioId": "receipt-approval-set-tamper",
+      "modelId": "D",
+      "transformation": "tamper",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "530905d13f1484ff667d55597029b91171e0af915aebe37d9821ab93b43964f8",
+      "rawResolverInputDigest": "5ce39a0826738d144d4fb19a2918695fd0d0903a3e7ea8be9825fb5746b2693d",
+      "normalizedResolverInputDigest": "41abab7f29848153a7a97e9799759e2c9a2ecfa14fb0d47db7cbb17dcd694c79",
+      "modelEvaluationInputDigest": "732cc852e8f07302c3c023a0657ae10532e0c12e80c7dcf6c126d09a63aee539",
+      "modelOutputDigest": "08c9ce8a197ea22444aae5ec0512e2f4aeb43a1fbe430562705291892d712c65"
+    },
+    {
+      "scenarioId": "receipt-approval-set-tamper",
+      "modelId": "E",
+      "transformation": "tamper",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "3724067b7ec64715134693a2b70e153448b4f02754af22477a48e9c2a5a9f766",
+      "rawResolverInputDigest": "5ce39a0826738d144d4fb19a2918695fd0d0903a3e7ea8be9825fb5746b2693d",
+      "normalizedResolverInputDigest": "41abab7f29848153a7a97e9799759e2c9a2ecfa14fb0d47db7cbb17dcd694c79",
+      "modelEvaluationInputDigest": "d803aa5d68a9a3ad5f83907c677657813fc83a5c6802931efc274ef71b4e806c",
+      "modelOutputDigest": "8ce0fe302885ea2913d5cb4e695e2b0d9c72b23e4f2e4460f2169b8c3404f6f8"
+    },
+    {
+      "scenarioId": "receipt-approval-set-tamper",
+      "modelId": "F",
+      "transformation": "tamper",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "3724067b7ec64715134693a2b70e153448b4f02754af22477a48e9c2a5a9f766",
+      "rawResolverInputDigest": "5ce39a0826738d144d4fb19a2918695fd0d0903a3e7ea8be9825fb5746b2693d",
+      "normalizedResolverInputDigest": "41abab7f29848153a7a97e9799759e2c9a2ecfa14fb0d47db7cbb17dcd694c79",
+      "modelEvaluationInputDigest": "e5b4a69e109d47cdfa35ceb444a86ebb1c7168108300103f5fd801877a5419da",
+      "modelOutputDigest": "6d590b7dd2ed522e8c4143910ca58ac566dcbfafd88be808ccf97ba85a43f22b"
+    },
+    {
+      "scenarioId": "receipt-requirement-revision-tamper",
+      "modelId": "A",
+      "transformation": "tamper",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "5ad9f407bbe759aa222795331a4ba103326ac55ce886799bb10946e7bb9ac380",
+      "rawResolverInputDigest": "756d68c882c59a1c0a78f0055eb77cea3a3f3fe970871f1f08e93b7bc6910a38",
+      "normalizedResolverInputDigest": "0dbf2a5612fabda6c8f3e4b84d1e9248cebd1def06fcb86663a0071b9fd74319",
+      "modelEvaluationInputDigest": "0136d348c4fe1f8915e1a4bb6921c566bab5a1e066b024c3ffbee44040e9c236",
+      "modelOutputDigest": "a0815d19c2c97e5206bfb2b43359d0e3190dc18a84839f95843783b349d26ce7"
+    },
+    {
+      "scenarioId": "receipt-requirement-revision-tamper",
+      "modelId": "B",
+      "transformation": "tamper",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "5ad9f407bbe759aa222795331a4ba103326ac55ce886799bb10946e7bb9ac380",
+      "rawResolverInputDigest": "756d68c882c59a1c0a78f0055eb77cea3a3f3fe970871f1f08e93b7bc6910a38",
+      "normalizedResolverInputDigest": "0dbf2a5612fabda6c8f3e4b84d1e9248cebd1def06fcb86663a0071b9fd74319",
+      "modelEvaluationInputDigest": "6d82883ba2269337ebbedb9282da4ac3f8abd786c1f96766b46bbb57e1f27849",
+      "modelOutputDigest": "73dc44b18aae1bfa777e2e4dbe5e8eda6f809b4640d0059523e42b86df8e3549"
+    },
+    {
+      "scenarioId": "receipt-requirement-revision-tamper",
+      "modelId": "C",
+      "transformation": "tamper",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "38c9dbc31dbfa3eea9dec22796a5f7156f0e68a5d8ca224d131ab2c8c342cfa3",
+      "rawResolverInputDigest": "756d68c882c59a1c0a78f0055eb77cea3a3f3fe970871f1f08e93b7bc6910a38",
+      "normalizedResolverInputDigest": "0dbf2a5612fabda6c8f3e4b84d1e9248cebd1def06fcb86663a0071b9fd74319",
+      "modelEvaluationInputDigest": "8c3fda36575e04a3b371daec4e9d6eec45e13d4db26c0634cf047dfc84b8601f",
+      "modelOutputDigest": "234d2dcb534a8ac4daf782c4de66afef7a95d1c43b6df888972cde301d82972c"
+    },
+    {
+      "scenarioId": "receipt-requirement-revision-tamper",
+      "modelId": "D",
+      "transformation": "tamper",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "38c9dbc31dbfa3eea9dec22796a5f7156f0e68a5d8ca224d131ab2c8c342cfa3",
+      "rawResolverInputDigest": "756d68c882c59a1c0a78f0055eb77cea3a3f3fe970871f1f08e93b7bc6910a38",
+      "normalizedResolverInputDigest": "0dbf2a5612fabda6c8f3e4b84d1e9248cebd1def06fcb86663a0071b9fd74319",
+      "modelEvaluationInputDigest": "31847920dbff1bd1a1cb65f019fea0f4b74ffb020966e176a327805dfb76bfc8",
+      "modelOutputDigest": "49eb6399b39f67dce2ce635ef8d4582840431578898e8562678e1507dc330d45"
+    },
+    {
+      "scenarioId": "receipt-requirement-revision-tamper",
+      "modelId": "E",
+      "transformation": "tamper",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "5ad9f407bbe759aa222795331a4ba103326ac55ce886799bb10946e7bb9ac380",
+      "rawResolverInputDigest": "756d68c882c59a1c0a78f0055eb77cea3a3f3fe970871f1f08e93b7bc6910a38",
+      "normalizedResolverInputDigest": "0dbf2a5612fabda6c8f3e4b84d1e9248cebd1def06fcb86663a0071b9fd74319",
+      "modelEvaluationInputDigest": "aaaef88c67f8e85327ee745d304b22c55abbf74ae3909e57c4f4f29547782a8b",
+      "modelOutputDigest": "aedf1b68f98590dc7e0348cb98f423bb8d02b37b362aa862ced1542dcfdbe1e7"
+    },
+    {
+      "scenarioId": "receipt-requirement-revision-tamper",
+      "modelId": "F",
+      "transformation": "tamper",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "5ad9f407bbe759aa222795331a4ba103326ac55ce886799bb10946e7bb9ac380",
+      "rawResolverInputDigest": "756d68c882c59a1c0a78f0055eb77cea3a3f3fe970871f1f08e93b7bc6910a38",
+      "normalizedResolverInputDigest": "0dbf2a5612fabda6c8f3e4b84d1e9248cebd1def06fcb86663a0071b9fd74319",
+      "modelEvaluationInputDigest": "57f6d6452567bf433bf256d327ba7efed76b2772782f50c786efa13064c7f775",
+      "modelOutputDigest": "d213e0fa838ae409c00faaafeab5c6c8e96e480b5e2cdb5f08a80a8b29392bb0"
+    },
+    {
+      "scenarioId": "receipt-requirement-integrity-tamper",
+      "modelId": "A",
+      "transformation": "tamper",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "eec0d87e68e0482c8cae643ff78ab6788a68912cd8150072c0663e957847b549",
+      "rawResolverInputDigest": "59ba60c3b9e0c1d45ac7db7a4fe1b9a60151cffcba5fd7608c7c9480df8fc07e",
+      "normalizedResolverInputDigest": "003a25959c78e36b64751e06f2fb98b5cc30f8062abcb88b0d77c2d420c3f9ed",
+      "modelEvaluationInputDigest": "29a511eb2356b19a65dc3c6778e4c95c69cb2a531c337c6313976bd4eab50f91",
+      "modelOutputDigest": "85488229bfb7db9e0d26ef2dc6696bf7a9c0031d8ee6614fb5dadf6536520100"
+    },
+    {
+      "scenarioId": "receipt-requirement-integrity-tamper",
+      "modelId": "B",
+      "transformation": "tamper",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "eec0d87e68e0482c8cae643ff78ab6788a68912cd8150072c0663e957847b549",
+      "rawResolverInputDigest": "59ba60c3b9e0c1d45ac7db7a4fe1b9a60151cffcba5fd7608c7c9480df8fc07e",
+      "normalizedResolverInputDigest": "003a25959c78e36b64751e06f2fb98b5cc30f8062abcb88b0d77c2d420c3f9ed",
+      "modelEvaluationInputDigest": "7a26a90e85b9e5eecdecd98d444e10661d6ca6286b2902174d327c48ead37487",
+      "modelOutputDigest": "f61796c6d9070c62610c2c67598c52385ef4d3519f9919ee71a64a961956a066"
+    },
+    {
+      "scenarioId": "receipt-requirement-integrity-tamper",
+      "modelId": "C",
+      "transformation": "tamper",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "ce4c56cdd136f1f14acdb299810b1b39e7949356f8a05a6186e899b845ce2e02",
+      "rawResolverInputDigest": "59ba60c3b9e0c1d45ac7db7a4fe1b9a60151cffcba5fd7608c7c9480df8fc07e",
+      "normalizedResolverInputDigest": "003a25959c78e36b64751e06f2fb98b5cc30f8062abcb88b0d77c2d420c3f9ed",
+      "modelEvaluationInputDigest": "0d22a5d242fbb7070e08ac7c5edc34999f6ac88df82db4b10ded446aa8a1167e",
+      "modelOutputDigest": "9b066447613a1d69ac144ae95cdc59fc7b2651f6bfc43117b13a8640203a5a0f"
+    },
+    {
+      "scenarioId": "receipt-requirement-integrity-tamper",
+      "modelId": "D",
+      "transformation": "tamper",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "ce4c56cdd136f1f14acdb299810b1b39e7949356f8a05a6186e899b845ce2e02",
+      "rawResolverInputDigest": "59ba60c3b9e0c1d45ac7db7a4fe1b9a60151cffcba5fd7608c7c9480df8fc07e",
+      "normalizedResolverInputDigest": "003a25959c78e36b64751e06f2fb98b5cc30f8062abcb88b0d77c2d420c3f9ed",
+      "modelEvaluationInputDigest": "88ee459eff209dad3c605d36cca9669676f06941eec38c64250b2735e8848240",
+      "modelOutputDigest": "3bdcf56e902005ff0d2272223b2a140eaf2b68de9d73b48d2276ede31f7c6cb3"
+    },
+    {
+      "scenarioId": "receipt-requirement-integrity-tamper",
+      "modelId": "E",
+      "transformation": "tamper",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "eec0d87e68e0482c8cae643ff78ab6788a68912cd8150072c0663e957847b549",
+      "rawResolverInputDigest": "59ba60c3b9e0c1d45ac7db7a4fe1b9a60151cffcba5fd7608c7c9480df8fc07e",
+      "normalizedResolverInputDigest": "003a25959c78e36b64751e06f2fb98b5cc30f8062abcb88b0d77c2d420c3f9ed",
+      "modelEvaluationInputDigest": "b19362bb1a62a561140974ffc18834267f40ffc0c91add8ed82442234d7f56c6",
+      "modelOutputDigest": "d3fd645497b013c6d5ce0afb1d3871c1f14b5912121393d46bb2d112ba6f6be8"
+    },
+    {
+      "scenarioId": "receipt-requirement-integrity-tamper",
+      "modelId": "F",
+      "transformation": "tamper",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "eec0d87e68e0482c8cae643ff78ab6788a68912cd8150072c0663e957847b549",
+      "rawResolverInputDigest": "59ba60c3b9e0c1d45ac7db7a4fe1b9a60151cffcba5fd7608c7c9480df8fc07e",
+      "normalizedResolverInputDigest": "003a25959c78e36b64751e06f2fb98b5cc30f8062abcb88b0d77c2d420c3f9ed",
+      "modelEvaluationInputDigest": "261d71b1d047474c99085247f94b8868fae0d4cfff8fd55f72e0b90b6e670413",
+      "modelOutputDigest": "de9e7e4fa60a25b82371c750ca7776229055f942186c68ac676a1fef21c72ea0"
+    },
+    {
+      "scenarioId": "duplicate-identical-receipt",
+      "modelId": "A",
+      "transformation": "issuance-mutation",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "dac24e12943dea077e16c66d902543bb1f726ffbd3ac364a0528e9b81e964aa0",
+      "rawResolverInputDigest": "1fd4e5ce8d7b1db4b5ea8e5f018f7335e8245ce2f966b55ea9c56aaf670c8720",
+      "normalizedResolverInputDigest": "acce94188057698f520c60a241168fc12f662de56c066aed5a1e49279f061a12",
+      "modelEvaluationInputDigest": "b54423699a3a93f70f9e931d2db2edc23f1a3e7e21f31e84635ca99e144877af",
+      "modelOutputDigest": "82ab927e1a2900ad7337b6b649329c5985fe8abd7db1853639317dc43cd8824e"
+    },
+    {
+      "scenarioId": "duplicate-identical-receipt",
+      "modelId": "B",
+      "transformation": "issuance-mutation",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "dac24e12943dea077e16c66d902543bb1f726ffbd3ac364a0528e9b81e964aa0",
+      "rawResolverInputDigest": "1fd4e5ce8d7b1db4b5ea8e5f018f7335e8245ce2f966b55ea9c56aaf670c8720",
+      "normalizedResolverInputDigest": "acce94188057698f520c60a241168fc12f662de56c066aed5a1e49279f061a12",
+      "modelEvaluationInputDigest": "1a7039cee1755af2b16dac78df56964a192eb6967ba56b1ed2d820288b967bb4",
+      "modelOutputDigest": "678ac995435db02e487f3d474229604cc9b10fb2cf9c58087a1b2d158aceae28"
+    },
+    {
+      "scenarioId": "duplicate-identical-receipt",
+      "modelId": "C",
+      "transformation": "issuance-mutation",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "17f1b4883e769d165ea0981c8786a21d97c9688b638dc4aa984a5fca519aa6b9",
+      "rawResolverInputDigest": "1fd4e5ce8d7b1db4b5ea8e5f018f7335e8245ce2f966b55ea9c56aaf670c8720",
+      "normalizedResolverInputDigest": "acce94188057698f520c60a241168fc12f662de56c066aed5a1e49279f061a12",
+      "modelEvaluationInputDigest": "64d0a83338c45bbdb8890b56ce3d9a3760d3f1508a33e0b6fdbb9b0af82a0bf4",
+      "modelOutputDigest": "547c2bfcfeef5d200b2fa10bd97b8cb9695d2d03fc7a3efcae57e18a621948b2"
+    },
+    {
+      "scenarioId": "duplicate-identical-receipt",
+      "modelId": "D",
+      "transformation": "issuance-mutation",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "invalid-approval",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "17f1b4883e769d165ea0981c8786a21d97c9688b638dc4aa984a5fca519aa6b9",
+      "rawResolverInputDigest": "1fd4e5ce8d7b1db4b5ea8e5f018f7335e8245ce2f966b55ea9c56aaf670c8720",
+      "normalizedResolverInputDigest": "acce94188057698f520c60a241168fc12f662de56c066aed5a1e49279f061a12",
+      "modelEvaluationInputDigest": "f04aba9385cd5f92211ae82a3d9e403b361fe5b4e476345902ff70aebbe15ce7",
+      "modelOutputDigest": "5f6235f7da0e288ecffec3e5ce5c7839d04566ae70e90921eec88ca13af1786e"
+    },
+    {
+      "scenarioId": "duplicate-identical-receipt",
+      "modelId": "E",
+      "transformation": "issuance-mutation",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "dac24e12943dea077e16c66d902543bb1f726ffbd3ac364a0528e9b81e964aa0",
+      "rawResolverInputDigest": "1fd4e5ce8d7b1db4b5ea8e5f018f7335e8245ce2f966b55ea9c56aaf670c8720",
+      "normalizedResolverInputDigest": "acce94188057698f520c60a241168fc12f662de56c066aed5a1e49279f061a12",
+      "modelEvaluationInputDigest": "85392e846408711a528425ccc2395db7d3df2d4adf4c0e7bf4d4759cd882e761",
+      "modelOutputDigest": "c28f502df0ec93c2fa325941ba509e4b35cf30edcf21378c4ddbb5f755fa9b3d"
+    },
+    {
+      "scenarioId": "duplicate-identical-receipt",
+      "modelId": "F",
+      "transformation": "issuance-mutation",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "dac24e12943dea077e16c66d902543bb1f726ffbd3ac364a0528e9b81e964aa0",
+      "rawResolverInputDigest": "1fd4e5ce8d7b1db4b5ea8e5f018f7335e8245ce2f966b55ea9c56aaf670c8720",
+      "normalizedResolverInputDigest": "acce94188057698f520c60a241168fc12f662de56c066aed5a1e49279f061a12",
+      "modelEvaluationInputDigest": "27374bdd618d887c9875df4f1abce7a0daef1f2ea220c0a138d1dae9ee05c353",
+      "modelOutputDigest": "97c25459a4860b7b91f032d605966fd3c83b18f1c51a291577af09e7a5b6362d"
+    },
+    {
+      "scenarioId": "requirement-revoked",
+      "modelId": "A",
+      "transformation": "revocation",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "dd166ff7e205dc444ab0dd7bef57391c2ac61202c7ccfd379de62d3cda9586b2",
+      "rawResolverInputDigest": "005887760b79fbc283a3fe51c8efd100943fd08bb1b7d147c168a3402c744a4f",
+      "normalizedResolverInputDigest": "e78dcbb9f1ab5ee9dcde79492e5fd128c2ba14e0c92092f257e031eb7db5a293",
+      "modelEvaluationInputDigest": "53178a847d9c163aae34cc9b961344ef2258c0f8936586c5e8b7c7d1ff9baa71",
+      "modelOutputDigest": "966e1df421b67b7967ab5476fd5b3a549ce836c4418fadddff780ea9d617fb63"
+    },
+    {
+      "scenarioId": "requirement-revoked",
+      "modelId": "B",
+      "transformation": "revocation",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "resolved",
+      "basis": "exact-field-record",
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 2,
+      "operationOutputDigest": "74690ba980f3b9f2538ed9b60ecac9cb17745ab978bd6ed611da2f365bc75b4d",
+      "rawResolverInputDigest": "005887760b79fbc283a3fe51c8efd100943fd08bb1b7d147c168a3402c744a4f",
+      "normalizedResolverInputDigest": "e78dcbb9f1ab5ee9dcde79492e5fd128c2ba14e0c92092f257e031eb7db5a293",
+      "modelEvaluationInputDigest": "22f39752bd1eaa69cf035d4fbf1e14135fccd38faa64f30b43a3676225c411fe",
+      "modelOutputDigest": "a2eba9e5bbcb18daa1cfd92e08177266a1918e576cdbe2526c2a25c0abcf99bc"
+    },
+    {
+      "scenarioId": "requirement-revoked",
+      "modelId": "C",
+      "transformation": "revocation",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "resolved",
+      "basis": "field-family-policy",
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "db902682fee67d853f32f6fee5b65b42324f85942481d8eb5656939668791f56",
+      "rawResolverInputDigest": "005887760b79fbc283a3fe51c8efd100943fd08bb1b7d147c168a3402c744a4f",
+      "normalizedResolverInputDigest": "e78dcbb9f1ab5ee9dcde79492e5fd128c2ba14e0c92092f257e031eb7db5a293",
+      "modelEvaluationInputDigest": "fc262372996de45abe1ed9801a481d2cf21972c8fa2322f167d43bcbcca11e59",
+      "modelOutputDigest": "b671cd0a4fe76d385e0389f8d02765f591f7f859a1562bde3950d2b381ff4ce5"
+    },
+    {
+      "scenarioId": "requirement-revoked",
+      "modelId": "D",
+      "transformation": "revocation",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "revoked",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 3,
+      "operationOutputDigest": "731166d79223ef9cc20a75dc0dfb97a9d16bdea7a441654c0d9cdb06b07c8c46",
+      "rawResolverInputDigest": "005887760b79fbc283a3fe51c8efd100943fd08bb1b7d147c168a3402c744a4f",
+      "normalizedResolverInputDigest": "e78dcbb9f1ab5ee9dcde79492e5fd128c2ba14e0c92092f257e031eb7db5a293",
+      "modelEvaluationInputDigest": "0901c13d17277cf41fda1d556e0cf85686d0692c4786e270244776d03de79a16",
+      "modelOutputDigest": "015951487998c6504fdd696acc967950ff406050397361a3b6d493c392e313b5"
+    },
+    {
+      "scenarioId": "requirement-revoked",
+      "modelId": "E",
+      "transformation": "revocation",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "dd166ff7e205dc444ab0dd7bef57391c2ac61202c7ccfd379de62d3cda9586b2",
+      "rawResolverInputDigest": "005887760b79fbc283a3fe51c8efd100943fd08bb1b7d147c168a3402c744a4f",
+      "normalizedResolverInputDigest": "e78dcbb9f1ab5ee9dcde79492e5fd128c2ba14e0c92092f257e031eb7db5a293",
+      "modelEvaluationInputDigest": "71088e78fca42d6d7fdc843f72ed1a99d17796805af3c5ce137e20a95ce91b3b",
+      "modelOutputDigest": "6858a76b37dee7fb2ac9ea6430925ddf1dced51332e7f9c6f5607cf45d7de168"
+    },
+    {
+      "scenarioId": "requirement-revoked",
+      "modelId": "F",
+      "transformation": "revocation",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "revoked",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "731166d79223ef9cc20a75dc0dfb97a9d16bdea7a441654c0d9cdb06b07c8c46",
+      "rawResolverInputDigest": "005887760b79fbc283a3fe51c8efd100943fd08bb1b7d147c168a3402c744a4f",
+      "normalizedResolverInputDigest": "e78dcbb9f1ab5ee9dcde79492e5fd128c2ba14e0c92092f257e031eb7db5a293",
+      "modelEvaluationInputDigest": "96b4aaa43d2c01cec7ea5e013ae6d06d1c7f4eb0788c3f48839605d25664e630",
+      "modelOutputDigest": "22384a31897e8970057ec8ea8176befc95c2e88ea2f54dca151c6e762e2f0ba4"
+    },
+    {
+      "scenarioId": "requirement-superseded",
+      "modelId": "A",
+      "transformation": "historical-receipt",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "283dc49ddade21c8039e97f3b464273bf87f8692b9ab5d9198ec37d7e6d7d814",
+      "rawResolverInputDigest": "f6022d326e1183def113d271ecbbf0f7cefe4864137f097ee46ec70f8828e444",
+      "normalizedResolverInputDigest": "6957071632ae2edd8654eaf337105350d66c3cdeaa6e94f35175d22fcc46df45",
+      "modelEvaluationInputDigest": "2185faea639483477416ad773e90bdf6e9e0a5ec9abb3f8dc96167abdbf8ec5b",
+      "modelOutputDigest": "c031ba4690bc117bea01af85a3efaf3a79a0c8baa84bdd95c2b8de6422b4598c"
+    },
+    {
+      "scenarioId": "requirement-superseded",
+      "modelId": "B",
+      "transformation": "historical-receipt",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "resolved",
+      "basis": "exact-field-record",
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 2,
+      "operationOutputDigest": "2feefb74d373748f7e11fef85716a02383a5554bf7e534c8a2ef3d0fa658f4d7",
+      "rawResolverInputDigest": "f6022d326e1183def113d271ecbbf0f7cefe4864137f097ee46ec70f8828e444",
+      "normalizedResolverInputDigest": "6957071632ae2edd8654eaf337105350d66c3cdeaa6e94f35175d22fcc46df45",
+      "modelEvaluationInputDigest": "5c466198882584b359be08578afc1e03aae2f187cb48ff185443212cbf0446cc",
+      "modelOutputDigest": "a41c96a47e5883a9ad6daaab40ab3d0e3aa119298320f55daa553375de371a06"
+    },
+    {
+      "scenarioId": "requirement-superseded",
+      "modelId": "C",
+      "transformation": "historical-receipt",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "resolved",
+      "basis": "field-family-policy",
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "882de72720c8f26c3897b7a3880eda369ab3e14f5d21703744ff089f25a06a78",
+      "rawResolverInputDigest": "f6022d326e1183def113d271ecbbf0f7cefe4864137f097ee46ec70f8828e444",
+      "normalizedResolverInputDigest": "6957071632ae2edd8654eaf337105350d66c3cdeaa6e94f35175d22fcc46df45",
+      "modelEvaluationInputDigest": "004569a09aba631f14f596abeca14a1a8f124611d51875dc9c7aea80cfbda0cd",
+      "modelOutputDigest": "f7353d81cf9c580d778bae41b9bddbe5355f00645baecc73e38abebef1b6f367"
+    },
+    {
+      "scenarioId": "requirement-superseded",
+      "modelId": "D",
+      "transformation": "historical-receipt",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "resolved",
+      "basis": "exact-object-override",
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 3,
+      "operationOutputDigest": "bd13fa5bda08520c26394f1a6efc215813a76577258390c51371a8c71b2e334b",
+      "rawResolverInputDigest": "f6022d326e1183def113d271ecbbf0f7cefe4864137f097ee46ec70f8828e444",
+      "normalizedResolverInputDigest": "6957071632ae2edd8654eaf337105350d66c3cdeaa6e94f35175d22fcc46df45",
+      "modelEvaluationInputDigest": "1137629f42eb580fcad56ba1a7b15434351b23d48a3f73c7010f025a39c5ce19",
+      "modelOutputDigest": "7d041fa3b2ffbcba320fee1ac972609a8130620858c2a067aed3c008dbe548fe"
+    },
+    {
+      "scenarioId": "requirement-superseded",
+      "modelId": "E",
+      "transformation": "historical-receipt",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "283dc49ddade21c8039e97f3b464273bf87f8692b9ab5d9198ec37d7e6d7d814",
+      "rawResolverInputDigest": "f6022d326e1183def113d271ecbbf0f7cefe4864137f097ee46ec70f8828e444",
+      "normalizedResolverInputDigest": "6957071632ae2edd8654eaf337105350d66c3cdeaa6e94f35175d22fcc46df45",
+      "modelEvaluationInputDigest": "709af6726a040f26d6fb37b13ca6753e93880961219699b0c5e888a7f4fc125c",
+      "modelOutputDigest": "b48bf0b0b6ef840443855ee922e3fd82a7ee8f8c968fbb2732d3bddaf2bbb669"
+    },
+    {
+      "scenarioId": "requirement-superseded",
+      "modelId": "F",
+      "transformation": "historical-receipt",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "5f87f690dde92d2835a593a3aec66939c5f0f700c33e9b4354468785f7256669",
+      "rawResolverInputDigest": "f6022d326e1183def113d271ecbbf0f7cefe4864137f097ee46ec70f8828e444",
+      "normalizedResolverInputDigest": "6957071632ae2edd8654eaf337105350d66c3cdeaa6e94f35175d22fcc46df45",
+      "modelEvaluationInputDigest": "9e1385b3b55403f1639dc81f733679e4ec5b52326469b1d1431f01361f5e3677",
+      "modelOutputDigest": "0f9e704d276f155c6576f2c01c4f2b7c65b7c25963f4f7c100a986d9ee680545"
+    },
+    {
+      "scenarioId": "topology-identity-tamper",
+      "modelId": "A",
+      "transformation": "topology-mutation",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "invalid-topology",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "90ba224ca0f2128b12a0e9f4a4594fd8d3cd2beb36fbd010f6659d0dbe00b9ef",
+      "rawResolverInputDigest": "ccc14c6a405912d88cd289b15a424c6a77771ce8c6f9edb1c0e12dc801f34b74",
+      "normalizedResolverInputDigest": "d16fd5a51ec599efdddcebbd9f6a852eb379ff58b2c338d4ef996daf45fbc1a4",
+      "modelEvaluationInputDigest": "cd033ff2e2814db28e2ca0070443007a7960539ff36e90d5a91892383a7e62db",
+      "modelOutputDigest": "12bb09342d620447076d5bbb1915488be47a604bed46cb2aa514f9f73a484653"
+    },
+    {
+      "scenarioId": "topology-identity-tamper",
+      "modelId": "B",
+      "transformation": "topology-mutation",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "invalid-topology",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "90ba224ca0f2128b12a0e9f4a4594fd8d3cd2beb36fbd010f6659d0dbe00b9ef",
+      "rawResolverInputDigest": "ccc14c6a405912d88cd289b15a424c6a77771ce8c6f9edb1c0e12dc801f34b74",
+      "normalizedResolverInputDigest": "d16fd5a51ec599efdddcebbd9f6a852eb379ff58b2c338d4ef996daf45fbc1a4",
+      "modelEvaluationInputDigest": "d4489a6ef1ff1f2a65cfb6fb4f7387aa49ef229b57a561732344ef5740125374",
+      "modelOutputDigest": "c2691e06df7e4daf2ec0bed9f5bc194234650b5b134c2f80865425ed7ee80f1e"
+    },
+    {
+      "scenarioId": "topology-identity-tamper",
+      "modelId": "C",
+      "transformation": "topology-mutation",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "invalid-topology",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "90ba224ca0f2128b12a0e9f4a4594fd8d3cd2beb36fbd010f6659d0dbe00b9ef",
+      "rawResolverInputDigest": "ccc14c6a405912d88cd289b15a424c6a77771ce8c6f9edb1c0e12dc801f34b74",
+      "normalizedResolverInputDigest": "d16fd5a51ec599efdddcebbd9f6a852eb379ff58b2c338d4ef996daf45fbc1a4",
+      "modelEvaluationInputDigest": "1e36b0d0567f78b807c5504c0eb842ae6878768aa5957e1330743e6dae4821e4",
+      "modelOutputDigest": "950cfb030f53b15384f652dcf5ac7a9efbc458f7e40783db1f72d3a942b28263"
+    },
+    {
+      "scenarioId": "topology-identity-tamper",
+      "modelId": "D",
+      "transformation": "topology-mutation",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "invalid-topology",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "90ba224ca0f2128b12a0e9f4a4594fd8d3cd2beb36fbd010f6659d0dbe00b9ef",
+      "rawResolverInputDigest": "ccc14c6a405912d88cd289b15a424c6a77771ce8c6f9edb1c0e12dc801f34b74",
+      "normalizedResolverInputDigest": "d16fd5a51ec599efdddcebbd9f6a852eb379ff58b2c338d4ef996daf45fbc1a4",
+      "modelEvaluationInputDigest": "1146d548c3dc1b3752e9603dd72db2cffc574160254e4e03c99f923f6d61d99c",
+      "modelOutputDigest": "13a5966cd55c8a721e4d69651267d8c9381c36a8a919e0a7e91702380a755737"
+    },
+    {
+      "scenarioId": "topology-identity-tamper",
+      "modelId": "E",
+      "transformation": "topology-mutation",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "invalid-topology",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "90ba224ca0f2128b12a0e9f4a4594fd8d3cd2beb36fbd010f6659d0dbe00b9ef",
+      "rawResolverInputDigest": "ccc14c6a405912d88cd289b15a424c6a77771ce8c6f9edb1c0e12dc801f34b74",
+      "normalizedResolverInputDigest": "d16fd5a51ec599efdddcebbd9f6a852eb379ff58b2c338d4ef996daf45fbc1a4",
+      "modelEvaluationInputDigest": "739c773367855aa45900e2f376f7348391323f084bdd966bc870fd89731345ca",
+      "modelOutputDigest": "05696591f4a1dc63600fad152ca5040e29260f39ce6fbf99e3d8e5e846c1043c"
+    },
+    {
+      "scenarioId": "topology-identity-tamper",
+      "modelId": "F",
+      "transformation": "topology-mutation",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "invalid-topology",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "90ba224ca0f2128b12a0e9f4a4594fd8d3cd2beb36fbd010f6659d0dbe00b9ef",
+      "rawResolverInputDigest": "ccc14c6a405912d88cd289b15a424c6a77771ce8c6f9edb1c0e12dc801f34b74",
+      "normalizedResolverInputDigest": "d16fd5a51ec599efdddcebbd9f6a852eb379ff58b2c338d4ef996daf45fbc1a4",
+      "modelEvaluationInputDigest": "4fde23b87af7a48dfa9ea22335e874e4acd4766001794f235c7b60e8cf3ab1d1",
+      "modelOutputDigest": "9249cd9804c81adc31514347ed4a822f70698ca7a22fa53a93630f9815cdf7f1"
+    },
+    {
+      "scenarioId": "topology-cycle",
+      "modelId": "A",
+      "transformation": "topology-mutation",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "invalid-topology",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "ce3f2186eda6fcd16addbf8e2baec85468dc547c5e632027c9d9546ff9e45e6d",
+      "rawResolverInputDigest": "dcf44d2d26f410fbc8631ea664990cf04c05c18dafe9e01652c6ad6510d767e0",
+      "normalizedResolverInputDigest": "0b176890f67cbdcde472ee14afef5eea00b6514133e5b167509ebbf7970f1f40",
+      "modelEvaluationInputDigest": "474e7ce1c88258c368f65b71ee4b3102dc09cb117cbf2c08ff9272e22edb06fb",
+      "modelOutputDigest": "adced9536ada583888c8e4589062faf981c517f31d926fe1953a85262b1ecde7"
+    },
+    {
+      "scenarioId": "topology-cycle",
+      "modelId": "B",
+      "transformation": "topology-mutation",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "invalid-topology",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "ce3f2186eda6fcd16addbf8e2baec85468dc547c5e632027c9d9546ff9e45e6d",
+      "rawResolverInputDigest": "dcf44d2d26f410fbc8631ea664990cf04c05c18dafe9e01652c6ad6510d767e0",
+      "normalizedResolverInputDigest": "0b176890f67cbdcde472ee14afef5eea00b6514133e5b167509ebbf7970f1f40",
+      "modelEvaluationInputDigest": "3f6f9ec2d2da24d04949d9ce74845a3ac93dbb3c01830bd8ab200083e8b45598",
+      "modelOutputDigest": "6a369af3fbf68713f83a1df7ecc67f816efb1e7e076a527a4a9719be322f5e28"
+    },
+    {
+      "scenarioId": "topology-cycle",
+      "modelId": "C",
+      "transformation": "topology-mutation",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "invalid-topology",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "ce3f2186eda6fcd16addbf8e2baec85468dc547c5e632027c9d9546ff9e45e6d",
+      "rawResolverInputDigest": "dcf44d2d26f410fbc8631ea664990cf04c05c18dafe9e01652c6ad6510d767e0",
+      "normalizedResolverInputDigest": "0b176890f67cbdcde472ee14afef5eea00b6514133e5b167509ebbf7970f1f40",
+      "modelEvaluationInputDigest": "e1481db20737add5461065369cf966b3b19d0c4a5b85e9441963fddc2303e426",
+      "modelOutputDigest": "ba387dfd02c941d0de5e9b44540af130497b22577c0381eaf8e9f66d76408e26"
+    },
+    {
+      "scenarioId": "topology-cycle",
+      "modelId": "D",
+      "transformation": "topology-mutation",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "invalid-topology",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "ce3f2186eda6fcd16addbf8e2baec85468dc547c5e632027c9d9546ff9e45e6d",
+      "rawResolverInputDigest": "dcf44d2d26f410fbc8631ea664990cf04c05c18dafe9e01652c6ad6510d767e0",
+      "normalizedResolverInputDigest": "0b176890f67cbdcde472ee14afef5eea00b6514133e5b167509ebbf7970f1f40",
+      "modelEvaluationInputDigest": "9df0d4a5ea58ac0ce8ff60bcc0edaffb75bcbd6d1b08bd70132af4a935e57761",
+      "modelOutputDigest": "7c2a569443ad5ddf3e15986bb100ab4275c328afec9b2ce670234a94077a6469"
+    },
+    {
+      "scenarioId": "topology-cycle",
+      "modelId": "E",
+      "transformation": "topology-mutation",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "invalid-topology",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "ce3f2186eda6fcd16addbf8e2baec85468dc547c5e632027c9d9546ff9e45e6d",
+      "rawResolverInputDigest": "dcf44d2d26f410fbc8631ea664990cf04c05c18dafe9e01652c6ad6510d767e0",
+      "normalizedResolverInputDigest": "0b176890f67cbdcde472ee14afef5eea00b6514133e5b167509ebbf7970f1f40",
+      "modelEvaluationInputDigest": "2bc3caeffbf7fc09daee84d391171186ac06ff6071bc07de00375812424bee84",
+      "modelOutputDigest": "a5b5200172a3e6a7ea1196eef7d98d906b17a220c190f5a003241009895f3a91"
+    },
+    {
+      "scenarioId": "topology-cycle",
+      "modelId": "F",
+      "transformation": "topology-mutation",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "invalid-topology",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "ce3f2186eda6fcd16addbf8e2baec85468dc547c5e632027c9d9546ff9e45e6d",
+      "rawResolverInputDigest": "dcf44d2d26f410fbc8631ea664990cf04c05c18dafe9e01652c6ad6510d767e0",
+      "normalizedResolverInputDigest": "0b176890f67cbdcde472ee14afef5eea00b6514133e5b167509ebbf7970f1f40",
+      "modelEvaluationInputDigest": "8f34cee1547a543738cd92eae5c2db6bae7007c25dd4709d84f70e2fd142189c",
+      "modelOutputDigest": "7cdda86bc320c8098d96794ff5e78828039c29672bf7d0923242d39ea15f1e73"
+    },
+    {
+      "scenarioId": "stale-target",
+      "modelId": "A",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "embed-governance-on-canonical-field"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "GOVERNANCE_MUTATES_COGNITION",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "REQUIREMENT_LIFECYCLE"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "94799b078f7ca479884e693dd852bbeb4fee182a9d836e24cb69610f0ca16f9a",
+      "rawResolverInputDigest": "67637fb50ffc97162ea19ee5d76e576f5c5021ec1a6735f112fef8b928fc429d",
+      "normalizedResolverInputDigest": "240305d1460c80f19c781e1bbcc7c2228bb34f34f428b6cc41a98ff443c203cd",
+      "modelEvaluationInputDigest": "f0fdd4a604a5eb9055b5a5fe99382e7d27d16245ab6d6925a0c0c8ac022d771c",
+      "modelOutputDigest": "802293f1318b527e4957c08278cebd34fe4378d003cb9093ec2b30aec73934fb"
+    },
+    {
+      "scenarioId": "stale-target",
+      "modelId": "B",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "exact-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "exact-only-resolution"
+      ],
+      "disposition": "resolved",
+      "basis": "exact-field-record",
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "0973376fd0ff1cf8804f93f08904ca1fc75eee5c944daeb552e5ffc8dae02fe6",
+      "rawResolverInputDigest": "67637fb50ffc97162ea19ee5d76e576f5c5021ec1a6735f112fef8b928fc429d",
+      "normalizedResolverInputDigest": "240305d1460c80f19c781e1bbcc7c2228bb34f34f428b6cc41a98ff443c203cd",
+      "modelEvaluationInputDigest": "243330832fe7df5639c1702c0f7343fbca1a26f6cf65298148f399ccd763c2d8",
+      "modelOutputDigest": "06e725d8d6dfd3c26c1f1231983e6f35134a417910c81f2c0280855358844b36"
+    },
+    {
+      "scenarioId": "stale-target",
+      "modelId": "C",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "family-policy-proposal",
+        "approval",
+        "issuance",
+        "receipt",
+        "resolution"
+      ],
+      "disposition": "resolved",
+      "basis": "field-family-policy",
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "43ddf7a29a029e7fd2e629aab0bb6f6c32541a3f5d3f35a97f896eea4eef7b26",
+      "rawResolverInputDigest": "67637fb50ffc97162ea19ee5d76e576f5c5021ec1a6735f112fef8b928fc429d",
+      "normalizedResolverInputDigest": "240305d1460c80f19c781e1bbcc7c2228bb34f34f428b6cc41a98ff443c203cd",
+      "modelEvaluationInputDigest": "66db80f2ecc77418358b903ce3cd272654b5ae90274cfd3e9c74de1846b455b7",
+      "modelOutputDigest": "b1707ed3579ae3e70b31336cfcd1441d1bcf810e3ac35635fb6ee49e6639ddba"
+    },
+    {
+      "scenarioId": "stale-target",
+      "modelId": "D",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "derive-approval-policy",
+        "proposal",
+        "approval",
+        "authorize-issuance",
+        "construct-receipt",
+        "validate-historical-receipt",
+        "resolve-lifecycle",
+        "validate-topology"
+      ],
+      "disposition": "stale-target",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [],
+      "administrativeOperations": 2,
+      "operationOutputDigest": "61915251a0ef29bc92a26403892105adea0879c7b56564ac79ace6fae8d9033b",
+      "rawResolverInputDigest": "67637fb50ffc97162ea19ee5d76e576f5c5021ec1a6735f112fef8b928fc429d",
+      "normalizedResolverInputDigest": "240305d1460c80f19c781e1bbcc7c2228bb34f34f428b6cc41a98ff443c203cd",
+      "modelEvaluationInputDigest": "a1bacfb912c78b4c1daa40207d7f3a78e36c70e18141c6f59bd1dcfa71b459d9",
+      "modelOutputDigest": "f269fb1f432af34a5facea50643be0eaf25c8236adec871cfe6e4db6b89bb608"
+    },
+    {
+      "scenarioId": "stale-target",
+      "modelId": "E",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "derive-from-scopes",
+        "authorize-without-governed-owner"
+      ],
+      "disposition": "unresolved",
+      "basis": null,
+      "securityViolations": [
+        "IMPLICIT_SCOPE_AUTHORITY",
+        "PRIVILEGE_CONFLATION"
+      ],
+      "operationalGaps": [
+        "MISSING_OPERATION"
+      ],
+      "administrativeOperations": 1,
+      "operationOutputDigest": "94799b078f7ca479884e693dd852bbeb4fee182a9d836e24cb69610f0ca16f9a",
+      "rawResolverInputDigest": "67637fb50ffc97162ea19ee5d76e576f5c5021ec1a6735f112fef8b928fc429d",
+      "normalizedResolverInputDigest": "240305d1460c80f19c781e1bbcc7c2228bb34f34f428b6cc41a98ff443c203cd",
+      "modelEvaluationInputDigest": "edb2d95345c2e99cdcb5401dfbbecb75f86933696d6342b0f9cfb3fcf3e30696",
+      "modelOutputDigest": "677225cf8a7a1ebf4dfe83b0ba3eff345d6fbd411957ccc1fb1a83fe6eaecf2e"
+    },
+    {
+      "scenarioId": "stale-target",
+      "modelId": "F",
+      "transformation": "semantic-input-mutation",
+      "operationCalls": [
+        "manual-exact-field-administration",
+        "resolution"
+      ],
+      "disposition": "stale-target",
+      "basis": null,
+      "securityViolations": [],
+      "operationalGaps": [
+        "MANUAL_OPERATION_BURDEN"
+      ],
+      "administrativeOperations": 23,
+      "operationOutputDigest": "61915251a0ef29bc92a26403892105adea0879c7b56564ac79ace6fae8d9033b",
+      "rawResolverInputDigest": "67637fb50ffc97162ea19ee5d76e576f5c5021ec1a6735f112fef8b928fc429d",
+      "normalizedResolverInputDigest": "240305d1460c80f19c781e1bbcc7c2228bb34f34f428b6cc41a98ff443c203cd",
+      "modelEvaluationInputDigest": "99c19b87b353951736d410a5ecac7e3c00ef5ef65229f789b1f1161a70eb1c24",
+      "modelOutputDigest": "15b1685346f450eb236262fbbcc778bfd350087064a0d7f4c644e14915c1e2b8"
+    }
+  ],
+  "digest": "49edd0dc64e332996f253f1aadcbdc707b4f116e045007f3b1e11079a4d8b822"
+}

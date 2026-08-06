@@ -3,9 +3,9 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** Audience-lineage diagnostic foundation is canonically
-closed with producer classification F; field audience-requirement governance
-is next
+**Current phase:** Field audience-requirement governance correction is ready
+for renewed final review at classification C; completed Explanation
+immutable-version ownership remains the dynamically derived next owner
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
@@ -94,8 +94,8 @@ the repository corpus and retained local metadata.
 
 ## Current Objective
 
-Define the canonical field audience-requirement governance contract without
-grant issuance, activation, disclosure, Runtime wiring, or routes.
+Define completed Organizational Explanation immutable-version ownership without
+field activation, disclosure, Runtime rewriting, or routes.
 
 This objective closes a governance prerequisite in the Leadership Workspace
 strategy program. Prepared Work Product, Decision Readiness, workspace, route,
@@ -105,8 +105,8 @@ and `GAP-D-006`.
 
 ## Next Priority
 
-**DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING FIELD
-AUDIENCE-REQUIREMENT GOVERNANCE CONTRACT 001**
+**DISCOVERY COMPLETED ORGANIZATIONAL EXPLANATION IMMUTABLE-VERSION OWNERSHIP
+CONTRACT 001**
 
 The completed benchmark passed 52 cases, five models, and 27 leakage channels
 (7,020 cells), selecting Model 2 with primary F and secondary B/C/D. Material role
@@ -120,10 +120,13 @@ STRESS TEST 001** passes.
 The completed forward-lineage diagnostic contains 20 scenarios, five models,
 100 cells, 78 invariants, six neutrality invariants, and four tamper
 validations. No model qualifies and no field is complete. Exact source closure
-and separate source/Evidence scope resolution pass. The owner graph derives
-field audience-requirement governance as the unique dominant actionable root;
-Explanation immutable-version ownership is separate and later, and
-condition/investigation production remains deferred. No live behavior changed.
+and separate source/Evidence scope resolution pass. Field audience-requirement
+governance correction selected classification C across 22 truthful scenarios
+and six models (132 cells), with revision-bound approvals, reconstructable
+receipts, internally derived approval thresholds, T3 temporal semantics, eight
+tamper validations, and 20 executable dynamic controls. Its owner graph now
+derives Explanation immutable-version ownership; condition/investigation
+production remains deferred. No live behavior changed.
 
 ## Canonical implementation boundary
 

@@ -2,14 +2,20 @@
 
 ## Exact next task
 
-Begin **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING FIELD
-AUDIENCE-REQUIREMENT GOVERNANCE CONTRACT 001** from the exact resulting
+Begin **DISCOVERY COMPLETED ORGANIZATIONAL EXPLANATION IMMUTABLE-VERSION
+OWNERSHIP CONTRACT 001** from the exact resulting
 `origin/main` in a new branch and worktree.
 
-This task is Phase 2 of the canonized Leadership Workspace strategy program:
-the governance benchmark must close before Prepared Work Product or Leadership
-Workspace implementation. Product brainstorming and implementation of
-workspaces, Decision Readiness, or Environmental Intelligence remain frozen.
+Field audience-requirement governance is shadow-complete under classification
+C after correction: a versioned family policy plus exact target-version
+override, revision-bound approvals, reconstructable receipts, T3 temporal
+semantics, historical validation separation, topology-backed DNF, and an
+executed-cell oracle. Completed
+Explanation immutable-version ownership is the next derived upstream owner.
+The issuance threshold is internally derived from proposal semantics and
+validated topology; callers cannot lower it.
+Product brainstorming and implementation of workspaces, Decision Readiness, or
+Environmental Intelligence remain frozen.
 Material role differentiation remains **OPEN**, recipient-scoped nested-field
 disclosure remains unimplemented, and activation and route promotion remain
 **BLOCKED**.
@@ -90,18 +96,22 @@ disclosure remains unimplemented, and activation and route promotion remain
 
 ## Frontend boundary
 
-Implement only the field audience-requirement governance contract. The
-audience-lineage forward-producer investigation is complete as a fail-closed
-diagnostic foundation: producer classification F, no qualifying model, and no
-complete field family. Do not require persisted grants, wire live
-authorization, implement disclosure, or infer authority from role, default
-scope, subject scope, source scope, or Evidence scope. Material differentiation
-remains OPEN.
+Implement only completed Organizational Explanation immutable-version
+ownership. Field audience-requirement governance is complete as a shadow-only
+contract; do not persist or activate it, create current requirements or grants,
+wire live authorization, implement disclosure, or infer authority from role,
+default scope, subject scope, source scope, or Evidence scope. Material
+differentiation remains OPEN.
 
 Completed: **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING
 AUDIENCE-RELEVANT NESTED-FIELD LINEAGE FORWARD PRODUCER 001**.
 
 Result: **FAIL-CLOSED DIAGNOSTIC FOUNDATION — PRODUCER CLASSIFICATION F**.
+
+Completed: **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING FIELD
+AUDIENCE-REQUIREMENT GOVERNANCE CONTRACT 001**.
+
+Result: **CORRECTED SHADOW CONTRACT — CLASSIFICATION C — READY FOR RENEWED FINAL REVIEW**.
 
 ## Explicitly deferred
 

@@ -337,6 +337,19 @@ and outcomes while remaining user-governed.
   registry entries fail closed with no next task. Condition/investigation
   production remains deferred by its actual dependency position.
 
+- Field audience-requirement governance is shadow-complete under classification
+  C after correction: versioned field-family policy plus exact target-version
+  override, revision-bound approvals, reconstructable receipts, T3
+  approval-plus-issuance-time authority, historical validation separation, and dual
+  control for organization-wide or proven broadening changes. The next
+  derived upstream task is completed Organizational Explanation immutable-
+  version ownership. No current requirement records or live resolver wiring
+  exist; administrative persistence, nested disclosure, activation, and route
+  promotion remain blocked.
+  Approval thresholds are internally derived, and ownership/temporal
+  selection is produced by executable policy harnesses rather than assigned
+  findings.
+
 - Connected Evidence improves specific Answer recovery without weaker negative
   controls.
 - Collaboration never manufactures consensus.

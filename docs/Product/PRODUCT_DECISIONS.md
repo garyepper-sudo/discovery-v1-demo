@@ -786,3 +786,54 @@ Changing one requires the process in
 - **Affected roadmap:** Leadership Workspace strategy phases 1–7.
 - **Status:** Active strategy decision; validation required before
   implementation.
+
+## DEC-PROD-039 — Field audience requirements use governed family policies plus exact overrides
+
+- **Decision:** A separately versioned field-family policy owns the default
+  audience requirement for one canonical Organizational Understanding field
+  family. One exact immutable target-version-bound record may override it.
+  Only an active organization-bound `manage-field-audience-requirements`
+  authority revision may authorize issuance. Approval is a separate immutable
+  act bound to the exact proposal revision. Issuance produces a separately
+  reconstructable receipt bound to the final requirement and exact operation.
+- **Reason:** The six-model executable benchmark found cognition embedding
+  couples governance to cognition, exact-only administration does not scale,
+  family-only policy cannot represent exceptions, and subject/source/Evidence
+  scopes carry no audience authority. Policy plus exact override was the sole
+  qualifying model after renewed correction across 22 truthful scenarios and
+  132 executable cells. Twenty controls derive the result dynamically from
+  executed model operations.
+- **Separation:** Classification accepts no recipient, access assignment,
+  `RecipientAudienceGrant`, role, title, hierarchy, default/display scope, or
+  presentation state. Classification authority grants no receive authority;
+  receive authority grants no classification authority.
+- **Lifecycle:** Policies, overrides, and administrative authorities are
+  immutable revisions with exact predecessors. Multiple active terminals,
+  stale targets, invalid authority, tampering, and cross-organization inputs
+  fail closed. Exact override precedence derives from exact target binding,
+  never scope breadth.
+- **Dual control and time:** Dual control applies to organization-wide family
+  policies and exact overrides proven broader through normalized DNF and valid
+  canonical topology. Equal and narrowing overrides need one approval;
+  incomparable relations fail closed. T3 validates authority at approval and
+  again at new issuance. Later revocation blocks pending or future issuance
+  without rewriting a historical receipt; requirement lifecycle independently
+  governs current validity.
+- **Approval policy:** The caller supplies no threshold. A versioned derivation
+  selects one or two distinct principals from proposal semantics and validated
+  topology; unresolved or invalid relationships fail closed.
+- **Correction:** Reviews rejected the initial hardcoded oracle, false
+  missing-approval case, and authority-reference-only approvals. Revision-bound
+  approvals, real topology transformations, truthful target-version dependency,
+  and then the incomplete, resolver-minted receipt. Separate authorization,
+  construction, historical validation, internal approval-policy derivation,
+  and executable ownership/temporal harnesses supersede those results.
+- **Consequences:** The contract, integrity helpers, validator, and resolver are
+  additive, pure, shadow-only, unpersisted, and unwired. No current field is
+  classified. No grant, assignment, Runtime, migration, Product behavior, or
+  route changes. Future activation requires separately reviewed administrative
+  bootstrap, persistence, migration, and nested-disclosure work.
+- **Affected gap and phase:** `GAP-B-014`, Phase 5 connected understanding.
+- **Next derived owner:** completed Organizational Explanation immutable-version
+  ownership.
+- **Status:** Active shadow contract; Production unchanged.

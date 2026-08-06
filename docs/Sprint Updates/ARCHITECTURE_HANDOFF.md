@@ -40,6 +40,28 @@ route promotion remain **BLOCKED**. Leadership Workspace validation does not
 replace the scope/governance critical path, and that engineering path does not
 erase the Product-validation direction.
 
+## Field audience-requirement governance closure
+
+The shadow-only field-side contract selects classification C: one immutable,
+versioned field-family policy with exact target-version-bound overrides and an
+independent `manage-field-audience-requirements` administrative authority
+revision. Initial final review rejected authority-reference-only approvals and
+a hardcoded oracle; renewed review then rejected a resolver-minted incomplete
+receipt and manual findings. The correction uses immutable revision-bound
+approvals, separately reconstructable receipts, distinct new-issuance
+authorization and historical validation, topology-backed DNF comparison, and
+executable controls. Renewed correction removes caller threshold control and
+reconstructs Models A–F and T1–T3 as executable adapters. Dual
+control covers organization-wide policies and proven broadening overrides. The pure resolver is recipient-neutral, unpersisted, and unwired.
+Current Northstar requirements, grants, assignments, migrations, Runtime, and
+live invocations remain zero. Classification authority and receive authority
+remain mutually non-implying.
+
+The owner graph now selects **DISCOVERY COMPLETED ORGANIZATIONAL EXPLANATION
+IMMUTABLE-VERSION OWNERSHIP CONTRACT 001**. Audience-lineage production and
+recipient-scoped nested-field disclosure remain blocked; activation and route
+promotion remain prohibited.
+
 ## Current Living Organization integration handoff
 
 The read-only Google Drive vertical slice is live-validated and integrated at
@@ -862,10 +884,10 @@ accounting is 20 scenarios × five models = 100 cells, plus 78 invariants, six
 neutrality invariants, and four tamper validations. No model qualifies and no
 field is complete. Exact source-binding closure and independent source/Evidence
 scope resolution pass; Explanation immutable-version ownership remains
-unresolved. The executed owner graph derives field audience-requirement
-governance as the unique dominant actionable root. Next: **DISCOVERY CANONICAL
-ORGANIZATIONAL UNDERSTANDING FIELD AUDIENCE-REQUIREMENT GOVERNANCE CONTRACT
-001**. Explanation version ownership remains separate and later;
+unresolved. The executed owner graph derived field audience-requirement
+governance as the unique dominant actionable root. That task is now
+shadow-complete at classification C. Next: **DISCOVERY COMPLETED
+ORGANIZATIONAL EXPLANATION IMMUTABLE-VERSION OWNERSHIP CONTRACT 001**;
 condition/investigation production remains deferred. Runtime, grants,
 assignments, disclosure, projection, presentation, routes, and Product behavior
 are unchanged; material differentiation remains OPEN and activation/promotion
