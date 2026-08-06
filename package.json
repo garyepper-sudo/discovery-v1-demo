@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "validate:governed-source-content": "tsx scripts/product/validateGovernedSourceContentOwner.ts",
+    "validate:governed-source-content-replay": "tsx scripts/product/validateGovernedSourceContentReplay.ts",
+    "validate:multi-role-foundational-governance-contracts": "tsx scripts/product/validateMultiRoleFoundationalGovernanceContracts.ts",
     "dev": "node --import tsx scripts/development/startRedactedDevelopmentServer.ts",
     "build": "next build",
     "start": "next start",

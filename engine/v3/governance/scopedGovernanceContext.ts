@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 export const SCOPED_GOVERNANCE_CONTEXT_VERSION = "1";
 export type GovernedScopeType = "organization" | "function" | "department" | "team" | "initiative" | "private-workspace" | "restricted";
 export type GovernedScopeRef = { organizationId: string; type: GovernedScopeType; id: string };
-export type ScopedGovernanceOperation = "understanding:disclose-direct" | "understanding:disclose-derived" | "understanding:read-historical" | "understanding:read-historical-metadata" | "contribution:submit" | "contribution:request-evidence-candidacy";
+export type ScopedGovernanceOperation = "understanding:disclose-direct" | "understanding:disclose-derived" | "understanding:read-historical" | "understanding:read-historical-metadata" | "contribution:submit" | "contribution:request-evidence-candidacy" | "source-content:write" | "source-content:read-for-proposal" | "source-content:read-for-evidence-admission" | "source-content:reset-development";
 export type GovernedSensitivity = "standard" | "restricted" | "private";
 export type ScopedAuthorityGrant = {
   authorityRef: string; policyRef: string; organizationId: string; subjectId: string;

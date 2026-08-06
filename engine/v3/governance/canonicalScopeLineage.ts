@@ -33,6 +33,8 @@ export type CanonicalSourceVersionRef = {
   sourceVersion: string;
   normalizedContentDigest: string;
 };
+export type CanonicalSourceType = "pasted-text" | "plain-text-upload" | "markdown-upload" | "manual-takeaway" | "authorized-record";
+export type CanonicalSourceAvailability = "available" | "revoked";
 export type CanonicalSourceScopeBinding = {
   kind: "canonical-source-scope-binding";
   schemaVersion: typeof CANONICAL_SCOPE_LINEAGE_VERSION;
@@ -45,6 +47,9 @@ export type CanonicalSourceScopeBinding = {
   basisRefs: string[];
   effectiveAt: string;
   supersedesBindingId: string | null;
+  sourceType?: CanonicalSourceType;
+  purposeRef?: string;
+  availability?: CanonicalSourceAvailability;
   digest: string;
 };
 export type CanonicalEvidenceScopeAttribution = {
@@ -166,19 +171,24 @@ export function resolveCurrentScopeTopology(revisions: readonly CanonicalScopeTo
   if(heads.length!==1) throw new Error("Ambiguous current topology revision."); return heads[0];
 }
 
-export function createCanonicalSourceScopeBinding(input:{ organizationId:string; bindingVersion:number; source:CanonicalSourceVersionRef; topology:CanonicalScopeTopology; assertions:readonly SourceScopeAssertion[]; basisRefs:readonly string[]; effectiveAt:string; supersedesBindingId?:string|null }):CanonicalSourceScopeBinding {
+export function createCanonicalSourceScopeBinding(input:{ organizationId:string; bindingVersion:number; source:CanonicalSourceVersionRef; topology:CanonicalScopeTopology; assertions:readonly SourceScopeAssertion[]; basisRefs:readonly string[]; effectiveAt:string; supersedesBindingId?:string|null; sourceType?:CanonicalSourceType; purposeRef?:string; availability?:CanonicalSourceAvailability }):CanonicalSourceScopeBinding {
   validateTopologyReference(input.topology,input.organizationId,input.topology.topologyId);
   if(!Number.isInteger(input.bindingVersion)||input.bindingVersion<1||!timestamp(input.effectiveAt)||!exact(input.source.sourceId)||!exact(input.source.sourceVersion)||!exact(input.source.normalizedContentDigest)||input.source.normalizedContentDigest.length<16) throw new Error("Invalid canonical source binding metadata.");
   const assertions=normalizeAssertions(input.assertions); if(!assertions.length) throw new Error("Canonical source binding requires an explicit scope assertion.");
   const known=nodeMap(input.topology); for(const assertion of assertions){ validateScope(assertion.scope,input.organizationId); if(!known.has(scopeKey(assertion.scope))) throw new Error("Unknown canonical source-binding scope."); }
   const basisRefs=normalizeStrings(input.basisRefs); if(!basisRefs.length||basisRefs.some(value=>!exact(value)||/filename|drive-file/i.test(value))) throw new Error("Canonical binding requires non-transport governed basis.");
-  const unsigned={kind:"canonical-source-scope-binding" as const,schemaVersion:CANONICAL_SCOPE_LINEAGE_VERSION,organizationId:input.organizationId,bindingVersion:input.bindingVersion,source:structuredClone(input.source),topologyId:input.topology.topologyId,assertions,basisRefs,effectiveAt:input.effectiveAt,supersedesBindingId:input.supersedesBindingId??null};
+  const extensionCount=[input.sourceType,input.purposeRef,input.availability].filter(value=>value!==undefined).length;
+  if(extensionCount!==0&&extensionCount!==3)throw new Error("Governed local source binding metadata must be complete.");
+  if(input.purposeRef!==undefined&&!exact(input.purposeRef))throw new Error("Invalid governed source purpose reference.");
+  const extension=input.sourceType===undefined?{}:{sourceType:input.sourceType,purposeRef:input.purposeRef!,availability:input.availability!};
+  const unsigned={kind:"canonical-source-scope-binding" as const,schemaVersion:CANONICAL_SCOPE_LINEAGE_VERSION,organizationId:input.organizationId,bindingVersion:input.bindingVersion,source:structuredClone(input.source),topologyId:input.topology.topologyId,assertions,basisRefs,effectiveAt:input.effectiveAt,supersedesBindingId:input.supersedesBindingId??null,...extension};
   const digest=hash(unsigned); return {...unsigned,bindingId:`source-scope-binding:${input.organizationId}:${input.source.sourceId}:v${input.bindingVersion}:${digest}`,digest};
 }
 
 export function resolveCurrentSourceScopeBinding(revisions:readonly CanonicalSourceScopeBinding[],at:string):CanonicalSourceScopeBinding|undefined{
   if(!revisions.length)return undefined; if(!timestamp(at))throw new Error("Invalid binding resolution time.");
-  const identity=stable(revisions[0]!.source); if(revisions.some(item=>item.organizationId!==revisions[0]!.organizationId||stable(item.source)!==identity))throw new Error("Binding revision identity changed.");
+  for(const item of revisions){const {bindingId,digest,...unsigned}=item;const expected=hash(unsigned);if(digest!==expected||bindingId!==`source-scope-binding:${item.organizationId}:${item.source.sourceId}:v${item.bindingVersion}:${expected}`)throw new Error("Canonical source binding integrity failed.");}
+  const identity=stable({source:revisions[0]!.source,sourceType:revisions[0]!.sourceType,purposeRef:revisions[0]!.purposeRef}); if(revisions.some(item=>item.organizationId!==revisions[0]!.organizationId||stable({source:item.source,sourceType:item.sourceType,purposeRef:item.purposeRef})!==identity))throw new Error("Binding revision identity changed.");
   const byId=new Map(revisions.map(item=>[item.bindingId,item])); if(byId.size!==revisions.length)throw new Error("Duplicate binding identity.");
   const successors=new Map<string,string[]>(); for(const item of revisions){if(item.supersedesBindingId){if(!byId.has(item.supersedesBindingId))throw new Error("Stale binding predecessor.");successors.set(item.supersedesBindingId,[...(successors.get(item.supersedesBindingId)??[]),item.bindingId]);}}
   if([...successors.values()].some(items=>items.length!==1))throw new Error("Forked binding revision.");
