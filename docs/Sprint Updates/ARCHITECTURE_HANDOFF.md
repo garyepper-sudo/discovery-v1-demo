@@ -40,6 +40,23 @@ route promotion remain **BLOCKED**. Leadership Workspace validation does not
 replace the scope/governance critical path, and that engineering path does not
 erase the Product-validation direction.
 
+## Field audience direct-security closure
+
+The directly validated field-audience issuance chain is canonical as a
+shadow-only governance primitive. Approval-policy derivation is internally
+governed and content-addressed; issuance authorization, receipt construction,
+and historical issuance are independently reconstructable. Later administrator
+revocation blocks future issuance without rewriting valid historical receipts,
+while requirement lifecycle remains a separate current-state owner.
+
+The contract is unpersisted, has no live consumer, and changes no Runtime,
+authorization, disclosure, projection, Product Communication, presentation, or
+route behavior. Comparative ownership/temporal research is preserved on
+`research/field-audience-requirement-comparative-model-temporal-preservation-001`,
+is noncanonical, and is not a closure gate. The exact next review is
+**DISCOVERY POST-FIELD-AUDIENCE DIRECT-SECURITY GOVERNANCE OWNER-GRAPH
+RECONCILIATION 001**; no implementation successor is yet canonical.
+
 ## Current Living Organization integration handoff
 
 The read-only Google Drive vertical slice is live-validated and integrated at

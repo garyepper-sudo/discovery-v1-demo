@@ -358,3 +358,16 @@ before replacing canonical state. Failure leaves the prior Runtime,
 Understanding history, receipt, and checkpoint unchanged. OAuth callback and
 log redaction is recursive; credentials and raw Runtime are never report
 content.
+
+## Field audience-requirement security
+
+The canonical shadow boundary is a content-addressed chain from authoritative
+proposal, governing family policy, and canonical topology through derived
+approval policy, reconstructed issuance authorization, validated receipt
+construction, and historical validation. Current requirement lifecycle remains
+separate. The boundary is unpersisted and has no live Product consumer.
+
+Comparative ownership and temporal-model research is noncanonical and selects
+no architecture owner or successor. The next governed activity is the
+review-only **DISCOVERY POST-FIELD-AUDIENCE DIRECT-SECURITY GOVERNANCE
+OWNER-GRAPH RECONCILIATION 001**.

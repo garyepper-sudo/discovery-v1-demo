@@ -3,9 +3,8 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** Audience-lineage diagnostic foundation is canonically
-closed with producer classification F; field audience-requirement governance
-is next
+**Current phase:** Field audience-requirement direct security is canonically
+closed as a shadow primitive; owner-graph reconciliation is next
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
@@ -94,8 +93,9 @@ the repository corpus and retained local metadata.
 
 ## Current Objective
 
-Define the canonical field audience-requirement governance contract without
-grant issuance, activation, disclosure, Runtime wiring, or routes.
+Reconcile the post-field-audience governance owner graph without implementing
+any presumed successor, persistence, activation, disclosure, Runtime wiring, or
+route.
 
 This objective closes a governance prerequisite in the Leadership Workspace
 strategy program. Prepared Work Product, Decision Readiness, workspace, route,
@@ -105,8 +105,16 @@ and `GAP-D-006`.
 
 ## Next Priority
 
-**DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING FIELD
-AUDIENCE-REQUIREMENT GOVERNANCE CONTRACT 001**
+**DISCOVERY POST-FIELD-AUDIENCE DIRECT-SECURITY GOVERNANCE OWNER-GRAPH
+RECONCILIATION 001**
+
+The direct-security contract is classification A: approval-policy derivation,
+issuance authorization, receipt construction, and historical issuance are
+independently reconstructable across 47 cases. It remains shadow-only,
+unpersisted, unused by live Product code, and creates no current records.
+Comparative ownership/temporal research is preserved on its research branch,
+is noncanonical, and establishes no accepted model, readiness, owner graph, or
+next task.
 
 The completed benchmark passed 52 cases, five models, and 27 leakage channels
 (7,020 cells), selecting Model 2 with primary F and secondary B/C/D. Material role

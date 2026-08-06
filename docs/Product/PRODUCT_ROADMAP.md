@@ -326,6 +326,12 @@ and outcomes while remaining user-governed.
   bound to an exact access-assignment revision. Forward lineage is next;
   persistence, administrative issuance, activation, and live acceptance remain
   later explicit gates.
+- Direct field-audience issuance security is shadow-complete: policy derivation,
+  authorization, receipt construction, and historical validation are
+  independently reconstructable. Persistence, bootstrap, delegation, migration,
+  live wiring, and nested disclosure remain blocked. Comparative model research
+  is noncanonical. Owner-graph reconciliation must establish a unique next owner
+  before further implementation.
 - Forward lineage remains blocked before condition/investigation work. The
   accounting-corrected executable matrix proves that field-owned
   recipient-audience requirement semantics are the earliest missing owner.

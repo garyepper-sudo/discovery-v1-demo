@@ -2,13 +2,14 @@
 
 ## Exact next task
 
-Begin **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING FIELD
-AUDIENCE-REQUIREMENT GOVERNANCE CONTRACT 001** from the exact resulting
-`origin/main` in a new branch and worktree.
+Begin **DISCOVERY POST-FIELD-AUDIENCE DIRECT-SECURITY GOVERNANCE OWNER-GRAPH
+RECONCILIATION 001** from the exact resulting `origin/main` in a new branch and
+worktree.
 
-This task is Phase 2 of the canonized Leadership Workspace strategy program:
-the governance benchmark must close before Prepared Work Product or Leadership
-Workspace implementation. Product brainstorming and implementation of
+This is a review-only reconciliation after canonical closure of the shadow
+field-audience direct-security primitive. It must determine whether a unique
+next owner exists; comparative model/temporal research supplies no accepted
+selection or successor. Product brainstorming and implementation of
 workspaces, Decision Readiness, or Environmental Intelligence remain frozen.
 Material role differentiation remains **OPEN**, recipient-scoped nested-field
 disclosure remains unimplemented, and activation and route promotion remain
@@ -88,20 +89,18 @@ disclosure remains unimplemented, and activation and route promotion remain
   lineage are present. Reconstruction used no Drive, connector, Production, or
   deployment activity.
 
-## Frontend boundary
+## Completed direct-security boundary
 
-Implement only the field audience-requirement governance contract. The
-audience-lineage forward-producer investigation is complete as a fail-closed
-diagnostic foundation: producer classification F, no qualifying model, and no
-complete field family. Do not require persisted grants, wire live
-authorization, implement disclosure, or infer authority from role, default
-scope, subject scope, source scope, or Evidence scope. Material differentiation
-remains OPEN.
+Completed: **DISCOVERY FIELD AUDIENCE-REQUIREMENT GOVERNANCE DIRECT SECURITY
+CONTRACT 001**.
 
-Completed: **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING
-AUDIENCE-RELEVANT NESTED-FIELD LINEAGE FORWARD PRODUCER 001**.
+Result: **DIRECT-SECURITY CLASSIFICATION A — SHADOW-ONLY RECONSTRUCTABLE
+ISSUANCE CHAIN**.
 
-Result: **FAIL-CLOSED DIAGNOSTIC FOUNDATION — PRODUCER CLASSIFICATION F**.
+Comparative ownership/temporal model research is preserved, noncanonical, and
+not a closure gate. Do not wire persistence, live authorization, disclosure,
+projection, presentation, or routes. Material differentiation remains OPEN and
+recipient-scoped nested disclosure remains blocked.
 
 ## Explicitly deferred
 

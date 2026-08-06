@@ -156,6 +156,15 @@ Production and research gaps retain their existing classifications. Connector
 retrieval does not silently promote autonomous reevaluation, notification,
 monitoring, enterprise authorization, or experimental cognition.
 
+## Field audience direct-security boundary
+
+The shadow-only field-audience issuance security chain is directly validated
+and canonical. Persistence, administrative bootstrap and delegation, migration,
+live integration, and nested disclosure remain open activation dependencies.
+Comparative ownership/temporal research is preserved separately and closes no
+gap. Material role differentiation remains **OPEN**. Owner-graph reconciliation,
+not implementation of a presumed successor, is the next bounded task.
+
 ## Resolved Gaps
 
 Every closed gap moves here rather than being deleted. Resolved identifiers

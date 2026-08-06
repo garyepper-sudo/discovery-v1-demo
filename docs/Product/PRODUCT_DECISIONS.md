@@ -786,3 +786,23 @@ Changing one requires the process in
 - **Affected roadmap:** Leadership Workspace strategy phases 1–7.
 - **Status:** Active strategy decision; validation required before
   implementation.
+
+## DEC-PROD-039 — Direct field-audience issuance security is a shadow governance primitive
+
+- **Decision:** Accept the directly validated, content-addressed field-audience
+  approval-policy, authorization, receipt-construction, and historical-validation
+  chain as a shadow-only governance primitive.
+- **Boundary:** The contract is unpersisted and unused by live Product code.
+  Authority, approval, authorization, historical receipt, and current requirement
+  lifecycle remain distinct. No Runtime, disclosure, projection, communication,
+  presentation, route, or Product behavior changes.
+- **Research separation:** Comparative ownership and temporal-model research is
+  preserved on
+  `research/field-audience-requirement-comparative-model-temporal-preservation-001`.
+  It is noncanonical, establishes no accepted model or readiness result, and is
+  not a closure gate.
+- **Validation:** 47 direct-security cases, caller-control rejection,
+  deterministic replay, and order invariance pass with classification A.
+- **Next review:** `DISCOVERY POST-FIELD-AUDIENCE DIRECT-SECURITY GOVERNANCE
+  OWNER-GRAPH RECONCILIATION 001` determines the next exact owner; no successor
+  is canonized by this decision.
