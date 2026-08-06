@@ -28,6 +28,7 @@ import {
   buildDurableProductQuestion,
   productQuestionEvents,
 } from "../questions/questionLifecycle";
+import { currentProductDecisionDraftRevision } from "../decisions";
 
 type ProductRuntimeMemory = OrganizationRuntime["memory"] & {
   investigationOpportunities?: InvestigationOpportunity[];
@@ -200,9 +201,41 @@ function projectDecision(
   question: ProductQuestion,
   answer: ProductAnswer | null,
 ): { draft: ProductDecisionDraft | null; active: ProductDecision | null } {
-  if (!answer) return { draft: null, active: null };
   const record = runtime.memory.executiveDecisionRecords.at(-1);
   if (!record) {
+    const persisted = currentProductDecisionDraftRevision(runtime, question.id);
+    if (persisted) {
+      const readyForReview = Boolean(
+        persisted.expectedOutcomes.length && persisted.measures.length
+        && persisted.intendedDecisionMakerLabel && persisted.proposedReviewDate,
+      );
+      return {
+        draft: {
+          id: persisted.draftId,
+          organizationId: persisted.organizationId,
+          sourceQuestionId: persisted.questionId,
+          sourceAnswerId: persisted.sourceAnswerId,
+          title: persisted.title,
+          intervention: persisted.intervention,
+          rationale: persisted.rationale,
+          assumptions: structuredClone(persisted.assumptions),
+          risks: structuredClone(persisted.risks),
+          expectedOutcomes: structuredClone(persisted.expectedOutcomes),
+          measures: structuredClone(persisted.measures),
+          owner: persisted.intendedDecisionMakerLabel ? {
+            id: persisted.intendedDecisionMakerRef,
+            label: persisted.intendedDecisionMakerLabel,
+          } : null,
+          proposedReviewDate: persisted.proposedReviewDate,
+          readiness: readyForReview ? "ready_for_review" : "draft",
+          readinessLimiter: readyForReview
+            ? null
+            : "Expected outcomes, measures, owner, and review date are required before review.",
+        },
+        active: null,
+      };
+    }
+    if (!answer) return { draft: null, active: null };
     if (!answer.decisionImplication) return { draft: null, active: null };
     return {
       draft: {
@@ -225,6 +258,7 @@ function projectDecision(
       active: null,
     };
   }
+  if (!answer) return { draft: null, active: null };
   const work = runtime.memory.executiveWork.find((item) => item.decisionRecordId === record.id);
   return {
     draft: null,
