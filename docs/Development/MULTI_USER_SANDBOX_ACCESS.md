@@ -21,3 +21,9 @@ before projection but authorizes no implementation. Current assignments lack
 explicit recipient-audience authority; default scopes and role labels remain
 non-authoritative. Material differentiation stays open through the required
 governance D → producer C → contract B sequence.
+
+Audience-governance contract readiness now passes through a separate
+assignment-bound shadow grant, but none of the three current Northstar accounts
+has such a grant. Their assignments and shared production content remain
+unchanged. Persistence, administrative issuance, resolution, and live wiring
+remain blocked.

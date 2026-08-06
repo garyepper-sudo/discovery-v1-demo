@@ -810,3 +810,12 @@ order: audience governance, forward lineage, then contract implementation.
 Production and retained Runtime remain unchanged; route promotion stays
 blocked. Next: **DISCOVERY ORGANIZATIONAL ACCESS RECIPIENT-AUDIENCE SCOPE
 GOVERNANCE CONTRACT 001**.
+
+## Recipient-audience governance closure
+
+The separate immutable `RecipientAudienceGrant` is shadow-contract complete
+and exact-assignment-revision bound. Explicit descendant coverage uses only
+canonical `contains` edges. Contract readiness passes; activation remains
+blocked on persistence, administrative issuance, current resolution, and live
+wiring. No current grant exists. Next: **DISCOVERY CANONICAL ORGANIZATIONAL
+UNDERSTANDING AUDIENCE-RELEVANT NESTED-FIELD LINEAGE FORWARD PRODUCER 001**.

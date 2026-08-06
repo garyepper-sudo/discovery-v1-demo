@@ -3,9 +3,8 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** Northstar typed canonical Product population and the
-recipient-scope disclosure benchmark are complete; recipient-audience
-governance is next
+**Current phase:** Recipient-audience governance is shadow-contract complete;
+audience-relevant nested-field lineage is next
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
@@ -89,13 +88,13 @@ the repository corpus and retained local metadata.
 
 ## Current Objective
 
-Define the recipient-audience scope governance contract without implementing
-nested disclosure, changing canonical truth, or promoting routes.
+Forward-produce audience-relevant nested-field lineage using the accepted
+shadow governance vocabulary without grants, activation, disclosure, or routes.
 
 ## Next Priority
 
-**DISCOVERY ORGANIZATIONAL ACCESS RECIPIENT-AUDIENCE SCOPE GOVERNANCE CONTRACT
-001**
+**DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING AUDIENCE-RELEVANT
+NESTED-FIELD LINEAGE FORWARD PRODUCER 001**
 
 The completed benchmark passed 52 cases, five models, and 27 leakage channels
 (7,020 cells), selecting Model 2 with primary F and secondary B/C/D. Material role

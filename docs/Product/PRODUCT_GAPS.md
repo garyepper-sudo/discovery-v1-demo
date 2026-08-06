@@ -48,6 +48,12 @@ now populated and truthfully shared. Benchmark 001 selected Model 2 but proved
 explicit audience-governance (D), forward-lineage (C), and nested-contract (B)
 blockers, in that dependency order. This is not yet a corpus gap. Material role
 differentiation and route promotion remain open.
+
+Recipient-audience governance refinement: classification B selects a separate
+versioned grant bound to the exact access-assignment revision. The shadow
+contract is complete; future administrative issuance and persistence require a
+separate governed migration. The next dependency is forward-produced
+audience-relevant nested-field lineage. No current Northstar grant exists.
 | GAP-B-015 | B | Answer specificity expansion | Current precision is high but coverage is narrow. | Unsupported scenarios abstain. | More domains produce specific answers without weaker precision. | Precision is preferred to generic coverage. | Benchmark expansion, evidence quality | Broader payable utility | P1 | Beta | L | Domain-balanced recovery improves while negative controls remain unchanged. | Open |
 | GAP-B-016 | B | Industry validation | Product outputs lack broad industry validation. | Synthetic and bounded organizational scenarios dominate. | Realistic cross-industry evaluation supports claims. | Design-partner evidence unavailable. | Evaluation framework, privacy | Market confidence | P1 | Beta | M | Approved industries clear specificity, truthfulness, and utility gates. | Open |
 | GAP-B-017 | B | Large-scale retrieval validation | Retrieval has not been tested at organizational scale. | Manual bounded evidence sets. | Large corpora preserve latency, precision, lineage, and isolation. | Governed connector absent. | Connector, performance harness | Enterprise retrieval | P2 | Beta | L | Scale test passes defined recall, precision, latency, and cost limits. | Open |

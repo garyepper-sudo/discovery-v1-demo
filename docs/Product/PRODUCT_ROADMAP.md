@@ -292,6 +292,10 @@ and outcomes while remaining user-governed.
   audience governance, forward-produced audience-relevant lineage, canonical
   nested-field disclosure, projection, Product Communication, presentation.
   Benchmark success alone authorizes no production implementation.
+- Recipient-audience governance is now shadow-complete as an immutable grant
+  bound to an exact access-assignment revision. Forward lineage is next;
+  persistence, administrative issuance, activation, and live acceptance remain
+  later explicit gates.
 
 - Connected Evidence improves specific Answer recovery without weaker negative
   controls.

@@ -2,8 +2,8 @@
 
 ## Exact next task
 
-Begin **DISCOVERY ORGANIZATIONAL ACCESS RECIPIENT-AUDIENCE SCOPE GOVERNANCE
-CONTRACT 001** from the exact resulting
+Begin **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING AUDIENCE-RELEVANT
+NESTED-FIELD LINEAGE FORWARD PRODUCER 001** from the exact resulting
 `origin/main` in a new branch and worktree.
 
 ## Read first
@@ -82,12 +82,11 @@ CONTRACT 001** from the exact resulting
 
 ## Frontend boundary
 
-Implement only **DISCOVERY ORGANIZATIONAL ACCESS RECIPIENT-AUDIENCE SCOPE
-GOVERNANCE CONTRACT 001**. The completed 52-case, five-model, 27-channel
-benchmark (7,020 cells) selected Model 2 and primary F with secondary B/C/D.
-Define audience authority before forward lineage or nested disclosure. Do not
-infer authority from role, default scope, or `composition.scope`. Material role
-differentiation remains OPEN and production behavior remains unchanged.
+Implement only the shadow audience-relevant nested-field lineage forward
+producer. Recipient-audience governance is contract-ready (primary B,
+secondary D) but activation remains blocked. Do not require persisted grants,
+wire live authorization, implement disclosure, or infer authority from role,
+default scope, or `composition.scope`. Material differentiation remains OPEN.
 
 ## Explicitly deferred
 

@@ -684,3 +684,11 @@ forward audience-relevant lineage is incomplete, and nested-field contracts
 cannot yet represent the governed result. Governance precedes producer and
 contract work. Historical Runtimes remain immutable and fail closed without
 existence leakage; production behavior and route status remain unchanged.
+
+Recipient-audience governance is now contract-ready but not activation-ready.
+An additive, shadow-only `RecipientAudienceGrant` owns explicit audience scope
+and binds to an exact current access-assignment identity and revision.
+`CanonicalScopeTopology` retains identity and explicit relation ownership.
+No current Northstar grant exists and no migration ran. Forward lineage may
+proceed without persisted grants; live activation, material differentiation,
+and route promotion remain blocked.

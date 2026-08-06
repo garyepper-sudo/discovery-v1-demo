@@ -695,3 +695,18 @@ Changing one requires the process in
   without hidden existence signals.
 - **Status:** Benchmark PASS; primary F, secondary B/C/D. Production unchanged;
   material role differentiation remains open.
+
+## DEC-PROD-036 — Audience authority is a separate assignment-bound grant
+
+- **Decision:** A versioned `RecipientAudienceGrant` bound to an exact current
+  access-assignment identity and revision owns recipient-audience authority.
+- **Coverage:** Exact scope and explicitly proven descendants only. Ancestors,
+  siblings, initiatives without exact grants, missing relations, and
+  cross-organization references fail closed.
+- **Boundary:** Version 1 is limited to canonical Organizational Understanding,
+  operation `receive`, and governed purpose `organizational-understanding`.
+- **Lifecycle:** Immutable revisions; revoked or stale grants do not reactivate
+  after access restoration. Future issuance requires explicit administrative
+  authority and separate persistence.
+- **Status:** Additive shadow contract and pure evaluator implemented and
+  validated; no migration, live wiring, grant seeding, or Product change.

@@ -157,3 +157,11 @@ contract implementation. Current production behavior and retained Runtime are
 unchanged; material differentiation and promotion remain open. Next:
 **DISCOVERY ORGANIZATIONAL ACCESS RECIPIENT-AUDIENCE SCOPE GOVERNANCE CONTRACT
 001**.
+
+## Recipient-audience governance closure
+
+The corrected shadow contract selected Model B with primary B and secondary D.
+Contract readiness is PASS; activation readiness is BLOCKED. No Northstar grant,
+assignment mutation, migration, Runtime mutation, or live wiring occurred.
+Next: **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING AUDIENCE-RELEVANT
+NESTED-FIELD LINEAGE FORWARD PRODUCER 001**.
