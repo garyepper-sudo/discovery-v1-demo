@@ -19,6 +19,10 @@ The purpose of this folder is to keep Discovery evolving intentionally rather th
 
 The Product Canon is the long-term source of truth for Discovery's product direction.
 
+Discovery's current product north star is reducing the cognitive cost of
+leadership. Organizational Understanding remains the engine; Leadership
+Workspaces become the product environment.
+
 ---
 
 # Product Philosophy
@@ -84,6 +88,17 @@ Neither should redefine the other.
 # Canonical Reading Order
 
 Every significant product sprint should begin by reviewing these documents.
+
+---
+
+## 0. DISCOVERY_LEADERSHIP_WORKSPACE_MANIFESTO.md
+
+Defines why Discovery exists, why Organizational Understanding remains the
+engine, why Leadership Workspaces become the product, and how Prepared Work
+Products, Decision Journeys, validation, and the phased strategy fit the
+existing architecture.
+
+Read this before proposing new product experiences.
 
 ---
 

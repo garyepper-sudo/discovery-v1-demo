@@ -20,6 +20,37 @@ Every checked item represents a validated end-to-end capability.
 
 No new product capabilities should be added until this benchmark is complete unless they are required to satisfy one of the benchmark stages.
 
+## Leadership Workspace validation strategy
+
+Discovery's next validation program tests whether governed Organizational
+Understanding can reduce the cognitive cost of leadership through Prepared
+Work Products and recurring Leadership Workspaces.
+
+Validation proceeds in this order:
+
+1. leadership interviews establish recurring work, cadence, preparation burden,
+   existing artifacts, correction behavior, and decision journeys;
+2. a simulated organization supplies repeatable longitudinal changes and
+   negative controls;
+3. the multi-role governance benchmark proves that prepared work discloses only
+   authorized meaning and does not leak through summaries, omissions, counts,
+   history, or copied state;
+4. one product-safe Prepared Work Product prototype tests usefulness without
+   creating a production contract or persistence owner;
+5. a Decision benchmark suite tests Context, Current Understanding, Unknowns,
+   Assumptions, Contradictions, Evidence, Alternatives, Decision, Expected and
+   Observed Outcomes, Learning, and revised Understanding.
+
+Primary evidence is reduction in preparation and synthesis effort subject to
+truthfulness. Secondary evidence includes prepared-work quality, meeting
+preparation quality, confidence calibration, organizational coherence,
+decision quality, and learning quality. Retrieval volume, interface activity,
+document count, or generic satisfaction alone cannot pass the benchmark.
+
+Brief, Prepare, Explore, and Capture remain hypotheses until this program
+supports them. Environmental Intelligence and additional workspace families
+remain excluded.
+
 ---
 
 # Active Validation Systems

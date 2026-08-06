@@ -30,6 +30,29 @@ A Question is not a transient investigation input. `ProductQuestion` is the
 canonical long-lived product object. It accumulates references to searches,
 answers, confidence, improvements, decisions, outcomes, learning, and insights.
 
+At the experience boundary, Discovery is organized around the leadership
+objective **“What are you trying to accomplish?”** Organizational
+Understanding remains the engine; Leadership Workspaces become the product.
+Brief, Prepare, Explore, and Capture are initial universal workspace
+hypotheses, not new cognition, persistence, identity, or authority owners.
+They compose durable Questions and existing workflow objects into recurring
+leadership work. The governing strategy is
+[DISCOVERY_LEADERSHIP_WORKSPACE_MANIFESTO.md](./DISCOVERY_LEADERSHIP_WORKSPACE_MANIFESTO.md).
+`canonicalCompositions` remains the Product-visible Organizational
+Understanding owner. Future Prepared Work Products consume governed Product
+contracts derived from that owner, never raw Runtime cognition.
+
+Prepared Work Products are future Product Workflow projections for artifacts
+leaders already create. They must reference existing canonical owners and
+preserve scope, Evidence lineage, uncertainty, and exact confidence ownership.
+Their versioned contract, lifecycle, and validation remain unimplemented.
+
+Decision Readiness is a future bounded product determination about whether
+sufficient authorized understanding exists for one exact decision. It may not
+be inferred from object counts, presentation completeness, hierarchy, or a
+universal score. Until its owner and contract are validated, the product must
+abstain rather than manufacture readiness.
+
 ## Canonical workflow
 
 ```mermaid
@@ -300,6 +323,7 @@ and is consumed unchanged by the same one-read adapter for every recipient.
 
 ## Related canonical documents
 
+- [DISCOVERY_LEADERSHIP_WORKSPACE_MANIFESTO.md](./DISCOVERY_LEADERSHIP_WORKSPACE_MANIFESTO.md)
 - [ORGANIZATIONAL_UNDERSTANDING_MODEL.md](./ORGANIZATIONAL_UNDERSTANDING_MODEL.md)
 - [WORKFLOW_ACCEPTANCE_SPEC.md](./WORKFLOW_ACCEPTANCE_SPEC.md)
 - [PHASE_2_PRODUCT_ACCEPTANCE_SPEC.md](./PHASE_2_PRODUCT_ACCEPTANCE_SPEC.md)

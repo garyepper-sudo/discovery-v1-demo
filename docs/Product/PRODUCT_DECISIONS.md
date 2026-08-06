@@ -754,3 +754,35 @@ Changing one requires the process in
   missing registry entries fail closed.
 - **Status:** Oracle correction A; producer classification F; hold for multiple
   producer gaps.
+
+## DEC-PROD-038 — Organizational Understanding is the engine; Leadership Workspaces are the product
+
+- **Decision:** Discovery's product north star is reducing the cognitive cost
+  of leadership. The canonical experience begins with “What are you trying to
+  accomplish?” and organizes recurring work through the initial Brief,
+  Prepare, Explore, and Capture workspace hypotheses. Prepared Work Products
+  become the intended primary manifestation of Organizational Understanding.
+- **Reason:** Leaders repeatedly reconstruct context before meetings,
+  planning, decisions, communication, and review. Discovery can create greater
+  value by preparing that work from governed understanding than by centering
+  dashboards, reports, retrieval, or chat.
+- **Architecture boundary:** `ProductQuestion` remains the canonical long-lived
+  product object; `ProductQuestionWorkspace` remains the canonical frontend
+  boundary. Runtime, cognition, governance, authorization, Evidence, scope,
+  confidence, Decision, Outcome, and Learning owners do not change. Workspaces
+  and Prepared Work Products are compositions over those owners.
+- **Alternatives considered:** Continue a retrieval-first product; make a
+  dashboard or AI chat the primary surface; introduce a new workspace truth or
+  persistence owner; expand immediately into industry-specific workspaces.
+- **Why rejected:** These alternatives center access or presentation rather
+  than leadership work, duplicate authority, or outpace customer evidence.
+- **Consequences:** Product brainstorming is frozen while leadership workflow,
+  governance, Prepared Work Product, and Decision Journey validation proceeds.
+  Decision Readiness requires its own bounded contract and may not be inferred
+  as a universal score. Environmental Intelligence remains a separate deferred
+  model. No implementation, route, persistence, Runtime, or contract change is
+  authorized by this decision.
+- **Affected gaps:** `GAP-B-019`, `GAP-B-020`, `GAP-D-005`, `GAP-D-006`.
+- **Affected roadmap:** Leadership Workspace strategy phases 1–7.
+- **Status:** Active strategy decision; validation required before
+  implementation.

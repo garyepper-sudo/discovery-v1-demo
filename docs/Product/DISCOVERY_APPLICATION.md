@@ -26,9 +26,16 @@ The interface exists to guide executives through one continuous organizational l
 
 # Application Identity
 
-Discovery is question-first. The user begins with an objective—“What are you
-trying to understand?”—and the application requests additional Evidence only
-after that objective is known.
+Discovery is accomplishment-first at the experience boundary. The user begins
+with “What are you trying to accomplish?” and the application forms or reuses
+durable Questions to determine what must be understood. It requests additional
+Evidence only after that leadership objective is known.
+
+Organizational Understanding remains the engine. The application increasingly
+exposes it through Leadership Workspaces and Prepared Work Products rather than
+organizing the experience around retrieval, dashboards, reports, or chat. The
+initial universal workspace hypotheses are Brief, Prepare, Explore, and
+Capture; they do not alter the ownership model below.
 
 The current Discovery application is one continuously running Executive Operating System built on the shared organizational intelligence platform.
 
@@ -358,6 +365,13 @@ The full Cognitive Operating System remains available through progressive disclo
 The application is validated through the canonical Product Benchmark.
 
 Success is measured by completing one full organizational lifecycle.
+
+The Leadership Workspace validation program additionally measures whether
+prepared work reduces preparation and synthesis burden while preserving
+truthfulness, exact confidence ownership, authorization, lineage, and bounded
+abstention. It begins with leadership interviews, a simulated organization,
+the multi-role governance benchmark, one Prepared Work Product prototype, and
+a Decision benchmark suite. It does not authorize implementation.
 
 The benchmark is defined in:
 

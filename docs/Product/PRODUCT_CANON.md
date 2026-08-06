@@ -29,6 +29,15 @@ override those contracts.
 
 # Mission
 
+> **Every important leadership activity should begin with an already-prepared
+> understanding.**
+
+Discovery exists to reduce the cognitive cost of leadership: the effort
+required to prepare, understand, synthesize, decide, communicate, and learn.
+That product north star is subordinate to truthfulness and governance and
+supports the canonical fitness function below; it does not replace or weaken
+Organizational Understanding as the system objective.
+
 > **Discovery is a platform that continuously builds shared organizational intelligence that becomes more valuable than the sum of its contributors, information, and experiences.**
 
 Discovery exists to maximize useful organizational understanding for any
@@ -84,13 +93,25 @@ Canonical Evidence + Organization Runtime + Understanding history
 New experiences reuse the existing identity, authorization, Evidence, Runtime,
 Understanding, confidence, lineage, and history owners.
 
-Discovery is a question-first product. A user begins with:
+Discovery is accomplishment-first at the experience boundary. A user begins
+with:
 
-> **What are you trying to understand?**
+> **What are you trying to accomplish?**
 
-Discovery learns the objective before requesting additional Evidence. Building
-an Operating Model, configuring the organization, and uploading documents are
-not the user's onboarding objective.
+The product may then form or reuse one or more durable `ProductQuestion`
+objects to establish what must be understood. Discovery learns the leadership
+objective before requesting additional Evidence. Building an Operating Model,
+configuring the organization, and uploading documents are not the user's
+onboarding objective.
+
+Organizational Understanding is the engine. Leadership Workspaces are the
+product environment in which recurring leadership work is prepared, performed,
+captured, and learned from. The initial universal workspace hypotheses are
+Brief, Prepare, Explore, and Capture. Retrieval, dashboards, reports, and chat
+may support these experiences but do not organize the product.
+
+The permanent strategy is defined in
+[DISCOVERY_LEADERSHIP_WORKSPACE_MANIFESTO.md](./DISCOVERY_LEADERSHIP_WORKSPACE_MANIFESTO.md).
 
 Its first major application is the **Executive Operating System**, which remains the current product focus and helps organizations continuously evolve through better executive understanding, decisions, simulation, communication, and learning.
 
@@ -614,6 +635,10 @@ If it strengthens none of these, it should not exist.
 
 Discovery succeeds when:
 
+- the cognitive cost of recurring leadership work demonstrably falls,
+- important leadership activities begin with prepared, authorized
+  understanding,
+- Prepared Work Products improve without concealing uncertainty or lineage,
 - organizations naturally manage Executive Work inside Discovery,
 - executives trust Discovery's understanding,
 - organizations continuously improve their Operating Model,

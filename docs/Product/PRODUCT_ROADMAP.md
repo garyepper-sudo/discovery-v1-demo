@@ -12,6 +12,36 @@ The additive `ProductQuestionWorkspace` version-2 projection, semantic action su
 Roadmap phases are promotion gates, not date commitments. Work may enter a
 phase only when its dependencies and validations are explicit.
 
+## Leadership Workspace strategy program
+
+The next product phase is governed by the
+[Leadership Workspace Manifesto](./DISCOVERY_LEADERSHIP_WORKSPACE_MANIFESTO.md).
+Organizational Understanding remains the engine; Prepared Work Products and
+Leadership Workspaces become the product manifestation. This strategy does not
+authorize implementation and does not supersede unfinished gates below.
+
+1. **Backend readiness:** close required canonical workflow and Product-input
+   dependencies without creating new owners.
+2. **Governance benchmark:** complete recipient-safe multi-role disclosure and
+   negative-control acceptance.
+3. **Prepared Work Product foundation:** validate ownership, lifecycle,
+   versioning, fixtures, lineage, confidence, authorization, and migration
+   before any contract implementation (`GAP-B-019`).
+4. **Universal Leadership Workspaces:** validate Brief, Prepare, Explore, and
+   Capture through customer research and product-safe prototypes
+   (`GAP-D-005`).
+5. **Decision Workspaces:** validate the reusable Decision Journey and bounded
+   Decision Readiness architecture (`GAP-B-020`).
+6. **Environmental Intelligence:** design only after Organizational
+   Understanding, Leadership Workspaces, and Decision Workspaces are validated
+   (`GAP-D-006`).
+7. **Advanced organizational learning:** promote only with longitudinal,
+   governed outcome evidence.
+
+Product brainstorming is frozen during validation. Interviews study recurring
+leadership workflows, decision journeys, management cadence, preparation, and
+synthesis burden rather than collecting an unbounded feature list.
+
 ## Ordered pre-wireframe backend program
 
 No additional wireframe or frontend implementation begins until this sequence
