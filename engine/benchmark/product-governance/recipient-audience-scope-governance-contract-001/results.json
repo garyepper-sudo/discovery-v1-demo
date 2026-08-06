@@ -1,0 +1,3600 @@
+{
+  "benchmark": "recipient-audience-scope-governance-contract-001",
+  "classification": "B",
+  "counts": {
+    "cases": 70,
+    "duplicateCases": 0,
+    "duplicateModels": 0,
+    "invariants": 11,
+    "matrixCells": 350,
+    "missing": 0,
+    "models": 5,
+    "unexpected": 0
+  },
+  "coverage": {
+    "ancestor": false,
+    "exact": true,
+    "explicitDescendants": true,
+    "initiative": "exact grant; initiative-relates does not imply containment",
+    "multipleGrants": true,
+    "organizationShared": "requires explicit organization audience grant",
+    "unknownOrCrossOrganization": "deny"
+  },
+  "externalDeniedContract": {
+    "disposition": "denied"
+  },
+  "invariants": {
+    "conflictingActiveRevisionsFailClosed": true,
+    "crossOrganizationDenied": true,
+    "defaultScopeNeutral": true,
+    "explicitGrantChangesAuthority": true,
+    "governedDimensionsChangeResult": true,
+    "missingRelationChanges": true,
+    "reversedGrantInvariant": true,
+    "revokedAssignmentDenied": true,
+    "revokedGrantDenied": true,
+    "roleNeutral": true,
+    "staleRevisionDenied": true
+  },
+  "matrix": [
+    {
+      "boundedResource": true,
+      "caseId": 1,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "exact organization grant/requirement",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 1,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "exact organization grant/requirement",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 1,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "exact organization grant/requirement",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 1,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "exact organization grant/requirement",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 1,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "exact organization grant/requirement",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 2,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "organization grant/function",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 2,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "organization grant/function",
+      "reason": "authorized-explicit-descendant",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 2,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "organization grant/function",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 2,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "organization grant/function",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 2,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "organization grant/function",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 3,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "organization grant/team",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 3,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "organization grant/team",
+      "reason": "authorized-explicit-descendant",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 3,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "organization grant/team",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 3,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "organization grant/team",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 3,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "organization grant/team",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 4,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "function exact",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 4,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "function exact",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 4,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "function exact",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 4,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "function exact",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 4,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "function exact",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 5,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "function/child team",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 5,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "function/child team",
+      "reason": "authorized-explicit-descendant",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 5,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "function/child team",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 5,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "function/child team",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 5,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "function/child team",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 6,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "function/sibling function",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 6,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "function/sibling function",
+      "reason": "scope-not-authorized",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 6,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "function/sibling function",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 6,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "function/sibling function",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 6,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "function/sibling function",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 7,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "function/unrelated team",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 7,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "function/unrelated team",
+      "reason": "scope-not-authorized",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 7,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "function/unrelated team",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 7,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "function/unrelated team",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 7,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "function/unrelated team",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 8,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "team exact",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 8,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "team exact",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 8,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "team exact",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 8,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "team exact",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 8,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "team exact",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 9,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "team/parent function",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 9,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "team/parent function",
+      "reason": "scope-not-authorized",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 9,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "team/parent function",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 9,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "team/parent function",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 9,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "team/parent function",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 10,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "team/sibling team",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 10,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "team/sibling team",
+      "reason": "scope-not-authorized",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 10,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "team/sibling team",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 10,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "team/sibling team",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 10,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "team/sibling team",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 11,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "multiple grants one match",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 11,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "multiple grants one match",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 11,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "multiple grants one match",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 11,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "multiple grants one match",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 11,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "multiple grants one match",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 12,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "multiple grants no match",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 12,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "multiple grants no match",
+      "reason": "scope-not-authorized",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 12,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "multiple grants no match",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 12,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "multiple grants no match",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 12,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "multiple grants no match",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 13,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "initiative one function",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 13,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "initiative one function",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 13,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "initiative one function",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 13,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "initiative one function",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 13,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "initiative one function",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 14,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "cross-functional initiative explicit",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 14,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "cross-functional initiative explicit",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 14,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "cross-functional initiative explicit",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 14,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "cross-functional initiative explicit",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 14,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "cross-functional initiative explicit",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 15,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "cross-organization requirement",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 15,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "cross-organization requirement",
+      "reason": "organization-mismatch",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 15,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "cross-organization requirement",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 15,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "cross-organization requirement",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 15,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "cross-organization requirement",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 16,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "unknown scope",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 16,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "unknown scope",
+      "reason": "scope-unknown",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 16,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "unknown scope",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 16,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "unknown scope",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 16,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "unknown scope",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 17,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "malformed scope",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 17,
+      "disposition": "invalid",
+      "model": "B-separate-bound-grant",
+      "name": "malformed scope",
+      "reason": "assignment-invalid",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 17,
+      "disposition": "invalid",
+      "model": "C-purpose-policy-binding",
+      "name": "malformed scope",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 17,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "malformed scope",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 17,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "malformed scope",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 18,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "missing relation",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 18,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "missing relation",
+      "reason": "scope-not-authorized",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 18,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "missing relation",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 18,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "missing relation",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 18,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "missing relation",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 19,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "cyclic graph",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 19,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "cyclic graph",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 19,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "cyclic graph",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 19,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "cyclic graph",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 19,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "cyclic graph",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 20,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "duplicate relation",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 20,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "duplicate relation",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 20,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "duplicate relation",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 20,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "duplicate relation",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 20,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "duplicate relation",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 21,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "active assignment/active grant",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 21,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "active assignment/active grant",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 21,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "active assignment/active grant",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 21,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "active assignment/active grant",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 21,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "active assignment/active grant",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 22,
+      "disposition": "denied",
+      "model": "A-embedded-assignment",
+      "name": "inactive assignment",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 22,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "inactive assignment",
+      "reason": "assignment-inactive",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 22,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "inactive assignment",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 22,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "inactive assignment",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 22,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "inactive assignment",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 23,
+      "disposition": "denied",
+      "model": "A-embedded-assignment",
+      "name": "revoked assignment",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 23,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "revoked assignment",
+      "reason": "assignment-inactive",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 23,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "revoked assignment",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 23,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "revoked assignment",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 23,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "revoked assignment",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 24,
+      "disposition": "denied",
+      "model": "A-embedded-assignment",
+      "name": "missing assignment",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 24,
+      "disposition": "invalid",
+      "model": "B-separate-bound-grant",
+      "name": "missing assignment",
+      "reason": "assignment-invalid",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 24,
+      "disposition": "invalid",
+      "model": "C-purpose-policy-binding",
+      "name": "missing assignment",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 24,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "missing assignment",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 24,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "missing assignment",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 25,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "malformed assignment",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 25,
+      "disposition": "invalid",
+      "model": "B-separate-bound-grant",
+      "name": "malformed assignment",
+      "reason": "assignment-invalid",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 25,
+      "disposition": "invalid",
+      "model": "C-purpose-policy-binding",
+      "name": "malformed assignment",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 25,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "malformed assignment",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 25,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "malformed assignment",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 26,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "active assignment/missing grant",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 26,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "active assignment/missing grant",
+      "reason": "grant-missing",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 26,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "active assignment/missing grant",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 26,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "active assignment/missing grant",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 26,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "active assignment/missing grant",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 27,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "inactive grant",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 27,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "inactive grant",
+      "reason": "grant-inactive",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 27,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "inactive grant",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 27,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "inactive grant",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 27,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "inactive grant",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 28,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "revoked grant",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 28,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "revoked grant",
+      "reason": "grant-inactive",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 28,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "revoked grant",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 28,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "revoked grant",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 28,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "revoked grant",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 29,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "superseded grant",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 29,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "superseded grant",
+      "reason": "grant-inactive",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 29,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "superseded grant",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 29,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "superseded grant",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 29,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "superseded grant",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 30,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "restored assignment/old revoked grant",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 30,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "restored assignment/old revoked grant",
+      "reason": "grant-inactive",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 30,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "restored assignment/old revoked grant",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 30,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "restored assignment/old revoked grant",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 30,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "restored assignment/old revoked grant",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 31,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "restored assignment/new active revision",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 31,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "restored assignment/new active revision",
+      "reason": "assignment-revision-stale",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 31,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "restored assignment/new active revision",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 31,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "restored assignment/new active revision",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 31,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "restored assignment/new active revision",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 32,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "stale assignment revision",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 32,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "stale assignment revision",
+      "reason": "assignment-revision-stale",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 32,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "stale assignment revision",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 32,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "stale assignment revision",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 32,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "stale assignment revision",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 33,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "stale grant revision",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 33,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "stale grant revision",
+      "reason": "assignment-revision-stale",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 33,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "stale grant revision",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 33,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "stale grant revision",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 33,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "stale grant revision",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 34,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "mismatched assignment",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 34,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "mismatched assignment",
+      "reason": "grant-missing",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 34,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "mismatched assignment",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 34,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "mismatched assignment",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 34,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "mismatched assignment",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 35,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "mismatched recipient",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 35,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "mismatched recipient",
+      "reason": "recipient-mismatch",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 35,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "mismatched recipient",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 35,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "mismatched recipient",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 35,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "mismatched recipient",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 36,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "mismatched organization",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 36,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "mismatched organization",
+      "reason": "organization-mismatch",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 36,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "mismatched organization",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 36,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "mismatched organization",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 36,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "mismatched organization",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 37,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "matching purpose",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 37,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "matching purpose",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 37,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "matching purpose",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 37,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "matching purpose",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 37,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "matching purpose",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 38,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "purpose mismatch",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 38,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "purpose mismatch",
+      "reason": "purpose-mismatch",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 38,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "purpose mismatch",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 38,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "purpose mismatch",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 38,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "purpose mismatch",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 39,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "missing required purpose",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 39,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "missing required purpose",
+      "reason": "purpose-mismatch",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 39,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "missing required purpose",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 39,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "missing required purpose",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 39,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "missing required purpose",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 40,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "matching resource",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 40,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "matching resource",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 40,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "matching resource",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 40,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "matching resource",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 40,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "matching resource",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 41,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "resource mismatch",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 41,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "resource mismatch",
+      "reason": "resource-mismatch",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 41,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "resource mismatch",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 41,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "resource mismatch",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 41,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "resource mismatch",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 42,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "matching receive operation",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 42,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "matching receive operation",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 42,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "matching receive operation",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 42,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "matching receive operation",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 42,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "matching receive operation",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 43,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "operation mismatch",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 43,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "operation mismatch",
+      "reason": "operation-mismatch",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 43,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "operation mismatch",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 43,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "operation mismatch",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 43,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "operation mismatch",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 44,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "unsupported operation",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 44,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "unsupported operation",
+      "reason": "operation-mismatch",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 44,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "unsupported operation",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 44,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "unsupported operation",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 44,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "unsupported operation",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 45,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "role label neutrality",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 45,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "role label neutrality",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 45,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "role label neutrality",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 45,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "role label neutrality",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 45,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "role label neutrality",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 46,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "display scope neutrality",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 46,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "display scope neutrality",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 46,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "display scope neutrality",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 46,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "display scope neutrality",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 46,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "display scope neutrality",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 47,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "same role/different assignments",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 47,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "same role/different assignments",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 47,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "same role/different assignments",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 47,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "same role/different assignments",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 47,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "same role/different assignments",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 48,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "same role/different grant states",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 48,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "same role/different grant states",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 48,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "same role/different grant states",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 48,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "same role/different grant states",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 48,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "same role/different grant states",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 49,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "default scope neutrality",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 49,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "default scope neutrality",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 49,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "default scope neutrality",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 49,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "default scope neutrality",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 49,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "default scope neutrality",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 50,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "title neutrality",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 50,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "title neutrality",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 50,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "title neutrality",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 50,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "title neutrality",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 50,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "title neutrality",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 51,
+      "disposition": "denied",
+      "model": "A-embedded-assignment",
+      "name": "assignment revoked after read",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 51,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "assignment revoked after read",
+      "reason": "assignment-inactive",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 51,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "assignment revoked after read",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 51,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "assignment revoked after read",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 51,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "assignment revoked after read",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 52,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "grant revoked after read",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 52,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "grant revoked after read",
+      "reason": "grant-inactive",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 52,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "grant revoked after read",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 52,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "grant revoked after read",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 52,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "grant revoked after read",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 53,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "CEO/Director switch",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 53,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "CEO/Director switch",
+      "reason": "recipient-mismatch",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 53,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "CEO/Director switch",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 53,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "CEO/Director switch",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 53,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "CEO/Director switch",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 54,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "Director/Manager switch",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 54,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "Director/Manager switch",
+      "reason": "recipient-mismatch",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 54,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "Director/Manager switch",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 54,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "Director/Manager switch",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 54,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "Director/Manager switch",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 55,
+      "disposition": "denied",
+      "model": "A-embedded-assignment",
+      "name": "signed out after read",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 55,
+      "disposition": "invalid",
+      "model": "B-separate-bound-grant",
+      "name": "signed out after read",
+      "reason": "assignment-invalid",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 55,
+      "disposition": "invalid",
+      "model": "C-purpose-policy-binding",
+      "name": "signed out after read",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 55,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "signed out after read",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 55,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "signed out after read",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 56,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "copied metadata/different principal",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 56,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "copied metadata/different principal",
+      "reason": "recipient-mismatch",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 56,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "copied metadata/different principal",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 56,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "copied metadata/different principal",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 56,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "copied metadata/different principal",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 57,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "cross-org recipient",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 57,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "cross-org recipient",
+      "reason": "organization-mismatch",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 57,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "cross-org recipient",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 57,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "cross-org recipient",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 57,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "cross-org recipient",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 58,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "cross-org relation contamination",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 58,
+      "disposition": "denied",
+      "model": "B-separate-bound-grant",
+      "name": "cross-org relation contamination",
+      "reason": "organization-mismatch",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 58,
+      "disposition": "denied",
+      "model": "C-purpose-policy-binding",
+      "name": "cross-org relation contamination",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 58,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "cross-org relation contamination",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 58,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "cross-org relation contamination",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 59,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "repeat input",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 59,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "repeat input",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 59,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "repeat input",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 59,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "repeat input",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 59,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "repeat input",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 60,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "reverse grants",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 60,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "reverse grants",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 60,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "reverse grants",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 60,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "reverse grants",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 60,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "reverse grants",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 61,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "reverse relations",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 61,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "reverse relations",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 61,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "reverse relations",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 61,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "reverse relations",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 61,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "reverse relations",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 62,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "duplicate grant refs",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 62,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "duplicate grant refs",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 62,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "duplicate grant refs",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 62,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "duplicate grant refs",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 62,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "duplicate grant refs",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 63,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "fixed clock",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 63,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "fixed clock",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 63,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "fixed clock",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 63,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "fixed clock",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 63,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "fixed clock",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 64,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "frontend-safe serialization",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 64,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "frontend-safe serialization",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 64,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "frontend-safe serialization",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 64,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "frontend-safe serialization",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 64,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "frontend-safe serialization",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 65,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "no Runtime read",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 65,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "no Runtime read",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 65,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "no Runtime read",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 65,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "no Runtime read",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 65,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "no Runtime read",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 66,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "no Runtime mutation",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 66,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "no Runtime mutation",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 66,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "no Runtime mutation",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 66,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "no Runtime mutation",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 66,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "no Runtime mutation",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 67,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "no assignment mutation",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 67,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "no assignment mutation",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 67,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "no assignment mutation",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 67,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "no assignment mutation",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 67,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "no assignment mutation",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 68,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "no client grant id",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 68,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "no client grant id",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 68,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "no client grant id",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 68,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "no client grant id",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 68,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "no client grant id",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 69,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "no client scope existence",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 69,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "no client scope existence",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 69,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "no client scope existence",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 69,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "no client scope existence",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 69,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "no client scope existence",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 70,
+      "disposition": "authorized",
+      "model": "A-embedded-assignment",
+      "name": "no client denial reason",
+      "reason": "audience-lifecycle-conflated",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 70,
+      "disposition": "authorized",
+      "model": "B-separate-bound-grant",
+      "name": "no client denial reason",
+      "reason": "authorized-exact",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "caseId": 70,
+      "disposition": "authorized",
+      "model": "C-purpose-policy-binding",
+      "name": "no client denial reason",
+      "reason": "over-generalized-beyond-one-resource-family",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "caseId": 70,
+      "disposition": "authorized",
+      "model": "D-default-scope-derivation",
+      "name": "no client denial reason",
+      "reason": "default-scope-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "caseId": 70,
+      "disposition": "authorized",
+      "model": "E-role-hierarchy-derivation",
+      "name": "no client denial reason",
+      "reason": "role-is-not-authority",
+      "safe": false,
+      "separateLifecycle": false
+    }
+  ],
+  "modelEvidence": [
+    {
+      "boundedResource": true,
+      "model": "A-embedded-assignment",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "model": "B-separate-bound-grant",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": false,
+      "model": "C-purpose-policy-binding",
+      "safe": true,
+      "separateLifecycle": true
+    },
+    {
+      "boundedResource": true,
+      "model": "D-default-scope-derivation",
+      "safe": false,
+      "separateLifecycle": false
+    },
+    {
+      "boundedResource": true,
+      "model": "E-role-hierarchy-derivation",
+      "safe": false,
+      "separateLifecycle": false
+    }
+  ],
+  "nextTask": "DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING AUDIENCE-RELEVANT NESTED-FIELD LINEAGE FORWARD PRODUCER 001",
+  "ownership": {
+    "audienceAuthority": "RecipientAudienceGrant bound to exact assignment revision",
+    "authentication": "Clerk identifies principal only",
+    "organizationAdmission": "AlphaOrganizationAccessRecord",
+    "scopeRelations": "CanonicalScopeTopology"
+  },
+  "persistenceFindings": {
+    "administrativeIssuanceImplemented": false,
+    "migrationExecuted": false,
+    "repositoryImplemented": false
+  },
+  "readiness": {
+    "activation": "BLOCKED",
+    "contract": "PASS"
+  },
+  "recommendation": "READY FOR FORWARD PRODUCER TASK",
+  "secondaryClassification": "D",
+  "selectedModel": "B-separate-bound-grant",
+  "sideEffects": {
+    "assignmentWrites": 0,
+    "databaseMigrations": 0,
+    "liveWiring": 0,
+    "runtimeReads": 0,
+    "runtimeWrites": 0
+  },
+  "status": "PASS"
+}
