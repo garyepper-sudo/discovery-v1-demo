@@ -6,6 +6,14 @@ Begin **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING FIELD
 AUDIENCE-REQUIREMENT GOVERNANCE CONTRACT 001** from the exact resulting
 `origin/main` in a new branch and worktree.
 
+This task is Phase 2 of the canonized Leadership Workspace strategy program:
+the governance benchmark must close before Prepared Work Product or Leadership
+Workspace implementation. Product brainstorming and implementation of
+workspaces, Decision Readiness, or Environmental Intelligence remain frozen.
+Material role differentiation remains **OPEN**, recipient-scoped nested-field
+disclosure remains unimplemented, and activation and route promotion remain
+**BLOCKED**.
+
 ## Read first
 
 1. `AGENTS.md`

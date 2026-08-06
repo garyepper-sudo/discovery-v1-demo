@@ -10,6 +10,11 @@ is next
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
 
+**Product strategy:** Organizational Understanding remains the engine;
+Leadership Workspaces become the product. The north star is reducing the
+cognitive cost of leadership, with Brief, Prepare, Explore, and Capture held as
+validation hypotheses rather than implementation commitments.
+
 ## Current Milestone
 
 The Living Organization Google Drive corpus integration is complete,
@@ -91,6 +96,12 @@ the repository corpus and retained local metadata.
 
 Define the canonical field audience-requirement governance contract without
 grant issuance, activation, disclosure, Runtime wiring, or routes.
+
+This objective closes a governance prerequisite in the Leadership Workspace
+strategy program. Prepared Work Product, Decision Readiness, workspace, route,
+and Environmental Intelligence implementation remain unauthorized. Their
+open architecture and research gaps are `GAP-B-019`, `GAP-B-020`, `GAP-D-005`,
+and `GAP-D-006`.
 
 ## Next Priority
 

@@ -6,6 +6,40 @@ Generated: 2026-07-31T20:42:07.380Z
 
 This document is the canonical architecture handoff for beginning a new Discovery sprint or chat.
 
+## Leadership Workspace strategy canonization
+
+Discovery's product north star is now reducing the cognitive cost of
+leadership. Organizational Understanding remains the canonical engine;
+Leadership Workspaces become the product environment and Prepared Work
+Products become its intended primary manifestation.
+
+The initial workspace hypotheses are Brief, Prepare, Explore, and Capture. A
+future Decision Workspace must follow the canonical Decision Journey and begin
+with a bounded, decision-specific Decision Readiness determination. No
+workspace, Prepared Work Product, Decision Readiness, route, contract,
+persistence, or UI implementation is authorized by this documentation change.
+
+Architecture review found the existing cognition, Runtime, Evidence, scope,
+governance, Product Workflow, Question, Objective, Decision, Outcome, Learning,
+adapter, and presentation-firewall owners sufficient as the foundation.
+Required extensions are registered as `GAP-B-019` and `GAP-B-020`; validation
+and deferred Environmental Intelligence are registered as `GAP-D-005` and
+`GAP-D-006`. The governing strategy is
+`docs/Product/DISCOVERY_LEADERSHIP_WORKSPACE_MANIFESTO.md` and the canonical
+decision is `DEC-PROD-038`.
+
+The immediate engineering dependency remains the already identified field
+audience-requirement governance contract. Product brainstorming is frozen;
+subsequent strategy work should prioritize leadership interviews, the simulated
+organization, multi-role governance validation, one product-safe Prepared Work
+Product prototype, and a Decision benchmark suite.
+
+These are parallel tracks. Material role differentiation remains **OPEN**;
+recipient-scoped nested-field disclosure remains unimplemented; activation and
+route promotion remain **BLOCKED**. Leadership Workspace validation does not
+replace the scope/governance critical path, and that engineering path does not
+erase the Product-validation direction.
+
 ## Current Living Organization integration handoff
 
 The read-only Google Drive vertical slice is live-validated and integrated at
