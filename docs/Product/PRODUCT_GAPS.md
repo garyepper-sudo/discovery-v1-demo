@@ -162,8 +162,14 @@ The shadow-only field-audience issuance security chain is directly validated
 and canonical. Persistence, administrative bootstrap and delegation, migration,
 live integration, and nested disclosure remain open activation dependencies.
 Comparative ownership/temporal research is preserved separately and closes no
-gap. Material role differentiation remains **OPEN**. Owner-graph reconciliation,
-not implementation of a presumed successor, is the next bounded task.
+gap. Material role differentiation remains **OPEN**. The owner-graph review is
+closed as `OWNER-GRAPH-B`: administrative persistence, completed Explanation
+immutable versions, Condition scope, confidence, uncertainty, contradiction,
+and evolution lineage are incomparable actionable roots for the immediate
+Product target. None blocks a development-only shared organization-wide
+conversation slice, so `PIVOT-A` advances `GAP-B-019` and `GAP-D-005` through
+the bounded Prepare/Capture validation task. This does not close or weaken any
+field-governance, disclosure, integration, or activation gap.
 
 ## Resolved Gaps
 

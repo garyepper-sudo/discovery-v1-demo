@@ -42,6 +42,15 @@ Product brainstorming is frozen during validation. Interviews study recurring
 leadership workflows, decision journeys, management cadence, preparation, and
 synthesis burden rather than collecting an unbounded feature list.
 
+The post-field-audience dependency review establishes `OWNER-GRAPH-B` and
+`PIVOT-A`. No remaining governance root blocks a development-only shared
+organization-wide slice. The immediate Product-validation task is **DISCOVERY
+LEADERSHIP CONVERSATION PREPARE-AND-CAPTURE VERTICAL SLICE 001**. It includes
+the bounded Prepared Work Product contract and immutable snapshot inside the
+slice; it does not claim material role differentiation or activate field
+requirements, grants, nested disclosure, routes, or deployment. Parallel
+governance work continues before differentiated activation.
+
 ## Ordered pre-wireframe backend program
 
 No additional wireframe or frontend implementation begins until this sequence
@@ -330,8 +339,9 @@ and outcomes while remaining user-governed.
   authorization, receipt construction, and historical validation are
   independently reconstructable. Persistence, bootstrap, delegation, migration,
   live wiring, and nested disclosure remain blocked. Comparative model research
-  is noncanonical. Owner-graph reconciliation must establish a unique next owner
-  before further implementation.
+  is noncanonical. Owner-graph reconciliation is closed as `OWNER-GRAPH-B`:
+  there is no unique governance successor for the immediate shared Product
+  target, and the remaining roots continue in parallel.
 - Forward lineage remains blocked before condition/investigation work. The
   accounting-corrected executable matrix proves that field-owned
   recipient-audience requirement semantics are the earliest missing owner.

@@ -248,6 +248,21 @@ materially improve, not primarily collect feature requests.
 These are strategy gates, not implementation authorization or date
 commitments.
 
+## First validation slice
+
+The post-field-audience owner-graph reconciliation selects `PIVOT-A` for the
+first bounded validation slice. **DISCOVERY LEADERSHIP CONVERSATION
+PREPARE-AND-CAPTURE VERTICAL SLICE 001** is development-only and explicitly
+uses shared organization-wide preparation. It preserves `ProductQuestion` as
+the long-lived anchor and defines the immutable Prepared Work Product snapshot
+inside the slice.
+
+This selection does not authorize implementation through this manifesto. The
+slice must not claim material role differentiation, expose Evidence bodies,
+persist field requirements or recipient grants, perform nested disclosure,
+admit uploads autonomously, promote a route, or deploy. Full differentiated
+activation remains dependent on the parallel governance program.
+
 ## Long-term direction
 
 Discovery should become the place where important leadership activity begins

@@ -731,3 +731,23 @@ ORGANIZATIONAL UNDERSTANDING FIELD AUDIENCE-REQUIREMENT GOVERNANCE CONTRACT
 001**. Explanation version ownership is separate and later, while
 condition/investigation production remains deferred. Runtime, grants,
 assignments, Product behavior, activation, and routes are unchanged.
+
+The post-field-audience owner-graph review is now canonically closed as
+`OWNER-GRAPH-B`. Administrative persistence, completed Explanation immutable
+versions, Condition scope, confidence contributor references, uncertainty
+owner/support references, contradiction side/revision references, and
+history/evolution revision lineage are independently governed actionable roots.
+They are incomparable for the immediate Product target; there is no unique next
+governance owner.
+
+Discovery therefore selects `PIVOT-A — PIVOT NOW` for a development-only,
+shared organization-wide Leadership Conversation Prepare/Capture slice. The
+slice consumes the already-authorized Organizational Understanding projection,
+makes no material role-differentiation claim, exposes no Evidence bodies, and
+activates no field requirements, recipient grants, nested disclosure, route, or
+deployment. `ProductQuestion` remains the long-lived workflow anchor. A
+versioned immutable Prepared Work Product is a bounded Product Workflow
+artifact inside the slice, not a new cognition model or preceding governance
+sprint. Full differentiated activation remains blocked by the parallel
+governance chain. See
+[`POST_FIELD_AUDIENCE_OWNER_GRAPH_RECONCILIATION_001.md`](./POST_FIELD_AUDIENCE_OWNER_GRAPH_RECONCILIATION_001.md).

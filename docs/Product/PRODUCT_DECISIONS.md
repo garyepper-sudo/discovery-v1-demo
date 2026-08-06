@@ -806,3 +806,38 @@ Changing one requires the process in
 - **Next review:** `DISCOVERY POST-FIELD-AUDIENCE DIRECT-SECURITY GOVERNANCE
   OWNER-GRAPH RECONCILIATION 001` determines the next exact owner; no successor
   is canonized by this decision.
+
+## DEC-PROD-040 — Pivot to shared Leadership Conversation validation while governance continues in parallel
+
+- **Decision:** Accept `OWNER-GRAPH-B` and `PIVOT-A — PIVOT NOW`. No unique
+  governance successor exists because the remaining actionable roots are
+  independently governed and incomparable for the immediate target. Discovery
+  will next validate a development-only, organization-wide Leadership
+  Conversation Prepare-and-Capture vertical slice.
+- **Product boundary:** `ProductQuestion` remains the long-lived workflow
+  anchor. The future slice consumes the authorized
+  `OrganizationalUnderstandingProjection` and introduces a versioned immutable
+  Prepared Work Product only as a non-authoritative Product Workflow artifact.
+  Upload interpretation creates proposals; only human-approved proposals may
+  enter canonical Evidence or Product Workflow owners.
+- **Authorization boundary:** The first slice is explicitly **Shared
+  organization-wide preparation**. It makes no material CEO, Director, or
+  Manager differentiation claim, exposes no Evidence bodies, and activates no
+  field requirements, recipient grants, or nested disclosure.
+- **Governance consequence:** Administrative persistence, completed Explanation
+  immutable versions, Condition scope, confidence, uncertainty, contradiction,
+  and evolution lineage remain open parallel roots. Full differentiated
+  activation remains blocked by their downstream lineage, disclosure,
+  abstraction, integration, and security-acceptance chain.
+- **Implementation boundary:** This decision authorizes the next bounded
+  Product-validation task, not route promotion or deployment. No new cognition,
+  Runtime, organization identity, Question identity, Decision identity,
+  confidence, or Evidence-authority owner is authorized.
+- **Immediate task:** `DISCOVERY LEADERSHIP CONVERSATION PREPARE-AND-CAPTURE
+  VERTICAL SLICE 001`.
+- **Evidence:**
+  [`POST_FIELD_AUDIENCE_OWNER_GRAPH_RECONCILIATION_001.md`](./POST_FIELD_AUDIENCE_OWNER_GRAPH_RECONCILIATION_001.md).
+- **Affected gaps:** `GAP-B-019`, `GAP-D-005`; material role differentiation
+  remains open under `GAP-B-014`.
+- **Status:** Canonical Product-validation direction; implementation has not
+  begun.
