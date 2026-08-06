@@ -112,6 +112,17 @@ may support these experiences but do not organize the product.
 
 The permanent strategy is defined in
 [DISCOVERY_LEADERSHIP_WORKSPACE_MANIFESTO.md](./DISCOVERY_LEADERSHIP_WORKSPACE_MANIFESTO.md).
+The durable Product laws and bounded first Leadership Conversation loop are
+defined in
+[DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUTION.md](./DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUTION.md).
+
+The first Product wedge is a recurring cross-functional leadership
+conversation: prepare from current authorized Understanding, freeze a versioned
+Prepared Work Product, Capture bounded post-conversation material, generate
+typed proposals, require human disposition, admit approved proposals only
+through existing owners, show exact change or no-change, and prepare the next
+conversation better. It is not a meeting assistant, transcription product,
+generic Takeaway owner, or direct Runtime mutation path.
 
 Its first major application is the **Executive Operating System**, which remains the current product focus and helps organizations continuously evolve through better executive understanding, decisions, simulation, communication, and learning.
 

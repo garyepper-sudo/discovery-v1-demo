@@ -42,10 +42,14 @@ leadership work. The governing strategy is
 Understanding owner. Future Prepared Work Products consume governed Product
 contracts derived from that owner, never raw Runtime cognition.
 
-Prepared Work Products are future Product Workflow projections for artifacts
-leaders already create. They must reference existing canonical owners and
-preserve scope, Evidence lineage, uncertainty, and exact confidence ownership.
-Their versioned contract, lifecycle, and validation remain unimplemented.
+`PreparedWorkProduct` is now canonized as a bounded, versioned Product Workflow
+artifact for work leaders already create. It references existing canonical
+owners and preserves organization, Question, projection, scope, Evidence
+lineage, uncertainty, unavailable areas, and exact confidence ownership. It is
+not cognition, a report owner, authorization, disclosure, Evidence, Decision,
+or a second Question. Its implementation remains unbegun and is governed by
+[the Leadership Conversation Product Constitution](./DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUTION.md)
+and [first-slice specification](./LEADERSHIP_CONVERSATION_PREPARE_CAPTURE_SPEC_001.md).
 
 Decision Readiness is a future bounded product determination about whether
 sufficient authorized understanding exists for one exact decision. It may not
@@ -126,6 +130,9 @@ canonical acceptance oracles.
 | `ProductModelState` | Product Workflow projection | Coverage, coherence, freshness, trustworthiness, tensions, growth | Projection of canonical Runtime state |
 | `ProductInsight` | Product Workflow | Quality-gated, evidence-backed insight referencing Questions | Referenced by Question history |
 | `ProductChangeReceipt` | Product Workflow | What changed, when, and which bounded product fields changed | Referenced by answer revision history |
+| `PreparedWorkProduct` | Product Workflow | Versioned, non-authoritative composition for one Question-linked leadership activity | Bounded Product artifact persistence selected during implementation planning; never generic Runtime storage |
+| `ConversationUploadReceipt` | Product Workflow source boundary | Exact source identity, digests, organization, Question, artifact, uploader, duplicate, and binding state | Bounded Product source receipt; grants no Evidence authority |
+| `TakeawayProposalEnvelope` | Product Workflow proposal boundary | Human-reviewable typed proposal naming an existing canonical admission owner | Versioned proposal/disposition history; no generic Takeaway authority |
 
 These objects are versioned contracts. They may reference canonical objects;
 they must not duplicate cognition or create parallel authority.
@@ -324,6 +331,9 @@ and is consumed unchanged by the same one-read adapter for every recipient.
 ## Related canonical documents
 
 - [DISCOVERY_LEADERSHIP_WORKSPACE_MANIFESTO.md](./DISCOVERY_LEADERSHIP_WORKSPACE_MANIFESTO.md)
+- [DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUTION.md](./DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUTION.md)
+- [LEADERSHIP_CONVERSATION_PREPARE_CAPTURE_SPEC_001.md](./LEADERSHIP_CONVERSATION_PREPARE_CAPTURE_SPEC_001.md)
+- [LEADERSHIP_CONVERSATION_CONFLICT_REGISTER_001.md](./LEADERSHIP_CONVERSATION_CONFLICT_REGISTER_001.md)
 - [ORGANIZATIONAL_UNDERSTANDING_MODEL.md](./ORGANIZATIONAL_UNDERSTANDING_MODEL.md)
 - [WORKFLOW_ACCEPTANCE_SPEC.md](./WORKFLOW_ACCEPTANCE_SPEC.md)
 - [PHASE_2_PRODUCT_ACCEPTANCE_SPEC.md](./PHASE_2_PRODUCT_ACCEPTANCE_SPEC.md)
@@ -368,6 +378,7 @@ construction, and historical validation. Current requirement lifecycle remains
 separate. The boundary is unpersisted and has no live Product consumer.
 
 Comparative ownership and temporal-model research is noncanonical and selects
-no architecture owner or successor. The next governed activity is the
-review-only **DISCOVERY POST-FIELD-AUDIENCE DIRECT-SECURITY GOVERNANCE
-OWNER-GRAPH RECONCILIATION 001**.
+no architecture owner or successor. The owner-graph reconciliation is closed
+as `OWNER-GRAPH-B`; the remaining governance roots continue in parallel. None
+blocks the development-only shared organization-wide Leadership Conversation
+slice, which creates no differentiated activation authority.

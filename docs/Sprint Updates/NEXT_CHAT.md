@@ -2,8 +2,10 @@
 
 ## Exact next task
 
-Begin **DISCOVERY LEADERSHIP CONVERSATION PREPARE-AND-CAPTURE VERTICAL SLICE
-001** from the exact resulting `origin/main` in a new branch and worktree.
+Begin implementation planning for **DISCOVERY LEADERSHIP CONVERSATION
+PREPARE-AND-CAPTURE VERTICAL SLICE 001** from the exact resulting canonical
+commit in a new branch and worktree. Do not write code until the bounded prompt
+is reviewed and authorized.
 
 The post-field-audience review is complete: `OWNER-GRAPH-B — NO UNIQUE
 GOVERNANCE SUCCESSOR` and `PIVOT-A — PIVOT NOW`. The next task is a bounded
@@ -17,15 +19,46 @@ differentiation remains **OPEN**; administrative persistence, recipient grants,
 forward lineage, nested disclosure, safe abstraction, activation, and route
 promotion remain parallel blocked governance work.
 
+The Product direction is closed under `DEC-PROD-041`. Do not reopen broad
+brainstorming. Reconcile the canonized planning contracts against actual files,
+select the existing Product Workflow persistence boundary, define exact
+contract versions, fixtures, validators, and negative controls, then return a
+bounded Codex implementation prompt for operator approval.
+
 ## Read first
 
 1. `AGENTS.md`
-2. `docs/Product/ROLE_AWARE_SCOPED_PRODUCT_PROJECTION_FRONTEND_HANDOFF.md`
-3. `docs/Product/CANONICAL_PRODUCT_ARCHITECTURE.md`
-4. `docs/Product/POST_FIELD_AUDIENCE_OWNER_GRAPH_RECONCILIATION_001.md`
-5. `docs/Product/PRODUCT_GAPS.md`
-6. `docs/Sprint Updates/DISCOVERY_SNAPSHOT.md`
-7. `docs/Sprint Updates/PROJECT_STATE.md`
+2. `docs/Product/DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUTION.md`
+3. `docs/Product/LEADERSHIP_CONVERSATION_PREPARE_CAPTURE_SPEC_001.md`
+4. `docs/Product/LEADERSHIP_CONVERSATION_CONFLICT_REGISTER_001.md`
+5. `docs/Product/LEADERSHIP_CONVERSATION_IMPLEMENTATION_HANDOFF_001.md`
+6. `docs/Product/CANONICAL_PRODUCT_ARCHITECTURE.md`
+7. `docs/Product/POST_FIELD_AUDIENCE_OWNER_GRAPH_RECONCILIATION_001.md`
+8. `docs/Product/PRODUCT_GAPS.md`
+9. `docs/Sprint Updates/DISCOVERY_SNAPSHOT.md`
+10. `docs/Sprint Updates/PROJECT_STATE.md`
+
+## Canonized Product boundary
+
+- North star: reduce the cognitive cost of leadership.
+- Mission: every important leadership activity begins with already-prepared
+  understanding.
+- Initial user: a cross-functional Director, VP, executive, Chief of Staff, or
+  equivalent leader; title grants no authority.
+- Wedge: one generic Leadership Conversation contract and one recurring
+  cross-functional Northstar staff-conversation scenario.
+- Loop: Set up → Prepare → Freeze → Capture → Review → What changed → Prepare
+  again.
+- Anchor: `ProductQuestion`.
+- New bounded artifacts: conversation context, `PreparedWorkProduct`, upload
+  receipt, typed proposal envelope, minimal Capture events and future-preparation
+  linkage.
+- Human boundary: approval precedes and is distinct from canonical admission.
+- Runtime boundary: evolution runs only after admission; upload and approval do
+  not mutate Runtime.
+- Exclusions: role differentiation, Evidence bodies, field governance,
+  recipient grants, nested disclosure, connectors, transcription, Decision
+  Readiness, Production, and route promotion.
 
 ## Completed owner-graph closure
 

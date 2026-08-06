@@ -841,3 +841,46 @@ Changing one requires the process in
   remains open under `GAP-B-014`.
 - **Status:** Canonical Product-validation direction; implementation has not
   begun.
+
+## DEC-PROD-041 — Canonize the ProductQuestion-anchored Leadership Conversation Prepare/Capture loop
+
+- **Decision:** Canonize one generic Leadership Conversation contract and one
+  deterministic recurring cross-functional Northstar acceptance scenario as
+  Discovery's first Product wedge. The loop is Prepare → converse → Capture →
+  human review → canonical admission → governed learning → truthful change or
+  no-change → better future preparation.
+- **Product laws:** Discovery prepares before requesting contribution, never
+  starts from a blank page, creates no unnecessary documentation work, keeps
+  human conversation human, captures understanding change rather than notes,
+  never promotes uploads automatically, preserves existing canonical owners,
+  uses progressive disclosure, preserves architectural simplicity, and earns
+  expansion through evidence.
+- **Identity and ownership:** `ProductQuestion` remains the long-lived anchor.
+  `PreparedWorkProduct` is a bounded versioned Product Workflow artifact, not
+  cognition, Evidence, Decision, authority, disclosure, confidence, or a second
+  Question. Conversation uploads receive exact source receipts and create typed
+  proposals; no generic Takeaway owner exists.
+- **Human and Runtime boundary:** Approval is distinct from canonical admission;
+  admission is distinct from Runtime evolution; evolution is distinct from an
+  Organizational Understanding change. Uploaded prose and approval never
+  directly mutate Runtime.
+- **First-slice boundary:** Development-only shared organization-wide semantics;
+  one stateful Question-centered workspace; no role differentiation, Evidence
+  bodies, field-audience persistence, recipient grants, nested disclosure,
+  route promotion, Production, connectors, transcription, Decision Readiness,
+  or autonomous action.
+- **Persistence boundary:** Question, context, Prepared Work Product versions,
+  edits, frozen snapshot, source receipt, proposals, dispositions, admission
+  receipts, Capture events, change receipt, and future-preparation linkage must
+  survive deterministic reset/replay. Implementation planning must choose a
+  bounded Product Workflow store and may not use Organization Runtime as
+  generic document storage.
+- **Evidence:**
+  [`DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUTION.md`](./DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUTION.md),
+  [`LEADERSHIP_CONVERSATION_PREPARE_CAPTURE_SPEC_001.md`](./LEADERSHIP_CONVERSATION_PREPARE_CAPTURE_SPEC_001.md), and
+  [`LEADERSHIP_CONVERSATION_CONFLICT_REGISTER_001.md`](./LEADERSHIP_CONVERSATION_CONFLICT_REGISTER_001.md).
+- **Affected gaps:** `GAP-B-019`, `GAP-D-005`; `GAP-B-014` remains open.
+- **Architecture:** No architecture change. Existing canonical owners are
+  composed and remain authoritative.
+- **Status:** Canonical and implementation-planning ready; implementation not
+  begun.

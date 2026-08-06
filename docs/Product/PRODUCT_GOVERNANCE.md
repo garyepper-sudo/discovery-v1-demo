@@ -220,3 +220,10 @@ Foundational decisions live in
 - validator changes.
 
 Silent reversal through implementation is prohibited.
+
+The durable Product laws and first Leadership Conversation boundary live in
+[DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUTION.md](./DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUTION.md).
+Implementation review must also reconcile the first-slice specification and
+conflict register. Neither artifact supersedes canonical object owners,
+authorization, disclosure, Runtime, Evidence admission, or the projection
+firewall.

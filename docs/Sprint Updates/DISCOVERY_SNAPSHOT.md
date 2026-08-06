@@ -136,7 +136,7 @@ the original question truthfully reports unavailable. Protected sign-out,
 Back/reload/copied-URL isolation, account switching, and Manager
 revocation/restoration pass, but an independent live two-tab witness remains a
 pre-promotion gate. Sequential CEO → Director → Manager → signed-out denial →
-CEO acceptance passed. The next task is **DISCOVERY CANONICAL ORGANIZATIONAL
+CEO acceptance passed. At that checkpoint, the then-next task was **DISCOVERY CANONICAL ORGANIZATIONAL
 UNDERSTANDING RECIPIENT-SCOPE AND NESTED-FIELD DISCLOSURE SEMANTICS BENCHMARK
 001**.
 
@@ -154,7 +154,7 @@ Benchmark 001 is PASS: 52 cases × five models × 27 direct and combined-inferen
 channels = 7,020 evaluated cells. It selects Model 2 with primary F and
 secondary B/C/D. Audience governance precedes forward lineage and nested-field
 contract implementation. Current production behavior and retained Runtime are
-unchanged; material differentiation and promotion remain open. Next:
+unchanged; material differentiation and promotion remain open. Its then-next task was
 **DISCOVERY ORGANIZATIONAL ACCESS RECIPIENT-AUDIENCE SCOPE GOVERNANCE CONTRACT
 001**.
 
@@ -162,8 +162,8 @@ unchanged; material differentiation and promotion remain open. Next:
 
 The corrected shadow contract selected Model B with primary B and secondary D.
 Contract readiness is PASS; activation readiness is BLOCKED. No Northstar grant,
-assignment mutation, migration, Runtime mutation, or live wiring occurred.
-Next: **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING AUDIENCE-RELEVANT
+assignment mutation, migration, Runtime mutation, or live wiring occurred. Its
+then-next task was **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING AUDIENCE-RELEVANT
 NESTED-FIELD LINEAGE FORWARD PRODUCER 001**.
 
 ## Audience-lineage diagnostic closure
@@ -206,3 +206,27 @@ immutable Prepared Work Product snapshot belongs inside the slice. Material
 role differentiation, field-governance persistence, recipient grants, nested
 disclosure, Evidence-body disclosure, autonomous admission, route promotion,
 and deployment remain unauthorized.
+
+## Leadership Conversation Product canonization
+
+`DEC-PROD-041` canonizes Discovery's first Product wedge: one generic
+Leadership Conversation Prepare/Capture contract demonstrated by a recurring
+cross-functional Northstar leadership/staff conversation. Discovery prepares
+from current authorized Organizational Understanding, freezes an immutable
+versioned Prepared Work Product, receives bounded post-conversation material,
+generates typed proposals, requires human disposition, routes approved items
+through existing owners, reports exact change or no-change, and improves later
+preparation.
+
+The Product Constitution establishes ten permanent laws: prepare before asking,
+never start blank, create no documentation work, keep human conversation human,
+capture understanding changes, never promote uploads automatically, preserve
+existing owners, use progressive disclosure, preserve architectural
+simplicity, and earn expansion through evidence.
+
+`ProductQuestion` remains the long-lived anchor. `PreparedWorkProduct` is a
+non-authoritative Product Workflow artifact; upload receipts and typed proposal
+envelopes grant no canonical authority. Approval, admission, Runtime evolution,
+and Understanding change remain separate states. Implementation has not begun.
+The next chat performs bounded implementation planning before requesting code
+authorization.

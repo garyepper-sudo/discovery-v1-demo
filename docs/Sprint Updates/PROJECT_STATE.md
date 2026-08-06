@@ -3,8 +3,8 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** Post-field-audience owner graph is canonically reconciled;
-the shared Leadership Conversation Prepare/Capture validation slice is next
+**Current phase:** Leadership Conversation Product canonization is complete;
+bounded implementation planning is next
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
@@ -94,10 +94,12 @@ the repository corpus and retained local metadata.
 ## Current Objective
 
 Plan the bounded development-only, organization-wide Leadership Conversation
-Prepare/Capture slice. It consumes the authorized shared projection, preserves
-`ProductQuestion` as the long-lived anchor, and defines the immutable Prepared
-Work Product snapshot inside the slice. Leadership Workspace implementation has
-not begun.
+Prepare/Capture slice against actual implementation files, then produce the
+smallest reviewed implementation prompt. The Product thesis, laws, initial
+user, Northstar wedge, loop, ownership, persistence classification, UX stages,
+human-review boundary, acceptance scenario, metrics, and exclusions are
+canonical under `DEC-PROD-041`. Leadership Workspace implementation has not
+begun.
 
 Material role differentiation remains OPEN. Administrative persistence,
 audience grants, forward lineage, nested disclosure, safe abstraction, live
@@ -120,6 +122,13 @@ differences, expose Evidence bodies, activate field requirements or recipient
 grants, perform nested disclosure, promote a route, or deploy. Capture creates
 source-bound proposals requiring human review; it does not autonomously mutate
 Evidence or Runtime.
+
+Implementation planning must read the Leadership Conversation Product
+Constitution, first-slice specification, conflict register, and implementation
+handoff. It must identify exact existing modules, bounded Product Workflow
+persistence, contract versions, event consolidation, deterministic clock and
+normalization injection, fixtures, validators, and an isolated development
+experience before requesting authorization to write code.
 
 ## Canonical implementation boundary
 

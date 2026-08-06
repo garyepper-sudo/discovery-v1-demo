@@ -107,8 +107,11 @@ The future product contract must preserve:
 - versioned fixtures, validation, compatibility, and migration review;
 - no independent persistence unless existing Runtime is proven insufficient.
 
-No Prepared Work Product contract or implementation is authorized by this
-manifesto.
+The Leadership Conversation Product Constitution now authorizes one bounded
+`PreparedWorkProduct` contract for implementation planning. This manifesto
+still authorizes no implementation by itself. The artifact remains a Product
+Workflow composition and never becomes a cognition, confidence, authority,
+Evidence, Decision, Question, or generic persistence owner.
 
 ## Decision Journey
 
@@ -262,6 +265,16 @@ slice must not claim material role differentiation, expose Evidence bodies,
 persist field requirements or recipient grants, perform nested disclosure,
 admit uploads autonomously, promote a route, or deploy. Full differentiated
 activation remains dependent on the parallel governance program.
+
+The first wedge is one generic Leadership Conversation contract demonstrated by
+one deterministic recurring cross-functional Northstar leadership/staff
+conversation. Sensitive one-on-one preparation is deferred. The workspace
+progresses through Set up, Prepare, Freeze, Capture, Review, What changed, and
+Prepare again. Product laws, Capture boundaries, persistence classifications,
+acceptance, and exclusions are canonical in
+[`DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUTION.md`](./DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUTION.md)
+and
+[`LEADERSHIP_CONVERSATION_PREPARE_CAPTURE_SPEC_001.md`](./LEADERSHIP_CONVERSATION_PREPARE_CAPTURE_SPEC_001.md).
 
 ## Long-term direction
 

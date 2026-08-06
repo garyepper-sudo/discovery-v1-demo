@@ -78,6 +78,29 @@ actionable roots. Their downstream audience lineage, disclosure, abstraction,
 integration, and activation work remains required before differentiated
 Product behavior.
 
+## Leadership Conversation Product canonization
+
+`DEC-PROD-041` closes Product strategy for the first proof. The durable Product
+Constitution preserves one Organizational Understanding, Runtime,
+`ProductQuestion`, Decision, confidence, organization, source identity, and
+Evidence-authority model. It canonizes `PreparedWorkProduct` as a bounded
+versioned Product Workflow artifact and conversation uploads as exact source
+receipts feeding typed human-reviewable proposals.
+
+The first deterministic Northstar wedge is a recurring cross-functional
+leadership/staff conversation with the state progression Set up → Prepare →
+Freeze → Capture → Review → What changed → Prepare again. The leader makes the
+decision; approval is distinct from canonical admission; Runtime evolution
+runs only after admission; and every Understanding change or no-change has
+exact before/after lineage.
+
+Implementation remains unbegun. The next chat must reconcile the planning
+contracts against actual modules and return a bounded implementation prompt.
+No code is authorized until it identifies the exact Product Workflow
+persistence boundary, contract versions, event set, deterministic clock and
+normalization rules, fixtures, validators, security controls, and isolated
+development experience.
+
 ## Current Living Organization integration handoff
 
 The read-only Google Drive vertical slice is live-validated and integrated at
@@ -151,7 +174,8 @@ authority or role differentiation. Denied requests expose only a disposition,
 the presentation boundary remains free of forbidden cognition and Runtime
 internals, and the accepted sequential browser witness passed without a server
 restart. Material differentiation therefore remains OPEN pending governed
-recipient-scope and nested-field disclosure semantics. The next task is
+recipient-scope and nested-field disclosure semantics. At that checkpoint, the
+then-next task was
 **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING RECIPIENT-SCOPE AND
 NESTED-FIELD DISCLOSURE SEMANTICS BENCHMARK 001**. Route promotion remains
 deferred until truthful governed differences exist, an independent two-tab

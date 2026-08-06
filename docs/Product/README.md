@@ -91,7 +91,19 @@ Every significant product sprint should begin by reviewing these documents.
 
 ---
 
-## 0. DISCOVERY_LEADERSHIP_WORKSPACE_MANIFESTO.md
+## 0. DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUTION.md
+
+Defines the durable Product laws, first Leadership Conversation wedge,
+`ProductQuestion` ownership, Prepared Work Product boundary, Capture and human
+review, truthful change semantics, exclusions, validation gates, and phased
+roadmap.
+
+Read this first for Leadership Conversation work, followed by
+`LEADERSHIP_CONVERSATION_PREPARE_CAPTURE_SPEC_001.md` and the conflict register.
+
+---
+
+## 0A. DISCOVERY_LEADERSHIP_WORKSPACE_MANIFESTO.md
 
 Defines why Discovery exists, why Organizational Understanding remains the
 engine, why Leadership Workspaces become the product, and how Prepared Work

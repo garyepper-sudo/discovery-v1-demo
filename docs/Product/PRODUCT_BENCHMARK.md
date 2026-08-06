@@ -47,7 +47,27 @@ preparation quality, confidence calibration, organizational coherence,
 decision quality, and learning quality. Retrieval volume, interface activity,
 document count, or generic satisfaction alone cannot pass the benchmark.
 
-Brief, Prepare, Explore, and Capture remain hypotheses until this program
+The first accepted validation wedge is one generic Leadership Conversation
+contract with one deterministic recurring cross-functional Northstar scenario.
+It must prove Question anchoring, useful shared organization-wide preparation,
+leader edit, immutable freeze, exact upload receipt, multiple typed proposals,
+approval, edited approval, rejection, deferral, canonical admission only for
+approved items, governed evolution, exact change/no-change, improved later
+preparation, and byte-equivalent reset/replay.
+
+The scenario includes new Evidence, a corrected assumption or Understanding, a
+proposed Decision or commitment, a rejected proposal, a deferred Unknown or
+follow-up, an approved no-change item, and an approved item that materially
+changes future preparation. It does not require role differentiation.
+
+Validation measures preparation time saved, preparation quality, retained and
+edited content, leader trust, cognitive effort, proposal approval/correction/
+false rates, willingness to return, first-to-second preparation improvement,
+useful admitted Evidence and corrections, and eliminated context-reconstruction
+steps. Retrieval volume, opaque Decision Readiness, and unproven business
+outcomes cannot pass the benchmark.
+
+Brief, broader Prepare, Explore, and Capture remain hypotheses until evidence
 supports them. Environmental Intelligence and additional workspace families
 remain excluded.
 
