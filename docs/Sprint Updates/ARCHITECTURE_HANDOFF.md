@@ -6,6 +6,23 @@ Generated: 2026-07-31T20:42:07.380Z
 
 This document is the canonical architecture handoff for beginning a new Discovery sprint or chat.
 
+## Product Decision Draft closure
+
+`DEC-PROD-042` canonizes the bounded, non-authoritative Product Workflow owner
+for immutable Decision Draft revisions and receipts. Runtime event persistence
+stores the typed history but performs no cognition evolution; the Executive
+Decision pipeline remains the sole actual Decision owner. `GAP-A-012` remains
+open for promotion and commit.
+
+The immediate successor is **DISCOVERY LEADERSHIP CONVERSATION TYPED CANONICAL
+OWNER ROUTING AND SERVER COMPOSITION 001** from a new clean continuation
+worktree based on canonical main. The old Leadership Conversation worktree and
+its nineteen files remain untouched on baseline
+`ab327ce5307b09f0436fe6935ca9c985d89ea4b4`. Transfer its sixteen new files
+exactly and its three tracked diffs only after a patch passes
+`git apply --check`; verify all nineteen content digests before retiring the
+old worktree. Do not rebase, force-reset, or merge into that dirty worktree.
+
 ## Leadership Workspace strategy canonization
 
 Discovery's product north star is now reducing the cognitive cost of
@@ -104,7 +121,7 @@ decision; approval is distinct from canonical admission; Runtime evolution
 runs only after admission; and every Understanding change or no-change has
 exact before/after lineage.
 
-Implementation remains unbegun. The next chat must reconcile the planning
+Implementation remains noncanonical and preserved. The continuation must reconcile the planning
 contracts against actual modules and return a bounded implementation prompt.
 No code is authorized until it identifies the exact Product Workflow
 persistence boundary, contract versions, event set, deterministic clock and

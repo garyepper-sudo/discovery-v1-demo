@@ -114,7 +114,15 @@ parallel governance work.
 
 ## Next Priority
 
-**DISCOVERY LEADERSHIP CONVERSATION PREPARE-AND-CAPTURE VERTICAL SLICE 001**
+**DISCOVERY LEADERSHIP CONVERSATION TYPED CANONICAL OWNER ROUTING AND SERVER
+COMPOSITION 001** is the immediate successor after the bounded Product Decision
+Draft prerequisite. `DEC-PROD-042` records immutable Product Workflow draft
+revisions and receipts; `GAP-A-012` remains open for actual promotion through
+the existing Executive Decision pipeline. Resume the preserved nineteen-file
+Leadership Conversation implementation only by verified transfer into a new
+clean continuation worktree from canonical main.
+
+### Preserved predecessor: Leadership Conversation Prepare/Capture slice
 
 The owner-graph reconciliation is complete with `OWNER-GRAPH-B` and
 `PIVOT-A — PIVOT NOW`. No unique governance successor exists: administrative

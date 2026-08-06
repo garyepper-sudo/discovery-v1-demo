@@ -124,7 +124,7 @@ canonical acceptance oracles.
 | `ProductObjectiveRecommendationEligibility` | Product Workflow | Read-only determination that Objective and Optimization inputs permit future business Recommendation generation | Derived result; no Recommendation generation or persistence |
 | `ProductOrganizationalObjective` | Product Workflow | Versioned authoritative desired organizational change | Immutable additive product events in Runtime `memory.events` |
 | `ProductOptimizationContext` | Product Workflow | Objective-version-specific governed action preferences and criteria | Immutable additive product events in Runtime `memory.events` |
-| `ProductDecisionDraft` | Product Workflow | Readiness-bounded draft that references Question and Answer | Projection of existing decision capability |
+| `ProductDecisionDraft` | Product Workflow | Non-authoritative, readiness-bounded immutable draft revisions with exact Question and Answer ancestry | Typed Product Workflow events in authorized Runtime event persistence; actual Decision ownership remains with the Executive Decision pipeline |
 | `ProductDecision` | Executive Decision pipeline | Committed intervention and ancestry | Existing Runtime decision/work objects |
 | `ProductOutcomeReview` | Executive Review/Learning | Comparison of expected and observed outcomes | Existing Runtime review and learning objects |
 | `ProductModelState` | Product Workflow projection | Coverage, coherence, freshness, trustworthiness, tensions, growth | Projection of canonical Runtime state |

@@ -91,6 +91,14 @@ Every significant product sprint should begin by reviewing these documents.
 
 ---
 
+## Current bounded Decision prerequisite
+
+[`DISCOVERY_PRODUCT_DECISION_DRAFT_OPERATION_AND_IMMUTABLE_RECEIPT_001.md`](./DISCOVERY_PRODUCT_DECISION_DRAFT_OPERATION_AND_IMMUTABLE_RECEIPT_001.md)
+records the implemented non-authoritative Product Workflow draft operation,
+immutable receipt, and the still-open promotion boundary under `GAP-A-012`.
+
+---
+
 ## 0. DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUTION.md
 
 Defines the durable Product laws, first Leadership Conversation wedge,

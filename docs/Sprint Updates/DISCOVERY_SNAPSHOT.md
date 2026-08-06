@@ -200,8 +200,8 @@ Investigation Opportunities. CEO, Director, and Manager receive the same
 substantive semantic projection. Role and default-scope labels grant no
 additional authority.
 
-The exact next task is **DISCOVERY LEADERSHIP CONVERSATION PREPARE-AND-CAPTURE
-VERTICAL SLICE 001**. `ProductQuestion` remains the long-lived anchor; the
+The preserved predecessor is **DISCOVERY LEADERSHIP CONVERSATION
+PREPARE-AND-CAPTURE VERTICAL SLICE 001**. `ProductQuestion` remains the long-lived anchor; the
 immutable Prepared Work Product snapshot belongs inside the slice. Material
 role differentiation, field-governance persistence, recipient grants, nested
 disclosure, Evidence-body disclosure, autonomous admission, route promotion,
@@ -211,8 +211,8 @@ The connector-neutral governed exact Source Content owner is implemented and
 validated for development. It resolves current canonical Source Binding
 revisions server-side, retains exact bytes and digest-only idempotency state,
 and performs no Evidence admission, Runtime mutation, connector access, or
-Product Workflow body storage. Leadership Conversation implementation remains
-the exact next task.
+Product Workflow body storage. Leadership Conversation implementation is
+preserved outside canonical main pending safe transfer.
 
 ## Leadership Conversation Product canonization
 
@@ -234,6 +234,18 @@ simplicity, and earn expansion through evidence.
 `ProductQuestion` remains the long-lived anchor. `PreparedWorkProduct` is a
 non-authoritative Product Workflow artifact; upload receipts and typed proposal
 envelopes grant no canonical authority. Approval, admission, Runtime evolution,
-and Understanding change remain separate states. Implementation has not begun.
-The next chat performs bounded implementation planning before requesting code
-authorization.
+and Understanding change remain separate states. Its implementation is
+preserved outside canonical main pending safe transfer and routing review.
+
+## Product Decision Draft operation
+
+`DEC-PROD-042` closes the non-authoritative draft prerequisite with immutable
+Product Workflow revisions, typed Runtime events, exact authorization,
+optimistic concurrency, request-bound idempotency, canonical immutable
+receipts, deterministic fresh-process replay, and truthful workspace
+projection. It performs no cognition evolution and creates no actual Decision
+or Outcome. `GAP-A-012` remains open for promotion through the existing
+Executive Decision pipeline. The immediate successor is **DISCOVERY LEADERSHIP
+CONVERSATION TYPED CANONICAL OWNER ROUTING AND SERVER COMPOSITION 001**, safely
+resumed in a new clean worktree while the preserved nineteen-file dirty
+worktree remains untouched until exact transfer verification.

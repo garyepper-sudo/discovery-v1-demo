@@ -2,19 +2,31 @@
 
 ## Exact next task
 
-Begin implementation planning for **DISCOVERY LEADERSHIP CONVERSATION
-PREPARE-AND-CAPTURE VERTICAL SLICE 001** from the exact resulting canonical
-commit in a new branch and worktree. Do not write code until the bounded prompt
-is reviewed and authorized.
+Rerun **DISCOVERY LEADERSHIP CONVERSATION TYPED CANONICAL OWNER ROUTING AND
+SERVER COMPOSITION 001** from the resulting canonical main in a new clean
+continuation worktree. Do not resume or rewrite the preserved dirty worktree.
+
+The Product Decision Draft prerequisite is closed under `DEC-PROD-042` with
+immutable revisions and receipts. `GAP-A-012` remains open because Decision
+promotion and actual Decision creation are not implemented.
+
+Safely resume the preserved Leadership Conversation implementation: its
+nineteen pre/post content digests matched; its old worktree remains based on
+`ab327ce5307b09f0436fe6935ca9c985d89ea4b4`. Copy or reapply the sixteen new
+files exactly, capture the three tracked diffs as a patch, require
+`git apply --check` against the new canonical baseline before applying it, and
+require all nineteen transferred digests to match. Keep the old worktree
+untouched until verification completes; do not rebase, force-reset, or merge
+into it.
 
 The post-field-audience review is complete: `OWNER-GRAPH-B — NO UNIQUE
-GOVERNANCE SUCCESSOR` and `PIVOT-A — PIVOT NOW`. The next task is a bounded
-development-only Product-validation slice, not differentiated activation. It
+GOVERNANCE SUCCESSOR` and `PIVOT-A — PIVOT NOW`. The preserved implementation
+is a bounded development-only Product-validation slice, not differentiated activation. It
 must describe itself as **SHARED ORGANIZATION-WIDE PREPARATION**, consume only
 the authorized projection, preserve `ProductQuestion` as the long-lived anchor,
 and define the immutable Prepared Work Product snapshot inside the slice.
 
-Leadership Workspace implementation has not begun. Material role
+Leadership Workspace implementation is preserved but is not canonical. Material role
 differentiation remains **OPEN**; administrative persistence, recipient grants,
 forward lineage, nested disclosure, safe abstraction, activation, and route
 promotion remain parallel blocked governance work.

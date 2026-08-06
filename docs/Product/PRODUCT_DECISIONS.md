@@ -882,6 +882,36 @@ Changing one requires the process in
 - **Affected gaps:** `GAP-B-019`, `GAP-D-005`; `GAP-B-014` remains open.
 - **Architecture:** No architecture change. Existing canonical owners are
   composed and remain authoritative.
-- **Status:** Canonical and implementation-ready. Its governed exact Source
-  Content prerequisite is implemented and validated; the Leadership
-  Conversation slice itself has not begun.
+- **Status:** Canonical. Its governed exact Source Content prerequisite is
+  implemented and validated; the Leadership Conversation implementation is
+  preserved outside canonical main pending safe continuation.
+
+## DEC-PROD-042 — Product Decision drafts are non-authoritative Product Workflow records
+
+- **Decision:** Own versioned `ProductDecisionDraft` revisions and immutable
+  operation receipts in Product Workflow while preserving the existing
+  Executive Decision pipeline as the sole owner of actual Decisions.
+- **Persistence:** Draft revisions are typed immutable events in authorized
+  Organization Runtime event persistence. This use of Runtime storage is not
+  Runtime cognition evolution and grants no organizational authority.
+- **Operation boundary:** Create, revise, and read require exact authorization,
+  deterministic identity, complete request-bound idempotency, optimistic
+  concurrency, linear append-only history, and exact Question/Answer ancestry.
+  Malformed, cross-organization, ambiguous, duplicate, or branched histories
+  fail closed.
+- **Receipt boundary:** A successful operation returns an immutable receipt
+  re-derived from the actually persisted event. Exact replay returns the
+  original canonical receipt; conflicting key reuse is rejected.
+- **Projection boundary:** The ProductQuestion workspace may disclose active or
+  superseded draft state as available, unavailable, or withheld. It does not
+  interpret Runtime internals or create a Decision.
+- **Exclusions:** No Decision promotion, actual Decision creation, Outcome
+  creation or routing, cognition evolution, route promotion, connector access,
+  or Production activity is authorized.
+- **Evidence:**
+  [`DISCOVERY_PRODUCT_DECISION_DRAFT_OPERATION_AND_IMMUTABLE_RECEIPT_001.md`](./DISCOVERY_PRODUCT_DECISION_DRAFT_OPERATION_AND_IMMUTABLE_RECEIPT_001.md).
+- **Affected gap:** `GAP-A-012` remains open for promotion and commit through
+  the existing Executive Decision pipeline.
+- **Architecture:** No architecture change; existing Product Workflow, Runtime,
+  ProductQuestion, authorization, and Executive Decision owners are composed.
+- **Status:** Canonical bounded draft prerequisite implemented and validated.

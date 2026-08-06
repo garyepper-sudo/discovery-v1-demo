@@ -108,7 +108,9 @@ passes the binding replay in
 5. **Phase 3 — Confidence improvement:** `GAP-A-011`; one specific action
    causes further acquisition and an Answer revision or explicit no-change.
 6. **Phase 4 — Decision completion:** `GAP-A-012`; draft and commit through the
-   existing canonical decision pipeline.
+   existing canonical decision pipeline. The non-authoritative immutable draft
+   operation and receipt are complete; promotion into the existing Executive
+   Decision owner remains open.
 7. **Phase 5 — Outcome and learning:** `GAP-A-013`, `GAP-A-014`; manual
    observed outcomes, canonical review, learning, and model-state revision.
 8. **Phase 6 — Insight completion:** `GAP-A-015`; source-backed insight or
