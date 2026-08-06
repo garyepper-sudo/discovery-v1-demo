@@ -3,8 +3,9 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** Leadership Conversation Product canonization is complete;
-bounded implementation planning is next
+**Current phase:** Leadership Conversation Product canonization and its governed
+exact Source Content prerequisite are complete; the bounded vertical slice is
+next
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
@@ -90,12 +91,17 @@ the repository corpus and retained local metadata.
   Runtime was reconstructed from the canonical versioned local package.
 - Automatic watching, recursive/multiple folders, connector writes, other
   connectors, selector activation, and Production activation: blocked.
+- Governed exact Source Content: implemented and validated as a connector-
+  neutral development-only owner; current Source Binding resolution precedes
+  persistence, exact bytes remain distinct from normalized comparison identity,
+  and Product Workflow, Evidence admission, Runtime, and Production remain
+  outside its boundary.
 
 ## Current Objective
 
-Plan the bounded development-only, organization-wide Leadership Conversation
-Prepare/Capture slice against actual implementation files, then produce the
-smallest reviewed implementation prompt. The Product thesis, laws, initial
+Implement the bounded development-only, organization-wide Leadership
+Conversation Prepare/Capture slice against actual implementation files. The
+Product thesis, laws, initial
 user, Northstar wedge, loop, ownership, persistence classification, UX stages,
 human-review boundary, acceptance scenario, metrics, and exclusions are
 canonical under `DEC-PROD-041`. Leadership Workspace implementation has not
@@ -119,9 +125,12 @@ roots for this target. None blocks shared organization-wide preparation.
 The first slice is explicitly **SHARED ORGANIZATION-WIDE PREPARATION**. It must
 not present role or default-scope labels as substantive authorization
 differences, expose Evidence bodies, activate field requirements or recipient
-grants, perform nested disclosure, promote a route, or deploy. Capture creates
-source-bound proposals requiring human review; it does not autonomously mutate
-Evidence or Runtime.
+grants, perform nested disclosure, promote a route, or deploy. Capture resolves
+a canonical local Source Binding, writes exact content through
+`GovernedSourceContentService`, and stores only receipt references. It creates
+source-bound proposals requiring human review; approved proposals use the
+separate Evidence-admission read and do not autonomously mutate Evidence or
+Runtime.
 
 Implementation planning must read the Leadership Conversation Product
 Constitution, first-slice specification, conflict register, and implementation

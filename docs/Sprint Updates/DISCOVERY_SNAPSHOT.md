@@ -207,6 +207,13 @@ role differentiation, field-governance persistence, recipient grants, nested
 disclosure, Evidence-body disclosure, autonomous admission, route promotion,
 and deployment remain unauthorized.
 
+The connector-neutral governed exact Source Content owner is implemented and
+validated for development. It resolves current canonical Source Binding
+revisions server-side, retains exact bytes and digest-only idempotency state,
+and performs no Evidence admission, Runtime mutation, connector access, or
+Product Workflow body storage. Leadership Conversation implementation remains
+the exact next task.
+
 ## Leadership Conversation Product canonization
 
 `DEC-PROD-041` canonizes Discovery's first Product wedge: one generic

@@ -882,5 +882,6 @@ Changing one requires the process in
 - **Affected gaps:** `GAP-B-019`, `GAP-D-005`; `GAP-B-014` remains open.
 - **Architecture:** No architecture change. Existing canonical owners are
   composed and remain authoritative.
-- **Status:** Canonical and implementation-planning ready; implementation not
-  begun.
+- **Status:** Canonical and implementation-ready. Its governed exact Source
+  Content prerequisite is implemented and validated; the Leadership
+  Conversation slice itself has not begun.

@@ -72,6 +72,16 @@ slice. It makes no material role-differentiation claim and authorizes no
 Evidence-body disclosure, field-governance persistence, recipient grants,
 nested disclosure, autonomous admission, route promotion, or deployment.
 
+The governed exact Source Content prerequisite is implemented and validated.
+The slice must resolve a canonical local Source Binding, write through
+`GovernedSourceContentService`, retain only `SourceContentWriteReceiptV1`
+references in `ConversationUploadReceiptV1`, read proposals server-side through
+`source-content:read-for-proposal`, and use
+`source-content:read-for-evidence-admission` only when routing an approved
+proposal to the existing Evidence owner. Client replacement text is never
+canonical. Upload, approval, admission, Runtime evolution, and Understanding
+change remain distinct.
+
 Administrative persistence, completed Explanation versions, Condition scope,
 confidence, uncertainty, contradiction, and evolution lineage remain parallel
 actionable roots. Their downstream audience lineage, disclosure, abstraction,

@@ -98,8 +98,10 @@ Defines the durable Product laws, first Leadership Conversation wedge,
 review, truthful change semantics, exclusions, validation gates, and phased
 roadmap.
 
-Read this first for Leadership Conversation work, followed by
-`LEADERSHIP_CONVERSATION_PREPARE_CAPTURE_SPEC_001.md` and the conflict register.
+Read this first for Leadership Conversation work, followed by the
+[governed exact Source Content owner](./DISCOVERY_GOVERNED_EXACT_SOURCE_CONTENT_OWNER_001.md),
+`LEADERSHIP_CONVERSATION_PREPARE_CAPTURE_SPEC_001.md`, and the conflict
+register.
 
 ---
 

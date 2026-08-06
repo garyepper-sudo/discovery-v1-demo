@@ -60,25 +60,31 @@ govern this sequence:
 0. **Product canonization and closure — COMPLETE:** thesis, laws, architecture,
    first-slice specification, conflict register, roadmap, and implementation
    handoff are canonical.
-1. **Development vertical slice — NEXT:** implement the shared
-   organization-wide Prepare–Capture–Prepare loop under `GAP-B-019`; no
-   material role differentiation or Production.
-2. **Product Workflow hardening:** persistence, reload, idempotency, audit,
+1. **Governed exact Source Content owner — COMPLETE:** connector-neutral,
+   development-only exact-byte persistence, current Source Binding resolution,
+   scoped reads, immutable revisions, deterministic reset, and fresh-process
+   replay are implemented without Evidence admission or Runtime mutation.
+2. **Development vertical slice — NEXT:** implement the shared
+   organization-wide Prepare–Capture–Prepare loop under `GAP-B-019`; resolve a
+   canonical local Source Binding, write through `GovernedSourceContentService`,
+   and retain only receipt references in Product Workflow. No material role
+   differentiation or Production.
+3. **Product Workflow hardening:** persistence, reload, idempotency, audit,
    reset, replay, broader deterministic acceptance, and failure recovery.
-3. **Customer validation:** Director/VP interviews, prepared-content review,
+4. **Customer validation:** Director/VP interviews, prepared-content review,
    time-saved, first/second-preparation, trust, and cognitive-effort measures.
-4. **Organization-wide Production readiness:** secure persistence,
+5. **Organization-wide Production readiness:** secure persistence,
    authorization reevaluation, controlled upload handling, retention,
    revocation, operations, and security acceptance.
-5. **Multi-role differentiation:** only after persisted field requirements,
+6. **Multi-role differentiation:** only after persisted field requirements,
    recipient grants, forward lineage, nested disclosure, safe abstraction, and
    inference-leakage acceptance.
-6. **Leadership Attention Management:** Current Focus, focus-aware preparation,
+7. **Leadership Attention Management:** Current Focus, focus-aware preparation,
    background watch, exceptional interruption, and Attention Queue only after
    validation and through existing Objective/Optimization Context owners.
-7. **Broader Leadership Workspaces:** Brief, Prepare variants, Explore, broader
+8. **Broader Leadership Workspaces:** Brief, Prepare variants, Explore, broader
    Capture, and journey templates only with customer evidence.
-8. **Environmental Intelligence:** deferred until the internal Product loop is
+9. **Environmental Intelligence:** deferred until the internal Product loop is
    validated.
 
 ## Ordered pre-wireframe backend program

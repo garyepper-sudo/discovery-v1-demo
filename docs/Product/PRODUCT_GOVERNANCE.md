@@ -227,3 +227,9 @@ Implementation review must also reconcile the first-slice specification and
 conflict register. Neither artifact supersedes canonical object owners,
 authorization, disclosure, Runtime, Evidence admission, or the projection
 firewall.
+
+The governed exact Source Content owner is the only semantic ingress for local
+exact bytes. Product Workflow stores receipt references, not replacement body
+text. Proposal reads and Evidence-admission reads use separate exact scoped
+operations; neither read grants admission or Runtime authority. The owner is
+development-only and connector-neutral.

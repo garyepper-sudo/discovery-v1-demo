@@ -369,6 +369,16 @@ Understanding history, receipt, and checkpoint unchanged. OAuth callback and
 log redaction is recursive; credentials and raw Runtime are never report
 content.
 
+Exact local Source Content is now owned by the connector-neutral,
+development-only `GovernedSourceContentService`. Source Binding remains the
+stable source and scope-lineage owner; the service resolves its current
+immutable revision server-side before any mechanical repository access. Exact
+bytes receive a content-addressed version while normalized digest remains a
+comparison constraint. The owner persists no authorization context, does not
+admit Evidence or mutate Organization Runtime, and has no Product Workflow or
+Production-storage authority. See
+[DISCOVERY_GOVERNED_EXACT_SOURCE_CONTENT_OWNER_001.md](./DISCOVERY_GOVERNED_EXACT_SOURCE_CONTENT_OWNER_001.md).
+
 ## Field audience-requirement security
 
 The canonical shadow boundary is a content-addressed chain from authoritative

@@ -20,10 +20,14 @@ forward lineage, nested disclosure, safe abstraction, activation, and route
 promotion remain parallel blocked governance work.
 
 The Product direction is closed under `DEC-PROD-041`. Do not reopen broad
-brainstorming. Reconcile the canonized planning contracts against actual files,
-select the existing Product Workflow persistence boundary, define exact
-contract versions, fixtures, validators, and negative controls, then return a
-bounded Codex implementation prompt for operator approval.
+brainstorming. Use the implemented governed exact Source Content owner: create
+or resolve the canonical local Source Binding, write through
+`GovernedSourceContentService`, store only `SourceContentWriteReceiptV1`
+references in `ConversationUploadReceiptV1`, read server-side for proposals,
+and route approved Evidence proposals through the separate Evidence-admission
+read. Select the Product Workflow persistence boundary and define the remaining
+contracts, fixtures, validators, and negative controls. Never accept
+replacement canonical text from the client.
 
 ## Read first
 
