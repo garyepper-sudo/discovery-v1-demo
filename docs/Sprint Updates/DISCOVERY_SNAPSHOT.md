@@ -147,3 +147,13 @@ original research worktree contains preserved, unapproved evaluator Phase
 4–5, external-comparative, observable-output-fidelity, scoring-robustness,
 governance, handoff, package, and related research drafts. It is not the UI/UX
 implementation worktree and must not be cleaned, merged, or consumed.
+
+## Recipient-scope benchmark closure
+
+Benchmark 001 is PASS: 52 cases × five models × 27 direct and combined-inference
+channels = 7,020 evaluated cells. It selects Model 2 with primary F and
+secondary B/C/D. Audience governance precedes forward lineage and nested-field
+contract implementation. Current production behavior and retained Runtime are
+unchanged; material differentiation and promotion remain open. Next:
+**DISCOVERY ORGANIZATIONAL ACCESS RECIPIENT-AUDIENCE SCOPE GOVERNANCE CONTRACT
+001**.

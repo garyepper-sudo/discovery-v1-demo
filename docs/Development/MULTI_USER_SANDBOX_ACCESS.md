@@ -15,3 +15,9 @@ Revocation performs the canonical one-way active-to-revoked transition and appen
 For acceptance, use separate browser profiles or fully signed-out sequential sessions, visit the development access or live Product route, and complete Clerk sign-out before switching accounts. Protected Product presentation is synchronously scrubbed before sign-out; hidden, frozen, BFCache-restored, and back/forward-restored documents revalidate current identity and authorization. The server uses private/no-store responses, accepts no persona query authority, and returns 404 in Production. Back navigation and a copied URL must return to Clerk sign-in after sign-out.
 
 All three users share one canonical organization and model; only explicit scope and operation grants differ. `/your-organization`, Drive content, and Drive synchronization remain outside this contract. Live typed-path acceptance now exposes useful canonical Organizational Understanding for all three accounts through one Runtime read and a projection/Product-Communication-only presentation. Their substantive organization-wide content is currently identical; visible role labels are display metadata, and material differentiation remains open pending governed recipient-scope and nested-field disclosure semantics.
+
+The completed disclosure benchmark selects canonical nested-field decisions
+before projection but authorizes no implementation. Current assignments lack
+explicit recipient-audience authority; default scopes and role labels remain
+non-authoritative. Material differentiation stays open through the required
+governance D → producer C → contract B sequence.

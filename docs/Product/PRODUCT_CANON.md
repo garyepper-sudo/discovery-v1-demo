@@ -676,3 +676,11 @@ unavailable. The route remains development-only, `/your-organization` remains
 unchanged, and promotion is blocked pending governed recipient-scope semantics,
 material differentiation, an independent two-tab witness, and the live
 unauthorized-disclosure/inference stress test.
+
+The recipient-scope benchmark passed 52 cases, five models, 27 leakage
+channels, and 7,020 evaluated cells. It selected Model 2 while classifying the
+boundary F with secondary B/C/D. Recipient-audience governance is missing,
+forward audience-relevant lineage is incomplete, and nested-field contracts
+cannot yet represent the governed result. Governance precedes producer and
+contract work. Historical Runtimes remain immutable and fail closed without
+existence leakage; production behavior and route status remain unchanged.

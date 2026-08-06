@@ -3,8 +3,9 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** Northstar typed canonical Product population is complete;
-recipient-scope and nested-field disclosure semantics are next
+**Current phase:** Northstar typed canonical Product population and the
+recipient-scope disclosure benchmark are complete; recipient-audience
+governance is next
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
@@ -88,16 +89,16 @@ the repository corpus and retained local metadata.
 
 ## Current Objective
 
-Benchmark governed recipient-scope and nested-field disclosure semantics for
-canonical Organizational Understanding without changing canonical truth,
-generic item ownership, or `/your-organization`.
+Define the recipient-audience scope governance contract without implementing
+nested disclosure, changing canonical truth, or promoting routes.
 
 ## Next Priority
 
-**DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING RECIPIENT-SCOPE AND
-NESTED-FIELD DISCLOSURE SEMANTICS BENCHMARK 001**
+**DISCOVERY ORGANIZATIONAL ACCESS RECIPIENT-AUDIENCE SCOPE GOVERNANCE CONTRACT
+001**
 
-Begin from the resulting `origin/main` in a new branch/worktree. Material role
+The completed benchmark passed 52 cases, five models, and 27 leakage channels
+(7,020 cells), selecting Model 2 with primary F and secondary B/C/D. Material role
 differentiation remains OPEN: current canonical disclosure is organization-wide
 and function/team display scopes do not filter it. Do not fabricate role content
 or broaden access. Route promotion remains deferred until governed semantics

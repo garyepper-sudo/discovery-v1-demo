@@ -2,8 +2,8 @@
 
 ## Exact next task
 
-Begin **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING RECIPIENT-SCOPE AND
-NESTED-FIELD DISCLOSURE SEMANTICS BENCHMARK 001** from the exact resulting
+Begin **DISCOVERY ORGANIZATIONAL ACCESS RECIPIENT-AUDIENCE SCOPE GOVERNANCE
+CONTRACT 001** from the exact resulting
 `origin/main` in a new branch and worktree.
 
 ## Read first
@@ -82,12 +82,12 @@ NESTED-FIELD DISCLOSURE SEMANTICS BENCHMARK 001** from the exact resulting
 
 ## Frontend boundary
 
-Define and benchmark governed recipient-scope and nested-field disclosure
-semantics for canonical Organizational Understanding. Do not infer access from
-role or `composition.scope`, broaden permissions, weaken unavailable/withheld
-semantics, or flatten canonical Understanding into generic items. Material role
-differentiation remains OPEN until governed semantics and corpus content support
-truthful differences.
+Implement only **DISCOVERY ORGANIZATIONAL ACCESS RECIPIENT-AUDIENCE SCOPE
+GOVERNANCE CONTRACT 001**. The completed 52-case, five-model, 27-channel
+benchmark (7,020 cells) selected Model 2 and primary F with secondary B/C/D.
+Define audience authority before forward lineage or nested disclosure. Do not
+infer authority from role, default scope, or `composition.scope`. Material role
+differentiation remains OPEN and production behavior remains unchanged.
 
 ## Explicitly deferred
 

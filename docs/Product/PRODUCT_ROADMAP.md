@@ -288,6 +288,10 @@ and outcomes while remaining user-governed.
 - Useful three-account differentiation, independent two-tab isolation, and the
   dedicated live unauthorized-disclosure/inference stress test must pass before
   route promotion.
+- Recipient-scoped Understanding follows the benchmark-proven order: explicit
+  audience governance, forward-produced audience-relevant lineage, canonical
+  nested-field disclosure, projection, Product Communication, presentation.
+  Benchmark success alone authorizes no production implementation.
 
 - Connected Evidence improves specific Answer recovery without weaker negative
   controls.

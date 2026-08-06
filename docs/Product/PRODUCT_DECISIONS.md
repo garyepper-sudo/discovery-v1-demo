@@ -679,3 +679,19 @@ Changing one requires the process in
   recommendations, and Product meaning do not change.
 - **Status:** Implemented, synthetic-validated, and preserved through the
   deterministic Northstar reconstruction and retained-Runtime reload.
+
+## DEC-PROD-035 — Recipient-scoped nested disclosure is governed before projection
+
+- **Decision:** Select Model 2: recipient-audience governance resolves first;
+  canonical Organizational Understanding disclosure owns recipient-specific
+  claim and nested-field dispositions before projection.
+- **Evidence:** 52 cases, five models, and 27 direct/combined-inference leakage
+  channels produced a complete deterministic 7,020-cell matrix.
+- **Boundary:** `composition.scope` remains subject scope. Source/Evidence scope
+  remains provenance. Role and default-scope labels grant no authority.
+- **Ordering:** Audience governance (D), forward lineage (C), then nested-field
+  disclosure/projection contracts (B).
+- **Compatibility:** Historical Runtimes remain immutable and fail closed
+  without hidden existence signals.
+- **Status:** Benchmark PASS; primary F, secondary B/C/D. Production unchanged;
+  material role differentiation remains open.

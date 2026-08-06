@@ -800,3 +800,13 @@ Treat the following files as canonical architectural sources:
 - `docs/Sprint Updates/ARCHITECTURE_HANDOFF.md`
 
 When architectural evidence conflicts, prefer the current registry and verified source-code trace over older sprint prose.
+
+## Recipient-scope benchmark closure
+
+The deterministic benchmark passed 52 cases, five models, 27 leakage channels,
+and 7,020 cells. Model 2 owns nested-field decisions in canonical Understanding
+disclosure before projection. Primary F and secondary B/C/D establish the
+order: audience governance, forward lineage, then contract implementation.
+Production and retained Runtime remain unchanged; route promotion stays
+blocked. Next: **DISCOVERY ORGANIZATIONAL ACCESS RECIPIENT-AUDIENCE SCOPE
+GOVERNANCE CONTRACT 001**.
