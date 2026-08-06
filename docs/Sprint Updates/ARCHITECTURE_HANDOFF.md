@@ -68,13 +68,23 @@ readable; no migration occurred, and one guarded atomic replacement created the
 durable reconstruction. The preserved
 Northstar `-002` candidate remains unchanged and unintegrated.
 
-Material differentiation remains blocked because the live adapter supplies no
-scoped Product source items despite canonical cognition and lineage upstream.
-The next task is **DISCOVERY NORTHSTAR SOURCE-TO-PRODUCT PROJECTION POPULATION
-AND MATERIAL ROLE DIFFERENTIATION 001** from a new worktree. After it closes,
-**DISCOVERY LIVE MULTI-ROLE
-UNAUTHORIZED DISCLOSURE AND INFERENCE STRESS TEST 001** remains mandatory;
-route promotion stays deferred until both pass.
+The Northstar zero-content blocker is resolved through a distinct typed
+Runtime-to-scoped-Product source path. It projects two Organizational
+Understandings, one Organizational Explanation, twelve Evidence references,
+seven Organizational Conditions, and nine Investigation Opportunities while
+leaving generic scoped items at zero. All three authorized accounts currently
+receive the same organization-wide substantive content at semantic digest
+`536fe532…`; visible role labels are display metadata and do not fabricate
+authority or role differentiation. Denied requests expose only a disposition,
+the presentation boundary remains free of forbidden cognition and Runtime
+internals, and the accepted sequential browser witness passed without a server
+restart. Material differentiation therefore remains OPEN pending governed
+recipient-scope and nested-field disclosure semantics. The next task is
+**DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING RECIPIENT-SCOPE AND
+NESTED-FIELD DISCLOSURE SEMANTICS BENCHMARK 001**. Route promotion remains
+deferred until truthful governed differences exist, an independent two-tab
+witness is captured, and **DISCOVERY LIVE MULTI-ROLE UNAUTHORIZED DISCLOSURE
+AND INFERENCE STRESS TEST 001** passes.
 
 Before proposing a new capability, use this document to verify whether the responsibility, cognitive object, canonical producer, Runtime destination, or executive destination already exists.
 

@@ -654,3 +654,25 @@ is retained.
 Automatic watching, recursive or multiple folders, connector writes, other
 connectors, Production, recommendation/decision integration, impact review,
 snapshots, PDF export, and final frontend implementation remain deferred.
+
+## Northstar typed role-aware Product population status
+
+The development-only role-aware path now exposes retained canonical
+Organizational Understanding through existing owners: current access, one
+`StoredOrganizationRuntime` read, canonical authority/disclosure, canonical
+projection, Product Communication, and recipient-safe presentation. Canonical
+Understanding remains distinct from generic scoped Product items, which
+truthfully total zero for this retained Runtime.
+
+The retained projection exposes 2 Understandings, 1 Explanation, 12 bounded
+Evidence references with bodies unavailable, 7 conditions, and 9
+investigations. CEO, Engineering Director, and Platform Manager currently
+receive identical organization-wide substantive content; display roles grant no
+authority and are not material differentiation. Denied output is exactly
+`{ disposition: "denied" }`. Raw Runtime snapshots, events,
+`currentUnderstandings`, persisted bytes, and Evidence bodies do not enter the
+role-aware presentation, and the original question truthfully reports
+unavailable. The route remains development-only, `/your-organization` remains
+unchanged, and promotion is blocked pending governed recipient-scope semantics,
+material differentiation, an independent two-tab witness, and the live
+unauthorized-disclosure/inference stress test.

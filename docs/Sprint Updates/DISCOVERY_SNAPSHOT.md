@@ -1,8 +1,8 @@
 # Discovery Startup Snapshot
 
 **Current milestone:** The multi-role scoped Product backend, first
-fixture-backed role-aware frontend slice, and development-only live scoped
-adapter are complete. GAP-MR-001 through
+fixture-backed role-aware frontend slice, and development-only typed canonical
+live Product path are complete. GAP-MR-001 through
 GAP-MR-006 all have focused production-owner traceability while the frozen
 benchmark remains the historical oracle. The Living Organization Drive slice
 and Product Workflow frontend readiness remain complete.
@@ -121,14 +121,24 @@ canonical Evidence/admission identity v2. Different content with a reused local
 label remains distinct; exact and formatting-normalized duplicates remain
 deduplicated; later same-content sources retain complete provenance. Ambiguous
 v1 ancestry fails closed, unambiguous v1 remains readable, focused unauthorized
-canaries returned zero occurrences, and no migration was required. Material differentiation remains blocked only
-because the live adapter's retained-Runtime source owner still returns zero
-scoped Product items. Canonical cognition and lineage exist upstream; selection,
-disclosure, and presentation receive no candidates. Protected sign-out,
+canaries returned zero occurrences, and no migration was required. The former
+zero-content blocker is resolved through the distinct canonical Organizational
+Understanding path: current access, one retained Runtime read, canonical
+authority/disclosure, one canonical projection, Product Communication, and
+recipient-safe presentation. The retained result contains 2 Understandings,
+1 Explanation, 12 bounded Evidence references with bodies unavailable,
+7 conditions, and 9 investigations; generic scoped Product items remain
+independently governed and total zero. CEO, Director, and Manager share the same
+substantive digest `536fe532…`; visible roles are display metadata, so material
+role differentiation remains OPEN. Denied output is exactly
+`{ disposition: "denied" }`, raw Runtime presentation inputs are excluded, and
+the original question truthfully reports unavailable. Protected sign-out,
 Back/reload/copied-URL isolation, account switching, and Manager
 revocation/restoration pass, but an independent live two-tab witness remains a
-pre-promotion gate. The next task is **DISCOVERY NORTHSTAR SOURCE-TO-PRODUCT
-PROJECTION POPULATION AND MATERIAL ROLE DIFFERENTIATION 001**.
+pre-promotion gate. Sequential CEO → Director → Manager → signed-out denial →
+CEO acceptance passed. The next task is **DISCOVERY CANONICAL ORGANIZATIONAL
+UNDERSTANDING RECIPIENT-SCOPE AND NESTED-FIELD DISCLOSURE SEMANTICS BENCHMARK
+001**.
 
 ## Worktree boundary
 

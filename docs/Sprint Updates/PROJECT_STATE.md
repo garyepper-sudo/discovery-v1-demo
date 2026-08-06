@@ -3,8 +3,8 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** Northstar retained-state reconstruction and protected-page
-cache isolation are complete; scoped Product input population is next
+**Current phase:** Northstar typed canonical Product population is complete;
+recipient-scope and nested-field disclosure semantics are next
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
@@ -62,6 +62,17 @@ the repository corpus and retained local metadata.
   sessions, copied-URL/cache isolation, Manager revocation, canonical
   append-only restoration, and exact idempotent reset passed.
 - Canonical `/your-organization`: unchanged.
+- Typed live population: current access → one retained Runtime read → canonical
+  authority/disclosure → canonical Organizational Understanding projection →
+  Product Communication → recipient-safe presentation. The retained view has
+  2 Understandings, 1 Explanation, 12 bounded Evidence references with bodies
+  unavailable, 7 conditions, and 9 investigations. Generic items remain zero.
+- CEO, Engineering Director, and Platform Manager currently receive identical
+  organization-wide substantive content at digest `536fe532…`; visible role
+  labels are display metadata, not material differentiation.
+- Denied output is exactly `{ disposition: "denied" }`; raw Runtime snapshots,
+  events, `currentUnderstandings`, Evidence bodies, and persisted bytes do not
+  enter presentation. `originalQuestion` truthfully reports unavailable.
 - Governed Drive integration: one exact private/non-root/non-recursive folder;
   manual incremental synchronization; read-only connector; strict MIME,
   file-count, byte, and digest validation.
@@ -77,21 +88,22 @@ the repository corpus and retained local metadata.
 
 ## Current Objective
 
-Populate scoped Product inputs from the reconstructed canonical Runtime without
-changing cognition, frontend meaning, authorization, or `/your-organization`.
+Benchmark governed recipient-scope and nested-field disclosure semantics for
+canonical Organizational Understanding without changing canonical truth,
+generic item ownership, or `/your-organization`.
 
 ## Next Priority
 
-**DISCOVERY NORTHSTAR SOURCE-TO-PRODUCT PROJECTION POPULATION AND MATERIAL ROLE
-DIFFERENTIATION 001**
+**DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING RECIPIENT-SCOPE AND
+NESTED-FIELD DISCLOSURE SEMANTICS BENCHMARK 001**
 
-Begin diagnostically from the resulting `origin/main` in a new branch/worktree.
-The earliest observed seam is `sourceForRetainedRuntime`, which currently
-constructs an authorized source with `items: []` despite canonical cognition
-and scope lineage upstream. Do not fabricate role content or broaden access.
-Route promotion remains deferred until renewed three-account material
-differentiation, an independent live two-tab witness, and the later **DISCOVERY
-LIVE MULTI-ROLE UNAUTHORIZED DISCLOSURE AND INFERENCE STRESS TEST 001** pass.
+Begin from the resulting `origin/main` in a new branch/worktree. Material role
+differentiation remains OPEN: current canonical disclosure is organization-wide
+and function/team display scopes do not filter it. Do not fabricate role content
+or broaden access. Route promotion remains deferred until governed semantics
+support truthful differences, an independent two-tab witness is captured, and
+the later **DISCOVERY LIVE MULTI-ROLE UNAUTHORIZED DISCLOSURE AND INFERENCE
+STRESS TEST 001** passes.
 
 ## Canonical implementation boundary
 

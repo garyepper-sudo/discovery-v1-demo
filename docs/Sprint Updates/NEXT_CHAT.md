@@ -2,9 +2,9 @@
 
 ## Exact next task
 
-Begin **DISCOVERY NORTHSTAR SOURCE-TO-PRODUCT PROJECTION POPULATION AND MATERIAL
-ROLE DIFFERENTIATION 001** from the exact resulting `origin/main` in a new
-branch and worktree.
+Begin **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING RECIPIENT-SCOPE AND
+NESTED-FIELD DISCLOSURE SEMANTICS BENCHMARK 001** from the exact resulting
+`origin/main` in a new branch and worktree.
 
 ## Read first
 
@@ -45,10 +45,21 @@ branch and worktree.
   cross-organization requests use zero. Fixture fallback is absent, Manager
   revocation/restoration and session/cache isolation passed, Runtime and Drive
   remained unchanged, and Production returns 404.
-- `/your-organization` remains unchanged. Material role differentiation is
-  blocked because the live adapter constructs an authorized retained-Runtime
-  source with zero Product items. Canonical cognition and scope lineage are
-  present; Product input population is the earliest observed seam.
+- The Northstar zero-content blocker is resolved through a distinct typed
+  canonical Organizational Understanding path: current access → one
+  `StoredOrganizationRuntime` read → canonical authority/disclosure → canonical
+  projection → Product Communication → recipient-safe presentation. It exposes
+  2 Understandings, 1 Explanation, 12 bounded Evidence references (bodies
+  unavailable), 7 conditions, and 9 investigations. Generic scoped Product
+  items remain independently governed and truthfully total zero.
+- CEO, Engineering Director, and Platform Manager receive the same substantive
+  organization-wide content at normalized digest
+  `536fe53258759243714cc966dbed823569989c878935b03ebc24ca33b1d51126`.
+  Visible role labels are display metadata, not material differentiation.
+- Denied output is exactly `{ disposition: "denied" }`. Presentation consumes
+  governed projection/Product Communication output only; the original question
+  truthfully reports unavailable. Sequential CEO → Director → Manager →
+  signed-out denial → CEO acceptance passed without stale content.
 - Canonical replay now excludes processing time from identities, history,
   references, and Runtime revisions. Snapshot contract
   `living-organization-reconstruction-input/v1` is reproducible from both the
@@ -71,12 +82,12 @@ branch and worktree.
 
 ## Frontend boundary
 
-Trace canonical cognition production → scoped Product input population →
-scoped selection → disclosure → presentation mapping, beginning at the current
-zero-item source population. Do not change source content, infer access from
-role, broaden permissions, weaken unavailable/withheld semantics, or repurpose
-the preserved `-002` worktree. Prove material differences come from authorized
-canonical inputs before promotion.
+Define and benchmark governed recipient-scope and nested-field disclosure
+semantics for canonical Organizational Understanding. Do not infer access from
+role or `composition.scope`, broaden permissions, weaken unavailable/withheld
+semantics, or flatten canonical Understanding into generic items. Material role
+differentiation remains OPEN until governed semantics and corpus content support
+truthful differences.
 
 ## Explicitly deferred
 
@@ -84,6 +95,7 @@ Production, deployment, Drive writes, automatic connector watching, new metric
 formulas, decision ranking/recommendation changes, role-specific truth models,
 alignment scoring, and autonomous approval remain outside scope.
 
-After successful Northstar replay and closure, run **DISCOVERY LIVE MULTI-ROLE
-UNAUTHORIZED DISCLOSURE AND INFERENCE STRESS TEST 001**. No live-alpha route
-promotion may occur before that dedicated stress test passes.
+Before route promotion, also capture an independent two-tab/stale-tab witness
+and run **DISCOVERY LIVE MULTI-ROLE UNAUTHORIZED DISCLOSURE AND INFERENCE STRESS
+TEST 001**. `/development/role-aware-live` remains development-only and
+`/your-organization` remains unchanged.
