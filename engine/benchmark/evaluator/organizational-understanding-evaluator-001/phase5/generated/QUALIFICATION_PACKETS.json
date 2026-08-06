@@ -1,0 +1,101 @@
+[
+  {
+    "studyVersion": "oue-001-phase-5-human-study/v1",
+    "packetId": "phase5-qualification-03",
+    "partition": "qualification",
+    "family": "constraint",
+    "difficulty": "moderate",
+    "neutralLabelA": "Proposition A",
+    "neutralLabelB": "Proposition B",
+    "propositionA": "Approval ownership timing is the principal current constraint.",
+    "propositionB": "Late assignment of the sign-off owner is the main present limitation.",
+    "structuredContext": {
+      "polarity": [
+        "affirmed",
+        "affirmed"
+      ],
+      "modality": [
+        "inferred",
+        "inferred"
+      ],
+      "temporality": [
+        "unknown",
+        "current"
+      ],
+      "supportingEvidence": [
+        "evidence-1"
+      ],
+      "opposingEvidence": [],
+      "relationshipContext": []
+    },
+    "rubricVersion": "oue-semantic-adjudication-rubric/v1",
+    "requiredResponseFields": [
+      "classification",
+      "meaning agreement",
+      "polarity",
+      "modality",
+      "temporality",
+      "causal agreement when applicable",
+      "endpoint fidelity when applicable",
+      "confidence agreement when applicable",
+      "lineage agreement",
+      "reviewer confidence",
+      "escalation",
+      "structured justification"
+    ],
+    "displayOrderSeed": "66406fef706e9bc1",
+    "packetHash": "49fe7e6d96ae24e6ebb58974add70b5a3ac61d84ddcbb992a266ba1b8eee0b69"
+  },
+  {
+    "studyVersion": "oue-001-phase-5-human-study/v1",
+    "packetId": "phase5-qualification-04",
+    "partition": "qualification",
+    "family": "contradiction",
+    "difficulty": "difficult",
+    "neutralLabelA": "Proposition A",
+    "neutralLabelB": "Proposition B",
+    "propositionA": "Approval timing and credential readiness remain competing explanations.",
+    "propositionB": "The evidence still supports both late sign-off ownership and access readiness as alternatives.",
+    "structuredContext": {
+      "polarity": [
+        "mixed",
+        "mixed"
+      ],
+      "modality": [
+        "inferred",
+        "inferred"
+      ],
+      "temporality": [
+        "unknown",
+        "current"
+      ],
+      "supportingEvidence": [
+        "evidence-1"
+      ],
+      "opposingEvidence": [],
+      "relationshipContext": [
+        "mechanism-1",
+        "mechanism-2",
+        "recovered-mechanism-1",
+        "recovered-mechanism-2"
+      ]
+    },
+    "rubricVersion": "oue-semantic-adjudication-rubric/v1",
+    "requiredResponseFields": [
+      "classification",
+      "meaning agreement",
+      "polarity",
+      "modality",
+      "temporality",
+      "causal agreement when applicable",
+      "endpoint fidelity when applicable",
+      "confidence agreement when applicable",
+      "lineage agreement",
+      "reviewer confidence",
+      "escalation",
+      "structured justification"
+    ],
+    "displayOrderSeed": "e54ed3cd47eb2382",
+    "packetHash": "59e622a349ecc89e6330ece30bbb0ff993d831281fb6f66bd8d390ccf1b9f752"
+  }
+]

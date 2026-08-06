@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-31T20:42:07.241Z",
+    "generatedAt": "2026-08-05T20:56:08.359Z",
     "generator": "scripts/cognition/generateArchitectureState.mjs",
     "sourceOfTruthOrder": [
       "Verified source code",
@@ -17,7 +17,7 @@
     "currentPhase": "Contract implementation and product validation. Architecture discovery is\nsubstantially complete for the complete backend workflow vision.",
     "currentObjective": "Collect independent live human-choice and outcome evidence without activating\nthe Material Information Acquisition selector or beginning frontend wiring.",
     "currentSprint": null,
-    "nextPriority": "Material Information Acquisition — Independent Live Outcome Calibration 002.",
+    "nextPriority": "Validate the benchmark-only Discovery observable-output adapter on independent\ncanonical fixtures, then prepare a new untouched external comparative suite.\nMaterial Information Acquisition calibration remains a separate open track.",
     "sourceDocuments": [
       "DISCOVERY_SNAPSHOT.md",
       "ENGINE_CAPABILITY_AUDIT.md",

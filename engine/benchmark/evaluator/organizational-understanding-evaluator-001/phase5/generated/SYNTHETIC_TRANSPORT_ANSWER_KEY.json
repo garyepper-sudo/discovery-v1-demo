@@ -1,0 +1,68 @@
+[
+  {
+    "packetId": "phase5-training-01",
+    "expectedClassification": "equivalent",
+    "transportValidationOnly": true,
+    "excludedFromHumanEvidence": true
+  },
+  {
+    "packetId": "phase5-training-02",
+    "expectedClassification": "equivalent",
+    "transportValidationOnly": true,
+    "excludedFromHumanEvidence": true
+  },
+  {
+    "packetId": "phase5-qualification-03",
+    "expectedClassification": "equivalent",
+    "transportValidationOnly": true,
+    "excludedFromHumanEvidence": true
+  },
+  {
+    "packetId": "phase5-qualification-04",
+    "expectedClassification": "equivalent",
+    "transportValidationOnly": true,
+    "excludedFromHumanEvidence": true
+  },
+  {
+    "packetId": "phase5-confirmatory-05",
+    "expectedClassification": "equivalent",
+    "transportValidationOnly": true,
+    "excludedFromHumanEvidence": true
+  },
+  {
+    "packetId": "phase5-confirmatory-06",
+    "expectedClassification": "equivalent",
+    "transportValidationOnly": true,
+    "excludedFromHumanEvidence": true
+  },
+  {
+    "packetId": "phase5-confirmatory-07",
+    "expectedClassification": "equivalent",
+    "transportValidationOnly": true,
+    "excludedFromHumanEvidence": true
+  },
+  {
+    "packetId": "phase5-holdout-08",
+    "expectedClassification": "equivalent",
+    "transportValidationOnly": true,
+    "excludedFromHumanEvidence": true
+  },
+  {
+    "packetId": "phase5-holdout-09",
+    "expectedClassification": "equivalent",
+    "transportValidationOnly": true,
+    "excludedFromHumanEvidence": true
+  },
+  {
+    "packetId": "phase5-holdout-10",
+    "expectedClassification": "equivalent",
+    "transportValidationOnly": true,
+    "excludedFromHumanEvidence": true
+  },
+  {
+    "packetId": "phase5-holdout-11",
+    "expectedClassification": "equivalent",
+    "transportValidationOnly": true,
+    "excludedFromHumanEvidence": true
+  }
+]

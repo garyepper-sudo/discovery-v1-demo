@@ -26,19 +26,48 @@ the Material Information Acquisition selector or beginning frontend wiring.
 
 ## Next Priority
 
-Material Information Acquisition — Independent Live Outcome Calibration 002.
+Validate the benchmark-only Discovery observable-output adapter on independent
+canonical fixtures, then prepare a new untouched external comparative suite.
+Material Information Acquisition calibration remains a separate open track.
 
-In parallel, Organizational Understanding Evaluator 001 Phase 2 is classified
-**PASS — Deterministic structural evaluator validated**. It can transform
-complete, authorized, explicitly imported semantic adjudications into
-component-versioned, deterministic, auditable frozen-fixture scores. It cannot
-recover propositions, judge semantic meaning, verify imported judgments,
-calibrate confidence against outcomes, or measure observed decision utility.
+## Comparative validation status
 
-Only Phase 3 candidate-generation research is newly authorized. Semantic or
-human adjudication, External Comparative Validation 002, Runtime, Production,
-Scorecard, frontend, and route integration remain unauthorized. This parallel
-research does not displace the Material Information Acquisition product gate.
+External Comparative Validation Phase 0 produced a preregistered ten-case
+synthetic harness and raw results, but final classification is **F — Invalid or
+Blocked**. The Discovery adapter failed to preserve canonical contradiction,
+uncertainty, and evidence-gap structures, so the cases are non-evaluative and
+were not repaired or rerun. No comparative advantage or disadvantage claim is
+supported.
+
+Observable Output Fidelity Validation 001 independently validates a read-only,
+typed canonical-artifact collector and deterministic normalizer. All protected
+artifact families and semantic-boundary checks pass at 100% on the golden and
+typed-collector fixtures. This authorizes design of a new untouched comparative
+suite only after independent evaluator paraphrase and scoring compatibility
+validation; it does not authorize reuse or rescoring of Validation 001.
+
+Scoring Robustness Validation 001 subsequently classified the unchanged
+evaluator as **FAIL — not sufficiently robust**. Ordering, verbosity,
+formatting, cross-treatment identity, and negative controls passed, but lexical
+paraphrases, non-native terminology, equivalent causal and uncertainty wording,
+missing-Evidence wording, confidence representations, and duplicate-artifact
+invariance failed. External Comparative Validation 002 remains blocked.
+
+Organizational Understanding Evaluator 001 Phase 1 now provides the inactive,
+versioned contract foundation for a replacement evaluator. The benchmark unit
+is a structured proposition rather than text overlap. All ten proposition
+families, confidence representations, adjudication classifications, scoring
+components, validation gates, ledger fields, synthetic fixtures, and
+fail-closed ports are defined. No recovery, semantic model, scorer, or
+comparative execution exists yet.
+
+Phase 2 of Organizational Understanding Evaluator 001 is classified **PASS —
+Deterministic structural evaluator validated**. Every structural hard gate is
+100%, duplicate score inflation is zero, cross-version contamination is zero,
+and reordered inputs produce identical scores and ledger hashes. The evaluator
+can score completed imported adjudications deterministically but cannot recover
+or judge semantic meaning. Phase 3 candidate-generation research is authorized;
+comparative execution is not.
 
 ## Product identity
 
@@ -106,6 +135,23 @@ shadow selection and against truthfully observable owner outcomes.
 4. Phase 2E — Decision operation completion.
 5. Phase 2F — Outcome and Learning completion.
 6. Phase 2G — Insight lifecycle.
+
+Parallel evaluator research: Organizational Understanding Evaluator 001 Phase
+3 implements inactive, deterministic, treatment-neutral candidate retrieval
+only. Phase 4 semantic adjudication requires separate review. External
+Comparative Validation 002 remains unauthorized.
+
+Phase 4 adds an inactive, treatment-neutral import and reconciliation boundary
+for independently completed semantic adjudications. It may feed the unchanged
+Phase 2 scorer only after candidate binding, blinding, confidence, rubric,
+family, ambiguity, uniqueness, and completion gates pass. No live semantic
+judge or human-review operation exists.
+
+Phase 5 is classified `STUDY READY — HUMAN RESPONSES NOT YET AVAILABLE`.
+Preregistration, reviewer protocol, packet partitions, response integrity,
+agreement statistics, disagreement resolution, gold-set admission, and study
+ledger infrastructure are validated. Synthetic transport fixtures are not
+human evidence. There is no eligible human semantic gold set.
 
 The selector remains inactive. External action, connector execution, durable
 selector-owned receipts, Production activation, and final frontend wiring are

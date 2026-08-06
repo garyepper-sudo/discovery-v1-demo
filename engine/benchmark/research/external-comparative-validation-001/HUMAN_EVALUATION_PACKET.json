@@ -1,0 +1,483 @@
+{
+  "contractVersion": "1",
+  "blinded": true,
+  "status": "not-yet-evaluated",
+  "instructions": "Review treatment outputs in randomized blinded order and score correctness, material coverage, contradiction quality, causal quality, uncertainty discipline, evidence-gap quality, and decision utility. Do not infer treatment identity.",
+  "cases": [
+    {
+      "caseId": "linear-fulfillment",
+      "question": "Why are customer shipments late?",
+      "phases": [
+        {
+          "phaseId": "initial",
+          "evidence": [
+            {
+              "id": "lf-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "Packing capacity fell below daily order volume after one packing line failed."
+            },
+            {
+              "id": "lf-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "Orders wait in a packing queue; carrier pickup and inventory availability remain on schedule."
+            }
+          ]
+        },
+        {
+          "phaseId": "update",
+          "evidence": [
+            {
+              "id": "lf-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "Packing capacity fell below daily order volume after one packing line failed."
+            },
+            {
+              "id": "lf-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "Orders wait in a packing queue; carrier pickup and inventory availability remain on schedule."
+            },
+            {
+              "id": "lf-3",
+              "observedAt": "2026-01-12T12:00:00.000Z",
+              "content": "The packing line was restored and the packing queue returned to normal within three days."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "department-conflict",
+      "question": "Why are enterprise implementations delayed?",
+      "phases": [
+        {
+          "phaseId": "initial",
+          "evidence": [
+            {
+              "id": "dc-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "Sales reports that implementation delays are caused by slow engineering integration work."
+            },
+            {
+              "id": "dc-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "Engineering reports integration work begins on time but customer requirements arrive incomplete from Sales."
+            },
+            {
+              "id": "dc-3",
+              "observedAt": "2026-01-04T12:00:00.000Z",
+              "content": "Audit logs show 68 percent of delayed implementations lacked approved requirements at engineering kickoff."
+            }
+          ]
+        },
+        {
+          "phaseId": "update",
+          "evidence": [
+            {
+              "id": "dc-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "Sales reports that implementation delays are caused by slow engineering integration work."
+            },
+            {
+              "id": "dc-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "Engineering reports integration work begins on time but customer requirements arrive incomplete from Sales."
+            },
+            {
+              "id": "dc-3",
+              "observedAt": "2026-01-04T12:00:00.000Z",
+              "content": "Audit logs show 68 percent of delayed implementations lacked approved requirements at engineering kickoff."
+            },
+            {
+              "id": "dc-4",
+              "observedAt": "2026-01-11T12:00:00.000Z",
+              "content": "A requirements gate pilot reduced delayed kickoffs while engineering cycle time remained unchanged."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "incomplete-retention",
+      "question": "Why is subscriber retention falling?",
+      "phases": [
+        {
+          "phaseId": "initial",
+          "evidence": [
+            {
+              "id": "ir-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "Subscriber retention declined during the quarter."
+            },
+            {
+              "id": "ir-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "The pricing team changed annual plan pricing, but no cohort or cancellation-reason data is available."
+            }
+          ]
+        },
+        {
+          "phaseId": "update",
+          "evidence": [
+            {
+              "id": "ir-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "Subscriber retention declined during the quarter."
+            },
+            {
+              "id": "ir-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "The pricing team changed annual plan pricing, but no cohort or cancellation-reason data is available."
+            },
+            {
+              "id": "ir-3",
+              "observedAt": "2026-01-12T12:00:00.000Z",
+              "content": "Cohort data shows the decline is concentrated among users experiencing repeated playback failures, not among repriced annual plans."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "misleading-utilization",
+      "question": "Why are appointment waits increasing?",
+      "phases": [
+        {
+          "phaseId": "initial",
+          "evidence": [
+            {
+              "id": "mu-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "A regional memo attributes longer waits to clinician utilization reaching 94 percent."
+            },
+            {
+              "id": "mu-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "The utilization metric includes protected administrative time as available clinical capacity."
+            },
+            {
+              "id": "mu-3",
+              "observedAt": "2026-01-04T12:00:00.000Z",
+              "content": "Scheduling records show 27 percent of appointment slots are released fewer than two days before service."
+            }
+          ]
+        },
+        {
+          "phaseId": "update",
+          "evidence": [
+            {
+              "id": "mu-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "A regional memo attributes longer waits to clinician utilization reaching 94 percent."
+            },
+            {
+              "id": "mu-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "The utilization metric includes protected administrative time as available clinical capacity."
+            },
+            {
+              "id": "mu-3",
+              "observedAt": "2026-01-04T12:00:00.000Z",
+              "content": "Scheduling records show 27 percent of appointment slots are released fewer than two days before service."
+            },
+            {
+              "id": "mu-4",
+              "observedAt": "2026-01-12T12:00:00.000Z",
+              "content": "Earlier slot release reduced waits without changing clinician staffing or measured utilization."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "branching-quality",
+      "question": "Why are customer returns increasing?",
+      "phases": [
+        {
+          "phaseId": "initial",
+          "evidence": [
+            {
+              "id": "bq-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "A supplier material change increased dimensional variation."
+            },
+            {
+              "id": "bq-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "Dimensional variation increases both assembly rework and calibration drift."
+            },
+            {
+              "id": "bq-3",
+              "observedAt": "2026-01-04T12:00:00.000Z",
+              "content": "Assembly rework and calibration drift independently increase customer returns."
+            }
+          ]
+        },
+        {
+          "phaseId": "update",
+          "evidence": [
+            {
+              "id": "bq-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "A supplier material change increased dimensional variation."
+            },
+            {
+              "id": "bq-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "Dimensional variation increases both assembly rework and calibration drift."
+            },
+            {
+              "id": "bq-3",
+              "observedAt": "2026-01-04T12:00:00.000Z",
+              "content": "Assembly rework and calibration drift independently increase customer returns."
+            },
+            {
+              "id": "bq-4",
+              "observedAt": "2026-01-12T12:00:00.000Z",
+              "content": "Restoring the prior material specification reduced both rework and calibration drift before returns fell."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "converging-delivery",
+      "question": "Why are projects missing delivery dates?",
+      "phases": [
+        {
+          "phaseId": "initial",
+          "evidence": [
+            {
+              "id": "cd-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "Late client approvals reduce the time available for delivery."
+            },
+            {
+              "id": "cd-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "Specialist staffing gaps also reduce delivery capacity."
+            },
+            {
+              "id": "cd-3",
+              "observedAt": "2026-01-04T12:00:00.000Z",
+              "content": "Projects with both late approvals and staffing gaps miss dates at a much higher rate than projects with either alone."
+            }
+          ]
+        },
+        {
+          "phaseId": "update",
+          "evidence": [
+            {
+              "id": "cd-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "Late client approvals reduce the time available for delivery."
+            },
+            {
+              "id": "cd-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "Specialist staffing gaps also reduce delivery capacity."
+            },
+            {
+              "id": "cd-3",
+              "observedAt": "2026-01-04T12:00:00.000Z",
+              "content": "Projects with both late approvals and staffing gaps miss dates at a much higher rate than projects with either alone."
+            },
+            {
+              "id": "cd-4",
+              "observedAt": "2026-01-12T12:00:00.000Z",
+              "content": "Approval timing improved, but projects with specialist gaps continued to miss dates."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "changing-mechanism",
+      "question": "Why is account opening slow?",
+      "phases": [
+        {
+          "phaseId": "initial",
+          "evidence": [
+            {
+              "id": "cm-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "Manual compliance review creates most account-opening delay."
+            },
+            {
+              "id": "cm-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "Operations queue time is otherwise stable."
+            }
+          ]
+        },
+        {
+          "phaseId": "update",
+          "evidence": [
+            {
+              "id": "cm-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "Manual compliance review creates most account-opening delay."
+            },
+            {
+              "id": "cm-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "Operations queue time is otherwise stable."
+            },
+            {
+              "id": "cm-3",
+              "observedAt": "2026-01-12T12:00:00.000Z",
+              "content": "Compliance review was automated, but a new identity-provider outage now creates most account-opening delay."
+            },
+            {
+              "id": "cm-4",
+              "observedAt": "2026-01-13T12:00:00.000Z",
+              "content": "Manual review time is now normal while identity verification retries have tripled."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "irrelevant-noise",
+      "question": "Why is store replenishment late?",
+      "phases": [
+        {
+          "phaseId": "initial",
+          "evidence": [
+            {
+              "id": "in-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "Warehouse pick-list batching delays replenishment dispatch by one day."
+            },
+            {
+              "id": "in-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "Store receiving teams process dispatched replenishment on time."
+            },
+            {
+              "id": "in-noise-1",
+              "observedAt": "2026-01-04T12:00:00.000Z",
+              "content": "The holiday marketing campaign exceeded social engagement targets."
+            },
+            {
+              "id": "in-noise-2",
+              "observedAt": "2026-01-05T12:00:00.000Z",
+              "content": "The office cafeteria introduced a new menu."
+            }
+          ]
+        },
+        {
+          "phaseId": "update",
+          "evidence": [
+            {
+              "id": "in-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "Warehouse pick-list batching delays replenishment dispatch by one day."
+            },
+            {
+              "id": "in-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "Store receiving teams process dispatched replenishment on time."
+            },
+            {
+              "id": "in-noise-1",
+              "observedAt": "2026-01-04T12:00:00.000Z",
+              "content": "The holiday marketing campaign exceeded social engagement targets."
+            },
+            {
+              "id": "in-noise-2",
+              "observedAt": "2026-01-05T12:00:00.000Z",
+              "content": "The office cafeteria introduced a new menu."
+            },
+            {
+              "id": "in-3",
+              "observedAt": "2026-01-12T12:00:00.000Z",
+              "content": "Hourly pick-list release removed the dispatch delay while store receiving time was unchanged."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "stale-pipeline",
+      "question": "Why is pipeline conversion weak?",
+      "phases": [
+        {
+          "phaseId": "initial",
+          "evidence": [
+            {
+              "id": "sp-1",
+              "observedAt": "2026-01-01T12:00:00.000Z",
+              "content": "A year-old review found slow proposal turnaround reduced conversion."
+            },
+            {
+              "id": "sp-2",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "Proposal turnaround was improved six months ago."
+            }
+          ]
+        },
+        {
+          "phaseId": "update",
+          "evidence": [
+            {
+              "id": "sp-1",
+              "observedAt": "2026-01-01T12:00:00.000Z",
+              "content": "A year-old review found slow proposal turnaround reduced conversion."
+            },
+            {
+              "id": "sp-2",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "Proposal turnaround was improved six months ago."
+            },
+            {
+              "id": "sp-3",
+              "observedAt": "2026-01-12T12:00:00.000Z",
+              "content": "Current losses are concentrated in deals without executive sponsorship; proposal turnaround is now on target."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "strict-abstention",
+      "question": "Why did the trial miss its efficacy target?",
+      "phases": [
+        {
+          "phaseId": "initial",
+          "evidence": [
+            {
+              "id": "sa-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "The trial missed its efficacy target."
+            },
+            {
+              "id": "sa-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "Blinded subgroup and protocol-deviation data are restricted and unavailable to this benchmark scope."
+            }
+          ]
+        },
+        {
+          "phaseId": "update",
+          "evidence": [
+            {
+              "id": "sa-1",
+              "observedAt": "2026-01-02T12:00:00.000Z",
+              "content": "The trial missed its efficacy target."
+            },
+            {
+              "id": "sa-2",
+              "observedAt": "2026-01-03T12:00:00.000Z",
+              "content": "Blinded subgroup and protocol-deviation data are restricted and unavailable to this benchmark scope."
+            },
+            {
+              "id": "sa-3",
+              "observedAt": "2026-01-12T12:00:00.000Z",
+              "content": "No additional authorized evidence became available."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

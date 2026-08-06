@@ -325,6 +325,15 @@ understanding, calibration, and operational governance are proven.
 ## Research track
 
 Research does not enter production merely because a benchmark succeeds.
-`GAP-D-001`, `GAP-D-002`, and `GAP-D-003` require independent evidence,
+`GAP-D-001` through `GAP-D-005` require independent evidence,
 negative controls, an explicit owner, and a promotion decision recorded in
 [PRODUCT_DECISIONS.md](./PRODUCT_DECISIONS.md).
+
+### External comparative validation — Phase 0
+
+`GAP-D-005` begins with a benchmark-only preregistered synthetic comparison of
+observable organizational-understanding quality. Human responses and genuine
+external-model output remain import-only until independently available. A
+deterministic fixture-backed synthesis proxy may validate the harness but may
+not support an external-advantage claim. No benchmark result changes OUI,
+production cognition, Runtime, Product Workflow, or customer behavior.

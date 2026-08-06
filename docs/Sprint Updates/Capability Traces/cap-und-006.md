@@ -1,6 +1,6 @@
 # Capability Trace — Executive Understanding Synthesis
 
-Generated: 2026-07-31T20:42:03.692Z
+Generated: 2026-08-05T20:56:04.495Z
 
 ## Verified Architecture
 
@@ -110,6 +110,33 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/RESULTS.json`
 - `engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/productionPathAudit.ts`
 - `engine/benchmark/emergent-organizational-intelligence-production-shadow-experiment-002/runProductionShadowCognition.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/PHASE_1_RESULTS.json`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/PHASE_2_RESULTS.json`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/PHASE_3_RESULTS.json`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/PHASE_4_RESULTS.json`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/contracts.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/deterministicScoring.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/frozenSemantics.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/generateSemanticCandidates.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase2ValidationFixtures.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase3CandidateFixtures.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase3Contracts.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-protocol-infrastructure-001/RESULTS.json`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-protocol-infrastructure-001/contracts.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-protocol-infrastructure-001/phase4InfrastructureFixtures.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-protocol-infrastructure-001/validatePhase4ProtocolInfrastructure001.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-study-operations-readiness-001/RESULTS.json`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-study-operations-readiness-001/validatePhase4StudyOperationsReadiness001.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase5/EXECUTION_INSTRUCTIONS.md`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase5/generated/PHASE_5_RESULTS.json`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase5/validatePhase5HumanStudy.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/retrievalSignals.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/structuralValidation.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validatePhase1Architecture.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validatePhase2StructuralEvaluator.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validatePhase3CandidateGeneration.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validatePhase4ImportedAdjudication.ts`
+- `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validationFixtures.ts`
 - `engine/benchmark/executive-collaboration-lab/executiveConversationScenarios.ts`
 - `engine/benchmark/executive-collaboration-lab/runExecutiveConversationScenario.ts`
 - `engine/benchmark/executive-decision-lab/runExecutiveDecisionLab.ts`
@@ -147,9 +174,18 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/benchmark/organizationalUnderstandingScorer.ts`
 - `engine/benchmark/product-communication/structuredProductCommunicationShadow.ts`
 - `engine/benchmark/research/ORGANIZATIONAL_UNDERSTANDING_RESEARCH_FRAMEWORK.md`
+- `engine/benchmark/research/README.md`
+- `engine/benchmark/research/external-comparative-validation-001/README.md`
+- `engine/benchmark/research/external-comparative-validation-001/RESULTS.json`
+- `engine/benchmark/research/external-comparative-validation-001/evaluate.ts`
+- `engine/benchmark/research/external-comparative-validation-001/runExternalComparativeValidation001.ts`
+- `engine/benchmark/research/external-comparative-validation-001/treatments.ts`
+- `engine/benchmark/research/external-comparative-validation-001/types.ts`
 - `engine/benchmark/research/localized-nonlinear-cognition-adapter/RESULT.json`
 - `engine/benchmark/research/localized-nonlinear-cognition-adapter/runLocalizedNonlinearResearchAdapter.ts`
 - `engine/benchmark/research/localized-nonlinear-cognition-adapter/types.ts`
+- `engine/benchmark/research/scoring-robustness-validation-001/RESULTS.json`
+- `engine/benchmark/research/scoring-robustness-validation-001/validateScoringRobustness001.ts`
 - `engine/benchmark/runAtlasSimulation.ts`
 - `engine/benchmark/runBenchmarkInvestigation.ts`
 - `engine/benchmark/runtime/executiveMeaningPreservation001.ts`
@@ -259,7 +295,7 @@ This section records source-code references. It supplements, but does not replac
 | UI | ✅ Found | 25 |
 | API | ✅ Found | 1 |
 | Simulation | ✅ Found | 7 |
-| Benchmark | ✅ Found | 276 |
+| Benchmark | ✅ Found | 493 |
 | Other | ✅ Found | 99 |
 
 ### Detailed Matches
@@ -1260,6 +1296,199 @@ This section records source-code references. It supplements, but does not replac
 - Line 41 · **unknown** · matched `evolveOrganizationRuntime`
   - `const runtime = evolveOrganizationRuntime({`
 
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/PHASE_1_RESULTS.json`
+
+- Line 2 · **unknown** · matched `organizational-understanding`
+  - `"validation": "organizational-understanding-evaluator-phase-1",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/PHASE_2_RESULTS.json`
+
+- Line 2 · **unknown** · matched `organizational-understanding`
+  - `"validation": "organizational-understanding-evaluator-phase-2",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/PHASE_3_RESULTS.json`
+
+- Line 2 · **unknown** · matched `organizational-understanding`
+  - `"validation": "organizational-understanding-evaluator-phase-3",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/PHASE_4_RESULTS.json`
+
+- Line 2 · **unknown** · matched `organizational-understanding`
+  - `"validation": "organizational-understanding-evaluator-phase-4",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/contracts.ts`
+
+- Line 19 · **unknown** · matched `OrganizationalUnderstanding`
+  - `export type OrganizationalUnderstandingProposition = {`
+- Line 49 · **unknown** · matched `OrganizationalUnderstanding`
+  - `propositions: OrganizationalUnderstandingProposition[];`
+- Line 165 · **unknown** · matched `OrganizationalUnderstanding`
+  - `groundTruth: OrganizationalUnderstandingProposition[];`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/deterministicScoring.ts`
+
+- Line 2 · **import** · matched `OrganizationalUnderstanding`
+  - `import type { EvaluationDimension, EvaluationLedger, OrganizationalUnderstandingProposition, RecoveredProposition, SemanticAdjudication } from "./contracts";`
+- Line 25 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const importance = (item: OrganizationalUnderstandingProposition) => (item.importance + item.decisionRelevance) / 2;`
+- Line 37 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const familyRows = (family: OrganizationalUnderstandingProposition["family"]) => input.source.groundTruth.propositions.filter((item) => item.family === family).map((item) => ({ credit: byGroundTruth.has(item.id) ? credit(byGroundTruth.get(item.id)!) : 0, weight: importance(item), ref: item.id }));`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/frozenSemantics.ts`
+
+- Line 31 · **unknown** · matched `organizational-understanding`
+  - `version: "organizational-understanding-semantics/v1",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/generateSemanticCandidates.ts`
+
+- Line 1 · **import** · matched `OrganizationalUnderstanding`
+  - `import type { OrganizationalUnderstandingProposition, RecoveredProposition } from "./contracts";`
+- Line 30 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const normalizedStructure = (item: OrganizationalUnderstandingProposition) => canonicalHash({ family: item.family, subjectRefs: [...item.subjectRefs].sort(), predicate: item.predicate, objectRefs: [...item.objectRefs].sort(), polarity: item.polarity, modality: item.modality, temporality: item.temporality, supportingEvidenceRefs: [...item.supportingEvidenceRefs].sort(), opposingEvidenceRefs: [...item.opposingEvidenceRefs].sort(), contradictionEndpointRefs: [...item.contradictionEndpointRefs].sort(), competingPropositionRefs: [...item.competingPropositionRefs].sort(), authorizationScope: [...item.authorizationScope].sort() });`
+- Line 31 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const canonicalTruth = (item: OrganizationalUnderstandingProposition) => ({ ...item, subjectRefs: [...item.subjectRefs].sort(), objectRefs: [...item.objectRefs].sort(), supportingEvidenceRefs: [...item.supportingEvidenceRefs].sort(), opposingEvidenceRefs: [...item.opposingEvidenceRefs].sort(), contradictionEndpointRefs: [...item.contradictionEndpointRefs].sort(), competingPropositionRefs: [...item.competingPropositionRefs].sort(), authorizationScope: [...item.authorizationScope].sort(), allowedEquivalentMeanings: [...item.allowedEquivalentMeanings].sort(), prohibitedInterpretations: [...item.prohibitedInterpretations].sort() });`
+- Line 33 · **unknown** · matched `OrganizationalUnderstanding`
+  - `export const phase3GroundTruthGraphHash = (items: OrganizationalUnderstandingProposition[]) => canonicalHash([...items].map(canonicalTruth).sort((a, b) => a.id.localeCompare(b.id)));`
+- Line 36 · **unknown** · matched `OrganizationalUnderstanding`
+  - `function collapseGroundTruth(items: OrganizationalUnderstandingProposition[]) {`
+- Line 37 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const retained: OrganizationalUnderstandingProposition[] = [];`
+- Line 38 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const byStructure = new Map<string, OrganizationalUnderstandingProposition>();`
+- Line 85 · **unknown** · matched `OrganizationalUnderstanding`
+  - `function structuralEligibility(recovered: RecoveredProposition, truth: OrganizationalUnderstandingProposition) {`
+- Line 146 · **unknown** · matched `organizational-understanding`
+  - `const receiptContent = { evaluatorId: "organizational-understanding-evaluator-001" as const, structuralEvaluatorVersion: "oue-001-phase-2-structural/v1" as const, structuralComparisonVersion: STRUCTURAL_COMPARISON_VERSION, familyCompatibilityVersion: FAMILY_COMPATIBILITY_VERSION, duplicateCollapseVersion: DUPLICATE_COLLAPSE_VERSION, valid: true as const, organizationId: input.groundTruth.organizationId, caseId: input.groundTruth.caseId, recoveredGraphHash, groundTruthGraphHash };`
+- Line 148 · **unknown** · matched `organizational-understanding`
+  - `return { inputVersion: PHASE_3_INPUT_VERSION, evaluatorId: "organizational-understanding-evaluator-001", organizationId: input.groundTruth.organizationId, caseId: input.groundTruth.caseId, activeAuthorizationScopes: input.activeAuthorizationScopes, groundTruth: { ...input.groundTruth, graphHash: groundTruthGraphHash }, collapsedRecovered, structuralReceipt: { ...receiptContent, receiptId: \`phase2-structural-${receiptHash.slice(0, 24)}\`, receiptHash }, configuration: { version: PHASE_3_CONFIGURATION_VERSION, maximumCandidatesPerRecovered: input.maximumCandidates ?? 10, minimumFeatureScore: 0 }, preregistrationVersion: PHASE_3_PREREGISTRATION_VERSION, preregistrationHash: canonicalHash({ compatibilityOnly: true, version: PHASE_3_PREREGISTRATION_VERSION }), corpusSplitVersion: PHASE_3_CORPUS_SPLIT_VERSION, corpusSplitHash: canonicalHash({ compatibilityOnly: true, version: PHASE_3_CORPUS_SPLIT_VERSION }), evaluatedAt: "2026-07-31T12:00:00.000Z" };`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase2ValidationFixtures.ts`
+
+- Line 2 · **import** · matched `OrganizationalUnderstanding`
+  - `import type { GroundTruthPropositionGraph, OrganizationalUnderstandingProposition, RecoveredProposition, RecoveredPropositionGraph, SemanticAdjudication } from "./contracts";`
+- Line 9 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const mechanismTwo: OrganizationalUnderstandingProposition = {`
+- Line 32 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const recoveredIdFor = (item: OrganizationalUnderstandingProposition) => \`recovered-${item.id}\`;`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase3CandidateFixtures.ts`
+
+- Line 19 · **unknown** · matched `organizational-understanding`
+  - `const content = { evaluatorId: "organizational-understanding-evaluator-001" as const, structuralEvaluatorVersion: "oue-001-phase-2-structural/v1" as const, structuralComparisonVersion: STRUCTURAL_COMPARISON_VERSION, familyCompatibilityVersion: FAMILY_COMPATIBILITY_VERSION, duplicateCollapseVersion: DUPLICATE_COLLAPSE_VERSION, valid: true as const, organizationId, caseId, recoveredGraphHash: recoveredHash, groundTruthGraphHash: groundTruthHash };`
+- Line 30 · **unknown** · matched `organizational-understanding`
+  - `evaluatorId: "organizational-understanding-evaluator-001",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase3Contracts.ts`
+
+- Line 3 · **unknown** · matched `OrganizationalUnderstanding`
+  - `OrganizationalUnderstandingProposition,`
+- Line 25 · **unknown** · matched `organizational-understanding`
+  - `evaluatorId: "organizational-understanding-evaluator-001";`
+- Line 41 · **unknown** · matched `organizational-understanding`
+  - `evaluatorId: "organizational-understanding-evaluator-001";`
+- Line 69 · **unknown** · matched `OrganizationalUnderstanding`
+  - `propositionFamily: OrganizationalUnderstandingProposition["family"];`
+- Line 156 · **unknown** · matched `OrganizationalUnderstanding`
+  - `candidateCountByFamily: Record<OrganizationalUnderstandingProposition["family"], number>;`
+- Line 173 · **unknown** · matched `OrganizationalUnderstanding`
+  - `propositions: OrganizationalUnderstandingProposition[];`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-protocol-infrastructure-001/RESULTS.json`
+
+- Line 2 · **unknown** · matched `organizational-understanding`
+  - `"validation": "organizational-understanding-evaluator-phase-4-protocol-infrastructure-001",`
+- Line 31 · **unknown** · matched `organizational-understanding`
+  - `"phase3ResultIdentity": "organizational-understanding-evaluator-phase-3/authoritative-result",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-protocol-infrastructure-001/contracts.ts`
+
+- Line 22 · **unknown** · matched `organizational-understanding`
+  - `export const EVALUATOR_ID = "organizational-understanding-evaluator-001" as const;`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-protocol-infrastructure-001/phase4InfrastructureFixtures.ts`
+
+- Line 35 · **unknown** · matched `organizational-understanding`
+  - `evaluatorId: "organizational-understanding-evaluator-001",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-protocol-infrastructure-001/validatePhase4ProtocolInfrastructure001.ts`
+
+- Line 139 · **unknown** · matched `organizational-understanding`
+  - `const ledgerBody = { ledgerVersion: INFRASTRUCTURE_LEDGER_VERSION, infrastructureVersion: PHASE_4_INFRASTRUCTURE_VERSION, componentVersions, canonicalSerializationVersion: CANONICAL_SERIALIZATION_VERSION, protocolDocumentIdentity: "PHASE_4_SEMANTIC_ADJUDICATION_PROTOCOL.md@6ded90823361678c706048b555199ec265f80732", protocolDocumentHash, preregistrationDocumentIdentity: "PHASE_4_SEMANTIC_ADJUDICATION_PREREGISTRATION.md@6ded90823361678c706048b555199ec265f80732", preregistrationDocumentHash, phase3ResultIdentity: "organizational-understanding-evaluator-phase-3/authoritative-result", phase3ResultHash: PHASE_3_AUTHORITATIVE_RESULT_HASH, fixtureClassification: CONTROLLED_FIXTURE_CLASSIFICATION, validatorVersion: "oue-001-phase-4-protocol-validator/v1", scenarioCount: 44, safetyGateResults: { labelLeakage: "pass", unsafeDraftIsolation: "pass", productIsolation: "pass", scoreActivation: "pass", externalAction: "pass" }, prohibitedOperations: { genuineHumanReviews: 0, genuineModelReviews: 0, genuineSemanticAdjudications: 0, genuineGoldLabels: 0, phase2ScoreActivations: 0, externalComparativeValidationExecutions: 0, productActivations: 0, productionActivations: 0, externalActions: 0 } };`
+- Line 146 · **unknown** · matched `organizational-understanding`
+  - `const result = { validation: "organizational-understanding-evaluator-phase-4-protocol-infrastructure-001", classification: "A — PHASE 4 DETERMINISTIC PROTOCOL INFRASTRUCTURE VALIDATED", ...ledgerBody, ledgerHash, infrastructureResultHash, scenarioCount: checks.length, checks, failures: [], studyExecutionAuthorized: false, phase4AdjudicationAuthorized: false, phase5Authorized: false, externalComparativeValidation002Authorized: false };`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-study-operations-readiness-001/RESULTS.json`
+
+- Line 2 · **unknown** · matched `organizational-understanding`
+  - `"validation": "organizational-understanding-evaluator-phase-4-study-operations-readiness-001",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase4-study-operations-readiness-001/validatePhase4StudyOperationsReadiness001.ts`
+
+- Line 212 · **unknown** · matched `organizational-understanding`
+  - `validation: "organizational-understanding-evaluator-phase-4-study-operations-readiness-001",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase5/EXECUTION_INSTRUCTIONS.md`
+
+- Line 3 · **unknown** · matched `organizational-understanding`
+  - `1. Run \`npm run validate:organizational-understanding-evaluator-phase-5\` before`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase5/generated/PHASE_5_RESULTS.json`
+
+- Line 2 · **unknown** · matched `organizational-understanding`
+  - `"validation": "organizational-understanding-evaluator-phase-5",`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/phase5/validatePhase5HumanStudy.ts`
+
+- Line 51 · **unknown** · matched `organizational-understanding`
+  - `const result = { validation: "organizational-understanding-evaluator-phase-5", classification: failures.length ? "BLOCKED" : classification, genuineHumanResponsesAvailable: false, genuineAgreementResults: null, humanGoldSetEligible: false, liveModelAdjudicatorDevelopmentAuthorized: false, externalComparativeValidation002Authorized: false, checks, failures, infrastructureMetrics: { packetIntegrity: 1, importRejection: 1, perfectAgreementFixture: perfect.exactAgreement, systematicDisagreementDetection: systematic.exactAgreement === 0 ? 1 : 0, orderInvariance: 1, syntheticGoldAdmission: 0 }, ledger };`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/retrievalSignals.ts`
+
+- Line 1 · **import** · matched `OrganizationalUnderstanding`
+  - `import type { OrganizationalUnderstandingProposition, RecoveredProposition } from "./contracts";`
+- Line 16 · **unknown** · matched `OrganizationalUnderstanding`
+  - `export function collectPhase3Features(recovered: RecoveredProposition, truth: OrganizationalUnderstandingProposition): Phase3FeatureObservation[] {`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/structuralValidation.ts`
+
+- Line 1 · **import** · matched `OrganizationalUnderstanding`
+  - `import type { EvaluationGateFailure, OrganizationalUnderstandingProposition, RecoveredProposition } from "./contracts";`
+- Line 18 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const propositionRefs = (item: OrganizationalUnderstandingProposition) => [...item.contradictionEndpointRefs, ...item.competingPropositionRefs];`
+- Line 111 · **unknown** · matched `OrganizationalUnderstanding`
+  - `function validateGroundTruthIntegrity(item: OrganizationalUnderstandingProposition, byId: Map<string, OrganizationalUnderstandingProposition>, add: (code: Phase2FailureCode, detail: string, refs?: string[]) => void) {`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validatePhase1Architecture.ts`
+
+- Line 40 · **unknown** · matched `organizational-understanding`
+  - `const result = { validation: "organizational-understanding-evaluator-phase-1", classification: failed.length ? "FAIL — Phase 1 architecture incomplete" : "PASS — Phase 1 architecture complete; evaluator inactive", evaluatorVersion: ORGANIZATIONAL_UNDERSTANDING_EVALUATOR_PHASE_1_VERSION, checks, failures: failed, liveSemanticAdjudicatorImplemented: false, externalComparativeValidation002Executed: false, externalComparativeValidation002Authorized: false };`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validatePhase2StructuralEvaluator.ts`
+
+- Line 103 · **unknown** · matched `organizational-understanding`
+  - `const result = { validation: "organizational-understanding-evaluator-phase-2", classification, metrics: metricResults, summaryMetrics, checks, failures, hardGateFailures, compositeScoreActivation: "active only for structurally valid completed imported adjudications", semanticRecoveryImplemented: false, semanticCandidateGenerationImplemented: false, liveSemanticAdjudicatorImplemented: false, humanReviewExecuted: false, externalComparativeValidation002Executed: false, externalComparativeValidation002Authorized: false, phase3Authorized: failures.length === 0 };`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validatePhase3CandidateGeneration.ts`
+
+- Line 17 · **unknown** · matched `organizational-understanding`
+  - `const content = { evaluatorId: "organizational-understanding-evaluator-001" as const, structuralEvaluatorVersion: "oue-001-phase-2-structural/v1" as const, structuralComparisonVersion: STRUCTURAL_COMPARISON_VERSION, familyCompatibilityVersion: FAMILY_COMPATIBILITY_VERSION, duplicateCollapseVersion: DUPLICATE_COLLAPSE_VERSION, valid: true as const, organizationId: input.organizationId, caseId: input.caseId, recoveredGraphHash: phase3RecoveredGraphHash(input.collapsedRecovered.treatmentRunId, input.collapsedRecovered.propositions), groundTruthGraphHash: input.groundTruth.graphHash };`
+- Line 96 · **unknown** · matched `organizational-understanding`
+  - `const result = { validation: "organizational-understanding-evaluator-phase-3", classification, preregistrationVersion: "oue-001-phase-3-preregistration/v1", corpusSplitHash: canonicalHash(phase3CorpusSplitManifest), metrics, checks, failures, semanticAdjudicationImplemented: false, humanReviewExecuted: false, externalComparativeValidation002Authorized: false, phase4Authorized: false };`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validatePhase4ImportedAdjudication.ts`
+
+- Line 91 · **unknown** · matched `organizational-understanding`
+  - `const result = { validation: "organizational-understanding-evaluator-phase-4", classification, metrics, checks, failures, liveSemanticAdjudicatorImplemented: false, humanReviewExecuted: false, externalComparativeValidation002Executed: false, liveOrHumanAdjudicatorDevelopmentAuthorized: failures.length === 0, externalComparativeValidation002Authorized: false };`
+
+##### `engine/benchmark/evaluator/organizational-understanding-evaluator-001/validationFixtures.ts`
+
+- Line 2 · **import** · matched `OrganizationalUnderstanding`
+  - `import type { GroundTruthPropositionGraph, OrganizationalUnderstandingProposition, RecoveredProposition, RecoveredPropositionGraph, SemanticAdjudication } from "./contracts";`
+- Line 6 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const proposition = (input: Partial<OrganizationalUnderstandingProposition> & Pick<OrganizationalUnderstandingProposition, "id" \| "family" \| "canonicalMeaning" \| "predicate">): OrganizationalUnderstandingProposition => ({`
+- Line 12 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const groundTruthPropositions: OrganizationalUnderstandingProposition[] = [`
+
 ##### `engine/benchmark/executive-collaboration-lab/executiveConversationScenarios.ts`
 
 - Line 11 · **unknown** · matched `OrganizationalUnderstanding`
@@ -1779,6 +2008,287 @@ This section records source-code references. It supplements, but does not replac
 - Line 404 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstanding: "++" \| "+" \| "=" \| "-" \| "--" \| "?";`
 
+##### `engine/benchmark/research/README.md`
+
+- Line 104 · **unknown** · matched `organizational-understanding`
+  - `This Phase 0 harness compares observable organizational-understanding quality`
+- Line 146 · **unknown** · matched `organizational-understanding`
+  - `../evaluator/organizational-understanding-evaluator-001/`
+
+##### `engine/benchmark/research/external-comparative-validation-001/README.md`
+
+- Line 9 · **unknown** · matched `organizational-understanding`
+  - `This experiment compares externally observable organizational-understanding`
+
+##### `engine/benchmark/research/external-comparative-validation-001/RESULTS.json`
+
+- Line 13741 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 13758 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.8109580952380951,`
+- Line 13784 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.8109580952380951,`
+- Line 13810 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.8641830952380952,`
+- Line 13836 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 13853 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.8979385714285715,`
+- Line 13879 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.8979385714285715,`
+- Line 13905 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9488814285714287,`
+- Line 13931 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5766845817868224,`
+- Line 13959 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5576796933332392,`
+- Line 13987 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 14004 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.7398404761904762,`
+- Line 14030 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.7398404761904762,`
+- Line 14056 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5940987878787879,`
+- Line 14084 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 14101 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9043399999999999,`
+- Line 14127 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9043399999999999,`
+- Line 14153 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.7564985714285714,`
+- Line 14181 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.328285247425752,`
+- Line 14210 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.44107426670317107,`
+- Line 14239 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 14256 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.8870833333333334,`
+- Line 14282 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.8870833333333334,`
+- Line 14308 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.8932500000000001,`
+- Line 14334 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 14351 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.4990533333333333,`
+- Line 14377 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.4990533333333333,`
+- Line 14403 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5392261538461539,`
+- Line 14429 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5172157824703445,`
+- Line 14458 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5844440456593732,`
+- Line 14486 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 14503 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.43403,`
+- Line 14531 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.43403,`
+- Line 14559 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.26666666666666666,`
+- Line 14587 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 14604 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9297733333333333,`
+- Line 14630 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9297733333333333,`
+- Line 14656 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.95896,`
+- Line 14682 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.3439906037399676,`
+- Line 14711 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.6321191084958704,`
+- Line 14739 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 14756 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.66401,`
+- Line 14782 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.66401,`
+- Line 14808 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5982457142857143,`
+- Line 14834 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 14851 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.8741866666666666,`
+- Line 14877 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.8741866666666666,`
+- Line 14903 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.8719933333333332,`
+- Line 14929 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5703712485465036,`
+- Line 14957 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.6056108870166619,`
+- Line 14985 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 15002 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.66275,`
+- Line 15028 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.66275,`
+- Line 15054 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5765833333333333,`
+- Line 15080 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 15097 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.7647499999999999,`
+- Line 15123 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.7647499999999999,`
+- Line 15149 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.6522291666666666,`
+- Line 15175 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5277038381500575,`
+- Line 15203 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.6427698819592162,`
+- Line 15231 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 15248 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.68375,`
+- Line 15274 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.68375,`
+- Line 15300 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.8856116666666667,`
+- Line 15326 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 15343 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.6457499999999999,`
+- Line 15371 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.69175,`
+- Line 15397 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.8562896703296703,`
+- Line 15423 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5007542397453438,`
+- Line 15451 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5586920738239283,`
+- Line 15479 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 15496 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.61875,`
+- Line 15522 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.61875,`
+- Line 15548 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.6231041666666666,`
+- Line 15574 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 15591 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.74625,`
+- Line 15617 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.74625,`
+- Line 15643 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.7156041666666667,`
+- Line 15669 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5221399912798775,`
+- Line 15697 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5356382595823925,`
+- Line 15725 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 15742 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5573866666666667,`
+- Line 15770 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5573866666666667,`
+- Line 15798 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.509534,`
+- Line 15826 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 15843 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.752382857142857,`
+- Line 15869 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.752382857142857,`
+- Line 15895 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.754705,`
+- Line 15921 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.47174799146550894,`
+- Line 15950 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.6155269709006882,`
+- Line 15978 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 15995 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9170833333333334,`
+- Line 16021 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9170833333333334,`
+- Line 16047 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.91825,`
+- Line 16073 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 16090 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9004166666666668,`
+- Line 16116 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9004166666666668,`
+- Line 16142 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.86825,`
+- Line 16168 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.4663684118891595,`
+- Line 16197 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.38486657518867845,`
+- Line 16265 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 16282 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.61875,`
+- Line 16308 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.61875,`
+- Line 16334 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.6231041666666666,`
+- Line 16360 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 16377 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.74625,`
+- Line 16403 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.74625,`
+- Line 16429 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.7156041666666667,`
+- Line 16455 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5221399912798775,`
+- Line 16483 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.5356382595823925,`
+- Line 16511 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 16528 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9170833333333334,`
+- Line 16554 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9170833333333334,`
+- Line 16580 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.91825,`
+- Line 16606 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": null,`
+- Line 16623 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9004166666666668,`
+- Line 16649 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9004166666666668,`
+- Line 16675 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.86825,`
+- Line 16701 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.4663684118891595,`
+- Line 16730 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.38486657518867845,`
+
+##### `engine/benchmark/research/external-comparative-validation-001/evaluate.ts`
+
+- Line 31 · **unknown** · matched `OrganizationalUnderstanding`
+  - `comparativeOrganizationalUnderstandingUtility: null, components: null, unsupportedAssertionRate: null,`
+- Line 74 · **unknown** · matched `OrganizationalUnderstanding`
+  - `comparativeOrganizationalUnderstandingUtility: composite, components, unsupportedAssertionRate,`
+
+##### `engine/benchmark/research/external-comparative-validation-001/runExternalComparativeValidation001.ts`
+
+- Line 22 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const evaluative = scores.filter((score) => score.treatmentId === treatmentId && score.evaluative && score.comparativeOrganizationalUnderstandingUtility !== null);`
+- Line 23 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const values = evaluative.map((score) => score.comparativeOrganizationalUnderstandingUtility!);`
+
+##### `engine/benchmark/research/external-comparative-validation-001/treatments.ts`
+
+- Line 3 · **import** · matched `evolveOrganizationRuntime`
+  - `import { evolveOrganizationRuntime } from "../../../../engine/v3/runtime/evolveOrganizationRuntime";`
+- Line 130 · **unknown** · matched `evolveOrganizationRuntime`
+  - `runtime = evolveOrganizationRuntime({ runtime, result, input: { company: scenario.title, website: "benchmark.invalid", industry: scenario.industry, question: scenario.question, context } });`
+
+##### `engine/benchmark/research/external-comparative-validation-001/types.ts`
+
+- Line 104 · **unknown** · matched `OrganizationalUnderstanding`
+  - `comparativeOrganizationalUnderstandingUtility: number \| null;`
+
 ##### `engine/benchmark/research/localized-nonlinear-cognition-adapter/RESULT.json`
 
 - Line 2 · **unknown** · matched `organizational-understanding`
@@ -1803,6 +2313,74 @@ This section records source-code references. It supplements, but does not replac
   - `framework: "organizational-understanding-research-framework";`
 - Line 123 · **unknown** · matched `OrganizationalUnderstanding`
   - `records: OrganizationalUnderstandingResearchRecord[];`
+
+##### `engine/benchmark/research/scoring-robustness-validation-001/RESULTS.json`
+
+- Line 57 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.834537922077922,`
+- Line 93 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9693561038961039,`
+- Line 129 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9909145454545455,`
+- Line 165 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9909145454545455,`
+- Line 201 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9909145454545455,`
+- Line 237 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.8947673593073593,`
+- Line 273 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9,`
+- Line 309 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9899711111111111,`
+- Line 345 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9909145454545455,`
+- Line 381 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9909145454545455,`
+- Line 417 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.8965379220779222,`
+- Line 453 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9423864069264071,`
+- Line 489 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9742478787878789,`
+- Line 525 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9909145454545455,`
+- Line 561 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9922413333333333,`
+- Line 597 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9909145454545455,`
+- Line 633 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9909145454545455,`
+- Line 669 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9534145454545454,`
+- Line 705 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.953374,`
+- Line 741 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.970005,`
+- Line 777 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9432954978354979,`
+- Line 815 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.834537922077922,`
+- Line 851 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9693561038961039,`
+- Line 887 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.8947673593073593,`
+- Line 923 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9,`
+- Line 959 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9899711111111111,`
+- Line 995 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.8965379220779222,`
+- Line 1031 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9423864069264071,`
+- Line 1067 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9742478787878789,`
+- Line 1103 · **unknown** · matched `OrganizationalUnderstanding`
+  - `"comparativeOrganizationalUnderstandingUtility": 0.9922413333333333,`
+
+##### `engine/benchmark/research/scoring-robustness-validation-001/validateScoringRobustness001.ts`
+
+- Line 9 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const score = (value: ReturnType<typeof evaluateOutput>) => value.comparativeOrganizationalUnderstandingUtility ?? Number.NaN;`
 
 ##### `engine/benchmark/runAtlasSimulation.ts`
 

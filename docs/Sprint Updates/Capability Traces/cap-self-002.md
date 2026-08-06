@@ -1,6 +1,6 @@
 # Capability Trace — Investigation Opportunity Generation
 
-Generated: 2026-07-31T20:42:07.112Z
+Generated: 2026-08-05T20:56:08.225Z
 
 ## Verified Architecture
 
@@ -84,6 +84,9 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/benchmark/judgment-lab/runJudgmentLab.ts`
 - `engine/benchmark/judgment-lab/themeEvidenceCompositionIsolation.ts`
 - `engine/benchmark/judgment-lab/validateJudgmentLabProvenance.ts`
+- `engine/benchmark/research/external-comparative-validation-001/treatments.ts`
+- `engine/benchmark/research/observable-output-fidelity-validation-001/canonicalArtifactCollector.ts`
+- `engine/benchmark/research/observable-output-fidelity-validation-001/validateObservableOutputFidelity001.ts`
 - `engine/benchmark/stress/runEngineStressTest.ts`
 - `engine/v3/communication/buildExecutiveStory.ts`
 - `engine/v3/communication/executiveCommunicationSource.ts`
@@ -148,7 +151,7 @@ This section records source-code references. It supplements, but does not replac
 | UI | ✅ Found | 32 |
 | API | ❌ Not found | 0 |
 | Simulation | ✅ Found | 4 |
-| Benchmark | ✅ Found | 18 |
+| Benchmark | ✅ Found | 22 |
 | Other | ✅ Found | 22 |
 
 ### Detailed Matches
@@ -553,6 +556,23 @@ This section records source-code references. It supplements, but does not replac
   - `investigationOpportunities?: unknown;`
 - Line 101 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities: memory.investigationOpportunities,`
+
+##### `engine/benchmark/research/external-comparative-validation-001/treatments.ts`
+
+- Line 92 · **read** · matched `investigationOpportunities`
+  - `const opportunities = artifactClaims(values(memory.investigationOpportunities ?? raw.investigationOpportunities), ["question", "gap", "rationale", "summary"], evidenceIds);`
+
+##### `engine/benchmark/research/observable-output-fidelity-validation-001/canonicalArtifactCollector.ts`
+
+- Line 12 · **type** · matched `investigationOpportunities`
+  - `investigationOpportunities?: Array<{ id: string; topic: string; reason: string; expectedConfidenceGain: number; executiveLeverage: "high" \| "medium" \| "low"; affectedConditions: string[]; missingEvidence: string[]; suggestedExecutiveQuestion: string }>;`
+- Line 26 · **read** · matched `investigationOpportunities`
+  - `for (const item of memory.investigationOpportunities ?? []) artifacts.push(artifact({ id: item.id, kind: "evidence-gap", organizationId: input.organizationId, statement: item.suggestedExecutiveQuestion, confidence: null, supportingEvidenceIds: [], opposingEvidenceIds: [], competingArtifactIds: [], unresolved: true, priority: item.executiveLeverage === "high" ? 1 : item.executiveLeverage === "medium" ? 0.6 : 0.3, expectedUtility: item.expectedConfidenceGain, justification: item.reason, understandingRefs: [understandingRef, ...sorted(item.affectedConditions)], changedFromArtifactId: null, observedAt: null }));`
+
+##### `engine/benchmark/research/observable-output-fidelity-validation-001/validateObservableOutputFidelity001.ts`
+
+- Line 86 · **type** · matched `investigationOpportunities`
+  - `investigationOpportunities: [{ id: "gap-c", topic: "Conflict", reason: "Resolve conflict", expectedConfidenceGain: 0.2, executiveLeverage: "high", affectedConditions: ["condition-c"], missingEvidence: ["Comparator"], suggestedExecutiveQuestion: "Which claim holds?" }],`
 
 ##### `engine/benchmark/stress/runEngineStressTest.ts`
 

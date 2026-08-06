@@ -11,6 +11,19 @@ There is no live semantic adjudicator, candidate generator, deterministic
 scorer, treatment execution path, Runtime dependency, or Production consumer.
 External Comparative Validation 002 remains unauthorized.
 
+## Phase 5
+
+Phase 5 preregisters a blinded human semantic-adjudication study and provides
+reviewer eligibility, training, qualification, packet, response-integrity,
+agreement-analysis, disagreement, gold-admission, and deterministic-ledger
+infrastructure. Training, confirmatory, and protected holdout packets are
+separated and hash-frozen; answer keys remain separate.
+
+No genuine human responses were supplied. Synthetic transport fixtures validate
+code paths only and are prohibited from the human gold set. Classification is
+`STUDY READY — HUMAN RESPONSES NOT YET AVAILABLE`; live model-adjudicator
+development and External Comparative Validation 002 remain unauthorized.
+
 ## Phase 2
 
 Phase 2 adds deterministic identity, authorization, graph, confidence, family,
@@ -35,3 +48,16 @@ not express correctness, do not assign benchmark credit, and are never
 consumed by the Phase 2 scorer. The generator cannot receive imported
 adjudications or fixture labels. Semantic adjudication, human review, Phase 4,
 and External Comparative Validation 002 remain unauthorized.
+
+## Phase 4
+
+Phase 4 imports independently completed, fixture-authored or manually authored
+semantic judgments. Imports are cryptographically bound to the exact Phase 3
+candidate set, validated against a frozen generic and family-specific rubric,
+checked for blinding and confidence, and reconciled deterministically. Only a
+complete, conflict-free set is converted into the unchanged Phase 2 scoring
+input and an auditable semantic ledger.
+
+The package does not make semantic judgments or execute human review. Fixture
+human resolutions validate the future import boundary and are not evidence of
+human agreement. External Comparative Validation 002 remains unauthorized.

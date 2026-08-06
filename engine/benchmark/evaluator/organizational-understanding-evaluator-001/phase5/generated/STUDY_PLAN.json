@@ -1,0 +1,181 @@
+{
+  "preregistration": {
+    "studyVersion": "oue-001-phase-5-human-study/v1",
+    "frozenBeforeGenuineResponses": true,
+    "reviewerEligibility": {
+      "minimumInitialReviewersPerItem": 2,
+      "preferredInitialReviewersPerItem": 3,
+      "materialDisagreementRequiresIndependentThirdReviewerOrBlindedConsensus": true,
+      "discoveryExpertiseRequired": false,
+      "duplicateReviewerIdentityProhibited": true
+    },
+    "sample": {
+      "externalComparativeValidation002OutputsProhibited": true,
+      "allTenFamiliesRequired": true,
+      "trainingSeparatedFromConfirmatory": true,
+      "protectedHoldoutRequired": true,
+      "answerKeysSeparated": true
+    },
+    "responseSchemaVersion": "oue-001-phase-5-human-response/v1",
+    "rubricVersion": "oue-semantic-adjudication-rubric/v1",
+    "allowedReferences": [
+      "frozen packet",
+      "frozen rubric",
+      "reviewer instructions"
+    ],
+    "prohibitedReferences": [
+      "treatment identity",
+      "Discovery origin",
+      "aggregate score",
+      "other reviewer responses",
+      "answer key"
+    ],
+    "agreementMetrics": [
+      "exact agreement",
+      "adjacent agreement",
+      "Cohen kappa",
+      "Fleiss kappa",
+      "Krippendorff alpha nominal",
+      "class-specific agreement",
+      "confusion matrix",
+      "field agreement",
+      "mean absolute difference",
+      "intraclass correlation"
+    ],
+    "thresholds": {
+      "exactClassificationAgreementMinimum": 0.85,
+      "adjacentMaterialAgreementMinimum": 0.92,
+      "chanceCorrectedAgreementMinimum": 0.8,
+      "polarityAgreementMinimum": 0.98,
+      "modalityAgreementMinimum": 0.95,
+      "temporalAgreementMinimum": 0.95,
+      "causalAgreementMinimum": 0.9,
+      "contradictionEndpointAgreementMinimum": 0.95,
+      "highImportanceUnresolvedMaximum": 0.05,
+      "treatmentIdentityLeakageMaximum": 0,
+      "packetOrVersionMismatchAcceptedMaximum": 0,
+      "minimumConfirmatoryItemsForStableEstimate": 30
+    },
+    "adjacentPairs": [
+      [
+        "exact",
+        "equivalent"
+      ],
+      [
+        "equivalent",
+        "partial"
+      ],
+      [
+        "partial",
+        "undergeneralized"
+      ],
+      [
+        "partial",
+        "overgeneralized"
+      ]
+    ],
+    "neverAdjacent": [
+      [
+        "equivalent",
+        "contradictory"
+      ],
+      [
+        "equivalent",
+        "unsupported"
+      ],
+      [
+        "exact",
+        "irrelevant"
+      ]
+    ],
+    "confidenceTreatment": {
+      "confirmatoryMinimum": 0.75,
+      "lowConfidenceRequiresEscalation": true,
+      "confidenceNeverChangesSemanticCredit": true
+    },
+    "exclusionRules": [
+      "missing provenance",
+      "duplicate reviewer identity",
+      "answer-key exposure",
+      "treatment exposure",
+      "packet mismatch",
+      "rubric mismatch",
+      "incomplete response",
+      "malformed audit metadata"
+    ],
+    "goldAdmission": [
+      "packet integrity",
+      "independence",
+      "blinding",
+      "complete fields",
+      "resolved judgment",
+      "confidence threshold",
+      "no rubric defect",
+      "no unresolved material disagreement",
+      "complete lineage"
+    ],
+    "classificationRules": {
+      "noGenuineResponses": "STUDY READY — HUMAN RESPONSES NOT YET AVAILABLE",
+      "genuineResponsesAllGates": "PASS — Human semantic adjudication validated",
+      "insufficientSample": "inconclusive; thresholds may not be lowered"
+    }
+  },
+  "preregistrationHash": "8131188a7dc216a9575a8677d9bb4d6e7a31c56eaed1230fc560cb8436629bf7",
+  "packetHashes": [
+    {
+      "packetId": "phase5-training-01",
+      "partition": "training",
+      "packetHash": "1164f940d6f582bbec620f60956bc2d072d5d946806cbbf73087253fc9372db7"
+    },
+    {
+      "packetId": "phase5-training-02",
+      "partition": "training",
+      "packetHash": "6841a1a9d9bcde3856cffbc144ad4c7ad813dcd3536b8b82a7ae8f0f551e6e1b"
+    },
+    {
+      "packetId": "phase5-qualification-03",
+      "partition": "qualification",
+      "packetHash": "49fe7e6d96ae24e6ebb58974add70b5a3ac61d84ddcbb992a266ba1b8eee0b69"
+    },
+    {
+      "packetId": "phase5-qualification-04",
+      "partition": "qualification",
+      "packetHash": "59e622a349ecc89e6330ece30bbb0ff993d831281fb6f66bd8d390ccf1b9f752"
+    },
+    {
+      "packetId": "phase5-confirmatory-05",
+      "partition": "confirmatory",
+      "packetHash": "0ef857e3f1d3ef14d4d2fc13b473ae18c7d6b88d983f96fe6f9c7b39c7d5b814"
+    },
+    {
+      "packetId": "phase5-confirmatory-06",
+      "partition": "confirmatory",
+      "packetHash": "9eb27ba8a401b05ed80c5a2e48428e6ba982605fda8212f2d6f8785e251fcffc"
+    },
+    {
+      "packetId": "phase5-confirmatory-07",
+      "partition": "confirmatory",
+      "packetHash": "844ad95fe3de094e539d2afcad65eee099d72af50a8cddb720a6793feb845eca"
+    },
+    {
+      "packetId": "phase5-holdout-08",
+      "partition": "holdout",
+      "packetHash": "6657a3acf544b0b50f7b289c72e9cba884c18da58f9faef8cbb17808ea2915ca"
+    },
+    {
+      "packetId": "phase5-holdout-09",
+      "partition": "holdout",
+      "packetHash": "dfb9d21fff4beffdfe40ebe364a538cbe0c8b7de28123d375a9351019a5224ca"
+    },
+    {
+      "packetId": "phase5-holdout-10",
+      "partition": "holdout",
+      "packetHash": "6bc889b9e25b2985cee9109f193858e644f9ac942b6bed3662a3a4106b6b5123"
+    },
+    {
+      "packetId": "phase5-holdout-11",
+      "partition": "holdout",
+      "packetHash": "e4beffa20486af7d4fe99515ace2282b9ba541f34c40823dd16e067a45b1ea5e"
+    }
+  ]
+}

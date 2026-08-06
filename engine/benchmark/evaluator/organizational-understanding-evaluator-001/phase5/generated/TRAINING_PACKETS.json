@@ -1,0 +1,96 @@
+[
+  {
+    "studyVersion": "oue-001-phase-5-human-study/v1",
+    "packetId": "phase5-training-01",
+    "partition": "training",
+    "family": "conclusion",
+    "difficulty": "moderate",
+    "neutralLabelA": "Proposition A",
+    "neutralLabelB": "Proposition B",
+    "propositionA": "Late approval ownership best explains the currently supported share of handoff delay.",
+    "propositionB": "The evidence currently favors delayed assignment of sign-off responsibility as the explanation.",
+    "structuredContext": {
+      "polarity": [
+        "affirmed",
+        "affirmed"
+      ],
+      "modality": [
+        "inferred",
+        "inferred"
+      ],
+      "temporality": [
+        "unknown",
+        "current"
+      ],
+      "supportingEvidence": [
+        "evidence-1"
+      ],
+      "opposingEvidence": [],
+      "relationshipContext": []
+    },
+    "rubricVersion": "oue-semantic-adjudication-rubric/v1",
+    "requiredResponseFields": [
+      "classification",
+      "meaning agreement",
+      "polarity",
+      "modality",
+      "temporality",
+      "causal agreement when applicable",
+      "endpoint fidelity when applicable",
+      "confidence agreement when applicable",
+      "lineage agreement",
+      "reviewer confidence",
+      "escalation",
+      "structured justification"
+    ],
+    "displayOrderSeed": "efc4d84d3efc93be",
+    "packetHash": "1164f940d6f582bbec620f60956bc2d072d5d946806cbbf73087253fc9372db7"
+  },
+  {
+    "studyVersion": "oue-001-phase-5-human-study/v1",
+    "packetId": "phase5-training-02",
+    "partition": "training",
+    "family": "condition",
+    "difficulty": "clear",
+    "neutralLabelA": "Proposition A",
+    "neutralLabelB": "Proposition B",
+    "propositionA": "Customer onboarding handoffs are operationally constrained.",
+    "propositionB": "The current onboarding transfer process is constrained.",
+    "structuredContext": {
+      "polarity": [
+        "affirmed",
+        "affirmed"
+      ],
+      "modality": [
+        "inferred",
+        "inferred"
+      ],
+      "temporality": [
+        "unknown",
+        "current"
+      ],
+      "supportingEvidence": [
+        "evidence-1"
+      ],
+      "opposingEvidence": [],
+      "relationshipContext": []
+    },
+    "rubricVersion": "oue-semantic-adjudication-rubric/v1",
+    "requiredResponseFields": [
+      "classification",
+      "meaning agreement",
+      "polarity",
+      "modality",
+      "temporality",
+      "causal agreement when applicable",
+      "endpoint fidelity when applicable",
+      "confidence agreement when applicable",
+      "lineage agreement",
+      "reviewer confidence",
+      "escalation",
+      "structured justification"
+    ],
+    "displayOrderSeed": "1d7e9c3502c30023",
+    "packetHash": "6841a1a9d9bcde3856cffbc144ad4c7ad813dcd3536b8b82a7ae8f0f551e6e1b"
+  }
+]

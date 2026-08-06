@@ -518,3 +518,26 @@ Changing one requires the process in
   execution port, frontend path, or Production activation was added.
 - **Status:** Active; selector activation remains blocked pending independent,
   outcome-backed live calibration.
+
+## DEC-PROD-030 — Comparative advantage requires shared observable-output evaluation
+
+- **Decision:** Discovery's comparative organizational-understanding claim is
+  evaluated through preregistered externally observable outputs, common source
+  evidence, fixed benchmark-only scoring, blinded treatment identity where
+  feasible, holdouts, and explicit guardrail gates. Baselines are not required
+  to imitate Discovery's internal architecture, and Discovery receives no
+  credit for producing more internal artifact types.
+- **Reason:** Internal capability benchmarks cannot determine whether explicit
+  organizational cognition adds value beyond generic synthesis, retrieval, or
+  structured analysis.
+- **Alternatives considered:** Compare architecture features; use provider
+  opinions; score verbosity; claim superiority from internal OUI movement.
+- **Why rejected:** These approaches reward implementation resemblance, invite
+  leakage, and cannot establish comparative user value.
+- **Consequences:** Phase 0 remains benchmark-only. Fixture-backed synthesis is
+  labeled non-live; unavailable human or model treatments remain unevaluated.
+  The Comparative Organizational Understanding Utility composite is local to
+  this frozen protocol and subordinate to OUI, with every component reported.
+- **Affected phase:** Research track, External Comparative Validation Phase 0.
+- **Affected gaps:** `GAP-D-005`.
+- **Status:** Active research protocol decision; no production authorization.

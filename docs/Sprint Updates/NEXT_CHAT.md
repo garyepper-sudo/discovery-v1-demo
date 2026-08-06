@@ -61,18 +61,17 @@ Local Clerk, PostgreSQL, filesystem Runtime, OAuth, connector, and recovery stat
 
 ## Exact next Codex task
 
-Run Material Information Acquisition — Independent Live Outcome Calibration
-002. Freeze complete owner-produced v3 candidate envelopes, persist real human
-choices before revealing the shadow result, and observe only separately
-authorized outcomes that already occur. Do not optimize selector logic against
-the evaluation cases.
-
-Parallel benchmark research may begin Phase 3 candidate generation for the
-inactive Organizational Understanding Evaluator 001. Phase 2 proves only that
-complete authorized imported adjudications can be structurally validated and
-scored deterministically. It does not authorize semantic adjudication, human
-review, External Comparative Validation 002, Production integration, or a
-change to the Material Information Acquisition product priority.
+Review the Phase 5 blinded human semantic-adjudication study package. Do not
+claim human reliability until genuine independent responses are collected,
+validated, reconciled, and admitted under the frozen preregistration. Do not
+develop a live model adjudicator without a genuine eligible gold set, and do
+not execute live semantic adjudication,
+optimize Discovery wording, repair
+or rerun External Comparative Validation 001, or execute External Comparative
+Validation 002. Comparative Validation 002 remains blocked until all later
+semantic and human-agreement gates pass. Keep Material
+Information Acquisition calibration separate and do not optimize its selector
+against evaluation cases.
 
 ## Prohibited shortcuts
 

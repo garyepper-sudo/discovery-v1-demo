@@ -1,0 +1,290 @@
+{
+  "validation": "organizational-understanding-evaluator-phase-4",
+  "classification": "PASS — Imported semantic adjudication boundary validated",
+  "metrics": {
+    "validImportAcceptanceRate": 1,
+    "invalidImportRejectionRate": 1,
+    "candidateSetBindingAccuracy": 1,
+    "rubricConsistencyValidationAccuracy": 1,
+    "familySpecificValidationAccuracy": 1,
+    "adjudicatorIndependenceEnforcement": 1,
+    "lowConfidenceEscalationAccuracy": 1,
+    "multiAdjudicatorReconciliationDeterminism": 1,
+    "unresolvedDisagreementBlockingRate": 1,
+    "completedSetValidationAccuracy": 1,
+    "semanticLedgerCompleteness": 1,
+    "downstreamDeterministicScoringStability": 1,
+    "inputOrderInvariance": 1,
+    "repeatedRunDeterminism": 1,
+    "canonicalSerializationStability": 1,
+    "crossVersionContamination": 0,
+    "treatmentIdentityLeakage": 0,
+    "duplicateSemanticCreditInflation": 0
+  },
+  "checks": [
+    {
+      "name": "complete imported set scores",
+      "passed": true,
+      "metric": "valid-import",
+      "detail": "dc017b2792b0f8ecb0d6c3041f429b03aa8bededd6c7de08f2c204bd5704bb5d"
+    },
+    {
+      "name": "all ten proposition families adjudicated",
+      "passed": true,
+      "metric": "family-specific",
+      "detail": "10/10 families"
+    },
+    {
+      "name": "semantic ledger complete",
+      "passed": true,
+      "metric": "ledger",
+      "detail": "dc017b2792b0f8ecb0d6c3041f429b03aa8bededd6c7de08f2c204bd5704bb5d"
+    },
+    {
+      "name": "exact versus equivalent bounded reconciliation",
+      "passed": true,
+      "metric": "reconciliation",
+      "detail": "adjacent frozen policy applied"
+    },
+    {
+      "name": "no live adjudicator or human review",
+      "passed": true,
+      "metric": "boundary",
+      "detail": "imports only"
+    },
+    {
+      "name": "all families and neutral writing styles frozen",
+      "passed": true,
+      "metric": "rubric-consistency",
+      "detail": "10 family controls and 6 neutral styles"
+    },
+    {
+      "name": "rubric classification accepted: exact",
+      "passed": true,
+      "metric": "rubric-consistency",
+      "detail": ""
+    },
+    {
+      "name": "rubric classification accepted: equivalent",
+      "passed": true,
+      "metric": "rubric-consistency",
+      "detail": ""
+    },
+    {
+      "name": "rubric classification accepted: partial",
+      "passed": true,
+      "metric": "rubric-consistency",
+      "detail": ""
+    },
+    {
+      "name": "rubric classification accepted: overgeneralized",
+      "passed": true,
+      "metric": "rubric-consistency",
+      "detail": ""
+    },
+    {
+      "name": "rubric classification accepted: undergeneralized",
+      "passed": true,
+      "metric": "rubric-consistency",
+      "detail": ""
+    },
+    {
+      "name": "rubric classification accepted: contradictory",
+      "passed": true,
+      "metric": "rubric-consistency",
+      "detail": ""
+    },
+    {
+      "name": "rubric classification accepted: unsupported",
+      "passed": true,
+      "metric": "rubric-consistency",
+      "detail": ""
+    },
+    {
+      "name": "rubric classification accepted: irrelevant",
+      "passed": true,
+      "metric": "rubric-consistency",
+      "detail": ""
+    },
+    {
+      "name": "ambiguous classification escalates",
+      "passed": true,
+      "metric": "disagreement-blocking",
+      "detail": "incomplete-adjudication-set, unresolved-disagreement"
+    },
+    {
+      "name": "missing cannot select recovered pair",
+      "passed": true,
+      "metric": "rubric-consistency",
+      "detail": "incomplete-adjudication-set, rubric-inconsistency"
+    },
+    {
+      "name": "exact polarity disagreement rejected",
+      "passed": true,
+      "metric": "rubric-consistency",
+      "detail": "incomplete-adjudication-set, rubric-inconsistency"
+    },
+    {
+      "name": "mechanism without causal agreement rejected",
+      "passed": true,
+      "metric": "family-specific",
+      "detail": "family-requirement-failure, incomplete-adjudication-set"
+    },
+    {
+      "name": "contradiction endpoint loss rejected",
+      "passed": true,
+      "metric": "family-specific",
+      "detail": "family-requirement-failure, incomplete-adjudication-set"
+    },
+    {
+      "name": "family requirements cannot be omitted",
+      "passed": true,
+      "metric": "family-specific",
+      "detail": "family-requirement-failure, incomplete-adjudication-set"
+    },
+    {
+      "name": "candidate hash mismatch rejected",
+      "passed": true,
+      "metric": "candidate-binding",
+      "detail": "candidate-binding-failure, incomplete-adjudication-set"
+    },
+    {
+      "name": "candidate absent rejected",
+      "passed": true,
+      "metric": "candidate-binding",
+      "detail": "candidate-binding-failure, family-requirement-failure, family-requirement-failure, incomplete-adjudication-set"
+    },
+    {
+      "name": "cross organization rejected",
+      "passed": true,
+      "metric": "isolation",
+      "detail": "incomplete-adjudication-set, organization-contamination"
+    },
+    {
+      "name": "cross case rejected",
+      "passed": true,
+      "metric": "isolation",
+      "detail": "case-contamination, incomplete-adjudication-set"
+    },
+    {
+      "name": "treatment run mismatch rejected",
+      "passed": true,
+      "metric": "isolation",
+      "detail": "incomplete-adjudication-set, treatment-run-contamination"
+    },
+    {
+      "name": "evaluator version mismatch rejected",
+      "passed": true,
+      "metric": "version",
+      "detail": "incomplete-adjudication-set, version-contamination"
+    },
+    {
+      "name": "rubric version mismatch rejected",
+      "passed": true,
+      "metric": "version",
+      "detail": "incomplete-adjudication-set, version-contamination"
+    },
+    {
+      "name": "invalid output hash rejected",
+      "passed": true,
+      "metric": "invalid-import",
+      "detail": "incomplete-adjudication-set, invalid-import"
+    },
+    {
+      "name": "confidence representations normalize equivalently",
+      "passed": true,
+      "metric": "confidence",
+      "detail": "0.82 and 82% eligible"
+    },
+    {
+      "name": "qualitative and interval confidence remain bounded",
+      "passed": true,
+      "metric": "confidence",
+      "detail": "highly likely and [0.8,0.9] eligible without point collapse"
+    },
+    {
+      "name": "low confidence escalates",
+      "passed": true,
+      "metric": "confidence",
+      "detail": "incomplete-adjudication-set, low-adjudicator-confidence"
+    },
+    {
+      "name": "absent confidence escalates",
+      "passed": true,
+      "metric": "confidence",
+      "detail": "incomplete-adjudication-set, low-adjudicator-confidence"
+    },
+    {
+      "name": "material adjudicator disagreement blocks",
+      "passed": true,
+      "metric": "disagreement-blocking",
+      "detail": "incomplete-adjudication-set, unresolved-disagreement"
+    },
+    {
+      "name": "unresolved high-importance ambiguity blocks",
+      "passed": true,
+      "metric": "disagreement-blocking",
+      "detail": "incomplete-adjudication-set, unresolved-disagreement"
+    },
+    {
+      "name": "non-blinded confirmatory import rejected",
+      "passed": true,
+      "metric": "independence",
+      "detail": "incomplete-adjudication-set, treatment-identity-leakage"
+    },
+    {
+      "name": "non-blinded exploratory import cannot score",
+      "passed": true,
+      "metric": "independence",
+      "detail": "incomplete-adjudication-set"
+    },
+    {
+      "name": "incomplete set rejected",
+      "passed": true,
+      "metric": "completed-set",
+      "detail": "incomplete-adjudication-set"
+    },
+    {
+      "name": "duplicate semantic credit rejected",
+      "passed": true,
+      "metric": "completed-set",
+      "detail": "duplicate-semantic-credit, incomplete-adjudication-set"
+    },
+    {
+      "name": "fixture-authored human resolution imports",
+      "passed": true,
+      "metric": "human-resolution",
+      "detail": ""
+    },
+    {
+      "name": "malformed human resolution rejected",
+      "passed": true,
+      "metric": "human-resolution",
+      "detail": "invalid-human-resolution"
+    },
+    {
+      "name": "reordered input deterministic",
+      "passed": true,
+      "metric": "determinism",
+      "detail": "dc017b2792b0f8ecb0d6c3041f429b03aa8bededd6c7de08f2c204bd5704bb5d === dc017b2792b0f8ecb0d6c3041f429b03aa8bededd6c7de08f2c204bd5704bb5d"
+    },
+    {
+      "name": "repeated run deterministic",
+      "passed": true,
+      "metric": "determinism",
+      "detail": "dc017b2792b0f8ecb0d6c3041f429b03aa8bededd6c7de08f2c204bd5704bb5d"
+    },
+    {
+      "name": "downstream scoring stable",
+      "passed": true,
+      "metric": "scoring",
+      "detail": "1"
+    }
+  ],
+  "failures": [],
+  "liveSemanticAdjudicatorImplemented": false,
+  "humanReviewExecuted": false,
+  "externalComparativeValidation002Executed": false,
+  "liveOrHumanAdjudicatorDevelopmentAuthorized": true,
+  "externalComparativeValidation002Authorized": false
+}

@@ -1,0 +1,136 @@
+{
+  "validation": "organizational-understanding-evaluator-phase-5",
+  "classification": "STUDY READY — HUMAN RESPONSES NOT YET AVAILABLE",
+  "genuineHumanResponsesAvailable": false,
+  "genuineAgreementResults": null,
+  "humanGoldSetEligible": false,
+  "liveModelAdjudicatorDevelopmentAuthorized": false,
+  "externalComparativeValidation002Authorized": false,
+  "checks": [
+    {
+      "name": "no genuine human responses available",
+      "passed": true,
+      "detail": "repository and supplied-input audit found none"
+    },
+    {
+      "name": "preregistration frozen before responses",
+      "passed": true,
+      "detail": "8131188a7dc216a9575a8677d9bb4d6e7a31c56eaed1230fc560cb8436629bf7"
+    },
+    {
+      "name": "minimum independent reviewer design frozen",
+      "passed": true,
+      "detail": "{\"discoveryExpertiseRequired\":false,\"duplicateReviewerIdentityProhibited\":true,\"materialDisagreementRequiresIndependentThirdReviewerOrBlindedConsensus\":true,\"minimumInitialReviewersPerItem\":2,\"preferredInitialReviewersPerItem\":3}"
+    },
+    {
+      "name": "all ten families represented",
+      "passed": true,
+      "detail": "conclusion,condition,constraint,contradiction,finding,evidence-gap,implication,mechanism,mechanism,prediction,uncertainty"
+    },
+    {
+      "name": "training qualification confirmatory and holdout separated",
+      "passed": true,
+      "detail": "{\"confirmatory\":3,\"holdout\":4,\"qualification\":2,\"training\":2}"
+    },
+    {
+      "name": "holdout hashes frozen",
+      "passed": true,
+      "detail": "6657a3acf544b0b50f7b289c72e9cba884c18da58f9faef8cbb17808ea2915ca,dfb9d21fff4beffdfe40ebe364a538cbe0c8b7de28123d375a9351019a5224ca,6bc889b9e25b2985cee9109f193858e644f9ac942b6bed3662a3a4106b6b5123,e4beffa20486af7d4fe99515ace2282b9ba541f34c40823dd16e067a45b1ea5e"
+    },
+    {
+      "name": "answer key separated from packets",
+      "passed": true,
+      "detail": "packet schema contains no answers"
+    },
+    {
+      "name": "synthetic transport accepted but labeled non-human",
+      "passed": true,
+      "detail": "8 synthetic responses"
+    },
+    {
+      "name": "packet corruption and duplicate identity rejected",
+      "passed": true,
+      "detail": "packet hash mismatch,response audit hash mismatch,duplicate reviewer identity for packet"
+    },
+    {
+      "name": "perfect agreement fixture",
+      "passed": true,
+      "detail": "{\"adjacentAgreement\":1,\"causalAgreement\":null,\"classSpecificAgreement\":{\"equivalent\":1},\"cohensKappa\":1,\"confusionMatrix\":{\"equivalent\":{\"equivalent\":4}},\"endpointFidelityAgreement\":1,\"escalationAgreement\":1,\"exactAgreement\":1,\"fleissKappa\":1,\"intraclassCorrelation\":1,\"itemCount\":4,\"krippendorffsAlphaNominal\":1,\"meaningAgreementMeanAbsoluteDifference\":0,\"modalityAgreement\":1,\"polarityAgreement\":1,\"prevalenceWarning\":\"One-class prevalence makes chance-corrected metrics unstable.\",\"reviewerCount\":2,\"temporalAgreement\":1}"
+    },
+    {
+      "name": "systematic disagreement fixture",
+      "passed": true,
+      "detail": "{\"adjacentAgreement\":0,\"causalAgreement\":null,\"classSpecificAgreement\":{\"contradictory\":0,\"equivalent\":0},\"cohensKappa\":0,\"confusionMatrix\":{\"contradictory\":{\"contradictory\":0,\"equivalent\":0},\"equivalent\":{\"contradictory\":4,\"equivalent\":0}},\"endpointFidelityAgreement\":1,\"escalationAgreement\":1,\"exactAgreement\":0,\"fleissKappa\":-1,\"intraclassCorrelation\":-1,\"itemCount\":4,\"krippendorffsAlphaNominal\":-1,\"meaningAgreementMeanAbsoluteDifference\":1,\"modalityAgreement\":1,\"polarityAgreement\":0,\"reviewerCount\":2,\"temporalAgreement\":1}"
+    },
+    {
+      "name": "chance agreement formula",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "name": "rare-class prevalence disclosed",
+      "passed": true,
+      "detail": "One-class prevalence makes chance-corrected metrics unstable."
+    },
+    {
+      "name": "missing responses handled",
+      "passed": true,
+      "detail": "missing values do not fabricate stable estimates"
+    },
+    {
+      "name": "response order invariant",
+      "passed": true,
+      "detail": "bf7a55233725f4e96ada432e624e02031d4d18a84dee894fb6662783b465f781"
+    },
+    {
+      "name": "synthetic responses prohibited from gold set",
+      "passed": true,
+      "detail": "7 rejected"
+    },
+    {
+      "name": "study ledger deterministic",
+      "passed": true,
+      "detail": "9b45b81cc806d1afabbd179b284983c1423b3c3b1d91f4bbc74a942a321c80df"
+    }
+  ],
+  "failures": [],
+  "infrastructureMetrics": {
+    "packetIntegrity": 1,
+    "importRejection": 1,
+    "perfectAgreementFixture": 1,
+    "systematicDisagreementDetection": 1,
+    "orderInvariance": 1,
+    "syntheticGoldAdmission": 0
+  },
+  "ledger": {
+    "ledgerVersion": "oue-001-phase-5-study-ledger/v1",
+    "studyVersion": "oue-001-phase-5-human-study/v1",
+    "preregistrationHash": "8131188a7dc216a9575a8677d9bb4d6e7a31c56eaed1230fc560cb8436629bf7",
+    "trainingPacketHashes": [
+      "1164f940d6f582bbec620f60956bc2d072d5d946806cbbf73087253fc9372db7",
+      "6841a1a9d9bcde3856cffbc144ad4c7ad813dcd3536b8b82a7ae8f0f551e6e1b"
+    ],
+    "qualificationPacketHashes": [
+      "49fe7e6d96ae24e6ebb58974add70b5a3ac61d84ddcbb992a266ba1b8eee0b69",
+      "59e622a349ecc89e6330ece30bbb0ff993d831281fb6f66bd8d390ccf1b9f752"
+    ],
+    "confirmatoryPacketHashes": [
+      "0ef857e3f1d3ef14d4d2fc13b473ae18c7d6b88d983f96fe6f9c7b39c7d5b814",
+      "844ad95fe3de094e539d2afcad65eee099d72af50a8cddb720a6793feb845eca",
+      "9eb27ba8a401b05ed80c5a2e48428e6ba982605fda8212f2d6f8785e251fcffc"
+    ],
+    "holdoutPacketHashes": [
+      "6657a3acf544b0b50f7b289c72e9cba884c18da58f9faef8cbb17808ea2915ca",
+      "6bc889b9e25b2985cee9109f193858e644f9ac942b6bed3662a3a4106b6b5123",
+      "dfb9d21fff4beffdfe40ebe364a538cbe0c8b7de28123d375a9351019a5224ca",
+      "e4beffa20486af7d4fe99515ace2282b9ba541f34c40823dd16e067a45b1ea5e"
+    ],
+    "validResponseHashes": [],
+    "invalidResponseHashes": [],
+    "genuineHumanResponseCount": 0,
+    "syntheticTransportFixtureCount": 16,
+    "goldSetHashes": [],
+    "classification": "STUDY READY — HUMAN RESPONSES NOT YET AVAILABLE",
+    "outputHash": "9b45b81cc806d1afabbd179b284983c1423b3c3b1d91f4bbc74a942a321c80df"
+  }
+}

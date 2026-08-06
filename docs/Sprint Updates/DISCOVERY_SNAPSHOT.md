@@ -54,21 +54,69 @@ Local OAuth credentials, connector state, development Runtime, Clerk state, and 
 
 ## Immediate work
 
-1. Run Material Information Acquisition — Independent Live Outcome Calibration 002.
-2. Keep the selector frozen and hidden until independent human choices are persisted.
-3. Do not activate selection, execute connectors or external actions, generate Objective Recommendations, or begin final frontend wiring.
+1. Implement Phase 3 high-recall semantic candidate generation for the inactive Organizational Understanding Evaluator without assigning correctness or final scores.
+2. Do not design or execute External Comparative Validation 002 until Scoring Robustness Validation passes every required threshold; Phase 0 Case Suite 001 remains Classification F and non-evaluative.
+3. Continue Material Information Acquisition calibration separately; do not activate selection, execute external actions, generate Objective Recommendations, or begin final frontend wiring.
 
-## Parallel evaluator research
+## External comparative research
 
-Organizational Understanding Evaluator 001 Phase 1 freezes the inactive,
-architecture-neutral proposition, adjudication, scoring, ledger, and audit
-contracts. Phase 2 passes deterministic structural validation for complete,
-authorized, explicitly imported semantic adjudications. Component versions,
-duplicate ancestry, imported-rubric provenance, blocking gates, and canonical
-hashes are auditable.
+External Comparative Validation 001 established a frozen ten-case harness but
+was invalidated after execution because the benchmark adapter dropped canonical
+contradiction, uncertainty, and evidence-gap structures. Raw adapter-level
+results are preserved and must not be represented as evidence that Discovery
+lost or won. Human and genuine external-model treatments remain unevaluated.
+No Production or architectural behavior changed.
 
-These are frozen-fixture structural results, not semantic accuracy,
-outcome-calibrated confidence, or observed decision utility. Phase 3
-candidate-generation research is authorized as a parallel benchmark track.
-Material Information Acquisition Independent Live Outcome Calibration 002
-remains the canonical product evidence gate and product priority.
+Observable Output Fidelity Validation 001 now passes the independent typed
+collector and normalization boundary at 100% for artifact-family,
+contradiction, mechanism, evidence-gap, lineage, permission, organization
+isolation, determinism, and semantic-equivalence checks. This validates the
+measurement boundary only. It does not rescore the frozen cases, establish
+comparative performance, or alter External Comparative Validation 001's
+permanent Classification F.
+
+Scoring Robustness Validation 001 fails closed. The unchanged evaluator passed
+ordering, verbosity, formatting, treatment-identity blindness, and all semantic
+negative controls, but achieved only 47.1% semantic agreement, 0% paraphrase
+agreement, 0% terminology agreement, and 0% confidence-representation
+agreement. Nine semantically equivalent cases were falsely distinguished.
+External Comparative Validation 002 is not authorized.
+
+Organizational Understanding Evaluator 001 Phase 1 is complete as inactive
+research architecture. It freezes versioned proposition, recovery,
+adjudication, confidence, scoring, ledger, and audit contracts; covers all ten
+proposition families with architecture-neutral fixtures; and fails closed on
+missing, ambiguous, or unknown adjudications. Recovery, candidate generation,
+live adjudication, deterministic scoring, and comparative execution remain
+unimplemented. This does not clear the scoring-robustness blocker.
+
+Organizational Understanding Evaluator 001 Phase 2 now passes deterministic
+structural validation. Identity, authorization, confidence normalization,
+duplicates, family compatibility, polarity, modality, temporality, graph
+integrity, one-to-one assignment, eight dimension scores, blocking gates,
+ledger generation, canonical serialization, and hashing are deterministic for
+completed imported adjudications. Composite infrastructure is active only for
+structurally valid completed imports. Semantic recovery and adjudication remain
+unimplemented, so External Comparative Validation 002 remains unauthorized.
+
+Organizational Understanding Evaluator 001 Phase 3 adds benchmark-only,
+treatment-neutral semantic candidate retrieval. It deterministically ranks
+plausible proposition pairs and records every retrieval signal, but performs no
+semantic adjudication and assigns no benchmark credit. Phase 4 research may
+begin only as a separately reviewed adjudication phase; External Comparative
+Validation 002 remains unauthorized.
+
+Organizational Understanding Evaluator 001 Phase 4 validates the inactive
+import boundary for independently completed semantic adjudications. Exact
+candidate-set hashes, frozen generic and family rubrics, blinding attestations,
+adjudicator confidence, deterministic reconciliation, completion gates, and a
+semantic audit ledger now protect the unchanged Phase 2 scorer. No live judge
+or human review was executed; External Comparative Validation 002 remains
+unauthorized.
+
+Organizational Understanding Evaluator 001 Phase 5 is study-ready. The blinded
+human semantic-calibration preregistration, packets, response import,
+agreement-analysis, reconciliation, gold-admission, and ledger infrastructure
+are frozen and validated. No genuine human responses or human semantic gold set
+exist yet. Live model-adjudicator development and External Comparative
+Validation 002 remain unauthorized.

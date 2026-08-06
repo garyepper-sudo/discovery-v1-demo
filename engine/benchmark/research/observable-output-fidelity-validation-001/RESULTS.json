@@ -1,0 +1,535 @@
+{
+  "validation": "observable-output-fidelity-validation-001",
+  "classification": "PASS — Observable output fidelity validated",
+  "externalComparativeValidation001": "F — Invalid or Blocked (permanent)",
+  "metrics": {
+    "artifactFamilyRecall": 1,
+    "artifactFamilyPrecision": 1,
+    "contradictionRecall": 1,
+    "contradictionPrecision": 1,
+    "endpointFidelity": 1,
+    "mechanismRecall": 1,
+    "mechanismPrecision": 1,
+    "mechanismFidelity": 1,
+    "evidenceGapRecall": 1,
+    "lineagePreservation": 1,
+    "permissionCompliance": 1,
+    "organizationIsolation": 1,
+    "deterministicSerialization": 1,
+    "semanticEquivalence": 1
+  },
+  "coverage": [
+    {
+      "artifactFamily": "finding",
+      "internal": 1,
+      "external": 1,
+      "recall": 1,
+      "precision": 1
+    },
+    {
+      "artifactFamily": "condition",
+      "internal": 1,
+      "external": 1,
+      "recall": 1,
+      "precision": 1
+    },
+    {
+      "artifactFamily": "constraint",
+      "internal": 1,
+      "external": 1,
+      "recall": 1,
+      "precision": 1
+    },
+    {
+      "artifactFamily": "conclusion",
+      "internal": 1,
+      "external": 1,
+      "recall": 1,
+      "precision": 1
+    },
+    {
+      "artifactFamily": "prediction",
+      "internal": 1,
+      "external": 1,
+      "recall": 1,
+      "precision": 1
+    },
+    {
+      "artifactFamily": "contradiction",
+      "internal": 1,
+      "external": 1,
+      "recall": 1,
+      "precision": 1
+    },
+    {
+      "artifactFamily": "mechanism",
+      "internal": 2,
+      "external": 2,
+      "recall": 1,
+      "precision": 1
+    },
+    {
+      "artifactFamily": "uncertainty",
+      "internal": 1,
+      "external": 1,
+      "recall": 1,
+      "precision": 1
+    },
+    {
+      "artifactFamily": "evidence-gap",
+      "internal": 1,
+      "external": 1,
+      "recall": 1,
+      "precision": 1
+    }
+  ],
+  "checks": [
+    {
+      "name": "finding preservation",
+      "passed": true,
+      "detail": "recall=1; precision=1",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "condition preservation",
+      "passed": true,
+      "detail": "recall=1; precision=1",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "constraint preservation",
+      "passed": true,
+      "detail": "recall=1; precision=1",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "conclusion preservation",
+      "passed": true,
+      "detail": "recall=1; precision=1",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "prediction preservation",
+      "passed": true,
+      "detail": "recall=1; precision=1",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "contradiction preservation",
+      "passed": true,
+      "detail": "recall=1; precision=1",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "mechanism preservation",
+      "passed": true,
+      "detail": "recall=1; precision=1",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "uncertainty preservation",
+      "passed": true,
+      "detail": "recall=1; precision=1",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "evidence-gap preservation",
+      "passed": true,
+      "detail": "recall=1; precision=1",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "finding-1 represented",
+      "passed": true,
+      "detail": "present",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "finding-1 semantic fields",
+      "passed": true,
+      "detail": "statement, status, priority, utility, and justification preserved",
+      "failureClass": "artifact-corruption"
+    },
+    {
+      "name": "finding-1 confidence",
+      "passed": true,
+      "detail": "0.72 === 0.72",
+      "failureClass": "confidence-corruption"
+    },
+    {
+      "name": "finding-1 lineage",
+      "passed": true,
+      "detail": "supporting, opposing, understanding, and change-ancestry references preserved",
+      "failureClass": "lineage-loss"
+    },
+    {
+      "name": "condition-1 represented",
+      "passed": true,
+      "detail": "present",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "condition-1 semantic fields",
+      "passed": true,
+      "detail": "statement, status, priority, utility, and justification preserved",
+      "failureClass": "artifact-corruption"
+    },
+    {
+      "name": "condition-1 confidence",
+      "passed": true,
+      "detail": "0.68 === 0.68",
+      "failureClass": "confidence-corruption"
+    },
+    {
+      "name": "condition-1 lineage",
+      "passed": true,
+      "detail": "supporting, opposing, understanding, and change-ancestry references preserved",
+      "failureClass": "lineage-loss"
+    },
+    {
+      "name": "constraint-1 represented",
+      "passed": true,
+      "detail": "present",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "constraint-1 semantic fields",
+      "passed": true,
+      "detail": "statement, status, priority, utility, and justification preserved",
+      "failureClass": "artifact-corruption"
+    },
+    {
+      "name": "constraint-1 confidence",
+      "passed": true,
+      "detail": "0.64 === 0.64",
+      "failureClass": "confidence-corruption"
+    },
+    {
+      "name": "constraint-1 lineage",
+      "passed": true,
+      "detail": "supporting, opposing, understanding, and change-ancestry references preserved",
+      "failureClass": "lineage-loss"
+    },
+    {
+      "name": "conclusion-1 represented",
+      "passed": true,
+      "detail": "present",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "conclusion-1 semantic fields",
+      "passed": true,
+      "detail": "statement, status, priority, utility, and justification preserved",
+      "failureClass": "artifact-corruption"
+    },
+    {
+      "name": "conclusion-1 confidence",
+      "passed": true,
+      "detail": "0.66 === 0.66",
+      "failureClass": "confidence-corruption"
+    },
+    {
+      "name": "conclusion-1 lineage",
+      "passed": true,
+      "detail": "supporting, opposing, understanding, and change-ancestry references preserved",
+      "failureClass": "lineage-loss"
+    },
+    {
+      "name": "prediction-1 represented",
+      "passed": true,
+      "detail": "present",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "prediction-1 semantic fields",
+      "passed": true,
+      "detail": "statement, status, priority, utility, and justification preserved",
+      "failureClass": "artifact-corruption"
+    },
+    {
+      "name": "prediction-1 confidence",
+      "passed": true,
+      "detail": "0.58 === 0.58",
+      "failureClass": "confidence-corruption"
+    },
+    {
+      "name": "prediction-1 lineage",
+      "passed": true,
+      "detail": "supporting, opposing, understanding, and change-ancestry references preserved",
+      "failureClass": "lineage-loss"
+    },
+    {
+      "name": "contradiction-1 represented",
+      "passed": true,
+      "detail": "present",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "contradiction-1 semantic fields",
+      "passed": true,
+      "detail": "statement, status, priority, utility, and justification preserved",
+      "failureClass": "artifact-corruption"
+    },
+    {
+      "name": "contradiction-1 confidence",
+      "passed": true,
+      "detail": "0.61 === 0.61",
+      "failureClass": "confidence-corruption"
+    },
+    {
+      "name": "contradiction-1 lineage",
+      "passed": true,
+      "detail": "supporting, opposing, understanding, and change-ancestry references preserved",
+      "failureClass": "lineage-loss"
+    },
+    {
+      "name": "mechanism-1 represented",
+      "passed": true,
+      "detail": "present",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "mechanism-1 semantic fields",
+      "passed": true,
+      "detail": "statement, status, priority, utility, and justification preserved",
+      "failureClass": "artifact-corruption"
+    },
+    {
+      "name": "mechanism-1 confidence",
+      "passed": true,
+      "detail": "0.7 === 0.7",
+      "failureClass": "confidence-corruption"
+    },
+    {
+      "name": "mechanism-1 lineage",
+      "passed": true,
+      "detail": "supporting, opposing, understanding, and change-ancestry references preserved",
+      "failureClass": "lineage-loss"
+    },
+    {
+      "name": "mechanism-2 represented",
+      "passed": true,
+      "detail": "present",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "mechanism-2 semantic fields",
+      "passed": true,
+      "detail": "statement, status, priority, utility, and justification preserved",
+      "failureClass": "artifact-corruption"
+    },
+    {
+      "name": "mechanism-2 confidence",
+      "passed": true,
+      "detail": "0.57 === 0.57",
+      "failureClass": "confidence-corruption"
+    },
+    {
+      "name": "mechanism-2 lineage",
+      "passed": true,
+      "detail": "supporting, opposing, understanding, and change-ancestry references preserved",
+      "failureClass": "lineage-loss"
+    },
+    {
+      "name": "uncertainty-1 represented",
+      "passed": true,
+      "detail": "present",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "uncertainty-1 semantic fields",
+      "passed": true,
+      "detail": "statement, status, priority, utility, and justification preserved",
+      "failureClass": "artifact-corruption"
+    },
+    {
+      "name": "uncertainty-1 confidence",
+      "passed": true,
+      "detail": "0.4 === 0.4",
+      "failureClass": "confidence-corruption"
+    },
+    {
+      "name": "uncertainty-1 lineage",
+      "passed": true,
+      "detail": "supporting, opposing, understanding, and change-ancestry references preserved",
+      "failureClass": "lineage-loss"
+    },
+    {
+      "name": "gap-1 represented",
+      "passed": true,
+      "detail": "present",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "gap-1 semantic fields",
+      "passed": true,
+      "detail": "statement, status, priority, utility, and justification preserved",
+      "failureClass": "artifact-corruption"
+    },
+    {
+      "name": "gap-1 confidence",
+      "passed": true,
+      "detail": "null === null",
+      "failureClass": "confidence-corruption"
+    },
+    {
+      "name": "gap-1 lineage",
+      "passed": true,
+      "detail": "supporting, opposing, understanding, and change-ancestry references preserved",
+      "failureClass": "lineage-loss"
+    },
+    {
+      "name": "confidence ordering",
+      "passed": true,
+      "detail": "relative confidence ordering preserved",
+      "failureClass": "confidence-corruption"
+    },
+    {
+      "name": "contradiction endpoints",
+      "passed": true,
+      "detail": "support, opposition, and unresolved state preserved",
+      "failureClass": "artifact-corruption"
+    },
+    {
+      "name": "mechanism fidelity",
+      "passed": true,
+      "detail": "support, opposition, competitor, and confidence preserved",
+      "failureClass": "artifact-corruption"
+    },
+    {
+      "name": "evidence-gap fidelity",
+      "passed": true,
+      "detail": "priority, expected utility, justification, and Understanding link preserved",
+      "failureClass": "artifact-corruption"
+    },
+    {
+      "name": "repeated deterministic serialization",
+      "passed": true,
+      "detail": "byte-equivalent canonical serialization",
+      "failureClass": "serialization-defect"
+    },
+    {
+      "name": "canonical-order invariance",
+      "passed": true,
+      "detail": "input and lineage order do not alter serialization",
+      "failureClass": "serialization-defect"
+    },
+    {
+      "name": "timestamp semantic invariance",
+      "passed": true,
+      "detail": "equivalent timestamp changes do not alter semantic signature",
+      "failureClass": "normalization-defect"
+    },
+    {
+      "name": "equivalent-identifier semantic invariance",
+      "passed": true,
+      "detail": "consistent identity remapping preserves semantic signature",
+      "failureClass": "normalization-defect"
+    },
+    {
+      "name": "serialization-form invariance",
+      "passed": true,
+      "detail": "JSON round trip preserves output",
+      "failureClass": "serialization-defect"
+    },
+    {
+      "name": "malformed confidence denied",
+      "passed": true,
+      "detail": "out-of-contract confidence fails closed",
+      "failureClass": "confidence-corruption"
+    },
+    {
+      "name": "permission filtering",
+      "passed": true,
+      "detail": "unauthorized artifact and evidence omitted",
+      "failureClass": "permission-defect"
+    },
+    {
+      "name": "authorization organization mismatch denied",
+      "passed": true,
+      "detail": "normalization failed closed before output",
+      "failureClass": "organization-contamination"
+    },
+    {
+      "name": "cross-organization cognition denied",
+      "passed": true,
+      "detail": "mixed snapshot failed closed",
+      "failureClass": "organization-contamination"
+    },
+    {
+      "name": "collector maps finding",
+      "passed": true,
+      "detail": "typed canonical owner mapped",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "collector maps condition",
+      "passed": true,
+      "detail": "typed canonical owner mapped",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "collector maps constraint",
+      "passed": true,
+      "detail": "typed canonical owner mapped",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "collector maps conclusion",
+      "passed": true,
+      "detail": "typed canonical owner mapped",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "collector maps prediction",
+      "passed": true,
+      "detail": "typed canonical owner mapped",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "collector maps contradiction",
+      "passed": true,
+      "detail": "typed canonical owner mapped",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "collector maps mechanism",
+      "passed": true,
+      "detail": "typed canonical owner mapped",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "collector maps uncertainty",
+      "passed": true,
+      "detail": "typed canonical owner mapped",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "collector maps evidence-gap",
+      "passed": true,
+      "detail": "typed canonical owner mapped",
+      "failureClass": "artifact-omission"
+    },
+    {
+      "name": "collector contradiction endpoints",
+      "passed": true,
+      "detail": "opposingEvidenceIds preserved from V3Contradiction",
+      "failureClass": "lineage-loss"
+    },
+    {
+      "name": "collector mechanism lineage",
+      "passed": true,
+      "detail": "contradiction and opposing evidence preserved from V3Mechanism",
+      "failureClass": "lineage-loss"
+    },
+    {
+      "name": "golden reviewer agreement",
+      "passed": true,
+      "detail": "canonical and normalized reviewers receive materially equivalent semantic fields",
+      "failureClass": "evaluator-incompatibility"
+    }
+  ],
+  "failures": [],
+  "canDiscoveryNowBeMeasuredFairly": true,
+  "externalComparativeValidation002Authorized": true
+}

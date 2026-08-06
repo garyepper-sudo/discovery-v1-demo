@@ -1,0 +1,28 @@
+{
+  "status": "exploratory-post-run-analysis",
+  "method": "Paired mean differences with deterministic 5000-resample percentile bootstrap. This analysis was not separately preregistered and cannot rescue the invalidated comparison.",
+  "comparisons": [
+    {
+      "baseline": "llm-only-fixture-proxy",
+      "n": 20,
+      "discoveryMinusBaselineMean": -0.2253399817085388,
+      "standardizedMeanDifference": -1.4123526492253324,
+      "bootstrap95": [-0.29280162672151105, -0.15656862033584568]
+    },
+    {
+      "baseline": "retrieval-plus-synthesis",
+      "n": 20,
+      "discoveryMinusBaselineMean": -0.22763998170853877,
+      "standardizedMeanDifference": -1.4428350004116175,
+      "bootstrap95": [-0.2959539687048711, -0.16127590916183965]
+    },
+    {
+      "baseline": "traditional-structured-analysis",
+      "n": 20,
+      "discoveryMinusBaselineMean": -0.2134240611207932,
+      "standardizedMeanDifference": -1.2395895254563742,
+      "bootstrap95": [-0.2853717897356419, -0.14177448643413165]
+    }
+  ],
+  "interpretation": "The raw adapter-level scores favored every local baseline, including on holdouts. These effect estimates are retained as diagnostics only because the Discovery observable-output adapter failed the post-run validity audit."
+}

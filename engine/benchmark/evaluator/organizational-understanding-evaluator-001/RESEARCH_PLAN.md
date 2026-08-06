@@ -15,12 +15,19 @@ import human judgments, compute a benchmark score, or execute a treatment.
    family, confidence, duplicate, graph, assignment, scoring, and ledger behavior.
 2. Phase 3 candidate generation is independently preregistered and validated
    as retrieval-only infrastructure that cannot assign correctness or credit.
-3. Design a blinded adjudication import or independently versioned model port.
-4. Run semantic-equivalence, distinction, anti-gaming, style-neutrality,
+3. Phase 4 complete: blinded, hash-bound imported-adjudication validation,
+   deterministic reconciliation, completion gates, and semantic audit ledger.
+4. Phase 5 study protocol complete: genuine blinded human responses have not
+   yet been collected, so no human semantic gold set exists.
+5. Execute the frozen human study without changing thresholds; import genuine
+   responses, measure agreement, resolve disputes, and admit an auditable gold
+   set only if every preregistered gate passes.
+6. Validate any future live semantic adjudicator against that genuine gold set.
+7. Run semantic-equivalence, distinction, anti-gaming, style-neutrality,
    consistency, and negative-control suites.
-5. Compare adjudication against at least two blinded experts and consensus.
-6. Freeze hashes only after every pre-comparative gate passes.
-7. Create External Comparative Validation 002 as a new untouched suite.
+8. Compare adjudication against at least two blinded experts and consensus.
+9. Freeze hashes only after every pre-comparative gate passes.
+10. Create External Comparative Validation 002 as a new untouched suite.
 
 ## Required evidence before activation
 

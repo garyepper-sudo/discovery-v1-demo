@@ -93,7 +93,52 @@ Localized nonlinear research: replicate
 
 No benchmark result may be represented as completed production work.
 
-### Organizational Understanding Evaluator 001 — Phases 1–2
+### External Comparative Validation 001
+
+Path:
+
+```text
+external-comparative-validation-001/
+```
+
+This Phase 0 harness compares observable organizational-understanding quality
+across shared evidence. It includes deterministic local baselines, canonical
+Discovery, a blinded human import packet, fixed scoring, holdouts, robustness
+checks, and explicit invalidation gates. Its generic-synthesis treatment is a
+fixture-backed proxy rather than genuine external-model evidence, so missing
+human and live-model treatments force an inconclusive classification.
+
+### Observable Output Fidelity Validation 001
+
+Path:
+
+```text
+observable-output-fidelity-validation-001/
+```
+
+This independent measurement-validation package verifies typed preservation of
+canonical findings, conditions, constraints, conclusions, predictions,
+contradictions, mechanisms, uncertainty, evidence gaps, confidence, and
+lineage. It validates permission filtering, organization isolation, canonical
+serialization, semantic invariance, and a golden canonical-versus-normalized
+review packet. It does not rerun or reclassify the permanently invalid External
+Comparative Validation 001 suite.
+
+### Scoring Robustness Validation 001
+
+Path:
+
+```text
+scoring-robustness-validation-001/
+```
+
+This independent evaluator-validation package measures semantic-equivalence,
+paraphrase, ordering, verbosity, terminology, confidence wording, negative
+controls, anti-gaming behavior, and cross-treatment blindness. It imports the
+frozen evaluator read-only, never executes a comparative treatment, and fails
+closed unless every required robustness threshold passes.
+
+### Organizational Understanding Evaluator 001 — Phase 1
 
 Path:
 
@@ -103,14 +148,29 @@ Path:
 
 Phase 1 defines architecture-neutral proposition, recovery, adjudication,
 confidence, scoring, ledger, and audit contracts plus frozen semantics and
-fail-closed ports. Phase 2 adds deterministic structural validation,
-confidence normalization, duplicate collapse with audit ancestry, frozen
-family/polarity/modality/temporal checks, graph integrity, one-to-one
-assignment, dimension scoring from explicitly imported adjudications, blocking
-gates, component-versioned ledgers, canonical serialization, and hashing.
+fail-closed ports. It contains no live adjudicator or comparative execution
+path. External Comparative Validation 002 remains unauthorized.
 
-The frozen-fixture results do not establish semantic accuracy, outcome-based
-confidence calibration, or observed decision utility. Semantic recovery and
-adjudication remain unimplemented. Phase 3 candidate-generation research is
-authorized in parallel; External Comparative Validation 002 remains
-unauthorized.
+Phase 2 adds deterministic structural validation, confidence normalization,
+duplicate collapse, family/polarity/modality/temporal checks, graph integrity,
+one-to-one assignment, dimension scoring from imported adjudications, blocking
+gates, ledgers, canonical serialization, and hashing. It still performs no
+semantic recovery or adjudication.
+
+Phase 3 adds an inactive deterministic candidate generator. It ranks plausible
+same-family ground-truth propositions from structural, lexical, entity, graph,
+evidence, and confidence retrieval signals, optimizing Recall@10. Retrieval
+scores never determine correctness or benchmark credit. Semantic adjudication
+and External Comparative Validation 002 remain unauthorized.
+
+Phase 4 adds an inactive imported semantic-adjudication boundary. Independently
+authored fixture or manual judgments are candidate-set-bound, rubric-validated,
+blinding-checked, confidence-gated, reconciled, completed, and then passed into
+the unchanged deterministic scorer. No live semantic judge or human review is
+executed, and fixture resolutions do not establish human agreement.
+
+Phase 5 freezes the blinded human-calibration protocol, reviewer workflow,
+training and qualification materials, confirmatory and protected holdout
+packets, response integrity checks, agreement statistics, resolution workflow,
+gold-set admission, and study ledger. No genuine human responses are available;
+synthetic transport fixtures are excluded from evidence and gold admission.

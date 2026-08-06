@@ -1,0 +1,148 @@
+[
+  {
+    "studyVersion": "oue-001-phase-5-human-study/v1",
+    "packetId": "phase5-confirmatory-05",
+    "partition": "confirmatory",
+    "family": "finding",
+    "difficulty": "clear",
+    "neutralLabelA": "Proposition A",
+    "neutralLabelB": "Proposition B",
+    "propositionA": "Approval ownership begins after customer handoff.",
+    "propositionB": "Customers are handed over before an approval owner is assigned.",
+    "structuredContext": {
+      "polarity": [
+        "affirmed",
+        "affirmed"
+      ],
+      "modality": [
+        "observed",
+        "observed"
+      ],
+      "temporality": [
+        "unknown",
+        "current"
+      ],
+      "supportingEvidence": [
+        "evidence-1"
+      ],
+      "opposingEvidence": [],
+      "relationshipContext": []
+    },
+    "rubricVersion": "oue-semantic-adjudication-rubric/v1",
+    "requiredResponseFields": [
+      "classification",
+      "meaning agreement",
+      "polarity",
+      "modality",
+      "temporality",
+      "causal agreement when applicable",
+      "endpoint fidelity when applicable",
+      "confidence agreement when applicable",
+      "lineage agreement",
+      "reviewer confidence",
+      "escalation",
+      "structured justification"
+    ],
+    "displayOrderSeed": "2a8b57e620c5751d",
+    "packetHash": "0ef857e3f1d3ef14d4d2fc13b473ae18c7d6b88d983f96fe6f9c7b39c7d5b814"
+  },
+  {
+    "studyVersion": "oue-001-phase-5-human-study/v1",
+    "packetId": "phase5-confirmatory-06",
+    "partition": "confirmatory",
+    "family": "evidence-gap",
+    "difficulty": "difficult",
+    "neutralLabelA": "Proposition A",
+    "neutralLabelB": "Proposition B",
+    "propositionA": "Compare handoff duration while varying approval timing and holding credential readiness constant.",
+    "propositionB": "Hold access preparation equal and compare transfer times for early versus late sign-off ownership.",
+    "structuredContext": {
+      "polarity": [
+        "affirmed",
+        "affirmed"
+      ],
+      "modality": [
+        "hypothetical",
+        "hypothetical"
+      ],
+      "temporality": [
+        "unknown",
+        "current"
+      ],
+      "supportingEvidence": [
+        "evidence-1"
+      ],
+      "opposingEvidence": [],
+      "relationshipContext": [
+        "mechanism-1",
+        "mechanism-2",
+        "recovered-mechanism-1",
+        "recovered-mechanism-2"
+      ]
+    },
+    "rubricVersion": "oue-semantic-adjudication-rubric/v1",
+    "requiredResponseFields": [
+      "classification",
+      "meaning agreement",
+      "polarity",
+      "modality",
+      "temporality",
+      "causal agreement when applicable",
+      "endpoint fidelity when applicable",
+      "confidence agreement when applicable",
+      "lineage agreement",
+      "reviewer confidence",
+      "escalation",
+      "structured justification"
+    ],
+    "displayOrderSeed": "c9d1830410018a27",
+    "packetHash": "9eb27ba8a401b05ed80c5a2e48428e6ba982605fda8212f2d6f8785e251fcffc"
+  },
+  {
+    "studyVersion": "oue-001-phase-5-human-study/v1",
+    "packetId": "phase5-confirmatory-07",
+    "partition": "confirmatory",
+    "family": "implication",
+    "difficulty": "moderate",
+    "neutralLabelA": "Proposition A",
+    "neutralLabelB": "Proposition B",
+    "propositionA": "Test earlier approval ownership before redesigning the full onboarding process.",
+    "propositionB": "Try assigning the sign-off owner sooner before undertaking a complete process redesign.",
+    "structuredContext": {
+      "polarity": [
+        "affirmed",
+        "affirmed"
+      ],
+      "modality": [
+        "inferred",
+        "inferred"
+      ],
+      "temporality": [
+        "unknown",
+        "current"
+      ],
+      "supportingEvidence": [
+        "evidence-1"
+      ],
+      "opposingEvidence": [],
+      "relationshipContext": []
+    },
+    "rubricVersion": "oue-semantic-adjudication-rubric/v1",
+    "requiredResponseFields": [
+      "classification",
+      "meaning agreement",
+      "polarity",
+      "modality",
+      "temporality",
+      "causal agreement when applicable",
+      "endpoint fidelity when applicable",
+      "confidence agreement when applicable",
+      "lineage agreement",
+      "reviewer confidence",
+      "escalation",
+      "structured justification"
+    ],
+    "displayOrderSeed": "48afd2bfaec1b56c",
+    "packetHash": "844ad95fe3de094e539d2afcad65eee099d72af50a8cddb720a6793feb845eca"
+  }
+]
