@@ -174,8 +174,35 @@ five executable models, 100 cells, 78 invariants, six neutrality invariants,
 and four tamper validations. No model qualifies and no field family is
 complete. Attribution and source-binding closure pass; source and Evidence
 scope remain separate; Explanation immutable-version ownership remains
-unresolved. The executed owner graph selects field audience-requirement
-governance as the unique dominant actionable root. Its exact next task is
+unresolved. At that diagnostic checkpoint, the executed owner graph selected
+field audience-requirement governance as its dominant actionable root. Its
+then-next task was
 **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING FIELD AUDIENCE-REQUIREMENT
-GOVERNANCE CONTRACT 001**. Material differentiation remains OPEN; activation
+GOVERNANCE CONTRACT 001**. That task is now closed. Material differentiation remains OPEN; activation
 and route promotion remain BLOCKED.
+
+## Post-field-audience owner-graph closure
+
+**DISCOVERY POST-FIELD-AUDIENCE DIRECT-SECURITY GOVERNANCE OWNER-GRAPH
+RECONCILIATION 001** is complete with `OWNER-GRAPH-B` and
+`PIVOT-A — PIVOT NOW`.
+
+Administrative persistence, completed Explanation immutable versions,
+Condition scope, confidence contributor references, uncertainty owner/support
+references, contradiction side/revision references, and history/evolution
+revision lineage remain independently governed, incomparable actionable roots.
+There is no unique next governance successor for the immediate Product target.
+
+The current projection remains useful for a development-only **SHARED
+ORGANIZATION-WIDE PREPARATION** slice: 2 Understandings, 1 completed
+Explanation, 12 bounded Evidence references, 7 projected Conditions, and 9
+Investigation Opportunities. CEO, Director, and Manager receive the same
+substantive semantic projection. Role and default-scope labels grant no
+additional authority.
+
+The exact next task is **DISCOVERY LEADERSHIP CONVERSATION PREPARE-AND-CAPTURE
+VERTICAL SLICE 001**. `ProductQuestion` remains the long-lived anchor; the
+immutable Prepared Work Product snapshot belongs inside the slice. Material
+role differentiation, field-governance persistence, recipient grants, nested
+disclosure, Evidence-body disclosure, autonomous admission, route promotion,
+and deployment remain unauthorized.

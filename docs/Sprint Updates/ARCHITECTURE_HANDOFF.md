@@ -28,11 +28,11 @@ and deferred Environmental Intelligence are registered as `GAP-D-005` and
 `docs/Product/DISCOVERY_LEADERSHIP_WORKSPACE_MANIFESTO.md` and the canonical
 decision is `DEC-PROD-038`.
 
-The immediate engineering dependency remains the already identified field
-audience-requirement governance contract. Product brainstorming is frozen;
-subsequent strategy work should prioritize leadership interviews, the simulated
-organization, multi-role governance validation, one product-safe Prepared Work
-Product prototype, and a Decision benchmark suite.
+The post-field-audience review is canonically closed as `OWNER-GRAPH-B`. The
+remaining actionable governance roots are independently owned and incomparable
+for the immediate Product target; there is no unique governance successor.
+Discovery therefore selects `PIVOT-A — PIVOT NOW` for the bounded
+development-only Leadership Conversation Prepare/Capture validation slice.
 
 These are parallel tracks. Material role differentiation remains **OPEN**;
 recipient-scoped nested-field disclosure remains unimplemented; activation and
@@ -53,9 +53,30 @@ The contract is unpersisted, has no live consumer, and changes no Runtime,
 authorization, disclosure, projection, Product Communication, presentation, or
 route behavior. Comparative ownership/temporal research is preserved on
 `research/field-audience-requirement-comparative-model-temporal-preservation-001`,
-is noncanonical, and is not a closure gate. The exact next review is
-**DISCOVERY POST-FIELD-AUDIENCE DIRECT-SECURITY GOVERNANCE OWNER-GRAPH
-RECONCILIATION 001**; no implementation successor is yet canonical.
+is noncanonical, and is not a closure gate.
+
+## Post-field-audience owner-graph closure
+
+Completed: **DISCOVERY POST-FIELD-AUDIENCE DIRECT-SECURITY GOVERNANCE
+OWNER-GRAPH RECONCILIATION 001**.
+
+Result: **OWNER-GRAPH-B — NO UNIQUE GOVERNANCE SUCCESSOR**. Pivot:
+**PIVOT-A — PIVOT NOW**.
+
+The immediate engineering task is **DISCOVERY LEADERSHIP CONVERSATION
+PREPARE-AND-CAPTURE VERTICAL SLICE 001**. The first slice is explicitly
+**SHARED ORGANIZATION-WIDE PREPARATION**. It consumes the authorized projection,
+preserves `ProductQuestion` as the long-lived anchor, and defines an immutable
+versioned Prepared Work Product as a Product Workflow artifact inside the
+slice. It makes no material role-differentiation claim and authorizes no
+Evidence-body disclosure, field-governance persistence, recipient grants,
+nested disclosure, autonomous admission, route promotion, or deployment.
+
+Administrative persistence, completed Explanation versions, Condition scope,
+confidence, uncertainty, contradiction, and evolution lineage remain parallel
+actionable roots. Their downstream audience lineage, disclosure, abstraction,
+integration, and activation work remains required before differentiated
+Product behavior.
 
 ## Current Living Organization integration handoff
 
@@ -879,10 +900,11 @@ accounting is 20 scenarios × five models = 100 cells, plus 78 invariants, six
 neutrality invariants, and four tamper validations. No model qualifies and no
 field is complete. Exact source-binding closure and independent source/Evidence
 scope resolution pass; Explanation immutable-version ownership remains
-unresolved. The executed owner graph derives field audience-requirement
-governance as the unique dominant actionable root. Next: **DISCOVERY CANONICAL
+unresolved. At that diagnostic checkpoint, the executed owner graph derived
+field audience-requirement governance as its dominant actionable root. Its
+then-next task was **DISCOVERY CANONICAL
 ORGANIZATIONAL UNDERSTANDING FIELD AUDIENCE-REQUIREMENT GOVERNANCE CONTRACT
-001**. Explanation version ownership remains separate and later;
+001**. That task is now closed. Explanation version ownership remains separate;
 condition/investigation production remains deferred. Runtime, grants,
 assignments, disclosure, projection, presentation, routes, and Product behavior
 are unchanged; material differentiation remains OPEN and activation/promotion

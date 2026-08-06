@@ -3,8 +3,8 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** Field audience-requirement direct security is canonically
-closed as a shadow primitive; owner-graph reconciliation is next
+**Current phase:** Post-field-audience owner graph is canonically reconciled;
+the shared Leadership Conversation Prepare/Capture validation slice is next
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
@@ -93,45 +93,33 @@ the repository corpus and retained local metadata.
 
 ## Current Objective
 
-Reconcile the post-field-audience governance owner graph without implementing
-any presumed successor, persistence, activation, disclosure, Runtime wiring, or
-route.
+Plan the bounded development-only, organization-wide Leadership Conversation
+Prepare/Capture slice. It consumes the authorized shared projection, preserves
+`ProductQuestion` as the long-lived anchor, and defines the immutable Prepared
+Work Product snapshot inside the slice. Leadership Workspace implementation has
+not begun.
 
-This objective closes a governance prerequisite in the Leadership Workspace
-strategy program. Prepared Work Product, Decision Readiness, workspace, route,
-and Environmental Intelligence implementation remain unauthorized. Their
-open architecture and research gaps are `GAP-B-019`, `GAP-B-020`, `GAP-D-005`,
-and `GAP-D-006`.
+Material role differentiation remains OPEN. Administrative persistence,
+audience grants, forward lineage, nested disclosure, safe abstraction, live
+integration, route promotion, and Production deployment remain separate
+parallel governance work.
 
 ## Next Priority
 
-**DISCOVERY POST-FIELD-AUDIENCE DIRECT-SECURITY GOVERNANCE OWNER-GRAPH
-RECONCILIATION 001**
+**DISCOVERY LEADERSHIP CONVERSATION PREPARE-AND-CAPTURE VERTICAL SLICE 001**
 
-The direct-security contract is classification A: approval-policy derivation,
-issuance authorization, receipt construction, and historical issuance are
-independently reconstructable across 47 cases. It remains shadow-only,
-unpersisted, unused by live Product code, and creates no current records.
-Comparative ownership/temporal research is preserved on its research branch,
-is noncanonical, and establishes no accepted model, readiness, owner graph, or
-next task.
+The owner-graph reconciliation is complete with `OWNER-GRAPH-B` and
+`PIVOT-A — PIVOT NOW`. No unique governance successor exists: administrative
+persistence, completed Explanation versions, Condition scope, confidence,
+uncertainty, contradiction, and evolution lineage are incomparable actionable
+roots for this target. None blocks shared organization-wide preparation.
 
-The completed benchmark passed 52 cases, five models, and 27 leakage channels
-(7,020 cells), selecting Model 2 with primary F and secondary B/C/D. Material role
-differentiation remains OPEN: current canonical disclosure is organization-wide
-and function/team display scopes do not filter it. Do not fabricate role content
-or broaden access. Route promotion remains deferred until governed semantics
-support truthful differences, an independent two-tab witness is captured, and
-the later **DISCOVERY LIVE MULTI-ROLE UNAUTHORIZED DISCLOSURE AND INFERENCE
-STRESS TEST 001** passes.
-
-The completed forward-lineage diagnostic contains 20 scenarios, five models,
-100 cells, 78 invariants, six neutrality invariants, and four tamper
-validations. No model qualifies and no field is complete. Exact source closure
-and separate source/Evidence scope resolution pass. The owner graph derives
-field audience-requirement governance as the unique dominant actionable root;
-Explanation immutable-version ownership is separate and later, and
-condition/investigation production remains deferred. No live behavior changed.
+The first slice is explicitly **SHARED ORGANIZATION-WIDE PREPARATION**. It must
+not present role or default-scope labels as substantive authorization
+differences, expose Evidence bodies, activate field requirements or recipient
+grants, perform nested disclosure, promote a route, or deploy. Capture creates
+source-bound proposals requiring human review; it does not autonomously mutate
+Evidence or Runtime.
 
 ## Canonical implementation boundary
 

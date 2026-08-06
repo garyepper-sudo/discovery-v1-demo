@@ -2,27 +2,43 @@
 
 ## Exact next task
 
-Begin **DISCOVERY POST-FIELD-AUDIENCE DIRECT-SECURITY GOVERNANCE OWNER-GRAPH
-RECONCILIATION 001** from the exact resulting `origin/main` in a new branch and
-worktree.
+Begin **DISCOVERY LEADERSHIP CONVERSATION PREPARE-AND-CAPTURE VERTICAL SLICE
+001** from the exact resulting `origin/main` in a new branch and worktree.
 
-This is a review-only reconciliation after canonical closure of the shadow
-field-audience direct-security primitive. It must determine whether a unique
-next owner exists; comparative model/temporal research supplies no accepted
-selection or successor. Product brainstorming and implementation of
-workspaces, Decision Readiness, or Environmental Intelligence remain frozen.
-Material role differentiation remains **OPEN**, recipient-scoped nested-field
-disclosure remains unimplemented, and activation and route promotion remain
-**BLOCKED**.
+The post-field-audience review is complete: `OWNER-GRAPH-B — NO UNIQUE
+GOVERNANCE SUCCESSOR` and `PIVOT-A — PIVOT NOW`. The next task is a bounded
+development-only Product-validation slice, not differentiated activation. It
+must describe itself as **SHARED ORGANIZATION-WIDE PREPARATION**, consume only
+the authorized projection, preserve `ProductQuestion` as the long-lived anchor,
+and define the immutable Prepared Work Product snapshot inside the slice.
+
+Leadership Workspace implementation has not begun. Material role
+differentiation remains **OPEN**; administrative persistence, recipient grants,
+forward lineage, nested disclosure, safe abstraction, activation, and route
+promotion remain parallel blocked governance work.
 
 ## Read first
 
 1. `AGENTS.md`
 2. `docs/Product/ROLE_AWARE_SCOPED_PRODUCT_PROJECTION_FRONTEND_HANDOFF.md`
 3. `docs/Product/CANONICAL_PRODUCT_ARCHITECTURE.md`
-4. `docs/Product/PRODUCT_GAPS.md`
-5. `docs/Sprint Updates/DISCOVERY_SNAPSHOT.md`
-6. `docs/Sprint Updates/PROJECT_STATE.md`
+4. `docs/Product/POST_FIELD_AUDIENCE_OWNER_GRAPH_RECONCILIATION_001.md`
+5. `docs/Product/PRODUCT_GAPS.md`
+6. `docs/Sprint Updates/DISCOVERY_SNAPSHOT.md`
+7. `docs/Sprint Updates/PROJECT_STATE.md`
+
+## Completed owner-graph closure
+
+Completed: **DISCOVERY POST-FIELD-AUDIENCE DIRECT-SECURITY GOVERNANCE
+OWNER-GRAPH RECONCILIATION 001**.
+
+Result: **OWNER-GRAPH-B — NO UNIQUE GOVERNANCE SUCCESSOR**.
+
+Pivot: **PIVOT-A — PIVOT NOW**.
+
+Target A has no governance blockers. Target B requires bounded Product Workflow
+contracts but not field-governance completion. Target C remains blocked by the
+complete differentiated-governance chain.
 
 ## Canonical current state
 
