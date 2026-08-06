@@ -819,3 +819,20 @@ canonical `contains` edges. Contract readiness passes; activation remains
 blocked on persistence, administrative issuance, current resolution, and live
 wiring. No current grant exists. Next: **DISCOVERY CANONICAL ORGANIZATIONAL
 UNDERSTANDING AUDIENCE-RELEVANT NESTED-FIELD LINEAGE FORWARD PRODUCER 001**.
+
+## Audience-lineage diagnostic closure
+
+The forward-producer investigation is canonically closed as a fail-closed,
+shadow-only diagnostic foundation with producer classification F. Its exact
+accounting is 20 scenarios × five models = 100 cells, plus 78 invariants, six
+neutrality invariants, and four tamper validations. No model qualifies and no
+field is complete. Exact source-binding closure and independent source/Evidence
+scope resolution pass; Explanation immutable-version ownership remains
+unresolved. The executed owner graph derives field audience-requirement
+governance as the unique dominant actionable root. Next: **DISCOVERY CANONICAL
+ORGANIZATIONAL UNDERSTANDING FIELD AUDIENCE-REQUIREMENT GOVERNANCE CONTRACT
+001**. Explanation version ownership remains separate and later;
+condition/investigation production remains deferred. Runtime, grants,
+assignments, disclosure, projection, presentation, routes, and Product behavior
+are unchanged; material differentiation remains OPEN and activation/promotion
+remain BLOCKED.

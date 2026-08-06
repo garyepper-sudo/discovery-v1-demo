@@ -710,3 +710,47 @@ Changing one requires the process in
   authority and separate persistence.
 - **Status:** Additive shadow contract and pure evaluator implemented and
   validated; no migration, live wiring, grant seeding, or Product change.
+
+## DEC-PROD-037 — Audience-lineage production requires explicit audience semantics
+
+- **Decision:** No production model is selected. A lineage producer may retain
+  subject and provenance scope, but may not reinterpret composition,
+  Explanation, source, or Evidence scope as a recipient-audience requirement
+  without an explicit field-owned requirement or governed derivation rule.
+- **Evidence:** The accounting-corrected oracle executes 20 truthful behavioral
+  scenarios against five benchmark-only policies (100 exact cells), plus 58
+  invariant assertions, six wrapper-only neutrality invariants, and four
+  tamper validations. Every model violates at least one mandatory ownership or
+  safety invariant. The sole repeated normalized input is an enumerated
+  normalization-equivalence pair; unjustified repeats are zero. Both earlier
+  digests and the original Model C result are superseded.
+- **Accounting boundary:** Scenario-wrapper, raw producer-input, normalized
+  producer-input, model-evaluation-input, producer-output, and model-output
+  identities are separately stable-digested. Role, recipient, default scope,
+  grants, presentation, case identity, and assertion metadata never enter a
+  producer-input digest.
+- **Version boundary:** `OrganizationalExplanation` has no explicit revision and
+  its producer does not establish immutable identity as the version boundary.
+  Lineage must record this as unresolved; it may not synthesize a revision.
+- **Scope closure:** Source scope resolves from exact source bindings. Evidence
+  scope resolves from the exact attribution. Their values may coincide because
+  current attribution is derived from bindings, but their resolution paths and
+  fields remain distinct. Every referenced binding must resolve exactly.
+- **Compatibility:** The corrected contract remains pure, shadow-only, and
+  unpersisted. No Runtime, grant, disclosure, projection, or Product behavior
+  changed.
+- **Affected gap and phase:** `GAP-B-014`, Phase 5 connected understanding.
+- **Ordering:** Field audience-requirement governance is the earliest owner
+  because the executed owner graph identifies it as an actionable root whose
+  blocked-field set strictly contains every other actionable root's set.
+  Completed Explanation immutable-version ownership derives as separate after
+  failing shared semantic, mutation, production, version, and validation-owner
+  checks. Condition/investigation production remains deferred because
+  investigation references are downstream of unresolved condition scope.
+- **Oracle integrity:** Final review found the earlier owner/task conclusion was
+  still constant. Version 4 now derives normalized findings, graph, dominance,
+  combined-task boundedness, registry key, and next task in one integrity-
+  digested decision. Alternate-finding controls change or null the selection;
+  missing registry entries fail closed.
+- **Status:** Oracle correction A; producer classification F; hold for multiple
+  producer gaps.

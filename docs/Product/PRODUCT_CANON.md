@@ -692,3 +692,17 @@ and binds to an exact current access-assignment identity and revision.
 No current Northstar grant exists and no migration ran. Forward lineage may
 proceed without persisted grants; live activation, material differentiation,
 and route promotion remain blocked.
+
+The forward-lineage task is now canonically closed as a fail-closed,
+shadow-only diagnostic foundation, not a complete producer. Its exact oracle
+executes 20 behavioral scenarios across five models (100 cells), 78 invariants,
+six neutrality invariants, and four tamper validations. No model qualifies and
+no field family is complete, so producer classification is F. Exact attribution
+and source-binding closure pass, source and Evidence scopes remain separate,
+and Explanation immutable-version ownership remains unresolved. An executed
+owner graph derives field audience-requirement governance as the unique
+dominant actionable root; the next task is **DISCOVERY CANONICAL
+ORGANIZATIONAL UNDERSTANDING FIELD AUDIENCE-REQUIREMENT GOVERNANCE CONTRACT
+001**. Explanation version ownership is separate and later, while
+condition/investigation production remains deferred. Runtime, grants,
+assignments, Product behavior, activation, and routes are unchanged.

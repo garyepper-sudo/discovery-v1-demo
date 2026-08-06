@@ -3,8 +3,9 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** Recipient-audience governance is shadow-contract complete;
-audience-relevant nested-field lineage is next
+**Current phase:** Audience-lineage diagnostic foundation is canonically
+closed with producer classification F; field audience-requirement governance
+is next
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
@@ -88,13 +89,13 @@ the repository corpus and retained local metadata.
 
 ## Current Objective
 
-Forward-produce audience-relevant nested-field lineage using the accepted
-shadow governance vocabulary without grants, activation, disclosure, or routes.
+Define the canonical field audience-requirement governance contract without
+grant issuance, activation, disclosure, Runtime wiring, or routes.
 
 ## Next Priority
 
-**DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING AUDIENCE-RELEVANT
-NESTED-FIELD LINEAGE FORWARD PRODUCER 001**
+**DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING FIELD
+AUDIENCE-REQUIREMENT GOVERNANCE CONTRACT 001**
 
 The completed benchmark passed 52 cases, five models, and 27 leakage channels
 (7,020 cells), selecting Model 2 with primary F and secondary B/C/D. Material role
@@ -104,6 +105,14 @@ or broaden access. Route promotion remains deferred until governed semantics
 support truthful differences, an independent two-tab witness is captured, and
 the later **DISCOVERY LIVE MULTI-ROLE UNAUTHORIZED DISCLOSURE AND INFERENCE
 STRESS TEST 001** passes.
+
+The completed forward-lineage diagnostic contains 20 scenarios, five models,
+100 cells, 78 invariants, six neutrality invariants, and four tamper
+validations. No model qualifies and no field is complete. Exact source closure
+and separate source/Evidence scope resolution pass. The owner graph derives
+field audience-requirement governance as the unique dominant actionable root;
+Explanation immutable-version ownership is separate and later, and
+condition/investigation production remains deferred. No live behavior changed.
 
 ## Canonical implementation boundary
 

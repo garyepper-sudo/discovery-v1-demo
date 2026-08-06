@@ -2,8 +2,8 @@
 
 ## Exact next task
 
-Begin **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING AUDIENCE-RELEVANT
-NESTED-FIELD LINEAGE FORWARD PRODUCER 001** from the exact resulting
+Begin **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING FIELD
+AUDIENCE-REQUIREMENT GOVERNANCE CONTRACT 001** from the exact resulting
 `origin/main` in a new branch and worktree.
 
 ## Read first
@@ -82,11 +82,18 @@ NESTED-FIELD LINEAGE FORWARD PRODUCER 001** from the exact resulting
 
 ## Frontend boundary
 
-Implement only the shadow audience-relevant nested-field lineage forward
-producer. Recipient-audience governance is contract-ready (primary B,
-secondary D) but activation remains blocked. Do not require persisted grants,
-wire live authorization, implement disclosure, or infer authority from role,
-default scope, or `composition.scope`. Material differentiation remains OPEN.
+Implement only the field audience-requirement governance contract. The
+audience-lineage forward-producer investigation is complete as a fail-closed
+diagnostic foundation: producer classification F, no qualifying model, and no
+complete field family. Do not require persisted grants, wire live
+authorization, implement disclosure, or infer authority from role, default
+scope, subject scope, source scope, or Evidence scope. Material differentiation
+remains OPEN.
+
+Completed: **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING
+AUDIENCE-RELEVANT NESTED-FIELD LINEAGE FORWARD PRODUCER 001**.
+
+Result: **FAIL-CLOSED DIAGNOSTIC FOUNDATION — PRODUCER CLASSIFICATION F**.
 
 ## Explicitly deferred
 

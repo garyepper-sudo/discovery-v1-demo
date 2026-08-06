@@ -54,6 +54,27 @@ versioned grant bound to the exact access-assignment revision. The shadow
 contract is complete; future administrative issuance and persistence require a
 separate governed migration. The next dependency is forward-produced
 audience-relevant nested-field lineage. No current Northstar grant exists.
+
+Audience-lineage correction: the first shadow candidate failed final review
+because its named cases repeated one fixture, its model/result oracle was
+hardcoded, source-binding closure was incomplete, Explanation revision was
+locally synthesized, and source/Evidence scopes were collapsed. A subsequent
+oracle still confused scenario-wrapper identity with actual producer-input
+identity. The accounting-corrected 20-by-5 executable matrix separately hashes
+wrapper, raw producer input, normalized producer input, model input, producer
+output, and model output. It reports 58 invariants, six neutrality invariants,
+four tamper validations, one justified normalization-equivalent repeat, and
+zero unjustified repeats. It selects no model and supports no complete field
+family. Composition, Explanation, and Evidence scopes are subject/provenance
+only; no existing governance contract makes them recipient-audience
+requirements, and Explanation has no proven canonical version boundary.
+Field audience-requirement governance is the earliest owner; Explanation
+immutable-version ownership is separate and later. This ordering is now
+executed rather than assigned: normalized gap findings feed a dependency graph,
+actionable-root and strict-superset dominance rules, a boundedness evaluator,
+and a fail-closed task registry. Negative controls prove different findings
+change or null the selected owner and task. `GAP-B-014` remains open with no
+Runtime, grant, disclosure, projection, or live Product behavior change.
 | GAP-B-015 | B | Answer specificity expansion | Current precision is high but coverage is narrow. | Unsupported scenarios abstain. | More domains produce specific answers without weaker precision. | Precision is preferred to generic coverage. | Benchmark expansion, evidence quality | Broader payable utility | P1 | Beta | L | Domain-balanced recovery improves while negative controls remain unchanged. | Open |
 | GAP-B-016 | B | Industry validation | Product outputs lack broad industry validation. | Synthetic and bounded organizational scenarios dominate. | Realistic cross-industry evaluation supports claims. | Design-partner evidence unavailable. | Evaluation framework, privacy | Market confidence | P1 | Beta | M | Approved industries clear specificity, truthfulness, and utility gates. | Open |
 | GAP-B-017 | B | Large-scale retrieval validation | Retrieval has not been tested at organizational scale. | Manual bounded evidence sets. | Large corpora preserve latency, precision, lineage, and isolation. | Governed connector absent. | Connector, performance harness | Enterprise retrieval | P2 | Beta | L | Scale test passes defined recall, precision, latency, and cost limits. | Open |

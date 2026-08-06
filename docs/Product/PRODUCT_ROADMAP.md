@@ -296,6 +296,16 @@ and outcomes while remaining user-governed.
   bound to an exact access-assignment revision. Forward lineage is next;
   persistence, administrative issuance, activation, and live acceptance remain
   later explicit gates.
+- Forward lineage remains blocked before condition/investigation work. The
+  accounting-corrected executable matrix proves that field-owned
+  recipient-audience requirement semantics are the earliest missing owner.
+  Canonical completed-Explanation immutable-version ownership is a distinct,
+  later boundary; the two tasks must not be combined. Subject, source, and
+  Evidence scopes cannot be promoted into audience requirements by the lineage
+  producer. The ordering is derived through the executed owner graph and task
+  registry rather than fixed report values. Incomparable roots and missing
+  registry entries fail closed with no next task. Condition/investigation
+  production remains deferred by its actual dependency position.
 
 - Connected Evidence improves specific Answer recovery without weaker negative
   controls.

@@ -165,3 +165,17 @@ Contract readiness is PASS; activation readiness is BLOCKED. No Northstar grant,
 assignment mutation, migration, Runtime mutation, or live wiring occurred.
 Next: **DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING AUDIENCE-RELEVANT
 NESTED-FIELD LINEAGE FORWARD PRODUCER 001**.
+
+## Audience-lineage diagnostic closure
+
+The forward-producer task is closed as a fail-closed shadow diagnostic with
+producer classification F. The exact oracle contains 20 behavioral scenarios,
+five executable models, 100 cells, 78 invariants, six neutrality invariants,
+and four tamper validations. No model qualifies and no field family is
+complete. Attribution and source-binding closure pass; source and Evidence
+scope remain separate; Explanation immutable-version ownership remains
+unresolved. The executed owner graph selects field audience-requirement
+governance as the unique dominant actionable root. Its exact next task is
+**DISCOVERY CANONICAL ORGANIZATIONAL UNDERSTANDING FIELD AUDIENCE-REQUIREMENT
+GOVERNANCE CONTRACT 001**. Material differentiation remains OPEN; activation
+and route promotion remain BLOCKED.
