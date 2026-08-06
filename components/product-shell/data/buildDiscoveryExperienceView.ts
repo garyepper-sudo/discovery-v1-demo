@@ -61,6 +61,38 @@ export function buildDiscoveryExperienceView(input: {
   view: ActivatedView;
 }): AlphaFixture {
   const { runtime, view } = input;
+  return buildDiscoveryExperience({
+    organizationId: runtime.metadata.organizationId,
+    organizationName: runtime.metadata.name || "Your organization",
+    displayRole: "Authorized organization view",
+    originalQuestion: originalInvestigationQuestion(runtime),
+    view,
+  });
+}
+
+/** Projection/Product-Communication-only presentation boundary for role-aware reads. */
+export function buildRoleAwareDiscoveryExperienceView(input: {
+  organizationId: string;
+  displayRole: string;
+  view: ActivatedView;
+}): AlphaFixture {
+  return buildDiscoveryExperience({
+    organizationId: input.organizationId,
+    organizationName: "Your organization",
+    displayRole: input.displayRole,
+    originalQuestion: "Original question unavailable",
+    view: input.view,
+  });
+}
+
+function buildDiscoveryExperience(input: {
+  organizationId: string;
+  organizationName: string;
+  displayRole: string;
+  originalQuestion: string;
+  view: ActivatedView;
+}): AlphaFixture {
+  const { view } = input;
   const sections = view.runtimeSections;
   const understanding = availableText(sections.currentUnderstanding.summary);
   const explanation = availableText(sections.explanations.summary);
@@ -92,17 +124,17 @@ export function buildDiscoveryExperienceView(input: {
   return {
     productionMode: true,
     organization: {
-      id: runtime.metadata.organizationId,
-      name: runtime.metadata.name || "Your organization",
+      id: input.organizationId,
+      name: input.organizationName,
     },
     user: {
-      name: runtime.metadata.name || "Your organization",
-      role: "Authorized organization view",
+      name: input.organizationName,
+      role: input.displayRole,
     },
     understanding: {
       id: view.insights[0]?.id ?? "authorized-organizational-understanding",
       title: "Current Organizational Understanding",
-      originalQuestion: originalInvestigationQuestion(runtime),
+      originalQuestion: input.originalQuestion,
       objective: understanding,
       synthesis: understanding,
       explanation,

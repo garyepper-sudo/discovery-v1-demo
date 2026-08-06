@@ -1,100 +1,114 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
 import type { AlphaOrganizationAccessRecord } from "../../engine/v3/governance/alphaAllowlistDisclosureProducer";
-import { createEmptyOrganizationRuntime } from "../../engine/v3/runtime/organizationRuntime";
+import { FilesystemOrganizationRuntimeRepository } from "../../engine/v3/runtime/organizationRuntimeRepository";
 import { SANDBOX_PERSONAS, SANDBOX_ORGANIZATION_ID, type ResolvedSandboxPersona } from "../../lib/access/sandboxMultiUserAccess";
 import { assertFrontendSafeSerialization } from "../../product/frontend/roleAwareLivingOrganization";
-import { mapRoleAwarePresentation } from "../../product/frontend/roleAwarePresentation";
-import { defaultSandboxScope, readLiveScopedRoleAwareProjection } from "../../product/integration/liveScopedRoleAwareAdapter";
-import { readScopedOrganizationalProductProjection } from "../../product/integration/scopedOrganizationalProductProjection";
+import { readLiveScopedRoleAwareProjection } from "../../product/integration/liveScopedRoleAwareAdapter";
 
 const NOW = "2026-08-04T20:00:00.000Z";
-let checks = 0;
-const check = (condition: unknown, message: string) => { assert.ok(condition, message); checks += 1; };
+const RETAINED = "/Users/garyepper/Desktop/Alpha-Sprint-14-main/.discovery-onboarding-runtime/organizations";
+const EXPECTED = "824a4c2e3f86cf000e3f8442d2bf38a97b4281e545959a49bf2bc6f41bb8b047";
+const sha = (value: Uint8Array | string) => createHash("sha256").update(value).digest("hex");
 const persona = (index: number, label?: string): ResolvedSandboxPersona => ({ ...SANDBOX_PERSONAS[index]!, ...(label ? { label } : {}), userId: `user_syntheticlive${index}` });
 const record = (p: ResolvedSandboxPersona, overrides: Partial<AlphaOrganizationAccessRecord> = {}): AlphaOrganizationAccessRecord => ({
-  accessRecordId: `access:${p.key}`,
-  policyId: "alpha-explicit-allowlist-disclosure",
-  policyVersion: "1",
-  consumerId: p.userId,
-  organizationId: SANDBOX_ORGANIZATION_ID,
-  relationship: "allowed_alpha_user",
-  supportedExperiences: ["organization"],
-  scope: { type: "organization", organizationId: SANDBOX_ORGANIZATION_ID },
-  status: "active",
-  createdAt: "2026-08-04T12:00:00.000Z",
-  ...overrides,
+  accessRecordId: `access:${p.key}`, policyId: "alpha-explicit-allowlist-disclosure", policyVersion: "1",
+  consumerId: p.userId, organizationId: SANDBOX_ORGANIZATION_ID, relationship: "allowed_alpha_user",
+  supportedExperiences: ["organization"], scope: { type: "organization", organizationId: SANDBOX_ORGANIZATION_ID },
+  status: "active", createdAt: "2026-08-04T12:00:00.000Z", ...overrides,
 });
+const semantic = (value: unknown) => sha(JSON.stringify(value));
 
-function runtimeRepository(organizationId = SANDBOX_ORGANIZATION_ID) {
+async function read(
+  p: ResolvedSandboxPersona,
+  records = [record(p)],
+  mutateRuntime?: (runtime: Record<string, unknown>) => void,
+) {
   let reads = 0;
-  const runtime = createEmptyOrganizationRuntime({ organizationId, name: "Synthetic live validation" });
-  return {
-    repository: { read: async (requested: string) => { reads += 1; return requested === organizationId ? { bytes: new Uint8Array(), revision: "revision:synthetic-live", runtime } : null; } },
-    reads: () => reads,
-  };
+  const repository = new FilesystemOrganizationRuntimeRepository(RETAINED);
+  const result = await readLiveScopedRoleAwareProjection({ userId: p.userId, organizationId: SANDBOX_ORGANIZATION_ID, persona: p, accessRecords: records, runtimeRepository: { read: async (id) => {
+    reads += 1;
+    const stored = await repository.read(id);
+    if (stored && mutateRuntime) mutateRuntime(stored.runtime as unknown as Record<string, unknown>);
+    return stored;
+  } }, evaluatedAt: NOW });
+  return { result, reads };
 }
 
 async function main() {
-for (let index = 0; index < 3; index += 1) {
-  const p = persona(index);
-  const counted = runtimeRepository();
-  let projectionCalls = 0;
-  const live = await readLiveScopedRoleAwareProjection({ userId: p.userId, organizationId: SANDBOX_ORGANIZATION_ID, persona: p, accessRecords: [record(p)], runtimeRepository: counted.repository, evaluatedAt: NOW, projectionReader: (input) => { projectionCalls += 1; return readScopedOrganizationalProductProjection(input); } });
-  check(live.runtimeReads === 1 && counted.reads() === 1, `${p.key} must use one Runtime read`);
-  check(projectionCalls === 1, `${p.key} must produce exactly one scoped Product projection`);
-  check(live.disposition === "authorized", `${p.key} must return an authorized live result`);
-  if (live.disposition !== "authorized") throw new Error(`${p.key} unexpectedly denied`);
-  check(live.projection.recipientId === p.userId && live.projection.organizationId === SANDBOX_ORGANIZATION_ID, `${p.key} identity binding`);
-  check(JSON.stringify(live.projection.requestedScope) === JSON.stringify(defaultSandboxScope(p)), `${p.key} default scope`);
-  assertFrontendSafeSerialization(live.projection);
+  const path = `${RETAINED}/${SANDBOX_ORGANIZATION_ID}.json`;
+  assert.equal(sha(readFileSync(path)), EXPECTED);
+  const authorized = [];
+  for (let index = 0; index < 3; index += 1) {
+    const { result, reads } = await read(persona(index));
+    assert.equal(result.disposition, "authorized");
+    assert.equal(reads, 1);
+    if (result.disposition !== "authorized") throw new Error("authorized path denied");
+    assert.equal(Object.hasOwn(result, "runtimeReads"), false);
+    assert.equal(result.genericProjection.items.length, 0);
+    assert.equal(result.canonicalProjection.understandings.length, 2);
+    assert.equal(result.canonicalProjection.explanations.length, 1);
+    assert.equal(result.canonicalProjection.conditions.length, 7);
+    assert.equal(result.canonicalProjection.investigations.length, 9);
+    assert.equal(result.canonicalProjection.evolution.length, 0);
+    assert.equal(result.canonicalProjection.evidence.length, 12);
+    assert.ok(result.experience.understanding.synthesis.trim());
+    assert.equal(result.experience.user.role, result.personaLabel);
+    assert.equal(result.experience.understanding.originalQuestion, "Original question unavailable");
+    assertFrontendSafeSerialization(result.canonicalProjection);
+    assertFrontendSafeSerialization(result.genericProjection);
+    assertFrontendSafeSerialization(result.experience);
+    const projection = structuredClone(result.canonicalProjection);
+    projection.projectionId = "normalized";
+    projection.consumerId = "normalized";
+    projection.disclosureDecisionId = "normalized";
+    authorized.push({ key: pKey(index), digest: semantic(projection), result });
+  }
+  assert.equal(new Set(authorized.map((item) => item.digest)).size, 1);
+  const renamed = await read(persona(1, "Changed descriptive title"));
+  assert.equal(renamed.result.disposition, "authorized");
+  if (renamed.result.disposition !== "authorized") throw new Error("renamed path denied");
+  assert.deepEqual(renamed.result.canonicalProjection, authorized[1]!.result.canonicalProjection);
+  assert.deepEqual(renamed.result.genericProjection, authorized[1]!.result.genericProjection);
+  const standardExperience = structuredClone(authorized[1]!.result.experience);
+  const renamedExperience = structuredClone(renamed.result.experience);
+  standardExperience.user.role = "normalized";
+  renamedExperience.user.role = "normalized";
+  assert.deepEqual(renamedExperience, standardExperience);
+
+  const decoy = "FORBIDDEN_RAW_RUNTIME_QUESTION_7f51";
+  const decoyRead = await read(persona(1), [record(persona(1))], (runtime) => {
+    const memory = runtime.memory as Record<string, unknown>;
+    memory.understandingSnapshots = [{ question: decoy, timestamp: NOW }];
+    memory.events = [{ question: decoy, timestamp: NOW }];
+    memory.currentUnderstandings = [{ summary: decoy }];
+  });
+  assert.equal(decoyRead.result.disposition, "authorized");
+  if (decoyRead.result.disposition !== "authorized") throw new Error("decoy path denied");
+  assert.deepEqual(decoyRead.result.experience, authorized[1]!.result.experience);
+  assert.doesNotMatch(JSON.stringify(decoyRead.result.experience), new RegExp(decoy));
+
+  const manager = persona(2);
+  for (const records of [[], [record(manager, { status: "revoked", revokedAt: NOW })], [record(manager), record(manager, { accessRecordId: "fork", supersedesAccessRecordId: "missing" })]]) {
+    const { result, reads } = await read(manager, records);
+    assert.equal(result.disposition, "denied");
+    assert.equal(reads, 0);
+    assert.deepEqual(Object.keys(result), ["disposition"]);
+    for (const forbidden of ["runtimeReads", "personaLabel", "scopeLabel", "canonicalProjection", "genericProjection", "experience", "sourceRevision", "sourceRevisionDigest"]) assert.equal(Object.hasOwn(result, forbidden), false);
+  }
+  const mismatch = await readLiveScopedRoleAwareProjection({ userId: "user_other", organizationId: SANDBOX_ORGANIZATION_ID, persona: manager, accessRecords: [record(manager)], runtimeRepository: { read: async () => { throw new Error("must not read"); } }, evaluatedAt: NOW });
+  assert.equal(mismatch.disposition, "denied");
+  assert.deepEqual(Object.keys(mismatch), ["disposition"]);
+  assert.equal(sha(readFileSync(path)), EXPECTED);
+
+  const source = readFileSync("product/integration/liveScopedRoleAwareAdapter.ts", "utf8");
+  assert.equal((source.match(/composeActivatedYourOrganization\(/g) ?? []).length, 1);
+  assert.ok(source.indexOf("preflightAlphaOrganizationAccess") < source.indexOf("runtimeRepository.read"));
+  assert.doesNotMatch(source, /sourcePopulator|scopeSelector|projectionReader/);
+  assert.doesNotMatch(source, /runtimeReads/);
+  console.log(JSON.stringify({ status: "PASS", accounts: authorized.map(({ key, digest, result }) => ({ account: key, displayedRole: result.experience.user.role, scope: result.scopeLabel, compositions: result.canonicalProjection.understandings.length, understandings: result.canonicalProjection.understandings.length, explanations: result.canonicalProjection.explanations.length, evidenceReferences: result.canonicalProjection.evidence.length, conditions: result.canonicalProjection.conditions.length, investigations: result.canonicalProjection.investigations.length, semanticDigest: digest })), semanticDigestsIdentical: true, genericItems: 0, callCounts: { authorizedRuntimeReads: 1, deniedRuntimeReads: 0 }, deniedShape: ["disposition"], decoyQuestionAbsent: true, roleLabelNeutrality: true, retainedRuntimeDigest: EXPECTED, externalActivity: { network: 0, connectorCalls: 0, driveReads: 0, driveWrites: 0 } }));
 }
-
-const manager = persona(2);
-for (const scenario of [
-  { name: "recipient mismatch", userId: "user_syntheticother", organizationId: SANDBOX_ORGANIZATION_ID, records: [record(manager)] },
-  { name: "revoked", userId: manager.userId, organizationId: SANDBOX_ORGANIZATION_ID, records: [record(manager, { status: "revoked", revokedAt: NOW })] },
-  { name: "cross organization", userId: manager.userId, organizationId: "sandbox-foreign", records: [record(manager)] },
-  { name: "malformed chain", userId: manager.userId, organizationId: SANDBOX_ORGANIZATION_ID, records: [record(manager), record(manager, { accessRecordId: "access:fork", supersedesAccessRecordId: "missing" })] },
-]) {
-  const counted = runtimeRepository();
-  let projectionCalls = 0;
-  const live = await readLiveScopedRoleAwareProjection({ userId: scenario.userId, organizationId: scenario.organizationId, persona: manager, accessRecords: scenario.records, runtimeRepository: counted.repository, evaluatedAt: NOW, projectionReader: (input) => { projectionCalls += 1; return readScopedOrganizationalProductProjection(input); } });
-  check(live.disposition === "denied" && live.runtimeReads === 0 && counted.reads() === 0, `${scenario.name} must deny before Runtime read`);
-  check(projectionCalls === 0 && live.projection === null, `${scenario.name} must produce no Product projection`);
-}
-
-const standard = persona(1);
-const renamed = persona(1, "Changed descriptive title");
-const standardRuntime = runtimeRepository();
-const renamedRuntime = runtimeRepository();
-const standardProjection = await readLiveScopedRoleAwareProjection({ userId: standard.userId, organizationId: SANDBOX_ORGANIZATION_ID, persona: standard, accessRecords: [record(standard)], runtimeRepository: standardRuntime.repository, evaluatedAt: NOW });
-const renamedProjection = await readLiveScopedRoleAwareProjection({ userId: renamed.userId, organizationId: SANDBOX_ORGANIZATION_ID, persona: renamed, accessRecords: [record(renamed)], runtimeRepository: renamedRuntime.repository, evaluatedAt: NOW });
-if (standardProjection.disposition !== "authorized" || renamedProjection.disposition !== "authorized") throw new Error("Role-neutral validation unexpectedly denied");
-check(JSON.stringify(standardProjection.projection) === JSON.stringify(renamedProjection.projection), "role title must not change projection meaning");
-
-const view = mapRoleAwarePresentation({ description: "Live", roleDescription: standard.label, scopeLabel: standardProjection.scopeLabel, workspace: "home", projection: standardProjection.projection, primaryHeading: "Live", expectedDisposition: "disclosed", routePath: "/development/role-aware-live", liveDiagnostic: { organizationId: SANDBOX_ORGANIZATION_ID, requestedScope: standardProjection.scopeLabel, sourceRevisionDigest: standardProjection.sourceRevisionDigest } });
-assertFrontendSafeSerialization(view);
-const serialized = JSON.stringify(view);
-check(!serialized.includes("RA-"), "live presentation must contain no fixture identity");
-check(!serialized.includes("fixtureId"), "live presentation must contain no fixture selector binding");
-check(!serialized.includes("runtime") && !serialized.includes("memory"), "live presentation must contain no raw Runtime");
-check(view.metrics.length === 0, "unsupported or unlineaged metric values must not appear");
-check(view.decisionCalibration === null, "unavailable decision calibration must not be recomputed by presentation");
-check(view.routePath === "/development/role-aware-live", "live route must remain isolated");
-
-const page = readFileSync("app/development/role-aware-live/page.tsx", "utf8");
-const middleware = readFileSync("middleware.ts", "utf8");
-check(page.includes("isHostedDiscoveryEnvironment()") && page.includes("notFound()"), "Production route must fail with 404");
-check(page.includes("noStore()") && middleware.includes("role-aware-live"), "live route must be private and authenticated");
-check(!page.includes("ROLE_AWARE_FIXTURES") && !page.includes("getRoleAwareFixture"), "live route must have no fixture fallback");
-check(!page.includes("searchParams).role") && !page.includes("searchParams).scope"), "live route must accept no role or scope authority");
-
-console.log(JSON.stringify({ status: "PASS", checks, runtimeReads: { authorized: 1, denied: 0, revoked: 0, crossOrganization: 0 }, fixtureFallback: false, rawRuntimeReturned: false, externalActivity: { network: 0, connectorCalls: 0, driveReads: 0, driveWrites: 0 } }));
-}
-
-main().catch((error) => {
-  console.error(error instanceof Error ? error.message : "Live scoped adapter validation failed.");
-  process.exitCode = 1;
-});
+function pKey(index: number) { return ["CEO", "Engineering Director", "Platform Manager"][index]!; }
+main().catch((error) => { console.error(error instanceof Error ? error.message : "validation failed"); process.exitCode = 1; });

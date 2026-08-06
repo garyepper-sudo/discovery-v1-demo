@@ -328,7 +328,7 @@ function AlphaSidebar({
       )}
       <div className={styles.sidebarProfile}>
         <span className={styles.avatar} aria-hidden="true">SR</span>
-        <span><strong>{experience.user.name}</strong><small>{hosted ? "Organization member" : experience.user.role}</small></span>
+        <span><strong>{experience.user.name}</strong><small>{experience.user.role}</small></span>
         <ChevronDown size={16} aria-hidden="true" />
       </div>
       <div className={styles.sidebarConfidence}>
