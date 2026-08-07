@@ -207,6 +207,16 @@ retrieval, composes durable `ProductQuestion` lifecycle services with Product
 Workflow, performs writes through optimistic Runtime repository replacement,
 and returns a refreshed version-1 `ProductQuestionWorkspace`.
 
+For callers that require exact canonical admission references, the additive
+`contributeEvidenceWithCanonicalResult` operation returns the zero/one/many
+batch produced directly by the admission invocation and persists a typed,
+non-authoritative replay record in existing Runtime events. That record binds
+the Product operation to canonical references but changes no Evidence,
+admission, attribution, Source Binding, confidence, cognition, or Runtime-schema
+owner. Exact replay reads the immutable record without rerunning investigation
+or persistence; the established `contributeEvidence` contract remains
+compatible.
+
 Legacy investigations enter through deterministic adoption receipts. Historical
 Answers resolve only from an exact retained customer-safe Answer revision;
 missing or incompatible content fails closed. The adapter never consumes legacy

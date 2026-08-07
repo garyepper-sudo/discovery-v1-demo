@@ -97,6 +97,12 @@ Every significant product sprint should begin by reviewing these documents.
 records the implemented non-authoritative Product Workflow draft operation,
 immutable receipt, and the still-open promotion boundary under `GAP-A-012`.
 
+The related Leadership Conversation admission prerequisite is recorded in
+[`DISCOVERY_OPERATION_BOUND_CANONICAL_EVIDENCE_CONTRIBUTION_AND_ADMISSION_RESULT_001.md`](./DISCOVERY_OPERATION_BOUND_CANONICAL_EVIDENCE_CONTRIBUTION_AND_ADMISSION_RESULT_001.md).
+It defines the additive, non-authoritative zero/one/many result consumed by the
+next typed owner-routing task without changing canonical identity, confidence,
+cognition, or Runtime schema.
+
 ---
 
 ## 0. DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUTION.md

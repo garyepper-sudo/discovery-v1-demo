@@ -3,8 +3,9 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** Leadership Conversation Product canonization and its governed
-exact Source Content prerequisite are complete; the bounded vertical slice is
+**Current phase:** Leadership Conversation Product canonization, governed exact
+Source Content, and operation-bound canonical Evidence/admission result
+prerequisites are complete; typed owner routing in a new clean continuation is
 next
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
@@ -121,6 +122,11 @@ revisions and receipts; `GAP-A-012` remains open for actual promotion through
 the existing Executive Decision pipeline. Resume the preserved nineteen-file
 Leadership Conversation implementation only by verified transfer into a new
 clean continuation worktree from canonical main.
+
+The routing task must consume the actual operation-bound zero/one/many
+Evidence/admission result. It must not reconstruct identities by Runtime diff,
+project a first item, accept canonical IDs from the client, or treat the result
+as changed/unchanged or generic Outcome authority.
 
 ### Preserved predecessor: Leadership Conversation Prepare/Capture slice
 

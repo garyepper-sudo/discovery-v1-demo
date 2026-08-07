@@ -23,6 +23,21 @@ persistent state is organizational understanding; Product Workflow operations
 inspect, improve, test, or revise that state without moving product meaning or
 execution authority into the frontend.
 
+## Operation-bound canonical Evidence result
+
+Canonical admission now returns an exact, deterministic zero/one/many batch
+directly from the invocation. Product integration persists only a typed,
+non-authoritative operation record and can replay it without investigation,
+cognition execution, or Runtime replacement. New Evidence, existing Evidence
+with new provenance, exact replay, and zero admission are distinct. Canonical
+Evidence, admission, attribution, Source Binding, confidence, cognition, and
+Runtime schema are unchanged. The next Leadership Conversation routing task
+must consume this batch and keep changed/unchanged separately owned.
+
+Immediate successor: **DISCOVERY LEADERSHIP CONVERSATION TYPED CANONICAL OWNER
+ROUTING AND SERVER COMPOSITION 001** in a new clean continuation from canonical
+main. Product strategy is closed and must not be reopened.
+
 ## Frontend-ready Product boundary
 
 `ProductQuestionWorkspaceV2` is the canonical frontend contract, version `2`.

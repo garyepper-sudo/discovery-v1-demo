@@ -6,6 +6,25 @@ Generated: 2026-07-31T20:42:07.380Z
 
 This document is the canonical architecture handoff for beginning a new Discovery sprint or chat.
 
+## Operation-bound canonical Evidence result closure
+
+The canonical admission owner now returns the exact zero/one/many batch created
+by one invocation. `CanonicalProductWorkspaceAdapter` additively exposes that
+batch and persists a typed, immutable, non-authoritative Product operation
+record in the same optimistic-concurrency Runtime replacement. Exact replay
+reruns neither cognition nor persistence. Evidence, admission, attribution,
+Source Binding, confidence, cognition, ProductQuestion workspace, and
+Runtime-schema ownership remain unchanged.
+
+The immediate successor remains **DISCOVERY LEADERSHIP CONVERSATION TYPED
+CANONICAL OWNER ROUTING AND SERVER COMPOSITION 001**. It must use this exact
+batch after governed Source Content reread and approval, and must derive
+changed/unchanged separately. Begin in a new clean continuation from canonical
+main. Copy the sixteen new files byte-for-byte, create a bounded patch for the
+three tracked diffs, require `git apply --check`, apply only after it passes,
+and verify all nineteen transferred digests. Preserve both existing dirty
+Leadership Conversation worktrees until that transfer is verified.
+
 ## Product Decision Draft closure
 
 `DEC-PROD-042` canonizes the bounded, non-authoritative Product Workflow owner

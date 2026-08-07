@@ -10,6 +10,14 @@ The Product Decision Draft prerequisite is closed under `DEC-PROD-042` with
 immutable revisions and receipts. `GAP-A-012` remains open because Decision
 promotion and actual Decision creation are not implemented.
 
+The operation-bound canonical Evidence/admission prerequisite is also closed.
+The routing task must call `contributeEvidenceWithCanonicalResult`, consume its
+exact zero/one/many batch, and never scan Runtime, select a first attribution,
+assume one result, accept client-supplied canonical IDs, or manufacture a
+canonical receipt. Existing Evidence with new provenance, exact replay, and
+zero admission are explicit; changed/unchanged remains a separate owner
+concern. Do not reopen Product strategy.
+
 Safely resume the preserved Leadership Conversation implementation: its
 nineteen pre/post content digests matched; its old worktree remains based on
 `ab327ce5307b09f0436fe6935ca9c985d89ea4b4`. Copy or reapply the sixteen new

@@ -64,27 +64,31 @@ govern this sequence:
    development-only exact-byte persistence, current Source Binding resolution,
    scoped reads, immutable revisions, deterministic reset, and fresh-process
    replay are implemented without Evidence admission or Runtime mutation.
-2. **Development vertical slice — NEXT:** implement the shared
-   organization-wide Prepare–Capture–Prepare loop under `GAP-B-019`; resolve a
-   canonical local Source Binding, write through `GovernedSourceContentService`,
-   and retain only receipt references in Product Workflow. No material role
-   differentiation or Production.
-3. **Product Workflow hardening:** persistence, reload, idempotency, audit,
+2. **Operation-bound canonical admission result — COMPLETE:** the canonical
+   admission invocation now returns an exact zero/one/many batch, and the
+   Product adapter persists and replays its non-authoritative operation record
+   without changing Evidence, admission, attribution, confidence, cognition,
+   or Runtime schema ownership.
+3. **Development vertical slice routing — NEXT:** resume the shared
+   organization-wide Prepare–Capture–Prepare loop under `GAP-B-019` in a new
+   clean continuation; consume the exact operation-bound batch after governed
+   source reread and approval. No material role differentiation or Production.
+4. **Product Workflow hardening:** persistence, reload, idempotency, audit,
    reset, replay, broader deterministic acceptance, and failure recovery.
-4. **Customer validation:** Director/VP interviews, prepared-content review,
+5. **Customer validation:** Director/VP interviews, prepared-content review,
    time-saved, first/second-preparation, trust, and cognitive-effort measures.
-5. **Organization-wide Production readiness:** secure persistence,
+6. **Organization-wide Production readiness:** secure persistence,
    authorization reevaluation, controlled upload handling, retention,
    revocation, operations, and security acceptance.
-6. **Multi-role differentiation:** only after persisted field requirements,
+7. **Multi-role differentiation:** only after persisted field requirements,
    recipient grants, forward lineage, nested disclosure, safe abstraction, and
    inference-leakage acceptance.
-7. **Leadership Attention Management:** Current Focus, focus-aware preparation,
+8. **Leadership Attention Management:** Current Focus, focus-aware preparation,
    background watch, exceptional interruption, and Attention Queue only after
    validation and through existing Objective/Optimization Context owners.
-8. **Broader Leadership Workspaces:** Brief, Prepare variants, Explore, broader
+9. **Broader Leadership Workspaces:** Brief, Prepare variants, Explore, broader
    Capture, and journey templates only with customer evidence.
-9. **Environmental Intelligence:** deferred until the internal Product loop is
+10. **Environmental Intelligence:** deferred until the internal Product loop is
    validated.
 
 ## Ordered pre-wireframe backend program
