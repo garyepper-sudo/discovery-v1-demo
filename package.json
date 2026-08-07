@@ -33,6 +33,8 @@
     "validate:canonical-scope-lineage": "tsx scripts/product/validateCanonicalScopeLineage.ts",
     "validate:canonical-evidence-contribution-result": "tsx scripts/product/validateCanonicalEvidenceContributionResult.ts",
     "validate:canonical-evidence-contribution-result-replay": "tsx scripts/product/validateCanonicalEvidenceContributionResultReplay.ts",
+    "validate:canonical-material-evidence-origin": "tsx scripts/product/validateCanonicalMaterialEvidenceOrigin.ts",
+    "validate:canonical-material-evidence-origin-fresh-process": "tsx scripts/product/validateCanonicalMaterialEvidenceOriginFreshProcess.ts",
     "validate:duplicate-evidence-replay-aware-cognition-entry": "tsx scripts/product/validateDuplicateEvidenceReplayAwareCognitionEntry.ts",
     "validate:duplicate-evidence-replay-aware-cognition-fresh-process": "tsx scripts/product/validateDuplicateEvidenceReplayAwareCognitionFreshProcess.ts",
     "validate:canonical-understanding-audience-lineage-forward-producer": "tsx scripts/product/validateCanonicalUnderstandingAudienceLineageForwardProducer.ts",

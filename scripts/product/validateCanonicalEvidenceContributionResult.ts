@@ -16,8 +16,11 @@ import { RuntimeStorageConflictError, type OrganizationRuntimeRepository, type S
 import { CanonicalProductWorkspaceAdapter } from "../../product/integration";
 import type { CanonicalEvidenceContribution } from "../../product/integration/contracts";
 import { createDurableProductQuestion } from "../../product/questions/questionLifecycle";
+import { atlasIndustrialArtifacts } from "../../engine/benchmark/judgment-lab/atlasIndustrialPilot";
 
 const ORG="operation-result-validation";const USER="authorized-user";const AT="2026-08-06T12:00:00.000Z";const QUESTION_ID="product-question-operation-result";
+const GOVERNED_CONTENT=atlasIndustrialArtifacts.map(item=>item.content).join("\n\n");
+const FIRST_GOVERNED_EVIDENCE=GOVERNED_CONTENT.split("\n").map(value=>value.trim()).find(Boolean)!;
 const sha=(value:string)=>createHash("sha256").update(value).digest("hex");
 const bytes=(value:unknown)=>new TextEncoder().encode(JSON.stringify(value,null,2));
 const revision=(value:Uint8Array)=>createHash("sha256").update(value).digest("hex");
@@ -66,21 +69,22 @@ async function main(){
   check(orderingAdmission.operationBatch.admissions[0]!.investigationEvidenceIds.join(",")==="E2,E10","local Evidence IDs use parsed ordinal ordering");
   assert.throws(()=>admitCanonicalEvidenceScopeLineage({lineage:{organizationId:ORG,effectiveAt:AT,topologyRevisions:[topology],sourceBindingRevisions:[orderingBinding]},evidence:[{evidenceId:"E1",evidenceText:"Order fact.",sourceId:"source-ordering",contentDigest:orderingBinding.source.normalizedContentDigest},{evidenceId:"E1",evidenceText:"Order fact.",sourceId:"source-ordering",contentDigest:orderingBinding.source.normalizedContentDigest}]}));checks+=1;
   const repository=new MemoryRepository(storedInitial());const adapter=new CanonicalProductWorkspaceAdapter({runtimeRepository:repository,authorize:async({userId,organizationId})=>userId===USER&&organizationId===ORG,preflightCanonicalEvidence:preflight(),investigate:investigate()});
-  const first=await adapter.contributeEvidenceWithCanonicalResult({userId:USER,organizationId:ORG,questionId:QUESTION_ID,contribution:contribution("source-one","key-one","Alpha fact.\nBeta risk."),operation:{requestId:"request-one",operatorId:USER}});
-  check(first.contributionResult.admissions.length===2,"multi-admission batch retained");
-  check(first.contributionResult.operationDisposition==="partially-admitted","legacy context skips are represented as partial");
+  const first=await adapter.contributeEvidenceWithCanonicalResult({userId:USER,organizationId:ORG,questionId:QUESTION_ID,contribution:contribution("source-one","key-one",GOVERNED_CONTENT),operation:{requestId:"request-one",operatorId:USER}});
+  check(first.contributionResult.admissions.length===16,"all sixteen governed Evidence admissions retained");
+  check(first.contributionResult.operationDisposition==="admitted","all eligible governed Evidence is fully admitted");
   check(first.contributionResult.admissions.every(item=>item.disposition==="new-canonical-evidence"),"new Evidence disposition");
-  check(new Set(first.contributionResult.admissions.map(item=>item.canonicalEvidenceId)).size===2,"all Evidence identities distinct");
-  check(new Set(first.contributionResult.admissions.map(item=>item.canonicalAdmissionId)).size===2,"all admission identities distinct");
+  check(new Set(first.contributionResult.admissions.map(item=>item.canonicalEvidenceId)).size===16,"all Evidence identities distinct");
+  check(new Set(first.contributionResult.admissions.map(item=>item.canonicalAdmissionId)).size===16,"all admission identities distinct");
   check(first.contributionResult.admissions.every(item=>item.sourceBindings.length===1),"exact source bindings returned");
-  check(first.contributionResult.admissions.map(item=>item.investigationEvidenceIds[0]).join(",")==="E6,E7","local operation order retained");
-  check(!JSON.stringify(first.contributionResult).includes("Alpha fact"),"Evidence body absent");
+  check(first.contributionResult.admissions.map(item=>item.investigationEvidenceIds[0]).join(",")==Array.from({length:16},(_,index)=>`E${index+6}`).join(","),"local operation order retained without framing IDs");
+  check(first.contributionResult.admissions.flatMap(item=>item.investigationEvidenceIds).every(id=>!["E1","E2","E3","E4","E5"].includes(id)),"framing local IDs are absent from the governed result");
+  check(!JSON.stringify(first.contributionResult).includes(FIRST_GOVERNED_EVIDENCE),"Evidence body absent");
   check(first.contributionResult.evidenceAccepted,"evidenceAccepted compatibility");
   check(repository.writes===1,"one atomic write");
   const eventCount=repository.value.runtime.memory.events.filter(item=>(item as {kind?:string})?.kind==="canonical-evidence-contribution-operation").length;
   check(eventCount===1,"one operation record persisted");
   const writesBeforeReplay=repository.writes;
-  const replay=await adapter.contributeEvidenceWithCanonicalResult({userId:USER,organizationId:ORG,questionId:QUESTION_ID,contribution:contribution("source-one","key-one","Alpha fact.\nBeta risk."),operation:{requestId:"request-replay",operatorId:USER}});
+  const replay=await adapter.contributeEvidenceWithCanonicalResult({userId:USER,organizationId:ORG,questionId:QUESTION_ID,contribution:contribution("source-one","key-one",GOVERNED_CONTENT),operation:{requestId:"request-replay",operatorId:USER}});
   check(replay.contributionResult.operationDisposition==="idempotent-replay","replay distinguished");
   check(replay.contributionResult.contributionOperationId===first.contributionResult.contributionOperationId,"operation identity stable");
   check(replay.contributionResult.canonicalResultDigest===first.contributionResult.canonicalResultDigest,"result digest stable");
@@ -88,12 +92,13 @@ async function main(){
   check(repository.writes===writesBeforeReplay,"replay writes zero");
   await assert.rejects(()=>adapter.contributeEvidenceWithCanonicalResult({userId:USER,organizationId:ORG,questionId:QUESTION_ID,contribution:contribution("source-one","key-one","Changed request."),operation:{requestId:"conflict",operatorId:USER}}));checks+=1;
   check(repository.writes===writesBeforeReplay,"conflicting replay writes zero");
-  const provenance=await adapter.contributeEvidenceWithCanonicalResult({userId:USER,organizationId:ORG,questionId:QUESTION_ID,contribution:contribution("source-two","key-two","Alpha fact."),operation:{requestId:"request-two",operatorId:USER}});
+  const provenance=await adapter.contributeEvidenceWithCanonicalResult({userId:USER,organizationId:ORG,questionId:QUESTION_ID,contribution:contribution("source-two","key-two",FIRST_GOVERNED_EVIDENCE),operation:{requestId:"request-two",operatorId:USER}});
   check(provenance.contributionResult.admissions.length===1,"single admission supported");
   check(provenance.contributionResult.admissions[0]!.disposition==="existing-evidence-new-provenance","new provenance distinguished");
   check(provenance.contributionResult.admissions[0]!.canonicalEvidenceId===first.contributionResult.admissions[0]!.canonicalEvidenceId,"canonical Evidence reused");
   check(provenance.contributionResult.admissions[0]!.canonicalAdmissionId===first.contributionResult.admissions[0]!.canonicalAdmissionId,"admission identity preserved");
   check(provenance.contributionResult.admissions[0]!.sourceBindings.length===2,"multiple Source Bindings retained");
+  check(["admitted","partially-admitted","not-admitted"].includes(first.contributionResult.operationDisposition),"partial disposition remains contractually supported but has no truthful source-bound rejection fixture");
   const emptyUnsigned={contractVersion:"1" as const,organizationId:ORG,admissions:[],admissionDisposition:"not-admitted" as const};const emptyBatch:CanonicalEvidenceAdmissionOperationBatchV1={...emptyUnsigned,batchDigest:canonicalScopeLineageDigest(emptyUnsigned)};
   const emptyAdapter=new CanonicalProductWorkspaceAdapter({runtimeRepository:repository,authorize:async()=>true,preflightCanonicalEvidence:async()=>({organizationId:ORG,topology,sourceBindings:[],evidenceAttributions:[],operationBatch:emptyBatch,digest:canonicalScopeLineageDigest({organizationId:ORG,topologyId:topology.topologyId,sourceBindingIds:[],evidenceAttributionIds:[]})}),investigate:async({runtime})=>({runtime,evidenceAccepted:false,canonicalEvidenceAdmissionBatch:emptyBatch})});
   const empty=await emptyAdapter.contributeEvidenceWithCanonicalResult({userId:USER,organizationId:ORG,questionId:QUESTION_ID,contribution:contribution("unsupported-source","key-zero","Unsupported"),operation:{requestId:"request-zero",operatorId:USER}});
@@ -128,11 +133,11 @@ async function main(){
   check(replay.contributionResult.runtimeRevisionBefore===replay.contributionResult.runtimeRevisionAfter,"replay is no-write revision envelope");
   const recordIndex=repository.value.runtime.memory.events.findIndex(item=>(item as {kind?:string})?.kind==="canonical-evidence-contribution-operation");const originalRecord=structuredClone(repository.value.runtime.memory.events[recordIndex]);
   (repository.value.runtime.memory.events[recordIndex] as {recordDigest:string}).recordDigest="0".repeat(64);
-  await assert.rejects(()=>adapter.contributeEvidenceWithCanonicalResult({userId:USER,organizationId:ORG,questionId:QUESTION_ID,contribution:contribution("source-one","key-one","Alpha fact.\nBeta risk."),operation:{requestId:"tampered-record",operatorId:USER}}));checks+=1;
+  await assert.rejects(()=>adapter.contributeEvidenceWithCanonicalResult({userId:USER,organizationId:ORG,questionId:QUESTION_ID,contribution:contribution("source-one","key-one",GOVERNED_CONTENT),operation:{requestId:"tampered-record",operatorId:USER}}));checks+=1;
   repository.value.runtime.memory.events[recordIndex]=originalRecord;
   const serialized=JSON.stringify(first.contributionResult);
   check(!serialized.includes("key-one")&&!serialized.includes(USER),"raw key and authorization data absent");
-  console.log(JSON.stringify({result:"PASS",checks,admissions:{zero:true,one:true,many:true},replay:true,externalActivity:{network:0,connector:0,drive:0,production:0}}));
+  console.log(JSON.stringify({result:"PASS",checks,governedEvidenceCount:16,framingEvidenceCount:0,fullAdmission:true,partialDisposition:"contract-supported-unexercised",admissions:{zero:true,one:true,many:true},replay:true,externalActivity:{network:0,connector:0,drive:0,production:0}}));
 }
 
 main().catch(error=>{console.error(error instanceof Error?error.stack??error.message:"validation failed");process.exitCode=1;});

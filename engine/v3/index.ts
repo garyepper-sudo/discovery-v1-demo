@@ -22,7 +22,7 @@ import {
 import { buildReasoningGraph } from "./reasoningGraph";
 import { detectSignals } from "./signals";
 import { detectThemes } from "./themes";
-import { DiscoveryV3Result } from "./types";
+import { DiscoveryV3Result, type V3Evidence } from "./types";
 import { admitCanonicalEvidenceScopeLineage, type CanonicalScopeLineageAdmissionInput } from "./governance/canonicalScopeLineage";
 import { buildUnderstanding } from "./understanding";
 import { runUnderstandingEngine } from "./understanding/index";
@@ -48,8 +48,24 @@ export function resolveCanonicalEvidenceAdmission(
   input: InvestigationInput,
   scopeLineage: CanonicalScopeLineageAdmissionInput,
 ) {
-  const evidence = buildEvidence(investigationRawText(input), input.evidenceSources);
-  return admitCanonicalEvidenceScopeLineage({
+  return admitGovernedEvidence(buildGovernedEvidence(input), scopeLineage);
+}
+
+function buildGovernedEvidence(input: InvestigationInput): V3Evidence[] {
+  if ((input.evidenceSources ?? []).some((source) =>
+    !source.sourceId?.trim() || !source.contentDigest?.trim()
+  )) {
+    throw new Error("Governed cognition Evidence requires source provenance.");
+  }
+  return buildEvidence(investigationRawText(input), input.evidenceSources)
+    .filter((item) => Boolean(item.sourceId));
+}
+
+function admitGovernedEvidence(
+  evidence: readonly V3Evidence[],
+  scopeLineage: CanonicalScopeLineageAdmissionInput,
+) {
+  const admission = admitCanonicalEvidenceScopeLineage({
     lineage: scopeLineage,
     evidence: evidence.map((item) => ({
       evidenceId: item.id,
@@ -58,6 +74,19 @@ export function resolveCanonicalEvidenceAdmission(
       ...(item.contentDigest ? { contentDigest: item.contentDigest } : {}),
     })),
   });
+  const cognitionIds = evidence.map((item) => item.id).sort();
+  const admissionIds = admission.operationBatch.admissions.flatMap((item) => item.investigationEvidenceIds).sort();
+  if (cognitionIds.length !== admissionIds.length || cognitionIds.some((id, index) => id !== admissionIds[index])) {
+    throw new Error("Governed cognition Evidence admission is incomplete.");
+  }
+  const bindingById = new Map(scopeLineage.sourceBindingRevisions.map((item) => [item.bindingId, item]));
+  for (const bindingRef of admission.operationBatch.admissions.flatMap((item) => item.sourceBindings)) {
+    const binding = bindingById.get(bindingRef.sourceBindingId);
+    if (!binding || binding.availability === "revoked") {
+      throw new Error("Governed cognition Evidence source is unavailable.");
+    }
+  }
+  return admission;
 }
 
 export function runDiscoveryV3(input: InvestigationInput, scopeLineage?: CanonicalScopeLineageAdmissionInput): DiscoveryV3Result {
@@ -66,10 +95,9 @@ export function runDiscoveryV3(input: InvestigationInput, scopeLineage?: Canonic
   const workspace = createInvestigationWorkspace(rawText);
 
   workspace.metadata.stage = "evidence";
-  workspace.evidence = buildEvidence(
-    workspace.rawText,
-    input.evidenceSources,
-  );
+  workspace.evidence = scopeLineage
+    ? buildGovernedEvidence(input)
+    : buildEvidence(workspace.rawText, input.evidenceSources);
 
   workspace.metadata.stage = "evidenceNetwork";
   workspace.evidenceNetwork = buildEvidenceNetwork(workspace.evidence);
@@ -215,7 +243,7 @@ export function runDiscoveryV3(input: InvestigationInput, scopeLineage?: Canonic
 
   const result=workspaceToResult(workspace);
   if(!scopeLineage)return result;
-  const scopeLineageAdmission=resolveCanonicalEvidenceAdmission(input,scopeLineage);
+  const scopeLineageAdmission=admitGovernedEvidence(workspace.evidence,scopeLineage);
   return {...result,scopeLineageAdmission};
 }
 
