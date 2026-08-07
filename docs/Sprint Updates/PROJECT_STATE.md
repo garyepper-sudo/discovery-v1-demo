@@ -5,8 +5,8 @@
 
 **Current phase:** Leadership Conversation Product canonization, governed exact
 Source Content, and operation-bound canonical Evidence/admission result
-prerequisites are complete; typed owner routing in a new clean continuation is
-next
+prerequisites are complete. Duplicate Evidence cognition entry is replay-aware
+and canonically stable; typed owner routing in a new clean continuation is next
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
@@ -127,6 +127,14 @@ The routing task must consume the actual operation-bound zero/one/many
 Evidence/admission result. It must not reconstruct identities by Runtime diff,
 project a first item, accept canonical IDs from the client, or treat the result
 as changed/unchanged or generic Outcome authority.
+
+It must also inject the integrated Engine admission preflight into canonical
+server composition. Exact operation replay remains write-free; a new operation
+may skip cognition only when its entire canonical batch replays exact prior
+support for the same organization and ProductQuestion. New provenance, Source
+Binding, scope, or Question support must continue through cognition. All older
+dirty Leadership Conversation worktrees remain untouched until a digest- and
+patch-verified transfer into a clean continuation from current main completes.
 
 ### Preserved predecessor: Leadership Conversation Prepare/Capture slice
 

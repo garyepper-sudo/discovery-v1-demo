@@ -18,14 +18,22 @@ canonical receipt. Existing Evidence with new provenance, exact replay, and
 zero admission are explicit; changed/unchanged remains a separate owner
 concern. Do not reopen Product strategy.
 
-Safely resume the preserved Leadership Conversation implementation: its
-nineteen pre/post content digests matched; its old worktree remains based on
-`ab327ce5307b09f0436fe6935ca9c985d89ea4b4`. Copy or reapply the sixteen new
-files exactly, capture the three tracked diffs as a patch, require
-`git apply --check` against the new canonical baseline before applying it, and
-require all nineteen transferred digests to match. Keep the old worktree
-untouched until verification completes; do not rebase, force-reset, or merge
-into it.
+Duplicate Evidence cognition entry is now replay-aware. The continuation must
+inject the integrated Engine admission preflight into canonical server
+composition and preserve its three-class behavior: exact operation replay,
+new-operation exact-attribution replay for the same ProductQuestion, and
+existing Evidence with genuinely new provenance or support. It must retain the
+unchanged duplicate-Evidence assertion and must not substitute source-ID
+matching for exact organization, Question, attribution, admission, provenance,
+and scope parity.
+
+Safely resume the preserved Leadership Conversation implementation in a new
+clean continuation from current canonical main. Preserve byte parity for its
+sixteen new files, preserve exact tracked-patch parity, and preserve newer
+canonical-main work in overlapping tracked files. Require every transferred
+digest and the authorized routing delta relative to its post-transfer
+checkpoint to match. Keep all older dirty worktrees untouched until transfer
+verification completes; do not rebase, force-reset, or merge into them.
 
 The post-field-audience review is complete: `OWNER-GRAPH-B — NO UNIQUE
 GOVERNANCE SUCCESSOR` and `PIVOT-A — PIVOT NOW`. The preserved implementation
