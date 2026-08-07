@@ -992,3 +992,34 @@ Changing one requires the process in
 - **Evidence:**
   [`DISCOVERY_CANONICAL_MATERIAL_EVIDENCE_ORIGIN_ADMISSION_ENVELOPE_COMPLETENESS_AND_EXPLANATION_LINEAGE_RECONCILIATION_001.md`](./DISCOVERY_CANONICAL_MATERIAL_EVIDENCE_ORIGIN_ADMISSION_ENVELOPE_COMPLETENESS_AND_EXPLANATION_LINEAGE_RECONCILIATION_001.md).
 - **Status:** Canonical prerequisite implemented and independently validated.
+
+## DEC-PROD-046 — Current eligibility follows immutable Understanding lineage and precedes Product cognition
+
+- **Decision:** Keep cross-operation canonical ancestry immutable and pure.
+  Resolve current disclosure eligibility through one explicit server-owned
+  Understanding-domain operation before the scoped Product projection.
+- **Owner boundary:** Existing Source Binding and scoped-authorization owners
+  retain availability, revocation, subject, purpose, scope, sensitivity, and
+  temporal authority. The eligibility operation only composes their current
+  results with immutable material ancestry; Product and personas own none of
+  those decisions.
+- **Result:** The version-1 result is `eligible`, `withheld`, or `unavailable`.
+  Any unavailable material branch takes precedence over a proven withheld
+  branch; ambiguity never becomes eligibility.
+- **Projection boundary:** The authorized projection verifies exact
+  organization, subject, purpose, scope digest, sensitivity, evaluation time,
+  authorization-context revision, canonical Understanding revision, and result
+  integrity. Only an eligible result can reach Product cognition.
+- **Revocation:** Current Source Binding or subject revocation is re-resolved
+  without rewriting Theory, Explanation, composition, or ancestry history.
+  Historical incomplete Runtime state is denied rather than migrated or
+  treated as authorized.
+- **Proof:** Four fresh processes exercise actual Runtime evolution, canonical
+  admission, Theory and Explanation owners, composition, authorized projection,
+  persisted revocation, reload, candidate validation, and repository CAS loss.
+- **Evidence:**
+  [`DISCOVERY_CANONICAL_UNDERSTANDING_LINEAGE_TO_CURRENT_ELIGIBILITY_COMPOSITION_AND_REVOCATION_OWNER_BOUNDARY_001.md`](./DISCOVERY_CANONICAL_UNDERSTANDING_LINEAGE_TO_CURRENT_ELIGIBILITY_COMPOSITION_AND_REVOCATION_OWNER_BOUNDARY_001.md).
+- **Architecture:** Additive versioned governance composition; no Runtime schema,
+  cognition owner, identity owner, authorization owner, or frontend contract is
+  introduced.
+- **Status:** Canonical bounded implementation, independently validated.

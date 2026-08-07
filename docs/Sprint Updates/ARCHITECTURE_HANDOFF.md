@@ -1,5 +1,23 @@
 # Discovery Architecture Handoff
 
+## Canonical Understanding current eligibility
+
+Immutable cross-operation Theory and Explanation ancestry is now separated
+from mutable current disclosure eligibility. The server-owned resolver composes
+existing scoped authorization and current Source Binding owners into
+`eligible`, `withheld`, or `unavailable`; unavailable takes precedence. The
+scoped projection validates exact subject, purpose, scope, sensitivity, time,
+and revision bindings before Product cognition. Persisted revocation is proven
+across fresh processes without rewriting immutable cognition.
+
+The retained historical Northstar Runtime remains unchanged and fails closed
+because it predates canonical Theory and Explanation lineage. The next clean
+continuation is **Discovery Canonical Explanation Operation-Bound Material
+Lineage Completeness and Validator Reconciliation 001**. Transfer the preserved
+fifteen-path implementation by exact patch/digest verification while retaining
+the newly canonical ancestry and current-eligibility changes in overlapping
+files. Do not merge or rebase any dirty preserved worktree.
+
 Generated: 2026-07-31T20:42:07.380Z
 
 ## Purpose

@@ -305,6 +305,20 @@ bounded advisory classification. It adds no alignment score, treats neither
 hierarchy nor authority as evidential truth, performs no approval or mutation,
 and is consumed unchanged by the same one-read adapter for every recipient.
 
+Canonical Understanding lineage and current eligibility are separate owners.
+Immutable ancestry records the material Evidence, admissions, Source Bindings,
+ancestor revisions, support roles, and lineage-policy version that produced a
+Theory or Explanation. A server-owned Understanding-domain operation then
+re-resolves current subject authority and every materially required Source
+Binding for the exact purpose, scope, sensitivity, semantic evaluation time,
+and canonical Understanding revision. Its deterministic result is `eligible`,
+`withheld`, or `unavailable`, with unavailable taking precedence whenever a
+material branch cannot be safely evaluated. The scoped projection validates
+that result and its bindings before any cognition enters Product composition.
+Revocation changes current eligibility without rewriting immutable cognition or
+ancestry. Historical Runtime state without the required ancestry fails closed;
+no compatibility default may infer authorization.
+
 ## Answer and confidence ownership
 
 - The backend selects one current Answer or explicitly abstains.

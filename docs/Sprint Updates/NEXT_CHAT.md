@@ -8,6 +8,11 @@ based on canonical main.
 
 Transfer the preserved fifteen-path operation-bound implementation with exact
 patch and digest verification. Preserve the integrated `DEC-PROD-045` governed
+material-Evidence boundary and `DEC-PROD-046` immutable-ancestry/current-
+eligibility boundary in every overlapping file. Preserve the current-
+eligibility resolver, projection-before-cognition gate, and historical
+fail-closed behavior while reconciling the preserved implementation. Do not
+merge or rebase the dirty worktree.
 Evidence selection in overlapping files: cognition and admission must continue
 to consume one sixteen-item source-bound collection, with zero framing Evidence
 and zero missing material references. Do not merge or rebase the dirty
