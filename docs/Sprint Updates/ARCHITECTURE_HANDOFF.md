@@ -6,6 +6,25 @@ Generated: 2026-07-31T20:42:07.380Z
 
 This document is the canonical architecture handoff for beginning a new Discovery sprint or chat.
 
+## Leadership Conversation canonical routing closure
+
+`DEC-PROD-044` closes `GAP-B-019` as `GAP-R-012` for the bounded
+development-only slice.
+Process A persists real preparation and freeze artifacts; Process B reloads
+them and persists real Source Binding, Source Content, upload, proposal, and
+disposition artifacts; Process C reloads those exact artifacts, independently
+constructs canonical server composition, and routes them through actual
+Evidence, Product Decision Draft, Unknown, and follow-up Question owners.
+
+Typed routing receipts derive only from actual owner results. Exact Class 2
+duplicate Evidence skips cognition and leaves Understanding unchanged;
+material Evidence continues through cognition. The isolated development route
+remains unpromoted and protected internals never enter frontend state.
+
+Immediate successor: **DISCOVERY GOVERNED COGNITION NON-DISCLOSURE FOUNDATION
+AND ADVERSARIAL BENCHMARK 001**, initially planning only: architecture
+reconciliation, owner audit, threat model, and benchmark design.
+
 ## Canonical local Source Binding closure
 
 `DEC-PROD-043` closes the fresh-process local Source Binding prerequisite by

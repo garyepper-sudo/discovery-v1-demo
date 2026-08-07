@@ -938,6 +938,37 @@ Changing one requires the process in
 - **Affected gap:** `GAP-B-019` remains open for the complete Leadership
   Conversation slice; its fresh-process local Source Binding prerequisite is
   resolved.
+
+## DEC-PROD-044 — Leadership Conversation routes through actual canonical owners
+
+- **Decision:** Accept the development-only, ProductQuestion-anchored
+  Leadership Conversation Prepare–Capture–Prepare slice and its typed canonical
+  owner router under `GAP-B-019`.
+- **Composition:** Canonical server composition constructs authorization,
+  repositories, services, adapters, clock, and deterministic helpers internally.
+  Route and React boundaries cannot supply canonical identities, receipts,
+  revisions, change classifications, or dependency objects.
+- **Owner boundary:** Evidence uses the exact operation-bound zero/one/many
+  admission result; Decision Draft, Unknown, and follow-up Question routes use
+  their actual existing owner results. Typed Product receipts record only the
+  routing fact and grant no new authority.
+- **Replay boundary:** Exact Class 2 duplicate Evidence skips cognition and
+  leaves Understanding unchanged; material Evidence continues through
+  cognition. Idempotent re-entry creates no duplicate canonical or Product
+  Workflow records.
+- **Proof:** Three fresh processes persist, reload, and cryptographically bind
+  preparation, freeze, Source Binding, Source Content, upload, proposal,
+  disposition, actual-owner routing, and future preparation artifacts.
+- **Exclusions:** No generic Outcome routing, Decision promotion, role
+  differentiation, field-audience activation, route promotion, Production,
+  connector, or Google Drive activity.
+- **Evidence:**
+  [`DISCOVERY_LEADERSHIP_CONVERSATION_TYPED_CANONICAL_OWNER_ROUTING_AND_SERVER_COMPOSITION_001.md`](./DISCOVERY_LEADERSHIP_CONVERSATION_TYPED_CANONICAL_OWNER_ROUTING_AND_SERVER_COMPOSITION_001.md).
+- **Affected gap:** `GAP-B-019` is resolved as `GAP-R-012` for the bounded development slice;
+  Production hardening and customer validation remain separate.
+- **Architecture:** No architecture change; existing canonical owners remain
+  authoritative.
+- **Status:** Canonical bounded implementation, independently validated.
 - **Architecture:** No new owner or repository; existing scope lineage and
   Runtime persistence are composed.
 - **Status:** Canonical bounded prerequisite implemented and validated.

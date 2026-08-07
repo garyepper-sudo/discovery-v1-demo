@@ -7,6 +7,15 @@ GAP-MR-006 all have focused production-owner traceability while the frozen
 benchmark remains the historical oracle. The Living Organization Drive slice
 and Product Workflow frontend readiness remain complete.
 
+The bounded Leadership Conversation development slice is now canonical under
+`DEC-PROD-044`. Its seven-step ProductQuestion-anchored loop persists and
+fresh-process reloads immutable preparation, governed source, proposal,
+disposition, actual-owner receipt, change, and future-preparation artifacts.
+Process C independently constructs canonical server composition and routes the
+exact reloaded proposals through actual existing owners. Generic Outcome,
+Decision promotion, role differentiation, route promotion, and Production
+remain deferred.
+
 Canonical Runtime replay determinism is now closed. Processing time no longer
 enters canonical semantic identities, Understanding/Learning history, support
 references, or Runtime revisions. The versioned

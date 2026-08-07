@@ -26,7 +26,7 @@ authorize implementation and does not supersede unfinished gates below.
    negative-control acceptance.
 3. **Prepared Work Product foundation:** validate ownership, lifecycle,
    versioning, fixtures, lineage, confidence, authorization, and migration
-   before any contract implementation (`GAP-B-019`).
+   before any contract implementation (resolved as `GAP-R-012`).
 4. **Universal Leadership Workspaces:** validate Brief, Prepare, Explore, and
    Capture through customer research and product-safe prototypes
    (`GAP-D-005`).
@@ -69,13 +69,14 @@ govern this sequence:
    Product adapter persists and replays its non-authoritative operation record
    without changing Evidence, admission, attribution, confidence, cognition,
    or Runtime schema ownership.
-3. **Development vertical slice routing — NEXT:** resume the shared
-   organization-wide Prepare–Capture–Prepare loop under `GAP-B-019` in a new
-   clean continuation; consume the exact operation-bound batch after governed
-   source reread and approval. No material role differentiation or Production.
-4. **Product Workflow hardening:** persistence, reload, idempotency, audit,
-   reset, replay, broader deterministic acceptance, and failure recovery.
-5. **Customer validation:** Director/VP interviews, prepared-content review,
+3. **Development vertical slice routing — COMPLETE:** the shared organization-
+   wide Prepare–Capture–Prepare loop consumes actual canonical owner results
+   after governed source reread and approval. No material role differentiation
+   or Production claim is made.
+4. **Product Workflow hardening — COMPLETE FOR THE BOUNDED SLICE:** persistence,
+   fresh-process reload, idempotency, audit receipts, reset, replay, tamper
+   rejection, and deterministic Process A/B/C acceptance pass.
+5. **Customer validation — NEXT:** Director/VP interviews, prepared-content review,
    time-saved, first/second-preparation, trust, and cognitive-effort measures.
 6. **Organization-wide Production readiness:** secure persistence,
    authorization reevaluation, controlled upload handling, retention,

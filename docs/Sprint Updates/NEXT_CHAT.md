@@ -2,9 +2,17 @@
 
 ## Exact next task
 
-Rerun **DISCOVERY LEADERSHIP CONVERSATION TYPED CANONICAL OWNER ROUTING AND
-SERVER COMPOSITION 001** from the resulting canonical main in a new clean
-continuation worktree. Do not resume or rewrite the preserved dirty worktree.
+Plan **DISCOVERY GOVERNED COGNITION NON-DISCLOSURE FOUNDATION AND ADVERSARIAL
+BENCHMARK 001** from canonical main.
+
+Initial mode: **ARCHITECTURE RECONCILIATION, OWNER AUDIT, THREAT MODEL, AND
+BENCHMARK DESIGN ONLY**. Do not implement the benchmark in the planning task.
+
+The Leadership Conversation typed canonical owner routing and server
+composition slice is closed under `DEC-PROD-044`. Its Process A/B/C acceptance
+persists and reloads exact artifacts, independently constructs server
+composition, routes through actual existing owners, and proves idempotent
+re-entry without frontend disclosure of protected internals.
 
 The Product Decision Draft prerequisite is closed under `DEC-PROD-042` with
 immutable revisions and receipts. `GAP-A-012` remains open because Decision
