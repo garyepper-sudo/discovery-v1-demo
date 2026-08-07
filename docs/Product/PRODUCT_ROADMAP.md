@@ -57,6 +57,14 @@ The [Product Constitution](./DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUT
 and [first-slice specification](./LEADERSHIP_CONVERSATION_PREPARE_CAPTURE_SPEC_001.md)
 govern this sequence:
 
+The governed material-Evidence prerequisite is complete under `DEC-PROD-045`:
+the governed cognition and admission boundaries consume one 16-item
+source-bound collection, while five investigation-framing facts remain
+non-Evidence. The next engineering continuation transfers and reruns the
+preserved operation-bound material-lineage implementation from a new clean
+canonical-main worktree before continuing Explanation lineage and the governed
+Product resolver.
+
 0. **Product canonization and closure — COMPLETE:** thesis, laws, architecture,
    first-slice specification, conflict register, roadmap, and implementation
    handoff are canonical.

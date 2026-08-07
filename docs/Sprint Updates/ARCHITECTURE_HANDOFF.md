@@ -6,6 +6,25 @@ Generated: 2026-07-31T20:42:07.380Z
 
 This document is the canonical architecture handoff for beginning a new Discovery sprint or chat.
 
+## Governed material Evidence selection closure
+
+`DEC-PROD-045` closes the prerequisite defect that promoted five investigation-
+framing records into governed cognition Evidence. Governed `runDiscoveryV3`
+now constructs one source-bound Evidence collection for cognition and canonical
+admission. The deterministic proof is 16/16, with zero framing Evidence and
+zero missing material Explanation references; legacy ungoverned behavior
+remains compatible at 21 records.
+
+The contribution-result fixture now truthfully reports `admitted` for all
+sixteen eligible records. Partial admission remains a supported contract state
+but is not manufactured from framing. No canonical identity, Runtime schema,
+Explanation, Product, frontend, or material-support policy changed.
+
+Immediate successor: create a clean continuation from canonical main and
+transfer the preserved fifteen-path operation-bound material-lineage
+implementation with exact patch and digest verification. Preserve this newer
+selection behavior in overlaps; do not merge or rebase a dirty worktree.
+
 ## Leadership Conversation canonical routing closure
 
 `DEC-PROD-044` closes `GAP-B-019` as `GAP-R-012` for the bounded
@@ -21,9 +40,11 @@ duplicate Evidence skips cognition and leaves Understanding unchanged;
 material Evidence continues through cognition. The isolated development route
 remains unpromoted and protected internals never enter frontend state.
 
-Immediate successor: **DISCOVERY GOVERNED COGNITION NON-DISCLOSURE FOUNDATION
-AND ADVERSARIAL BENCHMARK 001**, initially planning only: architecture
-reconciliation, owner audit, threat model, and benchmark design.
+That closure originally queued the governed-cognition benchmark. `DEC-PROD-045`
+now establishes the material-Evidence prerequisite, so the current successor is
+the clean operation-bound material-lineage continuation described above. The
+adversarial benchmark remains deferred until the lineage and resolver
+foundations close.
 
 ## Canonical local Source Binding closure
 

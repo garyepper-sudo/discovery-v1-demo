@@ -2,11 +2,21 @@
 
 ## Exact next task
 
-Plan **DISCOVERY GOVERNED COGNITION NON-DISCLOSURE FOUNDATION AND ADVERSARIAL
-BENCHMARK 001** from canonical main.
+Continue **DISCOVERY CANONICAL EXPLANATION OPERATION-BOUND MATERIAL LINEAGE
+COMPLETENESS AND VALIDATOR RECONCILIATION 001** from a new clean continuation
+based on canonical main.
 
-Initial mode: **ARCHITECTURE RECONCILIATION, OWNER AUDIT, THREAT MODEL, AND
-BENCHMARK DESIGN ONLY**. Do not implement the benchmark in the planning task.
+Transfer the preserved fifteen-path operation-bound implementation with exact
+patch and digest verification. Preserve the integrated `DEC-PROD-045` governed
+Evidence selection in overlapping files: cognition and admission must continue
+to consume one sixteen-item source-bound collection, with zero framing Evidence
+and zero missing material references. Do not merge or rebase the dirty
+preserved worktree.
+
+After operation-bound closure, complete canonical Explanation governance
+lineage, then resume the governed Product cognition resolver. The governed
+cognition adversarial benchmark remains planning-only until those foundations
+close.
 
 The Leadership Conversation typed canonical owner routing and server
 composition slice is closed under `DEC-PROD-044`. Its Process A/B/C acceptance
@@ -42,13 +52,13 @@ unchanged duplicate-Evidence assertion and must not substitute source-ID
 matching for exact organization, Question, attribution, admission, provenance,
 and scope parity.
 
-Safely resume the preserved Leadership Conversation implementation in a new
-clean continuation from current canonical main. Preserve byte parity for its
-new files, preserve exact tracked-patch parity, and preserve newer
-canonical-main work in overlapping tracked files. Require every transferred
-digest and the authorized routing delta relative to its post-transfer
-checkpoint to match. Keep all older dirty worktrees untouched until transfer
-verification completes; do not rebase, force-reset, or merge into them.
+Safely transfer the preserved operation-bound material-lineage implementation
+into a new clean continuation from current canonical main. Preserve byte parity
+for new files, exact tracked-patch parity, and newer canonical-main work in
+overlapping files. Require every transferred digest and the authorized delta
+relative to its post-transfer checkpoint to match. Keep all older dirty
+worktrees untouched until transfer verification completes; do not rebase,
+force-reset, or merge into them.
 
 The post-field-audience review is complete: `OWNER-GRAPH-B — NO UNIQUE
 GOVERNANCE SUCCESSOR` and `PIVOT-A — PIVOT NOW`. The preserved implementation
@@ -57,10 +67,11 @@ must describe itself as **SHARED ORGANIZATION-WIDE PREPARATION**, consume only
 the authorized projection, preserve `ProductQuestion` as the long-lived anchor,
 and define the immutable Prepared Work Product snapshot inside the slice.
 
-Leadership Workspace implementation is preserved but is not canonical. Material role
-differentiation remains **OPEN**; administrative persistence, recipient grants,
-forward lineage, nested disclosure, safe abstraction, activation, and route
-promotion remain parallel blocked governance work.
+The bounded Leadership Conversation slice is canonical; broader Leadership
+Workspace hypotheses remain unvalidated. Material role differentiation remains
+**OPEN**; administrative persistence, recipient grants, forward lineage,
+nested disclosure, safe abstraction, activation, and route promotion remain
+parallel blocked governance work.
 
 The Product direction is closed under `DEC-PROD-041`. Do not reopen broad
 brainstorming. Use the implemented canonical local Source Binding service and

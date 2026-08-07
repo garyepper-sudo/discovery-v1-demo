@@ -3,11 +3,12 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** Leadership Conversation typed canonical owner routing and
-server composition are complete under `DEC-PROD-044`. The bounded development
-slice uses actual existing owner results with fresh-process Process A/B/C proof;
-the governed-cognition non-disclosure foundation and adversarial benchmark is
-next in planning-only mode
+**Current phase:** Governed material Evidence selection is complete under
+`DEC-PROD-045`. Governed cognition and canonical admission share one sixteen-
+item source-bound collection; five framing records remain non-Evidence. The
+next task is a clean transfer and rerun of the preserved operation-bound
+material-lineage implementation, followed by Explanation-lineage and governed
+Product resolver closure.
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default

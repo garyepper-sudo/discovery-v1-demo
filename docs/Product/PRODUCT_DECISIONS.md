@@ -972,3 +972,23 @@ Changing one requires the process in
 - **Architecture:** No new owner or repository; existing scope lineage and
   Runtime persistence are composed.
 - **Status:** Canonical bounded prerequisite implemented and validated.
+
+## DEC-PROD-045 — Governed cognition admits only source-bound Evidence
+
+- **Decision:** Governed `runDiscoveryV3` cognition constructs its Evidence
+  population only from source-bound `evidenceSources` and supplies that same
+  ordered collection to canonical admission.
+- **Framing boundary:** Company, website, industry, ProductQuestion, and
+  investigation context remain non-Evidence framing. They receive no Evidence,
+  Source Binding, admission, material-support, or governance-lineage identity.
+- **Compatibility:** The deterministic governed case is 16/16 with zero
+  framing Evidence and zero missing material references. Legacy ungoverned
+  Engine behavior remains compatible at 21 records.
+- **Admission result:** All sixteen eligible governed records produce the
+  existing `admitted` disposition. `partially-admitted` remains supported but
+  is not fabricated from framing omissions.
+- **Architecture:** No canonical identity, owner, Runtime schema, Explanation,
+  Product, frontend, or material-support policy changes.
+- **Evidence:**
+  [`DISCOVERY_CANONICAL_MATERIAL_EVIDENCE_ORIGIN_ADMISSION_ENVELOPE_COMPLETENESS_AND_EXPLANATION_LINEAGE_RECONCILIATION_001.md`](./DISCOVERY_CANONICAL_MATERIAL_EVIDENCE_ORIGIN_ADMISSION_ENVELOPE_COMPLETENESS_AND_EXPLANATION_LINEAGE_RECONCILIATION_001.md).
+- **Status:** Canonical prerequisite implemented and independently validated.

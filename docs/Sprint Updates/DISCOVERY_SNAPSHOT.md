@@ -16,6 +16,14 @@ exact reloaded proposals through actual existing owners. Generic Outcome,
 Decision promotion, role differentiation, route promotion, and Production
 remain deferred.
 
+The governed material-Evidence prerequisite is canonical under `DEC-PROD-045`.
+Governed cognition and canonical admission use the same sixteen source-bound
+records; company, website, industry, ProductQuestion, and investigation context
+remain framing and create no Evidence identity or lineage. Missing material
+Explanation references are zero. Legacy ungoverned behavior remains at 21
+records. The preserved operation-bound, Explanation-lineage, and governed
+Product resolver stacks remain unmodified and require clean continuation.
+
 Canonical Runtime replay determinism is now closed. Processing time no longer
 enters canonical semantic identities, Understanding/Learning history, support
 references, or Runtime revisions. The versioned
@@ -40,12 +48,13 @@ non-authoritative operation record and can replay it without investigation,
 cognition execution, or Runtime replacement. New Evidence, existing Evidence
 with new provenance, exact replay, and zero admission are distinct. Canonical
 Evidence, admission, attribution, Source Binding, confidence, cognition, and
-Runtime schema are unchanged. The next Leadership Conversation routing task
-must consume this batch and keep changed/unchanged separately owned.
+Runtime schema are unchanged. Leadership Conversation routing now consumes
+that batch under `DEC-PROD-044`; `DEC-PROD-045` additionally ensures governed
+cognition and admission share only source-bound Evidence.
 
-Immediate successor: **DISCOVERY LEADERSHIP CONVERSATION TYPED CANONICAL OWNER
-ROUTING AND SERVER COMPOSITION 001** in a new clean continuation from canonical
-main. Product strategy is closed and must not be reopened.
+Immediate successor: transfer the preserved operation-bound material-lineage
+implementation into a new clean continuation from canonical main. Product
+strategy is closed and must not be reopened.
 
 ## Frontend-ready Product boundary
 
