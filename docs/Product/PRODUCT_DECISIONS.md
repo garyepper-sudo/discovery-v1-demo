@@ -915,3 +915,29 @@ Changing one requires the process in
 - **Architecture:** No architecture change; existing Product Workflow, Runtime,
   ProductQuestion, authorization, and Executive Decision owners are composed.
 - **Status:** Canonical bounded draft prerequisite implemented and validated.
+
+## DEC-PROD-043 — Canonical local Source Bindings use the existing lineage owner and Runtime index
+
+- **Decision:** Register, resolve, revoke, and restore local Source Bindings
+  through the existing canonical scope-lineage owner. Persist canonical state
+  only in `OrganizationRuntime.memory.canonicalScopeLineageIndex` and immutable
+  operation records in existing Runtime events.
+- **Compatibility:** Index version 2 retains the complete canonical topology.
+  Historical version-1 indexes remain readable and are not rewritten or given
+  invented topology; new governed local operations fail closed without v2
+  topology.
+- **Operation boundary:** Exact scoped authorization precedes Runtime access.
+  Deterministic identity, request-bound idempotency, optimistic concurrency,
+  immutable availability successors, and integrity-checked receipts are
+  required.
+- **Exclusions:** Source Content retains bytes and content facts only. Product
+  Workflow retains receipt references only. Registration creates no Evidence,
+  admission, cognition, Understanding change, connector behavior, or route.
+- **Evidence:**
+  [`DISCOVERY_CANONICAL_LOCAL_SOURCE_BINDING_REGISTRATION_PERSISTENCE_AND_IMMUTABLE_RECEIPT_001.md`](./DISCOVERY_CANONICAL_LOCAL_SOURCE_BINDING_REGISTRATION_PERSISTENCE_AND_IMMUTABLE_RECEIPT_001.md).
+- **Affected gap:** `GAP-B-019` remains open for the complete Leadership
+  Conversation slice; its fresh-process local Source Binding prerequisite is
+  resolved.
+- **Architecture:** No new owner or repository; existing scope lineage and
+  Runtime persistence are composed.
+- **Status:** Canonical bounded prerequisite implemented and validated.

@@ -389,6 +389,16 @@ admit Evidence or mutate Organization Runtime, and has no Product Workflow or
 Production-storage authority. See
 [DISCOVERY_GOVERNED_EXACT_SOURCE_CONTENT_OWNER_001.md](./DISCOVERY_GOVERNED_EXACT_SOURCE_CONTENT_OWNER_001.md).
 
+Local Source Binding registration remains owned by canonical scope lineage.
+Its version-2 Runtime index retains the complete canonical topology for
+fresh-process validation, while historical version-1 indexes remain readable
+and fail closed for new governed operations without topology. Registration,
+current resolution, and availability revision authorize before Runtime access,
+use optimistic replacement, and return immutable safe receipts. No separate
+binding repository, Source Content authority, Product Workflow authority,
+Evidence admission, or cognition is created. See
+[DISCOVERY_CANONICAL_LOCAL_SOURCE_BINDING_REGISTRATION_PERSISTENCE_AND_IMMUTABLE_RECEIPT_001.md](./DISCOVERY_CANONICAL_LOCAL_SOURCE_BINDING_REGISTRATION_PERSISTENCE_AND_IMMUTABLE_RECEIPT_001.md).
+
 ## Field audience-requirement security
 
 The canonical shadow boundary is a content-addressed chain from authoritative

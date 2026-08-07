@@ -6,6 +6,22 @@ Generated: 2026-07-31T20:42:07.380Z
 
 This document is the canonical architecture handoff for beginning a new Discovery sprint or chat.
 
+## Canonical local Source Binding closure
+
+`DEC-PROD-043` closes the fresh-process local Source Binding prerequisite by
+composing the existing canonical scope-lineage and Runtime owners.
+`CanonicalLocalSourceBindingService` provides authorization-first registration,
+current resolution, and immutable revoke/restore successors with request-bound,
+integrity-checked receipts. Version-2 lineage indexes retain complete canonical
+topology; historical version-1 indexes remain readable and fail closed for new
+operations that require topology.
+
+The Leadership Conversation continuation must inject this service into canonical
+server composition. It must not recreate binding persistence, infer identities,
+accept caller-supplied receipts, or move Source Content bytes into Runtime. Use
+the established two-layer transfer into a new clean continuation from canonical
+main and preserve every older dirty worktree until parity is verified.
+
 ## Operation-bound canonical Evidence result closure
 
 The canonical admission owner now returns the exact zero/one/many batch created

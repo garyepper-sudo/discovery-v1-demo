@@ -4,9 +4,10 @@
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
 **Current phase:** Leadership Conversation Product canonization, governed exact
-Source Content, and operation-bound canonical Evidence/admission result
-prerequisites are complete. Duplicate Evidence cognition entry is replay-aware
-and canonically stable; typed owner routing in a new clean continuation is next
+Source Content, canonical local Source Binding persistence, and operation-bound
+canonical Evidence/admission result prerequisites are complete. Duplicate
+Evidence cognition entry is replay-aware and canonically stable; typed owner
+routing in a new clean continuation is next
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default
@@ -97,6 +98,12 @@ the repository corpus and retained local metadata.
   persistence, exact bytes remain distinct from normalized comparison identity,
   and Product Workflow, Evidence admission, Runtime, and Production remain
   outside its boundary.
+- Canonical local Source Binding operations: implemented under `DEC-PROD-043`
+  through the existing scope-lineage and Runtime owners. Version-2 indexes
+  retain complete topology across fresh processes; historical version-1 state
+  remains readable and fails closed for topology-requiring writes. Registration,
+  resolution, availability revision, immutable receipts, replay, isolation, and
+  optimistic replacement are validated.
 
 ## Current Objective
 
@@ -117,11 +124,12 @@ parallel governance work.
 
 **DISCOVERY LEADERSHIP CONVERSATION TYPED CANONICAL OWNER ROUTING AND SERVER
 COMPOSITION 001** is the immediate successor after the bounded Product Decision
-Draft prerequisite. `DEC-PROD-042` records immutable Product Workflow draft
-revisions and receipts; `GAP-A-012` remains open for actual promotion through
-the existing Executive Decision pipeline. Resume the preserved nineteen-file
-Leadership Conversation implementation only by verified transfer into a new
-clean continuation worktree from canonical main.
+Draft and canonical local Source Binding prerequisites. `DEC-PROD-042` records
+immutable Product Workflow draft revisions and receipts; `DEC-PROD-043` closes
+fresh-process local binding registration and resolution; `GAP-A-012` remains
+open for actual promotion through the existing Executive Decision pipeline.
+Resume the preserved Leadership Conversation implementation only by verified
+two-layer transfer into a new clean continuation worktree from canonical main.
 
 The routing task must consume the actual operation-bound zero/one/many
 Evidence/admission result. It must not reconstruct identities by Runtime diff,

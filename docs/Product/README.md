@@ -103,6 +103,12 @@ It defines the additive, non-authoritative zero/one/many result consumed by the
 next typed owner-routing task without changing canonical identity, confidence,
 cognition, or Runtime schema.
 
+The local Source Binding prerequisite is recorded in
+[`DISCOVERY_CANONICAL_LOCAL_SOURCE_BINDING_REGISTRATION_PERSISTENCE_AND_IMMUTABLE_RECEIPT_001.md`](./DISCOVERY_CANONICAL_LOCAL_SOURCE_BINDING_REGISTRATION_PERSISTENCE_AND_IMMUTABLE_RECEIPT_001.md).
+It composes the existing scope-lineage and Runtime owners for authorization-
+first registration, fresh-process resolution, immutable availability history,
+and safe receipts without creating a second binding repository.
+
 ---
 
 ## 0. DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUTION.md

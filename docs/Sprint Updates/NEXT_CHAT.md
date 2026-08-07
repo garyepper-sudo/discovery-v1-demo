@@ -10,6 +10,13 @@ The Product Decision Draft prerequisite is closed under `DEC-PROD-042` with
 immutable revisions and receipts. `GAP-A-012` remains open because Decision
 promotion and actual Decision creation are not implemented.
 
+The canonical local Source Binding prerequisite is closed under
+`DEC-PROD-043`. The continuation must inject
+`CanonicalLocalSourceBindingService` into canonical server composition and use
+its persisted, authorization-first registration and resolution operations. It
+must not reconstruct a binding repository, accept caller-supplied identities,
+or couple Source Content persistence to Runtime mutation.
+
 The operation-bound canonical Evidence/admission prerequisite is also closed.
 The routing task must call `contributeEvidenceWithCanonicalResult`, consume its
 exact zero/one/many batch, and never scan Runtime, select a first attribution,
@@ -29,7 +36,7 @@ and scope parity.
 
 Safely resume the preserved Leadership Conversation implementation in a new
 clean continuation from current canonical main. Preserve byte parity for its
-sixteen new files, preserve exact tracked-patch parity, and preserve newer
+new files, preserve exact tracked-patch parity, and preserve newer
 canonical-main work in overlapping tracked files. Require every transferred
 digest and the authorized routing delta relative to its post-transfer
 checkpoint to match. Keep all older dirty worktrees untouched until transfer
@@ -48,8 +55,8 @@ forward lineage, nested disclosure, safe abstraction, activation, and route
 promotion remain parallel blocked governance work.
 
 The Product direction is closed under `DEC-PROD-041`. Do not reopen broad
-brainstorming. Use the implemented governed exact Source Content owner: create
-or resolve the canonical local Source Binding, write through
+brainstorming. Use the implemented canonical local Source Binding service and
+governed exact Source Content owner: create or resolve the binding, write through
 `GovernedSourceContentService`, store only `SourceContentWriteReceiptV1`
 references in `ConversationUploadReceiptV1`, read server-side for proposals,
 and route approved Evidence proposals through the separate Evidence-admission
