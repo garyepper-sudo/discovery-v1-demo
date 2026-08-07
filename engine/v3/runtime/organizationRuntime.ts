@@ -18,7 +18,7 @@ import type {
   OperatingModelImprovement,
 } from "../work/operatingModelImprovement";
 import type { EntityMention } from "../entities/entityLifecycle";
-import type { CanonicalScopeLineageIndex } from "../governance/canonicalScopeLineage";
+import type { CanonicalScopeLineageIndexV1, CanonicalScopeLineageIndexV2 } from "../governance/canonicalScopeLineage";
 import type { ExecutiveState } from "../executive/executiveState";
 import type { OrganizationalCausalModel } from "../model/causal/organizationalCausalModel";
 import { createOrganizationModel } from "../model/createOrganizationModel";
@@ -89,7 +89,7 @@ export type OrganizationRuntimeMemory = {
    * Additive provenance index. It never grants authority and is excluded from
    * existing Evidence, investigation, and cognitive-object identities.
    */
-  canonicalScopeLineageIndex?: CanonicalScopeLineageIndex;
+  canonicalScopeLineageIndex?: CanonicalScopeLineageIndexV1 | CanonicalScopeLineageIndexV2;
   /**
    * Sprint 34
    *

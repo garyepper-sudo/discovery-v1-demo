@@ -5,6 +5,8 @@
   "scripts": {
     "validate:governed-source-content": "tsx scripts/product/validateGovernedSourceContentOwner.ts",
     "validate:governed-source-content-replay": "tsx scripts/product/validateGovernedSourceContentReplay.ts",
+    "validate:canonical-local-source-binding": "tsx scripts/product/validateCanonicalLocalSourceBindingRegistration.ts",
+    "validate:canonical-local-source-binding-replay": "tsx scripts/product/validateCanonicalLocalSourceBindingReplay.ts",
     "validate:multi-role-foundational-governance-contracts": "tsx scripts/product/validateMultiRoleFoundationalGovernanceContracts.ts",
     "dev": "node --import tsx scripts/development/startRedactedDevelopmentServer.ts",
     "build": "next build",

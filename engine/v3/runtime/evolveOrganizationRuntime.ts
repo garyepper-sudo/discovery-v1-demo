@@ -60,7 +60,7 @@ import {
 import {
   runExecutiveCommunicationOperatingSystem,
 } from "../operating-systems/communication/runExecutiveCommunicationOperatingSystem";
-import { createCanonicalDerivedScopeLineage, createCanonicalScopeLineageIndex } from "../governance/canonicalScopeLineage";
+import { createCanonicalDerivedScopeLineage, createCanonicalScopeLineageIndex, createCanonicalScopeLineageIndexV1 } from "../governance/canonicalScopeLineage";
 
 
 export function evolveOrganizationRuntime(params: {
@@ -108,9 +108,12 @@ export function evolveOrganizationRuntime(params: {
   ]:[];
   const derivedScopeLineages=scopeAdmission&&scopeLineageEffectiveAt?derivedScopeInputs.map(item=>createCanonicalDerivedScopeLineage({organizationId:runtime.metadata.organizationId,derivedObjectRef:item.ref,supportingEvidenceIds:item.evidenceIds,attributions:scopeAdmission.evidenceAttributions,topology:scopeAdmission.topology,effectiveAt:scopeLineageEffectiveAt})):[];
   const existingScopeLineageIndex=runtime.memory.canonicalScopeLineageIndex;
+  // New indexes retain the complete already-validated canonical topology.
+  // Historical v1 indexes preserve their exact representation and semantics.
   if(scopeAdmission&&existingScopeLineageIndex&&existingScopeLineageIndex.topologyId!==scopeAdmission.topology.topologyId)throw new Error("Runtime scope-lineage topology mismatch.");
   const unionById=<T>(prior:readonly T[],current:readonly T[],identity:(value:T)=>string):T[]=>[...new Map([...prior,...current].map(value=>[identity(value),value])).values()];
-  const canonicalScopeLineageIndex=scopeAdmission?createCanonicalScopeLineageIndex({
+  const createLineageIndex=existingScopeLineageIndex?.schemaVersion==="1"?createCanonicalScopeLineageIndexV1:createCanonicalScopeLineageIndex;
+  const canonicalScopeLineageIndex=scopeAdmission?createLineageIndex({
     organizationId:runtime.metadata.organizationId,
     topology:scopeAdmission.topology,
     sourceBindings:unionById(existingScopeLineageIndex?.sourceBindings??[],scopeAdmission.sourceBindings,item=>item.bindingId),

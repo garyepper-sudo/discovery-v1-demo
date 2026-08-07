@@ -227,3 +227,4 @@ export {
 } from "./workspace";
 
 export * from "./model/cognition/cognitiveOntology";
+export * from "./governance/canonicalLocalSourceBindingService";

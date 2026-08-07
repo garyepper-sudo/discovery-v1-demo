@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import type { GovernedScopeRef, GovernedScopeType } from "./scopedGovernanceContext";
 
 export const CANONICAL_SCOPE_LINEAGE_VERSION = "1" as const;
+export const CANONICAL_SCOPE_LINEAGE_INDEX_VERSION = "2" as const;
 export type ScopeRelationshipKind = "contains" | "initiative-relates";
 export type SourceScopeRelationship = "origin" | "subject" | "applies-to" | "initiative";
 
@@ -84,7 +85,7 @@ export type CanonicalDerivedScopeLineage = {
   effectiveAt: string;
   digest: string;
 };
-export type CanonicalScopeLineageIndex = {
+export type CanonicalScopeLineageIndexV1 = {
   kind: "canonical-scope-lineage-index";
   schemaVersion: typeof CANONICAL_SCOPE_LINEAGE_VERSION;
   organizationId: string;
@@ -94,6 +95,11 @@ export type CanonicalScopeLineageIndex = {
   derivedLineages: CanonicalDerivedScopeLineage[];
   digest: string;
 };
+export type CanonicalScopeLineageIndexV2 = Omit<CanonicalScopeLineageIndexV1, "schemaVersion"> & {
+  schemaVersion: typeof CANONICAL_SCOPE_LINEAGE_INDEX_VERSION;
+  topology: CanonicalScopeTopology;
+};
+export type CanonicalScopeLineageIndex = CanonicalScopeLineageIndexV1 | CanonicalScopeLineageIndexV2;
 export type CanonicalScopeLineageAdmissionInput = {
   organizationId: string;
   effectiveAt: string;
@@ -255,7 +261,28 @@ export function createCanonicalScopeLineageIndex(input:{organizationId:string;to
   validateTopologyReference(input.topology,input.organizationId,input.topology.topologyId);
   const sourceBindings=[...(input.sourceBindings??[])].sort((a,b)=>compare(a.bindingId,b.bindingId)); const evidenceAttributions=[...(input.evidenceAttributions??[])].sort((a,b)=>compare(a.attributionId,b.attributionId)); const derivedLineages=[...(input.derivedLineages??[])].sort((a,b)=>compare(a.lineageId,b.lineageId));
   for(const item of [...sourceBindings,...evidenceAttributions,...derivedLineages])if(item.organizationId!==input.organizationId||item.topologyId!==input.topology.topologyId)throw new Error("Scope lineage index organization or topology mismatch.");
+  const unsigned={kind:"canonical-scope-lineage-index" as const,schemaVersion:CANONICAL_SCOPE_LINEAGE_INDEX_VERSION,organizationId:input.organizationId,topologyId:input.topology.topologyId,topology:structuredClone(input.topology),sourceBindings,evidenceAttributions,derivedLineages};return{...unsigned,digest:hash(unsigned)};
+}
+
+export function createCanonicalScopeLineageIndexV1(input:{organizationId:string;topology:CanonicalScopeTopology;sourceBindings?:readonly CanonicalSourceScopeBinding[];evidenceAttributions?:readonly CanonicalEvidenceScopeAttribution[];derivedLineages?:readonly CanonicalDerivedScopeLineage[]}):CanonicalScopeLineageIndexV1{
+  validateTopologyReference(input.topology,input.organizationId,input.topology.topologyId);
+  const sourceBindings=[...(input.sourceBindings??[])].sort((a,b)=>compare(a.bindingId,b.bindingId));const evidenceAttributions=[...(input.evidenceAttributions??[])].sort((a,b)=>compare(a.attributionId,b.attributionId));const derivedLineages=[...(input.derivedLineages??[])].sort((a,b)=>compare(a.lineageId,b.lineageId));
+  for(const item of [...sourceBindings,...evidenceAttributions,...derivedLineages])if(item.organizationId!==input.organizationId||item.topologyId!==input.topology.topologyId)throw new Error("Scope lineage index organization or topology mismatch.");
   const unsigned={kind:"canonical-scope-lineage-index" as const,schemaVersion:CANONICAL_SCOPE_LINEAGE_VERSION,organizationId:input.organizationId,topologyId:input.topology.topologyId,sourceBindings,evidenceAttributions,derivedLineages};return{...unsigned,digest:hash(unsigned)};
+}
+
+export function readCanonicalScopeLineageTopology(index:CanonicalScopeLineageIndex):CanonicalScopeTopology|undefined{
+  if(index.schemaVersion!==CANONICAL_SCOPE_LINEAGE_INDEX_VERSION)return undefined;
+  validateTopologyReference(index.topology,index.organizationId,index.topologyId);
+  const rebuilt=createCanonicalScopeLineageIndex({organizationId:index.organizationId,topology:index.topology,sourceBindings:index.sourceBindings,evidenceAttributions:index.evidenceAttributions,derivedLineages:index.derivedLineages});
+  if(rebuilt.digest!==index.digest)throw new Error("Canonical scope-lineage index integrity failed.");
+  return structuredClone(index.topology);
+}
+
+export function createCanonicalLocalSourceVersionRef(input:{organizationId:string;sourceType:Exclude<CanonicalSourceType,"authorized-record">;purposeRef:string;normalizedContentDigest:string;assertions:readonly SourceScopeAssertion[]}):CanonicalSourceVersionRef{
+  if(!exact(input.organizationId)||!exact(input.purposeRef)||!exact(input.normalizedContentDigest)||input.normalizedContentDigest.length!==64||!input.assertions.length)throw new Error("Invalid canonical local source identity input.");
+  const identity={contractVersion:"1",organizationId:input.organizationId,sourceType:input.sourceType,purposeRef:input.purposeRef,normalizedContentDigest:input.normalizedContentDigest,assertions:normalizeAssertions(input.assertions)};
+  return{sourceId:`canonical-local-source:v1:${hash(identity)}`,sourceVersion:"1",normalizedContentDigest:input.normalizedContentDigest};
 }
 
 export function lineageSupportsRequestedScope(lineage:CanonicalDerivedScopeLineage,requestedScope:GovernedScopeRef):boolean{
