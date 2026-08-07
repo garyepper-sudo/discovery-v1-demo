@@ -30,6 +30,10 @@ import type {
   ProductOptimizationContext,
   ProductOrganizationalObjective,
 } from "../objectives";
+import type {
+  CanonicalEvidenceAdmissionOperationBatchV1,
+  CanonicalEvidenceAdmissionOperationItemV1,
+} from "../../engine/v3/governance/canonicalScopeLineage";
 
 export type ProductQuestionSummary = {
   id: string;
@@ -175,6 +179,42 @@ export type CanonicalEvidenceContribution = {
 export type CanonicalInvestigationResult = {
   runtime: import("../../engine/v3/runtime/organizationRuntime").OrganizationRuntime;
   evidenceAccepted: boolean;
+  canonicalEvidenceAdmissionBatch?: CanonicalEvidenceAdmissionOperationBatchV1;
+};
+
+export type CanonicalEvidenceContributionOperationRecordV1 = {
+  kind: "canonical-evidence-contribution-operation";
+  contractVersion: "1";
+  organizationId: string;
+  questionId: string;
+  contributionOperationId: string;
+  idempotencyKeyDigest: string;
+  requestFingerprint: string;
+  canonicalAdmissionBatch: CanonicalEvidenceAdmissionOperationBatchV1;
+  evidenceAccepted: boolean;
+  productQuestionRevisionBefore: number;
+  productQuestionRevisionAfter: number;
+  recordedAt: string;
+  recordDigest: string;
+};
+
+export type CanonicalEvidenceContributionOperationResultV1 = {
+  contractVersion: "1";
+  organizationId: string;
+  questionId: string;
+  contributionOperationId: string;
+  operationDisposition: "admitted" | "partially-admitted" | "idempotent-replay" | "not-admitted";
+  admissions: CanonicalEvidenceAdmissionOperationItemV1[];
+  evidenceAccepted: boolean;
+  runtimeRevisionBefore: string;
+  runtimeRevisionAfter: string;
+  productQuestionRevisionBefore: number;
+  productQuestionRevisionAfter: number;
+  canonicalResultDigest: string;
+};
+
+export type CanonicalEvidenceContributionMutationResultV1 = CanonicalWorkspaceReadResult & {
+  contributionResult: CanonicalEvidenceContributionOperationResultV1;
 };
 
 export type HistoricalAnswerSource = Pick<

@@ -25,6 +25,8 @@
     "validate:multi-user-sandbox-access": "tsx scripts/product/validateMultiUserSandboxAccess.ts",
     "validate:live-scoped-role-aware-adapter": "tsx scripts/product/validateLiveScopedRoleAwareAdapter.ts",
     "validate:canonical-scope-lineage": "tsx scripts/product/validateCanonicalScopeLineage.ts",
+    "validate:canonical-evidence-contribution-result": "tsx scripts/product/validateCanonicalEvidenceContributionResult.ts",
+    "validate:canonical-evidence-contribution-result-replay": "tsx scripts/product/validateCanonicalEvidenceContributionResultReplay.ts",
     "validate:canonical-understanding-audience-lineage-forward-producer": "tsx scripts/product/validateCanonicalUnderstandingAudienceLineageForwardProducer.ts",
     "validate:field-audience-requirement-direct-security": "tsx scripts/product/validateFieldAudienceRequirementDirectSecurityContract.ts",
     "validate:northstar-reconstruction-package": "tsx scripts/product/validateNorthstarReconstructionPackage.ts",

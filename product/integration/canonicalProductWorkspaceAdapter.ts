@@ -1,8 +1,13 @@
+import { createHash } from "node:crypto";
 import type {
   OrganizationRuntimeRepository,
   RuntimeStorageOperationMetadata,
   StoredOrganizationRuntime,
 } from "../../engine/v3/runtime/organizationRuntimeRepository";
+import {
+  canonicalScopeLineageDigest,
+  type CanonicalEvidenceAdmissionOperationBatchV1,
+} from "../../engine/v3/governance/canonicalScopeLineage";
 import {
   appendProductQuestionEvent,
   buildDurableProductQuestion,
@@ -62,6 +67,9 @@ import {
 } from "../objectives";
 import type {
   CanonicalEvidenceContribution,
+  CanonicalEvidenceContributionMutationResultV1,
+  CanonicalEvidenceContributionOperationRecordV1,
+  CanonicalEvidenceContributionOperationResultV1,
   CanonicalAnswerReadResult,
   CanonicalAnswerRefreshResult,
   CanonicalInvestigationResult,
@@ -123,6 +131,70 @@ function canonicalReplayValue(value: unknown): string {
   if (Array.isArray(value)) return `[${value.map(canonicalReplayValue).sort().join(",")}]`;
   if (value && typeof value === "object") return `{${Object.keys(value).sort().map((key) => `${key}:${canonicalReplayValue((value as Record<string, unknown>)[key])}`).join(",")}}`;
   return JSON.stringify(value);
+}
+
+function canonicalOperationValue(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map(canonicalOperationValue).join(",")}]`;
+  if (value && typeof value === "object") return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${canonicalOperationValue((value as Record<string, unknown>)[key])}`).join(",")}}`;
+  return JSON.stringify(value);
+}
+
+function operationDigest(value: unknown): string {
+  return createHash("sha256").update(canonicalOperationValue(value)).digest("hex");
+}
+
+function normalizedContributionDigest(content: string): string {
+  return operationDigest(content.normalize("NFKC").replace(/\s+/g, " ").trim());
+}
+
+function contributionIdentity(input: {
+  organizationId: string;
+  questionId: string;
+  contribution: CanonicalEvidenceContribution;
+}): { idempotencyKeyDigest: string; requestFingerprint: string; contributionOperationId: string } {
+  const idempotencyKeyDigest = operationDigest(["canonical-evidence-contribution", input.contribution.idempotencyKey]);
+  const requestFingerprint = operationDigest({contractVersion:"1",organizationId:input.organizationId,questionId:input.questionId,sourceId:input.contribution.sourceId,sourceType:input.contribution.sourceType,normalizedContentDigest:normalizedContributionDigest(input.contribution.content),contributedAt:input.contribution.contributedAt});
+  return {idempotencyKeyDigest,requestFingerprint,contributionOperationId:`canonical-evidence-contribution-operation:v1:${operationDigest([input.organizationId,input.questionId,idempotencyKeyDigest,requestFingerprint])}`};
+}
+
+function operationRecord(value: unknown): CanonicalEvidenceContributionOperationRecordV1 | undefined {
+  if (!value || typeof value !== "object") return undefined;
+  const candidate=value as Partial<CanonicalEvidenceContributionOperationRecordV1>;
+  return candidate.kind==="canonical-evidence-contribution-operation"&&candidate.contractVersion==="1"?candidate as CanonicalEvidenceContributionOperationRecordV1:undefined;
+}
+
+function validateAdmissionBatch(batch: CanonicalEvidenceAdmissionOperationBatchV1, organizationId: string, runtime: StoredOrganizationRuntime["runtime"], previousRuntime?: StoredOrganizationRuntime["runtime"]): void {
+  if(batch.contractVersion!=="1"||batch.organizationId!==organizationId)throw new Error("Canonical Evidence contribution result is invalid.");
+  const {batchDigest,...unsigned}=batch;
+  if(batchDigest!==canonicalScopeLineageDigest(unsigned))throw new Error("Canonical Evidence contribution result is invalid.");
+  const evidenceIds=new Set<string>();const admissionIds=new Set<string>();const attributionIds=new Set<string>();const locals=new Set<string>();
+  const index=runtime.memory.canonicalScopeLineageIndex;
+  for(const item of batch.admissions){
+    if(item.contractVersion!=="1"||evidenceIds.has(item.canonicalEvidenceId)||admissionIds.has(item.canonicalAdmissionId)||attributionIds.has(item.attributionId)||item.investigationEvidenceIds.length===0||item.sourceBindings.length===0)throw new Error("Canonical Evidence contribution result is invalid.");
+    evidenceIds.add(item.canonicalEvidenceId);admissionIds.add(item.canonicalAdmissionId);attributionIds.add(item.attributionId);
+    for(const localId of item.investigationEvidenceIds){if(locals.has(localId))throw new Error("Canonical Evidence contribution result is invalid.");locals.add(localId);}
+    const attribution=index?.evidenceAttributions.find(value=>value.attributionId===item.attributionId);
+    if(!attribution||attribution.organizationId!==organizationId||attribution.evidenceId!==item.canonicalEvidenceId||attribution.evidenceAdmissionId!==item.canonicalAdmissionId||attribution.attributionVersion!==item.attributionVersion||attribution.digest!==item.attributionDigest)throw new Error("Canonical Evidence contribution result is invalid.");
+    const itemBindingIds=item.sourceBindings.map(value=>value.sourceBindingId);
+    if(new Set(itemBindingIds).size!==itemBindingIds.length||canonicalOperationValue([...itemBindingIds].sort())!==canonicalOperationValue([...attribution.sourceBindingIds].sort()))throw new Error("Canonical Evidence contribution result is invalid.");
+    for(const binding of item.sourceBindings){const retained=index?.sourceBindings.find(value=>value.bindingId===binding.sourceBindingId);if(!retained||retained.organizationId!==organizationId||retained.topologyId!==attribution.topologyId||retained.source.sourceId!==binding.sourceId||retained.source.sourceVersion!==binding.sourceVersion||retained.source.normalizedContentDigest!==binding.normalizedContentDigest)throw new Error("Canonical Evidence contribution result is invalid.");}
+    if(previousRuntime){
+      const priorAttributions=previousRuntime.memory.canonicalScopeLineageIndex?.evidenceAttributions??[];
+      const expectedDisposition=priorAttributions.some(value=>value.attributionId===item.attributionId)
+        ? "existing-attribution-replayed"
+        : priorAttributions.some(value=>value.evidenceId===item.canonicalEvidenceId)
+          ? "existing-evidence-new-provenance"
+          : "new-canonical-evidence";
+      if(item.disposition!==expectedDisposition)throw new Error("Canonical Evidence contribution result is invalid.");
+    }
+  }
+  const expected=batch.admissions.length===0?"not-admitted":batch.admissionDisposition;
+  if(expected!==batch.admissionDisposition)throw new Error("Canonical Evidence contribution result is invalid.");
+}
+
+function validateOperationRecord(record: CanonicalEvidenceContributionOperationRecordV1): void {
+  const {recordDigest,...unsigned}=record;
+  if(recordDigest!==operationDigest(unsigned))throw new Error("Canonical Evidence contribution replay is invalid.");
 }
 
 function governedChoiceContextMatches(input: {
@@ -309,16 +381,17 @@ export class CanonicalProductWorkspaceAdapter {
     return { workspace, runtimeRevision: persisted.revision };
   }
 
-  async contributeEvidence(input: {
+  private async contributeEvidenceMutation(input: {
     userId: string;
     organizationId: string;
     questionId: string;
     contribution: CanonicalEvidenceContribution;
     operation: RuntimeStorageOperationMetadata;
-  }): Promise<CanonicalWorkspaceReadResult> {
+  }, requireCanonicalResult: boolean): Promise<CanonicalWorkspaceReadResult | CanonicalEvidenceContributionMutationResultV1> {
     const stored = await this.authorizedRuntime(input);
     const question = buildDurableProductQuestion({ runtime: stored.runtime, questionId: input.questionId });
     if (!question) throw new Error("Product Question was not found in this organization.");
+    const identity=contributionIdentity(input);
     const marker = stableId("product-contribution", input.organizationId, input.contribution.idempotencyKey);
     const acceptedMarkers = new Set([
       marker,
@@ -326,11 +399,26 @@ export class CanonicalProductWorkspaceAdapter {
         stableId("product-contribution", input.organizationId, key)
       ),
     ]);
+    const records=stored.runtime.memory.events.map(operationRecord).filter((value):value is CanonicalEvidenceContributionOperationRecordV1=>Boolean(value));
+    const acceptedKeyDigests=new Set([identity.idempotencyKeyDigest,...(input.contribution.priorIdempotencyKeys??[]).map(key=>operationDigest(["canonical-evidence-contribution",key]))]);
+    const replayRecord=records.find(record=>acceptedKeyDigests.has(record.idempotencyKeyDigest));
+    if(replayRecord){
+      validateOperationRecord(replayRecord);
+      if(replayRecord.organizationId!==input.organizationId||replayRecord.questionId!==input.questionId||replayRecord.requestFingerprint!==identity.requestFingerprint)throw new Error("Canonical Evidence contribution replay conflicts with the request.");
+      validateAdmissionBatch(replayRecord.canonicalAdmissionBatch,input.organizationId,stored.runtime);
+      const workspace=buildProductQuestionWorkspace({runtime:stored.runtime,question:question.title,questionId:question.id});
+      const contributionResult:CanonicalEvidenceContributionOperationResultV1={contractVersion:"1",organizationId:input.organizationId,questionId:input.questionId,contributionOperationId:replayRecord.contributionOperationId,operationDisposition:"idempotent-replay",admissions:replayRecord.canonicalAdmissionBatch.admissions,evidenceAccepted:replayRecord.evidenceAccepted,runtimeRevisionBefore:stored.revision,runtimeRevisionAfter:stored.revision,productQuestionRevisionBefore:replayRecord.productQuestionRevisionBefore,productQuestionRevisionAfter:replayRecord.productQuestionRevisionAfter,canonicalResultDigest:replayRecord.recordDigest};
+      return requireCanonicalResult?{workspace,runtimeRevision:stored.revision,contributionResult}:{workspace,runtimeRevision:stored.revision};
+    }
+    if(records.some(record=>record.idempotencyKeyDigest===identity.idempotencyKeyDigest))throw new Error("Canonical Evidence contribution replay conflicts with the request.");
     if (stored.runtime.memory.events.some((event) =>
       event
       && typeof event === "object"
       && acceptedMarkers.has(String((event as { id?: unknown }).id ?? ""))
-    )) return this.getQuestionWorkspace(input);
+    )) {
+      if(requireCanonicalResult)throw new Error("Canonical Evidence contribution result is unavailable for a legacy replay.");
+      return this.getQuestionWorkspace(input);
+    }
     const investigated = await this.dependencies.investigate({
       runtime: stored.runtime,
       question: question.title,
@@ -339,6 +427,11 @@ export class CanonicalProductWorkspaceAdapter {
     if (investigated.runtime.metadata.organizationId !== input.organizationId) {
       throw new Error("Investigation changed organization identity.");
     }
+    const batch=investigated.canonicalEvidenceAdmissionBatch;
+    if(requireCanonicalResult&&!batch)throw new Error("Canonical Evidence contribution result is unavailable.");
+    if(batch)validateAdmissionBatch(batch,input.organizationId,investigated.runtime,stored.runtime);
+    const batchForRecord=batch;
+    let record:CanonicalEvidenceContributionOperationRecordV1|undefined;
     let runtime = {
       ...investigated.runtime,
       memory: {
@@ -365,15 +458,44 @@ export class CanonicalProductWorkspaceAdapter {
       workspace,
       recordedAt: input.contribution.contributedAt,
     });
+    const resultingQuestion=buildDurableProductQuestion({runtime,questionId:question.id});
+    if(!resultingQuestion)throw new Error("Investigation removed Product Question identity.");
+    const recordUnsigned=batchForRecord?{kind:"canonical-evidence-contribution-operation" as const,contractVersion:"1" as const,organizationId:input.organizationId,questionId:input.questionId,contributionOperationId:identity.contributionOperationId,idempotencyKeyDigest:identity.idempotencyKeyDigest,requestFingerprint:identity.requestFingerprint,canonicalAdmissionBatch:batchForRecord,evidenceAccepted:investigated.evidenceAccepted,productQuestionRevisionBefore:question.revision,productQuestionRevisionAfter:resultingQuestion.revision,recordedAt:input.contribution.contributedAt}:undefined;
+    record=recordUnsigned?{...recordUnsigned,recordDigest:operationDigest(recordUnsigned)}:undefined;
+    if(record)runtime={...runtime,memory:{...runtime.memory,events:[...runtime.memory.events,record]}};
     const persisted = await this.replace({ stored, runtime, operation: input.operation });
-    return {
-      workspace: buildProductQuestionWorkspace({
+    const persistedWorkspace=buildProductQuestionWorkspace({
         runtime: persisted.runtime,
         question: question.title,
         questionId: question.id,
-      }),
-      runtimeRevision: persisted.revision,
-    };
+      });
+    if(!requireCanonicalResult)return {workspace:persistedWorkspace,runtimeRevision:persisted.revision};
+    if(!record||!batch)throw new Error("Canonical Evidence contribution result is unavailable.");
+    const persistedRecord=persisted.runtime.memory.events.map(operationRecord).find(value=>value?.contributionOperationId===record.contributionOperationId);
+    if(!persistedRecord)throw new Error("Canonical Evidence contribution result was not persisted.");
+    validateOperationRecord(persistedRecord);validateAdmissionBatch(batch,input.organizationId,persisted.runtime,stored.runtime);
+    const contributionResult:CanonicalEvidenceContributionOperationResultV1={contractVersion:"1",organizationId:input.organizationId,questionId:input.questionId,contributionOperationId:identity.contributionOperationId,operationDisposition:batch.admissionDisposition,admissions:batch.admissions,evidenceAccepted:investigated.evidenceAccepted,runtimeRevisionBefore:stored.revision,runtimeRevisionAfter:persisted.revision,productQuestionRevisionBefore:question.revision,productQuestionRevisionAfter:persistedWorkspace.question.revision,canonicalResultDigest:record.recordDigest};
+    return {workspace:persistedWorkspace,runtimeRevision:persisted.revision,contributionResult};
+  }
+
+  async contributeEvidence(input: {
+    userId: string;
+    organizationId: string;
+    questionId: string;
+    contribution: CanonicalEvidenceContribution;
+    operation: RuntimeStorageOperationMetadata;
+  }): Promise<CanonicalWorkspaceReadResult> {
+    return this.contributeEvidenceMutation(input,false) as Promise<CanonicalWorkspaceReadResult>;
+  }
+
+  async contributeEvidenceWithCanonicalResult(input: {
+    userId: string;
+    organizationId: string;
+    questionId: string;
+    contribution: CanonicalEvidenceContribution;
+    operation: RuntimeStorageOperationMetadata;
+  }): Promise<CanonicalEvidenceContributionMutationResultV1> {
+    return this.contributeEvidenceMutation(input,true) as Promise<CanonicalEvidenceContributionMutationResultV1>;
   }
 
   async recordSearch(input: {

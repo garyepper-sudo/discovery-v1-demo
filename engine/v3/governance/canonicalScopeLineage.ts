@@ -106,7 +106,31 @@ export type CanonicalEvidenceScopeAdmission = {
   topology: CanonicalScopeTopology;
   sourceBindings: CanonicalSourceScopeBinding[];
   evidenceAttributions: CanonicalEvidenceScopeAttribution[];
+  operationBatch: CanonicalEvidenceAdmissionOperationBatchV1;
   digest: string;
+};
+export type CanonicalEvidenceAdmissionOperationItemV1 = {
+  contractVersion: "1";
+  canonicalEvidenceId: string;
+  canonicalAdmissionId: string;
+  attributionId: string;
+  attributionVersion: number;
+  investigationEvidenceIds: string[];
+  sourceBindings: Array<{
+    sourceBindingId: string;
+    sourceId: string;
+    sourceVersion: string;
+    normalizedContentDigest: string;
+  }>;
+  disposition: "new-canonical-evidence" | "existing-evidence-new-provenance" | "existing-attribution-replayed";
+  attributionDigest: string;
+};
+export type CanonicalEvidenceAdmissionOperationBatchV1 = {
+  contractVersion: "1";
+  organizationId: string;
+  admissions: CanonicalEvidenceAdmissionOperationItemV1[];
+  admissionDisposition: "admitted" | "partially-admitted" | "not-admitted";
+  batchDigest: string;
 };
 
 const compare = (left: string, right: string): number => left.localeCompare(right);
@@ -123,6 +147,14 @@ const assertionKey = (value: SourceScopeAssertion): string => stable([value.rela
 const copyScope = (scope: GovernedScopeRef): GovernedScopeRef => ({ organizationId: scope.organizationId, type: scope.type, id: scope.id });
 const normalizeAssertions = (values: readonly SourceScopeAssertion[]): SourceScopeAssertion[] => [...new Map(values.map(value => [assertionKey(value), { relationship: value.relationship, scope: copyScope(value.scope) }])).values()].sort((a,b) => compare(assertionKey(a), assertionKey(b)));
 const normalizeStrings = (values: readonly string[]): string[] => [...new Set(values)].sort(compare);
+const investigationEvidenceOrdinal = (value: string): number => {
+  const match = value.match(/^(?:.*?)(\d+)$/);
+  return match ? Number(match[1]) : Number.POSITIVE_INFINITY;
+};
+const normalizeInvestigationEvidenceIds = (values: readonly string[]): string[] =>
+  [...new Set(values)].sort((left, right) =>
+    investigationEvidenceOrdinal(left) - investigationEvidenceOrdinal(right) || compare(left, right)
+  );
 
 function validateScope(scope: GovernedScopeRef, organizationId: string): void {
   if (scope.organizationId !== organizationId || !exact(scope.id)) throw new Error("Canonical scope organization or identity mismatch.");
@@ -260,31 +292,42 @@ export function admitCanonicalEvidenceScopeLineage(input:{
   }
   const selected=new Map<string,CanonicalSourceScopeBinding>();
   const bindingsById=new Map(lineage.sourceBindingRevisions.map(value=>[value.bindingId,value]));
-  const grouped=new Map<string,{localEvidenceIds:string[];bindings:CanonicalSourceScopeBinding[]}>();
+  const grouped=new Map<string,{localEvidenceIds:string[];bindings:CanonicalSourceScopeBinding[];ordinal:number}>();
   const canonicalByLocalId=new Map<string,string>();
-  for(const item of input.evidence){
+  for(const [ordinal,item] of input.evidence.entries()){
     if(!item.sourceId)continue;
     const revisions=bindingGroups.get(item.sourceId); if(!revisions)continue;
     const binding=resolveCurrentSourceScopeBinding(revisions,lineage.effectiveAt);
     if(!binding||binding.topologyId!==topology.topologyId||!item.contentDigest||item.contentDigest!==binding.source.normalizedContentDigest)throw new Error("Evidence source version does not match its effective canonical binding.");
     selected.set(binding.bindingId,binding);
     const evidenceId=canonicalEvidenceIdentity({organizationId:lineage.organizationId,evidenceText:item.evidenceText});
-    const existingCanonical=canonicalByLocalId.get(item.evidenceId);if(existingCanonical&&existingCanonical!==evidenceId)throw new Error("Duplicate investigation-local Evidence ID resolves to different canonical Evidence.");canonicalByLocalId.set(item.evidenceId,evidenceId);
-    const group=grouped.get(evidenceId)??{localEvidenceIds:[],bindings:[]}; group.localEvidenceIds.push(item.evidenceId);group.bindings.push(binding);grouped.set(evidenceId,group);
+    const existingCanonical=canonicalByLocalId.get(item.evidenceId);if(existingCanonical)throw new Error(existingCanonical===evidenceId?"Duplicate investigation-local Evidence ID.":"Duplicate investigation-local Evidence ID resolves to different canonical Evidence.");canonicalByLocalId.set(item.evidenceId,evidenceId);
+    const group=grouped.get(evidenceId)??{localEvidenceIds:[],bindings:[],ordinal}; group.localEvidenceIds.push(item.evidenceId);group.bindings.push(binding);grouped.set(evidenceId,group);
   }
   const attributions:CanonicalEvidenceScopeAttribution[]=[];
+  const operationAdmissions:Array<CanonicalEvidenceAdmissionOperationItemV1 & {ordinal:number}>=[];
   for(const [evidenceId,group] of grouped){
     const history=(lineage.existingEvidenceAttributions??[]).filter(value=>value.organizationId===lineage.organizationId&&value.evidenceId===evidenceId).sort((a,b)=>a.attributionVersion-b.attributionVersion);
     const previous=history.at(-1);
     const retainedBindings=(previous?.sourceBindingIds??[]).map(bindingId=>bindingsById.get(bindingId)).filter((value):value is CanonicalSourceScopeBinding=>Boolean(value&&value.organizationId===lineage.organizationId&&value.topologyId===topology.topologyId));
     const bindings=[...new Map([...retainedBindings,...group.bindings].map(value=>[value.bindingId,value])).values()];
     const bindingIds=normalizeStrings(bindings.map(value=>value.bindingId));
-    if(previous&&stable(previous.sourceBindingIds)===stable(bindingIds)){attributions.push(previous);continue;}
-    attributions.push(createCanonicalEvidenceScopeAttribution({organizationId:lineage.organizationId,attributionVersion:(previous?.attributionVersion??0)+1,evidenceId,evidenceAdmissionId:canonicalEvidenceAdmissionId(lineage.organizationId,evidenceId),evidenceIdentityVersion:"2",localEvidenceIds:[...(previous?.localEvidenceIds??[]),...group.localEvidenceIds],bindings,topology,effectiveAt:lineage.effectiveAt,supersedesAttributionId:previous?.attributionId??null}));
+    const replayed=Boolean(previous&&stable(previous.sourceBindingIds)===stable(bindingIds));
+    const attribution=replayed?previous!:createCanonicalEvidenceScopeAttribution({organizationId:lineage.organizationId,attributionVersion:(previous?.attributionVersion??0)+1,evidenceId,evidenceAdmissionId:canonicalEvidenceAdmissionId(lineage.organizationId,evidenceId),evidenceIdentityVersion:"2",localEvidenceIds:[...(previous?.localEvidenceIds??[]),...group.localEvidenceIds],bindings,topology,effectiveAt:lineage.effectiveAt,supersedesAttributionId:previous?.attributionId??null});
+    attributions.push(attribution);
+    operationAdmissions.push({contractVersion:"1",canonicalEvidenceId:attribution.evidenceId,canonicalAdmissionId:attribution.evidenceAdmissionId,attributionId:attribution.attributionId,attributionVersion:attribution.attributionVersion,investigationEvidenceIds:normalizeInvestigationEvidenceIds(group.localEvidenceIds),sourceBindings:bindings.sort((a,b)=>compare(a.bindingId,b.bindingId)).map(binding=>({sourceBindingId:binding.bindingId,sourceId:binding.source.sourceId,sourceVersion:binding.source.sourceVersion,normalizedContentDigest:binding.source.normalizedContentDigest})),disposition:replayed?"existing-attribution-replayed":previous?"existing-evidence-new-provenance":"new-canonical-evidence",attributionDigest:attribution.digest,ordinal:group.ordinal});
   }
   const sourceBindings=[...selected.values()].sort((a,b)=>compare(a.bindingId,b.bindingId));
   const evidenceAttributions=[...new Map(attributions.map(value=>[value.attributionId,value])).values()].sort((a,b)=>compare(a.attributionId,b.attributionId));
-  const unsigned={organizationId:lineage.organizationId,topology,sourceBindings,evidenceAttributions}; return {...unsigned,digest:hash(unsigned)};
+  const admissions=operationAdmissions.sort((a,b)=>a.ordinal-b.ordinal||compare(a.canonicalEvidenceId,b.canonicalEvidenceId)||compare(a.canonicalAdmissionId,b.canonicalAdmissionId)||compare(a.attributionId,b.attributionId)).map(({ordinal:_,...item})=>item);
+  const admittedLocalCount=operationAdmissions.reduce((sum,item)=>sum+item.investigationEvidenceIds.length,0);
+  const admissionDisposition=admissions.length===0?"not-admitted":admittedLocalCount<input.evidence.length?"partially-admitted":"admitted";
+  const batchUnsigned={contractVersion:"1" as const,organizationId:lineage.organizationId,admissions,admissionDisposition};
+  const operationBatch={...batchUnsigned,batchDigest:hash(batchUnsigned)};
+  const unsigned={organizationId:lineage.organizationId,topology,sourceBindings,evidenceAttributions};
+  const admission={...unsigned,digest:hash(unsigned)} as CanonicalEvidenceScopeAdmission;
+  Object.defineProperty(admission,"operationBatch",{value:operationBatch,enumerable:false,writable:false,configurable:false});
+  return admission;
 }
 
 export function resolveUnambiguousLegacyEvidenceAttribution(input:{organizationId:string;localEvidenceId:string;attributions:readonly CanonicalEvidenceScopeAttribution[]}):CanonicalEvidenceScopeAttribution|undefined{
