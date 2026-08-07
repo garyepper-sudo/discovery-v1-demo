@@ -89,6 +89,8 @@ import type {
   ProductQuestionAdoptionReceipt,
   ProductQuestionSummary,
 } from "./contracts";
+import type { LeadershipConversationProductOperations } from "../workflow/leadershipConversation";
+import type { CanonicalLeadershipConversationOwnerRouter } from "./canonicalLeadershipConversationOwnerRouter";
 
 export type CanonicalProductWorkspaceAdapterDependencies = {
   runtimeRepository: Pick<OrganizationRuntimeRepository, "read" | "replace">;
@@ -131,6 +133,8 @@ export type CanonicalProductWorkspaceAdapterDependencies = {
     objective?: ProductOrganizationalObjective;
     optimizationContext?: ProductOptimizationContext;
   }): Promise<ProductObjectiveReferenceValidation>;
+  leadershipConversation?: LeadershipConversationProductOperations;
+  leadershipConversationOwnerRouter?: CanonicalLeadershipConversationOwnerRouter;
 };
 
 function canonicalReplayValue(value: unknown): string {
@@ -294,6 +298,29 @@ type ProductImprovementAuthorizationOperation =
 
 export class CanonicalProductWorkspaceAdapter {
   constructor(private readonly dependencies: CanonicalProductWorkspaceAdapterDependencies) {}
+
+  private leadership(): LeadershipConversationProductOperations {
+    if (!this.dependencies.leadershipConversation) throw new Error("Leadership Conversation operations are unavailable.");
+    return this.dependencies.leadershipConversation;
+  }
+
+  private leadershipRouter(): CanonicalLeadershipConversationOwnerRouter {
+    if (!this.dependencies.leadershipConversationOwnerRouter) {
+      throw new Error("Leadership Conversation canonical owner router is unavailable.");
+    }
+    return this.dependencies.leadershipConversationOwnerRouter;
+  }
+
+  getLeadershipConversationWorkspace(input: Parameters<LeadershipConversationProductOperations["workspace"]>[0]) { return this.leadership().workspace(input); }
+  recordLeadershipConversationContext(input: Parameters<LeadershipConversationProductOperations["recordContext"]>[0]) { return this.leadership().recordContext(input); }
+  createPreparedWorkProductVersion(input: Parameters<LeadershipConversationProductOperations["recordPreparation"]>[0]) { return this.leadership().recordPreparation(input); }
+  freezePreparedWorkProduct(input: Parameters<LeadershipConversationProductOperations["freeze"]>[0]) { return this.leadership().freeze(input); }
+  receiveLeadershipConversationUpload(input: Parameters<LeadershipConversationProductOperations["receiveUpload"]>[0]) { return this.leadership().receiveUpload(input); }
+  generateLeadershipConversationProposals(input: Parameters<LeadershipConversationProductOperations["generateFixtureProposals"]>[0]) { return this.leadership().generateFixtureProposals(input); }
+  recordTakeawayProposalDisposition(input: Parameters<LeadershipConversationProductOperations["review"]>[0]) { return this.leadership().review(input); }
+  routeApprovedTakeawayProposal(input: Parameters<CanonicalLeadershipConversationOwnerRouter["routeApproved"]>[0]) { return this.leadershipRouter().routeApproved(input); }
+  prepareNextLeadershipConversation(input: Parameters<LeadershipConversationProductOperations["linkFuturePreparation"]>[0]) { return this.leadership().linkFuturePreparation(input); }
+  resetLeadershipConversationDevelopmentScenario(input: Parameters<LeadershipConversationProductOperations["reset"]>[0]) { return this.leadership().reset(input); }
 
   private async authorizedRuntime(input: {
     userId: string;

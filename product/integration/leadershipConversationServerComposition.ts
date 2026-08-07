@@ -1,0 +1,89 @@
+import "server-only";
+
+import path from "node:path";
+
+import { resolveCanonicalEvidenceAdmission, runDiscoveryV3 } from "../../engine/v3";
+import { CanonicalLocalSourceBindingService } from "../../engine/v3/governance/canonicalLocalSourceBindingService";
+import { readCanonicalScopeLineageTopology } from "../../engine/v3/governance/canonicalScopeLineage";
+import { resolveScopedGovernanceContext, type ScopedGovernanceOperation } from "../../engine/v3/governance/scopedGovernanceContext";
+import { evolveOrganizationRuntime } from "../../engine/v3/runtime/evolveOrganizationRuntime";
+import { createOrganizationRuntimeRepository, FilesystemOrganizationRuntimeRepository, type OrganizationRuntimeRepository } from "../../engine/v3/runtime/organizationRuntimeRepository";
+import { createFilesystemSourceContentRepository, decodeAndNormalizeSourceContent, GovernedSourceContentService, sourceContentDigest } from "../../engine/v3/sources";
+import { resolvePersonaForSignedInUser, SANDBOX_ORGANIZATION_ID } from "../../lib/access/sandboxMultiUserAccess";
+import { buildFrontendReadyProductQuestionWorkspace } from "../workflow";
+import { createProductWorkflowArtifactRepository, NORTHSTAR_LEADERSHIP_CONVERSATION_FIXTURE, type LeadershipConversationSourceGateway, type LeadershipConversationWorkspaceV1 } from "../workflow/leadershipConversation";
+import { CanonicalLeadershipConversationOwnerRouter } from "./canonicalLeadershipConversationOwnerRouter";
+import { CanonicalProductWorkspaceAdapter } from "./canonicalProductWorkspaceAdapter";
+import type { CanonicalEvidenceContribution } from "./contracts";
+import { createLeadershipConversationProductOperations } from "./leadershipConversationProductOperations";
+import { ProductDecisionDraftService } from "./productDecisionDraftService";
+
+export type LeadershipConversationServerComposition = {
+  workspace(input: { userId: string; organizationId: string; questionId: string; conversationId: string }): Promise<LeadershipConversationWorkspaceV1>;
+  recordContext(input: Parameters<CanonicalProductWorkspaceAdapter["recordLeadershipConversationContext"]>[0]): ReturnType<CanonicalProductWorkspaceAdapter["recordLeadershipConversationContext"]>;
+  recordPreparation(input: Parameters<CanonicalProductWorkspaceAdapter["createPreparedWorkProductVersion"]>[0]): ReturnType<CanonicalProductWorkspaceAdapter["createPreparedWorkProductVersion"]>;
+  freeze(input: Parameters<CanonicalProductWorkspaceAdapter["freezePreparedWorkProduct"]>[0]): ReturnType<CanonicalProductWorkspaceAdapter["freezePreparedWorkProduct"]>;
+  receiveUpload(input: Parameters<CanonicalProductWorkspaceAdapter["receiveLeadershipConversationUpload"]>[0]): ReturnType<CanonicalProductWorkspaceAdapter["receiveLeadershipConversationUpload"]>;
+  generateProposals(input: Parameters<CanonicalProductWorkspaceAdapter["generateLeadershipConversationProposals"]>[0]): ReturnType<CanonicalProductWorkspaceAdapter["generateLeadershipConversationProposals"]>;
+  review(input: Parameters<CanonicalProductWorkspaceAdapter["recordTakeawayProposalDisposition"]>[0]): ReturnType<CanonicalProductWorkspaceAdapter["recordTakeawayProposalDisposition"]>;
+  routeApproved(input: Parameters<CanonicalLeadershipConversationOwnerRouter["routeApproved"]>[0]): ReturnType<CanonicalLeadershipConversationOwnerRouter["routeApproved"]>;
+  prepareAgain(input: Parameters<CanonicalProductWorkspaceAdapter["prepareNextLeadershipConversation"]>[0]): ReturnType<CanonicalProductWorkspaceAdapter["prepareNextLeadershipConversation"]>;
+  reset(input: Parameters<CanonicalProductWorkspaceAdapter["resetLeadershipConversationDevelopmentScenario"]>[0]): ReturnType<CanonicalProductWorkspaceAdapter["resetLeadershipConversationDevelopmentScenario"]>;
+};
+
+const PURPOSE = "leadership-conversation-capture" as const;
+const FIXED_TIME = NORTHSTAR_LEADERSHIP_CONVERSATION_FIXTURE.at;
+const clock = { now: () => FIXED_TIME };
+
+function exactDevelopmentIdentity(userId:string, organizationId:string): boolean {
+  if (process.env.NODE_ENV === "production" || organizationId !== SANDBOX_ORGANIZATION_ID) return false;
+  try { return resolvePersonaForSignedInUser(userId)?.userId === userId; } catch { return false; }
+}
+
+function scoped(userId:string, organizationId:string, operation:ScopedGovernanceOperation, authorized:(userId:string,organizationId:string)=>boolean, at=FIXED_TIME) {
+  const requestedScope={organizationId,type:"organization" as const,id:organizationId};
+  return resolveScopedGovernanceContext({organizationId,subjectId:userId,requestedScope,operation,purpose:PURPOSE,sensitivity:"standard",evaluatedAt:at,temporal:{mode:"current"},serverResolvedAuthority:authorized(userId,organizationId)?[{authorityRef:`leadership-conversation:${userId}`,policyRef:"leadership-conversation-development:v1",organizationId,subjectId:userId,scope:requestedScope,operations:["source-binding:register-local","source-binding:resolve-current","source-binding:revise-availability","source-content:write","source-content:read-for-proposal","source-content:read-for-evidence-admission","source-content:reset-development"],sensitivity:["standard"],relationship:"direct",status:"active",validFrom:"2026-01-01T00:00:00.000Z"}]:[]});
+}
+
+function investigation(runtime:Parameters<typeof evolveOrganizationRuntime>[0]["runtime"], question:string, contribution:CanonicalEvidenceContribution) {
+  const index=runtime.memory.canonicalScopeLineageIndex,topology=index?readCanonicalScopeLineageTopology(index):undefined;
+  if(!index||!topology)throw new Error("Leadership Conversation canonical lineage is unavailable.");
+  const normalizedContent=decodeAndNormalizeSourceContent(new TextEncoder().encode(contribution.content)).normalizedText;
+  const input={company:runtime.metadata.name||runtime.metadata.organizationId,website:runtime.metadata.website??"",industry:runtime.metadata.industry??"",question,context:"",evidenceSources:[{sourceId:contribution.sourceId,sourceType:contribution.sourceType,observedAt:contribution.contributedAt,contentDigest:sourceContentDigest(new TextEncoder().encode(normalizedContent)),content:contribution.content}]};
+  const lineage={organizationId:runtime.metadata.organizationId,effectiveAt:contribution.contributedAt,topologyRevisions:[topology],sourceBindingRevisions:index.sourceBindings,existingEvidenceAttributions:index.evidenceAttributions};
+  return {input,lineage};
+}
+
+type CompositionConstruction={runtimeRepository:OrganizationRuntimeRepository;workflowRoot:string;contentRoot:string;environment:"development"|"test";authorized:(userId:string,organizationId:string)=>boolean};
+
+function constructLeadershipConversationServerComposition(construction:CompositionConstruction):LeadershipConversationServerComposition {
+  if(process.env.NODE_ENV==="production")throw new Error("Leadership Conversation development composition is unavailable.");
+  const {runtimeRepository,workflowRoot,contentRoot,environment,authorized}=construction;
+  if(runtimeRepository.backend!=="filesystem")throw new Error("Leadership Conversation development composition requires local Runtime storage.");
+  const workflow=createProductWorkflowArtifactRepository({root:workflowRoot,environment});
+  const sourceRepository=createFilesystemSourceContentRepository({root:contentRoot,environment});
+  const bindingService=new CanonicalLocalSourceBindingService(runtimeRepository,clock);
+  const sourceService=new GovernedSourceContentService(sourceRepository,{loadRevisions:async({organizationId,sourceBindingId})=>{const stored=await runtimeRepository.read(organizationId);const all=stored?.runtime.memory.canonicalScopeLineageIndex?.sourceBindings??[];const target=all.find(item=>item.bindingId===sourceBindingId);return target?all.filter(item=>item.organizationId===organizationId&&item.source.sourceId===target.source.sourceId):[];}},clock);
+  const source:LeadershipConversationSourceGateway={
+    write:async(input)=>{if(input.purposeRef!==PURPOSE||!authorized(input.storedByActorRef,input.organizationId))throw new Error("Leadership Conversation source operation denied.");const {normalizedText}=decodeAndNormalizeSourceContent(input.bytes),normalizedContentDigest=sourceContentDigest(new TextEncoder().encode(normalizedText)),stored=await runtimeRepository.read(input.organizationId);if(!stored)throw new Error("Leadership Conversation Runtime is unavailable.");const scope={relationship:"applies-to" as const,scope:{organizationId:input.organizationId,type:"organization" as const,id:input.organizationId}},sourceType=input.mediaType==="text/markdown"?"markdown-upload" as const:"plain-text-upload" as const,authorization=scoped(input.storedByActorRef,input.organizationId,"source-binding:register-local",authorized,input.storedAt);const bindingReceipt=await bindingService.registerCanonicalLocalSourceBinding({contractVersion:"1",organizationId:input.organizationId,productQuestionId:input.questionId,sourceType,purposeRef:PURPOSE,normalizedContentDigest,requestedScopeAssertions:[scope],sensitivity:"standard",authorization,recordedAt:input.storedAt,recordedByActorRef:input.storedByActorRef,idempotencyKey:`${input.idempotencyKey}:binding`,expectedRuntimeRevision:stored.revision,operation:{requestId:`${input.idempotencyKey}:binding`,operatorId:input.storedByActorRef}});const expectedRepositoryRevision=await sourceRepository.inspectRevision(input.organizationId),receipt=await sourceService.write({contractVersion:"1",organizationId:input.organizationId,sourceBindingId:bindingReceipt.sourceBindingId,purposeRef:PURPOSE,mediaType:input.mediaType,bytes:input.bytes,storedAt:input.storedAt,storedByActorRef:input.storedByActorRef,idempotencyKey:`${input.idempotencyKey}:content`,expectedRepositoryRevision,authorization:scoped(input.storedByActorRef,input.organizationId,"source-content:write",authorized,input.storedAt)});return{...receipt,sourceBindingMutationReceiptDigest:bindingReceipt.receiptDigest};},
+    readForProposal:async(input)=>{const read=await sourceService.read({contractVersion:"1",organizationId:input.organizationId,sourceBindingId:input.sourceBindingId,sourceContentVersionId:input.sourceContentVersionId,purposeRef:PURPOSE,authorization:scoped(input.userId,input.organizationId,"source-content:read-for-proposal",authorized)});return{bytes:read.bytes,exactContentDigest:read.version.exactContentDigest,normalizedContentDigest:read.version.normalizedContentDigest};},
+    readForEvidenceAdmission:async(input)=>{const read=await sourceService.read({contractVersion:"1",organizationId:input.organizationId,sourceBindingId:input.sourceBindingId,sourceContentVersionId:input.sourceContentVersionId,purposeRef:PURPOSE,authorization:scoped(input.userId,input.organizationId,"source-content:read-for-evidence-admission",authorized)});return{text:read.text,exactContentDigest:read.version.exactContentDigest,normalizedContentDigest:read.version.normalizedContentDigest};},
+  };
+  const productDependencies={runtimeRepository,authorize:async({userId,organizationId}:{userId:string;organizationId:string})=>authorized(userId,organizationId),preflightCanonicalEvidence:async({runtime,question,contribution}:Parameters<NonNullable<ConstructorParameters<typeof CanonicalProductWorkspaceAdapter>[0]["preflightCanonicalEvidence"]>>[0])=>{const value=investigation(runtime,question,contribution);return resolveCanonicalEvidenceAdmission(value.input,value.lineage);},investigate:async({runtime,question,contribution}:Parameters<ConstructorParameters<typeof CanonicalProductWorkspaceAdapter>[0]["investigate"]>[0])=>{const value=investigation(runtime,question,contribution),result=runDiscoveryV3(value.input,value.lineage);return{runtime:evolveOrganizationRuntime({runtime,result,input:value.input,semanticTime:contribution.contributedAt}),evidenceAccepted:result.evidence.length>0,canonicalEvidenceAdmissionBatch:result.scopeLineageAdmission!.operationBatch};}};
+  const productAdapter=new CanonicalProductWorkspaceAdapter(productDependencies);
+  const operations=createLeadershipConversationProductOperations({repository:workflow,clock,authorize:async({userId,organizationId})=>authorized(userId,organizationId),loadBase:async({userId,organizationId,questionId})=>buildFrontendReadyProductQuestionWorkspace({workspace:(await productAdapter.getQuestionWorkspace({userId,organizationId,questionId})).workspace}),source});
+  const decisionDraftService=new ProductDecisionDraftService({runtimeRepository,authorize:async(input)=>({contractVersion:"1",operation:input.operation,organizationId:input.organizationId,questionId:input.questionId,scope:input.scope,purpose:input.purpose,sensitivity:"standard",actorRef:input.userId,authorityRef:`leadership-conversation:${input.userId}`,policyRef:"leadership-conversation-development:v1",authorized:authorized(input.userId,input.organizationId),status:"active",validFrom:"2026-01-01T00:00:00.000Z",authorizedAt:input.evaluatedAt})});
+  const ownerRouter=new CanonicalLeadershipConversationOwnerRouter({repository:workflow,source,productAdapter,decisionDraftService,clock,authorize:async(input)=>authorized(input.userId,input.organizationId),resolveCurrentSourceBinding:async(input)=>{const result=await bindingService.resolveCanonicalCurrentSourceBinding({contractVersion:"1",organizationId:input.organizationId,productQuestionId:input.questionId,sourceType:input.sourceType,purposeRef:PURPOSE,normalizedContentDigest:input.normalizedContentDigest,requestedScopeAssertions:[{relationship:"applies-to",scope:{organizationId:input.organizationId,type:"organization",id:input.organizationId}}],sensitivity:"standard",authorization:scoped(input.userId,input.organizationId,"source-binding:resolve-current",authorized,input.evaluatedAt),resolvedAt:input.evaluatedAt});if(result.binding.bindingId!==input.sourceBindingId)throw new Error("Leadership Conversation source binding is unavailable.");return result.binding;}});
+  const adapter=new CanonicalProductWorkspaceAdapter({...productDependencies,leadershipConversation:operations,leadershipConversationOwnerRouter:ownerRouter});
+  return{workspace:(input)=>adapter.getLeadershipConversationWorkspace(input),recordContext:(input)=>adapter.recordLeadershipConversationContext(input),recordPreparation:(input)=>adapter.createPreparedWorkProductVersion(input),freeze:(input)=>adapter.freezePreparedWorkProduct(input),receiveUpload:(input)=>adapter.receiveLeadershipConversationUpload(input),generateProposals:(input)=>adapter.generateLeadershipConversationProposals(input),review:(input)=>adapter.recordTakeawayProposalDisposition(input),routeApproved:(input)=>ownerRouter.routeApproved(input),prepareAgain:(input)=>adapter.prepareNextLeadershipConversation(input),reset:(input)=>adapter.resetLeadershipConversationDevelopmentScenario(input)};
+}
+
+export function createLeadershipConversationServerComposition():LeadershipConversationServerComposition {
+  return constructLeadershipConversationServerComposition({runtimeRepository:createOrganizationRuntimeRepository(),workflowRoot:process.env.DISCOVERY_LEADERSHIP_CONVERSATION_WORKFLOW_ROOT??path.join(process.cwd(),".discovery-runtime/product-workflow"),contentRoot:process.env.DISCOVERY_LEADERSHIP_CONVERSATION_SOURCE_CONTENT_ROOT??path.join(process.cwd(),".discovery-runtime/source-content"),environment:"development",authorized:exactDevelopmentIdentity});
+}
+
+export function createLeadershipConversationServerCompositionForValidation(input:{runtimeRoot:string;workflowRoot:string;sourceContentRoot:string;userId:string;organizationId:string}):LeadershipConversationServerComposition {
+  if(process.env.NODE_ENV!=="test"||![input.runtimeRoot,input.workflowRoot,input.sourceContentRoot].every(root=>path.basename(path.dirname(root)).startsWith("discovery-leadership-conversation-replay-")))throw new Error("Leadership Conversation validation composition is unavailable.");
+  const authorized=(userId:string,organizationId:string)=>userId===input.userId&&organizationId===input.organizationId;
+  return constructLeadershipConversationServerComposition({runtimeRepository:new FilesystemOrganizationRuntimeRepository(input.runtimeRoot),workflowRoot:input.workflowRoot,contentRoot:input.sourceContentRoot,environment:"test",authorized});
+}

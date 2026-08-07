@@ -4,3 +4,4 @@ export * from "./historicalAnswerResolution";
 export * from "./canonicalProductWorkspaceAdapter";
 export * from "./canonicalLocalInformationOperationAdapter";
 export * from "./productDecisionDraftService";
+export * from "./canonicalLeadershipConversationOwnerRouter";
