@@ -32,8 +32,8 @@ import {
   workspaceToResult,
 } from "./workspace";
 
-export function runDiscoveryV3(input: InvestigationInput, scopeLineage?: CanonicalScopeLineageAdmissionInput): DiscoveryV3Result {
-  const rawText = `
+function investigationRawText(input: InvestigationInput): string {
+  return `
 Company: ${input.company}
 Website: ${input.website}
 Industry: ${input.industry}
@@ -42,6 +42,26 @@ Question: ${input.question}
 Context:
 ${input.context}
 `;
+}
+
+export function resolveCanonicalEvidenceAdmission(
+  input: InvestigationInput,
+  scopeLineage: CanonicalScopeLineageAdmissionInput,
+) {
+  const evidence = buildEvidence(investigationRawText(input), input.evidenceSources);
+  return admitCanonicalEvidenceScopeLineage({
+    lineage: scopeLineage,
+    evidence: evidence.map((item) => ({
+      evidenceId: item.id,
+      evidenceText: item.text,
+      ...(item.sourceId ? { sourceId: item.sourceId } : {}),
+      ...(item.contentDigest ? { contentDigest: item.contentDigest } : {}),
+    })),
+  });
+}
+
+export function runDiscoveryV3(input: InvestigationInput, scopeLineage?: CanonicalScopeLineageAdmissionInput): DiscoveryV3Result {
+  const rawText = investigationRawText(input);
 
   const workspace = createInvestigationWorkspace(rawText);
 
@@ -195,7 +215,7 @@ ${input.context}
 
   const result=workspaceToResult(workspace);
   if(!scopeLineage)return result;
-  const scopeLineageAdmission=admitCanonicalEvidenceScopeLineage({lineage:scopeLineage,evidence:result.evidence.map(item=>({evidenceId:item.id,evidenceText:item.text,...(item.sourceId?{sourceId:item.sourceId}:{}),...(item.contentDigest?{contentDigest:item.contentDigest}:{})}))});
+  const scopeLineageAdmission=resolveCanonicalEvidenceAdmission(input,scopeLineage);
   return {...result,scopeLineageAdmission};
 }
 

@@ -33,6 +33,7 @@ import type {
 import type {
   CanonicalEvidenceAdmissionOperationBatchV1,
   CanonicalEvidenceAdmissionOperationItemV1,
+  CanonicalEvidenceScopeAdmission,
 } from "../../engine/v3/governance/canonicalScopeLineage";
 
 export type ProductQuestionSummary = {
@@ -182,6 +183,14 @@ export type CanonicalInvestigationResult = {
   canonicalEvidenceAdmissionBatch?: CanonicalEvidenceAdmissionOperationBatchV1;
 };
 
+export type CanonicalEvidenceAdmissionPreflight = CanonicalEvidenceScopeAdmission;
+
+export type CanonicalEvidenceCognitionDisposition =
+  | "executed"
+  | "exact-operation-replay"
+  | "no-new-canonical-input"
+  | "historical-unavailable";
+
 export type CanonicalEvidenceContributionOperationRecordV1 = {
   kind: "canonical-evidence-contribution-operation";
   contractVersion: "1";
@@ -191,6 +200,7 @@ export type CanonicalEvidenceContributionOperationRecordV1 = {
   idempotencyKeyDigest: string;
   requestFingerprint: string;
   canonicalAdmissionBatch: CanonicalEvidenceAdmissionOperationBatchV1;
+  cognitionDisposition?: Exclude<CanonicalEvidenceCognitionDisposition, "exact-operation-replay" | "historical-unavailable">;
   evidenceAccepted: boolean;
   productQuestionRevisionBefore: number;
   productQuestionRevisionAfter: number;
@@ -204,6 +214,7 @@ export type CanonicalEvidenceContributionOperationResultV1 = {
   questionId: string;
   contributionOperationId: string;
   operationDisposition: "admitted" | "partially-admitted" | "idempotent-replay" | "not-admitted";
+  cognitionDisposition: CanonicalEvidenceCognitionDisposition;
   admissions: CanonicalEvidenceAdmissionOperationItemV1[];
   evidenceAccepted: boolean;
   runtimeRevisionBefore: string;
