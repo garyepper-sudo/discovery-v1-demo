@@ -1,5 +1,9 @@
 import type { KnowledgeReference } from "../../cognition/cognitiveGraph";
 import type { PredictionReflection } from "../predictions/buildPredictionReflection";
+import type {
+  CanonicalMaterialAncestorReferenceV1,
+  CanonicalMaterialEvidenceSupportV1,
+} from "../../governance/canonicalDerivedArtifactGovernanceAncestry";
 
 export type OrganizationalExplanationType =
   | "causal"
@@ -116,6 +120,18 @@ export type OrganizationalExplanationEvidenceRoleAssignment = {
   relatedExplanationIds: string[];
 };
 
+export type CanonicalExplanationGovernanceLineageV1 = {
+  contractVersion: "canonical-explanation-governance-lineage.v1";
+  organizationId: string;
+  directMaterialSupports: CanonicalMaterialEvidenceSupportV1[];
+  inheritedMaterialAncestorRefs: CanonicalMaterialAncestorReferenceV1[];
+  materialSupports: CanonicalMaterialEvidenceSupportV1[];
+  topologyIds: string[];
+  purposeRefs: string[];
+  lineagePolicyVersion: "conservative-material-support.v1";
+  lineageDigest: string;
+};
+
 export type OrganizationalExplanation = {
   id: string;
   organizationId: string;
@@ -140,6 +156,9 @@ export type OrganizationalExplanation = {
 
   comparativeEvidenceRoles?:
     OrganizationalExplanationEvidenceRoleAssignment[];
+
+  /** Server-internal, additive governance lineage for governed completions. */
+  canonicalGovernanceLineage?: CanonicalExplanationGovernanceLineageV1;
 
   viability: "unadjudicated";
   uncertainty: string[];

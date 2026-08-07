@@ -7,6 +7,11 @@ import type {
   OrganizationalOutcomeRef,
   OrganizationalScopeRef,
 } from "../judgment/organizationalJudgment";
+import {
+  createCanonicalDerivedArtifactGovernanceAncestry,
+  resolveCanonicalMaterialSupports,
+  type CanonicalAncestryConstructionContext,
+} from "../../governance/canonicalDerivedArtifactGovernanceAncestry";
 
 type TheorySignal = {
   id?: string;
@@ -32,6 +37,8 @@ export type ConsolidateOrganizationalTheoriesParams = {
   mechanisms: TheorySignal[];
   concepts: TheorySignal[];
   evidence: TheorySignal[];
+  canonicalGovernanceContext?: CanonicalAncestryConstructionContext;
+  contradictoryEvidenceIds?: readonly string[];
   now?: string;
 };
 
@@ -46,6 +53,8 @@ export function consolidateOrganizationalTheories({
   mechanisms,
   concepts,
   evidence,
+  canonicalGovernanceContext,
+  contradictoryEvidenceIds = [],
   now = new Date().toISOString(),
 }: ConsolidateOrganizationalTheoriesParams): ConsolidateOrganizationalTheoriesResult {
   const candidates = buildTheoryCandidates({
@@ -58,12 +67,63 @@ export function consolidateOrganizationalTheories({
 
   const theoryMap = new Map(existingTheories.map((theory) => [theory.id, theory]));
   const theoryEvolution: OrganizationalTheoryEvolution[] = [];
+  const contradictory = new Set(contradictoryEvidenceIds);
+
+  const withCanonicalAncestry = (
+    theory: OrganizationalTheory,
+    currentEvidenceIds: readonly string[],
+    existing?: OrganizationalTheory,
+  ): OrganizationalTheory => {
+    if (!canonicalGovernanceContext) return theory;
+    if (existing && !existing.canonicalGovernanceAncestry) {
+      throw new Error(
+        "Historical pre-lineage Theory cannot support governed cognition.",
+      );
+    }
+    const directMaterialSupports = resolveCanonicalMaterialSupports({
+      context: canonicalGovernanceContext,
+      localEvidenceRoles: currentEvidenceIds.map((localEvidenceId) => ({
+        localEvidenceId,
+        role: contradictory.has(localEvidenceId)
+          ? ("contradictory-material" as const)
+          : ("material" as const),
+      })),
+    });
+    const {
+      canonicalGovernanceAncestry: _priorAncestry,
+      canonicalGovernanceAncestryHistory: _priorAncestryHistory,
+      ...revisionBasis
+    } = theory;
+    const ancestry = createCanonicalDerivedArtifactGovernanceAncestry({
+      organizationId: canonicalGovernanceContext.organizationId,
+      derivedArtifactType: "organizational-theory",
+      derivedArtifactId: theory.id,
+      revisionBasis,
+      directMaterialSupports,
+      inheritedMaterialAncestors: existing?.canonicalGovernanceAncestry
+        ? [existing.canonicalGovernanceAncestry]
+        : [],
+    });
+    return {
+      ...theory,
+      canonicalGovernanceAncestry: ancestry,
+      canonicalGovernanceAncestryHistory: [
+        ...(existing?.canonicalGovernanceAncestryHistory ?? []),
+        ...(existing?.canonicalGovernanceAncestry
+          ? [existing.canonicalGovernanceAncestry]
+          : []),
+      ],
+    };
+  };
 
   for (const candidate of candidates) {
     const existing = theoryMap.get(candidate.id);
 
     if (!existing) {
-      theoryMap.set(candidate.id, candidate);
+      theoryMap.set(
+        candidate.id,
+        withCanonicalAncestry(candidate, candidate.supportingEvidence),
+      );
       theoryEvolution.push({
         theoryId: candidate.id,
         previousConfidence: 0,
@@ -143,7 +203,10 @@ export function consolidateOrganizationalTheories({
       status,
     };
 
-    theoryMap.set(candidate.id, updated);
+    theoryMap.set(
+      candidate.id,
+      withCanonicalAncestry(updated, candidate.supportingEvidence, existing),
+    );
 
     theoryEvolution.push({
       theoryId: updated.id,

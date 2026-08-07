@@ -548,6 +548,21 @@ export function evolveOrganizationRuntime(params: {
       mechanisms: safeMechanismNetwork.mechanisms,
       concepts: organizationalConcepts,
       evidence: result.evidence ?? [],
+      ...(scopeAdmission && canonicalScopeLineageIndex
+        ? {
+            canonicalGovernanceContext: {
+              organizationId: runtime.metadata.organizationId,
+              operationBatch: scopeAdmission.operationBatch,
+              scopeLineageIndex: canonicalScopeLineageIndex,
+            },
+            contradictoryEvidenceIds: (result.evidenceRelationships ?? [])
+              .filter((relationship) => relationship.type === "contradicts")
+              .flatMap((relationship) => [
+                relationship.sourceEvidenceId,
+                relationship.targetEvidenceId,
+              ]),
+          }
+        : {}),
       now,
     });
 
@@ -583,6 +598,15 @@ export function evolveOrganizationRuntime(params: {
               left.type.localeCompare(right.type),
           ),
       },
+      ...(scopeAdmission && canonicalScopeLineageIndex
+        ? {
+            canonicalGovernanceContext: {
+              organizationId: runtime.metadata.organizationId,
+              operationBatch: scopeAdmission.operationBatch,
+              scopeLineageIndex: canonicalScopeLineageIndex,
+            },
+          }
+        : {}),
       now,
     });
 

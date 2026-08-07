@@ -21,6 +21,11 @@ import {
   type ServerResolvedDecisionCalibrationInput,
 } from "./scopedDecisionCalibrationProjection";
 import { lineageSupportsRequestedScope, type CanonicalScopeLineageIndex } from "../../engine/v3/governance/canonicalScopeLineage";
+import {
+  canonicalUnderstandingCurrentEligibilityScopeDigest,
+  validateCanonicalUnderstandingCurrentEligibilityResult,
+  type CanonicalUnderstandingCurrentEligibilityResultV1,
+} from "../../engine/v3/understanding/resolveCanonicalUnderstandingCurrentEligibility";
 
 export const SCOPED_ORGANIZATIONAL_PRODUCT_PROJECTION_VERSION = "1";
 
@@ -66,6 +71,8 @@ export type ScopedProjectionRepositorySource = {
     policyRef: string;
   }>;
   decisionCalibration?: ServerResolvedDecisionCalibrationInput;
+  currentEligibilityRequired?: boolean;
+  currentEligibility?: CanonicalUnderstandingCurrentEligibilityResultV1;
 };
 
 export interface ScopedProjectionRepository {
@@ -213,6 +220,29 @@ export function readScopedOrganizationalProductProjection(input: {
   if (requestedRevision && source.sourceRevisionRef !== requestedRevision) {
     return emptyProjection(context, "insufficient-authorized-information");
   }
+  const currentEligibility = source.currentEligibility;
+  if (source.currentEligibilityRequired) {
+    if (!currentEligibility) return emptyProjection(context, "unavailable");
+    try { validateCanonicalUnderstandingCurrentEligibilityResult(currentEligibility); }
+    catch { return emptyProjection(context, "unavailable"); }
+    if (
+      currentEligibility.organizationId !== input.organizationId ||
+      currentEligibility.subjectId !== context.subjectId ||
+      currentEligibility.purposeRef !== context.purpose ||
+      currentEligibility.requestedScopeDigest !==
+        canonicalUnderstandingCurrentEligibilityScopeDigest(context.requestedScope) ||
+      currentEligibility.sensitivity !== context.sensitivity ||
+      currentEligibility.evaluatedAt !== context.evaluatedAt ||
+      currentEligibility.authorizationContextRef !== context.contextId ||
+      currentEligibility.canonicalUnderstandingRevision !== source.sourceRevisionRef
+    ) return emptyProjection(context, "unavailable");
+    if (currentEligibility.disposition === "withheld") {
+      return emptyProjection(context, "withheld");
+    }
+    if (currentEligibility.disposition !== "eligible") {
+      return emptyProjection(context, "unavailable");
+    }
+  }
 
   const normalizedItems = [...new Map(source.items.map((item) => [stable([item.safeRef, item.revisionRef ?? null]), item])).values()]
     .sort((left, right) => compare(stable([left.kind, left.safeRef]), stable([right.kind, right.safeRef])));
@@ -341,5 +371,11 @@ export function readScopedOrganizationalProductProjection(input: {
     unsupportedCapabilities: [],
     auditRefs,
   };
-  return { projectionId: identity(safe), ...safe };
+  return {
+    projectionId: identity({
+      projection: safe,
+      currentEligibilityDigest: currentEligibility?.resultDigest ?? null,
+    }),
+    ...safe,
+  };
 }

@@ -1,5 +1,14 @@
 import type { OrganizationalBelief } from "../beliefs/organizationalBeliefs";
 import type { OrganizationalTheory } from "../memory/organizationalTheories";
+import {
+  canonicalAncestryDigest,
+  normalizeCanonicalMaterialSupports,
+  resolveCanonicalMaterialSupports,
+  validateCanonicalDerivedArtifactGovernanceAncestry,
+  validateCanonicalDerivedArtifactGovernanceAncestryGraph,
+  type CanonicalAncestryConstructionContext,
+  type CanonicalMaterialAncestorReferenceV1,
+} from "../../governance/canonicalDerivedArtifactGovernanceAncestry";
 import type {
   OrganizationalExplanation,
   OrganizationalExplanationEvidenceRole,
@@ -44,6 +53,7 @@ type CompleteOrganizationalExplanationsInput = {
   existingExplanations?: OrganizationalExplanation[];
   contradictionIds?: string[];
   evidenceContext?: OrganizationalExplanationCompletionEvidenceContext;
+  canonicalGovernanceContext?: CanonicalAncestryConstructionContext;
   now: string;
 };
 
@@ -227,6 +237,128 @@ function compareRoleAssignments(
       stable(right.relatedExplanationIds),
     )
   );
+}
+
+function canonicalExplanationGovernanceLineage(input: {
+  completionInput: CompleteOrganizationalExplanationsInput;
+  explanation: OrganizationalExplanation;
+  comparativeEvidenceRoles: readonly OrganizationalExplanationEvidenceRoleAssignment[];
+}): NonNullable<OrganizationalExplanation["canonicalGovernanceLineage"]> {
+  const context = input.completionInput.canonicalGovernanceContext;
+  if (!context) {
+    throw new Error("Canonical Explanation governance context is unavailable.");
+  }
+  const directRoles = new Map<
+    string,
+    "material" | "contradictory-material"
+  >();
+  const currentOperationEvidenceIds = new Set(
+    context.operationBatch.admissions.flatMap(
+      (admission) => admission.investigationEvidenceIds,
+    ),
+  );
+  for (const evidenceId of input.explanation.evidenceIds) {
+    if (currentOperationEvidenceIds.has(evidenceId)) {
+      directRoles.set(evidenceId, "material");
+    }
+  }
+  for (const assignment of input.comparativeEvidenceRoles) {
+    if (currentOperationEvidenceIds.has(assignment.evidenceId)) {
+      directRoles.set(
+        assignment.evidenceId,
+        assignment.role === "opposes" ? "contradictory-material" : "material",
+      );
+    }
+  }
+  const directMaterialSupports = resolveCanonicalMaterialSupports({
+    context,
+    localEvidenceRoles: [...directRoles.entries()]
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([localEvidenceId, role]) => ({ localEvidenceId, role })),
+  });
+
+  const theoryById = new Map(
+    input.completionInput.theories.map((theory) => [theory.id, theory]),
+  );
+  const ancestorRefs: CanonicalMaterialAncestorReferenceV1[] = [];
+  const inheritedSupports = [] as typeof directMaterialSupports;
+  for (const theoryId of input.explanation.theoryIds) {
+    const theory = theoryById.get(theoryId);
+    const ancestry = theory?.canonicalGovernanceAncestry;
+    if (!theory || !ancestry) {
+      throw new Error(
+        "Historical pre-lineage Theory cannot support a governed Explanation.",
+      );
+    }
+    validateCanonicalDerivedArtifactGovernanceAncestry(ancestry);
+    validateCanonicalDerivedArtifactGovernanceAncestryGraph({
+      root: ancestry,
+      ancestors: input.completionInput.theories.flatMap((candidate) =>
+        [
+          ...(candidate.canonicalGovernanceAncestry
+            ? [candidate.canonicalGovernanceAncestry]
+            : []),
+          ...(candidate.canonicalGovernanceAncestryHistory ?? []),
+        ],
+      ),
+    });
+    if (
+      ancestry.organizationId !== input.explanation.organizationId ||
+      ancestry.derivedArtifactId !== theory.id
+    ) {
+      throw new Error("Material Theory ancestry identity mismatch.");
+    }
+    ancestorRefs.push({
+      derivedArtifactType: "organizational-theory",
+      derivedArtifactId: theory.id,
+      derivedArtifactRevisionId: ancestry.derivedArtifactRevisionId,
+      ancestryDigest: ancestry.ancestryDigest,
+      supportRole: ancestry.transitiveMaterialSupports.some(
+        (support) => support.role === "contradictory-material",
+      )
+        ? "contradictory-material"
+        : "material",
+    });
+    inheritedSupports.push(...ancestry.transitiveMaterialSupports);
+  }
+  const inheritedMaterialAncestorRefs = [
+    ...new Map(
+      ancestorRefs.map((reference) => [
+        stable([
+          reference.derivedArtifactType,
+          reference.derivedArtifactId,
+          reference.derivedArtifactRevisionId,
+        ]),
+        reference,
+      ]),
+    ).values(),
+  ].sort((left, right) => stable(left).localeCompare(stable(right)));
+  if (inheritedMaterialAncestorRefs.length !== ancestorRefs.length) {
+    throw new Error("Duplicate material Theory ancestor reference.");
+  }
+  const materialSupports = normalizeCanonicalMaterialSupports([
+    ...directMaterialSupports,
+    ...inheritedSupports,
+  ]);
+  if (!directMaterialSupports.length || !inheritedMaterialAncestorRefs.length) {
+    throw new Error("Canonical Explanation material ancestry is incomplete.");
+  }
+  const unsigned = {
+    contractVersion: "canonical-explanation-governance-lineage.v1" as const,
+    organizationId: input.explanation.organizationId,
+    directMaterialSupports,
+    inheritedMaterialAncestorRefs,
+    materialSupports,
+    topologyIds: unique(materialSupports.map((support) => support.topologyId)),
+    purposeRefs: unique(
+      materialSupports.flatMap((support) => support.purposeRefs),
+    ),
+    lineagePolicyVersion: "conservative-material-support.v1" as const,
+  };
+  return {
+    ...unsigned,
+    lineageDigest: canonicalAncestryDigest(unsigned),
+  };
 }
 
 function formComparativeEvidenceRoles(params: {
@@ -482,15 +614,23 @@ export function completeOrganizationalExplanations(
     : null;
 
   return {
-    explanations: explanations.map((explanation) =>
-      rolesByExplanation
+    explanations: explanations.map((explanation) => {
+      const comparativeEvidenceRoles =
+        rolesByExplanation?.get(explanation.id) ?? [];
+      const withRoles = rolesByExplanation
+        ? { ...explanation, comparativeEvidenceRoles }
+        : explanation;
+      return input.canonicalGovernanceContext
         ? {
-            ...explanation,
-            comparativeEvidenceRoles:
-              rolesByExplanation.get(explanation.id) ?? [],
+            ...withRoles,
+            canonicalGovernanceLineage: canonicalExplanationGovernanceLineage({
+              completionInput: input,
+              explanation,
+              comparativeEvidenceRoles,
+            }),
           }
-        : explanation,
-    ),
+        : withRoles;
+    }),
     failures: failures.sort((a, b) => a.seedId.localeCompare(b.seedId)),
   };
 }

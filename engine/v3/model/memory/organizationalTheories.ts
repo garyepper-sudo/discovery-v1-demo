@@ -32,6 +32,14 @@ export type OrganizationalTheory = {
   investigationCount: number;
 
   status: OrganizationalTheoryStatus;
+
+  /**
+   * Additive server-internal governance ancestry. Historical Theories without
+   * this contract remain readable but cannot support new governed cognition.
+   */
+  canonicalGovernanceAncestry?: CanonicalDerivedArtifactGovernanceAncestryV1;
+  /** Immutable prior governance revisions required to validate exact ancestry references. */
+  canonicalGovernanceAncestryHistory?: CanonicalDerivedArtifactGovernanceAncestryV1[];
 };
 
 export type OrganizationalTheoryEvolution = {
@@ -68,3 +76,4 @@ import type {
   OrganizationalOutcomeRef,
   OrganizationalScopeRef,
 } from "../judgment/organizationalJudgment";
+import type { CanonicalDerivedArtifactGovernanceAncestryV1 } from "../../governance/canonicalDerivedArtifactGovernanceAncestry";

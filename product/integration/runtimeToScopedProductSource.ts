@@ -2,6 +2,7 @@ import type { StoredOrganizationRuntime } from "../../engine/v3/runtime/organiza
 import type { GovernedScopeRef } from "../../engine/v3/governance/scopedGovernanceContext";
 import type { ScopedProjectionRepositorySource } from "./scopedOrganizationalProductProjection";
 import { selectScopedProductItemsFromCanonicalLineage } from "./scopedOrganizationalProductProjection";
+import type { CanonicalUnderstandingCurrentEligibilityResultV1 } from "../../engine/v3/understanding/resolveCanonicalUnderstandingCurrentEligibility";
 
 /**
  * Builds the generic Product repository source from the one persistence-owned
@@ -12,6 +13,7 @@ export function buildGenericScopedProductSource(input: {
   stored: StoredOrganizationRuntime;
   organizationId: string;
   requestedScope: GovernedScopeRef;
+  currentEligibility?: CanonicalUnderstandingCurrentEligibilityResultV1;
 }): ScopedProjectionRepositorySource {
   if (
     input.stored.runtime.metadata.organizationId !== input.organizationId ||
@@ -24,6 +26,12 @@ export function buildGenericScopedProductSource(input: {
     items: [],
     metrics: [],
     metricCombinationPolicy: [],
+    ...(input.currentEligibility
+      ? {
+          currentEligibilityRequired: true,
+          currentEligibility: structuredClone(input.currentEligibility),
+        }
+      : {}),
   };
   const items = selectScopedProductItemsFromCanonicalLineage({
     organizationId: input.organizationId,

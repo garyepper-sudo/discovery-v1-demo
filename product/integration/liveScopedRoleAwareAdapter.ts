@@ -8,8 +8,14 @@ import {
   type VerifiedConsumerIdentity,
 } from "../../engine/v3/governance/alphaAllowlistDisclosureProducer";
 import { resolveScopedGovernanceContext, type GovernedScopeRef } from "../../engine/v3/governance/scopedGovernanceContext";
+import {
+  readCanonicalScopeLineageTopology,
+  resolveCurrentSourceScopeBinding,
+} from "../../engine/v3/governance/canonicalScopeLineage";
 import type { OrganizationalUnderstandingProjection } from "../../engine/v3/projection/organizationalUnderstandingProjection";
 import type { OrganizationRuntimeRepository } from "../../engine/v3/runtime/organizationRuntimeRepository";
+import { produceCanonicalUnderstandingAudienceLineage } from "../../engine/v3/understanding/produceCanonicalUnderstandingAudienceLineage";
+import { resolveCanonicalUnderstandingCurrentEligibility } from "../../engine/v3/understanding/resolveCanonicalUnderstandingCurrentEligibility";
 import { grantsFor, resolveSandboxAccessHead, SANDBOX_ORGANIZATION_ID, type ResolvedSandboxPersona } from "../../lib/access/sandboxMultiUserAccess";
 import { composeActivatedYourOrganization } from "../../components/product-shell/data/composeActivatedYourOrganization";
 import { buildRoleAwareDiscoveryExperienceView } from "../../components/product-shell/data/buildDiscoveryExperienceView";
@@ -81,6 +87,74 @@ export async function readLiveScopedRoleAwareProjection(input: {
   const stored = await input.runtimeRepository.read(input.organizationId);
   if (!stored || stored.runtime.metadata.organizationId !== input.organizationId) return denied();
   const compositions = stored.runtime.memory.organizationalUnderstandingState.canonicalCompositions ?? [];
+  const scopeLineageIndex = stored.runtime.memory.canonicalScopeLineageIndex;
+  const topology = scopeLineageIndex
+    ? readCanonicalScopeLineageTopology(scopeLineageIndex)
+    : undefined;
+  if (!scopeLineageIndex || !topology) return denied();
+  const audienceLineage = produceCanonicalUnderstandingAudienceLineage({
+    organizationId: input.organizationId,
+    compositions,
+    explanations: stored.runtime.memory.organizationalExplanations,
+    scopeLineageIndex,
+    scopeTopology: topology,
+  });
+  const materialSupports = stored.runtime.memory.organizationalExplanations.flatMap(
+    (explanation) => explanation.canonicalGovernanceLineage?.materialSupports ?? [],
+  );
+  const lineagePolicyVersion = stored.runtime.memory.theories
+    .map((theory) => theory.canonicalGovernanceAncestry?.lineagePolicyVersion)
+    .find((value) => Boolean(value)) ?? "unavailable";
+  const currentEligibility = resolveCanonicalUnderstandingCurrentEligibility({
+    contractVersion: "1",
+    organizationId: input.organizationId,
+    subjectId: input.userId,
+    purposeRef: context.purpose,
+    requestedScope,
+    sensitivity: context.sensitivity,
+    evaluatedAt: input.evaluatedAt,
+    authorizationContextRef: context.contextId,
+    canonicalUnderstandingRevision: stored.revision,
+    audienceLineageDigest: audienceLineage.digest,
+    lineagePolicyVersion,
+    materialSupports,
+  }, {
+    authorization: context,
+    isPurposeCompatible: ({ requestedPurpose, materialPurposeRefs }) =>
+      requestedPurpose === LIVE_ROLE_AWARE_PURPOSE && materialPurposeRefs.length > 0,
+    resolveCurrentSourceBinding: ({
+      organizationId,
+      historicalBindingId,
+      historicalGovernanceRevisionRef,
+      evaluatedAt,
+    }) => {
+      const historical = scopeLineageIndex.sourceBindings.find(
+        (binding) => binding.bindingId === historicalBindingId,
+      );
+      if (
+        !historical ||
+        historical.organizationId !== organizationId ||
+        historical.digest !== historicalGovernanceRevisionRef
+      ) return undefined;
+      const revisions = scopeLineageIndex.sourceBindings.filter(
+        (binding) =>
+          binding.organizationId === organizationId &&
+          binding.source.sourceId === historical.source.sourceId,
+      );
+      const current = resolveCurrentSourceScopeBinding(revisions, evaluatedAt);
+      if (!current) return undefined;
+      return {
+        organizationId,
+        historicalBindingId,
+        currentBindingRevisionRef: current.bindingId,
+        currentGovernanceRevisionRef: current.digest,
+        availability: current.availability ?? "unavailable",
+        purposeRefs: current.purposeRef ? [current.purposeRef] : [],
+        scopes: current.assertions.map((assertion) => assertion.scope),
+      };
+    },
+  });
+  if (currentEligibility.disposition !== "eligible") return denied();
   let resolution;
   try {
     resolution = resolveAlphaAllowlistDisclosureDecision({
@@ -97,7 +171,12 @@ export async function readLiveScopedRoleAwareProjection(input: {
 
   const canonical = composeActivatedYourOrganization({ runtime: stored.runtime, identity, resolution, resolvedAt: input.evaluatedAt });
   if (canonical.status !== "available") return denied();
-  const genericSource = buildGenericScopedProductSource({ stored, organizationId: input.organizationId, requestedScope });
+  const genericSource = buildGenericScopedProductSource({
+    stored,
+    organizationId: input.organizationId,
+    requestedScope,
+    currentEligibility,
+  });
   const genericProjection = readScopedOrganizationalProductProjection({
     authenticatedUserId: input.userId, organizationId: input.organizationId, context,
     repository: { readAuthorizedSource: () => structuredClone(genericSource) },
