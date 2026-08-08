@@ -6,7 +6,7 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 
 import { resolveCanonicalEvidenceAdmission, runDiscoveryV3 } from "../../engine/v3";
-import { createCanonicalScopeTopology, createCanonicalSourceScopeBinding } from "../../engine/v3/governance/canonicalScopeLineage";
+import { createCanonicalEvidenceContributionLineageEnvelope, createCanonicalScopeTopology, createCanonicalSourceScopeBinding } from "../../engine/v3/governance/canonicalScopeLineage";
 import { evolveOrganizationRuntime } from "../../engine/v3/runtime/evolveOrganizationRuntime";
 import { createEmptyOrganizationRuntime } from "../../engine/v3/runtime/organizationRuntime";
 import { FilesystemOrganizationRuntimeRepository, type StoredOrganizationRuntime } from "../../engine/v3/runtime/organizationRuntimeRepository";
@@ -26,11 +26,14 @@ function context(runtime:StoredOrganizationRuntime["runtime"],question:string,co
   const lineage={organizationId:ORG,effectiveAt:AT,topologyRevisions:[topology],sourceBindingRevisions:[sourceBinding],existingEvidenceAttributions:runtime.memory.canonicalScopeLineageIndex?.evidenceAttributions??[]};
   return{input,lineage};
 }
-function adapter(repository:FilesystemOrganizationRuntimeRepository){return new CanonicalProductWorkspaceAdapter({runtimeRepository:repository,authorize:async({userId,organizationId})=>userId===USER&&organizationId===ORG,preflightCanonicalEvidence:async({runtime,question,contribution})=>{const value=context(runtime,question,contribution);return resolveCanonicalEvidenceAdmission(value.input,value.lineage);},investigate:async({runtime,question,contribution})=>{
+function adapter(repository:FilesystemOrganizationRuntimeRepository){return new CanonicalProductWorkspaceAdapter({runtimeRepository:repository,evidenceContributionPurposeRef:()=>QUESTION_ID,authorize:async({userId,organizationId})=>userId===USER&&organizationId===ORG,preflightCanonicalEvidence:async({runtime,question,contribution})=>{const value=context(runtime,question,contribution);return resolveCanonicalEvidenceAdmission(value.input,value.lineage);},investigate:async({runtime,question,contribution,operationContext,replayOnly})=>{
+  assert.ok(operationContext);
   const {input,lineage}=context(runtime,question,contribution);
   const result=runDiscoveryV3(input,lineage);
-  const originalLog=console.log;let evolved;try{console.log=()=>{};evolved=evolveOrganizationRuntime({runtime,result,input,semanticTime:AT});}finally{console.log=originalLog;}
-  return{runtime:evolved,evidenceAccepted:result.evidence.length>0,canonicalEvidenceAdmissionBatch:result.scopeLineageAdmission!.operationBatch};
+  const admissionBatch=result.scopeLineageAdmission!.operationBatch;
+  const lineageEnvelope=createCanonicalEvidenceContributionLineageEnvelope({context:operationContext,admissionBatch});
+  const originalLog=console.log;let evolved;try{console.log=()=>{};evolved=replayOnly?runtime:evolveOrganizationRuntime({runtime,result,input,semanticTime:AT,canonicalEvidenceContributionOperationContext:operationContext,canonicalEvidenceContributionLineageEnvelope:lineageEnvelope});}finally{console.log=originalLog;}
+  return{runtime:evolved,evidenceAccepted:result.evidence.length>0,canonicalEvidenceAdmissionBatch:admissionBatch,canonicalEvidenceLineageEnvelope:lineageEnvelope};
 }});}
 
 async function worker(role:string,root:string){const repository=new FilesystemOrganizationRuntimeRepository(root);

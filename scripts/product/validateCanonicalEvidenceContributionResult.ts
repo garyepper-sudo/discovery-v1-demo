@@ -5,6 +5,7 @@ import { resolveCanonicalEvidenceAdmission, runDiscoveryV3 } from "../../engine/
 import {
   admitCanonicalEvidenceScopeLineage,
   canonicalScopeLineageDigest,
+  createCanonicalEvidenceContributionLineageEnvelope,
   createCanonicalScopeTopology,
   createCanonicalSourceScopeBinding,
   type CanonicalEvidenceAdmissionOperationBatchV1,
@@ -53,12 +54,14 @@ function investigationContext(runtime:StoredOrganizationRuntime["runtime"],quest
   return{input,lineage};
 }
 function preflight(){return async ({runtime,question,contribution}:{runtime:StoredOrganizationRuntime["runtime"];question:string;contribution:CanonicalEvidenceContribution})=>{const context=investigationContext(runtime,question,contribution);return resolveCanonicalEvidenceAdmission(context.input,context.lineage);};}
-function investigate(){return async ({runtime,question,contribution}:{runtime:StoredOrganizationRuntime["runtime"];question:string;contribution:CanonicalEvidenceContribution})=>{
+function investigate(){return async ({runtime,question,contribution,operationContext,replayOnly}:Parameters<ConstructorParameters<typeof CanonicalProductWorkspaceAdapter>[0]["investigate"]>[0])=>{
+  assert(operationContext);
   const {input,lineage}=investigationContext(runtime,question,contribution);
   const result=runDiscoveryV3(input,lineage);
   const canonicalEvidenceAdmissionBatch=result.scopeLineageAdmission!.operationBatch;
-  const originalLog=console.log;let evolved;try{console.log=()=>{};evolved=evolveOrganizationRuntime({runtime,result,input,semanticTime:contribution.contributedAt});}finally{console.log=originalLog;}
-  return{runtime:evolved,evidenceAccepted:result.evidence.length>0,canonicalEvidenceAdmissionBatch};
+  const canonicalEvidenceLineageEnvelope=createCanonicalEvidenceContributionLineageEnvelope({context:operationContext,admissionBatch:canonicalEvidenceAdmissionBatch});
+  const originalLog=console.log;let evolved;try{console.log=()=>{};evolved=replayOnly?runtime:evolveOrganizationRuntime({runtime,result,input,semanticTime:contribution.contributedAt,canonicalEvidenceContributionOperationContext:operationContext,canonicalEvidenceContributionLineageEnvelope:canonicalEvidenceLineageEnvelope});}finally{console.log=originalLog;}
+  return{runtime:evolved,evidenceAccepted:result.evidence.length>0,canonicalEvidenceAdmissionBatch,canonicalEvidenceLineageEnvelope};
 };}
 
 const contribution=(sourceId:string,key:string,content:string):CanonicalEvidenceContribution=>({sourceId,sourceType:"paste",content,contributedAt:AT,idempotencyKey:key});
@@ -68,7 +71,7 @@ async function main(){
   const orderingAdmission=admitCanonicalEvidenceScopeLineage({lineage:{organizationId:ORG,effectiveAt:AT,topologyRevisions:[topology],sourceBindingRevisions:[orderingBinding]},evidence:[{evidenceId:"E10",evidenceText:"Order fact.",sourceId:"source-ordering",contentDigest:orderingBinding.source.normalizedContentDigest},{evidenceId:"E2",evidenceText:"Order fact.",sourceId:"source-ordering",contentDigest:orderingBinding.source.normalizedContentDigest}]});
   check(orderingAdmission.operationBatch.admissions[0]!.investigationEvidenceIds.join(",")==="E2,E10","local Evidence IDs use parsed ordinal ordering");
   assert.throws(()=>admitCanonicalEvidenceScopeLineage({lineage:{organizationId:ORG,effectiveAt:AT,topologyRevisions:[topology],sourceBindingRevisions:[orderingBinding]},evidence:[{evidenceId:"E1",evidenceText:"Order fact.",sourceId:"source-ordering",contentDigest:orderingBinding.source.normalizedContentDigest},{evidenceId:"E1",evidenceText:"Order fact.",sourceId:"source-ordering",contentDigest:orderingBinding.source.normalizedContentDigest}]}));checks+=1;
-  const repository=new MemoryRepository(storedInitial());const adapter=new CanonicalProductWorkspaceAdapter({runtimeRepository:repository,authorize:async({userId,organizationId})=>userId===USER&&organizationId===ORG,preflightCanonicalEvidence:preflight(),investigate:investigate()});
+  const repository=new MemoryRepository(storedInitial());const adapter=new CanonicalProductWorkspaceAdapter({runtimeRepository:repository,authorize:async({userId,organizationId})=>userId===USER&&organizationId===ORG,evidenceContributionPurposeRef:()=>QUESTION_ID,preflightCanonicalEvidence:preflight(),investigate:investigate()});
   const first=await adapter.contributeEvidenceWithCanonicalResult({userId:USER,organizationId:ORG,questionId:QUESTION_ID,contribution:contribution("source-one","key-one",GOVERNED_CONTENT),operation:{requestId:"request-one",operatorId:USER}});
   check(first.contributionResult.admissions.length===16,"all sixteen governed Evidence admissions retained");
   check(first.contributionResult.operationDisposition==="admitted","all eligible governed Evidence is fully admitted");
@@ -100,7 +103,7 @@ async function main(){
   check(provenance.contributionResult.admissions[0]!.sourceBindings.length===2,"multiple Source Bindings retained");
   check(["admitted","partially-admitted","not-admitted"].includes(first.contributionResult.operationDisposition),"partial disposition remains contractually supported but has no truthful source-bound rejection fixture");
   const emptyUnsigned={contractVersion:"1" as const,organizationId:ORG,admissions:[],admissionDisposition:"not-admitted" as const};const emptyBatch:CanonicalEvidenceAdmissionOperationBatchV1={...emptyUnsigned,batchDigest:canonicalScopeLineageDigest(emptyUnsigned)};
-  const emptyAdapter=new CanonicalProductWorkspaceAdapter({runtimeRepository:repository,authorize:async()=>true,preflightCanonicalEvidence:async()=>({organizationId:ORG,topology,sourceBindings:[],evidenceAttributions:[],operationBatch:emptyBatch,digest:canonicalScopeLineageDigest({organizationId:ORG,topologyId:topology.topologyId,sourceBindingIds:[],evidenceAttributionIds:[]})}),investigate:async({runtime})=>({runtime,evidenceAccepted:false,canonicalEvidenceAdmissionBatch:emptyBatch})});
+  const emptyAdapter=new CanonicalProductWorkspaceAdapter({runtimeRepository:repository,authorize:async()=>true,evidenceContributionPurposeRef:()=>QUESTION_ID,preflightCanonicalEvidence:async()=>({organizationId:ORG,topology,sourceBindings:[],evidenceAttributions:[],operationBatch:emptyBatch,digest:canonicalScopeLineageDigest({organizationId:ORG,topologyId:topology.topologyId,sourceBindingIds:[],evidenceAttributionIds:[]})}),investigate:async({runtime,operationContext})=>{assert(operationContext);return{runtime,evidenceAccepted:false,canonicalEvidenceAdmissionBatch:emptyBatch,canonicalEvidenceLineageEnvelope:createCanonicalEvidenceContributionLineageEnvelope({context:operationContext,admissionBatch:emptyBatch})};}});
   const empty=await emptyAdapter.contributeEvidenceWithCanonicalResult({userId:USER,organizationId:ORG,questionId:QUESTION_ID,contribution:contribution("unsupported-source","key-zero","Unsupported"),operation:{requestId:"request-zero",operatorId:USER}});
   check(empty.contributionResult.admissions.length===0,"zero admissions supported");
   check(empty.contributionResult.operationDisposition==="not-admitted","zero admission truthful");

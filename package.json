@@ -40,6 +40,8 @@
     "validate:cross-operation-canonical-evidence-ancestry": "tsx scripts/product/validateCrossOperationCanonicalEvidenceAncestry.ts",
     "validate:cross-operation-canonical-evidence-ancestry-fresh-process": "tsx scripts/product/validateCrossOperationCanonicalEvidenceAncestryFreshProcess.ts",
     "validate:canonical-understanding-current-eligibility": "tsx scripts/product/validateCanonicalUnderstandingCurrentEligibility.ts",
+    "validate:canonical-explanation-governance-lineage": "tsx scripts/product/validateCanonicalExplanationGovernanceLineage.ts",
+    "validate:canonical-explanation-governance-lineage-fresh-process": "tsx scripts/product/validateCanonicalExplanationGovernanceLineageFreshProcess.ts",
     "validate:canonical-understanding-audience-lineage-forward-producer": "tsx scripts/product/validateCanonicalUnderstandingAudienceLineageForwardProducer.ts",
     "validate:field-audience-requirement-direct-security": "tsx scripts/product/validateFieldAudienceRequirementDirectSecurityContract.ts",
     "validate:northstar-reconstruction-package": "tsx scripts/product/validateNorthstarReconstructionPackage.ts",

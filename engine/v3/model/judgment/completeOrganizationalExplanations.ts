@@ -9,6 +9,10 @@ import {
   type CanonicalAncestryConstructionContext,
   type CanonicalMaterialAncestorReferenceV1,
 } from "../../governance/canonicalDerivedArtifactGovernanceAncestry";
+import {
+  validateCanonicalEvidenceContributionLineageEnvelope,
+  type CanonicalEvidenceContributionLineageEnvelopeV1,
+} from "../../governance/canonicalScopeLineage";
 import type {
   OrganizationalExplanation,
   OrganizationalExplanationEvidenceRole,
@@ -53,7 +57,9 @@ type CompleteOrganizationalExplanationsInput = {
   existingExplanations?: OrganizationalExplanation[];
   contradictionIds?: string[];
   evidenceContext?: OrganizationalExplanationCompletionEvidenceContext;
-  canonicalGovernanceContext?: CanonicalAncestryConstructionContext;
+  canonicalGovernanceContext?: CanonicalAncestryConstructionContext & {
+    envelope?: CanonicalEvidenceContributionLineageEnvelopeV1;
+  };
   now: string;
 };
 
@@ -248,6 +254,18 @@ function canonicalExplanationGovernanceLineage(input: {
   if (!context) {
     throw new Error("Canonical Explanation governance context is unavailable.");
   }
+  if (context.envelope) {
+    validateCanonicalEvidenceContributionLineageEnvelope({
+      envelope: context.envelope,
+    });
+    if (
+      context.envelope.organizationId !== context.organizationId ||
+      context.envelope.admissionBatch.batchDigest !==
+        context.operationBatch.batchDigest
+    ) {
+      throw new Error("Canonical Explanation operation mapping mismatch.");
+    }
+  }
   const directRoles = new Map<
     string,
     "material" | "contradictory-material"
@@ -353,12 +371,57 @@ function canonicalExplanationGovernanceLineage(input: {
     purposeRefs: unique(
       materialSupports.flatMap((support) => support.purposeRefs),
     ),
+    operationRefs: context.envelope
+      ? [
+          {
+            contributionOperationId: context.envelope.contributionOperationId,
+            questionId: context.envelope.questionId,
+            purposeRef: context.envelope.purposeRef,
+            canonicalOperationResultDigest:
+              context.envelope.canonicalOperationResultDigest,
+            envelopeDigest: context.envelope.envelopeDigest,
+          },
+        ]
+      : [],
     lineagePolicyVersion: "conservative-material-support.v1" as const,
   };
   return {
     ...unsigned,
     lineageDigest: canonicalAncestryDigest(unsigned),
   };
+}
+
+export function validateCanonicalExplanationGovernanceLineage(
+  value: NonNullable<OrganizationalExplanation["canonicalGovernanceLineage"]>,
+): void {
+  const normalizedSupports = normalizeCanonicalMaterialSupports(
+    value.materialSupports,
+  );
+  if (
+    value.contractVersion !== "canonical-explanation-governance-lineage.v1" ||
+    !value.organizationId ||
+    value.lineagePolicyVersion !== "conservative-material-support.v1" ||
+    value.directMaterialSupports.length === 0 ||
+    value.inheritedMaterialAncestorRefs.length === 0 ||
+    value.materialSupports.length === 0 ||
+    stable(normalizedSupports) !== stable(value.materialSupports) ||
+    stable(unique(value.topologyIds)) !== stable(value.topologyIds) ||
+    stable(unique(value.purposeRefs)) !== stable(value.purposeRefs) ||
+    value.operationRefs.some(
+      (reference) =>
+        !reference.contributionOperationId ||
+        !reference.questionId ||
+        !reference.purposeRef ||
+        !reference.canonicalOperationResultDigest ||
+        !reference.envelopeDigest,
+    )
+  ) {
+    throw new Error("Canonical Explanation governance lineage is incomplete.");
+  }
+  const { lineageDigest, ...unsigned } = value;
+  if (lineageDigest !== canonicalAncestryDigest(unsigned)) {
+    throw new Error("Canonical Explanation governance lineage integrity failed.");
+  }
 }
 
 function formComparativeEvidenceRoles(params: {

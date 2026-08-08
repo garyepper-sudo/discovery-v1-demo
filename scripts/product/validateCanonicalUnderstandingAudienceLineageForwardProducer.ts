@@ -3,11 +3,17 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
 import {
+  createCanonicalEvidenceContributionLineageEnvelope,
+  createCanonicalEvidenceContributionOperationContext,
   createCanonicalEvidenceScopeAttribution,
   createCanonicalScopeLineageIndex,
   createCanonicalScopeTopology,
   createCanonicalSourceScopeBinding,
 } from "../../engine/v3/governance/canonicalScopeLineage";
+import { runDiscoveryV3 } from "../../engine/v3";
+import { atlasIndustrialArtifacts } from "../../engine/benchmark/judgment-lab/atlasIndustrialPilot";
+import { evolveOrganizationRuntime } from "../../engine/v3/runtime/evolveOrganizationRuntime";
+import { createEmptyOrganizationRuntime } from "../../engine/v3/runtime/organizationRuntime";
 import type { OrganizationalExplanation } from "../../engine/v3/model/judgment/organizationalJudgment";
 import type { CanonicalUnderstandingComposition } from "../../engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow";
 import {
@@ -32,10 +38,25 @@ const root = { organizationId: ORG, type: "organization" as const, id: ORG };
 const team = { organizationId: ORG, type: "team" as const, id: "team:operations" };
 const department = { organizationId: ORG, type: "department" as const, id: "department:engineering" };
 const topology = createCanonicalScopeTopology({ organizationId: ORG, topologyVersion: 1, effectiveAt: NOW, nodes: [root, department, team], relationships: [{ kind: "contains", from: root, to: department }, { kind: "contains", from: department, to: team }] });
-const binding = createCanonicalSourceScopeBinding({ organizationId: ORG, bindingVersion: 1, source: { sourceId: "source:operations", sourceVersion: "1", normalizedContentDigest: "0123456789abcdef0123456789abcdef" }, topology, assertions: [{ relationship: "origin", scope: department }], basisRefs: ["governed-source-declaration:operations"], effectiveAt: NOW });
-const attribution = createCanonicalEvidenceScopeAttribution({ organizationId: ORG, attributionVersion: 1, evidenceId: "evidence:operations", evidenceAdmissionId: "evidence-admission:operations", bindings: [binding], topology, effectiveAt: NOW });
-const index = createCanonicalScopeLineageIndex({ organizationId: ORG, topology, sourceBindings: [binding], evidenceAttributions: [attribution] });
-const explanation: OrganizationalExplanation = { id: "explanation:operations", organizationId: ORG, semanticKey: "operations", claim: { scope: team, rootMechanismIds: ["mechanism:1"], outcomeRefs: [{ type: "phenomenon", id: "phenomenon:1" }], causalRelationFamily: "constraint" }, explanationSeedIds: ["seed:1"], reasoningPathIds: ["path:1"], mechanismIds: ["mechanism:1"], beliefIds: ["belief:1"], theoryIds: ["theory:1"], evidenceIds: [attribution.evidenceId], contradictionIds: [], assumptions: [], comparativeEvidenceRoles: [{ evidenceId: attribution.evidenceId, role: "supports", basis: { kind: "explanation-seed", referenceIds: ["seed:1"] }, relatedExplanationIds: [] }], viability: "unadjudicated", uncertainty: [], createdAt: NOW, updatedAt: NOW };
+const governedContent = atlasIndustrialArtifacts.map((item) => item.content).join("\n\n");
+const binding = createCanonicalSourceScopeBinding({ organizationId: ORG, bindingVersion: 1, source: { sourceId: "source:operations", sourceVersion: "1", normalizedContentDigest: createHash("sha256").update(governedContent).digest("hex") }, topology, assertions: [{ relationship: "origin", scope: department }], basisRefs: ["governed-source-declaration:operations"], effectiveAt: NOW, sourceType: "manual-takeaway", purposeRef: "organizational-understanding", availability: "available" });
+const investigationInput = { company: "Audience lineage validation", website: "", industry: "Testing", question: "What constrains delivery?", context: "", evidenceSources: [{ sourceId: binding.source.sourceId, sourceType: "paste", observedAt: NOW, contentDigest: binding.source.normalizedContentDigest, content: governedContent }] };
+const investigationResult = runDiscoveryV3(investigationInput, { organizationId: ORG, effectiveAt: NOW, topologyRevisions: [topology], sourceBindingRevisions: [binding] });
+const operationContext = createCanonicalEvidenceContributionOperationContext({ contributionOperationId: "operation:audience-lineage", organizationId: ORG, questionId: "question:audience-lineage", purposeRef: "organizational-understanding", requestFingerprint: digest("audience-lineage-request"), idempotencyKeyDigest: digest("audience-lineage-key") });
+const operationEnvelope = createCanonicalEvidenceContributionLineageEnvelope({ context: operationContext, admissionBatch: investigationResult.scopeLineageAdmission!.operationBatch });
+const originalLog = console.log;
+let governedRuntime;
+try {
+  console.log = () => {};
+  governedRuntime = evolveOrganizationRuntime({ runtime: createEmptyOrganizationRuntime({ organizationId: ORG, name: "Audience lineage validation", now: NOW }), result: investigationResult, input: investigationInput, semanticTime: NOW, canonicalEvidenceContributionOperationContext: operationContext, canonicalEvidenceContributionLineageEnvelope: operationEnvelope });
+} finally {
+  console.log = originalLog;
+}
+const index = governedRuntime.memory.canonicalScopeLineageIndex!;
+const explanation = governedRuntime.memory.organizationalExplanations.find((candidate) => candidate.canonicalGovernanceLineage)!;
+assert(explanation, "governed operation did not create a lineaged Explanation");
+const firstSupport = explanation.canonicalGovernanceLineage!.materialSupports[0]!;
+const attribution = index.evidenceAttributions.find((candidate) => candidate.attributionId === firstSupport.attributionId)!;
 const composition: CanonicalUnderstandingComposition = { id: "composition:operations", revisionId: "composition:operations:revision:1", previousRevisionId: null, organizationId: ORG, scope: root, outcomeRef: { type: "phenomenon", id: "phenomenon:1" }, explanationIds: [explanation.id], compositionUncertainty: [], createdAt: NOW, updatedAt: NOW };
 
 type ProducerInput = Parameters<typeof produceCanonicalUnderstandingAudienceLineage>[0];
@@ -179,7 +200,19 @@ const baselineExecution = scenarioExecutions.get("baseline")!;
 assert.equal(baselineExecution.status, "produced");
 if (baselineExecution.status !== "produced") throw new Error("baseline rejected");
 validateCanonicalUnderstandingAudienceLineage(baselineExecution.output); invariantAssertions += 1;
-invariant(baselineExecution.output.records.every((record) => record.completeness === "incomplete" && record.audienceRequirement === null), "baseline falsely complete");
+invariant(baselineExecution.output.records.every((record) => record.completeness === "complete" && record.audienceRequirement !== null), "governed baseline is not complete");
+const historicalInput = fixture();
+delete historicalInput.explanations[0]!.canonicalGovernanceLineage;
+const historicalExecution = executeProducer(historicalInput);
+invariant(
+  historicalExecution.status === "produced" &&
+    historicalExecution.output.records.every(
+      (record) =>
+        record.completeness === "incomplete" &&
+        record.audienceRequirement === null,
+    ),
+  "historical local-only lineage did not remain unavailable",
+);
 const evidenceRecord = baselineExecution.output.records.find((record) => record.fieldFamily === "evidence-reference")!;
 invariant(evidenceRecord.sourceScopes !== evidenceRecord.evidenceScopes, "source and Evidence arrays alias");
 invariant(stable(evidenceRecord.sourceScopes) !== stable(byId.get("evidence-scope")!.producerInput.scopeLineageIndex!.evidenceAttributions[0]!.assertions.map((item) => item.scope)), "Evidence scope leaked into source scope");

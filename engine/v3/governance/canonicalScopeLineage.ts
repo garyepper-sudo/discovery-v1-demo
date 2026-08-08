@@ -138,6 +138,29 @@ export type CanonicalEvidenceAdmissionOperationBatchV1 = {
   admissionDisposition: "admitted" | "partially-admitted" | "not-admitted";
   batchDigest: string;
 };
+export type CanonicalEvidenceContributionOperationContextV1 = {
+  contractVersion: "canonical-evidence-contribution-operation-context.v1";
+  contributionOperationId: string;
+  organizationId: string;
+  questionId: string;
+  purposeRef: string;
+  requestFingerprint: string;
+  idempotencyKeyDigest: string;
+  operationContextDigest: string;
+};
+export type CanonicalEvidenceContributionLineageEnvelopeV1 = {
+  contractVersion: "canonical-evidence-contribution-lineage-envelope.v1";
+  contributionOperationId: string;
+  organizationId: string;
+  questionId: string;
+  purposeRef: string;
+  requestFingerprint: string;
+  operationContextDigest: string;
+  canonicalOperationResultDigest: string;
+  admissionBatch: CanonicalEvidenceAdmissionOperationBatchV1;
+  mappingDigest: string;
+  envelopeDigest: string;
+};
 
 const compare = (left: string, right: string): number => left.localeCompare(right);
 function stable(value: unknown): string {
@@ -146,6 +169,26 @@ function stable(value: unknown): string {
   return JSON.stringify(value);
 }
 const hash = (value: unknown): string => createHash("sha256").update(stable(value)).digest("hex");
+export function createCanonicalEvidenceContributionOperationContext(input:Omit<CanonicalEvidenceContributionOperationContextV1,"contractVersion"|"operationContextDigest">):CanonicalEvidenceContributionOperationContextV1{
+  const unsigned={contractVersion:"canonical-evidence-contribution-operation-context.v1" as const,...input};
+  return{...unsigned,operationContextDigest:hash(unsigned)};
+}
+export function validateCanonicalEvidenceContributionOperationContext(value:CanonicalEvidenceContributionOperationContextV1):void{
+  const{operationContextDigest,...unsigned}=value;
+  if(value.contractVersion!=="canonical-evidence-contribution-operation-context.v1"||![value.contributionOperationId,value.organizationId,value.questionId,value.purposeRef,value.requestFingerprint,value.idempotencyKeyDigest].every(exact)||operationContextDigest!==hash(unsigned))throw new Error("Canonical Evidence contribution operation context is invalid.");
+}
+export function createCanonicalEvidenceContributionLineageEnvelope(input:{context:CanonicalEvidenceContributionOperationContextV1;admissionBatch:CanonicalEvidenceAdmissionOperationBatchV1}):CanonicalEvidenceContributionLineageEnvelopeV1{
+  validateCanonicalEvidenceContributionOperationContext(input.context);
+  const mappingDigest=hash(input.admissionBatch.admissions);
+  const canonicalOperationResultDigest=hash({operationContextDigest:input.context.operationContextDigest,admissionBatchDigest:input.admissionBatch.batchDigest,mappingDigest});
+  const unsigned={contractVersion:"canonical-evidence-contribution-lineage-envelope.v1" as const,contributionOperationId:input.context.contributionOperationId,organizationId:input.context.organizationId,questionId:input.context.questionId,purposeRef:input.context.purposeRef,requestFingerprint:input.context.requestFingerprint,operationContextDigest:input.context.operationContextDigest,canonicalOperationResultDigest,admissionBatch:input.admissionBatch,mappingDigest};
+  return{...unsigned,envelopeDigest:hash(unsigned)};
+}
+export function validateCanonicalEvidenceContributionLineageEnvelope(input:{envelope:CanonicalEvidenceContributionLineageEnvelopeV1;context?:CanonicalEvidenceContributionOperationContextV1}):void{
+  const{envelope,context}=input,{envelopeDigest,...unsigned}=envelope;
+  if(envelope.contractVersion!=="canonical-evidence-contribution-lineage-envelope.v1"||envelopeDigest!==hash(unsigned)||envelope.mappingDigest!==hash(envelope.admissionBatch.admissions)||envelope.canonicalOperationResultDigest!==hash({operationContextDigest:envelope.operationContextDigest,admissionBatchDigest:envelope.admissionBatch.batchDigest,mappingDigest:envelope.mappingDigest})||envelope.organizationId!==envelope.admissionBatch.organizationId)throw new Error("Canonical Evidence contribution lineage envelope is invalid.");
+  if(context){validateCanonicalEvidenceContributionOperationContext(context);if(envelope.contributionOperationId!==context.contributionOperationId||envelope.organizationId!==context.organizationId||envelope.questionId!==context.questionId||envelope.purposeRef!==context.purposeRef||envelope.requestFingerprint!==context.requestFingerprint||envelope.operationContextDigest!==context.operationContextDigest)throw new Error("Canonical Evidence contribution lineage operation mismatch.");}
+}
 const exact = (value: string): boolean => value.trim() === value && value.length > 0 && value !== "*";
 const timestamp = (value: string): boolean => exact(value) && Number.isFinite(Date.parse(value));
 const scopeKey = (scope: GovernedScopeRef): string => stable([scope.organizationId, scope.type, scope.id]);
@@ -355,6 +398,46 @@ export function admitCanonicalEvidenceScopeLineage(input:{
   const admission={...unsigned,digest:hash(unsigned)} as CanonicalEvidenceScopeAdmission;
   Object.defineProperty(admission,"operationBatch",{value:operationBatch,enumerable:false,writable:false,configurable:false});
   return admission;
+}
+
+export function validateCanonicalEvidenceAdmissionOperationBatch(input:{
+  organizationId:string;
+  batch:CanonicalEvidenceAdmissionOperationBatchV1;
+  scopeLineageIndex:CanonicalScopeLineageIndex;
+}):void{
+  const {organizationId,batch,scopeLineageIndex}=input;
+  if(batch.contractVersion!=="1"||batch.organizationId!==organizationId||scopeLineageIndex.organizationId!==organizationId)throw new Error("Canonical Evidence admission batch organization mismatch.");
+  const {batchDigest,...batchUnsigned}=batch;
+  if(batchDigest!==hash(batchUnsigned))throw new Error("Canonical Evidence admission batch integrity failed.");
+  const evidenceIds=new Set<string>(),admissionIds=new Set<string>(),attributionIds=new Set<string>(),localIds=new Set<string>();
+  const attributions=new Map(scopeLineageIndex.evidenceAttributions.map(value=>[value.attributionId,value]));
+  const bindings=new Map(scopeLineageIndex.sourceBindings.map(value=>[value.bindingId,value]));
+  for(const item of batch.admissions){
+    if(item.contractVersion!=="1"||evidenceIds.has(item.canonicalEvidenceId)||admissionIds.has(item.canonicalAdmissionId)||attributionIds.has(item.attributionId)||item.investigationEvidenceIds.length===0||item.sourceBindings.length===0)throw new Error("Canonical Evidence admission batch contains duplicate or incomplete mapping.");
+    evidenceIds.add(item.canonicalEvidenceId);admissionIds.add(item.canonicalAdmissionId);attributionIds.add(item.attributionId);
+    const attribution=attributions.get(item.attributionId);
+    if(!attribution||attribution.organizationId!==organizationId||attribution.evidenceId!==item.canonicalEvidenceId||attribution.evidenceAdmissionId!==item.canonicalAdmissionId||attribution.attributionVersion!==item.attributionVersion||attribution.digest!==item.attributionDigest)throw new Error("Canonical Evidence admission attribution mismatch.");
+    const normalizedLocals=normalizeInvestigationEvidenceIds(item.investigationEvidenceIds);
+    if(stable(normalizedLocals)!==stable(item.investigationEvidenceIds))throw new Error("Canonical Evidence admission local mapping is not normalized.");
+    for(const localId of normalizedLocals){if(localIds.has(localId))throw new Error("Ambiguous investigation-local Evidence mapping.");localIds.add(localId);}
+    const itemBindingIds=normalizeStrings(item.sourceBindings.map(value=>value.sourceBindingId));
+    if(stable(itemBindingIds)!==stable(normalizeStrings(attribution.sourceBindingIds)))throw new Error("Canonical Evidence admission Source Binding set mismatch.");
+    for(const ref of item.sourceBindings){const binding=bindings.get(ref.sourceBindingId);if(!binding||binding.organizationId!==organizationId||binding.source.sourceId!==ref.sourceId||binding.source.sourceVersion!==ref.sourceVersion||binding.source.normalizedContentDigest!==ref.normalizedContentDigest)throw new Error("Canonical Evidence admission Source Binding mismatch.");}
+  }
+  if(batch.admissions.length===0?batch.admissionDisposition!=="not-admitted":batch.admissionDisposition==="not-admitted")throw new Error("Canonical Evidence admission disposition mismatch.");
+}
+
+export function resolveCanonicalEvidenceAdmissionItemsForLocalReferences(input:{
+  organizationId:string;
+  localEvidenceIds:readonly string[];
+  batch:CanonicalEvidenceAdmissionOperationBatchV1;
+  scopeLineageIndex:CanonicalScopeLineageIndex;
+}):CanonicalEvidenceAdmissionOperationItemV1[]{
+  validateCanonicalEvidenceAdmissionOperationBatch(input);
+  const byLocal=new Map<string,CanonicalEvidenceAdmissionOperationItemV1>();
+  for(const item of input.batch.admissions)for(const localId of item.investigationEvidenceIds){if(byLocal.has(localId))throw new Error("Ambiguous investigation-local Evidence mapping.");byLocal.set(localId,item);}
+  const resolved=input.localEvidenceIds.map(localId=>{const item=byLocal.get(localId);if(!item)throw new Error("Material investigation-local Evidence mapping is unavailable.");return item;});
+  return [...new Map(resolved.map(item=>[stable([item.canonicalEvidenceId,item.canonicalAdmissionId,item.attributionId]),item])).values()].sort((left,right)=>compare(left.canonicalEvidenceId,right.canonicalEvidenceId)||compare(left.canonicalAdmissionId,right.canonicalAdmissionId)||compare(left.attributionId,right.attributionId));
 }
 
 export function resolveUnambiguousLegacyEvidenceAttribution(input:{organizationId:string;localEvidenceId:string;attributions:readonly CanonicalEvidenceScopeAttribution[]}):CanonicalEvidenceScopeAttribution|undefined{

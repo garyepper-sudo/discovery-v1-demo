@@ -6,6 +6,8 @@ import type {
 } from "../../engine/v3/runtime/organizationRuntimeRepository";
 import {
   canonicalScopeLineageDigest,
+  createCanonicalEvidenceContributionOperationContext,
+  validateCanonicalEvidenceContributionLineageEnvelope,
   type CanonicalEvidenceAdmissionOperationBatchV1,
 } from "../../engine/v3/governance/canonicalScopeLineage";
 import {
@@ -114,7 +116,10 @@ export type CanonicalProductWorkspaceAdapterDependencies = {
     runtime: StoredOrganizationRuntime["runtime"];
     question: string;
     contribution: CanonicalEvidenceContribution;
+    operationContext?: import("../../engine/v3/governance/canonicalScopeLineage").CanonicalEvidenceContributionOperationContextV1;
+    replayOnly?: boolean;
   }): Promise<CanonicalInvestigationResult>;
+  evidenceContributionPurposeRef?(input:{organizationId:string;questionId:string}):string;
   preflightCanonicalEvidence?(input: {
     runtime: StoredOrganizationRuntime["runtime"];
     question: string;
@@ -204,7 +209,7 @@ function validateAdmissionBatch(batch: CanonicalEvidenceAdmissionOperationBatchV
 
 function validateOperationRecord(record: CanonicalEvidenceContributionOperationRecordV1): void {
   const {recordDigest,...unsigned}=record;
-  if(recordDigest!==operationDigest(unsigned))throw new Error("Canonical Evidence contribution replay is invalid.");
+  if(!record.lineageEnvelopeDigest||recordDigest!==operationDigest(unsigned))throw new Error("Canonical Evidence contribution replay is invalid.");
 }
 
 function validatePreflight(
@@ -468,6 +473,7 @@ export class CanonicalProductWorkspaceAdapter {
     const question = buildDurableProductQuestion({ runtime: stored.runtime, questionId: input.questionId });
     if (!question) throw new Error("Product Question was not found in this organization.");
     const identity=contributionIdentity(input);
+    const operationContext=createCanonicalEvidenceContributionOperationContext({contributionOperationId:identity.contributionOperationId,organizationId:input.organizationId,questionId:input.questionId,purposeRef:this.dependencies.evidenceContributionPurposeRef?.(input)??`product-question:${input.questionId}`,requestFingerprint:identity.requestFingerprint,idempotencyKeyDigest:identity.idempotencyKeyDigest});
     const marker = stableId("product-contribution", input.organizationId, input.contribution.idempotencyKey);
     const acceptedMarkers = new Set([
       marker,
@@ -502,18 +508,21 @@ export class CanonicalProductWorkspaceAdapter {
       &&preflight.operationBatch.admissions.length>0
       &&preflight.operationBatch.admissions.every(item=>item.disposition==="existing-attribution-replayed")
       &&hasPriorQuestionSupport(records,stored.runtime,input.organizationId,input.questionId,preflight.operationBatch));
-    const investigated = replayOnly
-      ? {runtime:stored.runtime,evidenceAccepted:true,canonicalEvidenceAdmissionBatch:preflight!.operationBatch}
-      : await this.dependencies.investigate({
+    const investigated = await this.dependencies.investigate({
           runtime: stored.runtime,
           question: question.title,
           contribution: input.contribution,
+          operationContext,
+          replayOnly,
         });
     if (investigated.runtime.metadata.organizationId !== input.organizationId) {
       throw new Error("Investigation changed organization identity.");
     }
     const batch=investigated.canonicalEvidenceAdmissionBatch;
+    const lineageEnvelope=investigated.canonicalEvidenceLineageEnvelope;
     if(requireCanonicalResult&&!batch)throw new Error("Canonical Evidence contribution result is unavailable.");
+    if(requireCanonicalResult&&!lineageEnvelope)throw new Error("Canonical Evidence contribution lineage commitment is unavailable.");
+    if(lineageEnvelope)validateCanonicalEvidenceContributionLineageEnvelope({envelope:lineageEnvelope,context:operationContext});
     if(batch)validateAdmissionBatch(batch,input.organizationId,investigated.runtime,stored.runtime);
     if(preflight&&canonicalOperationValue(preflight.operationBatch)!==canonicalOperationValue(batch))throw new Error("Canonical Evidence admission preflight changed during execution.");
     if(replayOnly){
@@ -552,7 +561,7 @@ export class CanonicalProductWorkspaceAdapter {
     const resultingQuestion=buildDurableProductQuestion({runtime,questionId:question.id});
     if(!resultingQuestion)throw new Error("Investigation removed Product Question identity.");
     const cognitionDisposition=replayOnly?"no-new-canonical-input" as const:"executed" as const;
-    const recordUnsigned=batchForRecord?{kind:"canonical-evidence-contribution-operation" as const,contractVersion:"1" as const,organizationId:input.organizationId,questionId:input.questionId,contributionOperationId:identity.contributionOperationId,idempotencyKeyDigest:identity.idempotencyKeyDigest,requestFingerprint:identity.requestFingerprint,canonicalAdmissionBatch:batchForRecord,cognitionDisposition,evidenceAccepted:investigated.evidenceAccepted,productQuestionRevisionBefore:question.revision,productQuestionRevisionAfter:resultingQuestion.revision,recordedAt:input.contribution.contributedAt}:undefined;
+    const recordUnsigned=batchForRecord&&lineageEnvelope?{kind:"canonical-evidence-contribution-operation" as const,contractVersion:"1" as const,organizationId:input.organizationId,questionId:input.questionId,contributionOperationId:identity.contributionOperationId,idempotencyKeyDigest:identity.idempotencyKeyDigest,requestFingerprint:identity.requestFingerprint,canonicalAdmissionBatch:batchForRecord,lineageEnvelopeDigest:lineageEnvelope.envelopeDigest,cognitionDisposition,evidenceAccepted:investigated.evidenceAccepted,productQuestionRevisionBefore:question.revision,productQuestionRevisionAfter:resultingQuestion.revision,recordedAt:input.contribution.contributedAt}:undefined;
     record=recordUnsigned?{...recordUnsigned,recordDigest:operationDigest(recordUnsigned)}:undefined;
     if(record)runtime={...runtime,memory:{...runtime.memory,events:[...runtime.memory.events,record]}};
     const persisted = await this.replace({ stored, runtime, operation: input.operation });

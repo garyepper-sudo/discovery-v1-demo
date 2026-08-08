@@ -60,7 +60,14 @@ import {
 import {
   runExecutiveCommunicationOperatingSystem,
 } from "../operating-systems/communication/runExecutiveCommunicationOperatingSystem";
-import { createCanonicalDerivedScopeLineage, createCanonicalScopeLineageIndex, createCanonicalScopeLineageIndexV1 } from "../governance/canonicalScopeLineage";
+import {
+  createCanonicalDerivedScopeLineage,
+  createCanonicalScopeLineageIndex,
+  createCanonicalScopeLineageIndexV1,
+  validateCanonicalEvidenceContributionLineageEnvelope,
+  type CanonicalEvidenceContributionLineageEnvelopeV1,
+  type CanonicalEvidenceContributionOperationContextV1,
+} from "../governance/canonicalScopeLineage";
 
 
 export function evolveOrganizationRuntime(params: {
@@ -77,6 +84,8 @@ export function evolveOrganizationRuntime(params: {
   };
   nonTemporalEvidenceRecovery?: boolean;
   semanticTime?: string;
+  canonicalEvidenceContributionOperationContext?: CanonicalEvidenceContributionOperationContextV1;
+  canonicalEvidenceContributionLineageEnvelope?: CanonicalEvidenceContributionLineageEnvelopeV1;
 }): OrganizationRuntime {
   const { runtime, result: investigationResult, input } = params;
 
@@ -96,6 +105,29 @@ export function evolveOrganizationRuntime(params: {
     ),
   };
   const scopeAdmission=result.scopeLineageAdmission;
+  const operationContext =
+    params.canonicalEvidenceContributionOperationContext;
+  const contributionEnvelope =
+    params.canonicalEvidenceContributionLineageEnvelope;
+  if (Boolean(operationContext) !== Boolean(contributionEnvelope)) {
+    throw new Error(
+      "Operation-bound canonical Evidence lineage context is incomplete.",
+    );
+  }
+  if (operationContext && contributionEnvelope) {
+    validateCanonicalEvidenceContributionLineageEnvelope({
+      envelope: contributionEnvelope,
+      context: operationContext,
+    });
+    if (
+      !scopeAdmission ||
+      contributionEnvelope.organizationId !== runtime.metadata.organizationId ||
+      contributionEnvelope.admissionBatch.batchDigest !==
+        scopeAdmission.operationBatch.batchDigest
+    ) {
+      throw new Error("Runtime Evidence contribution lineage envelope mismatch.");
+    }
+  }
   const scopeLineageEffectiveAt=scopeAdmission?.evidenceAttributions.map(item=>item.effectiveAt).sort().at(-1)??scopeAdmission?.topology.effectiveAt;
   const derivedScopeInputs:Array<{ref:string;evidenceIds:readonly string[]}>=scopeAdmission?[
     ...(result.observations??[]).map(item=>({ref:item.id,evidenceIds:item.evidenceIds??[]})),
@@ -604,6 +636,7 @@ export function evolveOrganizationRuntime(params: {
               organizationId: runtime.metadata.organizationId,
               operationBatch: scopeAdmission.operationBatch,
               scopeLineageIndex: canonicalScopeLineageIndex,
+              ...(contributionEnvelope ? { envelope: contributionEnvelope } : {}),
             },
           }
         : {}),

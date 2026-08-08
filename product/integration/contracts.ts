@@ -32,6 +32,7 @@ import type {
 } from "../objectives";
 import type {
   CanonicalEvidenceAdmissionOperationBatchV1,
+  CanonicalEvidenceContributionLineageEnvelopeV1,
   CanonicalEvidenceAdmissionOperationItemV1,
   CanonicalEvidenceScopeAdmission,
 } from "../../engine/v3/governance/canonicalScopeLineage";
@@ -181,6 +182,7 @@ export type CanonicalInvestigationResult = {
   runtime: import("../../engine/v3/runtime/organizationRuntime").OrganizationRuntime;
   evidenceAccepted: boolean;
   canonicalEvidenceAdmissionBatch?: CanonicalEvidenceAdmissionOperationBatchV1;
+  canonicalEvidenceLineageEnvelope?: CanonicalEvidenceContributionLineageEnvelopeV1;
 };
 
 export type CanonicalEvidenceAdmissionPreflight = CanonicalEvidenceScopeAdmission;
@@ -200,6 +202,7 @@ export type CanonicalEvidenceContributionOperationRecordV1 = {
   idempotencyKeyDigest: string;
   requestFingerprint: string;
   canonicalAdmissionBatch: CanonicalEvidenceAdmissionOperationBatchV1;
+  lineageEnvelopeDigest: string;
   cognitionDisposition?: Exclude<CanonicalEvidenceCognitionDisposition, "exact-operation-replay" | "historical-unavailable">;
   evidenceAccepted: boolean;
   productQuestionRevisionBefore: number;

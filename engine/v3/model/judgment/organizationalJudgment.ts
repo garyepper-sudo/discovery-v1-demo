@@ -128,6 +128,13 @@ export type CanonicalExplanationGovernanceLineageV1 = {
   materialSupports: CanonicalMaterialEvidenceSupportV1[];
   topologyIds: string[];
   purposeRefs: string[];
+  operationRefs: Array<{
+    contributionOperationId: string;
+    questionId: string;
+    purposeRef: string;
+    canonicalOperationResultDigest: string;
+    envelopeDigest: string;
+  }>;
   lineagePolicyVersion: "conservative-material-support.v1";
   lineageDigest: string;
 };
