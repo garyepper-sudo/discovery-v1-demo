@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "validate:persistence-safe-actor-owner": "tsx scripts/product/validatePersistenceSafeActorReferenceOwner.ts",
+    "validate:persistence-safe-actor-fresh-process": "tsx scripts/product/validatePersistenceSafeActorReferenceFreshProcess.ts",
     "validate:leadership-conversation-prepare-capture": "tsx scripts/product/validateLeadershipConversationPrepareCapture.ts",
     "validate:leadership-conversation-replay": "tsx scripts/product/validateLeadershipConversationReplay.ts",
     "validate:leadership-conversation-frontend": "tsx scripts/product/validateLeadershipConversationFrontend.ts",

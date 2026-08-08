@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+import { createHash, createHmac, randomUUID } from "node:crypto";
 
 import type { Sql, TransactionSql } from "postgres";
 
@@ -11,12 +11,16 @@ import {
 import {
   assertValidAuditEvent,
   mapAlphaAccessRow,
+  mapAlphaActorMappingRow,
+  type AlphaActorMappingDatabaseRow,
   type AlphaAccessDatabaseRow,
 } from "./mapping";
 import {
   AlphaStorageError,
   type AlphaAccessRecordRepository,
   type AlphaDisclosureAuditRepository,
+  type AssignPersistenceSafeActorInput,
+  type PersistenceSafeActorReferenceRepository,
   type GrantAlphaAccessInput,
   type RevokeAlphaAccessInput,
   type RestoreAlphaAccessInput,
@@ -51,9 +55,67 @@ function stable(value: unknown): string {
 }
 
 export class PostgresAlphaAccessRecordRepository
-  implements AlphaAccessRecordRepository, RestorableAlphaAccessRecordRepository
+  implements AlphaAccessRecordRepository, RestorableAlphaAccessRecordRepository, PersistenceSafeActorReferenceRepository
 {
-  constructor(private readonly sql: GovernanceSql) {}
+  constructor(private readonly sql: GovernanceSql, private readonly actorSubjectLookupKey?: string) {}
+
+  private subjectLookupDigest(consumerId: string): string {
+    if (!this.actorSubjectLookupKey || this.actorSubjectLookupKey.length < 32) {
+      throw new AlphaStorageError("unavailable", "Alpha actor mapping key unavailable");
+    }
+    return createHmac("sha256", this.actorSubjectLookupKey).update(consumerId).digest("hex");
+  }
+
+  async assignPersistenceSafeActor(input: AssignPersistenceSafeActorInput) {
+    for (const [value, label] of [[input.consumerId, "consumerId"], [input.organizationId, "organizationId"], [input.idempotencyKey, "idempotencyKey"]] as const) validateIdentity(value, label);
+    if (!Number.isFinite(Date.parse(input.assignedAt))) throw new AlphaStorageError("integrity-failure", "Invalid actor assignment time");
+    const subjectDigest = this.subjectLookupDigest(input.consumerId);
+    return this.serializable(async (tx) => {
+      await tx`SELECT pg_advisory_xact_lock(hashtextextended(${`actor:${input.organizationId}:${subjectDigest}`}, 0))`;
+      const access = await tx<{ access_record_id: string }[]>`
+        SELECT access_record_id FROM alpha_access_records
+        WHERE policy_id = ${ALPHA_ALLOWLIST_POLICY_ID}
+          AND policy_version = ${ALPHA_ALLOWLIST_POLICY_VERSION}
+          AND consumer_id = ${input.consumerId}
+          AND organization_id = ${input.organizationId}
+          AND experience = 'organization'
+          AND status = 'active'
+          AND granted_at <= ${input.assignedAt}
+          AND (expires_at IS NULL OR expires_at > ${input.assignedAt})
+      `;
+      if (access.length !== 1) {
+        throw new AlphaStorageError("invalid-transition", "Active Alpha access is required for actor assignment");
+      }
+      const replay = await tx<AlphaActorMappingDatabaseRow[]>`SELECT mapping_id, mapping_revision, actor_ref, organization_id, subject_lookup_digest, status, assigned_at, revoked_at, predecessor_mapping_id FROM alpha_actor_mappings WHERE assignment_idempotency_key = ${input.idempotencyKey}`;
+      if (replay.length === 1) {
+        if (replay[0].organization_id !== input.organizationId || replay[0].subject_lookup_digest !== subjectDigest || new Date(replay[0].assigned_at).toISOString() !== new Date(input.assignedAt).toISOString()) throw new AlphaStorageError("conflict", "Actor assignment idempotency identity conflict");
+        return mapAlphaActorMappingRow(replay[0]);
+      }
+      const active = await tx<AlphaActorMappingDatabaseRow[]>`SELECT mapping_id, mapping_revision, actor_ref, organization_id, subject_lookup_digest, status, assigned_at, revoked_at, predecessor_mapping_id FROM alpha_actor_mappings WHERE organization_id = ${input.organizationId} AND subject_lookup_digest = ${subjectDigest} AND status = 'active'`;
+      if (active.length === 1) throw new AlphaStorageError("conflict", "Actor assignment conflict: mapping already assigned by another request");
+      const rows = await tx<AlphaActorMappingDatabaseRow[]>`INSERT INTO alpha_actor_mappings (mapping_id, mapping_revision, actor_ref, organization_id, subject_lookup_digest, status, assigned_at, assignment_idempotency_key) VALUES (${`alpha-actor-mapping:${randomUUID()}`}, 1, ${`actor:${randomUUID()}`}, ${input.organizationId}, ${subjectDigest}, 'active', ${input.assignedAt}, ${input.idempotencyKey}) RETURNING mapping_id, mapping_revision, actor_ref, organization_id, subject_lookup_digest, status, assigned_at, revoked_at, predecessor_mapping_id`;
+      return mapAlphaActorMappingRow(rows[0]);
+    });
+  }
+
+  async resolvePersistenceSafeActor(input: { consumerId: string; organizationId: string; resolvedAt: string }) {
+    validateIdentity(input.consumerId, "consumerId"); validateIdentity(input.organizationId, "organizationId");
+    if (!Number.isFinite(Date.parse(input.resolvedAt))) throw new AlphaStorageError("integrity-failure", "Invalid actor resolution time");
+    const subjectDigest = this.subjectLookupDigest(input.consumerId);
+    try {
+      const rows = await this.sql<AlphaActorMappingDatabaseRow[]>`SELECT mapping_id, mapping_revision, actor_ref, organization_id, subject_lookup_digest, status, assigned_at, revoked_at, predecessor_mapping_id FROM alpha_actor_mappings WHERE organization_id = ${input.organizationId} AND subject_lookup_digest = ${subjectDigest} AND status = 'active' AND assigned_at <= ${input.resolvedAt}`;
+      if (rows.length > 1) throw new AlphaStorageError("integrity-failure", "Ambiguous actor mapping");
+      return rows[0] ? mapAlphaActorMappingRow(rows[0]) : undefined;
+    } catch (error) { if (error instanceof AlphaStorageError) throw error; throw new AlphaStorageError("unavailable", "Alpha actor mapping store unavailable", true); }
+  }
+
+  private async attachActorReferences(records: readonly AlphaOrganizationAccessRecord[], consumerId: string, resolvedAt: string) {
+    if (!this.actorSubjectLookupKey) return records;
+    return Promise.all(records.map(async (record) => {
+      const actorReference = await this.resolvePersistenceSafeActor({ consumerId, organizationId: record.organizationId, resolvedAt });
+      return actorReference ? { ...record, actorReference } : record;
+    }));
+  }
 
   async findAccessRecordsForConsumer(input: {
     consumerId: string;
@@ -79,7 +141,7 @@ export class PostgresAlphaAccessRecordRepository
           AND experience = ${input.experience}
         ORDER BY organization_id, granted_at, access_record_id
       `;
-      return rows.map(mapAlphaAccessRow);
+      return this.attachActorReferences(rows.map(mapAlphaAccessRow), input.consumerId, input.resolvedAt);
     } catch (error) {
       if (error instanceof AlphaStorageError) throw error;
       throw new AlphaStorageError(
@@ -129,7 +191,7 @@ export class PostgresAlphaAccessRecordRepository
           AND experience = ${input.experience}
         ORDER BY granted_at, access_record_id
       `;
-      return rows.map(mapAlphaAccessRow);
+      return this.attachActorReferences(rows.map(mapAlphaAccessRow), input.consumerId, input.resolvedAt);
     } catch (error) {
       if (error instanceof AlphaStorageError) throw error;
       throw new AlphaStorageError("unavailable", "Alpha access store unavailable", true);

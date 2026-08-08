@@ -32,6 +32,7 @@ const expectedRelations = [
   "alpha_access_records",
   "alpha_access_lifecycle_events",
   "alpha_disclosure_audit_events",
+  "alpha_actor_mappings",
 ] as const;
 const expectedIndexes = [
   "alpha_access_one_active_uq",
@@ -43,6 +44,10 @@ const expectedIndexes = [
   "alpha_audit_organization_time_idx",
   "alpha_audit_consumer_time_idx",
   "alpha_audit_policy_review_idx",
+  "alpha_actor_mappings_actor_ref_key",
+  "alpha_actor_mappings_assignment_idempotency_key_key",
+  "alpha_actor_mapping_active_subject_uq",
+  "alpha_actor_mapping_subject_history_idx",
 ] as const;
 const expectedFunctions = [
   "alpha_reject_append_only_mutation",
@@ -70,7 +75,27 @@ const expectedConstraints = [
   "alpha_access_lifecycle_events_access_record_id_fkey",
   "alpha_access_records_supersedes_access_record_id_fkey",
   "alpha_disclosure_audit_events_access_record_id_fkey",
+  "alpha_actor_mappings_mapping_revision_check",
+  "alpha_actor_mappings_actor_ref_key",
+  "alpha_actor_mappings_status_check",
+  "alpha_actor_mappings_predecessor_mapping_id_fkey",
+  "alpha_actor_mappings_assignment_idempotency_key_key",
+  "alpha_actor_mapping_identity_check",
+  "alpha_actor_mapping_lifecycle_check",
 ] as const;
+const expectedActorColumns = [
+  ["mapping_id", "text", "NO"], ["mapping_revision", "integer", "NO"],
+  ["actor_ref", "text", "NO"], ["organization_id", "text", "NO"],
+  ["subject_lookup_digest", "text", "NO"], ["status", "text", "NO"],
+  ["assigned_at", "timestamp with time zone", "NO"], ["revoked_at", "timestamp with time zone", "YES"],
+  ["predecessor_mapping_id", "text", "YES"], ["assignment_idempotency_key", "text", "NO"],
+] as const;
+const actorSchemaObjects = new Set([
+  "relation:alpha_actor_mappings",
+  ...expectedIndexes.filter((name) => name.startsWith("alpha_actor")).map((name) => `index:${name}`),
+  ...expectedConstraints.filter((name) => name.startsWith("alpha_actor")).map((name) => `constraint:${name}`),
+  ...expectedActorColumns.map(([name, type, nullable]) => `column:alpha_actor_mappings:${name}:${type}:${nullable}`),
+]);
 
 export const canonicalGovernanceMigrationsFolder = path.join(
   process.cwd(),
@@ -109,6 +134,11 @@ async function schemaEvidence(sql: Sql): Promise<{
     WHERE c.conname IN ${sql(expectedConstraints)}
   `;
   const found = new Set(rows.map(({ kind, name }) => `${kind}:${name}`));
+  const columns = await sql<{ column_name: string; data_type: string; is_nullable: string }[]>`
+    SELECT column_name, data_type, is_nullable FROM information_schema.columns
+    WHERE table_schema = 'public' AND table_name = 'alpha_actor_mappings'
+  `;
+  for (const column of columns) found.add(`column:alpha_actor_mappings:${column.column_name}:${column.data_type}:${column.is_nullable}`);
   const expected = [
     ...expectedRelations.map((name) => `relation:${name}`),
     ...expectedIndexes.map((name) => `index:${name}`),
@@ -116,6 +146,7 @@ async function schemaEvidence(sql: Sql): Promise<{
     ...expectedTriggers.map((name) => `trigger:${name}`),
     ...expectedRoles.map((name) => `role:${name}`),
     ...expectedConstraints.map((name) => `constraint:${name}`),
+    ...expectedActorColumns.map(([name, type, nullable]) => `column:alpha_actor_mappings:${name}:${type}:${nullable}`),
   ];
   const missing = expected.filter((item) => !found.has(item));
 
@@ -130,6 +161,10 @@ async function schemaEvidence(sql: Sql): Promise<{
       administration_lifecycle_select: boolean;
       administration_lifecycle_insert: boolean;
       administration_audit_select: boolean;
+      application_actor_select: boolean;
+      administration_actor_select: boolean;
+      administration_actor_insert: boolean;
+      administration_actor_update: boolean;
     }[]>`
       SELECT
         has_table_privilege('discovery_alpha_application', 'public.alpha_access_records', 'SELECT') AS application_access_select,
@@ -140,7 +175,11 @@ async function schemaEvidence(sql: Sql): Promise<{
         has_table_privilege('discovery_alpha_administration', 'public.alpha_access_records', 'UPDATE') AS administration_access_update,
         has_table_privilege('discovery_alpha_administration', 'public.alpha_access_lifecycle_events', 'SELECT') AS administration_lifecycle_select,
         has_table_privilege('discovery_alpha_administration', 'public.alpha_access_lifecycle_events', 'INSERT') AS administration_lifecycle_insert,
-        has_table_privilege('discovery_alpha_administration', 'public.alpha_disclosure_audit_events', 'SELECT') AS administration_audit_select
+        has_table_privilege('discovery_alpha_administration', 'public.alpha_disclosure_audit_events', 'SELECT') AS administration_audit_select,
+        has_table_privilege('discovery_alpha_application', 'public.alpha_actor_mappings', 'SELECT') AS application_actor_select,
+        has_table_privilege('discovery_alpha_administration', 'public.alpha_actor_mappings', 'SELECT') AS administration_actor_select,
+        has_table_privilege('discovery_alpha_administration', 'public.alpha_actor_mappings', 'INSERT') AS administration_actor_insert,
+        has_table_privilege('discovery_alpha_administration', 'public.alpha_actor_mappings', 'UPDATE') AS administration_actor_update
     `;
     for (const [name, value] of Object.entries(grants)) {
       if (!value) missing.push(`grant:${name}`);
@@ -203,6 +242,22 @@ export async function inspectGovernanceMigrationState(
         reason: "Database migration history does not match committed migration identity or digest.",
       };
     }
+    if (applied.length < expected.length) {
+      const predecessorIsValid = applied.length === expected.length - 1 &&
+        schema.missing.length === actorSchemaObjects.size &&
+        schema.missing.every((item) => actorSchemaObjects.has(item));
+      return {
+        status: predecessorIsValid ? "PENDING" : "PARTIAL",
+        expectedMigrations: expected.length,
+        appliedMigrations: applied.length,
+        journalPresent: true,
+        schemaComplete: false,
+        missingSchemaObjects: schema.missing,
+        reason: predecessorIsValid
+          ? "Valid predecessor schema; persistence-safe actor migration remains pending."
+          : "Migration journal and predecessor schema are inconsistent.",
+      };
+    }
     if (!schema.complete && (applied.length > 0 || schema.anyPresent)) {
       return {
         status: "PARTIAL",
@@ -212,17 +267,6 @@ export async function inspectGovernanceMigrationState(
         schemaComplete: false,
         missingSchemaObjects: schema.missing,
         reason: "Journal and expected governance schema are inconsistent.",
-      };
-    }
-    if (applied.length < expected.length) {
-      return {
-        status: "PENDING",
-        expectedMigrations: expected.length,
-        appliedMigrations: applied.length,
-        journalPresent: true,
-        schemaComplete: schema.complete,
-        missingSchemaObjects: schema.missing,
-        reason: "Committed migrations remain pending.",
       };
     }
     return {

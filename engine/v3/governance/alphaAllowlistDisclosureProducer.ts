@@ -9,6 +9,7 @@ import {
   type OrganizationalUnderstandingDisclosureDecision,
   type OrganizationalUnderstandingDisclosureResult,
 } from "../understanding/discloseCanonicalOrganizationalUnderstanding";
+import type { PersistenceSafeActorReferenceV1 } from "./persistenceSafeActorReference";
 
 export const ALPHA_ALLOWLIST_POLICY_ID =
   "alpha-explicit-allowlist-disclosure";
@@ -39,6 +40,7 @@ export type AlphaOrganizationAccessRecord = {
   validUntil?: string;
   revokedAt?: string;
   supersedesAccessRecordId?: string;
+  actorReference?: PersistenceSafeActorReferenceV1;
 };
 
 export interface AlphaAccessRecordReader {

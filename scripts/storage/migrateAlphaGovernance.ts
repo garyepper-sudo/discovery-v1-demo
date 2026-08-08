@@ -39,8 +39,9 @@ try {
     ) {
       throw new Error("Reset requires an explicit local-only safety flag");
     }
-    await sql`DROP TABLE IF EXISTS alpha_disclosure_audit_events,
-      alpha_access_lifecycle_events, alpha_access_records CASCADE`;
+    await sql`DROP TABLE IF EXISTS alpha_actor_mappings,
+      alpha_disclosure_audit_events, alpha_access_lifecycle_events,
+      alpha_access_records CASCADE`;
     await sql`DROP FUNCTION IF EXISTS alpha_reject_append_only_mutation() CASCADE`;
     await sql`DROP FUNCTION IF EXISTS alpha_enforce_access_transition() CASCADE`;
     await sql`DROP SCHEMA IF EXISTS drizzle CASCADE`;

@@ -1,6 +1,7 @@
 import {
   check,
   index,
+  integer,
   jsonb,
   pgTable,
   text,
@@ -68,6 +69,33 @@ export const alphaAccessRecords = pgTable(
       table.policyId,
       table.policyVersion,
     ),
+  ],
+);
+
+export const alphaActorMappings = pgTable(
+  "alpha_actor_mappings",
+  {
+    mappingId: text("mapping_id").primaryKey(),
+    mappingRevision: integer("mapping_revision").notNull(),
+    actorRef: text("actor_ref").notNull(),
+    organizationId: text("organization_id").notNull(),
+    subjectLookupDigest: text("subject_lookup_digest").notNull(),
+    status: text("status").notNull(),
+    assignedAt: timestamp("assigned_at", { withTimezone: true, mode: "string" }).notNull(),
+    revokedAt: timestamp("revoked_at", { withTimezone: true, mode: "string" }),
+    predecessorMappingId: text("predecessor_mapping_id"),
+    assignmentIdempotencyKey: text("assignment_idempotency_key").notNull(),
+  },
+  (table) => [
+    check("alpha_actor_mapping_status_check", sql`${table.status} in ('active', 'revoked')`),
+    check("alpha_actor_mapping_revision_check", sql`${table.mappingRevision} >= 1`),
+    check("alpha_actor_mapping_identity_check", sql`${table.mappingId} <> '' and ${table.mappingId} <> '*' and ${table.mappingId} = btrim(${table.mappingId}) and ${table.actorRef} ~ '^actor:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$' and ${table.organizationId} <> '' and ${table.organizationId} <> '*' and ${table.organizationId} = btrim(${table.organizationId})`),
+    check("alpha_actor_mapping_lifecycle_check", sql`(${table.status} = 'active' and ${table.revokedAt} is null) or (${table.status} = 'revoked' and ${table.revokedAt} is not null and ${table.revokedAt} >= ${table.assignedAt})`),
+    uniqueIndex("alpha_actor_mapping_actor_ref_uq").on(table.actorRef),
+    uniqueIndex("alpha_actor_mapping_idempotency_uq").on(table.assignmentIdempotencyKey),
+    check("alpha_actor_mapping_subject_digest_check", sql`${table.subjectLookupDigest} ~ '^[0-9a-f]{64}$'`),
+    uniqueIndex("alpha_actor_mapping_active_subject_uq").on(table.organizationId, table.subjectLookupDigest).where(sql`${table.status} = 'active'`),
+    index("alpha_actor_mapping_subject_history_idx").on(table.organizationId, table.subjectLookupDigest, table.mappingRevision),
   ],
 );
 

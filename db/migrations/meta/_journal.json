@@ -8,6 +8,13 @@
       "when": 1785067200000,
       "tag": "0000_alpha_governance_foundation",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1786276800000,
+      "tag": "0001_alpha_persistence_safe_actor_reference",
+      "breakpoints": true
     }
   ]
 }

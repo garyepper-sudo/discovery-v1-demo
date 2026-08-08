@@ -1,0 +1,63 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import postgres from "postgres";
+import { PostgresAlphaAccessRecordRepository } from "../../db/governance/postgresRepositories";
+import { validatePersistenceSafeActorReference } from "../../engine/v3/governance/persistenceSafeActorReference";
+
+async function main(): Promise<void> {
+ const url = process.env.DISCOVERY_ACTOR_TEST_DATABASE_URL;
+ const key = process.env.DISCOVERY_ACTOR_SUBJECT_LOOKUP_KEY;
+ if (!url || !key || key.length < 32) throw new Error("Isolated actor-test database and lookup key are required.");
+ const sql = postgres(url, { max: 4 });
+ try {
+  const [{ current_database: database }] = await sql<{ current_database: string }[]>`select current_database()`;
+  assert.match(database, /^discovery_actor_test_/);
+  await sql.unsafe(await readFile(new URL("../../db/migrations/0000_alpha_governance_foundation.sql", import.meta.url), "utf8"));
+  await sql.unsafe(await readFile(new URL("../../db/migrations/0001_alpha_persistence_safe_actor_reference.sql", import.meta.url), "utf8"));
+  const repository = new PostgresAlphaAccessRecordRepository(sql, key);
+  const consumerId = `user_validator_${Date.now()}`;
+  const organizationId = "sandbox-actor-owner-validator";
+  const assignedAt = "2026-08-08T12:00:00.000Z";
+  const grant = (subject: string, organization: string, suffix: string) => repository.grantAccess({ accessRecordId: `actor-owner-access-${suffix}`, consumerId: subject, organizationId: organization, experience: "organization", actor: "operator:test", reasonCode: "test", idempotencyKey: `actor-owner-access-grant-${suffix}`, grantedAt: assignedAt });
+  const access = await grant(consumerId, organizationId, "primary");
+  const first = await repository.assignPersistenceSafeActor({ consumerId, organizationId, assignedAt, idempotencyKey: "actor-owner-assignment-1" });
+  validatePersistenceSafeActorReference(first);
+  assert.match(first.actorRef, /^actor:[0-9a-f-]{36}$/);
+  assert.equal(first.actorRef.includes(consumerId), false);
+  assert.notEqual(first.actorRef, access.accessRecordId);
+  const replay = await repository.assignPersistenceSafeActor({ consumerId, organizationId, assignedAt, idempotencyKey: "actor-owner-assignment-1" });
+  assert.deepEqual(replay, first);
+  await assert.rejects(repository.assignPersistenceSafeActor({ consumerId, organizationId, assignedAt, idempotencyKey: "actor-owner-assignment-2" }), /conflict/i);
+  const resolved = await repository.resolvePersistenceSafeActor({ consumerId, organizationId, resolvedAt: assignedAt });
+  assert.deepEqual(resolved, first);
+  assert.equal(await repository.resolvePersistenceSafeActor({ consumerId, organizationId: "wrong-org", resolvedAt: assignedAt }), undefined);
+  await grant(`${consumerId}_other`, organizationId, "other-subject");
+  await grant(consumerId, `${organizationId}-other`, "other-organization");
+  const secondSubject = await repository.assignPersistenceSafeActor({ consumerId: `${consumerId}_other`, organizationId, assignedAt, idempotencyKey: "actor-owner-assignment-other-subject" });
+  const secondOrganization = await repository.assignPersistenceSafeActor({ consumerId, organizationId: `${organizationId}-other`, assignedAt, idempotencyKey: "actor-owner-assignment-other-organization" });
+  assert.notEqual(secondSubject.actorRef, first.actorRef);
+  assert.notEqual(secondOrganization.actorRef, first.actorRef);
+  await grant(`${consumerId}_conflict`, organizationId, "conflict-subject");
+  await assert.rejects(repository.assignPersistenceSafeActor({ consumerId: `${consumerId}_conflict`, organizationId, assignedAt, idempotencyKey: "actor-owner-assignment-1" }), /conflict/i);
+  await assert.rejects(repository.assignPersistenceSafeActor({ consumerId, organizationId: `${organizationId}-other`, assignedAt, idempotencyKey: "actor-owner-assignment-1" }), /conflict/i);
+  await assert.rejects(repository.assignPersistenceSafeActor({ consumerId, organizationId, assignedAt: "2026-08-08T12:00:01.000Z", idempotencyKey: "actor-owner-assignment-1" }), /conflict/i);
+  await grant(`${consumerId}_concurrent`, organizationId, "concurrent");
+  const concurrent = await Promise.all(Array.from({ length: 8 }, () => repository.assignPersistenceSafeActor({ consumerId: `${consumerId}_concurrent`, organizationId, assignedAt, idempotencyKey: "concurrent-one-request" })));
+  assert.equal(new Set(concurrent.map((value) => value.actorRef)).size, 1);
+  assert.throws(() => validatePersistenceSafeActorReference({ ...first, actorRef: consumerId }), /invalid/i);
+  assert.equal(access.actorReference, undefined);
+  const ownerRead = await repository.findAccessRecords({ consumerId, organizationId, experience: "organization", resolvedAt: assignedAt });
+  assert.equal(ownerRead[0].actorReference?.actorRef, first.actorRef);
+  await repository.revokeAccess({ accessRecordId: access.accessRecordId, actor: "operator:test", reasonCode: "test", idempotencyKey: "actor-owner-access-revoke-1", revokedAt: "2026-08-08T12:01:00.000Z" });
+  const revokedRead = await repository.findAccessRecords({ consumerId, organizationId, experience: "organization", resolvedAt: "2026-08-08T12:01:00.000Z" });
+  assert.equal(revokedRead[0].status, "revoked");
+  assert.equal(revokedRead[0].actorReference?.actorRef, first.actorRef);
+  await repository.restoreAccess({ previousAccessRecordId: access.accessRecordId, nextAccessRecordId: "actor-owner-access-restored", actor: "operator:test", reasonCode: "test", idempotencyKey: "actor-owner-access-restore-1", restoredAt: "2026-08-08T12:02:00.000Z" });
+  const restoredRead = await repository.findAccessRecords({ consumerId, organizationId, experience: "organization", resolvedAt: "2026-08-08T12:02:00.000Z" });
+  assert.equal(restoredRead.find((record) => record.status === "active")?.actorReference?.actorRef, first.actorRef);
+  const raw = await sql<{ found: boolean }[]>`select exists(select 1 from alpha_actor_mappings where row_to_json(alpha_actor_mappings)::text like ${`%${consumerId}%`}) as found`;
+  assert.equal(raw[0].found, false);
+  console.log("Persistence-safe actor owner validation: PASS");
+ } finally { await sql.end(); }
+}
+main().catch((error) => { console.error(error instanceof Error ? error.message : "Actor validation failed"); process.exitCode = 1; });

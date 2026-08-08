@@ -6,6 +6,19 @@ import {
   type AlphaOrganizationAccessRecord,
 } from "../../engine/v3/governance/alphaAllowlistDisclosureProducer";
 import { AlphaStorageError } from "./types";
+import { persistenceSafeActorReference } from "../../engine/v3/governance/persistenceSafeActorReference";
+
+export type AlphaActorMappingDatabaseRow = {
+  mapping_id: string;
+  mapping_revision: number;
+  actor_ref: string;
+  organization_id: string;
+  subject_lookup_digest: string;
+  status: string;
+  assigned_at: Date | string;
+  revoked_at: Date | string | null;
+  predecessor_mapping_id: string | null;
+};
 
 export type AlphaAccessDatabaseRow = {
   access_record_id: string;
@@ -34,6 +47,22 @@ function timestamp(value: Date | string): string {
 
 function identifier(value: string): boolean {
   return Boolean(value && value !== "*" && value.trim() === value && !value.includes("\0"));
+}
+
+export function mapAlphaActorMappingRow(row: AlphaActorMappingDatabaseRow) {
+  if (!/^[0-9a-f]{64}$/.test(row.subject_lookup_digest) || !["active", "revoked"].includes(row.status)) {
+    throw new AlphaStorageError("integrity-failure", "Invalid Alpha actor mapping row");
+  }
+  return persistenceSafeActorReference({
+    mappingId: row.mapping_id,
+    mappingRevision: row.mapping_revision,
+    actorRef: row.actor_ref,
+    organizationId: row.organization_id,
+    status: row.status as "active" | "revoked",
+    assignedAt: timestamp(row.assigned_at),
+    ...(row.revoked_at ? { revokedAt: timestamp(row.revoked_at) } : {}),
+    ...(row.predecessor_mapping_id ? { predecessorMappingId: row.predecessor_mapping_id } : {}),
+  });
 }
 
 export function mapAlphaAccessRow(

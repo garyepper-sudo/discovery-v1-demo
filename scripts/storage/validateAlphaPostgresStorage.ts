@@ -18,6 +18,8 @@ import {
   PostgresAlphaDisclosureAuditRepository,
 } from "../../db/governance/postgresRepositories";
 import { AlphaStorageError } from "../../db/governance/types";
+import { inspectGovernanceMigrationState } from "./governanceMigrationContract";
+import type { Sql } from "postgres";
 
 async function main(): Promise<void> {
 const url = process.env.DISCOVERY_TEST_DATABASE_URL;
@@ -63,7 +65,7 @@ function sha256(value: unknown): string {
     .digest("hex");
 }
 
-await sql`TRUNCATE alpha_disclosure_audit_events,
+await sql`TRUNCATE alpha_actor_mappings, alpha_disclosure_audit_events,
   alpha_access_lifecycle_events, alpha_access_records CASCADE`;
 
 const version = await sql<{ version: string }[]>`
@@ -76,7 +78,43 @@ const relations = await sql<{ name: string }[]>`
   WHERE schemaname = 'public' AND tablename LIKE 'alpha_%'
   ORDER BY tablename
 `;
-check("02", "all three governance tables exist", relations.length === 3);
+const requiredRelations = ["alpha_access_records", "alpha_access_lifecycle_events", "alpha_disclosure_audit_events", "alpha_actor_mappings"];
+check("02", "all required named governance tables exist", requiredRelations.every((name) => relations.some((row) => row.name === name)));
+const actorColumns = await sql<{ column_name: string; data_type: string; is_nullable: string }[]>`
+  SELECT column_name, data_type, is_nullable FROM information_schema.columns
+  WHERE table_schema = 'public' AND table_name = 'alpha_actor_mappings'
+`;
+const actorColumn = (name: string) => actorColumns.find((column) => column.column_name === name);
+check("02a", "actor mapping stores a required non-null opaque text actorRef", actorColumn("actor_ref")?.data_type === "text" && actorColumn("actor_ref")?.is_nullable === "NO");
+check("02b", "actor mapping stores private lookup digest without raw subject column", actorColumn("subject_lookup_digest")?.data_type === "text" && !actorColumn("consumer_id"));
+check("02c", "actor mapping stores exact organization and revision", actorColumn("organization_id")?.is_nullable === "NO" && actorColumn("mapping_revision")?.data_type === "integer");
+const actorConstraints = await sql<{ name: string }[]>`
+  SELECT conname AS name FROM pg_constraint
+  WHERE conrelid = 'alpha_actor_mappings'::regclass
+`;
+const actorIndexes = await sql<{ name: string }[]>`
+  SELECT indexname AS name FROM pg_indexes
+  WHERE schemaname = 'public' AND tablename = 'alpha_actor_mappings'
+`;
+check("02d", "actorRef uniqueness is database-enforced", actorConstraints.some((row) => row.name === "alpha_actor_mappings_actor_ref_key"));
+check("02e", "active organization and subject lookup uniqueness is database-enforced", actorIndexes.some((row) => row.name === "alpha_actor_mapping_active_subject_uq"));
+check("02f", "assignment idempotency uniqueness is database-enforced", actorConstraints.some((row) => row.name === "alpha_actor_mappings_assignment_idempotency_key_key"));
+check("02g", "migration performs no historical actor backfill", Number((await sql<{ count: number }[]>`SELECT count(*)::int AS count FROM alpha_actor_mappings`)[0].count) === 0);
+
+async function migrationStateWithMutation(mutation: (transaction: Sql) => Promise<void>) {
+  return sql.begin(async (transaction) => {
+    await mutation(transaction as unknown as Sql);
+    const state = await inspectGovernanceMigrationState(transaction as unknown as Sql);
+    throw Object.assign(new Error("rollback schema control"), { state });
+  }).catch((error: Error & { state?: Awaited<ReturnType<typeof inspectGovernanceMigrationState>> }) => error.state);
+}
+check("02h", "missing actor table is classified fail-closed", (await migrationStateWithMutation(async (tx) => { await tx`DROP TABLE alpha_actor_mappings CASCADE`; }))?.status === "PARTIAL");
+check("02i", "missing actorRef uniqueness is classified fail-closed", (await migrationStateWithMutation(async (tx) => { await tx`ALTER TABLE alpha_actor_mappings DROP CONSTRAINT alpha_actor_mappings_actor_ref_key`; }))?.status === "PARTIAL");
+check("02j", "missing lookup uniqueness is classified fail-closed", (await migrationStateWithMutation(async (tx) => { await tx`DROP INDEX alpha_actor_mapping_active_subject_uq`; }))?.status === "PARTIAL");
+check("02k", "nullable actorRef is classified fail-closed", (await migrationStateWithMutation(async (tx) => { await tx`ALTER TABLE alpha_actor_mappings ALTER COLUMN actor_ref DROP NOT NULL`; }))?.status === "PARTIAL");
+check("02l", "wrong actorRef type is classified fail-closed", (await migrationStateWithMutation(async (tx) => { await tx`ALTER TABLE alpha_actor_mappings DROP CONSTRAINT alpha_actor_mappings_actor_ref_key`; await tx`ALTER TABLE alpha_actor_mappings DROP CONSTRAINT alpha_actor_mapping_identity_check`; await tx`ALTER TABLE alpha_actor_mappings ALTER COLUMN actor_ref TYPE integer USING 1`; }))?.status === "PARTIAL");
+check("02m", "missing actor migration journal is classified fail-closed", (await migrationStateWithMutation(async (tx) => { await tx`DELETE FROM drizzle.__drizzle_migrations WHERE id = (SELECT max(id) FROM drizzle.__drizzle_migrations)`; }))?.status !== "CURRENT");
+check("02n", "valid three-table predecessor is classified migration-pending", (await migrationStateWithMutation(async (tx) => { await tx`DELETE FROM drizzle.__drizzle_migrations WHERE id = (SELECT max(id) FROM drizzle.__drizzle_migrations)`; await tx`DROP TABLE alpha_actor_mappings CASCADE`; }))?.status === "PENDING");
 
 const triggers = await sql<{ count: number }[]>`
   SELECT count(*)::int AS count FROM pg_trigger

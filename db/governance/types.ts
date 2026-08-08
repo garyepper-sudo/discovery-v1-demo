@@ -2,6 +2,7 @@ import type {
   AlphaDisclosureDecisionAuditEvent,
   AlphaOrganizationAccessRecord,
 } from "../../engine/v3/governance/alphaAllowlistDisclosureProducer";
+import type { PersistenceSafeActorReferenceV1 } from "../../engine/v3/governance/persistenceSafeActorReference";
 
 export type AlphaStorageErrorCode =
   | "unavailable"
@@ -31,6 +32,18 @@ export type GrantAlphaAccessInput = {
   grantedAt: string;
   expiresAt?: string;
 };
+
+export type AssignPersistenceSafeActorInput = {
+  consumerId: string;
+  organizationId: string;
+  idempotencyKey: string;
+  assignedAt: string;
+};
+
+export interface PersistenceSafeActorReferenceRepository {
+  assignPersistenceSafeActor(input: AssignPersistenceSafeActorInput): Promise<PersistenceSafeActorReferenceV1>;
+  resolvePersistenceSafeActor(input: { consumerId: string; organizationId: string; resolvedAt: string }): Promise<PersistenceSafeActorReferenceV1 | undefined>;
+}
 
 export type RevokeAlphaAccessInput = {
   accessRecordId: string;
