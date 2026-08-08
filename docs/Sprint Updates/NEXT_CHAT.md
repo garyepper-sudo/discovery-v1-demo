@@ -156,6 +156,14 @@ complete differentiated-governance chain.
 
 ## Canonical current state
 
+- Persistence-safe Alpha actor identity is canonically implemented and
+  validated.
+  Authentication subject, Alpha authority identity, private lookup material,
+  and opaque organization-bound actor reference are distinct. Ordered
+  migration, replay, reset, concurrency, idempotency, revocation, and
+  fresh-process validation pass without Runtime, Product, frontend, connector,
+  Drive, Production, or deployment changes.
+
 - GAP-MR-001 through GAP-MR-006 have production-owner traceability.
 - One canonical Organizational Understanding model serves team lead, manager,
   director, functional executive, and organization-wide executive.

@@ -1023,6 +1023,15 @@ Executive Workspace
 
 ## Sprint Handoff Guidance
 
+## Persistence-safe Alpha actor-reference closure
+
+Alpha persistence now assigns one opaque organization-bound actor reference
+only after exact current Alpha authority is proven. Authentication subject,
+access-record identity, private keyed lookup material, and actor reference stay
+separate. The two-migration ordered journal, catalog, reset, replay,
+concurrency, idempotency, revocation, and fresh-process proofs are canonical.
+No Runtime, cognition, Product, frontend, or route boundary changed.
+
 Treat the following files as canonical architectural sources:
 
 - `docs/Architecture/COGNITIVE_CAPABILITY_REGISTRY.json`
