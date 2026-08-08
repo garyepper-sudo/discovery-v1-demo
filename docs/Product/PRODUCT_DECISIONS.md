@@ -1023,3 +1023,29 @@ Changing one requires the process in
   cognition owner, identity owner, authorization owner, or frontend contract is
   introduced.
 - **Status:** Canonical bounded implementation, independently validated.
+
+## DEC-PROD-047 — New material Explanations require operation-bound canonical lineage
+
+- **Decision:** A governed Product contribution uses a server-derived operation
+  context and an Engine-owned version-1 mapping envelope. Every new material
+  Explanation must persist the deterministic union of direct current-operation
+  Evidence lineage and inherited canonical Theory ancestry.
+- **Owner boundary:** Product commits only the routing/operation result and
+  envelope digest. Engine owners retain Evidence, admission, mapping, Theory
+  ancestry, Explanation lineage, cognition, and Runtime authority.
+- **Failure boundary:** Missing, ambiguous, stale, foreign, cyclic, or
+  incomplete material lineage fails before composition construction and
+  Runtime replacement. Product success is recorded only after canonical
+  Runtime CAS succeeds.
+- **Current governance:** Immutable lineage is resolved through the existing
+  current-eligibility owner before scoped authorized projection and Product
+  cognition. Historical pre-lineage state remains unavailable.
+- **Proof:** Independent cryptographic oracles and thirteen fresh processes
+  cover actual persistence, reload, revocation, candidate failure, CAS loss,
+  and deterministic retry.
+- **Evidence:**
+  [`DISCOVERY_CANONICAL_EXPLANATION_OPERATION_BOUND_MATERIAL_LINEAGE_COMPLETENESS_AND_VALIDATOR_RECONCILIATION_001.md`](./DISCOVERY_CANONICAL_EXPLANATION_OPERATION_BOUND_MATERIAL_LINEAGE_COMPLETENESS_AND_VALIDATOR_RECONCILIATION_001.md).
+- **Architecture:** Additive governed composition; canonical identities,
+  top-level Runtime schema, authorization owners, Product frontend, and routes
+  are unchanged.
+- **Status:** Canonical bounded implementation, independently reviewed.
