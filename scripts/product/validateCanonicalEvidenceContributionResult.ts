@@ -83,6 +83,7 @@ async function main(){
   check(first.contributionResult.admissions.flatMap(item=>item.investigationEvidenceIds).every(id=>!["E1","E2","E3","E4","E5"].includes(id)),"framing local IDs are absent from the governed result");
   check(!JSON.stringify(first.contributionResult).includes(FIRST_GOVERNED_EVIDENCE),"Evidence body absent");
   check(first.contributionResult.evidenceAccepted,"evidenceAccepted compatibility");
+  check(first.contributionResult.canonicalUnderstandingChange.status==="unavailable","historical predecessor change remains unavailable");
   check(repository.writes===1,"one atomic write");
   const eventCount=repository.value.runtime.memory.events.filter(item=>(item as {kind?:string})?.kind==="canonical-evidence-contribution-operation").length;
   check(eventCount===1,"one operation record persisted");
@@ -91,6 +92,7 @@ async function main(){
   check(replay.contributionResult.operationDisposition==="idempotent-replay","replay distinguished");
   check(replay.contributionResult.contributionOperationId===first.contributionResult.contributionOperationId,"operation identity stable");
   check(replay.contributionResult.canonicalResultDigest===first.contributionResult.canonicalResultDigest,"result digest stable");
+  check(JSON.stringify(replay.contributionResult.canonicalUnderstandingChange)===JSON.stringify(first.contributionResult.canonicalUnderstandingChange),"canonical change outcome replay stable");
   check(JSON.stringify(replay.contributionResult.admissions)===JSON.stringify(first.contributionResult.admissions),"ordered batch stable");
   check(repository.writes===writesBeforeReplay,"replay writes zero");
   await assert.rejects(()=>adapter.contributeEvidenceWithCanonicalResult({userId:USER,organizationId:ORG,questionId:QUESTION_ID,contribution:contribution("source-one","key-one","Changed request."),operation:{requestId:"conflict",operatorId:USER}}));checks+=1;
@@ -101,6 +103,7 @@ async function main(){
   check(provenance.contributionResult.admissions[0]!.canonicalEvidenceId===first.contributionResult.admissions[0]!.canonicalEvidenceId,"canonical Evidence reused");
   check(provenance.contributionResult.admissions[0]!.canonicalAdmissionId===first.contributionResult.admissions[0]!.canonicalAdmissionId,"admission identity preserved");
   check(provenance.contributionResult.admissions[0]!.sourceBindings.length===2,"multiple Source Bindings retained");
+  check(provenance.contributionResult.canonicalUnderstandingChange.status==="available","current canonical change result available");
   check(["admitted","partially-admitted","not-admitted"].includes(first.contributionResult.operationDisposition),"partial disposition remains contractually supported but has no truthful source-bound rejection fixture");
   const emptyUnsigned={contractVersion:"1" as const,organizationId:ORG,admissions:[],admissionDisposition:"not-admitted" as const};const emptyBatch:CanonicalEvidenceAdmissionOperationBatchV1={...emptyUnsigned,batchDigest:canonicalScopeLineageDigest(emptyUnsigned)};
   const emptyAdapter=new CanonicalProductWorkspaceAdapter({runtimeRepository:repository,authorize:async()=>true,evidenceContributionPurposeRef:()=>QUESTION_ID,preflightCanonicalEvidence:async()=>({organizationId:ORG,topology,sourceBindings:[],evidenceAttributions:[],operationBatch:emptyBatch,digest:canonicalScopeLineageDigest({organizationId:ORG,topologyId:topology.topologyId,sourceBindingIds:[],evidenceAttributionIds:[]})}),investigate:async({runtime,operationContext})=>{assert(operationContext);return{runtime,evidenceAccepted:false,canonicalEvidenceAdmissionBatch:emptyBatch,canonicalEvidenceLineageEnvelope:createCanonicalEvidenceContributionLineageEnvelope({context:operationContext,admissionBatch:emptyBatch})};}});
@@ -108,6 +111,7 @@ async function main(){
   check(empty.contributionResult.admissions.length===0,"zero admissions supported");
   check(empty.contributionResult.operationDisposition==="not-admitted","zero admission truthful");
   check(!empty.contributionResult.evidenceAccepted,"zero admission compatibility preserved");
+  check(empty.contributionResult.canonicalUnderstandingChange.status==="available"&&empty.contributionResult.canonicalUnderstandingChange.result.disposition==="unchanged","Runtime-only operation leaves Understanding unchanged");
   const deniedReads=repository.reads;const denied=new CanonicalProductWorkspaceAdapter({runtimeRepository:repository,authorize:async()=>false,preflightCanonicalEvidence:preflight(),investigate:investigate()});
   await assert.rejects(()=>denied.contributeEvidenceWithCanonicalResult({userId:"denied",organizationId:ORG,questionId:QUESTION_ID,contribution:contribution("source-denied","key-denied","Denied"),operation:{requestId:"denied",operatorId:"denied"}}));checks+=1;
   check(repository.reads===deniedReads,"authorization precedes Runtime read");

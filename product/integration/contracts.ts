@@ -36,6 +36,7 @@ import type {
   CanonicalEvidenceAdmissionOperationItemV1,
   CanonicalEvidenceScopeAdmission,
 } from "../../engine/v3/governance/canonicalScopeLineage";
+import type { CanonicalOrganizationalUnderstandingChangeOutcomeV1 } from "../../engine/v3/understanding/resolveCanonicalOrganizationalUnderstandingChange";
 
 export type ProductQuestionSummary = {
   id: string;
@@ -207,6 +208,7 @@ export type CanonicalEvidenceContributionOperationRecordV1 = {
   evidenceAccepted: boolean;
   productQuestionRevisionBefore: number;
   productQuestionRevisionAfter: number;
+  canonicalUnderstandingChange?: CanonicalOrganizationalUnderstandingChangeOutcomeV1;
   recordedAt: string;
   recordDigest: string;
 };
@@ -224,6 +226,7 @@ export type CanonicalEvidenceContributionOperationResultV1 = {
   runtimeRevisionAfter: string;
   productQuestionRevisionBefore: number;
   productQuestionRevisionAfter: number;
+  canonicalUnderstandingChange: CanonicalOrganizationalUnderstandingChangeOutcomeV1;
   canonicalResultDigest: string;
 };
 

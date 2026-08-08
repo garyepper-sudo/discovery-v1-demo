@@ -93,6 +93,12 @@ import type {
 } from "./contracts";
 import type { LeadershipConversationProductOperations } from "../workflow/leadershipConversation";
 import type { CanonicalLeadershipConversationOwnerRouter } from "./canonicalLeadershipConversationOwnerRouter";
+import {
+  resolveCanonicalOrganizationalUnderstandingChange,
+  validateCanonicalOrganizationalUnderstandingChangeOutcome,
+  validateCanonicalOrganizationalUnderstandingChangeResult,
+  type CanonicalOrganizationalUnderstandingChangeOutcomeV1,
+} from "../../engine/v3/understanding/resolveCanonicalOrganizationalUnderstandingChange";
 
 export type CanonicalProductWorkspaceAdapterDependencies = {
   runtimeRepository: Pick<OrganizationRuntimeRepository, "read" | "replace">;
@@ -210,6 +216,17 @@ function validateAdmissionBatch(batch: CanonicalEvidenceAdmissionOperationBatchV
 function validateOperationRecord(record: CanonicalEvidenceContributionOperationRecordV1): void {
   const {recordDigest,...unsigned}=record;
   if(!record.lineageEnvelopeDigest||recordDigest!==operationDigest(unsigned))throw new Error("Canonical Evidence contribution replay is invalid.");
+  if(record.canonicalUnderstandingChange){
+    validateCanonicalOrganizationalUnderstandingChangeOutcome(record.canonicalUnderstandingChange);
+  }
+  if(record.canonicalUnderstandingChange?.status==="available"){
+    validateCanonicalOrganizationalUnderstandingChangeResult(record.canonicalUnderstandingChange.result);
+    if(record.canonicalUnderstandingChange.result.organizationId!==record.organizationId||record.canonicalUnderstandingChange.result.questionId!==record.questionId||record.canonicalUnderstandingChange.result.contributionOperationId!==record.contributionOperationId)throw new Error("Canonical Evidence contribution replay is invalid.");
+  }
+}
+
+function historicalChangeOutcome():CanonicalOrganizationalUnderstandingChangeOutcomeV1{
+  return {status:"unavailable",reason:"historical-operation-result-unavailable"};
 }
 
 function validatePreflight(
@@ -489,7 +506,7 @@ export class CanonicalProductWorkspaceAdapter {
       if(replayRecord.organizationId!==input.organizationId||replayRecord.questionId!==input.questionId||replayRecord.requestFingerprint!==identity.requestFingerprint)throw new Error("Canonical Evidence contribution replay conflicts with the request.");
       validateAdmissionBatch(replayRecord.canonicalAdmissionBatch,input.organizationId,stored.runtime);
       const workspace=buildProductQuestionWorkspace({runtime:stored.runtime,question:question.title,questionId:question.id});
-      const contributionResult:CanonicalEvidenceContributionOperationResultV1={contractVersion:"1",organizationId:input.organizationId,questionId:input.questionId,contributionOperationId:replayRecord.contributionOperationId,operationDisposition:"idempotent-replay",cognitionDisposition:"exact-operation-replay",admissions:replayRecord.canonicalAdmissionBatch.admissions,evidenceAccepted:replayRecord.evidenceAccepted,runtimeRevisionBefore:stored.revision,runtimeRevisionAfter:stored.revision,productQuestionRevisionBefore:replayRecord.productQuestionRevisionBefore,productQuestionRevisionAfter:replayRecord.productQuestionRevisionAfter,canonicalResultDigest:replayRecord.recordDigest};
+      const contributionResult:CanonicalEvidenceContributionOperationResultV1={contractVersion:"1",organizationId:input.organizationId,questionId:input.questionId,contributionOperationId:replayRecord.contributionOperationId,operationDisposition:"idempotent-replay",cognitionDisposition:"exact-operation-replay",admissions:replayRecord.canonicalAdmissionBatch.admissions,evidenceAccepted:replayRecord.evidenceAccepted,runtimeRevisionBefore:stored.revision,runtimeRevisionAfter:stored.revision,productQuestionRevisionBefore:replayRecord.productQuestionRevisionBefore,productQuestionRevisionAfter:replayRecord.productQuestionRevisionAfter,canonicalUnderstandingChange:replayRecord.canonicalUnderstandingChange??historicalChangeOutcome(),canonicalResultDigest:replayRecord.recordDigest};
       return requireCanonicalResult?{workspace,runtimeRevision:stored.revision,contributionResult}:{workspace,runtimeRevision:stored.revision};
     }
     if(records.some(record=>record.idempotencyKeyDigest===identity.idempotencyKeyDigest))throw new Error("Canonical Evidence contribution replay conflicts with the request.");
@@ -561,7 +578,8 @@ export class CanonicalProductWorkspaceAdapter {
     const resultingQuestion=buildDurableProductQuestion({runtime,questionId:question.id});
     if(!resultingQuestion)throw new Error("Investigation removed Product Question identity.");
     const cognitionDisposition=replayOnly?"no-new-canonical-input" as const:"executed" as const;
-    const recordUnsigned=batchForRecord&&lineageEnvelope?{kind:"canonical-evidence-contribution-operation" as const,contractVersion:"1" as const,organizationId:input.organizationId,questionId:input.questionId,contributionOperationId:identity.contributionOperationId,idempotencyKeyDigest:identity.idempotencyKeyDigest,requestFingerprint:identity.requestFingerprint,canonicalAdmissionBatch:batchForRecord,lineageEnvelopeDigest:lineageEnvelope.envelopeDigest,cognitionDisposition,evidenceAccepted:investigated.evidenceAccepted,productQuestionRevisionBefore:question.revision,productQuestionRevisionAfter:resultingQuestion.revision,recordedAt:input.contribution.contributedAt}:undefined;
+    const canonicalUnderstandingChange=resolveCanonicalOrganizationalUnderstandingChange({organizationId:input.organizationId,questionId:input.questionId,contributionOperationId:identity.contributionOperationId,beforeCompositions:stored.runtime.memory.organizationalUnderstandingState?.canonicalCompositions,afterCompositions:runtime.memory.organizationalUnderstandingState?.canonicalCompositions});
+    const recordUnsigned=batchForRecord&&lineageEnvelope?{kind:"canonical-evidence-contribution-operation" as const,contractVersion:"1" as const,organizationId:input.organizationId,questionId:input.questionId,contributionOperationId:identity.contributionOperationId,idempotencyKeyDigest:identity.idempotencyKeyDigest,requestFingerprint:identity.requestFingerprint,canonicalAdmissionBatch:batchForRecord,lineageEnvelopeDigest:lineageEnvelope.envelopeDigest,cognitionDisposition,evidenceAccepted:investigated.evidenceAccepted,productQuestionRevisionBefore:question.revision,productQuestionRevisionAfter:resultingQuestion.revision,canonicalUnderstandingChange,recordedAt:input.contribution.contributedAt}:undefined;
     record=recordUnsigned?{...recordUnsigned,recordDigest:operationDigest(recordUnsigned)}:undefined;
     if(record)runtime={...runtime,memory:{...runtime.memory,events:[...runtime.memory.events,record]}};
     const persisted = await this.replace({ stored, runtime, operation: input.operation });
@@ -574,8 +592,9 @@ export class CanonicalProductWorkspaceAdapter {
     if(!record||!batch)throw new Error("Canonical Evidence contribution result is unavailable.");
     const persistedRecord=persisted.runtime.memory.events.map(operationRecord).find(value=>value?.contributionOperationId===record.contributionOperationId);
     if(!persistedRecord)throw new Error("Canonical Evidence contribution result was not persisted.");
+    if(!persistedRecord.canonicalUnderstandingChange)throw new Error("Canonical Evidence contribution change result was not persisted.");
     validateOperationRecord(persistedRecord);validateAdmissionBatch(batch,input.organizationId,persisted.runtime,stored.runtime);
-    const contributionResult:CanonicalEvidenceContributionOperationResultV1={contractVersion:"1",organizationId:input.organizationId,questionId:input.questionId,contributionOperationId:identity.contributionOperationId,operationDisposition:batch.admissionDisposition,cognitionDisposition,admissions:batch.admissions,evidenceAccepted:investigated.evidenceAccepted,runtimeRevisionBefore:stored.revision,runtimeRevisionAfter:persisted.revision,productQuestionRevisionBefore:question.revision,productQuestionRevisionAfter:persistedWorkspace.question.revision,canonicalResultDigest:record.recordDigest};
+    const contributionResult:CanonicalEvidenceContributionOperationResultV1={contractVersion:"1",organizationId:input.organizationId,questionId:input.questionId,contributionOperationId:identity.contributionOperationId,operationDisposition:batch.admissionDisposition,cognitionDisposition,admissions:batch.admissions,evidenceAccepted:investigated.evidenceAccepted,runtimeRevisionBefore:stored.revision,runtimeRevisionAfter:persisted.revision,productQuestionRevisionBefore:question.revision,productQuestionRevisionAfter:persistedWorkspace.question.revision,canonicalUnderstandingChange:persistedRecord.canonicalUnderstandingChange,canonicalResultDigest:record.recordDigest};
     return {workspace:persistedWorkspace,runtimeRevision:persisted.revision,contributionResult};
   }
 

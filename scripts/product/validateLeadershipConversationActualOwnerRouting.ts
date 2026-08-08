@@ -19,6 +19,9 @@ async function main(): Promise<void> {
   check(!router.includes("canonicalReceiptRefs:string[]") && !router.includes("classification:string"), "caller cannot supply authoritative receipt arrays or change classification");
   check(router.includes("resolveCurrentSourceBinding") && router.includes("readForEvidenceAdmission"), "Evidence routing resolves Binding and rereads governed content");
   check(router.includes("operationDisposition") && router.includes("admissions:safe"), "typed Evidence receipt uses the complete actual admission batch");
+  check(router.includes("canonicalUnderstandingChange") && router.includes("validateCanonicalOrganizationalUnderstandingChangeResult"), "router verifies and consumes the canonical Understanding owner result");
+  check(router.includes("canonicalOperationResultDigest:result.contributionResult.canonicalResultDigest"), "typed receipt binds the actual canonical operation-record digest");
+  check(!router.includes("meaning(before.workspace)") && !router.includes("modelState:workspace.modelState"), "Product workspace comparison is not canonical change authority");
   check(operations.includes("sourceBindingMutationReceiptDigest") && !operations.includes("sourceBindingId:input.sourceBindingId"), "capture persists server-derived Binding identity and receipt digest");
   check(composition.includes('import "server-only"') && composition.includes("CanonicalLocalSourceBindingService"), "live composition remains server-only and constructs canonical Binding ownership");
   check(composition.includes("ProductDecisionDraftService") && composition.includes("CanonicalLeadershipConversationOwnerRouter"), "live composition constructs actual owner services internally");
@@ -30,6 +33,7 @@ async function main(): Promise<void> {
   check(!replay.includes("stubbedPositiveOwners: true") && replay.includes("stubbedPositiveOwners: false"), "focused synthetic positive-owner acceptance has been removed");
   check(replay.includes("processAHandoffDigest") && replay.includes("processBHandoffDigest") && replay.includes("handoff digest mismatch"), "fresh-process handoffs are cryptographically chained and fail closed");
   check(replay.includes("actual-class-2") && replay.includes("existing-attribution-replayed"), "Class 2 duplicate acceptance derives from the actual admission result");
+  check(replay.includes("beforeCompositionSetDigest") && replay.includes("afterCompositionSetDigest"), "replay proves canonical composition-state equality independently of Product audit");
   check(replay.includes("different-purpose") && replay.includes("assert.rejects"), "same-key different-request control fails closed");
 
   console.log(JSON.stringify({ validation: "leadership-conversation-actual-owner-routing-001", result: "PASS", checks, positiveAcceptance: "unified-fresh-process-replay", focusedRole: "contract-and-adversarial-controls", syntheticPositiveOwners: false, networkCalls: 0, connectorCalls: 0, driveReads: 0, driveWrites: 0, productionAccess: 0, deployments: 0 }));

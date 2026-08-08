@@ -40,6 +40,21 @@ export type LeadershipConversationCanonicalRoutingReceiptV1 =
       runtimeRevisionAfter: string;
       productQuestionRevisionBefore: number;
       productQuestionRevisionAfter: number;
+      canonicalOperationResultDigest: string;
+      canonicalUnderstandingChange:
+        | {
+            status: "available";
+            resultDigest: string;
+            disposition: "changed" | "unchanged";
+            beforeCompositionSetDigest: string;
+            afterCompositionSetDigest: string;
+          }
+        | {
+            status: "unavailable";
+            reason:
+              | "historical-composition-state-unavailable"
+              | "historical-operation-result-unavailable";
+          };
     })
   | (Common & {
       ownerKind: "product-decision-draft";

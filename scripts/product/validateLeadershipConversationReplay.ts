@@ -46,6 +46,7 @@ async function processA(root: string): Promise<WorkerResult> {
   const runtimeRepository = new FilesystemOrganizationRuntimeRepository(locations.runtimeRoot);
   const topology = createCanonicalScopeTopology({ organizationId: fixture.organizationId, topologyVersion: 1, effectiveAt: fixture.at, nodes: [scope], relationships: [] });
   let runtime = createEmptyOrganizationRuntime({ organizationId: fixture.organizationId, name: "Northstar", now: fixture.at });
+  runtime.memory.organizationalUnderstandingState.canonicalCompositions = [];
   runtime.memory.canonicalScopeLineageIndex = createCanonicalScopeLineageIndex({ organizationId: fixture.organizationId, topology });
   runtime = createDurableProductQuestion({ runtime, title: "What is constraining Northstar delivery?", questionId: fixture.questionId, createdAt: fixture.at }).runtime;
   runtime = appendProductQuestionEvent(runtime, { type: "answer_recorded", organizationId: fixture.organizationId, questionId: fixture.questionId, occurredAt: fixture.at, answer: { answerId: "product-answer:northstar-leadership:1", canonicalSource: "canonical-product-answer", revision: 1, reasonForChange: "Initial supported Answer", changeReceiptId: "product-answer-receipt:northstar-leadership:1", timestamp: fixture.at, confidence: { level: "moderate", score: 0.7, meaning: "Supported", principalLimiter: "Additional sequencing evidence is required.", authoritativeSource: "canonical-product-workflow" } } });
@@ -134,12 +135,19 @@ async function processC(root: string, encodedA: string, encodedB: string): Promi
   const material = await route("evidence-candidate", "process-c-route-evidence-material");
   assert.equal(material.ownerKind, "evidence");
   assert.ok(material.admissions.length > 0);
+  assert.equal(material.canonicalUnderstandingChange.status, "available");
+  assert.match(material.canonicalOperationResultDigest, /^[a-f0-9]{64}$/);
   stored = await workflow.read(fixture.organizationId);
   const evidence = proposal("evidence-candidate");
   await composition.review({ ...identity, idempotencyKey: "process-c-review-evidence-duplicate", proposalId: evidence.proposalId, disposition: "approved", effectivePayload: null, reason: "Replay-aware duplicate control." });
   const duplicate = await route("evidence-candidate", "process-c-route-evidence-duplicate");
   assert.equal(duplicate.ownerKind, "evidence");
   assert.ok(duplicate.admissions.every(item => item.disposition === "existing-attribution-replayed"));
+  assert.equal(duplicate.canonicalUnderstandingChange.status, "available");
+  assert.match(duplicate.canonicalOperationResultDigest, /^[a-f0-9]{64}$/);
+  if (duplicate.canonicalUnderstandingChange.status !== "available") throw new Error("canonical change result unavailable");
+  assert.equal(duplicate.canonicalUnderstandingChange.disposition, "unchanged");
+  assert.equal(duplicate.canonicalUnderstandingChange.beforeCompositionSetDigest, duplicate.canonicalUnderstandingChange.afterCompositionSetDigest);
   assert.equal(duplicate.changeFacts.organizationalUnderstanding, "unchanged");
   const decision = await route("decision-draft", "process-c-route-decision");
   assert.equal(decision.ownerKind, "product-decision-draft");
@@ -160,7 +168,7 @@ async function processC(root: string, encodedA: string, encodedB: string): Promi
   await assert.rejects(() => composition.routeApproved({ ...identity, proposalId: proposal("decision-draft").proposalId, purposeRef: "different-purpose", expectedWorkflowRevision: stored.revision, idempotencyKey: "process-c-route-decision" }), /conflict/);
   runtime = await runtimeRepository.read(fixture.organizationId); assert.ok(runtime);
   const manifest = handoff({ processAHandoffDigest: a.handoffDigest, processBHandoffDigest: b.handoffDigest, organizationId: fixture.organizationId, questionId: fixture.questionId, conversationId: fixture.conversationId, materialEvidenceReceiptDigest: material.receiptDigest, duplicateEvidenceReceiptDigest: duplicate.receiptDigest, decisionDraftReceiptDigest: decision.receiptDigest, unknownReceiptDigest: unknown.receiptDigest, futurePreparationLinkId: stored.store.futurePreparationLinks.at(-1)!.futurePreparationLinkId, productWorkflowRepositoryRevision: stored.revision, runtimeRepositoryRevision: runtime.revision, sourceContentRepositoryRevision: await sourceRepository.inspectRevision(fixture.organizationId), routingReceiptCount: stored.store.canonicalRoutingReceipts.length, idempotentReentry: true });
-  return { role: "route-actual-owners-and-prepare-again", handoff: manifest, assertions: ["handoffs-verified", "material-evidence-actual", "duplicate-evidence-class-2", "decision-draft-actual", "unknown-actual", "future-preparation-persisted", "idempotent-reentry"] };
+  return { role: "route-actual-owners-and-prepare-again", handoff: manifest, assertions: ["handoffs-verified", "material-evidence-actual", "canonical-change-owner-result", "duplicate-evidence-class-2", "duplicate-understanding-unchanged", "decision-draft-actual", "unknown-actual", "future-preparation-persisted", "idempotent-reentry"] };
 }
 
 async function worker(role: string, root: string, encodedA?: string, encodedB?: string): Promise<WorkerResult> {
