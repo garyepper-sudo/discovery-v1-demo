@@ -3,12 +3,13 @@
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 
-**Current phase:** Governed material Evidence selection is complete under
-`DEC-PROD-045`. Governed cognition and canonical admission share one sixteen-
-item source-bound collection; five framing records remain non-Evidence. The
-next task is a clean transfer and rerun of the preserved operation-bound
-material-lineage implementation, followed by Explanation-lineage and governed
-Product resolver closure.
+**Current phase:** Canonical Organizational Understanding change classification
+is owned by normalized composition/revision state and is persisted with the
+immutable Evidence operation record after successful Runtime CAS. Exact replay,
+Class 2 unchanged behavior, historical unavailable compatibility, typed
+Leadership transport, and current-eligibility separation are validated. The
+next task is a clean transfer and closure of the preserved twelve-path governed
+Product cognition resolver continuation.
 
 **Architecture posture:** canonical Product backend complete for UI/UX design;
 recommendation and evaluator development frozen by default

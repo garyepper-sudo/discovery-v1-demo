@@ -1,5 +1,21 @@
 # Discovery Architecture Handoff
 
+## Canonical Organizational Understanding change result
+
+Canonical composition state now owns changed/unchanged classification through
+normalized `(compositionId, revisionId)` sets. The result is persisted in the
+existing immutable Evidence operation record, becomes authoritative only after
+successful Runtime CAS, and replays exactly. Complete empty state is distinct
+from historical unavailable state. The Product adapter verifies and transports
+the result; the Leadership router binds it and the canonical operation-record
+digest without comparing Product workspaces or granting disclosure.
+
+The immediate successor is **Discovery Governed Product Cognition Input
+Resolver, Derived Governance Lineage, and Revocation Revalidation 001**. Start
+from new canonical main and transfer the preserved twelve-path dirty resolver
+continuation by exact patch/digest verification, reconciling the two overlapping
+files without merging or rebasing the preserved worktree.
+
 ## Canonical Understanding current eligibility
 
 Immutable cross-operation Theory and Explanation ancestry is now separated

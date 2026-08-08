@@ -2,6 +2,24 @@
 
 ## Exact next task
 
+Continue **DISCOVERY GOVERNED PRODUCT COGNITION INPUT RESOLVER, DERIVED
+GOVERNANCE LINEAGE, AND REVOCATION REVALIDATION 001** from a new clean
+continuation based on canonical main. Preserve the existing twelve-path dirty
+resolver continuation and transfer it by exact patch and digest verification.
+In overlapping adapter and Leadership replay files, retain the canonical
+Organizational Understanding change result, immutable operation-record
+transport, typed router receipt, current eligibility, and authorized projection.
+Do not merge or rebase the dirty continuation.
+
+The canonical change result compares complete normalized
+`(compositionId, revisionId)` sets, distinguishes complete empty state from
+historical unavailable state, becomes authoritative only after Runtime CAS,
+and returns exact stored results on replay. Product workspace and audit changes
+are not canonical Understanding change authority.
+
+Historical sequencing below is retained for context; the resolver continuation
+is now the immediate task.
+
 Continue **DISCOVERY CANONICAL EXPLANATION OPERATION-BOUND MATERIAL LINEAGE
 COMPLETENESS AND VALIDATOR RECONCILIATION 001** from a new clean continuation
 based on canonical main.
