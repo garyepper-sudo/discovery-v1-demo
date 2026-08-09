@@ -84,6 +84,12 @@ Product resolver.
 4. **Product Workflow hardening — COMPLETE FOR THE BOUNDED SLICE:** persistence,
    fresh-process reload, idempotency, audit receipts, reset, replay, tamper
    rejection, and deterministic Process A/B/C acceptance pass.
+   Canonical mutation-to-Product materialization now also preserves the three
+   existing CAS owners: candidate governance and instruction commit with the
+   initial Runtime mutation, an optional Draft owner CAS, and one Product
+   Workflow CAS. Post-CAS retry reloads durable stage receipts without rerunning
+   cognition. Current artifact access and frontend delivery remain separate,
+   fail-closed work.
 5. **Customer validation — NEXT:** Director/VP interviews, prepared-content review,
    time-saved, first/second-preparation, trust, and cognitive-effort measures.
 6. **Organization-wide Production readiness:** secure persistence,

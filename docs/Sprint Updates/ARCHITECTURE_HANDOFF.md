@@ -1023,6 +1023,38 @@ Executive Workspace
 
 ## Sprint Handoff Guidance
 
+## Canonical mutation-to-Product materialization recovery closure
+
+The canonical Leadership Conversation owner boundary now uses an
+owner-preserving three-stage recovery protocol.
+Candidate Product governance resolves before the initial Runtime CAS, and the
+canonical mutation commits with one durable neutral materialization
+instruction. A required Product Decision Draft is then materialized by its
+existing Runtime owner in one CAS, followed by What Changed and Product
+Workflow state in one workflow CAS. The logical `draftMutationDigest` is the
+durable Draft identity; opaque physical repository revisions remain transport
+state.
+
+Post-CAS failure is reported as committed/pending or terminal integrity
+failure. Exact retry reloads the committed instruction and stage receipts and
+does not rerun cognition. Terminal integrity failure cannot transition back to
+a pending state. Historical state receives no guessed backfill, receipts grant
+no access, and backend materialization is not projected to frontend state.
+
+Validation covers deterministic neutral contracts, owner-specific CAS
+atomicity, failure injection, four-process restart recovery, actual-owner
+routing, replay, Draft ownership, non-disclosure, Product governance,
+typecheck, lint, and build. The retained Northstar Runtime remains exact and
+all preserved dirty worktrees remain out of scope.
+
+Immediate successor: **DISCOVERY CANONICAL PRODUCT WORKFLOW ARTIFACT CURRENT
+ACCESS, PER-ARTIFACT GOVERNANCE RECEIPTS, AND ITEM-LEVEL FUTURE PREPARATION
+CLASSIFICATION 001 — FINAL CONTINUATION AFTER MATERIALIZATION-ATOMICITY
+CLOSURE**. Start from newly integrated clean main, preserve the old dirty
+Product Workflow worktree as a source record, reconcile every overlap, and
+transfer only still-valid work. Independently close that prerequisite before
+resuming the governed Product resolver.
+
 ## Persistence-safe Alpha actor-reference closure
 
 Alpha persistence now assigns one opaque organization-bound actor reference

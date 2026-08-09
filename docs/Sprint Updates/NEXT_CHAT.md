@@ -2,6 +2,29 @@
 
 ## Exact next task
 
+Continue **DISCOVERY CANONICAL PRODUCT WORKFLOW ARTIFACT CURRENT ACCESS,
+PER-ARTIFACT GOVERNANCE RECEIPTS, AND ITEM-LEVEL FUTURE PREPARATION
+CLASSIFICATION 001 — FINAL CONTINUATION AFTER MATERIALIZATION-ATOMICITY
+CLOSURE** from newly integrated clean canonical main.
+
+The accepted foundation preserves `DEC-PROD-044` owner routing: candidate
+governance precedes the initial Runtime CAS; a durable neutral instruction commits with the canonical
+mutation; the existing Draft and Product Workflow owners each retain their own
+single CAS; and exact retry reloads committed stage receipts without rerunning
+cognition. Logical Draft identity is distinct from opaque physical repository
+revision. Materialization receipts do not authorize current access, historical
+state is not backfilled, and materialized state remains backend-only.
+
+Preserve the old dirty Product Workflow worktree as the source record,
+reconcile every overlap, and transfer only still-valid work. Preserve the
+neutral materialization contracts, staged recovery, logical Draft mutation,
+canonical Draft ownership, Product Workflow Draft reference, and current-access
+separation. Independently review and close this prerequisite before resuming
+the governed Product cognition resolver. Do not promote a route, introduce a
+new owner, implement Decision promotion, or claim Production readiness.
+
+Historical sequencing below is retained for context.
+
 Continue **DISCOVERY GOVERNED PRODUCT COGNITION INPUT RESOLVER, DERIVED
 GOVERNANCE LINEAGE, AND REVOCATION REVALIDATION 001** from a new clean
 continuation based on canonical main. Preserve the existing twelve-path dirty
