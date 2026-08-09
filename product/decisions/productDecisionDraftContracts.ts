@@ -1,4 +1,5 @@
 import type { ProductExpectedOutcome, ProductMeasure } from "../workflow/contracts";
+import type { CanonicalProductDecisionDraftMaterializationReceiptV1, CanonicalProductDecisionDraftMutationV1 } from "../workflow/leadershipConversation/canonicalProductMaterializationContracts";
 
 export const PRODUCT_DECISION_DRAFT_CONTRACT_VERSION = "1" as const;
 export const PRODUCT_DECISION_DRAFT_EVENT_KIND = "product-decision-draft-revision-recorded" as const;
@@ -57,6 +58,9 @@ export type ProductDecisionDraftRevisionV1 = ProductDecisionDraftContentV1 & {
   requestFingerprint: string;
   contentDigest: string;
   idempotencyKeyDigest: string;
+  canonicalMaterializationInstructionDigest?: string;
+  canonicalDraftEnvelopeDigest?: string;
+  draftMutationDigest?: string;
 };
 
 export type ProductDecisionDraftOperationReceiptV1 = {
@@ -80,6 +84,9 @@ export type ProductDecisionDraftOperationReceiptV1 = {
   idempotencyKeyDigest: string;
   receiptDigest: string;
   resultDigest: string;
+  canonicalMaterializationInstructionDigest?: string;
+  canonicalDraftEnvelopeDigest?: string;
+  draftMutationDigest?: string;
 };
 
 export type ProductDecisionDraftRevisionEventV1 = {
@@ -92,6 +99,18 @@ export type ProductDecisionDraftRevisionEventV1 = {
   revision: ProductDecisionDraftRevisionV1;
   receipt: ProductDecisionDraftOperationReceiptV1;
   occurredAt: string;
+  materializationReceipt?: CanonicalProductDecisionDraftMaterializationReceiptV1;
+  draftMutation?: CanonicalProductDecisionDraftMutationV1;
+};
+
+export type ProductDecisionDraftMaterializationBindingV1 = {
+  contractVersion: "1";
+  canonicalOperationId: string;
+  instructionDigest: string;
+  draftEnvelopeDigest: string;
+  materialReferenceDigest: string;
+  expectedRuntimeRevision: string;
+  lineagePolicyVersion: string;
 };
 
 export type RecordProductDecisionDraftRequestV1 = {
@@ -107,6 +126,7 @@ export type RecordProductDecisionDraftRequestV1 = {
   content: ProductDecisionDraftContentV1;
   recordedAt: string;
   idempotencyKey: string;
+  materializationBinding?: ProductDecisionDraftMaterializationBindingV1;
 };
 
 export type CreateProductDecisionDraftRequestV1 = RecordProductDecisionDraftRequestV1 & {
@@ -132,6 +152,7 @@ export type ProductDecisionDraftRecordResultV1 = {
   revision: ProductDecisionDraftRevisionV1;
   receipt: ProductDecisionDraftOperationReceiptV1;
   idempotent: boolean;
+  materializationReceipt?: CanonicalProductDecisionDraftMaterializationReceiptV1;
 };
 
 export type ProductDecisionDraftRevisionProjectionV1 = {

@@ -8,3 +8,4 @@ export * from "./customerLanguage";
 export * from "./selectProductAnswer";
 export * from "./questionAnswerRelevance";
 export * from "./leadershipConversation";
+export * from "./leadershipConversation/canonicalProductMaterializationContracts";

@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "validate:canonical-mutation-product-materialization-atomicity": "tsx scripts/product/validateCanonicalMutationProductMaterializationAtomicity.ts",
+    "validate:canonical-mutation-product-materialization-failure-atomicity": "tsx scripts/product/validateCanonicalMutationProductMaterializationFailureAtomicity.ts",
+    "validate:canonical-mutation-product-materialization-fresh-process": "tsx scripts/product/validateCanonicalMutationProductMaterializationFreshProcess.ts",
     "validate:persistence-safe-actor-owner": "tsx scripts/product/validatePersistenceSafeActorReferenceOwner.ts",
     "validate:persistence-safe-actor-fresh-process": "tsx scripts/product/validatePersistenceSafeActorReferenceFreshProcess.ts",
     "validate:leadership-conversation-prepare-capture": "tsx scripts/product/validateLeadershipConversationPrepareCapture.ts",

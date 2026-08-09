@@ -99,6 +99,12 @@ import {
   validateCanonicalOrganizationalUnderstandingChangeResult,
   type CanonicalOrganizationalUnderstandingChangeOutcomeV1,
 } from "../../engine/v3/understanding/resolveCanonicalOrganizationalUnderstandingChange";
+import {
+  assertCanonicalProductMaterializationCandidatePreflightIntegrityV1,
+  assertCanonicalProductMaterializationInstructionIntegrityV1,
+  type CanonicalProductMaterializationCandidatePreflightV1,
+  type CanonicalProductMaterializationInstructionV1,
+} from "../workflow/leadershipConversation/canonicalProductMaterializationContracts";
 
 export type CanonicalProductWorkspaceAdapterDependencies = {
   runtimeRepository: Pick<OrganizationRuntimeRepository, "read" | "replace">;
@@ -131,6 +137,26 @@ export type CanonicalProductWorkspaceAdapterDependencies = {
     question: string;
     contribution: CanonicalEvidenceContribution;
   }): Promise<CanonicalEvidenceAdmissionPreflight>;
+  resolveCandidateProductMaterializationInstruction?(input: {
+    userId: string;
+    organizationId: string;
+    questionId: string;
+    runtimeRevisionBefore: string;
+    candidateRuntime: StoredOrganizationRuntime["runtime"];
+    candidateRuntimeStateDigest: string;
+    operationRecord: Omit<CanonicalEvidenceContributionOperationRecordV1, "recordDigest" | "productMaterializationInstruction">;
+    materializationContext: {
+      conversationId: string;
+      proposalId: string;
+      targetProductWorkflowId: string;
+      integrationReceiptId: string;
+      routingLinkId: string;
+      draftMaterialization: CanonicalProductMaterializationInstructionV1["draftMaterialization"];
+    };
+  }): Promise<{
+    preflight: CanonicalProductMaterializationCandidatePreflightV1;
+    instruction: CanonicalProductMaterializationInstructionV1;
+  }>;
   authorizeObjectiveScope?(input: {
     userId: string;
     organizationId: string;
@@ -222,6 +248,10 @@ function validateOperationRecord(record: CanonicalEvidenceContributionOperationR
   if(record.canonicalUnderstandingChange?.status==="available"){
     validateCanonicalOrganizationalUnderstandingChangeResult(record.canonicalUnderstandingChange.result);
     if(record.canonicalUnderstandingChange.result.organizationId!==record.organizationId||record.canonicalUnderstandingChange.result.questionId!==record.questionId||record.canonicalUnderstandingChange.result.contributionOperationId!==record.contributionOperationId)throw new Error("Canonical Evidence contribution replay is invalid.");
+  }
+  if(record.productMaterializationInstruction){
+    assertCanonicalProductMaterializationInstructionIntegrityV1(record.productMaterializationInstruction);
+    if(record.productMaterializationInstruction.organizationId!==record.organizationId||record.productMaterializationInstruction.questionId!==record.questionId||record.productMaterializationInstruction.canonicalOperationId!==record.contributionOperationId||record.productMaterializationInstruction.requestFingerprint!==record.requestFingerprint)throw new Error("Canonical Product materialization instruction replay is invalid.");
   }
 }
 
@@ -485,7 +515,8 @@ export class CanonicalProductWorkspaceAdapter {
     questionId: string;
     contribution: CanonicalEvidenceContribution;
     operation: RuntimeStorageOperationMetadata;
-  }, requireCanonicalResult: boolean): Promise<CanonicalWorkspaceReadResult | CanonicalEvidenceContributionMutationResultV1> {
+    materializationContext?: Parameters<NonNullable<CanonicalProductWorkspaceAdapterDependencies["resolveCandidateProductMaterializationInstruction"]>>[0]["materializationContext"];
+  }, requireCanonicalResult: boolean, requireMaterializationInstruction = false): Promise<CanonicalWorkspaceReadResult | CanonicalEvidenceContributionMutationResultV1> {
     const stored = await this.authorizedRuntime(input);
     const question = buildDurableProductQuestion({ runtime: stored.runtime, questionId: input.questionId });
     if (!question) throw new Error("Product Question was not found in this organization.");
@@ -507,7 +538,8 @@ export class CanonicalProductWorkspaceAdapter {
       validateAdmissionBatch(replayRecord.canonicalAdmissionBatch,input.organizationId,stored.runtime);
       const workspace=buildProductQuestionWorkspace({runtime:stored.runtime,question:question.title,questionId:question.id});
       const contributionResult:CanonicalEvidenceContributionOperationResultV1={contractVersion:"1",organizationId:input.organizationId,questionId:input.questionId,contributionOperationId:replayRecord.contributionOperationId,operationDisposition:"idempotent-replay",cognitionDisposition:"exact-operation-replay",admissions:replayRecord.canonicalAdmissionBatch.admissions,evidenceAccepted:replayRecord.evidenceAccepted,runtimeRevisionBefore:stored.revision,runtimeRevisionAfter:stored.revision,productQuestionRevisionBefore:replayRecord.productQuestionRevisionBefore,productQuestionRevisionAfter:replayRecord.productQuestionRevisionAfter,canonicalUnderstandingChange:replayRecord.canonicalUnderstandingChange??historicalChangeOutcome(),canonicalResultDigest:replayRecord.recordDigest};
-      return requireCanonicalResult?{workspace,runtimeRevision:stored.revision,contributionResult}:{workspace,runtimeRevision:stored.revision};
+      if(requireMaterializationInstruction&&!replayRecord.productMaterializationInstruction)throw new Error("Canonical Product materialization instruction is unavailable for replay.");
+      return requireCanonicalResult?{workspace,runtimeRevision:stored.revision,contributionResult,...(replayRecord.productMaterializationInstruction?{productMaterializationInstruction:replayRecord.productMaterializationInstruction}:{})}:{workspace,runtimeRevision:stored.revision};
     }
     if(records.some(record=>record.idempotencyKeyDigest===identity.idempotencyKeyDigest))throw new Error("Canonical Evidence contribution replay conflicts with the request.");
     if (stored.runtime.memory.events.some((event) =>
@@ -579,7 +611,19 @@ export class CanonicalProductWorkspaceAdapter {
     if(!resultingQuestion)throw new Error("Investigation removed Product Question identity.");
     const cognitionDisposition=replayOnly?"no-new-canonical-input" as const:"executed" as const;
     const canonicalUnderstandingChange=resolveCanonicalOrganizationalUnderstandingChange({organizationId:input.organizationId,questionId:input.questionId,contributionOperationId:identity.contributionOperationId,beforeCompositions:stored.runtime.memory.organizationalUnderstandingState?.canonicalCompositions,afterCompositions:runtime.memory.organizationalUnderstandingState?.canonicalCompositions});
-    const recordUnsigned=batchForRecord&&lineageEnvelope?{kind:"canonical-evidence-contribution-operation" as const,contractVersion:"1" as const,organizationId:input.organizationId,questionId:input.questionId,contributionOperationId:identity.contributionOperationId,idempotencyKeyDigest:identity.idempotencyKeyDigest,requestFingerprint:identity.requestFingerprint,canonicalAdmissionBatch:batchForRecord,lineageEnvelopeDigest:lineageEnvelope.envelopeDigest,cognitionDisposition,evidenceAccepted:investigated.evidenceAccepted,productQuestionRevisionBefore:question.revision,productQuestionRevisionAfter:resultingQuestion.revision,canonicalUnderstandingChange,recordedAt:input.contribution.contributedAt}:undefined;
+    const recordBase=batchForRecord&&lineageEnvelope?{kind:"canonical-evidence-contribution-operation" as const,contractVersion:"1" as const,organizationId:input.organizationId,questionId:input.questionId,contributionOperationId:identity.contributionOperationId,idempotencyKeyDigest:identity.idempotencyKeyDigest,requestFingerprint:identity.requestFingerprint,canonicalAdmissionBatch:batchForRecord,lineageEnvelopeDigest:lineageEnvelope.envelopeDigest,cognitionDisposition,evidenceAccepted:investigated.evidenceAccepted,productQuestionRevisionBefore:question.revision,productQuestionRevisionAfter:resultingQuestion.revision,canonicalUnderstandingChange,recordedAt:input.contribution.contributedAt}:undefined;
+    let materializationInstruction:CanonicalProductMaterializationInstructionV1|undefined;
+    if(requireMaterializationInstruction){
+      if(!recordBase||!this.dependencies.resolveCandidateProductMaterializationInstruction)throw new Error("Canonical Product materialization preflight is unavailable.");
+      if(!input.materializationContext)throw new Error("Canonical Product materialization context is unavailable.");
+      const resolved=await this.dependencies.resolveCandidateProductMaterializationInstruction({userId:input.userId,organizationId:input.organizationId,questionId:input.questionId,runtimeRevisionBefore:stored.revision,candidateRuntime:runtime,candidateRuntimeStateDigest:operationDigest(runtime),operationRecord:recordBase,materializationContext:input.materializationContext});
+      assertCanonicalProductMaterializationCandidatePreflightIntegrityV1(resolved.preflight);
+      assertCanonicalProductMaterializationInstructionIntegrityV1(resolved.instruction);
+      if(resolved.preflight.disposition!=="approved"||resolved.preflight.organizationId!==input.organizationId||resolved.preflight.questionId!==input.questionId||resolved.preflight.expectedRuntimeRevision!==stored.revision)throw new Error("Canonical Product materialization preflight was rejected.");
+      if(resolved.instruction.organizationId!==input.organizationId||resolved.instruction.questionId!==input.questionId||resolved.instruction.canonicalOperationId!==identity.contributionOperationId||resolved.instruction.requestFingerprint!==identity.requestFingerprint||resolved.instruction.idempotencyKeyDigest!==identity.idempotencyKeyDigest||resolved.instruction.expectedRuntimeRevision!==stored.revision||resolved.instruction.committedRuntimeStateDigest!==operationDigest(runtime))throw new Error("Canonical Product materialization instruction conflicts with the candidate mutation.");
+      materializationInstruction=resolved.instruction;
+    }
+    const recordUnsigned=recordBase?{...recordBase,...(materializationInstruction?{productMaterializationInstruction:materializationInstruction}:{})}:undefined;
     record=recordUnsigned?{...recordUnsigned,recordDigest:operationDigest(recordUnsigned)}:undefined;
     if(record)runtime={...runtime,memory:{...runtime.memory,events:[...runtime.memory.events,record]}};
     const persisted = await this.replace({ stored, runtime, operation: input.operation });
@@ -595,7 +639,7 @@ export class CanonicalProductWorkspaceAdapter {
     if(!persistedRecord.canonicalUnderstandingChange)throw new Error("Canonical Evidence contribution change result was not persisted.");
     validateOperationRecord(persistedRecord);validateAdmissionBatch(batch,input.organizationId,persisted.runtime,stored.runtime);
     const contributionResult:CanonicalEvidenceContributionOperationResultV1={contractVersion:"1",organizationId:input.organizationId,questionId:input.questionId,contributionOperationId:identity.contributionOperationId,operationDisposition:batch.admissionDisposition,cognitionDisposition,admissions:batch.admissions,evidenceAccepted:investigated.evidenceAccepted,runtimeRevisionBefore:stored.revision,runtimeRevisionAfter:persisted.revision,productQuestionRevisionBefore:question.revision,productQuestionRevisionAfter:persistedWorkspace.question.revision,canonicalUnderstandingChange:persistedRecord.canonicalUnderstandingChange,canonicalResultDigest:record.recordDigest};
-    return {workspace:persistedWorkspace,runtimeRevision:persisted.revision,contributionResult};
+    return {workspace:persistedWorkspace,runtimeRevision:persisted.revision,contributionResult,...(persistedRecord.productMaterializationInstruction?{productMaterializationInstruction:persistedRecord.productMaterializationInstruction}:{})};
   }
 
   async contributeEvidence(input: {
@@ -616,6 +660,27 @@ export class CanonicalProductWorkspaceAdapter {
     operation: RuntimeStorageOperationMetadata;
   }): Promise<CanonicalEvidenceContributionMutationResultV1> {
     return this.contributeEvidenceMutation(input,true) as Promise<CanonicalEvidenceContributionMutationResultV1>;
+  }
+
+  async contributeEvidenceWithCanonicalMaterializationInstruction(input: {
+    userId: string;
+    organizationId: string;
+    questionId: string;
+    contribution: CanonicalEvidenceContribution;
+    operation: RuntimeStorageOperationMetadata;
+    materializationContext: Parameters<NonNullable<CanonicalProductWorkspaceAdapterDependencies["resolveCandidateProductMaterializationInstruction"]>>[0]["materializationContext"];
+  }): Promise<CanonicalEvidenceContributionMutationResultV1 & { productMaterializationInstruction: CanonicalProductMaterializationInstructionV1 }> {
+    const result=await this.contributeEvidenceMutation(input,true,true) as CanonicalEvidenceContributionMutationResultV1;
+    if(!result.productMaterializationInstruction)throw new Error("Canonical Product materialization instruction was not persisted.");
+    return {...result,productMaterializationInstruction:result.productMaterializationInstruction};
+  }
+
+  async findCanonicalEvidenceContributionOperation(input:{organizationId:string;contributionOperationId:string}):Promise<CanonicalEvidenceContributionOperationRecordV1|null>{
+    const stored=await this.dependencies.runtimeRepository.read(input.organizationId);
+    if(!stored)return null;
+    const record=stored.runtime.memory.events.map(operationRecord).find(value=>value?.contributionOperationId===input.contributionOperationId)??null;
+    if(record)validateOperationRecord(record);
+    return record?structuredClone(record):null;
   }
 
   async recordSearch(input: {

@@ -5,6 +5,7 @@ import { createEmptyOrganizationRuntime, type OrganizationRuntime } from "../../
 import type { StoredOrganizationRuntime } from "../../engine/v3/runtime/organizationRuntimeRepository";
 import {
   currentProductDecisionDraftRevision,
+  productDecisionDraftDigest,
   productDecisionDraftEvents,
   productDecisionDraftHistory,
   recordProductDecisionDraftRevision,
@@ -17,6 +18,11 @@ import {
 import { ProductDecisionDraftService } from "../../product/integration/productDecisionDraftService";
 import { appendProductQuestionEvent, createDurableProductQuestion } from "../../product/questions/questionLifecycle";
 import { buildProductQuestionWorkspace } from "../../product/workflow/buildProductQuestionWorkspace";
+import {
+  createCanonicalProductMaterializationInstructionDigestV1,
+  type CanonicalProductMaterializationInstructionV1,
+} from "../../product/workflow/leadershipConversation/canonicalProductMaterializationContracts";
+import { leadershipDigest, leadershipStableSerialize } from "../../product/workflow/leadershipConversation/determinism";
 
 const organizationId = "decision-draft-validation";
 const otherOrganizationId = "decision-draft-other";
@@ -75,6 +81,40 @@ function grant(operation: ProductDecisionDraftOperation, overrides: Partial<Prod
 
 const bytes = (runtime: OrganizationRuntime): Uint8Array => new TextEncoder().encode(JSON.stringify(runtime, null, 2));
 const revision = (value: Uint8Array): string => createHash("sha256").update(value).digest("hex");
+const sha = (value: string): string => createHash("sha256").update(value).digest("hex");
+
+function materializationInstruction(): CanonicalProductMaterializationInstructionV1 {
+  const payload = {
+    sourceAnswerId: answerId, expectedQuestionRevision: 1, expectedCurrentRevision: null,
+    predecessorRevisionId: null, originatingProposalRef: "proposal-1", ...content(),
+  };
+  const draftEnvelopeDigest = leadershipDigest(leadershipStableSerialize(payload));
+  const whatChangedEnvelope = {
+    integrationReceiptId: "integration-receipt-1", routingLinkIds: ["routing-link-1"],
+    classification: "changed" as const,
+    changeFacts: { proposalRouted: true as const, productArtifactRecorded: true, evidenceAdmitted: true,
+      runtimeRepository: "changed" as const, organizationalUnderstanding: "changed" as const,
+      answer: "unchanged" as const, unknown: "unchanged" as const, learning: "undetermined" as const },
+  };
+  const unsigned = {
+    contractVersion: "1" as const, instructionId: "instruction-1", organizationId, questionId,
+    conversationId: "conversation-1", proposalId: "proposal-1", canonicalOperationId: "operation-1",
+    requestFingerprint: sha("request"), idempotencyKeyDigest: sha("evidence-idempotency"), actorRef: "actor-authorized",
+    evaluatedAt: firstAt, authorityRevisionRefs: ["authority-decision-draft"], policyRevisionRefs: ["policy-decision-draft"],
+    expectedRuntimeRevision: sha("runtime-before-stage-1"), committedRuntimeStateDigest: sha("committed-state"),
+    canonicalUnderstandingBeforeRef: "understanding-before", canonicalUnderstandingAfterRef: "understanding-after",
+    canonicalChangeResultId: "change-result-1", canonicalChangeResultDigest: sha("change-result"),
+    governedProductInputDigest: sha("governed-input"), lineagePolicyVersion: "lineage-policy-1",
+    materialReferences: ["material-1"], materialEnvelopeDigest: sha("material-envelope"),
+    whatChangedIntent: "materialize" as const, whatChangedArtifactId: "what-changed-1", whatChangedEnvelope,
+    whatChangedEnvelopeDigest: leadershipDigest(leadershipStableSerialize(whatChangedEnvelope)),
+    draftMaterialization: { contractVersion: "1" as const, required: true as const, draftId: "draft-expected-1",
+      draftEnvelopeDigest, requestFingerprint: sha("draft-request"),
+      idempotencyKeyDigest: productDecisionDraftDigest("canonical-materialization:operation-1:draft"), payload },
+    targetProductWorkflowId: "workflow-1",
+  };
+  return { ...unsigned, instructionDigest: createCanonicalProductMaterializationInstructionDigestV1(unsigned) };
+}
 
 class MemoryRepository {
   readCount = 0;
@@ -107,6 +147,30 @@ async function main(): Promise<void> {
   check(JSON.stringify({ ...direct.runtime.memory, events: undefined }) === protectedBefore, "no cognition or Runtime evolution");
   check(direct.runtime.memory.executiveDecisionRecords.length === 0, "no actual Decision created");
   check(direct.runtime.memory.executiveReviews.length === 0, "no Outcome created");
+
+  const logicalRequest = request({
+    idempotencyKey: "canonical-materialization:operation-1:draft",
+    materializationBinding: {
+      contractVersion: "1",
+      canonicalOperationId: "operation-1",
+      instructionDigest: "1".repeat(64),
+      draftEnvelopeDigest: "2".repeat(64),
+      materialReferenceDigest: "3".repeat(64),
+      expectedRuntimeRevision: revision(bytes(initial)),
+      lineagePolicyVersion: "lineage-policy-1",
+    },
+  });
+  const logical = recordProductDecisionDraftRevision({ runtime: initial, request: logicalRequest, grant: grant("product-decision-draft:create") });
+  const logicalEvent = productDecisionDraftEvents(logical.runtime)[0]!;
+  check(Boolean(logical.result.materializationReceipt && logicalEvent.draftMutation), "logical Draft mutation and stage receipt are constructed before CAS");
+  check(logical.result.materializationReceipt?.draftMutationDigest === logicalEvent.draftMutation?.draftMutationDigest, "Draft-owned records share the logical mutation digest");
+  check(!("runtimeRevisionAfter" in logical.result.materializationReceipt!), "persisted Draft-stage receipt excludes physical post-CAS revision");
+  check(logical.result.materializationReceipt?.runtimeRevisionBefore === revision(bytes(initial)), "persisted Draft-stage receipt retains expected pre-CAS revision");
+  const changedLogical = recordProductDecisionDraftRevision({ runtime: initial, request: { ...logicalRequest, idempotencyKey: "canonical-materialization:operation-2:draft", materializationBinding: { ...logicalRequest.materializationBinding!, canonicalOperationId: "operation-2" } }, grant: grant("product-decision-draft:create") });
+  check(changedLogical.result.materializationReceipt?.draftMutationDigest !== logical.result.materializationReceipt?.draftMutationDigest, "material operation change changes logical Draft mutation digest");
+  const opaquePhysicalRevision = "opaque-etag-returned-after-write";
+  check(logical.result.materializationReceipt?.draftMutationDigest === logicalEvent.materializationReceipt?.draftMutationDigest && !logicalEvent.materializationReceipt?.receiptDigest.includes(opaquePhysicalRevision), "logical Draft receipt is independent of backend post-write revision");
+  check(productDecisionDraftDigest(logicalEvent.draftMutation) !== productDecisionDraftDigest({ ...logicalEvent.draftMutation, expectedRuntimeRevision: "different-pre-cas-revision" }), "pre-CAS revision remains material to the logical mutation");
 
   const repository = new MemoryRepository(initial);
   const authorizationCalls: ProductDecisionDraftOperation[] = [];
@@ -163,6 +227,26 @@ async function main(): Promise<void> {
   check(workspace.contractVersion === "1" && workspace.decisionDraft?.id === revised.revision.draftId, "ProductQuestionWorkspaceV2 contract remains unchanged and projects the active persisted draft");
   check(!("status" in revised.revision) && !("decisionRecordId" in revised.revision), "draft cannot claim decided approved or deferred Decision status");
   check(authorizationCalls[0] === "product-decision-draft:create" && authorizationCalls.includes("product-decision-draft:read"), "exact operation authorization used");
+
+  const instruction = materializationInstruction();
+  const provenanceRuntime = fixtureRuntime();
+  provenanceRuntime.memory.events.push({ contributionOperationId: instruction.canonicalOperationId, productMaterializationInstruction: instruction });
+  const materializationRepository = new MemoryRepository(provenanceRuntime);
+  const materializationService = new ProductDecisionDraftService({
+    runtimeRepository: materializationRepository,
+    authorize: async (input) => grant(input.operation, { organizationId: input.organizationId, questionId: input.questionId, scope: input.scope, purpose: input.purpose, sensitivity: input.sensitivity, authorizedAt: input.evaluatedAt }),
+    authorizeMaterialization: async ({ operation: materializationOperation }) => grant(materializationOperation, { authorizedAt: firstAt }),
+  });
+  const materialized = await materializationService.materializeCommittedInstruction({ instruction, storageOperation: { requestId: "materialize-draft", operatorId: "system" } });
+  check(materializationRepository.replaceCount === 1 && Boolean(materialized.materializationReceipt), "Draft service commits all Draft-owned materialization state with one CAS");
+  check(materialized.runtimeRevision !== materialized.materializationReceipt?.runtimeRevisionBefore, "physical post-CAS revision is returned outside the persisted receipt");
+  const afterDraftCas = materializationRepository.current.runtime;
+  afterDraftCas.memory.events.push({ kind: "unrelated-valid-runtime-event", id: "later-event" });
+  const afterDraftBytes = bytes(afterDraftCas);
+  materializationRepository.current = { runtime: afterDraftCas, bytes: afterDraftBytes, revision: revision(afterDraftBytes) };
+  const replayAfterLaterRevision = await materializationService.materializeCommittedInstruction({ instruction, storageOperation: { requestId: "must-not-write", operatorId: "system" } });
+  check(replayAfterLaterRevision.idempotent && materializationRepository.replaceCount === 1, "later unrelated Runtime revision preserves exact cognition-free Draft-stage replay");
+  check(replayAfterLaterRevision.materializationReceipt?.draftMutationDigest === materialized.materializationReceipt?.draftMutationDigest, "fresh replay retains the exact logical Draft mutation digest");
 
   const event = productDecisionDraftEvents(direct.runtime)[0]!;
   const tamperedContent = structuredClone(direct.runtime);

@@ -8,6 +8,7 @@ import {
   productDecisionDraftEvents,
   productDecisionDraftHistory,
   recordProductDecisionDraftRevision,
+  productDecisionDraftDigest,
   type ProductDecisionDraftAuthorityGrantV1,
   type ProductDecisionDraftOperation,
   type ProductDecisionDraftReadResultV1,
@@ -17,6 +18,10 @@ import {
   type RecordProductDecisionDraftRequestV1,
   type ReviseProductDecisionDraftRequestV1,
 } from "../decisions";
+import {
+  assertCanonicalProductMaterializationInstructionIntegrityV1,
+  type CanonicalProductMaterializationInstructionV1,
+} from "../workflow/leadershipConversation/canonicalProductMaterializationContracts";
 
 export type ProductDecisionDraftServiceDependencies = {
   runtimeRepository: Pick<OrganizationRuntimeRepository, "read" | "replace">;
@@ -29,6 +34,10 @@ export type ProductDecisionDraftServiceDependencies = {
     purpose: ProductDecisionDraftAuthorityGrantV1["purpose"];
     sensitivity: "standard";
     evaluatedAt: string;
+  }): Promise<ProductDecisionDraftAuthorityGrantV1>;
+  authorizeMaterialization?(input: {
+    instruction: CanonicalProductMaterializationInstructionV1;
+    operation: "product-decision-draft:create" | "product-decision-draft:revise";
   }): Promise<ProductDecisionDraftAuthorityGrantV1>;
 };
 
@@ -124,6 +133,109 @@ export class ProductDecisionDraftService {
       return Promise.reject(new Error("Draft revise request is missing revision state."));
     }
     return this.record({ ...input, operation: "product-decision-draft:revise" });
+  }
+
+  async materializeCommittedInstruction(input: {
+    instruction: CanonicalProductMaterializationInstructionV1;
+    storageOperation: RuntimeStorageOperationMetadata;
+  }): Promise<ProductDecisionDraftMutationResultV1> {
+    const { instruction } = input;
+    assertCanonicalProductMaterializationInstructionIntegrityV1(instruction);
+    const draft = instruction.draftMaterialization;
+    if (!draft.required) throw new Error("Canonical Product Decision Draft materialization is not required.");
+    if (!this.dependencies.authorizeMaterialization) throw new Error("Canonical Product Decision Draft materialization authorization is unavailable.");
+    const stored = await this.runtime(instruction.organizationId);
+    const persistedOperation = stored.runtime.memory.events.find((event) => {
+      if (!event || typeof event !== "object") return false;
+      const candidate = event as { contributionOperationId?: unknown; productMaterializationInstruction?: { instructionDigest?: unknown } };
+      return candidate.contributionOperationId === instruction.canonicalOperationId
+        && candidate.productMaterializationInstruction?.instructionDigest === instruction.instructionDigest;
+    });
+    if (!persistedOperation) throw new Error("Canonical Product materialization instruction provenance is unavailable.");
+    const materializationEvents = productDecisionDraftEvents(stored.runtime)
+      .filter((event) => event.materializationReceipt?.canonicalOperationId === instruction.canonicalOperationId);
+    if (materializationEvents.length > 1) throw new Error("Canonical Product Decision Draft stage is ambiguous.");
+    const completed = materializationEvents[0];
+    if (completed?.materializationReceipt) {
+      if (completed.materializationReceipt.instructionDigest !== instruction.instructionDigest
+        || completed.draftMutation?.instructionDigest !== instruction.instructionDigest) {
+        throw new Error("Canonical Product Decision Draft materialization collision.");
+      }
+      return {
+        revision: structuredClone(completed.revision),
+        receipt: structuredClone(completed.receipt),
+        materializationReceipt: structuredClone(completed.materializationReceipt),
+        idempotent: true,
+        runtimeRevision: stored.revision,
+      };
+    }
+    const rawIdempotencyKey = `canonical-materialization:${instruction.canonicalOperationId}:draft`;
+    if (productDecisionDraftDigest(rawIdempotencyKey) !== draft.idempotencyKeyDigest) {
+      throw new Error("Canonical Product Decision Draft idempotency binding is invalid.");
+    }
+    const operation = draft.payload.expectedCurrentRevision === null
+      ? "product-decision-draft:create" as const
+      : "product-decision-draft:revise" as const;
+    const grant = await this.dependencies.authorizeMaterialization({ instruction, operation });
+    const payload = draft.payload;
+    const request: RecordProductDecisionDraftRequestV1 = {
+      contractVersion: "1",
+      organizationId: instruction.organizationId,
+      questionId: instruction.questionId,
+      sourceAnswerId: payload.sourceAnswerId,
+      draftId: operation === "product-decision-draft:create" ? null : draft.draftId,
+      expectedQuestionRevision: payload.expectedQuestionRevision,
+      expectedCurrentRevision: payload.expectedCurrentRevision,
+      predecessorRevisionId: payload.predecessorRevisionId,
+      originatingProposalRef: payload.originatingProposalRef,
+      content: {
+        title: payload.title,
+        intervention: payload.intervention,
+        rationale: payload.rationale,
+        assumptions: payload.assumptions,
+        risks: payload.risks,
+        expectedOutcomes: payload.expectedOutcomes,
+        measures: payload.measures,
+        intendedDecisionMakerRef: payload.intendedDecisionMakerRef,
+        intendedDecisionMakerLabel: payload.intendedDecisionMakerLabel,
+        proposedReviewDate: payload.proposedReviewDate,
+      },
+      recordedAt: instruction.evaluatedAt,
+      idempotencyKey: rawIdempotencyKey,
+      materializationBinding: {
+        contractVersion: "1",
+        canonicalOperationId: instruction.canonicalOperationId,
+        instructionDigest: instruction.instructionDigest,
+        draftEnvelopeDigest: draft.draftEnvelopeDigest,
+        materialReferenceDigest: instruction.materialEnvelopeDigest,
+        expectedRuntimeRevision: stored.revision,
+        lineagePolicyVersion: instruction.lineagePolicyVersion,
+      },
+    };
+    const recorded = recordProductDecisionDraftRevision({ runtime: stored.runtime, request, grant });
+    if (recorded.result.idempotent) {
+      if (!recorded.result.materializationReceipt) throw new Error("Canonical Product Decision Draft stage receipt is unavailable.");
+      return { ...recorded.result, runtimeRevision: stored.revision };
+    }
+    const bytes = new TextEncoder().encode(JSON.stringify(recorded.runtime, null, 2));
+    const persisted = await this.dependencies.runtimeRepository.replace(
+      instruction.organizationId,
+      bytes,
+      stored.revision,
+      input.storageOperation,
+    );
+    const persistedEvent = productDecisionDraftEvents(persisted.runtime)
+      .find((event) => event.materializationReceipt?.instructionDigest === instruction.instructionDigest);
+    if (!persistedEvent?.materializationReceipt || !persistedEvent.draftMutation) {
+      throw new Error("Persisted canonical Product Decision Draft stage is unavailable.");
+    }
+    return {
+      revision: structuredClone(persistedEvent.revision),
+      receipt: structuredClone(persistedEvent.receipt),
+      materializationReceipt: structuredClone(persistedEvent.materializationReceipt),
+      idempotent: false,
+      runtimeRevision: persisted.revision,
+    };
   }
 
   async read(input: {

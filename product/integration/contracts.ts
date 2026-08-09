@@ -37,6 +37,7 @@ import type {
   CanonicalEvidenceScopeAdmission,
 } from "../../engine/v3/governance/canonicalScopeLineage";
 import type { CanonicalOrganizationalUnderstandingChangeOutcomeV1 } from "../../engine/v3/understanding/resolveCanonicalOrganizationalUnderstandingChange";
+import type { CanonicalProductMaterializationInstructionV1 } from "../workflow/leadershipConversation/canonicalProductMaterializationContracts";
 
 export type ProductQuestionSummary = {
   id: string;
@@ -209,6 +210,7 @@ export type CanonicalEvidenceContributionOperationRecordV1 = {
   productQuestionRevisionBefore: number;
   productQuestionRevisionAfter: number;
   canonicalUnderstandingChange?: CanonicalOrganizationalUnderstandingChangeOutcomeV1;
+  productMaterializationInstruction?: CanonicalProductMaterializationInstructionV1;
   recordedAt: string;
   recordDigest: string;
 };
@@ -232,6 +234,7 @@ export type CanonicalEvidenceContributionOperationResultV1 = {
 
 export type CanonicalEvidenceContributionMutationResultV1 = CanonicalWorkspaceReadResult & {
   contributionResult: CanonicalEvidenceContributionOperationResultV1;
+  productMaterializationInstruction?: CanonicalProductMaterializationInstructionV1;
 };
 
 export type HistoricalAnswerSource = Pick<

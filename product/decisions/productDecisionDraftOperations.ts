@@ -14,6 +14,14 @@ import {
   type ProductDecisionDraftRevisionV1,
   type RecordProductDecisionDraftRequestV1,
 } from "./productDecisionDraftContracts";
+import {
+  assertCanonicalProductDecisionDraftMaterializationReceiptIntegrityV1,
+  assertCanonicalProductDecisionDraftMutationIntegrityV1,
+  createCanonicalProductDecisionDraftMaterializationReceiptDigestV1,
+  createCanonicalProductDecisionDraftMutationDigestV1,
+  type CanonicalProductDecisionDraftMaterializationReceiptV1,
+  type CanonicalProductDecisionDraftMutationV1,
+} from "../workflow/leadershipConversation/canonicalProductMaterializationContracts";
 
 const exact = (value: string, label: string): string => {
   if (!value || value.trim() !== value || value === "*") throw new Error(`${label} is invalid.`);
@@ -127,7 +135,14 @@ function validateEvent(value: unknown, runtime: OrganizationRuntime): ProductDec
   });
   if (event.revision.revisionId !== expectedRevisionId) throw new Error("Product Decision Draft revision identity is invalid.");
   const receiptWithoutDigest = { ...event.receipt, receiptDigest: "", resultDigest: "" };
-  const expectedReceiptId = identifier("product-decision-draft-receipt", { ...receiptWithoutDigest, receiptId: "" });
+  const {
+    canonicalMaterializationInstructionDigest: _instructionDigest,
+    canonicalDraftEnvelopeDigest: _draftEnvelopeDigest,
+    draftMutationDigest: _draftMutationDigest,
+    ...receiptIdentityFields
+  } = receiptWithoutDigest;
+  void _instructionDigest; void _draftEnvelopeDigest; void _draftMutationDigest;
+  const expectedReceiptId = identifier("product-decision-draft-receipt", { ...receiptIdentityFields, receiptId: "" });
   if (event.receipt.receiptId !== expectedReceiptId) throw new Error("Product Decision Draft receipt identity is invalid.");
   const expectedReceiptDigest = productDecisionDraftDigest({ ...event.receipt, receiptDigest: "", resultDigest: "" });
   const expectedResultDigest = productDecisionDraftDigest({ revision: event.revision, receiptId: event.receipt.receiptId });
@@ -136,6 +151,44 @@ function validateEvent(value: unknown, runtime: OrganizationRuntime): ProductDec
   }
   const expectedEventId = identifier("product-decision-draft-event", { revisionId: event.revision.revisionId, receiptId: event.receipt.receiptId });
   if (event.eventId !== expectedEventId) throw new Error("Product Decision Draft event identity is invalid.");
+  if ((event.materializationReceipt === undefined) !== (event.draftMutation === undefined)) {
+    throw new Error("Product Decision Draft materialization state is incomplete.");
+  }
+  if (event.materializationReceipt && event.draftMutation) {
+    assertCanonicalProductDecisionDraftMutationIntegrityV1(event.draftMutation);
+    assertCanonicalProductDecisionDraftMaterializationReceiptIntegrityV1(event.materializationReceipt);
+    if (event.materializationReceipt.draftMutationDigest !== event.draftMutation.draftMutationDigest
+      || event.materializationReceipt.draftOperationReceiptDigest !== event.receipt.receiptDigest
+      || event.materializationReceipt.draftEventId !== event.eventId
+      || event.materializationReceipt.draftId !== event.draftId
+      || event.materializationReceipt.draftRevisionId !== event.revision.revisionId
+      || event.revision.draftMutationDigest !== event.draftMutation.draftMutationDigest
+      || event.receipt.draftMutationDigest !== event.draftMutation.draftMutationDigest) {
+      throw new Error("Product Decision Draft materialization state conflicts.");
+    }
+    const expectedOperationCandidateDigest = productDecisionDraftDigest({ ...receiptIdentityFields, receiptId: event.receipt.receiptId });
+    const expectedEventPayloadDigest = productDecisionDraftDigest({
+      kind: PRODUCT_DECISION_DRAFT_EVENT_KIND,
+      schemaVersion: PRODUCT_DECISION_DRAFT_CONTRACT_VERSION,
+      eventId: event.eventId,
+      organizationId: event.organizationId,
+      questionId: event.questionId,
+      draftId: event.draftId,
+      revisionId: event.revision.revisionId,
+      receiptId: event.receipt.receiptId,
+      occurredAt: event.occurredAt,
+    });
+    if (event.draftMutation.draftOperationReceiptCandidateDigest !== expectedOperationCandidateDigest
+      || event.draftMutation.draftEventPayloadDigest !== expectedEventPayloadDigest
+      || event.draftMutation.requestFingerprint !== event.receipt.requestFingerprint
+      || event.draftMutation.idempotencyKeyDigest !== event.receipt.idempotencyKeyDigest
+      || event.draftMutation.actorRef !== event.receipt.actorRef
+      || event.draftMutation.authorityRevisionRef !== event.receipt.authorityRef
+      || event.draftMutation.policyRevisionRef !== event.receipt.policyRef
+      || event.draftMutation.evaluatedAt !== event.occurredAt) {
+      throw new Error("Product Decision Draft logical mutation is invalid.");
+    }
+  }
   return event;
 }
 
@@ -201,7 +254,7 @@ export function recordProductDecisionDraftRevision(input: {
   const priorOperation = events.find((event) => event.receipt.idempotencyKeyDigest === keyDigest);
   if (priorOperation) {
     if (priorOperation.receipt.requestFingerprint !== requestFingerprint) throw new Error("Draft idempotency conflict.");
-    return { runtime: input.runtime, result: { revision: structuredClone(priorOperation.revision), receipt: structuredClone(priorOperation.receipt), idempotent: true } };
+    return { runtime: input.runtime, result: { revision: structuredClone(priorOperation.revision), receipt: structuredClone(priorOperation.receipt), idempotent: true, materializationReceipt: priorOperation.materializationReceipt ? structuredClone(priorOperation.materializationReceipt) : undefined } };
   }
   const question = buildDurableProductQuestion({ runtime: input.runtime, questionId: request.questionId });
   if (!question || question.organizationId !== request.organizationId) throw new Error("Product Question is unavailable.");
@@ -220,13 +273,17 @@ export function recordProductDecisionDraftRevision(input: {
   if (current && (current.draftId !== draftId || current.sourceAnswerId !== request.sourceAnswerId)) throw new Error("Draft lineage mismatch.");
   const contentDigest = productDecisionDraftDigest(content);
   const revisionId = identifier("product-decision-draft-revision", { draftId, revisionNumber, predecessorRevisionId: request.predecessorRevisionId, contentDigest, recordedAt: request.recordedAt });
-  const revision: ProductDecisionDraftRevisionV1 = {
+  let revision: ProductDecisionDraftRevisionV1 = {
     contractVersion: PRODUCT_DECISION_DRAFT_CONTRACT_VERSION,
     organizationId: request.organizationId, questionId: request.questionId, sourceAnswerId: request.sourceAnswerId,
     draftId, revisionId, revision: revisionNumber, predecessorRevisionId: request.predecessorRevisionId,
     originatingProposalRef: request.originatingProposalRef, ...content, recordedAt: request.recordedAt,
     recordedByActorRef: input.grant.actorRef, authorityRef: input.grant.authorityRef, policyRef: input.grant.policyRef,
     requestFingerprint, contentDigest, idempotencyKeyDigest: keyDigest,
+    ...(request.materializationBinding ? {
+      canonicalMaterializationInstructionDigest: request.materializationBinding.instructionDigest,
+      canonicalDraftEnvelopeDigest: request.materializationBinding.draftEnvelopeDigest,
+    } : {}),
   };
   const operationId = identifier("product-decision-draft-operation", { keyDigest, requestFingerprint });
   const receiptIdentityBase = {
@@ -240,17 +297,80 @@ export function recordProductDecisionDraftRevision(input: {
   const receiptId = identifier("product-decision-draft-receipt", receiptIdentityBase);
   const resultDigest = productDecisionDraftDigest({ revision, receiptId });
   const receiptWithoutDigest = { ...receiptIdentityBase, receiptId, resultDigest };
-  const receipt: ProductDecisionDraftOperationReceiptV1 = {
+  let receipt: ProductDecisionDraftOperationReceiptV1 = {
     ...receiptWithoutDigest,
     receiptDigest: productDecisionDraftDigest({ ...receiptWithoutDigest, receiptDigest: "", resultDigest: "" }),
   };
+  const eventId = identifier("product-decision-draft-event", { revisionId, receiptId });
+  let draftMutation: CanonicalProductDecisionDraftMutationV1 | undefined;
+  let materializationReceipt: CanonicalProductDecisionDraftMaterializationReceiptV1 | undefined;
+  if (request.materializationBinding) {
+    const binding = request.materializationBinding;
+    const operationReceiptCandidateDigest = productDecisionDraftDigest({ ...receiptIdentityBase, receiptId });
+    const eventPayloadDigest = productDecisionDraftDigest({
+      kind: PRODUCT_DECISION_DRAFT_EVENT_KIND,
+      schemaVersion: PRODUCT_DECISION_DRAFT_CONTRACT_VERSION,
+      eventId,
+      organizationId: request.organizationId,
+      questionId: request.questionId,
+      draftId,
+      revisionId,
+      receiptId,
+      occurredAt: request.recordedAt,
+    });
+    const unsignedMutation = {
+      contractVersion: "1" as const,
+      organizationId: request.organizationId,
+      canonicalOperationId: binding.canonicalOperationId,
+      instructionDigest: binding.instructionDigest,
+      draftId,
+      draftRevisionId: revisionId,
+      predecessorDraftRevisionId: request.predecessorRevisionId,
+      operation: revisionNumber === 1 ? "create" as const : "revise" as const,
+      draftEnvelopeDigest: binding.draftEnvelopeDigest,
+      materialReferenceDigest: binding.materialReferenceDigest,
+      actorRef: input.grant.actorRef,
+      evaluatedAt: request.recordedAt,
+      authorityRevisionRef: input.grant.authorityRef,
+      policyRevisionRef: input.grant.policyRef,
+      expectedRuntimeRevision: binding.expectedRuntimeRevision,
+      requestFingerprint,
+      idempotencyKeyDigest: keyDigest,
+      draftOperationReceiptId: receiptId,
+      draftOperationReceiptCandidateDigest: operationReceiptCandidateDigest,
+      draftEventId: eventId,
+      draftEventPayloadDigest: eventPayloadDigest,
+      disposition: revisionNumber === 1 ? "created" as const : "revised" as const,
+      lineagePolicyVersion: binding.lineagePolicyVersion,
+    };
+    draftMutation = { ...unsignedMutation, draftMutationDigest: createCanonicalProductDecisionDraftMutationDigestV1(unsignedMutation) };
+    revision = { ...revision, draftMutationDigest: draftMutation.draftMutationDigest };
+    const reboundResultDigest = productDecisionDraftDigest({ revision, receiptId });
+    const reboundReceipt = { ...receipt, canonicalMaterializationInstructionDigest: binding.instructionDigest, canonicalDraftEnvelopeDigest: binding.draftEnvelopeDigest, draftMutationDigest: draftMutation.draftMutationDigest, resultDigest: reboundResultDigest };
+    receipt = { ...reboundReceipt, receiptDigest: productDecisionDraftDigest({ ...reboundReceipt, receiptDigest: "", resultDigest: "" }) };
+    const unsignedStageReceipt = {
+      contractVersion: "1" as const,
+      receiptId: identifier("canonical-draft-materialization-receipt", { canonicalOperationId: binding.canonicalOperationId, instructionDigest: binding.instructionDigest, draftMutationDigest: draftMutation.draftMutationDigest }),
+      canonicalOperationId: binding.canonicalOperationId,
+      instructionDigest: binding.instructionDigest,
+      draftId,
+      draftRevisionId: revisionId,
+      draftEnvelopeDigest: binding.draftEnvelopeDigest,
+      draftOperationReceiptDigest: receipt.receiptDigest,
+      draftEventId: eventId,
+      runtimeRevisionBefore: binding.expectedRuntimeRevision,
+      draftMutationDigest: draftMutation.draftMutationDigest,
+    };
+    materializationReceipt = { ...unsignedStageReceipt, receiptDigest: createCanonicalProductDecisionDraftMaterializationReceiptDigestV1(unsignedStageReceipt) };
+  }
   const event: ProductDecisionDraftRevisionEventV1 = {
     kind: PRODUCT_DECISION_DRAFT_EVENT_KIND, schemaVersion: PRODUCT_DECISION_DRAFT_CONTRACT_VERSION,
-    eventId: identifier("product-decision-draft-event", { revisionId, receiptId }), organizationId: request.organizationId,
+    eventId, organizationId: request.organizationId,
     questionId: request.questionId, draftId, revision, receipt, occurredAt: request.recordedAt,
+    ...(draftMutation && materializationReceipt ? { draftMutation, materializationReceipt } : {}),
   };
   return {
     runtime: { ...input.runtime, metadata: { ...input.runtime.metadata, updatedAt: request.recordedAt }, memory: { ...input.runtime.memory, events: [...input.runtime.memory.events, event] } },
-    result: { revision: structuredClone(revision), receipt: structuredClone(receipt), idempotent: false },
+    result: { revision: structuredClone(revision), receipt: structuredClone(receipt), idempotent: false, ...(materializationReceipt ? { materializationReceipt: structuredClone(materializationReceipt) } : {}) },
   };
 }

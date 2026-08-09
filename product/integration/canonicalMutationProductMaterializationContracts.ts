@@ -1,0 +1,51 @@
+export {
+  CANONICAL_PRODUCT_MATERIALIZATION_CONTRACT_VERSION,
+  assertCanonicalMutationProductMaterializationStageTransitionV1,
+  assertCanonicalProductDecisionDraftMaterializationReceiptIntegrityV1,
+  assertCanonicalProductDecisionDraftMaterializationResultIntegrityV1,
+  assertCanonicalProductDecisionDraftMutationIntegrityV1,
+  assertCanonicalProductMaterializationCandidatePreflightIntegrityV1,
+  assertCanonicalProductMaterializationInstructionIntegrityV1,
+  assertCanonicalProductMaterializationReceiptIntegrityV1,
+  assertCanonicalProductMaterializationRecoveryResultIntegrityV1,
+  assertLeadershipConversationCanonicalRoutingResultIntegrityV1,
+  assertLeadershipConversationProductMaterializationRecordIntegrityV1,
+  createCanonicalProductDecisionDraftMaterializationReceiptDigestV1,
+  createCanonicalProductDecisionDraftMaterializationResultDigestV1,
+  createCanonicalProductDecisionDraftMutationDigestV1,
+  createCanonicalProductMaterializationCandidatePreflightDigestV1,
+  createCanonicalProductMaterializationInstructionDigestV1,
+  createCanonicalProductMaterializationReceiptDigestV1,
+  createCanonicalProductMaterializationRecoveryResultDigestV1,
+  createLeadershipConversationCanonicalRoutingResultDigestV1,
+  createLeadershipConversationProductMaterializationRecordDigestV1,
+  type CanonicalMutationProductMaterializationStageV1,
+  type CanonicalProductDecisionDraftMaterializationReceiptV1,
+  type CanonicalProductDecisionDraftMaterializationRequestV1,
+  type CanonicalProductDecisionDraftMaterializationPayloadV1,
+  type CanonicalProductDecisionDraftMaterializationResultV1,
+  type CanonicalProductDecisionDraftMaterializationStatusV1,
+  type CanonicalProductDecisionDraftMutationV1,
+  type CanonicalProductMaterializationCandidatePreflightV1,
+  type CanonicalProductMaterializationInstructionV1,
+  type CanonicalProductWhatChangedEnvelopeV1,
+  type CanonicalProductMaterializationReceiptV1,
+  type CanonicalProductMaterializationRecoveryResultV1,
+  type LeadershipConversationCanonicalRoutingResultV1,
+  type LeadershipConversationProductMaterializationRecordV1,
+} from "../workflow/leadershipConversation/canonicalProductMaterializationContracts";
+
+import type {
+  CanonicalProductDecisionDraftMaterializationResultV1,
+  CanonicalProductMaterializationInstructionV1,
+  CanonicalProductMaterializationRecoveryResultV1,
+} from "../workflow/leadershipConversation/canonicalProductMaterializationContracts";
+
+export type CanonicalLeadershipConversationProductMaterializerInputV1 = {
+  contractVersion: "1";
+  instruction: CanonicalProductMaterializationInstructionV1;
+  draftResult: CanonicalProductDecisionDraftMaterializationResultV1 | null;
+};
+
+export type CanonicalLeadershipConversationProductMaterializerResultV1 =
+  CanonicalProductMaterializationRecoveryResultV1;
