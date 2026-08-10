@@ -1,5 +1,22 @@
 # Discovery Architecture Handoff
 
+## Product artifact owner-specific split persistence
+
+Prepared Work, frozen Prepared Work snapshots, Product-visible What Changed,
+and Product Decision Draft now persist protected bodies through their existing
+semantic owners. `ProductArtifactBodyRepository` owns immutable bytes and
+integrity only; each body is staged before the existing owner CAS, which
+publishes content-free metadata and the exact body reference together with its
+receipt, event, and idempotency state. CAS loss can leave only an inaccessible
+orphan; exact replay is collision-safe and does not rerun cognition.
+
+`ProductQuestionWorkspace` and Leadership History remain derived and
+non-persisted. Legacy combined artifacts remain immutable and unavailable.
+The retained Runtime and all preserved dirty worktrees remain unchanged.
+Current-access delivery, history/reuse, and Prepare Again remain frozen as P2.
+Reentry requires the post-split-persistence baseline/overlap reconciliation,
+an updated self-contained P2 packet, and separate authorization.
+
 ## Canonical Organizational Understanding change result
 
 Canonical composition state now owns changed/unchanged classification through

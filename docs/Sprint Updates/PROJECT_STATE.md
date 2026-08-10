@@ -1,5 +1,22 @@
 # Discovery Project State
 
+## Product artifact split-persistence closure
+
+Canonical Product persistence now separates protected bodies for exactly four
+artifact classes: Prepared Work, frozen snapshot, What Changed, and Product
+Decision Draft. Each existing semantic owner stages immutable bytes through a
+bytes-only repository before its existing CAS and publishes content-free
+metadata, the exact body reference, receipt, event, and idempotency state in
+that one owner transition. Collision, crash/restart, inaccessible-orphan,
+exact-replay, and cognition-non-rerun validation pass.
+
+`ProductQuestionWorkspace` and Leadership History remain derived and are not
+persisted. Legacy combined artifacts are not migrated and fail closed. The
+retained Runtime and fifteen preserved dirty worktrees remain exact. P2
+current-access delivery, history/reuse, and Prepare Again are deferred pending
+post-closure baseline and eleven-path overlap reconciliation plus separate
+implementation authorization.
+
 **Drive integration baseline:**
 `39420f200e5789f223795d8f4b918d9814d16e04`
 

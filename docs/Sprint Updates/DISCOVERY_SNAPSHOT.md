@@ -1,5 +1,17 @@
 # Discovery Startup Snapshot
 
+**Product artifact persistence checkpoint:** Prepared Work, frozen snapshots,
+What Changed, and Product Decision Draft use owner-specific split persistence.
+The neutral repository owns immutable bytes and integrity only; the existing
+owner CAS publishes content-free metadata and the exact body reference with
+receipts, events, and idempotency. CAS-loss orphans remain inaccessible, exact
+replay does not rerun cognition, and legacy combined artifacts remain
+unavailable. `ProductQuestionWorkspace` and Leadership History remain derived
+and non-persisted. Current-access delivery, history/reuse, and Prepare Again
+remain frozen pending a post-P1 baseline/overlap reconciliation and separate P2
+authorization. No Alpha readiness, resolver completion, permanent adversarial
+benchmark completion, Production access, or deployment is claimed.
+
 **Current milestone:** The multi-role scoped Product backend, first
 fixture-backed role-aware frontend slice, and development-only typed canonical
 live Product path are complete. GAP-MR-001 through

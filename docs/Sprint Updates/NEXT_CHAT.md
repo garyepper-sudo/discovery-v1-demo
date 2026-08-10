@@ -2,6 +2,27 @@
 
 ## Exact next task
 
+Run **DISCOVERY CANONICAL PRODUCT ARTIFACT CURRENT-ACCESS DELIVERY, HISTORY /
+REUSE, AND PREPARE AGAIN 001 — POST-SPLIT-PERSISTENCE BASELINE AND OVERLAP
+RECONCILIATION** from newly integrated clean canonical main. First read the P1
+review-and-closure report, record the ending `origin/main`, verify main,
+feature, and upstreams are 0/0, and audit all eleven overlap paths. Confirm or
+correct the frozen 35-path P2 union and updated starting hashes, then issue one
+self-contained executable prompt requiring separate implementation approval.
+
+P1 persists exactly four protected source artifacts through their existing
+owners: Prepared Work, frozen snapshot, What Changed, and Product Decision
+Draft. The bytes-only body repository stages immutable bodies before owner CAS;
+content-free metadata, exact references, receipts, events, and idempotency
+commit together. Exact replay is cognition-free, CAS-loss orphans are
+inaccessible, and legacy combined artifacts remain unavailable.
+`ProductQuestionWorkspace` and Leadership History remain derived and
+non-persisted. Do not implement P2, resume the governed resolver, run the
+permanent adversarial benchmark, claim Alpha readiness, or deploy during the
+reconciliation.
+
+Historical sequencing below is retained for context.
+
 Continue **DISCOVERY CANONICAL PRODUCT WORKFLOW ARTIFACT CURRENT ACCESS,
 PER-ARTIFACT GOVERNANCE RECEIPTS, AND ITEM-LEVEL FUTURE PREPARATION
 CLASSIFICATION 001 — FINAL CONTINUATION AFTER MATERIALIZATION-ATOMICITY
