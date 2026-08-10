@@ -1,5 +1,20 @@
 # Discovery Next Chat
 
+## Exact next task after Northstar lineage closure
+
+**DISCOVERY CANONICAL PRODUCT ARTIFACT CURRENT-ACCESS DELIVERY, HISTORY / REUSE,
+AND PREPARE AGAIN 001 — POST-NORTHSTAR-LINEAGE-PROVISIONING BASELINE,
+PARTIAL-IMPLEMENTATION TRANSFER, AND OVERLAP RECONCILIATION**
+
+Begin from this closure's exact ending `origin/main`. Preserve the paused
+12-path P2 worktree as a read-only source record and create a clean continuation
+from integrated canonical main. Reconcile valid partial work against the
+canonical fixture provisioner, preserve applicable path-36 metadata-lineage
+work, reconsider paths 37 and 38 using the owner-backed seed, remove every
+Runtime-digest lineage fallback, freeze one complete corrected P2 boundary,
+and require separate implementation authorization. Do not begin P2 or the
+separate persona/roadmap reconciliation during this closure.
+
 ## Exact next task
 
 Run **DISCOVERY CANONICAL PRODUCT ARTIFACT CURRENT-ACCESS DELIVERY, HISTORY /

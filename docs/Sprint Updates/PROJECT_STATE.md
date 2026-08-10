@@ -1,5 +1,22 @@
 # Discovery Project State
 
+## Northstar preparation-lineage prerequisite
+
+Northstar preparation-time lineage fixture provisioning is implemented and
+independently reviewed at commit
+`00a3e1b91336b88ebc2101c8cf4c12b2328979b2`. The server-only coordinator uses
+canonical owners for Source Bindings, governed source versions, Evidence,
+Runtime evolution, Understanding eligibility, and scoped projection. Its
+deterministic body- and target-independent seed is historical lineage only;
+the Runtime digest grants no authority. Direct/inherited lineage and
+revocation, replay, collision, fresh-process reload, bounded reset, and
+non-disclosure pass. The inherited batch-3 failure remains visible with exact
+clean-main parity; architecture remains 295/302 with zero new findings.
+Retained Runtime and paused P2 are exact. No external system or deployment was
+used. Current-access delivery, workspace/history delivery, Prepare Again,
+governed resolver completion, permanent adversarial testing, and Alpha
+readiness remain incomplete.
+
 ## Product artifact split-persistence closure
 
 Canonical Product persistence now separates protected bodies for exactly four

@@ -1,5 +1,18 @@
 # Discovery Startup Snapshot
 
+**Northstar lineage fixture checkpoint:** implementation commit
+`00a3e1b91336b88ebc2101c8cf4c12b2328979b2` adds a server-only coordinator over
+existing Source Binding, Governed Source Content, canonical Evidence/Runtime,
+Understanding eligibility, and scoped-projection owners. Owner-backed direct
+and inherited lineage, material origin, deterministic target-independent seed,
+replay/collision, fresh-process reload, bounded reset, direct/inherited
+revocation, and non-disclosure pass. The Runtime-digest alias has no authority.
+The inherited sandbox batch-3 uncertainty failure remains registered and
+unsuppressed with exact clean-main parity; architecture remains 295/302 with
+the same seven findings. Retained Runtime and paused P2 remain exact, and no
+database, connector, Drive, Clerk, Production, browser, route promotion, or
+deployment activity occurred.
+
 **Product artifact persistence checkpoint:** Prepared Work, frozen snapshots,
 What Changed, and Product Decision Draft use owner-specific split persistence.
 The neutral repository owns immutable bytes and integrity only; the existing

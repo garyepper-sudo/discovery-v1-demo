@@ -1,5 +1,26 @@
 # Discovery Architecture Handoff
 
+## Northstar owner-backed preparation lineage fixture
+
+Implementation commit `00a3e1b91336b88ebc2101c8cf4c12b2328979b2`
+is independently reviewed. The server-only provisioner coordinates existing
+owners: `CanonicalLocalSourceBindingService`, `GovernedSourceContentService`,
+canonical Evidence admission and Runtime evolution, Understanding eligibility,
+and scoped projection. It owns no semantic record or persistence.
+
+Direct and inherited scope lineage, material Evidence origin/revisions, and the
+Understanding projection basis are owner-backed. The deterministic,
+body-independent, target-independent seed grants no current authority; the
+Runtime-digest alias has no source, material, scope, projection, eligibility,
+or access role. Replay, collision, fresh-process reload, bounded reset, direct
+and inherited revocation, and non-disclosure pass (27 focused checks, exceeding
+the required 23). The inherited 295/302 architecture result has the same seven
+findings and zero new findings. The batch-3 uncertainty assertion remains
+registered, unchanged, visible, and unsuppressed, with exact clean-main failure
+parity. Retained Runtime and the paused uncommitted P2 worktree remain exact;
+database, connector, Drive, Clerk, Production, browser, route-promotion, and
+deployment activity were zero.
+
 ## Product artifact owner-specific split persistence
 
 Prepared Work, frozen Prepared Work snapshots, Product-visible What Changed,
