@@ -1,5 +1,18 @@
 # Discovery Startup Snapshot
 
+## P2 current-access checkpoint
+
+Current-access delivery is closed across Prepared Work, frozen snapshots, What
+Changed, Product Decision Draft, derived history, and derived workspaces.
+Server-owned evaluation authorizes before body access, verifies owner-backed
+Northstar lineage and artifact integrity, and exposes no raw body, Runtime,
+cognition, grant, or authorization object to frontend state. Draft publication
+uses its existing owner CAS and grants no Decision authority. Seven-state
+Prepare Again, zero denied-material influence, fresh-process A–D, replay,
+cache isolation, and post-CAS recovery pass. The retained Runtime and paused
+source remain exact. Contemporaneous Epistemic History remains the next
+planning foundation and is not implemented by this closure.
+
 ## Persona architecture and organizational-learning direction
 
 Chief, Counsel, Operator, and Scout are governed application roles over one

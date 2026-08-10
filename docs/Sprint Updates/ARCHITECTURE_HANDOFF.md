@@ -1,5 +1,22 @@
 # Discovery Architecture Handoff
 
+## Product artifact current-access delivery closure
+
+P2 current-access delivery is complete for Prepared Work, frozen snapshots,
+What Changed, Product Decision Draft, derived leadership history, and derived
+workspaces. Server composition authorizes before protected-body access, reloads
+the owner-backed Northstar lineage seed in fresh processes, and requires
+inspectable material lineage for every persisted artifact. Draft body
+publication remains bound to the existing Draft owner CAS and grants no
+Decision authority.
+
+Prepare Again applies the seven-state classifier at one evaluation time;
+denied or invalid predecessor material has zero successor influence. Fresh-
+process A–D, replay, cache isolation, materialization atomicity, post-CAS
+recovery, and frontend non-disclosure are validated. The retained Runtime and
+paused source remain exact. Contemporaneous Epistemic History remains an
+explicitly deferred foundation; no Production or route promotion occurred.
+
 ## Persona architecture and organizational-learning roadmap
 
 `DEC-PROD-049` canonizes Chief, Counsel, Operator, and Scout as governed

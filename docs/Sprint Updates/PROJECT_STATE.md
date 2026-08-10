@@ -1,5 +1,19 @@
 # Discovery Project State
 
+## Product artifact current-access delivery complete
+
+Canonical server composition now provides current, operation-bound access to
+the four persisted protected-body classes and safe derived leadership history
+and workspace results. Authorization precedes body reads; Northstar material
+lineage is owner-backed and fresh-process reloadable; Product Decision Draft
+publication remains within its existing owner CAS and is non-authoritative.
+Prepare Again classifies all seven states at one time and gives denied material
+zero successor influence. Fresh-process A–D, replay, cache isolation,
+materialization failure recovery, and frontend non-disclosure pass. Retained
+Runtime and paused source preservation remain exact. Contemporaneous Epistemic
+History is still deferred and no Production, deployment, or route promotion is
+claimed.
+
 ## Persona architecture and roadmap reconciliation
 
 Discovery’s canonical Product direction now treats Chief, Counsel, Operator,

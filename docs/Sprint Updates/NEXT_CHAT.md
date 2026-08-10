@@ -1,5 +1,14 @@
 # Discovery Next Chat
 
+## Exact successor after P2 current-access delivery
+
+Run **DISCOVERY CONTEMPORANEOUS EPISTEMIC HISTORY FOUNDATION 001** in planning
+mode. Reconcile authentic cutoff-bound history with existing artifact owners,
+current-access evaluation, lineage, authorization, and Product Workflow without
+reconstructing past state from later knowledge. P2 delivery, seven-state
+Prepare Again, fresh-process A–D, atomic recovery, and non-disclosure are now
+closed; the permanent historical foundation itself remains unimplemented.
+
 ## Successors after persona-roadmap closure
 
 The active technical-governance successor is **DISCOVERY CANONICAL PRODUCT
