@@ -1,5 +1,35 @@
 # Discovery Architecture Handoff
 
+## Persona architecture and organizational-learning roadmap
+
+`DEC-PROD-049` canonizes Chief, Counsel, Operator, and Scout as governed
+application roles over one canonical Organizational Understanding and Product
+substrate. They are not separate agents, models, memories, truth stores, or
+authorization owners. The Leadership Conversation Alpha is Chief-led,
+Counsel-enhanced, minimally closed by Operator, and keeps Scout deferred or
+limited to uncertainty-linked acquisition recommendations.
+
+The application sequence is Alpha Leadership Conversation → Decision Learning
+→ Strategy Integrity → State Transfer/New-Leader Understanding → Scout and
+Environmental Intelligence → later composed hypotheses. This documentation
+decision changes no code or authority. P2 current access/history/reuse/Prepare
+Again, the governed resolver, permanent adversarial benchmark, Alpha Readiness,
+Alpha Baseline A, and design-partner Alpha remain incomplete.
+
+`DEC-PROD-050` separately makes Contemporaneous Epistemic History a first-class
+platform capability and compounding strategic asset. It distinguishes current
+Understanding, authentic owner-backed historical state, and later labeled
+Retrospective Analysis. No later knowledge may rewrite what was understood,
+uncertain, disputed, expected, accepted, rejected, or unresolved at the cutoff.
+The minimum historical package, rich dispositions, two-cycle Alpha proof, and
+twenty focused tests remain unimplemented under open `GAP-B-021`.
+
+Two successor tracks remain distinct. The active technical-governance successor
+is post-Northstar P2 current-access/history/reuse/Prepare Again transfer and
+overlap reconciliation. Before substantial persona expansion depends on
+history, the mandatory Product-architecture successor is Contemporaneous
+Epistemic History Foundation planning. Neither is authorized by this handoff.
+
 ## Northstar owner-backed preparation lineage fixture
 
 Implementation commit `00a3e1b91336b88ebc2101c8cf4c12b2328979b2`

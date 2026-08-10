@@ -1,5 +1,33 @@
 # Discovery Startup Snapshot
 
+## Persona architecture and organizational-learning direction
+
+Chief, Counsel, Operator, and Scout are governed application roles over one
+canonical Product and Organizational Understanding substrate—not separate
+agents, models, memories, truth stores, or authorization owners. Discovery’s
+durable Product event is a governed change in Organizational Understanding or
+a justified recorded non-change.
+
+The Alpha is one Chief-led, Counsel-enhanced Leadership Conversation, minimally
+closed by Operator, with Scout deferred. Its promise is to help leaders prepare
+with the best available understanding, uncover material assumptions or
+disagreement without manufacturing them, and preserve what changed. The
+immediate successor is independent review and closure of the documentation-only
+reconciliation; implementation, P2, Production, and deployment remain outside
+this task.
+
+`DEC-PROD-050` makes Contemporaneous Epistemic History a first-class temporal
+substrate and compounding strategic asset. Authentic cutoff-bound history is
+distinct from current Understanding and later labeled Retrospective Analysis;
+later Evidence, Outcomes, or interpretation versions cannot rewrite the prior
+record. Its minimum checkpoint, rich dispositions, historical-read
+authorization, two-cycle proof, and twenty focused tests remain unimplemented.
+
+Active technical successor: post-Northstar P2 current-access/history/reuse and
+Prepare Again reconciliation. Mandatory architecture successor before
+substantial persona expansion: Contemporaneous Epistemic History Foundation
+planning. Neither is authorized by this snapshot.
+
 **Northstar lineage fixture checkpoint:** implementation commit
 `00a3e1b91336b88ebc2101c8cf4c12b2328979b2` adds a server-only coordinator over
 existing Source Binding, Governed Source Content, canonical Evidence/Runtime,

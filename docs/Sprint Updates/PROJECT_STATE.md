@@ -1,5 +1,33 @@
 # Discovery Project State
 
+## Persona architecture and roadmap reconciliation
+
+Discovery’s canonical Product direction now treats Chief, Counsel, Operator,
+and Scout as governed application roles over one shared Organizational
+Understanding substrate. The first Alpha remains one Chief-led Leadership
+Conversation workflow with Counsel embedded, Operator bounded to closure, and
+Scout deferred. No role name grants authority, no persona owns separate truth,
+and no generated persona output is Evidence.
+
+The canonical application sequence is Alpha Leadership Conversation, Decision
+Learning, Strategy Integrity, State Transfer/New-Leader Understanding, Scout
+and Environmental Intelligence, then later composed hypotheses. The immediate
+task is independent review and closure of this documentation-only
+reconciliation. P2 current access/history/reuse/Prepare Again and all other
+listed technical/readiness gates remain incomplete and unchanged.
+
+Contemporaneous Epistemic History is canonized under `DEC-PROD-050` as a
+first-class shared temporal substrate, not a fifth persona or separate memory.
+Current Understanding, authentic cutoff-bound historical state, and later
+labeled Retrospective Analysis are distinct. The minimum checkpoint contract,
+non-reconstruction enforcement, rich disposition persistence, two-cycle Alpha
+proof, and twenty-test focused foundation remain open under `GAP-B-021`.
+
+The active technical successor remains the paused post-Northstar P2 transfer
+and overlap reconciliation. Contemporaneous Epistemic History Foundation
+planning is mandatory before substantial persona expansion depends on
+historical semantics; neither implementation is started here.
+
 ## Northstar preparation-lineage prerequisite
 
 Northstar preparation-time lineage fixture provisioning is implemented and

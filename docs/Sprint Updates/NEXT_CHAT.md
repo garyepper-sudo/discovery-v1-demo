@@ -1,6 +1,24 @@
 # Discovery Next Chat
 
-## Exact next task after Northstar lineage closure
+## Successors after persona-roadmap closure
+
+The active technical-governance successor is **DISCOVERY CANONICAL PRODUCT
+ARTIFACT CURRENT-ACCESS DELIVERY, HISTORY / REUSE, AND PREPARE AGAIN 001 —
+POST-NORTHSTAR-LINEAGE-PROVISIONING BASELINE, PARTIAL-IMPLEMENTATION TRANSFER,
+AND OVERLAP RECONCILIATION**.
+
+The mandatory Product-architecture successor before substantial persona
+expansion is **DISCOVERY CONTEMPORANEOUS EPISTEMIC HISTORY FOUNDATION 001** in
+planning mode: owner audit, minimum historical contract, non-reconstruction
+invariants, focused validation design, and two-cycle Alpha proof planning.
+
+P2 may continue as the active delivery foundation. Chief, Counsel, Operator,
+and Scout must not depend on historical semantics until the minimum foundation
+is canonically established through existing governance, lineage, persistence,
+authorization, and Product Workflow owners. Neither successor is authorized by
+this handoff.
+
+## Historical next task after Northstar lineage closure
 
 **DISCOVERY CANONICAL PRODUCT ARTIFACT CURRENT-ACCESS DELIVERY, HISTORY / REUSE,
 AND PREPARE AGAIN 001 — POST-NORTHSTAR-LINEAGE-PROVISIONING BASELINE,
@@ -12,8 +30,8 @@ from integrated canonical main. Reconcile valid partial work against the
 canonical fixture provisioner, preserve applicable path-36 metadata-lineage
 work, reconsider paths 37 and 38 using the owner-backed seed, remove every
 Runtime-digest lineage fallback, freeze one complete corrected P2 boundary,
-and require separate implementation authorization. Do not begin P2 or the
-separate persona/roadmap reconciliation during this closure.
+and require separate implementation authorization. That closure did not begin
+P2 or this now-completed persona/roadmap reconciliation.
 
 ## Exact next task
 
