@@ -22,6 +22,7 @@ import {
   type CanonicalProductDecisionDraftMaterializationReceiptV1,
   type CanonicalProductDecisionDraftMutationV1,
 } from "../workflow/leadershipConversation/canonicalProductMaterializationContracts";
+import { validateProductArtifactBodyRefV1, type ProductArtifactBodyRefV1 } from "../persistence/productArtifactBodyContracts";
 
 const exact = (value: string, label: string): string => {
   if (!value || value.trim() !== value || value === "*") throw new Error(`${label} is invalid.`);
@@ -126,8 +127,15 @@ function validateEvent(value: unknown, runtime: OrganizationRuntime): ProductDec
     measures: event.revision.measures, intendedDecisionMakerRef: event.revision.intendedDecisionMakerRef,
     intendedDecisionMakerLabel: event.revision.intendedDecisionMakerLabel, proposedReviewDate: event.revision.proposedReviewDate,
   };
-  validateContent(content);
-  if (event.revision.contentDigest !== productDecisionDraftDigest(content)) throw new Error("Product Decision Draft content digest is invalid.");
+  if(event.revision.bodyStoredExternally){
+    if(!event.revision.protectedBody||!event.revision.bodyStageReceiptDigest)throw new Error("Product Decision Draft body publication is incomplete.");
+    validateProductArtifactBodyRefV1(event.revision.protectedBody);
+    if(event.revision.protectedBody.organizationId!==event.organizationId||event.revision.protectedBody.semanticOwner!=="product-decision-draft"||event.revision.protectedBody.artifactType!=="product-decision-draft"||event.revision.protectedBody.artifactId!==event.draftId||event.revision.protectedBody.artifactRevision!==event.revision.revisionId||event.revision.protectedBody.exactBodyDigest!==event.revision.contentDigest)throw new Error("Product Decision Draft body publication is invalid.");
+    if(content.title!==""||content.intervention!==""||content.rationale!==""||content.assumptions.length||content.risks.length||content.expectedOutcomes.length||content.measures.length||content.intendedDecisionMakerRef!==null||content.intendedDecisionMakerLabel!==null||content.proposedReviewDate!==null)throw new Error("Product Decision Draft header contains protected content.");
+  }else{
+    validateContent(content);
+    if (event.revision.contentDigest !== productDecisionDraftDigest(content)) throw new Error("Product Decision Draft content digest is invalid.");
+  }
   const expectedRevisionId = identifier("product-decision-draft-revision", {
     draftId: event.draftId, revisionNumber: event.revision.revision,
     predecessorRevisionId: event.revision.predecessorRevisionId,
@@ -373,4 +381,9 @@ export function recordProductDecisionDraftRevision(input: {
     runtime: { ...input.runtime, metadata: { ...input.runtime.metadata, updatedAt: request.recordedAt }, memory: { ...input.runtime.memory, events: [...input.runtime.memory.events, event] } },
     result: { revision: structuredClone(revision), receipt: structuredClone(receipt), idempotent: false, ...(materializationReceipt ? { materializationReceipt: structuredClone(materializationReceipt) } : {}) },
   };
+}
+
+export function bindProductDecisionDraftBodyPublicationV1(input:{runtime:OrganizationRuntime;result:ProductDecisionDraftRecordResultV1;body:ProductArtifactBodyRefV1;stageReceiptDigest:string}):{runtime:OrganizationRuntime;result:ProductDecisionDraftRecordResultV1}{
+  validateProductArtifactBodyRefV1(input.body);const target=input.runtime.memory.events.find(event=>event&&typeof event==="object"&&(event as {kind?:unknown;eventId?:unknown}).kind===PRODUCT_DECISION_DRAFT_EVENT_KIND&&(event as {eventId?:unknown}).eventId===identifier("product-decision-draft-event",{revisionId:input.result.revision.revisionId,receiptId:input.result.receipt.receiptId})) as ProductDecisionDraftRevisionEventV1|undefined;if(!target)throw new Error("Product Decision Draft candidate event is unavailable.");if(input.body.organizationId!==target.organizationId||input.body.semanticOwner!=="product-decision-draft"||input.body.artifactType!=="product-decision-draft"||input.body.artifactId!==target.draftId||input.body.artifactRevision!==target.revision.revisionId||input.body.exactBodyDigest!==target.revision.contentDigest)throw new Error("Product Decision Draft body binding is invalid.");
+  const redacted:ProductDecisionDraftRevisionV1={...target.revision,title:"",intervention:"",rationale:"",assumptions:[],risks:[],expectedOutcomes:[],measures:[],intendedDecisionMakerRef:null,intendedDecisionMakerLabel:null,proposedReviewDate:null,bodyStoredExternally:true,protectedBody:structuredClone(input.body),bodyStageReceiptDigest:input.stageReceiptDigest};const receipt={...target.receipt,resultDigest:productDecisionDraftDigest({revision:redacted,receiptId:target.receipt.receiptId})};receipt.receiptDigest=productDecisionDraftDigest({...receipt,receiptDigest:"",resultDigest:""});let materializationReceipt=target.materializationReceipt;if(materializationReceipt){const {receiptDigest:_old,...unsigned}=materializationReceipt;void _old;const reboundUnsigned={...unsigned,draftOperationReceiptDigest:receipt.receiptDigest};materializationReceipt={...reboundUnsigned,receiptDigest:createCanonicalProductDecisionDraftMaterializationReceiptDigestV1(reboundUnsigned)};}const rebound={...target,revision:redacted,receipt,...(materializationReceipt?{materializationReceipt}:{})};const runtime={...input.runtime,memory:{...input.runtime.memory,events:input.runtime.memory.events.map(event=>event===target?rebound:event)}};return{runtime,result:{revision:structuredClone(input.result.revision),receipt:structuredClone(receipt),idempotent:input.result.idempotent,materializationReceipt:materializationReceipt?structuredClone(materializationReceipt):undefined}};
 }

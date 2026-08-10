@@ -1049,3 +1049,35 @@ Changing one requires the process in
   top-level Runtime schema, authorization owners, Product frontend, and routes
   are unchanged.
 - **Status:** Canonical bounded implementation, independently reviewed.
+
+## DEC-PROD-048 — Protected Product artifact bodies use owner-specific split persistence
+
+- **Decision:** Persist the bodies of exactly four protected Product artifact
+  classes—Prepared Work, frozen snapshot, What Changed, and Product Decision
+  Draft—through their existing canonical owners. Persist only content-free
+  identity, lifecycle, governance, lineage, integrity, and body-reference
+  metadata in Product Workflow or Runtime records.
+- **Owner boundary:** The neutral protected-body repository owns immutable
+  bytes and exact identity-to-body references only. Prepared Work and frozen
+  snapshot remain Leadership Conversation Product owners; What Changed remains
+  canonical materialization output; Product Decision Draft remains the Draft
+  owner. The repository does not own artifact semantics, authorization,
+  current access, revisions, workspace composition, or history.
+- **Commit boundary:** Each body is staged durably before its canonical owner
+  CAS. Same identity and same body is exact replay; same identity and different
+  body fails closed. A failed owner CAS can leave an unreachable staged blob
+  but cannot expose a committed artifact without a durable body reference.
+- **Derived-state boundary:** `ProductQuestionWorkspace` and Leadership History
+  remain derived, non-persisted projections. Workflow reuse and materialization
+  stage receipts remain content-free records. Legacy combined body-bearing
+  records fail closed rather than being silently migrated.
+- **Disclosure boundary:** Persistence grants no access. Current authorization,
+  metadata inspection, protected body reads, delivery, history/reuse, and
+  Prepare Again remain the separately gated successor and are not implemented
+  by this decision.
+- **Affected gap:** `GAP-B-019`; this closes the bounded owner-specific split-
+  persistence prerequisite without promoting the development route.
+- **Architecture:** No architecture change. Existing Product artifact owners,
+  Runtime CAS owners, Product Workflow CAS, and authorization owners remain
+  authoritative.
+- **Status:** Canonical bounded prerequisite implemented and validated.

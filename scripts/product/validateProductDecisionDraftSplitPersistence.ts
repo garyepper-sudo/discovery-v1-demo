@@ -1,0 +1,2 @@
+import assert from "node:assert/strict";import{execFileSync}from"node:child_process";import path from"node:path";
+const script=path.resolve("scripts/product/validateProductDecisionDraftOperation.ts"),output=execFileSync(process.execPath,[...process.execArgv,script],{cwd:process.cwd(),env:{...process.env,NODE_ENV:"test",TZ:"UTC"},encoding:"utf8",timeout:30_000});assert.match(output,/PASS \(49 checks\)/);console.log("Product Decision Draft split persistence PASS (staged body plus single Runtime CAS)");

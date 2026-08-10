@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
@@ -16,6 +16,8 @@ import {
 } from "../../product/decisions";
 import { ProductDecisionDraftService } from "../../product/integration/productDecisionDraftService";
 import { appendProductQuestionEvent, createDurableProductQuestion } from "../../product/questions/questionLifecycle";
+import { createProductArtifactBodyRefV1, productArtifactBodyDigest, type ProductArtifactBodyRefV1, type ProductArtifactBodyStageRequestV1, type ProductArtifactBodyStageReceiptV1 } from "../../product/persistence/productArtifactBodyContracts";
+import type { ProductArtifactBodyRepository } from "../../product/persistence/productArtifactBodyRepository";
 
 const fixed = "2026-08-06T13:00:00.000Z";
 const revisedAt = "2026-08-06T13:05:00.000Z";
@@ -57,9 +59,17 @@ function authority(operation: ProductDecisionDraftOperation, at: string): Produc
   };
 }
 
-function service(repository: FilesystemOrganizationRuntimeRepository): ProductDecisionDraftService {
+class ReplayBodyRepository implements ProductArtifactBodyRepository {
+  readonly backend="filesystem" as const;constructor(private readonly root:string){}
+  private target(ref:Pick<ProductArtifactBodyRefV1,"exactBodyDigest">){return path.join(this.root,`${ref.exactBodyDigest}.blob`);}
+  async stage(input:ProductArtifactBodyStageRequestV1):Promise<ProductArtifactBodyStageReceiptV1>{const body=createProductArtifactBodyRefV1({organizationId:input.organizationId,semanticOwner:input.semanticOwner,artifactType:input.artifactType,artifactId:input.artifactId,artifactRevision:input.artifactRevision,exactBodyDigest:productArtifactBodyDigest(input.bytes),byteLength:input.bytes.byteLength,mediaType:"application/json",schemaRef:input.schemaRef});await mkdir(this.root,{recursive:true,mode:0o700});let disposition:"staged"|"exact-replay"="staged";try{await writeFile(this.target(body),input.bytes,{flag:"wx",mode:0o600});}catch(error){if((error as NodeJS.ErrnoException).code!=="EEXIST")throw error;disposition="exact-replay";assert.deepEqual(new Uint8Array(await readFile(this.target(body))),input.bytes);}return{contractVersion:"1",body,disposition,receiptDigest:productArtifactBodyDigest({body,disposition})};}
+  async readStagedExact(ref:ProductArtifactBodyRefV1):Promise<Uint8Array>{const bytes=new Uint8Array(await readFile(this.target(ref)));if(bytes.byteLength!==ref.byteLength||productArtifactBodyDigest(bytes)!==ref.exactBodyDigest)throw new Error("body unavailable");return bytes;}
+}
+
+function service(repository: FilesystemOrganizationRuntimeRepository,root:string): ProductDecisionDraftService {
   return new ProductDecisionDraftService({
     runtimeRepository: repository,
+    bodyRepository:new ReplayBodyRepository(path.join(root,"product-artifact-bodies")),
     authorize: async (input) => authority(input.operation, input.evaluatedAt),
   });
 }
@@ -87,14 +97,14 @@ async function roleA(root: string): Promise<unknown> {
   console.info = () => undefined;
   const repository = new FilesystemOrganizationRuntimeRepository(root);
   await repository.create(organizationId, new TextEncoder().encode(JSON.stringify(fixtureRuntime(), null, 2)), { requestId: "fixture-create", operatorId: "validator" });
-  const created = await service(repository).create({ userId: "authorized", request: createRequest(), storageOperation: { requestId: "draft-create", operatorId: "actor-replay" } });
+  const created = await service(repository,root).create({ userId: "authorized", request: createRequest(), storageOperation: { requestId: "draft-create", operatorId: "actor-replay" } });
   return { role: "A", revision: created.revision, receipt: created.receipt, runtimeRevision: created.runtimeRevision };
 }
 
 async function roleB(root: string): Promise<unknown> {
   console.info = () => undefined;
   const repository = new FilesystemOrganizationRuntimeRepository(root);
-  const api = service(repository);
+  const api = service(repository,root);
   const before = await api.read({ userId: "authorized", request: { contractVersion: "1", organizationId, questionId, evaluatedAt: fixed } });
   assert.equal(before.status, "available");
   const replay = await api.create({ userId: "authorized", request: createRequest(), storageOperation: { requestId: "draft-replay", operatorId: "actor-replay" } });
@@ -110,7 +120,7 @@ async function roleB(root: string): Promise<unknown> {
 async function roleC(root: string): Promise<unknown> {
   console.info = () => undefined;
   const repository = new FilesystemOrganizationRuntimeRepository(root);
-  const api = service(repository);
+  const api = service(repository,root);
   const read = await api.read({ userId: "authorized", request: { contractVersion: "1", organizationId, questionId, evaluatedAt: revisedAt } });
   assert.equal(read.status, "available");
   const stale: ReviseProductDecisionDraftRequestV1 = {

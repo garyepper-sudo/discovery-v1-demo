@@ -8,11 +8,13 @@ import {
   productDecisionDraftEvents,
   productDecisionDraftHistory,
   recordProductDecisionDraftRevision,
+  bindProductDecisionDraftBodyPublicationV1,
   productDecisionDraftDigest,
   type ProductDecisionDraftAuthorityGrantV1,
   type ProductDecisionDraftOperation,
   type ProductDecisionDraftReadResultV1,
   type ProductDecisionDraftRecordResultV1,
+  type ProductDecisionDraftContentV1,
   type CreateProductDecisionDraftRequestV1,
   type ReadProductDecisionDraftRequestV1,
   type RecordProductDecisionDraftRequestV1,
@@ -22,9 +24,12 @@ import {
   assertCanonicalProductMaterializationInstructionIntegrityV1,
   type CanonicalProductMaterializationInstructionV1,
 } from "../workflow/leadershipConversation/canonicalProductMaterializationContracts";
+import { serializeProductArtifactBodyV1 } from "../persistence/productArtifactBodyContracts";
+import type { ProductArtifactBodyRepository } from "../persistence/productArtifactBodyRepository";
 
 export type ProductDecisionDraftServiceDependencies = {
   runtimeRepository: Pick<OrganizationRuntimeRepository, "read" | "replace">;
+  bodyRepository?: ProductArtifactBodyRepository;
   authorize(input: {
     userId: string;
     organizationId: string;
@@ -95,18 +100,24 @@ export class ProductDecisionDraftService {
     });
     const stored = await this.runtime(input.request.organizationId);
     const recorded = recordProductDecisionDraftRevision({ runtime: stored.runtime, request: input.request, grant });
-    if (recorded.result.idempotent) return { ...recorded.result, runtimeRevision: stored.revision };
-    const bytes = new TextEncoder().encode(JSON.stringify(recorded.runtime, null, 2));
+    if (recorded.result.idempotent) {
+      const ref=recorded.result.revision.protectedBody;if(!ref||!this.dependencies.bodyRepository)throw new Error("Product Decision Draft split-persistence replay is unavailable.");const content=JSON.parse(new TextDecoder().decode(await this.dependencies.bodyRepository.readStagedExact(ref))) as ProductDecisionDraftContentV1;return{...recorded.result,revision:{...recorded.result.revision,...content},runtimeRevision:stored.revision};
+    }
+    if(!this.dependencies.bodyRepository)throw new Error("Product Decision Draft split-persistence owner is unavailable.");
+    const draftBody:ProductDecisionDraftContentV1={title:recorded.result.revision.title,intervention:recorded.result.revision.intervention,rationale:recorded.result.revision.rationale,assumptions:recorded.result.revision.assumptions,risks:recorded.result.revision.risks,expectedOutcomes:recorded.result.revision.expectedOutcomes,measures:recorded.result.revision.measures,intendedDecisionMakerRef:recorded.result.revision.intendedDecisionMakerRef,intendedDecisionMakerLabel:recorded.result.revision.intendedDecisionMakerLabel,proposedReviewDate:recorded.result.revision.proposedReviewDate};
+    const staged=await this.dependencies.bodyRepository.stage({contractVersion:"1",organizationId:input.request.organizationId,semanticOwner:"product-decision-draft",artifactType:"product-decision-draft",artifactId:recorded.result.revision.draftId,artifactRevision:recorded.result.revision.revisionId,schemaRef:"discovery:product:decision-draft-body:v1",bytes:serializeProductArtifactBodyV1(draftBody)});
+    const bound=bindProductDecisionDraftBodyPublicationV1({runtime:recorded.runtime,result:recorded.result,body:staged.body,stageReceiptDigest:staged.receiptDigest});
+    const bytes = new TextEncoder().encode(JSON.stringify(bound.runtime, null, 2));
     const persisted = await this.dependencies.runtimeRepository.replace(
       input.request.organizationId, bytes, stored.revision, input.storageOperation,
     );
     const persistedEvent = productDecisionDraftEvents(persisted.runtime)
-      .find((event) => event.revision.revisionId === recorded.result.revision.revisionId);
-    if (!persistedEvent || persistedEvent.receipt.receiptId !== recorded.result.receipt.receiptId) {
+      .find((event) => event.revision.revisionId === bound.result.revision.revisionId);
+    if (!persistedEvent || persistedEvent.receipt.receiptId !== bound.result.receipt.receiptId) {
       throw new Error("Persisted Product Decision Draft receipt is unavailable.");
     }
     return {
-      revision: structuredClone(persistedEvent.revision),
+      revision: structuredClone(bound.result.revision),
       receipt: structuredClone(persistedEvent.receipt),
       idempotent: false,
       runtimeRevision: persisted.revision,
@@ -161,8 +172,10 @@ export class ProductDecisionDraftService {
         || completed.draftMutation?.instructionDigest !== instruction.instructionDigest) {
         throw new Error("Canonical Product Decision Draft materialization collision.");
       }
+      if(!completed.revision.protectedBody||!this.dependencies.bodyRepository)throw new Error("Canonical Product Decision Draft split-persistence replay is unavailable.");
+      const content=JSON.parse(new TextDecoder().decode(await this.dependencies.bodyRepository.readStagedExact(completed.revision.protectedBody))) as ProductDecisionDraftContentV1;
       return {
-        revision: structuredClone(completed.revision),
+        revision: {...structuredClone(completed.revision),...content},
         receipt: structuredClone(completed.receipt),
         materializationReceipt: structuredClone(completed.materializationReceipt),
         idempotent: true,
@@ -215,9 +228,13 @@ export class ProductDecisionDraftService {
     const recorded = recordProductDecisionDraftRevision({ runtime: stored.runtime, request, grant });
     if (recorded.result.idempotent) {
       if (!recorded.result.materializationReceipt) throw new Error("Canonical Product Decision Draft stage receipt is unavailable.");
-      return { ...recorded.result, runtimeRevision: stored.revision };
+      const ref=recorded.result.revision.protectedBody;if(!ref||!this.dependencies.bodyRepository)throw new Error("Canonical Product Decision Draft split-persistence replay is unavailable.");const content=JSON.parse(new TextDecoder().decode(await this.dependencies.bodyRepository.readStagedExact(ref))) as ProductDecisionDraftContentV1;return{...recorded.result,revision:{...recorded.result.revision,...content},runtimeRevision:stored.revision};
     }
-    const bytes = new TextEncoder().encode(JSON.stringify(recorded.runtime, null, 2));
+    if(!this.dependencies.bodyRepository)throw new Error("Canonical Product Decision Draft split-persistence owner is unavailable.");
+    const draftBody:ProductDecisionDraftContentV1={title:recorded.result.revision.title,intervention:recorded.result.revision.intervention,rationale:recorded.result.revision.rationale,assumptions:recorded.result.revision.assumptions,risks:recorded.result.revision.risks,expectedOutcomes:recorded.result.revision.expectedOutcomes,measures:recorded.result.revision.measures,intendedDecisionMakerRef:recorded.result.revision.intendedDecisionMakerRef,intendedDecisionMakerLabel:recorded.result.revision.intendedDecisionMakerLabel,proposedReviewDate:recorded.result.revision.proposedReviewDate};
+    const staged=await this.dependencies.bodyRepository.stage({contractVersion:"1",organizationId:instruction.organizationId,semanticOwner:"product-decision-draft",artifactType:"product-decision-draft",artifactId:recorded.result.revision.draftId,artifactRevision:recorded.result.revision.revisionId,schemaRef:"discovery:product:decision-draft-body:v1",bytes:serializeProductArtifactBodyV1(draftBody)});
+    const bound=bindProductDecisionDraftBodyPublicationV1({runtime:recorded.runtime,result:recorded.result,body:staged.body,stageReceiptDigest:staged.receiptDigest});
+    const bytes = new TextEncoder().encode(JSON.stringify(bound.runtime, null, 2));
     const persisted = await this.dependencies.runtimeRepository.replace(
       instruction.organizationId,
       bytes,
@@ -230,7 +247,7 @@ export class ProductDecisionDraftService {
       throw new Error("Persisted canonical Product Decision Draft stage is unavailable.");
     }
     return {
-      revision: structuredClone(persistedEvent.revision),
+      revision: {...structuredClone(persistedEvent.revision),...draftBody},
       receipt: structuredClone(persistedEvent.receipt),
       materializationReceipt: structuredClone(persistedEvent.materializationReceipt),
       idempotent: false,

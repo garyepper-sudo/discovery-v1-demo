@@ -1,5 +1,6 @@
 import type { ProductExpectedOutcome, ProductMeasure } from "../workflow/contracts";
 import type { CanonicalProductDecisionDraftMaterializationReceiptV1, CanonicalProductDecisionDraftMutationV1 } from "../workflow/leadershipConversation/canonicalProductMaterializationContracts";
+import type { ProductArtifactBodyRefV1 } from "../persistence/productArtifactBodyContracts";
 
 export const PRODUCT_DECISION_DRAFT_CONTRACT_VERSION = "1" as const;
 export const PRODUCT_DECISION_DRAFT_EVENT_KIND = "product-decision-draft-revision-recorded" as const;
@@ -61,6 +62,9 @@ export type ProductDecisionDraftRevisionV1 = ProductDecisionDraftContentV1 & {
   canonicalMaterializationInstructionDigest?: string;
   canonicalDraftEnvelopeDigest?: string;
   draftMutationDigest?: string;
+  bodyStoredExternally?: true;
+  protectedBody?: ProductArtifactBodyRefV1;
+  bodyStageReceiptDigest?: string;
 };
 
 export type ProductDecisionDraftOperationReceiptV1 = {

@@ -60,11 +60,12 @@ async function processA(root: string): Promise<WorkerResult> {
   stored = await workflow.read(fixture.organizationId);
   await composition.recordPreparation({ ...identity, idempotencyKey: "process-a-preparation-2", contextVersionId: context.contextVersionId, content: { ...NORTHSTAR_PREPARED_CONTENT, headline: "Resolve sequencing ownership before the next delivery window." }, lineage: NORTHSTAR_PREPARED_LINEAGE, changeSummary: "Leader clarified sequencing ownership." });
   stored = await workflow.read(fixture.organizationId);
-  const prepared = stored.store.preparedWorkProducts.at(-1)!;
-  await composition.freeze({ ...identity, idempotencyKey: "process-a-freeze", artifactVersionId: prepared.artifactVersionId });
+  const prepared = stored.store.preparedWorkPublications!.at(-1)!;
+  await composition.freeze({ ...identity, idempotencyKey: "process-a-freeze", artifactVersionId: prepared.artifactRevision });
   stored = await workflow.read(fixture.organizationId);
-  const frozen = stored.store.frozenSnapshots.at(-1)!;
-  const manifest = handoff({ organizationId: fixture.organizationId, questionId: fixture.questionId, conversationId: fixture.conversationId, contextVersionId: context.contextVersionId, preparedWorkProductVersionId: prepared.artifactVersionId, frozenSnapshotId: frozen.snapshotId, frozenSnapshotDigest: frozen.snapshotDigest, productWorkflowRepositoryRevision: stored.revision, eventCount: stored.store.events.length });
+  const frozen = stored.store.frozenSnapshotPublications!.at(-1)!;
+  assert.equal(stored.store.preparedWorkProducts.length,0);assert.equal(stored.store.frozenSnapshots.length,0);
+  const manifest = handoff({ organizationId: fixture.organizationId, questionId: fixture.questionId, conversationId: fixture.conversationId, contextVersionId: context.contextVersionId, preparedWorkProductVersionId: prepared.artifactRevision, frozenSnapshotId: frozen.artifactId, frozenSnapshotDigest: frozen.snapshotDigest, productWorkflowRepositoryRevision: stored.revision, eventCount: stored.store.events.length });
   return { role: "prepare-and-freeze", handoff: manifest, assertions: ["context-persisted", "preparation-v1-persisted", "preparation-v2-persisted", "frozen-snapshot-persisted"] };
 }
 
@@ -74,8 +75,8 @@ async function processB(root: string, encodedA: string): Promise<WorkerResult> {
   const workflow = createProductWorkflowArtifactRepository({ root: locations.workflowRoot, environment: "test" });
   let stored = await workflow.read(fixture.organizationId);
   assert.equal(stored.revision, a.productWorkflowRepositoryRevision);
-  assert.equal(stored.store.frozenSnapshots.at(-1)?.snapshotId, a.frozenSnapshotId);
-  assert.equal(stored.store.frozenSnapshots.at(-1)?.snapshotDigest, a.frozenSnapshotDigest);
+  assert.equal(stored.store.frozenSnapshotPublications!.at(-1)?.artifactId, a.frozenSnapshotId);
+  assert.equal(stored.store.frozenSnapshotPublications!.at(-1)?.snapshotDigest, a.frozenSnapshotDigest);
   const composition = await validationComposition(locations);
   await composition.receiveUpload({ ...identity, idempotencyKey: "process-b-upload", frozenSnapshotId: String(a.frozenSnapshotId), purposeRef: fixture.purposeRef, mediaType: "text/plain", bytes: fixture.captureBytes, displayLabel: "Staff notes", originalFilename: null });
   stored = await workflow.read(fixture.organizationId);
@@ -113,7 +114,7 @@ async function processC(root: string, encodedA: string, encodedB: string): Promi
   const workflow = createProductWorkflowArtifactRepository({ root: locations.workflowRoot, environment: "test" });
   let stored = await workflow.read(fixture.organizationId);
   assert.equal(stored.revision, b.productWorkflowRepositoryRevision);
-  assert.equal(stored.store.frozenSnapshots.find(item => item.snapshotId === a.frozenSnapshotId)?.snapshotDigest, a.frozenSnapshotDigest);
+  assert.equal(stored.store.frozenSnapshotPublications!.find(item => item.artifactId === a.frozenSnapshotId)?.snapshotDigest, a.frozenSnapshotDigest);
   const upload = stored.store.uploadReceipts.find(item => item.uploadReceiptId === b.uploadReceiptId)!;
   assert.equal(digest(upload), b.uploadReceiptDigest);
   assert.equal(upload.exactContentDigest, b.exactContentDigest);
@@ -156,14 +157,14 @@ async function processC(root: string, encodedA: string, encodedB: string): Promi
   if (!("integrationReceiptId" in decision) || !("integrationReceiptId" in unknown)) throw new Error("actual owner receipt unavailable");
   await composition.recordPreparation({ ...identity, idempotencyKey: "process-c-next-preparation", contextVersionId: context.contextVersionId, content: { ...NORTHSTAR_PREPARED_CONTENT, whatChanged: ["Canonical owner results were recorded."] }, lineage: { ...NORTHSTAR_PREPARED_LINEAGE, previousFrozenSnapshotId: String(a.frozenSnapshotId), canonicalChangeReceiptReferences: [material.productMaterializationReceiptDigest!, duplicate.productMaterializationReceiptDigest!, decision.integrationReceiptId, unknown.integrationReceiptId] }, changeSummary: "Prepared from actual canonical owner receipts." });
   stored = await workflow.read(fixture.organizationId);
-  const next = stored.store.preparedWorkProducts.at(-1)!;
-  await composition.prepareAgain({ ...identity, idempotencyKey: "process-c-future-preparation", nextConversationId: `${fixture.conversationId}:next`, nextContextVersionId: context.contextVersionId, nextPreparedWorkProductVersionId: next.artifactVersionId });
+  const next = stored.store.preparedWorkPublications!.at(-1)!;
+  await composition.prepareAgain({ ...identity, idempotencyKey: "process-c-future-preparation", nextConversationId: `${fixture.conversationId}:next`, nextContextVersionId: context.contextVersionId, nextPreparedWorkProductVersionId: next.artifactRevision });
   stored = await workflow.read(fixture.organizationId);
-  const beforeReplay = { revision: stored.revision, routes: stored.store.canonicalRoutingReceipts.length, future: stored.store.futurePreparationLinks.length, preparations: stored.store.preparedWorkProducts.length };
+  const beforeReplay = { revision: stored.revision, routes: stored.store.canonicalRoutingReceipts.length, future: stored.store.futurePreparationLinks.length, preparations: stored.store.preparedWorkPublications!.length };
   for (const [kind, key] of [["evidence-candidate", "process-c-route-evidence-duplicate"], ["decision-draft", "process-c-route-decision"], ["unknown", "process-c-route-unknown"]] as const) await route(kind, key);
-  await composition.prepareAgain({ ...identity, idempotencyKey: "process-c-future-preparation", nextConversationId: `${fixture.conversationId}:next`, nextContextVersionId: context.contextVersionId, nextPreparedWorkProductVersionId: next.artifactVersionId });
+  await composition.prepareAgain({ ...identity, idempotencyKey: "process-c-future-preparation", nextConversationId: `${fixture.conversationId}:next`, nextContextVersionId: context.contextVersionId, nextPreparedWorkProductVersionId: next.artifactRevision });
   stored = await workflow.read(fixture.organizationId);
-  assert.deepEqual({ revision: stored.revision, routes: stored.store.canonicalRoutingReceipts.length, future: stored.store.futurePreparationLinks.length, preparations: stored.store.preparedWorkProducts.length }, beforeReplay);
+  assert.deepEqual({ revision: stored.revision, routes: stored.store.canonicalRoutingReceipts.length, future: stored.store.futurePreparationLinks.length, preparations: stored.store.preparedWorkPublications!.length }, beforeReplay);
   await assert.rejects(() => composition.routeApproved({ ...identity, proposalId: proposal("decision-draft").proposalId, purposeRef: "different-purpose", expectedWorkflowRevision: stored.revision, idempotencyKey: "process-c-route-decision" }), /conflict/);
   runtime = await runtimeRepository.read(fixture.organizationId); assert.ok(runtime);
   if (!("receiptDigest" in decision) || !("receiptDigest" in unknown)) throw new Error("actual owner receipt unavailable");

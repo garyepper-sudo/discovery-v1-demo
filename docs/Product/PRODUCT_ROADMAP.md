@@ -88,8 +88,12 @@ Product resolver.
    existing CAS owners: candidate governance and instruction commit with the
    initial Runtime mutation, an optional Draft owner CAS, and one Product
    Workflow CAS. Post-CAS retry reloads durable stage receipts without rerunning
-   cognition. Current artifact access and frontend delivery remain separate,
-   fail-closed work.
+   cognition. Owner-specific split persistence is now complete for exactly
+   Prepared Work, frozen snapshot, What Changed, and Product Decision Draft:
+   canonical records retain content-free metadata and immutable protected-body
+   references, while workspace and history remain derived and non-persisted.
+   Current artifact access, protected-body delivery, history/reuse, and Prepare
+   Again remain the separately gated frozen successor and are not activated.
 5. **Customer validation — NEXT:** Director/VP interviews, prepared-content review,
    time-saved, first/second-preparation, trust, and cognitive-effort measures.
 6. **Organization-wide Production readiness:** secure persistence,

@@ -23,6 +23,9 @@ import {
   type CanonicalProductMaterializationInstructionV1,
 } from "../../product/workflow/leadershipConversation/canonicalProductMaterializationContracts";
 import { leadershipDigest, leadershipStableSerialize } from "../../product/workflow/leadershipConversation/determinism";
+import { createProductArtifactBodyRefV1 } from "../../product/persistence/productArtifactBodyContracts";
+import { productArtifactBodyDigest, type ProductArtifactBodyRefV1, type ProductArtifactBodyStageRequestV1, type ProductArtifactBodyStageReceiptV1 } from "../../product/persistence/productArtifactBodyContracts";
+import type { ProductArtifactBodyRepository } from "../../product/persistence/productArtifactBodyRepository";
 
 const organizationId = "decision-draft-validation";
 const otherOrganizationId = "decision-draft-other";
@@ -32,6 +35,12 @@ const firstAt = "2026-08-06T12:00:00.000Z";
 const secondAt = "2026-08-06T12:05:00.000Z";
 let checks = 0;
 const check = (value: unknown, message: string): void => { assert.ok(value, message); checks += 1; };
+
+class MemoryBodyRepository implements ProductArtifactBodyRepository {
+  readonly backend="filesystem" as const;private readonly bodies=new Map<string,Uint8Array>();
+  async stage(input:ProductArtifactBodyStageRequestV1):Promise<ProductArtifactBodyStageReceiptV1>{const body=createProductArtifactBodyRefV1({organizationId:input.organizationId,semanticOwner:input.semanticOwner,artifactType:input.artifactType,artifactId:input.artifactId,artifactRevision:input.artifactRevision,exactBodyDigest:productArtifactBodyDigest(input.bytes),byteLength:input.bytes.byteLength,mediaType:"application/json",schemaRef:input.schemaRef}),existing=this.bodies.get(body.bodyId),disposition=existing?"exact-replay" as const:"staged" as const;if(existing)assert.deepEqual(existing,input.bytes);else this.bodies.set(body.bodyId,input.bytes.slice());return{contractVersion:"1",body,disposition,receiptDigest:productArtifactBodyDigest({body,disposition})};}
+  async readStagedExact(ref:ProductArtifactBodyRefV1):Promise<Uint8Array>{const bytes=this.bodies.get(ref.bodyId);if(!bytes||productArtifactBodyDigest(bytes)!==ref.exactBodyDigest)throw new Error("body unavailable");return bytes.slice();}
+}
 
 function fixtureRuntime(): OrganizationRuntime {
   let runtime = createEmptyOrganizationRuntime({ organizationId, name: "Decision Draft Validation", now: firstAt });
@@ -89,13 +98,9 @@ function materializationInstruction(): CanonicalProductMaterializationInstructio
     predecessorRevisionId: null, originatingProposalRef: "proposal-1", ...content(),
   };
   const draftEnvelopeDigest = leadershipDigest(leadershipStableSerialize(payload));
-  const whatChangedEnvelope = {
-    integrationReceiptId: "integration-receipt-1", routingLinkIds: ["routing-link-1"],
-    classification: "changed" as const,
-    changeFacts: { proposalRouted: true as const, productArtifactRecorded: true, evidenceAdmitted: true,
-      runtimeRepository: "changed" as const, organizationalUnderstanding: "changed" as const,
-      answer: "unchanged" as const, unknown: "unchanged" as const, learning: "undetermined" as const },
-  };
+  const protectedBody=createProductArtifactBodyRefV1({organizationId,semanticOwner:"leadership-conversation",artifactType:"what-changed",artifactId:"what-changed-1",artifactRevision:"1",exactBodyDigest:sha("what-changed-body"),byteLength:1,mediaType:"application/json",schemaRef:"discovery:product:what-changed-body:v1"});
+  const whatChangedHeader={integrationReceiptId:"integration-receipt-1",artifactRevision:"1",productWorkflowId:"workflow-1",creationEnvelopeDigest:sha("creation"),materialReferencesDigest:sha("material-envelope"),protectedBody,ownerStageReceiptDigest:sha("stage")};
+  const whatChangedEnvelope={...whatChangedHeader,headerDigest:leadershipDigest(leadershipStableSerialize(whatChangedHeader))};
   const unsigned = {
     contractVersion: "1" as const, instructionId: "instruction-1", organizationId, questionId,
     conversationId: "conversation-1", proposalId: "proposal-1", canonicalOperationId: "operation-1",
@@ -173,9 +178,11 @@ async function main(): Promise<void> {
   check(productDecisionDraftDigest(logicalEvent.draftMutation) !== productDecisionDraftDigest({ ...logicalEvent.draftMutation, expectedRuntimeRevision: "different-pre-cas-revision" }), "pre-CAS revision remains material to the logical mutation");
 
   const repository = new MemoryRepository(initial);
+  const bodyRepository=new MemoryBodyRepository();
   const authorizationCalls: ProductDecisionDraftOperation[] = [];
   const service = new ProductDecisionDraftService({
     runtimeRepository: repository,
+    bodyRepository,
     authorize: async (input) => {
       authorizationCalls.push(input.operation);
       return grant(input.operation, { authorized: input.userId === "authorized", organizationId: input.organizationId,
@@ -234,6 +241,7 @@ async function main(): Promise<void> {
   const materializationRepository = new MemoryRepository(provenanceRuntime);
   const materializationService = new ProductDecisionDraftService({
     runtimeRepository: materializationRepository,
+    bodyRepository,
     authorize: async (input) => grant(input.operation, { organizationId: input.organizationId, questionId: input.questionId, scope: input.scope, purpose: input.purpose, sensitivity: input.sensitivity, authorizedAt: input.evaluatedAt }),
     authorizeMaterialization: async ({ operation: materializationOperation }) => grant(materializationOperation, { authorizedAt: firstAt }),
   });
@@ -292,6 +300,7 @@ async function main(): Promise<void> {
   const staleRepository = new StaleRepository(initial);
   const staleService = new ProductDecisionDraftService({
     runtimeRepository: staleRepository,
+    bodyRepository,
     authorize: async (input) => grant(input.operation, { organizationId: input.organizationId, questionId: input.questionId,
       scope: input.scope, purpose: input.purpose, sensitivity: input.sensitivity, authorizedAt: input.evaluatedAt }),
   });

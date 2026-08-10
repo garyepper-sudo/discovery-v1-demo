@@ -21,12 +21,15 @@ import {
   NORTHSTAR_PREPARED_CONTENT,
   NORTHSTAR_PREPARED_LINEAGE,
 } from "../../product/workflow/leadershipConversation";
+import { createProductArtifactBodyRefV1, productArtifactBodyDigest, type ProductArtifactBodyRefV1, type ProductArtifactBodyStageRequestV1, type ProductArtifactBodyStageReceiptV1 } from "../../product/persistence/productArtifactBodyContracts";
+import type { ProductArtifactBodyRepository } from "../../product/persistence/productArtifactBodyRepository";
 
 let checks = 0;
 function check(value: unknown, message: string): void {
   assert.ok(value, message);
   checks += 1;
 }
+class MemoryBodyRepository implements ProductArtifactBodyRepository {readonly backend="filesystem" as const;private bodies=new Map<string,Uint8Array>();async stage(input:ProductArtifactBodyStageRequestV1):Promise<ProductArtifactBodyStageReceiptV1>{const body=createProductArtifactBodyRefV1({organizationId:input.organizationId,semanticOwner:input.semanticOwner,artifactType:input.artifactType,artifactId:input.artifactId,artifactRevision:input.artifactRevision,exactBodyDigest:productArtifactBodyDigest(input.bytes),byteLength:input.bytes.byteLength,mediaType:"application/json",schemaRef:input.schemaRef}),prior=this.bodies.get(body.bodyId),disposition=prior?"exact-replay" as const:"staged" as const;if(prior)assert.deepEqual(prior,input.bytes);else this.bodies.set(body.bodyId,input.bytes.slice());return{contractVersion:"1",body,disposition,receiptDigest:productArtifactBodyDigest({body,disposition})};}async readStagedExact(ref:ProductArtifactBodyRefV1){const bytes=this.bodies.get(ref.bodyId);if(!bytes)throw new Error("body unavailable");return bytes.slice();}}
 
 async function main(): Promise<void> {
   const workflowRoot = await mkdtemp(path.join(tmpdir(), "discovery-leadership-conversation-workflow-"));
@@ -46,19 +49,21 @@ async function main(): Promise<void> {
       readForEvidenceAdmission: async () => { throw new Error("Canonical routing belongs to the canonical owner router."); },
     };
     const base = readLeadershipConversationFixture().base;
-    const operations = new LeadershipConversationProductOperations({ repository, clock: { now: () => fixture.at }, authorize: async ({ userId, organizationId }) => userId === fixture.actorId && organizationId === fixture.organizationId, loadBase: async () => base, source });
+    const bodyRepository=new MemoryBodyRepository();
+    const operations = new LeadershipConversationProductOperations({ repository, bodyRepository, clock: { now: () => fixture.at }, authorize: async ({ userId, organizationId }) => userId === fixture.actorId && organizationId === fixture.organizationId, loadBase: async () => base, source });
     const identity = { userId: fixture.actorId, organizationId: fixture.organizationId, questionId: fixture.questionId, conversationId: fixture.conversationId };
     let deniedReads = 0;
-    const denied = new LeadershipConversationProductOperations({ repository: { ...repository, read: async (id) => { deniedReads += 1; return repository.read(id); } }, clock: { now: () => fixture.at }, authorize: async () => false, loadBase: async () => base, source });
+    const denied = new LeadershipConversationProductOperations({ repository: { ...repository, read: async (id) => { deniedReads += 1; return repository.read(id); } }, bodyRepository, clock: { now: () => fixture.at }, authorize: async () => false, loadBase: async () => base, source });
     await assert.rejects(() => denied.workspace({ ...identity, userId: "denied" }), /access denied/);
     check(deniedReads === 0, "denial precedes workflow I/O");
     await operations.recordContext({ ...identity, idempotencyKey: "context", title: "Northstar staff conversation", purpose: "Resolve the next delivery constraint.", intendedOutcome: "Agree one bounded owner action.", timeframe: "Weekly", participants: [{ participantRef: "p1", displayName: "Leader", titleLabel: "Director" }], leaderContext: null });
     let store = (await repository.read(fixture.organizationId)).store;
     await operations.recordPreparation({ ...identity, idempotencyKey: "prepare", contextVersionId: store.contexts[0]!.contextVersionId, content: NORTHSTAR_PREPARED_CONTENT, lineage: NORTHSTAR_PREPARED_LINEAGE, changeSummary: null });
     store = (await repository.read(fixture.organizationId)).store;
-    await operations.freeze({ ...identity, idempotencyKey: "freeze", artifactVersionId: store.preparedWorkProducts[0]!.artifactVersionId });
+    await operations.freeze({ ...identity, idempotencyKey: "freeze", artifactVersionId: store.preparedWorkPublications![0]!.artifactRevision });
     store = (await repository.read(fixture.organizationId)).store;
-    await operations.receiveUpload({ ...identity, idempotencyKey: "upload", frozenSnapshotId: store.frozenSnapshots[0]!.snapshotId, purposeRef: fixture.purposeRef, mediaType: "text/plain", bytes: fixture.captureBytes, displayLabel: "Staff notes", originalFilename: null });
+    await operations.receiveUpload({ ...identity, idempotencyKey: "upload", frozenSnapshotId: store.frozenSnapshotPublications![0]!.artifactId, purposeRef: fixture.purposeRef, mediaType: "text/plain", bytes: fixture.captureBytes, displayLabel: "Staff notes", originalFilename: null });
+    check(store.preparedWorkProducts.length===0&&store.frozenSnapshots.length===0,"legacy combined Prepared Work and snapshot containers remain empty");
     store = (await repository.read(fixture.organizationId)).store;
     check(!JSON.stringify(store).includes("NORTHSTAR-LEADERSHIP-CAPTURE-001"), "workflow stores references, not source content");
     check(await operations.generateFixtureProposals({ ...identity, idempotencyKey: "proposals", uploadReceiptId: store.uploadReceipts[0]!.uploadReceiptId, purposeRef: fixture.purposeRef }) === 4, "typed fixture proposals generated");

@@ -1,4 +1,5 @@
 import { leadershipDigest, leadershipStableSerialize } from "./determinism";
+import type { ProductArtifactBodyRefV1 } from "../../persistence/productArtifactBodyContracts";
 
 export const CANONICAL_PRODUCT_MATERIALIZATION_CONTRACT_VERSION = "1" as const;
 
@@ -104,18 +105,13 @@ export type CanonicalProductMaterializationInstructionV1 = ContractV1 & {
 
 export type CanonicalProductWhatChangedEnvelopeV1 = {
   integrationReceiptId: string;
-  routingLinkIds: string[];
-  classification: "changed" | "unchanged" | "undetermined";
-  changeFacts: {
-    proposalRouted: true;
-    productArtifactRecorded: boolean;
-    evidenceAdmitted: boolean;
-    runtimeRepository: "changed" | "unchanged";
-    organizationalUnderstanding: "changed" | "unchanged" | "undetermined";
-    answer: "changed" | "unchanged" | "undetermined";
-    unknown: "changed" | "unchanged" | "undetermined";
-    learning: "changed" | "unchanged" | "undetermined";
-  };
+  artifactRevision: string;
+  productWorkflowId: string;
+  creationEnvelopeDigest: string;
+  materialReferencesDigest: string;
+  protectedBody: ProductArtifactBodyRefV1;
+  ownerStageReceiptDigest: string;
+  headerDigest: string;
 };
 
 export type CanonicalProductDecisionDraftMaterializationReceiptV1 = ContractV1 & {
@@ -305,10 +301,7 @@ export function createCanonicalProductMaterializationInstructionDigestV1(
     authorityRevisionRefs: sorted(value.authorityRevisionRefs),
     policyRevisionRefs: sorted(value.policyRevisionRefs),
     materialReferences: sorted(value.materialReferences),
-    whatChangedEnvelope: {
-      ...value.whatChangedEnvelope,
-      routingLinkIds: sorted(value.whatChangedEnvelope.routingLinkIds),
-    },
+    whatChangedEnvelope: value.whatChangedEnvelope,
   });
 }
 
@@ -407,17 +400,10 @@ export function assertCanonicalProductMaterializationInstructionIntegrityV1(
     value.governedProductInputDigest, value.materialEnvelopeDigest, value.whatChangedEnvelopeDigest]
     .forEach((field) => assertDigestValue(field, "instruction digest field"));
   if (value.whatChangedIntent !== "materialize") fail("What Changed intent is invalid");
-  assertClosedKeys(value.whatChangedEnvelope, ["integrationReceiptId", "routingLinkIds", "classification", "changeFacts"], "What Changed envelope");
-  assertClosedKeys(value.whatChangedEnvelope.changeFacts, ["proposalRouted", "productArtifactRecorded", "evidenceAdmitted", "runtimeRepository", "organizationalUnderstanding", "answer", "unknown", "learning"], "What Changed facts");
+  assertClosedKeys(value.whatChangedEnvelope, ["integrationReceiptId", "artifactRevision", "productWorkflowId", "creationEnvelopeDigest", "materialReferencesDigest", "protectedBody", "ownerStageReceiptDigest", "headerDigest"], "What Changed envelope");
   assertIdentifier(value.whatChangedEnvelope.integrationReceiptId, "What Changed integrationReceiptId");
-  assertUniqueIdentifiers(value.whatChangedEnvelope.routingLinkIds, "What Changed routingLinkIds");
-  if (!["changed", "unchanged", "undetermined"].includes(value.whatChangedEnvelope.classification)) fail("What Changed classification is invalid");
-  const facts = value.whatChangedEnvelope.changeFacts;
-  if (facts.proposalRouted !== true || typeof facts.productArtifactRecorded !== "boolean" || typeof facts.evidenceAdmitted !== "boolean") fail("What Changed facts are invalid");
-  if (!["changed", "unchanged"].includes(facts.runtimeRepository)) fail("What Changed Runtime disposition is invalid");
-  [facts.organizationalUnderstanding, facts.answer, facts.unknown, facts.learning]
-    .forEach((field) => { if (!["changed", "unchanged", "undetermined"].includes(field)) fail("What Changed fact disposition is invalid"); });
-  if (digestSemanticValue({ ...value.whatChangedEnvelope, routingLinkIds: sorted(value.whatChangedEnvelope.routingLinkIds) }) !== value.whatChangedEnvelopeDigest) fail("What Changed envelope digest does not match");
+  [value.whatChangedEnvelope.artifactRevision,value.whatChangedEnvelope.productWorkflowId].forEach(field=>assertIdentifier(field,"What Changed header identifier"));[value.whatChangedEnvelope.creationEnvelopeDigest,value.whatChangedEnvelope.materialReferencesDigest,value.whatChangedEnvelope.ownerStageReceiptDigest,value.whatChangedEnvelope.headerDigest].forEach(field=>assertDigestValue(field,"What Changed header digest"));const body=value.whatChangedEnvelope.protectedBody;if(body.organizationId!==value.organizationId||body.semanticOwner!=="leadership-conversation"||body.artifactType!=="what-changed"||body.artifactId!==value.whatChangedArtifactId||body.artifactRevision!==value.whatChangedEnvelope.artifactRevision)fail("What Changed body reference is invalid");const{headerDigest,...header}=value.whatChangedEnvelope;if(digestSemanticValue(header)!==headerDigest)fail("What Changed header digest does not match");
+  if (digestSemanticValue(value.whatChangedEnvelope) !== value.whatChangedEnvelopeDigest) fail("What Changed envelope digest does not match");
   assertDraftRequest(value.draftMaterialization);
   if (value.instructionDigest !== createCanonicalProductMaterializationInstructionDigestV1(withoutKey(value, "instructionDigest"))) fail("instructionDigest does not match");
 }

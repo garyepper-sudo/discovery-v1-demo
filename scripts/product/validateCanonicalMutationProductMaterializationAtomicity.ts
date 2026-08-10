@@ -22,6 +22,8 @@ import { CanonicalLeadershipConversationProductMaterializer } from "../../produc
 import type { ProductDecisionDraftAuthorityGrantV1, ProductDecisionDraftOperation } from "../../product/decisions";
 import { productDecisionDraftDigest } from "../../product/decisions";
 import { pathToFileURL } from "node:url";
+import { createProductArtifactBodyRefV1, productArtifactBodyDigest, type ProductArtifactBodyRefV1, type ProductArtifactBodyStageRequestV1, type ProductArtifactBodyStageReceiptV1 } from "../../product/persistence/productArtifactBodyContracts";
+import type { ProductArtifactBodyRepository } from "../../product/persistence/productArtifactBodyRepository";
 
 const sha = (value: string) => createHash("sha256").update(value).digest("hex");
 export const organizationId = "atomicity-validation";
@@ -47,13 +49,17 @@ export class MemoryWorkflowRepository implements ProductWorkflowArtifactReposito
   async resetDevelopmentFixture(): Promise<boolean> { return false; }
 }
 
+export class MemoryBodyRepository implements ProductArtifactBodyRepository {
+  readonly backend="filesystem" as const;
+  private readonly bodies=new Map<string,Uint8Array>();
+  async stage(input:ProductArtifactBodyStageRequestV1):Promise<ProductArtifactBodyStageReceiptV1>{const body=createProductArtifactBodyRefV1({organizationId:input.organizationId,semanticOwner:input.semanticOwner,artifactType:input.artifactType,artifactId:input.artifactId,artifactRevision:input.artifactRevision,exactBodyDigest:productArtifactBodyDigest(input.bytes),byteLength:input.bytes.byteLength,mediaType:"application/json",schemaRef:input.schemaRef}),existing=this.bodies.get(body.bodyId),disposition=existing?"exact-replay" as const:"staged" as const;if(existing)assert.deepEqual(existing,input.bytes);else this.bodies.set(body.bodyId,input.bytes.slice());return{contractVersion:"1",body,disposition,receiptDigest:productArtifactBodyDigest({body,disposition})};}
+  async readStagedExact(ref:ProductArtifactBodyRefV1):Promise<Uint8Array>{const bytes=this.bodies.get(ref.bodyId);if(!bytes||productArtifactBodyDigest(bytes)!==ref.exactBodyDigest)throw new Error("body unavailable");return bytes.slice();}
+}
+
 export function instruction(draftRequired = false): CanonicalProductMaterializationInstructionV1 {
-  const whatChangedEnvelope = {
-    integrationReceiptId: "integration-receipt-1", routingLinkIds: ["routing-link-1"], classification: "changed" as const,
-    changeFacts: { proposalRouted: true as const, productArtifactRecorded: true, evidenceAdmitted: true,
-      runtimeRepository: "changed" as const, organizationalUnderstanding: "changed" as const,
-      answer: "unchanged" as const, unknown: "unchanged" as const, learning: "undetermined" as const },
-  };
+  const protectedBody=createProductArtifactBodyRefV1({organizationId,semanticOwner:"leadership-conversation",artifactType:"what-changed",artifactId:"what-changed-1",artifactRevision:"1",exactBodyDigest:sha("what-changed-body"),byteLength:1,mediaType:"application/json",schemaRef:"discovery:product:what-changed-body:v1"});
+  const whatChangedHeader={integrationReceiptId:"integration-receipt-1",artifactRevision:"1",productWorkflowId:"workflow-1",creationEnvelopeDigest:sha("creation"),materialReferencesDigest:sha("materials"),protectedBody,ownerStageReceiptDigest:sha("stage")};
+  const whatChangedEnvelope={...whatChangedHeader,headerDigest:leadershipDigest(leadershipStableSerialize(whatChangedHeader))};
   const unsigned = {
     contractVersion: "1" as const, instructionId: "instruction-1", organizationId, questionId, conversationId,
     proposalId: "proposal-1", canonicalOperationId: "operation-1", requestFingerprint: sha("request"),
@@ -108,9 +114,9 @@ export async function runAtomicityValidation(): Promise<void> {
   const originalInstruction = structuredClone(canonicalInstruction);
   assertCanonicalProductMaterializationInstructionIntegrityV1(canonicalInstruction);
   assert.deepEqual(canonicalInstruction, originalInstruction);
-  const reordered = { ...canonicalInstruction, authorityRevisionRefs: [...canonicalInstruction.authorityRevisionRefs].reverse(), policyRevisionRefs: [...canonicalInstruction.policyRevisionRefs].reverse(), materialReferences: [...canonicalInstruction.materialReferences].reverse(), whatChangedEnvelope: { ...canonicalInstruction.whatChangedEnvelope, routingLinkIds: [...canonicalInstruction.whatChangedEnvelope.routingLinkIds].reverse() } };
+  const reordered = { ...canonicalInstruction, authorityRevisionRefs: [...canonicalInstruction.authorityRevisionRefs].reverse(), policyRevisionRefs: [...canonicalInstruction.policyRevisionRefs].reverse(), materialReferences: [...canonicalInstruction.materialReferences].reverse() };
   assert.equal(createCanonicalProductMaterializationInstructionDigestV1(unsignedInstruction(reordered)), canonicalInstruction.instructionDigest);
-  const changed = structuredClone(canonicalInstruction); changed.whatChangedEnvelope.classification = "unchanged"; changed.whatChangedEnvelopeDigest = leadershipDigest(leadershipStableSerialize(changed.whatChangedEnvelope)); changed.instructionDigest = createCanonicalProductMaterializationInstructionDigestV1(unsignedInstruction(changed));
+  const changed = structuredClone(canonicalInstruction); changed.whatChangedEnvelope.creationEnvelopeDigest = sha("different-creation"); const {headerDigest:_headerDigest,...changedHeader}=changed.whatChangedEnvelope; changed.whatChangedEnvelope.headerDigest=leadershipDigest(leadershipStableSerialize(changedHeader)); changed.whatChangedEnvelopeDigest = leadershipDigest(leadershipStableSerialize(changed.whatChangedEnvelope)); changed.instructionDigest = createCanonicalProductMaterializationInstructionDigestV1(unsignedInstruction(changed));
   assert.notEqual(changed.instructionDigest, canonicalInstruction.instructionDigest);
   const openEnvelope = structuredClone(canonicalInstruction) as CanonicalProductMaterializationInstructionV1 & { whatChangedEnvelope: CanonicalProductMaterializationInstructionV1["whatChangedEnvelope"] & { fabricated?: boolean } }; openEnvelope.whatChangedEnvelope.fabricated = true; openEnvelope.instructionDigest = createCanonicalProductMaterializationInstructionDigestV1(unsignedInstruction(openEnvelope));
   assert.throws(() => assertCanonicalProductMaterializationInstructionIntegrityV1(openEnvelope), /missing or unknown fields/);
@@ -126,7 +132,8 @@ export async function runAtomicityValidation(): Promise<void> {
   assert.equal(repository.replaceCount, 1); assert.equal(first.idempotent, false);
   assert.equal(repository.snapshot.store.productMaterializations?.length, 1);
   assert.equal(repository.snapshot.store.productMaterializationReceipts?.length, 1);
-  assert.equal(repository.snapshot.store.changeLinks.length, 1);
+  assert.equal(repository.snapshot.store.whatChangedPublications?.length, 1);
+  assert.equal(repository.snapshot.store.changeLinks.length, 0);
   const replay = await operations.materializeCanonicalProductInstruction({ instruction: canonicalInstruction, draftResult });
   assert.equal(replay.idempotent, true); assert.equal(repository.replaceCount, 1);
   assert.equal(replay.receipt.receiptDigest, first.receipt.receiptDigest);
@@ -137,7 +144,7 @@ export async function runAtomicityValidation(): Promise<void> {
   const runtimeRepository = new MemoryRuntimeRepository(runtimeWithInstruction(stagedInstruction));
   const stagedWorkflowRepository = new MemoryWorkflowRepository();
   const stagedOperations = new LeadershipConversationProductOperations({ repository: stagedWorkflowRepository, clock: { now: () => stagedInstruction.evaluatedAt }, authorize: async () => false, verifyCanonicalInstructionProvenance: async (candidate) => candidate.instructionDigest === stagedInstruction.instructionDigest, loadBase: async () => { throw new Error("frontend read must not occur"); }, source: { write: async () => { throw new Error("source write must not occur"); }, readForProposal: async () => { throw new Error("source read must not occur"); }, readForEvidenceAdmission: async () => { throw new Error("source read must not occur"); } } });
-  const draftService = new ProductDecisionDraftService({ runtimeRepository: runtimeRepository as never, authorize: async (value) => grant(value.operation, value.evaluatedAt), authorizeMaterialization: async ({ operation }) => grant(operation, stagedInstruction.evaluatedAt) });
+  const draftService = new ProductDecisionDraftService({ runtimeRepository: runtimeRepository as never, bodyRepository:new MemoryBodyRepository(), authorize: async (value) => grant(value.operation, value.evaluatedAt), authorizeMaterialization: async ({ operation }) => grant(operation, stagedInstruction.evaluatedAt) });
   const coordinator = new CanonicalLeadershipConversationProductMaterializer({ productDecisionDraftService: draftService, productWorkflowOperations: stagedOperations, storageOperation: () => ({ requestId: "draft-stage", operatorId: "system" }) });
   const completed = await coordinator.materialize({ contractVersion: "1", instruction: stagedInstruction, draftResult: null });
   assert.equal(completed.stage, "canonical-committed-product-materialized");

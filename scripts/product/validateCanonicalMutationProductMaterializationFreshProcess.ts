@@ -10,7 +10,7 @@ export type SafeRecoveryHandoffV1 = { contractVersion: "1"; role: ProcessRole; r
 const scriptByRole: Record<ProcessRole, string> = {
   "owner-replay": "validateLeadershipConversationReplay.ts",
   atomicity: "validateCanonicalMutationProductMaterializationAtomicity.ts",
-  "failure-recovery": "validateCanonicalMutationProductMaterializationFailureAtomicity.ts",
+  "failure-recovery": "validateCanonicalMutationProductMaterializationFailure.ts",
 };
 
 export async function runWorker(role: ProcessRole): Promise<SafeRecoveryHandoffV1> {

@@ -1,0 +1,2 @@
+import assert from "node:assert/strict";import{execFileSync}from"node:child_process";import path from"node:path";
+const script=path.resolve("scripts/product/validateLeadershipConversationPrepareCapture.ts"),output=execFileSync(process.execPath,[...process.execArgv,script],{cwd:process.cwd(),env:{...process.env,NODE_ENV:"test",TZ:"UTC"},encoding:"utf8",timeout:30_000});assert.match(output,/"result":"PASS"/);console.log("Prepared Work split persistence PASS (actual owner publication; legacy combined container empty)");

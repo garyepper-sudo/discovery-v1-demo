@@ -1,0 +1,9 @@
+import assert from "node:assert/strict";
+import {mkdtemp,readFile,rm,stat} from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+import {createProductArtifactBodyRepository} from "../../product/persistence/productArtifactBodyRepository";
+import {serializeProductArtifactBodyV1} from "../../product/persistence/productArtifactBodyContracts";
+
+async function main(){const root=await mkdtemp(path.join(os.tmpdir(),"discovery-product-artifact-body-"));try{const repository=createProductArtifactBodyRepository({root}),request={contractVersion:"1" as const,organizationId:"owner-validation",semanticOwner:"leadership-conversation" as const,artifactType:"prepared-work" as const,artifactId:"prepared-work-1",artifactRevision:"revision-1",schemaRef:"discovery:product:prepared-work-body:v1",bytes:serializeProductArtifactBodyV1({protected:"not metadata"})};const first=await repository.stage(request),replay=await repository.stage(request);assert.equal(first.disposition,"staged");assert.equal(replay.disposition,"exact-replay");assert.equal(first.body.refDigest,replay.body.refDigest);assert.deepEqual(await repository.readStagedExact(first.body),request.bytes);await assert.rejects(()=>repository.stage({...request,bytes:serializeProductArtifactBodyV1({protected:"different"})}),/identity collision/);await assert.rejects(()=>repository.readStagedExact({...first.body,artifactRevision:"foreign"}),/invalid|integrity/);const blob=path.join(root,"organizations",request.organizationId,"owners",request.semanticOwner,"blobs",`${first.body.exactBodyDigest}.blob`);assert.equal((await stat(blob)).mode&0o777,0o600);assert.deepEqual(new Uint8Array(await readFile(blob)),request.bytes);console.log("Product artifact protected body repository PASS (immutable identity, exact replay, integrity, mode 600)");}finally{await rm(root,{recursive:true,force:true});}}
+void main();
