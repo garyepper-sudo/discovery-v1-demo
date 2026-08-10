@@ -137,6 +137,89 @@ canonical acceptance oracles.
 These objects are versioned contracts. They may reference canonical objects;
 they must not duplicate cognition or create parallel authority.
 
+## Governed application-role architecture
+
+Discovery has four governed application roles over one canonical Product and
+Organizational Understanding substrate:
+
+- **Chief** maintains attention, conversational continuity, organizational
+  memory, what matters now, what changed, what deserves attention, and creates
+  or consumes consequential cognitive-commit boundaries. It is the primary
+  adoption and frequency wedge.
+- **Counsel** tests consequential theories, assumptions, strategies, and
+  choices; evaluates supporting and contradicting Evidence; exposes
+  incompatible and competing explanations; and states falsification and
+  reconsideration conditions, including a truthful no-material-challenge result.
+- **Operator** connects choices to execution, expected signals, observed
+  Outcomes, and durable Learning while preserving Decision authority. It is not
+  a generic project-management owner.
+- **Scout** detects material environmental change or missing Evidence, reasons
+  about freshness and volatility, and recommends targeted acquisition. It does
+  not own autonomous monitoring, research, or ingestion.
+
+These are packaged application roles, not separate agents, models, memories,
+truth stores, authorization owners, or cognition pipelines. Persona names grant
+no scope or authority. All roles consume permission-aware projections from the
+same Objective, Context, `ProductQuestion`, source, Evidence, cognition,
+Organizational Understanding, Product Workflow, Decision, Outcome, Learning,
+lineage, provenance, authorization, and governance owners. No role may mutate
+canonical Organizational Understanding outside an existing authorized
+operation.
+
+The conceptual organizational-learning loop may compose the roles in sequence,
+but it creates no autonomous authority or implementation dependency:
+
+```text
+Scout detects material change or an evidence gap
+→ Counsel identifies the affected theory, assumption, Question, or Decision
+→ Chief places it into governed leadership work
+→ Counsel challenges the consequential choice
+→ Chief captures and communicates what changed
+→ Operator connects the choice to action, signals, Outcomes, and review
+→ observed reality updates—or justifiably does not update—Understanding
+→ every role receives a new permission-aware projection
+```
+
+## Contemporaneous Epistemic History boundary
+
+Contemporaneous Epistemic History is the shared temporal substrate beneath the
+four application roles. It preserves authentic governed state at a cutoff; it
+does not become a fifth persona, separate memory, second Organizational
+Understanding, transcript archive, or retrospective narrative owner.
+
+The architecture distinguishes:
+
+1. **Current Organizational Understanding:** present governed state.
+2. **Contemporaneous Epistemic History:** an immutable historical package,
+   frozen owner-backed state, or exact immutable canonical references bound at
+   the historical cutoff.
+3. **Retrospective Analysis:** later derived interpretation, explicitly labeled
+   with its later source, model, rubric, prompt, evaluator, and algorithm basis.
+
+No later knowledge may alter what was understood, uncertain, disputed,
+expected, accepted, rejected, or unresolved at the earlier governed moment.
+Current reasoning over old documents, current owner state, post-cutoff Evidence
+or Outcomes, or newer interpretation machinery cannot impersonate the
+contemporaneous record. Later Decisions, Outcomes, and Learning may link to the
+immutable package without rewriting it.
+
+Before substantial persona behavior depends on historical semantics, a minimum
+versioned historical package must bind directly or by exact immutable
+references: organization; `ProductQuestion`; actor/recipient context; scope;
+purpose; cutoff/freeze boundary; exact Understanding identity/revision; Source
+Binding, Source Content revision, and Evidence basis; applicable Prepared Work
+revision; interpretation-affecting versions; conclusions; confidence;
+uncertainty; assumptions; supporting and contradicting basis; competing
+explanations; known unknowns; scope divergence; falsification/reconsideration
+conditions; available expected signals/Outcomes; deterministic identity;
+immutable lineage; creation authorization; and separately reevaluated
+historical-read authorization.
+
+Immutability does not grant disclosure. Historical reads reapply current
+authorization and revocation without deleting or rewriting the immutable
+record. A formerly broader historical scope must not leak to a currently
+narrower recipient.
+
 ## ProductQuestion lifecycle
 
 Allowed product states are:

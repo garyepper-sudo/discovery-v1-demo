@@ -40,6 +40,28 @@ questions, and lower understanding fatigue. The organization gains stronger
 memory, explicit assumption changes, governed Capture, and progressively better
 future preparation.
 
+The Leadership Conversation is the first application of `DEC-PROD-049`:
+Discovery is the governed system through which an organization improves and
+changes its understanding. The Alpha is **Chief-led, Counsel-enhanced,
+minimally closed by Operator, with Scout latent or deferred**. These are
+application responsibilities inside one workflow, not separate assistants,
+models, memories, authorities, or interfaces.
+
+- Chief owns the visible organizing experience: Question, authorized
+  preparation, attention, continuity, frozen baseline, Capture, review, What
+  Changed, and next preparation.
+- Counsel is embedded in Prepare and Review. It may surface one material
+  assumption, contradiction, divergence, local constraint, stale or missing
+  Evidence, or unresolved question—and must be able to return no material
+  challenge.
+- Operator provides bounded post-conversation closure: a non-authoritative
+  Product Decision Draft, supporting assumptions, expected Outcome,
+  observation signal, unresolved questions, and proposed review point. It does
+  not own generalized task or project management.
+- Scout is primarily deferred. A bounded acquisition recommendation must name
+  the uncertainty it is intended to reduce. There is no continuous monitoring,
+  autonomous research, or external-ingestion expansion.
+
 ## Permanent Product laws
 
 1. **Prepare before requesting contribution.** Save the leader time before
@@ -240,6 +262,81 @@ between preparations, useful admitted Evidence and corrections, and eliminated
 context-reconstruction steps. Retrieval volume, engagement, opaque Decision
 Readiness, or unproven business outcomes are not success measures.
 
+The Alpha succeeds only when all ten criteria hold:
+
+1. The loop is anchored to one material `ProductQuestion` with declared scope
+   and purpose.
+2. Preparation uses an authorized projection of current Organizational
+   Understanding and materially reduces context reconstruction.
+3. Preparation explicitly separates admitted Evidence, Source Content, current
+   Understanding, Product interpretation, uncertainty, contradictions, missing
+   Evidence, and non-authoritative generated Product work.
+4. Counsel produces a material challenge when justified or an explicit,
+   justified no-material-challenge result.
+5. Freeze creates an immutable, owner-backed pre-conversation historical
+   boundary with exact versions and cutoff semantics.
+6. Capture preserves Source Content separately; captured content never becomes
+   Evidence or Understanding automatically.
+7. Review distinguishes proposed Evidence, interpretation change, unchanged
+   Understanding, unresolved disagreement, rejected/unsupported contribution,
+   and provisional Decision material.
+8. What Changed truthfully reports conclusion change, confidence-only change,
+   preserved divergence, rejection, unresolved state, and justified non-change
+   where applicable.
+9. Bounded follow-through may record assumptions, expectations, unresolved
+   conditions, and a review signal without claiming canonical Decision
+   authority.
+10. Prepare Again reopens the same Question from evolved governed state and the
+    authorized exact prior checkpoint rather than reconstructing from scratch.
+
+The principal design-partner success statement is: **the next important
+conversation was easier and more useful to prepare for; the leader trusts what
+changed, what did not, what was rejected, and what remains unresolved; and
+chooses to return for the next preparation.** This is an Alpha validation
+criterion, not a Production or business-outcome claim.
+
+The complete negative-control set is mandatory: no manufactured disagreement;
+false alignment; unsupported change or non-change; generated persona output as
+Evidence; direct admission of meeting notes as truth; out-of-scope disclosure;
+Draft presented as Decision; persona authority bypass; acquisition
+recommendation without an identified uncertainty; persona-specific truth
+store; disconnected persona interface; project-management expansion; broad
+environmental monitoring; or autonomous organizational action.
+
+Historical negative controls additionally prohibit retrospective
+reconstruction presented as historical state; later Outcome contamination of
+prior expectations; post-cutoff Evidence appearing earlier; current
+Understanding substituted for prior Understanding; erased rejection or
+justified non-change; confidence-only change labeled as conclusion change; old
+broader scope disclosed to a currently narrower recipient; or a new model,
+rubric, prompt, evaluator, or algorithm masquerading as the original
+interpretation.
+
+## Alpha as the first epistemic-history workflow
+
+`Set up` binds Question, scope, and purpose. `Prepare` composes current
+authorized state and, where justified, assumptions, uncertainty,
+contradictions, alternatives, and Evidence gaps. `Freeze` establishes the
+immutable owner-backed contemporaneous boundary, not a detached generated
+summary. `Capture` stores separate Source Content without truth promotion.
+`Review` preserves governed human dispositions and lineage. `What Changed`
+distinguishes actual conclusion change, confidence-only change, preserved
+divergence, unresolved questions, rejection, and justified non-change.
+`Prepare Again` reuses the same Question, evolved current state, authorized
+prior checkpoint, and inspectable historical delta.
+
+The deterministic Alpha proof spans two cycles around the same Question. Cycle
+one prepares, freezes, captures, reviews, preserves the full disposition set,
+and may create bounded provisional Draft or expected-signal material. An
+intervening authorized Evidence admission, simulated Outcome, operating result,
+condition change, or other governed update follows. Cycle two loads the exact
+prior checkpoint without later-information contamination; compares expected
+signals and observed reality where applicable; distinguishes changes to
+conclusion, confidence, explanation, assumption, or uncertainty; preserves
+what remained unchanged; and prepares from updated governed state with lineage
+across both cycles. A simulated organization supplies the deterministic first
+proof; a real-world Outcome is not an Alpha prerequisite.
+
 ## Phased roadmap
 
 0. Product canonization and closure.
@@ -254,6 +351,12 @@ Readiness, or unproven business outcomes are not success measures.
 8. Environmental Intelligence remains deferred until the internal loop is
    validated.
 
+The minimum Contemporaneous Epistemic History Foundation must be canonically
+established before substantial persona expansion depends on historical
+semantics. P2 current-access/history/reuse/Prepare Again remains a separate
+paused technical-governance successor; neither foundation is claimed complete
+by this constitution.
+
 ## Deferred research and expansion
 
 Leadership Attention Management, broader prepared-work variants, leadership
@@ -262,6 +365,20 @@ Environmental Intelligence, structural analogy, evolving concepts,
 meta-understanding, visible assumptions, and dialogue that develops shared
 meaning remain later validation or research directions. They create no first-
 slice dependency and authorize no new cognition.
+
+Also deferred: checkpointing every message or opinion; passive capture of all
+employee thinking; an organization-wide epistemic-ledger UI; individual belief
+or calibration scoring; leader ranking; determining who was right; broad
+dissent analytics; a full Organizational Learning Model; reality-debt
+dashboards; generalized historical query; autonomous Understanding mutation;
+full Decision-to-Outcome orchestration; generalized project management; broad
+operational integration; continuous Environmental Intelligence; Scout
+monitoring; external research automation; persona-specific memory; and any new
+semantic owner without owner-graph evidence. Independent multi-user
+pre-convergence perspective capture remains a high-value hypothesis, not an
+automatic Alpha blocker. Private material never becomes organizational
+learning automatically; cross-user learning and contributor inference remain
+post-Alpha research, not surveillance pathways.
 
 ## Related canonical documents
 

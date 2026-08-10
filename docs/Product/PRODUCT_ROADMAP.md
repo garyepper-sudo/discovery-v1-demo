@@ -1,5 +1,159 @@
 # Discovery Product Roadmap
 
+## Persona architecture and organizational-learning application sequence
+
+`DEC-PROD-049` makes one Product direction explicit: Discovery is the governed
+system through which an organization improves and changes its understanding.
+The durable event is a governed change in Organizational Understanding or a
+justified, explicitly recorded non-change—not merely a document, answer,
+summary, recommendation, or meeting note. Discovery does not autonomously
+determine truth; contribution, disagreement, uncertainty, and no-change remain
+subject to their existing owners and governance.
+
+Chief, Counsel, Operator, and Scout are governed application roles, not
+separate agents, models, memories, authority sources, navigation systems, or
+truth stores. They share the canonical Objective, Context, `ProductQuestion`,
+Source Content, Evidence, cognition, Organizational Understanding, confidence,
+uncertainty, freshness, volatility, projection, Product Workflow, Prepared
+Work, Draft, Decision, Outcome, Learning, lineage, provenance, authorization,
+and governance substrate. Every role consumes permission-aware projections;
+none may bypass an existing authorized canonical operation.
+
+The controlling application sequence is:
+
+1. **Alpha — Governed Leadership Conversation.** Chief is primary, Counsel is
+   embedded, Operator provides bounded post-conversation closure, and Scout is
+   deferred or limited to uncertainty-linked evidence-gap recommendations.
+2. **Decision Learning.** Connect assumptions, canonical Decisions, expected
+   signals, Outcomes, review, supersession, and Learning.
+3. **Strategy Integrity.** Test theories of success, critical assumptions,
+   supporting and contradicting Evidence, scope-specific divergence, local
+   feasibility, invalidation conditions, and value of information.
+4. **State Transfer and New-Leader Understanding.** Apply governed continuity
+   to onboarding, succession, role transitions, transformations, founder
+   transitions, and key-person risk reduction.
+5. **Scout and Environmental Intelligence.** Address external assumptions,
+   freshness, volatility, material environmental change, bounded proactive
+   acquisition, and interruption thresholds only after the internal loop is
+   validated.
+6. **Later composed applications.** Reorganization intelligence, cognitive
+   acquisition due diligence, crisis understanding, organizational precedent,
+   epistemic-balance-sheet projections, and governed organizational context for
+   enterprise AI agents remain hypotheses, not commitments.
+
+The long-term conceptual loop is `Scout → Counsel → Chief → Counsel → Chief →
+Operator → observed reality → updated or justified-non-change Understanding →
+permission-aware projections`. It creates no autonomous monitoring, research,
+action, authority, or hidden mutation.
+
+### Alpha Product promise and gates
+
+> Discovery helps leaders enter important conversations with the best available
+> organizational understanding, uncover hidden assumptions and meaningful
+> disagreement, and preserve what the organization learns.
+
+Concise expression: **Prepare with what the organization knows. Discover what
+it is missing. Preserve what changed.** The Alpha proves one complete governed
+change-in-understanding loop through `Set up → Prepare → Freeze → Capture →
+Review → What Changed → Prepare Again`.
+
+Professional Alpha Readiness precedes design-partner rollout. Governance,
+authorization, lineage, tenant isolation, security, a critical-path test
+pyramid, observability, privacy-safe telemetry, failure recovery, data quality,
+performance/cost targets, build identity, rollback, and an experiment registry
+remain hard gates. Cognition optimization follows—not precedes—a frozen,
+trustworthy Alpha Baseline A. Forward-deployed design-partner learning informs
+later Product decisions. Intelligent carry-forward means continuity of
+Organizational Understanding, not task carry-forward. Privacy-preserving
+cross-user organizational learning remains post-Alpha research, and no private
+material becomes organizational learning automatically before Alpha.
+
+### Current technical truth
+
+Complete and canonical: persistence-safe actor separation; canonical
+materialization atomicity and staged recovery; owner-specific Product-artifact
+split persistence; derived, non-persistent `ProductQuestionWorkspace`; and the
+Northstar preparation-time owner-backed lineage fixture.
+
+Paused or incomplete: P2 current-access delivery, history/reuse, production
+Prepare Again, complete seven-state production lineage, zero denied-material
+successor-influence acceptance, complete frontend delivery acceptance, the
+governed Product resolver continuation, a permanent governed-cognition
+adversarial release benchmark, Alpha Readiness closure, Alpha Baseline A, and
+design-partner Alpha. Earlier roadmap programs remain supporting technical
+gates and historical sequencing; they do not override this application
+sequence or convert partial work into Product completion.
+
+### Mandatory Contemporaneous Epistemic History foundation (`GAP-B-021`)
+
+`DEC-PROD-050` makes Contemporaneous Epistemic History a first-class platform
+capability and compounding strategic asset. It is the immutable temporal
+substrate beneath Chief, Counsel, Operator, and Scout—not a fifth persona,
+transcript archive, Decision-provenance alias, second memory, new Understanding
+owner, or narrative reconstructed from present state.
+
+No later knowledge may alter the historical record of what was understood,
+uncertain, disputed, expected, accepted, rejected, or unresolved at an earlier
+governed moment. The roadmap distinguishes current Organizational Understanding,
+authentic contemporaneous historical packages, and later labeled Retrospective
+Analysis. Historical answers come only from an immutable package, frozen
+owner-backed state, or exact immutable canonical references bound at the
+cutoff. Current reasoning over old documents, current Understanding, later
+Evidence/Outcomes, or newer model/rubric/prompt/evaluator/algorithm versions may
+not impersonate the earlier record.
+
+Before substantial persona expansion depends on history, a minimum owner-backed
+checkpoint must bind the organization, Question, recipient context, scope,
+purpose, cutoff, Understanding identity/revision, Source and Evidence basis,
+Source Content revisions, applicable Prepared Work revision, interpretation
+versions, conclusions, confidence, uncertainty, assumptions, support,
+contradiction, competing explanations, unknowns, scope divergence,
+falsification conditions, available expected signals/Outcomes, deterministic
+identity, immutable lineage, creation authorization, and historical-read
+authorization. Current authorization and revocation govern disclosure without
+rewriting the immutable package.
+
+The Leadership Conversation is the first historical workflow and requires a
+two-cycle deterministic proof around the same Question: freeze and disposition
+cycle one; introduce an authorized Evidence, simulated Outcome, operating
+result, condition, or other governed event; then reload the uncontaminated
+checkpoint and prepare cycle two from evolved governed state while preserving
+what changed, changed only in confidence, remained divergent or unresolved,
+was rejected, or justifiably did not change. A simulated organization is
+sufficient for the initial mechanism proof.
+
+The focused foundation must validate historical immutability, fresh-process
+reload, owner-backed basis, non-contamination, current-state isolation,
+generated-output non-authority, rejection and no-change persistence,
+confidence-only change, convergent-present/distinct-history cases, replay,
+collision failure, scope/non-disclosure, revocation without rewriting, direct
+and inherited lineage, Outcome-link readiness, target-independent identity,
+fixture-only reset, historical projection authorization, and interpretation-
+version separation. This is separate from—and does not complete—the permanent
+governed-cognition twin-world release benchmark.
+
+Sequencing has two tracks. The active technical-governance successor remains
+the post-Northstar P2 current-access/history/reuse/Prepare Again transfer and
+overlap reconciliation. The mandatory Product-architecture successor before
+substantial persona expansion is the Contemporaneous Epistemic History
+Foundation owner audit, minimum contract, non-reconstruction invariants,
+focused validation design, and two-cycle proof planning. The history foundation
+must reuse closed governance, lineage, persistence, authorization, and Product
+Workflow owners rather than reopen them. Neither successor is authorized or
+implemented by this roadmap.
+
+Deferred historical expansion includes checkpointing every message or opinion,
+passive employee-thought capture, an epistemic-ledger UI, individual scoring or
+leader ranking, automated “who was right” determinations, broad dissent
+analytics, a full Organizational Learning Model, reality-debt dashboards,
+general historical query, autonomous mutation, full Decision-to-Outcome
+orchestration, broad operational integration, continuous Environmental
+Intelligence, full Scout monitoring, external research automation, or any
+persona-specific memory/truth store. Multi-user pre-convergence perspective
+capture remains a high-value hypothesis, not an Alpha blocker. Automated
+private-to-organizational learning, cross-user learning, contributor inference,
+and surveillance remain prohibited before Alpha and deferred thereafter.
+
 ## Northstar preparation-time lineage prerequisite
 
 Before resuming canonical Northstar preparation-time source, material, and projection work, close the isolated fixture-provisioning prerequisite. Acceptance requires canonical owner-backed Source Bindings, source-content versions, material admissions, Organizational Understanding references, deterministic replay, and bounded reset. The paused successor patch must then be reconciled from the new canonical main through review rather than complete-file copying.
@@ -430,14 +584,18 @@ and outcomes while remaining user-governed.
 
 ## Phase 6 — Autonomous organizational intelligence
 
+This retained technical promotion gate is subordinate to the six-application
+sequence above. It does not activate Scout, continuous monitoring, or
+autonomous organizational authority.
+
 **Objective:** Introduce bounded proactive behavior only after connected
 understanding, calibration, and operational governance are proven.
 
 **Capabilities**
 
-- Autonomous reevaluation (`GAP-C-001`)
+- Policy-bound reevaluation research (`GAP-C-001`)
 - Proactive insight delivery and suppression (`GAP-C-002`, `GAP-C-003`)
-- Continuous monitoring (`GAP-C-005`)
+- Continuous-monitoring research (`GAP-C-005`)
 - Model and confidence calibration (`GAP-C-006`, `GAP-C-007`)
 - Production observability, recovery, performance, and scale
   (`GAP-C-008`, `GAP-C-009`, `GAP-C-010`, `GAP-C-011`)
@@ -452,7 +610,7 @@ understanding, calibration, and operational governance are proven.
 
 **Promotion gates**
 
-- Every autonomous action has policy, scope, budget, stopping, audit, and
+- Every future proactive action has policy, scope, budget, stopping, audit, and
   suppression behavior.
 - Calibration and observability expose degradation.
 - Recovery and concurrency tests preserve Question lineage.

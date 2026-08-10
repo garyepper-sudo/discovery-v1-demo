@@ -21,6 +21,13 @@ The slice is development-only, shared organization-wide, and anchored by
 `ProductQuestion`. It creates no route, persistence implementation, adapter,
 API, UI, or Runtime behavior through this document.
 
+This first slice applies the shared persona architecture without creating
+persona-specific state. Chief organizes the one visible workflow; Counsel is a
+bounded Prepare/Review challenge that may abstain; Operator provides only the
+post-conversation Draft/signal/Outcome/review linkage; Scout remains deferred
+except for a recommendation tied to a named uncertainty. Every responsibility
+uses the same permission-aware projection and existing canonical owners.
+
 ## Reused owners
 
 - `ProductQuestion` and `ProductQuestionWorkspace`;
@@ -198,6 +205,18 @@ The implementation must represent independently:
 
 No state implies another without an exact receipt or before/after reference.
 
+Historical disposition is richer than binary changed/unchanged. Where existing
+owners support it, the checkpoint and delta must distinguish: conclusion
+changed; confidence changed without conclusion change; supporting explanation
+changed; uncertainty increased or decreased; competing explanation
+strengthened or weakened; scope-specific divergence remained justified;
+disagreement remained unresolved; Source Content was relevant but insufficient;
+proposed Evidence was not admitted; proposed interpretation was rejected; no
+material challenge was found; no change was warranted; Decision material
+remained provisional; and canonical Decision authority was not exercised.
+Authorized inspection preserves rejection and justified non-change; absence of
+change never erases the transition.
+
 ## Deterministic Northstar acceptance
 
 Primary scenario: a recurring cross-functional Northstar leadership/staff
@@ -227,7 +246,47 @@ change, and one approved item materially changing later preparation.
 Role differentiation is not required. CEO, Director, and Manager receive the
 same substantive projection.
 
+The Alpha acceptance uses two deterministic cycles around the same
+`ProductQuestion`. Cycle one establishes, prepares, freezes, captures, reviews,
+and preserves changed, confidence-only, unchanged, rejected, divergent,
+unresolved, and provisional results where applicable. After an authorized
+intervening Evidence admission, simulated Outcome, operating result, condition
+change, or other governed update, cycle two reloads the exact prior checkpoint,
+proves no later-information contamination, compares expected and observed
+signals where available, prepares from updated governed state, and preserves
+lineage across both cycles. A simulated organization is sufficient for the
+first proof.
+
+## Minimum historical checkpoint requirement
+
+Before substantial persona implementation relies on historical semantics, the
+foundation must reuse an existing immutable snapshot, receipt, Product Workflow
+history record, versioned package, historical projection, or exact canonical
+references. It must bind: organization; Question; actor/recipient context;
+scope; purpose; cutoff/freeze; exact Understanding identity and revision;
+Source Binding, Source Content revisions, and Evidence basis; applicable
+Prepared Work revision; interpretation-affecting model, rubric, evaluator,
+prompt, and algorithm versions; conclusions; confidence; uncertainty;
+assumptions; supporting and contradicting basis; competing explanations;
+known unknowns; scope divergence; falsification/reconsideration conditions;
+available expected signals/Outcomes; deterministic identity; immutable lineage;
+creation authorization; and historical-read authorization.
+
+The package is authentic historical basis, not present-day reconstruction.
+Later Decision, Outcome, and Learning records link without rewriting it.
+Generated output gains no Evidence, Understanding, or Decision authority.
+Historical-read authorization is reevaluated independently: revocation may deny
+current access but cannot rewrite immutable history.
+
 ## Validation metrics
+
+Acceptance implements the constitution’s ten Alpha criteria and complete
+negative-control set. A positive fixture must not require manufactured
+disagreement: Counsel may truthfully return no material challenge. Meeting
+notes remain governed Source Content and proposals, never Evidence or truth by
+presentation. Product Decision Draft remains visibly non-authoritative. Scout
+recommendations without a named uncertainty fail closed. No persona name,
+interface, or stored output supplies authority.
 
 - preparation time saved and context-reconstruction steps removed;
 - perceived preparation quality and content retained/edited;
@@ -241,6 +300,33 @@ Retrieval volume is not the primary metric. No Decision Readiness score or
 business-outcome improvement claim is permitted.
 
 ## Required implementation validation
+
+The focused historical-foundation suite must separately prove all twenty
+requirements before promotion:
+
+1. historical immutability;
+2. fresh-process reload;
+3. exact owner-backed basis;
+4. no retrospective contamination;
+5. current-state mutation isolation;
+6. generated-output non-authority;
+7. rejected-contribution persistence;
+8. justified non-change persistence;
+9. confidence-only change;
+10. distinguishable histories that converge to the same present state;
+11. same-input replay;
+12. different-input collision failure;
+13. scope and non-disclosure;
+14. revocation without rewriting immutable history;
+15. direct and inherited scope lineage;
+16. Outcome-linkage readiness;
+17. target-independent identity;
+18. fixture-only reset;
+19. historical projection authorization; and
+20. later model/rubric/prompt/evaluator version separation.
+
+This focused suite is not the permanent governed-cognition twin-world release
+benchmark. Neither suite is complete through this documentation task.
 
 - contract version, fixtures, validator, migration and compatibility review;
 - deterministic identity, ordering, serialization, reset, and replay;

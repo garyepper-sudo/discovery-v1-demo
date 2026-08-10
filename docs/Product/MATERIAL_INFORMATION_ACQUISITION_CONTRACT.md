@@ -16,6 +16,21 @@ Material Information Acquisition is:
 
 It compares, chooses, explains, and stops. It does not execute.
 
+Under `DEC-PROD-049`, Scout may consume this selector as a governed application
+role. Scout owns no connector, monitoring loop, Evidence admission, external
+truth, or authorization. Every recommendation must identify the exact
+uncertainty it is intended to reduce, may conclude that no acquisition is
+material, and remains non-executable until an existing action-specific owner
+authorizes and performs it. Alpha activates no continuous environmental
+monitoring or autonomous research.
+
+Future Scout use must also preserve historical cutoffs: an acquisition result
+may link to the uncertainty and assumption it tested, but post-cutoff material
+cannot be inserted into an earlier checkpoint or used to rewrite the earlier
+recommendation. Any later comparison is labeled Retrospective Analysis and
+retains the original selector inputs, versions, authorization, result, and
+discriminating-value basis.
+
 It is not the action, execution service, authorization authority, Evidence
 admission authority, Unknown lifecycle owner, Objective Recommendation,
 Decision, autonomous planner, or universal utility function.

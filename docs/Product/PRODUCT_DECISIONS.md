@@ -1,5 +1,82 @@
 # Discovery Product Decisions
 
+## DEC-PROD-049 — Personas are governed application roles over one Organizational Understanding
+
+- **Decision:** Discovery is the governed system through which an organization
+  improves and changes its understanding. Its durable Product event is a
+  governed change in Organizational Understanding or a justified, explicitly
+  recorded non-change. Chief, Counsel, Operator, and Scout are governed
+  application roles over one shared platform substrate; they are not separate
+  agents, models, memories, truth stores, or authorization owners.
+- **Product thesis:** Internally, Discovery is the governed system through which
+  an organization changes its mind. This never means Discovery autonomously
+  determines organizational truth. Rejected contributions remain rejected,
+  disagreement and uncertainty may remain justified, and new information may
+  correctly produce no canonical change.
+- **Application roles:** Chief maintains attention, continuity, memory, what
+  matters now, and consequential cognitive-commit boundaries; Counsel tests
+  consequential theories, assumptions, strategies, and choices, represents
+  competing explanations, and makes reconsideration conditions explicit;
+  Operator connects choices to execution, signals, Outcomes, and Learning while
+  preserving Decision authority; Scout detects material environmental change
+  or missing Evidence and recommends targeted acquisition. A role name grants
+  no authority.
+- **Shared substrate:** All roles compose the existing Objective, Optimization
+  Context, `ProductQuestion`, Source Content, Evidence, canonical cognition,
+  Organizational Understanding, confidence, uncertainty, freshness,
+  volatility, projection, Product Workflow, Prepared Work, Draft, Decision,
+  Outcome, Learning, lineage, provenance, authorization, and governance owners.
+  No persona-specific copy is permitted.
+- **Alpha:** The first governed Leadership Conversation is Chief-led,
+  Counsel-enhanced, minimally closed by Operator, and keeps Scout latent or
+  bounded to uncertainty-linked acquisition recommendations. It remains one
+  coherent `Set up → Prepare → Freeze → Capture → Review → What Changed →
+  Prepare Again` workflow, not four products or an “AI executive team.”
+- **Roadmap:** Alpha Leadership Conversation precedes Decision Learning,
+  Strategy Integrity, State Transfer/New-Leader Understanding, Scout and
+  Environmental Intelligence, and later composed application hypotheses.
+- **Authority boundary:** No persona may mutate canonical Organizational
+  Understanding outside an existing authorized operation. Generated persona
+  output is not Evidence, Product Decision Draft is not Decision, and the
+  conceptual cross-persona loop authorizes no external monitoring, autonomous
+  action, hidden mutation, Production access, or implementation.
+- **Status:** Canonical Product direction; documentation-only. Existing
+  implementation and promotion gates remain controlling.
+
+## DEC-PROD-050 — Contemporaneous Epistemic History is a first-class temporal substrate
+
+- **Decision:** Contemporaneous Epistemic History is a first-class platform
+  capability and a compounding strategic asset of Discovery. It preserves the
+  authentic governed state and transitions known at a historical cutoff beneath
+  every application role. It is not a fifth persona, transcript archive,
+  Decision-provenance alias, separate memory system, reconstructed narrative,
+  or new Organizational Understanding owner.
+- **Invariant:** No later knowledge may alter the historical record of what was
+  understood, uncertain, disputed, expected, accepted, rejected, or left
+  unresolved at an earlier governed moment.
+- **Three-state distinction:** Current Organizational Understanding is the
+  present governed state. Contemporaneous Epistemic History is an immutable
+  owner-backed historical package or exact canonical references frozen at the
+  relevant moment. Retrospective Analysis is a later derived interpretation,
+  labeled with its later basis and versions, and may never overwrite or
+  impersonate the contemporaneous record.
+- **Non-reconstruction:** Current reasoning over old documents, current
+  Understanding substituted for an earlier revision, later Evidence or
+  Outcomes applied before the cutoff, or a newer model, rubric, prompt,
+  evaluator, or algorithm silently applied to old inputs cannot be presented as
+  contemporaneous history.
+- **Owner boundary:** The minimum foundation must reuse existing immutable
+  snapshot, receipt, revision, history, Product Workflow, lineage,
+  authorization, and governance owners. This decision creates no new semantic
+  owner and authorizes no implementation.
+- **Sequencing:** Establish the minimum historical foundation before substantial
+  Chief, Counsel, Operator, or Scout behavior depends on historical semantics.
+  The paused P2 current-access/history/reuse/Prepare Again work remains a
+  distinct active technical-governance successor and must be reconciled rather
+  than treated as complete.
+- **Status:** Canonical strategic and architectural direction;
+  implementation, Product surface, and promotion remain deferred.
+
 ## Northstar preparation-time lineage fixture provisioning
 
 The Northstar preparation-time fixture uses an explicit server-only coordinator and existing canonical owners. Canonical local Source Binding owns source identity and scope; Governed Source Content owns exact bytes and immutable versions; canonical cognition and Runtime evolution own material and Organizational Understanding. The coordinator returns a target-independent immutable seed of owner-issued references and owns no semantic record. Runtime-digest aliases are not provenance, positive authorization is not stored in the seed, and P2 resumes only after this separate prerequisite is independently reviewed.

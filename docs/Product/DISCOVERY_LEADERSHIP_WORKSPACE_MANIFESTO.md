@@ -85,6 +85,82 @@ families are canonical hypotheses:
 
 These names describe product experiences, not new cognition or Runtime owners.
 
+## Governed application roles
+
+Leadership Workspaces may be packaged through four complementary application
+roles over the same governed Organizational Understanding:
+
+1. **Chief** organizes attention, continuity, memory, what matters now, what
+   changed, and the next important conversation.
+2. **Counsel** tests consequential theories, assumptions, strategies, and
+   choices; surfaces supporting and contradicting Evidence and meaningful
+   disagreement; and states what would change the organization’s mind.
+3. **Operator** connects a choice to execution, expected signals, observed
+   Outcomes, review, and durable Learning without becoming generic project
+   management.
+4. **Scout** distinguishes material environmental change and missing Evidence
+   from information volume, tracks freshness and volatility, and recommends
+   targeted acquisition tied to an explicit uncertainty.
+
+They are not independent assistants, agents, models, memories, truth stores,
+authority sources, or four primary navigation destinations. One governed
+substrate retains Objectives, Context, Questions, Source Content, Evidence,
+cognition, Understanding, confidence and uncertainty, projections, Product
+Workflow, Prepared Work, Drafts, Decisions, Outcomes, Learning, lineage,
+provenance, authorization, and governance. A role packages work; it never
+inherits authority from its name or mutates Understanding outside an existing
+authorized operation.
+
+The internal Product thesis is: **Discovery is the governed system through
+which an organization changes its mind.** This means improving the capacity to
+produce, test, revise, preserve, and apply understanding—not autonomously
+determining organizational truth. A valid result may be a governed change or a
+justified non-change; disagreement and uncertainty may remain unresolved.
+
+The application promise is:
+
+> Discovery helps leaders enter important conversations with the best available
+> organizational understanding, uncover hidden assumptions and meaningful
+> disagreement, and preserve what the organization learns.
+
+The long-term application loop composes Scout, Counsel, Chief, and Operator
+around observed reality and then returns permission-aware projections from the
+same model. This is a roadmap pattern only. It authorizes no continuous
+monitoring, autonomous action, hidden mutation, or persona-specific truth.
+
+## Contemporaneous Epistemic History as strategic asset
+
+Contemporaneous Epistemic History is a first-class platform capability and a
+compounding strategic asset: repeated governed cycles create an authentic,
+inspectable record of what the organization understood, questioned, expected,
+accepted, rejected, and left unresolved at each relevant moment. It is a
+temporal substrate beneath every application role, not a fifth persona,
+transcript archive, separate memory, or reconstructed story generated from the
+present.
+
+Chief uses current authorized preparation, an exact pre-conversation freeze,
+review dispositions, What Changed, and the prior checkpoint for next-cycle
+continuity. Counsel preserves assumptions, support, contradiction, alternatives,
+uncertainty, scope constraints, discriminating Evidence, falsification
+conditions, and an explicit no-material-challenge result. Operator may later
+link a checkpoint immutably to Draft, authoritative Decision, relied-upon
+assumptions, expected signals, Outcomes, review, supersession, and Learning.
+Scout may later link unresolved uncertainty to the Evidence sought, assumption
+tested, acquisition result, and discriminating value. None owns a historical
+truth store.
+
+The Product payoff is temporal but bounded:
+
+- **Before:** here is what the organization currently understands, why, and
+  what remains uncertain.
+- **After:** this changed, this did not change, this was rejected, and this
+  remains unresolved.
+- **Next cycle:** here is what we understood previously, what happened
+  afterward, and what now deserves reconsideration.
+
+Later Retrospective Analysis must be labeled as later analysis and cannot
+overwrite or masquerade as the contemporaneous record.
+
 ## Prepared Work Products
 
 Prepared Work Products are the primary product manifestation of Organizational
