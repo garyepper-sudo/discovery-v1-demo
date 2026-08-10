@@ -18,13 +18,14 @@ import { ProductDecisionDraftService } from "../../product/integration/productDe
 import { appendProductQuestionEvent, createDurableProductQuestion } from "../../product/questions/questionLifecycle";
 import { createProductArtifactBodyRefV1, productArtifactBodyDigest, type ProductArtifactBodyRefV1, type ProductArtifactBodyStageRequestV1, type ProductArtifactBodyStageReceiptV1 } from "../../product/persistence/productArtifactBodyContracts";
 import type { ProductArtifactBodyRepository } from "../../product/persistence/productArtifactBodyRepository";
+import { createOwnerBackedDraftDependencies } from "./validateCanonicalMutationProductMaterializationAtomicity";
 
 const fixed = "2026-08-06T13:00:00.000Z";
 const revisedAt = "2026-08-06T13:05:00.000Z";
-const organizationId = "decision-draft-replay";
-const questionId = "question-replay";
+const organizationId = "sandbox-northstar-implementation-services-001";
+const questionId = "product-question:northstar-implementation-duration";
 const answerId = "answer-replay";
-const prefix = "discovery-decision-draft-replay-";
+const prefix = "discovery-northstar-preparation-lineage-draft-replay-";
 
 const canonical = (value: unknown): string => {
   if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
@@ -66,10 +67,11 @@ class ReplayBodyRepository implements ProductArtifactBodyRepository {
   async readStagedExact(ref:ProductArtifactBodyRefV1):Promise<Uint8Array>{const bytes=new Uint8Array(await readFile(this.target(ref)));if(bytes.byteLength!==ref.byteLength||productArtifactBodyDigest(bytes)!==ref.exactBodyDigest)throw new Error("body unavailable");return bytes;}
 }
 
-function service(repository: FilesystemOrganizationRuntimeRepository,root:string): ProductDecisionDraftService {
+async function service(repository: FilesystemOrganizationRuntimeRepository,root:string): Promise<ProductDecisionDraftService> {
+  const ownerBacked=await createOwnerBackedDraftDependencies(root);
   return new ProductDecisionDraftService({
     runtimeRepository: repository,
-    bodyRepository:new ReplayBodyRepository(path.join(root,"product-artifact-bodies")),
+    ...ownerBacked,
     authorize: async (input) => authority(input.operation, input.evaluatedAt),
   });
 }
@@ -95,16 +97,16 @@ function safeRoot(value: string): string {
 
 async function roleA(root: string): Promise<unknown> {
   console.info = () => undefined;
-  const repository = new FilesystemOrganizationRuntimeRepository(root);
+  const repository = new FilesystemOrganizationRuntimeRepository(path.join(root,"draft-runtime"));
   await repository.create(organizationId, new TextEncoder().encode(JSON.stringify(fixtureRuntime(), null, 2)), { requestId: "fixture-create", operatorId: "validator" });
-  const created = await service(repository,root).create({ userId: "authorized", request: createRequest(), storageOperation: { requestId: "draft-create", operatorId: "actor-replay" } });
+  const created = await (await service(repository,root)).create({ userId: "authorized", request: createRequest(), storageOperation: { requestId: "draft-create", operatorId: "actor-replay" } });
   return { role: "A", revision: created.revision, receipt: created.receipt, runtimeRevision: created.runtimeRevision };
 }
 
 async function roleB(root: string): Promise<unknown> {
   console.info = () => undefined;
-  const repository = new FilesystemOrganizationRuntimeRepository(root);
-  const api = service(repository,root);
+  const repository = new FilesystemOrganizationRuntimeRepository(path.join(root,"draft-runtime"));
+  const api = await service(repository,root);
   const before = await api.read({ userId: "authorized", request: { contractVersion: "1", organizationId, questionId, evaluatedAt: fixed } });
   assert.equal(before.status, "available");
   const replay = await api.create({ userId: "authorized", request: createRequest(), storageOperation: { requestId: "draft-replay", operatorId: "actor-replay" } });
@@ -119,8 +121,8 @@ async function roleB(root: string): Promise<unknown> {
 
 async function roleC(root: string): Promise<unknown> {
   console.info = () => undefined;
-  const repository = new FilesystemOrganizationRuntimeRepository(root);
-  const api = service(repository,root);
+  const repository = new FilesystemOrganizationRuntimeRepository(path.join(root,"draft-runtime"));
+  const api = await service(repository,root);
   const read = await api.read({ userId: "authorized", request: { contractVersion: "1", organizationId, questionId, evaluatedAt: revisedAt } });
   assert.equal(read.status, "available");
   const stale: ReviseProductDecisionDraftRequestV1 = {
@@ -162,7 +164,7 @@ async function main(): Promise<void> {
     const root = await mkdtemp(path.join(os.tmpdir(), prefix));
     const script = path.resolve(process.argv[1]!);
     const run = (childRole: "A" | "B" | "C"): Record<string, unknown> => parseChild(execFileSync(
-      process.execPath, [...process.execArgv, script, childRole, root],
+      process.execPath, ["--conditions=react-server", ...process.execArgv, script, childRole, root],
       { cwd: process.cwd(), env: { NODE_ENV: "test", TZ: "UTC", TMPDIR: os.tmpdir() }, timeout: 15_000, maxBuffer: 65_536, shell: false },
     ), childRole);
     try {

@@ -1,0 +1,1 @@
+import{validateCurrentAccessScenario}from"./validateProductArtifactAuthorizationBeforeBodyRead";validateCurrentAccessScenario("workflow-replay-current-access").catch(e=>{console.error(e);process.exitCode=1});

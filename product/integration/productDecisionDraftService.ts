@@ -26,10 +26,13 @@ import {
 } from "../workflow/leadershipConversation/canonicalProductMaterializationContracts";
 import { serializeProductArtifactBodyV1 } from "../persistence/productArtifactBodyContracts";
 import type { ProductArtifactBodyRepository } from "../persistence/productArtifactBodyRepository";
+import type { ProductArtifactBodyRefV1 } from "../persistence/productArtifactBodyContracts";
+import type { ProductArtifactInspectionMetadataV1 } from "../workflow/productArtifactInspectionMetadataContracts";
 
 export type ProductDecisionDraftServiceDependencies = {
   runtimeRepository: Pick<OrganizationRuntimeRepository, "read" | "replace">;
   bodyRepository?: ProductArtifactBodyRepository;
+  completeInspectionMetadata?(input:{organizationId:string;questionId:string;draftId:string;draftRevisionId:string;creationOperationId:string;requestFingerprint:string;body:ProductArtifactBodyRefV1;stageReceiptDigest:string}):Promise<ProductArtifactInspectionMetadataV1>;
   authorize(input: {
     userId: string;
     organizationId: string;
@@ -106,7 +109,9 @@ export class ProductDecisionDraftService {
     if(!this.dependencies.bodyRepository)throw new Error("Product Decision Draft split-persistence owner is unavailable.");
     const draftBody:ProductDecisionDraftContentV1={title:recorded.result.revision.title,intervention:recorded.result.revision.intervention,rationale:recorded.result.revision.rationale,assumptions:recorded.result.revision.assumptions,risks:recorded.result.revision.risks,expectedOutcomes:recorded.result.revision.expectedOutcomes,measures:recorded.result.revision.measures,intendedDecisionMakerRef:recorded.result.revision.intendedDecisionMakerRef,intendedDecisionMakerLabel:recorded.result.revision.intendedDecisionMakerLabel,proposedReviewDate:recorded.result.revision.proposedReviewDate};
     const staged=await this.dependencies.bodyRepository.stage({contractVersion:"1",organizationId:input.request.organizationId,semanticOwner:"product-decision-draft",artifactType:"product-decision-draft",artifactId:recorded.result.revision.draftId,artifactRevision:recorded.result.revision.revisionId,schemaRef:"discovery:product:decision-draft-body:v1",bytes:serializeProductArtifactBodyV1(draftBody)});
-    const bound=bindProductDecisionDraftBodyPublicationV1({runtime:recorded.runtime,result:recorded.result,body:staged.body,stageReceiptDigest:staged.receiptDigest});
+    if(!this.dependencies.completeInspectionMetadata)throw new Error("Product Decision Draft inspection metadata owner is unavailable.");
+    const inspectionMetadata=await this.dependencies.completeInspectionMetadata({organizationId:input.request.organizationId,questionId:input.request.questionId,draftId:recorded.result.revision.draftId,draftRevisionId:recorded.result.revision.revisionId,creationOperationId:recorded.result.receipt.operationId,requestFingerprint:recorded.result.revision.requestFingerprint,body:staged.body,stageReceiptDigest:staged.receiptDigest});
+    const bound=bindProductDecisionDraftBodyPublicationV1({runtime:recorded.runtime,result:recorded.result,body:staged.body,stageReceiptDigest:staged.receiptDigest,inspectionMetadata});
     const bytes = new TextEncoder().encode(JSON.stringify(bound.runtime, null, 2));
     const persisted = await this.dependencies.runtimeRepository.replace(
       input.request.organizationId, bytes, stored.revision, input.storageOperation,
@@ -233,7 +238,9 @@ export class ProductDecisionDraftService {
     if(!this.dependencies.bodyRepository)throw new Error("Canonical Product Decision Draft split-persistence owner is unavailable.");
     const draftBody:ProductDecisionDraftContentV1={title:recorded.result.revision.title,intervention:recorded.result.revision.intervention,rationale:recorded.result.revision.rationale,assumptions:recorded.result.revision.assumptions,risks:recorded.result.revision.risks,expectedOutcomes:recorded.result.revision.expectedOutcomes,measures:recorded.result.revision.measures,intendedDecisionMakerRef:recorded.result.revision.intendedDecisionMakerRef,intendedDecisionMakerLabel:recorded.result.revision.intendedDecisionMakerLabel,proposedReviewDate:recorded.result.revision.proposedReviewDate};
     const staged=await this.dependencies.bodyRepository.stage({contractVersion:"1",organizationId:instruction.organizationId,semanticOwner:"product-decision-draft",artifactType:"product-decision-draft",artifactId:recorded.result.revision.draftId,artifactRevision:recorded.result.revision.revisionId,schemaRef:"discovery:product:decision-draft-body:v1",bytes:serializeProductArtifactBodyV1(draftBody)});
-    const bound=bindProductDecisionDraftBodyPublicationV1({runtime:recorded.runtime,result:recorded.result,body:staged.body,stageReceiptDigest:staged.receiptDigest});
+    if(!this.dependencies.completeInspectionMetadata)throw new Error("Product Decision Draft inspection metadata owner is unavailable.");
+    const inspectionMetadata=await this.dependencies.completeInspectionMetadata({organizationId:instruction.organizationId,questionId:instruction.questionId,draftId:recorded.result.revision.draftId,draftRevisionId:recorded.result.revision.revisionId,creationOperationId:recorded.result.receipt.operationId,requestFingerprint:recorded.result.revision.requestFingerprint,body:staged.body,stageReceiptDigest:staged.receiptDigest});
+    const bound=bindProductDecisionDraftBodyPublicationV1({runtime:recorded.runtime,result:recorded.result,body:staged.body,stageReceiptDigest:staged.receiptDigest,inspectionMetadata});
     const bytes = new TextEncoder().encode(JSON.stringify(bound.runtime, null, 2));
     const persisted = await this.dependencies.runtimeRepository.replace(
       instruction.organizationId,

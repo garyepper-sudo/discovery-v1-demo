@@ -4,6 +4,7 @@ export * from "./productArtifactInspectionMetadataContracts";
 export * from "./buildFrontendReadyProductQuestionWorkspace";
 export * from "./buildProductQuestionWorkspace";
 export * from "./renderProductQuestionWorkspace";
+export * from "./productArtifactCurrentAccessContracts";
 export * from "./buildShadowProductWorkspace";
 export * from "./customerLanguage";
 export * from "./selectProductAnswer";

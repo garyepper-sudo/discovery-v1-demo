@@ -1,5 +1,6 @@
 import type { ProductQuestionWorkspaceV2 } from "../frontendReadinessContracts";
 import type { ProductArtifactBodyRefV1 } from "../../persistence/productArtifactBodyContracts";
+import type { FuturePreparationItemStateV1, ProductArtifactCurrentAccessResultV1 } from "../productArtifactCurrentAccessContracts";
 import type { LeadershipConversationCanonicalChangeFactsV1, LeadershipConversationCanonicalRoutingReceiptV1 } from "./canonicalOwnerReceiptContracts";
 import type {
   CanonicalProductMaterializationReceiptV1,
@@ -33,3 +34,10 @@ export type LeadershipConversationStepV1 = "set-up"|"prepare"|"freeze"|"capture"
 export type LeadershipConversationActionV1 = { id:"record-context"|"create-preparation"|"edit-preparation"|"freeze-preparation"|"upload-source"|"generate-proposals"|"review-proposal"|"route-approved"|"prepare-again"|"reset-development";enabled:boolean;requiredAuthority:string;blockedReason:string|null };
 export type LeadershipConversationWorkspaceV1 = { contractVersion:"1";organizationId:string;questionId:string;conversationId:string;base:ProductQuestionWorkspaceV2;currentStep:LeadershipConversationStepV1;context:LeadershipConversationContextV1|null;currentPreparedWorkProduct:PreparedWorkProductV1|null;frozenSnapshot:FrozenPreparedWorkProductSnapshotV1|null;uploadReceipt:ConversationUploadReceiptV1|null;proposals:TakeawayProposalEnvelopeV1[];dispositions:TakeawayProposalDispositionReceiptV1[];canonicalRoutingReceipts:LeadershipConversationCanonicalRoutingReceiptV1[];routingLinks:CanonicalOwnerRoutingLinkV1[];changeReceiptLink:LeadershipConversationChangeReceiptLinkV1|null;futurePreparationLink:FuturePreparationLinkV1|null;actions:LeadershipConversationActionV1[];unavailableFields:string[];withheldFields:string[];auditReferences:string[] };
 export interface LeadershipConversationClock { now():string }
+
+export type SafeProductArtifactProjectionV1={contractVersion:"1";artifactType:"prepared-work"|"frozen-snapshot"|"what-changed"|"product-decision-draft";artifactId:string;artifactRevision:string;title:string;summary:string;accessResultDigest:string};
+export type LeadershipHistoryEntryV1={contractVersion:"1";artifactType:SafeProductArtifactProjectionV1["artifactType"];artifactId:string;artifactRevision:string;label:string;occurredAt:string;accessResultDigest:string};
+export type CurrentAuthorizedLeadershipHistoryV1={contractVersion:"1";entries:LeadershipHistoryEntryV1[];historyDigest:string};
+export type FuturePreparationItemV1={contractVersion:"1";artifactId:string;artifactRevision:string;state:FuturePreparationItemStateV1;accessResultDigest:string|null;semanticInfluence:boolean;ownerClassificationRef:string|null};
+export type CurrentAuthorizedProductQuestionWorkspaceV1={contractVersion:"1";organizationId:string;questionId:string;subjectId:string;purpose:string;scopeDigest:string;sensitivity:"standard"|"restricted"|"private";evaluatedAt:string;artifacts:SafeProductArtifactProjectionV1[];history:CurrentAuthorizedLeadershipHistoryV1;accessResultDigests:string[];workspaceDigest:string};
+export type CurrentArtifactDeliveryCandidateV1={access:ProductArtifactCurrentAccessResultV1;safeProjection:SafeProductArtifactProjectionV1|null;occurredAt:string;ownerState:"unchanged"|"changed"|"resolved"|"superseded"|null};

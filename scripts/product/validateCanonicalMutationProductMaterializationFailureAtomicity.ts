@@ -1,10 +1,14 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
+import { mkdtemp, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import { RuntimeStorageConflictError } from "../../engine/v3/runtime/organizationRuntimeRepository";
 import type { ProductDecisionDraftAuthorityGrantV1, ProductDecisionDraftOperation } from "../../product/decisions";
 import { ProductDecisionDraftService } from "../../product/integration/productDecisionDraftService";
 import { CanonicalLeadershipConversationProductMaterializer } from "../../product/integration/canonicalLeadershipConversationProductMaterializer";
 import { LeadershipConversationProductOperations } from "../../product/workflow/leadershipConversation/operations";
-import { MemoryRuntimeRepository, MemoryWorkflowRepository, instruction, organizationId, questionId, runtimeWithInstruction } from "./validateCanonicalMutationProductMaterializationAtomicity";
+import { createOwnerBackedDraftDependencies, MemoryRuntimeRepository, MemoryWorkflowRepository, instruction, organizationId, questionId, runtimeWithInstruction } from "./validateCanonicalMutationProductMaterializationAtomicity";
 
 export type FailurePoint = "draft-cas-conflict" | "crash-after-draft-cas" | "workflow-cas-conflict" | "instruction-tamper" | "draft-receipt-tamper";
 export type FailureScenarioResultV1 = { failurePoint: FailurePoint; stage: string; runtimeCasCount: number; workflowCasCount: number; cognitionCount: number };
@@ -14,20 +18,23 @@ const grant = (operation: ProductDecisionDraftOperation, at: string): ProductDec
 class DraftConflictRepository extends MemoryRuntimeRepository { override async replace(): Promise<never> { throw new RuntimeStorageConflictError("Runtime revision changed"); } }
 export class FailureInjectingProductWorkflowArtifactRepository extends MemoryWorkflowRepository { fail = true; override async replace(...args: Parameters<MemoryWorkflowRepository["replace"]>) { if (this.fail) throw new Error("Product Workflow store revision changed."); return super.replace(...args); } }
 
-function composition(runtimeRepository: MemoryRuntimeRepository, workflowRepository: MemoryWorkflowRepository) {
+async function composition(runtimeRepository: MemoryRuntimeRepository, workflowRepository: MemoryWorkflowRepository, root:string) {
   const canonicalInstruction = instruction(true);
   const operations = new LeadershipConversationProductOperations({ repository: workflowRepository, clock: { now: () => canonicalInstruction.evaluatedAt }, authorize: async () => false, verifyCanonicalInstructionProvenance: async () => true, loadBase: async () => { throw new Error("frontend read must not occur"); }, source: { write: async () => { throw new Error("source write must not occur"); }, readForProposal: async () => { throw new Error("source read must not occur"); }, readForEvidenceAdmission: async () => { throw new Error("source read must not occur"); } } });
-  const service = new ProductDecisionDraftService({ runtimeRepository: runtimeRepository as never, authorize: async (value) => grant(value.operation, value.evaluatedAt), authorizeMaterialization: async ({ operation }) => grant(operation, canonicalInstruction.evaluatedAt) });
+  const ownerBacked=await createOwnerBackedDraftDependencies(root);
+  const service = new ProductDecisionDraftService({ runtimeRepository: runtimeRepository as never, ...ownerBacked, authorize: async (value) => grant(value.operation, value.evaluatedAt), authorizeMaterialization: async ({ operation }) => grant(operation, canonicalInstruction.evaluatedAt) });
   const materializer = new CanonicalLeadershipConversationProductMaterializer({ productDecisionDraftService: service, productWorkflowOperations: operations, storageOperation: () => ({ requestId: "failure-draft", operatorId: "system" }) });
   return { canonicalInstruction, service, materializer };
 }
 
 export async function runFailureScenario(failurePoint: FailurePoint): Promise<FailureScenarioResultV1> {
+  const root=await mkdtemp(path.join(tmpdir(),`discovery-northstar-preparation-lineage-failure-atomicity-${failurePoint}-`));
+  try{
   const oracle = new CognitionInvocationOracle();
   const canonicalInstruction = instruction(true);
   const runtimeRepository = failurePoint === "draft-cas-conflict" ? new DraftConflictRepository(runtimeWithInstruction(canonicalInstruction)) : new MemoryRuntimeRepository(runtimeWithInstruction(canonicalInstruction));
   const workflowRepository = failurePoint === "workflow-cas-conflict" ? new FailureInjectingProductWorkflowArtifactRepository() : new MemoryWorkflowRepository();
-  const built = composition(runtimeRepository, workflowRepository);
+  const built = await composition(runtimeRepository, workflowRepository,root);
   let stage = "rejected";
   if (failurePoint === "instruction-tamper") {
     await assert.rejects(() => built.materializer.materialize({ contractVersion: "1", instruction: { ...canonicalInstruction, instructionDigest: "0".repeat(64) }, draftResult: null }), /integrity failed/);
@@ -44,6 +51,7 @@ export async function runFailureScenario(failurePoint: FailurePoint): Promise<Fa
   }
   oracle.assertUnchanged();
   return { failurePoint, stage, runtimeCasCount: runtimeRepository.replaceCount, workflowCasCount: workflowRepository.replaceCount, cognitionCount: oracle.count };
+  }finally{await rm(root,{recursive:true,force:true});}
 }
 
 async function main() {
@@ -55,4 +63,4 @@ async function main() {
   console.log("Canonical mutation Product materialization failure atomicity validation PASS (15 checks)");
 }
 
-void main();
+if(!process.argv.includes("--react-server-child")){const child=spawnSync(process.execPath,["--conditions=react-server",...process.execArgv,process.argv[1]!,"--react-server-child"],{cwd:process.cwd(),encoding:"utf8",env:{...process.env,NODE_ENV:"test"}});if(child.stdout)process.stdout.write(child.stdout);if(child.stderr)process.stderr.write(child.stderr);if(child.status!==0)process.exitCode=child.status??1;}else void main();

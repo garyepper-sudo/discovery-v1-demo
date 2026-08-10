@@ -1,0 +1,1 @@
+import{validateCurrentAccessScenario}from"./validateProductArtifactAuthorizationBeforeBodyRead";validateCurrentAccessScenario("prepare-again-seven-state-production").catch(e=>{console.error(e);process.exitCode=1});

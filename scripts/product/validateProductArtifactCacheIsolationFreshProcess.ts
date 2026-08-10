@@ -1,0 +1,1 @@
+import{validateCurrentAccessScenario}from"./validateProductArtifactAuthorizationBeforeBodyRead";validateCurrentAccessScenario("cache-isolation-fresh-process-a-d").catch(e=>{console.error(e);process.exitCode=1});

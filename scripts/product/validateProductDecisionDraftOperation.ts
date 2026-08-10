@@ -1,5 +1,9 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
+import { mkdtemp, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
 
 import { createEmptyOrganizationRuntime, type OrganizationRuntime } from "../../engine/v3/runtime/organizationRuntime";
 import type { StoredOrganizationRuntime } from "../../engine/v3/runtime/organizationRuntimeRepository";
@@ -25,22 +29,20 @@ import {
 import { leadershipDigest, leadershipStableSerialize } from "../../product/workflow/leadershipConversation/determinism";
 import { createProductArtifactBodyRefV1 } from "../../product/persistence/productArtifactBodyContracts";
 import { productArtifactBodyDigest, type ProductArtifactBodyRefV1, type ProductArtifactBodyStageRequestV1, type ProductArtifactBodyStageReceiptV1 } from "../../product/persistence/productArtifactBodyContracts";
-import type { ProductArtifactBodyRepository } from "../../product/persistence/productArtifactBodyRepository";
+import {
+  completeProductArtifactInspectionMetadataV1,
+  validateProductArtifactInspectionMetadataV1,
+  type ProductArtifactInspectionMetadataV1,
+} from "../../product/workflow/productArtifactInspectionMetadataContracts";
 
-const organizationId = "decision-draft-validation";
+const organizationId = "sandbox-northstar-implementation-services-001";
 const otherOrganizationId = "decision-draft-other";
-const questionId = "question-decision-draft";
+const questionId = "product-question:northstar-implementation-duration";
 const answerId = "answer-decision-draft";
 const firstAt = "2026-08-06T12:00:00.000Z";
 const secondAt = "2026-08-06T12:05:00.000Z";
 let checks = 0;
 const check = (value: unknown, message: string): void => { assert.ok(value, message); checks += 1; };
-
-class MemoryBodyRepository implements ProductArtifactBodyRepository {
-  readonly backend="filesystem" as const;private readonly bodies=new Map<string,Uint8Array>();
-  async stage(input:ProductArtifactBodyStageRequestV1):Promise<ProductArtifactBodyStageReceiptV1>{const body=createProductArtifactBodyRefV1({organizationId:input.organizationId,semanticOwner:input.semanticOwner,artifactType:input.artifactType,artifactId:input.artifactId,artifactRevision:input.artifactRevision,exactBodyDigest:productArtifactBodyDigest(input.bytes),byteLength:input.bytes.byteLength,mediaType:"application/json",schemaRef:input.schemaRef}),existing=this.bodies.get(body.bodyId),disposition=existing?"exact-replay" as const:"staged" as const;if(existing)assert.deepEqual(existing,input.bytes);else this.bodies.set(body.bodyId,input.bytes.slice());return{contractVersion:"1",body,disposition,receiptDigest:productArtifactBodyDigest({body,disposition})};}
-  async readStagedExact(ref:ProductArtifactBodyRefV1):Promise<Uint8Array>{const bytes=this.bodies.get(ref.bodyId);if(!bytes||productArtifactBodyDigest(bytes)!==ref.exactBodyDigest)throw new Error("body unavailable");return bytes.slice();}
-}
 
 function fixtureRuntime(): OrganizationRuntime {
   let runtime = createEmptyOrganizationRuntime({ organizationId, name: "Decision Draft Validation", now: firstAt });
@@ -143,6 +145,57 @@ class MemoryRepository {
 }
 
 async function main(): Promise<void> {
+  if (!process.argv.includes("--react-server-child")) {
+    const child = spawnSync(process.execPath, ["--conditions=react-server", ...process.execArgv, process.argv[1]!, "--react-server-child"], {
+      cwd: process.cwd(), encoding: "utf8", env: { ...process.env, NODE_ENV: "test" },
+    });
+    if (child.stdout) process.stdout.write(child.stdout);
+    if (child.stderr) process.stderr.write(child.stderr);
+    if (child.status !== 0) process.exitCode = child.status ?? 1;
+    return;
+  }
+  const [{ createProductArtifactBodyRepository }, {
+    provisionNorthstarPreparationLineageFixture,
+    readNorthstarPreparationLineageSeed,
+    resetNorthstarPreparationLineageFixture,
+  }] = await Promise.all([
+    import("../../product/persistence/productArtifactBodyRepository"),
+    import("../../product/simulations/living-organization-sandbox/preparationLineageFixtureProvisioner"),
+  ]);
+  const fixtureRoot = await mkdtemp(path.join(tmpdir(), "discovery-northstar-preparation-lineage-draft-validator-"));
+  const bodyRoot = await mkdtemp(path.join(tmpdir(), "discovery-product-decision-draft-body-validator-"));
+  try {
+  const provisioned = await provisionNorthstarPreparationLineageFixture({ environment: "test", fixtureRoot });
+  const seed = await readNorthstarPreparationLineageSeed({
+    fixtureRoot,
+    organizationId,
+    fixtureId: "northstar-preparation-lineage-fixture-v1",
+    provisioningKey: "northstar-preparation-lineage:v1",
+    expectedSeedDigest: provisioned.seed.seedDigest,
+  });
+  assert.ok(seed.organizationId === organizationId && seed.productQuestionId === questionId, "owner-backed Northstar seed targets the exact Draft organization and ProductQuestion");
+  assert.ok(seed.sourceBindings.length > 0 && seed.sourceContentVersions.length > 0 && seed.canonicalMaterial.length > 0, "owner-backed Northstar seed retains Source Binding, source-version, and canonical material provenance");
+  const completeInspectionMetadata = async (input:{organizationId:string;questionId:string;draftId:string;draftRevisionId:string;creationOperationId:string;requestFingerprint:string;body:ProductArtifactBodyRefV1;stageReceiptDigest:string}):Promise<ProductArtifactInspectionMetadataV1> => {
+    const loaded = await readNorthstarPreparationLineageSeed({ fixtureRoot, organizationId, fixtureId: "northstar-preparation-lineage-fixture-v1", provisioningKey: "northstar-preparation-lineage:v1", expectedSeedDigest: seed.seedDigest });
+    assert.equal(input.organizationId, loaded.organizationId);
+    assert.equal(input.questionId, loaded.productQuestionId);
+    const metadata = completeProductArtifactInspectionMetadataV1({
+      organizationId: input.organizationId,
+      semanticOwner: "product-decision-draft",
+      artifactType: "product-decision-draft",
+      artifactId: input.draftId,
+      artifactRevision: input.draftRevisionId,
+      productQuestionId: input.questionId,
+      productWorkflowId: null,
+      creationEnvelopeDigest: productDecisionDraftDigest({ creationOperationId: input.creationOperationId, requestFingerprint: input.requestFingerprint }),
+      materialReferencesDigest: productDecisionDraftDigest(loaded.canonicalMaterial),
+      protectedBody: input.body,
+      ownerStageReceiptDigest: input.stageReceiptDigest,
+      materialLineage: { ...loaded, semanticOwner: "product-decision-draft", artifactType: "product-decision-draft", artifactId: input.draftId, artifactRevision: input.draftRevisionId, envelopeDigest: "" },
+    });
+    validateProductArtifactInspectionMetadataV1(metadata);
+    return metadata;
+  };
   const initial = fixtureRuntime();
   const protectedBefore = JSON.stringify({ ...initial.memory, events: undefined });
   const direct = recordProductDecisionDraftRevision({ runtime: initial, request: request(), grant: grant("product-decision-draft:create") });
@@ -178,11 +231,12 @@ async function main(): Promise<void> {
   check(productDecisionDraftDigest(logicalEvent.draftMutation) !== productDecisionDraftDigest({ ...logicalEvent.draftMutation, expectedRuntimeRevision: "different-pre-cas-revision" }), "pre-CAS revision remains material to the logical mutation");
 
   const repository = new MemoryRepository(initial);
-  const bodyRepository=new MemoryBodyRepository();
+  const bodyRepository=createProductArtifactBodyRepository({root:bodyRoot});
   const authorizationCalls: ProductDecisionDraftOperation[] = [];
   const service = new ProductDecisionDraftService({
     runtimeRepository: repository,
     bodyRepository,
+    completeInspectionMetadata,
     authorize: async (input) => {
       authorizationCalls.push(input.operation);
       return grant(input.operation, { authorized: input.userId === "authorized", organizationId: input.organizationId,
@@ -242,6 +296,7 @@ async function main(): Promise<void> {
   const materializationService = new ProductDecisionDraftService({
     runtimeRepository: materializationRepository,
     bodyRepository,
+    completeInspectionMetadata,
     authorize: async (input) => grant(input.operation, { organizationId: input.organizationId, questionId: input.questionId, scope: input.scope, purpose: input.purpose, sensitivity: input.sensitivity, authorizedAt: input.evaluatedAt }),
     authorizeMaterialization: async ({ operation: materializationOperation }) => grant(materializationOperation, { authorizedAt: firstAt }),
   });
@@ -301,6 +356,7 @@ async function main(): Promise<void> {
   const staleService = new ProductDecisionDraftService({
     runtimeRepository: staleRepository,
     bodyRepository,
+    completeInspectionMetadata,
     authorize: async (input) => grant(input.operation, { organizationId: input.organizationId, questionId: input.questionId,
       scope: input.scope, purpose: input.purpose, sensitivity: input.sensitivity, authorizedAt: input.evaluatedAt }),
   });
@@ -310,6 +366,11 @@ async function main(): Promise<void> {
   check(!persistedJson.includes("create-draft-1") && !persistedJson.includes("validFrom") && !persistedJson.includes("scope\""), "raw idempotency key and raw authorization grant are not persisted");
   check(initial.memory.events.length + 2 === repository.current.runtime.memory.events.length, "only two Product Workflow events were appended");
   console.log(`Product Decision Draft operation validation PASS (${checks} checks)`);
+  } finally {
+    await resetNorthstarPreparationLineageFixture({ environment: "test", fixtureRoot }).catch(() => undefined);
+    await rm(fixtureRoot, { recursive: true, force: true });
+    await rm(bodyRoot, { recursive: true, force: true });
+  }
 }
 
 void main();

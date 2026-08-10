@@ -1,0 +1,1 @@
+import{validateCurrentAccessScenario}from"./validateProductArtifactAuthorizationBeforeBodyRead";validateCurrentAccessScenario("zero-successor-influence").catch(e=>{console.error(e);process.exitCode=1});

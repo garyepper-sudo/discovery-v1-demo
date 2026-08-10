@@ -1162,3 +1162,35 @@ Changing one requires the process in
   Runtime CAS owners, Product Workflow CAS, and authorization owners remain
   authoritative.
 - **Status:** Canonical bounded prerequisite implemented and validated.
+
+## DEC-PROD-051 — Product artifact delivery reauthorizes current access before protected-body reads
+
+- **Decision:** Deliver Prepared Work, frozen snapshots, What Changed, and
+  Product Decision Draft bodies only after metadata-only inspection and a
+  fresh, integrity-bound current-access decision. A permitted delivery performs
+  exactly one intended protected-body read; every denied branch performs zero.
+- **Owner boundary:** Existing Source Binding, authority, policy, eligibility,
+  projection, artifact, and protected-body owners remain authoritative.
+  Product orchestration composes their results but owns no permission,
+  cognition, material lineage, or historical truth.
+- **Draft publication:** Every new split-body Product Decision Draft binds
+  completed owner-backed inspection metadata, protected-body identity,
+  immutable Northstar material lineage, receipt, event, idempotency state, and
+  Draft-stage receipt through the existing Draft owner CAS. No second CAS or
+  post-write repair is permitted.
+- **Reuse and Prepare Again:** Current-authorized artifact history and derived
+  workspace projections remain non-persistent. Seven-state Prepare Again
+  reauthorizes every predecessor and proves denied material has zero influence
+  on successor publication.
+- **Recovery:** Canonical mutation, Draft, and Product Workflow stages retain
+  truthful committed/pending results. Exact retry reloads durable receipts and
+  never reruns cognition or duplicates an owner record.
+- **Historical limit:** This decision does not implement contemporaneous
+  epistemic checkpoints or retrospective historical reconstruction; that
+  remains `GAP-B-021`.
+- **Affected gap:** `GAP-B-019` bounded delivery successor.
+- **Architecture:** Additive composition through existing owners; no Runtime
+  schema, canonical cognition, Decision authority, or persisted workspace
+  change.
+- **Status:** Bounded current-access delivery implemented and validated; the
+  separate historical-foundation limit remains explicit.

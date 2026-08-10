@@ -1,7 +1,8 @@
 import "server-only";
 
 import { createHash } from "node:crypto";
-import { lstat, readFile, realpath, rm } from "node:fs/promises";
+import { constants } from "node:fs";
+import { chmod, lstat, mkdir, open, readFile, realpath, rename, rm, unlink } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 
@@ -26,6 +27,9 @@ const PURPOSE = "leadership-conversation-capture" as const;
 const ACTOR = "person:northstar-preparation-lineage-fixture";
 const QUESTION_ID = "product-question:northstar-implementation-duration";
 const POLICY = "conservative-material-ancestor.v1";
+const FIXTURE_ID = "northstar-preparation-lineage-fixture-v1";
+const PROVISIONING_KEY = "northstar-preparation-lineage:v1";
+const SAFE_ID = /^[A-Za-z0-9_-]+$/u;
 const stable = (value: unknown): string => Array.isArray(value) ? `[${value.map(stable).join(",")}]` : value && typeof value === "object" ? `{${Object.entries(value as Record<string, unknown>).sort(([a],[b])=>a.localeCompare(b)).map(([key,item])=>`${JSON.stringify(key)}:${stable(item)}`).join(",")}}` : JSON.stringify(value);
 const digest = (value: unknown): string => createHash("sha256").update(typeof value === "string" ? value : stable(value)).digest("hex");
 
@@ -37,7 +41,7 @@ export type NorthstarPreparationLineageSeedV1 = {
   creationOperationId: string;
   lineagePolicyVersion: typeof POLICY;
   sourceBindings: Array<{ sourceBindingId: string; bindingRevisionId: string }>;
-  sourceContentVersions: Array<{ sourceContentVersionId: string; normalizedContentDigest: string }>;
+  sourceContentVersions: Array<{ sourceBindingId: string; sourceContentVersionId: string; normalizedContentDigest: string }>;
   canonicalMaterial: Array<{ canonicalObjectId: string; revisionRef: string; owner: "canonical-evidence-admission" }>;
   canonicalUnderstandingRevision: string;
   projectionSourceRef: string;
@@ -49,6 +53,18 @@ export type NorthstarPreparationLineageProvisioningResult = {
   seed: NorthstarPreparationLineageSeedV1;
   counts: { sources: number; material: number; understandings: number };
   runtimeRevision: string;
+};
+
+export type NorthstarPreparationLineageSeedRecordV1 = {
+  contractVersion: "1";
+  organizationId: typeof SANDBOX_ORGANIZATION_ID;
+  fixtureId: typeof FIXTURE_ID;
+  recordId: string;
+  provisioningKeyDigest: string;
+  requestFingerprint: string;
+  seed: NorthstarPreparationLineageSeedV1;
+  seedDigest: string;
+  storageIntegrityDigest: string;
 };
 
 export type NorthstarPreparationLineageProvisioningInput = {
@@ -64,6 +80,8 @@ function authorization(operation: ScopedGovernanceOperation, at: string) {
 
 async function safeFixtureRoot(root: string): Promise<string> {
   if (!path.isAbsolute(root)) throw new Error("Northstar fixture root must be absolute.");
+  const suppliedStatus = await lstat(root);
+  if (!suppliedStatus.isDirectory() || suppliedStatus.isSymbolicLink()) throw new Error("Northstar fixture root is unsafe.");
   const actual = await realpath(root);
   const temporary = await realpath(tmpdir());
   if (!actual.startsWith(`${temporary}${path.sep}`) || !path.basename(actual).startsWith("discovery-northstar-preparation-lineage-")) throw new Error("Northstar fixture root is outside the isolated fixture boundary.");
@@ -73,6 +91,95 @@ async function safeFixtureRoot(root: string): Promise<string> {
 }
 
 function runtimeBytes(value: unknown): Uint8Array { return new TextEncoder().encode(JSON.stringify(value, null, 2)); }
+
+function validateSeed(seed: NorthstarPreparationLineageSeedV1): void {
+  const { seedDigest, ...unsigned } = seed;
+  const bindingIds = new Set(seed.sourceBindings.map(item => item.sourceBindingId));
+  const versionIds = new Set<string>();
+  if (seed.contractVersion !== "1" || seed.organizationId !== SANDBOX_ORGANIZATION_ID || seed.semanticOwner !== "leadership-conversation" || seed.productQuestionId !== QUESTION_ID || seed.lineagePolicyVersion !== POLICY || seedDigest !== digest(unsigned) || !bindingIds.size || bindingIds.size !== seed.sourceBindings.length || !seed.sourceContentVersions.length || !seed.canonicalMaterial.length || !seed.canonicalUnderstandingRevision || !seed.projectionSourceRef) throw new Error("Northstar preparation lineage seed integrity failed.");
+  for (const version of seed.sourceContentVersions) {
+    if (!version.sourceBindingId || !bindingIds.has(version.sourceBindingId) || !version.sourceContentVersionId || versionIds.has(version.sourceContentVersionId) || !/^[a-f0-9]{64}$/u.test(version.normalizedContentDigest)) throw new Error("Northstar preparation lineage seed integrity failed.");
+    versionIds.add(version.sourceContentVersionId);
+  }
+}
+
+function seedRecordIdentity(organizationId: string, fixtureId: string, provisioningKeyDigest: string): string {
+  return `northstar-lineage-seed-${digest(["1", organizationId, fixtureId, provisioningKeyDigest])}`;
+}
+
+function unsignedSeedRecord(seed: NorthstarPreparationLineageSeedV1) {
+  const provisioningKeyDigest = digest(PROVISIONING_KEY);
+  const recordId = seedRecordIdentity(SANDBOX_ORGANIZATION_ID, FIXTURE_ID, provisioningKeyDigest);
+  const requestFingerprint = digest({ contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID, fixtureId: FIXTURE_ID, provisioningKeyDigest, seedDigest: seed.seedDigest });
+  return { contractVersion: "1" as const, organizationId: SANDBOX_ORGANIZATION_ID as typeof SANDBOX_ORGANIZATION_ID, fixtureId: FIXTURE_ID as typeof FIXTURE_ID, recordId, provisioningKeyDigest, requestFingerprint, seed, seedDigest: seed.seedDigest };
+}
+
+function completeSeedRecord(seed: NorthstarPreparationLineageSeedV1): NorthstarPreparationLineageSeedRecordV1 {
+  validateSeed(seed);
+  const unsigned = unsignedSeedRecord(seed);
+  return { ...unsigned, storageIntegrityDigest: digest(unsigned) };
+}
+
+function seedRecordBytes(record: NorthstarPreparationLineageSeedRecordV1): Uint8Array {
+  return new TextEncoder().encode(`${stable(record)}\n`);
+}
+
+function validateSeedRecord(record: NorthstarPreparationLineageSeedRecordV1): void {
+  validateSeed(record.seed);
+  const { storageIntegrityDigest, ...unsigned } = record;
+  const expected = unsignedSeedRecord(record.seed);
+  if (record.contractVersion !== "1" || record.organizationId !== SANDBOX_ORGANIZATION_ID || record.fixtureId !== FIXTURE_ID || record.recordId !== expected.recordId || record.provisioningKeyDigest !== expected.provisioningKeyDigest || record.requestFingerprint !== expected.requestFingerprint || record.seedDigest !== record.seed.seedDigest || stable(unsigned) !== stable(expected) || storageIntegrityDigest !== digest(unsigned)) throw new Error("Northstar preparation lineage seed record integrity failed.");
+}
+
+async function rejectSymlink(target: string): Promise<void> {
+  try { if ((await lstat(target)).isSymbolicLink()) throw new Error("Northstar preparation lineage seed storage is unsafe."); }
+  catch (error) { if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error; }
+}
+
+async function seedRecordTarget(root: string, organizationId: string, fixtureId: string, provisioningKey: string): Promise<{ target: string; temporary: string }> {
+  if (organizationId !== SANDBOX_ORGANIZATION_ID || fixtureId !== FIXTURE_ID || provisioningKey !== PROVISIONING_KEY || !SAFE_ID.test(organizationId) || !SAFE_ID.test(fixtureId)) throw new Error("Northstar preparation lineage seed identity is invalid.");
+  const actualRoot = await safeFixtureRoot(root);
+  const records = path.join(actualRoot, "preparation-lineage-seeds"), organization = path.join(records, organizationId);
+  for (const directory of [records, organization]) { await rejectSymlink(directory); await mkdir(directory, { recursive: true, mode: 0o700 }); await rejectSymlink(directory); await chmod(directory, 0o700); }
+  const actualRecords = await realpath(records), actualOrganization = await realpath(organization);
+  if (actualRecords !== path.join(actualRoot, "preparation-lineage-seeds") || actualOrganization !== path.join(actualRecords, organizationId)) throw new Error("Northstar preparation lineage seed storage escaped its fixture root.");
+  const provisioningKeyDigest = digest(provisioningKey), recordId = seedRecordIdentity(organizationId, fixtureId, provisioningKeyDigest), target = path.join(actualOrganization, `${recordId}.json`), temporary = path.join(actualOrganization, `${recordId}.tmp`);
+  await rejectSymlink(target); await rejectSymlink(temporary);
+  return { target, temporary };
+}
+
+async function readSeedRecord(input: { fixtureRoot: string; organizationId: string; fixtureId: string; provisioningKey: string; expectedSeedDigest?: string }): Promise<NorthstarPreparationLineageSeedRecordV1> {
+  const { target } = await seedRecordTarget(input.fixtureRoot, input.organizationId, input.fixtureId, input.provisioningKey);
+  let raw: Uint8Array;
+  try { const status = await lstat(target); if (!status.isFile() || status.isSymbolicLink() || (status.mode & 0o777) !== 0o600) throw new Error("Northstar preparation lineage seed record integrity failed."); raw = new Uint8Array(await readFile(target)); }
+  catch (error) { if ((error as NodeJS.ErrnoException).code === "ENOENT") throw new Error("Northstar preparation lineage seed record is unavailable."); throw error; }
+  let record: NorthstarPreparationLineageSeedRecordV1;
+  try { record = JSON.parse(new TextDecoder().decode(raw)) as NorthstarPreparationLineageSeedRecordV1; }
+  catch { throw new Error("Northstar preparation lineage seed record integrity failed."); }
+  validateSeedRecord(record);
+  if (!Buffer.from(raw).equals(Buffer.from(seedRecordBytes(record))) || (input.expectedSeedDigest !== undefined && input.expectedSeedDigest !== record.seedDigest)) throw new Error("Northstar preparation lineage seed record integrity failed.");
+  return record;
+}
+
+async function persistSeedRecord(root: string, seed: NorthstarPreparationLineageSeedV1): Promise<NorthstarPreparationLineageSeedRecordV1> {
+  const record = completeSeedRecord(seed), next = seedRecordBytes(record), paths = await seedRecordTarget(root, SANDBOX_ORGANIZATION_ID, FIXTURE_ID, PROVISIONING_KEY);
+  try {
+    const existing = await readSeedRecord({ fixtureRoot: root, organizationId: SANDBOX_ORGANIZATION_ID, fixtureId: FIXTURE_ID, provisioningKey: PROVISIONING_KEY });
+    if (!Buffer.from(next).equals(Buffer.from(seedRecordBytes(existing)))) throw new Error("Northstar preparation lineage seed record collision.");
+    return existing;
+  } catch (error) { if (!/record is unavailable/u.test((error as Error).message)) throw error; }
+  try { await unlink(paths.temporary); } catch (error) { if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error; }
+  const handle = await open(paths.temporary, constants.O_CREAT | constants.O_EXCL | constants.O_WRONLY, 0o600);
+  try { await handle.writeFile(next); await handle.sync(); } finally { await handle.close(); }
+  await rename(paths.temporary, paths.target);
+  const published = await readSeedRecord({ fixtureRoot: root, organizationId: SANDBOX_ORGANIZATION_ID, fixtureId: FIXTURE_ID, provisioningKey: PROVISIONING_KEY, expectedSeedDigest: seed.seedDigest });
+  if (!Buffer.from(next).equals(Buffer.from(seedRecordBytes(published)))) throw new Error("Northstar preparation lineage seed record publication failed.");
+  return published;
+}
+
+export async function readNorthstarPreparationLineageSeed(input: { fixtureRoot: string; organizationId: typeof SANDBOX_ORGANIZATION_ID; fixtureId: typeof FIXTURE_ID; provisioningKey: typeof PROVISIONING_KEY; expectedSeedDigest?: string }): Promise<NorthstarPreparationLineageSeedV1> {
+  return structuredClone((await readSeedRecord(input)).seed);
+}
 
 export async function provisionNorthstarPreparationLineageFixture(input: NorthstarPreparationLineageProvisioningInput): Promise<NorthstarPreparationLineageProvisioningResult> {
   if (!(["development", "sandbox", "test"] as string[]).includes(input.environment)) throw new Error("Northstar preparation lineage provisioning is development-only.");
@@ -111,8 +218,9 @@ export async function provisionNorthstarPreparationLineageFixture(input: Northst
     const expectedRepositoryRevision = await sourceRepository.inspectRevision(SANDBOX_ORGANIZATION_ID);
     const version = await contentService.write({ contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID, sourceBindingId: binding.sourceBindingId, purposeRef: PURPOSE, mediaType: "text/markdown", bytes, storedAt: at, storedByActorRef: ACTOR, idempotencyKey: `northstar-preparation-content:${document.id}:v1`, expectedRepositoryRevision, authorization: authorization("source-content:write", at) });
     const read = await contentService.read({ contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID, sourceBindingId: binding.sourceBindingId, sourceContentVersionId: version.sourceContentVersionId, purposeRef: PURPOSE, authorization: authorization("source-content:read-for-evidence-admission", at) });
+    if (binding.organizationId !== SANDBOX_ORGANIZATION_ID || resolvedBinding.binding.organizationId !== SANDBOX_ORGANIZATION_ID || resolvedBinding.binding.bindingId !== binding.sourceBindingId || version.organizationId !== SANDBOX_ORGANIZATION_ID || version.sourceBindingId !== binding.sourceBindingId || read.version.sourceBindingId !== binding.sourceBindingId || read.version.sourceContentVersionId !== version.sourceContentVersionId || binding.normalizedContentDigest !== version.normalizedContentDigest || resolvedBinding.binding.source.normalizedContentDigest !== version.normalizedContentDigest || read.version.normalizedContentDigest !== version.normalizedContentDigest) throw new Error("Canonical Northstar source binding and source version association is invalid.");
     bindings.push({ sourceBindingId: binding.sourceBindingId, bindingRevisionId: binding.bindingRevisionId });
-    versions.push({ sourceContentVersionId: version.sourceContentVersionId, normalizedContentDigest: version.normalizedContentDigest });
+    versions.push({ sourceBindingId: version.sourceBindingId, sourceContentVersionId: version.sourceContentVersionId, normalizedContentDigest: version.normalizedContentDigest });
     evidenceSources.push({ sourceId: resolvedBinding.binding.source.sourceId, sourceType: "upload", observedAt: document.effectiveAt, contentDigest: version.normalizedContentDigest, content: read.text });
     replay ||= binding.disposition === "current-binding-reused" || version.disposition === "idempotent-replay";
   }
@@ -143,8 +251,9 @@ export async function provisionNorthstarPreparationLineageFixture(input: Northst
   if(eligibility.disposition!=="eligible")throw new Error("Canonical Northstar Understanding is not currently eligible.");
   const projection=readScopedOrganizationalProductProjection({authenticatedUserId:ACTOR,organizationId:SANDBOX_ORGANIZATION_ID,context:disclosure,repository:{readAuthorizedSource:()=>buildGenericScopedProductSource({stored,organizationId:SANDBOX_ORGANIZATION_ID,requestedScope:scope,currentEligibility:eligibility})}});
   if(projection.disposition!=="available")throw new Error("Canonical Northstar scoped projection is unavailable.");
-  const unsigned: Omit<NorthstarPreparationLineageSeedV1, "seedDigest"> = { contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID as typeof SANDBOX_ORGANIZATION_ID, semanticOwner: "leadership-conversation", productQuestionId: QUESTION_ID, creationOperationId: `northstar-preparation-lineage:v1:${digest([SANDBOX_ORGANIZATION_ID, documents.map(item=>item.id)])}`, lineagePolicyVersion: POLICY, sourceBindings: bindings.sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)), sourceContentVersions: versions.sort((a,b)=>a.sourceContentVersionId.localeCompare(b.sourceContentVersionId)), canonicalMaterial: admissions.map(item=>({ canonicalObjectId: item.canonicalEvidenceId, revisionRef: item.canonicalAdmissionId, owner: "canonical-evidence-admission" as const })).sort((a,b)=>a.canonicalObjectId.localeCompare(b.canonicalObjectId)), canonicalUnderstandingRevision: current.revisionId, projectionSourceRef: current.id };
+  const unsigned: Omit<NorthstarPreparationLineageSeedV1, "seedDigest"> = { contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID as typeof SANDBOX_ORGANIZATION_ID, semanticOwner: "leadership-conversation", productQuestionId: QUESTION_ID, creationOperationId: `northstar-preparation-lineage:v1:${digest([SANDBOX_ORGANIZATION_ID, documents.map(item=>item.id)])}`, lineagePolicyVersion: POLICY, sourceBindings: bindings.sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)), sourceContentVersions: versions.sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)||a.sourceContentVersionId.localeCompare(b.sourceContentVersionId)||a.normalizedContentDigest.localeCompare(b.normalizedContentDigest)), canonicalMaterial: admissions.map(item=>({ canonicalObjectId: item.canonicalEvidenceId, revisionRef: item.canonicalAdmissionId, owner: "canonical-evidence-admission" as const })).sort((a,b)=>a.canonicalObjectId.localeCompare(b.canonicalObjectId)), canonicalUnderstandingRevision: current.revisionId, projectionSourceRef: current.id };
   const seed = { ...unsigned, seedDigest: digest(unsigned) };
+  await persistSeedRecord(root, seed);
   return { disposition: replay ? "idempotent-replay" : "provisioned", seed, counts: { sources: bindings.length, material: admissions.length, understandings: compositions.length }, runtimeRevision: stored.revision };
 }
 

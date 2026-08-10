@@ -1,5 +1,9 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
+import { mkdtemp, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import type { ProductWorkflowArtifactRepository, ProductWorkflowStoreSnapshot } from "../../product/workflow/leadershipConversation/productWorkflowArtifactRepository";
 import { LeadershipConversationProductOperations } from "../../product/workflow/leadershipConversation/operations";
 import {
@@ -24,10 +28,11 @@ import { productDecisionDraftDigest } from "../../product/decisions";
 import { pathToFileURL } from "node:url";
 import { createProductArtifactBodyRefV1, productArtifactBodyDigest, type ProductArtifactBodyRefV1, type ProductArtifactBodyStageRequestV1, type ProductArtifactBodyStageReceiptV1 } from "../../product/persistence/productArtifactBodyContracts";
 import type { ProductArtifactBodyRepository } from "../../product/persistence/productArtifactBodyRepository";
+import { completeProductArtifactInspectionMetadataV1, validateProductArtifactInspectionMetadataV1, type ProductArtifactInspectionMetadataV1 } from "../../product/workflow/productArtifactInspectionMetadataContracts";
 
 const sha = (value: string) => createHash("sha256").update(value).digest("hex");
-export const organizationId = "atomicity-validation";
-export const questionId = "question-1";
+export const organizationId = "sandbox-northstar-implementation-services-001";
+export const questionId = "product-question:northstar-implementation-duration";
 const conversationId = "conversation-1";
 
 const emptyStore = (): LeadershipConversationArtifactStoreV1 => ({
@@ -54,6 +59,14 @@ export class MemoryBodyRepository implements ProductArtifactBodyRepository {
   private readonly bodies=new Map<string,Uint8Array>();
   async stage(input:ProductArtifactBodyStageRequestV1):Promise<ProductArtifactBodyStageReceiptV1>{const body=createProductArtifactBodyRefV1({organizationId:input.organizationId,semanticOwner:input.semanticOwner,artifactType:input.artifactType,artifactId:input.artifactId,artifactRevision:input.artifactRevision,exactBodyDigest:productArtifactBodyDigest(input.bytes),byteLength:input.bytes.byteLength,mediaType:"application/json",schemaRef:input.schemaRef}),existing=this.bodies.get(body.bodyId),disposition=existing?"exact-replay" as const:"staged" as const;if(existing)assert.deepEqual(existing,input.bytes);else this.bodies.set(body.bodyId,input.bytes.slice());return{contractVersion:"1",body,disposition,receiptDigest:productArtifactBodyDigest({body,disposition})};}
   async readStagedExact(ref:ProductArtifactBodyRefV1):Promise<Uint8Array>{const bytes=this.bodies.get(ref.bodyId);if(!bytes||productArtifactBodyDigest(bytes)!==ref.exactBodyDigest)throw new Error("body unavailable");return bytes.slice();}
+}
+
+export async function createOwnerBackedDraftDependencies(fixtureRoot:string):Promise<{bodyRepository:ProductArtifactBodyRepository;completeInspectionMetadata(input:{organizationId:string;questionId:string;draftId:string;draftRevisionId:string;creationOperationId:string;requestFingerprint:string;body:ProductArtifactBodyRefV1;stageReceiptDigest:string}):Promise<ProductArtifactInspectionMetadataV1>}>{
+  const [{createProductArtifactBodyRepository},{provisionNorthstarPreparationLineageFixture,readNorthstarPreparationLineageSeed}]=await Promise.all([import("../../product/persistence/productArtifactBodyRepository"),import("../../product/simulations/living-organization-sandbox/preparationLineageFixtureProvisioner")]);
+  const provisioned=await provisionNorthstarPreparationLineageFixture({environment:"test",fixtureRoot});
+  const load=()=>readNorthstarPreparationLineageSeed({fixtureRoot,organizationId,fixtureId:"northstar-preparation-lineage-fixture-v1",provisioningKey:"northstar-preparation-lineage:v1",expectedSeedDigest:provisioned.seed.seedDigest});
+  const seed=await load();assert.equal(seed.productQuestionId,questionId);assert.ok(seed.sourceBindings.length&&seed.sourceContentVersions.length&&seed.canonicalMaterial.length);
+  return{bodyRepository:createProductArtifactBodyRepository({root:path.join(fixtureRoot,"product-artifact-bodies")}),completeInspectionMetadata:async input=>{const loaded=await load();assert.equal(input.organizationId,loaded.organizationId);assert.equal(input.questionId,loaded.productQuestionId);const metadata=completeProductArtifactInspectionMetadataV1({organizationId:input.organizationId,semanticOwner:"product-decision-draft",artifactType:"product-decision-draft",artifactId:input.draftId,artifactRevision:input.draftRevisionId,productQuestionId:input.questionId,productWorkflowId:null,creationEnvelopeDigest:productDecisionDraftDigest({creationOperationId:input.creationOperationId,requestFingerprint:input.requestFingerprint}),materialReferencesDigest:productDecisionDraftDigest(loaded.canonicalMaterial),protectedBody:input.body,ownerStageReceiptDigest:input.stageReceiptDigest,materialLineage:{...loaded,semanticOwner:"product-decision-draft",artifactType:"product-decision-draft",artifactId:input.draftId,artifactRevision:input.draftRevisionId,envelopeDigest:""}});validateProductArtifactInspectionMetadataV1(metadata);return metadata;}};
 }
 
 export function instruction(draftRequired = false): CanonicalProductMaterializationInstructionV1 {
@@ -98,6 +111,8 @@ export function runtimeWithInstruction(value: CanonicalProductMaterializationIns
 function grant(operation: ProductDecisionDraftOperation, at: string): ProductDecisionDraftAuthorityGrantV1 { return { contractVersion: "1", operation, organizationId, questionId, scope: { type: "product-question", id: questionId }, purpose: operation === "product-decision-draft:create" ? "create-product-decision-draft" : operation === "product-decision-draft:revise" ? "revise-product-decision-draft" : "read-product-decision-draft", sensitivity: "standard", actorRef: "actor-1", authorityRef: "authority-1", policyRef: "policy-1", authorized: true, status: "active", validFrom: at, authorizedAt: at }; }
 
 export async function runAtomicityValidation(): Promise<void> {
+  const fixtureRoot=await mkdtemp(path.join(tmpdir(),"discovery-northstar-preparation-lineage-atomicity-"));
+  try{
   const repository = new MemoryWorkflowRepository();
   const operations = new LeadershipConversationProductOperations({
     repository, clock: { now: () => "2026-08-09T12:00:00.000Z" }, authorize: async () => false,
@@ -144,7 +159,8 @@ export async function runAtomicityValidation(): Promise<void> {
   const runtimeRepository = new MemoryRuntimeRepository(runtimeWithInstruction(stagedInstruction));
   const stagedWorkflowRepository = new MemoryWorkflowRepository();
   const stagedOperations = new LeadershipConversationProductOperations({ repository: stagedWorkflowRepository, clock: { now: () => stagedInstruction.evaluatedAt }, authorize: async () => false, verifyCanonicalInstructionProvenance: async (candidate) => candidate.instructionDigest === stagedInstruction.instructionDigest, loadBase: async () => { throw new Error("frontend read must not occur"); }, source: { write: async () => { throw new Error("source write must not occur"); }, readForProposal: async () => { throw new Error("source read must not occur"); }, readForEvidenceAdmission: async () => { throw new Error("source read must not occur"); } } });
-  const draftService = new ProductDecisionDraftService({ runtimeRepository: runtimeRepository as never, bodyRepository:new MemoryBodyRepository(), authorize: async (value) => grant(value.operation, value.evaluatedAt), authorizeMaterialization: async ({ operation }) => grant(operation, stagedInstruction.evaluatedAt) });
+  const ownerBacked=await createOwnerBackedDraftDependencies(fixtureRoot);
+  const draftService = new ProductDecisionDraftService({ runtimeRepository: runtimeRepository as never, ...ownerBacked, authorize: async (value) => grant(value.operation, value.evaluatedAt), authorizeMaterialization: async ({ operation }) => grant(operation, stagedInstruction.evaluatedAt) });
   const coordinator = new CanonicalLeadershipConversationProductMaterializer({ productDecisionDraftService: draftService, productWorkflowOperations: stagedOperations, storageOperation: () => ({ requestId: "draft-stage", operatorId: "system" }) });
   const completed = await coordinator.materialize({ contractVersion: "1", instruction: stagedInstruction, draftResult: null });
   assert.equal(completed.stage, "canonical-committed-product-materialized");
@@ -153,6 +169,7 @@ export async function runAtomicityValidation(): Promise<void> {
   assert.equal(completedReplay.stage, "canonical-replayed-product-materialized");
   assert.equal(runtimeRepository.replaceCount, 1); assert.equal(stagedWorkflowRepository.replaceCount, 1);
   console.log("Canonical mutation Product materialization atomicity validation PASS (19 checks)");
+  }finally{await rm(fixtureRoot,{recursive:true,force:true});}
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) void runAtomicityValidation();
+if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){if(!process.argv.includes("--react-server-child")){const child=spawnSync(process.execPath,["--conditions=react-server",...process.execArgv,process.argv[1]!,"--react-server-child"],{cwd:process.cwd(),encoding:"utf8",env:{...process.env,NODE_ENV:"test"}});if(child.stdout)process.stdout.write(child.stdout);if(child.stderr)process.stderr.write(child.stderr);if(child.status!==0)process.exitCode=child.status??1;}else void runAtomicityValidation();}

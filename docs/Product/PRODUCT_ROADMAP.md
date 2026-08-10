@@ -73,12 +73,14 @@ material becomes organizational learning automatically before Alpha.
 Complete and canonical: persistence-safe actor separation; canonical
 materialization atomicity and staged recovery; owner-specific Product-artifact
 split persistence; derived, non-persistent `ProductQuestionWorkspace`; and the
-Northstar preparation-time owner-backed lineage fixture.
+Northstar preparation-time owner-backed lineage fixture. P2 current-access
+delivery, current-authorized history/reuse, seven-state Prepare Again,
+zero denied-material successor influence, owner-backed revocation, and
+fresh-process A–D isolation are implemented for the bounded Alpha artifact set.
 
-Paused or incomplete: P2 current-access delivery, history/reuse, production
-Prepare Again, complete seven-state production lineage, zero denied-material
-successor-influence acceptance, complete frontend delivery acceptance, the
-governed Product resolver continuation, a permanent governed-cognition
+Paused or incomplete: complete frontend delivery acceptance, the governed
+Product resolver continuation, the Contemporaneous Epistemic History
+foundation, a permanent governed-cognition
 adversarial release benchmark, Alpha Readiness closure, Alpha Baseline A, and
 design-partner Alpha. Earlier roadmap programs remain supporting technical
 gates and historical sequencing; they do not override this application
@@ -250,8 +252,11 @@ Product resolver.
    Prepared Work, frozen snapshot, What Changed, and Product Decision Draft:
    canonical records retain content-free metadata and immutable protected-body
    references, while workspace and history remain derived and non-persisted.
-   Current artifact access, protected-body delivery, history/reuse, and Prepare
-   Again remain the separately gated frozen successor and are not activated.
+   Current artifact access, protected-body delivery, current-authorized
+   history/reuse, and seven-state Prepare Again are complete for the bounded
+   Alpha artifact set. They reauthorize before every body read, preserve zero
+   denied-material successor influence, and do not claim contemporaneous
+   historical checkpoints.
 5. **Customer validation — NEXT:** Director/VP interviews, prepared-content review,
    time-saved, first/second-preparation, trust, and cognitive-effort measures.
 6. **Organization-wide Production readiness:** secure persistence,

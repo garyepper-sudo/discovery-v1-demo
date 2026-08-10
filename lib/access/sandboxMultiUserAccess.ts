@@ -34,12 +34,12 @@ export const SANDBOX_PERSONAS: readonly Persona[] = [
   {
     key: "sandbox-ceo", label: "Northstar CEO", environmentKey: "DISCOVERY_SANDBOX_CEO_USER_ID",
     scopes: [scope("organization", SANDBOX_ORGANIZATION_ID)],
-    operations: ["understanding:disclose-direct", "understanding:disclose-derived", "understanding:read-historical", "understanding:read-historical-metadata"],
+    operations: ["understanding:disclose-direct", "understanding:disclose-derived", "understanding:read-historical", "understanding:read-historical-metadata", "product-artifact:read", "product-artifact:reuse", "product-artifact:compare", "product-artifact:prepare-again", "product-artifact:create-successor", "product-workspace:read", "leadership-history:list", "leadership-history:read"],
   },
   {
     key: "sandbox-director", label: "Northstar Engineering Director", environmentKey: "DISCOVERY_SANDBOX_DIRECTOR_USER_ID",
     scopes: [scope("function", "engineering"), scope("initiative", "northstar-cross-functional-delivery")],
-    operations: ["understanding:disclose-direct", "understanding:disclose-derived", "understanding:read-historical", "understanding:read-historical-metadata", "contribution:request-evidence-candidacy"],
+    operations: ["understanding:disclose-direct", "understanding:disclose-derived", "understanding:read-historical", "understanding:read-historical-metadata", "contribution:request-evidence-candidacy", "product-artifact:read", "product-artifact:reuse", "product-artifact:compare", "product-artifact:prepare-again", "product-workspace:read", "leadership-history:list", "leadership-history:read"],
   },
   {
     key: "sandbox-manager", label: "Northstar Platform Manager", environmentKey: "DISCOVERY_SANDBOX_MANAGER_USER_ID",
