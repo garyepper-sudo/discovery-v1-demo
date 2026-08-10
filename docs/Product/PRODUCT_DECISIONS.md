@@ -1,5 +1,9 @@
 # Discovery Product Decisions
 
+## Northstar preparation-time lineage fixture provisioning
+
+The Northstar preparation-time fixture uses an explicit server-only coordinator and existing canonical owners. Canonical local Source Binding owns source identity and scope; Governed Source Content owns exact bytes and immutable versions; canonical cognition and Runtime evolution own material and Organizational Understanding. The coordinator returns a target-independent immutable seed of owner-issued references and owns no semantic record. Runtime-digest aliases are not provenance, positive authorization is not stored in the seed, and P2 resumes only after this separate prerequisite is independently reviewed.
+
 ## ProductQuestionWorkspace version 2 is derived and non-persistent
 
 **Decision:** Add deterministic workflow orientation, semantic actions, blocked reasons, and fixture parity as a version-2 projection around the unchanged version-1 workspace. Do not persist a workflow aggregate or let the frontend infer Product meaning from nulls.

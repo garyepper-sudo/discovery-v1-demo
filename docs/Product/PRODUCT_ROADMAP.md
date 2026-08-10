@@ -1,5 +1,9 @@
 # Discovery Product Roadmap
 
+## Northstar preparation-time lineage prerequisite
+
+Before resuming canonical Northstar preparation-time source, material, and projection work, close the isolated fixture-provisioning prerequisite. Acceptance requires canonical owner-backed Source Bindings, source-content versions, material admissions, Organizational Understanding references, deterministic replay, and bounded reset. The paused successor patch must then be reconciled from the new canonical main through review rather than complete-file copying.
+
 ## Frontend readiness checkpoint
 
 The additive `ProductQuestionWorkspace` version-2 projection, semantic action surface, deterministic 24-state fixture pack, state matrix, and UI/UX handoff are joined by one canonical local `inspect-existing-evidence` executor. `GAP-A-005` now passes a real authorization-first operation, immutable result, Outcome observation, truthful no-change Learning, reload, and reset. Dedicated UI/UX design may proceed without moving execution authority into the frontend.

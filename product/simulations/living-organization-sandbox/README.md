@@ -1,5 +1,11 @@
 # Living Organization Sandbox Foundation
 
+## Preparation-time lineage fixture
+
+`preparationLineageFixtureProvisioner.ts` is an explicit server-only development coordinator. It registers the committed, hash-verified Northstar corpus through the canonical local Source Binding owner, stores exact bytes through Governed Source Content, and runs canonical cognition into an isolated filesystem Runtime. Its immutable seed contains only owner-issued binding, content-version, material-admission, and Organizational Understanding references. It is not an authority, projection result, Prepared Work record, or alternate persistence owner.
+
+Provisioning and reset accept only dedicated `discovery-northstar-preparation-lineage-*` directories beneath the operating-system temporary directory. Exact replay is idempotent; reset is bounded to that injected fixture root. Retained/default Runtime roots, databases, connectors, Drive, Clerk, Production, and Product Workflow storage are outside this boundary.
+
 This Product-owned, non-Production simulation uses organization `sandbox-northstar-implementation-services-001`, a bounded company derived from Northstar material without modifying Northstar benchmark fixtures. Its primary Question is “Why are customer implementations taking longer?” The unrelated control area is community science volunteering.
 
 The six ordered manifest batches contain company context, an incomplete operating picture, diagnostic comparisons, a policy constraint and counterevidence, future Outcome/Learning source material, and five negative controls. All files are Markdown, source-controlled, content-hashed, and loaded locally. No single source states a complete conclusion.
