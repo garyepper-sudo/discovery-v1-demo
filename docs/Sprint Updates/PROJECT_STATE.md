@@ -277,3 +277,13 @@ evaluator Phase 4–5, external-comparative, observable-output-fidelity,
 scoring-robustness, governance, handoff, package, and related research drafts.
 Do not use it for UI/UX implementation. Start a new branch from `origin/main`
 in the clean Product worktree.
+
+## Executive History current access
+
+Executive History current delivery now uses canonical persisted exact-record
+access governance. Creation, revision, revocation, restoration, rebind, and
+supersession preserve immutable historical truth while current authorization
+is evaluated against the current policy head before protected reads. Denial is
+body-free, cross-organization access fails closed, mutation is collision-safe,
+and fresh-process replay is deterministic. No route, Runtime, cognition, or
+frontend disclosure boundary changed.

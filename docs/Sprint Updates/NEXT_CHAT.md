@@ -350,3 +350,12 @@ Before route promotion, also capture an independent two-tab/stale-tab witness
 and run **DISCOVERY LIVE MULTI-ROLE UNAUTHORIZED DISCLOSURE AND INFERENCE STRESS
 TEST 001**. `/development/role-aware-live` remains development-only and
 `/your-organization` remains unchanged.
+
+## Immediate successor
+
+Executive History current-access governance is canonically closed. Next:
+**DISCOVERY HISTORICAL CHECKPOINT L1 POST-EXECUTIVE-HISTORY-ACCESS
+RECONCILIATION 001** in planning and preserved-partial-transfer mode only.
+Begin from the new `origin/main`, preserve the 19-path L1 candidate exactly,
+and reconcile its owner/path/symbol inventory against the integrated exact-
+record current-access architecture before requesting implementation authority.

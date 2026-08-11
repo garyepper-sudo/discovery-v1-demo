@@ -1212,3 +1212,13 @@ condition/investigation production remains deferred. Runtime, grants,
 assignments, disclosure, projection, presentation, routes, and Product behavior
 are unchanged; material differentiation remains OPEN and activation/promotion
 remain BLOCKED.
+
+## Executive History current-access governance closure
+
+Executive History now has one canonical, exact-record current-access owner.
+Immutable history remains historical fact; every current delivery separately
+resolves the exact access record, active policy head, inherited-policy state,
+and current authorization before any protected load. Revocation, supersession,
+stale policy provenance, cross-organization access, concurrent mutation, and
+safe body-free denial are fail-closed and validator-backed. This adds no new
+Runtime, cognition, Product meaning, or frontend disclosure owner.

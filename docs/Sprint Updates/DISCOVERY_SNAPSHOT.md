@@ -364,3 +364,13 @@ Executive Decision pipeline. The immediate successor is **DISCOVERY LEADERSHIP
 CONVERSATION TYPED CANONICAL OWNER ROUTING AND SERVER COMPOSITION 001**, safely
 resumed in a new clean worktree while the preserved nineteen-file dirty
 worktree remains untouched until exact transfer verification.
+
+## Executive History governance checkpoint
+
+Executive History current-access governance is integrated as a server-owned,
+persisted exact-record lifecycle. Historical artifacts remain immutable; each
+current delivery proves active access and current policy provenance before
+loading protected content. Stale, revoked, superseded, inherited-revoked,
+cross-organization, and ambiguous states deny safely. The next task is
+**DISCOVERY HISTORICAL CHECKPOINT L1 POST-EXECUTIVE-HISTORY-ACCESS
+RECONCILIATION 001** in planning and preserved-partial-transfer mode only.
