@@ -1,1 +1,1 @@
-import{validateCurrentAccessScenario}from"./validateProductArtifactAuthorizationBeforeBodyRead";validateCurrentAccessScenario("leadership-history-current-access").catch(e=>{console.error(e);process.exitCode=1});
+import{validateExecutiveHistoryCurrentAccess}from"./validateExecutiveHistoryCurrentAccess";validateExecutiveHistoryCurrentAccess().catch(e=>{console.error(e);process.exitCode=1});

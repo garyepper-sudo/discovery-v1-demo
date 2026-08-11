@@ -1212,3 +1212,35 @@ Changing one requires the process in
 - **Affected gap:** `GAP-B-021`, first prerequisite only.
 - **Status:** Implemented for independent review; lifecycle linkage remains
   unimplemented.
+
+## DEC-PROD-053 — Executive History current access is an exact-record disclosure decision
+
+- **Decision:** A content-free Executive History access owner binds immutable
+  Review and Learning identities to versioned shared policies. Observed Outcome
+  access inherits the exact parent Review binding; Learning has its own binding.
+- **Authorization:** `leadership-history:read`, organization membership, persona,
+  current assignment, and governed scope are prerequisites, never final record
+  grants. The exact binding and current policy revision make the final decision.
+- **Disclosure:** Every semantic read authorizes before loading Runtime. Missing,
+  pending, stale, expired, revoked, cross-organization, wrong-parent, and
+  mismatched-purpose requests are indistinguishably inaccessible.
+- **Lifecycle:** Binding creation is pending until its existing semantic owner
+  commits. Post-CAS activation failure is explicitly recoverable without
+  repeating semantic creation. Revocation changes current disclosure only;
+  restoration is append-only and historical Review/Learning remains immutable.
+- **Persistence:** Local filesystem and deployed Blob repositories persist stable,
+  integrity-bound, CAS-protected policy/binding history across process restart.
+  Filesystem replacement uses per-organization inter-process exclusion and
+  expected-revision comparison under the lock; exact replay may return the
+  persisted winner, while divergent or forked writers fail closed. No Review,
+  Outcome, Learning, Evidence, Runtime, or cognition body is stored.
+- **Projection:** Server composition may emit only the versioned, deterministic,
+  body-free safe projection after successful authorization and owner load.
+  Inaccessible missing and denied states serialize identically.
+- **Legacy:** Existing unbound history is inaccessible. Reads never manufacture
+  bindings; any future registration requires a separately governed operation.
+- **Affected gaps:** bounded prerequisite for `GAP-C-004` and `GAP-B-021`.
+- **Architecture:** Additive disclosure owner; existing Review, Outcome, Learning,
+  Runtime, scoped-governance, and Product owners remain authoritative.
+- **Status:** Implemented for independent review. The preserved L1 candidate is
+  neither accepted nor corrected and requires post-integration reconciliation.

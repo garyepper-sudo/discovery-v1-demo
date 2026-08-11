@@ -233,3 +233,32 @@ exact bytes. Product Workflow stores receipt references, not replacement body
 text. Proposal reads and Evidence-admission reads use separate exact scoped
 operations; neither read grants admission or Runtime authority. The owner is
 development-only and connector-neutral.
+
+## Executive History current-access governance
+
+Executive History disclosure is owned by a content-free, versioned policy and
+exact-record binding service. Shared policies may cover audiences, purposes,
+sensitivity, and actions; they do not require a manual per-user ACL for every
+record. A Review has one exact binding, its observed Outcomes inherit that
+Review decision, and Learning has an independent binding.
+
+Organization membership, current persona/assignment, scoped authority, and
+`leadership-history:read` are prerequisites only. They never grant a record by
+themselves. Semantic owners remain Review, Outcome, and Learning; current access
+must be authorized before Runtime load. Missing, pending, stale, revoked,
+expired, wrong-parent, or unbound legacy state fails closed without revealing
+existence, counts, metadata, or bodies.
+
+Revocation and restoration append access history without mutating semantic
+history. Policy revision, revocation, and restoration also append immutable
+successors; existing bindings remain inaccessible until explicitly rebound to
+the current active policy revision. Access persistence survives process restart,
+serializes concurrent writers through real per-organization CAS, and contains no
+protected semantic content. Exact replay can recover only its identical persisted
+winner; divergent idempotency fingerprints and forked successors are rejected.
+The server-only safe projection is versioned and body-free, and missing versus
+denied state has one indistinguishable serialization. A post-semantic-commit
+activation failure remains explicitly pending and is recoverable idempotently
+under administrative authority. Any
+future historical-checkpoint L1 linkage must be reconciled separately after
+this owner is canonically integrated.

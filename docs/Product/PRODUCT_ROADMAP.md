@@ -88,6 +88,18 @@ sequence or convert partial work into Product completion.
 
 ### Mandatory Contemporaneous Epistemic History foundation (`GAP-B-021`)
 
+The bounded Executive History current-access prerequisite is implemented for
+independent review. It separates immutable Review/Learning history from current
+disclosure through shared versioned policies and exact-record bindings, with
+observed Outcomes inheriting their parent Review decision. Reads authorize before
+semantic load; pending, stale, revoked, and unbound legacy records fail closed.
+Policy successors require exact binding reattachment, concurrent filesystem
+writers have a single CAS winner, and the only delivery contract is a
+deterministic server-composed safe projection with indistinguishable inaccessible
+output.
+The next mandatory step after canonical integration is a formal post-access L1
+reconciliation. The preserved L1 candidate is not accepted or corrected here.
+
 First prerequisite: canonical Organizational Understanding confidence and
 uncertainty revisions under stable semantic identity are implemented for
 independent review. Next, independently close checkpoint lifecycle linkage;

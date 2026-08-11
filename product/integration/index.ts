@@ -12,3 +12,4 @@ export * from "./canonicalProductArtifactCurrentAccessComposition";
 export * from "./canonicalLeadershipConversationOwnerRouter";
 export * from "./canonicalMutationProductMaterializationContracts";
 export * from "./canonicalLeadershipConversationProductMaterializer";
+export * from "./canonicalExecutiveHistoryAccessComposition";
