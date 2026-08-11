@@ -1,5 +1,21 @@
 # Discovery Startup Snapshot
 
+## Canonical Understanding confidence-revision checkpoint
+
+Canonical Organizational Understanding now owns immutable confidence and
+uncertainty revisions under stable semantic identity. One governed Runtime CAS
+publishes the revision, current pointer, event, receipt, fingerprint, and
+idempotency record. Current projections and Leadership Conversation artifacts
+consume this exact owner result without exposing Runtime, cognition, grants,
+or authorization state and without creating Product-owned confidence truth.
+
+The reviewed closure includes strict 16-process Leadership replay, persisted
+fresh-process owner proofs, exact replay/collision behavior, atomic Product
+materialization recovery, 192 Product-governance checks, and the unchanged
+295/302 architecture baseline. Retained Runtime and every preserved dirty
+worktree remain exact. Next: planning-only post-confidence rebaseline of the
+separate historical checkpoint Decision/Outcome/Learning linkage prerequisite.
+
 ## P2 current-access checkpoint
 
 Current-access delivery is closed across Prepared Work, frozen snapshots, What

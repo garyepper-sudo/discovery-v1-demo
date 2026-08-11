@@ -1,5 +1,23 @@
 # Discovery Project State
 
+## Canonical Understanding confidence revision complete
+
+Canonical Organizational Understanding retains stable semantic identity while
+publishing immutable confidence and uncertainty revisions through its existing
+Runtime owner boundary. Revisions bind predecessor, conclusion, material
+basis, scope, interpretation, governed operation, actor, authority, policy,
+and time. Current authorized projections and Leadership Conversation consume
+the exact receipt; Product Workflow owns no confidence truth.
+
+Focused and regression validation passes, including 16-process Leadership
+replay, exact original-request idempotency, collision denial, materialization
+fresh-process recovery, Product governance (192 checks, 52 decisions), and the
+accepted inherited architecture baseline (295/302, same seven findings).
+Retained Runtime and preserved worktrees remain exact. The immediate successor
+is a planning-only post-confidence rebaseline of historical checkpoint
+Decision/Outcome/Learning linkage; historical-foundation reentry remains
+separate and deferred.
+
 ## Product artifact current-access delivery complete
 
 Canonical server composition now provides current, operation-bound access to

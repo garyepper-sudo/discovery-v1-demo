@@ -1,5 +1,19 @@
 # Discovery Next Chat
 
+## Exact successor after confidence-revision closure
+
+Run **DISCOVERY HISTORICAL CHECKPOINT DECISION / OUTCOME / LEARNING LINKAGE 001
+POST-CONFIDENCE BASELINE, PATH, SYMBOL, OWNER, AND VALIDATION RECONCILIATION**
+in planning and packet-rebaseline mode only. Re-resolve every path and starting
+hash against the new canonical main while preserving the frozen L1 law:
+Product Workflow may own only a verified append-only relationship between an
+immutable checkpoint and an existing Draft, Decision, Outcome, Review, or
+Learning owner record. Neither side may be rewritten or promoted.
+
+Canonical Understanding confidence/uncertainty revision ownership is closed.
+Do not begin lifecycle-link implementation or historical-foundation reentry
+without their separate authorization.
+
 ## Exact successor after P2 current-access delivery
 
 Run **DISCOVERY CONTEMPORANEOUS EPISTEMIC HISTORY FOUNDATION 001** in planning

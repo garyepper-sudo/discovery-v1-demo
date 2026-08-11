@@ -1,5 +1,22 @@
 # Discovery Architecture Handoff
 
+## Canonical Organizational Understanding confidence revisions
+
+Canonical Organizational Understanding now owns immutable confidence and
+uncertainty revisions beneath a stable semantic Understanding identity. The
+exact governed operation publishes the revision, current pointer, event,
+receipt, fingerprint, and idempotency record through one Runtime CAS. Exact
+replay is mutation-free; collisions and unresolved current authority fail
+closed. Current authorized projections and Leadership Conversation artifacts
+consume the owner result without creating a second confidence owner.
+
+Independent validation covers 26 authorized paths, including strict
+16-process Leadership replay, fresh-process materialization, atomic recovery,
+Evidence replay, and Duplicate-Evidence cognition. Retained Runtime and all
+preserved worktrees remain exact. Historical checkpoint lifecycle linkage is
+the next separately owned prerequisite; historical-foundation reentry remains
+deferred until that prerequisite closes.
+
 ## Product artifact current-access delivery closure
 
 P2 current-access delivery is complete for Prepared Work, frozen snapshots,
