@@ -182,6 +182,21 @@ export type OrganizationalUnderstandingEvolutionEvent = {
   relatedUnderstandingIds: string[];
 };
 
+export type CanonicalUnderstandingRevisionOperationRecordV1 = {
+  contractVersion: "1";
+  operationId: string;
+  organizationId: string;
+  stableUnderstandingId: string;
+  revisionId: string;
+  predecessorRevisionId: string;
+  idempotencyKeyDigest: string;
+  requestFingerprint: string;
+  eventId: string;
+  receiptDigest: string;
+  recordedAt: string;
+  recordDigest: string;
+};
+
 export type OrganizationalUnderstandingState = {
   organizationId: string;
   name?: string;
@@ -206,6 +221,8 @@ export type OrganizationalUnderstandingState = {
    * Optional for historical Runtime compatibility.
    */
   canonicalCompositions?: CanonicalUnderstandingComposition[];
+  /** Owner-created operation records for additive confidence/uncertainty revisions. */
+  canonicalRevisionOperations?: CanonicalUnderstandingRevisionOperationRecordV1[];
   organizationalConcepts: OrganizationalConcept[];
   organizationalBeliefs: OrganizationalBelief[];
 

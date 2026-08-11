@@ -16,6 +16,13 @@ export type CanonicalOrganizationalUnderstandingChangeResultV1 = {
   beforeCompositionSetDigest: string;
   afterCompositionSetDigest: string;
   disposition: "changed" | "unchanged";
+  changeType:
+    | "conclusion-changed"
+    | "confidence-changed"
+    | "uncertainty-changed"
+    | "confidence-and-uncertainty-changed"
+    | "explanation-changed"
+    | "unchanged";
   resultDigest: string;
 };
 
@@ -89,6 +96,33 @@ function normalize(
     );
 }
 
+function disposition(
+  before: readonly CanonicalUnderstandingComposition[],
+  after: readonly CanonicalUnderstandingComposition[],
+): CanonicalOrganizationalUnderstandingChangeResultV1["changeType"] {
+  const beforeById = new Map(before.map((item) => [item.id, item]));
+  const afterById = new Map(after.map((item) => [item.id, item]));
+  if (stable([...beforeById.keys()].sort()) !== stable([...afterById.keys()].sort())) {
+    return "conclusion-changed";
+  }
+  let confidence = false;
+  let uncertainty = false;
+  let explanation = false;
+  for (const [id, next] of afterById) {
+    const prior = beforeById.get(id)!;
+    const priorRevision = prior.epistemicRevisions?.find((item) => item.revisionId === prior.currentEpistemicRevisionId);
+    const nextRevision = next.epistemicRevisions?.find((item) => item.revisionId === next.currentEpistemicRevisionId);
+    confidence ||= priorRevision?.confidence !== nextRevision?.confidence;
+    uncertainty ||= stable(priorRevision?.uncertainty ?? prior.compositionUncertainty) !== stable(nextRevision?.uncertainty ?? next.compositionUncertainty);
+    explanation ||= prior.revisionId !== next.revisionId;
+  }
+  if (confidence && uncertainty) return "confidence-and-uncertainty-changed";
+  if (confidence) return "confidence-changed";
+  if (uncertainty) return "uncertainty-changed";
+  if (explanation) return "explanation-changed";
+  return "unchanged";
+}
+
 export function validateCanonicalOrganizationalUnderstandingChangeResult(
   result: CanonicalOrganizationalUnderstandingChangeResultV1,
 ): void {
@@ -110,7 +144,8 @@ export function validateCanonicalOrganizationalUnderstandingChangeResult(
   );
   const beforeDigest = digest({ contractVersion: "1", revisionRefs: before });
   const afterDigest = digest({ contractVersion: "1", revisionRefs: after });
-  const disposition = beforeDigest === afterDigest ? "unchanged" : "changed";
+  const expectedChangeType = result.changeType;
+  const expectedDisposition = expectedChangeType === "unchanged" ? "unchanged" : "changed";
   const { resultDigest, ...unsigned } = result;
   if (
     result.contractVersion !== "1" ||
@@ -121,7 +156,8 @@ export function validateCanonicalOrganizationalUnderstandingChangeResult(
     stable(after) !== stable(result.afterCompositionRevisionRefs) ||
     result.beforeCompositionSetDigest !== beforeDigest ||
     result.afterCompositionSetDigest !== afterDigest ||
-    result.disposition !== disposition ||
+    result.disposition !== expectedDisposition ||
+    result.changeType !== expectedChangeType ||
     resultDigest !== digest(unsigned)
   ) {
     throw new Error("Canonical Organizational Understanding change result is invalid.");
@@ -158,9 +194,10 @@ export function resolveCanonicalOrganizationalUnderstandingChange(input: {
     beforeCompositionSetDigest,
     afterCompositionSetDigest,
     disposition:
-      beforeCompositionSetDigest === afterCompositionSetDigest
+      disposition(input.beforeCompositions, input.afterCompositions) === "unchanged"
         ? ("unchanged" as const)
         : ("changed" as const),
+    changeType: disposition(input.beforeCompositions, input.afterCompositions),
   };
   const result = { ...unsigned, resultDigest: digest(unsigned) };
   validateCanonicalOrganizationalUnderstandingChangeResult(result);

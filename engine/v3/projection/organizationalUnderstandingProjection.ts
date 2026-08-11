@@ -229,7 +229,7 @@ function compositionReference(
   return {
     objectType: "organizational-understanding",
     objectId: composition.id,
-    revisionId: composition.revisionId,
+    revisionId: composition.currentEpistemicRevisionId ?? composition.revisionId,
   };
 }
 
@@ -737,7 +737,7 @@ export function compileOrganizationalUnderstandingProjection(
     ...projectedEvidence.map((item) => item.canonicalRef),
   ]);
   const sourceRevisionIds = disclosedCompositions
-    .map((composition) => composition.revisionId)
+    .map((composition) => composition.currentEpistemicRevisionId ?? composition.revisionId)
     .sort(compare);
 
   return {

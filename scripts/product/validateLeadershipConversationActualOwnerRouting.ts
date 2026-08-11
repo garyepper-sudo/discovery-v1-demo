@@ -24,6 +24,9 @@ async function main(): Promise<void> {
   check(composition.includes("operationRecord.canonicalAdmissionBatch.admissions"), "materialization derives from the complete actual admission batch");
   check(router.includes("canonicalUnderstandingChange") && router.includes("validateCanonicalOrganizationalUnderstandingChangeResult"), "router verifies and consumes the canonical Understanding owner result");
   check(composition.includes("canonicalChangeResultDigest:changeDigest"), "instruction binds the actual canonical change-result digest");
+  check(composition.includes("CANONICAL_UNDERSTANDING_REVISION_OPERATION"), "server composition uses the exact confidence-revision governance operation");
+  check(composition.includes("CanonicalOrganizationalUnderstandingRevisionService"), "server composition constructs the canonical Understanding revision owner");
+  check(composition.includes("organizationalUnderstandingChangeType"), "What Changed consumes the actual canonical change type");
   check(!router.includes("meaning(before.workspace)") && !router.includes("modelState:workspace.modelState"), "Product workspace comparison is not canonical change authority");
   check(operations.includes("sourceBindingMutationReceiptDigest") && !operations.includes("sourceBindingId:input.sourceBindingId"), "capture persists server-derived Binding identity and receipt digest");
   check(composition.includes('import "server-only"') && composition.includes("CanonicalLocalSourceBindingService"), "live composition remains server-only and constructs canonical Binding ownership");

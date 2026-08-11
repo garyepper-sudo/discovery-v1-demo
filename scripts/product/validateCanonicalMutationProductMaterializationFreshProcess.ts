@@ -22,7 +22,7 @@ export async function runWorker(role: ProcessRole): Promise<SafeRecoveryHandoffV
   assert.equal(stderr, "");
   assert.match(stdout, /PASS/);
   if (role === "owner-replay") {
-    assert.match(stdout, /"freshProcesses":15/); assert.match(stdout, /"networkCalls":0/);
+    assert.match(stdout, /"freshProcesses":16/); assert.match(stdout, /"networkCalls":0/);
     assert.match(stdout, /"driveReads":0/); assert.match(stdout, /"productionAccess":0/);
   }
   return { contractVersion: "1", role, result: "PASS", outputDigestClass: "bounded-validator-result" };

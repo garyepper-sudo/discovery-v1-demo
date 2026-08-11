@@ -4,6 +4,20 @@
 **Contract version:** 1
 **Governed by:** [PRODUCT_GOVERNANCE.md](./PRODUCT_GOVERNANCE.md)
 
+## Canonical Organizational Understanding epistemic revisions
+
+Canonical Organizational Understanding owns confidence and uncertainty as
+immutable epistemic revisions beneath one stable semantic Understanding
+identity. A confidence-only or uncertainty-only change preserves the
+conclusion identity, binds its exact predecessor and governed material basis,
+and publishes through one Runtime CAS with an owner event, receipt, request
+fingerprint, and idempotency record. Current authorized projections and
+Prepared Work consume the resulting revision only after scoped authorization.
+Product Workflow owns neither confidence nor a replacement truth store.
+
+Historical Runtime without these additive fields remains readable and is not
+backfilled. Historical checkpoint lifecycle linkage remains separate work.
+
 ## Purpose
 
 This document is Discovery's product-architecture constitution. It defines

@@ -49,8 +49,34 @@ export type CanonicalUnderstandingComposition = {
    */
   authorityTransition?: CanonicalUnderstandingAuthorityTransition;
   compositionUncertainty: CanonicalUnderstandingCompositionUncertainty[];
+  /**
+   * Current immutable epistemic revision. Optional only for historical Runtime
+   * records created before canonical confidence-revision ownership existed.
+   */
+  currentEpistemicRevisionId?: string;
+  epistemicRevisions?: CanonicalUnderstandingEpistemicRevisionV1[];
   createdAt: string;
   updatedAt: string;
+};
+
+export type CanonicalUnderstandingEpistemicRevisionV1 = {
+  contractVersion: "1";
+  revisionId: string;
+  stableUnderstandingId: string;
+  predecessorRevisionId: string;
+  conclusionRevisionId: string;
+  confidence: number | null;
+  uncertainty: string[];
+  supportingMaterialRefs: string[];
+  contradictingMaterialRefs: string[];
+  scopeDigest: string;
+  interpretationVersion: string;
+  operationId: string;
+  occurredAt: string;
+  actorRef: string;
+  authorityRefs: string[];
+  policyRefs: string[];
+  revisionDigest: string;
 };
 
 export type CanonicalUnderstandingTraceView = {
@@ -283,6 +309,12 @@ export function buildCanonicalUnderstandingCompatibilityShadow(input: {
             ? (["comparative-role-data-unavailable"] as const)
             : []),
         ],
+        ...(previous?.currentEpistemicRevisionId
+          ? {
+              currentEpistemicRevisionId: previous.currentEpistemicRevisionId,
+              epistemicRevisions: structuredClone(previous.epistemicRevisions ?? []),
+            }
+          : {}),
         createdAt: previous?.createdAt ?? input.now,
         updatedAt:
           previous?.revisionId === revisionId ? previous.updatedAt : input.now,

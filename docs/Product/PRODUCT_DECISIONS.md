@@ -1194,3 +1194,21 @@ Changing one requires the process in
   change.
 - **Status:** Bounded current-access delivery implemented and validated; the
   separate historical-foundation limit remains explicit.
+
+## DEC-PROD-052 — Canonical Organizational Understanding owns confidence and uncertainty revisions
+
+- **Decision:** Confidence and uncertainty are immutable epistemic revision
+  semantics of canonical Organizational Understanding under stable semantic
+  identity. The exact scoped mutation operation is
+  `organizational-understanding:revise-confidence-uncertainty`.
+- **Reason:** A changed confidence assessment must update current canonical
+  state without manufacturing a new conclusion or a second confidence owner.
+- **Consequences:** Same conclusion with changed confidence or uncertainty
+  creates a new predecessor-bound revision, owner event and receipt through one
+  Runtime CAS. Conclusion change remains separately governed. Basis-only
+  changes are not authorized by this operation.
+- **Compatibility:** Historical records remain readable without fabricated
+  confidence history or retained-Runtime migration.
+- **Affected gap:** `GAP-B-021`, first prerequisite only.
+- **Status:** Implemented for independent review; lifecycle linkage remains
+  unimplemented.

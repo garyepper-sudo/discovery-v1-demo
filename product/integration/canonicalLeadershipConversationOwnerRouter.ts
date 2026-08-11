@@ -41,8 +41,9 @@ export class CanonicalLeadershipConversationOwnerRouter{
       if(change.status==="available"){
         validateCanonicalOrganizationalUnderstandingChangeResult(change.result);
         if(change.result.organizationId!==input.organizationId||change.result.questionId!==input.questionId||change.result.contributionOperationId!==result.contributionResult.contributionOperationId)throw new Error("Leadership Conversation canonical change result mismatch.");
+        if((change.result.changeType==="unchanged")!==(change.result.disposition==="unchanged"))throw new Error("Leadership Conversation canonical change classification mismatch.");
       }
-      const routedChange=change.status==="available"?{status:"available" as const,resultDigest:change.result.resultDigest,disposition:change.result.disposition,beforeCompositionSetDigest:change.result.beforeCompositionSetDigest,afterCompositionSetDigest:change.result.afterCompositionSetDigest}:safe(change);
+      const routedChange=change.status==="available"?{status:"available" as const,resultDigest:change.result.resultDigest,disposition:change.result.disposition,changeType:change.result.changeType,beforeCompositionSetDigest:change.result.beforeCompositionSetDigest,afterCompositionSetDigest:change.result.afterCompositionSetDigest}:safe(change);
       changeFacts={proposalRouted:true,productArtifactRecorded:true,evidenceAdmitted:result.contributionResult.admissions.length>0,runtimeRepository:result.contributionResult.runtimeRevisionBefore===result.contributionResult.runtimeRevisionAfter?"unchanged":"changed",organizationalUnderstanding:change.status==="available"?change.result.disposition:"undetermined",answer:answer(before.workspace)===answer(result.workspace)?"unchanged":"changed",unknown:"unchanged",learning:"undetermined"};
       void changeFacts;void routedChange;
       const recovery=await this.d.productMaterializer.materialize({contractVersion:"1",instruction:result.productMaterializationInstruction,draftResult:null});

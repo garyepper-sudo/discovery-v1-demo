@@ -88,6 +88,12 @@ sequence or convert partial work into Product completion.
 
 ### Mandatory Contemporaneous Epistemic History foundation (`GAP-B-021`)
 
+First prerequisite: canonical Organizational Understanding confidence and
+uncertainty revisions under stable semantic identity are implemented for
+independent review. Next, independently close checkpoint lifecycle linkage;
+only then reenter the historical foundation from a clean worktree. This status
+does not claim lifecycle linkage or historical-foundation completion.
+
 `DEC-PROD-050` makes Contemporaneous Epistemic History a first-class platform
 capability and compounding strategic asset. It is the immutable temporal
 substrate beneath Chief, Counsel, Operator, and Scout—not a fifth persona,
