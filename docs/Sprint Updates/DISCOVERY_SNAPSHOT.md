@@ -1,5 +1,19 @@
 # Discovery Startup Snapshot
 
+## Architecture compression and Alpha freeze snapshot
+
+Canonical baseline: `eb8923bcc9001ee6891463b94a8e629aedb184d0`.
+Executive History current access and Historical Checkpoint L1 are closed. The
+Alpha semantic freeze is active. Discovery now canonically preserves semantic
+richness while planning to compress repeated mechanics through owner-preserving
+protocols and executable conformance. Implementation has not begun.
+
+Chief remains a Product application over shared Organizational Understanding;
+Counsel, Operator, and Scout add no independent truth. This reconciliation adds
+no owner, repository, policy model, schema, migration, Runtime change, or
+application behavior. The next task is planning-only protocol owner audit and
+benchmark design, subject to separate authorization.
+
 ## Canonical Understanding confidence-revision checkpoint
 
 Canonical Organizational Understanding now owns immutable confidence and

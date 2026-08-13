@@ -1,5 +1,19 @@
 # Discovery Next Chat
 
+## Canonical successor after architecture-compression roadmap reconciliation
+
+The baseline is `eb8923bcc9001ee6891463b94a8e629aedb184d0`.
+Executive History current access and Historical Checkpoint L1 are closed. The
+Alpha semantic freeze is active. The architecture-compression and feature-value
+governance roadmap is canonized; implementation has not begun.
+
+The next task is `DISCOVERY SHARED GOVERNED PROTOCOL CONFORMANCE FOUNDATION
+OWNER AUDIT AND BENCHMARK DESIGN 001`, planning only. It must audit repeated
+mechanics and design owner-preserving conformance benchmarks without selecting
+or implementing a universal abstraction. Chief remains one Product application
+over shared Organizational Understanding. No new owner, repository, policy
+model, schema, migration, or application behavior is authorized.
+
 ## Exact successor after confidence-revision closure
 
 Run **DISCOVERY HISTORICAL CHECKPOINT DECISION / OUTCOME / LEARNING LINKAGE 001

@@ -1,5 +1,21 @@
 # Discovery Project State
 
+## Architecture-compression roadmap state
+
+At canonical baseline `eb8923bcc9001ee6891463b94a8e629aedb184d0`:
+
+- Executive History current access: closed;
+- Historical Checkpoint L1: closed;
+- Alpha semantic freeze: active;
+- architecture-compression roadmap: canonized;
+- architecture-compression implementation: not begun;
+- Chief: one Product application over shared Organizational Understanding;
+- new owners, repositories, policy models, schemas, migrations, Runtime changes,
+  and application behavior: zero.
+
+The immediate successor is a planning-only governed-protocol owner audit and
+benchmark design. Implementation requires separate authorization.
+
 ## Canonical Understanding confidence revision complete
 
 Canonical Organizational Understanding retains stable semantic identity while

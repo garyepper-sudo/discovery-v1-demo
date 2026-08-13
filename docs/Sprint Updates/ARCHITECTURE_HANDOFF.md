@@ -1,5 +1,22 @@
 # Discovery Architecture Handoff
 
+## Architecture compression roadmap reconciliation
+
+- Canonical baseline: `eb8923bcc9001ee6891463b94a8e629aedb184d0`.
+- Executive History current access: closed.
+- Historical Checkpoint L1: closed.
+- Alpha semantic freeze: active.
+- Architecture-compression roadmap: canonized.
+- Architecture-compression implementation: not begun.
+- Governing rule: preserve semantic richness; compress mechanical variety.
+- Chief remains one Product application over shared Organizational
+  Understanding; Counsel, Operator, and Scout compose existing owners only.
+- No owner, repository, policy model, schema, migration, Runtime, or application
+  behavior was introduced.
+- Next planning task: `DISCOVERY SHARED GOVERNED PROTOCOL CONFORMANCE FOUNDATION
+  OWNER AUDIT AND BENCHMARK DESIGN 001` (planning only).
+- Any implementation requires separate authorization.
+
 ## Canonical Organizational Understanding confidence revisions
 
 Canonical Organizational Understanding now owns immutable confidence and
