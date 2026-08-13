@@ -1222,3 +1222,7 @@ and current authorization before any protected load. Revocation, supersession,
 stale policy provenance, cross-organization access, concurrent mutation, and
 safe body-free denial are fail-closed and validator-backed. This adds no new
 Runtime, cognition, Product meaning, or frontend disclosure owner.
+
+## Prepared Work publication integrity closure
+
+Prepared Work and frozen snapshots now publish body-free material lineage only after atomic protected-body persistence and Product Workflow CAS. Server-owned current access reconstructs current owner state, exact-scope authority, Source Binding availability, and publication proof before any body read; containment alone grants no authority. A first-principles foreign canonical organization partition proves valid-but-foreign references deny with zero protected reads. The 30-scenario/59-cell matrix, replay, collision, concurrency, legacy, and fresh-process controls pass. The retained Runtime and paused L1 candidates stay unchanged; the immediate successor is the post-lineage L1 reentry planning task.

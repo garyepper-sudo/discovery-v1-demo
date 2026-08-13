@@ -287,3 +287,7 @@ is evaluated against the current policy head before protected reads. Denial is
 body-free, cross-organization access fails closed, mutation is collision-safe,
 and fresh-process replay is deterministic. No route, Runtime, cognition, or
 frontend disclosure boundary changed.
+
+## Prepared Work publication integrity
+
+Prepared Work and frozen-snapshot publications now carry body-free material lineage and immutable semantic receipts backed by atomic protected-body storage and Product Workflow CAS. Freeze validates its source publication proof. Current access resolves canonical owner state, exact scope, current Source Binding availability, and publication integrity before protected reads; containment is non-authoritative. A separately constructed canonical foreign organization partition is internally valid but cannot authorize local artifacts. The complete 30/59 matrix denies without body reads. Retained Runtime and preserved L1 worktrees remain unchanged and L1 remains paused.
