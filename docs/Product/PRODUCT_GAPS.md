@@ -226,6 +226,37 @@ remain permanent and must not be reused.
 
 ### GAP-B-021 historical lifecycle continuation
 
+## Architecture-compression deferrals
+
+### GAP-C-022 reusable governed-protocol conformance foundation
+
+**Status:** Planned, not implemented.
+
+Audit repeated owner-specific mechanics and design executable conformance suites
+for canonical record references, exact-record current access, governed
+operations, typed relationships, permission-aware projections, and provider
+adapters. Promote only the smallest mechanic supported by multiple independent
+consumers. Do not create a universal graph, workflow language, policy language,
+or ontology.
+
+### GAP-C-023 capability manifest and architecture-health evidence
+
+**Status:** Hypothesis deferred until the conformance foundation is proven.
+
+Evaluate a bounded, non-authoritative capability manifest and architecture
+health measures: owners per feature, bespoke mechanics per feature, conformance
+coverage, access-policy reuse, migration surface, disclosure surface, extension
+lead time, and extension-cost-budget consumption. The manifest must not become
+a second Capability Registry or source of runtime authority.
+
+### GAP-C-024 privacy-preserving organizational learning
+
+**Status:** Deferred beyond narrow Alpha.
+
+Before cross-person or cross-organization learning, canonize consent,
+revocation, retention, non-inference, aggregation boundaries, and adversarial
+proof. Private and Working cognition remain outside Organizational cognition
+until explicitly admitted by an existing canonical owner.
 The bounded L1 checkpoint relationship foundation covers Draft, Review,
 observed Outcome, and Learning only. Authoritative Decision linkage, expected
 Outcome linkage, expected-signal linkage, supersession semantics, ordinary UI,

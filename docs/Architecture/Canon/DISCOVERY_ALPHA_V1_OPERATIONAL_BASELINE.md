@@ -238,6 +238,19 @@ The sequential program is defined in
 
 ## Documentation Governance
 
+## Alpha semantic freeze and next optimization boundary
+
+The accepted operational baseline remains frozen while the next design-partner
+Alpha is narrowed to one Chief-led workflow. Executive History current access
+and Historical Checkpoint L1 remain closed foundations. Counsel, Operator, and
+Scout compose existing owners only; they add no persona memory or truth.
+
+Pre-Alpha optimization is limited to measurable cognition quality and Product
+utility within existing owners. Architecture-compression implementation,
+capability manifests, new policy families, new repositories, autonomous agents,
+and privacy-preserving cross-user learning require separate decisions. The
+Alpha Readiness Gate must preserve exact current access, revocation, isolation,
+non-disclosure, replay, recovery, and rollback evidence.
 The Architecture Canon should govern deployment reports, handoff summaries,
 operator guides, and the generated startup brief. A later bounded
 consolidation should reconcile overlapping architecture-state, activation,

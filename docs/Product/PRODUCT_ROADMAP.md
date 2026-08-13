@@ -661,6 +661,105 @@ negative controls, an explicit owner, and a promotion decision recorded in
 
 ## Post-Executive-History L1 gate
 
+## Architecture compression and feature-value governance program
+
+**Canonical status:** roadmap canonized; implementation not begun.
+
+The program principle is: **preserve semantic richness; compress mechanical
+variety.** Rich organizational meaning remains with existing owners. Repeated
+mechanics may converge only after evidence, conformance, and bounded migration.
+
+### Combined sequence
+
+1. **Alpha semantic freeze.** Preserve the closed Executive History current-
+   access foundation, closed Historical Checkpoint L1, retained Runtime, and
+   narrow Chief-led Alpha boundary.
+2. **Alpha Baseline A.** Freeze a reproducible Chief workflow and longitudinal
+   benchmark before optimization.
+3. **Chief V1 through composition.** Complete the coherent Set up → Prepare →
+   Freeze → Capture → Review → What Changed → Prepare again loop. Governed
+   Cognition may proceed only where it is a hard security dependency.
+4. **Alpha Readiness Foundation.** Prove authentication, exact organization and
+   record access, disclosure, revocation, auditability, recovery, and negative
+   controls.
+5. **Freeze Alpha Baseline A.** Freeze reproducible Product, build, configuration,
+   fixture, and benchmark identity before optimization.
+6. **Longitudinal benchmark and bounded optimization.** Benchmark first, then
+   run ablation, sensitivity analysis, bounded parameter optimization, and only
+   a bounded evolutionary experiment. Authorization, lineage, tenant isolation,
+   deterministic identity, replay, and non-disclosure remain hard gates. Use
+   human adjudication, protected holdouts, and Goodhart controls. Retain A and
+   proceed to users unless a clearly superior candidate earns Baseline B.
+7. **Alpha Readiness Gate.** Require the baseline, two-cycle replay, current-
+   access revocation, cross-account and cross-organization isolation, protected-
+   body non-disclosure, critical-path tests, observability, privacy-safe
+   telemetry, failure recovery, data quality, performance/cost targets,
+   release identity, rollback, experiment registry, and operational evidence.
+   Readiness is PASS/BLOCK with explicit bounded exceptions, never a composite
+   score or an enterprise-scale infrastructure program.
+8. **Limited design-partner Alpha.** Serve approximately 5–10 closely supported
+   users with the one Chief-led workflow and
+   measure useful decisions, preparation quality, follow-through, confidence
+   calibration, and learning over time.
+9. **Forward-deployed learning and evidence-driven professionalization.** Broaden
+   only from design-partner evidence.
+10. **Shared-protocol audit and conformance design.** Inventory repeated
+   implementations and select at most the smallest justified protocol.
+11. **Separate implementation planning.** Only after evidence, authorize a
+   bounded conformance foundation; capability-manifest work remains later.
+
+### Alpha promise and negative controls
+
+Alpha promises that an authorized leader can prepare for, conduct, capture, and
+follow through on one consequential conversation using current, governed
+Organizational Understanding. Success requires truthful utility, visible
+lineage/confidence, current access, durable replay, and evidence that the next
+cycle improves. It does not promise autonomous executives, continuous external
+monitoring, universal search, generic agents, persona truth stores, unrestricted
+history, or Production-wide activation.
+
+### Ten feature simulations
+
+| Candidate | Class | Owners/repositories/access/relationships/validation | Directional value/cost and decision |
+|---|---|---|---|
+| Chief weekly focus | P/W | Reuse Question, Understanding, Prepared Work, and history; no owner/repository; current projection; workflow replay | High/low: Alpha priority after the primary Conversation loop stabilizes |
+| Operator Decision-to-Outcome | W | Reuse Decision, Outcome, Review, Learning, history; no parallel record; endpoint access; lifecycle validation | High/medium: follow Chief Baseline A |
+| Counsel Strategy Integrity | A/W | Reuse Understanding and Prepared Work; no owner/repository; non-authoritative challenge; promotion tests | Medium/medium: evidence gated |
+| Scout Evidence acquisition | A/W | Reuse acquisition selector and Evidence owner; no Scout repository; action-specific access; admission tests | Medium/high: recommendation only |
+| Organizational State Transfer | P/W, possible later R | Reuse authentic history, typed relationships, access, replay; no new owner now | High/high: defer until authentic history accumulates |
+| Notion adapter | W plus provider seam | Existing Source Binding/Content/Evidence owners; no provider truth; scoped credentials and adapter isolation | Medium/medium: plausible early adapter only for a concrete design-partner workflow |
+| Glean context adapter | P/W plus provider seam | Existing owners; no provider truth; current-access projection and isolation | Medium/high: enterprise-demand gated |
+| Palantir scenario/outcome adapter | A/W plus provider seam | Existing Scenario/Outcome owners; no provider truth; exact access and provenance tests | Uncertain/very high: enterprise-demand gated |
+| General autonomous-agent framework | F | Would add unsafe authority/operation surface; no approved consumers | Uncertain/unacceptable: reject for Alpha |
+| Organization-wide epistemic dashboard | P, possible W | Reuse current Understanding and authentic history; no new truth owner; exact-scope projection; non-disclosure tests | Low before history/high cost: defer until authentic transitions exist |
+
+All numerical scoring used in planning is provisional. No ratio overrides an
+authority, privacy, security, lineage, or current-access gate.
+
+Privacy-preserving organizational learning is an additional post-initial-Alpha
+research track, not one of these ten simulations and not an Alpha prerequisite.
+It begins with explicit user research, synthetic benchmarks, consent and
+revocation design, privacy hard gates, and adversarial re-identification tests.
+
+### Chief capability direction
+
+Intelligent carry-forward is the highest-priority competitive mechanic to
+evaluate, but creates no `CarryForward` owner. **Brief Me** and **Protect My
+Attention** are Projection plus Workflow directions. **Help Me Communicate** is
+Derived Analysis plus Workflow. Private thinking remains sensitive and deferred
+until separately governed. Calendar-linked continuity is a future context seam,
+not authority; proactive preparation is a later bounded mechanic, not a
+notification engine.
+
+### Extension-cost budget
+
+Each implementation plan must state the permitted increments in owners,
+repositories, schemas, migrations, policy/access models, operational services,
+and disclosure surfaces. The Alpha default budget is zero new entries in each
+category unless a separately accepted canonical decision proves necessity.
+
+**Smallest next planning task:** `DISCOVERY SHARED GOVERNED PROTOCOL
+CONFORMANCE FOUNDATION OWNER AUDIT AND BENCHMARK DESIGN 001`, planning only.
 The next historical-epistemic prerequisite is the four-kind, dual-endpoint
 current-access L1 checkpoint relationship owner. Its gate requires exact
 checkpoint/Understanding lineage, canonical endpoint reload, one-CAS Product

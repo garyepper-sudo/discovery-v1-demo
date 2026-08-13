@@ -1299,6 +1299,26 @@ Architecture changes remain prohibited unless validated product behavior exposes
 
 # 27. Immediate Next Artifact
 
+# 28. Canonical Alpha Semantic Freeze
+
+The current Alpha target is one Chief-led Leadership Conversation workflow over
+shared Organizational Understanding. Counsel may supply bounded challenge,
+Operator may connect a choice to execution and review, and Scout may recommend a
+material Evidence gap. None owns a separate truth store or autonomous authority.
+
+Alpha acceptance requires a reproducible Baseline A, two-cycle replay, exact
+organization and record authorization, revocation, cross-account and
+cross-organization isolation, protected-body non-disclosure, truthful
+insufficiency, auditability, and rollback. Architecture-compression
+infrastructure, generic agents, continuous monitoring, universal search, and
+privacy-preserving cross-user learning are outside this Alpha.
+
+The Alpha cohort is approximately 5–10 closely supported design-partner users.
+Readiness asks whether Discovery can serve them safely, explain and recover from
+failure, preserve governance, and collect trustworthy Product evidence. After
+Baseline A freezes, optimization is benchmarked, time-bounded, and guarded by
+ablation, sensitivity, holdout/Goodhart controls, hard governance gates, and
+human adjudication. Without a clearly superior candidate, retain A and proceed.
 The next artifact should define the exact visual and interaction specification for:
 
 > **Scene One — Ask**

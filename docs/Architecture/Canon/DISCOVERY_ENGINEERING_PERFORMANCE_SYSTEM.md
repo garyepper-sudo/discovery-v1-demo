@@ -649,6 +649,22 @@ engineering/performance/reports/DEPS_PHASE_1_1.md
 
 ## Phase 1.1 compatible progress reports
 
+# Architecture compression and feature-value evidence
+
+Future DEPS reports should record, without collapsing unlike protocols:
+
+- owners, repositories, schemas, migrations, access/policy families, and
+  disclosure surfaces added per capability;
+- bespoke versus conforming mechanics and conformance coverage;
+- extension lead time, replay and concurrency evidence, and migration burden;
+- user utility, learning leverage, Alpha necessity, reuse breadth, and risk
+  reduction;
+- an explicitly provisional value-to-enduring-cost comparison.
+
+Scores are heuristics for prioritization, not performance claims or authority.
+Security, privacy, current access, lineage, replay, and non-disclosure remain
+hard gates. A capability manifest may later improve traceability, but must not
+duplicate the Capability Registry or become a runtime owner.
 Phase 1.1 adds a compatible-predecessor comparison layer. A current report may
 be compared only when:
 

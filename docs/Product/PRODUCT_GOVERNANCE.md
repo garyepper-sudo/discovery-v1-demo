@@ -236,6 +236,51 @@ development-only and connector-neutral.
 
 ## Executive History current-access governance
 
+## Feature-value and architecture-cost gate
+
+Every proposed capability is classified before implementation:
+
+- **P — Projection:** a new permission-aware view of existing canonical truth;
+- **W — Workflow composition:** existing owners composed into Product work;
+- **A — Derived analysis artifact:** non-authoritative analysis over existing
+  canonical truth;
+- **R — New canonical record:** durable semantic state with its own justified
+  authoritative producer, lifecycle, integrity, and current-access boundary;
+- **F — New platform primitive:** shared mechanics supported by independently
+  approved consumers without acquiring their semantic authority.
+
+P, W, and A are the default. R requires durable user-relevant state, a distinct
+authoritative producer or Decision boundary, an independent lifecycle or
+integrity boundary, proof that projection, relationship, Prepared Work, and
+analysis are insufficient, and Product, benchmark, or unavoidable governance
+evidence. Two proposed new owners trigger architecture review; three or more
+normally require rejection, narrowing, or separate platform authorization.
+F requires three independently approved consumers or two security/integrity-
+critical repetitions, preserved semantic ownership, executable conformance,
+and bounded migration. A genuine one-time security boundary may still proceed
+when its invariant cannot be represented safely by existing owners.
+
+Feature value is considered across user utility, learning leverage, Alpha
+necessity, reuse breadth, and risk reduction. Enduring architecture cost is
+considered across new owners, repositories, schemas, migrations, policy/access
+families, operational burden, disclosure surface, and irreversible coupling.
+Numerical scores and value-to-cost ratios are provisional comparison heuristics,
+never authorization and never grounds to weaken security, privacy, lineage, or
+current-access invariants. Proof before promotion is mandatory: local patterns
+remain owner-specific until repeated evidence and conformance justify reuse.
+
+The fuller value review records frequency, consequence, differentiation,
+evidence strength, and compounding value. A provisional planning target is
+`feature value / architecture cost >= 2`, recalibrated against actual sprint
+history. It is non-automatic: weak evidence, unsafe authority, wrong sequence,
+duplication of a mature external system, Alpha distraction, or unproven
+prerequisites can still reject a feature. Security-critical prerequisites may
+proceed with lower direct user value when required to preserve hard invariants.
+
+Every capability proposal records an extension-cost budget and the increment it
+consumes. A capability manifest is a roadmap hypothesis for declaring owner,
+class, persistence, lineage, authorization, projection, fixtures, validators,
+and dependencies; it is not yet a runtime registry or source of authority.
 Executive History disclosure is owned by a content-free, versioned policy and
 exact-record binding service. Shared policies may cover audiences, purposes,
 sensitivity, and actions; they do not require a manual per-user ACL for every

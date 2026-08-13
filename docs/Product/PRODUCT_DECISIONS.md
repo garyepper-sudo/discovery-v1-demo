@@ -1272,6 +1272,29 @@ Changing one requires the process in
 
 ## DEC-PROD-055 — Product Workflow owns bounded content-free Historical Checkpoint relationships
 
+## DEC-PROD-056 — Preserve semantic richness and compress mechanical variety
+
+**Status:** Accepted — roadmap and governance decision; implementation not begun.
+
+Discovery will keep canonical semantic owners independent while converging
+repeated infrastructure toward a thin waist of canonical record references,
+exact-record access evaluation, governed operations, typed relationships,
+permission-aware projections, and provider adapters. Shared protocols cannot
+erase owner-specific lifecycle, authority, confidence, lineage, persistence,
+or revocation semantics.
+
+Ordinary capabilities default to Projection, Workflow composition, or Derived
+Analysis. New canonical records require durable semantic-state and lifecycle
+proof. New platform primitives require independently approved repeated
+consumers and executable conformance. Both require explicit proof that
+composition is insufficient and expected Product value exceeds enduring
+architecture cost. Scores are heuristic; invariants are gates.
+
+The near-term Product remains the narrow Chief-led Alpha over shared
+Organizational Understanding. Counsel, Operator, and Scout participate only in
+bounded roles; they do not create autonomous agents, persona-specific truth, or
+parallel organizational memory. Architecture-compression implementation is
+separately authorized work and is not implied by this decision.
 - **Decision:** Product Workflow owns only content-free lifecycle relationships from frozen Leadership Conversation checkpoints to Product Decision Draft, Executive Review, observed Outcome through its owning Review, and Executive Learning.
 - **Access:** Publication and current read independently resolve current access to the checkpoint and exact linked endpoint. Exact scope is required and containment is non-authoritative.
 - **Persistence:** Relationship, immutable receipt, typed event, request fingerprint, and idempotency result commit in one inter-process-safe Product Workflow CAS.

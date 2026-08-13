@@ -1500,6 +1500,25 @@ authorize implementation of the next phase.
 
 ## Inactive Alpha durable storage foundation
 
+# Architecture-compression sequencing overlay
+
+This documentation-only overlay does not reorder completed phases or authorize
+implementation. Future extension follows a thin-waist discipline:
+
+1. preserve owner-specific semantics and the Alpha semantic freeze;
+2. inventory repeated mechanics with exact callsite evidence;
+3. classify proposals as Projection, Workflow composition, Derived analysis,
+   new canonical Record, or new platform primitive;
+4. design executable conformance before shared implementation;
+5. prove multiple independent consumers and bounded migration;
+6. promote only the smallest justified mechanic;
+7. measure extension cost and Product value longitudinally.
+
+Initial conformance-suite candidates are canonical record-reference integrity,
+exact-record current access, governed-operation replay/concurrency, typed-
+relationship integrity, permission-aware projection non-disclosure, and
+provider-adapter isolation. No shared protocol is selected for implementation
+by this roadmap reconciliation.
 The separately authorized Phase 8 Alpha program now includes an inactive
 PostgreSQL/Drizzle repository shadow for Discovery-owned access, lifecycle,
 and disclosure audit. Local PostgreSQL 17 validation passes `60/60`. This is

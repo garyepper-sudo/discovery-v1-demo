@@ -530,6 +530,59 @@ slice, which creates no differentiated activation authority.
 
 ## Historical checkpoint lifecycle links (L1)
 
+## Architecture compression thin waist
+
+Discovery preserves semantic richness while compressing mechanical variety. The
+canonical thin waist is a small family of reusable governed mechanics beneath
+independent semantic owners:
+
+1. canonical record references identify owner-issued records without copying
+   their meaning;
+2. exact-record current-access evaluation reauthorizes the requested record,
+   operation, scope, audience, policy revision, and evaluation time;
+3. governed operations bind authenticated actor, purpose, inputs, result,
+   lineage, replay identity, and immutable receipt;
+4. typed relationships connect records without creating a universal graph;
+5. permission-aware projections disclose Product-safe views rather than owner
+   internals;
+6. provider adapters translate external mechanics without acquiring semantic
+   authority.
+
+These are protocol candidates, not an implemented universal framework. Each
+candidate must earn promotion through repeated owner-specific implementations,
+an executable conformance suite, bounded migration, and demonstrated Product
+value. Semantic owners, repositories, lifecycles, confidence, lineage, and
+authorization remain independent. No universal ontology, graph, workflow
+language, policy language, or persona truth store is authorized.
+
+### Persona composition over shared Understanding
+
+- **Chief** owns leadership attention, preparation, conversation continuity,
+  capture, and follow-through as one Product application over shared
+  Organizational Understanding.
+- **Counsel** owns bounded challenge work products; it neither owns truth nor
+  autonomously mutates canonical records.
+- **Operator** owns execution linkage, signals, Outcomes, and review work
+  products through governed operations.
+- **Scout** owns material-change and Evidence-gap recommendations; acquisition
+  and admission remain with their canonical owners.
+
+The cross-persona loop is: Scout recommends a material gap; Counsel tests the
+affected assumption; Chief places the issue into governed leadership work;
+Operator connects an accepted choice to execution and review; owner-issued
+results update shared Understanding; every persona then receives a fresh,
+permission-aware projection. Persona output alone is never Evidence or
+organizational truth.
+
+### Cognitive privacy boundary
+
+Private cognition, Working cognition, and Organizational cognition are distinct
+classes. Private and Working material do not become organizational memory by
+being generated, viewed, or reused. Promotion requires an explicit governed
+operation, canonical owner acceptance, lineage, current authorization, and a
+body-safe disclosure decision. Privacy-preserving aggregate learning across
+people or organizations remains deferred until its owner, consent, revocation,
+non-inference, and adversarial proof are separately canonized.
 Product Workflow owns a bounded, content-free relationship from an immutable
 Leadership Conversation frozen checkpoint to exactly one canonical Product
 Decision Draft revision, Executive Review, observed Outcome within its owning
