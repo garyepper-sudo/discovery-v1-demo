@@ -1269,3 +1269,12 @@ Changing one requires the process in
 - **Affected gap:** bounded prerequisite for `GAP-B-021`.
 - **Status:** Implemented for independent review; it does not itself complete
   historical checkpoint lifecycle linkage.
+
+## DEC-PROD-055 — Product Workflow owns bounded content-free Historical Checkpoint relationships
+
+- **Decision:** Product Workflow owns only content-free lifecycle relationships from frozen Leadership Conversation checkpoints to Product Decision Draft, Executive Review, observed Outcome through its owning Review, and Executive Learning.
+- **Access:** Publication and current read independently resolve current access to the checkpoint and exact linked endpoint. Exact scope is required and containment is non-authoritative.
+- **Persistence:** Relationship, immutable receipt, typed event, request fingerprint, and idempotency result commit in one inter-process-safe Product Workflow CAS.
+- **Authority:** Relationships grant no endpoint authority and do not promote Drafts, Decisions, Reviews, Outcomes, Learning, or Understanding ownership.
+- **Disclosure:** Lists are body-free and detail authorizes before exact protected loads; inaccessible and absent relationships are indistinguishable at the safe projection boundary.
+- **Exclusions:** Authoritative Decision linkage, expected Outcome/signal, supersession, universal graphs, ordinary frontend delivery, and Architecture Compression remain deferred.

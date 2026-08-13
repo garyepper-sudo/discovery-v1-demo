@@ -10,6 +10,7 @@ export * from "./productArtifactMetadataInspectionService";
 export * from "./productArtifactAuthorizedBodyReader";
 export * from "./canonicalProductArtifactCurrentAccessComposition";
 export * from "./canonicalLeadershipConversationOwnerRouter";
+export * from "./canonicalHistoricalCheckpointLifecycleLinkRouter";
 export * from "./canonicalMutationProductMaterializationContracts";
 export * from "./canonicalLeadershipConversationProductMaterializer";
 export * from "./canonicalExecutiveHistoryAccessComposition";

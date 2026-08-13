@@ -11,3 +11,4 @@ export * from "./selectProductAnswer";
 export * from "./questionAnswerRelevance";
 export * from "./leadershipConversation";
 export * from "./leadershipConversation/canonicalProductMaterializationContracts";
+export * from "./leadershipConversation/historicalCheckpointLifecycleLinkContracts";

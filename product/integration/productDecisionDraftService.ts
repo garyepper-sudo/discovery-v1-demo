@@ -286,4 +286,52 @@ export class ProductDecisionDraftService {
       runtimeRevision: stored.revision,
     };
   }
+
+  async readExactLifecycleEndpoint(input: {
+    userId: string;
+    organizationId: string;
+    questionId: string;
+    draftId: string;
+    draftRevisionId: string;
+    evaluatedAt: string;
+  }): Promise<{
+    draftId: string;
+    revisionId: string;
+    ownerEventId: string;
+    ownerReceiptId: string;
+    ownerReceiptDigest: string;
+    inspectionMetadata: ProductArtifactInspectionMetadataV1;
+  } | null> {
+    try {
+      await this.grant({
+        userId: input.userId,
+        organizationId: input.organizationId,
+        questionId: input.questionId,
+        operation: "product-decision-draft:read",
+        evaluatedAt: input.evaluatedAt,
+      });
+    } catch {
+      return null;
+    }
+    const stored = await this.runtime(input.organizationId);
+    const event = productDecisionDraftEvents(stored.runtime).find(
+      (candidate) =>
+        candidate.organizationId === input.organizationId &&
+        candidate.questionId === input.questionId &&
+        candidate.draftId === input.draftId &&
+        candidate.revision.revisionId === input.draftRevisionId,
+    );
+    const metadata = event?.revision.inspectionMetadata;
+    if (!event || !metadata || metadata.artifactId !== input.draftId || metadata.artifactRevision !== input.draftRevisionId) {
+      return null;
+    }
+    return {
+      draftId: event.draftId,
+      revisionId: event.revision.revisionId,
+      ownerEventId: event.eventId,
+      ownerReceiptId: event.receipt.receiptId,
+      ownerReceiptDigest: event.receipt.receiptDigest,
+      inspectionMetadata: structuredClone(metadata),
+    };
+  }
 }

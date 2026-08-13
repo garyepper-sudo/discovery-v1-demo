@@ -14,6 +14,7 @@ async function main(): Promise<void> {
   const materializer = await readFile(path.join(process.cwd(), "product/integration/canonicalLeadershipConversationProductMaterializer.ts"), "utf8");
   const neutral = await readFile(path.join(process.cwd(), "product/workflow/leadershipConversation/canonicalProductMaterializationContracts.ts"), "utf8");
   const draftService = await readFile(path.join(process.cwd(), "product/integration/productDecisionDraftService.ts"), "utf8");
+  const lifecycleRouter = await readFile(path.join(process.cwd(), "product/integration/canonicalHistoricalCheckpointLifecycleLinkRouter.ts"), "utf8");
 
   check(router.includes("contributeEvidenceWithCanonicalMaterializationInstruction"), "Evidence routing persists the actual operation-bound result and instruction together");
   check(router.includes("decisionDraftService.create"), "Product Decision Draft uses the actual service");
@@ -46,6 +47,8 @@ async function main(): Promise<void> {
   check(replay.includes("actual-class-2") && replay.includes("canonical-committed-product-materialized"), "Class 2 duplicate acceptance uses staged canonical materialization");
   check(replay.includes("productMaterializationReceiptDigest"), "replay binds future preparation to staged Product materialization receipts");
   check(replay.includes("different-purpose") && replay.includes("assert.rejects"), "same-key different-request control fails closed");
+  check(composition.includes("historicalCheckpointLifecycle") && composition.includes("CanonicalProductArtifactCurrentAccessComposition") && composition.includes("executiveHistoryAccess.readReview") && composition.includes("executiveHistoryAccess.readOutcome") && composition.includes("executiveHistoryAccess.readLearning"), "server composition routes L1 through actual Product-artifact and Executive History access owners");
+  check(lifecycleRouter.includes("resolveCheckpoint") && lifecycleRouter.includes("resolveLinkedRecord") && !lifecycleRouter.includes("runtimeRepository"), "L1 router accepts no Runtime repository or caller-supplied owner proof");
 
   console.log(JSON.stringify({ validation: "leadership-conversation-actual-owner-routing-001", result: "PASS", checks, positiveAcceptance: "unified-fresh-process-replay", focusedRole: "contract-and-adversarial-controls", syntheticPositiveOwners: false, networkCalls: 0, connectorCalls: 0, driveReads: 0, driveWrites: 0, productionAccess: 0, deployments: 0 }));
 }

@@ -223,3 +223,10 @@ remain permanent and must not be reused.
 | GAP-A-010 | Connected retrieval was not bound to an exact durable Question. | Added exact-Question ranking, irrelevant-source rejection, canonical evidence admission, exact citations, targeted abstention, null-confidence protection, and idempotent repeated search. | `product/connectors/google-drive/service.ts`; `product/integration/canonicalProductWorkspaceAdapter.ts` | 2026-07-30 | `validate:google-drive-question-search`; `validate:question-evidence-admission-idempotency`; live positive and negative Question acceptance |
 | GAP-A-017 | Ephemeral local Runtime loss left a valid organization, access record, and connector without a canonical Runtime. | Added development-only, authorization-first recovery of one empty canonical Runtime from explicit operator metadata, preserving identity and operational state without reconstructing cognition. | `lib/onboarding/testing/developmentRuntimeRecovery.ts`; `scripts/development/recoverDevelopmentRuntime.ts` | 2026-07-30 | `validate:development-runtime-recovery`; authorization, idempotency, conflict, lineage, and state-preservation modes; live recovery/reload acceptance |
 | GAP-B-001 | Governed Google Drive retrieval did not exist. | Added exact-user and exact-organization OAuth, encrypted credentials, selected-folder scope, deterministic synchronization/extraction, Question-relative retrieval, Evidence admission, citations, freshness, reload, and fail-closed isolation. Live revocation remains separately tracked by `GAP-A-006` and `GAP-A-016`. | `product/connectors/google-drive/`; `product/integration/canonicalProductWorkspaceAdapter.ts` | 2026-07-30 | Google Drive connector validators; live folder, extraction, incremental synchronization, retrieval, negative-control, and reload acceptance |
+
+### GAP-B-021 historical lifecycle continuation
+
+The bounded L1 checkpoint relationship foundation covers Draft, Review,
+observed Outcome, and Learning only. Authoritative Decision linkage, expected
+Outcome linkage, expected-signal linkage, supersession semantics, ordinary UI,
+and any architecture-compression or universal graph remain explicitly deferred.

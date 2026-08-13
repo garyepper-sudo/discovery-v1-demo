@@ -527,3 +527,21 @@ no architecture owner or successor. The owner-graph reconciliation is closed
 as `OWNER-GRAPH-B`; the remaining governance roots continue in parallel. None
 blocks the development-only shared organization-wide Leadership Conversation
 slice, which creates no differentiated activation authority.
+
+## Historical checkpoint lifecycle links (L1)
+
+Product Workflow owns a bounded, content-free relationship from an immutable
+Leadership Conversation frozen checkpoint to exactly one canonical Product
+Decision Draft revision, Executive Review, observed Outcome within its owning
+Review, or Executive Learning record. It owns only the relationship, receipt,
+event, replay identity, and safe projection. Endpoint meaning and persistence
+remain with their existing owners.
+
+Publication and every current list/detail read require current authorization
+for both the checkpoint Product artifact and the linked endpoint. Product
+artifacts reuse the canonical Runtime-to-current-eligibility derivation;
+Review, Outcome, and Learning reuse Executive History exact-record access.
+Authorization precedes protected loading. The link binds the exact frozen
+checkpoint package and exact Understanding confidence/uncertainty revision.
+One Product Workflow CAS persists link, receipt, event, and idempotency state.
+This is not a universal relationship graph or an authorization owner.

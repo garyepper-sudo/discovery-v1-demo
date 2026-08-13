@@ -658,3 +658,13 @@ Research does not enter production merely because a benchmark succeeds.
 `GAP-D-001`, `GAP-D-002`, and `GAP-D-003` require independent evidence,
 negative controls, an explicit owner, and a promotion decision recorded in
 [PRODUCT_DECISIONS.md](./PRODUCT_DECISIONS.md).
+
+## Post-Executive-History L1 gate
+
+The next historical-epistemic prerequisite is the four-kind, dual-endpoint
+current-access L1 checkpoint relationship owner. Its gate requires exact
+checkpoint/Understanding lineage, canonical endpoint reload, one-CAS Product
+Workflow persistence, fresh-process and concurrent collision proof, and safe
+projection non-disclosure. Architecture compression, generalized relationship
+primitives, authoritative Decision/expected-Outcome linkage, and ordinary UI
+remain sequenced after independent L1 review and closure.
