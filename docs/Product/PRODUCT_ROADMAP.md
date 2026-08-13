@@ -100,6 +100,15 @@ output.
 The next mandatory step after canonical integration is a formal post-access L1
 reconciliation. The preserved L1 candidate is not accepted or corrected here.
 
+Prepared Work publication now has a bounded implementation for independent
+review under `DEC-PROD-054`. Preparation resolves complete owner-backed,
+body-free material lineage on the server and publishes it atomically with the
+artifact header; freeze validates that lineage and transfers it atomically to
+the immutable checkpoint. Legacy incomplete lineage remains readable but
+cannot prove current access, reuse, or historical completeness. This is a
+prerequisite only and does not close checkpoint lifecycle linkage or
+`GAP-B-021`.
+
 First prerequisite: canonical Organizational Understanding confidence and
 uncertainty revisions under stable semantic identity are implemented for
 independent review. Next, independently close checkpoint lifecycle linkage;

@@ -8,12 +8,13 @@ import path from "node:path";
 
 import { runDiscoveryV3 } from "../../../engine/v3";
 import { CanonicalLocalSourceBindingService } from "../../../engine/v3/governance/canonicalLocalSourceBindingService";
-import { createCanonicalScopeLineageIndex, readCanonicalScopeLineageTopology, resolveCurrentSourceScopeBinding } from "../../../engine/v3/governance/canonicalScopeLineage";
+import { createCanonicalScopeLineageIndex, createCanonicalScopeTopology, readCanonicalScopeLineageTopology, resolveCurrentSourceScopeBinding } from "../../../engine/v3/governance/canonicalScopeLineage";
 import { resolveScopedGovernanceContext, type ScopedGovernanceOperation } from "../../../engine/v3/governance/scopedGovernanceContext";
 import { evolveOrganizationRuntime } from "../../../engine/v3/runtime/evolveOrganizationRuntime";
 import { produceCanonicalUnderstandingAudienceLineage } from "../../../engine/v3/understanding/produceCanonicalUnderstandingAudienceLineage";
 import { resolveCanonicalUnderstandingCurrentEligibility } from "../../../engine/v3/understanding/resolveCanonicalUnderstandingCurrentEligibility";
 import { createEmptyOrganizationRuntime } from "../../../engine/v3/runtime/organizationRuntime";
+import { createDurableProductQuestion } from "../../questions/questionLifecycle";
 import { FilesystemOrganizationRuntimeRepository } from "../../../engine/v3/runtime/organizationRuntimeRepository";
 import { GovernedSourceContentService } from "../../../engine/v3/sources/governedSourceContentService";
 import { createFilesystemSourceContentRepository } from "../../../engine/v3/sources/sourceContentRepository";
@@ -45,6 +46,9 @@ export type NorthstarPreparationLineageSeedV1 = {
   canonicalMaterial: Array<{ canonicalObjectId: string; revisionRef: string; owner: "canonical-evidence-admission" }>;
   canonicalUnderstandingRevision: string;
   projectionSourceRef: string;
+  scopeDigest: string;
+  purpose: string;
+  sensitivity: "standard";
   seedDigest: string;
 };
 
@@ -73,6 +77,53 @@ export type NorthstarPreparationLineageProvisioningInput = {
   now?: string;
 };
 
+export async function provisionForeignCanonicalOwnerPartition(input:{runtimeRoot:string;sourceContentRoot:string;organizationId:string;productQuestionId:string;actorId:string;at:string}):Promise<{organizationId:string;productQuestionId:string;canonicalUnderstandingRevision:string;projectionSourceRef:string;projectionRevision:string;runtimeRevision:string;sourceBindingId:string;sourceContentVersionId:string;canonicalEvidenceIds:string[]}> {
+  if(input.organizationId===SANDBOX_ORGANIZATION_ID||!SAFE_ID.test(input.organizationId))throw new Error("Foreign canonical owner partition identity is invalid.");
+  const repository=new FilesystemOrganizationRuntimeRepository(input.runtimeRoot),scope={organizationId:input.organizationId,type:"organization" as const,id:input.organizationId};
+  const topology=createCanonicalScopeTopology({organizationId:input.organizationId,topologyVersion:1,effectiveAt:input.at,nodes:[{...scope,label:"Foreign canonical validation partition"}],relationships:[]});
+  const empty=createEmptyOrganizationRuntime({organizationId:input.organizationId,name:"Foreign canonical validation partition",now:input.at});
+  const withQuestion=createDurableProductQuestion({runtime:{...empty,memory:{...empty.memory,canonicalScopeLineageIndex:createCanonicalScopeLineageIndex({organizationId:input.organizationId,topology,sourceBindings:[],evidenceAttributions:[],derivedLineages:[]})}},title:"What constrains the foreign validation partition?",questionId:input.productQuestionId,createdAt:input.at}).runtime;
+  await repository.create(input.organizationId,runtimeBytes(withQuestion),{requestId:"foreign-owner-partition:create",operatorId:input.actorId});
+  const text=[
+    "Northstar delivery commitments repeatedly exceed the implementation capacity available to the delivery team.",
+    "Leaders approve additional work without removing existing commitments, while cross-functional dependencies remain unresolved.",
+    "The resulting queue growth causes schedule slippage, rework, and recurring escalation across product and engineering.",
+    "A bounded commitment policy and explicit dependency ownership would reduce overload and improve delivery predictability.",
+  ].join("\n\n"),bytes=new TextEncoder().encode(text),normalized=decodeAndNormalizeSourceContent(bytes),normalizedBytes=new TextEncoder().encode(normalized.normalizedText),normalizedContentDigest=sourceContentDigest(normalizedBytes);
+  const scoped=(operation:ScopedGovernanceOperation)=>resolveScopedGovernanceContext({organizationId:input.organizationId,subjectId:input.actorId,requestedScope:scope,operation,purpose:PURPOSE,sensitivity:"standard",evaluatedAt:input.at,temporal:{mode:"current"},serverResolvedAuthority:[{authorityRef:"authority:foreign-canonical-partition",policyRef:"policy:foreign-canonical-partition:v1",organizationId:input.organizationId,subjectId:input.actorId,scope,operations:[operation],sensitivity:["standard"],relationship:"direct",status:"active",validFrom:input.at}]});
+  const before=(await repository.read(input.organizationId))!,service=new CanonicalLocalSourceBindingService(repository,{now:()=>input.at});
+  const receipt=await service.registerCanonicalLocalSourceBinding({contractVersion:"1",organizationId:input.organizationId,productQuestionId:input.productQuestionId,sourceType:"plain-text-upload",purposeRef:PURPOSE,normalizedContentDigest,requestedScopeAssertions:[{relationship:"applies-to",scope}],sensitivity:"standard",recordedAt:input.at,recordedByActorRef:input.actorId,idempotencyKey:"foreign-owner-partition:binding",expectedRuntimeRevision:before.revision,operation:{requestId:"foreign-owner-partition:binding",operatorId:input.actorId},authorization:scoped("source-binding:register-local")});
+  const bound=(await repository.read(input.organizationId))!,index=bound.runtime.memory.canonicalScopeLineageIndex!,binding=index.sourceBindings.find(item=>item.bindingId===receipt.sourceBindingId)!;
+  const sourceRepository=createFilesystemSourceContentRepository({root:input.sourceContentRoot,environment:"test"}),contentService=new GovernedSourceContentService(sourceRepository,{loadRevisions:async({organizationId,sourceBindingId})=>{const loaded=await repository.read(organizationId),all=loaded?.runtime.memory.canonicalScopeLineageIndex?.sourceBindings??[],target=all.find(item=>item.bindingId===sourceBindingId);return target?all.filter(item=>item.source.sourceId===target.source.sourceId):[];}},{now:()=>input.at});
+  const sourceVersion=await contentService.write({contractVersion:"1",organizationId:input.organizationId,sourceBindingId:binding.bindingId,purposeRef:PURPOSE,mediaType:"text/plain",bytes,storedAt:input.at,storedByActorRef:input.actorId,idempotencyKey:"foreign-owner-partition:content",expectedRepositoryRevision:await sourceRepository.inspectRevision(input.organizationId),authorization:scoped("source-content:write")});
+  const sourceRead=await contentService.read({contractVersion:"1",organizationId:input.organizationId,sourceBindingId:binding.bindingId,sourceContentVersionId:sourceVersion.sourceContentVersionId,purposeRef:PURPOSE,authorization:scoped("source-content:read-for-evidence-admission")});
+  if(sourceRead.version.organizationId!==input.organizationId||sourceRead.version.sourceBindingId!==binding.bindingId||sourceRead.version.normalizedContentDigest!==binding.source.normalizedContentDigest||sourceRead.text!==normalized.normalizedText)throw new Error("Foreign canonical owner partition governed Source Content is invalid.");
+  const result=runDiscoveryV3({company:"Foreign canonical validation partition",website:"https://foreign.invalid",industry:"Validation",question:"What constrains this partition?",context:"",evidenceSources:[{sourceId:binding.source.sourceId,sourceType:"upload",observedAt:input.at,contentDigest:sourceRead.version.normalizedContentDigest,content:sourceRead.text}]},{organizationId:input.organizationId,effectiveAt:input.at,topologyRevisions:[topology],sourceBindingRevisions:index.sourceBindings});
+  const admissions=result.scopeLineageAdmission?.operationBatch.admissions??[];
+  if(!admissions.length)throw new Error("Foreign canonical owner partition Evidence admission is unavailable.");
+  const priorLog=console.log;let evolved;
+  try{console.log=()=>{};evolved=evolveOrganizationRuntime({runtime:bound.runtime,result,input:{company:"Foreign canonical validation partition",website:"https://foreign.invalid",industry:"Validation",question:"What constrains this partition?",context:""},semanticTime:input.at,organizationalUnderstandingOwnershipMode:"canonical"});}finally{console.log=priorLog;}
+  const explanations=evolved.memory.organizationalExplanations.filter(item=>item.canonicalGovernanceLineage),compositions=evolved.memory.organizationalUnderstandingState.canonicalCompositions??[];
+  if(!explanations.length||!compositions.length)throw new Error("Foreign canonical owner partition construction is unavailable.");
+  const serialized=stable(explanations);
+  if(serialized.includes(SANDBOX_ORGANIZATION_ID)||explanations.some(item=>item.organizationId!==input.organizationId||item.claim.scope.organizationId!==input.organizationId||item.canonicalGovernanceLineage?.organizationId!==input.organizationId))throw new Error("Foreign canonical owner partition contains foreign owner lineage.");
+  const stored=await repository.replace(input.organizationId,runtimeBytes(evolved),bound.revision,{requestId:"foreign-owner-partition:cognition",operatorId:input.actorId});
+  const reloaded = await repository.read(input.organizationId);
+  const reloadedExplanations=reloaded?.runtime.memory.organizationalExplanations.filter(item=>item.canonicalGovernanceLineage)??[],composition=reloaded?.runtime.memory.organizationalUnderstandingState.canonicalCompositions?.find(item=>item.organizationId===input.organizationId&&item.scope.organizationId===input.organizationId&&item.explanationIds.every(explanationId=>reloadedExplanations.some(explanation=>explanation.id===explanationId)));
+  if(
+    !reloaded ||
+    !composition ||
+    composition.organizationId !== input.organizationId ||
+    composition.scope.organizationId !== input.organizationId ||
+    composition.revisionId.length === 0
+  )throw new Error("Foreign canonical owner partition cognition is unavailable.");
+  const reloadedIndex=reloaded.runtime.memory.canonicalScopeLineageIndex!,materialSupports=reloadedExplanations.flatMap(item=>item.canonicalGovernanceLineage!.materialSupports),audienceLineage=produceCanonicalUnderstandingAudienceLineage({organizationId:input.organizationId,compositions:reloaded.runtime.memory.organizationalUnderstandingState.canonicalCompositions??[],explanations:reloadedExplanations,scopeLineageIndex:reloadedIndex,scopeTopology:readCanonicalScopeLineageTopology(reloadedIndex)}),disclosure=scoped("understanding:disclose-derived"),eligibility=resolveCanonicalUnderstandingCurrentEligibility({contractVersion:"1",organizationId:input.organizationId,subjectId:input.actorId,purposeRef:PURPOSE,requestedScope:scope,sensitivity:"standard",evaluatedAt:input.at,authorizationContextRef:disclosure.contextId,canonicalUnderstandingRevision:reloaded.revision,audienceLineageDigest:audienceLineage.digest,lineagePolicyVersion:POLICY,materialSupports},{authorization:disclosure,isPurposeCompatible:({requestedPurpose,materialPurposeRefs})=>materialPurposeRefs.includes(requestedPurpose),resolveCurrentSourceBinding:({historicalBindingId,historicalGovernanceRevisionRef})=>{const historical=reloadedIndex.sourceBindings.find(item=>item.bindingId===historicalBindingId&&item.digest===historicalGovernanceRevisionRef);if(!historical)return undefined;const latest=resolveCurrentSourceScopeBinding(reloadedIndex.sourceBindings.filter(item=>item.source.sourceId===historical.source.sourceId),input.at);return latest?{organizationId:input.organizationId,historicalBindingId,currentBindingRevisionRef:latest.bindingId,currentGovernanceRevisionRef:latest.digest,availability:latest.availability??"unavailable",purposeRefs:latest.purposeRef?[latest.purposeRef]:[],scopes:latest.assertions.map(item=>item.scope)}:undefined;}});
+  if(eligibility.disposition!=="eligible")throw new Error("Foreign canonical owner partition current eligibility is unavailable.");
+  const projection=readScopedOrganizationalProductProjection({authenticatedUserId:input.actorId,organizationId:input.organizationId,context:disclosure,repository:{readAuthorizedSource:()=>buildGenericScopedProductSource({stored:reloaded,organizationId:input.organizationId,requestedScope:scope,currentEligibility:eligibility})}});
+  if(projection.disposition!=="available"||projection.sourceRevisionRef!==reloaded.revision)throw new Error("Foreign canonical owner partition scoped projection is unavailable.");
+  return{organizationId:input.organizationId,productQuestionId:input.productQuestionId,canonicalUnderstandingRevision:composition.revisionId,projectionSourceRef:composition.id,projectionRevision:projection.sourceRevisionRef,runtimeRevision:reloaded.revision,sourceBindingId:binding.bindingId,sourceContentVersionId:sourceVersion.sourceContentVersionId,canonicalEvidenceIds:admissions.map(item=>item.canonicalEvidenceId).sort()};
+}
+
 function authorization(operation: ScopedGovernanceOperation, at: string) {
   const scope = { organizationId: SANDBOX_ORGANIZATION_ID, type: "organization" as const, id: SANDBOX_ORGANIZATION_ID };
   return resolveScopedGovernanceContext({ organizationId: SANDBOX_ORGANIZATION_ID, subjectId: ACTOR, requestedScope: scope, operation, purpose: PURPOSE, sensitivity: "standard", evaluatedAt: at, temporal: { mode: "current" }, serverResolvedAuthority: [{ authorityRef: "authority:northstar-preparation-lineage-fixture", policyRef: "policy:northstar-preparation-lineage-fixture:v1", organizationId: SANDBOX_ORGANIZATION_ID, subjectId: ACTOR, scope, operations: [operation], sensitivity: ["standard"], relationship: "direct", status: "active", validFrom: sandboxManifest.replayTimestamps[0] }] });
@@ -96,7 +147,7 @@ function validateSeed(seed: NorthstarPreparationLineageSeedV1): void {
   const { seedDigest, ...unsigned } = seed;
   const bindingIds = new Set(seed.sourceBindings.map(item => item.sourceBindingId));
   const versionIds = new Set<string>();
-  if (seed.contractVersion !== "1" || seed.organizationId !== SANDBOX_ORGANIZATION_ID || seed.semanticOwner !== "leadership-conversation" || seed.productQuestionId !== QUESTION_ID || seed.lineagePolicyVersion !== POLICY || seedDigest !== digest(unsigned) || !bindingIds.size || bindingIds.size !== seed.sourceBindings.length || !seed.sourceContentVersions.length || !seed.canonicalMaterial.length || !seed.canonicalUnderstandingRevision || !seed.projectionSourceRef) throw new Error("Northstar preparation lineage seed integrity failed.");
+  if (seed.contractVersion !== "1" || seed.organizationId !== SANDBOX_ORGANIZATION_ID || seed.semanticOwner !== "leadership-conversation" || seed.productQuestionId !== QUESTION_ID || seed.lineagePolicyVersion !== POLICY || seedDigest !== digest(unsigned) || !bindingIds.size || bindingIds.size !== seed.sourceBindings.length || !seed.sourceContentVersions.length || !seed.canonicalMaterial.length || !seed.canonicalUnderstandingRevision || !seed.projectionSourceRef || !seed.scopeDigest || seed.purpose!==PURPOSE || seed.sensitivity!=="standard") throw new Error("Northstar preparation lineage seed integrity failed.");
   for (const version of seed.sourceContentVersions) {
     if (!version.sourceBindingId || !bindingIds.has(version.sourceBindingId) || !version.sourceContentVersionId || versionIds.has(version.sourceContentVersionId) || !/^[a-f0-9]{64}$/u.test(version.normalizedContentDigest)) throw new Error("Northstar preparation lineage seed integrity failed.");
     versionIds.add(version.sourceContentVersionId);
@@ -251,7 +302,7 @@ export async function provisionNorthstarPreparationLineageFixture(input: Northst
   if(eligibility.disposition!=="eligible")throw new Error("Canonical Northstar Understanding is not currently eligible.");
   const projection=readScopedOrganizationalProductProjection({authenticatedUserId:ACTOR,organizationId:SANDBOX_ORGANIZATION_ID,context:disclosure,repository:{readAuthorizedSource:()=>buildGenericScopedProductSource({stored,organizationId:SANDBOX_ORGANIZATION_ID,requestedScope:scope,currentEligibility:eligibility})}});
   if(projection.disposition!=="available")throw new Error("Canonical Northstar scoped projection is unavailable.");
-  const unsigned: Omit<NorthstarPreparationLineageSeedV1, "seedDigest"> = { contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID as typeof SANDBOX_ORGANIZATION_ID, semanticOwner: "leadership-conversation", productQuestionId: QUESTION_ID, creationOperationId: `northstar-preparation-lineage:v1:${digest([SANDBOX_ORGANIZATION_ID, documents.map(item=>item.id)])}`, lineagePolicyVersion: POLICY, sourceBindings: bindings.sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)), sourceContentVersions: versions.sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)||a.sourceContentVersionId.localeCompare(b.sourceContentVersionId)||a.normalizedContentDigest.localeCompare(b.normalizedContentDigest)), canonicalMaterial: admissions.map(item=>({ canonicalObjectId: item.canonicalEvidenceId, revisionRef: item.canonicalAdmissionId, owner: "canonical-evidence-admission" as const })).sort((a,b)=>a.canonicalObjectId.localeCompare(b.canonicalObjectId)), canonicalUnderstandingRevision: current.revisionId, projectionSourceRef: current.id };
+  const unsigned: Omit<NorthstarPreparationLineageSeedV1, "seedDigest"> = { contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID as typeof SANDBOX_ORGANIZATION_ID, semanticOwner: "leadership-conversation", productQuestionId: QUESTION_ID, creationOperationId: `northstar-preparation-lineage:v1:${digest([SANDBOX_ORGANIZATION_ID, documents.map(item=>item.id)])}`, lineagePolicyVersion: POLICY, sourceBindings: bindings.sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)), sourceContentVersions: versions.sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)||a.sourceContentVersionId.localeCompare(b.sourceContentVersionId)||a.normalizedContentDigest.localeCompare(b.normalizedContentDigest)), canonicalMaterial: admissions.map(item=>({ canonicalObjectId: item.canonicalEvidenceId, revisionRef: item.canonicalAdmissionId, owner: "canonical-evidence-admission" as const })).sort((a,b)=>a.canonicalObjectId.localeCompare(b.canonicalObjectId)), canonicalUnderstandingRevision: current.revisionId, projectionSourceRef: current.id, scopeDigest:digest(scope), purpose:PURPOSE, sensitivity:"standard" };
   const seed = { ...unsigned, seedDigest: digest(unsigned) };
   await persistSeedRecord(root, seed);
   return { disposition: replay ? "idempotent-replay" : "provisioned", seed, counts: { sources: bindings.length, material: admissions.length, understandings: compositions.length }, runtimeRevision: stored.revision };

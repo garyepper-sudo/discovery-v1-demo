@@ -114,6 +114,14 @@ confidence/uncertainty revision ownership is implemented under `DEC-PROD-052`
 for independent review. Historical checkpoint-to-lifecycle linkage and the
 complete contemporaneous-history foundation remain open and separately
 sequenced.
+
+`GAP-B-021` material-lineage prerequisite update (2026-08-11): under
+`DEC-PROD-054`, Prepared Work preparation and freeze now publish complete
+owner-backed, body-free Source, Evidence, scope, purpose, sensitivity, and
+projection lineage with their existing Product Workflow CAS transitions.
+Missing or incomplete legacy lineage cannot establish current eligibility,
+reuse authority, or historical completeness. This does not accept the
+preserved L1 candidate and does not close checkpoint lifecycle linkage.
 | GAP-D-005 | D | Universal Leadership Workspace validation | The Leadership Conversation Prepare/Capture wedge is canonized, while Brief, broader Prepare, Explore, and Capture families remain hypotheses. | One generic conversation contract and Northstar cross-functional acceptance scenario are specified; universality across recurring leadership work is unproven. | Validate recurrence, burden, prepared-work value, and cross-industry applicability through Director/VP interviews, deterministic simulation, and product-safe prototypes. | Direct customer workflow evidence is incomplete. | `DEC-PROD-038`, `DEC-PROD-041`, first-slice evidence | Broader Leadership Workspace implementation and expansion | P0 | Before workspace-family expansion | M | Preregistered research supports or revises each family without introducing unvalidated feature areas. | Research |
 | GAP-D-006 | D | Scout and Environmental Intelligence architecture | External conditions, freshness, volatility, and material-change interruption have no validated governed composition with Decisions or Organizational Understanding. | Scout is a deferred application role over one governed substrate; it owns no separate truth model, autonomous monitoring, connector, Evidence admission, historical truth, or authority. | After the internal Leadership Conversation, Decision Learning, Strategy Integrity, state-transfer sequence, and minimum contemporaneous-history foundation are validated, define bounded external-assumption and material-change composition that recommends uncertainty-linked acquisition and may truthfully produce no change. | Organizational Understanding, Leadership Workspaces, Decision Learning, current-access delivery, and historical-cutoff semantics are not yet complete together. | `GAP-D-002`, `GAP-D-005`, `GAP-B-020`, `GAP-B-021` | Scout/environment-aware decision support | P2 | Future research | XL | Authority, provenance, scope, confidence, freshness, volatility, cutoff, interruption, budgets, stopping, suppression, and no-change semantics remain distinct; no external information becomes organizational truth or earlier history automatically. | Research |
 

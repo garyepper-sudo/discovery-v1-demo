@@ -56,12 +56,16 @@ leadership work. The governing strategy is
 Understanding owner. Future Prepared Work Products consume governed Product
 contracts derived from that owner, never raw Runtime cognition.
 
-`PreparedWorkProduct` is now canonized as a bounded, versioned Product Workflow
+`PreparedWorkProduct` is canonized as a bounded, versioned Product Workflow
 artifact for work leaders already create. It references existing canonical
 owners and preserves organization, Question, projection, scope, Evidence
-lineage, uncertainty, unavailable areas, and exact confidence ownership. It is
-not cognition, a report owner, authorization, disclosure, Evidence, Decision,
-or a second Question. Its implementation remains unbegun and is governed by
+lineage, uncertainty, unavailable areas, and exact confidence ownership. Its
+preparation and freeze transitions publish an owner-resolved, body-free
+material-lineage envelope atomically with the Product Workflow header. The
+envelope carries identifiers and digests, never Source Content, Evidence
+bodies, Runtime cognition, grants, or authorization objects. It is not
+cognition, a report owner, authorization, disclosure, Evidence, Decision, or a
+second Question. The bounded first slice is governed by
 [the Leadership Conversation Product Constitution](./DISCOVERY_LEADERSHIP_CONVERSATION_PRODUCT_CONSTITUTION.md)
 and [first-slice specification](./LEADERSHIP_CONVERSATION_PREPARE_CAPTURE_SPEC_001.md).
 

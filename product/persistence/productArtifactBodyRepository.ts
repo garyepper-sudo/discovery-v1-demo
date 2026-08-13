@@ -1,7 +1,8 @@
 import "server-only";
 
+import { randomUUID } from "node:crypto";
 import { constants } from "node:fs";
-import { chmod, lstat, mkdir, open, readFile, realpath } from "node:fs/promises";
+import { chmod, link, lstat, mkdir, open, readFile, realpath, unlink } from "node:fs/promises";
 import path from "node:path";
 import {
   createProductArtifactBodyRefV1,
@@ -77,19 +78,30 @@ export class FilesystemProductArtifactBodyRepository implements ProductArtifactB
     await this.prepare(input.organizationId, input.semanticOwner);
     const target = this.target(staged.body);
     await this.noLink(target);
+    const temporary = path.join(
+      path.dirname(target),
+      `.${staged.body.exactBodyDigest}.${process.pid}.${randomUUID()}.tmp`,
+    );
+    let published = false;
     try {
-      const handle = await open(target, constants.O_CREAT | constants.O_EXCL | constants.O_WRONLY, 0o600);
+      const handle = await open(temporary, constants.O_CREAT | constants.O_EXCL | constants.O_WRONLY, 0o600);
       try { await handle.writeFile(input.bytes); await handle.sync(); } finally { await handle.close(); }
-    } catch (error) {
-      if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
+      const temporaryStatus = await lstat(temporary);
+      const temporaryBytes = new Uint8Array(await readFile(temporary));
+      if (!temporaryStatus.isFile() || temporaryStatus.isSymbolicLink() || (temporaryStatus.mode & 0o777) !== 0o600 || temporaryBytes.byteLength !== staged.body.byteLength || productArtifactBodyDigest(temporaryBytes) !== staged.body.exactBodyDigest) {
+        throw new Error("Product artifact body temporary integrity failed.");
+      }
+      try { await link(temporary, target); published = true; }
+      catch (error) { if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error; }
       const status = await lstat(target);
       const bytes = new Uint8Array(await readFile(target));
       if (!status.isFile() || (status.mode & 0o777) !== 0o600 || bytes.byteLength !== staged.body.byteLength || productArtifactBodyDigest(bytes) !== staged.body.exactBodyDigest) {
         throw new Error("Product artifact body integrity failed.");
       }
-      const replay=receipt(input,"exact-replay");await this.bindRef(replay.body);return replay;
+    } finally {
+      try { await unlink(temporary); } catch (error) { if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error; }
     }
-    await this.bindRef(staged.body);return staged;
+    const result=published?staged:receipt(input,"exact-replay");await this.bindRef(result.body);return result;
   }
   private async bindRef(body:ProductArtifactBodyRefV1):Promise<void>{const target=this.refTarget(body);await this.noLink(target);const bytes=new TextEncoder().encode(JSON.stringify(body));try{const handle=await open(target,constants.O_CREAT|constants.O_EXCL|constants.O_WRONLY,0o600);try{await handle.writeFile(bytes);await handle.sync();}finally{await handle.close();}}catch(error){if((error as NodeJS.ErrnoException).code!=="EEXIST")throw error;const status=await lstat(target),existing=JSON.parse(await readFile(target,"utf8")) as ProductArtifactBodyRefV1;if(!status.isFile()||(status.mode&0o777)!==0o600||existing.refDigest!==body.refDigest)throw new Error("Product artifact body identity collision.");}}
   async readStagedExact(body: ProductArtifactBodyRefV1): Promise<Uint8Array> {

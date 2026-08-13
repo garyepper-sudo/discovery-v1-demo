@@ -47,7 +47,7 @@ function parseHandoff(value: string): SafeHandoff {
   return parsed;
 }
 
-async function processA(root: string): Promise<WorkerResult> {
+async function processA(root: string,lineageFixtureRoot?:string): Promise<WorkerResult> {
   const locations = roots(root);
   const runtimeRepository = new FilesystemOrganizationRuntimeRepository(locations.runtimeRoot);
   const topology = createCanonicalScopeTopology({ organizationId: fixture.organizationId, topologyVersion: 1, effectiveAt: fixture.at, nodes: [scope], relationships: [] });
@@ -57,7 +57,7 @@ async function processA(root: string): Promise<WorkerResult> {
   runtime = createDurableProductQuestion({ runtime, title: "What is constraining Northstar delivery?", questionId: NORTHSTAR_LINEAGE_QUESTION_ID, createdAt: fixture.at }).runtime;
   runtime = appendProductQuestionEvent(runtime, { type: "answer_recorded", organizationId: fixture.organizationId, questionId: NORTHSTAR_LINEAGE_QUESTION_ID, occurredAt: fixture.at, answer: { answerId: "product-answer:northstar-leadership:1", canonicalSource: "canonical-product-answer", revision: 1, reasonForChange: "Initial supported Answer", changeReceiptId: "product-answer-receipt:northstar-leadership:1", timestamp: fixture.at, confidence: { level: "moderate", score: 0.7, meaning: "Supported", principalLimiter: "Additional sequencing evidence is required.", authoritativeSource: "canonical-product-workflow" } } });
   await runtimeRepository.create(fixture.organizationId, new TextEncoder().encode(JSON.stringify(runtime, null, 2)), { requestId: "process-a-runtime", operatorId: fixture.actorId });
-  const composition = await validationComposition(locations);
+  const composition = await validationComposition(locations,lineageFixtureRoot);
   await composition.recordContext({ ...identity, idempotencyKey: "process-a-context", title: "Northstar staff conversation", purpose: "Resolve the next delivery constraint.", intendedOutcome: "Agree one bounded owner action.", timeframe: "Weekly", participants: [{ participantRef: "leader", displayName: "Leader", titleLabel: "Director" }], leaderContext: null });
   const workflow = createProductWorkflowArtifactRepository({ root: locations.workflowRoot, environment: "test" });
   let stored = await workflow.read(fixture.organizationId);
@@ -186,7 +186,7 @@ async function processC(root: string, lineageFixtureRoot: string, expectedSeedDi
 
 async function worker(role: string, root: string, lineageFixtureRoot: string, expectedSeedDigest: string, encodedA?: string, encodedB?: string): Promise<WorkerResult> {
   assert.ok(path.basename(root).startsWith("discovery-leadership-conversation-replay-"));
-  if (role === "prepare-and-freeze") return processA(root);
+  if (role === "prepare-and-freeze") return processA(root,lineageFixtureRoot);
   if (role === "capture-and-review") return processB(root, encodedA!);
   if (role === "route-actual-owners-and-prepare-again") return processC(root, lineageFixtureRoot, expectedSeedDigest, encodedA!, encodedB!);
   throw new Error("unknown process role");
@@ -219,7 +219,7 @@ async function main(): Promise<void> {
     const provisioned = await provisionNorthstarPreparationLineageFixture({ environment: "test", fixtureRoot: lineageFixtureRoot, now: fixture.at });
     assert.equal(provisioned.disposition, "provisioned"); checks++;
     assert.ok(provisioned.counts.sources > 0 && provisioned.counts.material > 0 && provisioned.counts.understandings > 0); checks++;
-    const a = await execute(root, "prepare-and-freeze", null, null); checks += a.assertions.length;
+    const a = await execute(root, "prepare-and-freeze", lineageFixtureRoot, provisioned.seed.seedDigest); checks += a.assertions.length;
     const b = await execute(root, "capture-and-review", null, null, a.handoff); checks += b.assertions.length;
     const resign = (value: SafeHandoff, changes: Record<string, unknown>): SafeHandoff => { const { handoffDigest: _old, ...unsigned } = { ...value, ...changes }; return { ...unsigned, handoffDigest: digest(unsigned) }; };
     const reject = async (attempt: () => Promise<unknown>) => { await assert.rejects(attempt); checks += 1; };

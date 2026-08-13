@@ -50,10 +50,11 @@ async function main(): Promise<void> {
     };
     const base = readLeadershipConversationFixture().base;
     const bodyRepository=new MemoryBodyRepository();
-    const operations = new LeadershipConversationProductOperations({ repository, bodyRepository, clock: { now: () => fixture.at }, authorize: async ({ userId, organizationId }) => userId === fixture.actorId && organizationId === fixture.organizationId, loadBase: async () => base, source });
+    const lineageUnsigned={contractVersion:"1" as const,organizationId:fixture.organizationId,semanticOwner:"leadership-conversation" as const,productQuestionId:fixture.questionId,creationOperationId:"fixture-prepare:1",lineagePolicyVersion:"fixture-lineage:v1",sourceBindings:[{sourceBindingId:binding.bindingId,bindingRevisionId:binding.digest}],sourceContentVersions:[{sourceBindingId:binding.bindingId,sourceContentVersionId:"fixture-source-version:1",normalizedContentDigest:binding.source.normalizedContentDigest}],canonicalMaterial:[{canonicalObjectId:"fixture-evidence:1",revisionRef:"fixture-admission:1",owner:"canonical-evidence-admission" as const}],canonicalUnderstandingRevision:"fixture-understanding:1",projectionSourceRef:"fixture-projection:1",scopeDigest:productArtifactBodyDigest(scope),purpose:fixture.purposeRef,sensitivity:"standard" as const},materialLineage={...lineageUnsigned,seedDigest:productArtifactBodyDigest(lineageUnsigned)};
+    const operations = new LeadershipConversationProductOperations({ repository, bodyRepository, clock: { now: () => fixture.at }, authorize: async ({ userId, organizationId }) => userId === fixture.actorId && organizationId === fixture.organizationId, resolvePreparedWorkMaterialLineage:async()=>materialLineage, loadBase: async () => base, source });
     const identity = { userId: fixture.actorId, organizationId: fixture.organizationId, questionId: fixture.questionId, conversationId: fixture.conversationId };
     let deniedReads = 0;
-    const denied = new LeadershipConversationProductOperations({ repository: { ...repository, read: async (id) => { deniedReads += 1; return repository.read(id); } }, bodyRepository, clock: { now: () => fixture.at }, authorize: async () => false, loadBase: async () => base, source });
+    const denied = new LeadershipConversationProductOperations({ repository: { ...repository, read: async (id) => { deniedReads += 1; return repository.read(id); } }, bodyRepository, clock: { now: () => fixture.at }, authorize: async () => false, resolvePreparedWorkMaterialLineage:async()=>materialLineage, loadBase: async () => base, source });
     await assert.rejects(() => denied.workspace({ ...identity, userId: "denied" }), /access denied/);
     check(deniedReads === 0, "denial precedes workflow I/O");
     await operations.recordContext({ ...identity, idempotencyKey: "context", title: "Northstar staff conversation", purpose: "Resolve the next delivery constraint.", intendedOutcome: "Agree one bounded owner action.", timeframe: "Weekly", participants: [{ participantRef: "p1", displayName: "Leader", titleLabel: "Director" }], leaderContext: null });
@@ -62,6 +63,8 @@ async function main(): Promise<void> {
     store = (await repository.read(fixture.organizationId)).store;
     await operations.freeze({ ...identity, idempotencyKey: "freeze", artifactVersionId: store.preparedWorkPublications![0]!.artifactRevision });
     store = (await repository.read(fixture.organizationId)).store;
+    check(Boolean(store.preparedWorkPublications![0]!.materialLineage),"Prepared Work publishes complete body-free material lineage");
+    check(store.frozenSnapshotPublications![0]!.materialLineage?.seedDigest===store.preparedWorkPublications![0]!.materialLineage?.seedDigest,"freeze transfers the exact owner-backed lineage seed");
     await operations.receiveUpload({ ...identity, idempotencyKey: "upload", frozenSnapshotId: store.frozenSnapshotPublications![0]!.artifactId, purposeRef: fixture.purposeRef, mediaType: "text/plain", bytes: fixture.captureBytes, displayLabel: "Staff notes", originalFilename: null });
     check(store.preparedWorkProducts.length===0&&store.frozenSnapshots.length===0,"legacy combined Prepared Work and snapshot containers remain empty");
     store = (await repository.read(fixture.organizationId)).store;

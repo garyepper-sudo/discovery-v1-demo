@@ -1244,3 +1244,28 @@ Changing one requires the process in
   Runtime, scoped-governance, and Product owners remain authoritative.
 - **Status:** Implemented for independent review. The preserved L1 candidate is
   neither accepted nor corrected and requires post-integration reconciliation.
+
+## DEC-PROD-054 — Prepared Work publication carries body-free governed material lineage
+
+- **Decision:** Preparation and freeze publish a versioned, body-free material
+  lineage envelope obtained from the canonical Northstar preparation-lineage
+  owner. The envelope binds the exact organization, Question, scope, purpose,
+  sensitivity, Source Binding, Source Content revision, Evidence basis, and
+  projection basis used for the artifact.
+- **Authority:** The server resolves and validates lineage after scoped
+  authorization. Callers cannot supply, replace, broaden, or repair lineage,
+  and fixture composition cannot become the canonical owner.
+- **Atomicity:** Protected body persistence may be staged first, but the
+  Prepared Work header and its complete lineage publish together through the
+  existing Product Workflow CAS. Freeze validates the published preparation
+  lineage and retargets it to the immutable checkpoint in the same freeze CAS.
+- **Disclosure:** Headers, events, idempotency records, and frontend-safe
+  metadata contain identifiers and digests only. Source Content and Evidence
+  bodies, Runtime cognition, grants, and authorization objects remain behind
+  their canonical owners.
+- **Compatibility:** Legacy Prepared Work remains readable, but missing or
+  incomplete lineage cannot establish current access, historical eligibility,
+  reuse authority, or checkpoint completeness.
+- **Affected gap:** bounded prerequisite for `GAP-B-021`.
+- **Status:** Implemented for independent review; it does not itself complete
+  historical checkpoint lifecycle linkage.
