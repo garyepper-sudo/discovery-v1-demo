@@ -1,6 +1,6 @@
 # Capability Trace — Investigation Opportunity Generation
 
-Generated: 2026-07-31T20:42:07.112Z
+Generated: 2026-08-13T21:50:28.741Z
 
 ## Verified Architecture
 
@@ -84,6 +84,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/benchmark/judgment-lab/runJudgmentLab.ts`
 - `engine/benchmark/judgment-lab/themeEvidenceCompositionIsolation.ts`
 - `engine/benchmark/judgment-lab/validateJudgmentLabProvenance.ts`
+- `engine/benchmark/multi-role-scoped-understanding-governance-001/runBenchmark.ts`
 - `engine/benchmark/stress/runEngineStressTest.ts`
 - `engine/v3/communication/buildExecutiveStory.ts`
 - `engine/v3/communication/executiveCommunicationSource.ts`
@@ -101,6 +102,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/v3/scenarios/buildExecutiveDecisionContext.ts`
 - `engine/v3/scenarios/runExecutiveScenario.ts`
 - `scripts/cognition/reviewCognitiveDomain.mjs`
+- `scripts/development/reconstructNorthstarRuntime.ts`
 - `scripts/product/capabilitySurvivalManifest.ts`
 - `scripts/product/validateAlphaYourOrganizationActivation.ts`
 - `scripts/product/validateAskExperience.ts`
@@ -142,13 +144,13 @@ This section records source-code references. It supplements, but does not replac
 | Layer | Status | Matches |
 |---|:---:|---:|
 | Engine | ✅ Found | 47 |
-| Runtime | ✅ Found | 24 |
+| Runtime | ✅ Found | 26 |
 | Executive | ❌ Not found | 0 |
 | Projection | ✅ Found | 14 |
 | UI | ✅ Found | 32 |
 | API | ❌ Not found | 0 |
 | Simulation | ✅ Found | 4 |
-| Benchmark | ✅ Found | 18 |
+| Benchmark | ✅ Found | 19 |
 | Other | ✅ Found | 22 |
 
 ### Detailed Matches
@@ -292,57 +294,64 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/runtime/evolveOrganizationRuntime.ts`
 
-- Line 47 · **import** · matched `buildInvestigationOpportunities`
+- Line 48 · **import** · matched `buildInvestigationOpportunities`
   - `import { buildInvestigationOpportunities } from "../model/investigation/buildInvestigationOpportunities";`
-- Line 48 · **import** · matched `investigationOpportunities`
+- Line 49 · **import** · matched `investigationOpportunities`
   - `import { refineInvestigationOpportunities } from "../model/investigation/refineInvestigationOpportunities";`
-- Line 133 · **type** · matched `investigationOpportunities`
+- Line 193 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities?: any[];`
-- Line 839 · **unknown** · matched `buildInvestigationOpportunities`
+- Line 934 · **unknown** · matched `buildInvestigationOpportunities`
   - `buildInvestigationOpportunities({`
-- Line 845 · **unknown** · matched `investigationOpportunities`
+- Line 940 · **unknown** · matched `investigationOpportunities`
   - `previousInvestigationOpportunities:`
-- Line 846 · **read** · matched `investigationOpportunities`
+- Line 941 · **read** · matched `investigationOpportunities`
   - `memory.investigationOpportunities,`
-- Line 852 · **unknown** · matched `investigationOpportunities`
+- Line 947 · **unknown** · matched `investigationOpportunities`
   - `const initialInvestigationOpportunities =`
-- Line 855 · **definition** · matched `investigationOpportunities`
+- Line 950 · **definition** · matched `investigationOpportunities`
   - `let investigationOpportunities =`
-- Line 856 · **unknown** · matched `investigationOpportunities`
+- Line 951 · **unknown** · matched `investigationOpportunities`
   - `initialInvestigationOpportunities;`
-- Line 894 · **unknown** · matched `investigationOpportunities`
+- Line 989 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 915 · **unknown** · matched `investigationOpportunities`
+- Line 1010 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1182 · **type** · matched `investigationOpportunities`
+- Line 1282 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities:`
-- Line 1183 · **unknown** · matched `investigationOpportunities`
+- Line 1283 · **unknown** · matched `investigationOpportunities`
   - `initialInvestigationOpportunities,`
-- Line 1189 · **assignment** · matched `investigationOpportunities`
+- Line 1289 · **assignment** · matched `investigationOpportunities`
   - `investigationOpportunities =`
-- Line 1190 · **unknown** · matched `investigationOpportunities`
+- Line 1290 · **unknown** · matched `investigationOpportunities`
   - `refineInvestigationOpportunities({`
-- Line 1192 · **unknown** · matched `investigationOpportunities`
+- Line 1292 · **unknown** · matched `investigationOpportunities`
   - `initialInvestigationOpportunities,`
-- Line 1203 · **unknown** · matched `investigationOpportunities`
+- Line 1303 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1221 · **unknown** · matched `investigationOpportunities`
+- Line 1321 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1410 · **unknown** · matched `investigationOpportunities`
+- Line 1510 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1468 · **unknown** · matched `investigationOpportunities`
+- Line 1569 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1551 · **unknown** · matched `investigationOpportunities`
+- Line 1652 · **unknown** · matched `investigationOpportunities`
   - `investigationOpportunities,`
-- Line 1811 · **type** · matched `investigationOpportunities`
+- Line 1912 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities:`
-- Line 1812 · **unknown** · matched `investigationOpportunities`
+- Line 1913 · **unknown** · matched `investigationOpportunities`
   - `typeof investigationOpportunities;`
 
 ##### `components/product-shell/data/buildRuntimeOrganizationView.ts`
 
 - Line 187 · **read** · matched `investigationOpportunities`
   - `const investigations = records(memory.investigationOpportunities);`
+
+##### `scripts/development/reconstructNorthstarRuntime.ts`
+
+- Line 38 · **type** · matched `investigationOpportunities`
+  - `investigationOpportunities?: unknown[];`
+- Line 53 · **read** · matched `investigationOpportunities`
+  - `investigations: memory.investigationOpportunities?.length ?? 0,`
 
 #### Projection
 
@@ -553,6 +562,11 @@ This section records source-code references. It supplements, but does not replac
   - `investigationOpportunities?: unknown;`
 - Line 101 · **type** · matched `investigationOpportunities`
   - `investigationOpportunities: memory.investigationOpportunities,`
+
+##### `engine/benchmark/multi-role-scoped-understanding-governance-001/runBenchmark.ts`
+
+- Line 52 · **unknown** · matched `CAP-SELF-002`
+  - `return {organization:{id:ORGANIZATION_ID,canonicalModelCount:1,scopes},roles,corpus:normalized,scenarios,utilityRubric,projections,direct,derived,revocation,crossScope,crossOrganization,metrics,contribution,decisions,adversarial,utility,gaps,canonicalOwners:["CAP-PER-001","CAP-UND-006","canonical Understanding disclosure","authorized Organizational Understanding projection","CAP-LRN-002","CAP-SELF-002","CAP-DEC-001..007","Product Objective and Optimization Context","organization authorization and isolation"]};`
 
 ##### `engine/benchmark/stress/runEngineStressTest.ts`
 

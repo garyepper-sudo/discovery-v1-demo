@@ -1,5 +1,25 @@
 # Discovery Next Chat
 
+## Canonical next task after Chief Alpha and thin-waist freeze
+
+Owner canon commit `441a719` completes the Product and architecture planning
+decision. The next task is **Discovery Chief V1 Recurring-Meeting Alpha Minimum
+Vertical Slice — Exact Implementation Planning 001**, planning only.
+
+That successor must specify the exact user-visible slice, existing owners to
+compose, likely repository paths, phases, acceptance criteria, negative
+controls, privacy and non-disclosure tests, deterministic two-cycle validation,
+stop conditions, and implementation prohibitions. It must not implement Chief,
+begin Alpha Readiness, create a new owner, centralize domain implementations,
+run another compression phase, deploy, access Production or customer data, or
+call connectors.
+
+The Alpha wedge is one user, one recurring consequential meeting, and one
+material `ProductQuestion`; Chief is visible, Counsel embedded, Operator
+bounded, and Scout mostly deferred. No Alpha-blocking thin-waist foundation
+remains. Broad architecture compression is deferred, and the rejected shared-
+process candidate is not promoted.
+
 ## Canonical successor after architecture-compression roadmap reconciliation
 
 The baseline is `eb8923bcc9001ee6891463b94a8e629aedb184d0`.

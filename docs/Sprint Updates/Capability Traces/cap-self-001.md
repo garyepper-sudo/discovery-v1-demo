@@ -1,6 +1,6 @@
 # Capability Trace — Theory Validation
 
-Generated: 2026-07-31T20:42:05.843Z
+Generated: 2026-08-13T21:50:27.311Z
 
 ## Verified Architecture
 
@@ -246,23 +246,23 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/model/judgment/organizationalJudgment.ts`
 
-- Line 183 · **unknown** · matched `theoryValidation`
+- Line 209 · **unknown** · matched `theoryValidation`
   - `export type TheoryValidationEvidence = {`
-- Line 196 · **unknown** · matched `theoryValidation`
+- Line 222 · **unknown** · matched `theoryValidation`
   - `export type TheoryValidation = {`
-- Line 201 · **unknown** · matched `theoryValidation`
+- Line 227 · **unknown** · matched `theoryValidation`
   - `supportingMechanisms: TheoryValidationEvidence[];`
-- Line 202 · **unknown** · matched `theoryValidation`
+- Line 228 · **unknown** · matched `theoryValidation`
   - `supportingOrganizationalBeliefs: TheoryValidationEvidence[];`
-- Line 206 · **unknown** · matched `theoryValidation`
+- Line 232 · **unknown** · matched `theoryValidation`
   - `contradictoryOrWeakeningEvidence: TheoryValidationEvidence[];`
-- Line 277 · **unknown** · matched `theoryValidation`
+- Line 303 · **unknown** · matched `theoryValidation`
   - `supportingMechanisms: TheoryValidationEvidence[];`
-- Line 282 · **unknown** · matched `theoryValidation`
+- Line 308 · **unknown** · matched `theoryValidation`
   - `supportingOrganizationalBeliefs: TheoryValidationEvidence[];`
-- Line 292 · **unknown** · matched `theoryValidation`
+- Line 318 · **unknown** · matched `theoryValidation`
   - `contradictoryOrWeakeningEvidence: TheoryValidationEvidence[];`
-- Line 381 · **type** · matched `theoryValidation`
+- Line 407 · **type** · matched `theoryValidation`
   - `theoryValidation?: TheoryValidation;`
 
 ##### `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`

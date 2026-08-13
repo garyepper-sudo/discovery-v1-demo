@@ -1,7 +1,7 @@
 {
   "metadata": {
     "schemaVersion": 1,
-    "generatedAt": "2026-08-01T19:11:26.087Z",
+    "generatedAt": "2026-08-13T21:50:28.917Z",
     "generator": "scripts/cognition/generateArchitectureState.mjs",
     "sourceOfTruthOrder": [
       "Verified source code",
@@ -13,11 +13,11 @@
     ]
   },
   "project": {
-    "currentMilestone": "Product Workflow Frontend Readiness is complete and classified\nA — PRODUCT WORKFLOW FRONTEND READINESS VALIDATED. GAP-A-005 is closed and\nrecorded as `GAP-R-011` after a real canonical local-operation replay.",
-    "currentPhase": "Frontend-ready Product workflow handoff. The backend architecture required for\nUI/UX design is complete; frontend implementation has not started.",
-    "currentObjective": "Prepare the canonical Product Workflow contract and deterministic state system\nfor a dedicated UI/UX design sprint without changing Product meaning or\nexecution authority.",
+    "currentMilestone": "The Living Organization Google Drive corpus integration is complete,\nlive-validated, and integrated into `origin/main`. The retained sandbox uses\norganization `sandbox-northstar-implementation-services-001`, six semantic\nbatches, sixteen documents, and five negative controls.",
+    "currentPhase": "All six multi-role benchmark gaps have focused production-owner traceability.\nOne canonical model serves five permission-safe role projections through one\nscoped Product adapter. The first fixture-backed frontend slice is implemented.\nCross-investigation Evidence/admission identity is reviewed at v2: local\nEvidence labels remain investigation-local, canonical attribution and Runtime\nsupport ancestry are unambiguous, valid normalized-content deduplication and\nmulti-source provenance remain intact, and ambiguous v1 ancestry fails closed.\nThe canonical retained Northstar Runtime is the newly reconstructed revision\n`824a4c2e3f86cf000e3f8442d2bf38a97b4281e545959a49bf2bc6f41bb8b047`.\nCanonical replay is byte-deterministic across fresh processes, and the\nversioned reconstruction-input snapshot is independently reproducible from\nthe repository corpus and retained local metadata.",
+    "currentObjective": "Preserve the canonically closed bounded development-only, organization-wide\nLeadership Conversation Prepare/Capture slice. The\nProduct thesis, laws, initial\nuser, Northstar wedge, loop, ownership, persistence classification, UX stages,\nhuman-review boundary, acceptance scenario, metrics, and exclusions are\ncanonical under `DEC-PROD-041` and implemented under `DEC-PROD-044`.\n\nMaterial role differentiation remains OPEN. Administrative persistence,\naudience grants, forward lineage, nested disclosure, safe abstraction, live\nintegration, route promotion, and Production deployment remain separate\nparallel governance work.",
     "currentSprint": null,
-    "nextPriority": "DISCOVERY PRODUCT WORKFLOW UI/UX DESIGN 001\n\nThe sprint may design hierarchy, labels, layout, navigation, progressive\ndisclosure, interactions, visual treatment, accessibility, and responsive\nbehavior. It must render Product-owned contracts and must not infer workflow\neligibility, interpret Runtime or cognition, execute source logic, or alter\ncanonical semantics.",
+    "nextPriority": "DISCOVERY GOVERNED COGNITION NON-DISCLOSURE FOUNDATION AND ADVERSARIAL\nBENCHMARK 001 is the immediate successor. Its initial mode is architecture\nreconciliation, owner audit, threat model, and benchmark design only.\n`GAP-A-012` remains open for actual promotion through the existing Executive\nDecision pipeline; generic Outcome routing remains deferred.",
     "sourceDocuments": [
       "DISCOVERY_SNAPSHOT.md",
       "ENGINE_CAPABILITY_AUDIT.md",
@@ -47,6 +47,7 @@
       "DISCOVERY_ALPHA_GOVERNANCE_IDENTITY_FOUNDATION_COMPLETE.md",
       "DISCOVERY_PRODUCT_COMMUNICATION_FOUNDATION_COMPLETE.md",
       "DISCOVERY_PROJECTION_FOUNDATION_COMPLETE.md",
+      "DUPLICATE_EVIDENCE_REPLAY_AWARE_COGNITION_ENTRY.md",
       "DURABLE_ALPHA_ACCESS_AND_AUDIT_STORAGE_DECISION.md",
       "DURABLE_ALPHA_POSTGRESQL_STORAGE_FOUNDATION.md",
       "EVIDENCE_INDEPENDENCE_BENCHMARK.md",

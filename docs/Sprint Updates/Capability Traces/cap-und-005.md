@@ -1,6 +1,6 @@
 # Capability Trace — Executive Assessment
 
-Generated: 2026-07-31T20:42:01.298Z
+Generated: 2026-08-13T21:50:22.181Z
 
 ## Verified Architecture
 
@@ -281,11 +281,11 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/model/judgment/organizationalJudgment.ts`
 
-- Line 337 · **unknown** · matched `Executive Assessment`
-  - `* Concise summary of the Executive Assessment.`
-- Line 350 · **unknown** · matched `Executive Assessment`
-  - `* Executive Assessment.`
 - Line 363 · **unknown** · matched `Executive Assessment`
+  - `* Concise summary of the Executive Assessment.`
+- Line 376 · **unknown** · matched `Executive Assessment`
+  - `* Executive Assessment.`
+- Line 389 · **unknown** · matched `Executive Assessment`
   - `* Executive Assessment consumes this object but does not`
 
 ##### `engine/v3/model/learning/computeOrganizationalLearningProfile.ts`
@@ -454,7 +454,7 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/types.ts`
 
-- Line 563 · **type** · matched `executiveAssessment`
+- Line 564 · **type** · matched `executiveAssessment`
   - `executiveAssessment?: OrganizationalAssessment;`
 
 ##### `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
@@ -493,52 +493,52 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/runtime/evolveOrganizationRuntime.ts`
 
-- Line 15 · **import** · matched `executiveAssessment`
+- Line 16 · **import** · matched `executiveAssessment`
   - `import { buildExecutiveAssessment } from "../model/judgment/buildExecutiveAssessment";`
-- Line 108 · **type** · matched `executiveAssessment`
+- Line 168 · **type** · matched `executiveAssessment`
   - `executiveAssessment?: any;`
-- Line 906 · **definition** · matched `executiveAssessment`
+- Line 1001 · **definition** · matched `executiveAssessment`
   - `const executiveAssessment = buildExecutiveAssessment({`
-- Line 920 · **unknown** · matched `executiveAssessment`
+- Line 1016 · **unknown** · matched `executiveAssessment`
   - `const runtimeWithExecutiveAssessment:`
-- Line 926 · **unknown** · matched `executiveAssessment`
+- Line 1022 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 941 · **unknown** · matched `executiveAssessment`
+- Line 1037 · **unknown** · matched `executiveAssessment`
   - `runtimeWithExecutiveAssessment,`
-- Line 948 · **unknown** · matched `executiveAssessment`
-  - `executiveAssessment,`
-- Line 972 · **unknown** · matched `executive-assessment`
-  - `understanding.source === "executive-assessment",`
-- Line 1043 · **unknown** · matched `Executive Assessment`
-  - `"Executive Assessment",`
 - Line 1044 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 1097 · **unknown** · matched `executiveAssessment`
+- Line 1068 · **unknown** · matched `executive-assessment`
+  - `understanding.source === "executive-assessment",`
+- Line 1143 · **unknown** · matched `Executive Assessment`
+  - `"Executive Assessment",`
+- Line 1144 · **unknown** · matched `executiveAssessment`
+  - `executiveAssessment,`
+- Line 1197 · **unknown** · matched `executiveAssessment`
   - `executiveAssessmentConfidence:`
-- Line 1098 · **unknown** · matched `executiveAssessment`
+- Line 1198 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment.confidence,`
-- Line 1199 · **unknown** · matched `executiveAssessment`
+- Line 1299 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 1392 · **unknown** · matched `executiveAssessment`
+- Line 1492 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 1454 · **unknown** · matched `executiveAssessment`
+- Line 1555 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment,`
-- Line 1668 · **unknown** · matched `executiveAssessment`
+- Line 1769 · **unknown** · matched `executiveAssessment`
   - `executiveAssessmentConfidence:`
-- Line 1669 · **unknown** · matched `executiveAssessment`
+- Line 1770 · **unknown** · matched `executiveAssessment`
   - `executiveAssessment.confidence,`
-- Line 1715 · **type** · matched `executiveAssessment`
+- Line 1816 · **type** · matched `executiveAssessment`
   - `executiveAssessment:`
-- Line 1716 · **unknown** · matched `executiveAssessment`
+- Line 1817 · **unknown** · matched `executiveAssessment`
   - `typeof executiveAssessment;`
 
 ##### `engine/v3/runtime/organizationRuntime.ts`
 
-- Line 197 · **unknown** · matched `Executive Assessment`
+- Line 203 · **unknown** · matched `Executive Assessment`
   - `* Executive Assessment.`
-- Line 206 · **unknown** · matched `Executive Assessment`
+- Line 212 · **unknown** · matched `Executive Assessment`
   - `* Executive Assessment, Executive Recommendation, organizational state,`
-- Line 376 · **unknown** · matched `Executive Assessment`
+- Line 381 · **unknown** · matched `Executive Assessment`
   - `* No canonical recommendation exists until Executive Assessment`
 
 ##### `engine/v3/runtime/organizationalUnderstandingState.ts`

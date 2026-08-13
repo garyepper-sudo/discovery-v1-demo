@@ -1,5 +1,28 @@
 # Discovery Project State
 
+## Chief Alpha composition and thin-waist freeze canonized
+
+Owner canon commit `441a719` establishes the first Alpha Product wedge: one
+authorized user, one recurring consequential meeting, one material
+`ProductQuestion`, a three-minute readiness brief, private working information,
+intentional governed contribution, two-minute closure, and a mandatory improved
+second cycle. Chief is an application over existing Organizational
+Understanding and Product owners, not a cognition system, memory, truth store,
+or governance owner. Counsel is embedded, Operator bounded, and Scout mostly
+deferred.
+
+The nine-invariant thin waist is frozen without requiring shared-code
+promotion or migration. Authorization/current access, non-disclosure, and
+body-safe projection are complete foundations that Chief must compose; no new
+Alpha-blocking foundation exists. The shared governed-process shadow benchmark
+is closed without permanent promotion. Broad compression remains deferred
+through initial design-partner Alpha.
+
+The exact next task is **Discovery Chief V1 Recurring-Meeting Alpha Minimum
+Vertical Slice — Exact Implementation Planning 001**, planning only. No Chief
+implementation, Alpha launch, deployment, Production access, or connector
+activity is claimed by this state update.
+
 ## Architecture-compression roadmap state
 
 At canonical baseline `eb8923bcc9001ee6891463b94a8e629aedb184d0`:

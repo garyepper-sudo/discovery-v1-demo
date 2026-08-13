@@ -1,5 +1,31 @@
 # Discovery Startup Snapshot
 
+## Chief Alpha and thin-waist canonical checkpoint
+
+Owner canon commit `441a719` fixes the first Alpha as one authorized user
+preparing for one recurring consequential meeting around one material
+`ProductQuestion`. Chief is the visible Product experience; Counsel is
+embedded, Operator is bounded to continuity and follow-through, and Scout is
+mostly deferred. The experience targets a three-minute readiness brief,
+private-by-default working information, intentional governed contribution,
+approximately two-minute closure, and a mandatory second cycle that is better
+because authorized prior context was retained.
+
+The thin waist is frozen as nine feature-independent mechanical invariants:
+organization confinement/addressability; authorization and current access
+before protected loading; absent/foreign/denied non-disclosure; permission-
+aware body-safe projection; owner-issued identity/revision/digest/lineage and
+immutable provenance; atomic expected-revision persistence; replay/collision/
+deterministic reconstruction; governed-operation identity and immutable result
+receipts; and real-process concurrency/restart/residue validation. Acceptance
+of an invariant does not mandate shared code or owner migration. No Alpha-
+blocking foundation remains, and broad compression is deferred through initial
+design-partner Alpha.
+
+The next bounded task is planning only: **Discovery Chief V1 Recurring-Meeting
+Alpha Minimum Vertical Slice — Exact Implementation Planning 001**. Chief has
+not been implemented, Alpha is not launched, and no deployment is implied.
+
 ## Architecture compression and Alpha freeze snapshot
 
 Canonical baseline: `eb8923bcc9001ee6891463b94a8e629aedb184d0`.

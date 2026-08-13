@@ -1,6 +1,6 @@
 # Capability Trace — Executive Understanding Synthesis
 
-Generated: 2026-08-01T19:11:22.422Z
+Generated: 2026-08-13T21:50:24.899Z
 
 ## Verified Architecture
 
@@ -84,6 +84,7 @@ Review these files to determine whether they should be registered as consumers, 
 - `components/product-shell/data/composeActivatedYourOrganization.ts`
 - `components/product-shell/data/loadActivatedYourOrganization.ts`
 - `components/results/SemanticConceptInspector.tsx`
+- `components/role-aware/RoleAwareExperience.tsx`
 - `engine/benchmark/auditUnderstandingLayers.ts`
 - `engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/BENCHMARK_REPORT.md`
 - `engine/benchmark/candidate-enriched-mechanism-shadow-experiment-001/README.md`
@@ -164,10 +165,13 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/benchmark/judgment/mechanismEvidencePropagation001.ts`
 - `engine/benchmark/localized-nonlinear-cognition-experiment-001/RESULTS.json`
 - `engine/benchmark/localized-nonlinear-cognition-experiment-001/productionPathAudit.ts`
+- `engine/benchmark/multi-role-scoped-understanding-governance-001/runBenchmark.ts`
 - `engine/benchmark/operating-model-evolution-lab/productionReplay.ts`
 - `engine/benchmark/organizational-intelligence-lab/runOrganizationalIntelligenceLab.ts`
 - `engine/benchmark/organizationalUnderstandingScorer.ts`
 - `engine/benchmark/product-communication/structuredProductCommunicationShadow.ts`
+- `engine/benchmark/product-governance/canonical-understanding-recipient-scope-nested-disclosure-001/runBenchmark.ts`
+- `engine/benchmark/product-governance/recipient-audience-scope-governance-contract-001/runBenchmark.ts`
 - `engine/benchmark/research/ORGANIZATIONAL_UNDERSTANDING_RESEARCH_FRAMEWORK.md`
 - `engine/benchmark/research/README.md`
 - `engine/benchmark/research/localized-nonlinear-cognition-adapter/RESULT.json`
@@ -182,6 +186,10 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/v3/executive/buildExecutiveChangeSummary.ts`
 - `engine/v3/executive/executiveLearningSummary.ts`
 - `engine/v3/governance/alphaAllowlistDisclosureProducer.ts`
+- `engine/v3/governance/authorizedMetricLineage.ts`
+- `engine/v3/governance/fieldAudienceRequirement.ts`
+- `engine/v3/governance/recipientAudienceScope.ts`
+- `engine/v3/governance/scopedGovernanceContext.ts`
 - `engine/v3/investigation/runOrganizationInvestigation.ts`
 - `engine/v3/model/judgment/buildExecutiveAssessment.ts`
 - `engine/v3/model/judgment/buildOrganizationalUnderstanding.ts`
@@ -197,28 +205,57 @@ Review these files to determine whether they should be registered as consumers, 
 - `engine/v3/runtime/updateOrganizationalUnderstandingState.ts`
 - `engine/v3/scenarios/buildExecutiveDecisionContext.ts`
 - `engine/v3/understanding/buildUnadjudicatedExplanationUnderstandingShadow.ts`
+- `engine/v3/understanding/canonicalOrganizationalUnderstandingRevisionService.ts`
 - `engine/v3/understanding/canonicalUnderstanding.ts`
 - `engine/v3/understanding/discloseCanonicalOrganizationalUnderstanding.ts`
+- `engine/v3/understanding/produceCanonicalUnderstandingAudienceLineage.ts`
 - `engine/v3/understanding/rankOrganizationalUnderstanding.ts`
+- `engine/v3/understanding/resolveCanonicalOrganizationalUnderstandingChange.ts`
 - `scripts/cognition/generateArchitectureHandoff.mjs`
 - `scripts/cognition/generateArchitectureState.mjs`
 - `scripts/cognition/reviewCognitiveDomain.mjs`
+- `scripts/development/reconstructNorthstarRuntime.ts`
+- `scripts/product/buildGoogleDriveCumulativeParityDiagnostic.ts`
 - `scripts/product/capabilitySurvivalManifest.ts`
+- `scripts/product/historicalCheckpointLifecycleActualOwnerAcceptanceCoordinator.ts`
 - `scripts/product/validateAlphaAllowlistDisclosureProducerShadow.ts`
 - `scripts/product/validateAlphaYourOrganizationActivation.ts`
 - `scripts/product/validateAskExperience.ts`
+- `scripts/product/validateAuthorizedMetricLineageAndScopedProjection.ts`
+- `scripts/product/validateCanonicalEvidenceContributionResult.ts`
+- `scripts/product/validateCanonicalEvidenceContributionResultReplay.ts`
+- `scripts/product/validateCanonicalExplanationGovernanceLineage.ts`
+- `scripts/product/validateCanonicalMaterialEvidenceOrigin.ts`
+- `scripts/product/validateCanonicalMaterialEvidenceOriginFreshProcess.ts`
+- `scripts/product/validateCanonicalOrganizationalUnderstandingChangeResult.ts`
+- `scripts/product/validateCanonicalOrganizationalUnderstandingChangeResultFreshProcess.ts`
 - `scripts/product/validateCanonicalProductComposition.ts`
+- `scripts/product/validateCanonicalScopeLineage.ts`
+- `scripts/product/validateCanonicalUnderstandingAudienceLineageForwardProducer.ts`
+- `scripts/product/validateCanonicalUnderstandingConfidenceRevision.ts`
+- `scripts/product/validateCanonicalUnderstandingConfidenceRevisionFreshProcess.ts`
+- `scripts/product/validateCanonicalUnderstandingCurrentEligibility.ts`
 - `scripts/product/validateCapabilitySurvival.ts`
+- `scripts/product/validateCrossInvestigationEvidenceAdmissionIdentity.ts`
+- `scripts/product/validateCrossOperationCanonicalEvidenceAncestryFreshProcess.ts`
+- `scripts/product/validateDuplicateEvidenceReplayAwareCognitionEntry.ts`
+- `scripts/product/validateDuplicateEvidenceReplayAwareCognitionFreshProcessRole.ts`
 - `scripts/product/validateEvidenceRoles.ts`
 - `scripts/product/validateLeadCoherentUnderstanding.ts`
+- `scripts/product/validateLeadershipConversationActualOwnerRouting.ts`
+- `scripts/product/validateLeadershipConversationReplay.ts`
 - `scripts/product/validateLivingInteractionLoop.ts`
+- `scripts/product/validateMultiRoleFoundationalGovernanceContracts.ts`
 - `scripts/product/validateOnboardingEvidenceExperience.ts`
 - `scripts/product/validateOnboardingInvestigationIdempotency.ts`
 - `scripts/product/validateOnboardingToAlphaReplay.ts`
 - `scripts/product/validateOrganizationExperience.ts`
 - `scripts/product/validateOrganizationalUnderstandingProjectionShadow.ts`
+- `scripts/product/validateProductArtifactAuthorizationBeforeBodyRead.ts`
 - `scripts/product/validateProductUnderstandingTranslation.ts`
 - `scripts/product/validateResearchExperience.ts`
+- `scripts/product/validateRuntimeToScopedProductSource.ts`
+- `scripts/product/validateScopedDecisionCalibrationProjection.ts`
 - `scripts/product/validateTruthfulUtility.ts`
 - `scripts/product/validateUnifiedExecutiveWorkspace.ts`
 - `scripts/product/validateWhatChangedAndWhy.ts`
@@ -275,15 +312,15 @@ This section records source-code references. It supplements, but does not replac
 
 | Layer | Status | Matches |
 |---|:---:|---:|
-| Engine | ✅ Found | 121 |
-| Runtime | ✅ Found | 105 |
+| Engine | ✅ Found | 158 |
+| Runtime | ✅ Found | 107 |
 | Executive | ✅ Found | 12 |
-| Projection | ✅ Found | 76 |
-| UI | ✅ Found | 25 |
+| Projection | ✅ Found | 110 |
+| UI | ✅ Found | 26 |
 | API | ✅ Found | 1 |
 | Simulation | ✅ Found | 7 |
-| Benchmark | ✅ Found | 328 |
-| Other | ✅ Found | 99 |
+| Benchmark | ✅ Found | 340 |
+| Other | ✅ Found | 188 |
 
 ### Detailed Matches
 
@@ -323,16 +360,56 @@ This section records source-code references. It supplements, but does not replac
   - `type OrganizationalUnderstandingDisclosureResult,`
 - Line 11 · **import** · matched `OrganizationalUnderstanding`
   - `} from "../understanding/discloseCanonicalOrganizationalUnderstanding";`
-- Line 145 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 147 · **unknown** · matched `OrganizationalUnderstanding`
   - `decision: OrganizationalUnderstandingDisclosureDecision;`
-- Line 146 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 148 · **unknown** · matched `OrganizationalUnderstanding`
   - `disclosure: OrganizationalUnderstandingDisclosureResult;`
-- Line 485 · **unknown** · matched `organizational-understanding`
+- Line 494 · **unknown** · matched `organizational-understanding`
   - `"canonical-organizational-understanding" &&`
-- Line 535 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 544 · **unknown** · matched `OrganizationalUnderstanding`
   - `const decision: OrganizationalUnderstandingDisclosureDecision = {`
-- Line 543 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 552 · **unknown** · matched `OrganizationalUnderstanding`
   - `const disclosure = discloseCanonicalOrganizationalUnderstanding({`
+
+##### `engine/v3/governance/authorizedMetricLineage.ts`
+
+- Line 8 · **import** · matched `OrganizationalUnderstanding`
+  - `} from "../understanding/scopedOrganizationalUnderstandingDisclosure";`
+- Line 18 · **unknown** · matched `organizational-understanding`
+  - `\| "organizational-understanding.coherence"`
+- Line 23 · **unknown** · matched `organizational-understanding`
+  - `\| "organizational-understanding.confidence"`
+- Line 24 · **unknown** · matched `organizational-understanding`
+  - `\| "organizational-understanding.freshness"`
+- Line 25 · **unknown** · matched `organizational-understanding`
+  - `\| "organizational-understanding.health"`
+- Line 34 · **unknown** · matched `organizational-understanding`
+  - `\| "organizational-understanding"`
+- Line 115 · **unknown** · matched `organizational-understanding`
+  - `"organizational-understanding.coherence": {`
+- Line 116 · **unknown** · matched `organizational-understanding`
+  - `producerRef: "update-organizational-understanding-state",`
+- Line 118 · **unknown** · matched `organizational-understanding`
+  - `calculationMethod: "canonical-organizational-understanding-health-coherence",`
+
+##### `engine/v3/governance/fieldAudienceRequirement.ts`
+
+- Line 8 · **unknown** · matched `organizational-understanding`
+  - `export const FIELD_AUDIENCE_RESOURCE = "canonical-organizational-understanding" as const;`
+- Line 10 · **unknown** · matched `organizational-understanding`
+  - `export const FIELD_AUDIENCE_PURPOSE = "organizational-understanding" as const;`
+
+##### `engine/v3/governance/recipientAudienceScope.ts`
+
+- Line 7 · **unknown** · matched `organizational-understanding`
+  - `export const RECIPIENT_AUDIENCE_RESOURCE_FAMILY = "canonical-organizational-understanding" as const;`
+- Line 9 · **unknown** · matched `organizational-understanding`
+  - `export type RecipientAudiencePurpose = "organizational-understanding";`
+
+##### `engine/v3/governance/scopedGovernanceContext.ts`
+
+- Line 6 · **type** · matched `organizational-understanding`
+  - `export type ScopedGovernanceOperation = "understanding:disclose-direct" \| "understanding:disclose-derived" \| "understanding:read-historical" \| "understanding:read-historical-metadata" \| "organizational-understanding:revise-confidence-uncertainty" \| "contribution:submit" \| "contribution:request-evidence-candidacy" \| "source-content:write" \| "source-content:read-for-proposal" \| "source-content:read-for-evidence-admission" \| "source-content:reset-development" \| "source-binding:register-local" \| "source-binding:resolve-current" \| "source-binding:revise-availability" \| "product-artifact:read" \| "product-artifact:reuse" \| "product-artifact:compare" \| "product-artifact:prepare-again" \| "product-artifact:create-successor" \| "product-workspace:read" \| "leadership-history:list" \| "leadership-history:read" \| "executive-history-access:administer" \| "executive-history-access:revoke" \| "executive-history-access:restore" \| "historical-checkpoint-lifecycle-link:publish" \| "historical-checkpoint-lifecycle-link:list" \| "historical-checkpoint-lifecycle-link:read";`
 
 ##### `engine/v3/investigation/runOrganizationInvestigation.ts`
 
@@ -340,9 +417,9 @@ This section records source-code references. It supplements, but does not replac
   - `evolveOrganizationRuntime,`
 - Line 15 · **import** · matched `evolveOrganizationRuntime`
   - `} from "../runtime/evolveOrganizationRuntime";`
-- Line 175 · **unknown** · matched `evolveOrganizationRuntime`
+- Line 194 · **unknown** · matched `evolveOrganizationRuntime`
   - `evolveOrganizationRuntime({`
-- Line 210 · **unknown** · matched `evolveOrganizationRuntime`
+- Line 230 · **unknown** · matched `evolveOrganizationRuntime`
   - `* evolveOrganizationRuntime() already advances investigationCount.`
 
 ##### `engine/v3/model/judgment/buildExecutiveAssessment.ts`
@@ -375,23 +452,23 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/model/judgment/organizationalJudgment.ts`
 
-- Line 216 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 242 · **unknown** · matched `OrganizationalUnderstanding`
   - `export type OrganizationalUnderstandingState = {`
-- Line 222 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 248 · **unknown** · matched `OrganizationalUnderstanding`
   - `export type OrganizationalUnderstandingCondition = {`
-- Line 230 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 256 · **unknown** · matched `OrganizationalUnderstanding`
   - `export type OrganizationalUnderstandingInvestigation = {`
-- Line 239 · **assignment** · matched `OrganizationalUnderstanding`
+- Line 265 · **assignment** · matched `OrganizationalUnderstanding`
   - `export type OrganizationalUnderstanding = {`
-- Line 260 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 286 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalState: OrganizationalUnderstandingState \| null;`
-- Line 266 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 292 · **unknown** · matched `OrganizationalUnderstanding`
   - `dominantCondition: OrganizationalUnderstandingCondition \| null;`
-- Line 324 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 350 · **unknown** · matched `OrganizationalUnderstanding`
   - `nextInvestigation: OrganizationalUnderstandingInvestigation \| null;`
-- Line 357 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 383 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstanding: OrganizationalUnderstanding;`
-- Line 372 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 398 · **unknown** · matched `OrganizationalUnderstanding`
   - `* consumers migrate to organizationalUnderstanding.`
 
 ##### `engine/v3/model/learning/computeOrganizationalLearningProfile.ts`
@@ -427,11 +504,11 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 29 · **unknown** · matched `organizational-understanding`
   - `authorityOwner: "canonical-organizational-understanding";`
-- Line 171 · **definition** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+- Line 197 · **definition** · matched `buildCanonicalUnderstandingCompatibilityShadow`
   - `export function buildCanonicalUnderstandingCompatibilityShadow(input: {`
-- Line 238 · **type** · matched `organizational-understanding`
+- Line 264 · **type** · matched `organizational-understanding`
   - `const compositionId = \`organizational-understanding:${encodedIdentity([`
-- Line 266 · **unknown** · matched `organizational-understanding`
+- Line 292 · **unknown** · matched `organizational-understanding`
   - `"canonical-organizational-understanding" as const,`
 
 ##### `engine/v3/understanding/buildExecutiveUnderstandingCandidates.ts`
@@ -449,6 +526,21 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 164 · **unknown** · matched `CAP-UND-006`
   - `* Read-only Phase 3 shadow at CAP-UND-006. The result is deliberately`
+
+##### `engine/v3/understanding/canonicalOrganizationalUnderstandingRevisionService.ts`
+
+- Line 8 · **import** · matched `OrganizationalUnderstanding`
+  - `import type { CanonicalUnderstandingRevisionOperationRecordV1 } from "../runtime/organizationalUnderstandingState";`
+- Line 12 · **import** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `} from "./buildCanonicalUnderstandingCompatibilityShadow";`
+- Line 15 · **type** · matched `organizational-understanding`
+  - `"organizational-understanding:revise-confidence-uncertainty" as const;`
+- Line 84 · **unknown** · matched `OrganizationalUnderstanding`
+  - `export class CanonicalOrganizationalUnderstandingRevisionService {`
+- Line 162 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const state = stored.runtime.memory.organizationalUnderstandingState;`
+- Line 239 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const nextState = runtime.memory.organizationalUnderstandingState;`
 
 ##### `engine/v3/understanding/canonicalUnderstanding.ts`
 
@@ -505,6 +597,17 @@ This section records source-code references. It supplements, but does not replac
 - Line 53 · **unknown** · matched `OrganizationalUnderstanding`
   - `}): OrganizationalUnderstandingDisclosureResult {`
 
+##### `engine/v3/understanding/produceCanonicalUnderstandingAudienceLineage.ts`
+
+- Line 19 · **import** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `import type { CanonicalUnderstandingComposition } from "./buildCanonicalUnderstandingCompatibilityShadow";`
+- Line 63 · **unknown** · matched `organizational-understanding`
+  - `purpose: "organizational-understanding";`
+- Line 123 · **unknown** · matched `organizational-understanding`
+  - `const unsigned={kind:"canonical-understanding-audience-lineage-record" as const,schemaVersion:CANONICAL_UNDERSTANDING_AUDIENCE_LINEAGE_VERSION,producerVersion:CANONICAL_UNDERSTANDING_AUDIENCE_LINEAGE_PRODUCER_VERSION,lineageId,revisionId,...normalized,resourceFamily:RECIPIENT_AUDIENCE_RESOURCE_FAMILY,operation:"receive" as const,purpose:"organizational-understanding" as const};`
+- Line 130 · **unknown** · matched `organizational-understanding`
+  - `if(record.resourceFamily!==RECIPIENT_AUDIENCE_RESOURCE_FAMILY\|\|record.operation!=="receive"\|\|record.purpose!=="organizational-understanding") throw new Error("Invalid audience-lineage resource semantics.");`
+
 ##### `engine/v3/understanding/rankOrganizationalUnderstanding.ts`
 
 - Line 2 · **unknown** · matched `OrganizationalUnderstanding`
@@ -535,6 +638,35 @@ This section records source-code references. It supplements, but does not replac
   - `T extends OrganizationalUnderstandingItem,`
 - Line 178 · **unknown** · matched `OrganizationalUnderstanding`
   - `return rankOrganizationalUnderstandings(`
+
+##### `engine/v3/understanding/resolveCanonicalOrganizationalUnderstandingChange.ts`
+
+- Line 2 · **import** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `import type { CanonicalUnderstandingComposition } from "./buildCanonicalUnderstandingCompatibilityShadow";`
+- Line 9 · **unknown** · matched `OrganizationalUnderstanding`
+  - `export type CanonicalOrganizationalUnderstandingChangeResultV1 = {`
+- Line 29 · **unknown** · matched `OrganizationalUnderstanding`
+  - `export type CanonicalOrganizationalUnderstandingChangeOutcomeV1 =`
+- Line 30 · **unknown** · matched `OrganizationalUnderstanding`
+  - `\| { status: "available"; result: CanonicalOrganizationalUnderstandingChangeResultV1 }`
+- Line 38 · **unknown** · matched `OrganizationalUnderstanding`
+  - `export function validateCanonicalOrganizationalUnderstandingChangeOutcome(`
+- Line 39 · **unknown** · matched `OrganizationalUnderstanding`
+  - `outcome: CanonicalOrganizationalUnderstandingChangeOutcomeV1,`
+- Line 45 · **unknown** · matched `OrganizationalUnderstanding`
+  - `validateCanonicalOrganizationalUnderstandingChangeResult(outcome.result);`
+- Line 102 · **unknown** · matched `OrganizationalUnderstanding`
+  - `): CanonicalOrganizationalUnderstandingChangeResultV1["changeType"] {`
+- Line 126 · **unknown** · matched `OrganizationalUnderstanding`
+  - `export function validateCanonicalOrganizationalUnderstandingChangeResult(`
+- Line 127 · **unknown** · matched `OrganizationalUnderstanding`
+  - `result: CanonicalOrganizationalUnderstandingChangeResultV1,`
+- Line 167 · **unknown** · matched `OrganizationalUnderstanding`
+  - `export function resolveCanonicalOrganizationalUnderstandingChange(input: {`
+- Line 173 · **unknown** · matched `OrganizationalUnderstanding`
+  - `}): CanonicalOrganizationalUnderstandingChangeOutcomeV1 {`
+- Line 203 · **unknown** · matched `OrganizationalUnderstanding`
+  - `validateCanonicalOrganizationalUnderstandingChangeResult(result);`
 
 ##### `engine/v3/understanding/synthesizeUnderstanding.ts`
 
@@ -589,145 +721,145 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/runtime/evolveOrganizationRuntime.ts`
 
-- Line 4 · **import** · matched `OrganizationalUnderstanding`
+- Line 5 · **import** · matched `OrganizationalUnderstanding`
   - `import type { OrganizationalUnderstandingState } from "./organizationalUnderstandingState";`
-- Line 25 · **import** · matched `OrganizationalUnderstanding`
+- Line 26 · **import** · matched `OrganizationalUnderstanding`
   - `import { updateOrganizationalUnderstandingState } from "./updateOrganizationalUnderstandingState";`
-- Line 27 · **unknown** · matched `consolidateUnderstanding`
+- Line 28 · **unknown** · matched `consolidateUnderstanding`
   - `consolidateUnderstanding,`
-- Line 29 · **import** · matched `consolidateUnderstanding`
+- Line 30 · **import** · matched `consolidateUnderstanding`
   - `} from "../understanding/consolidateUnderstanding";`
-- Line 30 · **import** · matched `synthesizeUnderstanding`
+- Line 31 · **import** · matched `synthesizeUnderstanding`
   - `import { synthesizeUnderstanding } from "../understanding/synthesizeUnderstanding";`
-- Line 31 · **import** · matched `buildExecutiveUnderstandingCandidates`
+- Line 32 · **import** · matched `buildExecutiveUnderstandingCandidates`
   - `import { buildExecutiveUnderstandingCandidates } from "../understanding/buildExecutiveUnderstandingCandidates";`
-- Line 32 · **import** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+- Line 33 · **import** · matched `buildCanonicalUnderstandingCompatibilityShadow`
   - `import { buildCanonicalUnderstandingCompatibilityShadow } from "../understanding/buildCanonicalUnderstandingCompatibilityShadow";`
-- Line 43 · **import** · matched `OrganizationalUnderstanding`
+- Line 44 · **import** · matched `OrganizationalUnderstanding`
   - `import { createEmptyOrganizationalUnderstandingState } from "./organizationalUnderstandingState";`
-- Line 64 · **definition** · matched `evolveOrganizationRuntime`
+- Line 73 · **definition** · matched `evolveOrganizationRuntime`
   - `export function evolveOrganizationRuntime(params: {`
-- Line 67 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 76 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingOwnershipMode?: "canonical" \| "legacy";`
-- Line 68 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 77 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingAuthorityMode?: "explicit" \| "implicit";`
-- Line 145 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 209 · **unknown** · matched `OrganizationalUnderstanding`
   - `const existingOrganizationalUnderstandingState:`
-- Line 146 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 210 · **unknown** · matched `OrganizationalUnderstanding`
   - `OrganizationalUnderstandingState =`
-- Line 147 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 211 · **unknown** · matched `OrganizationalUnderstanding`
   - `memory.organizationalUnderstandingState ??`
-- Line 148 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 212 · **unknown** · matched `OrganizationalUnderstanding`
   - `createEmptyOrganizationalUnderstandingState({`
-- Line 174 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 238 · **unknown** · matched `OrganizationalUnderstanding`
   - `const baseOrganizationalUnderstandingState =`
-- Line 175 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 239 · **unknown** · matched `OrganizationalUnderstanding`
   - `updateOrganizationalUnderstandingState({`
-- Line 176 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 240 · **unknown** · matched `OrganizationalUnderstanding`
   - `state: existingOrganizationalUnderstandingState,`
-- Line 181 · **unknown** · matched `consolidateUnderstanding`
+- Line 245 · **unknown** · matched `consolidateUnderstanding`
   - `const consolidationResult = consolidateUnderstanding(`
-- Line 182 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 246 · **unknown** · matched `OrganizationalUnderstanding`
   - `baseOrganizationalUnderstandingState,`
-- Line 186 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 251 · **unknown** · matched `OrganizationalUnderstanding`
   - `const updatedOrganizationalUnderstandingState:`
-- Line 187 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 252 · **unknown** · matched `OrganizationalUnderstanding`
   - `OrganizationalUnderstandingState = {`
-- Line 188 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 253 · **unknown** · matched `OrganizationalUnderstanding`
   - `...baseOrganizationalUnderstandingState,`
-- Line 192 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 257 · **unknown** · matched `OrganizationalUnderstanding`
   - `...baseOrganizationalUnderstandingState.evolutionHistory,`
-- Line 221 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 289 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 222 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 290 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState,`
-- Line 270 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 340 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 279 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 349 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 307 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 377 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 401 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 471 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 484 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 554 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 501 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 571 · **unknown** · matched `OrganizationalUnderstanding`
   - `updatedOrganizationalUnderstandingState.organizationalBeliefs,`
-- Line 554 · **assignment** · matched `OrganizationalUnderstanding`
+- Line 649 · **assignment** · matched `OrganizationalUnderstanding`
   - `const canonicalOrganizationalUnderstanding =`
-- Line 555 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 650 · **unknown** · matched `OrganizationalUnderstanding`
   - `params.organizationalUnderstandingOwnershipMode === "legacy"`
-- Line 556 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 651 · **unknown** · matched `OrganizationalUnderstanding`
   - `? existingOrganizationalUnderstandingState.canonicalCompositions`
-- Line 557 · **unknown** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+- Line 652 · **unknown** · matched `buildCanonicalUnderstandingCompatibilityShadow`
   - `: buildCanonicalUnderstandingCompatibilityShadow({`
-- Line 561 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 656 · **unknown** · matched `OrganizationalUnderstanding`
   - `params.organizationalUnderstandingAuthorityMode,`
-- Line 563 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 658 · **unknown** · matched `OrganizationalUnderstanding`
   - `existingOrganizationalUnderstandingState.canonicalCompositions,`
-- Line 603 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 698 · **unknown** · matched `OrganizationalUnderstanding`
   - `const beliefUpdatedOrganizationalUnderstandingState:`
-- Line 604 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 699 · **unknown** · matched `OrganizationalUnderstanding`
   - `OrganizationalUnderstandingState = {`
-- Line 605 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 700 · **unknown** · matched `OrganizationalUnderstanding`
   - `...updatedOrganizationalUnderstandingState,`
-- Line 606 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 701 · **unknown** · matched `OrganizationalUnderstanding`
   - `...(canonicalOrganizationalUnderstanding`
-- Line 609 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 704 · **unknown** · matched `OrganizationalUnderstanding`
   - `canonicalOrganizationalUnderstanding,`
-- Line 617 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 712 · **unknown** · matched `OrganizationalUnderstanding`
   - `const synthesizedOrganizationalUnderstandingState =`
-- Line 618 · **unknown** · matched `synthesizeUnderstanding`
+- Line 713 · **unknown** · matched `synthesizeUnderstanding`
   - `synthesizeUnderstanding({`
-- Line 619 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 714 · **unknown** · matched `OrganizationalUnderstanding`
   - `state: beliefUpdatedOrganizationalUnderstandingState,`
-- Line 626 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 721 · **unknown** · matched `OrganizationalUnderstanding`
   - `synthesizedOrganizationalUnderstandingState.currentUnderstandings,`
-- Line 917 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1012 · **unknown** · matched `OrganizationalUnderstanding`
   - `canonicalOrganizationalUnderstanding,`
-- Line 947 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
+- Line 1043 · **unknown** · matched `buildExecutiveUnderstandingCandidates`
   - `buildExecutiveUnderstandingCandidates({`
-- Line 959 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1055 · **unknown** · matched `OrganizationalUnderstanding`
   - `OrganizationalUnderstandingState = {`
-- Line 960 · **unknown** · matched `OrganizationalUnderstanding`
-  - `...existingOrganizationalUnderstandingState,`
-- Line 962 · **unknown** · matched `OrganizationalUnderstanding`
-  - `...(canonicalOrganizationalUnderstanding`
-- Line 965 · **unknown** · matched `OrganizationalUnderstanding`
-  - `canonicalOrganizationalUnderstanding,`
-- Line 970 · **unknown** · matched `OrganizationalUnderstanding`
-  - `existingOrganizationalUnderstandingState.currentUnderstandings.filter(`
-- Line 982 · **unknown** · matched `consolidateUnderstanding`
-  - `consolidateUnderstanding(`
-- Line 987 · **unknown** · matched `OrganizationalUnderstanding`
-  - `const finalOrganizationalUnderstandingState =`
-- Line 988 · **unknown** · matched `synthesizeUnderstanding`
-  - `synthesizeUnderstanding({`
-- Line 1024 · **unknown** · matched `OrganizationalUnderstanding`
-  - `_canonicalCompositionsOwnedByOrganizationalUnderstanding,`
-- Line 1026 · **unknown** · matched `OrganizationalUnderstanding`
-  - `} = finalOrganizationalUnderstandingState;`
-- Line 1030 · **unknown** · matched `OrganizationalUnderstanding`
-  - `finalOrganizationalUnderstandingState.currentUnderstandings.map(`
 - Line 1056 · **unknown** · matched `OrganizationalUnderstanding`
+  - `...existingOrganizationalUnderstandingState,`
+- Line 1058 · **unknown** · matched `OrganizationalUnderstanding`
+  - `...(canonicalOrganizationalUnderstanding`
+- Line 1061 · **unknown** · matched `OrganizationalUnderstanding`
+  - `canonicalOrganizationalUnderstanding,`
+- Line 1066 · **unknown** · matched `OrganizationalUnderstanding`
+  - `existingOrganizationalUnderstandingState.currentUnderstandings.filter(`
+- Line 1078 · **unknown** · matched `consolidateUnderstanding`
+  - `consolidateUnderstanding(`
+- Line 1084 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const finalOrganizationalUnderstandingState =`
+- Line 1085 · **unknown** · matched `synthesizeUnderstanding`
+  - `synthesizeUnderstanding({`
+- Line 1124 · **unknown** · matched `OrganizationalUnderstanding`
+  - `_canonicalCompositionsOwnedByOrganizationalUnderstanding,`
+- Line 1126 · **unknown** · matched `OrganizationalUnderstanding`
+  - `} = finalOrganizationalUnderstandingState;`
+- Line 1130 · **unknown** · matched `OrganizationalUnderstanding`
+  - `finalOrganizationalUnderstandingState.currentUnderstandings.map(`
+- Line 1156 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingScore:`
-- Line 1057 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1157 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState.score.overall,`
-- Line 1397 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1497 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 1398 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1498 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState,`
-- Line 1484 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1585 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 1485 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1586 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState,`
-- Line 1671 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1772 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingScore:`
-- Line 1672 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1773 · **unknown** · matched `OrganizationalUnderstanding`
   - `finalOrganizationalUnderstandingState.score.overall,`
-- Line 1742 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1843 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 1743 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 1844 · **unknown** · matched `OrganizationalUnderstanding`
   - `typeof finalOrganizationalUnderstandingState;`
 
 ##### `engine/v3/runtime/index.ts`
@@ -739,19 +871,19 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `engine/v3/runtime/organizationRuntime.ts`
 
-- Line 60 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 61 · **unknown** · matched `OrganizationalUnderstanding`
   - `createEmptyOrganizationalUnderstandingState,`
-- Line 61 · **import** · matched `OrganizationalUnderstanding`
+- Line 62 · **import** · matched `OrganizationalUnderstanding`
   - `} from "./organizationalUnderstandingState";`
-- Line 63 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 64 · **unknown** · matched `OrganizationalUnderstanding`
   - `OrganizationalUnderstandingState,`
-- Line 64 · **import** · matched `OrganizationalUnderstanding`
+- Line 65 · **import** · matched `OrganizationalUnderstanding`
   - `} from "./organizationalUnderstandingState";`
-- Line 114 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 120 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState: OrganizationalUnderstandingState;`
-- Line 321 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 326 · **unknown** · matched `OrganizationalUnderstanding`
   - `organizationalUnderstandingState:`
-- Line 322 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 327 · **unknown** · matched `OrganizationalUnderstanding`
   - `createEmptyOrganizationalUnderstandingState({`
 
 ##### `engine/v3/runtime/organizationalUnderstandingState.ts`
@@ -776,21 +908,21 @@ This section records source-code references. It supplements, but does not replac
   - `score: OrganizationalUnderstandingScore;`
 - Line 170 · **unknown** · matched `OrganizationalUnderstanding`
   - `export type OrganizationalUnderstandingEvolutionEvent = {`
-- Line 185 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 200 · **unknown** · matched `OrganizationalUnderstanding`
   - `export type OrganizationalUnderstandingState = {`
-- Line 193 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 208 · **unknown** · matched `OrganizationalUnderstanding`
   - `score: OrganizationalUnderstandingScore;`
-- Line 197 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 212 · **unknown** · matched `OrganizationalUnderstanding`
   - `currentUnderstandings: OrganizationalUnderstandingItem[];`
-- Line 214 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 231 · **unknown** · matched `OrganizationalUnderstanding`
   - `recommendations: OrganizationalUnderstandingRecommendation[];`
-- Line 220 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 237 · **unknown** · matched `OrganizationalUnderstanding`
   - `evolutionHistory: OrganizationalUnderstandingEvolutionEvent[];`
-- Line 230 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 247 · **unknown** · matched `OrganizationalUnderstanding`
   - `export function createEmptyUnderstandingScore(): OrganizationalUnderstandingScore {`
-- Line 397 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 414 · **unknown** · matched `OrganizationalUnderstanding`
   - `export function createEmptyOrganizationalUnderstandingState(params: {`
-- Line 403 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 420 · **unknown** · matched `OrganizationalUnderstanding`
   - `}): OrganizationalUnderstandingState {`
 
 ##### `engine/v3/runtime/updateOrganizationalUnderstandingState.ts`
@@ -814,6 +946,16 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 126 · **unknown** · matched `OrganizationalUnderstanding`
   - `const understandingState = record(memory.organizationalUnderstandingState);`
+
+##### `scripts/development/reconstructNorthstarRuntime.ts`
+
+- Line 51 · **unknown** · matched `OrganizationalUnderstanding`
+  - `understandings: runtime.memory.organizationalUnderstandingState.canonicalCompositions?.length ?? 0,`
+
+##### `scripts/product/validateRuntimeToScopedProductSource.ts`
+
+- Line 9 · **unknown** · matched `OrganizationalUnderstanding`
+  - `runtime.memory.organizationalUnderstandingState.currentUnderstandings = [{ id: "must-not-be-mapped" }] as never;`
 
 #### Executive
 
@@ -911,6 +1053,71 @@ This section records source-code references. It supplements, but does not replac
 - Line 79 · **unknown** · matched `OrganizationalUnderstanding`
   - `projection: OrganizationalUnderstandingProjection;`
 
+##### `scripts/product/validateAuthorizedMetricLineageAndScopedProjection.ts`
+
+- Line 101 · **unknown** · matched `organizational-understanding`
+  - `objectType: "organizational-understanding",`
+- Line 117 · **unknown** · matched `organizational-understanding`
+  - `const coherence = metricId === "organizational-understanding.coherence";`
+- Line 121 · **unknown** · matched `organizational-understanding`
+  - `producerRef: coherence ? "update-organizational-understanding-state" : "compute-organizational-learning-profile",`
+- Line 125 · **unknown** · matched `organizational-understanding`
+  - `? "canonical-organizational-understanding-health-coherence"`
+- Line 147 · **unknown** · matched `organizational-understanding`
+  - `evaluateAuthorizedMetricLineage({ context: managerContext, serverResolvedMetric: metric("organizational-understanding.coherence", scopes.manager, managerAuthority) }).disposition,`
+- Line 153 · **unknown** · matched `organizational-understanding`
+  - `evaluateAuthorizedMetricLineage({ context: managerContext, serverResolvedMetric: metric("organizational-understanding.freshness", scopes.manager, managerAuthority) }).disposition,`
+- Line 156 · **unknown** · matched `organizational-understanding`
+  - `const hidden = metric("organizational-understanding.coherence", scopes.manager, managerAuthority, {`
+- Line 166 · **unknown** · matched `organizational-understanding`
+  - `const global = metric("organizational-understanding.coherence", scopes.manager, managerAuthority, {`
+- Line 174 · **unknown** · matched `organizational-understanding`
+  - `serverResolvedMetric: metric("organizational-understanding.coherence", scopes.manager, managerAuthority, { resultSideChannelSafe: false, value: 772211 }),`
+- Line 181 · **unknown** · matched `organizational-understanding`
+  - `evaluateAuthorizedMetricLineage({ context: managerContext, serverResolvedMetric: metric("organizational-understanding.coherence", scopes.manager, managerAuthority, { candidateInputs: [metricInput(scopes.manager, managerAuthority), metricInput(scopes.manager, managerAuthority, { safeRef: "input:second" })], inputCombinationProtected: true }) }).disposition,`
+- Line 185 · **unknown** · matched `organizational-understanding`
+  - `evaluateAuthorizedMetricLineage({ context: revoked, serverResolvedMetric: metric("organizational-understanding.coherence", scopes.manager, managerAuthority) }).disposition,`
+- Line 190 · **unknown** · matched `organizational-understanding`
+  - `evaluateAuthorizedMetricLineage({ context: historical, serverResolvedMetric: metric("organizational-understanding.coherence", scopes.manager, historicalAuthority, { historicalRevisionRef: REVISION }) }).disposition,`
+- Line 193 · **unknown** · matched `organizational-understanding`
+  - `evaluateAuthorizedMetricLineage({ context: historical, serverResolvedMetric: metric("organizational-understanding.coherence", scopes.manager, historicalAuthority) }).disposition,`
+- Line 196 · **unknown** · matched `organizational-understanding`
+  - `evaluateAuthorizedMetricLineage({ context: managerContext, serverResolvedMetric: metric("organizational-understanding.coherence", scopes.manager, managerAuthority, { candidateInputs: [metricInput(scopes.manager, managerAuthority, { supportLineageComplete: false })] }) }).disposition,`
+- Line 200 · **unknown** · matched `organizational-understanding`
+  - `return evaluateAuthorizedMetricLineage({ context: invalid, serverResolvedMetric: metric("organizational-understanding.coherence", scopes.manager, managerAuthority) }).disposition;`
+- Line 203 · **unknown** · matched `organizational-understanding`
+  - `evaluateAuthorizedMetricLineage({ context: managerContext, serverResolvedMetric: metric("organizational-understanding.coherence", scopes.manager, managerAuthority, { organizationId: FOREIGN }) }).disposition,`
+- Line 207 · **unknown** · matched `organizational-understanding`
+  - `const one = evaluateAuthorizedMetricLineage({ context: managerContext, serverResolvedMetric: metric("organizational-understanding.coherence", scopes.manager, managerAuthority, { candidateInputs: [input] }) });`
+- Line 208 · **unknown** · matched `organizational-understanding`
+  - `const duplicate = evaluateAuthorizedMetricLineage({ context: managerContext, serverResolvedMetric: metric("organizational-understanding.coherence", scopes.manager, managerAuthority, { candidateInputs: [input, input] }) });`
+- Line 215 · **unknown** · matched `organizational-understanding`
+  - `const forward = evaluateAuthorizedMetricLineage({ context: managerContext, serverResolvedMetric: metric("organizational-understanding.coherence", scopes.manager, managerAuthority, { candidateInputs: [first, second] }) });`
+- Line 216 · **unknown** · matched `organizational-understanding`
+  - `const reverse = evaluateAuthorizedMetricLineage({ context: managerContext, serverResolvedMetric: metric("organizational-understanding.coherence", scopes.manager, managerAuthority, { candidateInputs: [second, first] }) });`
+- Line 226 · **unknown** · matched `organizational-understanding`
+  - `canonicalObjectType: kind === "material-change" ? "organizational-evolution" : kind === "investigation-opportunity" ? "investigation-opportunity" : "organizational-understanding",`
+- Line 243 · **unknown** · matched `organizational-understanding`
+  - `safeRef: CANARIES[1]!, canonicalObjectType: "organizational-understanding", revisionRef: REVISION,`
+- Line 254 · **unknown** · matched `organizational-understanding`
+  - `metric("organizational-understanding.coherence", scope, authorityRef),`
+- Line 256 · **unknown** · matched `organizational-understanding`
+  - `metric("organizational-understanding.freshness", scope, authorityRef),`
+- Line 293 · **unknown** · matched `OrganizationalUnderstanding`
+  - `for (const forbidden of ["organizationalUnderstandingState", "runtime", "memory", "evidenceIds", "sourceId", "credential", "connector"]) assert.equal(Object.hasOwn(projection, forbidden), false);`
+- Line 327 · **unknown** · matched `organizational-understanding`
+  - `assert.equal(metrics.find((item) => item.metricId === "organizational-understanding.coherence")?.disposition, "disclosed");`
+- Line 328 · **unknown** · matched `organizational-understanding`
+  - `assert.equal(metrics.find((item) => item.metricId === "organizational-understanding.freshness")?.disposition, "unsupported-metric");`
+- Line 334 · **unknown** · matched `organizational-understanding`
+  - `metric("organizational-understanding.coherence", scopes.manager, managerAuthority, { value: 882211 }),`
+- Line 338 · **unknown** · matched `organizational-understanding`
+  - `metricIds: ["organizational-understanding.coherence", "organizational-learning.learning-velocity"],`
+- Line 397 · **unknown** · matched `organizational-understanding`
+  - `supportedMetricIds: ["organizational-understanding.coherence", "organizational-learning.learning-velocity"],`
+- Line 398 · **unknown** · matched `organizational-understanding`
+  - `unsupportedMetricIds: ["organizational-understanding.confidence", "organizational-understanding.freshness", "organizational-understanding.health", "organizational-learning.understanding-growth", "organizational-learning.memory-growth", "organizational-learning.trend-ranking"],`
+
 ##### `scripts/product/validateOrganizationalUnderstandingProjectionShadow.ts`
 
 - Line 22 · **unknown** · matched `OrganizationalUnderstanding`
@@ -992,6 +1199,15 @@ This section records source-code references. It supplements, but does not replac
 - Line 743 · **unknown** · matched `OrganizationalUnderstanding`
   - `productSource.includes("compileOrganizationalUnderstandingProjection"),`
 
+##### `scripts/product/validateScopedDecisionCalibrationProjection.ts`
+
+- Line 54 · **unknown** · matched `OrganizationalUnderstanding`
+  - `organizationalUnderstandingRefs: ["understanding:scope:1"], localConstraintRefs: ["constraint:local:1"],`
+- Line 83 · **unknown** · matched `OrganizationalUnderstanding`
+  - `trace.push({ id, benchmarkCaseId, productionOwner: "projectScopedDecisionCalibration", adapter: "readScopedOrganizationalProductProjection", organization: ORG, recipient: ctx.subjectId, requestedScope: SCOPE.id, purpose: ctx.purpose, decisionRef: result.decisionRef, objectiveRevision: result.objectiveRevisionRef, optimizationContextRevision: result.optimizationContextRevisionRef, authorityResult: result.axes.find((axis) => axis.axis === "authority"), authorizedEvidenceInputs: calibrationInput.canonicalInputs.supportingEvidenceRefs, withheldInputs: [], authorizedUnderstandingInputs: calibrationInput.canonicalInputs.organizationalUnderstandingRefs, localConstraints: calibrationInput.canonicalInputs.localConstraintRefs, broaderConstraints: calibrationInput.canonicalInputs.broaderConstraintRefs, experimentAuthority: calibrationInput.canonicalInputs.experimentAuthorizationRef ?? null, outcomeState: result.axes.find((axis) => axis.axis === "outcome-status"), axisDispositions: result.axes.map((axis) => [axis.axis, axis.disposition, axis.value]), overallClassification: expected, safeLineage: result.safeSupportingLineage, reads: 1, writes: 0, externalActivity: 0, observedSerializedResult: JSON.stringify(result) });`
+- Line 139 · **unknown** · matched `OrganizationalUnderstanding`
+  - `for (const forbidden of ["alignmentScore", "conformityScore", "approve", "reject", "execute", "mutate", "organizationalUnderstandingState", "runtime", "memory"]) assert.equal(serialized.includes(\`\"${forbidden}\"\`), false);`
+
 ##### `scripts/product/validateYourOrganizationProjectionCompatibility.ts`
 
 - Line 12 · **unknown** · matched `OrganizationalUnderstanding`
@@ -1052,7 +1268,7 @@ This section records source-code references. It supplements, but does not replac
 
 ##### `components/product-shell/data/buildDiscoveryExperienceView.ts`
 
-- Line 103 · **unknown** · matched `organizational-understanding`
+- Line 135 · **unknown** · matched `organizational-understanding`
   - `id: view.insights[0]?.id ?? "authorized-organizational-understanding",`
 
 ##### `components/product-shell/data/buildOrganizationExperienceView.ts`
@@ -1109,6 +1325,11 @@ This section records source-code references. It supplements, but does not replac
 
 - Line 23 · **unknown** · matched `OrganizationalUnderstanding`
   - `runtime?.memory?.organizationalUnderstandingState?.currentUnderstandings \|\|`
+
+##### `components/role-aware/RoleAwareExperience.tsx`
+
+- Line 79 · **unknown** · matched `organizational-understanding`
+  - `const label = metric.metricId === "organizational-understanding.coherence"`
 
 #### API
 
@@ -1895,6 +2116,21 @@ This section records source-code references. It supplements, but does not replac
 - Line 3 · **unknown** · matched `evolveOrganizationRuntime`
   - `runtime: "In-memory evolveOrganizationRuntime under the existing production-shadow harness.",`
 
+##### `engine/benchmark/multi-role-scoped-understanding-governance-001/runBenchmark.ts`
+
+- Line 6 · **import** · matched `OrganizationalUnderstanding`
+  - `import { discloseCanonicalOrganizationalUnderstanding, type OrganizationalUnderstandingDisclosureDecision } from "../../../engine/v3/understanding/discloseCanonicalOrganizationalUnderstanding";`
+- Line 13 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const decision=(consumerId:string, disposition:"eligible"\|"withheld"\|"revoked", organizationId=ORGANIZATION_ID):OrganizationalUnderstandingDisclosureDecision=>({id:\`decision:${consumerId}:${disposition}\`,organizationId,consumerId,disposition,effectiveAt:NOW,basis:["benchmark-synthetic-resolved-decision"]});`
+- Line 17 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const eligible=discloseCanonicalOrganizationalUnderstanding({organizationId:ORGANIZATION_ID,consumerId:consumer,decision:decision(consumer,"eligible"),compositions:[]});`
+- Line 18 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const revoked=discloseCanonicalOrganizationalUnderstanding({organizationId:ORGANIZATION_ID,consumerId:consumer,decision:decision(consumer,"revoked"),compositions:[]});`
+- Line 19 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const foreign=discloseCanonicalOrganizationalUnderstanding({organizationId:ORGANIZATION_ID,consumerId:consumer,decision:decision(consumer,"eligible",OTHER_ORGANIZATION_ID),compositions:[]});`
+- Line 52 · **unknown** · matched `CAP-UND-006`
+  - `return {organization:{id:ORGANIZATION_ID,canonicalModelCount:1,scopes},roles,corpus:normalized,scenarios,utilityRubric,projections,direct,derived,revocation,crossScope,crossOrganization,metrics,contribution,decisions,adversarial,utility,gaps,canonicalOwners:["CAP-PER-001","CAP-UND-006","canonical Understanding disclosure","authorized Organizational Understanding projection","CAP-LRN-002","CAP-SELF-002","CAP-DEC-001..007","Product Objective and Optimization Context","organization authorization and isolation"]};`
+
 ##### `engine/benchmark/operating-model-evolution-lab/productionReplay.ts`
 
 - Line 3 · **import** · matched `evolveOrganizationRuntime`
@@ -1962,6 +2198,24 @@ This section records source-code references. It supplements, but does not replac
   - `): OrganizationalUnderstandingProjection {`
 - Line 664 · **unknown** · matched `OrganizationalUnderstanding`
   - `OrganizationalUnderstandingProjection["conditions"][number]["value"]`
+
+##### `engine/benchmark/product-governance/canonical-understanding-recipient-scope-nested-disclosure-001/runBenchmark.ts`
+
+- Line 5 · **import** · matched `OrganizationalUnderstanding`
+  - `import type { OrganizationalUnderstandingProjection } from "../../../v3/projection/organizationalUnderstandingProjection";`
+- Line 6 · **import** · matched `OrganizationalUnderstanding`
+  - `import type { OrganizationalUnderstandingDisclosureResult } from "../../../v3/understanding/discloseCanonicalOrganizationalUnderstanding";`
+- Line 12 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const typeWitness: { disclosure?: OrganizationalUnderstandingDisclosureResult; projection?: OrganizationalUnderstandingProjection } = {};`
+
+##### `engine/benchmark/product-governance/recipient-audience-scope-governance-contract-001/runBenchmark.ts`
+
+- Line 12 · **read** · matched `organizational-understanding`
+  - `const grant=(over:Partial<RecipientAudienceGrant>={}):RecipientAudienceGrant=>createRecipientAudienceGrant({revision:1,organizationId:ORG,assignmentId:"access:1",assignmentRevision:"access-rev:1",recipientId:"principal:1",resourceFamily:RECIPIENT_AUDIENCE_RESOURCE_FAMILY,operations:["receive"],purposes:["organizational-understanding"],audienceScopes:[fn],coverage:"explicit-descendants",state:"active",issuerAuthorityRef:"authority:organization-admin",issuerOperation:"audience-grant:administer",effectiveAt:AT,supersedesRevisionId:null,topology,...over});`
+- Line 13 · **unknown** · matched `organizational-understanding`
+  - `const requirement=(audienceScope:GovernedScopeRef=fn)=>({organizationId:ORG,recipientId:"principal:1",resourceFamily:RECIPIENT_AUDIENCE_RESOURCE_FAMILY,operation:"receive" as const,purpose:"organizational-understanding" as const,audienceScope});`
+- Line 31 · **unknown** · matched `organizational-understanding`
+  - `if(id===38\|\|id===39)s.req={...requirement(),purpose:"other" as "organizational-understanding"}; if(id===41)s.req={...requirement(),resourceFamily:"other" as typeof RECIPIENT_AUDIENCE_RESOURCE_FAMILY}; if(id===43\|\|id===44)s.req={...requirement(),operation:"other" as "receive"};`
 
 ##### `engine/benchmark/research/ORGANIZATIONAL_UNDERSTANDING_RESEARCH_FRAMEWORK.md`
 
@@ -2103,6 +2357,11 @@ This section records source-code references. It supplements, but does not replac
 - Line 253 · **unknown** · matched `OrganizationalUnderstanding`
   - `"OrganizationalUnderstandingState",`
 
+##### `scripts/product/buildGoogleDriveCumulativeParityDiagnostic.ts`
+
+- Line 26 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const graph={version:"1",root:{id:"runtime-store-directory-bound-before-oracle-isolation",owner:"runtime-persistence-isolation",field:firstField},nodes:differences.map((item,index)=>({id:\`mismatch-${index+1}\`,field:item.field,objectType:item.field.includes("Understanding")?"OrganizationalUnderstanding":item.field.includes("Evidence")?"Evidence":item.field.includes("contradiction")?"Contradiction":"SemanticCheckpoint",producingOwner:item.firstResponsibleBoundary,primary:index===0,earliestDivergentAncestor:"runtime-store-directory-bound-before-oracle-isolation",wouldDisappearIfAncestorCorrected:true})),edges:differences.map((_,index)=>({from:"runtime-store-directory-bound-before-oracle-isolation",to:\`mismatch-${index+1}\`,relationship:"causes-or-propagates"}))};`
+
 ##### `scripts/product/capabilitySurvivalManifest.ts`
 
 - Line 27 · **unknown** · matched `CAP-UND-006`
@@ -2111,6 +2370,13 @@ This section records source-code references. It supplements, but does not replac
   - `capabilityId: "CAP-UND-006",`
 - Line 231 · **unknown** · matched `organizational-understanding`
   - `"validate:organizational-understanding-projection-shadow",`
+
+##### `scripts/product/historicalCheckpointLifecycleActualOwnerAcceptanceCoordinator.ts`
+
+- Line 146 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const canonical = runtimeStored.runtime.memory.organizationalUnderstandingState.canonicalCompositions?.at(-1);`
+- Line 363 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const composition = runtimeStored.runtime.memory.organizationalUnderstandingState.canonicalCompositions?.find((value) => value.id === foreign.projectionSourceRef);`
 
 ##### `scripts/product/validateAlphaAllowlistDisclosureProducerShadow.ts`
 
@@ -2124,7 +2390,7 @@ This section records source-code references. It supplements, but does not replac
   - `} from "../../engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow";`
 - Line 189 · **unknown** · matched `buildCanonicalUnderstandingCompatibilityShadow`
   - `const compositions = buildCanonicalUnderstandingCompatibilityShadow({`
-- Line 807 · **unknown** · matched `OrganizationalUnderstanding`
+- Line 852 · **unknown** · matched `OrganizationalUnderstanding`
   - `const projection = compileOrganizationalUnderstandingProjection({`
 
 ##### `scripts/product/validateAlphaYourOrganizationActivation.ts`
@@ -2143,6 +2409,83 @@ This section records source-code references. It supplements, but does not replac
 - Line 58 · **unknown** · matched `OrganizationalUnderstanding`
   - `sparse.memory.organizationalUnderstandingState.currentUnderstandings = [];`
 
+##### `scripts/product/validateCanonicalEvidenceContributionResult.ts`
+
+- Line 14 · **import** · matched `evolveOrganizationRuntime`
+  - `import { evolveOrganizationRuntime } from "../../engine/v3/runtime/evolveOrganizationRuntime";`
+- Line 63 · **unknown** · matched `evolveOrganizationRuntime`
+  - `const originalLog=console.log;let evolved;try{console.log=()=>{};evolved=replayOnly?runtime:evolveOrganizationRuntime({runtime,result,input,semanticTime:contribution.contributedAt,canonicalEvidenceContributionOperationContext:operationContext,canonicalEvidenceContributionLineageEnvelope:canonicalEvidenceLineageEnvelope});}finally{console.log=originalLog;}`
+
+##### `scripts/product/validateCanonicalEvidenceContributionResultReplay.ts`
+
+- Line 10 · **import** · matched `evolveOrganizationRuntime`
+  - `import { evolveOrganizationRuntime } from "../../engine/v3/runtime/evolveOrganizationRuntime";`
+- Line 36 · **unknown** · matched `evolveOrganizationRuntime`
+  - `const originalLog=console.log;let evolved;try{console.log=()=>{};evolved=replayOnly?runtime:evolveOrganizationRuntime({runtime,result,input,semanticTime:AT,canonicalEvidenceContributionOperationContext:operationContext,canonicalEvidenceContributionLineageEnvelope:lineageEnvelope});}finally{console.log=originalLog;}`
+
+##### `scripts/product/validateCanonicalExplanationGovernanceLineage.ts`
+
+- Line 14 · **import** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `import type { CanonicalUnderstandingComposition } from "../../engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow";`
+- Line 44 · **unknown** · matched `organizational-understanding`
+  - `purposeRef: "organizational-understanding",`
+- Line 56 · **unknown** · matched `organizational-understanding`
+  - `purposeRef: "organizational-understanding",`
+- Line 80 · **read** · matched `organizational-understanding`
+  - `purposeRefs: ["organizational-understanding"],`
+- Line 98 · **read** · matched `organizational-understanding`
+  - `purposeRefs: ["organizational-understanding"],`
+- Line 99 · **unknown** · matched `organizational-understanding`
+  - `operationRefs: [{contributionOperationId:"operation:one",questionId:"question:one",purposeRef:"organizational-understanding",canonicalOperationResultDigest:"a".repeat(64),envelopeDigest:"b".repeat(64)}],`
+
+##### `scripts/product/validateCanonicalMaterialEvidenceOrigin.ts`
+
+- Line 5 · **import** · matched `evolveOrganizationRuntime`
+  - `import { evolveOrganizationRuntime } from "../../engine/v3/runtime/evolveOrganizationRuntime";`
+- Line 25 · **unknown** · matched `evolveOrganizationRuntime`
+  - `const original=console.log;let evolved;try{console.log=()=>{};evolved=evolveOrganizationRuntime({runtime:createEmptyOrganizationRuntime({organizationId:ORG,name:"Material",now:AT}),result:run,input,semanticTime:AT});}finally{console.log=original;}`
+
+##### `scripts/product/validateCanonicalMaterialEvidenceOriginFreshProcess.ts`
+
+- Line 9 · **import** · matched `evolveOrganizationRuntime`
+  - `import { evolveOrganizationRuntime } from "../../engine/v3/runtime/evolveOrganizationRuntime";`
+- Line 19 · **unknown** · matched `evolveOrganizationRuntime`
+  - `if(role==="run-governed-cognition-and-admission"){const runtime=JSON.parse(await readFile(runtimePath,"utf8")),result=runDiscoveryV3(input,lineage),evidenceIds=result.evidence.map(item=>item.id),admissionIds=result.scopeLineageAdmission!.operationBatch.admissions.flatMap(item=>item.investigationEvidenceIds).sort();assert.equal(evidenceIds.length,16);assert.deepEqual([...evidenceIds].sort(),admissionIds);const original=console.log;let evolved;try{console.log=()=>{};evolved=evolveOrganizationRuntime({runtime,result,input,semanticTime:AT});}finally{console.log=original;}const safe={evidenceIds,admissionIds,batchDigest:result.scopeLineageAdmission!.operationBatch.batchDigest,explanationIds:(evolved.memory.organizationalExplanations??[]).map(item=>item.id),compositionIds:(evolved.memory.organizationalUnderstandingState.canonicalCompositions??[]).map(item=>[item.id,item.revisionId])};await writeFile(runtimePath,JSON.stringify(evolved),{mode:0o600});await writeFile(safePath,JSON.stringify(safe),{mode:0o600});return{role,result:"PASS",governedEvidenceCount:16,admissionCount:16,framingCount:0,batchDigest:safe.batchDigest};}`
+
+##### `scripts/product/validateCanonicalOrganizationalUnderstandingChangeResult.ts`
+
+- Line 3 · **import** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `import type { CanonicalUnderstandingComposition } from "../../engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow";`
+- Line 5 · **unknown** · matched `OrganizationalUnderstanding`
+  - `resolveCanonicalOrganizationalUnderstandingChange,`
+- Line 6 · **unknown** · matched `OrganizationalUnderstanding`
+  - `validateCanonicalOrganizationalUnderstandingChangeOutcome,`
+- Line 7 · **unknown** · matched `OrganizationalUnderstanding`
+  - `validateCanonicalOrganizationalUnderstandingChangeResult,`
+- Line 8 · **import** · matched `OrganizationalUnderstanding`
+  - `} from "../../engine/v3/understanding/resolveCanonicalOrganizationalUnderstandingChange";`
+- Line 29 · **unknown** · matched `OrganizationalUnderstanding`
+  - `resolveCanonicalOrganizationalUnderstandingChange({ organizationId: ORG, questionId: QUESTION, contributionOperationId: OPERATION, beforeCompositions: before, afterCompositions: after });`
+- Line 41 · **unknown** · matched `OrganizationalUnderstanding`
+  - `validateCanonicalOrganizationalUnderstandingChangeOutcome(unavailable); checks += 1;`
+- Line 42 · **unknown** · matched `OrganizationalUnderstanding`
+  - `assert.throws(() => validateCanonicalOrganizationalUnderstandingChangeOutcome({ status: "unavailable", reason: "invalid" } as never)); checks += 1;`
+- Line 43 · **unknown** · matched `OrganizationalUnderstanding`
+  - `assert.throws(() => validateCanonicalOrganizationalUnderstandingChangeOutcome(undefined as never)); checks += 1;`
+- Line 50 · **unknown** · matched `OrganizationalUnderstanding`
+  - `validateCanonicalOrganizationalUnderstandingChangeResult(ordered.result); checks += 1;`
+- Line 51 · **unknown** · matched `OrganizationalUnderstanding`
+  - `assert.throws(() => validateCanonicalOrganizationalUnderstandingChangeResult({ ...ordered.result, disposition: "changed" })); checks += 1;`
+- Line 52 · **unknown** · matched `OrganizationalUnderstanding`
+  - `assert.throws(() => validateCanonicalOrganizationalUnderstandingChangeResult({ ...ordered.result, resultDigest: "0".repeat(64) })); checks += 1;`
+- Line 56 · **unknown** · matched `organizational-understanding`
+  - `console.log(JSON.stringify({ validation: "canonical-organizational-understanding-change-result-001", result: "PASS", checks, independentOracle: true, networkCalls: 0, connectorCalls: 0, driveReads: 0, driveWrites: 0, productionAccess: 0 }));`
+
+##### `scripts/product/validateCanonicalOrganizationalUnderstandingChangeResultFreshProcess.ts`
+
+- Line 68 · **unknown** · matched `organizational-understanding`
+  - `validation: "canonical-organizational-understanding-change-result-fresh-process-001",`
+
 ##### `scripts/product/validateCanonicalProductComposition.ts`
 
 - Line 14 · **unknown** · matched `OrganizationalUnderstanding`
@@ -2154,10 +2497,133 @@ This section records source-code references. It supplements, but does not replac
 - Line 308 · **unknown** · matched `OrganizationalUnderstanding`
   - `const authorityFailure = compileOrganizationalUnderstandingProjection({`
 
+##### `scripts/product/validateCanonicalScopeLineage.ts`
+
+- Line 19 · **import** · matched `evolveOrganizationRuntime`
+  - `import { evolveOrganizationRuntime } from "../../engine/v3/runtime/evolveOrganizationRuntime";`
+- Line 88 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const runtime=createEmptyOrganizationRuntime({organizationId:ORG}); const cognitiveBefore=canonicalScopeLineageDigest({metadata:runtime.metadata,understanding:runtime.memory.organizationalUnderstandingState,observations:runtime.memory.observations,beliefs:runtime.memory.beliefs}); runtime.memory.canonicalScopeLineageIndex=index; const cognitiveAfter=canonicalScopeLineageDigest({metadata:runtime.metadata,understanding:runtime.memory.organizationalUnderstandingState,observations:runtime.memory.observations,beliefs:runtime.memory.beliefs});`
+- Line 110 · **unknown** · matched `evolveOrganizationRuntime`
+  - `try{producedRuntime=evolveOrganizationRuntime({runtime:createEmptyOrganizationRuntime({organizationId:ORG}),result:productionResult,input:{company:productionInput.company,website:productionInput.website,industry:productionInput.industry,question:productionInput.question,context:productionInput.context}});}finally{console.log=savedLog;}`
+
+##### `scripts/product/validateCanonicalUnderstandingAudienceLineageForwardProducer.ts`
+
+- Line 15 · **import** · matched `evolveOrganizationRuntime`
+  - `import { evolveOrganizationRuntime } from "../../engine/v3/runtime/evolveOrganizationRuntime";`
+- Line 18 · **import** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `import type { CanonicalUnderstandingComposition } from "../../engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow";`
+- Line 42 · **unknown** · matched `organizational-understanding`
+  - `const binding = createCanonicalSourceScopeBinding({ organizationId: ORG, bindingVersion: 1, source: { sourceId: "source:operations", sourceVersion: "1", normalizedContentDigest: createHash("sha256").update(governedContent).digest("hex") }, topology, assertions: [{ relationship: "origin", scope: department }], basisRefs: ["governed-source-declaration:operations"], effectiveAt: NOW, sourceType: "manual-takeaway", purposeRef: "organizational-understanding", availability: "available" });`
+- Line 45 · **unknown** · matched `organizational-understanding`
+  - `const operationContext = createCanonicalEvidenceContributionOperationContext({ contributionOperationId: "operation:audience-lineage", organizationId: ORG, questionId: "question:audience-lineage", purposeRef: "organizational-understanding", requestFingerprint: digest("audience-lineage-request"), idempotencyKeyDigest: digest("audience-lineage-key") });`
+- Line 51 · **unknown** · matched `evolveOrganizationRuntime`
+  - `governedRuntime = evolveOrganizationRuntime({ runtime: createEmptyOrganizationRuntime({ organizationId: ORG, name: "Audience lineage validation", now: NOW }), result: investigationResult, input: investigationInput, semanticTime: NOW, canonicalEvidenceContributionOperationContext: operationContext, canonicalEvidenceContributionLineageEnvelope: operationEnvelope });`
+- Line 288 · **unknown** · matched `organizational-understanding`
+  - `finding({ id: "finding:field-audience-requirement", category: "GOVERNANCE", canonicalOwnerId: "field-audience-requirement-governance", canonicalOwnerBoundary: "canonical-field-audience-classification", affectedFieldFamilies: incompleteFieldFamilies, blocking: baselineExecution.output.records.every((record) => record.audienceRequirementBasis === "unresolved"), prerequisiteOwnerIds: [], prerequisiteResolved: true, boundedTask: true, semanticOwner: "canonical-organizational-understanding-field-governance", mutationOwner: "field-audience-requirement-contract", productionBoundary: "canonical-understanding-field-lineage", versioningBoundary: "audience-requirement-policy", validationBoundary: "audience-requirement-governance-oracle", likelyProductionFiles: ["engine/v3/governance/recipientAudienceScope.ts"], evidenceRefs: evidenceRefs(["baseline", "composition-subject-scope", "source-scope", "evidence-scope"]), ...common }),`
+
+##### `scripts/product/validateCanonicalUnderstandingConfidenceRevision.ts`
+
+- Line 11 · **unknown** · matched `OrganizationalUnderstanding`
+  - `CanonicalOrganizationalUnderstandingRevisionService,`
+- Line 12 · **import** · matched `OrganizationalUnderstanding`
+  - `} from "../../engine/v3/understanding/canonicalOrganizationalUnderstandingRevisionService";`
+- Line 13 · **import** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `import type { CanonicalUnderstandingComposition } from "../../engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow";`
+- Line 14 · **import** · matched `OrganizationalUnderstanding`
+  - `import { discloseCanonicalOrganizationalUnderstanding } from "../../engine/v3/understanding/discloseCanonicalOrganizationalUnderstanding";`
+- Line 15 · **import** · matched `OrganizationalUnderstanding`
+  - `import { compileOrganizationalUnderstandingProjection } from "../../engine/v3/projection/organizationalUnderstandingProjection";`
+- Line 16 · **import** · matched `OrganizationalUnderstanding`
+  - `import { resolveCanonicalOrganizationalUnderstandingChange } from "../../engine/v3/understanding/resolveCanonicalOrganizationalUnderstandingChange";`
+- Line 23 · **type** · matched `organizational-understanding`
+  - `const stableUnderstandingId = "organizational-understanding:validation-001";`
+- Line 34 · **unknown** · matched `organizational-understanding`
+  - `authorityOwner: "canonical-organizational-understanding",`
+- Line 79 · **unknown** · matched `OrganizationalUnderstanding`
+  - `runtime.memory.organizationalUnderstandingState.canonicalCompositions = [composition];`
+- Line 86 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const service = new CanonicalOrganizationalUnderstandingRevisionService(repository, { now: () => clock });`
+- Line 134 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const retained = current.runtime.memory.organizationalUnderstandingState.canonicalCompositions![0]!;`
+- Line 139 · **unknown** · matched `OrganizationalUnderstanding`
+  - `assert.equal(current.runtime.memory.organizationalUnderstandingState.canonicalRevisionOperations?.length, 2);`
+- Line 140 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const change = resolveCanonicalOrganizationalUnderstandingChange({ organizationId, questionId: "question-validation-001", contributionOperationId: second.receipt.operationId, beforeCompositions: [composition], afterCompositions: [retained] });`
+- Line 151 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const disclosure = discloseCanonicalOrganizationalUnderstanding({`
+- Line 157 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const projection = compileOrganizationalUnderstandingProjection({`
+
+##### `scripts/product/validateCanonicalUnderstandingConfidenceRevisionFreshProcess.ts`
+
+- Line 10 · **import** · matched `OrganizationalUnderstanding`
+  - `import { CANONICAL_UNDERSTANDING_REVISION_OPERATION, CanonicalOrganizationalUnderstandingRevisionService } from "../../engine/v3/understanding/canonicalOrganizationalUnderstandingRevisionService";`
+- Line 11 · **import** · matched `buildCanonicalUnderstandingCompatibilityShadow`
+  - `import type { CanonicalUnderstandingComposition } from "../../engine/v3/understanding/buildCanonicalUnderstandingCompatibilityShadow";`
+- Line 17 · **type** · matched `organizational-understanding`
+  - `const stableUnderstandingId = "organizational-understanding:fresh-process-001";`
+- Line 27 · **unknown** · matched `organizational-understanding`
+  - `const composition: CanonicalUnderstandingComposition = { id: stableUnderstandingId, revisionId: \`${stableUnderstandingId}:conclusion:1\`, previousRevisionId: null, organizationId, scope: { organizationId, type: "organization", id: organizationId }, outcomeRef: { type: "phenomenon", id: "fresh-outcome" }, explanationIds: [], authorityTransition: { authorityOwner: "canonical-organizational-understanding", contributionDecisionOwner: "canonical-understanding-contribution-validation", persistenceOwner: "organization-runtime", disclosureOwner: "application-boundary-not-evaluated", explanationIds: [], disposition: "authorized-organizational-knowledge", basis: ["existing-production-semantics-satisfied"] }, compositionUncertainty: ["comparative-role-data-unavailable"], createdAt: at, updatedAt: at };`
+- Line 28 · **unknown** · matched `OrganizationalUnderstanding`
+  - `runtime.memory.organizationalUnderstandingState.canonicalCompositions = [composition];`
+- Line 30 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const service = new CanonicalOrganizationalUnderstandingRevisionService(repository, { now: () => at });`
+- Line 39 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const state = stored.runtime.memory.organizationalUnderstandingState;`
+
+##### `scripts/product/validateCanonicalUnderstandingCurrentEligibility.ts`
+
+- Line 15 · **unknown** · matched `organizational-understanding`
+  - `const PURPOSE = "organizational-understanding";`
+- Line 155 · **unknown** · matched `organizational-understanding`
+  - `canonicalObjectType: "organizational-understanding",`
+
 ##### `scripts/product/validateCapabilitySurvival.ts`
 
 - Line 21 · **unknown** · matched `CAP-UND-006`
   - `"CAP-UND-006",`
+
+##### `scripts/product/validateCrossInvestigationEvidenceAdmissionIdentity.ts`
+
+- Line 3 · **import** · matched `evolveOrganizationRuntime`
+  - `import { evolveOrganizationRuntime } from "../../engine/v3/runtime/evolveOrganizationRuntime";`
+- Line 74 · **unknown** · matched `evolveOrganizationRuntime`
+  - `const silent=console.log;console.log=()=>{};let runtimeA,runtimeB;try{runtimeA=evolveOrganizationRuntime({runtime:createEmptyOrganizationRuntime({organizationId:ORG}),result:first.result,input:first.input});runtimeB=evolveOrganizationRuntime({runtime:createEmptyOrganizationRuntime({organizationId:ORG}),result:second.result,input:second.input});}finally{console.log=silent;}`
+
+##### `scripts/product/validateCrossOperationCanonicalEvidenceAncestryFreshProcess.ts`
+
+- Line 25 · **import** · matched `evolveOrganizationRuntime`
+  - `import { evolveOrganizationRuntime } from "../../engine/v3/runtime/evolveOrganizationRuntime";`
+- Line 97 · **unknown** · matched `evolveOrganizationRuntime`
+  - `return evolveOrganizationRuntime({`
+- Line 128 · **unknown** · matched `OrganizationalUnderstanding`
+  - `assert.ok((runtime.memory.organizationalUnderstandingState.canonicalCompositions ?? []).length > 0);`
+- Line 147 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const compositions = before.runtime.memory.organizationalUnderstandingState.canonicalCompositions ?? [];`
+- Line 177 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const compositionBytes = sha(JSON.stringify(runtime.memory.organizationalUnderstandingState.canonicalCompositions));`
+- Line 185 · **unknown** · matched `OrganizationalUnderstanding`
+  - `assert.equal(sha(JSON.stringify(reloaded.runtime.memory.organizationalUnderstandingState.canonicalCompositions)), compositionBytes);`
+
+##### `scripts/product/validateDuplicateEvidenceReplayAwareCognitionEntry.ts`
+
+- Line 6 · **import** · matched `evolveOrganizationRuntime`
+  - `import { evolveOrganizationRuntime } from "../../engine/v3/runtime/evolveOrganizationRuntime";`
+- Line 46 · **unknown** · matched `evolveOrganizationRuntime`
+  - `function createAdapter(repository:MemoryRepository,counters:{investigate:number;preflight:number}){return new CanonicalProductWorkspaceAdapter({runtimeRepository:repository,evidenceContributionPurposeRef:({questionId})=>questionId,authorize:async({userId,organizationId})=>userId===USER&&organizationId===ORG,preflightCanonicalEvidence:async({runtime,question,contribution})=>{counters.preflight+=1;const value=context(runtime,question,contribution);return resolveCanonicalEvidenceAdmission(value.input,value.lineage);},investigate:async({runtime,question,contribution,operationContext,replayOnly})=>{assert.ok(operationContext);if(!replayOnly)counters.investigate+=1;const {input,lineage}=context(runtime,question,contribution);const result=runDiscoveryV3(input,lineage);const admissionBatch=result.scopeLineageAdmission!.operationBatch;const lineageEnvelope=createCanonicalEvidenceContributionLineageEnvelope({context:operationContext,admissionBatch});const original=console.log;let evolved;try{console.log=()=>{};evolved=replayOnly?runtime:evolveOrganizationRuntime({runtime,result,input,semanticTime:AT,canonicalEvidenceContributionOperationContext:operationContext,canonicalEvidenceContributionLineageEnvelope:lineageEnvelope});}finally{console.log=original;}return{runtime:evolved,evidenceAccepted:result.evidence.length>0,canonicalEvidenceAdmissionBatch:admissionBatch,canonicalEvidenceLineageEnvelope:lineageEnvelope};}});}`
+- Line 48 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const cognitionSnapshot=(runtime:StoredOrganizationRuntime["runtime"])=>JSON.stringify({understanding:runtime.memory.organizationalUnderstandingState,explanations:runtime.memory.organizationalExplanations,ownerEvents:runtime.memory.events.filter(event=>{const kind=String((event as {kind?:unknown})?.kind??"");return /answer\|unknown\|decision/.test(kind);})});`
+- Line 70 · **unknown** · matched `evolveOrganizationRuntime`
+  - `const identicalBaseline=afterMaterial;const direct=async()=>{const value=context(identicalBaseline,"What changed?",contribution("source-recompute","recompute",material));const result=runDiscoveryV3(value.input,value.lineage);const original=console.log;try{console.log=()=>{};const evolved=evolveOrganizationRuntime({runtime:structuredClone(identicalBaseline),result,input:value.input,semanticTime:AT});return JSON.stringify({explanations:(evolved.memory.organizationalExplanations??[]).map(item=>item.id),compositions:(evolved.memory.organizationalUnderstandingState.canonicalCompositions??[]).map(item=>[item.id,item.revisionId])});}finally{console.log=original;}};`
+
+##### `scripts/product/validateDuplicateEvidenceReplayAwareCognitionFreshProcessRole.ts`
+
+- Line 6 · **import** · matched `evolveOrganizationRuntime`
+  - `import { evolveOrganizationRuntime } from "../../engine/v3/runtime/evolveOrganizationRuntime";`
+- Line 19 · **unknown** · matched `evolveOrganizationRuntime`
+  - `function service(repository:FilesystemOrganizationRuntimeRepository,counter:{value:number}){return new CanonicalProductWorkspaceAdapter({runtimeRepository:repository,evidenceContributionPurposeRef:()=>QUESTION,authorize:async({userId,organizationId})=>userId===USER&&organizationId===ORG,preflightCanonicalEvidence:async({runtime,question,contribution})=>{const value=context(runtime,question,contribution);return resolveCanonicalEvidenceAdmission(value.input,value.lineage);},investigate:async({runtime,question,contribution,operationContext,replayOnly})=>{assert.ok(operationContext);if(!replayOnly)counter.value+=1;const {input,lineage}=context(runtime,question,contribution);const result=runDiscoveryV3(input,lineage);const admissionBatch=result.scopeLineageAdmission!.operationBatch;const lineageEnvelope=createCanonicalEvidenceContributionLineageEnvelope({context:operationContext,admissionBatch});const original=console.log;let evolved;try{console.log=()=>{};evolved=replayOnly?runtime:evolveOrganizationRuntime({runtime,result,input,semanticTime:AT,canonicalEvidenceContributionOperationContext:operationContext,canonicalEvidenceContributionLineageEnvelope:lineageEnvelope});}finally{console.log=original;}return{runtime:evolved,evidenceAccepted:result.evidence.length>0,canonicalEvidenceAdmissionBatch:admissionBatch,canonicalEvidenceLineageEnvelope:lineageEnvelope};}});}`
+- Line 20 · **unknown** · matched `OrganizationalUnderstanding`
+  - `function summary(runtime:StoredOrganizationRuntime["runtime"]){const explanations=runtime.memory.organizationalExplanations??[];const compositions=runtime.memory.organizationalUnderstandingState.canonicalCompositions??[];const support=JSON.stringify({lineage:runtime.memory.canonicalScopeLineageIndex,understanding:runtime.memory.understandingState,model:runtime.organizationModel});return{explanationCount:explanations.length,compositionCount:compositions.length,explanationDigest:sha(JSON.stringify(explanations.map(item=>item.id))),compositionDigest:sha(JSON.stringify(compositions.map(item=>[item.id,item.revisionId]))),supportDigest:sha(support)};}`
 
 ##### `scripts/product/validateEvidenceRoles.ts`
 
@@ -2177,12 +2643,35 @@ This section records source-code references. It supplements, but does not replac
 - Line 227 · **unknown** · matched `OrganizationalUnderstanding`
   - `const revoked = compileOrganizationalUnderstandingProjection({`
 
+##### `scripts/product/validateLeadershipConversationActualOwnerRouting.ts`
+
+- Line 26 · **unknown** · matched `OrganizationalUnderstanding`
+  - `check(router.includes("canonicalUnderstandingChange") && router.includes("validateCanonicalOrganizationalUnderstandingChangeResult"), "router verifies and consumes the canonical Understanding owner result");`
+- Line 29 · **unknown** · matched `OrganizationalUnderstanding`
+  - `check(composition.includes("CanonicalOrganizationalUnderstandingRevisionService"), "server composition constructs the canonical Understanding revision owner");`
+- Line 30 · **unknown** · matched `OrganizationalUnderstanding`
+  - `check(composition.includes("organizationalUnderstandingChangeType"), "What Changed consumes the actual canonical change type");`
+
+##### `scripts/product/validateLeadershipConversationReplay.ts`
+
+- Line 55 · **unknown** · matched `OrganizationalUnderstanding`
+  - `runtime.memory.organizationalUnderstandingState.canonicalCompositions = [];`
+
 ##### `scripts/product/validateLivingInteractionLoop.ts`
 
 - Line 18 · **unknown** · matched `OrganizationalUnderstanding`
   - `runtime.memory.organizationalUnderstandingState.health.coherence = 0.68;`
 - Line 19 · **unknown** · matched `OrganizationalUnderstanding`
   - `runtime.memory.organizationalUnderstandingState.currentUnderstandings = [{`
+
+##### `scripts/product/validateMultiRoleFoundationalGovernanceContracts.ts`
+
+- Line 16 · **import** · matched `OrganizationalUnderstanding`
+  - `} from "../../engine/v3/understanding/scopedOrganizationalUnderstandingDisclosure";`
+- Line 70 · **unknown** · matched `organizational-understanding`
+  - `purpose: "improve-organizational-understanding",`
+- Line 186 · **unknown** · matched `organizational-understanding`
+  - `return evaluateScopedEvidenceContribution({ organizationId: input.organizationId ?? ORG, contributorId, sourceScope: input.sourceScope ?? targetScope, targetScope, purpose: input.purpose ?? "improve-organizational-understanding", sourceRef: "source:safe", sensitivity: input.sensitivity ?? "standard", propagation: input.propagation ?? "local-only", idempotencyKey: input.idempotencyKey ?? "idempotency:1", contributedAt: NOW, governance });`
 
 ##### `scripts/product/validateOnboardingEvidenceExperience.ts`
 
@@ -2231,6 +2720,15 @@ This section records source-code references. It supplements, but does not replac
   - `const canonicalState = canonical.memory.organizationalUnderstandingState;`
 - Line 171 · **unknown** · matched `organizational-understanding`
   - `authorityOwner: "canonical-organizational-understanding",`
+
+##### `scripts/product/validateProductArtifactAuthorizationBeforeBodyRead.ts`
+
+- Line 152 · **unknown** · matched `OrganizationalUnderstanding`
+  - `const composition = foreignRuntime.runtime.memory.organizationalUnderstandingState.canonicalCompositions?.find((item) => item.id === manifest.foreign!.projectionSourceRef && item.revisionId === manifest.foreign!.canonicalUnderstandingRevision && item.organizationId === manifest.foreign!.organizationId);`
+- Line 450 · **unknown** · matched `OrganizationalUnderstanding`
+  - `assert.ok((foreignRuntime.runtime.memory.organizationalUnderstandingState.canonicalCompositions??[]).some((item) => item.id === foreignPartition.projectionSourceRef && item.revisionId === foreignPartition.canonicalUnderstandingRevision));`
+- Line 562 · **unknown** · matched `OrganizationalUnderstanding`
+  - `{ classId: 35, label: "generic-unresolved-current-owner-state", applies: both, runtime: (value) => { value.memory.organizationalUnderstandingState.canonicalCompositions = []; } },`
 
 ##### `scripts/product/validateProductUnderstandingTranslation.ts`
 
