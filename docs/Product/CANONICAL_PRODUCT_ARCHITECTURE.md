@@ -548,12 +548,22 @@ independent semantic owners:
 6. provider adapters translate external mechanics without acquiring semantic
    authority.
 
-These are protocol candidates, not an implemented universal framework. Each
-candidate must earn promotion through repeated owner-specific implementations,
-an executable conformance suite, bounded migration, and demonstrated Product
-value. Semantic owners, repositories, lifecycles, confidence, lineage, and
-authorization remain independent. No universal ontology, graph, workflow
-language, policy language, or persona truth store is authorized.
+`DEC-PROD-056` freezes the distinction between invariant and implementation.
+The waist admits organization confinement, authorization-before-load/current
+access, non-disclosure, body-safe projection, canonical identity/revision/
+digest/lineage/provenance, atomic expected-revision persistence, exact replay/
+collision/deterministic reconstruction, governed-operation receipts, and
+real-process concurrency/restart/residue validation. These invariants are
+already complete or complete but not yet composed into Chief; no new Alpha-
+blocking foundation was found.
+
+The six protocol shapes above remain implementation candidates, not an
+implemented universal framework or the complete definition of the waist. Each
+permanent shared implementation must independently earn promotion under Product
+governance. Semantic owners, repositories, lifecycles, confidence, lineage,
+and authorization remain independent. No universal ontology, graph, workflow
+language, policy language, persona truth store, migration-before-Alpha, or
+replacement compression benchmark is authorized.
 
 ### Persona composition over shared Understanding
 

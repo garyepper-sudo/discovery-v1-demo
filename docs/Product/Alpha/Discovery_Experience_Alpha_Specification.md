@@ -1306,6 +1306,14 @@ shared Organizational Understanding. Counsel may supply bounded challenge,
 Operator may connect a choice to execution and review, and Scout may recommend a
 material Evidence gap. None owns a separate truth store or autonomous authority.
 
+The minimum entry is one user preparing for one recurring consequential
+meeting around one material `ProductQuestion`. The first session must deliver a
+useful three-minute readiness brief without model administration; private
+working preparation remains private unless intentionally contributed; Capture,
+Review, and What Changed form a low-burden closure; and acceptance requires a
+second cycle whose preparation is better because exact prior context was
+preserved.
+
 Alpha acceptance requires a reproducible Baseline A, two-cycle replay, exact
 organization and record authorization, revocation, cross-account and
 cross-organization isolation, protected-body non-disclosure, truthful
@@ -1319,6 +1327,14 @@ failure, preserve governance, and collect trustworthy Product evidence. After
 Baseline A freezes, optimization is benchmarked, time-bounded, and guarded by
 ablation, sensitivity, holdout/Goodhart controls, hard governance gates, and
 human adjudication. Without a clearly superior candidate, retain A and proceed.
+
+The design-partner promise is: **Walk into the meeting prepared, perceptive,
+and difficult to surprise.** The retention criterion is: **This meeting is
+better because Discovery was present last time.** The strongest acceptance
+statement is: **I do not want to go into this meeting without Discovery.**
+These statements are measured through preparation time, material insight,
+better questions, surprise detection, closure burden, repeat-series use, and
+second-cycle continuity—not employee or personality scoring.
 The next artifact should define the exact visual and interaction specification for:
 
 > **Scene One — Ask**

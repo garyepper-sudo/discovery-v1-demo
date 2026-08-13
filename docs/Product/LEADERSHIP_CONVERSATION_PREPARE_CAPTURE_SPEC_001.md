@@ -28,6 +28,12 @@ post-conversation Draft/signal/Outcome/review linkage; Scout remains deferred
 except for a recommendation tied to a named uncertainty. Every responsibility
 uses the same permission-aware projection and existing canonical owners.
 
+Activation begins with one user, one recurring consequential meeting, one
+material Question, the user's role and purpose, and recent authorized agenda,
+notes, or reports. It must yield useful preparation in one session and must not
+begin with an empty workspace, model-building exercise, persona selector,
+broad questionnaire, or organization-wide rollout.
+
 ## Reused owners
 
 - `ProductQuestion` and `ProductQuestionWorkspace`;
@@ -136,6 +142,19 @@ evidence-grounded, adjacent context, non-predictive, non-alarmist, and
 subordinate to the stated purpose. Discovery does not predict what another
 leader will say.
 
+The default three-minute brief prioritizes six questions: what changed; what
+matters now; where the hidden tension is; what might surprise the user; what to
+ask; and what happened last time. It is a derived `PreparedWorkProduct`, not a
+new canonical Meeting Brief. Evidence basis, uncertainty, reasoning, competing
+explanations, and provenance use progressive disclosure.
+
+Private working preparation may explore counterarguments, missing Evidence,
+failure conditions, communication choices, and whether the user's
+interpretation is mistaken. It remains private Product working state unless
+the user explicitly selects material for governed contribution. Private
+reasoning never automatically becomes Source Content, Evidence, Organizational
+Understanding, Decision, Learning, or an employee-evaluation artifact.
+
 ## Persistence classification
 
 | Candidate | First-proof classification | Boundary |
@@ -178,6 +197,11 @@ Set up → Prepare → Freeze → Capture → Review → What changed → Prepar
 - Review: compact proposals with explicit dispositions.
 - What changed: admitted, changed, unchanged, unresolved, and deferred states.
 - Return: next preparation incorporates approved learning.
+
+Capture, Review, and What Changed should complete as a two-minute closure
+covering what was decided, changed, unchanged, unresolved, worth watching, and
+owed. Follow-through uses existing Draft, commitment, expected-signal, Outcome,
+review-condition, and Question owners; it does not create generic tasks.
 
 Dashboard-first, generic chat-first, task management, raw Runtime, and live
 meeting participation are excluded.
@@ -257,6 +281,10 @@ signals where available, prepares from updated governed state, and preserves
 lineage across both cycles. A simulated organization is sufficient for the
 first proof.
 
+The two-cycle proof is mandatory rather than an optional historical extension.
+It must show a measurable second-cycle advantage from exact authorized history,
+not merely successful replay.
+
 ## Minimum historical checkpoint requirement
 
 Before substantial persona implementation relies on historical semantics, the
@@ -295,6 +323,12 @@ interface, or stored output supplies authority.
 - cognitive effort and willingness to return;
 - improvement between first and second preparation;
 - useful canonical Evidence and corrections admitted.
+- time to first useful brief and post-meeting closure time;
+- repeat use for the same meeting series and use of prior context;
+- user-rated material insight, better-question help, likely-surprise detection,
+  confidence explaining the issue, and willingness to attend without Discovery;
+- commitments, unresolved issues, expected signals, and review conditions
+  carried forward through existing owners.
 
 Retrieval volume is not the primary metric. No Decision Readiness score or
 business-outcome improvement claim is permitted.

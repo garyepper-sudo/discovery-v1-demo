@@ -1295,9 +1295,84 @@ Organizational Understanding. Counsel, Operator, and Scout participate only in
 bounded roles; they do not create autonomous agents, persona-specific truth, or
 parallel organizational memory. Architecture-compression implementation is
 separately authorized work and is not implied by this decision.
+
+### Thin-waist invariant freeze
+
+The thin waist is the smallest stable set of feature-independent mechanical
+invariants through which domain-owned capabilities compose safely. An invariant
+does not imply one shared implementation, repository, service, data model, or
+migration. Existing domain implementations remain valid when they satisfy the
+same narrow contract and preserve owner-specific validation.
+
+The frozen invariant set is:
+
+1. exact organization confinement and organization-scoped addressability;
+2. authorization and current-access evaluation before protected loading;
+3. absent/foreign/denied non-disclosure at safe boundaries;
+4. permission-aware, body-safe projection;
+5. canonical owner-issued identity plus version, revision, digest, lineage,
+   and immutable provenance rules;
+6. trustworthy persistence with atomic replacement and expected-revision
+   conflict protection;
+7. same-input idempotent replay, different-input collision rejection, and
+   deterministic reconstruction;
+8. authenticated governed-operation identity and immutable result receipts;
+9. real-process concurrency, restart, and residue validation.
+
+Historical relationships, checkpoint meaning, Source Binding, publication
+proof, Product Workflow transitions, domain events and receipts, confidence,
+Evidence, Decision, Outcome, Learning, and valid semantic transitions remain
+domain-owned. Chief, Counsel, Operator, Scout, Prepare, Freeze, Capture, Review,
+What Changed, Prepare Again, private working state, and instrumentation remain
+above the waist.
+
+Admission requires either two independently valuable capability consumers or a
+hard first-use necessity for organization confinement, authorization,
+non-disclosure, identity, lineage, replay, concurrency, or consistency. The
+security exception must identify the exact failure prevented and may not be
+used as general architecture discretion. Repeated code and neatness are
+insufficient. Every candidate must exclude Product/persona/meeting semantics,
+preserve domain validation, expose a narrow stable contract, and demonstrate
+positive feature value after implementation, migration, validation,
+governance, review, and coupling costs.
+
+Accepting an invariant does not promote shared code. Any permanent shared
+implementation still requires frozen objectives and baseline, a feature-value
+hypothesis and cost model, negative controls, benchmark or equivalent evidence,
+independent review, explicit human authorization, and canonical integration.
+Existing owners are not migrated without concrete Product need, a bounded
+owner-specific plan, semantic/regression proof, and positive value. Broader
+waist expansion is frozen through the initial design-partner Alpha unless real
+user evidence identifies a repeated need or a hard invariant gap.
 - **Decision:** Product Workflow owns only content-free lifecycle relationships from frozen Leadership Conversation checkpoints to Product Decision Draft, Executive Review, observed Outcome through its owning Review, and Executive Learning.
 - **Access:** Publication and current read independently resolve current access to the checkpoint and exact linked endpoint. Exact scope is required and containment is non-authoritative.
 - **Persistence:** Relationship, immutable receipt, typed event, request fingerprint, and idempotency result commit in one inter-process-safe Product Workflow CAS.
 - **Authority:** Relationships grant no endpoint authority and do not promote Drafts, Decisions, Reviews, Outcomes, Learning, or Understanding ownership.
 - **Disclosure:** Lists are body-free and detail authorizes before exact protected loads; inaccessible and absent relationships are indistinguishable at the safe projection boundary.
 - **Exclusions:** Authoritative Decision linkage, expected Outcome/signal, supersession, universal graphs, ordinary frontend delivery, and Architecture Compression remain deferred.
+
+## DEC-PROD-057 — Chief Alpha activates through one recurring meeting and explicit private contribution
+
+**Status:** Proposed by planning reconciliation; not canonical until separately
+reviewed and integrated.
+
+- **Activation:** One authorized user, one recurring consequential meeting, and
+  one material `ProductQuestion` are the minimum wedge. First-session utility
+  precedes organizational administration or contribution requests.
+- **Composition:** Three-minute preparation, private working state, two-minute
+  closure, and the mandatory second cycle reuse existing Prepared Work,
+  Product Workflow, contribution, Historical Checkpoint, Decision Draft,
+  Outcome, Learning, and current-access owners.
+- **Privacy:** Private reasoning remains private Product working state unless
+  intentionally selected for governed submission. It has no Evidence,
+  Understanding, Decision, Learning, employee-evaluation, or authorization
+  authority by itself.
+- **History:** Intelligent carry-forward composes exact prior checkpoints and
+  existing lifecycle owners. It creates no `CarryForward`, Meeting Brief, or
+  user-truth owner.
+- **Acceptance:** Two cycles around the same meeting and Question must show the
+  second preparation is materially better because authorized context from the
+  first was preserved.
+- **Ethics:** Discovery creates asymmetric preparedness through authorized
+  Evidence, continuity, and better reasoning—not asymmetric access to truth,
+  surveillance, colleague scoring, loyalty prediction, or manipulation.

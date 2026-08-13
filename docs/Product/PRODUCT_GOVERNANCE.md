@@ -269,6 +269,23 @@ never authorization and never grounds to weaken security, privacy, lineage, or
 current-access invariants. Proof before promotion is mandatory: local patterns
 remain owner-specific until repeated evidence and conformance justify reuse.
 
+Thin-waist admission and shared-implementation promotion are separate
+decisions. A stable feature-independent invariant may be canonical while its
+implementations remain domain-owned. Admission requires two independently
+valuable capability consumers, except where one centralized boundary is
+strictly necessary from first use to prevent a named organization-confinement,
+authorization, non-disclosure, identity, lineage, replay, concurrency, or
+consistency failure. The exception is fail-closed and cannot justify general
+framework discretion.
+
+No permanent shared implementation follows automatically. Promotion requires
+a frozen objective and baseline, explicit Product-value hypothesis and total
+cost model, negative controls, benchmark or equivalent evidence, independent
+review, human authorization, and canonical integration. Migration requires a
+separate bounded owner-specific plan, preserved semantics, regression proof,
+and positive value. Before initial design-partner Alpha, uncertainty defaults
+to domain-owned or deferred infrastructure.
+
 The fuller value review records frequency, consequence, differentiation,
 evidence strength, and compounding value. A provisional planning target is
 `feature value / architecture cost >= 2`, recalibrated against actual sprint

@@ -23,6 +23,14 @@ For the first vertical slice:
 > changed through that conversation, routes approved takeaways through existing
 > canonical owners, and prepares the next conversation better.**
 
+The Alpha activation wedge is deliberately narrower: **one authorized user,
+one recurring consequential meeting, and one material `ProductQuestion`**.
+Discovery must provide useful preparation in the first session without asking
+the user to administer an Organizational Understanding model. The user promise
+is: **Walk into the meeting prepared, perceptive, and difficult to surprise.**
+The second-cycle retention moment is: **This meeting is better because
+Discovery was present last time.**
+
 ## Product thesis
 
 Discovery is not enterprise search, generic AI chat, dashboard or reporting
@@ -90,6 +98,10 @@ models, memories, authorities, or interfaces.
    truth model.
 10. **Earn expansion through evidence.** Broader Leadership Workspaces require
     customer and benchmark evidence before implementation.
+11. **Private unless intentionally contributed.** Private preparation and
+    working interpretation remain Product working state. They become an
+    organizational contribution only through explicit selection, governed
+    submission, review, and canonical-owner disposition.
 
 ## Canonical architecture
 
@@ -237,6 +249,15 @@ authorized lineage is hidden by default. The workspace is not dashboard-first,
 chat-first, task management, raw Runtime presentation, or live meeting
 participation.
 
+The first preparation should be readable in approximately three minutes and
+answer, in this order: what changed, what matters now, the hidden tension, a
+likely surprise, what to ask, and what happened last time. Source basis,
+uncertainty, competing explanations, provenance, and deeper context use
+progressive disclosure. Capture, Review, and What Changed should form a
+two-minute closure that preserves what was decided, changed, unchanged,
+unresolved, worth watching, and owed without becoming meeting or task
+management.
+
 ## First-slice exclusions
 
 The first slice is development-only and uses shared organization-wide
@@ -289,11 +310,27 @@ The Alpha succeeds only when all ten criteria hold:
 10. Prepare Again reopens the same Question from evolved governed state and the
     authorized exact prior checkpoint rather than reconstructing from scratch.
 
+Acceptance requires two completed cycles around the same recurring meeting and
+Question. Cycle two must retrieve the exact prior checkpoint, distinguish new
+Evidence or Outcomes from the prior basis, carry forward unresolved issues,
+commitments, expected signals, and review conditions through their existing
+owners, and show why preparation improved. No `CarryForward`, Meeting Brief,
+or private-understanding owner is created.
+
 The principal design-partner success statement is: **the next important
 conversation was easier and more useful to prepare for; the leader trusts what
 changed, what did not, what was rejected, and what remains unresolved; and
 chooses to return for the next preparation.** This is an Alpha validation
 criterion, not a Production or business-outcome claim.
+
+The stronger design-partner test is: **I do not want to go into this meeting
+without Discovery.** Instrumentation remains lightweight and privacy-safe:
+time to first useful brief, preparation and closure time, material-insight and
+better-question ratings, likely-surprise detection, repeat use for the same
+series, second-cycle reuse, carried-forward commitments/unresolved issues, and
+whether the user would willingly attend without Discovery. These metrics
+evaluate Product utility; they never score loyalty, personality, performance,
+or employee comprehension.
 
 The complete negative-control set is mandatory: no manufactured disagreement;
 false alignment; unsupported change or non-change; generated persona output as

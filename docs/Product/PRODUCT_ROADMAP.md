@@ -57,6 +57,14 @@ it is missing. Preserve what changed.** The Alpha proves one complete governed
 change-in-understanding loop through `Set up → Prepare → Freeze → Capture →
 Review → What Changed → Prepare Again`.
 
+The minimum adoption wedge is one user returning to one recurring consequential
+meeting around one material Question. The first session must produce a concise,
+useful preparation; the mandatory second cycle must be better because prior
+checkpoint, unresolved issue, commitment, expectation, Outcome, and change
+history are available through existing owners. The Product ambition is
+asymmetric preparedness through authorized Evidence and better reasoning—not
+asymmetric access to truth.
+
 Professional Alpha Readiness precedes design-partner rollout. Governance,
 authorization, lineage, tenant isolation, security, a critical-path test
 pyramid, observability, privacy-safe telemetry, failure recovery, data quality,
@@ -79,8 +87,7 @@ zero denied-material successor influence, owner-backed revocation, and
 fresh-process A–D isolation are implemented for the bounded Alpha artifact set.
 
 Paused or incomplete: complete frontend delivery acceptance, the governed
-Product resolver continuation, the Contemporaneous Epistemic History
-foundation, a permanent governed-cognition
+Product resolver continuation, a permanent governed-cognition
 adversarial release benchmark, Alpha Readiness closure, Alpha Baseline A, and
 design-partner Alpha. Earlier roadmap programs remain supporting technical
 gates and historical sequencing; they do not override this application
@@ -679,6 +686,9 @@ mechanics may converge only after evidence, conformance, and bounded migration.
 3. **Chief V1 through composition.** Complete the coherent Set up → Prepare →
    Freeze → Capture → Review → What Changed → Prepare again loop. Governed
    Cognition may proceed only where it is a hard security dependency.
+   Deliver recurring-meeting activation, a three-minute brief,
+   private-by-default working state with explicit contribution, a two-minute
+   closure, and mandatory two-cycle value proof through existing owners.
 4. **Alpha Readiness Foundation.** Prove authentication, exact organization and
    record access, disclosure, revocation, auditability, recovery, and negative
    controls.
@@ -703,10 +713,12 @@ mechanics may converge only after evidence, conformance, and bounded migration.
    calibration, and learning over time.
 9. **Forward-deployed learning and evidence-driven professionalization.** Broaden
    only from design-partner evidence.
-10. **Shared-protocol audit and conformance design.** Inventory repeated
-   implementations and select at most the smallest justified protocol.
-11. **Separate implementation planning.** Only after evidence, authorize a
-   bounded conformance foundation; capability-manifest work remains later.
+10. **Evidence-driven mechanical compression only.** The completed shared
+   governed-process shadow was technically correct (20/20 runs, 8/8 defects,
+   zero false positives) but failed the frozen burden and onboarding promotion
+   gates. Its code was reverted and no permanent consumer remains. Do not
+   reopen or replace it; future compression requires new independent value
+   evidence.
 
 ### Alpha promise and negative controls
 
@@ -746,8 +758,9 @@ revocation design, privacy hard gates, and adversarial re-identification tests.
 Intelligent carry-forward is the highest-priority competitive mechanic to
 evaluate, but creates no `CarryForward` owner. **Brief Me** and **Protect My
 Attention** are Projection plus Workflow directions. **Help Me Communicate** is
-Derived Analysis plus Workflow. Private thinking remains sensitive and deferred
-until separately governed. Calendar-linked continuity is a future context seam,
+Derived Analysis plus Workflow. Private working preparation is required for
+Alpha but remains non-authoritative Product state unless intentionally
+submitted through existing contribution governance. Calendar-linked continuity is a future context seam,
 not authority; proactive preparation is a later bounded mechanic, not a
 notification engine.
 
