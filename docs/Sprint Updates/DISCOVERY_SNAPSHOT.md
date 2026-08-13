@@ -378,3 +378,7 @@ RECONCILIATION 001** in planning and preserved-partial-transfer mode only.
 ## Prepared Work publication-integrity checkpoint
 
 Body-free Prepared Work lineage, atomic body persistence, Product Workflow CAS, events and receipts, freeze source proof, server-resolved current-owner state, exact-scope access, containment non-authority, and Source Binding revocation are validated. A first-principles foreign canonical partition remains valid in its own owner graph yet is denied for local artifact access with zero protected reads. All 59 matrix cells pass. The retained Runtime and both paused L1 states remain preserved; next work is the post-Prepared-Work-lineage L1 reentry reconciliation, not Architecture Compression or route promotion.
+
+## Historical Checkpoint L1 closure
+
+Four body-free historical relationship kinds are canonically integrated: Draft, Review, observed Outcome through Review, and Learning. They are organization-local lineage facts, not access grants. Current access is resolved through the actual checkpoint and endpoint owners before protected reads; Draft follows upstream artifact governance and Outcome follows Review. Endpoint-specific, organization-addressability, X/Y cross-record, shared-CAS, and five-transition fresh-process proofs pass with immutable history and zero denied protected loads. Retained Runtime and preserved candidates remain exact. Authoritative Decision linkage, expected Outcome/signal, supersession, ordinary frontend history delivery, universal history, and Architecture Compression are still deferred.

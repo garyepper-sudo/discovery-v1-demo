@@ -291,3 +291,7 @@ frontend disclosure boundary changed.
 ## Prepared Work publication integrity
 
 Prepared Work and frozen-snapshot publications now carry body-free material lineage and immutable semantic receipts backed by atomic protected-body storage and Product Workflow CAS. Freeze validates its source publication proof. Current access resolves canonical owner state, exact scope, current Source Binding availability, and publication integrity before protected reads; containment is non-authoritative. A separately constructed canonical foreign organization partition is internally valid but cannot authorize local artifacts. The complete 30/59 matrix denies without body reads. Retained Runtime and preserved L1 worktrees remain unchanged and L1 remains paused.
+
+## Historical Checkpoint L1
+
+L1 is complete as an organization-local Product Workflow relationship boundary for Draft, Review, Outcome-through-Review, and Learning. Relationship persistence is non-authoritative: each list or detail request recomputes checkpoint and endpoint current access first. Five canonical transition scenarios, foreign-endpoint non-addressability, X/Y isolation, eight-worker CAS, and independent five-world A/B/C/D reload all pass. Denied requests perform zero protected reads and immutable relationship/event/receipt history is retained. Frontend history delivery and broader semantic linkage remain deferred.
