@@ -37,7 +37,7 @@ import {
 
 const organizationId = "sandbox-northstar-implementation-services-001";
 const otherOrganizationId = "decision-draft-other";
-const questionId = "product-question:northstar-implementation-duration";
+let questionId: string;
 const answerId = "answer-decision-draft";
 const firstAt = "2026-08-06T12:00:00.000Z";
 const secondAt = "2026-08-06T12:05:00.000Z";
@@ -166,6 +166,7 @@ async function main(): Promise<void> {
   const bodyRoot = await mkdtemp(path.join(tmpdir(), "discovery-product-decision-draft-body-validator-"));
   try {
   const provisioned = await provisionNorthstarPreparationLineageFixture({ environment: "test", fixtureRoot });
+  questionId = provisioned.seed.productQuestionId;
   const seed = await readNorthstarPreparationLineageSeed({
     fixtureRoot,
     organizationId,

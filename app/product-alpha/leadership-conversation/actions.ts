@@ -3,6 +3,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { createLeadershipConversationServerComposition } from "../../../product/integration/leadershipConversationServerComposition";
 import type { CanonicalProductWorkspaceAdapter } from "../../../product/integration/canonicalProductWorkspaceAdapter";
+import type { ChiefFirstPrepareActivationV1 } from "../../../product/workflow/leadershipConversation";
 
 function guard(): void {
   if (process.env.NODE_ENV === "production") {
@@ -25,6 +26,7 @@ export async function getLeadershipConversationWorkspaceAction(input: {
   const userId = await signedInUserId();
   return createLeadershipConversationServerComposition().workspace({ ...input, userId });
 }
+export async function activateAndPrepareLeadershipConversationAction(input:ChiefFirstPrepareActivationV1){return createLeadershipConversationServerComposition().activateAndPrepare({...input,userId:await signedInUserId()});}
 
 export async function routeApprovedTakeawayProposalAction(input: {
   organizationId: string;

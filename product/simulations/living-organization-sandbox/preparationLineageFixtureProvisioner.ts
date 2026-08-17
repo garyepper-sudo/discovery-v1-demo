@@ -21,12 +21,13 @@ import { createFilesystemSourceContentRepository } from "../../../engine/v3/sour
 import { decodeAndNormalizeSourceContent, sourceContentDigest } from "../../../engine/v3/sources/sourceContentDeterminism";
 import { buildGenericScopedProductSource } from "../../integration/runtimeToScopedProductSource";
 import { readScopedOrganizationalProductProjection } from "../../integration/scopedOrganizationalProductProjection";
+import { CanonicalProductWorkspaceAdapter } from "../../integration/canonicalProductWorkspaceAdapter";
 import { northstarScopeTopology } from "./sourceScopeBindings";
 import { SANDBOX_ORGANIZATION_ID, SANDBOX_PRIMARY_QUESTION, sandboxManifest } from "./manifest";
 
 const PURPOSE = "leadership-conversation-capture" as const;
 const ACTOR = "person:northstar-preparation-lineage-fixture";
-const QUESTION_ID = "product-question:northstar-implementation-duration";
+export const NORTHSTAR_PRODUCT_QUESTION_FIXTURE_KEY = "northstar-implementation-duration";
 const POLICY = "conservative-material-ancestor.v1";
 const FIXTURE_ID = "northstar-preparation-lineage-fixture-v1";
 const PROVISIONING_KEY = "northstar-preparation-lineage:v1";
@@ -147,7 +148,7 @@ function validateSeed(seed: NorthstarPreparationLineageSeedV1): void {
   const { seedDigest, ...unsigned } = seed;
   const bindingIds = new Set(seed.sourceBindings.map(item => item.sourceBindingId));
   const versionIds = new Set<string>();
-  if (seed.contractVersion !== "1" || seed.organizationId !== SANDBOX_ORGANIZATION_ID || seed.semanticOwner !== "leadership-conversation" || seed.productQuestionId !== QUESTION_ID || seed.lineagePolicyVersion !== POLICY || seedDigest !== digest(unsigned) || !bindingIds.size || bindingIds.size !== seed.sourceBindings.length || !seed.sourceContentVersions.length || !seed.canonicalMaterial.length || !seed.canonicalUnderstandingRevision || !seed.projectionSourceRef || !seed.scopeDigest || seed.purpose!==PURPOSE || seed.sensitivity!=="standard") throw new Error("Northstar preparation lineage seed integrity failed.");
+  if (seed.contractVersion !== "1" || seed.organizationId !== SANDBOX_ORGANIZATION_ID || seed.semanticOwner !== "leadership-conversation" || !seed.productQuestionId || seed.lineagePolicyVersion !== POLICY || seedDigest !== digest(unsigned) || !bindingIds.size || bindingIds.size !== seed.sourceBindings.length || !seed.sourceContentVersions.length || !seed.canonicalMaterial.length || !seed.canonicalUnderstandingRevision || !seed.projectionSourceRef || !seed.scopeDigest || seed.purpose!==PURPOSE || seed.sensitivity!=="standard") throw new Error("Northstar preparation lineage seed integrity failed.");
   for (const version of seed.sourceContentVersions) {
     if (!version.sourceBindingId || !bindingIds.has(version.sourceBindingId) || !version.sourceContentVersionId || versionIds.has(version.sourceContentVersionId) || !/^[a-f0-9]{64}$/u.test(version.normalizedContentDigest)) throw new Error("Northstar preparation lineage seed integrity failed.");
     versionIds.add(version.sourceContentVersionId);
@@ -245,6 +246,22 @@ export async function provisionNorthstarPreparationLineageFixture(input: Northst
     runtime.memory.canonicalScopeLineageIndex = createCanonicalScopeLineageIndex({ organizationId: SANDBOX_ORGANIZATION_ID, topology: northstarScopeTopology });
     stored = await runtimeRepository.create(SANDBOX_ORGANIZATION_ID, runtimeBytes(runtime), { requestId: "northstar-preparation-lineage:create", operatorId: ACTOR });
   }
+  const productQuestionOwner = new CanonicalProductWorkspaceAdapter({
+    runtimeRepository,
+    authorize: async ({ userId, organizationId }) => userId === ACTOR && organizationId === SANDBOX_ORGANIZATION_ID,
+    investigate: async () => { throw new Error("Northstar Product Question setup does not perform investigation."); },
+  });
+  const questionResult = await productQuestionOwner.createQuestion({
+    userId: ACTOR,
+    organizationId: SANDBOX_ORGANIZATION_ID,
+    question: SANDBOX_PRIMARY_QUESTION,
+    createdAt: at,
+    idempotencyKey: NORTHSTAR_PRODUCT_QUESTION_FIXTURE_KEY,
+    operation: { requestId: "northstar-product-question:setup", operatorId: ACTOR },
+  });
+  const productQuestionId = questionResult.workspace.question.id;
+  if (!productQuestionId) throw new Error("Northstar owner-issued Product Question identity is unavailable.");
+  stored = (await runtimeRepository.read(SANDBOX_ORGANIZATION_ID))!;
   const clock = { now: () => at };
   const bindingService = new CanonicalLocalSourceBindingService(runtimeRepository, clock);
   const bindingResolver = { loadRevisions: async ({ organizationId, sourceBindingId }: { organizationId: string; sourceBindingId: string }) => {
@@ -264,8 +281,8 @@ export async function provisionNorthstarPreparationLineageFixture(input: Northst
     if (sourceContentDigest(bytes) !== document.sha256) throw new Error("Committed Northstar source integrity failed.");
     const normalized = decodeAndNormalizeSourceContent(bytes);
     stored = (await runtimeRepository.read(SANDBOX_ORGANIZATION_ID))!;
-    const binding = await bindingService.registerCanonicalLocalSourceBinding({ contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID, productQuestionId: QUESTION_ID, sourceType: "markdown-upload", purposeRef: PURPOSE, normalizedContentDigest: sourceContentDigest(new TextEncoder().encode(normalized.normalizedText)), requestedScopeAssertions: [{ relationship: "applies-to", scope }], sensitivity: "standard", recordedAt: at, recordedByActorRef: ACTOR, idempotencyKey: `northstar-preparation-binding:${document.id}:v1`, expectedRuntimeRevision: stored.revision, operation: { requestId: `northstar-preparation-binding:${document.id}`, operatorId: ACTOR }, authorization: authorization("source-binding:register-local", at) });
-    const resolvedBinding = await bindingService.resolveCanonicalCurrentSourceBinding({ contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID, productQuestionId: QUESTION_ID, sourceType: "markdown-upload", purposeRef: PURPOSE, normalizedContentDigest: binding.normalizedContentDigest, requestedScopeAssertions: [{ relationship: "applies-to", scope }], sensitivity: "standard", resolvedAt: at, authorization: authorization("source-binding:resolve-current", at) });
+    const binding = await bindingService.registerCanonicalLocalSourceBinding({ contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID, productQuestionId, sourceType: "markdown-upload", purposeRef: PURPOSE, normalizedContentDigest: sourceContentDigest(new TextEncoder().encode(normalized.normalizedText)), requestedScopeAssertions: [{ relationship: "applies-to", scope }], sensitivity: "standard", recordedAt: at, recordedByActorRef: ACTOR, idempotencyKey: `northstar-preparation-binding:${document.id}:v1`, expectedRuntimeRevision: stored.revision, operation: { requestId: `northstar-preparation-binding:${document.id}`, operatorId: ACTOR }, authorization: authorization("source-binding:register-local", at) });
+    const resolvedBinding = await bindingService.resolveCanonicalCurrentSourceBinding({ contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID, productQuestionId, sourceType: "markdown-upload", purposeRef: PURPOSE, normalizedContentDigest: binding.normalizedContentDigest, requestedScopeAssertions: [{ relationship: "applies-to", scope }], sensitivity: "standard", resolvedAt: at, authorization: authorization("source-binding:resolve-current", at) });
     const expectedRepositoryRevision = await sourceRepository.inspectRevision(SANDBOX_ORGANIZATION_ID);
     const version = await contentService.write({ contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID, sourceBindingId: binding.sourceBindingId, purposeRef: PURPOSE, mediaType: "text/markdown", bytes, storedAt: at, storedByActorRef: ACTOR, idempotencyKey: `northstar-preparation-content:${document.id}:v1`, expectedRepositoryRevision, authorization: authorization("source-content:write", at) });
     const read = await contentService.read({ contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID, sourceBindingId: binding.sourceBindingId, sourceContentVersionId: version.sourceContentVersionId, purposeRef: PURPOSE, authorization: authorization("source-content:read-for-evidence-admission", at) });
@@ -302,7 +319,7 @@ export async function provisionNorthstarPreparationLineageFixture(input: Northst
   if(eligibility.disposition!=="eligible")throw new Error("Canonical Northstar Understanding is not currently eligible.");
   const projection=readScopedOrganizationalProductProjection({authenticatedUserId:ACTOR,organizationId:SANDBOX_ORGANIZATION_ID,context:disclosure,repository:{readAuthorizedSource:()=>buildGenericScopedProductSource({stored,organizationId:SANDBOX_ORGANIZATION_ID,requestedScope:scope,currentEligibility:eligibility})}});
   if(projection.disposition!=="available")throw new Error("Canonical Northstar scoped projection is unavailable.");
-  const unsigned: Omit<NorthstarPreparationLineageSeedV1, "seedDigest"> = { contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID as typeof SANDBOX_ORGANIZATION_ID, semanticOwner: "leadership-conversation", productQuestionId: QUESTION_ID, creationOperationId: `northstar-preparation-lineage:v1:${digest([SANDBOX_ORGANIZATION_ID, documents.map(item=>item.id)])}`, lineagePolicyVersion: POLICY, sourceBindings: bindings.sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)), sourceContentVersions: versions.sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)||a.sourceContentVersionId.localeCompare(b.sourceContentVersionId)||a.normalizedContentDigest.localeCompare(b.normalizedContentDigest)), canonicalMaterial: admissions.map(item=>({ canonicalObjectId: item.canonicalEvidenceId, revisionRef: item.canonicalAdmissionId, owner: "canonical-evidence-admission" as const })).sort((a,b)=>a.canonicalObjectId.localeCompare(b.canonicalObjectId)), canonicalUnderstandingRevision: current.revisionId, projectionSourceRef: current.id, scopeDigest:digest(scope), purpose:PURPOSE, sensitivity:"standard" };
+  const unsigned: Omit<NorthstarPreparationLineageSeedV1, "seedDigest"> = { contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID as typeof SANDBOX_ORGANIZATION_ID, semanticOwner: "leadership-conversation", productQuestionId, creationOperationId: `northstar-preparation-lineage:v1:${digest([SANDBOX_ORGANIZATION_ID, documents.map(item=>item.id)])}`, lineagePolicyVersion: POLICY, sourceBindings: bindings.sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)), sourceContentVersions: versions.sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)||a.sourceContentVersionId.localeCompare(b.sourceContentVersionId)||a.normalizedContentDigest.localeCompare(b.normalizedContentDigest)), canonicalMaterial: admissions.map(item=>({ canonicalObjectId: item.canonicalEvidenceId, revisionRef: item.canonicalAdmissionId, owner: "canonical-evidence-admission" as const })).sort((a,b)=>a.canonicalObjectId.localeCompare(b.canonicalObjectId)), canonicalUnderstandingRevision: current.revisionId, projectionSourceRef: current.id, scopeDigest:digest(scope), purpose:PURPOSE, sensitivity:"standard" };
   const seed = { ...unsigned, seedDigest: digest(unsigned) };
   await persistSeedRecord(root, seed);
   return { disposition: replay ? "idempotent-replay" : "provisioned", seed, counts: { sources: bindings.length, material: admissions.length, understandings: compositions.length }, runtimeRevision: stored.revision };

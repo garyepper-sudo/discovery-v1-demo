@@ -1,5 +1,9 @@
+import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 import { LeadershipConversationExperience } from "../../../components/product-alpha/leadership-conversation/LeadershipConversationExperience";
 import { readLeadershipConversationFixture } from "../../../product/frontend/leadershipConversationFixtureAdapter";
+import { readNorthstarPreparationLineageSeed } from "../../../product/simulations/living-organization-sandbox/preparationLineageFixtureProvisioner";
+import { SANDBOX_ORGANIZATION_ID } from "../../../product/simulations/living-organization-sandbox/manifest";
+import { createLeadershipConversationServerComposition } from "../../../product/integration/leadershipConversationServerComposition";
 export const dynamic="force-dynamic";
-export default function LeadershipConversationPage(){if(process.env.NODE_ENV==="production"&&process.env.DISCOVERY_PRODUCT_ALPHA_FIXTURES_ENABLED!=="true")notFound();return <LeadershipConversationExperience workspace={readLeadershipConversationFixture()}/>;}
+export default async function LeadershipConversationPage(){if(process.env.NODE_ENV==="production"&&process.env.DISCOVERY_PRODUCT_ALPHA_FIXTURES_ENABLED!=="true")notFound();const {userId}=await auth();if(!userId||!await createLeadershipConversationServerComposition().authorizePageCurrentAccess({userId,organizationId:SANDBOX_ORGANIZATION_ID}))notFound();const fixtureRoot=process.env.DISCOVERY_NORTHSTAR_PREPARATION_LINEAGE_FIXTURE_ROOT;if(!fixtureRoot)throw new Error("Northstar preparation lineage seed is unavailable.");const seed=await readNorthstarPreparationLineageSeed({fixtureRoot,organizationId:SANDBOX_ORGANIZATION_ID,fixtureId:"northstar-preparation-lineage-fixture-v1",provisioningKey:"northstar-preparation-lineage:v1"});return <LeadershipConversationExperience workspace={readLeadershipConversationFixture(seed.productQuestionId)} activation={{organizationId:seed.organizationId,questionId:seed.productQuestionId,sourceOptions:[{sourceRef:"northstar-runtime:824a4c2e",label:"Current authorized organizational projection"}]}}/>;}

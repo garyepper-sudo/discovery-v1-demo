@@ -25,12 +25,13 @@ import {
 import { SANDBOX_ORGANIZATION_ID } from "../../product/simulations/living-organization-sandbox/manifest";
 
 const runFile = promisify(execFile);
-const NORTHSTAR_LINEAGE_QUESTION_ID = "product-question:northstar-implementation-duration";
+let questionId:string;
 const scope = { organizationId: fixture.organizationId, type: "organization" as const, id: fixture.organizationId };
 const digest = (value: unknown) => leadershipDigest(leadershipStableSerialize(value));
 const handoff = <T extends object>(value: T) => ({ ...value, handoffDigest: digest(value) });
 const roots = (root: string) => ({ runtimeRoot: path.join(root, "runtime"), workflowRoot: path.join(root, "workflow"), sourceContentRoot: path.join(root, "content") });
-const identity = { userId: fixture.actorId, organizationId: fixture.organizationId, questionId: NORTHSTAR_LINEAGE_QUESTION_ID, conversationId: fixture.conversationId };
+let identity:{userId:string;organizationId:string;questionId:string;conversationId:string};
+function bindOwnerIssuedQuestion(value:string){questionId=value;identity={userId:fixture.actorId,organizationId:fixture.organizationId,questionId,conversationId:fixture.conversationId};}
 
 async function validationComposition(locations: ReturnType<typeof roots>, lineageFixtureRoot?: string) {
   const { createLeadershipConversationServerCompositionForValidation } = await import("../../product/integration/leadershipConversationServerComposition");
@@ -54,8 +55,8 @@ async function processA(root: string,lineageFixtureRoot?:string): Promise<Worker
   let runtime = createEmptyOrganizationRuntime({ organizationId: fixture.organizationId, name: "Northstar", now: fixture.at });
   runtime.memory.organizationalUnderstandingState.canonicalCompositions = [];
   runtime.memory.canonicalScopeLineageIndex = createCanonicalScopeLineageIndex({ organizationId: fixture.organizationId, topology });
-  runtime = createDurableProductQuestion({ runtime, title: "What is constraining Northstar delivery?", questionId: NORTHSTAR_LINEAGE_QUESTION_ID, createdAt: fixture.at }).runtime;
-  runtime = appendProductQuestionEvent(runtime, { type: "answer_recorded", organizationId: fixture.organizationId, questionId: NORTHSTAR_LINEAGE_QUESTION_ID, occurredAt: fixture.at, answer: { answerId: "product-answer:northstar-leadership:1", canonicalSource: "canonical-product-answer", revision: 1, reasonForChange: "Initial supported Answer", changeReceiptId: "product-answer-receipt:northstar-leadership:1", timestamp: fixture.at, confidence: { level: "moderate", score: 0.7, meaning: "Supported", principalLimiter: "Additional sequencing evidence is required.", authoritativeSource: "canonical-product-workflow" } } });
+  runtime = createDurableProductQuestion({ runtime, title: "What is constraining Northstar delivery?", questionId: questionId, createdAt: fixture.at }).runtime;
+  runtime = appendProductQuestionEvent(runtime, { type: "answer_recorded", organizationId: fixture.organizationId, questionId: questionId, occurredAt: fixture.at, answer: { answerId: "product-answer:northstar-leadership:1", canonicalSource: "canonical-product-answer", revision: 1, reasonForChange: "Initial supported Answer", changeReceiptId: "product-answer-receipt:northstar-leadership:1", timestamp: fixture.at, confidence: { level: "moderate", score: 0.7, meaning: "Supported", principalLimiter: "Additional sequencing evidence is required.", authoritativeSource: "canonical-product-workflow" } } });
   await runtimeRepository.create(fixture.organizationId, new TextEncoder().encode(JSON.stringify(runtime, null, 2)), { requestId: "process-a-runtime", operatorId: fixture.actorId });
   const composition = await validationComposition(locations,lineageFixtureRoot);
   await composition.recordContext({ ...identity, idempotencyKey: "process-a-context", title: "Northstar staff conversation", purpose: "Resolve the next delivery constraint.", intendedOutcome: "Agree one bounded owner action.", timeframe: "Weekly", participants: [{ participantRef: "leader", displayName: "Leader", titleLabel: "Director" }], leaderContext: null });
@@ -71,7 +72,7 @@ async function processA(root: string,lineageFixtureRoot?:string): Promise<Worker
   stored = await workflow.read(fixture.organizationId);
   const frozen = stored.store.frozenSnapshotPublications!.at(-1)!;
   assert.equal(stored.store.preparedWorkProducts.length,0);assert.equal(stored.store.frozenSnapshots.length,0);
-  const manifest = handoff({ organizationId: fixture.organizationId, questionId: NORTHSTAR_LINEAGE_QUESTION_ID, conversationId: fixture.conversationId, contextVersionId: context.contextVersionId, preparedWorkProductVersionId: prepared.artifactRevision, frozenSnapshotId: frozen.artifactId, frozenSnapshotDigest: frozen.snapshotDigest, productWorkflowRepositoryRevision: stored.revision, eventCount: stored.store.events.length });
+  const manifest = handoff({ organizationId: fixture.organizationId, questionId: questionId, conversationId: fixture.conversationId, contextVersionId: context.contextVersionId, preparedWorkProductVersionId: prepared.artifactRevision, frozenSnapshotId: frozen.artifactId, frozenSnapshotDigest: frozen.snapshotDigest, productWorkflowRepositoryRevision: stored.revision, eventCount: stored.store.events.length });
   return { role: "prepare-and-freeze", handoff: manifest, assertions: ["context-persisted", "preparation-v1-persisted", "preparation-v2-persisted", "frozen-snapshot-persisted"] };
 }
 
@@ -106,7 +107,7 @@ async function processB(root: string, encodedA: string): Promise<WorkerResult> {
   const sourceRevision = await createFilesystemSourceContentRepository({ root: locations.sourceContentRoot, environment: "test" }).inspectRevision(fixture.organizationId);
   const proposals = stored.store.proposals.map(item => ({ proposalId: item.proposalId, kind: item.kind, payloadDigest: item.payloadDigest }));
   const dispositions = stored.store.dispositions.map(item => ({ dispositionReceiptId: item.dispositionReceiptId, proposalId: item.proposalId, disposition: item.disposition, digest: digest(item) }));
-  const manifest = handoff({ processAHandoffDigest: a.handoffDigest, organizationId: fixture.organizationId, questionId: NORTHSTAR_LINEAGE_QUESTION_ID, conversationId: fixture.conversationId, frozenSnapshotId: a.frozenSnapshotId, sourceBindingId: upload.sourceBindingId, sourceBindingVersion: binding.bindingVersion, sourceBindingReceiptDigest: upload.sourceBindingMutationReceiptDigest, sourceContentVersionId: upload.sourceContentVersionId, exactContentDigest: upload.exactContentDigest, normalizedContentDigest: upload.normalizedContentDigest, uploadReceiptId: upload.uploadReceiptId, uploadReceiptDigest: digest(upload), proposals, dispositions, productWorkflowRepositoryRevision: stored.revision, runtimeRepositoryRevision: runtime.revision, sourceContentRepositoryRevision: sourceRevision });
+  const manifest = handoff({ processAHandoffDigest: a.handoffDigest, organizationId: fixture.organizationId, questionId: questionId, conversationId: fixture.conversationId, frozenSnapshotId: a.frozenSnapshotId, sourceBindingId: upload.sourceBindingId, sourceBindingVersion: binding.bindingVersion, sourceBindingReceiptDigest: upload.sourceBindingMutationReceiptDigest, sourceContentVersionId: upload.sourceContentVersionId, exactContentDigest: upload.exactContentDigest, normalizedContentDigest: upload.normalizedContentDigest, uploadReceiptId: upload.uploadReceiptId, uploadReceiptDigest: digest(upload), proposals, dispositions, productWorkflowRepositoryRevision: stored.revision, runtimeRepositoryRevision: runtime.revision, sourceContentRepositoryRevision: sourceRevision });
   return { role: "capture-and-review", handoff: manifest, assertions: ["process-a-verified", "binding-persisted", "content-persisted", "upload-receipt-persisted", "proposals-persisted", "dispositions-persisted"] };
 }
 
@@ -114,12 +115,12 @@ async function processC(root: string, lineageFixtureRoot: string, expectedSeedDi
   const a = parseHandoff(encodedA), b = parseHandoff(encodedB);
   assert.equal(b.processAHandoffDigest, a.handoffDigest);
   assert.equal(a.organizationId, fixture.organizationId); assert.equal(b.organizationId, fixture.organizationId);
-  assert.equal(a.questionId, NORTHSTAR_LINEAGE_QUESTION_ID); assert.equal(b.questionId, NORTHSTAR_LINEAGE_QUESTION_ID);
+  assert.equal(a.questionId, questionId); assert.equal(b.questionId, questionId);
   assert.equal(a.conversationId, fixture.conversationId); assert.equal(b.conversationId, fixture.conversationId);
   assert.equal(fixture.organizationId, SANDBOX_ORGANIZATION_ID);
   const seed = await readNorthstarPreparationLineageSeed({ fixtureRoot: lineageFixtureRoot, organizationId: SANDBOX_ORGANIZATION_ID, fixtureId: "northstar-preparation-lineage-fixture-v1", provisioningKey: "northstar-preparation-lineage:v1", expectedSeedDigest });
   assert.equal(seed.organizationId, fixture.organizationId);
-  assert.equal(seed.productQuestionId, NORTHSTAR_LINEAGE_QUESTION_ID);
+  assert.equal(seed.productQuestionId, questionId);
   assert.equal(seed.seedDigest, expectedSeedDigest);
   assert.ok(seed.sourceBindings.length > 0 && seed.sourceContentVersions.length > 0 && seed.canonicalMaterial.length > 0);
   const locations = roots(root);
@@ -180,11 +181,12 @@ async function processC(root: string, lineageFixtureRoot: string, expectedSeedDi
   await assert.rejects(() => composition.routeApproved({ ...identity, proposalId: proposal("decision-draft").proposalId, purposeRef: "different-purpose", expectedWorkflowRevision: stored.revision, idempotencyKey: "process-c-route-decision" }), /conflict/);
   runtime = await runtimeRepository.read(fixture.organizationId); assert.ok(runtime);
   if (!("receiptDigest" in decision) || !("receiptDigest" in unknown)) throw new Error("actual owner receipt unavailable");
-  const manifest = handoff({ processAHandoffDigest: a.handoffDigest, processBHandoffDigest: b.handoffDigest, organizationId: fixture.organizationId, questionId: NORTHSTAR_LINEAGE_QUESTION_ID, conversationId: fixture.conversationId, materialEvidenceReceiptDigest: material.productMaterializationReceiptDigest!, duplicateEvidenceReceiptDigest: duplicate.productMaterializationReceiptDigest!, decisionDraftReceiptDigest: decision.receiptDigest, unknownReceiptDigest: unknown.receiptDigest, futurePreparationLinkId: stored.store.futurePreparationLinks.at(-1)!.futurePreparationLinkId, productWorkflowRepositoryRevision: stored.revision, runtimeRepositoryRevision: runtime.revision, sourceContentRepositoryRevision: await sourceRepository.inspectRevision(fixture.organizationId), routingReceiptCount: stored.store.canonicalRoutingReceipts.length, idempotentReentry: true });
+  const manifest = handoff({ processAHandoffDigest: a.handoffDigest, processBHandoffDigest: b.handoffDigest, organizationId: fixture.organizationId, questionId: questionId, conversationId: fixture.conversationId, materialEvidenceReceiptDigest: material.productMaterializationReceiptDigest!, duplicateEvidenceReceiptDigest: duplicate.productMaterializationReceiptDigest!, decisionDraftReceiptDigest: decision.receiptDigest, unknownReceiptDigest: unknown.receiptDigest, futurePreparationLinkId: stored.store.futurePreparationLinks.at(-1)!.futurePreparationLinkId, productWorkflowRepositoryRevision: stored.revision, runtimeRepositoryRevision: runtime.revision, sourceContentRepositoryRevision: await sourceRepository.inspectRevision(fixture.organizationId), routingReceiptCount: stored.store.canonicalRoutingReceipts.length, idempotentReentry: true });
   return { role: "route-actual-owners-and-prepare-again", handoff: manifest, assertions: ["handoffs-verified", "northstar-seed-reloaded", "northstar-source-binding-lineage-verified", "northstar-material-lineage-verified", "material-evidence-actual", "canonical-change-owner-result", "duplicate-evidence-class-2", "duplicate-understanding-unchanged", "decision-draft-actual", "unknown-actual", "future-preparation-persisted", "idempotent-reentry"] };
 }
 
-async function worker(role: string, root: string, lineageFixtureRoot: string, expectedSeedDigest: string, encodedA?: string, encodedB?: string): Promise<WorkerResult> {
+async function worker(role: string, root: string, ownerIssuedQuestionId:string, lineageFixtureRoot: string, expectedSeedDigest: string, encodedA?: string, encodedB?: string): Promise<WorkerResult> {
+  bindOwnerIssuedQuestion(ownerIssuedQuestionId);
   assert.ok(path.basename(root).startsWith("discovery-leadership-conversation-replay-"));
   if (role === "prepare-and-freeze") return processA(root,lineageFixtureRoot);
   if (role === "capture-and-review") return processB(root, encodedA!);
@@ -193,7 +195,7 @@ async function worker(role: string, root: string, lineageFixtureRoot: string, ex
 }
 
 async function execute(root: string, role: string, lineageFixtureRoot: string | null, expectedSeedDigest: string | null, ...handoffs: SafeHandoff[]): Promise<WorkerResult> {
-  const args = ["--conditions=react-server", ...process.execArgv.filter(argument => argument !== "--conditions=react-server"), import.meta.filename, "--worker", role, root, lineageFixtureRoot ?? "-", expectedSeedDigest ?? "-", ...handoffs.map(item => Buffer.from(JSON.stringify(item)).toString("base64url"))];
+  const args = ["--conditions=react-server", ...process.execArgv.filter(argument => argument !== "--conditions=react-server"), import.meta.filename, "--worker", role, root, questionId, lineageFixtureRoot ?? "-", expectedSeedDigest ?? "-", ...handoffs.map(item => Buffer.from(JSON.stringify(item)).toString("base64url"))];
   const { stdout, stderr } = await runFile(process.execPath, args, { cwd: process.cwd(), env: { PATH: process.env.PATH ?? "", NODE_PATH: process.env.NODE_PATH ?? "", NODE_ENV: "test", TZ: "UTC", LANG: "C", TMPDIR: tmpdir() }, timeout: 30_000, maxBuffer: 128 * 1024, shell: false });
   assert.equal(stderr, "");
   const parsed = JSON.parse(stdout) as WorkerResult;
@@ -208,7 +210,7 @@ async function main(): Promise<void> {
     const index = process.argv.indexOf("--worker");
     const originalInfo = console.info, originalLog = console.log;
     console.info = () => {}; console.log = () => {};
-    try { process.stdout.write(JSON.stringify(await worker(process.argv[index + 1]!, process.argv[index + 2]!, process.argv[index + 3]!, process.argv[index + 4]!, process.argv[index + 5], process.argv[index + 6]))); }
+    try { process.stdout.write(JSON.stringify(await worker(process.argv[index + 1]!, process.argv[index + 2]!, process.argv[index + 3]!, process.argv[index + 4]!, process.argv[index + 5]!, process.argv[index + 6], process.argv[index + 7]))); }
     finally { console.info = originalInfo; console.log = originalLog; }
     return;
   }
@@ -217,6 +219,7 @@ async function main(): Promise<void> {
   const lineageFixtureRoot = await mkdtemp(path.join(tmpdir(), "discovery-northstar-preparation-lineage-"));
   try {
     const provisioned = await provisionNorthstarPreparationLineageFixture({ environment: "test", fixtureRoot: lineageFixtureRoot, now: fixture.at });
+    bindOwnerIssuedQuestion(provisioned.seed.productQuestionId);
     assert.equal(provisioned.disposition, "provisioned"); checks++;
     assert.ok(provisioned.counts.sources > 0 && provisioned.counts.material > 0 && provisioned.counts.understandings > 0); checks++;
     const a = await execute(root, "prepare-and-freeze", lineageFixtureRoot, provisioned.seed.seedDigest); checks += a.assertions.length;

@@ -488,6 +488,9 @@ export class CanonicalProductWorkspaceAdapter {
     );
     const existing = buildDurableProductQuestion({ runtime: stored.runtime, questionId });
     if (existing) {
+      if (existing.title !== input.question.trim()) {
+        throw new Error("Product Question idempotency conflict.");
+      }
       return this.getQuestionWorkspace({ ...input, questionId });
     }
     const created = createDurableProductQuestion({

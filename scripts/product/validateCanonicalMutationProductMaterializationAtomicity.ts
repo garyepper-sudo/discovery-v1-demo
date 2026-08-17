@@ -32,7 +32,7 @@ import { completeProductArtifactInspectionMetadataV1, validateProductArtifactIns
 
 const sha = (value: string) => createHash("sha256").update(value).digest("hex");
 export const organizationId = "sandbox-northstar-implementation-services-001";
-export const questionId = "product-question:northstar-implementation-duration";
+export let questionId: string;
 const conversationId = "conversation-1";
 
 const emptyStore = (): LeadershipConversationArtifactStoreV1 => ({
@@ -61,12 +61,12 @@ export class MemoryBodyRepository implements ProductArtifactBodyRepository {
   async readStagedExact(ref:ProductArtifactBodyRefV1):Promise<Uint8Array>{const bytes=this.bodies.get(ref.bodyId);if(!bytes||productArtifactBodyDigest(bytes)!==ref.exactBodyDigest)throw new Error("body unavailable");return bytes.slice();}
 }
 
-export async function createOwnerBackedDraftDependencies(fixtureRoot:string):Promise<{bodyRepository:ProductArtifactBodyRepository;completeInspectionMetadata(input:{organizationId:string;questionId:string;draftId:string;draftRevisionId:string;creationOperationId:string;requestFingerprint:string;body:ProductArtifactBodyRefV1;stageReceiptDigest:string}):Promise<ProductArtifactInspectionMetadataV1>}>{
+export async function createOwnerBackedDraftDependencies(fixtureRoot:string):Promise<{questionId:string;bodyRepository:ProductArtifactBodyRepository;completeInspectionMetadata(input:{organizationId:string;questionId:string;draftId:string;draftRevisionId:string;creationOperationId:string;requestFingerprint:string;body:ProductArtifactBodyRefV1;stageReceiptDigest:string}):Promise<ProductArtifactInspectionMetadataV1>}>{
   const [{createProductArtifactBodyRepository},{provisionNorthstarPreparationLineageFixture,readNorthstarPreparationLineageSeed}]=await Promise.all([import("../../product/persistence/productArtifactBodyRepository"),import("../../product/simulations/living-organization-sandbox/preparationLineageFixtureProvisioner")]);
   const provisioned=await provisionNorthstarPreparationLineageFixture({environment:"test",fixtureRoot});
   const load=()=>readNorthstarPreparationLineageSeed({fixtureRoot,organizationId,fixtureId:"northstar-preparation-lineage-fixture-v1",provisioningKey:"northstar-preparation-lineage:v1",expectedSeedDigest:provisioned.seed.seedDigest});
-  const seed=await load();assert.equal(seed.productQuestionId,questionId);assert.ok(seed.sourceBindings.length&&seed.sourceContentVersions.length&&seed.canonicalMaterial.length);
-  return{bodyRepository:createProductArtifactBodyRepository({root:path.join(fixtureRoot,"product-artifact-bodies")}),completeInspectionMetadata:async input=>{const loaded=await load();assert.equal(input.organizationId,loaded.organizationId);assert.equal(input.questionId,loaded.productQuestionId);const metadata=completeProductArtifactInspectionMetadataV1({organizationId:input.organizationId,semanticOwner:"product-decision-draft",artifactType:"product-decision-draft",artifactId:input.draftId,artifactRevision:input.draftRevisionId,productQuestionId:input.questionId,productWorkflowId:null,creationEnvelopeDigest:productDecisionDraftDigest({creationOperationId:input.creationOperationId,requestFingerprint:input.requestFingerprint}),materialReferencesDigest:productDecisionDraftDigest(loaded.canonicalMaterial),protectedBody:input.body,ownerStageReceiptDigest:input.stageReceiptDigest,materialLineage:{...loaded,semanticOwner:"product-decision-draft",artifactType:"product-decision-draft",artifactId:input.draftId,artifactRevision:input.draftRevisionId,envelopeDigest:""}});validateProductArtifactInspectionMetadataV1(metadata);return metadata;}};
+  const seed=await load();assert.ok(seed.sourceBindings.length&&seed.sourceContentVersions.length&&seed.canonicalMaterial.length);
+  return{questionId:seed.productQuestionId,bodyRepository:createProductArtifactBodyRepository({root:path.join(fixtureRoot,"product-artifact-bodies")}),completeInspectionMetadata:async input=>{const loaded=await load();assert.equal(input.organizationId,loaded.organizationId);assert.equal(input.questionId,loaded.productQuestionId);const metadata=completeProductArtifactInspectionMetadataV1({organizationId:input.organizationId,semanticOwner:"product-decision-draft",artifactType:"product-decision-draft",artifactId:input.draftId,artifactRevision:input.draftRevisionId,productQuestionId:input.questionId,productWorkflowId:null,creationEnvelopeDigest:productDecisionDraftDigest({creationOperationId:input.creationOperationId,requestFingerprint:input.requestFingerprint}),materialReferencesDigest:productDecisionDraftDigest(loaded.canonicalMaterial),protectedBody:input.body,ownerStageReceiptDigest:input.stageReceiptDigest,materialLineage:{...loaded,semanticOwner:"product-decision-draft",artifactType:"product-decision-draft",artifactId:input.draftId,artifactRevision:input.draftRevisionId,envelopeDigest:""}});validateProductArtifactInspectionMetadataV1(metadata);return metadata;}};
 }
 
 export function instruction(draftRequired = false): CanonicalProductMaterializationInstructionV1 {
@@ -113,6 +113,8 @@ function grant(operation: ProductDecisionDraftOperation, at: string): ProductDec
 export async function runAtomicityValidation(): Promise<void> {
   const fixtureRoot=await mkdtemp(path.join(tmpdir(),"discovery-northstar-preparation-lineage-atomicity-"));
   try{
+  const {provisionNorthstarPreparationLineageFixture}=await import("../../product/simulations/living-organization-sandbox/preparationLineageFixtureProvisioner");
+  questionId=(await provisionNorthstarPreparationLineageFixture({environment:"test",fixtureRoot})).seed.productQuestionId;
   const repository = new MemoryWorkflowRepository();
   const operations = new LeadershipConversationProductOperations({
     repository, clock: { now: () => "2026-08-09T12:00:00.000Z" }, authorize: async () => false,

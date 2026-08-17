@@ -91,12 +91,13 @@ export type HistoricalCheckpointEndpointScenarioEvidence = {
   assertions: number;
 };
 
-const QUESTION_ID = "product-question:northstar-implementation-duration";
+let questionId:string;
 const PURPOSE = "leadership-conversation-capture" as const;
 assert.equal(fixture.purposeRef, PURPOSE);
 const AT = fixture.at;
 const scope = { organizationId: fixture.organizationId, type: "organization" as const, id: fixture.organizationId };
-const identity = { userId: fixture.actorId, organizationId: fixture.organizationId, questionId: QUESTION_ID, conversationId: fixture.conversationId };
+let identity:{userId:string;organizationId:string;questionId:string;conversationId:string};
+function bindOwnerIssuedQuestion(value:string){questionId=value;identity={userId:fixture.actorId,organizationId:fixture.organizationId,questionId,conversationId:fixture.conversationId};}
 const digest = (value: unknown) => leadershipDigest(leadershipStableSerialize(value));
 
 function roots(root: string) {
@@ -115,8 +116,7 @@ async function initialRuntime(lineageFixtureRoot: string) {
   const ownerProduced = await new FilesystemOrganizationRuntimeRepository(path.join(lineageFixtureRoot, "runtime")).read(fixture.organizationId);
   if (!ownerProduced) throw new Error("Owner-produced Northstar fixture Runtime is unavailable.");
   let runtime = structuredClone(ownerProduced.runtime);
-  runtime = createDurableProductQuestion({ runtime, title: "What is constraining Northstar delivery?", questionId: QUESTION_ID, createdAt: AT }).runtime;
-  runtime = appendProductQuestionEvent(runtime, { type: "answer_recorded", organizationId: fixture.organizationId, questionId: QUESTION_ID, occurredAt: AT, answer: { answerId: "product-answer:northstar-l1:1", canonicalSource: "canonical-product-answer", revision: 1, reasonForChange: "Initial supported Answer", changeReceiptId: "product-answer-receipt:northstar-l1:1", timestamp: AT, confidence: { level: "moderate", score: 0.7, meaning: "Supported", principalLimiter: "Sequencing evidence remains incomplete.", authoritativeSource: "canonical-product-workflow" } } });
+  runtime = appendProductQuestionEvent(runtime, { type: "answer_recorded", organizationId: fixture.organizationId, questionId: questionId, occurredAt: AT, answer: { answerId: "product-answer:northstar-l1:1", canonicalSource: "canonical-product-answer", revision: 1, reasonForChange: "Initial supported Answer", changeReceiptId: "product-answer-receipt:northstar-l1:1", timestamp: AT, confidence: { level: "moderate", score: 0.7, meaning: "Supported", principalLimiter: "Sequencing evidence remains incomplete.", authoritativeSource: "canonical-product-workflow" } } });
   const work: ExecutiveWork = { id: "work:northstar-l1", organizationId: fixture.organizationId, decisionRecordId: "decision:northstar-l1", selectedOptionId: "option:northstar-l1", title: "Resolve delivery sequencing", owner: fixture.actorId, status: "completed", health: "on-track", progress: 1, expectedOutcomes: [], successCriteria: [], reviewAt: AT, createdAt: AT, updatedAt: AT };
   runtime.memory.executiveDecisionRecords = [{ id: work.decisionRecordId, submissionId: "submission:northstar-l1", organizationId: fixture.organizationId, executiveDecisionId: "executive-decision:northstar-l1", status: "decided", disposition: "accepted-recommendation", selectedOptionId: work.selectedOptionId, title: "Sequence delivery", decision: "Proceed with bounded sequencing", rationale: "Governed review", acceptedAssumptions: [], acceptedRisks: [], expectedOutcomes: [], successCriteria: [], createdAt: AT, updatedAt: AT, outcomeStatus: "not-reviewed" }];
   runtime.memory.executiveWork = [work];
@@ -146,7 +146,7 @@ async function provision(root: string, lineageFixtureRoot: string, reads: { coun
   const canonical = runtimeStored.runtime.memory.organizationalUnderstandingState.canonicalCompositions?.at(-1);
   if (!canonical) throw new Error("Actual canonical Understanding is unavailable.");
   const currentEpistemic = canonical.epistemicRevisions?.find((item) => item.revisionId === canonical.currentEpistemicRevisionId);
-  const revision = await server.reviseUnderstandingConfidence({ userId: fixture.actorId, organizationId: fixture.organizationId, questionId: QUESTION_ID, stableUnderstandingId: canonical.id, expectedPredecessorRevisionId: currentEpistemic?.revisionId ?? canonical.revisionId, confidence: currentEpistemic?.confidence === null ? 0.7 : Math.min(1, (currentEpistemic?.confidence ?? 0.7) + 0.01), uncertainty: currentEpistemic?.uncertainty ?? canonical.compositionUncertainty, supportingMaterialRefs: currentEpistemic?.supportingMaterialRefs.length ? currentEpistemic.supportingMaterialRefs : supportingMaterialRefs, contradictingMaterialRefs: currentEpistemic?.contradictingMaterialRefs ?? [], interpretationVersion: "l1-actual-owner:v1", idempotencyKey: "l1-understanding-revision", expectedRuntimeRevision: runtimeStored.revision });
+  const revision = await server.reviseUnderstandingConfidence({ userId: fixture.actorId, organizationId: fixture.organizationId, questionId: questionId, stableUnderstandingId: canonical.id, expectedPredecessorRevisionId: currentEpistemic?.revisionId ?? canonical.revisionId, confidence: currentEpistemic?.confidence === null ? 0.7 : Math.min(1, (currentEpistemic?.confidence ?? 0.7) + 0.01), uncertainty: currentEpistemic?.uncertainty ?? canonical.compositionUncertainty, supportingMaterialRefs: currentEpistemic?.supportingMaterialRefs.length ? currentEpistemic.supportingMaterialRefs : supportingMaterialRefs, contradictingMaterialRefs: currentEpistemic?.contradictingMaterialRefs ?? [], interpretationVersion: "l1-actual-owner:v1", idempotencyKey: "l1-understanding-revision", expectedRuntimeRevision: runtimeStored.revision });
   stored = await workflow.read(fixture.organizationId); context = stored.store.contexts.at(-1)!;
   await server.recordPreparation({ ...identity, idempotencyKey: "l1-preparation-governed", contextVersionId: context.contextVersionId, content: NORTHSTAR_PREPARED_CONTENT, lineage: { ...NORTHSTAR_PREPARED_LINEAGE, canonicalUnderstandingRevisionId: revision.receipt.revisionId, canonicalUnderstandingRevisionReceiptDigest: revision.receipt.receiptDigest }, changeSummary: "Bound exact governed Understanding revision." });
   stored = await workflow.read(fixture.organizationId);
@@ -197,7 +197,7 @@ async function revokeExactSourceBinding(world: Awaited<ReturnType<typeof provisi
   const authorization = resolveScopedGovernanceContext({ organizationId: fixture.organizationId, subjectId: fixture.actorId, requestedScope, operation: "source-binding:revise-availability", purpose: PURPOSE, sensitivity: "standard", evaluatedAt: AT, temporal: { mode: "current" }, serverResolvedAuthority: [{ authorityRef: `leadership-conversation:${fixture.actorId}`, policyRef: "leadership-conversation-development:v1", organizationId: fixture.organizationId, subjectId: fixture.actorId, scope: requestedScope, operations: ["source-binding:revise-availability"], sensitivity: ["standard"], relationship: "direct", status: "active", validFrom: "2026-01-01T00:00:00.000Z" }] });
   const service = new CanonicalLocalSourceBindingService(world.runtimeRepository, { now: () => AT });
   assert.equal(binding.purposeRef, PURPOSE);
-  await service.reviseCanonicalSourceBindingAvailability({ contractVersion: "1", organizationId: fixture.organizationId, productQuestionId: QUESTION_ID, sourceType: binding.sourceType as "markdown-upload", purposeRef: PURPOSE, normalizedContentDigest: binding.source.normalizedContentDigest, requestedScopeAssertions: binding.assertions, sensitivity: "standard", availability: "revoked", recordedAt: AT, recordedByActorRef: fixture.actorId, idempotencyKey: `l1-endpoint-binding-revoke:${suffix}`, expectedRuntimeRevision: stored.revision, operation: { requestId: `l1-endpoint-binding-revoke:${suffix}`, operatorId: fixture.actorId }, authorization });
+  await service.reviseCanonicalSourceBindingAvailability({ contractVersion: "1", organizationId: fixture.organizationId, productQuestionId: questionId, sourceType: binding.sourceType as "markdown-upload", purposeRef: PURPOSE, normalizedContentDigest: binding.source.normalizedContentDigest, requestedScopeAssertions: binding.assertions, sensitivity: "standard", availability: "revoked", recordedAt: AT, recordedByActorRef: fixture.actorId, idempotencyKey: `l1-endpoint-binding-revoke:${suffix}`, expectedRuntimeRevision: stored.revision, operation: { requestId: `l1-endpoint-binding-revoke:${suffix}`, operatorId: fixture.actorId }, authorization });
 }
 
 export async function runHistoricalCheckpointEndpointSpecificAcceptance(): Promise<{ validation: string; result: "PASS"; scenarios: HistoricalCheckpointEndpointScenarioEvidence[]; checks: number; labelOnlyScenarios: 0; deniedProtectedLoads: 0 }> {
@@ -597,6 +597,7 @@ export async function provisionHistoricalCheckpointSharedWorld(
   lineageFixtureRoot: string,
 ): Promise<HistoricalCheckpointSharedWorldManifest> {
   const lineage = await provisionNorthstarPreparationLineageFixture({ environment: "test", fixtureRoot: lineageFixtureRoot, now: AT });
+  bindOwnerIssuedQuestion(lineage.seed.productQuestionId);
   if (lineage.disposition !== "provisioned") throw new Error("Shared owner lineage provisioning failed.");
   const world = await provision(root, lineageFixtureRoot, { count: 0, safe: [] }, lineage.seed.canonicalMaterial.map((item) => item.canonicalObjectId));
   if (!("draftId" in world.decision)) throw new Error("Shared Product Decision Draft endpoint is unavailable.");
@@ -609,7 +610,7 @@ export async function provisionHistoricalCheckpointSharedWorld(
     lineageFixtureRoot,
     organizationId: fixture.organizationId,
     userId: fixture.actorId,
-    questionId: QUESTION_ID,
+    questionId: questionId,
     conversationId: fixture.conversationId,
     checkpointId: world.checkpoint.artifactId,
     checkpointRevision: world.checkpoint.artifactRevision,
@@ -663,12 +664,13 @@ export async function provisionHistoricalCheckpointFiveTransitionWorlds(baseRoot
     const lineageFixtureRoot = path.join(lineageBaseRoot, `discovery-northstar-preparation-lineage-${scenarioId}`);
     await mkdir(root, { recursive: true }); await mkdir(lineageFixtureRoot, { recursive: true });
     const lineage = await provisionNorthstarPreparationLineageFixture({ environment: "test", fixtureRoot: lineageFixtureRoot, now: AT });
+    bindOwnerIssuedQuestion(lineage.seed.productQuestionId);
     assert.equal(lineage.disposition, "provisioned");
     const world = await provision(root, lineageFixtureRoot, { count: 0, safe: [] }, lineage.seed.canonicalMaterial.map((value) => value.canonicalObjectId));
     const { publications, scopeDigest } = await publishAllEndpointKinds(world);
     const targetIndex = scenarioId === "checkpoint-source-binding-loss" || scenarioId === "draft-upstream-authority-loss" ? 0 : scenarioId === "review-policy-revocation" ? 1 : scenarioId === "outcome-through-review" ? 2 : 3;
     const store = await world.workflow.read(fixture.organizationId);
-    scenarios.push({ scenarioId, root, lineageFixtureRoot, organizationId: fixture.organizationId, userId: fixture.actorId, questionId: QUESTION_ID, conversationId: fixture.conversationId, checkpointId: world.checkpoint.artifactId, checkpointRevision: world.checkpoint.artifactRevision, purpose: PURPOSE, scopeDigest, evaluatedAt: AT, targetLinkId: publications[targetIndex]!.link.linkId, reviewId: world.review.id, learningId: world.learning.id, historyDigest: digest({ links: store.store.historicalCheckpointLifecycleLinks, receipts: store.store.historicalCheckpointLifecycleLinkReceipts }) });
+    scenarios.push({ scenarioId, root, lineageFixtureRoot, organizationId: fixture.organizationId, userId: fixture.actorId, questionId: questionId, conversationId: fixture.conversationId, checkpointId: world.checkpoint.artifactId, checkpointRevision: world.checkpoint.artifactRevision, purpose: PURPOSE, scopeDigest, evaluatedAt: AT, targetLinkId: publications[targetIndex]!.link.linkId, reviewId: world.review.id, learningId: world.learning.id, historyDigest: digest({ links: store.store.historicalCheckpointLifecycleLinks, receipts: store.store.historicalCheckpointLifecycleLinkReceipts }) });
   }
   const unsigned = { contractVersion: "1" as const, scenarios };
   return { ...unsigned, manifestDigest: digest(unsigned) };

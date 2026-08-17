@@ -23,7 +23,7 @@ import { createOwnerBackedDraftDependencies } from "./validateCanonicalMutationP
 const fixed = "2026-08-06T13:00:00.000Z";
 const revisedAt = "2026-08-06T13:05:00.000Z";
 const organizationId = "sandbox-northstar-implementation-services-001";
-const questionId = "product-question:northstar-implementation-duration";
+let questionId: string;
 const answerId = "answer-replay";
 const prefix = "discovery-northstar-preparation-lineage-draft-replay-";
 
@@ -69,6 +69,7 @@ class ReplayBodyRepository implements ProductArtifactBodyRepository {
 
 async function service(repository: FilesystemOrganizationRuntimeRepository,root:string): Promise<ProductDecisionDraftService> {
   const ownerBacked=await createOwnerBackedDraftDependencies(root);
+  questionId=ownerBacked.questionId;
   return new ProductDecisionDraftService({
     runtimeRepository: repository,
     ...ownerBacked,
@@ -98,9 +99,10 @@ function safeRoot(value: string): string {
 async function roleA(root: string): Promise<unknown> {
   console.info = () => undefined;
   const repository = new FilesystemOrganizationRuntimeRepository(path.join(root,"draft-runtime"));
+  const api=await service(repository,root);
   await repository.create(organizationId, new TextEncoder().encode(JSON.stringify(fixtureRuntime(), null, 2)), { requestId: "fixture-create", operatorId: "validator" });
-  const created = await (await service(repository,root)).create({ userId: "authorized", request: createRequest(), storageOperation: { requestId: "draft-create", operatorId: "actor-replay" } });
-  return { role: "A", revision: created.revision, receipt: created.receipt, runtimeRevision: created.runtimeRevision };
+  const created = await api.create({ userId: "authorized", request: createRequest(), storageOperation: { requestId: "draft-create", operatorId: "actor-replay" } });
+  return { role: "A", questionId, revision: created.revision, receipt: created.receipt, runtimeRevision: created.runtimeRevision };
 }
 
 async function roleB(root: string): Promise<unknown> {
@@ -177,6 +179,7 @@ async function main(): Promise<void> {
   const first = await runSuite();
   const second = await runSuite();
   assert.deepEqual(first, second);
+  questionId=String(first.a.questionId);
   const firstRevision = (first.a.revision as Record<string, unknown>);
   const firstReceipt = (first.a.receipt as Record<string, unknown>);
   const replay = (first.b.replay as Record<string, unknown>);

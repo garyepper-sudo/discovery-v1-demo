@@ -27,6 +27,47 @@ function protectedHeaders(response: NextResponse): NextResponse {
   return response;
 }
 
+const loopbackHostnames = new Set(["localhost", "127.0.0.1", "[::1]"]);
+
+function equivalentMiddlewareHostname(left: string, right: string): boolean {
+  return (
+    left === right ||
+    (loopbackHostnames.has(left) && loopbackHostnames.has(right))
+  );
+}
+
+export function normalizeClerkSameRequestContinuation(
+  request: NextRequest,
+  response: NextResponse,
+): NextResponse {
+  const rewrite = response.headers.get("x-middleware-rewrite");
+  if (!rewrite || response.status !== 200 || response.headers.has("location")) {
+    return response;
+  }
+
+  let destination: URL;
+  try {
+    destination = new URL(rewrite, request.url);
+  } catch {
+    return response;
+  }
+
+  const incoming = new URL(request.url);
+  if (
+    destination.protocol !== incoming.protocol ||
+    destination.port !== incoming.port ||
+    destination.pathname !== incoming.pathname ||
+    destination.search !== incoming.search ||
+    !equivalentMiddlewareHostname(destination.hostname, incoming.hostname)
+  ) {
+    return response;
+  }
+
+  response.headers.delete("x-middleware-rewrite");
+  response.headers.set("x-middleware-next", "1");
+  return response;
+}
+
 function requestId(request: NextRequest): string {
   return request.headers.get("x-request-id") ?? crypto.randomUUID();
 }
@@ -93,13 +134,14 @@ export async function middleware(
     if (!response) {
       return new NextResponse("Authentication required.", { status: 401 });
     }
-    return response instanceof NextResponse
+    const nextResponse = response instanceof NextResponse
       ? response
       : new NextResponse(response.body, {
           status: response.status,
           statusText: response.statusText,
           headers: response.headers,
         });
+    return normalizeClerkSameRequestContinuation(request, nextResponse);
   }
   if (
     productionRouteDisposition({
@@ -122,13 +164,14 @@ export async function middleware(
     if (!response) {
       return new NextResponse("Authentication required.", { status: 401 });
     }
-    return response instanceof NextResponse
+    const nextResponse = response instanceof NextResponse
       ? response
       : new NextResponse(response.body, {
           status: response.status,
           statusText: response.statusText,
           headers: response.headers,
         });
+    return normalizeClerkSameRequestContinuation(request, nextResponse);
   }
   if (
     activationEnabled &&

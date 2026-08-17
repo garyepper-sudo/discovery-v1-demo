@@ -17,10 +17,11 @@ import { readLeadershipConversationFixture } from "../../product/frontend/leader
 import {
   createProductWorkflowArtifactRepository,
   LeadershipConversationProductOperations,
-  NORTHSTAR_LEADERSHIP_CONVERSATION_FIXTURE as fixture,
+  northstarLeadershipConversationFixture,
   NORTHSTAR_PREPARED_CONTENT,
   NORTHSTAR_PREPARED_LINEAGE,
 } from "../../product/workflow/leadershipConversation";
+import { provisionNorthstarPreparationLineageFixture } from "../../product/simulations/living-organization-sandbox/preparationLineageFixtureProvisioner";
 import { createProductArtifactBodyRefV1, productArtifactBodyDigest, type ProductArtifactBodyRefV1, type ProductArtifactBodyStageRequestV1, type ProductArtifactBodyStageReceiptV1 } from "../../product/persistence/productArtifactBodyContracts";
 import type { ProductArtifactBodyRepository } from "../../product/persistence/productArtifactBodyRepository";
 
@@ -34,6 +35,9 @@ class MemoryBodyRepository implements ProductArtifactBodyRepository {readonly ba
 async function main(): Promise<void> {
   const workflowRoot = await mkdtemp(path.join(tmpdir(), "discovery-leadership-conversation-workflow-"));
   const sourceRoot = await mkdtemp(path.join(tmpdir(), "discovery-governed-source-content-leadership-"));
+  const lineageRoot = await mkdtemp(path.join(tmpdir(), "discovery-northstar-preparation-lineage-prepare-capture-"));
+  const setup = await provisionNorthstarPreparationLineageFixture({ environment: "test", fixtureRoot: lineageRoot });
+  const fixture = northstarLeadershipConversationFixture(setup.seed.productQuestionId);
   const scope = { organizationId: fixture.organizationId, type: "organization" as const, id: fixture.organizationId };
   try {
     const normalized = decodeAndNormalizeSourceContent(fixture.captureBytes).normalizedText;
@@ -48,7 +52,7 @@ async function main(): Promise<void> {
       readForProposal: async (input: { organizationId: string; sourceBindingId: string; sourceContentVersionId: string; purposeRef: string }) => { const result = await sourceService.read({ contractVersion: "1", ...input, authorization: authorization("source-content:read-for-proposal") }); return { bytes: result.bytes, exactContentDigest: result.version.exactContentDigest, normalizedContentDigest: result.version.normalizedContentDigest }; },
       readForEvidenceAdmission: async () => { throw new Error("Canonical routing belongs to the canonical owner router."); },
     };
-    const base = readLeadershipConversationFixture().base;
+    const base = readLeadershipConversationFixture(fixture.questionId).base;
     const bodyRepository=new MemoryBodyRepository();
     const lineageUnsigned={contractVersion:"1" as const,organizationId:fixture.organizationId,semanticOwner:"leadership-conversation" as const,productQuestionId:fixture.questionId,creationOperationId:"fixture-prepare:1",lineagePolicyVersion:"fixture-lineage:v1",sourceBindings:[{sourceBindingId:binding.bindingId,bindingRevisionId:binding.digest}],sourceContentVersions:[{sourceBindingId:binding.bindingId,sourceContentVersionId:"fixture-source-version:1",normalizedContentDigest:binding.source.normalizedContentDigest}],canonicalMaterial:[{canonicalObjectId:"fixture-evidence:1",revisionRef:"fixture-admission:1",owner:"canonical-evidence-admission" as const}],canonicalUnderstandingRevision:"fixture-understanding:1",projectionSourceRef:"fixture-projection:1",scopeDigest:productArtifactBodyDigest(scope),purpose:fixture.purposeRef,sensitivity:"standard" as const},materialLineage={...lineageUnsigned,seedDigest:productArtifactBodyDigest(lineageUnsigned)};
     const operations = new LeadershipConversationProductOperations({ repository, bodyRepository, clock: { now: () => fixture.at }, authorize: async ({ userId, organizationId }) => userId === fixture.actorId && organizationId === fixture.organizationId, resolvePreparedWorkMaterialLineage:async()=>materialLineage, loadBase: async () => base, source });
@@ -78,8 +82,10 @@ async function main(): Promise<void> {
   } finally {
     await rm(workflowRoot, { recursive: true, force: true });
     await rm(sourceRoot, { recursive: true, force: true });
+    await rm(lineageRoot, { recursive: true, force: true });
     await assert.rejects(() => lstat(workflowRoot));
     await assert.rejects(() => lstat(sourceRoot));
+    await assert.rejects(() => lstat(lineageRoot));
   }
 }
 
