@@ -1,5 +1,21 @@
 # Discovery Project State
 
+## Chief V1 recurring-meeting Alpha Phase 1 complete
+
+Canonical commit `6ca1ec1f4420f1852b21c334adb177ff32ade9f3` integrates the exact accepted
+30-path Chief V1 Phase-1 feature. One authorized Director can activate the
+deterministic first recurring meeting and use all six First Prepare sections;
+organization authorization and current access are enforced before protected
+loading, denied access fails closed, and persistence/replay create zero
+duplicates. The accepted authenticated browser run, post-integration Product
+regression, and external runner validation pass.
+
+This closes only Activation and First Prepare Phase 1. Capture, Review, What
+Changed, Prepare Again, private preparation, cognition optimization, Phase 2,
+and design-partner rollout remain unstarted. The next Product boundary is a
+separately governed Phase-2 planning and authorization decision for the next
+Leadership Conversation lifecycle slice.
+
 ## Chief Alpha composition and thin-waist freeze canonized
 
 Owner canon commit `441a719` establishes the first Alpha Product wedge: one

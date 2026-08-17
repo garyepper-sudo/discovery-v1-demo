@@ -1,6 +1,12 @@
 # Leadership Conversation Implementation-Planning Handoff 001
 
-**Immediate task:** `DISCOVERY LEADERSHIP CONVERSATION PREPARE-AND-CAPTURE VERTICAL SLICE 001`
+**Current status:** Chief V1 Activation and First Prepare Phase 1 is complete at
+canonical commit `6ca1ec1f4420f1852b21c334adb177ff32ade9f3`.
+
+**Next boundary:** separately governed planning and authorization for the next
+Leadership Conversation lifecycle slice. Capture, Review, What Changed,
+Prepare Again, private preparation, cognition optimization, Phase 2, and
+design-partner rollout have not begun.
 
 This handoff starts implementation planning. It does not authorize code changes
 by itself.
