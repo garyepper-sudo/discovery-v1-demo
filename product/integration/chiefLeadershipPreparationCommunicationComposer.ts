@@ -1,0 +1,6 @@
+import type{ChiefFirstPrepareViewV1}from"../workflow/leadershipConversation";import{compileChiefCommunicationPlanV1}from"../workflow/leadershipConversation/chiefCommunicationPlan";import{renderChiefCommunicationPlanV1}from"./chiefLeadershipCommunicationRenderer";import{validateChiefLeadershipCommunicationFidelityV1}from"./validateChiefLeadershipCommunicationFidelity";
+export function composeCandidateB1ChiefCommunication(view:ChiefFirstPrepareViewV1){const plan=compileChiefCommunicationPlanV1(view),rendered=renderChiefCommunicationPlanV1(plan),fidelity=validateChiefLeadershipCommunicationFidelityV1(plan,rendered);return{plan,rendered,fidelity}}
+import{compileChiefCommunicationPlanB11V1}from"../workflow/leadershipConversation/chiefCommunicationPlan";
+import{renderChiefCommunicationPlanB11V1}from"./chiefLeadershipCommunicationRenderer";
+import{validateChiefLeadershipCommunicationFidelityB11V1}from"./validateChiefLeadershipCommunicationFidelity";
+export function composeCandidateB11ChiefCommunication(view:ChiefFirstPrepareViewV1){const plan=compileChiefCommunicationPlanB11V1(view),rendered=renderChiefCommunicationPlanB11V1(plan),fidelity=validateChiefLeadershipCommunicationFidelityB11V1(plan,rendered);return{plan,rendered,fidelity}}
