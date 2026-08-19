@@ -1,0 +1,14 @@
+.container { margin-block: 2rem; }
+.sheet { border: 1px solid currentColor; border-radius: .5rem; max-width: 48rem; padding: 1.25rem; }
+.sheet section { break-inside: avoid; margin-block: 1rem; }
+.sheet h2, .sheet h3, .sheet p { margin-block: .35rem; }
+.boundary { font-weight: 650; }
+.controls { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; margin-block: 1rem; }
+.controls p, .controls label { flex-basis: 100%; }
+@media print {
+  .controls { display: none !important; }
+  .container { margin: 0; }
+  .sheet { border: 0; max-width: none; padding: 0; }
+  .sheet section { break-inside: avoid; }
+  @page { margin: .55in; }
+}

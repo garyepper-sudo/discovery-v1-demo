@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "validate:chief-personal-room-sheet": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateChiefPersonalRoomSheet.ts",
     "validate:chief-v1-current-baseline-cognition-boundary-001": "NODE_OPTIONS=--conditions=react-server tsx scripts/benchmark/validateChiefV1CognitionBenchmarkBoundary001.ts",
     "validate:chief-v1-conversational-communication-b1": "NODE_OPTIONS=--conditions=react-server tsx scripts/benchmark/validateChiefV1ConversationalCommunicationB1.ts",
     "validate:chief-v1-preparation-semantic-gates-b2": "NODE_OPTIONS=--conditions=react-server tsx scripts/benchmark/validateChiefV1PreparationSemanticGatesB2.ts",

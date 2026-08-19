@@ -4,6 +4,13 @@ import { auth } from "@clerk/nextjs/server";
 import { createLeadershipConversationServerComposition } from "../../../product/integration/leadershipConversationServerComposition";
 import type { CanonicalProductWorkspaceAdapter } from "../../../product/integration/canonicalProductWorkspaceAdapter";
 import type { ChiefFirstPrepareActivationV1 } from "../../../product/workflow/leadershipConversation";
+import { buildChiefFirstPrepareViewFromWorkspace } from "../../../product/frontend/leadershipConversationFixtureAdapter";
+import { composeChiefLeadershipAnalysisToAction } from "../../../product/integration/chiefLeadershipAnalysisToActionComposer";
+import { createPersonalRoomSheetConfirmationDigest, projectContentSafePersonalRoomSheet } from "../../../product/integration/chiefPersonalRoomSheetComposer";
+import { readNorthstarPreparationLineageSeed } from "../../../product/simulations/living-organization-sandbox/preparationLineageFixtureProvisioner";
+import { SANDBOX_ORGANIZATION_ID } from "../../../product/simulations/living-organization-sandbox/manifest";
+import { northstarLeadershipConversationFixture } from "../../../product/workflow/leadershipConversation";
+import { PERSONAL_ROOM_SHEET_CONTRACT_VERSION, type PersonalRoomSheetConfirmationRequestV1, type PersonalRoomSheetConfirmationResponseV1 } from "../../../product/workflow/leadershipConversation/personalRoomSheetContracts";
 
 function guard(): void {
   if (process.env.NODE_ENV === "production") {
@@ -16,6 +23,28 @@ async function signedInUserId(): Promise<string> {
   const { userId } = await auth();
   if (!userId) throw new Error("Leadership Conversation authentication is required.");
   return userId;
+}
+
+async function composeCurrentPersonalRoomSheet() {
+  const userId = await signedInUserId(), server = createLeadershipConversationServerComposition();
+  if (!await server.authorizePageCurrentAccess({ userId, organizationId: SANDBOX_ORGANIZATION_ID })) throw new Error("Personal Room Sheet current access is unavailable.");
+  const fixtureRoot = process.env.DISCOVERY_NORTHSTAR_PREPARATION_LINEAGE_FIXTURE_ROOT;
+  if (!fixtureRoot) throw new Error("Northstar preparation lineage seed is unavailable.");
+  const seed = await readNorthstarPreparationLineageSeed({ fixtureRoot, organizationId: SANDBOX_ORGANIZATION_ID, fixtureId: "northstar-preparation-lineage-fixture-v1", provisioningKey: "northstar-preparation-lineage:v1" }), fixture = northstarLeadershipConversationFixture(seed.productQuestionId), workspace = await server.workspace({ userId, organizationId: seed.organizationId, questionId: seed.productQuestionId, conversationId: fixture.conversationId }), view = buildChiefFirstPrepareViewFromWorkspace(workspace), support = await server.resolveEvidenceSupport({ contractVersion: "1", organizationId: seed.organizationId, questionId: seed.productQuestionId, subjectId: userId, requestedScope: { organizationId: seed.organizationId, type: "organization", id: seed.organizationId }, purposeRef: seed.purpose, sensitivity: seed.sensitivity, evaluatedAt: workspace.context?.recordedAt ?? fixture.at, evidenceIds: seed.canonicalMaterial.map(item => item.canonicalObjectId), replayKey: `candidate3a-route:${seed.seedDigest}` }), candidate = composeChiefLeadershipAnalysisToAction({ view, productQuestion: workspace.base.base.question.text, meetingPurpose: view.meeting.purpose, support, permissionScope: "organization", replayKey: `candidate3a-route:${seed.seedDigest}` });
+  const sheet = await server.composePersonalRoomSheet({ userId, organizationId: seed.organizationId, seriesId: view.seriesId, occurrenceId: view.conversationId, questionId: seed.productQuestionId, meetingPurpose: view.meeting.purpose, sourceProjectionDigest: support.projection.projectionDigest, analysis: candidate.analysis, b11Plan: candidate.communication.plan, b11CommunicationDigest: candidate.communication.rendered.planDigest });
+  return { sheet, occurrenceRef: view.conversationId };
+}
+
+export async function getPersonalRoomSheetPreviewAction() {
+  const current = await composeCurrentPersonalRoomSheet();
+  return { sheet: projectContentSafePersonalRoomSheet(current.sheet), occurrenceRef: current.occurrenceRef };
+}
+
+export async function confirmPersonalRoomSheetAction(input: PersonalRoomSheetConfirmationRequestV1): Promise<PersonalRoomSheetConfirmationResponseV1> {
+  if (input.contractVersion !== PERSONAL_ROOM_SHEET_CONTRACT_VERSION || !Number.isSafeInteger(input.requestSequence) || input.requestSequence < 0) throw new Error("Personal Room Sheet confirmation request is invalid.");
+  const current = await composeCurrentPersonalRoomSheet(), sheet = current.sheet;
+  if (input.occurrenceRef !== current.occurrenceRef || input.expectedSourceProjectionDigest !== sheet.sourceProjectionDigest || input.expectedCandidate1AssessmentDigest !== sheet.candidate1AssessmentDigest || input.expectedB11CommunicationDigest !== sheet.b11CommunicationDigest || input.expectedPersonalRoomSheetDigest !== sheet.personalRoomSheetDigest) throw Object.assign(new Error("Personal Room Sheet confirmation is stale."), { code: "PERSONAL_ROOM_SHEET_STALE" });
+  return { contractVersion: PERSONAL_ROOM_SHEET_CONTRACT_VERSION, sheet: projectContentSafePersonalRoomSheet(sheet), personalRoomSheetDigest: sheet.personalRoomSheetDigest, confirmationDigest: createPersonalRoomSheetConfirmationDigest(sheet), requestSequence: input.requestSequence };
 }
 
 export async function getLeadershipConversationWorkspaceAction(input: {
