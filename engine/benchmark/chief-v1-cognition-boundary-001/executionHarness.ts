@@ -7,6 +7,7 @@ import {FilesystemOrganizationRuntimeRepository} from "../../v3/runtime/organiza
 import {CanonicalProductWorkspaceAdapter} from "../../../product/integration/canonicalProductWorkspaceAdapter";
 import {ChiefLeadershipPreparationComposer} from "../../../product/integration/chiefLeadershipPreparationComposer";
 import {composeCandidateB1ChiefCommunication,composeCandidateB11ChiefCommunication} from "../../../product/integration/chiefLeadershipPreparationCommunicationComposer";
+import {composeChiefLeadershipAnalysisToActionFromGrounded} from "../../../product/integration/chiefLeadershipAnalysisToActionComposer";
 import {applyChiefPreparationSemanticGates} from "../../../product/integration/chiefLeadershipPreparationSemanticGates";
 import {createLeadershipConversationProductOperations} from "../../../product/integration/leadershipConversationProductOperations";
 import {buildFrontendReadyProductQuestionWorkspace} from "../../../product/workflow";
@@ -93,6 +94,12 @@ export async function runCandidateB21ASelectedScenario(scenarioId:string,repetit
 export async function runCandidateB11SelectedScenario(scenarioId:string,repetition:number){
   const result=await runCandidateB21ASelectedScenario(scenarioId,repetition);
   const convert=(row:(typeof result)["primary"])=>row.candidateB21A?{...row,candidateB11:{semanticView:row.candidateB21A.view,claimSupport:row.candidateB21A.claimSupport,communication:composeCandidateB11ChiefCommunication(row.candidateB21A.view)}}:{...row,candidateB11:null};
+  return{primary:convert(result.primary),permissionChecks:result.permissionChecks.map(row=>convert(row as typeof result.primary))};
+}
+
+export async function runCandidate1SelectedScenario(scenarioId:string,repetition:number){
+  const result=await runCandidateB21ASelectedScenario(scenarioId,repetition);
+  const convert=(row:(typeof result)["primary"])=>{if(!row.candidateB21A?.claimSupport)return{...row,candidateB11:null,candidate1:null};const grounded=row.candidateB21A,claimSupport=grounded.claimSupport!,candidateB11={semanticView:grounded.view,claimSupport,communication:composeCandidateB11ChiefCommunication(grounded.view)},composed=composeChiefLeadershipAnalysisToActionFromGrounded({view:grounded.view,semantic:grounded.receipt,claimSupport,supportProjectionDigest:digest({scenarioId:row.scenarioId,permissionCase:row.permissionCase,claimSupport:claimSupport.receiptDigest}),permissionScope:row.permissionCase==="manager"?"team":"organization",replayKey:`candidate1:${row.scenarioId}:${repetition}:${row.permissionCase}`,context:grounded.receipt.missingEvidence==="present"?{exactEvidenceAcquisitionRef:`evidence-need:${row.scenarioId}`}:{}}),candidate1={semantic:{...grounded.receipt,claimSupport},...composed};return{...row,candidateB11,candidate1}};
   return{primary:convert(result.primary),permissionChecks:result.permissionChecks.map(row=>convert(row as typeof result.primary))};
 }
 
