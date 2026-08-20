@@ -19,6 +19,8 @@ type Common = Omit<DigestAudit, "contentDigest"> & {
   conversationId: string;
   proposalId: string;
   dispositionReceiptId: string;
+  sourceProposalContractVersion?: "1" | "2";
+  governedScopeBindingDigest?: string;
   integrationReceiptId: string;
   integrationOperationId: string;
   canonicalOperation: string;

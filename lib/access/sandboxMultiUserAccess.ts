@@ -4,6 +4,8 @@ import type { AlphaOrganizationAccessRecord } from "../../engine/v3/governance/a
 import {
   resolveScopedGovernanceContext,
   type GovernedScopeRef,
+  type GovernedSensitivity,
+  type ScopedGovernanceContext,
   type ScopedAuthorityGrant,
   type ScopedGovernanceOperation,
 } from "../../engine/v3/governance/scopedGovernanceContext";
@@ -11,6 +13,8 @@ import { validateOnboardingTestEnvironment } from "../environment/discoveryEnvir
 
 export const SANDBOX_ORGANIZATION_ID = "sandbox-northstar-implementation-services-001";
 export type SandboxPersonaKey = "sandbox-ceo" | "sandbox-director" | "sandbox-manager";
+declare const sandboxGovernanceContextReferenceBrand: unique symbol;
+export type SandboxGovernanceContextReference = string & { readonly [sandboxGovernanceContextReferenceBrand]: true };
 
 export function nextSandboxLifecycleTime(createdAt: string): string {
   const value = Date.parse(createdAt);
@@ -33,8 +37,8 @@ const scope = (type: GovernedScopeRef["type"], id: string): GovernedScopeRef => 
 export const SANDBOX_PERSONAS: readonly Persona[] = [
   {
     key: "sandbox-ceo", label: "Northstar CEO", environmentKey: "DISCOVERY_SANDBOX_CEO_USER_ID",
-    scopes: [scope("organization", SANDBOX_ORGANIZATION_ID)],
-    operations: ["understanding:disclose-direct", "understanding:disclose-derived", "understanding:read-historical", "understanding:read-historical-metadata", "product-artifact:read", "product-artifact:reuse", "product-artifact:compare", "product-artifact:prepare-again", "product-artifact:create-successor", "product-workspace:read", "leadership-history:list", "leadership-history:read"],
+    scopes: [scope("organization", SANDBOX_ORGANIZATION_ID), scope("team", "platform-delivery")],
+    operations: ["understanding:disclose-direct", "understanding:disclose-derived", "understanding:read-historical", "understanding:read-historical-metadata", "source-content:read-for-proposal", "source-binding:resolve-current", "source-content:read-for-evidence-admission", "product-artifact:read", "product-artifact:reuse", "product-artifact:compare", "product-artifact:prepare-again", "product-artifact:create-successor", "product-workspace:read", "historical-checkpoint-lifecycle-link:publish", "leadership-history:list", "leadership-history:read"],
   },
   {
     key: "sandbox-director", label: "Northstar Engineering Director", environmentKey: "DISCOVERY_SANDBOX_DIRECTOR_USER_ID",
@@ -94,6 +98,42 @@ export function authorizeSandboxRequest(input: { persona: ResolvedSandboxPersona
     temporal: { mode: "current" },
     serverResolvedAuthority: grantsFor(input.persona, input.status),
   });
+}
+
+type SandboxGovernanceReferenceRequest = {
+  persona: ResolvedSandboxPersona;
+  status: "active" | "revoked";
+  operation: ScopedGovernanceOperation;
+  purpose: string;
+  sensitivity: GovernedSensitivity;
+  evaluatedAt: string;
+};
+
+function resolveOwnedContexts(input: SandboxGovernanceReferenceRequest): ScopedGovernanceContext[] {
+  return input.persona.scopes.map((requestedScope) => resolveScopedGovernanceContext({
+    organizationId: requestedScope.organizationId,
+    subjectId: input.persona.userId,
+    requestedScope,
+    operation: input.operation,
+    purpose: input.purpose,
+    sensitivity: input.sensitivity,
+    evaluatedAt: input.evaluatedAt,
+    temporal: { mode: "current" },
+    serverResolvedAuthority: grantsFor(input.persona, input.status),
+  }));
+}
+
+export function issueSandboxGovernanceContextReferences(input: SandboxGovernanceReferenceRequest): readonly SandboxGovernanceContextReference[] {
+  return resolveOwnedContexts(input)
+    .filter((context): context is Extract<ScopedGovernanceContext, { disposition: "authorized" }> => context.disposition === "authorized")
+    .map((context) => context.contextId as SandboxGovernanceContextReference);
+}
+
+export function resolveSandboxGovernanceContextReference(
+  input: SandboxGovernanceReferenceRequest & { reference: SandboxGovernanceContextReference },
+): Extract<ScopedGovernanceContext, { disposition: "authorized" }> | null {
+  const resolved = resolveOwnedContexts(input).find((context) => context.disposition === "authorized" && context.contextId === input.reference);
+  return resolved?.disposition === "authorized" ? resolved : null;
 }
 
 const stable = (value: unknown): string => JSON.stringify(value, Object.keys(value as object).sort());

@@ -23,6 +23,7 @@ export type HistoricalCheckpointLifecycleLinkV1={
   linkedOwnerEventId:string|null;linkedOwnerReceiptId:string|null;linkedOwnerIntegrityDigest:string;
   linkedOwnerPersistence:HistoricalCheckpointLifecyclePersistenceV1;linkedSubrecordId:string|null;
   actorRef:string;operation:"historical-checkpoint-lifecycle-link:publish";purpose:string;scopeDigest:string;
+  sourceProposalContractVersion?:"1"|"2";governedScopeBindingDigest?:string;
   sensitivity:"standard"|"restricted"|"private";occurredAt:string;
   checkpointAccessBindingRef:string;linkedAccessBindingRef:string;
   requestFingerprint:string;idempotencyKeyDigest:string;workflowEventId:string;workflowReceiptId:string;linkDigest:string;
@@ -33,9 +34,10 @@ export type HistoricalCheckpointLifecycleLinkReceiptV1={
   checkpointId:string;linkId:string;linkKind:HistoricalCheckpointLifecycleLinkKindV1;linkedRecordId:string;
   linkedRecordRevision:string;linkedSubrecordId:string|null;workflowEventId:string;workflowCasBaseRevision:string|null;
   requestFingerprint:string;idempotencyKeyDigest:string;occurredAt:string;receiptDigest:string;
+  sourceProposalContractVersion?:"1"|"2";governedScopeBindingDigest?:string;
 };
 
-export type HistoricalCheckpointLifecycleLinkProjectionV1={contractVersion:"1";linkId:string;linkKind:HistoricalCheckpointLifecycleLinkKindV1;checkpointId:string;linkedRecordId:string;linkedRecordRevision:string;linkedSubrecordId:string|null;occurredAt:string;accessResultDigests:[string,string];projectionDigest:string};
+export type HistoricalCheckpointLifecycleLinkProjectionV1={contractVersion:"1";linkId:string;linkKind:HistoricalCheckpointLifecycleLinkKindV1;checkpointId:string;linkedRecordId:string;linkedRecordRevision:string;linkedSubrecordId:string|null;sourceProposalContractVersion?:"1"|"2";governedScopeBindingDigest?:string;occurredAt:string;accessResultDigests:[string,string];projectionDigest:string};
 export type HistoricalCheckpointLifecyclePublicationResultV1={link:HistoricalCheckpointLifecycleLinkV1;receipt:HistoricalCheckpointLifecycleLinkReceiptV1;idempotent:boolean;repository:{disposition:"committed"|"replayed";committedWorkflowRepositoryRevision:string|null;currentWorkflowRepositoryRevision:string|null}};
 
 export const historicalCheckpointLifecycleDigestV1=(value:unknown)=>leadershipDigest(leadershipStableSerialize(value));
@@ -50,5 +52,6 @@ export function assertHistoricalCheckpointLifecycleLinkIntegrityV1(link:Historic
   if((link.linkKind==="observed-outcome")!==Boolean(link.linkedSubrecordId))throw new Error("Historical checkpoint lifecycle subrecord identity is invalid.");
   if(!link.understanding.stableUnderstandingId||!link.understanding.revisionId||!link.understanding.revisionReceiptDigest)throw new Error("Historical checkpoint Understanding revision binding is incomplete.");
   if(!link.checkpointAccessBindingRef||!link.linkedAccessBindingRef)throw new Error("Historical checkpoint lifecycle access binding is incomplete.");
+  if(link.sourceProposalContractVersion==="2"&&!link.governedScopeBindingDigest||link.sourceProposalContractVersion==="1"&&link.governedScopeBindingDigest||link.sourceProposalContractVersion===undefined&&link.governedScopeBindingDigest)throw new Error("Historical checkpoint lifecycle governed scope lineage is invalid.");
 }
-export function assertHistoricalCheckpointLifecycleReceiptIntegrityV1(receipt:HistoricalCheckpointLifecycleLinkReceiptV1):void{const{receiptDigest,...unsigned}=receipt;if(receipt.contractVersion!=="1"||receiptDigest!==createHistoricalCheckpointLifecycleReceiptDigestV1(unsigned))throw new Error("Historical checkpoint lifecycle receipt integrity failed.");}
+export function assertHistoricalCheckpointLifecycleReceiptIntegrityV1(receipt:HistoricalCheckpointLifecycleLinkReceiptV1):void{const{receiptDigest,...unsigned}=receipt;if(receipt.contractVersion!=="1"||receiptDigest!==createHistoricalCheckpointLifecycleReceiptDigestV1(unsigned))throw new Error("Historical checkpoint lifecycle receipt integrity failed.");if(receipt.sourceProposalContractVersion==="2"&&!receipt.governedScopeBindingDigest||receipt.sourceProposalContractVersion==="1"&&receipt.governedScopeBindingDigest||receipt.sourceProposalContractVersion===undefined&&receipt.governedScopeBindingDigest)throw new Error("Historical checkpoint lifecycle governed scope lineage is invalid.");}
