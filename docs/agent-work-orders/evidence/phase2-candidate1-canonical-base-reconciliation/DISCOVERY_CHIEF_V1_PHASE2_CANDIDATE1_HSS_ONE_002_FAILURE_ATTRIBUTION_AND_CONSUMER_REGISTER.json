@@ -1,0 +1,33 @@
+{
+  "contractVersion": "002",
+  "classification": "P2C1HSS-F",
+  "defects": [
+    {
+      "id": "bounded-lifecycle-link-consumer",
+      "path": "product/integration/canonicalHistoricalCheckpointLifecycleLinkRouter.ts",
+      "exactSymbol": "CanonicalHistoricalCheckpointLifecycleLinkRouter.persist/list/read",
+      "failedInvariant": "complete store loaded above repository boundary",
+      "correctionBoundary": "bounded repository contract consumer"
+    },
+    {
+      "id": "team-narrow-manager-projection",
+      "path": "product/integration/leadershipConversationServerComposition.ts",
+      "exactSymbol": "constructLeadershipConversationServerComposition.workspace",
+      "failedInvariant": "closureCompletion removed instead of team-authorized projection",
+      "correctionBoundary": "MP-2 server projection"
+    }
+  ],
+  "candidate1BroadConsumersBeforeCorrection": [
+    {
+      "path": "product/integration/canonicalHistoricalCheckpointLifecycleLinkRouter.ts",
+      "symbols": ["persist", "list", "read"],
+      "broadRead": true,
+      "broadReplace": true
+    }
+  ],
+  "managerSuppressionBeforeCorrection": {
+    "repositorySymbol": "FilesystemProductWorkflowArtifactRepository.readOccurrence",
+    "serverSymbol": "constructLeadershipConversationServerComposition.workspace",
+    "behavior": "proposal-kind filtering returns an empty cycle1ClosureCompletions array"
+  }
+}

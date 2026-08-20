@@ -1,0 +1,3 @@
+# HSS-ONE entry state
+
+Gate 0: PASS. Canonical HEAD/tree/relation `9dab563c63aa2357eded34c9ff8e8743e4f89a1f` / `36efdeb6b07e82b608bf15a0e4ad7e87948d5cb9` / `0 6`. Package lock `07e5227977b8040704c75bec3a5b03c1fbfad2b20d687709b4845369ac49c1f3`. Candidate branch/worktree `product/chief-v1-phase2-cycle1-closure-checkpoint-001` / `/private/tmp/discovery-chief-v1-phase2-cycle1-closure-checkpoint-001`. Entry patch `5fad8df0be5607a30e5fd2cc1d48463275dfd618462971ceb238b9a703417d09`; semantic digest `9e7ebef71aaa853caed1298ed064453852750cf4c1887da451ebb6d2a277fab9`; exact 11 unstaged paths; staging empty. HSA manifest/synopsis and seven controlling artifacts hash-exact. Dependencies/build/Runtime/Product state and prior HSS artifacts absent. External effects 0.
