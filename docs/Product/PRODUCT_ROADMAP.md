@@ -46,7 +46,7 @@ Operator → observed reality → updated or justified-non-change Understanding 
 permission-aware projections`. It creates no autonomous monitoring, research,
 action, authority, or hidden mutation.
 
-### Alpha Product promise and gates
+### Immediate priority: design-partner-ready Alpha
 
 > Discovery helps leaders enter important conversations with the best available
 > organizational understanding, uncover hidden assumptions and meaningful
@@ -54,11 +54,14 @@ action, authority, or hidden mutation.
 
 Concise expression: **Prepare with what the organization knows. Discover what
 it is missing. Preserve what changed.** The Alpha proves one complete governed
-change-in-understanding loop through `Set up → Prepare → Freeze → Capture →
-Review → What Changed → Prepare Again`.
+change-in-understanding loop through `Activate → Prepare → Private Working →
+Intentional Contribution → Freeze → Capture → Review → What Changed → Prepare
+Again`, repeated twice around the same meeting and Question.
 
-The minimum adoption wedge is one user returning to one recurring consequential
-meeting around one material Question. The first session must produce a concise,
+The minimum adoption wedge is one VP, Director, or executive returning to one
+recurring consequential meeting around one material Question. VP Sales is the
+leading design context, but the contract and acceptance remain
+industry-agnostic. The first session must produce a concise,
 useful preparation; the mandatory second cycle must be better because prior
 checkpoint, unresolved issue, commitment, expectation, Outcome, and change
 history are available through existing owners. The Product ambition is
@@ -75,6 +78,53 @@ later Product decisions. Intelligent carry-forward means continuity of
 Organizational Understanding, not task carry-forward. Privacy-preserving
 cross-user organizational learning remains post-Alpha research, and no private
 material becomes organizational learning automatically before Alpha.
+
+### Alpha Control Tower
+
+This is a governed readiness projection inside the canonical roadmap, not a
+dashboard, runtime service, product owner, persistence boundary, or source of
+truth. Each gate is `PASS`, `BLOCKED`, or `PENDING HUMAN APPROVAL`, with links
+to its canonical owner and validation evidence. Green activity outside these
+gates cannot make the Alpha ready.
+
+| Gate | Current state | Exit evidence |
+|---|---|---|
+| 1. Canonical planning base | PASS | Canonical `main` is clean at `71277521`; both planning commits retain exact identity; push remains separate |
+| 2. Candidate-1 controlled reconstruction | BLOCKED | Clean reconstruction from the accepted governed-scope foundation; historical worktree preserved |
+| 3. HSS-ONE resumption and cycle-1 closure | BLOCKED by Gate 2 | Reconcile preserved `P2C1HSS-F`; complete the intended checkpoint boundary and first occurrence without weakening provenance, replay, or current access |
+| 4. Complete Occurrence 1 | BLOCKED by Gate 3 | Private Working, Intentional Contribution, Freeze, Capture, Review, completion, and body-safe negative states pass |
+| 5. What Changed and Prepare Again | BLOCKED by Gate 4 | Fresh-process second occurrence reconstructs from canonical artifacts and current Evidence, shows change and uncertainty, and creates no duplicates |
+| 6. Chief-of-staff value layer | BLOCKED by Gate 5 | Concise priority, surprises, tensions, unknowns, meeting questions, bounded acquisition recommendations, provenance, and truthful abstention |
+| 7. Alpha experience and operations | BLOCKED by Gates 4–6 | Onboarding, source guidance, resilient states, instrumentation, production smoke/deployment validation, rollback, support, privacy, and design-partner operations |
+| 8. Design-partner launch | BLOCKED by Gate 7 and human approval | Two-cycle acceptance, no unresolved high-severity trust failure, verified instrumentation, onboarding, support, limitations, measures, and observation plan |
+
+The following initial scorecard is deliberately small and falsifiable. Its
+numeric thresholds are **proposed and pending human approval**; they are not
+Product truth, readiness authority, or a composite score:
+
+- activation completed by the invited user without operator repair in one
+  session;
+- first useful preparation reached in at most 3 minutes and no more than five
+  required user actions after activation;
+- occurrence-one loop completion rate of 100% for the initial design partner;
+- post-meeting closure completed in at most 2 minutes;
+- a second preparation completed before the next selected meeting;
+- user-rated pre-meeting usefulness at least 8/10 in both occurrences;
+- at least one important, surprising, or previously overlooked issue confirmed
+  by the user in one of the two occurrences;
+- at least one Discovery-suggested question or Evidence request acted on across
+  the two occurrences;
+- occurrence-two usefulness no lower than occurrence one, with at least one
+  user-confirmed material improvement attributable to governed carry-forward;
+- voluntary return for occurrence two and stated willingness of at least 8/10
+  to continue using the Alpha;
+- user-rated trust in sources, uncertainty, and provenance at least 8/10;
+- zero severity-1 or severity-2 Product failures and no more than two lower-
+  severity recoverable failures across the first two occurrences;
+- 100% of displayed material retains current authorization and lineage;
+- zero cross-user, cross-organization, protected-body, or private-working-state
+  disclosure failures and zero duplicate canonical or Product Workflow records;
+- 100% of material unknowns are explicit or produce truthful abstention.
 
 ### Current technical truth
 
@@ -707,8 +757,8 @@ mechanics may converge only after evidence, conformance, and bounded migration.
    release identity, rollback, experiment registry, and operational evidence.
    Readiness is PASS/BLOCK with explicit bounded exceptions, never a composite
    score or an enterprise-scale infrastructure program.
-8. **Limited design-partner Alpha.** Serve approximately 5–10 closely supported
-   users with the one Chief-led workflow and
+8. **Initial design-partner Alpha.** Serve one closely supported authorized VP,
+   Director, or executive with the one Chief-led workflow and
    measure useful decisions, preparation quality, follow-through, confidence
    calibration, and learning over time.
 9. **Forward-deployed learning and evidence-driven professionalization.** Broaden
@@ -719,6 +769,67 @@ mechanics may converge only after evidence, conformance, and bounded migration.
    gates. Its code was reverted and no permanent consumer remains. Do not
    reopen or replace it; future compression requires new independent value
    evidence.
+
+### Parallel non-blocking Discovery-on-Discovery Internal Learning Loop
+
+This internal loop may run in parallel but may not block, reorder, or broaden
+Gates 1–8. It uses existing governance and evidence owners; it creates no
+private-to-organizational learning shortcut and no new product authority.
+
+1. **DOD-0 — Evidence capture now.** Durably produce or reference Product
+   decisions, roadmap changes, work orders, task identities, diffs/commits,
+   validation and benchmark results, independent reviews, failures, human gates,
+   remediation, elapsed execution/waiting time, repeated friction, deployment
+   observations, design-partner feedback, decision dispositions, and Outcomes.
+   Do not duplicate existing evidence owners or make active cognition grow in
+   proportion to history.
+2. **DOD-1 — Bounded read-only internal understanding.** After the first
+   complete live Governor-managed implementation loop, analyze human
+   interventions, avoidable friction, recurring ambiguity/defects/findings,
+   validation cost, helpful and burdensome governance, weak assumptions,
+   missing instrumentation, and highest-value next Evidence. Produce proposals
+   only; modify nothing automatically.
+3. **DOD-2 — Governed falsifiable experiments.** After DOD-1 acceptance, use
+   `observation → Evidence → hypothesis → frozen baseline → bounded experiment →
+   independent evaluation → human promotion or rejection`. Preserve failed and
+   rejected experiments; the proposer may not uncritically approve its own
+   work.
+4. **DOD-3 — Training or model adaptation later.** Specialized evaluators,
+   classifiers, smaller models, adapters, fine-tuning, retrieval, or routing
+   require sufficient independently reviewed data, clear permissions, holdout
+   evaluation, contamination controls, versioning, reversibility, and evidence
+   over simpler application changes. No autonomous training begins now and no
+   customer Evidence is merged across organizations without explicit legal,
+   Product, privacy, and governance authorization.
+
+Benchmark, governance, architecture-compression, and internal-learning work
+must not displace the Alpha sequence unless it exposes a failing security,
+privacy, authorization, lineage, isolation, or truthful-utility invariant.
+
+### Explicit post-Alpha deferrals
+
+Until one design partner completes the Alpha—unless a failing Gate 1–8 trust
+invariant proves necessity—defer broad multi-persona or company-wide rollout;
+large connector catalogs; autonomous fine-tuning; user-facing teaching;
+decision-portfolio, regret, opportunity-cost, or broad counterfactual
+optimization; executive-reflection systems; generalized self-modifying agents;
+speculative shared foundations; architecture expansion; and benchmark
+optimization unrelated to Alpha trust or value. These refine, rather than
+replace, the detailed deferrals in `PRODUCT_GAPS.md`, the Leadership Workspace
+manifesto, and the feature simulations below.
+
+### Governor execution boundary
+
+The Governor is the normal user-facing orchestration layer and follows the
+bounded sequence `idea → analysis → Product decision → repository canon → work
+order → explicit implementation authorization → execution → validation →
+independent review → bounded remediation → completion evidence → exact commit
+authorization → verified commit → exact integration authorization → verified
+integration → exact push authorization → verified push → deployment
+authorization → deployment → observation → learning`. The canonical local-
+commit gate remains owned by `AGENTS.md`. The user is not a message bus, routine
+manual operator, or substitute monitor; process that does not improve Alpha
+value or protect a named invariant is not a reason to delay the Product.
 
 ### Alpha promise and negative controls
 

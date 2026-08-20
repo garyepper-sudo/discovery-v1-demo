@@ -100,7 +100,7 @@ Runtime, grant, disclosure, projection, or live Product behavior change.
 | ID | Class | Title | Description | Current behavior | Desired behavior | Reason deferred | Dependencies | Blocked capabilities | Priority | Required before | Complexity | Success criteria | Status |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | GAP-B-020 | B | Decision Readiness contract | Decision Workspaces have no canonical readiness owner or calibrated product contract. | Existing Evidence, Understanding, Unknown, Objective, Optimization Context, Decision, Outcome, and calibration owners remain separate and truthful. | Define a bounded, scoped, decision-specific readiness determination that preserves independent dimensions and abstains when inputs are missing or withheld. | Customer validation, producer ownership, calibration, and side-channel analysis are incomplete. | `GAP-R-012`, decision benchmark suite, scoped governance | Decision Workspace implementation | P1 | Decision Workspace implementation | L | Readiness cannot be confused with approval, authority, confidence, recommendation, or success prediction and passes deterministic and disclosure-negative controls. | Open |
-| GAP-B-021 | B | Contemporaneous Epistemic History foundation | Current owners preserve revisions and lineage, but no minimum historical package yet proves authentic cutoff state, rich dispositions, non-reconstruction, or two-cycle Alpha history. | `DEC-PROD-050` establishes the strategic temporal substrate and requires reuse of existing immutable owners; implementation is unstarted. | Define the minimum owner-backed checkpoint, historical-read authorization, non-reconstruction invariants, twenty focused tests, and deterministic two-cycle proof before substantial persona behavior relies on historical semantics. | P2 current-access/history/reuse remains paused; owner audit and contract planning require a separate bounded task. | `DEC-PROD-041`, `DEC-PROD-048`, `DEC-PROD-050`, P2 overlap reconciliation, scoped governance, Product Workflow persistence | Historically truthful Chief continuity and later persona history | P0 | Before substantial persona expansion | L | Current, contemporaneous, and retrospective state remain distinct; immutable history survives revocation while reads fail closed; no later Evidence, Outcome, or interpretation version contaminates the cutoff. | Open |
+| GAP-B-021 | B | Contemporaneous Epistemic History composition | Historical Checkpoint L1 and its access/lineage prerequisites are closed, but the preserved Candidate-1/HSS continuation and complete two-occurrence Product composition are not accepted. | Canonical owners provide cutoff identity, lineage, current-access transitions, isolation, CAS, replay, and fresh-process reconstruction; HSS-ONE remains stopped after `P2C1HSS-F`. | Reconstruct Candidate-1 from the current canonical base, resume HSS-ONE separately, and prove scope-correct Chief composition and deterministic two-occurrence acceptance without a new history owner. | The historical dirty patch conflicts with the governed-scope foundation and cannot be resumed directly. | `DEC-PROD-041`, `DEC-PROD-048`, `DEC-PROD-050`, Candidate-1 work order, scoped governance, Product Workflow persistence | Historically truthful Chief continuity and two-occurrence Alpha acceptance | P0 | Before design-partner Alpha | L | Closed L1 invariants remain exact while scope-correct HSS and Product composition prove current, contemporaneous, and retrospective state separation without later-state contamination. | Open — L1/prerequisites closed; HSS/composition pending |
 
 `GAP-B-021` disclosure prerequisite update (2026-08-11): the bounded Executive
 History current-access owner now provides exact Review binding, inherited
@@ -232,6 +232,19 @@ remain permanent and must not be reused.
 | GAP-B-001 | Governed Google Drive retrieval did not exist. | Added exact-user and exact-organization OAuth, encrypted credentials, selected-folder scope, deterministic synchronization/extraction, Question-relative retrieval, Evidence admission, citations, freshness, reload, and fail-closed isolation. Live revocation remains separately tracked by `GAP-A-006` and `GAP-A-016`. | `product/connectors/google-drive/`; `product/integration/canonicalProductWorkspaceAdapter.ts` | 2026-07-30 | Google Drive connector validators; live folder, extraction, incremental synchronization, retrieval, negative-control, and reload acceptance |
 
 ### GAP-B-021 historical lifecycle continuation
+
+**Current Alpha sequence:** Historical Checkpoint L1 and its owner/access
+prerequisites are canonically closed. The accepted governed-scope foundation
+and preserved Candidate-1 plan do not close the remaining HSS/Product
+composition work. Candidate-1 must be
+reconstructed deliberately from canonical `71277521` before HSS-ONE resumes;
+only the separately validated scope-correct lifecycle and two-occurrence
+composition may resolve this gap. This is Gate 3 and a prerequisite to Gates
+4–5 of the design-partner Alpha roadmap.
+
+The initial one-user Alpha does not authorize the deferred authoritative
+Decision, expected Outcome/signal, supersession, general historical-query, or
+cross-user learning expansions below.
 
 ## Architecture-compression deferrals
 

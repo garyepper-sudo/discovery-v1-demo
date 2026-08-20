@@ -3,13 +3,18 @@
 **Current status:** Chief V1 Activation and First Prepare Phase 1 is complete at
 canonical commit `6ca1ec1f4420f1852b21c334adb177ff32ade9f3`.
 
-**Next boundary:** separately governed planning and authorization for the next
-Leadership Conversation lifecycle slice. Capture, Review, What Changed,
-Prepare Again, private preparation, cognition optimization, Phase 2, and
-design-partner rollout have not begun.
+**Current next boundary:** controlled Candidate-1 reconstruction from canonical
+`71277521`, followed—only after successful validation—by separately authorized
+HSS-ONE resumption under `GAP-B-021`. This preserves the historical handoff
+while aligning its continuation with the design-partner Alpha roadmap.
 
-This handoff starts implementation planning. It does not authorize code changes
-by itself.
+This handoff does not authorize code changes by itself. Its current bounded
+target is exactly the committed Candidate-1 reconstruction work order: preserve
+the historical worktree, reconstruct on canonical `71277521`, reconcile the six
+overlapping paths, validate, independently review, and stop before HSS-ONE.
+The complete two-occurrence Alpha proof remains a later roadmap boundary for
+one VP, Director, or executive. VP Sales is the leading design context; the
+Product boundary remains industry-agnostic.
 
 ## Canonical baseline
 
@@ -37,9 +42,11 @@ by itself.
 
 ## Planning objective
 
-Reconcile the canonized planning contracts against actual implementation files,
-then produce the smallest Codex implementation prompt for a deterministic
-development-only Prepare–Capture–Prepare proof.
+Reconcile the canonized planning contracts and Candidate-1 evidence against
+actual implementation files, then reconstruct only the bounded Candidate-1
+behavior without modifying the preserved historical worktree. Stop after
+validation and independent review, before HSS-ONE or the later two-occurrence
+proof; neither this handoff nor the roadmap alone authorizes those transitions.
 
 The next planning chat must identify:
 
@@ -58,7 +65,7 @@ improvise a generic Runtime document store.
 ## Required first-slice behavior
 
 ```text
-Set up → Prepare → Freeze → Capture → Review → What changed → Prepare again
+Activate → Prepare → Private Working → Intentional Contribution → Freeze → Capture → Review → What Changed → Prepare Again
 ```
 
 Use or create a canonical `ProductQuestion`; collect minimal conversation

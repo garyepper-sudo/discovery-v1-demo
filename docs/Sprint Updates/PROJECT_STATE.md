@@ -1,5 +1,28 @@
 # Discovery Project State
 
+## Immediate priority: one design-partner-ready Alpha
+
+Canonical planning and governed evidence are integrated at `71277521`. The
+next implementation transition is the separately authorized controlled
+Candidate-1 reconstruction from that base; only after it succeeds may HSS-ONE
+resume. The target Product loop is two occurrences of `Activate → Prepare →
+Private Working → Intentional Contribution → Freeze → Capture → Review → What
+Changed → Prepare Again` for one authorized VP, Director, or executive. VP Sales
+is the leading design context, not an industry-specific architecture.
+
+The canonical Alpha Control Tower in `PRODUCT_ROADMAP.md` projects and tracks
+readiness for Gates 1–8; it never owns readiness or Product truth. Its numeric scorecard is proposed and pending human
+approval. The parallel Discovery-on-Discovery DOD-0..3 learning loop may inform
+later decisions but cannot block or displace Alpha absent a failing trust
+invariant. No Product source, runtime owner, route, deployment, or design-
+partner activation is changed by this documentation rebaseline.
+
+The Governor remains the normal user-facing orchestration layer and must use
+bounded work, validation, independent review, remediation, and separately
+authorized state transitions. `AGENTS.md` remains the canonical local-commit
+gate. The user is not the routine message bus or terminal operator, and process
+work must not displace Alpha unless it protects a named trust invariant.
+
 ## Chief V1 recurring-meeting Alpha Phase 1 complete
 
 Canonical commit `6ca1ec1f4420f1852b21c334adb177ff32ade9f3` integrates the exact accepted
@@ -34,10 +57,10 @@ Alpha-blocking foundation exists. The shared governed-process shadow benchmark
 is closed without permanent promotion. Broad compression remains deferred
 through initial design-partner Alpha.
 
-The exact next task is **Discovery Chief V1 Recurring-Meeting Alpha Minimum
-Vertical Slice — Exact Implementation Planning 001**, planning only. No Chief
-implementation, Alpha launch, deployment, Production access, or connector
-activity is claimed by this state update.
+At that checkpoint, the exact next task was **Discovery Chief V1
+Recurring-Meeting Alpha Minimum Vertical Slice — Exact Implementation Planning
+001**. It is retained as historical sequencing; the current priority is the
+design-partner Alpha sequence at the top of this document.
 
 ## Architecture-compression roadmap state
 
@@ -52,8 +75,10 @@ At canonical baseline `eb8923bcc9001ee6891463b94a8e629aedb184d0`:
 - new owners, repositories, policy models, schemas, migrations, Runtime changes,
   and application behavior: zero.
 
-The immediate successor is a planning-only governed-protocol owner audit and
-benchmark design. Implementation requires separate authorization.
+The then-immediate successor was a planning-only governed-protocol owner audit
+and benchmark design. That historical checkpoint does not supersede the current
+Alpha priority; reusable-protocol work remains deferred unless an Alpha trust
+invariant requires it.
 
 ## Canonical Understanding confidence revision complete
 
@@ -69,7 +94,7 @@ replay, exact original-request idempotency, collision denial, materialization
 fresh-process recovery, Product governance (192 checks, 52 decisions), and the
 accepted inherited architecture baseline (295/302, same seven findings).
 Retained Runtime and preserved worktrees remain exact. The immediate successor
-is a planning-only post-confidence rebaseline of historical checkpoint
+at that checkpoint was a planning-only post-confidence rebaseline of historical checkpoint
 Decision/Outcome/Learning linkage; historical-foundation reentry remains
 separate and deferred.
 
@@ -270,13 +295,14 @@ audience grants, forward lineage, nested disclosure, safe abstraction, live
 integration, route promotion, and Production deployment remain separate
 parallel governance work.
 
-## Next Priority
+## Preserved historical priority
 
 **DISCOVERY GOVERNED COGNITION NON-DISCLOSURE FOUNDATION AND ADVERSARIAL
-BENCHMARK 001** is the immediate successor. Its initial mode is architecture
+BENCHMARK 001** was the immediate successor at this checkpoint. Its initial mode is architecture
 reconciliation, owner audit, threat model, and benchmark design only.
 `GAP-A-012` remains open for actual promotion through the existing Executive
-Decision pipeline; generic Outcome routing remains deferred.
+Decision pipeline; generic Outcome routing remains deferred. This preserved
+priority does not displace the current design-partner Alpha sequence.
 
 ### Preserved predecessor: Leadership Conversation Prepare/Capture slice
 

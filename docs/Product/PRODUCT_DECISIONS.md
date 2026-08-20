@@ -1353,12 +1353,15 @@ user evidence identifies a repeated need or a hard invariant gap.
 
 ## DEC-PROD-057 — Chief Alpha activates through one recurring meeting and explicit private contribution
 
-**Status:** Proposed by planning reconciliation; not canonical until separately
-reviewed and integrated.
+**Status:** Accepted — canonical Alpha activation and initial design-partner
+boundary.
 
 - **Activation:** One authorized user, one recurring consequential meeting, and
   one material `ProductQuestion` are the minimum wedge. First-session utility
   precedes organizational administration or contribution requests.
+- **Initial user:** One VP, Director, or executive. VP Sales is the leading
+  design context, while Product contracts and acceptance remain
+  industry-agnostic.
 - **Composition:** Three-minute preparation, private working state, two-minute
   closure, and the mandatory second cycle reuse existing Prepared Work,
   Product Workflow, contribution, Historical Checkpoint, Decision Draft,
@@ -1376,3 +1379,16 @@ reviewed and integrated.
 - **Ethics:** Discovery creates asymmetric preparedness through authorized
   Evidence, continuity, and better reasoning—not asymmetric access to truth,
   surveillance, colleague scoring, loyalty prediction, or manipulation.
+- **Sequence:** The complete two-occurrence loop is `Activate → Prepare →
+  Private Working → Intentional Contribution → Freeze → Capture → Review → What
+  Changed → Prepare Again`.
+- **Chief behavior:** Chief organizes attention around consequential change,
+  material uncertainty, contradiction, and unresolved commitments. It states
+  what is unknown and may recommend bounded Evidence acquisition through the
+  existing selector; it may not imply certainty, initiate acquisition, or
+  create an autonomous chief-of-staff authority.
+- **Readiness:** The roadmap's Alpha Control Tower is a status projection over
+  canonical gates, not a dashboard or owner. Initial numeric thresholds remain
+  proposed and require human approval before they become acceptance criteria.
+- **Sequencing:** Candidate-1 controlled reconstruction precedes any HSS-ONE
+  resumption. The Discovery-on-Discovery loop is parallel and non-blocking.

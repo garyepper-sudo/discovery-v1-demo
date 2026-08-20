@@ -31,6 +31,12 @@ is: **Walk into the meeting prepared, perceptive, and difficult to surprise.**
 The second-cycle retention moment is: **This meeting is better because
 Discovery was present last time.**
 
+The initial user is one VP, Director, or executive. VP Sales supplies the
+leading design context, while the workflow remains industry-agnostic. Alpha
+acceptance requires two occurrences of the complete sequence: `Activate →
+Prepare → Private Working → Intentional Contribution → Freeze → Capture →
+Review → What Changed → Prepare Again`.
+
 ## Product thesis
 
 Discovery is not enterprise search, generic AI chat, dashboard or reporting
@@ -58,6 +64,9 @@ models, memories, authorities, or interfaces.
 - Chief owns the visible organizing experience: Question, authorized
   preparation, attention, continuity, frozen baseline, Capture, review, What
   Changed, and next preparation.
+  It makes material unknowns and contradictions explicit, directs attention to
+  consequential change, and may recommend—but never initiate—bounded Evidence
+  acquisition through the existing governed selector.
 - Counsel is embedded in Prepare and Review. It may surface one material
   assumption, contradiction, divergence, local constraint, stale or missing
   Evidence, or unresolved question—and must be able to return no material

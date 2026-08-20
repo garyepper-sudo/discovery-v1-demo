@@ -1321,8 +1321,9 @@ insufficiency, auditability, and rollback. Architecture-compression
 infrastructure, generic agents, continuous monitoring, universal search, and
 privacy-preserving cross-user learning are outside this Alpha.
 
-The Alpha cohort is approximately 5–10 closely supported design-partner users.
-Readiness asks whether Discovery can serve them safely, explain and recover from
+The Alpha begins with one closely supported primary design partner. Widening to
+additional users is evidence-driven after the initial recurring loop succeeds.
+Readiness asks whether Discovery can serve that user safely, explain and recover from
 failure, preserve governance, and collect trustworthy Product evidence. After
 Baseline A freezes, optimization is benchmarked, time-bounded, and guarded by
 ablation, sensitivity, holdout/Goodhart controls, hard governance gates, and

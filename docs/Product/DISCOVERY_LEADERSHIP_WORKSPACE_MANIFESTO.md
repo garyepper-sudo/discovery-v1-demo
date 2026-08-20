@@ -60,6 +60,14 @@ The canonical product question becomes:
 
 > What are you trying to accomplish?
 
+The immediate Product priority is a design-partner-ready Alpha for one VP,
+Director, or executive returning to one consequential recurring meeting. VP
+Sales is the leading context for design and evaluation, not an industry or
+persona-specific contract. The Alpha must complete two occurrences of
+`Activate → Prepare → Private Working → Intentional Contribution → Freeze →
+Capture → Review → What Changed → Prepare Again` before workspace-family
+expansion.
+
 Examples include preparing a staff meeting, preparing a one-on-one, composing a
 weekly update, exploring a hiring or reorganization decision, preparing
 quarterly planning, investigating an organizational issue, or reviewing
@@ -91,7 +99,10 @@ Leadership Workspaces may be packaged through four complementary application
 roles over the same governed Organizational Understanding:
 
 1. **Chief** organizes attention, continuity, memory, what matters now, what
-   changed, and the next important conversation.
+   changed, and the next important conversation. It foregrounds material
+   unknowns and contradictions and may recommend bounded Evidence acquisition
+   through existing owners while truthfully abstaining when support is
+   insufficient.
 2. **Counsel** tests consequential theories, assumptions, strategies, and
    choices; surfaces supporting and contradicting Evidence and meaningful
    disagreement; and states what would change the organization’s mind.
@@ -286,6 +297,11 @@ information retrieval alone is not success.
 - Environmental Intelligence;
 - production routes, persistence, and UI implementation;
 - industry-specific workspace variants.
+- broad benchmark, governance, or architecture-compression programs that do
+  not close a named Alpha trust invariant;
+- multi-user rollout before one design partner completes the two-occurrence
+  loop;
+- automated or cross-user private-to-organizational learning.
 
 ### Primary risks
 
