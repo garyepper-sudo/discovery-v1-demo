@@ -400,15 +400,73 @@ If additional benchmarks exist for the modified subsystem, run them when appropr
 
 # Git
 
-Never:
+The user owns authorization and judgment for Git state transitions. By default,
+Codex must not stage or commit repository changes.
 
-- commit
-- push
-- merge
-- rebase
-- delete branches
+Codex may stage exact paths and create one ordinary local commit only after the
+user explicitly authorizes a complete commit packet identifying:
 
-The user owns Git operations.
+- objective and work-order identity
+- exact worktree, branch, and expected parent HEAD
+- exact proposed path list and path count
+- expected diffstat
+- material artifact hashes
+- required validation results
+- independent-review and bounded-remediation results
+- exact commit message
+- confirmation that no material uncertainty remains
+- confirmation that push, merge, integration, promotion, release, and deployment
+  are excluded
+
+Authorization applies to exactly one identified local commit and expires after
+that commit or immediately upon drift in any packet fact. It does not carry
+forward, expand the path set, permit a changed message or amend, or permit a
+second attempt after a materially changed result without renewed approval.
+
+Immediately before staging, Codex must independently verify the exact worktree,
+branch, parent HEAD, initial index state, changed and untracked path set,
+specified artifact hashes and sizes, applicability of validation and independent
+review, absence of unexpected files or drift, and preservation of protected
+worktrees, branches, artifacts, and unrelated state. Any mismatch must stop the
+operation before staging.
+
+Codex must stage each approved path explicitly, then verify the exact staged set
+and count, inspect staged name-status and diffstat, run required staged
+validation, and reverify material hashes. Never use `git add .`, `git add -A`,
+`git commit -a`, an unrestricted directory glob, or any operation capable of
+absorbing unapproved paths.
+
+When every approved check passes, Codex may create exactly one normal local
+commit with the exact approved message, allow ordinary repository hooks to run,
+and surface a native protected-metadata approval request when required. It must
+not bypass hooks, use `--no-verify`, amend, create an empty commit, change Git or
+signing configuration, or suppress a validation failure.
+
+If an operation fails after exact staging but before commit completion, Codex
+may unstage only the exact authorized paths solely to restore the verified
+pre-staging index state. It must leave working-tree bytes unchanged, not restore
+or delete files, report the exact failure, and require renewed authorization if
+the approved packet is no longer exact.
+
+After committing, Codex must verify commit, parent, and tree identities; branch;
+exact committed path set and count; diffstat; message; material hashes; clean or
+expected worktree state; preservation of protected and unrelated repository
+state; and absence of unauthorized transitions.
+
+A local-commit authorization never authorizes push, merge, rebase, cherry-pick,
+fast-forward or canonical-main integration, reset, restoration of unrelated
+state, branch or worktree deletion, destructive cleanup, promotion, release,
+deployment, database action, or infrastructure mutation. Remote, canonical,
+destructive, and release transitions remain separately controlled and
+prohibited unless a later canonical rule and exact human authorization permit
+them.
+
+A commit containing `AGENTS.md` or another governance file must identify the
+governance change explicitly in its packet, receive explicit human authorization
+and independent review, and remain separate from unrelated Product or
+implementation changes unless the user explicitly authorizes a combined
+governance commit. Codex must not weaken, remove, or circumvent its own
+governance rules merely to complete another task.
 
 ---
 
