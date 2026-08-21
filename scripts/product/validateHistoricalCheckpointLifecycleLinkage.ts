@@ -1,7 +1,7 @@
 // @ts-nocheck -- validator runtime assertions deliberately inspect discriminated persisted fixtures.
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
@@ -10,6 +10,14 @@ import { resolveSandboxGovernanceContextReference, resolveSandboxPersonas, type 
 import { provisionHistoricalCheckpointSharedWorld, reconstructHistoricalCheckpointActualOwnerComposition, runHistoricalCheckpointLifecycleActualOwnerAcceptance, runHistoricalCheckpointLifecycleAdversarialWorldAcceptance, type HistoricalCheckpointActualOwnerMode } from "./historicalCheckpointLifecycleActualOwnerAcceptanceCoordinator";
 
 const execFileAsync=promisify(execFile);
+
+async function validateBoundedLifecycleRepositoryConsumption():Promise<Record<string,unknown>>{
+  const router=await readFile(path.join(process.cwd(),"product/integration/canonicalHistoricalCheckpointLifecycleLinkRouter.ts"),"utf8"),server=await readFile(path.join(process.cwd(),"product/integration/leadershipConversationServerComposition.ts"),"utf8"),repository=await readFile(path.join(process.cwd(),"product/workflow/leadershipConversation/productWorkflowArtifactRepository.ts"),"utf8");
+  assert.match(router,/mutateHistoricalCheckpointLifecycle/);assert.match(router,/readHistoricalCheckpointLifecycle/);assert.doesNotMatch(router,/this\.d\.repository\.read\(/);assert.doesNotMatch(router,/this\.d\.repository\.replace\(/);
+  const lifecycleConstruction=server.slice(server.indexOf("const historicalCheckpointLifecycle="),server.indexOf("const productMaterializer="));assert.match(lifecycleConstruction,/workflow\.readHistoricalCheckpointLifecycle\(/);assert.doesNotMatch(lifecycleConstruction,/workflow\.read\(/);
+  assert.match(repository,/async readHistoricalCheckpointLifecycle\(/);assert.match(repository,/async mutateHistoricalCheckpointLifecycle\(/);assert.match(repository,/checkpointPublication/);assert.match(repository,/expectedRevision/);
+  return{result:"PASS",routerBroadReads:0,routerBroadReplaces:0,serverCheckpointBroadReads:0,boundedReadOwner:"ProductWorkflowArtifactRepository.readHistoricalCheckpointLifecycle",boundedMutationOwner:"ProductWorkflowArtifactRepository.mutateHistoricalCheckpointLifecycle",wholeStoreAccessLocation:"inside-repository-only",casPreserved:true};
+}
 
 async function foundationWorker(root:string,organizationId:string):Promise<void>{const repository=createProductWorkflowArtifactRepository({root:path.join(root,"workflow"),environment:"test"}),snapshot=await repository.read(organizationId),routing=snapshot.store.canonicalRoutingReceipts.find(value=>value.sourceProposalContractVersion==="2")!,proposal=snapshot.store.proposals.find(value=>value.contractVersion==="2"&&value.proposalId===routing.proposalId)!,disposition=snapshot.store.dispositions.find(value=>value.proposalId===proposal.proposalId)!,link=snapshot.store.historicalCheckpointLifecycleLinks?.at(-1)!,receipt=snapshot.store.historicalCheckpointLifecycleLinkReceipts?.at(-1)!;assert.ok(proposal&&disposition&&routing&&link&&receipt);assert.equal(proposal.governedScopeBinding.bindingDigest,disposition.governedScopeBindingDigest);assert.equal(routing.governedScopeBindingDigest,proposal.governedScopeBinding.bindingDigest);assert.equal(link.governedScopeBindingDigest,routing.governedScopeBindingDigest);assert.equal(receipt.governedScopeBindingDigest,link.governedScopeBindingDigest);console.log(`FOUNDATION_WORKER_RESULT ${JSON.stringify({proposalId:proposal.proposalId,proposalVersion:proposal.contractVersion,bindingDigest:proposal.governedScopeBinding.bindingDigest,reviewBindingDigest:disposition.governedScopeBindingDigest,routingReceiptDigest:routing.receiptDigest,routingBindingDigest:routing.governedScopeBindingDigest,linkId:link.linkId,linkDigest:link.linkDigest,linkBindingDigest:link.governedScopeBindingDigest,checkpointId:link.checkpointId,receiptDigest:receipt.receiptDigest,requestFingerprint:link.requestFingerprint,revision:snapshot.revision})}`);}
 
@@ -92,7 +100,8 @@ export async function runHistoricalCheckpointLifecycleValidation(mode: Historica
   const foundationEvidence=await validatePersistedFoundationLineage();
   const scopeSensitivity=await validateOwnerIssuedScopeSensitivity();
   const managerProjection=await validateManagerBoundedProjection();
-  return{...await runHistoricalCheckpointLifecycleActualOwnerAcceptance(mode),foundationEvidence,scopeSensitivity,managerProjection};
+  const boundedRepositoryConsumption=await validateBoundedLifecycleRepositoryConsumption();
+  return{...await runHistoricalCheckpointLifecycleActualOwnerAcceptance(mode),foundationEvidence,scopeSensitivity,managerProjection,boundedRepositoryConsumption};
 }
 
 const foundationWorkerIndex=process.argv.indexOf("--foundation-worker");if(foundationWorkerIndex>=0){void foundationWorker(process.argv[foundationWorkerIndex+1]!,process.argv[foundationWorkerIndex+2]!).catch(error=>{console.error(error);process.exitCode=1;});}else if (process.argv[1]?.endsWith("validateHistoricalCheckpointLifecycleLinkage.ts")) {

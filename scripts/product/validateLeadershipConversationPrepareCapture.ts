@@ -4,6 +4,8 @@ import { lstat, mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
+
+Object.assign(process.env,{NODE_ENV:"test"});
 import {
   createCanonicalScopeTopology,
   createCanonicalSourceScopeBinding,
