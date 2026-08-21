@@ -8,6 +8,7 @@ import type { OrganizationRuntimeRepository } from "../../engine/v3/runtime/orga
 import { produceCanonicalUnderstandingAudienceLineage } from "../../engine/v3/understanding/produceCanonicalUnderstandingAudienceLineage";
 import { resolveCanonicalUnderstandingCurrentEligibility } from "../../engine/v3/understanding/resolveCanonicalUnderstandingCurrentEligibility";
 import type { ProductArtifactCurrentOwnerStateV1 } from "../workflow/productArtifactCurrentAccessContracts";
+import type { HistoricalPredecessorCurrentAccessRequestV2 } from "../workflow/productArtifactCurrentAccessContracts";
 import type { ProductArtifactInspectionMetadataV1 } from "../workflow/productArtifactInspectionMetadataContracts";
 import { buildGenericScopedProductSource } from "./runtimeToScopedProductSource";
 import { readScopedOrganizationalProductProjection } from "./scopedOrganizationalProductProjection";
@@ -65,6 +66,14 @@ export class ProductArtifactCurrentOwnerStateResolver {
   async resolve(
     input: ProductArtifactCurrentOwnerStateResolutionInputV1,
   ): Promise<ProductArtifactCurrentOwnerStateV1> {
+    return this.resolveCurrent(input, false);
+  }
+
+  private async resolveCurrent(
+    input: ProductArtifactCurrentOwnerStateResolutionInputV1,
+    allowProvenSuccessorRevision: boolean,
+    historicalStatus?:{durableRevoked:boolean},
+  ): Promise<ProductArtifactCurrentOwnerStateV1> {
     const lineage = input.metadata.materialLineage;
     const governance = input.governance;
     if (
@@ -100,9 +109,13 @@ export class ProductArtifactCurrentOwnerStateResolver {
         (item) =>
           item.organizationId === input.organizationId &&
           item.id === lineage.projectionSourceRef &&
-          item.revisionId === lineage.canonicalUnderstandingRevision,
+          (item.revisionId === lineage.canonicalUnderstandingRevision ||
+            (allowProvenSuccessorRevision && item.epistemicRevisions?.some(
+              (revision) => revision.revisionId === lineage.canonicalUnderstandingRevision,
+            ))),
       );
       if (!historicalProjectionBasis) return unavailable(input);
+      if(!allowProvenSuccessorRevision&&historicalProjectionBasis.epistemicRevisions?.length&&historicalProjectionBasis.epistemicRevisions.at(-1)?.revisionId!==lineage.canonicalUnderstandingRevision)return unavailable(input);
       const canonicalIds = new Set(
         lineage.canonicalMaterial.map((item) => item.canonicalObjectId),
       );
@@ -176,6 +189,7 @@ export class ProductArtifactCurrentOwnerStateResolver {
           },
         },
       );
+      if(historicalStatus)historicalStatus.durableRevoked=eligibility.reasonClasses.includes("current-binding-revoked");
       if (eligibility.disposition !== "eligible") {
         return {
           ...unavailable(input),
@@ -220,5 +234,26 @@ export class ProductArtifactCurrentOwnerStateResolver {
     } catch {
       return unavailable(input);
     }
+  }
+
+  async resolveHistoricalPredecessor(
+    input: ProductArtifactCurrentOwnerStateResolutionInputV1 & { request: HistoricalPredecessorCurrentAccessRequestV2 },
+  ): Promise<{state:ProductArtifactCurrentOwnerStateV1;durableRevoked:boolean}> {
+    const { request, metadata } = input;
+    if (
+      request.contractVersion !== "2" ||
+      request.organizationId !== input.organizationId ||
+      request.productQuestionId !== metadata.productQuestionId ||
+      request.artifactId !== metadata.artifactId ||
+      request.artifactRevision !== metadata.artifactRevision ||
+      request.headerDigest !== metadata.headerDigest ||
+      request.bodyRefDigest !== metadata.protectedBody.refDigest ||
+      metadata.semanticOwner !== "leadership-conversation" ||
+      metadata.artifactType !== "prepared-work" ||
+      metadata.productWorkflowId !== `leadership-conversation:${request.predecessorConversationId}` ||
+      metadata.materialLineage?.productWorkflowId !== metadata.productWorkflowId
+    ) return {state:unavailable(input),durableRevoked:false};
+    const status={durableRevoked:false};
+    return{state:await this.resolveCurrent(input,true,status),durableRevoked:status.durableRevoked};
   }
 }

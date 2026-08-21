@@ -119,6 +119,7 @@ type CurrentOwnerFreshManifest = {
   organizationId: string; userId: string; purpose: string; evaluatedAt: string;
   prepared: { artifactType: "prepared-work"; artifactId: string; artifactRevision: string; scopeDigest: string };
   checkpoint: { artifactType: "frozen-snapshot"; artifactId: string; artifactRevision: string; scopeDigest: string };
+  predecessorOccurrenceId: string;
   denialArtifact?: "prepared" | "checkpoint";
   foreign?: {
     organizationId: string; productQuestionId: string; sourceContentRoot: string;
@@ -169,8 +170,9 @@ async function currentOwnerFreshChild(manifestPath: string): Promise<void> {
   const prepared = await composition.productArtifactAccess.readAuthorized({ ...base, ...manifest.prepared });
   const checkpoint = await composition.productArtifactAccess.readAuthorized({ ...base, ...manifest.checkpoint });
   const denied = await composition.productArtifactAccess.readAuthorized({ ...base, ...manifest.prepared, subjectId: "fresh-denied-user" });
-  if (prepared.disposition !== "eligible" || checkpoint.disposition !== "eligible" || denied.disposition !== "inaccessible" || reads.preparedWork !== 1 || reads.checkpoint !== 1) throw new Error("Fresh current-owner-state reconstruction failed.");
-  process.stdout.write(JSON.stringify({ result: "PASS", prepared: prepared.disposition, checkpoint: checkpoint.disposition, denied: denied.disposition, reads }));
+  const historical=await composition.productArtifactAccess.readHistoricalPredecessor({contractVersion:"2",organizationId:manifest.organizationId,predecessorArtifactOrganizationId:manifest.organizationId,productQuestionId:(await createProductWorkflowArtifactRepository({root:manifest.workflowRoot,environment:"test"}).read(manifest.organizationId)).store.contexts[0]!.questionId,meetingSeriesId:`leadership-conversation-series:${NORTHSTAR_LEADERSHIP_CONVERSATION_FIXTURE.conversationId}`,predecessorOccurrenceId:manifest.predecessorOccurrenceId,predecessorConversationId:NORTHSTAR_LEADERSHIP_CONVERSATION_FIXTURE.conversationId,predecessorCheckpointId:manifest.checkpoint.artifactId,subjectId:manifest.userId,artifactId:manifest.prepared.artifactId,artifactRevision:manifest.prepared.artifactRevision,headerDigest:(await createProductWorkflowArtifactRepository({root:manifest.workflowRoot,environment:"test"}).read(manifest.organizationId)).store.preparedWorkPublications![0]!.headerDigest,bodyRefDigest:(await createProductWorkflowArtifactRepository({root:manifest.workflowRoot,environment:"test"}).read(manifest.organizationId)).store.preparedWorkPublications![0]!.protectedBody.refDigest,purpose:manifest.purpose,scopeDigest:manifest.prepared.scopeDigest,sensitivity:"standard",evaluatedAt:manifest.evaluatedAt});
+  if (prepared.disposition !== "eligible" || checkpoint.disposition !== "eligible" || denied.disposition !== "inaccessible" || historical.outcome!=="accessible" || reads.preparedWork !== 2 || reads.checkpoint !== 1) throw new Error("Fresh current-owner-state reconstruction failed.");
+  process.stdout.write(JSON.stringify({ result: "PASS", prepared: prepared.disposition, checkpoint: checkpoint.disposition, denied: denied.disposition, historical:historical.outcome, reads }));
 }
 async function runFreshCurrentOwnerChild(manifestPath: string): Promise<string> {
   return new Promise((resolve, reject) => { const child = spawn(process.execPath, ["--conditions=react-server", "--import", "tsx", process.argv[1]!, "--current-owner-fresh-child", manifestPath], { cwd: process.cwd(), env: { ...process.env, NODE_ENV: "test" }, stdio: ["ignore", "pipe", "pipe"] }); let stdout = "", stderr = ""; child.stdout.on("data", (value) => { stdout += String(value); }); child.stderr.on("data", (value) => { stderr += String(value); }); child.on("error", reject); child.on("close", (code) => code === 0 ? resolve(stdout) : reject(new Error(stderr || `fresh child exited ${code}`))); });
@@ -420,10 +422,12 @@ async function validateCanonicalServerCurrentAccess(): Promise<number> {
       conversationId: fixture.conversationId,
       idempotencyKey: "current-owner-freeze",
       artifactVersionId: prepared.artifactRevision,
+      privateWorkingContribution:{seriesId:`leadership-conversation-series:${fixture.conversationId}`,occurrenceId:fixture.conversationId,authorizationRevision:NORTHSTAR_PREPARED_LINEAGE.authorizedProjectionRevision,provenanceDigest:NORTHSTAR_PREPARED_LINEAGE.authorizedProjectionDigest,selectedContent:["Bounded predecessor validation contribution."]},
     });
     const frozen = (await workflow.read(fixture.organizationId)).store
       .frozenSnapshotPublications!.at(-1)!;
     assert.ok(frozen.materialLineage?.scopeDigest);
+    await composition.captureFrozenPrivateWorkingContribution({userId:fixture.actorId,organizationId:fixture.organizationId,questionId,conversationId:fixture.conversationId,snapshotId:frozen.artifactId,idempotencyKey:"current-owner-contribution-capture"});
     const checkpointRequest = {
       ...request,
       artifactType: frozen.artifactType,
@@ -435,7 +439,7 @@ async function validateCanonicalServerCurrentAccess(): Promise<number> {
       (await composition.productArtifactAccess.readAuthorized(checkpointRequest)).disposition,
       "eligible",
     );
-    assert.deepEqual(readCounts, { preparedWork: 1, checkpoint: 1, unrelated: 0 });
+    assert.deepEqual(readCounts, { preparedWork: 1, checkpoint: 1, unrelated: 1 });
     const beforeDenied = structuredClone(readCounts);
 
     const baselineWorkflow = await workflow.read(fixture.organizationId);
@@ -648,6 +652,7 @@ async function validateCanonicalServerCurrentAccess(): Promise<number> {
             evaluatedAt: fixture.at,
             prepared: { artifactType: "prepared-work", artifactId: prepared.artifactId, artifactRevision: prepared.artifactRevision, scopeDigest: prepared.materialLineage.scopeDigest },
             checkpoint: { artifactType: "frozen-snapshot", artifactId: frozen.artifactId, artifactRevision: frozen.artifactRevision, scopeDigest: frozen.materialLineage.scopeDigest },
+            predecessorOccurrenceId:fixture.conversationId,
             denialArtifact: "prepared",
             ...(matrixCase.classId === 21 ? { foreign: { ...foreignPartition, sourceContentRoot: path.join(replayRoot, "foreign-source-content") } } : {}),
           } satisfies CurrentOwnerFreshManifestUnsigned)), { mode: 0o600 });
@@ -676,10 +681,10 @@ async function validateCanonicalServerCurrentAccess(): Promise<number> {
     );
     assert.deepEqual(readCounts, beforeDenied);
     const manifestPath = path.join(replayRoot, "current-owner-safe-manifest.json");
-    const manifest: CurrentOwnerFreshManifest = completeCurrentOwnerFreshManifest({ runtimeRoot, workflowRoot, sourceContentRoot, lineageFixtureRoot: lineageRoot, organizationId: fixture.organizationId, userId: fixture.actorId, purpose: fixture.purposeRef, evaluatedAt: fixture.at, prepared: { artifactType: "prepared-work", artifactId: prepared.artifactId, artifactRevision: prepared.artifactRevision, scopeDigest: prepared.materialLineage.scopeDigest }, checkpoint: { artifactType: "frozen-snapshot", artifactId: frozen.artifactId, artifactRevision: frozen.artifactRevision, scopeDigest: frozen.materialLineage.scopeDigest } });
+    const manifest: CurrentOwnerFreshManifest = completeCurrentOwnerFreshManifest({ runtimeRoot, workflowRoot, sourceContentRoot, lineageFixtureRoot: lineageRoot, organizationId: fixture.organizationId, userId: fixture.actorId, purpose: fixture.purposeRef, evaluatedAt: fixture.at, prepared: { artifactType: "prepared-work", artifactId: prepared.artifactId, artifactRevision: prepared.artifactRevision, scopeDigest: prepared.materialLineage.scopeDigest }, checkpoint: { artifactType: "frozen-snapshot", artifactId: frozen.artifactId, artifactRevision: frozen.artifactRevision, scopeDigest: frozen.materialLineage.scopeDigest },predecessorOccurrenceId:fixture.conversationId });
     await writeFile(manifestPath, JSON.stringify(manifest), { mode: 0o600 });
-    const fresh = JSON.parse(await runFreshCurrentOwnerChild(manifestPath)) as { result: string; prepared: string; checkpoint: string; denied: string; reads: typeof readCounts };
-    assert.deepEqual(fresh, { result: "PASS", prepared: "eligible", checkpoint: "eligible", denied: "inaccessible", reads: { preparedWork: 1, checkpoint: 1 } });
+    const fresh = JSON.parse(await runFreshCurrentOwnerChild(manifestPath)) as { result: string; prepared: string; checkpoint: string; denied: string; historical:string; reads: typeof readCounts };
+    assert.deepEqual(fresh, { result: "PASS", prepared: "eligible", checkpoint: "eligible", denied: "inaccessible", historical:"accessible", reads: { preparedWork: 2, checkpoint: 1 } });
     assert.equal(
       (await composition.productArtifactAccess.readAuthorized({ ...request, purpose: "wrong-purpose" }))
         .disposition,
@@ -691,8 +696,32 @@ async function validateCanonicalServerCurrentAccess(): Promise<number> {
       "inaccessible",
     );
     assert.deepEqual(readCounts, beforeDenied);
+    const predecessorRequest={contractVersion:"2" as const,organizationId:fixture.organizationId,predecessorArtifactOrganizationId:fixture.organizationId,productQuestionId:provisioned.seed.productQuestionId,meetingSeriesId:`leadership-conversation-series:${fixture.conversationId}`,predecessorOccurrenceId:fixture.conversationId,predecessorConversationId:fixture.conversationId,predecessorCheckpointId:frozen.artifactId,subjectId:fixture.actorId,artifactId:prepared.artifactId,artifactRevision:prepared.artifactRevision,headerDigest:prepared.headerDigest,bodyRefDigest:prepared.protectedBody.refDigest,purpose:fixture.purposeRef,scopeDigest:prepared.materialLineage.scopeDigest,sensitivity:"standard" as const,evaluatedAt:fixture.at};
+    const predecessor=await composition.productArtifactAccess.readHistoricalPredecessor(predecessorRequest);
+    assert.equal(predecessor.outcome,"accessible");
+    assert.equal(predecessor.projection?.productQuestionId,provisioned.seed.productQuestionId);
+    assert.equal(predecessor.projection?.predecessorOccurrenceId,fixture.conversationId);
+    assert.equal(predecessor.projection?.predecessorCheckpointId,frozen.artifactId);
+    assert.deepEqual(predecessor.projection?.content.whatMattersNow,[NORTHSTAR_PREPARED_CONTENT.situationSummary,...NORTHSTAR_PREPARED_CONTENT.decisionsRequiringAttention]);
+    const beforeHistoricalDenied=structuredClone(readCounts),historicalDenied=await composition.productArtifactAccess.readHistoricalPredecessor({...predecessorRequest,subjectId:"denied-user"});
+    assert.equal(historicalDenied.outcome,"withheld");
+    assert.equal(historicalDenied.projection,null);
+    assert.deepEqual(readCounts,beforeHistoricalDenied);
+    assert.equal((await composition.productArtifactAccess.readHistoricalPredecessor({...predecessorRequest,bodyRefDigest:"malformed"})).outcome,"malformed");
+    assert.equal((await composition.productArtifactAccess.readHistoricalPredecessor({...predecessorRequest,predecessorOccurrenceId:"stale-occurrence"})).outcome,"stale");
+    assert.equal((await composition.productArtifactAccess.readHistoricalPredecessor({...predecessorRequest,predecessorArtifactOrganizationId:"foreign-organization"})).outcome,"foreign");
+    assert.equal((await composition.productArtifactAccess.readHistoricalPredecessor({...predecessorRequest,artifactId:"absent-artifact"})).outcome,"absent");
+    const beforeAmbiguous=await workflow.read(fixture.organizationId),ambiguousStore=structuredClone(beforeAmbiguous.store);ambiguousStore.preparedWorkPublications!.push(structuredClone(prepared));await workflow.replace(fixture.organizationId,ambiguousStore,beforeAmbiguous.revision);
+    assert.equal((await composition.productArtifactAccess.readHistoricalPredecessor(predecessorRequest)).outcome,"ambiguous");
+    const afterAmbiguous=await workflow.read(fixture.organizationId);await workflow.replace(fixture.organizationId,structuredClone(beforeAmbiguous.store),afterAmbiguous.revision);
+    const transitionRuntime=await runtime.read(fixture.organizationId);assert.ok(transitionRuntime);const transitionComposition=transitionRuntime.runtime.memory.organizationalUnderstandingState.canonicalCompositions?.find(value=>value.id===prepared.materialLineage!.projectionSourceRef&&value.revisionId===prepared.materialLineage!.canonicalUnderstandingRevision);assert.ok(transitionComposition);const transitionEpistemic=transitionComposition.epistemicRevisions?.at(-1);await composition.reviseUnderstandingConfidence({userId:fixture.actorId,organizationId:fixture.organizationId,questionId:questionId,stableUnderstandingId:transitionComposition.id,expectedPredecessorRevisionId:transitionEpistemic?.revisionId??transitionComposition.revisionId,confidence:transitionEpistemic?.confidence??0.7,uncertainty:transitionEpistemic?.uncertainty??transitionComposition.compositionUncertainty,supportingMaterialRefs:transitionEpistemic?.supportingMaterialRefs.length?transitionEpistemic.supportingMaterialRefs:prepared.materialLineage!.canonicalMaterial.map(value=>value.canonicalObjectId),contradictingMaterialRefs:transitionEpistemic?.contradictingMaterialRefs??[],interpretationVersion:"historical-predecessor-transition:v1",idempotencyKey:"historical-predecessor:valid-successor-revision",expectedRuntimeRevision:transitionRuntime.revision});
+    const freshAfterTransition=createLeadershipConversationServerCompositionForValidation({runtimeRoot,workflowRoot,sourceContentRoot,lineageFixtureRoot:lineageRoot,userId:fixture.actorId,organizationId:fixture.organizationId,bodyRepository:counted}),beforeTransitionReads=structuredClone(readCounts);assert.equal((await freshAfterTransition.productArtifactAccess.readAuthorized(request)).disposition,"inaccessible");assert.deepEqual(readCounts,beforeTransitionReads);const transitioned=await freshAfterTransition.productArtifactAccess.readHistoricalPredecessor(predecessorRequest);assert.equal(transitioned.outcome,"accessible");assert.equal(readCounts.preparedWork,beforeTransitionReads.preparedWork+1);assert.equal(readCounts.checkpoint,beforeTransitionReads.checkpoint);assert.equal(readCounts.unrelated,beforeTransitionReads.unrelated);
+    const beforeRevocation=await runtime.read(fixture.organizationId);assert.ok(beforeRevocation);const revocationService=new CanonicalLocalSourceBindingService(runtime,{now:()=>fixture.at});await revocationService.reviseCanonicalSourceBindingAvailability({contractVersion:"1",organizationId:fixture.organizationId,productQuestionId:provisioned.seed.productQuestionId,sourceType:exactBinding.sourceType as "markdown-upload",purposeRef:"leadership-conversation-capture",normalizedContentDigest:exactBinding.source.normalizedContentDigest,requestedScopeAssertions:exactBinding.assertions,sensitivity:"standard",availability:"revoked",recordedAt:fixture.at,recordedByActorRef:fixture.actorId,idempotencyKey:"historical-predecessor:revoke-current-binding",expectedRuntimeRevision:beforeRevocation.revision,operation:{requestId:"historical-predecessor:revoke-current-binding",operatorId:fixture.actorId},authorization:bindingAuthorization("source-binding:revise-availability")});
+    const beforeRevokedRead=structuredClone(readCounts),revoked=await freshAfterTransition.productArtifactAccess.readHistoricalPredecessor(predecessorRequest);assert.equal(revoked.outcome,"revoked");assert.equal(revoked.projection,null);assert.deepEqual(readCounts,beforeRevokedRead);
+    const revokedRuntime=await runtime.read(fixture.organizationId);assert.ok(revokedRuntime);await runtime.replace(fixture.organizationId,baselineRuntime.bytes,revokedRuntime.revision,{requestId:"historical-predecessor:restore-after-revocation",operatorId:"historical-predecessor-validator"});
     console.log(`canonical-server-current-owner-state: PASS (13 checks; prepared=${readCounts.preparedWork}; checkpoint=${readCounts.checkpoint}; denied=0; fresh-process=PASS)`);
-    return 13;
+    console.log("historical-predecessor-current-access-v2: PASS (9 checks; authorization-before-body=PASS; aggregate-projection=PASS)");
+    return 22;
   } finally {
     await rm(replayRoot, { recursive: true, force: true });
     await rm(lineageRoot, { recursive: true, force: true });
