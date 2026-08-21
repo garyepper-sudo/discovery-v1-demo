@@ -94,9 +94,10 @@ gates cannot make the Alpha ready.
 | 3. HSS-ONE resumption and cycle-1 closure | PASS | HSS-ONE and the intended checkpoint boundary are canonically complete without weakening provenance, replay, or current access |
 | Pre-Gate 4A. Exact Governed Source Content version resolution | PASS | The existing Governed Source Content owner resolves the exact eligible version from canonical owner-issued ancestry without enumeration or caller invention |
 | Pre-Gate 4. Pre-existing canonical Evidence claim-support resolution | PASS | Legitimate pre-existing canonical Evidence resolves into body-safe claim support without requiring a same-conversation Capture chain |
-| Pre-Gate 4B. Durable Intentional Contribution at Freeze | READY — sole active primary item | Freeze atomically creates owner-issued protected contribution artifacts and a body-free receipt so exact intentional contribution survives reload without persisting pre-Freeze Private Working |
-| 4. Complete Occurrence 1 | BLOCKED by `ALPHA-RM-G4-PRE-002` / PAUSED CANDIDATE PRESERVED | Keep the existing bounded candidate unchanged and reusable; resume it after durable intentional contribution is canonically complete |
-| 5. What Changed and Prepare Again | NOT STARTED — blocked by Gate 4 | Fresh-process second occurrence reconstructs from canonical artifacts and current Evidence, shows change and uncertainty, and creates no duplicates |
+| Pre-Gate 4B. Durable Intentional Contribution at Freeze | PASS | Freeze atomically creates owner-issued protected contribution artifacts and a body-free receipt so exact intentional contribution survives reload without persisting pre-Freeze Private Working |
+| 4. Complete Occurrence 1 | PASS | The complete first occurrence is canonically integrated with authenticated rendered acceptance and truthful closure |
+| Pre-Gate 5. Current-accessible historical predecessor projection | READY — sole active primary item | The existing Product Artifact current-access owner resolves one exact immutable predecessor under present authorization before protected-body loading and projects only body-safe currently accessible content |
+| 5. What Changed and Prepare Again | BLOCKED by `ALPHA-RM-G5-PRE-001` / PAUSED CANDIDATE PRESERVED AND REUSABLE | Fresh-process second occurrence reconstructs from canonical artifacts, current Evidence, and the exact currently accessible predecessor; the existing 10-file candidate remains paused and reusable |
 | 6. Chief-of-staff value layer | NOT STARTED — blocked by Gate 5 | Concise priority, surprises, tensions, unknowns, meeting questions, bounded acquisition recommendations, provenance, and truthful abstention |
 | 7. Alpha experience and operations | NOT STARTED — blocked by Gates 4–6 | Onboarding, source guidance, resilient states, instrumentation, production smoke/deployment validation, rollback, support, privacy, and design-partner operations |
 | 8. Design-partner launch | NOT STARTED — blocked by Gate 7 and human approval | Two-cycle acceptance, no unresolved high-severity trust failure, verified instrumentation, onboarding, support, limitations, measures, and observation plan |
@@ -112,13 +113,12 @@ protected access, Review, and truthful closure. These refinements do not reopen
 Gate 4 unless a functional or trust defect is discovered.
 
 Control Tower baseline: canonical `main` is clean at
-`e0382e77d895a8a00daf93fd93607361719d56f9`. Push and deployment have not been
-performed. Occurrence 2 and Prepare Again have not begun. The sole active
-primary item is `ALPHA-RM-G4-PRE-002`. `ALPHA-RM-G4-PRE-001A` and
-`ALPHA-RM-G4-PRE-001` are canonically complete. The preserved
-`ALPHA-RM-G4-001` Gate-4 candidate is paused and reusable, and must resume
-rather than restart after `PRE-002` is canonically complete. The next five
-primary items are `ALPHA-RM-G4-001`, `ALPHA-RM-G5-001`, `ALPHA-RM-G6-001`,
+`f639f5d7f28fc5a30e059e26dec2d05b29d9cd19`. Push and deployment have not been
+performed. Gate 4 is complete. Occurrence 2 and Prepare Again have not begun.
+The sole active primary item is `ALPHA-RM-G5-PRE-001`. The existing 10-file
+`ALPHA-RM-G5-001` candidate, its worktree, implementation bytes, screenshots,
+and evidence are paused, preserved, and reusable. The next five primary items
+are `ALPHA-RM-G5-PRE-001`, `ALPHA-RM-G5-001`, `ALPHA-RM-G6-001`,
 `ALPHA-BASE-A-001`, and `ALPHA-BENCH-LONG-001`.
 
 ### Master Alpha Program
@@ -136,19 +136,21 @@ parallel lanes; it does not create another roadmap owner.
 | 3 | `ALPHA-RM-G3-001` | HSS-ONE / cycle-1 closure | COMPLETE |
 | 4 | `ALPHA-RM-G4-PRE-001A` | EXACT GOVERNED SOURCE CONTENT VERSION RESOLUTION | COMPLETE |
 | 5 | `ALPHA-RM-G4-PRE-001` | PRE-EXISTING CANONICAL EVIDENCE CLAIM-SUPPORT RESOLUTION | COMPLETE |
-| 6 | `ALPHA-RM-G4-PRE-002` | DURABLE INTENTIONAL CONTRIBUTION AT FREEZE | READY — sole active primary item |
-| 7 | `ALPHA-RM-G4-001` | Complete Occurrence 1 | BLOCKED by `ALPHA-RM-G4-PRE-002` / PAUSED CANDIDATE PRESERVED AND REUSABLE |
-| 8 | `ALPHA-RM-G5-001` | What Changed / Prepare Again | QUEUED — blocked by `ALPHA-RM-G4-001` |
-| 9 | `ALPHA-RM-G6-001` | Chief-of-Staff value layer | QUEUED — blocked by `ALPHA-RM-G5-001` |
-| 10 | `ALPHA-BASE-A-001` | Freeze Alpha Baseline A | QUEUED — blocked by the recurring-meeting capability through Gate 6 and required readiness evidence |
-| 11 | `ALPHA-BENCH-LONG-001` | Longitudinal Chief / Organizational Understanding benchmark | QUEUED — execution blocked until `ALPHA-BASE-A-001` |
-| 12 | `ALPHA-OPT-001` | Bounded cognition optimization | QUEUED — blocked by the frozen baseline benchmark run |
-| 13 | `ALPHA-BASE-DECIDE-001` | Retain Baseline A or promote Baseline B | QUEUED — blocked by bounded optimization evidence |
-| 14 | `ALPHA-OPS-001` | Alpha operations | QUEUED — readiness and baseline decision required |
-| 15 | `ALPHA-LAUNCH-001` | Design-partner launch | QUEUED — blocked by operations and human approval |
+| 6 | `ALPHA-RM-G4-PRE-002` | DURABLE INTENTIONAL CONTRIBUTION AT FREEZE | COMPLETE |
+| 7 | `ALPHA-RM-G4-001` | Complete Occurrence 1 | COMPLETE |
+| 8 | `ALPHA-RM-G5-PRE-001` | CURRENT-ACCESSIBLE HISTORICAL PREDECESSOR PROJECTION | READY — sole active primary item |
+| 9 | `ALPHA-RM-G5-001` | What Changed / Prepare Again | BLOCKED by `ALPHA-RM-G5-PRE-001` / PAUSED 10-FILE CANDIDATE PRESERVED AND REUSABLE |
+| 10 | `ALPHA-RM-G6-001` | Chief-of-Staff value layer | QUEUED — blocked by `ALPHA-RM-G5-001` |
+| 11 | `ALPHA-BASE-A-001` | Freeze Alpha Baseline A | QUEUED — blocked by the recurring-meeting capability through Gate 6 and required readiness evidence |
+| 12 | `ALPHA-BENCH-LONG-001` | Longitudinal Chief / Organizational Understanding benchmark | QUEUED — execution blocked until `ALPHA-BASE-A-001` |
+| 13 | `ALPHA-OPT-001` | Bounded cognition optimization | QUEUED — blocked by the frozen baseline benchmark run |
+| 14 | `ALPHA-BASE-DECIDE-001` | Retain Baseline A or promote Baseline B | QUEUED — blocked by bounded optimization evidence |
+| 15 | `ALPHA-OPS-001` | Alpha operations | QUEUED — readiness and baseline decision required |
+| 16 | `ALPHA-LAUNCH-001` | Design-partner launch | QUEUED — blocked by operations and human approval |
 
 The required linear sequence is `ALPHA-RM-G4-PRE-001A` →
-`ALPHA-RM-G4-PRE-001` → `ALPHA-RM-G4-PRE-002` → `ALPHA-RM-G4-001`. The first capability belongs to
+`ALPHA-RM-G4-PRE-001` → `ALPHA-RM-G4-PRE-002` → `ALPHA-RM-G4-001` →
+`ALPHA-RM-G5-PRE-001` → `ALPHA-RM-G5-001`. The first capability belongs to
 the existing Governed Source Content owner; no new canonical owner is proposed.
 It resolves exact Source Content version identity from canonical ancestry
 without guessing, caller invention, or enumeration.
@@ -213,6 +215,24 @@ Every future roadmap change must be recorded as exactly one of `ADD`, `CHANGE`,
 `REORDER`, `DEFER`, `OMIT`, or `SUPERSEDE`. Each record must show the previous
 state, proposed state, dependency impact, Alpha impact, active-work impact, and
 reason. Roadmap items must never silently disappear.
+
+Roadmap change record — `ADD`:
+
+- previous state: `ALPHA-RM-G5-001` followed completed Gate 4 without an
+  explicit current-access reconstruction boundary for its immutable
+  predecessor Prepared Work;
+- proposed state: insert `ALPHA-RM-G5-PRE-001` immediately before
+  `ALPHA-RM-G5-001`, preserving `ALPHA-RM-G4-001 → ALPHA-RM-G5-PRE-001 →
+  ALPHA-RM-G5-001`;
+- dependency impact: Gate 5 is blocked until the prerequisite is canonically
+  complete; every later item and parallel workstream retains its prior order;
+- Alpha impact: exact predecessor comparison is available only when the
+  existing Product Artifact owner proves current access, with a truthful
+  body-safe undetermined fallback when comparison is unavailable;
+- active-work impact: pause and preserve the existing 10-file Gate-5 candidate,
+  its screenshots, and evidence for reconciliation and reuse; and
+- reason: past access must not grant present access, and inaccessible historical
+  content must neither be disclosed nor influence What Changed.
 
 Roadmap change record — `ADD`:
 
