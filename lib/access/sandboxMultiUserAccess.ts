@@ -48,7 +48,7 @@ export const SANDBOX_PERSONAS: readonly Persona[] = [
   {
     key: "sandbox-manager", label: "Northstar Platform Manager", environmentKey: "DISCOVERY_SANDBOX_MANAGER_USER_ID",
     scopes: [scope("team", "platform-delivery"), scope("initiative", "northstar-cross-functional-delivery")],
-    operations: ["understanding:disclose-direct", "understanding:read-historical-metadata", "contribution:submit", "contribution:request-evidence-candidacy"],
+    operations: ["understanding:disclose-direct", "understanding:read-historical-metadata", "contribution:submit", "contribution:request-evidence-candidacy", "product-workspace:read", "product-artifact:read", "leadership-history:list", "leadership-history:read"],
   },
 ] as const;
 

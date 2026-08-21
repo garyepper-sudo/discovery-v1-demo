@@ -209,6 +209,7 @@ export async function runHistoricalCheckpointEndpointSpecificAcceptance(): Promi
     try {
       const lineage = await provisionNorthstarPreparationLineageFixture({ environment: "test", fixtureRoot: lineageRoot, now: AT });
       assert.equal(lineage.disposition, "provisioned");
+      bindOwnerIssuedQuestion(lineage.seed.productQuestionId);
       const reads = { count: 0, safe: [] as string[] };
       const world = await provision(root, lineageRoot, reads, lineage.seed.canonicalMaterial.map((value) => value.canonicalObjectId));
       const { publications, scopeDigest } = await publishAllEndpointKinds(world);
@@ -253,6 +254,7 @@ export async function runHistoricalCheckpointCrossRecordIsolationAcceptance() {
   try {
     const lineage = await provisionNorthstarPreparationLineageFixture({ environment: "test", fixtureRoot: lineageRoot, now: AT });
     assert.equal(lineage.disposition, "provisioned");
+    bindOwnerIssuedQuestion(lineage.seed.productQuestionId);
     const reads = { count: 0, safe: [] as string[] };
     const world = await provision(root, lineageRoot, reads, lineage.seed.canonicalMaterial.map((value) => value.canonicalObjectId));
     const scopeDigest = world.checkpoint.materialLineage?.scopeDigest;

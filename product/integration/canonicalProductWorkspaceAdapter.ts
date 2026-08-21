@@ -370,6 +370,7 @@ export class CanonicalProductWorkspaceAdapter {
   receiveLeadershipConversationUpload(input: Parameters<LeadershipConversationProductOperations["receiveUpload"]>[0]) { return this.leadership().receiveUpload(input); }
   generateLeadershipConversationProposals(input: Parameters<LeadershipConversationProductOperations["generateFixtureProposals"]>[0]) { return this.leadership().generateFixtureProposals(input); }
   recordTakeawayProposalDisposition(input: Parameters<LeadershipConversationProductOperations["review"]>[0]) { return this.leadership().review(input); }
+  completeLeadershipConversationCycle1Closure(input: Parameters<LeadershipConversationProductOperations["completeCycle1Closure"]>[0]) { return this.leadership().completeCycle1Closure(input); }
   routeApprovedTakeawayProposal(input: Parameters<CanonicalLeadershipConversationOwnerRouter["routeApproved"]>[0]) { return this.leadershipRouter().routeApproved(input); }
   prepareNextLeadershipConversation(input: Parameters<LeadershipConversationProductOperations["linkFuturePreparation"]>[0]) { return this.leadership().linkFuturePreparation(input); }
   resetLeadershipConversationDevelopmentScenario(input: Parameters<LeadershipConversationProductOperations["reset"]>[0]) { return this.leadership().reset(input); }

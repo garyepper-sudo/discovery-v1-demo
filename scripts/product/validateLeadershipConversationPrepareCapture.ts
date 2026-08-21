@@ -75,6 +75,14 @@ async function main(): Promise<void> {
     store = (await repository.read(fixture.organizationId)).store;
     check(Boolean(store.preparedWorkPublications![0]!.materialLineage),"Prepared Work publishes complete body-free material lineage");
     check(store.frozenSnapshotPublications![0]!.materialLineage?.seedDigest===store.preparedWorkPublications![0]!.materialLineage?.seedDigest,"freeze transfers the exact owner-backed lineage seed");
+    const closureInput={...identity,seriesId:"leadership-conversation-series:cycle1",expectedWorkflowRevision:(await repository.read(fixture.organizationId)).revision,authorizedProjectionDigest:NORTHSTAR_PREPARED_LINEAGE.authorizedProjectionDigest,candidateAssessmentDigest:"candidate-assessment:cycle1",b11CommunicationDigest:"b11-communication:cycle1",personalRoomSheetDigest:"personal-room-sheet:cycle1",idempotencyKey:"cycle1-closure"};
+    const closed=await operations.completeCycle1Closure(closureInput),replayed=await operations.completeCycle1Closure(closureInput),completion=closed.cycle1ClosureCompletions![0]!;
+    check(closed.cycle1ClosureCompletions?.length===1&&replayed.cycle1ClosureCompletions?.length===1,"closure replay creates exactly one completed checkpoint");
+    check(completion.checkpointId===store.frozenSnapshotPublications![0]!.artifactId&&completion.checkpointStatus==="completed","closure binds the exact frozen checkpoint");
+    check(completion.sections.some(section=>section.label==="What changed"&&section.items[0]?.includes("No consequential result")),"truthful no-consequential-result closure");
+    check(completion.prepareAgainReadiness.eligible&&completion.prepareAgainReadiness.checkpointId===completion.checkpointId,"valid checkpoint exposes bounded readiness metadata");
+    await assert.rejects(()=>operations.completeCycle1Closure({...closureInput,authorizedProjectionDigest:"changed"}),/idempotency conflict/);check(true,"different-input same-key closure fails closed");
+    await assert.rejects(()=>operations.completeCycle1Closure({...closureInput,idempotencyKey:"stale-closure",expectedWorkflowRevision:"stale"}),/revision changed/);check(true,"stale closure revision fails closed");
     await operations.receiveUpload({ ...identity, idempotencyKey: "upload", frozenSnapshotId: store.frozenSnapshotPublications![0]!.artifactId, purposeRef: fixture.purposeRef, mediaType: "text/plain", bytes: fixture.captureBytes, displayLabel: "Staff notes", originalFilename: null });
     check(store.preparedWorkProducts.length===0&&store.frozenSnapshots.length===0,"legacy combined Prepared Work and snapshot containers remain empty");
     store = (await repository.read(fixture.organizationId)).store;
