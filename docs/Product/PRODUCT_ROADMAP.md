@@ -92,19 +92,21 @@ gates cannot make the Alpha ready.
 | 1. Canonical planning base | PASS | Canonical planning and routine-governance foundations are integrated; protected worktrees remain preserved |
 | 2. Candidate-1 controlled reconstruction | PASS | Candidate-1 is reconstructed from the governed-scope foundation and canonically integrated with historical evidence preserved |
 | 3. HSS-ONE resumption and cycle-1 closure | PASS | HSS-ONE and the intended checkpoint boundary are canonically complete without weakening provenance, replay, or current access |
-| 4. Complete Occurrence 1 | READY / PAUSED CANDIDATE PRESERVED | Resume the existing bounded candidate; Private Working, Intentional Contribution, Freeze, Capture, Review, completion, and body-safe negative states pass |
+| Pre-Gate 4. Pre-existing canonical Evidence claim-support resolution | READY — sole active primary item | Chief resolves eligible, body-safe claim support from authorized pre-existing canonical Evidence before any same-conversation Capture exists |
+| 4. Complete Occurrence 1 | BLOCKED by `ALPHA-RM-G4-PRE-001` / PAUSED CANDIDATE PRESERVED | Keep the existing bounded candidate unchanged and reusable; resume it after the prerequisite is canonically complete |
 | 5. What Changed and Prepare Again | NOT STARTED — blocked by Gate 4 | Fresh-process second occurrence reconstructs from canonical artifacts and current Evidence, shows change and uncertainty, and creates no duplicates |
 | 6. Chief-of-staff value layer | NOT STARTED — blocked by Gate 5 | Concise priority, surprises, tensions, unknowns, meeting questions, bounded acquisition recommendations, provenance, and truthful abstention |
 | 7. Alpha experience and operations | NOT STARTED — blocked by Gates 4–6 | Onboarding, source guidance, resilient states, instrumentation, production smoke/deployment validation, rollback, support, privacy, and design-partner operations |
 | 8. Design-partner launch | NOT STARTED — blocked by Gate 7 and human approval | Two-cycle acceptance, no unresolved high-severity trust failure, verified instrumentation, onboarding, support, limitations, measures, and observation plan |
 
 Control Tower baseline: canonical `main` is clean at
-`3debe4d066edb9473277af6a2a332f3b809015e9`. Push and deployment have not been
+`ae99fdb86cfe112f90522dc510cd4bcbfb6b1563`. Push and deployment have not been
 performed. Occurrence 2 and Prepare Again have not begun. The sole active
-primary item is `ALPHA-RM-G4-001`; its preserved candidate is paused until this
-program reset is canonically integrated, then it resumes rather than restarts.
-The next five primary items are `ALPHA-RM-G5-001`, `ALPHA-RM-G6-001`,
-`ALPHA-BASE-A-001`, `ALPHA-BENCH-LONG-001`, and `ALPHA-OPT-001`.
+primary item is `ALPHA-RM-G4-PRE-001`. The preserved `ALPHA-RM-G4-001`
+candidate is paused and reusable, and must resume rather than restart after the
+prerequisite is canonically complete. The next five primary items are
+`ALPHA-RM-G4-001`, `ALPHA-RM-G5-001`, `ALPHA-RM-G6-001`,
+`ALPHA-BASE-A-001`, and `ALPHA-BENCH-LONG-001`.
 
 ### Master Alpha Program
 
@@ -119,15 +121,21 @@ parallel lanes; it does not create another roadmap owner.
 | 1 | `ALPHA-RM-G1-001` | Canonical planning base | COMPLETE |
 | 2 | `ALPHA-RM-G2-001` | Candidate-1 | COMPLETE |
 | 3 | `ALPHA-RM-G3-001` | HSS-ONE / cycle-1 closure | COMPLETE |
-| 4 | `ALPHA-RM-G4-001` | Complete Occurrence 1 | READY / PAUSED CANDIDATE PRESERVED — sole active primary item |
-| 5 | `ALPHA-RM-G5-001` | What Changed / Prepare Again | QUEUED — blocked by `ALPHA-RM-G4-001` |
-| 6 | `ALPHA-RM-G6-001` | Chief-of-Staff value layer | QUEUED — blocked by `ALPHA-RM-G5-001` |
-| 7 | `ALPHA-BASE-A-001` | Freeze Alpha Baseline A | QUEUED — blocked by the recurring-meeting capability through Gate 6 and required readiness evidence |
-| 8 | `ALPHA-BENCH-LONG-001` | Longitudinal Chief / Organizational Understanding benchmark | QUEUED — execution blocked until `ALPHA-BASE-A-001` |
-| 9 | `ALPHA-OPT-001` | Bounded cognition optimization | QUEUED — blocked by the frozen baseline benchmark run |
-| 10 | `ALPHA-BASE-DECIDE-001` | Retain Baseline A or promote Baseline B | QUEUED — blocked by bounded optimization evidence |
-| 11 | `ALPHA-OPS-001` | Alpha operations | QUEUED — readiness and baseline decision required |
-| 12 | `ALPHA-LAUNCH-001` | Design-partner launch | QUEUED — blocked by operations and human approval |
+| 4 | `ALPHA-RM-G4-PRE-001` | PRE-EXISTING CANONICAL EVIDENCE CLAIM-SUPPORT RESOLUTION | READY — sole active primary item |
+| 5 | `ALPHA-RM-G4-001` | Complete Occurrence 1 | BLOCKED by `ALPHA-RM-G4-PRE-001` / PAUSED CANDIDATE PRESERVED AND REUSABLE |
+| 6 | `ALPHA-RM-G5-001` | What Changed / Prepare Again | QUEUED — blocked by `ALPHA-RM-G4-001` |
+| 7 | `ALPHA-RM-G6-001` | Chief-of-Staff value layer | QUEUED — blocked by `ALPHA-RM-G5-001` |
+| 8 | `ALPHA-BASE-A-001` | Freeze Alpha Baseline A | QUEUED — blocked by the recurring-meeting capability through Gate 6 and required readiness evidence |
+| 9 | `ALPHA-BENCH-LONG-001` | Longitudinal Chief / Organizational Understanding benchmark | QUEUED — execution blocked until `ALPHA-BASE-A-001` |
+| 10 | `ALPHA-OPT-001` | Bounded cognition optimization | QUEUED — blocked by the frozen baseline benchmark run |
+| 11 | `ALPHA-BASE-DECIDE-001` | Retain Baseline A or promote Baseline B | QUEUED — blocked by bounded optimization evidence |
+| 12 | `ALPHA-OPS-001` | Alpha operations | QUEUED — readiness and baseline decision required |
+| 13 | `ALPHA-LAUNCH-001` | Design-partner launch | QUEUED — blocked by operations and human approval |
+
+`ALPHA-RM-G4-PRE-001` corrects a circular dependency in first-occurrence
+Prepare: legitimate pre-existing canonical Evidence must be able to resolve
+into body-safe claim support before any same-conversation Capture record
+exists. It does not authorize edits to the preserved Gate-4 candidate.
 
 Only one write-bearing Alpha task may be active at a time unless the user
 explicitly authorizes parallel execution. Read-only planning and DOD-0 Evidence
@@ -175,6 +183,22 @@ Every future roadmap change must be recorded as exactly one of `ADD`, `CHANGE`,
 `REORDER`, `DEFER`, `OMIT`, or `SUPERSEDE`. Each record must show the previous
 state, proposed state, dependency impact, Alpha impact, active-work impact, and
 reason. Roadmap items must never silently disappear.
+
+Roadmap change record — `ADD`:
+
+- previous state: `ALPHA-RM-G4-001` was the next active item without an explicit
+  upstream claim-support prerequisite;
+- proposed state: insert `ALPHA-RM-G4-PRE-001` immediately before
+  `ALPHA-RM-G4-001`;
+- dependency impact: Gate 4 is blocked until the prerequisite is canonically
+  complete; every later item and parallel workstream retains its prior order
+  and dependency;
+- Alpha impact: first-occurrence Prepare can use legitimate pre-existing
+  canonical Evidence without depending on a later same-conversation Capture;
+- active-work impact: pause the existing Gate-4 candidate unchanged and reuse
+  it after prerequisite completion; and
+- reason: remove the discovered circular dependency at the actual Product
+  boundary rather than fabricate provenance or expand Gate-4 scope.
 
 #### Execution-lane assignment
 
