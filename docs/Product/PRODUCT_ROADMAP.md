@@ -89,14 +89,18 @@ gates cannot make the Alpha ready.
 
 | Gate | Current state | Exit evidence |
 |---|---|---|
-| 1. Canonical planning base | PASS | Canonical `main` is clean at `71277521`; both planning commits retain exact identity; push remains separate |
-| 2. Candidate-1 controlled reconstruction | BLOCKED | Clean reconstruction from the accepted governed-scope foundation; historical worktree preserved |
-| 3. HSS-ONE resumption and cycle-1 closure | BLOCKED by Gate 2 | Reconcile preserved `P2C1HSS-F`; complete the intended checkpoint boundary and first occurrence without weakening provenance, replay, or current access |
-| 4. Complete Occurrence 1 | BLOCKED by Gate 3 | Private Working, Intentional Contribution, Freeze, Capture, Review, completion, and body-safe negative states pass |
-| 5. What Changed and Prepare Again | BLOCKED by Gate 4 | Fresh-process second occurrence reconstructs from canonical artifacts and current Evidence, shows change and uncertainty, and creates no duplicates |
-| 6. Chief-of-staff value layer | BLOCKED by Gate 5 | Concise priority, surprises, tensions, unknowns, meeting questions, bounded acquisition recommendations, provenance, and truthful abstention |
-| 7. Alpha experience and operations | BLOCKED by Gates 4–6 | Onboarding, source guidance, resilient states, instrumentation, production smoke/deployment validation, rollback, support, privacy, and design-partner operations |
-| 8. Design-partner launch | BLOCKED by Gate 7 and human approval | Two-cycle acceptance, no unresolved high-severity trust failure, verified instrumentation, onboarding, support, limitations, measures, and observation plan |
+| 1. Canonical planning base | PASS | Canonical planning and routine-governance foundations are integrated; protected worktrees remain preserved |
+| 2. Candidate-1 controlled reconstruction | PASS | Candidate-1 is reconstructed from the governed-scope foundation and canonically integrated with historical evidence preserved |
+| 3. HSS-ONE resumption and cycle-1 closure | PASS | HSS-ONE and the intended checkpoint boundary are canonically complete without weakening provenance, replay, or current access |
+| 4. Complete Occurrence 1 | READY — NOT STARTED | Private Working, Intentional Contribution, Freeze, Capture, Review, completion, and body-safe negative states pass |
+| 5. What Changed and Prepare Again | NOT STARTED — blocked by Gate 4 | Fresh-process second occurrence reconstructs from canonical artifacts and current Evidence, shows change and uncertainty, and creates no duplicates |
+| 6. Chief-of-staff value layer | NOT STARTED — blocked by Gate 5 | Concise priority, surprises, tensions, unknowns, meeting questions, bounded acquisition recommendations, provenance, and truthful abstention |
+| 7. Alpha experience and operations | NOT STARTED — blocked by Gates 4–6 | Onboarding, source guidance, resilient states, instrumentation, production smoke/deployment validation, rollback, support, privacy, and design-partner operations |
+| 8. Design-partner launch | NOT STARTED — blocked by Gate 7 and human approval | Two-cycle acceptance, no unresolved high-severity trust failure, verified instrumentation, onboarding, support, limitations, measures, and observation plan |
+
+Control Tower baseline: canonical `main` is clean at
+`db24ee992b559d23ad1ae6294f975a395da1634d`. Push and deployment have not been
+performed. Occurrence 2 and Prepare Again have not begun.
 
 The following initial scorecard is deliberately small and falsifiable. Its
 numeric thresholds are **proposed and pending human approval**; they are not
@@ -731,44 +735,92 @@ mechanics may converge only after evidence, conformance, and bounded migration.
 1. **Alpha semantic freeze.** Preserve the closed Executive History current-
    access foundation, closed Historical Checkpoint L1, retained Runtime, and
    narrow Chief-led Alpha boundary.
-2. **Alpha Baseline A.** Freeze a reproducible Chief workflow and longitudinal
-   benchmark before optimization.
-3. **Chief V1 through composition.** Complete the coherent Set up → Prepare →
+2. **Chief V1 through composition.** Complete the coherent Set up → Prepare →
    Freeze → Capture → Review → What Changed → Prepare again loop. Governed
    Cognition may proceed only where it is a hard security dependency.
    Deliver recurring-meeting activation, a three-minute brief,
    private-by-default working state with explicit contribution, a two-minute
    closure, and mandatory two-cycle value proof through existing owners.
-4. **Alpha Readiness Foundation.** Prove authentication, exact organization and
+   Complete the recurring-meeting Alpha capability required through Alpha
+   Control Tower Gate 6 before entering the evaluation sequence below.
+3. **Alpha Readiness Foundation.** Prove authentication, exact organization and
    record access, disclosure, revocation, auditability, recovery, and negative
-   controls.
-5. **Freeze Alpha Baseline A.** Freeze reproducible Product, build, configuration,
-   fixture, and benchmark identity before optimization.
-6. **Longitudinal benchmark and bounded optimization.** Benchmark first, then
-   run ablation, sensitivity analysis, bounded parameter optimization, and only
-   a bounded evolutionary experiment. Authorization, lineage, tenant isolation,
-   deterministic identity, replay, and non-disclosure remain hard gates. Use
-   human adjudication, protected holdouts, and Goodhart controls. Retain A and
-   proceed to users unless a clearly superior candidate earns Baseline B.
-7. **Alpha Readiness Gate.** Require the baseline, two-cycle replay, current-
+   controls. Its required trust workstream is the **DISCOVERY GOVERNED COGNITION
+   NON-DISCLOSURE FOUNDATION AND ADVERSARIAL BENCHMARK** defined below.
+4. **Freeze Discovery Alpha Baseline A.** Freeze reproducible Product, build,
+   configuration, fixture, and benchmark identity before optimization.
+5. **LONGITUDINAL CHIEF / ORGANIZATIONAL UNDERSTANDING BENCHMARK.** Run the
+   frozen benchmark against Baseline A before any cognition optimization.
+6. **Bounded pre-Alpha cognition-optimization sweep.** After the baseline run,
+   conduct bounded ablation testing, bounded sensitivity analysis, and only
+   time-boxed, falsifiable configuration experiments. Apply governance,
+   authorization, lineage, determinism, replay, regression, complexity, and
+   human-utility promotion gates. Preserve rejected and failed candidates.
+7. **Retain Alpha Baseline A or promote Alpha Baseline B.** Promote only a
+   clearly superior candidate. Retain A when improvement is small, ambiguous,
+   fragile, unsafe, or not worth its complexity. Optimization must not
+   indefinitely delay the design-partner Alpha.
+8. **Alpha Readiness Gate and operations.** Require the baseline, two-cycle replay, current-
    access revocation, cross-account and cross-organization isolation, protected-
    body non-disclosure, critical-path tests, observability, privacy-safe
    telemetry, failure recovery, data quality, performance/cost targets,
    release identity, rollback, experiment registry, and operational evidence.
    Readiness is PASS/BLOCK with explicit bounded exceptions, never a composite
    score or an enterprise-scale infrastructure program.
-8. **Initial design-partner Alpha.** Serve one closely supported authorized VP,
+9. **Initial design-partner Alpha.** Serve one closely supported authorized VP,
    Director, or executive with the one Chief-led workflow and
    measure useful decisions, preparation quality, follow-through, confidence
    calibration, and learning over time.
-9. **Forward-deployed learning and evidence-driven professionalization.** Broaden
+10. **Forward-deployed learning and evidence-driven professionalization.** Broaden
    only from design-partner evidence.
-10. **Evidence-driven mechanical compression only.** The completed shared
+11. **Evidence-driven mechanical compression only.** The completed shared
    governed-process shadow was technically correct (20/20 runs, 8/8 defects,
    zero false positives) but failed the frozen burden and onboarding promotion
    gates. Its code was reverted and no permanent consumer remains. Do not
    reopen or replace it; future compression requires new independent value
    evidence.
+
+### Longitudinal comparison program
+
+The **LONGITUDINAL CHIEF / ORGANIZATIONAL UNDERSTANDING BENCHMARK** compares:
+
+- retrieval / RAG;
+- long context;
+- persisted summary memory;
+- meeting-assistant memory;
+- a strong ChatGPT / frontier-model setup; and
+- Discovery Alpha Baseline A using persistent governed Organizational
+  Understanding plus Chief.
+
+The strong ChatGPT / frontier-model setup must receive equivalent authorized
+organizational Evidence and equivalent chronological cutoffs. It must use a
+strong practical configuration rather than a one-shot strawman. Before any
+comparison, freeze prompts, Evidence, chronology, configuration, scoring, run
+count, and retry rules. Use blinded evaluation where appropriate and include a
+protected holdout. Never claim that Discovery beat ChatGPT unless ChatGPT was
+actually executed.
+
+The benchmark and optimization program must not reactivate or consume the
+frozen Organizational Understanding Evaluator Phase 4/5, External Comparative
+Validation 002, human semantic adjudication, gold-set construction, or
+unapproved research-worktree drafts. Any human evaluation newly required by
+the accepted Alpha benchmark must be separately governed and must not be
+misrepresented as approval to resume those frozen programs.
+
+### Discovery Governed Cognition Non-Disclosure Foundation and Adversarial Benchmark
+
+The **DISCOVERY GOVERNED COGNITION NON-DISCLOSURE FOUNDATION AND ADVERSARIAL
+BENCHMARK** is the required trust workstream associated with the Alpha
+Readiness Foundation. It must prove that unauthorized information cannot
+influence user-visible derived cognition. It tests authorization lineage,
+fail-closed ambiguity, tenant isolation, revocation, and non-disclosure across
+summaries, priorities, contradictions, confidence, recommendations, suggested
+questions, What Changed, and cached or historical outputs. It must prevent a
+Product-persona bypass of canonical authorization and disclosure controls.
+
+This placement authorizes no benchmark execution or implementation. It does
+not displace current Gate-4 Product execution, freeze Baseline A, begin the
+cognition-optimization sweep, begin Occurrence 2, push, or deploy.
 
 ### Parallel non-blocking Discovery-on-Discovery Internal Learning Loop
 
