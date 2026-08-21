@@ -101,6 +101,16 @@ gates cannot make the Alpha ready.
 | 7. Alpha experience and operations | NOT STARTED — blocked by Gates 4–6 | Onboarding, source guidance, resilient states, instrumentation, production smoke/deployment validation, rollback, support, privacy, and design-partner operations |
 | 8. Design-partner launch | NOT STARTED — blocked by Gate 7 and human approval | Two-cycle acceptance, no unresolved high-severity trust failure, verified instrumentation, onboarding, support, limitations, measures, and observation plan |
 
+Gates 6–7 must strengthen current-step and primary-action hierarchy; use
+chief-of-staff-oriented workflow labels; progressively disclose completed
+stages through concise summaries; reduce narrow-viewport density and scrolling
+burden; make the exact contribution that becomes durable at Freeze explicit;
+provide actionable, disclosure-safe unavailable states; complete launch-quality
+visual hierarchy, typography, spacing, and polish; and preserve the validated
+trust messaging for Private Working, explicit-only contribution, Freeze,
+protected access, Review, and truthful closure. These refinements do not reopen
+Gate 4 unless a functional or trust defect is discovered.
+
 Control Tower baseline: canonical `main` is clean at
 `e0382e77d895a8a00daf93fd93607361719d56f9`. Push and deployment have not been
 performed. Occurrence 2 and Prepare Again have not begun. The sole active

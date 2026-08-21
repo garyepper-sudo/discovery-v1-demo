@@ -2,35 +2,20 @@
 
 import { useEffect, useRef, useState } from "react";
 import { confirmPersonalRoomSheetAction } from "../../../app/product-alpha/leadership-conversation/actions";
-import {
-  PERSONAL_ROOM_SHEET_CONFIRMATION_TEXT,
-  PERSONAL_ROOM_SHEET_EXPLANATION,
-  serializePersonalRoomSheetPlainText,
-  type ContentSafePersonalRoomSheetViewV1,
-} from "../../../product/workflow/leadershipConversation/personalRoomSheetContracts";
+import { PERSONAL_ROOM_SHEET_CONFIRMATION_TEXT, PERSONAL_ROOM_SHEET_EXPLANATION, serializePersonalRoomSheetPlainText, type ContentSafePersonalRoomSheetViewV1 } from "../../../product/workflow/leadershipConversation/personalRoomSheetContracts";
 import styles from "./PersonalRoomSheetPanel.module.css";
 
-export function PersonalRoomSheetPanel({ initialSheet, occurrenceRef }: { initialSheet: ContentSafePersonalRoomSheetViewV1; occurrenceRef: string }) {
-  const [open, setOpen] = useState(false), [reviewed, setReviewed] = useState(false), [confirmed, setConfirmed] = useState<ContentSafePersonalRoomSheetViewV1 | null>(null), [pending, setPending] = useState(false), [error, setError] = useState<string | null>(null), [copied, setCopied] = useState(false), sequence = useRef(0);
+type Props = { initialSheet: ContentSafePersonalRoomSheetViewV1; occurrenceRef: string; contributedItemIds: string[]; onContribute: (items: string[]) => void; contributionLocked?: boolean; disabled?: boolean };
+export function PersonalRoomSheetPanel({ initialSheet, occurrenceRef, contributedItemIds, onContribute, contributionLocked = false, disabled = false }: Props) {
+  const [open, setOpen] = useState(false), [reviewed, setReviewed] = useState(false), [confirmed, setConfirmed] = useState<ContentSafePersonalRoomSheetViewV1 | null>(null), [selected, setSelected] = useState<string[]>(contributedItemIds), [pending, setPending] = useState(false), [error, setError] = useState<string | null>(null), [copied, setCopied] = useState(false), sequence = useRef(0);
   useEffect(() => () => { sequence.current++; }, []);
-  const clearConfirmation = () => { sequence.current++; setReviewed(false); setConfirmed(null); setCopied(false); setError(null); };
-  const confirm = async () => { if (!reviewed || pending) return; const requestSequence = ++sequence.current; setPending(true); setError(null); try { const response = await confirmPersonalRoomSheetAction({ contractVersion: initialSheet.contractVersion, occurrenceRef, expectedSourceProjectionDigest: initialSheet.sourceProjectionDigest, expectedCandidate1AssessmentDigest: initialSheet.candidate1AssessmentDigest, expectedB11CommunicationDigest: initialSheet.b11CommunicationDigest, expectedPersonalRoomSheetDigest: initialSheet.personalRoomSheetDigest, requestSequence }); if (response.requestSequence !== sequence.current) return; setConfirmed(response.sheet); } catch { if (requestSequence === sequence.current) { setConfirmed(null); setReviewed(false); setError("The sheet changed or access is no longer available. Refresh it before confirming."); } } finally { if (requestSequence === sequence.current) setPending(false); } };
+  useEffect(() => { setSelected([...contributedItemIds]); }, [contributedItemIds]);
+  const clearConfirmation = () => { sequence.current++; setReviewed(false); setConfirmed(null); setSelected([...contributedItemIds]); setCopied(false); setError(null); };
+  const confirm = async () => { if (!reviewed || pending) return; const requestSequence = ++sequence.current; setPending(true); setError(null); try { const response = await confirmPersonalRoomSheetAction({ contractVersion: initialSheet.contractVersion, occurrenceRef, expectedSourceProjectionDigest: initialSheet.sourceProjectionDigest, expectedCandidate1AssessmentDigest: initialSheet.candidate1AssessmentDigest, expectedB11CommunicationDigest: initialSheet.b11CommunicationDigest, expectedPersonalRoomSheetDigest: initialSheet.personalRoomSheetDigest, requestSequence }); if (response.requestSequence !== sequence.current) return; setConfirmed(response.sheet); } catch { if (requestSequence === sequence.current) { setConfirmed(null); setReviewed(false); setError("This working sheet changed or is no longer available. Refresh before continuing."); } } finally { if (requestSequence === sequence.current) setPending(false); } };
+  const toggle = (itemId: string) => { setSelected(items => items.includes(itemId) ? items.filter(item => item !== itemId) : [...items, itemId]); };
+  const contribute = () => { if (contributionLocked || !confirmed || !selected.length) return; const validIds=new Set(confirmed.sections.flatMap(section=>section.items.map(item=>item.itemId)));if(selected.some(itemId=>!validIds.has(itemId)))return;onContribute([...selected]); };
   const copy = async () => { if (!confirmed) return; await navigator.clipboard.writeText(serializePersonalRoomSheetPlainText(confirmed)); setCopied(true); };
   const print = () => { if (confirmed) window.print(); };
   const visible = confirmed ?? initialSheet;
-  return <section className={styles.container} aria-labelledby="personal-room-sheet-title">
-    <div className={styles.controls}><button type="button" onClick={() => { if (open) clearConfirmation(); setOpen(value => !value); }}>{open ? "Close personal meeting sheet" : "Create personal meeting sheet"}</button></div>
-    {open && <div className={styles.sheet}>
-      <header><h2 id="personal-room-sheet-title">Personal meeting sheet</h2><p className={styles.boundary}>{visible.boundaryLabel}</p></header>
-      {visible.sections.map(section => <section key={section.sectionId}><h3>{section.label}</h3>{section.items.map(item => <p key={item.itemId}>{item.text}</p>)}</section>)}
-      <div className={styles.controls}>
-        <p>{PERSONAL_ROOM_SHEET_EXPLANATION}</p>
-        {!confirmed && <><label><input type="checkbox" checked={reviewed} onChange={event => { setReviewed(event.target.checked); setError(null); }} /> {PERSONAL_ROOM_SHEET_CONFIRMATION_TEXT}</label><button type="button" disabled={!reviewed || pending} onClick={confirm}>{pending ? "Confirming…" : "Confirm sheet"}</button></>}
-        {error && <p role="alert">{error}</p>}
-        <button type="button" disabled={!confirmed} onClick={copy}>Copy plain text</button>
-        <button type="button" disabled={!confirmed} onClick={print}>Print</button>
-        {copied && <p role="status">Copied.</p>}
-      </div>
-    </div>}
-  </section>;
+  return <section className={`${styles.container} ${styles.privateCard}`} aria-labelledby="personal-room-sheet-title"><div className={styles.privateHeading}><div><p className={styles.eyebrow}>Private Working</p><h2 id="personal-room-sheet-title">Your private meeting sheet</h2><p>{visible.boundaryLabel}</p></div><button type="button" disabled={disabled && !open} onClick={() => { if (open) clearConfirmation(); setOpen(value => !value); }}>{open ? "Close Private Working" : "Open Private Working"}</button></div><p>{PERSONAL_ROOM_SHEET_EXPLANATION}</p>{open && <div className={styles.sheet}>{visible.sections.map(section => <section key={section.sectionId}><h3>{section.label}</h3>{section.items.map(item => confirmed ? <label className={styles.selectable} key={item.itemId}><input type="checkbox" disabled={disabled || contributionLocked || contributedItemIds.length > 0} checked={selected.includes(item.itemId)} onChange={() => toggle(item.itemId)} /> <span>{item.text}</span></label> : <p key={item.itemId}>{item.text}</p>)}</section>)}<div className={styles.controls}>{!confirmed && <><label><input type="checkbox" checked={reviewed} onChange={event => { setReviewed(event.target.checked); setError(null); }} /> {PERSONAL_ROOM_SHEET_CONFIRMATION_TEXT}</label><button type="button" disabled={!reviewed || pending} onClick={confirm}>{pending ? "Confirming…" : "Confirm this private view"}</button></>}{confirmed && <><p>Select only the items you intend to bring into Capture.</p><button type="button" disabled={!selected.length || contributedItemIds.length > 0 || contributionLocked || disabled} onClick={contribute}>{contributionLocked ? "Contribution frozen for this meeting" : contributedItemIds.length > 0 ? "Selected items ready for Freeze" : "Contribute selected items to Freeze"}</button><button type="button" disabled={!confirmed} onClick={copy}>Copy for your use</button><button type="button" disabled={!confirmed} onClick={print}>Print for your use</button></>}{error && <p role="alert">{error}</p>}{copied && <p role="status">Copied.</p>}</div></div>}</section>;
 }

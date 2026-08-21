@@ -1,7 +1,18 @@
+import type { ChiefFirstPrepareViewV1 } from "./contracts";
+
 export const PERSONAL_ROOM_SHEET_CONTRACT_VERSION = "1" as const;
-export const PERSONAL_ROOM_SHEET_BOUNDARY_LABEL = "Prepared for your use. Review before sharing." as const;
-export const PERSONAL_ROOM_SHEET_EXPLANATION = "This sheet uses your current authorized view. Discovery has not checked it for other recipients." as const;
-export const PERSONAL_ROOM_SHEET_CONFIRMATION_TEXT = "I reviewed this personal meeting sheet." as const;
+export const PERSONAL_ROOM_SHEET_BOUNDARY_LABEL = "Only you can see this working sheet. It is preparation, not a meeting record." as const;
+export const PERSONAL_ROOM_SHEET_EXPLANATION = "Nothing here enters Capture unless you explicitly contribute it." as const;
+export const PERSONAL_ROOM_SHEET_CONFIRMATION_TEXT = "I reviewed this private working view." as const;
+
+export function stabilizePersonalRoomSheetPrepareInput(view: ChiefFirstPrepareViewV1): ChiefFirstPrepareViewV1 {
+  return view.currentStep === "freeze" ? view : { ...view, currentStep: "freeze" };
+}
+
+export function createPersonalRoomSheetReplayKey(seedDigest: string, currentUserId: string): string {
+  if (!seedDigest || !currentUserId) throw new Error("Personal Room Sheet replay identity is unavailable.");
+  return `candidate3a-route:${seedDigest}:${currentUserId}`;
+}
 
 export type PersonalRoomSheetSectionIdV1 =
   | "purpose"
@@ -62,6 +73,35 @@ export type PersonalRoomSheetConfirmationResponseV1 = {
   confirmationDigest: string;
   requestSequence: number;
 };
+
+export function resolvePersonalRoomSheetContribution(
+  sheet: ContentSafePersonalRoomSheetViewV1,
+  input: { expectedPersonalRoomSheetDigest: string; selectedItemIds: string[] },
+): string[] {
+  if (input.expectedPersonalRoomSheetDigest !== sheet.personalRoomSheetDigest || !input.selectedItemIds.length) {
+    throw new Error("Private Working contribution is stale or invalid.");
+  }
+  const items = new Map(sheet.sections.flatMap(section => section.items).map(item => [item.itemId, item.text]));
+  const selected = [...new Set(input.selectedItemIds)];
+  if (selected.length !== input.selectedItemIds.length || selected.some(itemId => !items.has(itemId))) {
+    throw new Error("Private Working contribution is stale or invalid.");
+  }
+  return selected.map(itemId => items.get(itemId)!);
+}
+
+export type PersonalRoomSheetContributionActionState<TWorkspace> = {
+  checkpointId: string | null;
+  contributionArtifactIds: string[];
+  workspace: TWorkspace;
+  error: string | null;
+};
+
+export function reconstructPersonalRoomSheetContributionActionState<TWorkspace>(
+  previous: PersonalRoomSheetContributionActionState<TWorkspace>,
+  result: { checkpointId: string; contributionArtifactIds: string[]; workspace: TWorkspace },
+): PersonalRoomSheetContributionActionState<TWorkspace> {
+  return { checkpointId: result.checkpointId, contributionArtifactIds: [...result.contributionArtifactIds], workspace: result.workspace, error: null };
+}
 
 export function serializePersonalRoomSheetPlainText(sheet: ContentSafePersonalRoomSheetViewV1): string {
   return [sheet.boundaryLabel, ...sheet.sections.flatMap(section => ["", section.label, ...section.items.map(item => item.text)])].join("\n");

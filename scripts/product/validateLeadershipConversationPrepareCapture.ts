@@ -25,6 +25,7 @@ import {
   northstarLeadershipConversationFixture,
   NORTHSTAR_PREPARED_CONTENT,
   NORTHSTAR_PREPARED_LINEAGE,
+  resolveCurrentOccurrenceCheckpointIdentityV1,
 } from "../../product/workflow/leadershipConversation";
 import { provisionNorthstarPreparationLineageFixture } from "../../product/simulations/living-organization-sandbox/preparationLineageFixtureProvisioner";
 import { createProductArtifactBodyRefV1, productArtifactBodyDigest, type ProductArtifactBodyRefV1, type ProductArtifactBodyStageRequestV1, type ProductArtifactBodyStageReceiptV1 } from "../../product/persistence/productArtifactBodyContracts";
@@ -77,6 +78,8 @@ async function main(): Promise<void> {
     store = (await repository.read(fixture.organizationId)).store;
     check(Boolean(store.preparedWorkPublications![0]!.materialLineage),"Prepared Work publishes complete body-free material lineage");
     check(store.frozenSnapshotPublications![0]!.materialLineage?.seedDigest===store.preparedWorkPublications![0]!.materialLineage?.seedDigest,"freeze transfers the exact owner-backed lineage seed");
+    const reloadedAfterFreeze=(await repository.read(fixture.organizationId)).store,recoveredCheckpoint=resolveCurrentOccurrenceCheckpointIdentityV1({store:reloadedAfterFreeze,organizationId:fixture.organizationId,questionId:fixture.questionId,conversationId:fixture.conversationId});
+    check(recoveredCheckpoint.checkpointId===store.frozenSnapshotPublications![0]!.artifactId&&recoveredCheckpoint.preparedWorkProductVersionId===store.frozenSnapshotPublications![0]!.preparedWorkProductVersionId,"hard reload recovers the exact owner-issued checkpoint identity without a body read");
     const closureInput={...identity,seriesId:"leadership-conversation-series:cycle1",expectedWorkflowRevision:(await repository.read(fixture.organizationId)).revision,authorizedProjectionDigest:NORTHSTAR_PREPARED_LINEAGE.authorizedProjectionDigest,candidateAssessmentDigest:"candidate-assessment:cycle1",b11CommunicationDigest:"b11-communication:cycle1",personalRoomSheetDigest:"personal-room-sheet:cycle1",idempotencyKey:"cycle1-closure"};
     const closed=await operations.completeCycle1Closure(closureInput),replayed=await operations.completeCycle1Closure(closureInput),completion=closed.cycle1ClosureCompletions![0]!;
     check(closed.cycle1ClosureCompletions?.length===1&&replayed.cycle1ClosureCompletions?.length===1,"closure replay creates exactly one completed checkpoint");

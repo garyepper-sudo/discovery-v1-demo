@@ -1,29 +1,25 @@
 import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 import { composeChiefFirstPrepareViewFromWorkspace } from "../../../product/integration/chiefLeadershipPreparationComposer";
-import { composeChiefLeadershipAnalysisToAction } from "../../../product/integration/chiefLeadershipAnalysisToActionComposer";
-import { createLeadershipConversationServerComposition } from "../../../product/integration/leadershipConversationServerComposition";
+import { createLeadershipConversationServerComposition, resolveCurrentLeadershipConversationCheckpoint } from "../../../product/integration/leadershipConversationServerComposition";
 import { readNorthstarPreparationLineageSeed } from "../../../product/simulations/living-organization-sandbox/preparationLineageFixtureProvisioner";
 import { SANDBOX_ORGANIZATION_ID } from "../../../product/simulations/living-organization-sandbox/manifest";
-import { northstarLeadershipConversationFixture } from "../../../product/workflow/leadershipConversation";
-import { completeLeadershipConversationCycle1ClosureFormAction, getPersonalRoomSheetPreviewAction } from "./actions";
-import { PersonalRoomSheetPanel } from "../../../components/product-alpha/leadership-conversation/PersonalRoomSheetPanel";
-import styles from "../../../components/product-alpha/leadership-conversation/LeadershipConversationExperience.module.css";
+import { isLeadershipConversationPrepareAvailable, northstarLeadershipConversationFixture } from "../../../product/workflow/leadershipConversation";
+import { LeadershipConversationExperience } from "../../../components/product-alpha/leadership-conversation/LeadershipConversationExperience";
+import { getPersonalRoomSheetPreviewAction } from "./actions";
+
 export const dynamic = "force-dynamic";
 export default async function LeadershipConversationPage() {
-  if (process.env.NODE_ENV==="production" && process.env.DISCOVERY_PRODUCT_ALPHA_FIXTURES_ENABLED!=="true") notFound();
+  if (process.env.NODE_ENV === "production" && process.env.DISCOVERY_PRODUCT_ALPHA_FIXTURES_ENABLED !== "true") notFound();
   const { userId } = await auth(), server = createLeadershipConversationServerComposition();
   if (!userId || !await server.authorizePageCurrentAccess({ userId, organizationId: SANDBOX_ORGANIZATION_ID })) notFound();
   const fixtureRoot = process.env.DISCOVERY_NORTHSTAR_PREPARATION_LINEAGE_FIXTURE_ROOT;
   if (!fixtureRoot) throw new Error("Northstar preparation lineage seed is unavailable.");
-  const seed = await readNorthstarPreparationLineageSeed({ fixtureRoot, organizationId: SANDBOX_ORGANIZATION_ID, fixtureId: "northstar-preparation-lineage-fixture-v1", provisioningKey: "northstar-preparation-lineage:v1" }), fixture = northstarLeadershipConversationFixture(seed.productQuestionId), workspace = await server.workspace({ userId, organizationId: seed.organizationId, questionId: seed.productQuestionId, conversationId: fixture.conversationId });
-  let candidate, supportProjectionDigest: string;
-  try {
-    const view = composeChiefFirstPrepareViewFromWorkspace(workspace), support = await server.resolveEvidenceSupport({ contractVersion: "1", organizationId: seed.organizationId, questionId: seed.productQuestionId, subjectId: userId, requestedScope: { organizationId: seed.organizationId, type: "organization", id: seed.organizationId }, purposeRef: seed.purpose, sensitivity: seed.sensitivity, evaluatedAt: workspace.context?.recordedAt ?? fixture.at, evidenceIds: seed.canonicalMaterial.map(item => item.canonicalObjectId), replayKey: `candidate1-route:${seed.seedDigest}` });
-    supportProjectionDigest = support.projection.projectionDigest;
-    candidate = composeChiefLeadershipAnalysisToAction({ view, productQuestion: workspace.base.base.question.text, meetingPurpose: view.meeting.purpose, support, permissionScope: "organization", replayKey: `candidate1-route:${seed.seedDigest}` });
-  } catch { notFound(); }
-  const rendered = candidate.communication.rendered, personalRoomSheet = await getPersonalRoomSheetPreviewAction();
-  const closure=workspace.closureCompletion,canComplete=workspace.actions.some(action=>action.id==="complete-closure"&&action.enabled),complete=completeLeadershipConversationCycle1ClosureFormAction.bind(null,{organizationId:seed.organizationId,questionId:seed.productQuestionId,conversationId:candidate.view.conversationId,seriesId:candidate.view.seriesId,expectedWorkflowRevision:workspace.workflowRevision,authorizedProjectionDigest:supportProjectionDigest,candidateAssessmentDigest:candidate.analysis.assessmentDigest,b11CommunicationDigest:candidate.communication.rendered.planDigest,personalRoomSheetDigest:personalRoomSheet.sheet.personalRoomSheetDigest,idempotencyKey:`cycle1-closure:${candidate.view.conversationId}`});
-  return <main><header><p>Chief · recurring leadership conversation</p><h1>{candidate.view.meeting.title}</h1><p>{candidate.view.meeting.purpose}</p></header>{rendered.firstSurface.map(section => <section key={section.sectionId}><h2>{section.label}</h2>{section.items.map(item => <p key={item.itemId}>{item.text}</p>)}</section>)}{rendered.progressiveDisclosure.length > 0 && <details><summary>Why this is my view</summary>{rendered.progressiveDisclosure.map(section => <section key={section.sectionId}><h2>{section.label}</h2>{section.items.map(item => <p key={item.itemId}>{item.text}</p>)}</section>)}</details>}<PersonalRoomSheetPanel initialSheet={personalRoomSheet.sheet} occurrenceRef={personalRoomSheet.occurrenceRef} /><aside className={styles.closure} aria-labelledby="cycle1-closure-heading"><p className={styles.eyebrow}>After the meeting</p><h2 id="cycle1-closure-heading">Close this meeting</h2><p>Review only the consequential results. Capture remains a proposal until you review it and an existing owner accepts it.</p>{workspace.proposals.map(proposal=><section key={proposal.proposalId}><h3>{proposal.kind==="decision-draft"?"Proposed decision material":proposal.kind==="commitment"?"Proposed follow-through":proposal.kind==="unknown"?"Unresolved question":"Proposed consequential result"}</h3><p>{proposal.payload.summary}</p><p>{workspace.dispositions.some(item=>item.proposalId===proposal.proposalId)?"Reviewed":"Awaiting review"}</p></section>)}{closure?<>{closure.sections.map(section=><section key={section.label}><h3>{section.label}</h3>{section.items.map(item=><p key={item}>{item}</p>)}</section>)}</>:canComplete?<form action={complete}><button type="submit">Confirm consequential results and complete checkpoint</button></form>:<p role="status">Closure becomes available after the exact freeze, Capture review, and required owner routing are complete.</p>}</aside><footer><p>Chief composes authorized Product understanding. It does not create organizational truth or expose protected source bodies.</p></footer></main>;
+  const seed = await readNorthstarPreparationLineageSeed({ fixtureRoot, organizationId: SANDBOX_ORGANIZATION_ID, fixtureId: "northstar-preparation-lineage-fixture-v1", provisioningKey: "northstar-preparation-lineage:v1" }), fixture = northstarLeadershipConversationFixture(seed.productQuestionId);
+  const identity = { userId, organizationId: seed.organizationId, questionId: seed.productQuestionId, conversationId: fixture.conversationId };
+  const workspace = await server.workspace(identity);
+  if (!isLeadershipConversationPrepareAvailable(workspace)) return <main><header><p>Leadership conversation · Occurrence 1</p><h1>Meeting preparation is unavailable</h1><p role="status">Protected preparation cannot be shown with your current access.</p></header><section><h2>What you can do</h2><p>Confirm your current access or return to your organization workspace. No protected meeting content has been loaded.</p></section></main>;
+  const prepare = composeChiefFirstPrepareViewFromWorkspace(workspace), personal = await getPersonalRoomSheetPreviewAction();
+  const checkpoint = workspace.currentStep === "capture" ? await resolveCurrentLeadershipConversationCheckpoint(identity) : null;
+  return <LeadershipConversationExperience initialWorkspace={workspace} prepare={prepare} personalSheet={personal.sheet} occurrenceRef={personal.occurrenceRef} initialCheckpoint={checkpoint ? { checkpointId: checkpoint.checkpointId, contributionArtifactIds: checkpoint.contributionArtifactIds } : null} />;
 }
