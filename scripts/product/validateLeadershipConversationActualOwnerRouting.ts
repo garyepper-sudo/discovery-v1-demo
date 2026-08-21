@@ -10,6 +10,9 @@ async function main(): Promise<void> {
   const composition = await readFile(path.join(process.cwd(), "product/integration/leadershipConversationServerComposition.ts"), "utf8");
   const operations = await readFile(path.join(process.cwd(), "product/workflow/leadershipConversation/operations.ts"), "utf8");
   const actions = await readFile(path.join(process.cwd(), "app/product-alpha/leadership-conversation/actions.ts"), "utf8");
+  const page = await readFile(path.join(process.cwd(), "app/product-alpha/leadership-conversation/page.tsx"), "utf8");
+  const fixtureAdapter = await readFile(path.join(process.cwd(), "product/frontend/leadershipConversationFixtureAdapter.ts"), "utf8");
+  const chiefComposer = await readFile(path.join(process.cwd(), "product/integration/chiefLeadershipPreparationComposer.ts"), "utf8");
   const replay = await readFile(path.join(process.cwd(), "scripts/product/validateLeadershipConversationReplay.ts"), "utf8");
   const materializer = await readFile(path.join(process.cwd(), "product/integration/canonicalLeadershipConversationProductMaterializer.ts"), "utf8");
   const neutral = await readFile(path.join(process.cwd(), "product/workflow/leadershipConversation/canonicalProductMaterializationContracts.ts"), "utf8");
@@ -40,7 +43,10 @@ async function main(): Promise<void> {
   check(!composition.includes("installCanonicalLeadershipConversationServerOwnersForBootstrap") && !composition.includes("let canonicalOwners"), "mutable global owner installation is absent");
   check(composition.includes("process.env.NODE_ENV!==\"test\"") && composition.includes("FilesystemOrganizationRuntimeRepository"), "validator root injection is test-only and retains canonical filesystem repositories");
   check(!actions.includes("sourceBindingId") && !actions.includes("RuntimeRepository") && !actions.includes("SourceBindingService"), "server actions accept no canonical identity or dependency objects");
-  check(!actions.includes("leadershipConversationFixtureAdapter"), "fixture presentation cannot route canonical owners");
+  check(!actions.includes("leadershipConversationFixtureAdapter") && !page.includes("leadershipConversationFixtureAdapter"), "live Leadership Conversation consumers cannot import fixture presentation");
+  check(actions.includes("composeChiefFirstPrepareViewFromWorkspace") && page.includes("composeChiefFirstPrepareViewFromWorkspace"), "live consumers use the canonical Chief preparation projection");
+  check(fixtureAdapter.includes("composeChiefFirstPrepareViewFromWorkspace(workspace)"), "fixture presentation reuses the canonical Chief preparation projection");
+  check(chiefComposer.includes("export function composeChiefFirstPrepareViewFromWorkspace") && !chiefComposer.includes("Date.now") && !chiefComposer.includes("Math.random"), "Chief preparation projection is deterministic and owned by the existing composer");
   check(replay.includes("route-actual-owners-and-prepare-again") && replay.includes("createLeadershipConversationServerCompositionForValidation"), "unified Process C uses the actual root-bound server composition");
   check(!replay.includes("stubbedPositiveOwners: true") && replay.includes("stubbedPositiveOwners: false"), "focused synthetic positive-owner acceptance has been removed");
   check(replay.includes("processAHandoffDigest") && replay.includes("processBHandoffDigest") && replay.includes("handoff digest mismatch"), "fresh-process handoffs are cryptographically chained and fail closed");
