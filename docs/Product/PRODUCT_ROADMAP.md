@@ -92,21 +92,23 @@ gates cannot make the Alpha ready.
 | 1. Canonical planning base | PASS | Canonical planning and routine-governance foundations are integrated; protected worktrees remain preserved |
 | 2. Candidate-1 controlled reconstruction | PASS | Candidate-1 is reconstructed from the governed-scope foundation and canonically integrated with historical evidence preserved |
 | 3. HSS-ONE resumption and cycle-1 closure | PASS | HSS-ONE and the intended checkpoint boundary are canonically complete without weakening provenance, replay, or current access |
-| Pre-Gate 4. Pre-existing canonical Evidence claim-support resolution | READY — sole active primary item | Chief resolves eligible, body-safe claim support from authorized pre-existing canonical Evidence before any same-conversation Capture exists |
-| 4. Complete Occurrence 1 | BLOCKED by `ALPHA-RM-G4-PRE-001` / PAUSED CANDIDATE PRESERVED | Keep the existing bounded candidate unchanged and reusable; resume it after the prerequisite is canonically complete |
+| Pre-Gate 4A. Exact Governed Source Content version resolution | READY — sole active primary item | The existing Governed Source Content owner resolves the exact eligible version from canonical owner-issued ancestry without enumeration or caller invention |
+| Pre-Gate 4. Pre-existing canonical Evidence claim-support resolution | BLOCKED by `ALPHA-RM-G4-PRE-001A` / PAUSED ATTEMPT PRESERVED | Keep the reviewed claim-support attempt unchanged and reusable; resume it after exact Source Content version resolution is canonically complete |
+| 4. Complete Occurrence 1 | BLOCKED by `ALPHA-RM-G4-PRE-001` / PAUSED CANDIDATE PRESERVED | Keep the existing bounded candidate unchanged and reusable; resume it after both prerequisites are canonically complete |
 | 5. What Changed and Prepare Again | NOT STARTED — blocked by Gate 4 | Fresh-process second occurrence reconstructs from canonical artifacts and current Evidence, shows change and uncertainty, and creates no duplicates |
 | 6. Chief-of-staff value layer | NOT STARTED — blocked by Gate 5 | Concise priority, surprises, tensions, unknowns, meeting questions, bounded acquisition recommendations, provenance, and truthful abstention |
 | 7. Alpha experience and operations | NOT STARTED — blocked by Gates 4–6 | Onboarding, source guidance, resilient states, instrumentation, production smoke/deployment validation, rollback, support, privacy, and design-partner operations |
 | 8. Design-partner launch | NOT STARTED — blocked by Gate 7 and human approval | Two-cycle acceptance, no unresolved high-severity trust failure, verified instrumentation, onboarding, support, limitations, measures, and observation plan |
 
 Control Tower baseline: canonical `main` is clean at
-`ae99fdb86cfe112f90522dc510cd4bcbfb6b1563`. Push and deployment have not been
+`030a0cd31a042e60d0a8dac39d79dc53f66bdf00`. Push and deployment have not been
 performed. Occurrence 2 and Prepare Again have not begun. The sole active
-primary item is `ALPHA-RM-G4-PRE-001`. The preserved `ALPHA-RM-G4-001`
-candidate is paused and reusable, and must resume rather than restart after the
-prerequisite is canonically complete. The next five primary items are
-`ALPHA-RM-G4-001`, `ALPHA-RM-G5-001`, `ALPHA-RM-G6-001`,
-`ALPHA-BASE-A-001`, and `ALPHA-BENCH-LONG-001`.
+primary item is `ALPHA-RM-G4-PRE-001A`. The preserved
+`ALPHA-RM-G4-PRE-001` claim-support attempt and `ALPHA-RM-G4-001` Gate-4
+candidate are paused and reusable, and must resume rather than restart after
+their upstream prerequisites are canonically complete. The next five primary
+items are `ALPHA-RM-G4-PRE-001`, `ALPHA-RM-G4-001`, `ALPHA-RM-G5-001`,
+`ALPHA-RM-G6-001`, and `ALPHA-BASE-A-001`.
 
 ### Master Alpha Program
 
@@ -121,16 +123,23 @@ parallel lanes; it does not create another roadmap owner.
 | 1 | `ALPHA-RM-G1-001` | Canonical planning base | COMPLETE |
 | 2 | `ALPHA-RM-G2-001` | Candidate-1 | COMPLETE |
 | 3 | `ALPHA-RM-G3-001` | HSS-ONE / cycle-1 closure | COMPLETE |
-| 4 | `ALPHA-RM-G4-PRE-001` | PRE-EXISTING CANONICAL EVIDENCE CLAIM-SUPPORT RESOLUTION | READY — sole active primary item |
-| 5 | `ALPHA-RM-G4-001` | Complete Occurrence 1 | BLOCKED by `ALPHA-RM-G4-PRE-001` / PAUSED CANDIDATE PRESERVED AND REUSABLE |
-| 6 | `ALPHA-RM-G5-001` | What Changed / Prepare Again | QUEUED — blocked by `ALPHA-RM-G4-001` |
-| 7 | `ALPHA-RM-G6-001` | Chief-of-Staff value layer | QUEUED — blocked by `ALPHA-RM-G5-001` |
-| 8 | `ALPHA-BASE-A-001` | Freeze Alpha Baseline A | QUEUED — blocked by the recurring-meeting capability through Gate 6 and required readiness evidence |
-| 9 | `ALPHA-BENCH-LONG-001` | Longitudinal Chief / Organizational Understanding benchmark | QUEUED — execution blocked until `ALPHA-BASE-A-001` |
-| 10 | `ALPHA-OPT-001` | Bounded cognition optimization | QUEUED — blocked by the frozen baseline benchmark run |
-| 11 | `ALPHA-BASE-DECIDE-001` | Retain Baseline A or promote Baseline B | QUEUED — blocked by bounded optimization evidence |
-| 12 | `ALPHA-OPS-001` | Alpha operations | QUEUED — readiness and baseline decision required |
-| 13 | `ALPHA-LAUNCH-001` | Design-partner launch | QUEUED — blocked by operations and human approval |
+| 4 | `ALPHA-RM-G4-PRE-001A` | EXACT GOVERNED SOURCE CONTENT VERSION RESOLUTION | READY — sole active primary item |
+| 5 | `ALPHA-RM-G4-PRE-001` | PRE-EXISTING CANONICAL EVIDENCE CLAIM-SUPPORT RESOLUTION | BLOCKED by `ALPHA-RM-G4-PRE-001A` / PAUSED ATTEMPT PRESERVED AND REUSABLE |
+| 6 | `ALPHA-RM-G4-001` | Complete Occurrence 1 | BLOCKED by `ALPHA-RM-G4-PRE-001` / PAUSED CANDIDATE PRESERVED AND REUSABLE |
+| 7 | `ALPHA-RM-G5-001` | What Changed / Prepare Again | QUEUED — blocked by `ALPHA-RM-G4-001` |
+| 8 | `ALPHA-RM-G6-001` | Chief-of-Staff value layer | QUEUED — blocked by `ALPHA-RM-G5-001` |
+| 9 | `ALPHA-BASE-A-001` | Freeze Alpha Baseline A | QUEUED — blocked by the recurring-meeting capability through Gate 6 and required readiness evidence |
+| 10 | `ALPHA-BENCH-LONG-001` | Longitudinal Chief / Organizational Understanding benchmark | QUEUED — execution blocked until `ALPHA-BASE-A-001` |
+| 11 | `ALPHA-OPT-001` | Bounded cognition optimization | QUEUED — blocked by the frozen baseline benchmark run |
+| 12 | `ALPHA-BASE-DECIDE-001` | Retain Baseline A or promote Baseline B | QUEUED — blocked by bounded optimization evidence |
+| 13 | `ALPHA-OPS-001` | Alpha operations | QUEUED — readiness and baseline decision required |
+| 14 | `ALPHA-LAUNCH-001` | Design-partner launch | QUEUED — blocked by operations and human approval |
+
+The required linear sequence is `ALPHA-RM-G4-PRE-001A` →
+`ALPHA-RM-G4-PRE-001` → `ALPHA-RM-G4-001`. The first capability belongs to
+the existing Governed Source Content owner; no new canonical owner is proposed.
+It resolves exact Source Content version identity from canonical ancestry
+without guessing, caller invention, or enumeration.
 
 `ALPHA-RM-G4-PRE-001` corrects a circular dependency in first-occurrence
 Prepare: legitimate pre-existing canonical Evidence must be able to resolve
@@ -199,6 +208,22 @@ Roadmap change record — `ADD`:
   it after prerequisite completion; and
 - reason: remove the discovered circular dependency at the actual Product
   boundary rather than fabricate provenance or expand Gate-4 scope.
+
+Roadmap change record — `ADD`:
+
+- previous state: `ALPHA-RM-G4-PRE-001` was active without an explicit upstream
+  capability for exact Governed Source Content version resolution;
+- proposed state: insert `ALPHA-RM-G4-PRE-001A` immediately before
+  `ALPHA-RM-G4-PRE-001`, preserving the exact sequence
+  `PRE-001A → PRE-001 → G4`;
+- dependency impact: the claim-support prerequisite is blocked by `PRE-001A`,
+  Gate 4 remains blocked by `PRE-001`, and no later or parallel item changes;
+- Alpha impact: canonical ancestry can resolve one exact eligible Source
+  Content version without guessing, enumeration, or caller-issued identity;
+- active-work impact: preserve both the reviewed claim-support attempt and the
+  Gate-4 candidate unchanged and reusable; and
+- reason: place the missing capability in the existing Governed Source Content
+  owner without proposing a new canonical owner.
 
 #### Execution-lane assignment
 
