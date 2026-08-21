@@ -64,6 +64,20 @@ export type SourceContentReadResultV1 = {
   text: string;
 };
 
+export type SourceContentMetadataResolutionRequestV1 = {
+  contractVersion: "1";
+  organizationId: string;
+  sourceBindingId: string;
+  normalizedContentDigest: string;
+  purposeRef: string;
+  authorization: ScopedGovernanceContext;
+};
+
+export type SourceContentMetadataResolutionResultV1 = {
+  contractVersion: "1";
+  version: SourceContentVersionV1;
+};
+
 export type SourceContentRepositorySnapshotV1 = {
   contractVersion: "1";
   organizationId: string;
@@ -101,6 +115,7 @@ export interface SourceContentRepository {
   inspectRevision(organizationId: string): Promise<string | null>;
   write(input: ResolvedSourceContentWriteV1): Promise<SourceContentWriteReceiptV1>;
   read(organizationId: string, sourceContentVersionId: string): Promise<{ version: SourceContentVersionV1; bytes: Uint8Array } | null>;
+  resolveExactMetadata?(organizationId: string, sourceBindingId: string, normalizedContentDigest: string): Promise<SourceContentVersionV1 | null>;
   resetDevelopmentFixture(organizationId: string): Promise<boolean>;
 }
 
