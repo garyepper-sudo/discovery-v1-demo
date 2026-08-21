@@ -92,15 +92,96 @@ gates cannot make the Alpha ready.
 | 1. Canonical planning base | PASS | Canonical planning and routine-governance foundations are integrated; protected worktrees remain preserved |
 | 2. Candidate-1 controlled reconstruction | PASS | Candidate-1 is reconstructed from the governed-scope foundation and canonically integrated with historical evidence preserved |
 | 3. HSS-ONE resumption and cycle-1 closure | PASS | HSS-ONE and the intended checkpoint boundary are canonically complete without weakening provenance, replay, or current access |
-| 4. Complete Occurrence 1 | READY — NOT STARTED | Private Working, Intentional Contribution, Freeze, Capture, Review, completion, and body-safe negative states pass |
+| 4. Complete Occurrence 1 | READY / PAUSED CANDIDATE PRESERVED | Resume the existing bounded candidate; Private Working, Intentional Contribution, Freeze, Capture, Review, completion, and body-safe negative states pass |
 | 5. What Changed and Prepare Again | NOT STARTED — blocked by Gate 4 | Fresh-process second occurrence reconstructs from canonical artifacts and current Evidence, shows change and uncertainty, and creates no duplicates |
 | 6. Chief-of-staff value layer | NOT STARTED — blocked by Gate 5 | Concise priority, surprises, tensions, unknowns, meeting questions, bounded acquisition recommendations, provenance, and truthful abstention |
 | 7. Alpha experience and operations | NOT STARTED — blocked by Gates 4–6 | Onboarding, source guidance, resilient states, instrumentation, production smoke/deployment validation, rollback, support, privacy, and design-partner operations |
 | 8. Design-partner launch | NOT STARTED — blocked by Gate 7 and human approval | Two-cycle acceptance, no unresolved high-severity trust failure, verified instrumentation, onboarding, support, limitations, measures, and observation plan |
 
 Control Tower baseline: canonical `main` is clean at
-`db24ee992b559d23ad1ae6294f975a395da1634d`. Push and deployment have not been
-performed. Occurrence 2 and Prepare Again have not begun.
+`3debe4d066edb9473277af6a2a332f3b809015e9`. Push and deployment have not been
+performed. Occurrence 2 and Prepare Again have not begun. The sole active
+primary item is `ALPHA-RM-G4-001`; its preserved candidate is paused until this
+program reset is canonically integrated, then it resumes rather than restarts.
+The next five primary items are `ALPHA-RM-G5-001`, `ALPHA-RM-G6-001`,
+`ALPHA-BASE-A-001`, `ALPHA-BENCH-LONG-001`, and `ALPHA-OPT-001`.
+
+### Master Alpha Program
+
+This section is the durable queue for the design-partner Alpha. It reconciles
+the eight-gate Product sequence with the required evaluation program and its
+parallel lanes; it does not create another roadmap owner.
+
+#### Primary product critical path
+
+| Order | Work ID | Program item | Status |
+|---:|---|---|---|
+| 1 | `ALPHA-RM-G1-001` | Canonical planning base | COMPLETE |
+| 2 | `ALPHA-RM-G2-001` | Candidate-1 | COMPLETE |
+| 3 | `ALPHA-RM-G3-001` | HSS-ONE / cycle-1 closure | COMPLETE |
+| 4 | `ALPHA-RM-G4-001` | Complete Occurrence 1 | READY / PAUSED CANDIDATE PRESERVED — sole active primary item |
+| 5 | `ALPHA-RM-G5-001` | What Changed / Prepare Again | QUEUED — blocked by `ALPHA-RM-G4-001` |
+| 6 | `ALPHA-RM-G6-001` | Chief-of-Staff value layer | QUEUED — blocked by `ALPHA-RM-G5-001` |
+| 7 | `ALPHA-BASE-A-001` | Freeze Alpha Baseline A | QUEUED — blocked by the recurring-meeting capability through Gate 6 and required readiness evidence |
+| 8 | `ALPHA-BENCH-LONG-001` | Longitudinal Chief / Organizational Understanding benchmark | QUEUED — execution blocked until `ALPHA-BASE-A-001` |
+| 9 | `ALPHA-OPT-001` | Bounded cognition optimization | QUEUED — blocked by the frozen baseline benchmark run |
+| 10 | `ALPHA-BASE-DECIDE-001` | Retain Baseline A or promote Baseline B | QUEUED — blocked by bounded optimization evidence |
+| 11 | `ALPHA-OPS-001` | Alpha operations | QUEUED — readiness and baseline decision required |
+| 12 | `ALPHA-LAUNCH-001` | Design-partner launch | QUEUED — blocked by operations and human approval |
+
+Only one write-bearing Alpha task may be active at a time unless the user
+explicitly authorizes parallel execution. Read-only planning and DOD-0 Evidence
+capture may continue in parallel. This constraint does not serialize all
+readiness or benchmark preparation behind Gate 6.
+
+#### Parallel trust and readiness lane
+
+The following are required before `ALPHA-BASE-A-001` and may be executed in
+parallel with Gates 4–6 only when separately authorized:
+
+- Governed Cognition Non-Disclosure Foundation and Adversarial Benchmark;
+- critical-path test pyramid;
+- end-to-end observability;
+- privacy-safe Product telemetry; and
+- critical failure recovery.
+
+No additional write-bearing readiness task begins at this program-reset
+boundary.
+
+#### Parallel benchmark-preparation lane
+
+Benchmark protocol, corpus, chronology, comparison configurations, scoring,
+protected holdout, and anti-bias planning may be prepared before Baseline A.
+Benchmark execution may not begin until `ALPHA-BASE-A-001` is frozen. The
+comparison set remains retrieval / RAG, long context, persisted summary memory,
+meeting-assistant memory, a strong ChatGPT / frontier setup, and Discovery
+Baseline A.
+
+#### Discovery-on-Discovery lane
+
+| Work item | Status |
+|---|---|
+| DOD-0 — Evidence capture | ACTIVE |
+| DOD-1 — bounded read-only internal understanding | BLOCKED until the first accepted live Governor-managed Product loop |
+| DOD-2 — governed falsifiable experiments | BLOCKED by accepted DOD-1 |
+| DOD-3 — training or model adaptation | DEFERRED |
+
+Discovery-on-Discovery remains parallel and non-blocking. It cannot reorder or
+broaden the primary Product path.
+
+#### Roadmap-change operations
+
+Every future roadmap change must be recorded as exactly one of `ADD`, `CHANGE`,
+`REORDER`, `DEFER`, `OMIT`, or `SUPERSEDE`. Each record must show the previous
+state, proposed state, dependency impact, Alpha impact, active-work impact, and
+reason. Roadmap items must never silently disappear.
+
+#### Execution-lane assignment
+
+Assign Routine or Sensitive from the actual work-order boundary, not from a
+default classification. Work is Routine when it does not change a sensitive
+trust, ownership, architecture, privacy, security, or production boundary. It
+is Sensitive only when it actually touches one of those boundaries.
 
 The following initial scorecard is deliberately small and falsifiable. Its
 numeric thresholds are **proposed and pending human approval**; they are not
