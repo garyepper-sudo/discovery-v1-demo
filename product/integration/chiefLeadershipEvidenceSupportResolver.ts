@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import type { CanonicalSourceScopeBinding } from "../../engine/v3/governance/canonicalScopeLineage";
+import type { CanonicalEvidenceScopeAttribution, CanonicalSourceScopeBinding } from "../../engine/v3/governance/canonicalScopeLineage";
 import { canonicalScopeLineageDigest } from "../../engine/v3/governance/canonicalScopeLineage";
 import type { GovernedScopeRef } from "../../engine/v3/governance/scopedGovernanceContext";
 import { assertCanonicalProductMaterializationInstructionIntegrityV1 } from "../workflow/leadershipConversation/canonicalProductMaterializationContracts";
@@ -36,6 +36,25 @@ export type ResolvedChiefEvidenceSupportItemV1 = {
   resolutionDigest: string;
 };
 
+export type ResolvedCanonicalEvidenceSupportItemV1 = {
+  resolutionKind: "canonical-evidence-admission";
+  evidenceId: string;
+  canonicalAdmissionId: string;
+  attributionId: string;
+  attributionVersion: number;
+  attributionDigest: string;
+  sourceBindingId: string;
+  sourceContentVersionId: string;
+  normalizedText: string;
+  normalizedTextDigest: string;
+  currentAccessResultDigest: string;
+  bindingRevisionDigest: string;
+  storageIntegrityDigest: string;
+  resolutionDigest: string;
+};
+
+export type ChiefEvidenceSupportItemV1 = ResolvedChiefEvidenceSupportItemV1 | ResolvedCanonicalEvidenceSupportItemV1;
+
 export type ChiefEvidenceSupportSafeProjectionV1 = {
   contractVersion: "1";
   authority: "non-authoritative";
@@ -54,7 +73,7 @@ export type ChiefEvidenceSupportResolutionResultV1 = {
     organizationId: string;
     questionId: string;
     authorizedScope: GovernedScopeRef;
-    items: ResolvedChiefEvidenceSupportItemV1[];
+    items: ChiefEvidenceSupportItemV1[];
     bundleDigest: string;
   };
   projection: ChiefEvidenceSupportSafeProjectionV1;
@@ -72,9 +91,11 @@ type ExactContentRead = {
 export type ChiefLeadershipEvidenceSupportResolverDependencies = {
   authorizeCurrent(input: ChiefEvidenceSupportResolutionInputV1): Promise<{ authorized: boolean; resultDigest: string }>;
   loadAdmissionOperations(organizationId: string): Promise<readonly CanonicalEvidenceContributionOperationRecordV1[]>;
+  loadCanonicalEvidenceAncestry(organizationId: string): Promise<readonly CanonicalEvidenceScopeAttribution[]>;
   loadWorkflowStore(organizationId: string): Promise<LeadershipConversationArtifactStoreV1>;
   resolveCurrentSourceBinding(input: { request: ChiefEvidenceSupportResolutionInputV1; sourceBindingId: string; normalizedContentDigest: string }): Promise<CanonicalSourceScopeBinding | null>;
   readExactSourceContent(input: { request: ChiefEvidenceSupportResolutionInputV1; sourceBindingId: string; sourceContentVersionId: string }): Promise<ExactContentRead>;
+  resolveExactSourceContentMetadata(input: { request: ChiefEvidenceSupportResolutionInputV1; sourceBindingId: string; normalizedContentDigest: string }): Promise<{ sourceContentVersionId: string } | null>;
 };
 
 const stable = (value: unknown): string => Array.isArray(value)
@@ -104,17 +125,91 @@ function sameScope(binding: CanonicalSourceScopeBinding, request: ChiefEvidenceS
 export class ChiefLeadershipEvidenceSupportResolver {
   constructor(private readonly dependencies: ChiefLeadershipEvidenceSupportResolverDependencies) {}
 
+  private abstain(request: ChiefEvidenceSupportResolutionInputV1): ChiefEvidenceSupportResolutionResultV1 {
+    const bundleUnsigned = {
+      contract: CHIEF_EVIDENCE_SUPPORT_RESOLUTION_CONTRACT,
+      organizationId: request.organizationId,
+      questionId: request.questionId,
+      authorizedScope: request.requestedScope,
+      replayKey: request.replayKey,
+      items: [],
+    };
+    const bundleDigest = digest(bundleUnsigned);
+    const projectionUnsigned = {
+      contractVersion: "1" as const,
+      authority: "non-authoritative" as const,
+      organizationId: request.organizationId,
+      questionId: request.questionId,
+      supportDisposition: "resolved-for-server-assessment" as const,
+      boundedEvidenceReferences: [],
+      uncertainty: [] as [],
+      withholdingReason: null,
+    };
+    return {
+      serverOnly: {
+        contract: CHIEF_EVIDENCE_SUPPORT_RESOLUTION_CONTRACT,
+        organizationId: request.organizationId,
+        questionId: request.questionId,
+        authorizedScope: request.requestedScope,
+        items: [],
+        bundleDigest,
+      },
+      projection: { ...projectionUnsigned, projectionDigest: digest({ ...projectionUnsigned, bundleDigest }) },
+    };
+  }
+
   async resolve(request: ChiefEvidenceSupportResolutionInputV1): Promise<ChiefEvidenceSupportResolutionResultV1> {
-    if (request.contractVersion !== "1" || request.organizationId !== request.requestedScope.organizationId || !exact(request.subjectId) || !exact(request.questionId) || !exact(request.purposeRef) || !exact(request.replayKey) || request.evidenceIds.length === 0 || new Set(request.evidenceIds).size !== request.evidenceIds.length) fail();
+    if (request.contractVersion !== "1" || request.organizationId !== request.requestedScope.organizationId || !exact(request.subjectId) || !exact(request.questionId) || !exact(request.purposeRef) || !exact(request.replayKey) || new Set(request.evidenceIds).size !== request.evidenceIds.length) fail();
     const access = await this.dependencies.authorizeCurrent(request);
     if (!access.authorized || !exact(access.resultDigest)) fail();
-    const [records, workflow] = await Promise.all([this.dependencies.loadAdmissionOperations(request.organizationId), this.dependencies.loadWorkflowStore(request.organizationId)]);
+    if (request.evidenceIds.length === 0) return this.abstain(request);
+    const [records, ancestry, workflow] = await Promise.all([this.dependencies.loadAdmissionOperations(request.organizationId), this.dependencies.loadCanonicalEvidenceAncestry(request.organizationId), this.dependencies.loadWorkflowStore(request.organizationId)]);
     if (workflow.organizationId !== request.organizationId) fail();
-    const items: ResolvedChiefEvidenceSupportItemV1[] = [];
+    const items: ChiefEvidenceSupportItemV1[] = [];
     for (const evidenceId of [...request.evidenceIds].sort()) {
       const matches = records.flatMap(record => record.organizationId === request.organizationId && record.questionId === request.questionId
         ? record.canonicalAdmissionBatch.admissions.filter(item => item.canonicalEvidenceId === evidenceId).map(item => ({ record, item }))
         : []);
+      if (matches.length === 0) {
+        try {
+          const candidates = ancestry.filter(value => value.organizationId === request.organizationId && value.evidenceId === evidenceId);
+          const latestVersion = Math.max(...candidates.map(value => value.attributionVersion));
+          const latest = candidates.filter(value => value.attributionVersion === latestVersion);
+          if (latest.length !== 1 || latest[0]!.sourceBindingIds.length !== 1) return this.abstain(request);
+          const attribution = latest[0]!;
+          const { digest: attributionDigest, attributionId: _attributionId, ...unsignedAttribution } = attribution;
+          if (attributionDigest !== canonicalScopeLineageDigest(unsignedAttribution)
+            || !attribution.assertions.some(value => value.scope.organizationId === request.requestedScope.organizationId && value.scope.type === request.requestedScope.type && value.scope.id === request.requestedScope.id)) return this.abstain(request);
+          const sourceBindingId = attribution.sourceBindingIds[0]!;
+          const binding = await this.dependencies.resolveCurrentSourceBinding({ request, sourceBindingId, normalizedContentDigest: "" });
+          if (!binding || binding.bindingId !== sourceBindingId || binding.organizationId !== request.organizationId || binding.purposeRef !== request.purposeRef || binding.availability !== "available" || !sameScope(binding, request)) return this.abstain(request);
+          const metadata = await this.dependencies.resolveExactSourceContentMetadata({ request, sourceBindingId, normalizedContentDigest: binding.source.normalizedContentDigest });
+          if (!metadata?.sourceContentVersionId) return this.abstain(request);
+          const content = await this.dependencies.readExactSourceContent({ request, sourceBindingId, sourceContentVersionId: metadata.sourceContentVersionId });
+          if (content.sourceBindingId !== sourceBindingId || content.sourceContentVersionId !== metadata.sourceContentVersionId || content.normalizedContentDigest !== binding.source.normalizedContentDigest || !exact(content.storageIntegrityDigest)) return this.abstain(request);
+          const normalizedText = content.text.normalize("NFC").replace(/\r\n?/g, "\n").replace(/[ \t]+$/gm, "").replace(/^(?:[ \t]*\n)+|(?:\n[ \t]*)+$/g, "");
+          if (!normalizedText) return this.abstain(request);
+          const normalizedTextDigest = digest(normalizedText);
+          const unsigned = {
+            resolutionKind: "canonical-evidence-admission" as const,
+            evidenceId,
+            canonicalAdmissionId: attribution.evidenceAdmissionId,
+            attributionId: attribution.attributionId,
+            attributionVersion: attribution.attributionVersion,
+            attributionDigest: attribution.digest,
+            sourceBindingId,
+            sourceContentVersionId: metadata.sourceContentVersionId,
+            normalizedTextDigest,
+            currentAccessResultDigest: access.resultDigest,
+            bindingRevisionDigest: binding.digest,
+            storageIntegrityDigest: content.storageIntegrityDigest,
+          };
+          items.push({ ...unsigned, normalizedText, resolutionDigest: digest(unsigned) });
+        } catch {
+          return this.abstain(request);
+        }
+        continue;
+      }
       if (matches.length !== 1) fail();
       const { record, item } = matches[0]!;
       validateRecord(record);
@@ -136,6 +231,8 @@ export class ChiefLeadershipEvidenceSupportResolver {
       const unsigned = { evidenceId, canonicalAdmissionId: item.canonicalAdmissionId, attributionId: item.attributionId, contributionOperationId: record.contributionOperationId, materializationInstructionId: instruction.instructionId, proposalId: proposal.proposalId, sourceBindingId: proposal.sourceBindingId, sourceContentVersionId: proposal.sourceContentVersionId, normalizedTextDigest, currentAccessResultDigest: access.resultDigest, recordDigest: record.recordDigest, instructionDigest: instruction.instructionDigest, proposalPayloadDigest: proposal.payloadDigest, uploadReceiptDigest: uploads[0]!.sourceContentWriteReceiptDigest, bindingRevisionDigest: authorizedBinding.digest, storageIntegrityDigest: content.storageIntegrityDigest };
       items.push({ evidenceId, canonicalAdmissionId: item.canonicalAdmissionId, attributionId: item.attributionId, contributionOperationId: record.contributionOperationId, materializationInstructionId: instruction.instructionId, proposalId: proposal.proposalId, sourceBindingId: proposal.sourceBindingId, sourceContentVersionId: proposal.sourceContentVersionId, normalizedText, normalizedTextDigest, currentAccessResultDigest: access.resultDigest, resolutionDigest: digest(unsigned) });
     }
+    const resolutionKinds = new Set(items.map(item => "resolutionKind" in item ? item.resolutionKind : "leadership-conversation-contribution"));
+    if (resolutionKinds.size > 1 || [...resolutionKinds].some(value => value !== "canonical-evidence-admission" && value !== "leadership-conversation-contribution")) fail();
     const bundleUnsigned = { contract: CHIEF_EVIDENCE_SUPPORT_RESOLUTION_CONTRACT, organizationId: request.organizationId, questionId: request.questionId, authorizedScope: request.requestedScope, replayKey: request.replayKey, items: items.map(({ normalizedText: _protected, ...item }) => item) };
     const bundleDigest = digest(bundleUnsigned);
     const projectionUnsigned = { contractVersion: "1" as const, authority: "non-authoritative" as const, organizationId: request.organizationId, questionId: request.questionId, supportDisposition: "resolved-for-server-assessment" as const, boundedEvidenceReferences: items.map(item => ({ evidenceId: item.evidenceId, sourceReferenceDigest: digest([item.sourceBindingId, item.sourceContentVersionId]) })), uncertainty: [] as [], withholdingReason: null };
