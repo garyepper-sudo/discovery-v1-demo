@@ -403,8 +403,97 @@ If additional benchmarks exist for the modified subsystem, run them when appropr
 The user owns authorization and judgment for Git state transitions. By default,
 Codex must not stage or commit repository changes.
 
-Codex may stage exact paths and create one ordinary local commit only after the
-user explicitly authorizes a complete commit packet identifying:
+## Execution lanes
+
+Every work order must use either the Routine Governed Lane or the Sensitive
+Governed Lane. Lane selection does not replace human product or architecture
+judgment, relax scope control, or permit a validation or review exception.
+
+### Routine Governed Lane
+
+A complete work order may declare:
+
+```text
+authorized_through: local_canonical_integration
+stop_before: push
+```
+
+When the user explicitly authorizes such a work order, that one authorization
+covers only the exact work-order facts and permits Codex to proceed through:
+
+- dedicated branch and worktree creation
+- bounded implementation
+- required validation
+- independent review
+- bounded in-scope remediation
+- one exact local commit
+- clean fast-forward integration into local canonical `main`
+- post-integration verification
+- current Alpha Control Tower projection update
+
+Codex must not pause for separate routine local-commit or clean-fast-forward
+authorization while every approved work-order fact remains exact. The existing
+staging, hook, commit, and post-commit requirements below remain mandatory.
+For this lane, the upfront explicitly authorized complete Routine work order
+itself is the required authorization for its one exact local commit and its one
+clean fast-forward canonical integration. This Routine-lane rule takes
+precedence over the default and Sensitive-lane clauses below that otherwise
+require a separately authorized commit packet or exclude integration from local
+commit authorization. Before staging, the Governor must internally construct
+and verify every fact required by the complete commit packet below; before
+integration, it must internally construct and verify the exact integration
+facts. It need not request renewed authorization while all facts remain exact
+and no mismatch or sensitive boundary is encountered.
+Before canonical integration, Codex must additionally verify the exact clean
+canonical worktree and branch, expected canonical HEAD and tree, target commit
+and tree, linear ancestry, committed path set, validation and review results,
+and preservation of protected and unrelated state. It may then perform only a
+clean `--ff-only` local canonical integration and must postverify the resulting
+HEAD, tree, ancestry, worktree state, and preservation state.
+
+The Routine Governed Lane fails closed and stops for human attention if:
+
+- the path set expands
+- the branch, worktree, parent, or canonical baseline drifts
+- required validation does not satisfy its controlling acceptance rule
+- independent review fails
+- integration is not a clean fast-forward
+- unexpected repository state appears
+- a sensitive boundary is encountered
+
+Routine authorization expires at the first mismatch and cannot be silently
+reused for a changed result, exception, retry with materially different facts,
+or broader task. Machine-verifiable transitions do not displace required human
+judgment about Product meaning, architecture, acceptance rules, or whether a
+boundary is sensitive.
+
+### Sensitive Governed Lane
+
+Separate explicit authorization for both the exact local commit and the exact
+canonical integration remains mandatory for changes involving:
+
+- `AGENTS.md` or governance
+- canonical owners
+- architecture or thin-waist contracts
+- authorization, identity, provenance, security, privacy, or non-disclosure
+  boundaries
+- persistent schemas or migrations
+- production infrastructure
+- credentials, secrets, or customer data
+- new dependencies, services, or permissions
+- destructive operations
+- unresolved scope expansion
+- an accepted benchmark or validation rule
+- a non-fast-forward integration
+
+Push, release, deployment, promotion, database action, production mutation,
+branch deletion, worktree deletion, and destructive cleanup always require
+separate explicit authorization in either lane. A work order cannot authorize
+through any of those transitions merely by declaring the Routine Governed Lane.
+
+Except for an exact Routine work order authorized as specified above, Codex may
+stage exact paths and create one ordinary local commit only after the user
+explicitly authorizes a complete commit packet identifying:
 
 - objective and work-order identity
 - exact worktree, branch, and expected parent HEAD
@@ -415,13 +504,18 @@ user explicitly authorizes a complete commit packet identifying:
 - independent-review and bounded-remediation results
 - exact commit message
 - confirmation that no material uncertainty remains
-- confirmation that push, merge, integration, promotion, release, and deployment
-  are excluded
+- confirmation that the commit operation itself performs no push, merge,
+  integration, promotion, release, or deployment; in the default and Sensitive
+  lanes those transitions also remain unauthorized by the commit packet
 
-Authorization applies to exactly one identified local commit and expires after
-that commit or immediately upon drift in any packet fact. It does not carry
-forward, expand the path set, permit a changed message or amend, or permit a
-second attempt after a materially changed result without renewed approval.
+Default and Sensitive-lane commit authorization applies to exactly one
+identified local commit and expires after that commit or immediately upon drift
+in any packet fact. Routine authorization remains active only through its exact
+post-integration verification and Alpha Control Tower projection, and expires
+there or immediately upon drift or a sensitive boundary. No authorization
+carries forward, expands the path set, permits a changed message or amend, or
+permits a second attempt after a materially changed result without renewed
+approval.
 
 Immediately before staging, Codex must independently verify the exact worktree,
 branch, parent HEAD, initial index state, changed and untracked path set,
@@ -453,10 +547,12 @@ exact committed path set and count; diffstat; message; material hashes; clean or
 expected worktree state; preservation of protected and unrelated repository
 state; and absence of unauthorized transitions.
 
-A local-commit authorization never authorizes push, merge, rebase, cherry-pick,
-fast-forward or canonical-main integration, reset, restoration of unrelated
-state, branch or worktree deletion, destructive cleanup, promotion, release,
-deployment, database action, or infrastructure mutation. Remote, canonical,
+A default or Sensitive-lane local-commit authorization never authorizes push,
+merge, rebase, cherry-pick, fast-forward or canonical-main integration, reset,
+restoration of unrelated state, branch or worktree deletion, destructive
+cleanup, promotion, release, deployment, database action, or infrastructure
+mutation. The sole Routine-lane exception is its exact authorized clean
+fast-forward canonical integration under the requirements above. Remote,
 destructive, and release transitions remain separately controlled and
 prohibited unless a later canonical rule and exact human authorization permit
 them.
