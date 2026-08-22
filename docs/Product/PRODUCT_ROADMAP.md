@@ -101,6 +101,7 @@ gates cannot make the Alpha ready.
 | 5. What Changed and Prepare Again | PASS | Fresh-process second occurrence reconstructs from canonical artifacts, current Evidence, the exact currently accessible predecessor, and the canonical PRE-002 Understanding result; authenticated desktop, narrow-viewport, denial, reload, and cleanup acceptance passed |
 | 6. Chief-of-staff value layer | PASS | Concise priority, surprises, tensions, unknowns, meeting questions, bounded acquisition recommendations, provenance, and truthful abstention are integrated and authenticated |
 | 7. Alpha experience and operations | PASS | Launch-quality workflow hierarchy, resilient and actionable states, responsive presentation, accessibility, and final design-partner UX polish are integrated and authenticated |
+| AR-1A. Non-Disclosure foundation | PASS — foundation only; Product readiness remains blocked | Owner-driven paired-world harness passes 45/45 threat cases and 1/1 positive control with deterministic fresh-process replay, zero scanner leakage, complete cleanup, and content-safe evidence; the harness truthfully exposes `EMPTY_CONTRIBUTION_CLOSURE` |
 | 8. Design-partner launch | NOT STARTED — blocked by Alpha Readiness, baseline decision, Alpha Operations, and human approval | Two-cycle acceptance, no unresolved high-severity trust failure, verified instrumentation, onboarding, support, limitations, measures, and observation plan |
 
 Gates 6–7 must strengthen current-step and primary-action hierarchy; use
@@ -118,7 +119,10 @@ Control Tower baseline: canonical `main` contains the clean fast-forwarded
 `8fc68894986b48374fa2ec5f5ee143f3bb413987`. Push and deployment have not been
 performed. Gate 4, both Gate-5 prerequisites, `ALPHA-RM-G5-001`,
 `ALPHA-RM-G6-001`, and `ALPHA-RM-G7-001` are complete. `ALPHA-READY-001` is
-the next primary roadmap boundary and has not begun. The next five ordered
+in progress: its AR-1A proof-system foundation is complete, while Product
+readiness is blocked by `EMPTY_CONTRIBUTION_CLOSURE`. The next separately
+governed boundary is the bounded Product/security correction exposed by AR-1A;
+AR-3, AR-4, AR-5, AR-2, AR-1B, and AR-6 retain their accepted order. The next five ordered
 items are `ALPHA-READY-001`, `ALPHA-BASE-A-001`, `ALPHA-BENCH-LONG-001`,
 `ALPHA-OPT-001`, and `ALPHA-BASE-DECIDE-001`; none has begun.
 
@@ -160,7 +164,7 @@ parallel lanes; it does not create another roadmap owner.
 | 10 | `ALPHA-RM-G5-001` | What Changed / Prepare Again | COMPLETE |
 | 11 | `ALPHA-RM-G6-001` | Chief-of-Staff value layer | COMPLETE |
 | 12 | `ALPHA-RM-G7-001` | Alpha experience and operations | COMPLETE |
-| 13 | `ALPHA-READY-001` | Alpha Readiness Foundation | READY — next boundary, not begun |
+| 13 | `ALPHA-READY-001` | Alpha Readiness Foundation | IN PROGRESS — AR-1A foundation complete; Product readiness blocked by `EMPTY_CONTRIBUTION_CLOSURE`; bounded correction is next |
 | 14 | `ALPHA-BASE-A-001` | Freeze Alpha Baseline A | QUEUED — blocked by `ALPHA-READY-001` PASS and separate authorization |
 | 15 | `ALPHA-BENCH-LONG-001` | Longitudinal Chief / Organizational Understanding benchmark | QUEUED — execution blocked until `ALPHA-BASE-A-001` |
 | 16 | `ALPHA-OPT-001` | Bounded cognition optimization | QUEUED — blocked by the frozen baseline benchmark run |
