@@ -98,8 +98,8 @@ gates cannot make the Alpha ready.
 | 4. Complete Occurrence 1 | PASS | The complete first occurrence is canonically integrated with authenticated rendered acceptance and truthful closure |
 | Pre-Gate 5. Current-accessible historical predecessor projection | PASS | The existing Product Artifact current-access owner resolves one exact immutable predecessor under present authorization before protected-body loading and projects only body-safe currently accessible content |
 | Pre-Gate 5B. Canonical Understanding composition for Prepare Again | PASS | The existing canonical Understanding owner evaluates the exact currently authorized understanding and issues body-free composition and evaluation references for later Gate-5 use without creating a new owner or persistence boundary |
-| 5. What Changed and Prepare Again | READY — PAUSED 10-FILE CANDIDATE PRESERVED FOR RECONCILIATION AND REUSE | Fresh-process second occurrence reconstructs from canonical artifacts, current Evidence, the exact currently accessible predecessor, and the canonical PRE-002 Understanding result |
-| 6. Chief-of-staff value layer | NOT STARTED — blocked by Gate 5 | Concise priority, surprises, tensions, unknowns, meeting questions, bounded acquisition recommendations, provenance, and truthful abstention |
+| 5. What Changed and Prepare Again | PASS | Fresh-process second occurrence reconstructs from canonical artifacts, current Evidence, the exact currently accessible predecessor, and the canonical PRE-002 Understanding result; authenticated desktop, narrow-viewport, denial, reload, and cleanup acceptance passed |
+| 6. Chief-of-staff value layer | READY — NEXT BOUNDARY, NOT BEGUN | Concise priority, surprises, tensions, unknowns, meeting questions, bounded acquisition recommendations, provenance, and truthful abstention |
 | 7. Alpha experience and operations | NOT STARTED — blocked by Gates 4–6 | Onboarding, source guidance, resilient states, instrumentation, production smoke/deployment validation, rollback, support, privacy, and design-partner operations |
 | 8. Design-partner launch | NOT STARTED — blocked by Gate 7 and human approval | Two-cycle acceptance, no unresolved high-severity trust failure, verified instrumentation, onboarding, support, limitations, measures, and observation plan |
 
@@ -113,14 +113,20 @@ trust messaging for Private Working, explicit-only contribution, Freeze,
 protected access, Review, and truthful closure. These refinements do not reopen
 Gate 4 unless a functional or trust defect is discovered.
 
-Control Tower baseline: canonical `main` is clean at
-`f482c9a1255e9706cb2724dcec33c663e457dccf`. Push and deployment have not been
-performed. Gate 4, `ALPHA-RM-G5-PRE-001`, and `ALPHA-RM-G5-PRE-002` are
-complete. The sole active primary item is `ALPHA-RM-G5-001`. The existing 10-file
-`ALPHA-RM-G5-001` candidate, its worktree, implementation bytes, screenshots,
-and evidence are paused, preserved, and reusable. The next five primary items
-are `ALPHA-RM-G5-001`, `ALPHA-RM-G6-001`, `ALPHA-BASE-A-001`,
-`ALPHA-BENCH-LONG-001`, and `ALPHA-OPT-001`.
+Control Tower baseline: canonical `main` contains the clean fast-forwarded
+`ALPHA-RM-G5-001` implementation at
+`3c7560fdcbf59f2c469f258c29445d06719814bd`. Push and deployment have not been
+performed. Gate 4, both Gate-5 prerequisites, and `ALPHA-RM-G5-001` are
+complete. `ALPHA-RM-G6-001` is the next primary roadmap boundary and has not
+begun. The next five primary items are `ALPHA-RM-G6-001`, `ALPHA-BASE-A-001`,
+`ALPHA-BENCH-LONG-001`, `ALPHA-OPT-001`, and `ALPHA-BASE-DECIDE-001`.
+
+Gate-5 product-necessity classification is `UNPROVEN — DEFER GENERALIZATION`.
+Chief necessity is proven, but no real second Product consumer has established
+reuse. Counsel, Operator, Scout, or multi-persona generality must not be claimed
+until a future second-consumer test passes. Gate 6 should consume the completed
+Product composition and current-access interfaces without reopening their core
+provenance or access contracts.
 
 ### Master Alpha Program
 
@@ -141,8 +147,8 @@ parallel lanes; it does not create another roadmap owner.
 | 7 | `ALPHA-RM-G4-001` | Complete Occurrence 1 | COMPLETE |
 | 8 | `ALPHA-RM-G5-PRE-001` | CURRENT-ACCESSIBLE HISTORICAL PREDECESSOR PROJECTION | COMPLETE |
 | 9 | `ALPHA-RM-G5-PRE-002` | CANONICAL UNDERSTANDING COMPOSITION FOR PREPARE AGAIN | COMPLETE |
-| 10 | `ALPHA-RM-G5-001` | What Changed / Prepare Again | READY — paused 10-file candidate preserved for reconciliation and reuse |
-| 11 | `ALPHA-RM-G6-001` | Chief-of-Staff value layer | QUEUED — blocked by `ALPHA-RM-G5-001` |
+| 10 | `ALPHA-RM-G5-001` | What Changed / Prepare Again | COMPLETE |
+| 11 | `ALPHA-RM-G6-001` | Chief-of-Staff value layer | READY — next boundary, not begun |
 | 12 | `ALPHA-BASE-A-001` | Freeze Alpha Baseline A | QUEUED — blocked by the recurring-meeting capability through Gate 6 and required readiness evidence |
 | 13 | `ALPHA-BENCH-LONG-001` | Longitudinal Chief / Organizational Understanding benchmark | QUEUED — execution blocked until `ALPHA-BASE-A-001` |
 | 14 | `ALPHA-OPT-001` | Bounded cognition optimization | QUEUED — blocked by the frozen baseline benchmark run |
@@ -233,6 +239,25 @@ Every future roadmap change must be recorded as exactly one of `ADD`, `CHANGE`,
 `REORDER`, `DEFER`, `OMIT`, or `SUPERSEDE`. Each record must show the previous
 state, proposed state, dependency impact, Alpha impact, active-work impact, and
 reason. Roadmap items must never silently disappear.
+
+Roadmap change record — `CHANGE`:
+
+- previous state: `ALPHA-RM-G5-001` was the sole READY primary item, with its
+  reconstructed candidate awaiting canonical integration and Gate 6 blocked;
+- proposed state: mark `ALPHA-RM-G5-001` COMPLETE after exact clean
+  fast-forward integration and make `ALPHA-RM-G6-001` the next READY boundary
+  without beginning execution;
+- dependency impact: preserve the existing order from Gate 6 through Alpha
+  baseline, benchmark, optimization, operations, and launch;
+- Alpha impact: the authenticated recurring-meeting loop now reaches truthful
+  What Changed and an explicit, deterministic second occurrence under current
+  access, replay, provenance, and nondisclosure controls;
+- active-work impact: preserve `UNPROVEN — DEFER GENERALIZATION` and require a
+  real second-consumer test before claiming Counsel, Operator, Scout, or
+  multi-persona reuse; and
+- reason: record the validated Gate-5 completion and expose the next canonical
+  execution checkpoint without starting Gate 6, benchmarks, baseline freezing,
+  optimization, push, or deployment.
 
 Roadmap change record — `ADD`:
 
