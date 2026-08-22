@@ -6,6 +6,7 @@ import { readNorthstarPreparationLineageSeed } from "../../../product/simulation
 import { SANDBOX_ORGANIZATION_ID } from "../../../product/simulations/living-organization-sandbox/manifest";
 import { isLeadershipConversationPrepareAvailable, northstarLeadershipConversationFixture } from "../../../product/workflow/leadershipConversation";
 import { LeadershipConversationExperience } from "../../../components/product-alpha/leadership-conversation/LeadershipConversationExperience";
+import { LeadershipConversationPrepare } from "../../../components/product-alpha/leadership-conversation/LeadershipConversationPrepare";
 import { getPersonalRoomSheetPreviewAction } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -18,6 +19,12 @@ export default async function LeadershipConversationPage() {
   const seed = await readNorthstarPreparationLineageSeed({ fixtureRoot, organizationId: SANDBOX_ORGANIZATION_ID, fixtureId: "northstar-preparation-lineage-fixture-v1", provisioningKey: "northstar-preparation-lineage:v1" }), fixture = northstarLeadershipConversationFixture(seed.productQuestionId);
   const identity = { userId, organizationId: seed.organizationId, questionId: seed.productQuestionId, conversationId: fixture.conversationId };
   const workspace = await server.workspace(identity);
+  if (workspace.futurePreparationLink) {
+    const nextWorkspace = await server.workspace({ ...identity, conversationId: workspace.futurePreparationLink.nextConversationId });
+    if (!isLeadershipConversationPrepareAvailable(nextWorkspace) || !workspace.closureCompletion) return <main><header><p>Leadership conversation · Occurrence 2</p><h1>Meeting preparation is unavailable</h1><p role="status">Protected preparation cannot be shown with your current access.</p></header><section><h2>What you can do</h2><p>Confirm your current access or return to your organization workspace. No protected meeting content has been loaded.</p></section></main>;
+    const nextBase = composeChiefFirstPrepareViewFromWorkspace(nextWorkspace), nextPrepare = { ...nextBase, seriesId: workspace.closureCompletion.seriesId, priorCycle: { status: "completed" as const, message: "Occurrence 1 is closed and its reviewed outcome is reflected here." }, currentStep: "freeze" as const };
+    return <main><header><p>Leadership conversation · Occurrence 2</p><h1>{nextPrepare.meeting.title}</h1><p>{nextPrepare.meeting.purpose}</p><p role="status">Occurrence 2 is prepared, but the next meeting has not started.</p></header><section><h2>Prepare Again</h2><p>Only the reviewed closure and current authorized evidence shaped this preparation. Private Working and unreviewed meeting content did not carry forward.</p><LeadershipConversationPrepare prepare={nextPrepare} /></section></main>;
+  }
   if (!isLeadershipConversationPrepareAvailable(workspace)) return <main><header><p>Leadership conversation · Occurrence 1</p><h1>Meeting preparation is unavailable</h1><p role="status">Protected preparation cannot be shown with your current access.</p></header><section><h2>What you can do</h2><p>Confirm your current access or return to your organization workspace. No protected meeting content has been loaded.</p></section></main>;
   const prepare = composeChiefFirstPrepareViewFromWorkspace(workspace), personal = await getPersonalRoomSheetPreviewAction();
   const checkpoint = workspace.currentStep === "capture" ? await resolveCurrentLeadershipConversationCheckpoint(identity) : null;

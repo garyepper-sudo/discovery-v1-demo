@@ -10,6 +10,8 @@ import { resolveCanonicalUnderstandingCurrentEligibility } from "../../engine/v3
 import type { ProductArtifactCurrentOwnerStateV1 } from "../workflow/productArtifactCurrentAccessContracts";
 import type { HistoricalPredecessorCurrentAccessRequestV2 } from "../workflow/productArtifactCurrentAccessContracts";
 import type { ProductArtifactInspectionMetadataV1 } from "../workflow/productArtifactInspectionMetadataContracts";
+import { validateProductArtifactInspectionMetadataV1 } from "../workflow/productArtifactInspectionMetadataContracts";
+import type { CanonicalEvidenceContributionOperationRecordV1 } from "./contracts";
 import { buildGenericScopedProductSource } from "./runtimeToScopedProductSource";
 import { readScopedOrganizationalProductProjection } from "./scopedOrganizationalProductProjection";
 
@@ -60,6 +62,8 @@ export class ProductArtifactCurrentOwnerStateResolver {
   constructor(
     private readonly dependencies: {
       runtimeRepository: Pick<OrganizationRuntimeRepository, "read">;
+      verifyDirectEvidenceOwnerProof?: (input:{organizationId:string;productQuestionId:string;provenance:import("../workflow/productArtifactInspectionMetadataContracts").DirectCanonicalEvidenceProvenanceV2})=>Promise<boolean>;
+      resolveExactSourceMetadata?: (input:{organizationId:string;subjectId:string;purpose:string;evaluatedAt:string;sourceBindingId:string;normalizedContentDigest:string})=>Promise<{sourceContentVersionId:string;exactContentDigest:string;normalizedContentDigest:string;storageIntegrityDigest:string}|null>;
     },
   ) {}
 
@@ -95,6 +99,8 @@ export class ProductArtifactCurrentOwnerStateResolver {
     ) return unavailable(input);
 
     try {
+      validateProductArtifactInspectionMetadataV1(input.metadata);
+      if(lineage.contractVersion==="2")return this.resolveDirectEvidence(input,lineage);
       const stored = await this.dependencies.runtimeRepository.read(input.organizationId);
       if (!stored || stored.runtime.metadata.organizationId !== input.organizationId) {
         return unavailable(input);
@@ -234,6 +240,16 @@ export class ProductArtifactCurrentOwnerStateResolver {
     } catch {
       return unavailable(input);
     }
+  }
+
+  private async resolveDirectEvidence(input:ProductArtifactCurrentOwnerStateResolutionInputV1,lineage:import("../workflow/productArtifactInspectionMetadataContracts").ProductArtifactMaterialLineageV2):Promise<ProductArtifactCurrentOwnerStateV1>{
+    if(!this.dependencies.verifyDirectEvidenceOwnerProof||!this.dependencies.resolveExactSourceMetadata||lineage.lineageVariant!=="direct-canonical-evidence")return unavailable(input);
+    const stored=await this.dependencies.runtimeRepository.read(input.organizationId);if(!stored||stored.runtime.metadata.organizationId!==input.organizationId)return unavailable(input);
+    const p=lineage.directEvidenceProvenance,{bundleDigest,...bundle}=p;if(bundleDigest!==digest(bundle)||p.organizationId!==input.organizationId||p.productQuestionId!==lineage.productQuestionId||p.artifactId!==lineage.artifactId||p.artifactRevision!==lineage.artifactRevision||p.artifactWorkflowRef!==lineage.productWorkflowId)return unavailable(input);
+    const operationMatches=stored.runtime.memory.events.filter((event):event is CanonicalEvidenceContributionOperationRecordV1=>Boolean(event&&typeof event==="object"&&(event as {kind?:unknown}).kind==="canonical-evidence-contribution-operation"&&(event as {contributionOperationId?:unknown}).contributionOperationId===p.operationEnvelope.contributionOperationId));if(operationMatches.length!==1)return unavailable(input);const operation=operationMatches[0]!,{recordDigest,...operationUnsigned}=operation;if(operation.organizationId!==input.organizationId||operation.questionId!==lineage.productQuestionId||operation.requestFingerprint!==p.operationEnvelope.requestFingerprint||operation.idempotencyKeyDigest!==p.operationEnvelope.idempotencyKeyDigest||operation.lineageEnvelopeDigest!==p.operationEnvelope.lineageEnvelopeDigest||recordDigest!==p.operationEnvelope.operationRecordDigest||recordDigest!==digest(operationUnsigned)||operation.canonicalAdmissionBatch.batchDigest!==p.admissionBatch.batchDigest||operation.canonicalAdmissionBatch.admissionDisposition!==p.admissionBatch.admissionDisposition)return unavailable(input);
+    if(!await this.dependencies.verifyDirectEvidenceOwnerProof({organizationId:input.organizationId,productQuestionId:lineage.productQuestionId,provenance:p}))return unavailable(input);
+    const index=stored.runtime.memory.canonicalScopeLineageIndex;if(!index||index.organizationId!==input.organizationId)return unavailable(input);const seenEvidence=new Set<string>(),seenBindings=new Map<string,string>();for(const declared of p.evidence){if(seenEvidence.has(declared.canonicalEvidenceId))return unavailable(input);seenEvidence.add(declared.canonicalEvidenceId);const admissions=operation.canonicalAdmissionBatch.admissions.filter(value=>value.canonicalEvidenceId===declared.canonicalEvidenceId&&value.canonicalAdmissionId===declared.canonicalAdmissionId&&value.attributionId===declared.attributionId&&value.attributionVersion===declared.attributionVersion&&value.attributionDigest===declared.attributionDigest);const attributions=index.evidenceAttributions.filter(value=>value.attributionId===declared.attributionId&&value.evidenceId===declared.canonicalEvidenceId&&value.evidenceAdmissionId===declared.canonicalAdmissionId&&value.attributionVersion===declared.attributionVersion&&value.digest===declared.attributionDigest);if(admissions.length!==1||attributions.length!==1||declared.sourceBindings.length!==admissions[0]!.sourceBindings.length)return unavailable(input);const local=new Set<string>();for(const source of declared.sourceBindings){const sourceDigest=digest(source),prior=seenBindings.get(source.sourceBindingId);if(local.has(source.sourceBindingId)||(prior!==undefined&&prior!==sourceDigest))return unavailable(input);local.add(source.sourceBindingId);seenBindings.set(source.sourceBindingId,sourceDigest);const admissionBinding=admissions[0]!.sourceBindings.filter(value=>value.sourceBindingId===source.sourceBindingId&&value.normalizedContentDigest===source.normalizedContentDigest),binding=index.sourceBindings.filter(value=>value.bindingId===source.bindingRevisionId&&value.digest===source.bindingRevisionDigest&&value.organizationId===input.organizationId&&value.source.normalizedContentDigest===source.normalizedContentDigest);if(admissionBinding.length!==1||binding.length!==1)return unavailable(input);const current=resolveCurrentSourceScopeBinding(index.sourceBindings.filter(value=>value.organizationId===input.organizationId&&value.source.sourceId===binding[0]!.source.sourceId),input.evaluatedAt);if(!current||current.bindingId!==source.bindingRevisionId||current.digest!==source.bindingRevisionDigest||current.availability!=="available"||current.purposeRef!==input.purpose||!current.assertions.some(value=>stable(value.scope)===stable(input.governance.requestedScope)))return unavailable(input);const metadata=await this.dependencies.resolveExactSourceMetadata({organizationId:input.organizationId,subjectId:input.subjectId,purpose:input.purpose,evaluatedAt:input.evaluatedAt,sourceBindingId:source.sourceBindingId,normalizedContentDigest:source.normalizedContentDigest});if(!metadata||metadata.sourceContentVersionId!==source.sourceContentVersionId||metadata.exactContentDigest!==source.exactContentDigest||metadata.normalizedContentDigest!==source.normalizedContentDigest||metadata.storageIntegrityDigest!==source.storageIntegrityDigest)return unavailable(input);}}
+    if(seenEvidence.size!==operation.canonicalAdmissionBatch.admissions.length)return unavailable(input);return{contractVersion:"1",organizationId:input.organizationId,productQuestionId:lineage.productQuestionId,sourceGovernanceDigest:digest([...seenBindings.keys()].sort()),eligibilityDigest:digest({bundleDigest,authorization:input.governance.contextId}),eligibilityDisposition:"eligible",projectionRevision:stored.revision,projectionDigest:digest({artifactId:lineage.artifactId,artifactRevision:lineage.artifactRevision,bundleDigest}),canonicalUnderstandingRevision:null,canonicalChangeResultDigest:"not-applicable",lineagePolicyVersion:lineage.lineagePolicyVersion,accessBasis:{contractVersion:"2",kind:"direct-canonical-evidence",canonicalUnderstandingRevision:null,provenanceBundleDigest:bundleDigest}};
   }
 
   async resolveHistoricalPredecessor(

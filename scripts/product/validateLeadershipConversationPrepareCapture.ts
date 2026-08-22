@@ -25,11 +25,13 @@ import {
   northstarLeadershipConversationFixture,
   NORTHSTAR_PREPARED_CONTENT,
   NORTHSTAR_PREPARED_LINEAGE,
+  resolveCurrentOccurrenceClosureMetadataV1,
   resolveCurrentOccurrenceCheckpointIdentityV1,
 } from "../../product/workflow/leadershipConversation";
 import { provisionNorthstarPreparationLineageFixture } from "../../product/simulations/living-organization-sandbox/preparationLineageFixtureProvisioner";
 import { createProductArtifactBodyRefV1, productArtifactBodyDigest, type ProductArtifactBodyRefV1, type ProductArtifactBodyStageRequestV1, type ProductArtifactBodyStageReceiptV1 } from "../../product/persistence/productArtifactBodyContracts";
 import type { ProductArtifactBodyRepository } from "../../product/persistence/productArtifactBodyRepository";
+import { resolveEvidenceAcceptanceContinuationV1 } from "../../product/workflow/leadershipConversation/operations";
 
 let checks = 0;
 const execFileAsync=promisify(execFile);
@@ -74,13 +76,17 @@ async function main(): Promise<void> {
     let store = (await repository.read(fixture.organizationId)).store;
     await operations.recordPreparation({ ...identity, idempotencyKey: "prepare", contextVersionId: store.contexts[0]!.contextVersionId, content: NORTHSTAR_PREPARED_CONTENT, lineage: NORTHSTAR_PREPARED_LINEAGE, changeSummary: null });
     store = (await repository.read(fixture.organizationId)).store;
-    await operations.freeze({ ...identity, idempotencyKey: "freeze", artifactVersionId: store.preparedWorkPublications![0]!.artifactRevision });
+    await operations.freeze({ ...identity, idempotencyKey: "freeze", artifactVersionId: store.preparedWorkPublications![0]!.artifactRevision, privateWorkingContribution:{seriesId:`leadership-conversation-series:${fixture.conversationId}`,occurrenceId:fixture.conversationId,authorizationRevision:NORTHSTAR_PREPARED_LINEAGE.authorizedProjectionRevision,provenanceDigest:NORTHSTAR_PREPARED_LINEAGE.authorizedProjectionDigest,selectedContent:["Bounded closure metadata validation contribution."]} });
     store = (await repository.read(fixture.organizationId)).store;
     check(Boolean(store.preparedWorkPublications![0]!.materialLineage),"Prepared Work publishes complete body-free material lineage");
     check(store.frozenSnapshotPublications![0]!.materialLineage?.seedDigest===store.preparedWorkPublications![0]!.materialLineage?.seedDigest,"freeze transfers the exact owner-backed lineage seed");
     const reloadedAfterFreeze=(await repository.read(fixture.organizationId)).store,recoveredCheckpoint=resolveCurrentOccurrenceCheckpointIdentityV1({store:reloadedAfterFreeze,organizationId:fixture.organizationId,questionId:fixture.questionId,conversationId:fixture.conversationId});
     check(recoveredCheckpoint.checkpointId===store.frozenSnapshotPublications![0]!.artifactId&&recoveredCheckpoint.preparedWorkProductVersionId===store.frozenSnapshotPublications![0]!.preparedWorkProductVersionId,"hard reload recovers the exact owner-issued checkpoint identity without a body read");
-    const closureInput={...identity,seriesId:"leadership-conversation-series:cycle1",expectedWorkflowRevision:(await repository.read(fixture.organizationId)).revision,authorizedProjectionDigest:NORTHSTAR_PREPARED_LINEAGE.authorizedProjectionDigest,candidateAssessmentDigest:"candidate-assessment:cycle1",b11CommunicationDigest:"b11-communication:cycle1",personalRoomSheetDigest:"personal-room-sheet:cycle1",idempotencyKey:"cycle1-closure"};
+    const closureMetadata=resolveCurrentOccurrenceClosureMetadataV1({store:reloadedAfterFreeze,organizationId:fixture.organizationId,questionId:fixture.questionId,conversationId:fixture.conversationId});
+    check(closureMetadata.checkpointId===recoveredCheckpoint.checkpointId&&closureMetadata.occurrenceId===fixture.conversationId&&closureMetadata.seriesId.length>0&&closureMetadata.authorizedProjectionDigest.length>0&&closureMetadata.personalRoomSheetDigest.length>0,"closure reconstructs exact body-free Freeze metadata without current Prepared Work or Personal Room Sheet recomposition");
+    for(const mutate of [(value:typeof reloadedAfterFreeze)=>{value.privateWorkingContributionPublications![0]!.authorizationRevision="mismatched";},(value:typeof reloadedAfterFreeze)=>{value.privateWorkingContributionPublications![0]!.provenanceDigest="mismatched";},(value:typeof reloadedAfterFreeze)=>{value.privateWorkingContributionPublications![0]!.occurrenceId="foreign";},(value:typeof reloadedAfterFreeze)=>{value.privateWorkingContributionPublications!.push(structuredClone(value.privateWorkingContributionPublications![0]!));},(value:typeof reloadedAfterFreeze)=>{const publication=value.privateWorkingContributionPublications![0]!;value.privateWorkingContributionReceipts=value.privateWorkingContributionReceipts!.filter(receipt=>receipt.artifactId!==publication.artifactId);}]){const invalid=structuredClone(reloadedAfterFreeze);mutate(invalid);assert.throws(()=>resolveCurrentOccurrenceClosureMetadataV1({store:invalid,organizationId:fixture.organizationId,questionId:fixture.questionId,conversationId:fixture.conversationId}),/unavailable/);}check(true,"mismatched, foreign, duplicate, or receipt-incomplete Freeze metadata fails closed");
+    const closureRevision=(await repository.read(fixture.organizationId)).revision,closureInput={...identity,seriesId:closureMetadata.seriesId,expectedWorkflowRevision:closureRevision,authorizedProjectionDigest:closureMetadata.authorizedProjectionDigest,candidateAssessmentDigest:null,b11CommunicationDigest:null,personalRoomSheetDigest:closureMetadata.personalRoomSheetDigest,idempotencyKey:"cycle1-closure"};
+    for(const [ordinal,override] of [{seriesId:"mismatched"},{authorizedProjectionDigest:"mismatched"},{personalRoomSheetDigest:"mismatched"},{candidateAssessmentDigest:"unproved"},{b11CommunicationDigest:"unproved"}].entries()){await assert.rejects(()=>operations.completeCycle1Closure({...closureInput,...override,idempotencyKey:`closure-invalid-${ordinal}`}),/metadata is unavailable/);assert.equal((await repository.read(fixture.organizationId)).store.cycle1ClosureCompletions?.length??0,0);}check(true,"closure owner rejects every unproved or Freeze-mismatched input before publication");
     const closed=await operations.completeCycle1Closure(closureInput),replayed=await operations.completeCycle1Closure(closureInput),completion=closed.cycle1ClosureCompletions![0]!;
     check(closed.cycle1ClosureCompletions?.length===1&&replayed.cycle1ClosureCompletions?.length===1,"closure replay creates exactly one completed checkpoint");
     check(completion.checkpointId===store.frozenSnapshotPublications![0]!.artifactId&&completion.checkpointStatus==="completed","closure binds the exact frozen checkpoint");
@@ -115,6 +121,19 @@ async function main(): Promise<void> {
     store = (await repository.read(fixture.organizationId)).store;
     await operations.review({ ...identity, idempotencyKey: "review", proposalId: store.proposals[0]!.proposalId, disposition: "approved", effectivePayload: null, reason: null });
     store=(await repository.read(fixture.organizationId)).store;
+    const evidenceProposal=store.proposals[0]!,approvedDisposition=store.dispositions.find(value=>value.proposalId===evidenceProposal.proposalId)!;
+    const approvedUnrouted=await operations.workspace(identity),initialWorkspace={...approvedUnrouted,dispositions:approvedUnrouted.dispositions.filter(value=>value.proposalId!==evidenceProposal.proposalId)};
+    check(resolveEvidenceAcceptanceContinuationV1(initialWorkspace,evidenceProposal.proposalId).disposition==="review","initial Evidence acceptance requires explicit review");
+    const continuation=resolveEvidenceAcceptanceContinuationV1(approvedUnrouted,evidenceProposal.proposalId);
+    check(continuation.disposition==="route"&&continuation.dispositionReceiptId===approvedDisposition.dispositionReceiptId,"approved but unrouted Evidence resumes from its exact owner-issued disposition");
+    check(!approvedUnrouted.actions.some(action=>action.id==="complete-closure"&&action.enabled),"closure remains disabled while approved Evidence routing is pending");
+    const exactRoute={proposalId:evidenceProposal.proposalId,dispositionReceiptId:approvedDisposition.dispositionReceiptId} as typeof approvedUnrouted.canonicalRoutingReceipts[number],routedWorkspace={...approvedUnrouted,canonicalRoutingReceipts:[exactRoute]};
+    check(resolveEvidenceAcceptanceContinuationV1(routedWorkspace,evidenceProposal.proposalId).disposition==="complete","initial routing success and exact replay reuse the competing winner");
+    const conflictingDisposition={...approvedDisposition,disposition:"rejected" as const},conflictingWorkspace={...approvedUnrouted,dispositions:[conflictingDisposition]};
+    check(resolveEvidenceAcceptanceContinuationV1(conflictingWorkspace,evidenceProposal.proposalId).disposition==="denied","a conflicting review disposition cannot be replaced by Evidence acceptance");
+    check(resolveEvidenceAcceptanceContinuationV1({...approvedUnrouted,dispositions:[approvedDisposition,{...approvedDisposition}]},evidenceProposal.proposalId).disposition==="denied","multiple review winners fail closed as ambiguous");
+    check(resolveEvidenceAcceptanceContinuationV1({...approvedUnrouted,canonicalRoutingReceipts:[{...exactRoute,dispositionReceiptId:"mismatched"}]},evidenceProposal.proposalId).disposition==="denied","a mismatched routing winner fails closed");
+    check(resolveEvidenceAcceptanceContinuationV1({...approvedUnrouted,canonicalRoutingReceipts:[exactRoute,{...exactRoute}]},evidenceProposal.proposalId).disposition==="denied","multiple routing winners fail closed as ambiguous");
     check(store.dispositions[0]!.governedScopeBindingDigest===governedScopeBinding.bindingDigest,"RW-0 review preserves the exact proposal binding");
     check(store.proposals.filter(value=>value.contractVersion==="1").length===4&&store.proposals.filter(value=>value.contractVersion==="1").every(value=>!("governedScopeBinding" in value)),"legacy V1 proposals receive no synthesized scope");
     const legacyIds=store.proposals.filter(value=>value.contractVersion==="1").map(value=>value.proposalId),beforeWorkerRevision=(await repository.read(fixture.organizationId)).revision,worker=await execFileAsync(process.execPath,[...process.execArgv,process.argv[1]!,"--historical-worker",workflowRoot,fixture.organizationId],{env:{...process.env,NODE_ENV:"test"}}),workerLine=worker.stdout.split("\n").find(value=>value.startsWith("FOUNDATION_WORKER_RESULT "));
@@ -126,6 +145,16 @@ async function main(): Promise<void> {
     await assert.rejects(()=>repository.replace(fixture.organizationId,mixed,validSnapshot.revision),/invalid/);check((await repository.read(fixture.organizationId)).revision===validSnapshot.revision,"inseparable mixed-scope consequence fails closed without permissive union or persistence");
     check((await repository.read(fixture.organizationId)).store.routingLinks.length === 0, "prepare/capture operations cannot route");
     check(!("route" in operations), "generic callback routing is absent");
+    const nextConversationId="leadership-conversation:fixture-series:occurrence:2";
+    await operations.recordContext({ ...identity, conversationId:nextConversationId, idempotencyKey:"next-context", title:"Northstar staff conversation", purpose:"Resolve the next delivery constraint.", intendedOutcome:"Prepare the next occurrence.", timeframe:"Next occurrence", participants:[{participantRef:"p1",displayName:"Leader",titleLabel:"Director"}], leaderContext:null });
+    store=(await repository.read(fixture.organizationId)).store;const nextContext=store.contexts.find(item=>item.conversationId===nextConversationId)!;
+    await operations.recordPreparation({ ...identity, conversationId:nextConversationId, idempotencyKey:"next-prepared", contextVersionId:nextContext.contextVersionId, content:{...NORTHSTAR_PREPARED_CONTENT,whatChanged:["No consequential result was accepted from the prior meeting."],priorCommitments:[]}, lineage:{...NORTHSTAR_PREPARED_LINEAGE,previousFrozenSnapshotId:completion.checkpointId,canonicalChangeReceiptReferences:[completion.contentDigest]}, changeSummary:"Prepared from the reviewed Occurrence 1 closure." });
+    store=(await repository.read(fixture.organizationId)).store;const nextPrepared=store.preparedWorkPublications!.find(item=>item.productWorkflowId===`leadership-conversation:${nextConversationId}`)!;
+    await operations.linkFuturePreparation({ ...identity, idempotencyKey:"future-link", nextConversationId, nextContextVersionId:nextContext.contextVersionId, nextPreparedWorkProductVersionId:nextPrepared.artifactRevision });
+    const linked=await repository.read(fixture.organizationId),linkedReplay=await operations.linkFuturePreparation({ ...identity, idempotencyKey:"future-link", nextConversationId, nextContextVersionId:nextContext.contextVersionId, nextPreparedWorkProductVersionId:nextPrepared.artifactRevision });
+    check(linked.store.futurePreparationLinks.length===1&&linkedReplay.futurePreparationLinks.length===1&&linked.store.contexts.filter(item=>item.conversationId===nextConversationId).length===1,"two-occurrence link replay preserves one deterministic successor");
+    check(nextConversationId!==identity.conversationId&&nextPrepared.productWorkflowId.endsWith(nextConversationId),"Occurrence 2 has a distinct owner-issued conversation and preparation identity");
+    await assert.rejects(()=>operations.linkFuturePreparation({ ...identity, idempotencyKey:"foreign-next", nextConversationId:identity.conversationId, nextContextVersionId:nextContext.contextVersionId, nextPreparedWorkProductVersionId:nextPrepared.artifactRevision }),/unavailable/);check(true,"same-occurrence Prepare Again fails closed");
     console.log(JSON.stringify({ validation: "leadership-conversation-prepare-capture-001", result: "PASS", checks, canonicalRoutes: 0, networkCalls: 0, connectorCalls: 0, driveReads: 0, driveWrites: 0, productionAccess: 0, deployments: 0 }));
   } finally {
     await rm(workflowRoot, { recursive: true, force: true });

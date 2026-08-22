@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
@@ -19,6 +19,7 @@ import {
   NORTHSTAR_LEADERSHIP_CONVERSATION_FIXTURE as fixture,
   NORTHSTAR_PREPARED_CONTENT,
   NORTHSTAR_PREPARED_LINEAGE,
+  resolveCurrentOccurrenceClosureMetadataV1,
 } from "../../product/workflow/leadershipConversation";
 import {
   provisionNorthstarPreparationLineageFixture,
@@ -70,7 +71,7 @@ async function processA(root: string,lineageFixtureRoot?:string): Promise<Worker
   await composition.recordPreparation({ ...identity, idempotencyKey: "process-a-preparation-2", contextVersionId: context.contextVersionId, content: { ...NORTHSTAR_PREPARED_CONTENT, headline: "Resolve sequencing ownership before the next delivery window." }, lineage: NORTHSTAR_PREPARED_LINEAGE, changeSummary: "Leader clarified sequencing ownership." });
   stored = await workflow.read(fixture.organizationId);
   const prepared = stored.store.preparedWorkPublications!.at(-1)!;
-  await composition.freeze({ ...identity, idempotencyKey: "process-a-freeze", artifactVersionId: prepared.artifactRevision });
+  await composition.freeze({ ...identity, idempotencyKey: "process-a-freeze", artifactVersionId: prepared.artifactRevision, privateWorkingContribution:{seriesId:`leadership-conversation-series:${fixture.conversationId}`,occurrenceId:fixture.conversationId,authorizationRevision:NORTHSTAR_PREPARED_LINEAGE.authorizedProjectionRevision,provenanceDigest:NORTHSTAR_PREPARED_LINEAGE.authorizedProjectionDigest,selectedContent:["Bounded fresh-process closure contribution."]} });
   stored = await workflow.read(fixture.organizationId);
   const frozen = stored.store.frozenSnapshotPublications!.at(-1)!;
   assert.equal(stored.store.preparedWorkProducts.length,0);assert.equal(stored.store.frozenSnapshots.length,0);
@@ -113,7 +114,7 @@ async function processB(root: string, encodedA: string): Promise<WorkerResult> {
   return { role: "capture-and-review", handoff: manifest, assertions: ["process-a-verified", "binding-persisted", "content-persisted", "upload-receipt-persisted", "proposals-persisted", "dispositions-persisted"] };
 }
 
-async function processC(root: string, lineageFixtureRoot: string, expectedSeedDigest: string, encodedA: string, encodedB: string): Promise<WorkerResult> {
+async function processC(root: string, lineageFixtureRoot: string, expectedSeedDigest: string, encodedA: string, encodedB: string, ambiguousEvidence=false): Promise<WorkerResult> {
   const a = parseHandoff(encodedA), b = parseHandoff(encodedB);
   assert.equal(b.processAHandoffDigest, a.handoffDigest);
   assert.equal(a.organizationId, fixture.organizationId); assert.equal(b.organizationId, fixture.organizationId);
@@ -149,55 +150,64 @@ async function processC(root: string, lineageFixtureRoot: string, expectedSeedDi
   const proposal = (kind: string) => stored.store.proposals.find(item => item.kind === kind)!;
   const route = async (kind: string, key: string) => { stored = await workflow.read(fixture.organizationId); const item = proposal(kind); return composition.routeApproved({ ...identity, proposalId: item.proposalId, purposeRef: fixture.purposeRef, expectedWorkflowRevision: stored.revision, idempotencyKey: key }); };
   const material = await route("evidence-candidate", "process-c-route-evidence-material");
-  assert.ok("stage" in material);
-  if (!("stage" in material)) throw new Error("staged canonical routing result unavailable");
-  assert.equal(material.stage, "canonical-committed-product-materialized");
-  assert.match(material.productMaterializationReceiptDigest!, /^[a-f0-9]{64}$/);
-  assert.ok(material.canonicalOperationId);
-  const understanding=await composition.evaluateMaterializedUnderstanding({...identity,seriesId:`leadership-conversation-series:${fixture.conversationId}`,occurrenceId:fixture.conversationId,contributionOperationId:material.canonicalOperationId!,idempotencyKey:"process-c-evaluate-understanding"});
-  assert.equal(understanding.receipt,null);
-  assert.ok("disposition" in understanding);
-  assert.equal(understanding.disposition,"insufficient");
+  if (!("ownerKind" in material) || material.ownerKind !== "evidence") throw new Error("persisted canonical Evidence routing receipt unavailable");
+  assert.equal(material.dispositionReceiptId, stored.store.dispositions.find(value=>value.proposalId===material.proposalId)!.dispositionReceiptId);
+  assert.match(material.canonicalOperationResultDigest, /^[a-f0-9]{64}$/);
+  assert.ok(material.contributionOperationId);
   runtime=await runtimeRepository.read(fixture.organizationId);assert.ok(runtime);
   assert.equal(runtime.runtime.memory.organizationalUnderstandingState.canonicalCompositionEvaluationOperations?.length??0,0);
   assert.equal(runtime.runtime.memory.organizationalUnderstandingState.canonicalCompositionEvaluationReceipts?.length??0,0);
   assert.equal(runtime.runtime.memory.organizationalExplanations.length,0);
-  const understandingReplay=await composition.evaluateMaterializedUnderstanding({...identity,seriesId:`leadership-conversation-series:${fixture.conversationId}`,occurrenceId:fixture.conversationId,contributionOperationId:material.canonicalOperationId!,idempotencyKey:"process-c-evaluate-understanding"});
-  assert.equal(understandingReplay.receipt,null);
-  assert.ok("disposition" in understandingReplay);
-  assert.equal(understandingReplay.disposition,"insufficient");
   stored = await workflow.read(fixture.organizationId);
-  const evidence = proposal("evidence-candidate");
-  await composition.review({ ...identity, idempotencyKey: "process-c-review-evidence-duplicate", proposalId: evidence.proposalId, disposition: "approved", effectivePayload: null, reason: "Replay-aware duplicate control." });
-  const duplicate = await route("evidence-candidate", "process-c-route-evidence-duplicate");
-  assert.ok("stage" in duplicate);
-  if (!("stage" in duplicate)) throw new Error("staged duplicate routing result unavailable");
-  assert.equal(duplicate.stage, "canonical-committed-product-materialized");
-  assert.match(duplicate.productMaterializationReceiptDigest!, /^[a-f0-9]{64}$/);
+  const persistedEvidenceRoute=stored.store.canonicalRoutingReceipts.filter(value=>value.proposalId===material.proposalId&&value.dispositionReceiptId===material.dispositionReceiptId);
+  assert.equal(persistedEvidenceRoute.length,1);
+  assert.equal(stored.store.routingLinks.filter(value=>value.integrationReceiptId===material.integrationReceiptId).length,1);
+  assert.equal((stored.store.productMaterializationReceipts??[]).filter(value=>value.canonicalOperationId===material.contributionOperationId).length,1);
+  const evidenceMaterialization=(stored.store.productMaterializations??[]).find(value=>value.canonicalOperationId===material.contributionOperationId)!;
+  assert.equal((stored.store.whatChangedPublications??[]).filter(value=>value.artifactId===evidenceMaterialization.whatChangedArtifactId).length,1);
+  if(ambiguousEvidence){const evidence=proposal("evidence-candidate");await composition.review({...identity,idempotencyKey:"process-c-review-evidence-ambiguous",proposalId:evidence.proposalId,disposition:"approved",effectivePayload:null,reason:"Operation-linked ambiguity control."});await route("evidence-candidate","process-c-route-evidence-ambiguous");}
+  const duplicate = await route("evidence-candidate", ambiguousEvidence?"process-c-route-evidence-ambiguous":"process-c-route-evidence-material");
+  if (!("ownerKind" in duplicate) || duplicate.ownerKind!=="evidence") throw new Error("persisted canonical Evidence replay receipt unavailable");
+  if(!ambiguousEvidence){assert.equal(duplicate.integrationReceiptId,material.integrationReceiptId);assert.equal(duplicate.receiptDigest,material.receiptDigest);}
   const decision = await route("decision-draft", "process-c-route-decision");
   if (!("ownerKind" in decision)) throw new Error("decision owner receipt unavailable");
   assert.equal(decision.ownerKind, "product-decision-draft");
   const unknown = await route("unknown", "process-c-route-unknown");
   if (!("ownerKind" in unknown)) throw new Error("unknown owner receipt unavailable");
   assert.equal(unknown.ownerKind, "unknown");
+  stored=await workflow.read(fixture.organizationId);const commitment=proposal("commitment");await composition.review({...identity,idempotencyKey:"process-c-review-commitment",proposalId:commitment.proposalId,disposition:"approved",effectivePayload:null,reason:"Prepare Again closure coverage."});await route("commitment", "process-c-route-commitment");
   stored = await workflow.read(fixture.organizationId);
-  const context = stored.store.contexts.at(-1)!;
   if (!("integrationReceiptId" in decision) || !("integrationReceiptId" in unknown)) throw new Error("actual owner receipt unavailable");
-  await composition.recordPreparation({ ...identity, idempotencyKey: "process-c-next-preparation", contextVersionId: context.contextVersionId, content: { ...NORTHSTAR_PREPARED_CONTENT, whatChanged: ["Canonical owner results were recorded."] }, lineage: { ...NORTHSTAR_PREPARED_LINEAGE, previousFrozenSnapshotId: String(a.frozenSnapshotId), canonicalChangeReceiptReferences: [material.productMaterializationReceiptDigest!, duplicate.productMaterializationReceiptDigest!, decision.integrationReceiptId, unknown.integrationReceiptId] }, changeSummary: "Prepared from actual canonical owner receipts." });
-  stored = await workflow.read(fixture.organizationId);
-  const next = stored.store.preparedWorkPublications!.at(-1)!;
-  await composition.prepareAgain({ ...identity, idempotencyKey: "process-c-future-preparation", nextConversationId: `${fixture.conversationId}:next`, nextContextVersionId: context.contextVersionId, nextPreparedWorkProductVersionId: next.artifactRevision });
+  for(const item of (await composition.workspace(identity)).proposals){
+    stored=await workflow.read(fixture.organizationId);
+    const latest=stored.store.dispositions.filter(value=>value.proposalId===item.proposalId).at(-1);
+    if(latest?.disposition.startsWith("approved")){assert.ok(stored.store.canonicalRoutingReceipts.some(value=>value.proposalId===item.proposalId&&value.dispositionReceiptId===latest.dispositionReceiptId),"approved proposals must retain an exact canonical route before closure");continue;}
+    if(latest&&!latest.disposition.startsWith("approved"))continue;
+    await composition.review({...identity,idempotencyKey:`process-c-final-review:${item.proposalId}`,proposalId:item.proposalId,disposition:"deferred",effectivePayload:null,reason:"Preserved for the next governed review."});
+  }
+  let sourceWorkspace=await composition.workspace(identity);assert.ok(sourceWorkspace.canonicalRoutingReceipts.some(value=>value.ownerKind==="evidence"&&value.proposalId===material.proposalId&&value.dispositionReceiptId===material.dispositionReceiptId));stored=await workflow.read(fixture.organizationId);const frozenClosure=resolveCurrentOccurrenceClosureMetadataV1({store:stored.store,organizationId:fixture.organizationId,questionId,conversationId:identity.conversationId});assert.equal(sourceWorkspace.currentPreparedWorkProduct,null);if(!sourceWorkspace.closureCompletion){await composition.completeCycle1Closure({...identity,seriesId:frozenClosure.seriesId,expectedWorkflowRevision:sourceWorkspace.workflowRevision,authorizedProjectionDigest:frozenClosure.authorizedProjectionDigest,candidateAssessmentDigest:null,b11CommunicationDigest:null,personalRoomSheetDigest:frozenClosure.personalRoomSheetDigest,idempotencyKey:"process-c-closure"});sourceWorkspace=await composition.workspace(identity);}assert.ok(sourceWorkspace.closureCompletion);assert.equal(sourceWorkspace.closureCompletion.authorizedProjectionDigest,frozenClosure.authorizedProjectionDigest);assert.equal(sourceWorkspace.closureCompletion.personalRoomSheetDigest,frozenClosure.personalRoomSheetDigest);assert.ok(sourceWorkspace.closureCompletion.reviewedProposalIds.includes(material.proposalId)&&sourceWorkspace.closureCompletion.canonicalRoutingLinkIds.some(value=>sourceWorkspace.routingLinks.some(link=>link.routingLinkId===value&&link.proposalId===material.proposalId)));
+  if(ambiguousEvidence){await assert.rejects(()=>composition.prepareNextOccurrence(identity),/unavailable/);return{role:"operation-linked-ambiguity",handoff:handoff({organizationId:fixture.organizationId,questionId,conversationId:fixture.conversationId,ambiguous:true}),assertions:["multiple-complete-operation-links-fail-closed"]};}
+  const preparedAgain=await composition.prepareNextOccurrence(identity),nextConversationId=preparedAgain.nextWorkspace.conversationId;
+  assert.notEqual(nextConversationId,identity.conversationId);assert.equal(preparedAgain.nextPrepare.priorCycle.status,"completed");assert.equal(preparedAgain.nextWorkspace.currentStep,"freeze");
   stored = await workflow.read(fixture.organizationId);
   const beforeReplay = { revision: stored.revision, routes: stored.store.canonicalRoutingReceipts.length, future: stored.store.futurePreparationLinks.length, preparations: stored.store.preparedWorkPublications!.length };
-  for (const [kind, key] of [["evidence-candidate", "process-c-route-evidence-duplicate"], ["decision-draft", "process-c-route-decision"], ["unknown", "process-c-route-unknown"]] as const) await route(kind, key);
-  await composition.prepareAgain({ ...identity, idempotencyKey: "process-c-future-preparation", nextConversationId: `${fixture.conversationId}:next`, nextContextVersionId: context.contextVersionId, nextPreparedWorkProductVersionId: next.artifactRevision });
+  for (const [kind, key] of [["decision-draft", "process-c-route-decision"], ["unknown", "process-c-route-unknown"]] as const) await route(kind, key);
+  const replayedNext=await composition.prepareNextOccurrence(identity);assert.equal(replayedNext.nextWorkspace.conversationId,nextConversationId);
   stored = await workflow.read(fixture.organizationId);
   assert.deepEqual({ revision: stored.revision, routes: stored.store.canonicalRoutingReceipts.length, future: stored.store.futurePreparationLinks.length, preparations: stored.store.preparedWorkPublications!.length }, beforeReplay);
+  assert.notEqual(nextConversationId,fixture.conversationId);assert.equal(stored.store.contexts.filter(value=>value.conversationId===nextConversationId).length,1);assert.equal(stored.store.preparedWorkPublications!.filter(value=>value.productWorkflowId===`leadership-conversation:${nextConversationId}`).length,1);assert.equal(stored.store.frozenSnapshotPublications!.filter(value=>value.productWorkflowId===`leadership-conversation:${nextConversationId}`).length,0);
   await assert.rejects(() => composition.routeApproved({ ...identity, proposalId: proposal("decision-draft").proposalId, purposeRef: "different-purpose", expectedWorkflowRevision: stored.revision, idempotencyKey: "process-c-route-decision" }), /conflict/);
   runtime = await runtimeRepository.read(fixture.organizationId); assert.ok(runtime);
   if (!("receiptDigest" in decision) || !("receiptDigest" in unknown)) throw new Error("actual owner receipt unavailable");
-  const manifest = handoff({ processAHandoffDigest: a.handoffDigest, processBHandoffDigest: b.handoffDigest, organizationId: fixture.organizationId, questionId: questionId, conversationId: fixture.conversationId, materialEvidenceReceiptDigest: material.productMaterializationReceiptDigest!, duplicateEvidenceReceiptDigest: duplicate.productMaterializationReceiptDigest!, decisionDraftReceiptDigest: decision.receiptDigest, unknownReceiptDigest: unknown.receiptDigest, futurePreparationLinkId: stored.store.futurePreparationLinks.at(-1)!.futurePreparationLinkId, productWorkflowRepositoryRevision: stored.revision, runtimeRepositoryRevision: runtime.revision, sourceContentRepositoryRevision: await sourceRepository.inspectRevision(fixture.organizationId), routingReceiptCount: stored.store.canonicalRoutingReceipts.length, idempotentReentry: true });
+  const manifest = handoff({ processAHandoffDigest: a.handoffDigest, processBHandoffDigest: b.handoffDigest, organizationId: fixture.organizationId, questionId: questionId, conversationId: fixture.conversationId,nextConversationId, materialEvidenceReceiptDigest: material.receiptDigest, duplicateEvidenceReceiptDigest: duplicate.receiptDigest, decisionDraftReceiptDigest: decision.receiptDigest, unknownReceiptDigest: unknown.receiptDigest, futurePreparationLinkId: stored.store.futurePreparationLinks.at(-1)!.futurePreparationLinkId, productWorkflowRepositoryRevision: stored.revision, runtimeRepositoryRevision: runtime.revision, sourceContentRepositoryRevision: await sourceRepository.inspectRevision(fixture.organizationId), routingReceiptCount: stored.store.canonicalRoutingReceipts.length, idempotentReentry: true });
   return { role: "route-actual-owners-and-prepare-again", handoff: manifest, assertions: ["handoffs-verified", "northstar-seed-reloaded", "northstar-source-binding-lineage-verified", "northstar-material-lineage-verified", "material-evidence-actual", "canonical-change-owner-result", "duplicate-evidence-class-2", "duplicate-understanding-unchanged", "decision-draft-actual", "unknown-actual", "future-preparation-persisted", "idempotent-reentry"] };
+}
+
+async function processD(root:string,lineageFixtureRoot:string,encodedC:string):Promise<WorkerResult>{
+  const c=parseHandoff(encodedC),locations=roots(root),composition=await validationComposition(locations,lineageFixtureRoot),nextConversationId=String(c.nextConversationId),identity={userId:fixture.actorId,organizationId:fixture.organizationId,questionId,conversationId:nextConversationId};
+  const source=await composition.workspace({...identity,conversationId:fixture.conversationId});assert.equal(source.currentPreparedWorkProduct,null);assert.equal(source.futurePreparationLink?.nextConversationId,nextConversationId);const first=await composition.workspace(identity);assert.ok(first.currentPreparedWorkProduct);assert.equal(first.currentPreparedWorkProduct?.conversationId,nextConversationId);
+  const repository=createProductWorkflowArtifactRepository({root:locations.workflowRoot,environment:"test"}),before=(await repository.read(fixture.organizationId)).revision,second=await composition.workspace(identity),after=(await repository.read(fixture.organizationId)).revision;assert.equal(second.currentPreparedWorkProduct?.artifactVersionId,first.currentPreparedWorkProduct?.artifactVersionId);assert.equal(after,before);
+  return{role:"reload-direct-evidence-successor",handoff:handoff({organizationId:fixture.organizationId,questionId,nextConversationId,artifactVersionId:first.currentPreparedWorkProduct!.artifactVersionId,workflowRevision:after}),assertions:["fresh-process-successor-link-from-body-safe-predecessor","fresh-process-successor-reload","direct-evidence-current-access","reload-idempotent"]};
 }
 
 async function worker(role: string, root: string, ownerIssuedQuestionId:string, lineageFixtureRoot: string, expectedSeedDigest: string, encodedA?: string, encodedB?: string): Promise<WorkerResult> {
@@ -206,6 +216,8 @@ async function worker(role: string, root: string, ownerIssuedQuestionId:string, 
   if (role === "prepare-and-freeze") return processA(root,lineageFixtureRoot);
   if (role === "capture-and-review") return processB(root, encodedA!);
   if (role === "route-actual-owners-and-prepare-again") return processC(root, lineageFixtureRoot, expectedSeedDigest, encodedA!, encodedB!);
+  if (role === "operation-linked-ambiguity") return processC(root, lineageFixtureRoot, expectedSeedDigest, encodedA!, encodedB!,true);
+  if (role === "reload-direct-evidence-successor") return processD(root,lineageFixtureRoot,encodedA!);
   throw new Error("unknown process role");
 }
 
@@ -267,7 +279,10 @@ async function main(): Promise<void> {
     const c = await execute(root, "route-actual-owners-and-prepare-again", ...cArgs, a.handoff, b.handoff); checks += c.assertions.length;
     assert.equal(c.handoff.processAHandoffDigest, a.handoff.handoffDigest); checks++;
     assert.equal(c.handoff.processBHandoffDigest, b.handoff.handoffDigest); checks++;
-    console.log(JSON.stringify({ validation: "leadership-conversation-replay-001", result: "PASS", checks, freshProcesses: 16, processA: "persisted", processB: "loaded-a-and-persisted-capture-review", processC: "loaded-a-b-and-executed-actual-owners", northstarFixtureProvisionerInvocations: 1, processCSeedIntegrityReloads: 1, processCHiddenProvisioningInvocations: 0, missingLineageFailsClosed: true, materialEvidence: "actual-path", duplicateEvidence: "actual-class-2", productDecisionDraft: "actual-service", additionalOwner: "actual-unknown", futurePreparation: "persisted", idempotentReentry: "passed", negativeBindingControls: 13, handoffDigestsVerified: true, canonicalComposition: true, stubbedPositiveOwners: false, boundedEnvironment: true, shell: false, timeoutMilliseconds: 30000, networkCalls: 0, connectorCalls: 0, driveReads: 0, driveWrites: 0, productionAccess: 0, deployments: 0 }));
+    const d=await execute(root,"reload-direct-evidence-successor",lineageFixtureRoot,null,c.handoff);checks+=d.assertions.length;
+    const occurrenceActions=await readFile("app/product-alpha/leadership-conversation/actions.ts","utf8"),experience=await readFile("components/product-alpha/leadership-conversation/LeadershipConversationExperience.tsx","utf8");assert.match(occurrenceActions,/acceptOccurrence1EvidenceAction[\s\S]*server\.review[\s\S]*server\.routeApproved/);assert.match(experience,/Accept as Evidence/);checks+=2;
+    const ambiguousRoot=await mkdtemp(path.join(tmpdir(),"discovery-leadership-conversation-replay-"));try{const ambiguousA=await execute(ambiguousRoot,"prepare-and-freeze",lineageFixtureRoot,provisioned.seed.seedDigest),ambiguousB=await execute(ambiguousRoot,"capture-and-review",null,null,ambiguousA.handoff),ambiguous=await execute(ambiguousRoot,"operation-linked-ambiguity",...cArgs,ambiguousA.handoff,ambiguousB.handoff);checks+=ambiguous.assertions.length;}finally{await rm(ambiguousRoot,{recursive:true,force:true});}
+    console.log(JSON.stringify({ validation: "leadership-conversation-replay-001", result: "PASS", checks, freshProcesses: 17, processA: "persisted", processB: "loaded-a-and-persisted-capture-review", processC: "loaded-a-b-and-executed-actual-owners", processD: "reloaded-direct-evidence-successor", northstarFixtureProvisionerInvocations: 1, processCSeedIntegrityReloads: 1, processCHiddenProvisioningInvocations: 0, missingLineageFailsClosed: true, materialEvidence: "actual-path", duplicateEvidence: "actual-class-2", productDecisionDraft: "actual-service", additionalOwner: "actual-unknown", futurePreparation: "persisted", idempotentReentry: "passed", negativeBindingControls: 13, handoffDigestsVerified: true, canonicalComposition: true, stubbedPositiveOwners: false, boundedEnvironment: true, shell: false, timeoutMilliseconds: 30000, networkCalls: 0, connectorCalls: 0, driveReads: 0, driveWrites: 0, productionAccess: 0, deployments: 0 }));
   } finally {
     await rm(root, { recursive: true, force: true });
     await rm(lineageFixtureRoot, { recursive: true, force: true });

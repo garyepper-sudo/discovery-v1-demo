@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
-import { createLeadershipConversationServerComposition, resolveCurrentLeadershipConversationCheckpoint } from "../../../product/integration/leadershipConversationServerComposition";
+import { createLeadershipConversationServerComposition, resolveCurrentLeadershipConversationCheckpoint, resolveCurrentLeadershipConversationClosureMetadata } from "../../../product/integration/leadershipConversationServerComposition";
 import type { CanonicalProductWorkspaceAdapter } from "../../../product/integration/canonicalProductWorkspaceAdapter";
 import type { ChiefFirstPrepareActivationV1 } from "../../../product/workflow/leadershipConversation";
 import { composeChiefFirstPrepareViewFromWorkspace } from "../../../product/integration/chiefLeadershipPreparationComposer";
@@ -10,6 +10,7 @@ import { createPersonalRoomSheetConfirmationDigest, projectContentSafePersonalRo
 import { readNorthstarPreparationLineageSeed } from "../../../product/simulations/living-organization-sandbox/preparationLineageFixtureProvisioner";
 import { SANDBOX_ORGANIZATION_ID } from "../../../product/simulations/living-organization-sandbox/manifest";
 import { NORTHSTAR_LEADERSHIP_CONVERSATION_FIXTURE, northstarLeadershipConversationFixture, type LeadershipConversationWorkspaceV1, type ProposalDisposition } from "../../../product/workflow/leadershipConversation";
+import { resolveEvidenceAcceptanceContinuationV1 } from "../../../product/workflow/leadershipConversation/operations";
 import { createPersonalRoomSheetReplayKey, PERSONAL_ROOM_SHEET_CONTRACT_VERSION, reconstructPersonalRoomSheetContributionActionState, resolvePersonalRoomSheetContribution, stabilizePersonalRoomSheetPrepareInput, type PersonalRoomSheetConfirmationRequestV1, type PersonalRoomSheetConfirmationResponseV1, type PersonalRoomSheetContributionActionState } from "../../../product/workflow/leadershipConversation/personalRoomSheetContracts";
 
 function guard(): void {
@@ -144,10 +145,61 @@ export async function reviewOccurrence1ProposalAction(input: { proposalId: strin
   return server.workspace(identity);
 }
 
+export async function acceptOccurrence1EvidenceAction(input: { proposalId: string }): Promise<LeadershipConversationWorkspaceV1> {
+  const { server, identity, fixture } = await occurrence1Context();
+  let current = await server.workspace(identity);
+  const proposal = current.proposals.find(item => item.proposalId === input.proposalId);
+  if (!proposal || proposal.kind !== "evidence-candidate") throw new Error("Occurrence 1 Evidence review is unavailable.");
+  let continuation = resolveEvidenceAcceptanceContinuationV1(current, input.proposalId);
+  if (continuation.disposition === "denied") throw new Error("Occurrence 1 Evidence review is unavailable.");
+  if (continuation.disposition === "complete") return current;
+  if (continuation.disposition === "review") {
+    try {
+      await server.review({ ...identity, proposalId: input.proposalId, disposition: "approved", effectivePayload: null, reason: "Accepted as canonical Evidence through explicit review.", idempotencyKey: `occurrence-1-review:${input.proposalId}:approved` });
+    } catch {
+      current = await server.workspace(identity);
+      continuation = resolveEvidenceAcceptanceContinuationV1(current, input.proposalId);
+      if (continuation.disposition !== "route" && continuation.disposition !== "complete") throw new Error("Occurrence 1 Evidence review is unavailable.");
+    }
+    current = await server.workspace(identity);
+    continuation = resolveEvidenceAcceptanceContinuationV1(current, input.proposalId);
+    if (continuation.disposition === "complete") return current;
+    if (continuation.disposition !== "route") throw new Error("Occurrence 1 Evidence review is unavailable.");
+  }
+  if (continuation.disposition !== "route" || !current.actions.some(action => action.id === "route-approved" && action.enabled)) throw new Error("Occurrence 1 Evidence routing is unavailable.");
+  try {
+    await server.routeApproved({ ...identity, proposalId: input.proposalId, purposeRef: fixture.purposeRef, expectedWorkflowRevision: current.workflowRevision, idempotencyKey: `occurrence-1-route:${input.proposalId}:${continuation.dispositionReceiptId}` });
+  } catch {
+    const raced = await server.workspace(identity), resolved = resolveEvidenceAcceptanceContinuationV1(raced, input.proposalId);
+    if (resolved.disposition === "complete" && resolved.dispositionReceiptId === continuation.dispositionReceiptId) return raced;
+    throw new Error("Occurrence 1 Evidence routing is pending. Retry acceptance.");
+  }
+  const routed = await server.workspace(identity), resolved = resolveEvidenceAcceptanceContinuationV1(routed, input.proposalId);
+  if (resolved.disposition !== "complete" || resolved.dispositionReceiptId !== continuation.dispositionReceiptId) throw new Error("Occurrence 1 Evidence routing is pending. Retry acceptance.");
+  return routed;
+}
+
 export async function completeOccurrence1Action(): Promise<LeadershipConversationWorkspaceV1> {
   const { server, identity } = await occurrence1Context(), current = await server.workspace(identity);
+  if (current.closureCompletion) return current;
   if (!current.actions.some(action => action.id === "complete-closure" && action.enabled)) throw new Error("Occurrence 1 completion is unavailable.");
-  const personal = await composeCurrentPersonalRoomSheet();
-  await server.completeCycle1Closure({ ...identity, seriesId: personal.sheet.seriesId, expectedWorkflowRevision: current.workflowRevision, authorizedProjectionDigest: personal.sheet.sourceProjectionDigest, candidateAssessmentDigest: personal.sheet.candidate1AssessmentDigest, b11CommunicationDigest: personal.sheet.b11CommunicationDigest, personalRoomSheetDigest: personal.sheet.personalRoomSheetDigest, idempotencyKey: `occurrence-1-completion:${identity.conversationId}` });
-  return server.workspace(identity);
+  const frozen = await resolveCurrentLeadershipConversationClosureMetadata(identity);
+  if (frozen.workflowRevision !== current.workflowRevision || frozen.occurrenceId !== identity.conversationId) throw new Error("Occurrence 1 completion is unavailable.");
+  try {
+    await server.completeCycle1Closure({ ...identity, seriesId: frozen.seriesId, expectedWorkflowRevision: frozen.workflowRevision, authorizedProjectionDigest: frozen.authorizedProjectionDigest, candidateAssessmentDigest: null, b11CommunicationDigest: null, personalRoomSheetDigest: frozen.personalRoomSheetDigest, idempotencyKey: `occurrence-1-completion:${identity.conversationId}` });
+  } catch {
+    const raced = await server.workspace(identity);
+    if (raced.closureCompletion?.seriesId === frozen.seriesId && raced.closureCompletion.authorizedProjectionDigest === frozen.authorizedProjectionDigest && raced.closureCompletion.personalRoomSheetDigest === frozen.personalRoomSheetDigest) return raced;
+    throw new Error("Occurrence 1 completion is unavailable.");
+  }
+  const completed = await server.workspace(identity);
+  if (completed.closureCompletion?.seriesId !== frozen.seriesId || completed.closureCompletion.authorizedProjectionDigest !== frozen.authorizedProjectionDigest || completed.closureCompletion.personalRoomSheetDigest !== frozen.personalRoomSheetDigest) throw new Error("Occurrence 1 completion is unavailable.");
+  return completed;
+}
+
+export async function prepareAgainOccurrence1Action() {
+  const { server, identity } = await occurrence1Context();
+  const current = await server.workspace(identity);
+  if (!current.futurePreparationLink && !current.actions.some(action => action.id === "prepare-again" && action.enabled)) throw new Error("Prepare Again is unavailable.");
+  return server.prepareNextOccurrence(identity);
 }
