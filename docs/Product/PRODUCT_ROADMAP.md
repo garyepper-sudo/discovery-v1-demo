@@ -100,8 +100,8 @@ gates cannot make the Alpha ready.
 | Pre-Gate 5B. Canonical Understanding composition for Prepare Again | PASS | The existing canonical Understanding owner evaluates the exact currently authorized understanding and issues body-free composition and evaluation references for later Gate-5 use without creating a new owner or persistence boundary |
 | 5. What Changed and Prepare Again | PASS | Fresh-process second occurrence reconstructs from canonical artifacts, current Evidence, the exact currently accessible predecessor, and the canonical PRE-002 Understanding result; authenticated desktop, narrow-viewport, denial, reload, and cleanup acceptance passed |
 | 6. Chief-of-staff value layer | PASS | Concise priority, surprises, tensions, unknowns, meeting questions, bounded acquisition recommendations, provenance, and truthful abstention are integrated and authenticated |
-| 7. Alpha experience and operations | READY — next boundary, not begun | Onboarding, source guidance, resilient states, instrumentation, production smoke/deployment validation, rollback, support, privacy, and design-partner operations |
-| 8. Design-partner launch | NOT STARTED — blocked by Gate 7 and human approval | Two-cycle acceptance, no unresolved high-severity trust failure, verified instrumentation, onboarding, support, limitations, measures, and observation plan |
+| 7. Alpha experience and operations | READY — next boundary, not begun | Launch-quality onboarding and source guidance, resilient and actionable states, mobile density, workflow hierarchy, accessibility, and final design-partner UX polish |
+| 8. Design-partner launch | NOT STARTED — blocked by Gate 7, Alpha Readiness, baseline decision, Alpha Operations, and human approval | Two-cycle acceptance, no unresolved high-severity trust failure, verified instrumentation, onboarding, support, limitations, measures, and observation plan |
 
 Gates 6–7 must strengthen current-step and primary-action hierarchy; use
 chief-of-staff-oriented workflow labels; progressively disclose completed
@@ -118,9 +118,9 @@ Control Tower baseline: canonical `main` contains the clean fast-forwarded
 `700c888819321d54f3268aab29e29d936c26bd51`. Push and deployment have not been
 performed. Gate 4, both Gate-5 prerequisites, `ALPHA-RM-G5-001`, and
 `ALPHA-RM-G6-001` are complete. Gate 7 is the next Product checkpoint and has
-not begun. The next five primary program items remain `ALPHA-BASE-A-001`,
-`ALPHA-BENCH-LONG-001`, `ALPHA-OPT-001`, `ALPHA-BASE-DECIDE-001`, and
-`ALPHA-OPS-001`; none has begun.
+not begun. The next five ordered items are `ALPHA-RM-G7-001`,
+`ALPHA-READY-001`, `ALPHA-BASE-A-001`, `ALPHA-BENCH-LONG-001`, and
+`ALPHA-OPT-001`; none has begun.
 
 Gate-5 product-necessity classification is `UNPROVEN — DEFER GENERALIZATION`.
 Chief necessity is proven, but no real second Product consumer has established
@@ -159,12 +159,14 @@ parallel lanes; it does not create another roadmap owner.
 | 9 | `ALPHA-RM-G5-PRE-002` | CANONICAL UNDERSTANDING COMPOSITION FOR PREPARE AGAIN | COMPLETE |
 | 10 | `ALPHA-RM-G5-001` | What Changed / Prepare Again | COMPLETE |
 | 11 | `ALPHA-RM-G6-001` | Chief-of-Staff value layer | COMPLETE |
-| 12 | `ALPHA-BASE-A-001` | Freeze Alpha Baseline A | QUEUED — required readiness evidence and separate authorization remain outstanding |
-| 13 | `ALPHA-BENCH-LONG-001` | Longitudinal Chief / Organizational Understanding benchmark | QUEUED — execution blocked until `ALPHA-BASE-A-001` |
-| 14 | `ALPHA-OPT-001` | Bounded cognition optimization | QUEUED — blocked by the frozen baseline benchmark run |
-| 15 | `ALPHA-BASE-DECIDE-001` | Retain Baseline A or promote Baseline B | QUEUED — blocked by bounded optimization evidence |
-| 16 | `ALPHA-OPS-001` | Alpha operations | QUEUED — readiness and baseline decision required |
-| 17 | `ALPHA-LAUNCH-001` | Design-partner launch | QUEUED — blocked by operations and human approval |
+| 12 | `ALPHA-RM-G7-001` | Alpha experience and operations | READY — next boundary, not begun |
+| 13 | `ALPHA-READY-001` | Alpha Readiness Foundation | QUEUED — blocked by Gate 7; separately authorized read-only planning may proceed |
+| 14 | `ALPHA-BASE-A-001` | Freeze Alpha Baseline A | QUEUED — blocked by `ALPHA-READY-001` PASS and separate authorization |
+| 15 | `ALPHA-BENCH-LONG-001` | Longitudinal Chief / Organizational Understanding benchmark | QUEUED — execution blocked until `ALPHA-BASE-A-001` |
+| 16 | `ALPHA-OPT-001` | Bounded cognition optimization | QUEUED — blocked by the frozen baseline benchmark run |
+| 17 | `ALPHA-BASE-DECIDE-001` | Retain Baseline A or promote Baseline B | QUEUED — blocked by bounded optimization evidence |
+| 18 | `ALPHA-OPS-001` | Alpha operations | QUEUED — blocked by Alpha Readiness PASS and the baseline decision |
+| 19 | `ALPHA-LAUNCH-001` | One-design-partner launch | QUEUED — blocked by Gate 7, Alpha Readiness, Alpha Operations, baseline decision, and human approval |
 
 The required linear sequence is `ALPHA-RM-G4-PRE-001A` →
 `ALPHA-RM-G4-PRE-001` → `ALPHA-RM-G4-PRE-002` → `ALPHA-RM-G4-001` →
@@ -208,10 +210,24 @@ explicitly authorizes parallel execution. Read-only planning and DOD-0 Evidence
 capture may continue in parallel. This constraint does not serialize all
 readiness or benchmark preparation behind Gate 6.
 
+`ALPHA-RM-G7-001`, `ALPHA-READY-001`, and `ALPHA-OPS-001` are distinct but
+adjacent work items. Gate 7 owns the launch-quality Product experience:
+onboarding and source guidance, actionable unavailable states, mobile density,
+workflow hierarchy, accessibility, and final design-partner UX polish.
+`ALPHA-READY-001` owns pre-baseline trust and readiness evidence: the Governed
+Cognition Non-Disclosure Foundation and Adversarial Benchmark, critical-path
+test pyramid, observability, privacy-safe telemetry, and failure recovery.
+`ALPHA-OPS-001` owns post-baseline operational closure: release identity,
+production smoke evidence, support, rollback, privacy operations, and the
+operating plan for the initial design partner. Shared concerns are handed off
+by evidence; they are not duplicate owners or interchangeable completion
+claims.
+
 #### Parallel trust and readiness lane
 
-The following are required before `ALPHA-BASE-A-001` and may be executed in
-parallel with Gates 4–6 only when separately authorized:
+The following constitute `ALPHA-READY-001`, are required before
+`ALPHA-BASE-A-001`, and may be planned read-only in parallel only when
+separately authorized:
 
 - Governed Cognition Non-Disclosure Foundation and Adversarial Benchmark;
 - critical-path test pyramid;
@@ -249,6 +265,30 @@ Every future roadmap change must be recorded as exactly one of `ADD`, `CHANGE`,
 `REORDER`, `DEFER`, `OMIT`, or `SUPERSEDE`. Each record must show the previous
 state, proposed state, dependency impact, Alpha impact, active-work impact, and
 reason. Roadmap items must never silently disappear.
+
+Roadmap change record — `CHANGE`:
+
+- previous state: Gate 6 was canonically COMPLETE and Gate 7 was READY in the
+  Control Tower, but the Master Alpha queue omitted both `ALPHA-RM-G7-001` and
+  `ALPHA-READY-001`, causing the next-five projection to skip mandatory work;
+- proposed state: retain one Gate-6 COMPLETE state, make
+  `ALPHA-RM-G7-001` the sole READY item, restore distinct
+  `ALPHA-READY-001` before Baseline A, and retain `ALPHA-OPS-001` after the
+  baseline decision and before launch;
+- dependency impact: Baseline A remains blocked until Alpha Readiness passes;
+  benchmark execution remains after the freeze; optimization and the A/B
+  decision remain serial; Alpha Operations and human approval remain required
+  before launch;
+- Alpha impact: preserve the non-disclosure benchmark, test pyramid,
+  observability, privacy-safe telemetry, recovery, launch-quality experience,
+  support, rollback, privacy operations, strong frontier comparison, bounded
+  optimization, baseline decision, and one-design-partner launch;
+- active-work impact: begin nothing, allow only separately authorized read-only
+  parallel planning, preserve the positive Gate-6 thin-waist evidence and
+  `UNPROVEN — DEFER GENERALIZATION`; and
+- reason: reconcile the Control Tower and Master Alpha queue without treating
+  Product experience, readiness evidence, and production operations as
+  accidental duplicates or allowing Baseline A to become READY prematurely.
 
 Roadmap change record — `CHANGE`:
 
