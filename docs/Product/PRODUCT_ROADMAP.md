@@ -235,8 +235,26 @@ separately authorized:
 - privacy-safe Product telemetry; and
 - critical failure recovery.
 
-No additional write-bearing readiness task begins at this program-reset
-boundary.
+The accepted readiness sequence is:
+
+1. `AR-1A` — Non-Disclosure Threat Model, Corpus, Scanner, and Harness
+   Foundation;
+2. separately governed bounded Product/security corrections exposed by AR-1A,
+   including truthful empty-contribution closure when required;
+3. `AR-3` — End-to-End Content-Safe Observability;
+4. `AR-4` — Privacy-Safe Product Telemetry;
+5. `AR-5` — Critical Failure Recovery;
+6. `AR-2` — Critical-Path Test Pyramid Freeze;
+7. `AR-1B` — Complete Governed Cognition Non-Disclosure Adversarial
+   Acceptance; and
+8. `AR-6` — Integrated Alpha Readiness Acceptance.
+
+`AR-1A` and `AR-1B` share the `AR-1` program identity. AR-1 through AR-5 use
+separate bounded commits. Only one write-bearing task may be active. Read-only
+preparation may overlap. `ALPHA-BASE-A-001` remains blocked until AR-6 passes.
+Benchmark execution remains blocked until Baseline A is frozen. Optimization,
+the baseline decision, Alpha Operations, and design-partner launch retain their
+existing dependencies.
 
 #### Parallel benchmark-preparation lane
 

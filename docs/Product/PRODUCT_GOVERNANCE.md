@@ -324,3 +324,30 @@ activation failure remains explicitly pending and is recoverable idempotently
 under administrative authority. Any
 future historical-checkpoint L1 linkage must be reconciled separately after
 this owner is canonically integrated.
+
+## Alpha Readiness phase governance
+
+`ALPHA-READY-001` is executed as bounded subgates with one write-bearing task
+at a time. Read-only preparation may overlap. Routine documentation
+reconciliation and only validation work independently classified non-sensitive
+under `AGENTS.md` may use the Routine Governed Lane. Security, privacy,
+non-disclosure, and accepted-benchmark readiness work remains Sensitive. Every
+Sensitive subgate requires one exact human checkpoint naming its parent, worktree,
+branch, maximum path allowlist and responsibilities, reused owners, trust and
+privacy decisions, acceptance and negative controls, review plan, stopping
+conditions, and requested local commit plus clean-fast-forward authority.
+
+After that exact Sensitive Gate Contract is approved, implementation,
+validation, independent review, bounded in-scope remediation, one local commit,
+clean local integration, and Control Tower progression may proceed without
+separate routine approvals. The work stops for scope drift, Product or
+architecture change, a new unapproved owner or persistence boundary, migration
+or backfill, unresolved privacy or security judgment, production access, push,
+deployment, or an unremediable mandatory validation failure.
+
+Readiness evidence is content-free and non-authoritative. It cannot grant
+authorization, mutate canonical Product truth, or influence cognition.
+Protected-value leakage and failed cleanup override every provisional PASS.
+Temporary external identities and state must be independently verified absent.
+Production Runtime rollback remains outside readiness and belongs to
+`ALPHA-OPS-001`; readiness may document its prerequisites without executing it.

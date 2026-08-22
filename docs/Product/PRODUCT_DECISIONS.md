@@ -1392,3 +1392,59 @@ boundary.
   proposed and require human approval before they become acceptance criteria.
 - **Sequencing:** Candidate-1 controlled reconstruction precedes any HSS-ONE
   resumption. The Discovery-on-Discovery loop is parallel and non-blocking.
+
+## DEC-PROD-058 — Alpha Readiness authority, privacy, telemetry, and recovery boundaries
+
+**Status:** Accepted — controlling decisions for `ALPHA-READY-001`.
+
+- **Reviewed closure authority:** A successfully reviewed and closed occurrence
+  is independently authorized, durable, organization-scoped user-created
+  material only when immutable Review and closure receipts bind the exact
+  organization, Product Question, series, occurrence, user, and authorization
+  state. Upstream revocation does not erase explicitly accepted closure content,
+  but the closure remains subject to its own current authorization. Inaccessible
+  upstream bodies, provenance, confidence, cognition, and unaccepted output may
+  not influence or be disclosed downstream.
+- **Empty contribution:** Freeze, Capture, Review, and closure may truthfully
+  complete with zero selected Private Working items. No synthetic contribution
+  or reference may be created. Capture notes are independent of Private Working
+  contribution and Capture may be explicitly empty where existing Product
+  behavior permits. Review explicitly accepts the empty or notes-only outcome;
+  closure references the real Freeze, Capture, Review, and closure receipts.
+  Reload must preserve the exact empty set and the Product must not imply that
+  Private Working was contributed.
+- **Observability:** Alpha observability has a dedicated, noncanonical owner
+  with a closed versioned content-free schema and injected sinks. It may not
+  authorize, mutate Product truth, influence cognition, accept free-form
+  metadata, or persist raw customer, user, request, operation, artifact,
+  session, source, credential, header, body, excerpt, note, or Private Working
+  values. Direct derived-cognition logging is not readiness evidence.
+- **Telemetry:** Alpha Product telemetry is durable, provider-neutral, opt-in,
+  disabled by default, enabled only with written design-partner organization
+  consent and a clear in-product notice, purpose-limited, and structurally
+  separate from cognition, authorization, and Product truth. Ordinary lifecycle
+  events require no per-event prompt after organization consent; voluntary
+  usefulness feedback remains separately optional. It uses an
+  environment-managed keyed pseudonym, bounded enumerated dimensions, a
+  mandatory automatic 90-day default expiry, organization-scoped and
+  independently verifiable deletion within seven days, and access only for explicitly designated Alpha
+  operators with auditable access. Retained aggregates may not permit
+  reidentification. Telemetry access grants no Product, source, or cognition
+  access. Optional feedback covers usefulness, surprise reduction, and
+  understanding improvement. Permitted dimensions are a closed set covering
+  event type, workflow stage, outcome category, occurrence number, role and
+  viewport categories, latency bucket, Product/build identity, progressive-
+  disclosure category, and voluntary-response category. Third-party analytics,
+  session replay, free text, raw customer
+  identifiers, keystrokes, cursor data, screens, sources, meeting notes, and
+  Private Working are prohibited. Production sink provisioning is deferred to
+  `ALPHA-OPS-001`.
+- **Cleanup:** Any residual temporary external user, session, membership,
+  organization, browser profile, process, test root, or protected temporary
+  file blocks readiness until cleanup succeeds and zero remaining state is
+  independently verified.
+- **Recovery:** Alpha Readiness may validate local and repository-backed
+  non-destructive recovery, immutable receipts, replay, CAS, restartability,
+  operator guidance, and production rollback prerequisites. Production Runtime rollback, customer-state access,
+  release identity, deployment, and promotion remain owned by
+  `ALPHA-OPS-001`.
