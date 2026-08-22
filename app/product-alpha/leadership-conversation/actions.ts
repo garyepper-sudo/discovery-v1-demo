@@ -12,6 +12,7 @@ import { SANDBOX_ORGANIZATION_ID } from "../../../product/simulations/living-org
 import { NORTHSTAR_LEADERSHIP_CONVERSATION_FIXTURE, northstarLeadershipConversationFixture, type LeadershipConversationWorkspaceV1, type ProposalDisposition } from "../../../product/workflow/leadershipConversation";
 import { resolveEvidenceAcceptanceContinuationV1 } from "../../../product/workflow/leadershipConversation/operations";
 import { createPersonalRoomSheetReplayKey, PERSONAL_ROOM_SHEET_CONTRACT_VERSION, reconstructPersonalRoomSheetContributionActionState, resolvePersonalRoomSheetContribution, stabilizePersonalRoomSheetPrepareInput, type PersonalRoomSheetConfirmationRequestV1, type PersonalRoomSheetConfirmationResponseV1, type PersonalRoomSheetContributionActionState } from "../../../product/workflow/leadershipConversation/personalRoomSheetContracts";
+import { compileChiefOfStaffValueLayerV1 } from "../../../product/workflow/leadershipConversation/chiefCommunicationPlan";
 
 function guard(): void {
   if (process.env.NODE_ENV === "production") {
@@ -201,5 +202,6 @@ export async function prepareAgainOccurrence1Action() {
   const { server, identity } = await occurrence1Context();
   const current = await server.workspace(identity);
   if (!current.futurePreparationLink && !current.actions.some(action => action.id === "prepare-again" && action.enabled)) throw new Error("Prepare Again is unavailable.");
-  return server.prepareNextOccurrence(identity);
+  const result=await server.prepareNextOccurrence(identity);
+  return{...result,valueLayer:compileChiefOfStaffValueLayerV1(result.nextPrepare)};
 }
