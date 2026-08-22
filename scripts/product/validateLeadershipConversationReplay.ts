@@ -6,6 +6,8 @@ import path from "node:path";
 import { promisify } from "node:util";
 
 import { createCanonicalScopeLineageIndex, createCanonicalScopeTopology } from "../../engine/v3/governance/canonicalScopeLineage";
+import { resolveScopedGovernanceContext } from "../../engine/v3/governance/scopedGovernanceContext";
+import { CANONICAL_UNDERSTANDING_COMPOSITION_EVALUATION_OPERATION, CANONICAL_UNDERSTANDING_REVISION_OPERATION } from "../../engine/v3/understanding/canonicalOrganizationalUnderstandingRevisionService";
 import { appendProductQuestionEvent, createDurableProductQuestion } from "../../product/questions/questionLifecycle";
 import { createEmptyOrganizationRuntime } from "../../engine/v3/runtime/organizationRuntime";
 import { FilesystemOrganizationRuntimeRepository } from "../../engine/v3/runtime/organizationRuntimeRepository";
@@ -151,6 +153,19 @@ async function processC(root: string, lineageFixtureRoot: string, expectedSeedDi
   if (!("stage" in material)) throw new Error("staged canonical routing result unavailable");
   assert.equal(material.stage, "canonical-committed-product-materialized");
   assert.match(material.productMaterializationReceiptDigest!, /^[a-f0-9]{64}$/);
+  assert.ok(material.canonicalOperationId);
+  const understanding=await composition.evaluateMaterializedUnderstanding({...identity,seriesId:`leadership-conversation-series:${fixture.conversationId}`,occurrenceId:fixture.conversationId,contributionOperationId:material.canonicalOperationId!,idempotencyKey:"process-c-evaluate-understanding"});
+  assert.equal(understanding.receipt,null);
+  assert.ok("disposition" in understanding);
+  assert.equal(understanding.disposition,"insufficient");
+  runtime=await runtimeRepository.read(fixture.organizationId);assert.ok(runtime);
+  assert.equal(runtime.runtime.memory.organizationalUnderstandingState.canonicalCompositionEvaluationOperations?.length??0,0);
+  assert.equal(runtime.runtime.memory.organizationalUnderstandingState.canonicalCompositionEvaluationReceipts?.length??0,0);
+  assert.equal(runtime.runtime.memory.organizationalExplanations.length,0);
+  const understandingReplay=await composition.evaluateMaterializedUnderstanding({...identity,seriesId:`leadership-conversation-series:${fixture.conversationId}`,occurrenceId:fixture.conversationId,contributionOperationId:material.canonicalOperationId!,idempotencyKey:"process-c-evaluate-understanding"});
+  assert.equal(understandingReplay.receipt,null);
+  assert.ok("disposition" in understandingReplay);
+  assert.equal(understandingReplay.disposition,"insufficient");
   stored = await workflow.read(fixture.organizationId);
   const evidence = proposal("evidence-candidate");
   await composition.review({ ...identity, idempotencyKey: "process-c-review-evidence-duplicate", proposalId: evidence.proposalId, disposition: "approved", effectivePayload: null, reason: "Replay-aware duplicate control." });
@@ -218,6 +233,11 @@ async function main(): Promise<void> {
   const root = await mkdtemp(path.join(tmpdir(), "discovery-leadership-conversation-replay-"));
   const lineageFixtureRoot = await mkdtemp(path.join(tmpdir(), "discovery-northstar-preparation-lineage-"));
   try {
+    const evaluationScope = { organizationId: fixture.organizationId, type: "organization" as const, id: fixture.organizationId };
+    const evaluationContext = resolveScopedGovernanceContext({ organizationId: fixture.organizationId, subjectId: fixture.actorId, requestedScope: evaluationScope, operation: CANONICAL_UNDERSTANDING_COMPOSITION_EVALUATION_OPERATION, purpose: fixture.purposeRef, sensitivity: "standard", evaluatedAt: fixture.at, temporal: { mode: "current" }, serverResolvedAuthority: [{ authorityRef: "authority:replay:evaluation", policyRef: "policy:replay:evaluation", organizationId: fixture.organizationId, subjectId: fixture.actorId, scope: evaluationScope, operations: [CANONICAL_UNDERSTANDING_COMPOSITION_EVALUATION_OPERATION], sensitivity: ["standard"], relationship: "direct", status: "active", validFrom: "2026-01-01T00:00:00.000Z" }] });
+    assert.equal(evaluationContext.disposition, "authorized"); checks++;
+    const confidenceOnlyContext = resolveScopedGovernanceContext({ organizationId: fixture.organizationId, subjectId: fixture.actorId, requestedScope: evaluationScope, operation: CANONICAL_UNDERSTANDING_COMPOSITION_EVALUATION_OPERATION, purpose: fixture.purposeRef, sensitivity: "standard", evaluatedAt: fixture.at, temporal: { mode: "current" }, serverResolvedAuthority: [{ authorityRef: "authority:replay:confidence", policyRef: "policy:replay:confidence", organizationId: fixture.organizationId, subjectId: fixture.actorId, scope: evaluationScope, operations: [CANONICAL_UNDERSTANDING_REVISION_OPERATION], sensitivity: ["standard"], relationship: "direct", status: "active", validFrom: "2026-01-01T00:00:00.000Z" }] });
+    assert.equal(confidenceOnlyContext.disposition, "denied"); checks++;
     const provisioned = await provisionNorthstarPreparationLineageFixture({ environment: "test", fixtureRoot: lineageFixtureRoot, now: fixture.at });
     bindOwnerIssuedQuestion(provisioned.seed.productQuestionId);
     assert.equal(provisioned.disposition, "provisioned"); checks++;

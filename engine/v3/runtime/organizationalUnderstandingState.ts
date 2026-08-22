@@ -197,6 +197,63 @@ export type CanonicalUnderstandingRevisionOperationRecordV1 = {
   recordDigest: string;
 };
 
+export type CanonicalUnderstandingCompositionEvaluationReceiptV1 = {
+  contractVersion: "1";
+  kind: "canonical-understanding-composition-evaluation-receipt";
+  operationId: string;
+  organizationId: string;
+  questionId: string;
+  seriesId: string;
+  occurrenceId: string;
+  contributionOperationId: string;
+  purpose: string;
+  authorityRefs: string[];
+  policyRefs: string[];
+  explanationIds: string[];
+  explanationLineageDigests: string[];
+  explanationSetDigest: string;
+  evidenceIds: string[];
+  admissionIds: string[];
+  attributionIds: string[];
+  sourceBindingRevisionRefs: string[];
+  admissionBatchDigests: string[];
+  operationResultDigests: string[];
+  operationEnvelopeDigests: string[];
+  materializationInstructionDigest: string;
+  materializationReceiptId: string;
+  materializationReceiptDigest: string;
+  sourceContentVersions: Array<{
+    sourceBindingId: string;
+    sourceContentVersionId: string;
+    normalizedContentDigest: string;
+  }>;
+  predecessorCompositionRefs: Array<{ compositionId: string; revisionId: string }>;
+  resultingCompositionRefs: Array<{ compositionId: string; revisionId: string }>;
+  projectionSourceRef: {
+    owner: "canonical-organizational-understanding";
+    compositionId: string;
+    revisionId: string;
+  };
+  disposition: "changed" | "no_change";
+  idempotencyKeyDigest: string;
+  requestFingerprint: string;
+  runtimeRevisionBefore: string;
+  runtimeRevisionAfter: string;
+  occurredAt: string;
+  receiptDigest: string;
+};
+
+export type CanonicalUnderstandingCompositionEvaluationOperationV1 = {
+  contractVersion: "1";
+  operationId: string;
+  organizationId: string;
+  idempotencyKeyDigest: string;
+  requestFingerprint: string;
+  receiptDigest: string;
+  recordedAt: string;
+  recordDigest: string;
+};
+
 export type OrganizationalUnderstandingState = {
   organizationId: string;
   name?: string;
@@ -223,6 +280,10 @@ export type OrganizationalUnderstandingState = {
   canonicalCompositions?: CanonicalUnderstandingComposition[];
   /** Owner-created operation records for additive confidence/uncertainty revisions. */
   canonicalRevisionOperations?: CanonicalUnderstandingRevisionOperationRecordV1[];
+  /** Body-free owner-issued results for exact Explanation-set evaluations. */
+  canonicalCompositionEvaluationOperations?: CanonicalUnderstandingCompositionEvaluationOperationV1[];
+  /** Immutable body-free receipts kept outside the ordinary cognition event stream. */
+  canonicalCompositionEvaluationReceipts?: CanonicalUnderstandingCompositionEvaluationReceiptV1[];
   organizationalConcepts: OrganizationalConcept[];
   organizationalBeliefs: OrganizationalBelief[];
 

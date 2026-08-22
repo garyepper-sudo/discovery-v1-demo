@@ -105,6 +105,12 @@ import {
   type CanonicalProductMaterializationCandidatePreflightV1,
   type CanonicalProductMaterializationInstructionV1,
 } from "../workflow/leadershipConversation/canonicalProductMaterializationContracts";
+import type { OrganizationalExplanation } from "../../engine/v3/model/judgment/organizationalJudgment";
+import { validateCanonicalExplanationGovernanceLineage } from "../../engine/v3/model/judgment/completeOrganizationalExplanations";
+
+export type CanonicalMaterializationExplanationContinuationResultV1 =
+  | { contractVersion:"1"; disposition:"existing"; explanationRefs:Array<{explanationId:string;lineageDigest:string}>; runtimeRevision:string }
+  | { contractVersion:"1"; disposition:"insufficient"|"absent"|"withheld"|"stale"|"revoked"|"foreign"|"ambiguous"|"mismatched"|"malformed"|"authorization_denied"|"current_access_denied"; explanationRefs:[]; runtimeRevision:string };
 
 export type CanonicalProductWorkspaceAdapterDependencies = {
   runtimeRepository: Pick<OrganizationRuntimeRepository, "read" | "replace">;
@@ -685,6 +691,19 @@ export class CanonicalProductWorkspaceAdapter {
     const record=stored.runtime.memory.events.map(operationRecord).find(value=>value?.contributionOperationId===input.contributionOperationId)??null;
     if(record)validateOperationRecord(record);
     return record?structuredClone(record):null;
+  }
+
+  async continueCommittedMaterializationToExplanations(input:{userId:string;organizationId:string;questionId:string;contributionOperationId:string;operation:RuntimeStorageOperationMetadata}):Promise<CanonicalMaterializationExplanationContinuationResultV1>{
+    const stored=await this.authorizedRuntime(input);
+    const records=stored.runtime.memory.events.map(operationRecord).filter((value):value is CanonicalEvidenceContributionOperationRecordV1=>Boolean(value?.contributionOperationId===input.contributionOperationId));
+    if(records.length!==1)return{contractVersion:"1",disposition:records.length===0?"absent":"ambiguous",explanationRefs:[],runtimeRevision:stored.revision};
+    const record=records[0]!;validateOperationRecord(record);
+    if(record.organizationId!==input.organizationId||record.questionId!==input.questionId||!record.productMaterializationInstruction)return{contractVersion:"1",disposition:"mismatched",explanationRefs:[],runtimeRevision:stored.revision};
+    const exact=(values:readonly OrganizationalExplanation[])=>values.filter(value=>value.organizationId===input.organizationId&&value.canonicalGovernanceLineage?.operationRefs.some(ref=>ref.contributionOperationId===record.contributionOperationId&&ref.questionId===record.questionId));
+    const refs=(values:readonly OrganizationalExplanation[])=>values.map(value=>{const lineage=value.canonicalGovernanceLineage;if(!lineage)throw new Error("Canonical Explanation continuation is invalid.");validateCanonicalExplanationGovernanceLineage(lineage);return{explanationId:value.id,lineageDigest:lineage.lineageDigest};}).sort((a,b)=>a.explanationId.localeCompare(b.explanationId));
+    const existing=exact(stored.runtime.memory.organizationalExplanations);
+    if(existing.length)return{contractVersion:"1",disposition:"existing",explanationRefs:refs(existing),runtimeRevision:stored.revision};
+    return{contractVersion:"1",disposition:"insufficient",explanationRefs:[],runtimeRevision:stored.revision};
   }
 
   async recordSearch(input: {

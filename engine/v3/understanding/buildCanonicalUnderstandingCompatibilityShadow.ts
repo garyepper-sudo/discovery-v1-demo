@@ -84,6 +84,22 @@ export type CanonicalUnderstandingTraceView = {
   explanations: OrganizationalExplanation[];
 };
 
+/** Stable, body-free identity of the exact completed-Explanation support set. */
+export function canonicalUnderstandingExplanationSetDigest(
+  explanations: readonly OrganizationalExplanation[],
+): string {
+  const rows = explanations.map((item) => {
+    if (!item.canonicalGovernanceLineage) {
+      throw new Error(`Missing canonical Explanation lineage: ${item.id}`);
+    }
+    return [item.id, item.canonicalGovernanceLineage.lineageDigest] as const;
+  }).sort((left, right) => left[0].localeCompare(right[0]));
+  if (new Set(rows.map(([id]) => id)).size !== rows.length) {
+    throw new Error("Duplicate completed Explanation identity.");
+  }
+  return encodedIdentity(rows.flatMap(([id, lineageDigest]) => [id, lineageDigest]));
+}
+
 const compare = (left: string, right: string): number =>
   left.localeCompare(right);
 
