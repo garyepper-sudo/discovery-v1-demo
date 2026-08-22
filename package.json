@@ -14,6 +14,7 @@
     "benchmark:chief-v1-current-baseline-cognition-boundary-001:smoke": "NODE_OPTIONS=--conditions=react-server tsx scripts/benchmark/validateChiefV1CognitionBenchmarkBoundary001.ts --smoke",
     "validate:canonical-understanding-confidence-revision": "tsx scripts/product/validateCanonicalUnderstandingConfidenceRevision.ts",
     "validate:canonical-understanding-confidence-revision:fresh-process": "tsx scripts/product/validateCanonicalUnderstandingConfidenceRevisionFreshProcess.ts",
+    "validate:alpha-readiness-ar1a": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/alpha-readiness/runNonDisclosureThreatHarness.ts",
     "validate:product-artifact-body-repository": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateProductArtifactProtectedBodyRepository.ts",
     "validate:product-artifact-metadata-inspection": "tsx scripts/product/validateProductArtifactMetadataInspection.ts",
     "validate:product-artifact-authorization-before-body-read": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateProductArtifactAuthorizationBeforeBodyRead.ts",

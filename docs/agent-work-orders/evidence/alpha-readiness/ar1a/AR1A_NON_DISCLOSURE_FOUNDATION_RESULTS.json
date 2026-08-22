@@ -1,0 +1,3443 @@
+{
+  "validation": "alpha-readiness-ar1a",
+  "foundationStatus": "PASS",
+  "productReadinessStatus": "BLOCKED_PRODUCT_DEFECT",
+  "blockerCategories": [
+    "EMPTY_CONTRIBUTION_CLOSURE"
+  ],
+  "caseTotals": {
+    "total": 45,
+    "passed": 45,
+    "failed": 0
+  },
+  "caseResults": [
+    {
+      "contractVersion": "1",
+      "caseId": "absent-authority",
+      "dimension": "absent authority",
+      "ownerPath": "resolveScopedGovernanceContext",
+      "permittedDifference": "protected contribution body only",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "absent-authority",
+          "resultCategory": "denied",
+          "publicResult": {
+            "disposition": "denied",
+            "reason": "authority-missing"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 0,
+            "receipts": 0,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "scopedGovernance": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "3e409f4dad266b447af6fa9f9ed88bb6b1fa0c7ed8354580d02ab6679ec16300"
+          ]
+        },
+        "forbidden": {
+          "contractVersion": "1",
+          "caseId": "absent-authority",
+          "resultCategory": "denied",
+          "publicResult": {
+            "disposition": "denied",
+            "reason": "authority-missing"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "scopedGovernance": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "3e409f4dad266b447af6fa9f9ed88bb6b1fa0c7ed8354580d02ab6679ec16300"
+          ]
+        },
+        "oracle": {
+          "contractVersion": "1",
+          "equal": true,
+          "earliestDivergence": null,
+          "differingPaths": [
+            "$.durableInventory.contributions",
+            "$.durableInventory.receipts"
+          ],
+          "permittedDifferingPaths": [
+            "$.durableInventory.contributions",
+            "$.durableInventory.receipts"
+          ],
+          "unexpectedDifferingPaths": [],
+          "controlDigest": "b980e7cd9f22ce101971633a64f3af6bd1883874fb9c03abb06c33cf6770eac0",
+          "counterfactualDigest": "51006a467bda95f5d1ab387f86f38c854d4c08d2154e39bc1f77d2f9b3a7b7f8"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "denied-authority",
+      "dimension": "operation denied by authority",
+      "ownerPath": "resolveScopedGovernanceContext",
+      "permittedDifference": "protected contribution body only",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "denied-authority",
+          "resultCategory": "denied",
+          "publicResult": {
+            "disposition": "denied",
+            "reason": "operation-not-authorized"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 0,
+            "receipts": 0,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "scopedGovernance": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "4b587fc3cb8a65b48cd8b2cf7ca69265e87f4e5431329d637020e572eaed7459"
+          ]
+        },
+        "forbidden": {
+          "contractVersion": "1",
+          "caseId": "denied-authority",
+          "resultCategory": "denied",
+          "publicResult": {
+            "disposition": "denied",
+            "reason": "operation-not-authorized"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "scopedGovernance": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "4b587fc3cb8a65b48cd8b2cf7ca69265e87f4e5431329d637020e572eaed7459"
+          ]
+        },
+        "oracle": {
+          "contractVersion": "1",
+          "equal": true,
+          "earliestDivergence": null,
+          "differingPaths": [
+            "$.durableInventory.contributions",
+            "$.durableInventory.receipts"
+          ],
+          "permittedDifferingPaths": [
+            "$.durableInventory.contributions",
+            "$.durableInventory.receipts"
+          ],
+          "unexpectedDifferingPaths": [],
+          "controlDigest": "697a4f5e317e091f6eaf78ec3253b2e9a31164d7f4efd21ba1abc61f21a80893",
+          "counterfactualDigest": "b440fabd659b1c565b6e8b268ad913b9a6304e55abee73ca25dae6f580bcb623"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "wrong-role",
+      "dimension": "role does not grant successor authority",
+      "ownerPath": "resolveScopedGovernanceContext",
+      "permittedDifference": "protected contribution body only",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "wrong-role",
+          "resultCategory": "denied",
+          "publicResult": {
+            "disposition": "denied",
+            "reason": "operation-not-authorized"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 0,
+            "receipts": 0,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "scopedGovernance": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "4b587fc3cb8a65b48cd8b2cf7ca69265e87f4e5431329d637020e572eaed7459"
+          ]
+        },
+        "forbidden": {
+          "contractVersion": "1",
+          "caseId": "wrong-role",
+          "resultCategory": "denied",
+          "publicResult": {
+            "disposition": "denied",
+            "reason": "operation-not-authorized"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "scopedGovernance": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "4b587fc3cb8a65b48cd8b2cf7ca69265e87f4e5431329d637020e572eaed7459"
+          ]
+        },
+        "oracle": {
+          "contractVersion": "1",
+          "equal": true,
+          "earliestDivergence": null,
+          "differingPaths": [
+            "$.durableInventory.contributions",
+            "$.durableInventory.receipts"
+          ],
+          "permittedDifferingPaths": [
+            "$.durableInventory.contributions",
+            "$.durableInventory.receipts"
+          ],
+          "unexpectedDifferingPaths": [],
+          "controlDigest": "9347b1cdebf8b8bc6f3d353c5a88d77e9598fb1011f469f13191198474597994",
+          "counterfactualDigest": "e211e60056637ff29d6b95bbd9fb2b6037acdc4c704183464f952283d630ad26"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "wrong-persona",
+      "dimension": "persona identity does not match authority subject",
+      "ownerPath": "resolveScopedGovernanceContext",
+      "permittedDifference": "protected contribution body only",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "wrong-persona",
+          "resultCategory": "denied",
+          "publicResult": {
+            "disposition": "denied",
+            "reason": "authority-missing"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 0,
+            "receipts": 0,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "scopedGovernance": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "3e409f4dad266b447af6fa9f9ed88bb6b1fa0c7ed8354580d02ab6679ec16300"
+          ]
+        },
+        "forbidden": {
+          "contractVersion": "1",
+          "caseId": "wrong-persona",
+          "resultCategory": "denied",
+          "publicResult": {
+            "disposition": "denied",
+            "reason": "authority-missing"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "scopedGovernance": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "3e409f4dad266b447af6fa9f9ed88bb6b1fa0c7ed8354580d02ab6679ec16300"
+          ]
+        },
+        "oracle": {
+          "contractVersion": "1",
+          "equal": true,
+          "earliestDivergence": null,
+          "differingPaths": [
+            "$.durableInventory.contributions",
+            "$.durableInventory.receipts"
+          ],
+          "permittedDifferingPaths": [
+            "$.durableInventory.contributions",
+            "$.durableInventory.receipts"
+          ],
+          "unexpectedDifferingPaths": [],
+          "controlDigest": "c66602c7fcc5057df809b92181f0b5aba80bbc185163c38a1e1a182e91f5841d",
+          "counterfactualDigest": "b34d9fd2b1c50268cb034ee163aea9863ced70965daaf9a8724697fc22ccf1c3"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "wrong-governed-scope",
+      "dimension": "requested scope is not granted",
+      "ownerPath": "resolveScopedGovernanceContext",
+      "permittedDifference": "protected contribution body only",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "wrong-governed-scope",
+          "resultCategory": "denied",
+          "publicResult": {
+            "disposition": "denied",
+            "reason": "scope-not-authorized"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 0,
+            "receipts": 0,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "scopedGovernance": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "14535db1cbab8bbd8d4e08900564db03fa189a42baf867ae724f5a37e22fbf95"
+          ]
+        },
+        "forbidden": {
+          "contractVersion": "1",
+          "caseId": "wrong-governed-scope",
+          "resultCategory": "denied",
+          "publicResult": {
+            "disposition": "denied",
+            "reason": "scope-not-authorized"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "scopedGovernance": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "14535db1cbab8bbd8d4e08900564db03fa189a42baf867ae724f5a37e22fbf95"
+          ]
+        },
+        "oracle": {
+          "contractVersion": "1",
+          "equal": true,
+          "earliestDivergence": null,
+          "differingPaths": [
+            "$.durableInventory.contributions",
+            "$.durableInventory.receipts"
+          ],
+          "permittedDifferingPaths": [
+            "$.durableInventory.contributions",
+            "$.durableInventory.receipts"
+          ],
+          "unexpectedDifferingPaths": [],
+          "controlDigest": "e6d05bf4329a987f9a1368fae19c92f3c32af502714aec89dc37ade7d12a94ba",
+          "counterfactualDigest": "851e9bcaa9416d5f3403a0afaee52280c3750b00b6408639c8702c15fd41850b"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "stale-access",
+      "dimension": "expired current authority",
+      "ownerPath": "resolveScopedGovernanceContext",
+      "permittedDifference": "protected contribution body only",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "stale-access",
+          "resultCategory": "denied",
+          "publicResult": {
+            "disposition": "denied",
+            "reason": "operation-not-authorized"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 0,
+            "receipts": 0,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "scopedGovernance": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "4b587fc3cb8a65b48cd8b2cf7ca69265e87f4e5431329d637020e572eaed7459"
+          ]
+        },
+        "forbidden": {
+          "contractVersion": "1",
+          "caseId": "stale-access",
+          "resultCategory": "denied",
+          "publicResult": {
+            "disposition": "denied",
+            "reason": "operation-not-authorized"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "scopedGovernance": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "4b587fc3cb8a65b48cd8b2cf7ca69265e87f4e5431329d637020e572eaed7459"
+          ]
+        },
+        "oracle": {
+          "contractVersion": "1",
+          "equal": true,
+          "earliestDivergence": null,
+          "differingPaths": [
+            "$.durableInventory.contributions",
+            "$.durableInventory.receipts"
+          ],
+          "permittedDifferingPaths": [
+            "$.durableInventory.contributions",
+            "$.durableInventory.receipts"
+          ],
+          "unexpectedDifferingPaths": [],
+          "controlDigest": "705d412da3b23c227a30e1195681e6627ba3fdfb2545dd39fd2fd63772d35150",
+          "counterfactualDigest": "7c2c921dd5206b04f5cf43a34e3418b2747fe78e0a92af2db40fb52779ccb996"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "unavailable-material",
+      "dimension": "unavailable protected artifact",
+      "ownerPath": "readFrozenPrivateWorkingContribution",
+      "permittedDifference": "protected contribution body only",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "unavailable-material",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 0,
+            "receipts": 0,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "lifecycle": 3,
+            "ownerRead": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": []
+        },
+        "forbidden": {
+          "contractVersion": "1",
+          "caseId": "unavailable-material",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "lifecycle": 3,
+            "ownerRead": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": []
+        },
+        "oracle": {
+          "contractVersion": "1",
+          "equal": true,
+          "earliestDivergence": null,
+          "differingPaths": [
+            "$.durableInventory.contributions",
+            "$.durableInventory.receipts"
+          ],
+          "permittedDifferingPaths": [
+            "$.durableInventory.contributions",
+            "$.durableInventory.receipts"
+          ],
+          "unexpectedDifferingPaths": [],
+          "controlDigest": "073a8e432ee75723d9ebc4a670e9cda5dc0e2bc079f7c88f5ecd28744c6b8c34",
+          "counterfactualDigest": "10ca240d314a1af9e4df435b9ee27d0f7d4eab6a1acbd9a3ac9b990de3d7b815"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "private-working-denied",
+      "dimension": "private-working / denied principal",
+      "ownerPath": "LeadershipConversationProductOperations.freeze+readFrozenPrivateWorkingContribution",
+      "permittedDifference": "one owner-issued protected contribution body",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "private-working-denied",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 0,
+            "receipts": 0,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "lifecycle": 3,
+            "deniedRead": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": []
+        },
+        "forbidden": {
+          "contractVersion": "1",
+          "caseId": "private-working-denied",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "lifecycle": 3,
+            "deniedRead": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": []
+        },
+        "oracle": {
+          "contractVersion": "1",
+          "equal": true,
+          "earliestDivergence": null,
+          "differingPaths": [
+            "$.durableInventory.contributions",
+            "$.durableInventory.receipts"
+          ],
+          "permittedDifferingPaths": [
+            "$.durableInventory.contributions",
+            "$.durableInventory.receipts"
+          ],
+          "unexpectedDifferingPaths": [],
+          "controlDigest": "cef8bc7f01689f2a879b498ceb4d1bd54ee3096647c4b0c63a54330629e30749",
+          "counterfactualDigest": "af3644aa6be01c247c0233fda096df28e025b2f89a800e27bc9195c9f7d26e3c"
+        },
+        "pairedDerivedInfluence": {
+          "controlDigest": "90fce3d7eea5cd02d70ea1d313048b1c7f40604f184b4707a4f89c248ed2084c",
+          "forbiddenDigest": "90fce3d7eea5cd02d70ea1d313048b1c7f40604f184b4707a4f89c248ed2084c",
+          "equal": true,
+          "surfaces": [
+            "priority",
+            "surprise",
+            "tension",
+            "epistemic",
+            "confidence",
+            "questions",
+            "acquisition",
+            "what-changed",
+            "prior-cycle"
+          ]
+        },
+        "pairedExplanation": {
+          "explanationIdDigest": "41a8c7b430ab9a603355be62a809e11f4d1bd7635a0db60252506fec4fbab4a0",
+          "runtimeRevision": "12f417546ff5592392c7e6f0c3e3515749c327806e694b4aa945198ee5873f9c"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "private-working-authorized-positive",
+      "dimension": "authorized protected-material sensitivity",
+      "ownerPath": "LeadershipConversationProductOperations.freeze+readFrozenPrivateWorkingContribution",
+      "permittedDifference": "authorized contribution content",
+      "expected": "different",
+      "measured": {
+        "authorizationState": "authorized",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "private-working-authorized-positive",
+          "resultCategory": "eligible",
+          "publicResult": {
+            "itemDigests": [
+              "038d29be6c0db219ef4312397697391c6dbf39161e92f7d7ffc95888270f3e9c"
+            ]
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "lifecycle": 3,
+            "authorizedRead": 1
+          },
+          "protectedBodyReads": 1,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "038d29be6c0db219ef4312397697391c6dbf39161e92f7d7ffc95888270f3e9c"
+          ]
+        },
+        "forbidden": {
+          "contractVersion": "1",
+          "caseId": "private-working-authorized-positive",
+          "resultCategory": "eligible",
+          "publicResult": {
+            "itemDigests": [
+              "7ae8f936470e9b3b769e3d1cd9d52e85603cb2ee4fe37dc3aad0ec834609ebac"
+            ]
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "lifecycle": 3,
+            "authorizedRead": 1
+          },
+          "protectedBodyReads": 1,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "7ae8f936470e9b3b769e3d1cd9d52e85603cb2ee4fe37dc3aad0ec834609ebac"
+          ]
+        },
+        "oracle": {
+          "contractVersion": "1",
+          "equal": false,
+          "earliestDivergence": "$.publicResult.itemDigests.0",
+          "differingPaths": [
+            "$.publicResult.itemDigests.0",
+            "$.safeDigests.0"
+          ],
+          "permittedDifferingPaths": [],
+          "unexpectedDifferingPaths": [
+            "$.publicResult.itemDigests.0",
+            "$.safeDigests.0"
+          ],
+          "controlDigest": "ef6586183d69e4e2296d04da8192e58852d52313915c75df3af5ada37b3506d0",
+          "counterfactualDigest": "37cb8a8f508034b60d59fccbb055638cb60ab2f4e32b6cb88a854320c595fa48"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "foreign-organization",
+      "dimension": "foreign organization",
+      "ownerPath": "LeadershipConversationProductOperations.readFrozenPrivateWorkingContribution",
+      "permittedDifference": "protected contribution exists only in counterfactual",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "same-owner-denied-condition",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "foreign-organization",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "lifecycle": 3,
+            "ownerRead": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": []
+        },
+        "forbidden": {
+          "contractVersion": "1",
+          "caseId": "foreign-organization",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "lifecycle": 3,
+            "ownerRead": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": []
+        },
+        "oracle": {
+          "contractVersion": "1",
+          "equal": true,
+          "earliestDivergence": null,
+          "differingPaths": [],
+          "permittedDifferingPaths": [],
+          "unexpectedDifferingPaths": [],
+          "controlDigest": "bfa5692acc0ccd35bc53865adc1cadc6d64cbc940b8bf90e26c1ff64dc47c4de",
+          "counterfactualDigest": "bfa5692acc0ccd35bc53865adc1cadc6d64cbc940b8bf90e26c1ff64dc47c4de"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "wrong-product-question",
+      "dimension": "wrong Product Question",
+      "ownerPath": "LeadershipConversationProductOperations.readFrozenPrivateWorkingContribution",
+      "permittedDifference": "protected contribution exists only in counterfactual",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "same-owner-denied-condition",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "wrong-product-question",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "lifecycle": 3,
+            "ownerRead": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": []
+        },
+        "forbidden": {
+          "contractVersion": "1",
+          "caseId": "wrong-product-question",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "lifecycle": 3,
+            "ownerRead": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": []
+        },
+        "oracle": {
+          "contractVersion": "1",
+          "equal": true,
+          "earliestDivergence": null,
+          "differingPaths": [],
+          "permittedDifferingPaths": [],
+          "unexpectedDifferingPaths": [],
+          "controlDigest": "158ebddc90e7587caa4aa51ae9ac22f533175080c3663d26e8068971416ff2ab",
+          "counterfactualDigest": "158ebddc90e7587caa4aa51ae9ac22f533175080c3663d26e8068971416ff2ab"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "wrong-occurrence",
+      "dimension": "cross-occurrence",
+      "ownerPath": "LeadershipConversationProductOperations.readFrozenPrivateWorkingContribution",
+      "permittedDifference": "protected contribution exists only in counterfactual",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "same-owner-denied-condition",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "wrong-occurrence",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "lifecycle": 3,
+            "ownerRead": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": []
+        },
+        "forbidden": {
+          "contractVersion": "1",
+          "caseId": "wrong-occurrence",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "lifecycle": 3,
+            "ownerRead": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": []
+        },
+        "oracle": {
+          "contractVersion": "1",
+          "equal": true,
+          "earliestDivergence": null,
+          "differingPaths": [],
+          "permittedDifferingPaths": [],
+          "unexpectedDifferingPaths": [],
+          "controlDigest": "719934b07d1bfd905de4836bff5a7798c9f97fc9834cc319dbf4a69f0ab6a63b",
+          "counterfactualDigest": "719934b07d1bfd905de4836bff5a7798c9f97fc9834cc319dbf4a69f0ab6a63b"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "ambiguous-artifact-request",
+      "dimension": "ambiguous lineage",
+      "ownerPath": "LeadershipConversationProductOperations.readFrozenPrivateWorkingContribution",
+      "permittedDifference": "protected contribution exists only in counterfactual",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "same-owner-denied-condition",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "ambiguous-artifact-request",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "lifecycle": 3,
+            "ownerRead": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": []
+        },
+        "forbidden": {
+          "contractVersion": "1",
+          "caseId": "ambiguous-artifact-request",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 0,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 3,
+            "idempotency": 3
+          },
+          "ownerInvocations": {
+            "lifecycle": 3,
+            "ownerRead": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": []
+        },
+        "oracle": {
+          "contractVersion": "1",
+          "equal": true,
+          "earliestDivergence": null,
+          "differingPaths": [],
+          "permittedDifferingPaths": [],
+          "unexpectedDifferingPaths": [],
+          "controlDigest": "27d1dd71f21bd7fdd2b1211bb8a47ec4654f0d35895947ddce93796cc26e96b6",
+          "counterfactualDigest": "27d1dd71f21bd7fdd2b1211bb8a47ec4654f0d35895947ddce93796cc26e96b6"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "revoked-governance",
+      "dimension": "revoked access",
+      "ownerPath": "resolveScopedGovernanceContext",
+      "permittedDifference": "protected material exists only in counterfactual",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "same-revoked-grant",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "revoked-governance",
+          "resultCategory": "denied",
+          "publicResult": {
+            "status": "denied",
+            "stage": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1
+          },
+          "ownerInvocations": {
+            "lifecycle": 3,
+            "scopedGovernance": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "417d1b7a33344820f3eada6c61980414edb6d31025fe294efdd379ad8a745ae3"
+          ]
+        },
+        "forbidden": {
+          "contractVersion": "1",
+          "caseId": "revoked-governance",
+          "resultCategory": "denied",
+          "publicResult": {
+            "status": "denied",
+            "stage": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1
+          },
+          "ownerInvocations": {
+            "lifecycle": 3,
+            "scopedGovernance": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "417d1b7a33344820f3eada6c61980414edb6d31025fe294efdd379ad8a745ae3"
+          ]
+        },
+        "oracle": {
+          "contractVersion": "1",
+          "equal": true,
+          "earliestDivergence": null,
+          "differingPaths": [],
+          "permittedDifferingPaths": [],
+          "unexpectedDifferingPaths": [],
+          "controlDigest": "b5422b429161870327108e34b1c1ae5b2e486f47bf938cd619aa1a7fb7532b9e",
+          "counterfactualDigest": "b5422b429161870327108e34b1c1ae5b2e486f47bf938cd619aa1a7fb7532b9e"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "source-content-denied",
+      "dimension": "Source Binding and Source Content denied before body read",
+      "ownerPath": "LeadershipConversation.receiveUpload+generateProposals",
+      "permittedDifference": "one owner-written Source Content body",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "source-content-denied",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable",
+            "proposalDigests": []
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "uploads": 1,
+            "proposals": 0
+          },
+          "ownerInvocations": {
+            "lifecycle": 4,
+            "proposalOperation": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": []
+        },
+        "forbidden": {
+          "contractVersion": "1",
+          "caseId": "source-content-denied",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable",
+            "proposalDigests": []
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "uploads": 1,
+            "proposals": 0
+          },
+          "ownerInvocations": {
+            "lifecycle": 4,
+            "proposalOperation": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": []
+        },
+        "oracle": {
+          "contractVersion": "1",
+          "equal": true,
+          "earliestDivergence": null,
+          "differingPaths": [],
+          "permittedDifferingPaths": [],
+          "unexpectedDifferingPaths": [],
+          "controlDigest": "ba6fbfecb3824dc38cca3403a961cbf0f2a327ea9468925bd899f7ee2a54949b",
+          "counterfactualDigest": "ba6fbfecb3824dc38cca3403a961cbf0f2a327ea9468925bd899f7ee2a54949b"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "filename-label-presentation-non-authority",
+      "dimension": "filename, display label, and presentation metadata do not alter proposal meaning",
+      "ownerPath": "receiveUpload+generateProposals",
+      "permittedDifference": "non-semantic upload presentation metadata",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "authorized-source-read-nonsemantic-metadata",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "filename-label-presentation-non-authority",
+          "resultCategory": "eligible",
+          "publicResult": {
+            "status": "eligible",
+            "proposalDigests": [
+              "2cceb8ee6c14cea04928659aeb2859b545973f647421c2efec8b413e78d51a43",
+              "5cd3545626a3af851c9904b89d4faba4af72b9ed039c66bda9030cec14129bd0",
+              "b6cfaa01ccaaac931ebca2af5b8cd3520edec042a32b42fa6737c51f566898a7",
+              "d8626369ca1a301186647f6a8b8b4fd5c879c196b43ebd8093cf4d605404303a"
+            ]
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "uploads": 1,
+            "proposals": 4
+          },
+          "ownerInvocations": {
+            "lifecycle": 4,
+            "proposalOperation": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "2cceb8ee6c14cea04928659aeb2859b545973f647421c2efec8b413e78d51a43",
+            "5cd3545626a3af851c9904b89d4faba4af72b9ed039c66bda9030cec14129bd0",
+            "b6cfaa01ccaaac931ebca2af5b8cd3520edec042a32b42fa6737c51f566898a7",
+            "d8626369ca1a301186647f6a8b8b4fd5c879c196b43ebd8093cf4d605404303a"
+          ]
+        },
+        "counterfactual": {
+          "contractVersion": "1",
+          "caseId": "filename-label-presentation-non-authority",
+          "resultCategory": "eligible",
+          "publicResult": {
+            "status": "eligible",
+            "proposalDigests": [
+              "2cceb8ee6c14cea04928659aeb2859b545973f647421c2efec8b413e78d51a43",
+              "5cd3545626a3af851c9904b89d4faba4af72b9ed039c66bda9030cec14129bd0",
+              "b6cfaa01ccaaac931ebca2af5b8cd3520edec042a32b42fa6737c51f566898a7",
+              "d8626369ca1a301186647f6a8b8b4fd5c879c196b43ebd8093cf4d605404303a"
+            ]
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "uploads": 1,
+            "proposals": 4
+          },
+          "ownerInvocations": {
+            "lifecycle": 4,
+            "proposalOperation": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "2cceb8ee6c14cea04928659aeb2859b545973f647421c2efec8b413e78d51a43",
+            "5cd3545626a3af851c9904b89d4faba4af72b9ed039c66bda9030cec14129bd0",
+            "b6cfaa01ccaaac931ebca2af5b8cd3520edec042a32b42fa6737c51f566898a7",
+            "d8626369ca1a301186647f6a8b8b4fd5c879c196b43ebd8093cf4d605404303a"
+          ]
+        },
+        "proposalMeaningEqual": true
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "stage-route-non-authority",
+      "dimension": "staging and proposal generation alone do not grant canonical authority",
+      "ownerPath": "receiveUpload+generateProposals+workspace",
+      "permittedDifference": "unreviewed staging records",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "same-denied-principal",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "stage-route-non-authority",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 1,
+            "proposals": 4,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 8,
+            "idempotency": 8
+          },
+          "ownerInvocations": {
+            "workspace": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "774a5957e1e1b76e5ba7d6a9b803e215b28d31ac0fae1df873a96758e7fb35ef"
+          ]
+        },
+        "counterfactual": {
+          "contractVersion": "1",
+          "caseId": "stage-route-non-authority",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 1,
+            "proposals": 4,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 8,
+            "idempotency": 8
+          },
+          "ownerInvocations": {
+            "workspace": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "774a5957e1e1b76e5ba7d6a9b803e215b28d31ac0fae1df873a96758e7fb35ef"
+          ]
+        },
+        "reviewedDispositionCount": 0,
+        "canonicalRouteCount": 0,
+        "protectedBodyReads": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "unaccepted-proposal-denied",
+      "dimension": "unaccepted proposal cannot influence denied workspace",
+      "ownerPath": "generateProposals+workspace",
+      "permittedDifference": "unaccepted owner-issued proposals exist only in forbidden world",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "same-denied-principal",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "unaccepted-proposal-denied",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 1,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 4,
+            "idempotency": 4
+          },
+          "ownerInvocations": {
+            "workspace": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "774a5957e1e1b76e5ba7d6a9b803e215b28d31ac0fae1df873a96758e7fb35ef"
+          ]
+        },
+        "forbidden": {
+          "contractVersion": "1",
+          "caseId": "unaccepted-proposal-denied",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 1,
+            "proposals": 4,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 8,
+            "idempotency": 8
+          },
+          "ownerInvocations": {
+            "workspace": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "774a5957e1e1b76e5ba7d6a9b803e215b28d31ac0fae1df873a96758e7fb35ef"
+          ]
+        },
+        "oracle": {
+          "contractVersion": "1",
+          "equal": true,
+          "earliestDivergence": null,
+          "differingPaths": [
+            "$.durableInventory.events",
+            "$.durableInventory.idempotency",
+            "$.durableInventory.proposals"
+          ],
+          "permittedDifferingPaths": [
+            "$.durableInventory.events",
+            "$.durableInventory.idempotency",
+            "$.durableInventory.proposals"
+          ],
+          "unexpectedDifferingPaths": [],
+          "controlDigest": "8f852543a0685ab9ec5a5a2d2d5fa149c71eb240134509138db8b3c7da223b35",
+          "counterfactualDigest": "2a6ce727046d0227f46574091cde80781bb4ce0a08cc03929b5cb233fb073db2"
+        },
+        "unacceptedProposalCount": 4,
+        "dispositionCount": 0,
+        "closureCount": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "unreviewed-closure-candidate-denied",
+      "dimension": "unreviewed closure candidate has no durable authority",
+      "ownerPath": "generateProposals+workspace",
+      "permittedDifference": "unreviewed owner-issued closure candidates exist only in forbidden world",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "same-denied-principal",
+        "control": {
+          "contractVersion": "1",
+          "caseId": "unreviewed-closure-candidate-denied",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 1,
+            "proposals": 0,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 4,
+            "idempotency": 4
+          },
+          "ownerInvocations": {
+            "workspace": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "774a5957e1e1b76e5ba7d6a9b803e215b28d31ac0fae1df873a96758e7fb35ef"
+          ]
+        },
+        "forbidden": {
+          "contractVersion": "1",
+          "caseId": "unreviewed-closure-candidate-denied",
+          "resultCategory": "unavailable",
+          "publicResult": {
+            "status": "unavailable"
+          },
+          "durableInventory": {
+            "contexts": 1,
+            "prepared": 1,
+            "frozen": 1,
+            "contributions": 1,
+            "receipts": 1,
+            "uploads": 1,
+            "proposals": 4,
+            "dispositions": 0,
+            "routingReceipts": 0,
+            "routingLinks": 0,
+            "whatChanged": 0,
+            "closures": 0,
+            "successors": 0,
+            "materializations": 0,
+            "historicalLinks": 0,
+            "events": 8,
+            "idempotency": 8
+          },
+          "ownerInvocations": {
+            "workspace": 1
+          },
+          "protectedBodyReads": 0,
+          "replayCategory": "not-run",
+          "safeDigests": [
+            "774a5957e1e1b76e5ba7d6a9b803e215b28d31ac0fae1df873a96758e7fb35ef"
+          ]
+        },
+        "oracle": {
+          "contractVersion": "1",
+          "equal": true,
+          "earliestDivergence": null,
+          "differingPaths": [
+            "$.durableInventory.events",
+            "$.durableInventory.idempotency",
+            "$.durableInventory.proposals"
+          ],
+          "permittedDifferingPaths": [
+            "$.durableInventory.events",
+            "$.durableInventory.idempotency",
+            "$.durableInventory.proposals"
+          ],
+          "unexpectedDifferingPaths": [],
+          "controlDigest": "1d19e5a3c3c590bc4d5e505c825785fdb0be56e9d4b17dcae1931ed7edb92d68",
+          "counterfactualDigest": "351cf2b393be4ae3f7c62cecfd4db76c3b350934559d72c8cb0b251f4548a044"
+        },
+        "unacceptedProposalCount": 4,
+        "dispositionCount": 0,
+        "closureCount": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "reviewed-closure-reload",
+      "dimension": "reviewed closure and current authorization",
+      "ownerPath": "captureFrozenPrivateWorkingContribution+completeCycle1Closure+workspace",
+      "permittedDifference": "none; fresh reconstruction",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "authorized",
+        "observation": {
+          "contractVersion": "1",
+          "resultCategory": "eligible",
+          "closureIdDigest": "a23d1e6df4a2d6cd6e0aa7fb58f4a24695ea7988adf28f27473c9b745b6fd6bf",
+          "futureLinkDigest": "7f7d83bb40a3af4fd188e88c4715d2de9f5ae88b874305351218c35edf7d6fc3",
+          "protectedBodyReads": 0,
+          "revision": "1301d693a2041648603ecb01696148623c172f5400b9741a345a3bb24639784d"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "closure-cross-user-denied",
+      "dimension": "closure authority is bound to current user",
+      "ownerPath": "completeCycle1Closure",
+      "permittedDifference": "none",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied-exact-binding",
+        "resultCategory": "unavailable",
+        "revisionBefore": "5eaca38eaca5e3a473f8b393c5b18f89c9d5b248dcdb1f1a95240c340380cd97",
+        "revisionAfter": "5eaca38eaca5e3a473f8b393c5b18f89c9d5b248dcdb1f1a95240c340380cd97",
+        "protectedBodyReads": 0,
+        "closureCount": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "closure-cross-customer-denied",
+      "dimension": "closure authority is bound to organization",
+      "ownerPath": "completeCycle1Closure",
+      "permittedDifference": "none",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied-exact-binding",
+        "resultCategory": "unavailable",
+        "revisionBefore": "5eaca38eaca5e3a473f8b393c5b18f89c9d5b248dcdb1f1a95240c340380cd97",
+        "revisionAfter": "5eaca38eaca5e3a473f8b393c5b18f89c9d5b248dcdb1f1a95240c340380cd97",
+        "protectedBodyReads": 0,
+        "closureCount": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "closure-wrong-question-denied",
+      "dimension": "closure is bound to Product Question",
+      "ownerPath": "completeCycle1Closure",
+      "permittedDifference": "none",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied-exact-binding",
+        "resultCategory": "unavailable",
+        "revisionBefore": "5eaca38eaca5e3a473f8b393c5b18f89c9d5b248dcdb1f1a95240c340380cd97",
+        "revisionAfter": "5eaca38eaca5e3a473f8b393c5b18f89c9d5b248dcdb1f1a95240c340380cd97",
+        "protectedBodyReads": 0,
+        "closureCount": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "closure-wrong-occurrence-denied",
+      "dimension": "closure is bound to occurrence",
+      "ownerPath": "completeCycle1Closure",
+      "permittedDifference": "none",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied-exact-binding",
+        "resultCategory": "unavailable",
+        "revisionBefore": "5eaca38eaca5e3a473f8b393c5b18f89c9d5b248dcdb1f1a95240c340380cd97",
+        "revisionAfter": "5eaca38eaca5e3a473f8b393c5b18f89c9d5b248dcdb1f1a95240c340380cd97",
+        "protectedBodyReads": 0,
+        "closureCount": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "closure-stale-revision-denied",
+      "dimension": "closure compare-and-swap revision is stale",
+      "ownerPath": "completeCycle1Closure",
+      "permittedDifference": "none",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied-exact-binding",
+        "resultCategory": "unavailable",
+        "revisionBefore": "5eaca38eaca5e3a473f8b393c5b18f89c9d5b248dcdb1f1a95240c340380cd97",
+        "revisionAfter": "5eaca38eaca5e3a473f8b393c5b18f89c9d5b248dcdb1f1a95240c340380cd97",
+        "protectedBodyReads": 0,
+        "closureCount": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "closure-tampered-projection-denied",
+      "dimension": "closure reviewed projection binding is tampered",
+      "ownerPath": "completeCycle1Closure",
+      "permittedDifference": "none",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied-exact-binding",
+        "resultCategory": "unavailable",
+        "revisionBefore": "5eaca38eaca5e3a473f8b393c5b18f89c9d5b248dcdb1f1a95240c340380cd97",
+        "revisionAfter": "5eaca38eaca5e3a473f8b393c5b18f89c9d5b248dcdb1f1a95240c340380cd97",
+        "protectedBodyReads": 0,
+        "closureCount": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "review-receipt-replay-tamper",
+      "dimension": "Review receipt idempotency binding rejects changed disposition",
+      "ownerPath": "review",
+      "permittedDifference": "none",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied-incompatible-replay",
+        "reviewReceiptIdDigest": "b54711166bbfd14f24545fecc2f4c6190b9f94b19c3f3d122c6c30c956351367",
+        "revisionStable": true,
+        "protectedBodyReads": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "closure-receipt-replay-tamper",
+      "dimension": "closure receipt idempotency binding rejects changed projection",
+      "ownerPath": "completeCycle1Closure",
+      "permittedDifference": "none",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied-incompatible-replay",
+        "closureReceiptDigest": "a23d1e6df4a2d6cd6e0aa7fb58f4a24695ea7988adf28f27473c9b745b6fd6bf",
+        "revisionStable": true,
+        "protectedBodyReads": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "closure-reviewed-only",
+      "dimension": "accepted closure admits only reviewed Evidence while preserving deferred proposals solely as unresolved Product state",
+      "ownerPath": "review+routeApproved+completeCycle1Closure",
+      "permittedDifference": "none",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "authorized-reviewed-only",
+        "approvedDispositionCount": 1,
+        "deferredDispositionCount": 3,
+        "routedEvidenceAdmissionCount": 1,
+        "closureCount": 1,
+        "deferredProposalSummaryDigests": [
+          "7d4ac97abce4649c3b7530cfc8404f67ce740f382010e358a6a9c9e1499030a6",
+          "9a28598a4e9fdcc4bccfbe1030405ad25096af2f63a3e35293d5755087882763",
+          "3dc0766936436a2b9a9e1d3ed55c13f131ebdf623448a9343d7e2a3f212a5f7a"
+        ],
+        "deferredPlacement": "what-remains-unresolved-only",
+        "promotedClosureOccurrences": 0,
+        "inspectedClosureSectionsDigest": "c0829f4b325652c5321cc8aa93da119cc83f9d586a222f26c50f0ac5f1880e6f",
+        "inspectedPrepareAgainSemanticDigest": "1a52bdea4377e7fb6570566be56c10a352ede82e14d13f86d189c005e2121194"
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "organizational-explanation-current-access",
+      "dimension": "persisted operation-linked Explanation is consumed only with current authorization",
+      "ownerPath": "completeOrganizationalExplanations+CanonicalOrganizationalUnderstandingRevisionService",
+      "permittedDifference": "authorized canonical Understanding projection",
+      "expected": "different",
+      "measured": {
+        "authorizationState": "authorized-versus-revoked",
+        "ownerIssuedExplanation": {
+          "explanationIdDigest": "41a8c7b430ab9a603355be62a809e11f4d1bd7635a0db60252506fec4fbab4a0",
+          "runtimeRevision": "12f417546ff5592392c7e6f0c3e3515749c327806e694b4aa945198ee5873f9c"
+        },
+        "authorized": {
+          "understandingOperationCount": 1,
+          "understandingReceiptCount": 1,
+          "prepareAgainCategory": "eligible",
+          "projectionDigest": "39fda0fdb0683ea1fe508c3e5d8f8f5a98211f2d39a3f450d7f733deb77d4c76"
+        },
+        "revoked": {
+          "understandingOperationCount": 1,
+          "understandingReceiptCount": 1,
+          "prepareAgainCategory": "unavailable",
+          "protectedBodyReads": 0
+        },
+        "oracle": {
+          "authorizedProjectionObserved": true,
+          "revokedProjectionWithheld": true
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "upstream-source-revoked-closure-current",
+      "dimension": "reviewed closure remains current while revoked upstream Source is excluded from Prepare Again",
+      "ownerPath": "CanonicalLocalSourceBindingService+completeCycle1Closure+prepareNextOccurrence",
+      "permittedDifference": "revoked current Evidence is withheld",
+      "expected": "different",
+      "measured": {
+        "authorizationState": "closure-current-source-revoked",
+        "sourceRevocation": {
+          "receiptDigest": "fad955bf00a79a684d605ccda8475f6fffc0531be38d6d75db3e1e7dbfb73869",
+          "revision": "d303807ffd9e9dbd3f45b05b5808d3303d08e47302b816ec96a8b975f5104f95"
+        },
+        "closureIdDigest": "630bc7d67d19b5ee46722343d46a4af300bb58b5859f3a72288c17d9c6ea2428",
+        "closureRemainedCurrent": true,
+        "prepareAgainCategory": "unavailable",
+        "protectedBodyReads": 0,
+        "authorizedInfluenceDigest": "90fce3d7eea5cd02d70ea1d313048b1c7f40604f184b4707a4f89c248ed2084c",
+        "authorizedSourceDependentLineage": {
+          "control": {
+            "admissionDigest": "a56eb49de50428284c78b6d9acb66d62c464ded940c419435de919b2108179cd",
+            "explanationIdDigest": "41a8c7b430ab9a603355be62a809e11f4d1bd7635a0db60252506fec4fbab4a0",
+            "understandingReceiptDigest": "b8d2c0cd9ecd67083bb1d73f5d7903a707226fc731eda2a0940135d9b990cc9d",
+            "projectionSourceRefDigest": "39fda0fdb0683ea1fe508c3e5d8f8f5a98211f2d39a3f450d7f733deb77d4c76"
+          },
+          "canary": {
+            "admissionDigest": "fbdc8dd3fae94f498cb448c8e98d0bc476cd062f3c24835e6e76242da4a2ead5",
+            "explanationIdDigest": "41a8c7b430ab9a603355be62a809e11f4d1bd7635a0db60252506fec4fbab4a0",
+            "understandingReceiptDigest": "b2d1b97d6ee54344c34337a39179cb9fb5a789edd50389a7c427723aadc3d2aa",
+            "projectionSourceRefDigest": "39fda0fdb0683ea1fe508c3e5d8f8f5a98211f2d39a3f450d7f733deb77d4c76"
+          },
+          "admissionChanged": true,
+          "understandingReceiptChanged": true
+        },
+        "revokedMaterialInfluence": null,
+        "revokedInfluenceDigest": null,
+        "inaccessibleSourceEvidenceExplanationUnderstandingCanaryExcluded": true
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "successor-link-replay",
+      "dimension": "Prepare Again successor and replay",
+      "ownerPath": "recordContext+recordPreparation+prepareAgain",
+      "permittedDifference": "none; exact replay",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "authorized",
+        "deterministicOccurrenceIdentity": "14366b94674cd6d30dad680daf47404006be32bb18e7d762e2d04f04bc374e98",
+        "revisionBeforeReplay": "1301d693a2041648603ecb01696148623c172f5400b9741a345a3bb24639784d",
+        "revisionAfterReplay": "1301d693a2041648603ecb01696148623c172f5400b9741a345a3bb24639784d",
+        "linkCount": 1,
+        "actualDerivedOutputs": {
+          "prepareAgainDigest": "bed0d0774a552578f5ef5184260c1b1cdac4018c8f8015750100a1430d845021",
+          "priorCycleStatus": "completed",
+          "whatChangedPublicationCount": 1,
+          "understandingEvaluation": "composed",
+          "understandingOperationCount": 1,
+          "understandingReceiptCount": 1,
+          "understandingReceiptDigest": "b8d2c0cd9ecd67083bb1d73f5d7903a707226fc731eda2a0940135d9b990cc9d",
+          "explanationIdDigest": "41a8c7b430ab9a603355be62a809e11f4d1bd7635a0db60252506fec4fbab4a0",
+          "projectionSourceRefDigest": "39fda0fdb0683ea1fe508c3e5d8f8f5a98211f2d39a3f450d7f733deb77d4c76",
+          "successorLineageContractVersion": "1",
+          "successorLineageVariant": null
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "fresh-artifact-denied",
+      "dimension": "fresh-process current artifact denial",
+      "ownerPath": "readFrozenPrivateWorkingContribution",
+      "permittedDifference": "authorized principal replaced by denied principal",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied",
+        "observation": {
+          "contractVersion": "1",
+          "resultCategory": "unavailable",
+          "protectedBodyReads": 0,
+          "revisionBefore": "3dfb46c0a0ab8e9dc70fa3b89db4b43815c2dc2872a20878f44aa70292b38318",
+          "revisionAfter": "3dfb46c0a0ab8e9dc70fa3b89db4b43815c2dc2872a20878f44aa70292b38318"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "fresh-reviewed-closure-denied",
+      "dimension": "fresh-process reviewed closure current authorization",
+      "ownerPath": "workspace",
+      "permittedDifference": "authorized principal replaced by denied principal",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied",
+        "observation": {
+          "contractVersion": "1",
+          "resultCategory": "unavailable",
+          "closureIdDigest": null,
+          "futureLinkDigest": null,
+          "protectedBodyReads": 0,
+          "revision": "1301d693a2041648603ecb01696148623c172f5400b9741a345a3bb24639784d"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "fresh-successor-projection",
+      "dimension": "fresh-process successor Prepared Work projection",
+      "ownerPath": "workspace",
+      "permittedDifference": "none; durable successor reconstruction",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "authorized-current-material-lineage",
+        "observation": {
+          "contractVersion": "1",
+          "resultCategory": "eligible",
+          "conversationDigest": "14366b94674cd6d30dad680daf47404006be32bb18e7d762e2d04f04bc374e98",
+          "currentStep": "freeze",
+          "preparedRevisionDigest": "6ce636e16f694c2e9cf1904391bd199444903eab80721ef1db5c862fe145a8bf",
+          "protectedBodyReads": 2,
+          "revision": "1301d693a2041648603ecb01696148623c172f5400b9741a345a3bb24639784d",
+          "successorLineageVariant": null,
+          "understandingOperationCount": 1,
+          "understandingReceiptCount": 1,
+          "prepareAgainCategory": "eligible",
+          "prepareAgainDigest": "bed0d0774a552578f5ef5184260c1b1cdac4018c8f8015750100a1430d845021"
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "fresh-successor-revoked",
+      "dimension": "revocation after initial successor access",
+      "ownerPath": "workspace+resolveScopedGovernanceContext",
+      "permittedDifference": "current authority grant status is revoked",
+      "expected": "different",
+      "measured": {
+        "authorizationState": "revoked-after-initial-access",
+        "authorizedObservation": {
+          "contractVersion": "1",
+          "resultCategory": "eligible",
+          "conversationDigest": "14366b94674cd6d30dad680daf47404006be32bb18e7d762e2d04f04bc374e98",
+          "currentStep": "freeze",
+          "preparedRevisionDigest": "6ce636e16f694c2e9cf1904391bd199444903eab80721ef1db5c862fe145a8bf",
+          "protectedBodyReads": 2,
+          "revision": "1301d693a2041648603ecb01696148623c172f5400b9741a345a3bb24639784d",
+          "successorLineageVariant": null,
+          "understandingOperationCount": 1,
+          "understandingReceiptCount": 1,
+          "prepareAgainCategory": "eligible",
+          "prepareAgainDigest": "bed0d0774a552578f5ef5184260c1b1cdac4018c8f8015750100a1430d845021"
+        },
+        "revokedObservation": {
+          "contractVersion": "1",
+          "resultCategory": "unavailable",
+          "conversationDigest": "14366b94674cd6d30dad680daf47404006be32bb18e7d762e2d04f04bc374e98",
+          "currentStep": "freeze",
+          "preparedRevisionDigest": null,
+          "protectedBodyReads": 0,
+          "revision": "1301d693a2041648603ecb01696148623c172f5400b9741a345a3bb24639784d",
+          "successorLineageVariant": null,
+          "understandingOperationCount": 1,
+          "understandingReceiptCount": 1,
+          "prepareAgainCategory": "unavailable",
+          "prepareAgainDigest": null
+        },
+        "oracle": {
+          "bodyReadDelta": 2,
+          "durableRevisionEqual": true
+        }
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "historical-predecessor-current-access",
+      "dimension": "current-authorized historical predecessor reconstruction",
+      "ownerPath": "prepareNextOccurrence+ProductArtifactCurrentAccessResolver",
+      "permittedDifference": "none; current authorized predecessor read",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "current-authorized",
+        "protectedBodyReads": 2,
+        "predecessorConversationDigest": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "successorConversationDigest": "14366b94674cd6d30dad680daf47404006be32bb18e7d762e2d04f04bc374e98",
+        "derivedOutputDigest": "bed0d0774a552578f5ef5184260c1b1cdac4018c8f8015750100a1430d845021"
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "historical-predecessor-withheld",
+      "dimension": "current-access denial withholds historical predecessor",
+      "ownerPath": "ProductArtifactCurrentAccessResolver.readHistoricalPredecessor",
+      "permittedDifference": "none",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "withheld",
+        "ownerOutcome": "withheld",
+        "resultDigest": "e83d43f25cc5bd8b0008a90c7020be64640563b5e30ac33465c7880e933697e4",
+        "projection": null,
+        "protectedBodyReads": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "historical-predecessor-malformed-lineage",
+      "dimension": "persisted predecessor body lineage mismatch fails malformed",
+      "ownerPath": "ProductArtifactCurrentAccessResolver.readHistoricalPredecessor",
+      "permittedDifference": "none",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "malformed",
+        "ownerOutcome": "malformed",
+        "resultDigest": "5b6a01a158fa73d8295d5da2e929fb62fcc36742c03b7a2c488e825ff8fa35fb",
+        "projection": null,
+        "protectedBodyReads": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "source-metadata-origin-denied",
+      "dimension": "tampered persisted Source-backed header metadata cannot authorize historical body read",
+      "ownerPath": "ProductArtifactCurrentAccessResolver.readHistoricalPredecessor",
+      "permittedDifference": "none",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "metadata-integrity-denied",
+        "ownerOutcome": "malformed",
+        "resultDigest": "5b6a01a158fa73d8295d5da2e929fb62fcc36742c03b7a2c488e825ff8fa35fb",
+        "projection": null,
+        "protectedBodyReads": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "historical-predecessor-denied",
+      "dimension": "denied principal cannot reconstruct historical predecessor",
+      "ownerPath": "ProductArtifactCurrentAccessResolver+workspace",
+      "permittedDifference": "none",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "denied",
+        "ownerOutcome": "withheld",
+        "resultDigest": "e83d43f25cc5bd8b0008a90c7020be64640563b5e30ac33465c7880e933697e4",
+        "predecessorProjectionAvailable": false,
+        "protectedBodyReads": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "historical-predecessor-foreign",
+      "dimension": "foreign organization cannot reconstruct historical predecessor",
+      "ownerPath": "ProductArtifactCurrentAccessResolver+workspace",
+      "permittedDifference": "none",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "foreign-organization",
+        "ownerOutcome": "foreign",
+        "resultDigest": "cb7eaef371ed166af623ef7007f4b4af9e6284be5d4cbd857de99ae8f7293b79",
+        "predecessorProjectionAvailable": false,
+        "protectedBodyReads": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "historical-predecessor-stale",
+      "dimension": "stale current-access authority cannot reconstruct historical predecessor",
+      "ownerPath": "resolveScopedGovernanceContext+ProductArtifactCurrentAccessResolver",
+      "permittedDifference": "none",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "stale",
+        "ownerOutcome": "stale",
+        "resultDigest": "43154067af25e458c3f3607e5b07ad6c149209a33af1300829c2b840452abda4",
+        "predecessorProjectionAvailable": false,
+        "protectedBodyReads": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "historical-predecessor-revoked",
+      "dimension": "revoked current-access authority cannot reconstruct historical predecessor",
+      "ownerPath": "resolveScopedGovernanceContext+ProductArtifactCurrentAccessResolver",
+      "permittedDifference": "none",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "revoked",
+        "ownerOutcome": "withheld",
+        "resultDigest": "f3f64be043de764a1358c9c676ffee7c57274d8caed3bf3fe62b954bd9bbeadd",
+        "predecessorProjectionAvailable": false,
+        "protectedBodyReads": 0
+      }
+    },
+    {
+      "contractVersion": "1",
+      "caseId": "fresh-process-cache-isolation",
+      "dimension": "process-local cache non-authority",
+      "ownerPath": "readFrozenPrivateWorkingContribution+fresh repository reconstruction",
+      "permittedDifference": "none; independent child process",
+      "expected": "equal",
+      "measured": {
+        "authorizationState": "authorized",
+        "firstProcessDigest": "dd920bdd18c798e1b554456a8fd68024cee97c5a430272c1ed6c88930144a298",
+        "secondProcessDigest": "dd920bdd18c798e1b554456a8fd68024cee97c5a430272c1ed6c88930144a298",
+        "equal": true,
+        "eachProtectedBodyReads": [
+          1,
+          1
+        ]
+      }
+    }
+  ],
+  "positiveControls": {
+    "total": 1,
+    "passed": 1
+  },
+  "distinctOwnerPathTotal": 22,
+  "preExecutionManifests": {
+    "privateWorkingDenied": {
+      "control": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "05829c2e851a7e6290a11df389a0530e1a3d333846dcff0b67327bddca9b9924",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 0,
+          "receipts": 0,
+          "uploads": 0,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 3,
+          "idempotency": 3
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 0,
+          "contributionReceipts": 0
+        }
+      },
+      "forbidden": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "75f74ba20629a1539e625b4406cf22a52a3e6fb0510d4d5f27b4ef12efe13e13",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 1,
+          "receipts": 1,
+          "uploads": 0,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 3,
+          "idempotency": 3
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 1,
+          "contributionReceipts": 1
+        }
+      },
+      "exactDeclaredCanaryDeltaPaths": [
+        "$.events.2.eventId",
+        "$.events.2.privateWorkingContributionRefs",
+        "$.events.2.recordDigest",
+        "$.events.2.recordRef",
+        "$.events.2.requestFingerprint",
+        "$.frozenSnapshotPublications.0.artifactId",
+        "$.frozenSnapshotPublications.0.headerDigest",
+        "$.frozenSnapshotPublications.0.materialLineage.artifactId",
+        "$.frozenSnapshotPublications.0.materialLineage.envelopeDigest",
+        "$.frozenSnapshotPublications.0.materialReferencesDigest",
+        "$.frozenSnapshotPublications.0.ownerStageReceiptDigest",
+        "$.frozenSnapshotPublications.0.privateWorkingContributionRefs",
+        "$.frozenSnapshotPublications.0.protectedBody.artifactId",
+        "$.frozenSnapshotPublications.0.protectedBody.bodyId",
+        "$.frozenSnapshotPublications.0.protectedBody.byteLength",
+        "$.frozenSnapshotPublications.0.protectedBody.exactBodyDigest",
+        "$.frozenSnapshotPublications.0.protectedBody.refDigest",
+        "$.frozenSnapshotPublications.0.requestFingerprint",
+        "$.frozenSnapshotPublications.0.snapshotDigest",
+        "$.idempotency.2.recordRef",
+        "$.idempotency.2.requestFingerprint",
+        "$.privateWorkingContributionFreezeIntents.0.contributionRefs.0",
+        "$.privateWorkingContributionFreezeIntents.0.intentDigest",
+        "$.privateWorkingContributionFreezeIntents.0.requestFingerprint",
+        "$.privateWorkingContributionPublications.0",
+        "$.privateWorkingContributionReceipts.0",
+        "$.publicationReceipts.1.artifactId",
+        "$.publicationReceipts.1.bodyRefDigest",
+        "$.publicationReceipts.1.eventId",
+        "$.publicationReceipts.1.headerDigest",
+        "$.publicationReceipts.1.materialLineageDigest",
+        "$.publicationReceipts.1.receiptDigest",
+        "$.publicationReceipts.1.receiptId",
+        "$.publicationReceipts.1.requestFingerprint",
+        "$.storeDigest"
+      ]
+    },
+    "authorizedSensitivity": {
+      "control": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "2913a63931fbe4b80ac66c45987b123795d8e670d5b3b41cc69443e85728300d",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 1,
+          "receipts": 1,
+          "uploads": 0,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 3,
+          "idempotency": 3
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 1,
+          "contributionReceipts": 1
+        }
+      },
+      "forbidden": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "e5fb8e19d6087c7ac8ad04297b7ccee60be453f8043957791942f9c2b7b6e1d6",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 1,
+          "receipts": 1,
+          "uploads": 0,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 3,
+          "idempotency": 3
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 1,
+          "contributionReceipts": 1
+        }
+      },
+      "exactDeclaredCanaryDeltaPaths": [
+        "$.events.2.eventId",
+        "$.events.2.privateWorkingContributionRefs.0.artifactId",
+        "$.events.2.privateWorkingContributionRefs.0.contributionDigest",
+        "$.events.2.recordDigest",
+        "$.events.2.recordRef",
+        "$.events.2.requestFingerprint",
+        "$.frozenSnapshotPublications.0.artifactId",
+        "$.frozenSnapshotPublications.0.headerDigest",
+        "$.frozenSnapshotPublications.0.materialLineage.artifactId",
+        "$.frozenSnapshotPublications.0.materialLineage.envelopeDigest",
+        "$.frozenSnapshotPublications.0.materialReferencesDigest",
+        "$.frozenSnapshotPublications.0.ownerStageReceiptDigest",
+        "$.frozenSnapshotPublications.0.privateWorkingContributionRefs.0.artifactId",
+        "$.frozenSnapshotPublications.0.privateWorkingContributionRefs.0.contributionDigest",
+        "$.frozenSnapshotPublications.0.protectedBody.artifactId",
+        "$.frozenSnapshotPublications.0.protectedBody.bodyId",
+        "$.frozenSnapshotPublications.0.protectedBody.exactBodyDigest",
+        "$.frozenSnapshotPublications.0.protectedBody.refDigest",
+        "$.frozenSnapshotPublications.0.requestFingerprint",
+        "$.frozenSnapshotPublications.0.snapshotDigest",
+        "$.idempotency.2.recordRef",
+        "$.idempotency.2.requestFingerprint",
+        "$.privateWorkingContributionFreezeIntents.0.contributionRefs.0.artifactId",
+        "$.privateWorkingContributionFreezeIntents.0.contributionRefs.0.contributionDigest",
+        "$.privateWorkingContributionFreezeIntents.0.intentDigest",
+        "$.privateWorkingContributionFreezeIntents.0.requestFingerprint",
+        "$.privateWorkingContributionPublications.0.artifactId",
+        "$.privateWorkingContributionPublications.0.contributionDigest",
+        "$.privateWorkingContributionPublications.0.ownerStageReceiptDigest",
+        "$.privateWorkingContributionPublications.0.protectedBody.artifactId",
+        "$.privateWorkingContributionPublications.0.protectedBody.bodyId",
+        "$.privateWorkingContributionPublications.0.protectedBody.exactBodyDigest",
+        "$.privateWorkingContributionPublications.0.protectedBody.refDigest",
+        "$.privateWorkingContributionPublications.0.publicationDigest",
+        "$.privateWorkingContributionPublications.0.snapshotId",
+        "$.privateWorkingContributionReceipts.0.artifactId",
+        "$.privateWorkingContributionReceipts.0.bodyRefDigest",
+        "$.privateWorkingContributionReceipts.0.contributionDigest",
+        "$.privateWorkingContributionReceipts.0.receiptDigest",
+        "$.privateWorkingContributionReceipts.0.receiptId",
+        "$.privateWorkingContributionReceipts.0.requestFingerprint",
+        "$.privateWorkingContributionReceipts.0.snapshotId",
+        "$.publicationReceipts.1.artifactId",
+        "$.publicationReceipts.1.bodyRefDigest",
+        "$.publicationReceipts.1.eventId",
+        "$.publicationReceipts.1.headerDigest",
+        "$.publicationReceipts.1.materialLineageDigest",
+        "$.publicationReceipts.1.receiptDigest",
+        "$.publicationReceipts.1.receiptId",
+        "$.publicationReceipts.1.requestFingerprint",
+        "$.storeDigest"
+      ]
+    },
+    "sourceContentDenied": {
+      "control": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "1aed84885e6d85bfc33d43df8b7baa2e26f4b1d97df19c486c26755caa883498",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 1,
+          "receipts": 1,
+          "uploads": 0,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 3,
+          "idempotency": 3
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 1,
+          "contributionReceipts": 1
+        }
+      },
+      "forbidden": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "1aed84885e6d85bfc33d43df8b7baa2e26f4b1d97df19c486c26755caa883498",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 1,
+          "receipts": 1,
+          "uploads": 0,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 3,
+          "idempotency": 3
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 1,
+          "contributionReceipts": 1
+        }
+      },
+      "nonPermittedEqual": true
+    },
+    "foreign-organization": {
+      "control": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "5f3de8d45469f43673eb641821ace4fa38923780f395f55739b754804a9b92a7",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 1,
+          "receipts": 1,
+          "uploads": 0,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 3,
+          "idempotency": 3
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 1,
+          "contributionReceipts": 1
+        }
+      },
+      "forbidden": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "75f74ba20629a1539e625b4406cf22a52a3e6fb0510d4d5f27b4ef12efe13e13",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 1,
+          "receipts": 1,
+          "uploads": 0,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 3,
+          "idempotency": 3
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 1,
+          "contributionReceipts": 1
+        }
+      },
+      "exactDeclaredCanaryDeltaPaths": [
+        "$.events.2.eventId",
+        "$.events.2.privateWorkingContributionRefs.0.artifactId",
+        "$.events.2.privateWorkingContributionRefs.0.contributionDigest",
+        "$.events.2.recordDigest",
+        "$.events.2.recordRef",
+        "$.events.2.requestFingerprint",
+        "$.frozenSnapshotPublications.0.artifactId",
+        "$.frozenSnapshotPublications.0.headerDigest",
+        "$.frozenSnapshotPublications.0.materialLineage.artifactId",
+        "$.frozenSnapshotPublications.0.materialLineage.envelopeDigest",
+        "$.frozenSnapshotPublications.0.materialReferencesDigest",
+        "$.frozenSnapshotPublications.0.ownerStageReceiptDigest",
+        "$.frozenSnapshotPublications.0.privateWorkingContributionRefs.0.artifactId",
+        "$.frozenSnapshotPublications.0.privateWorkingContributionRefs.0.contributionDigest",
+        "$.frozenSnapshotPublications.0.protectedBody.artifactId",
+        "$.frozenSnapshotPublications.0.protectedBody.bodyId",
+        "$.frozenSnapshotPublications.0.protectedBody.exactBodyDigest",
+        "$.frozenSnapshotPublications.0.protectedBody.refDigest",
+        "$.frozenSnapshotPublications.0.requestFingerprint",
+        "$.frozenSnapshotPublications.0.snapshotDigest",
+        "$.idempotency.2.recordRef",
+        "$.idempotency.2.requestFingerprint",
+        "$.privateWorkingContributionFreezeIntents.0.contributionRefs.0.artifactId",
+        "$.privateWorkingContributionFreezeIntents.0.contributionRefs.0.contributionDigest",
+        "$.privateWorkingContributionFreezeIntents.0.intentDigest",
+        "$.privateWorkingContributionFreezeIntents.0.requestFingerprint",
+        "$.privateWorkingContributionPublications.0.artifactId",
+        "$.privateWorkingContributionPublications.0.contributionDigest",
+        "$.privateWorkingContributionPublications.0.ownerStageReceiptDigest",
+        "$.privateWorkingContributionPublications.0.protectedBody.artifactId",
+        "$.privateWorkingContributionPublications.0.protectedBody.bodyId",
+        "$.privateWorkingContributionPublications.0.protectedBody.byteLength",
+        "$.privateWorkingContributionPublications.0.protectedBody.exactBodyDigest",
+        "$.privateWorkingContributionPublications.0.protectedBody.refDigest",
+        "$.privateWorkingContributionPublications.0.publicationDigest",
+        "$.privateWorkingContributionPublications.0.snapshotId",
+        "$.privateWorkingContributionReceipts.0.artifactId",
+        "$.privateWorkingContributionReceipts.0.bodyRefDigest",
+        "$.privateWorkingContributionReceipts.0.contributionDigest",
+        "$.privateWorkingContributionReceipts.0.receiptDigest",
+        "$.privateWorkingContributionReceipts.0.receiptId",
+        "$.privateWorkingContributionReceipts.0.requestFingerprint",
+        "$.privateWorkingContributionReceipts.0.snapshotId",
+        "$.publicationReceipts.1.artifactId",
+        "$.publicationReceipts.1.bodyRefDigest",
+        "$.publicationReceipts.1.eventId",
+        "$.publicationReceipts.1.headerDigest",
+        "$.publicationReceipts.1.materialLineageDigest",
+        "$.publicationReceipts.1.receiptDigest",
+        "$.publicationReceipts.1.receiptId",
+        "$.publicationReceipts.1.requestFingerprint",
+        "$.storeDigest"
+      ]
+    },
+    "wrong-product-question": {
+      "control": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "5f3de8d45469f43673eb641821ace4fa38923780f395f55739b754804a9b92a7",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 1,
+          "receipts": 1,
+          "uploads": 0,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 3,
+          "idempotency": 3
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 1,
+          "contributionReceipts": 1
+        }
+      },
+      "forbidden": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "75f74ba20629a1539e625b4406cf22a52a3e6fb0510d4d5f27b4ef12efe13e13",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 1,
+          "receipts": 1,
+          "uploads": 0,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 3,
+          "idempotency": 3
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 1,
+          "contributionReceipts": 1
+        }
+      },
+      "exactDeclaredCanaryDeltaPaths": [
+        "$.events.2.eventId",
+        "$.events.2.privateWorkingContributionRefs.0.artifactId",
+        "$.events.2.privateWorkingContributionRefs.0.contributionDigest",
+        "$.events.2.recordDigest",
+        "$.events.2.recordRef",
+        "$.events.2.requestFingerprint",
+        "$.frozenSnapshotPublications.0.artifactId",
+        "$.frozenSnapshotPublications.0.headerDigest",
+        "$.frozenSnapshotPublications.0.materialLineage.artifactId",
+        "$.frozenSnapshotPublications.0.materialLineage.envelopeDigest",
+        "$.frozenSnapshotPublications.0.materialReferencesDigest",
+        "$.frozenSnapshotPublications.0.ownerStageReceiptDigest",
+        "$.frozenSnapshotPublications.0.privateWorkingContributionRefs.0.artifactId",
+        "$.frozenSnapshotPublications.0.privateWorkingContributionRefs.0.contributionDigest",
+        "$.frozenSnapshotPublications.0.protectedBody.artifactId",
+        "$.frozenSnapshotPublications.0.protectedBody.bodyId",
+        "$.frozenSnapshotPublications.0.protectedBody.exactBodyDigest",
+        "$.frozenSnapshotPublications.0.protectedBody.refDigest",
+        "$.frozenSnapshotPublications.0.requestFingerprint",
+        "$.frozenSnapshotPublications.0.snapshotDigest",
+        "$.idempotency.2.recordRef",
+        "$.idempotency.2.requestFingerprint",
+        "$.privateWorkingContributionFreezeIntents.0.contributionRefs.0.artifactId",
+        "$.privateWorkingContributionFreezeIntents.0.contributionRefs.0.contributionDigest",
+        "$.privateWorkingContributionFreezeIntents.0.intentDigest",
+        "$.privateWorkingContributionFreezeIntents.0.requestFingerprint",
+        "$.privateWorkingContributionPublications.0.artifactId",
+        "$.privateWorkingContributionPublications.0.contributionDigest",
+        "$.privateWorkingContributionPublications.0.ownerStageReceiptDigest",
+        "$.privateWorkingContributionPublications.0.protectedBody.artifactId",
+        "$.privateWorkingContributionPublications.0.protectedBody.bodyId",
+        "$.privateWorkingContributionPublications.0.protectedBody.byteLength",
+        "$.privateWorkingContributionPublications.0.protectedBody.exactBodyDigest",
+        "$.privateWorkingContributionPublications.0.protectedBody.refDigest",
+        "$.privateWorkingContributionPublications.0.publicationDigest",
+        "$.privateWorkingContributionPublications.0.snapshotId",
+        "$.privateWorkingContributionReceipts.0.artifactId",
+        "$.privateWorkingContributionReceipts.0.bodyRefDigest",
+        "$.privateWorkingContributionReceipts.0.contributionDigest",
+        "$.privateWorkingContributionReceipts.0.receiptDigest",
+        "$.privateWorkingContributionReceipts.0.receiptId",
+        "$.privateWorkingContributionReceipts.0.requestFingerprint",
+        "$.privateWorkingContributionReceipts.0.snapshotId",
+        "$.publicationReceipts.1.artifactId",
+        "$.publicationReceipts.1.bodyRefDigest",
+        "$.publicationReceipts.1.eventId",
+        "$.publicationReceipts.1.headerDigest",
+        "$.publicationReceipts.1.materialLineageDigest",
+        "$.publicationReceipts.1.receiptDigest",
+        "$.publicationReceipts.1.receiptId",
+        "$.publicationReceipts.1.requestFingerprint",
+        "$.storeDigest"
+      ]
+    },
+    "wrong-occurrence": {
+      "control": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "5f3de8d45469f43673eb641821ace4fa38923780f395f55739b754804a9b92a7",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 1,
+          "receipts": 1,
+          "uploads": 0,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 3,
+          "idempotency": 3
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 1,
+          "contributionReceipts": 1
+        }
+      },
+      "forbidden": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "75f74ba20629a1539e625b4406cf22a52a3e6fb0510d4d5f27b4ef12efe13e13",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 1,
+          "receipts": 1,
+          "uploads": 0,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 3,
+          "idempotency": 3
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 1,
+          "contributionReceipts": 1
+        }
+      },
+      "exactDeclaredCanaryDeltaPaths": [
+        "$.events.2.eventId",
+        "$.events.2.privateWorkingContributionRefs.0.artifactId",
+        "$.events.2.privateWorkingContributionRefs.0.contributionDigest",
+        "$.events.2.recordDigest",
+        "$.events.2.recordRef",
+        "$.events.2.requestFingerprint",
+        "$.frozenSnapshotPublications.0.artifactId",
+        "$.frozenSnapshotPublications.0.headerDigest",
+        "$.frozenSnapshotPublications.0.materialLineage.artifactId",
+        "$.frozenSnapshotPublications.0.materialLineage.envelopeDigest",
+        "$.frozenSnapshotPublications.0.materialReferencesDigest",
+        "$.frozenSnapshotPublications.0.ownerStageReceiptDigest",
+        "$.frozenSnapshotPublications.0.privateWorkingContributionRefs.0.artifactId",
+        "$.frozenSnapshotPublications.0.privateWorkingContributionRefs.0.contributionDigest",
+        "$.frozenSnapshotPublications.0.protectedBody.artifactId",
+        "$.frozenSnapshotPublications.0.protectedBody.bodyId",
+        "$.frozenSnapshotPublications.0.protectedBody.exactBodyDigest",
+        "$.frozenSnapshotPublications.0.protectedBody.refDigest",
+        "$.frozenSnapshotPublications.0.requestFingerprint",
+        "$.frozenSnapshotPublications.0.snapshotDigest",
+        "$.idempotency.2.recordRef",
+        "$.idempotency.2.requestFingerprint",
+        "$.privateWorkingContributionFreezeIntents.0.contributionRefs.0.artifactId",
+        "$.privateWorkingContributionFreezeIntents.0.contributionRefs.0.contributionDigest",
+        "$.privateWorkingContributionFreezeIntents.0.intentDigest",
+        "$.privateWorkingContributionFreezeIntents.0.requestFingerprint",
+        "$.privateWorkingContributionPublications.0.artifactId",
+        "$.privateWorkingContributionPublications.0.contributionDigest",
+        "$.privateWorkingContributionPublications.0.ownerStageReceiptDigest",
+        "$.privateWorkingContributionPublications.0.protectedBody.artifactId",
+        "$.privateWorkingContributionPublications.0.protectedBody.bodyId",
+        "$.privateWorkingContributionPublications.0.protectedBody.byteLength",
+        "$.privateWorkingContributionPublications.0.protectedBody.exactBodyDigest",
+        "$.privateWorkingContributionPublications.0.protectedBody.refDigest",
+        "$.privateWorkingContributionPublications.0.publicationDigest",
+        "$.privateWorkingContributionPublications.0.snapshotId",
+        "$.privateWorkingContributionReceipts.0.artifactId",
+        "$.privateWorkingContributionReceipts.0.bodyRefDigest",
+        "$.privateWorkingContributionReceipts.0.contributionDigest",
+        "$.privateWorkingContributionReceipts.0.receiptDigest",
+        "$.privateWorkingContributionReceipts.0.receiptId",
+        "$.privateWorkingContributionReceipts.0.requestFingerprint",
+        "$.privateWorkingContributionReceipts.0.snapshotId",
+        "$.publicationReceipts.1.artifactId",
+        "$.publicationReceipts.1.bodyRefDigest",
+        "$.publicationReceipts.1.eventId",
+        "$.publicationReceipts.1.headerDigest",
+        "$.publicationReceipts.1.materialLineageDigest",
+        "$.publicationReceipts.1.receiptDigest",
+        "$.publicationReceipts.1.receiptId",
+        "$.publicationReceipts.1.requestFingerprint",
+        "$.storeDigest"
+      ]
+    },
+    "ambiguous-artifact-request": {
+      "control": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "5f3de8d45469f43673eb641821ace4fa38923780f395f55739b754804a9b92a7",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 1,
+          "receipts": 1,
+          "uploads": 0,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 3,
+          "idempotency": 3
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 1,
+          "contributionReceipts": 1
+        }
+      },
+      "forbidden": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "75f74ba20629a1539e625b4406cf22a52a3e6fb0510d4d5f27b4ef12efe13e13",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 1,
+          "receipts": 1,
+          "uploads": 0,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 3,
+          "idempotency": 3
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 1,
+          "contributionReceipts": 1
+        }
+      },
+      "exactDeclaredCanaryDeltaPaths": [
+        "$.events.2.eventId",
+        "$.events.2.privateWorkingContributionRefs.0.artifactId",
+        "$.events.2.privateWorkingContributionRefs.0.contributionDigest",
+        "$.events.2.recordDigest",
+        "$.events.2.recordRef",
+        "$.events.2.requestFingerprint",
+        "$.frozenSnapshotPublications.0.artifactId",
+        "$.frozenSnapshotPublications.0.headerDigest",
+        "$.frozenSnapshotPublications.0.materialLineage.artifactId",
+        "$.frozenSnapshotPublications.0.materialLineage.envelopeDigest",
+        "$.frozenSnapshotPublications.0.materialReferencesDigest",
+        "$.frozenSnapshotPublications.0.ownerStageReceiptDigest",
+        "$.frozenSnapshotPublications.0.privateWorkingContributionRefs.0.artifactId",
+        "$.frozenSnapshotPublications.0.privateWorkingContributionRefs.0.contributionDigest",
+        "$.frozenSnapshotPublications.0.protectedBody.artifactId",
+        "$.frozenSnapshotPublications.0.protectedBody.bodyId",
+        "$.frozenSnapshotPublications.0.protectedBody.exactBodyDigest",
+        "$.frozenSnapshotPublications.0.protectedBody.refDigest",
+        "$.frozenSnapshotPublications.0.requestFingerprint",
+        "$.frozenSnapshotPublications.0.snapshotDigest",
+        "$.idempotency.2.recordRef",
+        "$.idempotency.2.requestFingerprint",
+        "$.privateWorkingContributionFreezeIntents.0.contributionRefs.0.artifactId",
+        "$.privateWorkingContributionFreezeIntents.0.contributionRefs.0.contributionDigest",
+        "$.privateWorkingContributionFreezeIntents.0.intentDigest",
+        "$.privateWorkingContributionFreezeIntents.0.requestFingerprint",
+        "$.privateWorkingContributionPublications.0.artifactId",
+        "$.privateWorkingContributionPublications.0.contributionDigest",
+        "$.privateWorkingContributionPublications.0.ownerStageReceiptDigest",
+        "$.privateWorkingContributionPublications.0.protectedBody.artifactId",
+        "$.privateWorkingContributionPublications.0.protectedBody.bodyId",
+        "$.privateWorkingContributionPublications.0.protectedBody.byteLength",
+        "$.privateWorkingContributionPublications.0.protectedBody.exactBodyDigest",
+        "$.privateWorkingContributionPublications.0.protectedBody.refDigest",
+        "$.privateWorkingContributionPublications.0.publicationDigest",
+        "$.privateWorkingContributionPublications.0.snapshotId",
+        "$.privateWorkingContributionReceipts.0.artifactId",
+        "$.privateWorkingContributionReceipts.0.bodyRefDigest",
+        "$.privateWorkingContributionReceipts.0.contributionDigest",
+        "$.privateWorkingContributionReceipts.0.receiptDigest",
+        "$.privateWorkingContributionReceipts.0.receiptId",
+        "$.privateWorkingContributionReceipts.0.requestFingerprint",
+        "$.privateWorkingContributionReceipts.0.snapshotId",
+        "$.publicationReceipts.1.artifactId",
+        "$.publicationReceipts.1.bodyRefDigest",
+        "$.publicationReceipts.1.eventId",
+        "$.publicationReceipts.1.headerDigest",
+        "$.publicationReceipts.1.materialLineageDigest",
+        "$.publicationReceipts.1.receiptDigest",
+        "$.publicationReceipts.1.receiptId",
+        "$.publicationReceipts.1.requestFingerprint",
+        "$.storeDigest"
+      ]
+    },
+    "revokedGovernance": {
+      "control": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "8f277d8841910a4281d7222f61621c9797de8ae27e7a760d734d4f78ccc74c32",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 1,
+          "receipts": 1,
+          "uploads": 0,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 3,
+          "idempotency": 3
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 1,
+          "contributionReceipts": 1
+        }
+      },
+      "forbidden": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "75f74ba20629a1539e625b4406cf22a52a3e6fb0510d4d5f27b4ef12efe13e13",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 1,
+          "receipts": 1,
+          "uploads": 0,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 3,
+          "idempotency": 3
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 1,
+          "contributionReceipts": 1
+        }
+      },
+      "exactDeclaredCanaryDeltaPaths": [
+        "$.events.2.eventId",
+        "$.events.2.privateWorkingContributionRefs.0.artifactId",
+        "$.events.2.privateWorkingContributionRefs.0.contributionDigest",
+        "$.events.2.recordDigest",
+        "$.events.2.recordRef",
+        "$.events.2.requestFingerprint",
+        "$.frozenSnapshotPublications.0.artifactId",
+        "$.frozenSnapshotPublications.0.headerDigest",
+        "$.frozenSnapshotPublications.0.materialLineage.artifactId",
+        "$.frozenSnapshotPublications.0.materialLineage.envelopeDigest",
+        "$.frozenSnapshotPublications.0.materialReferencesDigest",
+        "$.frozenSnapshotPublications.0.ownerStageReceiptDigest",
+        "$.frozenSnapshotPublications.0.privateWorkingContributionRefs.0.artifactId",
+        "$.frozenSnapshotPublications.0.privateWorkingContributionRefs.0.contributionDigest",
+        "$.frozenSnapshotPublications.0.protectedBody.artifactId",
+        "$.frozenSnapshotPublications.0.protectedBody.bodyId",
+        "$.frozenSnapshotPublications.0.protectedBody.exactBodyDigest",
+        "$.frozenSnapshotPublications.0.protectedBody.refDigest",
+        "$.frozenSnapshotPublications.0.requestFingerprint",
+        "$.frozenSnapshotPublications.0.snapshotDigest",
+        "$.idempotency.2.recordRef",
+        "$.idempotency.2.requestFingerprint",
+        "$.privateWorkingContributionFreezeIntents.0.contributionRefs.0.artifactId",
+        "$.privateWorkingContributionFreezeIntents.0.contributionRefs.0.contributionDigest",
+        "$.privateWorkingContributionFreezeIntents.0.intentDigest",
+        "$.privateWorkingContributionFreezeIntents.0.requestFingerprint",
+        "$.privateWorkingContributionPublications.0.artifactId",
+        "$.privateWorkingContributionPublications.0.contributionDigest",
+        "$.privateWorkingContributionPublications.0.ownerStageReceiptDigest",
+        "$.privateWorkingContributionPublications.0.protectedBody.artifactId",
+        "$.privateWorkingContributionPublications.0.protectedBody.bodyId",
+        "$.privateWorkingContributionPublications.0.protectedBody.byteLength",
+        "$.privateWorkingContributionPublications.0.protectedBody.exactBodyDigest",
+        "$.privateWorkingContributionPublications.0.protectedBody.refDigest",
+        "$.privateWorkingContributionPublications.0.publicationDigest",
+        "$.privateWorkingContributionPublications.0.snapshotId",
+        "$.privateWorkingContributionReceipts.0.artifactId",
+        "$.privateWorkingContributionReceipts.0.bodyRefDigest",
+        "$.privateWorkingContributionReceipts.0.contributionDigest",
+        "$.privateWorkingContributionReceipts.0.receiptDigest",
+        "$.privateWorkingContributionReceipts.0.receiptId",
+        "$.privateWorkingContributionReceipts.0.requestFingerprint",
+        "$.privateWorkingContributionReceipts.0.snapshotId",
+        "$.publicationReceipts.1.artifactId",
+        "$.publicationReceipts.1.bodyRefDigest",
+        "$.publicationReceipts.1.eventId",
+        "$.publicationReceipts.1.headerDigest",
+        "$.publicationReceipts.1.materialLineageDigest",
+        "$.publicationReceipts.1.receiptDigest",
+        "$.publicationReceipts.1.receiptId",
+        "$.publicationReceipts.1.requestFingerprint",
+        "$.storeDigest"
+      ]
+    },
+    "sourceContentDeniedPostWritePreRead": {
+      "control": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "9e0755f004fda8a1c706f34d592b10043c9afafa755a2c70b936a92e4e4710a2",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 1,
+          "receipts": 1,
+          "uploads": 1,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 4,
+          "idempotency": 4
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 1,
+          "contributionReceipts": 1
+        }
+      },
+      "forbidden": {
+        "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
+        "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
+        "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
+        "fullDurableStateDigest": "92977b5f118d36c06b3b3a3aeb1a5e3db18ed2166ced08c5fe7b2215125f87c0",
+        "completeInventory": {
+          "contexts": 1,
+          "prepared": 1,
+          "frozen": 1,
+          "contributions": 1,
+          "receipts": 1,
+          "uploads": 1,
+          "proposals": 0,
+          "dispositions": 0,
+          "routingReceipts": 0,
+          "routingLinks": 0,
+          "whatChanged": 0,
+          "closures": 0,
+          "successors": 0,
+          "materializations": 0,
+          "historicalLinks": 0,
+          "events": 4,
+          "idempotency": 4
+        },
+        "permittedProtectedInventory": {
+          "contributionBodies": 1,
+          "contributionReceipts": 1
+        }
+      },
+      "exactDeclaredCanaryDeltaPaths": [
+        "$.events.3.eventId",
+        "$.events.3.recordDigest",
+        "$.events.3.recordRef",
+        "$.events.3.requestFingerprint",
+        "$.idempotency.3.recordRef",
+        "$.idempotency.3.requestFingerprint",
+        "$.storeDigest",
+        "$.uploadReceipts.0.byteLength",
+        "$.uploadReceipts.0.exactContentDigest",
+        "$.uploadReceipts.0.normalizedContentDigest",
+        "$.uploadReceipts.0.requestFingerprint",
+        "$.uploadReceipts.0.sourceBindingId",
+        "$.uploadReceipts.0.sourceBindingMutationReceiptDigest",
+        "$.uploadReceipts.0.sourceContentVersionId",
+        "$.uploadReceipts.0.sourceContentWriteReceiptDigest",
+        "$.uploadReceipts.0.uploadReceiptId"
+      ]
+    }
+  },
+  "denied": {
+    "contractVersion": "1",
+    "equal": true,
+    "earliestDivergence": null,
+    "differingPaths": [
+      "$.durableInventory.contributions",
+      "$.durableInventory.receipts"
+    ],
+    "permittedDifferingPaths": [
+      "$.durableInventory.contributions",
+      "$.durableInventory.receipts"
+    ],
+    "unexpectedDifferingPaths": [],
+    "controlDigest": "cef8bc7f01689f2a879b498ceb4d1bd54ee3096647c4b0c63a54330629e30749",
+    "counterfactualDigest": "af3644aa6be01c247c0233fda096df28e025b2f89a800e27bc9195c9f7d26e3c"
+  },
+  "distinctDenied": {
+    "foreign-organization": {
+      "contractVersion": "1",
+      "equal": true,
+      "earliestDivergence": null,
+      "differingPaths": [],
+      "permittedDifferingPaths": [],
+      "unexpectedDifferingPaths": [],
+      "controlDigest": "bfa5692acc0ccd35bc53865adc1cadc6d64cbc940b8bf90e26c1ff64dc47c4de",
+      "counterfactualDigest": "bfa5692acc0ccd35bc53865adc1cadc6d64cbc940b8bf90e26c1ff64dc47c4de"
+    },
+    "wrong-product-question": {
+      "contractVersion": "1",
+      "equal": true,
+      "earliestDivergence": null,
+      "differingPaths": [],
+      "permittedDifferingPaths": [],
+      "unexpectedDifferingPaths": [],
+      "controlDigest": "158ebddc90e7587caa4aa51ae9ac22f533175080c3663d26e8068971416ff2ab",
+      "counterfactualDigest": "158ebddc90e7587caa4aa51ae9ac22f533175080c3663d26e8068971416ff2ab"
+    },
+    "wrong-occurrence": {
+      "contractVersion": "1",
+      "equal": true,
+      "earliestDivergence": null,
+      "differingPaths": [],
+      "permittedDifferingPaths": [],
+      "unexpectedDifferingPaths": [],
+      "controlDigest": "719934b07d1bfd905de4836bff5a7798c9f97fc9834cc319dbf4a69f0ab6a63b",
+      "counterfactualDigest": "719934b07d1bfd905de4836bff5a7798c9f97fc9834cc319dbf4a69f0ab6a63b"
+    },
+    "ambiguous-artifact-request": {
+      "contractVersion": "1",
+      "equal": true,
+      "earliestDivergence": null,
+      "differingPaths": [],
+      "permittedDifferingPaths": [],
+      "unexpectedDifferingPaths": [],
+      "controlDigest": "27d1dd71f21bd7fdd2b1211bb8a47ec4654f0d35895947ddce93796cc26e96b6",
+      "counterfactualDigest": "27d1dd71f21bd7fdd2b1211bb8a47ec4654f0d35895947ddce93796cc26e96b6"
+    },
+    "revoked-governance": {
+      "contractVersion": "1",
+      "equal": true,
+      "earliestDivergence": null,
+      "differingPaths": [],
+      "permittedDifferingPaths": [],
+      "unexpectedDifferingPaths": [],
+      "controlDigest": "b5422b429161870327108e34b1c1ae5b2e486f47bf938cd619aa1a7fb7532b9e",
+      "counterfactualDigest": "b5422b429161870327108e34b1c1ae5b2e486f47bf938cd619aa1a7fb7532b9e"
+    },
+    "source-content-denied": {
+      "contractVersion": "1",
+      "equal": true,
+      "earliestDivergence": null,
+      "differingPaths": [],
+      "permittedDifferingPaths": [],
+      "unexpectedDifferingPaths": [],
+      "controlDigest": "ba6fbfecb3824dc38cca3403a961cbf0f2a327ea9468925bd899f7ee2a54949b",
+      "counterfactualDigest": "ba6fbfecb3824dc38cca3403a961cbf0f2a327ea9468925bd899f7ee2a54949b"
+    }
+  },
+  "positive": {
+    "privateWorking": {
+      "contractVersion": "1",
+      "equal": false,
+      "earliestDivergence": "$.publicResult.itemDigests.0",
+      "differingPaths": [
+        "$.publicResult.itemDigests.0",
+        "$.safeDigests.0"
+      ],
+      "permittedDifferingPaths": [],
+      "unexpectedDifferingPaths": [
+        "$.publicResult.itemDigests.0",
+        "$.safeDigests.0"
+      ],
+      "controlDigest": "ef6586183d69e4e2296d04da8192e58852d52313915c75df3af5ada37b3506d0",
+      "counterfactualDigest": "37cb8a8f508034b60d59fccbb055638cb60ab2f4e32b6cb88a854320c595fa48"
+    }
+  },
+  "currentArtifactAccess": {
+    "ownerScenarioChecks": 125,
+    "result": "PASS"
+  },
+  "freshProcess": {
+    "total": 6,
+    "protectedBodyReads": 1,
+    "stableRevision": true,
+    "deterministicRepeat": true,
+    "exactReplay": true,
+    "incompatibleReplay": "rejected",
+    "currentArtifactDenied": {
+      "contractVersion": "1",
+      "resultCategory": "unavailable",
+      "protectedBodyReads": 0,
+      "revisionBefore": "3dfb46c0a0ab8e9dc70fa3b89db4b43815c2dc2872a20878f44aa70292b38318",
+      "revisionAfter": "3dfb46c0a0ab8e9dc70fa3b89db4b43815c2dc2872a20878f44aa70292b38318"
+    },
+    "reviewedClosureReload": {
+      "contractVersion": "1",
+      "resultCategory": "eligible",
+      "closureIdDigest": "a23d1e6df4a2d6cd6e0aa7fb58f4a24695ea7988adf28f27473c9b745b6fd6bf",
+      "futureLinkDigest": "7f7d83bb40a3af4fd188e88c4715d2de9f5ae88b874305351218c35edf7d6fc3",
+      "protectedBodyReads": 0,
+      "revision": "1301d693a2041648603ecb01696148623c172f5400b9741a345a3bb24639784d"
+    },
+    "reviewedClosureDenied": {
+      "contractVersion": "1",
+      "resultCategory": "unavailable",
+      "closureIdDigest": null,
+      "futureLinkDigest": null,
+      "protectedBodyReads": 0,
+      "revision": "1301d693a2041648603ecb01696148623c172f5400b9741a345a3bb24639784d"
+    },
+    "successorReload": {
+      "contractVersion": "1",
+      "resultCategory": "eligible",
+      "conversationDigest": "14366b94674cd6d30dad680daf47404006be32bb18e7d762e2d04f04bc374e98",
+      "currentStep": "freeze",
+      "preparedRevisionDigest": "6ce636e16f694c2e9cf1904391bd199444903eab80721ef1db5c862fe145a8bf",
+      "protectedBodyReads": 2,
+      "revision": "1301d693a2041648603ecb01696148623c172f5400b9741a345a3bb24639784d",
+      "successorLineageVariant": null,
+      "understandingOperationCount": 1,
+      "understandingReceiptCount": 1,
+      "prepareAgainCategory": "eligible",
+      "prepareAgainDigest": "bed0d0774a552578f5ef5184260c1b1cdac4018c8f8015750100a1430d845021"
+    }
+  },
+  "successor": {
+    "deterministicOccurrenceIdentity": "14366b94674cd6d30dad680daf47404006be32bb18e7d762e2d04f04bc374e98",
+    "exactReplay": true,
+    "linkCount": 1
+  },
+  "emptyContribution": {
+    "capture": "rejected",
+    "closure": "rejected",
+    "review": {
+      "result": "completed",
+      "proposalCount": 4,
+      "dispositionCount": 4
+    },
+    "invalidClosureRecords": 0,
+    "syntheticContributions": 0,
+    "replaySafe": {
+      "parentRevisionStable": true,
+      "freshRevisionStable": true
+    },
+    "freshReload": {
+      "contractVersion": "1",
+      "capture": "rejected",
+      "closure": "rejected",
+      "revisionBefore": "30fd7414230eb11e483db803d80650879bd11d579c095776d1ec0701a9f50f1a",
+      "revisionAfter": "30fd7414230eb11e483db803d80650879bd11d579c095776d1ec0701a9f50f1a",
+      "invalidClosureRecords": 0,
+      "syntheticContributions": 0,
+      "protectedBodyReads": 0
+    }
+  },
+  "scanner": {
+    "rootsScanned": 46,
+    "expectedProtectedStorageFindings": 7,
+    "leakageFindings": 0,
+    "sensitivityCategories": 12,
+    "falsePositive": 0
+  },
+  "measured": {
+    "deniedBodyReads": 0,
+    "authorizedBodyReads": 2,
+    "deniedSourceReads": 0
+  },
+  "supportingOwners": [
+    {
+      "script": "validate:product-artifact-authorization-before-body-read",
+      "status": "PASS",
+      "safeDigest": "b5662c16c66170f5e4eda647c3f698b3641389e48e74a23ef5455c8fa594b2e9"
+    },
+    {
+      "script": "validate:leadership-conversation-replay",
+      "status": "PASS",
+      "safeDigest": "491aec1ebad91c6cf26c97551290e64a601a285be491efe32e9586b89de321c6"
+    },
+    {
+      "script": "validate:prepare-again-current-access",
+      "status": "PASS",
+      "safeDigest": "dcce5f81b6aa36fddd316595b8a619380f81f707f3dd07239cae42162726398a"
+    },
+    {
+      "script": "validate:workflow-replay-current-access",
+      "status": "PASS",
+      "safeDigest": "6cdbfe5fb33082540c27b8c3ce864cf00b59705716afc0db0e6d4b85883d490a"
+    }
+  ],
+  "cleanup": {
+    "status": "PASS",
+    "allocatedRoots": 46,
+    "rootsVerifiedAbsent": 46,
+    "rootsRemaining": 0,
+    "childProcessesStarted": 13,
+    "childProcessesExited": 13,
+    "childProcessesRemaining": 0,
+    "stagedStateBefore": "empty",
+    "stagedStateAfter": "empty",
+    "browserProfilesCreated": 0,
+    "serversCreated": 0,
+    "externalStateCreated": false
+  },
+  "deterministicRepeatStatus": {
+    "status": "PASS",
+    "semanticRunDigest": "e2da77885e5c3de620bf5cea766c5a8b85509ad075285902c967806195c64313",
+    "separateProcess": true
+  },
+  "evidenceHygieneStatus": "PASS",
+  "sourceDigest": "2316db19a61709c69abf4a717593831a25f898b1313a01143fb672090b67f24e",
+  "resultDigest": "c896d5fd2fd9b4014f09de4d0bba801849756a0275808c0c5dc36ea38c44bae3"
+}
