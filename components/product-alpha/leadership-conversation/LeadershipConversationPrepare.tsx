@@ -1,6 +1,66 @@
-import type {ChiefFirstPrepareViewV1} from "../../../product/workflow/leadershipConversation";
-import type {ChiefOfStaffValueItemV1,ChiefOfStaffValueLayerV1} from "../../../product/workflow/leadershipConversation/chiefCommunicationPlan";
+import type { ChiefFirstPrepareViewV1 } from "../../../product/workflow/leadershipConversation";
+import type { ChiefOfStaffValueItemV1, ChiefOfStaffValueLayerV1 } from "../../../product/workflow/leadershipConversation/chiefCommunicationPlan";
 import styles from "./LeadershipConversationExperience.module.css";
-const List=({items}:{items:string[]})=><ul>{items.map(item=><li key={item}>{item}</li>)}</ul>;
-const ValueList=({items,empty}:{items:ChiefOfStaffValueItemV1[];empty:string})=>items.length?<ul>{items.map(item=><li key={item.itemId}><span className={styles.epistemic}>{item.status}</span>{item.text}</li>)}</ul>:<p className={styles.quiet}>{empty}</p>;
-export function LeadershipConversationPrepare({prepare,valueLayer}:{prepare:ChiefFirstPrepareViewV1;valueLayer?:ChiefOfStaffValueLayerV1}){if(!valueLayer)return <section aria-labelledby="first-prepare-heading"><p>Prepared · guidance only</p><h2 id="first-prepare-heading">Prepare</h2><h3>What changed?</h3><List items={prepare.whatChanged}/><h3>What matters now?</h3><List items={prepare.whatMattersNow}/><h3>Where is the hidden tension?</h3><List items={prepare.hiddenTension}/><h3>What might surprise you?</h3><List items={prepare.possibleSurprise}/><h3>What should you ask?</h3><List items={prepare.questions}/><h3>What happened last time?</h3><p>{prepare.priorCycle.message}</p><details><summary>Sources, uncertainty, and reasoning</summary><h4>Sources available to you</h4><ul>{prepare.sourceBasis.map(item=><li key={item.sourceRef}>{item.label}</li>)}</ul><h4>Uncertainty</h4><List items={prepare.uncertainty}/><h4>Reasoning</h4><List items={prepare.reasoning}/><h4>Other explanations and unknowns</h4><List items={prepare.competingExplanations}/></details></section>;return <section aria-labelledby="first-prepare-heading" className={styles.valueLayer}><p>Prepared · guidance only</p><h2 id="first-prepare-heading">Your meeting brief</h2><section className={styles.priority}><h3>What deserves your attention</h3><ValueList items={valueLayer.attention} empty="No supported priority is available yet."/></section><div className={styles.valueGrid}><section><h3>Why it matters</h3><ValueList items={valueLayer.whyItMatters} empty="Discovery does not yet have enough support to say why."/></section><section><h3>What may surprise you</h3><ValueList items={valueLayer.surprises} empty="No supported surprise is available."/></section><section><h3>Consequential tensions</h3><ValueList items={valueLayer.tensions} empty="No consequential tension is supported."/></section><section><h3>Questions worth asking</h3><ValueList items={valueLayer.questions} empty="No grounded question is available."/></section></div><section className={styles.acquire}><h3>What would improve understanding</h3><ValueList items={valueLayer.acquisition} empty="Discovery abstains from recommending evidence acquisition without a grounded gap."/></section><h3>What changed since last time</h3>{prepare.priorCycle.status==="none"?<p>Change comparison will begin after this meeting cycle is completed.</p>:<ValueList items={valueLayer.changed} empty="No material change is supported."/>}<p>{prepare.priorCycle.message}</p><details><summary>How Discovery reached this view</summary><p className={styles.legend}>Supported = grounded in authorized material · Inferred = reasoned from that material · Suspected = a bounded possibility · Unknown = not established.</p><h4>What Discovery does not know</h4><ValueList items={valueLayer.unknowns} empty="No additional unknown is represented."/><h4>Sources available to you</h4><ul>{prepare.sourceBasis.map(item=><li key={item.sourceRef}>{item.label}</li>)}</ul><h4>Reasoning and alternatives</h4><ValueList items={valueLayer.details} empty="No further reasoning is available."/></details></section>}
+
+const List = ({ items }: { items: string[] }) => <ul>{items.map(item => <li key={item}>{item}</li>)}</ul>;
+const ValueList = ({ items, empty }: { items: ChiefOfStaffValueItemV1[]; empty: string }) => items.length
+  ? <ul>{items.map(item => <li key={item.itemId}><span className={styles.epistemic}>{item.status}</span>{item.text}</li>)}</ul>
+  : <p className={styles.quiet}>{empty}</p>;
+
+export function LeadershipConversationPrepare({ prepare, valueLayer }: { prepare: ChiefFirstPrepareViewV1; valueLayer?: ChiefOfStaffValueLayerV1 }) {
+  if (!valueLayer) return <section aria-labelledby="first-prepare-heading">
+    <p>Prepared · guidance only</p>
+    <h2 id="first-prepare-heading">Prepare</h2>
+    <h3>What changed?</h3><List items={prepare.whatChanged} />
+    <h3>What matters now?</h3><List items={prepare.whatMattersNow} />
+    <h3>Where is the hidden tension?</h3><List items={prepare.hiddenTension} />
+    <h3>What might surprise you?</h3><List items={prepare.possibleSurprise} />
+    <h3>What should you ask?</h3><List items={prepare.questions} />
+    <h3>What happened last time?</h3><p>{prepare.priorCycle.message}</p>
+    <details>
+      <summary>Sources, uncertainty, and reasoning</summary>
+      <h4>Sources available to you</h4>
+      <ul>{prepare.sourceBasis.map(item => <li key={item.sourceRef}>{item.label}</li>)}</ul>
+      <h4>Uncertainty</h4><List items={prepare.uncertainty} />
+      <h4>Reasoning</h4><List items={prepare.reasoning} />
+      <h4>Other explanations and unknowns</h4><List items={prepare.competingExplanations} />
+    </details>
+  </section>;
+
+  return <section aria-labelledby="first-prepare-heading" className={styles.valueLayer}>
+    <p>Prepared · guidance only</p>
+    <h2 id="first-prepare-heading">Your meeting brief</h2>
+    <section className={styles.priority}>
+      <h3>What deserves your attention</h3>
+      <ValueList items={valueLayer.attention} empty="No supported priority is available yet." />
+    </section>
+    <section>
+      <h3>Why it matters</h3>
+      <ValueList items={valueLayer.whyItMatters} empty="Discovery does not yet have enough support to say why." />
+    </section>
+    <h3>What changed since last time</h3>
+    {prepare.priorCycle.status === "none"
+      ? <p>Change comparison will begin after this meeting cycle is completed.</p>
+      : <ValueList items={valueLayer.changed} empty="No material change is supported." />}
+    <p>{prepare.priorCycle.message}</p>
+    <details>
+      <summary>Explore questions, tensions, and what would improve understanding</summary>
+      <div className={styles.valueGrid}>
+        <section><h3>What may surprise you</h3><ValueList items={valueLayer.surprises} empty="No supported surprise is available." /></section>
+        <section><h3>Consequential tensions</h3><ValueList items={valueLayer.tensions} empty="No consequential tension is supported." /></section>
+        <section><h3>Questions worth asking</h3><ValueList items={valueLayer.questions} empty="No grounded question is available." /></section>
+        <section className={styles.acquire}><h3>What would improve understanding</h3><ValueList items={valueLayer.acquisition} empty="Discovery abstains from recommending evidence acquisition without a grounded gap." /></section>
+      </div>
+    </details>
+    <details>
+      <summary>How Discovery reached this view</summary>
+      <p className={styles.legend}>Supported = grounded in authorized material · Inferred = reasoned from that material · Suspected = a bounded possibility · Unknown = not established.</p>
+      <h4>What Discovery does not know</h4>
+      <ValueList items={valueLayer.unknowns} empty="No additional unknown is represented." />
+      <h4>Sources available to you</h4>
+      <ul>{prepare.sourceBasis.map(item => <li key={item.sourceRef}>{item.label}</li>)}</ul>
+      <h4>Reasoning and alternatives</h4>
+      <ValueList items={valueLayer.details} empty="No further reasoning is available." />
+    </details>
+  </section>;
+}

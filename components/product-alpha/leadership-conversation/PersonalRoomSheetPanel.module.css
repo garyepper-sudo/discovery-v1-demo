@@ -1,16 +1,18 @@
 .container { margin-block: 1rem; }
-.privateCard { background: #eef0fb; border: 1px solid #aaa5d3; border-radius: .75rem; padding: 1rem; }
+.privateCard { background: #f0effb; border: 1px solid #aaa5d3; border-radius: 1rem; padding: clamp(1rem, 3vw, 1.5rem); box-shadow: 0 8px 24px rgb(76 71 143 / 8%); }
 .privateHeading { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
 .privateHeading h2, .privateHeading p { margin-block: .3rem; }
-.eyebrow { color: #5145a6; font-weight: 700; }
-.sheet { border: 1px solid currentColor; border-radius: .5rem; max-width: 48rem; padding: 1.25rem; }
+.eyebrow { color: #5145a6; font-weight: 750; }
+.sheet { border: 1px solid #aaa5d3; background: #fff; border-radius: .75rem; max-width: 48rem; padding: 1.25rem; }
 .sheet section { break-inside: avoid; margin-block: 1rem; }
 .sheet h2, .sheet h3, .sheet p { margin-block: .35rem; }
 .boundary { font-weight: 650; }
 .controls { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; margin-block: 1rem; }
 .controls p, .controls label { flex-basis: 100%; }
 .selectable { display: flex; align-items: flex-start; gap: .6rem; margin-block: .65rem; }
-.selectable input { margin-top: .2rem; }
+.selectable input { width: 1.15rem; height: 1.15rem; margin-top: .2rem; flex: 0 0 auto; }
+.contribute { color: #fff !important; background: #5145a6 !important; }
+.privateCard button:focus-visible, .privateCard input:focus-visible { outline: 3px solid #e26f22; outline-offset: 3px; }
 @media(max-width:700px){.privateHeading{display:block}.privateHeading button{width:100%;margin-top:.75rem}}
 @media print {
   .controls { display: none !important; }
