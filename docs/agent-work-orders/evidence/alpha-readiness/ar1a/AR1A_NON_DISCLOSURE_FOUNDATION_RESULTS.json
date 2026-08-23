@@ -1,10 +1,13 @@
 {
   "validation": "alpha-readiness-ar1a",
   "foundationStatus": "PASS",
-  "productReadinessStatus": "BLOCKED_PRODUCT_DEFECT",
-  "blockerCategories": [
-    "EMPTY_CONTRIBUTION_CLOSURE"
-  ],
+  "productReadinessStatus": "PASS",
+  "blockerCategories": [],
+  "correctedBlocker": {
+    "category": "EMPTY_CONTRIBUTION_CLOSURE",
+    "priorCanonicalResult": "BLOCKED_PRODUCT_DEFECT",
+    "correctingCandidateSourceDigest": "a202a4e3b72593b4124d19727b984145d3aeaed49051e888664a7229ec06a4b9"
+  },
   "caseTotals": {
     "total": 45,
     "passed": 45,
@@ -2294,7 +2297,7 @@
         "organization": "2b9b80761602f37064e93489119956cfcd9a4ae65d93212bac0bdcdda68b4b34",
         "question": "018ebddbe2d9ce2556565a9881029a973778eedf93ce289138600d0231a4f742",
         "conversation": "c2070464f13b7f044a9e89c0e111c588932a4be64899bd5bfdd018c61ec7d5c2",
-        "fullDurableStateDigest": "05829c2e851a7e6290a11df389a0530e1a3d333846dcff0b67327bddca9b9924",
+        "fullDurableStateDigest": "bdefdb7960165b1028d38a875633aec27fed422d617fb632460939d77a53b3b3",
         "completeInventory": {
           "contexts": 1,
           "prepared": 1,
@@ -2361,6 +2364,7 @@
         "$.frozenSnapshotPublications.0.materialReferencesDigest",
         "$.frozenSnapshotPublications.0.ownerStageReceiptDigest",
         "$.frozenSnapshotPublications.0.privateWorkingContributionRefs",
+        "$.frozenSnapshotPublications.0.privateWorkingEmptyContributionBoundary",
         "$.frozenSnapshotPublications.0.protectedBody.artifactId",
         "$.frozenSnapshotPublications.0.protectedBody.bodyId",
         "$.frozenSnapshotPublications.0.protectedBody.byteLength",
@@ -3360,28 +3364,35 @@
     "linkCount": 1
   },
   "emptyContribution": {
-    "capture": "rejected",
-    "closure": "rejected",
+    "freeze": "owner-issued-explicit-empty",
+    "capture": "persisted",
+    "closure": "completed",
+    "prepareAgain": "eligible",
     "review": {
       "result": "completed",
       "proposalCount": 4,
       "dispositionCount": 4
     },
-    "invalidClosureRecords": 0,
+    "closureRecords": 1,
     "syntheticContributions": 0,
+    "syntheticContributionReceipts": 0,
     "replaySafe": {
-      "parentRevisionStable": true,
+      "parentRevisionAdvancedOnlyByOwnerOperations": true,
       "freshRevisionStable": true
     },
     "freshReload": {
       "contractVersion": "1",
-      "capture": "rejected",
-      "closure": "rejected",
-      "revisionBefore": "30fd7414230eb11e483db803d80650879bd11d579c095776d1ec0701a9f50f1a",
-      "revisionAfter": "30fd7414230eb11e483db803d80650879bd11d579c095776d1ec0701a9f50f1a",
-      "invalidClosureRecords": 0,
+      "capture": "persisted",
+      "review": "complete",
+      "closure": "persisted",
+      "prepareAgain": "eligible",
+      "revisionBefore": "22427af584d0474f76408cefed73719ed6964c1e7d9fc51fc3c9577a8c6ada8f",
+      "revisionAfter": "22427af584d0474f76408cefed73719ed6964c1e7d9fc51fc3c9577a8c6ada8f",
+      "closureRecords": 1,
       "syntheticContributions": 0,
-      "protectedBodyReads": 0
+      "contributionReferences": 0,
+      "emptyBoundary": true,
+      "protectedBodyReads": 1
     }
   },
   "scanner": {
@@ -3434,10 +3445,10 @@
   },
   "deterministicRepeatStatus": {
     "status": "PASS",
-    "semanticRunDigest": "e2da77885e5c3de620bf5cea766c5a8b85509ad075285902c967806195c64313",
+    "semanticRunDigest": "9572c83965e90d55e4d4b94fbbc4d814a01e6cd02bfee63122eaf9a0ba46ac9d",
     "separateProcess": true
   },
   "evidenceHygieneStatus": "PASS",
-  "sourceDigest": "2316db19a61709c69abf4a717593831a25f898b1313a01143fb672090b67f24e",
-  "resultDigest": "c896d5fd2fd9b4014f09de4d0bba801849756a0275808c0c5dc36ea38c44bae3"
+  "sourceDigest": "a202a4e3b72593b4124d19727b984145d3aeaed49051e888664a7229ec06a4b9",
+  "resultDigest": "3a2506dbc361df1911bc975907be2aec4978dfaaa3b9cab2a9b75d86479c4e35"
 }

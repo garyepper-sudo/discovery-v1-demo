@@ -99,10 +99,11 @@ export async function freezeOccurrence1Action(input: { preparedWorkProductVersio
   const { server, identity } = await occurrence1Context();
   if (!input.preparedWorkProductVersionId) throw new Error("Occurrence 1 preparation is unavailable.");
   const currentPersonalRoomSheet = await composeCurrentPersonalRoomSheet();
-  const selectedContent = resolvePersonalRoomSheetContribution(projectContentSafePersonalRoomSheet(currentPersonalRoomSheet.sheet), { expectedPersonalRoomSheetDigest: input.expectedPersonalRoomSheetDigest, selectedItemIds: input.contributedItemIds });
+  const currentSheet = projectContentSafePersonalRoomSheet(currentPersonalRoomSheet.sheet);
+  if (input.expectedPersonalRoomSheetDigest !== currentSheet.personalRoomSheetDigest) throw new Error("Occurrence 1 contribution is unavailable.");
+  const selectedContent = input.contributedItemIds.length ? resolvePersonalRoomSheetContribution(currentSheet, { expectedPersonalRoomSheetDigest: input.expectedPersonalRoomSheetDigest, selectedItemIds: input.contributedItemIds }) : [];
   await server.freeze({ ...identity, artifactVersionId: input.preparedWorkProductVersionId, privateWorkingContribution: { seriesId: currentPersonalRoomSheet.sheet.seriesId, occurrenceId: currentPersonalRoomSheet.sheet.occurrenceId, authorizationRevision: currentPersonalRoomSheet.sheet.sourceProjectionDigest, provenanceDigest: currentPersonalRoomSheet.sheet.personalRoomSheetDigest, selectedContent }, idempotencyKey: `occurrence-1-freeze:${identity.conversationId}` });
   const checkpoint = await resolveCurrentLeadershipConversationCheckpoint(identity);
-  if (!checkpoint.contributionArtifactIds.length) throw new Error("Occurrence 1 contribution is unavailable.");
   return { checkpointId: checkpoint.checkpointId, contributionArtifactIds: checkpoint.contributionArtifactIds, workspace: await server.workspace(identity) };
 }
 
@@ -129,10 +130,10 @@ export async function captureOccurrence1Action(input: { meetingNotes: string }):
   const { server, identity, fixture } = await occurrence1Context(), meetingNotes = input.meetingNotes.trim();
   if (!meetingNotes || meetingNotes.length > 4000) throw new Error("Occurrence 1 Capture is invalid.");
   const checkpoint = await resolveCurrentLeadershipConversationCheckpoint(identity);
-  if (!checkpoint.contributionArtifactIds.length) throw new Error("Occurrence 1 contribution is unavailable.");
-  const contributedItems = await server.readFrozenPrivateWorkingContribution({ ...identity, snapshotId: checkpoint.checkpointId, artifactIds: checkpoint.contributionArtifactIds });
+  const contributedItems = checkpoint.contributionArtifactIds.length ? await server.readFrozenPrivateWorkingContribution({ ...identity, snapshotId: checkpoint.checkpointId, artifactIds: checkpoint.contributionArtifactIds }) : [];
   await server.captureFrozenPrivateWorkingContribution({ ...identity, snapshotId: checkpoint.checkpointId, idempotencyKey: `occurrence-1-contribution-capture:${identity.conversationId}` });
-  const text = `${new TextDecoder().decode(NORTHSTAR_LEADERSHIP_CONVERSATION_FIXTURE.captureBytes)}\nContributed from Private Working:\n${contributedItems.map(item => `- ${item}`).join("\n")}\n\nMeeting notes:\n${meetingNotes}\n`;
+  const contributionRecord = contributedItems.length ? `Contributed from Private Working:\n${contributedItems.map(item => `- ${item}`).join("\n")}` : "No Private Working content was contributed.";
+  const text = `${new TextDecoder().decode(NORTHSTAR_LEADERSHIP_CONVERSATION_FIXTURE.captureBytes)}\n${contributionRecord}\n\nMeeting notes:\n${meetingNotes}\n`;
   const stored = await server.receiveUpload({ ...identity, frozenSnapshotId: checkpoint.checkpointId, purposeRef: fixture.purposeRef, mediaType: "text/plain", bytes: new TextEncoder().encode(text), displayLabel: "Occurrence 1 meeting record", originalFilename: null, idempotencyKey: `occurrence-1-capture:${identity.conversationId}` }), uploadReceipt = stored.uploadReceipts.filter(item => item.conversationId === identity.conversationId).at(-1);
   if (!uploadReceipt) throw new Error("Occurrence 1 Capture is unavailable.");
   await server.generateProposals({ ...identity, uploadReceiptId: uploadReceipt.uploadReceiptId, purposeRef: fixture.purposeRef, idempotencyKey: `occurrence-1-proposals:${identity.conversationId}` });

@@ -88,6 +88,7 @@ async function processB(root: string, encodedA: string): Promise<WorkerResult> {
   assert.equal(stored.store.frozenSnapshotPublications!.at(-1)?.artifactId, a.frozenSnapshotId);
   assert.equal(stored.store.frozenSnapshotPublications!.at(-1)?.snapshotDigest, a.frozenSnapshotDigest);
   const composition = await validationComposition(locations);
+  await composition.captureFrozenPrivateWorkingContribution({ ...identity, idempotencyKey: "process-b-capture-contribution", snapshotId: String(a.frozenSnapshotId) });
   await composition.receiveUpload({ ...identity, idempotencyKey: "process-b-upload", frozenSnapshotId: String(a.frozenSnapshotId), purposeRef: fixture.purposeRef, mediaType: "text/plain", bytes: fixture.captureBytes, displayLabel: "Staff notes", originalFilename: null });
   stored = await workflow.read(fixture.organizationId);
   const upload = stored.store.uploadReceipts.at(-1)!;

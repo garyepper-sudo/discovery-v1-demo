@@ -19,7 +19,8 @@ async function main() {
   check(experience.includes("{completedStageCount} of {stepLabels.length} stages") && experience.includes('data-state="future"'), "workflow summarizes completed stages and orients only to the material next stage");
   check(experience.includes("styles.primaryAction") && experience.includes("styles.futureCard") && experience.includes("styles.completedCard"), "primary, future, and completed hierarchy is explicit");
   check(experience.indexOf("Only your explicitly selected contribution crossed the meeting boundary") < experience.indexOf("Capture what happened"), "Freeze explains the explicit-only boundary before Capture");
-  check(experience.includes("Unselected Private Working was not retained") && experience.includes("Unselected private notes will not persist"), "unselected Private Working non-persistence is explicit");
+  check(experience.includes("Unselected Private Working was not retained") && experience.includes("unselected private notes will not persist"), "unselected Private Working non-persistence is explicit");
+  check(experience.includes("No Private Working content was contributed") && experience.includes("You may continue with no contribution") && experience.includes('disabled={pending}'), "explicit empty Freeze and notes-only Capture are truthful and user controlled");
   check(personal.includes("only you can see this") && personal.includes("non-authoritative and private to you"), "Private Working visibility and non-authority are explicit");
   check(personal.includes('aria-expanded={open}') && personal.includes('aria-controls="private-working-sheet"'), "Private Working disclosure exposes accessible state");
   check(personal.includes("Selected items become durable only when you contribute them and complete Freeze"), "durability requires explicit contribution and Freeze");
