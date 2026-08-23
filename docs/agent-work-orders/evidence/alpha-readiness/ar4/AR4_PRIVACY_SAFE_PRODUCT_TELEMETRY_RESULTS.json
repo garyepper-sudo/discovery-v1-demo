@@ -1,0 +1,254 @@
+{
+  "schemaVersion": "1",
+  "status": "PASS",
+  "focused": {
+    "status": "PASS",
+    "checks": 92,
+    "cases": {
+      "startupMaintenance": true,
+      "retentionBoundaries": [
+        "90d-1ms",
+        "90d",
+        "90d+1ms"
+      ],
+      "operatorAudits": [
+        "read",
+        "sweep",
+        "zero-verify",
+        "denied"
+      ],
+      "repeatDeletion": true,
+      "multiKeyDeletion": true,
+      "foreignPreservation": true,
+      "concurrentAppendRevocation": true,
+      "indexes": [
+        "primary",
+        "organization",
+        "expiry",
+        "feedback",
+        "audit"
+      ],
+      "scanner": {
+        "findings": 0,
+        "sensitivity": 1,
+        "falsePositives": 0
+      },
+      "durableAdapter": {
+        "persistedRecords": 113,
+        "lifecycleRecords": 112,
+        "feedbackRecords": 1,
+        "progressiveDisclosure": [
+          "questions-tensions",
+          "reasoning-provenance"
+        ],
+        "typedOutcomes": [
+          "incompatible-replay",
+          "cas-conflict",
+          "recovered"
+        ],
+        "repositoryScannerFindings": 0,
+        "cleanup": "PASS"
+      },
+      "productParity": {
+        "status": "PASS",
+        "expected": [
+          "disabled",
+          "absent-consent",
+          "enabled-consent",
+          "revoked-consent",
+          "expired-consent",
+          "missing-active-key",
+          "missing-historical-key",
+          "repository-rejecting",
+          "repository-throwing",
+          "repository-unavailable",
+          "cleanup-failure",
+          "deletion-pending",
+          "denied-operator"
+        ],
+        "cases": {
+          "disabled": {
+            "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+            "telemetryRecords": 0
+          },
+          "absent-consent": {
+            "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+            "telemetryRecords": 0
+          },
+          "enabled-consent": {
+            "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+            "telemetryRecords": 1
+          },
+          "revoked-consent": {
+            "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+            "telemetryRecords": 0
+          },
+          "expired-consent": {
+            "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+            "telemetryRecords": 0
+          },
+          "missing-active-key": {
+            "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+            "telemetryRecords": 0
+          },
+          "missing-historical-key": {
+            "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+            "telemetryRecords": 0
+          },
+          "repository-rejecting": {
+            "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+            "telemetryRecords": 0
+          },
+          "repository-throwing": {
+            "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+            "telemetryRecords": 0
+          },
+          "repository-unavailable": {
+            "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+            "telemetryRecords": 0
+          },
+          "cleanup-failure": {
+            "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+            "telemetryRecords": 0
+          },
+          "deletion-pending": {
+            "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+            "telemetryRecords": 0
+          },
+          "denied-operator": {
+            "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+            "telemetryRecords": 1
+          }
+        },
+        "canonicalProductDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+        "cleanup": "PASS"
+      }
+    },
+    "deterministicOutputDigest": "ffcd518cc5a4a1f88b62ca624c39e050f567d017c3f96c8aa06a7a44d8f0c2d0"
+  },
+  "eventInventory": {
+    "ownerEvents": 108,
+    "freshProcesses": 17,
+    "stages": [
+      "activate",
+      "capture",
+      "closure",
+      "contribute",
+      "freeze",
+      "occurrence-2",
+      "prepare",
+      "prepare-again",
+      "private-working",
+      "reload",
+      "review",
+      "what-changed"
+    ],
+    "replayRecovery": [
+      "exact-replay",
+      "incompatible-replay"
+    ],
+    "neutralityCases": 6
+  },
+  "productParity": {
+    "status": "PASS",
+    "cases": [
+      {
+        "name": "disabled",
+        "role": "parity-case",
+        "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+        "telemetryRecords": 0
+      },
+      {
+        "name": "absent-consent",
+        "role": "parity-case",
+        "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+        "telemetryRecords": 0
+      },
+      {
+        "name": "enabled-consent",
+        "role": "positive-control",
+        "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+        "telemetryRecords": 1
+      },
+      {
+        "name": "revoked-consent",
+        "role": "parity-case",
+        "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+        "telemetryRecords": 0
+      },
+      {
+        "name": "expired-consent",
+        "role": "parity-case",
+        "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+        "telemetryRecords": 0
+      },
+      {
+        "name": "missing-active-key",
+        "role": "parity-case",
+        "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+        "telemetryRecords": 0
+      },
+      {
+        "name": "missing-historical-key",
+        "role": "parity-case",
+        "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+        "telemetryRecords": 0
+      },
+      {
+        "name": "repository-rejecting",
+        "role": "parity-case",
+        "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+        "telemetryRecords": 0
+      },
+      {
+        "name": "repository-throwing",
+        "role": "parity-case",
+        "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+        "telemetryRecords": 0
+      },
+      {
+        "name": "repository-unavailable",
+        "role": "parity-case",
+        "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+        "telemetryRecords": 0
+      },
+      {
+        "name": "cleanup-failure",
+        "role": "parity-case",
+        "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+        "telemetryRecords": 0
+      },
+      {
+        "name": "deletion-pending",
+        "role": "parity-case",
+        "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+        "telemetryRecords": 0
+      },
+      {
+        "name": "denied-operator",
+        "role": "parity-case",
+        "productDigest": "4056a2e245cd4f9efc3b5d74365d14de98460881d2520767d5e3eadf400a2942",
+        "telemetryRecords": 1
+      }
+    ],
+    "expected": 13,
+    "executed": 13,
+    "passed": 13,
+    "failed": 0,
+    "blocked": 0,
+    "basis": "measured fresh-process Product and durable-state parity"
+  },
+  "retention": {
+    "days": 90,
+    "physicalDeletionHours": 24
+  },
+  "scanner": {
+    "findings": 0,
+    "sensitivity": 1,
+    "falsePositives": 0,
+    "surfaces": 7
+  },
+  "cleanup": "PASS",
+  "sourceDigest": "45c36649b303a075bcc687a96848001910a096e3eed0f5b0427237da56758bcd",
+  "resultDigest": "9feb90e4037800ab659959792b79fb759f80a9ae8023703caa7358248c636555"
+}

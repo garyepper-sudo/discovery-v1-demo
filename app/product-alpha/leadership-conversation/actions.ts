@@ -15,14 +15,19 @@ import { createPersonalRoomSheetReplayKey, PERSONAL_ROOM_SHEET_CONTRACT_VERSION,
 import { compileChiefOfStaffValueLayerV1 } from "../../../product/workflow/leadershipConversation/chiefCommunicationPlan";
 import { writeAlphaOperationalLog } from "../../../lib/operations/alphaOperationalLog";
 import type { AlphaContentSafeObservabilityEventV1 } from "../../../lib/observability/alphaContentSafeObservabilityContracts";
+import { createAlphaTelemetryComposition } from "../../../lib/telemetry/alphaTelemetryComposition";
+import { assertClosedFeedback, type AlphaFeedbackDimension, type AlphaFeedbackRating } from "../../../lib/telemetry/alphaProductTelemetryContracts";
 
 function guard(): void {
   if (process.env.NODE_ENV === "production") {
     throw new Error("Leadership Conversation development route is unavailable.");
   }
 }
-function observeJourney(workflowStage:AlphaContentSafeObservabilityEventV1["workflowStage"],transitionCategory:AlphaContentSafeObservabilityEventV1["transitionCategory"],outcomeCategory:AlphaContentSafeObservabilityEventV1["outcomeCategory"],failureCategory:AlphaContentSafeObservabilityEventV1["failureCategory"]="none"){writeAlphaOperationalLog({eventCategory:"workflow-transition",workflowStage,transitionCategory,outcomeCategory,failureCategory});}
-export async function observeLeadershipConversationBrowserEventAction(input:{stage:AlphaContentSafeObservabilityEventV1["workflowStage"];transition:AlphaContentSafeObservabilityEventV1["transitionCategory"];outcome:AlphaContentSafeObservabilityEventV1["outcomeCategory"];viewport:AlphaContentSafeObservabilityEventV1["viewportCategory"]}){await signedInUserId();writeAlphaOperationalLog({eventCategory:"browser",workflowStage:input.stage,transitionCategory:input.transition,outcomeCategory:input.outcome,failureCategory:input.outcome==="browser-failure"?"browser":"none",viewportCategory:input.viewport,occurrenceCategory:"occurrence-1"});}
+function observeJourney(workflowStage:AlphaContentSafeObservabilityEventV1["workflowStage"],transitionCategory:AlphaContentSafeObservabilityEventV1["transitionCategory"],outcomeCategory:AlphaContentSafeObservabilityEventV1["outcomeCategory"],failureCategory:AlphaContentSafeObservabilityEventV1["failureCategory"]="none"){void writeAlphaOperationalLog({eventCategory:"workflow-transition",workflowStage,transitionCategory,outcomeCategory,failureCategory},undefined,{organizationScope:SANDBOX_ORGANIZATION_ID});}
+async function authorizedTelemetryIdentity(){const userId=await signedInUserId(),server=createLeadershipConversationServerComposition();if(!await server.authorizePageCurrentAccess({userId,organizationId:SANDBOX_ORGANIZATION_ID}))throw new Error("Telemetry operation is unavailable.");return{userId,organizationId:SANDBOX_ORGANIZATION_ID};}
+export async function observeLeadershipConversationBrowserEventAction(input:{stage:AlphaContentSafeObservabilityEventV1["workflowStage"];transition:AlphaContentSafeObservabilityEventV1["transitionCategory"];outcome:AlphaContentSafeObservabilityEventV1["outcomeCategory"];viewport:AlphaContentSafeObservabilityEventV1["viewportCategory"]}){const identity=await authorizedTelemetryIdentity();await writeAlphaOperationalLog({eventCategory:"browser",workflowStage:input.stage,transitionCategory:input.transition,outcomeCategory:input.outcome,failureCategory:input.outcome==="browser-failure"?"browser":"none",viewportCategory:input.viewport,occurrenceCategory:"occurrence-1"},undefined,{organizationScope:identity.organizationId});}
+export async function submitAlphaTelemetryFeedbackAction(input:{dimension:AlphaFeedbackDimension;rating:AlphaFeedbackRating}){const identity=await authorizedTelemetryIdentity();assertClosedFeedback(input);const telemetry=createAlphaTelemetryComposition();if(telemetry)await telemetry.telemetry.feedback(identity.organizationId,input);return{accepted:true as const};}
+export async function submitAlphaProgressiveDisclosureAction(category:"questions-tensions"|"reasoning-provenance"){const identity=await authorizedTelemetryIdentity(),telemetry=createAlphaTelemetryComposition();if(telemetry)await telemetry.telemetry.progressiveDisclosure(identity.organizationId,category);return{accepted:true as const};}
 
 async function signedInUserId(): Promise<string> {
   guard();

@@ -1,3 +1,4 @@
+"use client";
 import type { ChiefFirstPrepareViewV1 } from "../../../product/workflow/leadershipConversation";
 import type { ChiefOfStaffValueItemV1, ChiefOfStaffValueLayerV1 } from "../../../product/workflow/leadershipConversation/chiefCommunicationPlan";
 import styles from "./LeadershipConversationExperience.module.css";
@@ -7,7 +8,7 @@ const ValueList = ({ items, empty }: { items: ChiefOfStaffValueItemV1[]; empty: 
   ? <ul>{items.map(item => <li key={item.itemId}><span className={styles.epistemic}>{item.status}</span>{item.text}</li>)}</ul>
   : <p className={styles.quiet}>{empty}</p>;
 
-export function LeadershipConversationPrepare({ prepare, valueLayer }: { prepare: ChiefFirstPrepareViewV1; valueLayer?: ChiefOfStaffValueLayerV1 }) {
+export function LeadershipConversationPrepare({ prepare, valueLayer, onProgressiveDisclosure }: { prepare: ChiefFirstPrepareViewV1; valueLayer?: ChiefOfStaffValueLayerV1; onProgressiveDisclosure?:(category:"questions-tensions"|"reasoning-provenance")=>void }) {
   if (!valueLayer) return <section aria-labelledby="first-prepare-heading">
     <p>Prepared · guidance only</p>
     <h2 id="first-prepare-heading">Prepare</h2>
@@ -17,7 +18,7 @@ export function LeadershipConversationPrepare({ prepare, valueLayer }: { prepare
     <h3>What might surprise you?</h3><List items={prepare.possibleSurprise} />
     <h3>What should you ask?</h3><List items={prepare.questions} />
     <h3>What happened last time?</h3><p>{prepare.priorCycle.message}</p>
-    <details>
+    <details onToggle={event=>{if(event.currentTarget.open)onProgressiveDisclosure?.("reasoning-provenance");}}>
       <summary>Sources, uncertainty, and reasoning</summary>
       <h4>Sources available to you</h4>
       <ul>{prepare.sourceBasis.map(item => <li key={item.sourceRef}>{item.label}</li>)}</ul>
@@ -43,7 +44,7 @@ export function LeadershipConversationPrepare({ prepare, valueLayer }: { prepare
       ? <p>Change comparison will begin after this meeting cycle is completed.</p>
       : <ValueList items={valueLayer.changed} empty="No material change is supported." />}
     <p>{prepare.priorCycle.message}</p>
-    <details>
+    <details onToggle={event=>{if(event.currentTarget.open)onProgressiveDisclosure?.("questions-tensions");}}>
       <summary>Explore questions, tensions, and what would improve understanding</summary>
       <div className={styles.valueGrid}>
         <section><h3>What may surprise you</h3><ValueList items={valueLayer.surprises} empty="No supported surprise is available." /></section>
@@ -52,7 +53,7 @@ export function LeadershipConversationPrepare({ prepare, valueLayer }: { prepare
         <section className={styles.acquire}><h3>What would improve understanding</h3><ValueList items={valueLayer.acquisition} empty="Discovery abstains from recommending evidence acquisition without a grounded gap." /></section>
       </div>
     </details>
-    <details>
+    <details onToggle={event=>{if(event.currentTarget.open)onProgressiveDisclosure?.("reasoning-provenance");}}>
       <summary>How Discovery reached this view</summary>
       <p className={styles.legend}>Supported = grounded in authorized material · Inferred = reasoned from that material · Suspected = a bounded possibility · Unknown = not established.</p>
       <h4>What Discovery does not know</h4>

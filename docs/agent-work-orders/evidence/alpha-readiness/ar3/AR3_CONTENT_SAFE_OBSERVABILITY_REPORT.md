@@ -9,7 +9,7 @@
 - Full Product sink parity: **PASS**
 - Captured-surface leakage findings: 0
 - External and isolated cleanup before PASS: **PASS**
-- Source digest: `bfe17f1772cface8a3fd465b3dacd3174a9f22bf54c4fdfe679ecaf93d12c341`
-- Result digest: `3d7f635a681372e68e736b863adf8ed6f0c6b2e25a04b8512f762b53aefd1fb6`
+- Source digest: `f1a62e1d39e1ce651230155925fec8c6339a126667bfa56730e020ad4487532e`
+- Result digest: `9388cca4e6b1e97995535aa85e05690b5b6b57bede55a40a8e2ebe49c94125f6`
 
 AR-3 remains noncanonical readiness instrumentation. It adds no durable Product telemetry, identity, retention, analytics sink, or cognition input.

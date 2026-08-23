@@ -16,7 +16,7 @@ async function main() {
     const setup = await provisionNorthstarPreparationLineageFixture({ environment: "test", fixtureRoot: root });
     const workspace = readLeadershipConversationFixture(setup.seed.productQuestionId);
     const managerWorkspace = { ...workspace, currentPreparedWorkProduct: null };
-    const [component, sheetPanel, observer, activation, prepare, page, actions, server, builder, css] = await Promise.all([
+    const [component, sheetPanel, observer, activation, prepare, page, actions, server, builder, css,telemetryNotice] = await Promise.all([
       readFile("components/product-alpha/leadership-conversation/LeadershipConversationExperience.tsx", "utf8"),
       readFile("components/product-alpha/leadership-conversation/PersonalRoomSheetPanel.tsx", "utf8"),
       readFile("components/product-alpha/leadership-conversation/LeadershipConversationObservabilityObserver.tsx", "utf8"),
@@ -27,6 +27,7 @@ async function main() {
       readFile("product/integration/leadershipConversationServerComposition.ts", "utf8"),
       readFile("product/workflow/leadershipConversation/buildLeadershipConversationWorkspace.ts", "utf8"),
       readFile("components/product-alpha/leadership-conversation/LeadershipConversationExperience.module.css", "utf8"),
+      readFile("components/product-alpha/leadership-conversation/AlphaTelemetryNotice.tsx","utf8"),
     ]);
     check(workspace.contractVersion === "1" && workspace.base.contractVersion === "2", "workspace composes V2");
     check(isLeadershipConversationPrepareAvailable(workspace) && !isLeadershipConversationPrepareAvailable(managerWorkspace), "body-free Manager workspace fails closed");
@@ -59,6 +60,9 @@ async function main() {
     check(component.includes("Current stage") && component.includes('aria-current="step"') && component.includes("completed ? null"), "active workflow step is explicit and completed cycles have no current step");
     check(component.includes("LeadershipConversationObservabilityObserver") && sheetPanel.includes("onPrivateWorkingOpened"), "content-safe client observer is wired");
     check(observer.includes("viewportCategory") && observer.includes("observeLeadershipConversationBrowserEventAction") && !observer.includes("document.") && !observer.includes("localStorage") && !observer.includes("sessionStorage") && !observer.includes("innerText") && !observer.includes("textContent"), "client observer uses enum-only state and no protected DOM or storage");
+    check(page.indexOf("authorizePageCurrentAccess")<page.indexOf("telemetry.consent.current")&&component.includes("telemetryNotice&&<AlphaTelemetryNotice"),"telemetry notice follows Product authorization");
+    check(telemetryNotice.includes("Private Working")&&telemetryNotice.includes("meeting notes")&&!telemetryNotice.includes("textarea"),"notice excludes protected content and feedback is closed");
+    check(prepare.includes("onProgressiveDisclosure")&&!prepare.includes("textContent")&&!prepare.includes("innerText"),"progressive disclosure observation is content-free");
     console.log(JSON.stringify({ validation: "leadership-conversation-frontend-001", result: "PASS", checks, desktop: true, narrow: true, keyboard: true, rawSourceContent: false, runtime: false, cognition: false, authorizationContext: false, networkCalls: 0, productionAccess: 0 }));
   } finally {
     await rm(root, { recursive: true, force: true });
