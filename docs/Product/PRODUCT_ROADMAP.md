@@ -119,10 +119,10 @@ Control Tower baseline: canonical `main` contains the clean fast-forwarded
 `8fc68894986b48374fa2ec5f5ee143f3bb413987`. Push and deployment have not been
 performed. Gate 4, both Gate-5 prerequisites, `ALPHA-RM-G5-001`,
 `ALPHA-RM-G6-001`, and `ALPHA-RM-G7-001` are complete. `ALPHA-READY-001` is
-in progress: its AR-1A proof-system foundation is complete, while Product
-readiness is blocked by `EMPTY_CONTRIBUTION_CLOSURE`. The next separately
-governed boundary is the bounded Product/security correction exposed by AR-1A;
-AR-3, AR-4, AR-5, AR-2, AR-1B, and AR-6 retain their accepted order. The next five ordered
+in progress: its AR-1A proof-system foundation, the truthful empty-contribution
+closure correction, and AR-3 content-safe observability are complete. The next
+separately governed boundary is AR-4 privacy-safe Product telemetry; AR-4,
+AR-5, AR-2, AR-1B, and AR-6 retain their accepted order. The next five ordered
 items are `ALPHA-READY-001`, `ALPHA-BASE-A-001`, `ALPHA-BENCH-LONG-001`,
 `ALPHA-OPT-001`, and `ALPHA-BASE-DECIDE-001`; none has begun.
 
@@ -164,7 +164,7 @@ parallel lanes; it does not create another roadmap owner.
 | 10 | `ALPHA-RM-G5-001` | What Changed / Prepare Again | COMPLETE |
 | 11 | `ALPHA-RM-G6-001` | Chief-of-Staff value layer | COMPLETE |
 | 12 | `ALPHA-RM-G7-001` | Alpha experience and operations | COMPLETE |
-| 13 | `ALPHA-READY-001` | Alpha Readiness Foundation | IN PROGRESS — AR-1A foundation complete; Product readiness blocked by `EMPTY_CONTRIBUTION_CLOSURE`; bounded correction is next |
+| 13 | `ALPHA-READY-001` | Alpha Readiness Foundation | IN PROGRESS — AR-1A, the empty-contribution correction, and AR-3 are complete; AR-4 is next and has not begun |
 | 14 | `ALPHA-BASE-A-001` | Freeze Alpha Baseline A | QUEUED — blocked by `ALPHA-READY-001` PASS and separate authorization |
 | 15 | `ALPHA-BENCH-LONG-001` | Longitudinal Chief / Organizational Understanding benchmark | QUEUED — execution blocked until `ALPHA-BASE-A-001` |
 | 16 | `ALPHA-OPT-001` | Bounded cognition optimization | QUEUED — blocked by the frozen baseline benchmark run |
@@ -245,7 +245,7 @@ The accepted readiness sequence is:
    Foundation;
 2. separately governed bounded Product/security corrections exposed by AR-1A,
    including truthful empty-contribution closure when required;
-3. `AR-3` — End-to-End Content-Safe Observability;
+3. `AR-3` — End-to-End Content-Safe Observability — COMPLETE;
 4. `AR-4` — Privacy-Safe Product Telemetry;
 5. `AR-5` — Critical Failure Recovery;
 6. `AR-2` — Critical-Path Test Pyramid Freeze;
