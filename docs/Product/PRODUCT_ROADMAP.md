@@ -101,7 +101,9 @@ gates cannot make the Alpha ready.
 | 5. What Changed and Prepare Again | PASS | Fresh-process second occurrence reconstructs from canonical artifacts, current Evidence, the exact currently accessible predecessor, and the canonical PRE-002 Understanding result; authenticated desktop, narrow-viewport, denial, reload, and cleanup acceptance passed |
 | 6. Chief-of-staff value layer | PASS | Concise priority, surprises, tensions, unknowns, meeting questions, bounded acquisition recommendations, provenance, and truthful abstention are integrated and authenticated |
 | 7. Alpha experience and operations | PASS | Launch-quality workflow hierarchy, resilient and actionable states, responsive presentation, accessibility, and final design-partner UX polish are integrated and authenticated |
-| AR-1A. Non-Disclosure foundation | PASS — foundation only; Product readiness remains blocked | Owner-driven paired-world harness passes 45/45 threat cases and 1/1 positive control with deterministic fresh-process replay, zero scanner leakage, complete cleanup, and content-safe evidence; the harness truthfully exposes `EMPTY_CONTRIBUTION_CLOSURE` |
+| AR-1A. Non-Disclosure foundation | PASS | Owner-driven paired-world harness passes 45/45 threat cases and 1/1 positive control with deterministic fresh-process replay, zero scanner leakage, complete cleanup, and content-safe evidence; the exposed `EMPTY_CONTRIBUTION_CLOSURE` defect is corrected |
+| AR-3. Content-safe observability | PASS | Closed-schema, content-safe end-to-end observations, typed replay/CAS/recovery outcomes, authenticated two-occurrence acceptance, and zero cleanup are source-bound and independently reviewed |
+| AR-4. Privacy-safe Product telemetry | PASS | Written-consent-gated pseudonymous telemetry, 90-day retention, exact multi-key deletion, organization-scoped audited access, 13-state Product parity, authenticated acceptance, and zero cleanup are source-bound and independently reviewed |
 | 8. Design-partner launch | NOT STARTED — blocked by Alpha Readiness, baseline decision, Alpha Operations, and human approval | Two-cycle acceptance, no unresolved high-severity trust failure, verified instrumentation, onboarding, support, limitations, measures, and observation plan |
 
 Gates 6–7 must strengthen current-step and primary-action hierarchy; use
@@ -116,13 +118,13 @@ Gate 4 unless a functional or trust defect is discovered.
 
 Control Tower baseline: canonical `main` contains the clean fast-forwarded
 `ALPHA-RM-G7-001` implementation at
-`8fc68894986b48374fa2ec5f5ee143f3bb413987`. Push and deployment have not been
-performed. Gate 4, both Gate-5 prerequisites, `ALPHA-RM-G5-001`,
+`9835646f96e3a76d9cd1b530e5ca992c809327bd`. The pre-AR-4 canonical checkpoint was remotely preserved; deployment
+has not been performed. Gate 4, both Gate-5 prerequisites, `ALPHA-RM-G5-001`,
 `ALPHA-RM-G6-001`, and `ALPHA-RM-G7-001` are complete. `ALPHA-READY-001` is
 in progress: its AR-1A proof-system foundation, the truthful empty-contribution
-closure correction, and AR-3 content-safe observability are complete. The next
-separately governed boundary is AR-4 privacy-safe Product telemetry; AR-4,
-AR-5, AR-2, AR-1B, and AR-6 retain their accepted order. The next five ordered
+closure correction, AR-3 content-safe observability, and AR-4 privacy-safe
+Product telemetry are complete. The next separately governed boundary is AR-5
+critical failure recovery; AR-5, AR-2, AR-1B, and AR-6 retain their accepted order. The next five ordered
 items are `ALPHA-READY-001`, `ALPHA-BASE-A-001`, `ALPHA-BENCH-LONG-001`,
 `ALPHA-OPT-001`, and `ALPHA-BASE-DECIDE-001`; none has begun.
 
@@ -164,7 +166,7 @@ parallel lanes; it does not create another roadmap owner.
 | 10 | `ALPHA-RM-G5-001` | What Changed / Prepare Again | COMPLETE |
 | 11 | `ALPHA-RM-G6-001` | Chief-of-Staff value layer | COMPLETE |
 | 12 | `ALPHA-RM-G7-001` | Alpha experience and operations | COMPLETE |
-| 13 | `ALPHA-READY-001` | Alpha Readiness Foundation | IN PROGRESS — AR-1A, the empty-contribution correction, and AR-3 are complete; AR-4 is next and has not begun |
+| 13 | `ALPHA-READY-001` | Alpha Readiness Foundation | IN PROGRESS — AR-1A, the empty-contribution correction, AR-3, and AR-4 are complete; AR-5 is next and has not begun |
 | 14 | `ALPHA-BASE-A-001` | Freeze Alpha Baseline A | QUEUED — blocked by `ALPHA-READY-001` PASS and separate authorization |
 | 15 | `ALPHA-BENCH-LONG-001` | Longitudinal Chief / Organizational Understanding benchmark | QUEUED — execution blocked until `ALPHA-BASE-A-001` |
 | 16 | `ALPHA-OPT-001` | Bounded cognition optimization | QUEUED — blocked by the frozen baseline benchmark run |
@@ -246,7 +248,7 @@ The accepted readiness sequence is:
 2. separately governed bounded Product/security corrections exposed by AR-1A,
    including truthful empty-contribution closure when required;
 3. `AR-3` — End-to-End Content-Safe Observability — COMPLETE;
-4. `AR-4` — Privacy-Safe Product Telemetry;
+4. `AR-4` — Privacy-Safe Product Telemetry — COMPLETE;
 5. `AR-5` — Critical Failure Recovery;
 6. `AR-2` — Critical-Path Test Pyramid Freeze;
 7. `AR-1B` — Complete Governed Cognition Non-Disclosure Adversarial
