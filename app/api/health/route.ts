@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { requireDiscoveryDatabaseUrl } from "../../../db/config";
 import { createOrganizationRuntimeRepository } from "../../../engine/v3/runtime";
+import { writeAlphaOperationalLog } from "../../../lib/operations/alphaOperationalLog";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +12,6 @@ export async function GET(request: NextRequest) {
     request.headers.get("x-request-id") ?? crypto.randomUUID();
   const organizationId = process.env.DISCOVERY_ALPHA_ORGANIZATION_ID;
   const checks = { configuration: false, database: false, runtime: false };
-  let stage = "configuration";
   let sql;
 
   checks.configuration = Boolean(
@@ -21,7 +21,6 @@ export async function GET(request: NextRequest) {
   );
 
   try {
-    stage = "database";
     sql = postgres(requireDiscoveryDatabaseUrl("application"), {
       max: 1,
       connect_timeout: 10,
@@ -32,23 +31,11 @@ export async function GET(request: NextRequest) {
     if (!checks.database) throw new Error("database");
 
     if (checks.configuration && organizationId) {
-      stage = "runtime";
       checks.runtime =
         await createOrganizationRuntimeRepository().exists(organizationId);
     }
-  } catch (error) {
-    const provider = error as { name?: string; code?: string; sqlState?: string };
-    console.error(JSON.stringify({
-      event: "alpha.health-check-failed",
-      requestId,
-      stage,
-      errorClass: provider.name ?? "Error",
-      errorCode: provider.code ?? null,
-      sqlState: provider.sqlState ??
-        (provider.code && /^[0-9A-Z]{5}$/.test(provider.code)
-          ? provider.code
-          : null),
-    }));
+  } catch {
+    writeAlphaOperationalLog({eventCategory:"health",workflowStage:"health",transitionCategory:"completed",outcomeCategory:"server-failure",failureCategory:"server"});
   } finally {
     await sql?.end({ timeout: 1 }).catch(() => {});
   }

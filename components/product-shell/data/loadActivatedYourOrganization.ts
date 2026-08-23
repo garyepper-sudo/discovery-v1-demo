@@ -24,14 +24,8 @@ export async function loadActivatedYourOrganization(
   requestedOrganizationId: string | string[] | undefined,
   requestId = crypto.randomUUID(),
 ): Promise<ActivatedYourOrganizationState> {
-  writeAlphaOperationalLog({
-    event: "alpha.request.started",
-    requestId,
-    ...(typeof requestedOrganizationId === "string"
-      ? { organizationId: requestedOrganizationId }
-      : {}),
-    outcome: "started",
-  });
+  void requestId;
+  writeAlphaOperationalLog({eventCategory:"access-check",workflowStage:"activate",transitionCategory:"attempted",outcomeCategory:"attempted",failureCategory:"none"});
 
   const resolvedAt = new Date().toISOString();
   const identityResolution =
@@ -54,15 +48,7 @@ export async function loadActivatedYourOrganization(
   try {
     sql = postgres(requireDiscoveryDatabaseUrl("application"), { max: 1 });
   } catch {
-    writeAlphaOperationalLog({
-      event: "alpha.database.failed",
-      requestId,
-      ...(requestedOrganizationId
-        ? { organizationId: requestedOrganizationId }
-        : {}),
-      outcome: "failed",
-      reason: "database-configuration-unavailable",
-    });
+    writeAlphaOperationalLog({eventCategory:"health",workflowStage:"activate",transitionCategory:"completed",outcomeCategory:"server-failure",failureCategory:"server"});
     return {
       status: "activation-unavailable",
       reason: "alpha-storage-configuration-unavailable",
@@ -84,12 +70,7 @@ export async function loadActivatedYourOrganization(
       accessRepository: new PostgresAlphaAccessRecordRepository(sql),
     });
     if (organizationResolution.status !== "resolved") {
-      writeAlphaOperationalLog({
-        event: "alpha.access.denied",
-        requestId,
-        outcome: "denied",
-        reason: organizationResolution.reason,
-      });
+      writeAlphaOperationalLog({eventCategory:"access-check",workflowStage:"activate",transitionCategory:"completed",outcomeCategory:"access-unavailable",failureCategory:"access"});
       return {
         status: "organization-required",
         reason: organizationResolution.reason,
@@ -134,18 +115,7 @@ export async function loadActivatedYourOrganization(
       },
     });
     if (durable.status !== "committed") {
-      writeAlphaOperationalLog({
-        event:
-          durable.reason === "runtime-unavailable"
-            ? "alpha.runtime.failed"
-            : durable.reason === "audit-unavailable"
-              ? "alpha.audit.failed"
-              : "alpha.access.denied",
-        requestId,
-        organizationId,
-        outcome: durable.reason === "access-denied" ? "denied" : "failed",
-        reason: durable.reason,
-      });
+      writeAlphaOperationalLog({eventCategory:"access-check",workflowStage:"activate",transitionCategory:"completed",outcomeCategory:durable.reason==="access-denied"?"access-unavailable":"server-failure",failureCategory:durable.reason==="access-denied"?"access":"server"});
       return {
         status:
           durable.reason === "access-denied"
@@ -155,13 +125,7 @@ export async function loadActivatedYourOrganization(
       };
     }
     if (!runtime) {
-      writeAlphaOperationalLog({
-        event: "alpha.runtime.failed",
-        requestId,
-        organizationId,
-        outcome: "failed",
-        reason: "authorized-runtime-not-loaded",
-      });
+      writeAlphaOperationalLog({eventCategory:"health",workflowStage:"runtime",transitionCategory:"completed",outcomeCategory:"server-failure",failureCategory:"server"});
       return {
         status: "runtime-unavailable",
         reason: "authorized-runtime-not-loaded",
@@ -174,12 +138,7 @@ export async function loadActivatedYourOrganization(
       resolvedAt,
     });
     if (composed.status === "available") {
-      writeAlphaOperationalLog({
-        event: "alpha.disclosure.completed",
-        requestId,
-        organizationId,
-        outcome: "allowed",
-      });
+      writeAlphaOperationalLog({eventCategory:"access-check",workflowStage:"activate",transitionCategory:"completed",outcomeCategory:"success",failureCategory:"none"});
     }
     return composed;
   } finally {

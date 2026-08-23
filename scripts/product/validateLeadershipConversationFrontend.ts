@@ -16,9 +16,10 @@ async function main() {
     const setup = await provisionNorthstarPreparationLineageFixture({ environment: "test", fixtureRoot: root });
     const workspace = readLeadershipConversationFixture(setup.seed.productQuestionId);
     const managerWorkspace = { ...workspace, currentPreparedWorkProduct: null };
-    const [component, sheetPanel, activation, prepare, page, actions, server, builder, css] = await Promise.all([
+    const [component, sheetPanel, observer, activation, prepare, page, actions, server, builder, css] = await Promise.all([
       readFile("components/product-alpha/leadership-conversation/LeadershipConversationExperience.tsx", "utf8"),
       readFile("components/product-alpha/leadership-conversation/PersonalRoomSheetPanel.tsx", "utf8"),
+      readFile("components/product-alpha/leadership-conversation/LeadershipConversationObservabilityObserver.tsx", "utf8"),
       readFile("components/product-alpha/leadership-conversation/LeadershipConversationActivation.tsx", "utf8"),
       readFile("components/product-alpha/leadership-conversation/LeadershipConversationPrepare.tsx", "utf8"),
       readFile("app/product-alpha/leadership-conversation/page.tsx", "utf8"),
@@ -56,6 +57,8 @@ async function main() {
     check(component.indexOf("Occurrence 2 is prepared") < component.indexOf("<LeadershipConversationPrepare prepare={nextPrepare}"), "Occurrence 2 renders Prepare only");
     check(!component.includes("freezeOccurrence2") && !component.includes("captureOccurrence2"), "Occurrence 2 execution is not invented");
     check(component.includes("Current stage") && component.includes('aria-current="step"') && component.includes("completed ? null"), "active workflow step is explicit and completed cycles have no current step");
+    check(component.includes("LeadershipConversationObservabilityObserver") && sheetPanel.includes("onPrivateWorkingOpened"), "content-safe client observer is wired");
+    check(observer.includes("viewportCategory") && observer.includes("observeLeadershipConversationBrowserEventAction") && !observer.includes("document.") && !observer.includes("localStorage") && !observer.includes("sessionStorage") && !observer.includes("innerText") && !observer.includes("textContent"), "client observer uses enum-only state and no protected DOM or storage");
     console.log(JSON.stringify({ validation: "leadership-conversation-frontend-001", result: "PASS", checks, desktop: true, narrow: true, keyboard: true, rawSourceContent: false, runtime: false, cognition: false, authorizationContext: false, networkCalls: 0, productionAccess: 0 }));
   } finally {
     await rm(root, { recursive: true, force: true });

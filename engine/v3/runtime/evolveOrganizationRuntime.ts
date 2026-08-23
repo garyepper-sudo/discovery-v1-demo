@@ -342,8 +342,6 @@ export function evolveOrganizationRuntime(params: {
     now,
   });
 
-  console.log("Understanding Clusters", understandingClusters);
-
   const organizationalDynamicsState = inferFunctionalInterpretations({
     understandings:
       updatedOrganizationalUnderstandingState.currentUnderstandings,
@@ -378,15 +376,6 @@ export function evolveOrganizationRuntime(params: {
       previousState: memory.organizationalPhenomenaState,
       now,
     });
-
-  console.log(
-    "Organizational Observations",
-    organizationalObservationState,
-  );
-  console.log(
-    "Organizational Phenomena",
-    organizationalPhenomenaState,
-  );
 
   const organizationReasoningGraph =
     buildOrganizationReasoningGraph({
@@ -426,33 +415,10 @@ export function evolveOrganizationRuntime(params: {
     judgments: organizationalJudgments,
   });
 
-  console.log(
-    "Organization Reasoning Graph",
-    organizationReasoningGraph,
-  );
-  console.log(
-    "Organization Reasoning Relationships",
-    organizationReasoningRelationships,
-  );
-  console.log(
-    "Organizational Reasoning",
-    organizationalReasoning,
-  );
-  console.log(
-    "Organizational Explanation Seeds",
-    organizationalExplanationSeeds,
-  );
-  console.log(
-    "Organizational Judgments",
-    organizationalJudgments,
-  );
-
   const detectedCapabilities = inferOrganizationalCapabilities({
     interpretations: organizationalDynamicsState.interpretations,
     organizationReasoningGraph,
   });
-
-  console.log("Detected Capabilities", detectedCapabilities);
 
   const organizationalCapabilitiesState =
     updateOrganizationalCapabilities({
@@ -538,8 +504,6 @@ export function evolveOrganizationRuntime(params: {
       ? mechanismNetwork.centralMechanismIds
       : [],
   };
-
-  console.log("Mechanism Network", safeMechanismNetwork);
 
   const inferredOrganizationalBeliefs =
     inferOrganizationalBeliefs({
@@ -684,16 +648,6 @@ export function evolveOrganizationRuntime(params: {
     ].length,
     conceptCount: organizationalConcepts.length,
   });
-
-  console.log(
-    "Organizational Theories",
-    organizationalTheoryState.theories,
-  );
-  console.log(
-    "Organizational Theory Evolution",
-    organizationalTheoryState.theoryEvolution,
-  );
-  console.log("Memory Maturity", memoryMaturity);
 
   const beliefUpdatedOrganizationalUnderstandingState:
     OrganizationalUnderstandingState = {
@@ -950,54 +904,6 @@ export function evolveOrganizationRuntime(params: {
   let investigationOpportunities =
     initialInvestigationOpportunities;
 
-  console.log("Semantic Reasoning", semanticReasoning);
-  console.log("Concept Candidates", conceptCandidates);
-  console.log(
-    "Conceptual Understanding",
-    conceptualUnderstanding,
-  );
-  console.log(
-    "Organizational Conditions",
-    organizationalConditions,
-  );
-  console.log(
-    "Organizational State",
-    organizationalState,
-  );
-  console.log(
-    "Primary Executive Constraint",
-    primaryExecutiveConstraint,
-  );
-  console.log(
-    "Organizational Predictions",
-    organizationalPredictions,
-  );
-  console.log(
-    "Prediction Reflection",
-    predictionReflection,
-  );
-  console.log(
-    "Prediction Evaluations",
-    predictionEvaluations,
-  );
-  console.log(
-    "Investigation Strategy",
-    investigationStrategy,
-  );
-  console.log(
-    "Investigation Opportunities",
-    investigationOpportunities,
-  );
-
-  console.log(
-    "Organizational Beliefs",
-    organizationalBeliefState.beliefs,
-  );
-  console.log(
-    "Organizational Belief Revisions",
-    organizationalBeliefState.revisions,
-  );
-
   const executiveAssessment = buildExecutiveAssessment({
     judgments: organizationalJudgments,
     mechanisms: safeMechanismNetwork.mechanisms,
@@ -1124,25 +1030,6 @@ export function evolveOrganizationRuntime(params: {
       _canonicalCompositionsOwnedByOrganizationalUnderstanding,
     ...organizationalMemoryCompatibilityUnderstandingState
   } = finalOrganizationalUnderstandingState;
-
-  console.log(
-    "FINAL UNDERSTANDINGS",
-    finalOrganizationalUnderstandingState.currentUnderstandings.map(
-      (understanding) => ({
-        source: understanding.source,
-        statement: understanding.statement,
-        confidence: understanding.confidence,
-        explanatoryPower:
-          understanding.explanatoryPower,
-        supportCount: understanding.supportCount,
-      }),
-    ),
-  );
-
-  console.log(
-    "Executive Assessment",
-    executiveAssessment,
-  );
 
   const understandingSnapshot = {
     id: `snapshot-${eventId}`,
@@ -1306,26 +1193,6 @@ export function evolveOrganizationRuntime(params: {
         now,
     });
 
-  console.log(
-    "Organizational Learning Profile",
-    organizationalLearningProfile,
-  );
-
-  console.log(
-    "Organizational Uncertainty",
-    organizationalUncertainty,
-  );
-
-  console.log(
-    "Refined Investigation Opportunities",
-    investigationOpportunities,
-  );
-
-  console.log(
-    "Executive Explanation",
-    executiveExplanation,
-  );
-
   /**
    * CAP-UND-007 — Organizational Causal Reasoning
    *
@@ -1352,11 +1219,6 @@ export function evolveOrganizationRuntime(params: {
       generatedAt:
         now,
     });
-
-  console.log(
-    "Organizational Causal Model",
-    organizationalCausalModel,
-  );
 
 /**
  * CAP-SIM-002 — Organizational Intervention Modeling
@@ -1466,11 +1328,6 @@ const simulatedOrganizationStates = [
   ...(memory.simulatedOrganizationStates ?? []),
   simulatedOrganizationState,
 ];
-
-console.log(
-  "Simulated Organization State",
-  simulatedOrganizationState,
-);
 
 /**
  * Executive Communication Operating System

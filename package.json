@@ -468,6 +468,7 @@
     "discovery:brief": "npm run cognition:validate && npm run audit:executive-capabilities && npm run architecture:state && npm run architecture:handoff && npm run sprint:brief",
     "sprint:start": "npm run discovery:brief",
     "sprint:architecture": "npm run cognition:validate && npm run audit:executive-capabilities && npm run architecture:state && npm run architecture:handoff && cat \"docs/Sprint Updates/ARCHITECTURE_HANDOFF.md\"",
+    "validate:alpha-readiness-ar3": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/alpha-readiness/runContentSafeObservabilityHarness.ts",
     "deps:validate": "node scripts/performance/validatePerformanceReport.mjs",
     "deps:report": "npm run deps:validate && node scripts/performance/renderPerformanceReport.mjs"
   },

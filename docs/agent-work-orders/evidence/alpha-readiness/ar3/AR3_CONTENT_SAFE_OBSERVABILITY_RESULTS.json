@@ -1,0 +1,176 @@
+{
+  "schemaVersion": "1",
+  "sourceDigest": "bfe17f1772cface8a3fd465b3dacd3174a9f22bf54c4fdfe679ecaf93d12c341",
+  "caseIds": [
+    "closed-schema-firewall",
+    "actual-owner-event-traces",
+    "typed-incompatible-replay",
+    "typed-runtime-cas-recovery",
+    "access-shape-neutrality",
+    "fresh-process-repeat",
+    "full-product-sink-parity",
+    "authenticated-two-occurrence-journey",
+    "captured-surface-scan",
+    "cleanup-before-pass"
+  ],
+  "journey": {
+    "requiredStages": [
+      "activate",
+      "prepare",
+      "private-working",
+      "contribute",
+      "freeze",
+      "reload",
+      "capture",
+      "review",
+      "closure",
+      "what-changed",
+      "prepare-again",
+      "occurrence-2",
+      "acceptance",
+      "cleanup"
+    ],
+    "measuredOwnerStages": [
+      "activate",
+      "prepare",
+      "private-working",
+      "contribute",
+      "freeze",
+      "reload",
+      "capture",
+      "review",
+      "closure",
+      "what-changed",
+      "prepare-again",
+      "occurrence-2"
+    ],
+    "authenticatedStages": [
+      "activate",
+      "prepare",
+      "private-working",
+      "contribute",
+      "freeze",
+      "reload",
+      "capture",
+      "review",
+      "closure",
+      "what-changed",
+      "prepare-again",
+      "occurrence-2",
+      "acceptance",
+      "cleanup"
+    ],
+    "complete": true,
+    "ordered": true,
+    "actualOwnerEventCount": 112,
+    "segments": [
+      {
+        "segment": 1,
+        "eventCount": 10,
+        "firstSequence": 1,
+        "lastSequence": 10,
+        "attemptTerminalPairs": 5
+      },
+      {
+        "segment": 2,
+        "eventCount": 16,
+        "firstSequence": 1,
+        "lastSequence": 16,
+        "attemptTerminalPairs": 8
+      },
+      {
+        "segment": 3,
+        "eventCount": 70,
+        "firstSequence": 1,
+        "lastSequence": 70,
+        "attemptTerminalPairs": 35
+      },
+      {
+        "segment": 4,
+        "eventCount": 12,
+        "firstSequence": 1,
+        "lastSequence": 12,
+        "attemptTerminalPairs": 6
+      },
+      {
+        "segment": 5,
+        "eventCount": 4,
+        "firstSequence": 1,
+        "lastSequence": 4,
+        "attemptTerminalPairs": 2
+      }
+    ],
+    "freshProcess": true,
+    "twoOccurrences": true
+  },
+  "typedOutcomes": {
+    "incompatibleReplay": 1,
+    "casConflict": 1,
+    "recovered": 1
+  },
+  "neutrality": {
+    "actualOwnerCaseCount": 6,
+    "identicalShape": true
+  },
+  "parity": {
+    "disabled": true,
+    "throwing": true,
+    "rejected": true,
+    "malformed": true
+  },
+  "scanner": {
+    "capturedSurfaceFindings": 0,
+    "sensitivityFindings": 3,
+    "falsePositiveFindings": 0
+  },
+  "acceptance": {
+    "schemaVersion": "1",
+    "status": "PASS",
+    "journeyStages": [
+      "activate",
+      "prepare",
+      "private-working",
+      "contribute",
+      "freeze",
+      "reload",
+      "capture",
+      "review",
+      "closure",
+      "what-changed",
+      "prepare-again",
+      "occurrence-2",
+      "acceptance",
+      "cleanup"
+    ],
+    "desktop": true,
+    "narrow": true,
+    "hardReload": true,
+    "ceo": true,
+    "director": true,
+    "managerUnavailable": true,
+    "deniedNotFound": true,
+    "browserConsoleFindings": 0,
+    "browserFailureCount": 0,
+    "serverStopped": true,
+    "usersRemaining": 0,
+    "sessionsRemaining": 0,
+    "membershipsRemaining": 0,
+    "organizationsRemaining": 0,
+    "taskRootsRemaining": 0
+  },
+  "replay": {
+    "deterministic": true,
+    "duplicateRecords": false
+  },
+  "cleanup": {
+    "beforeCount": 7,
+    "afterCount": 7,
+    "status": "PASS"
+  },
+  "validations": {
+    "focused": "PASS",
+    "replay": "PASS"
+  },
+  "status": "PASS",
+  "resultDigest": "3d7f635a681372e68e736b863adf8ed6f0c6b2e25a04b8512f762b53aefd1fb6"
+}

@@ -1,33 +1,11 @@
 import "server-only";
+import { AlphaContentSafeObservabilityOwner, alphaObservationDefaults, type AlphaObservabilityEmissionResult } from "../observability/alphaContentSafeObservabilityOwner";
+import type { AlphaContentSafeObservabilityDraftV1 } from "../observability/alphaContentSafeObservabilityContracts";
 
-type AlphaOperationalEvent =
-  | "alpha.request.started"
-  | "alpha.access.denied"
-  | "alpha.runtime.failed"
-  | "alpha.database.failed"
-  | "alpha.audit.failed"
-  | "alpha.disclosure.completed";
+export function createAlphaOperationalJsonOutputOwner(output:(line:string)=>void|Promise<void>):AlphaContentSafeObservabilityOwner{
+  return new AlphaContentSafeObservabilityOwner({emit:event=>output(JSON.stringify(event))});
+}
 
-export function writeAlphaOperationalLog(input: {
-  event: AlphaOperationalEvent;
-  requestId: string;
-  organizationId?: string;
-  outcome: "started" | "allowed" | "denied" | "failed";
-  reason?: string;
-}): void {
-  const entry = {
-    timestamp: new Date().toISOString(),
-    level: input.outcome === "failed" ? "error" : "info",
-    service: "discovery",
-    event: input.event,
-    requestId: input.requestId,
-    ...(input.organizationId
-      ? { organizationId: input.organizationId }
-      : {}),
-    outcome: input.outcome,
-    ...(input.reason ? { reason: input.reason } : {}),
-  };
-  const line = JSON.stringify(entry);
-  if (input.outcome === "failed") console.error(line);
-  else console.info(line);
+export function writeAlphaOperationalLog(input:Pick<AlphaContentSafeObservabilityDraftV1,"eventCategory"|"workflowStage"|"transitionCategory"|"outcomeCategory"|"failureCategory">&Partial<Pick<AlphaContentSafeObservabilityDraftV1,"roleCategory"|"occurrenceCategory"|"viewportCategory"|"latencyBucket"|"replayRecoveryCategory"|"protectedLoadCategory">>,owner=new AlphaContentSafeObservabilityOwner()):Promise<AlphaObservabilityEmissionResult>{
+  return owner.observe({...alphaObservationDefaults,...input});
 }

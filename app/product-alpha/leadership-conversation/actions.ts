@@ -13,12 +13,16 @@ import { NORTHSTAR_LEADERSHIP_CONVERSATION_FIXTURE, northstarLeadershipConversat
 import { resolveEvidenceAcceptanceContinuationV1 } from "../../../product/workflow/leadershipConversation/operations";
 import { createPersonalRoomSheetReplayKey, PERSONAL_ROOM_SHEET_CONTRACT_VERSION, reconstructPersonalRoomSheetContributionActionState, resolvePersonalRoomSheetContribution, stabilizePersonalRoomSheetPrepareInput, type PersonalRoomSheetConfirmationRequestV1, type PersonalRoomSheetConfirmationResponseV1, type PersonalRoomSheetContributionActionState } from "../../../product/workflow/leadershipConversation/personalRoomSheetContracts";
 import { compileChiefOfStaffValueLayerV1 } from "../../../product/workflow/leadershipConversation/chiefCommunicationPlan";
+import { writeAlphaOperationalLog } from "../../../lib/operations/alphaOperationalLog";
+import type { AlphaContentSafeObservabilityEventV1 } from "../../../lib/observability/alphaContentSafeObservabilityContracts";
 
 function guard(): void {
   if (process.env.NODE_ENV === "production") {
     throw new Error("Leadership Conversation development route is unavailable.");
   }
 }
+function observeJourney(workflowStage:AlphaContentSafeObservabilityEventV1["workflowStage"],transitionCategory:AlphaContentSafeObservabilityEventV1["transitionCategory"],outcomeCategory:AlphaContentSafeObservabilityEventV1["outcomeCategory"],failureCategory:AlphaContentSafeObservabilityEventV1["failureCategory"]="none"){writeAlphaOperationalLog({eventCategory:"workflow-transition",workflowStage,transitionCategory,outcomeCategory,failureCategory});}
+export async function observeLeadershipConversationBrowserEventAction(input:{stage:AlphaContentSafeObservabilityEventV1["workflowStage"];transition:AlphaContentSafeObservabilityEventV1["transitionCategory"];outcome:AlphaContentSafeObservabilityEventV1["outcomeCategory"];viewport:AlphaContentSafeObservabilityEventV1["viewportCategory"]}){await signedInUserId();writeAlphaOperationalLog({eventCategory:"browser",workflowStage:input.stage,transitionCategory:input.transition,outcomeCategory:input.outcome,failureCategory:input.outcome==="browser-failure"?"browser":"none",viewportCategory:input.viewport,occurrenceCategory:"occurrence-1"});}
 
 async function signedInUserId(): Promise<string> {
   guard();
@@ -57,7 +61,7 @@ export async function getLeadershipConversationWorkspaceAction(input: {
   const userId = await signedInUserId();
   return createLeadershipConversationServerComposition().workspace({ ...input, userId });
 }
-export async function activateAndPrepareLeadershipConversationAction(input:ChiefFirstPrepareActivationV1){return createLeadershipConversationServerComposition().activateAndPrepare({...input,userId:await signedInUserId()});}
+export async function activateAndPrepareLeadershipConversationAction(input:ChiefFirstPrepareActivationV1){observeJourney("activate","attempted","attempted");const result=await createLeadershipConversationServerComposition().activateAndPrepare({...input,userId:await signedInUserId()});observeJourney("prepare","completed","success");return result;}
 
 export async function routeApprovedTakeawayProposalAction(input: {
   organizationId: string;
@@ -96,6 +100,7 @@ async function occurrence1Context() {
 }
 
 export async function freezeOccurrence1Action(input: { preparedWorkProductVersionId: string; expectedPersonalRoomSheetDigest: string; contributedItemIds: string[] }): Promise<{ checkpointId: string; contributionArtifactIds: string[]; workspace: LeadershipConversationWorkspaceV1 }> {
+  observeJourney("contribute","attempted","attempted");
   const { server, identity } = await occurrence1Context();
   if (!input.preparedWorkProductVersionId) throw new Error("Occurrence 1 preparation is unavailable.");
   const currentPersonalRoomSheet = await composeCurrentPersonalRoomSheet();
@@ -104,6 +109,7 @@ export async function freezeOccurrence1Action(input: { preparedWorkProductVersio
   const selectedContent = input.contributedItemIds.length ? resolvePersonalRoomSheetContribution(currentSheet, { expectedPersonalRoomSheetDigest: input.expectedPersonalRoomSheetDigest, selectedItemIds: input.contributedItemIds }) : [];
   await server.freeze({ ...identity, artifactVersionId: input.preparedWorkProductVersionId, privateWorkingContribution: { seriesId: currentPersonalRoomSheet.sheet.seriesId, occurrenceId: currentPersonalRoomSheet.sheet.occurrenceId, authorizationRevision: currentPersonalRoomSheet.sheet.sourceProjectionDigest, provenanceDigest: currentPersonalRoomSheet.sheet.personalRoomSheetDigest, selectedContent }, idempotencyKey: `occurrence-1-freeze:${identity.conversationId}` });
   const checkpoint = await resolveCurrentLeadershipConversationCheckpoint(identity);
+  observeJourney("contribute",input.contributedItemIds.length?"completed":"intentionally-empty",input.contributedItemIds.length?"success":"expected-abstention");observeJourney("freeze","completed","success");
   return { checkpointId: checkpoint.checkpointId, contributionArtifactIds: checkpoint.contributionArtifactIds, workspace: await server.workspace(identity) };
 }
 
@@ -127,6 +133,7 @@ export async function freezeOccurrence1FormAction(
 }
 
 export async function captureOccurrence1Action(input: { meetingNotes: string }): Promise<LeadershipConversationWorkspaceV1> {
+  observeJourney("capture","attempted","attempted");
   const { server, identity, fixture } = await occurrence1Context(), meetingNotes = input.meetingNotes.trim();
   if (!meetingNotes || meetingNotes.length > 4000) throw new Error("Occurrence 1 Capture is invalid.");
   const checkpoint = await resolveCurrentLeadershipConversationCheckpoint(identity);
@@ -137,14 +144,15 @@ export async function captureOccurrence1Action(input: { meetingNotes: string }):
   const stored = await server.receiveUpload({ ...identity, frozenSnapshotId: checkpoint.checkpointId, purposeRef: fixture.purposeRef, mediaType: "text/plain", bytes: new TextEncoder().encode(text), displayLabel: "Occurrence 1 meeting record", originalFilename: null, idempotencyKey: `occurrence-1-capture:${identity.conversationId}` }), uploadReceipt = stored.uploadReceipts.filter(item => item.conversationId === identity.conversationId).at(-1);
   if (!uploadReceipt) throw new Error("Occurrence 1 Capture is unavailable.");
   await server.generateProposals({ ...identity, uploadReceiptId: uploadReceipt.uploadReceiptId, purposeRef: fixture.purposeRef, idempotencyKey: `occurrence-1-proposals:${identity.conversationId}` });
-  return server.workspace(identity);
+  const workspace=await server.workspace(identity);observeJourney("capture","completed","success");return workspace;
 }
 
 export async function reviewOccurrence1ProposalAction(input: { proposalId: string; disposition: ProposalDisposition }): Promise<LeadershipConversationWorkspaceV1> {
+  observeJourney("review","attempted","attempted");
   const { server, identity } = await occurrence1Context(), current = await server.workspace(identity), proposal = current.proposals.find(item => item.proposalId === input.proposalId);
   if ((input.disposition !== "deferred" && input.disposition !== "rejected") || !proposal || current.dispositions.some(item => item.proposalId === input.proposalId)) throw new Error("Occurrence 1 review is unavailable.");
   await server.review({ ...identity, proposalId: proposal.proposalId, disposition: input.disposition, effectivePayload: null, reason: input.disposition === "deferred" ? "Kept open for a later governed review." : "Not carried forward from Occurrence 1.", idempotencyKey: `occurrence-1-review:${proposal.proposalId}:${input.disposition}` });
-  return server.workspace(identity);
+  const workspace=await server.workspace(identity);observeJourney("review","completed",input.disposition==="deferred"?"expected-abstention":"success");return workspace;
 }
 
 export async function acceptOccurrence1EvidenceAction(input: { proposalId: string }): Promise<LeadershipConversationWorkspaceV1> {
@@ -182,6 +190,7 @@ export async function acceptOccurrence1EvidenceAction(input: { proposalId: strin
 }
 
 export async function completeOccurrence1Action(): Promise<LeadershipConversationWorkspaceV1> {
+  observeJourney("closure","attempted","attempted");
   const { server, identity } = await occurrence1Context(), current = await server.workspace(identity);
   if (current.closureCompletion) return current;
   if (!current.actions.some(action => action.id === "complete-closure" && action.enabled)) throw new Error("Occurrence 1 completion is unavailable.");
@@ -196,13 +205,14 @@ export async function completeOccurrence1Action(): Promise<LeadershipConversatio
   }
   const completed = await server.workspace(identity);
   if (completed.closureCompletion?.seriesId !== frozen.seriesId || completed.closureCompletion.authorizedProjectionDigest !== frozen.authorizedProjectionDigest || completed.closureCompletion.personalRoomSheetDigest !== frozen.personalRoomSheetDigest) throw new Error("Occurrence 1 completion is unavailable.");
-  return completed;
+  observeJourney("closure","completed","success");return completed;
 }
 
 export async function prepareAgainOccurrence1Action() {
+  observeJourney("prepare-again","attempted","attempted");
   const { server, identity } = await occurrence1Context();
   const current = await server.workspace(identity);
   if (!current.futurePreparationLink && !current.actions.some(action => action.id === "prepare-again" && action.enabled)) throw new Error("Prepare Again is unavailable.");
   const result=await server.prepareNextOccurrence(identity);
-  return{...result,valueLayer:compileChiefOfStaffValueLayerV1(result.nextPrepare)};
+  observeJourney("what-changed","completed","success");observeJourney("prepare-again","completed","success");return{...result,valueLayer:compileChiefOfStaffValueLayerV1(result.nextPrepare)};
 }

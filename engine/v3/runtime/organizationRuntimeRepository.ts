@@ -106,25 +106,6 @@ function stored(
   };
 }
 
-function logStorageOperation(input: {
-  backend: RuntimeStorageBackend;
-  operation: "create" | "replace" | "backup" | "restore";
-  organizationId: string;
-  metadata: RuntimeStorageOperationMetadata;
-}): void {
-  console.info(JSON.stringify({
-    timestamp: new Date().toISOString(),
-    level: "info",
-    service: "discovery",
-    event: `runtime.storage.${input.operation}`,
-    backend: input.backend,
-    requestId: input.metadata.requestId,
-    operatorId: input.metadata.operatorId,
-    organizationId: input.organizationId,
-    outcome: "completed",
-  }));
-}
-
 export function organizationRuntimeObjectKey(
   organizationId: string,
   prefix = "discovery/runtime/v1",
@@ -196,7 +177,6 @@ implements OrganizationRuntimeRepository {
       }
       throw error;
     }
-    logStorageOperation({ backend: this.backend, operation: "create", organizationId, metadata });
     return value;
   }
 
@@ -216,7 +196,6 @@ implements OrganizationRuntimeRepository {
       .digest("hex")}.tmp`;
     await writeFile(temporary, bytes, { flag: "wx" });
     await rename(temporary, this.activePath(organizationId));
-    logStorageOperation({ backend: this.backend, operation: "replace", organizationId, metadata });
     return value;
   }
 
@@ -241,7 +220,6 @@ implements OrganizationRuntimeRepository {
       }
       throw error;
     }
-    logStorageOperation({ backend: this.backend, operation: "backup", organizationId, metadata });
     return current;
   }
 
@@ -264,7 +242,6 @@ implements OrganizationRuntimeRepository {
       .digest("hex")}.restore`;
     await copyFile(this.backupPath(organizationId, backupId), temporary);
     await rename(temporary, this.activePath(organizationId));
-    logStorageOperation({ backend: this.backend, operation: "restore", organizationId, metadata });
     return value;
   }
 }
@@ -364,7 +341,6 @@ implements OrganizationRuntimeRepository {
     const result = await this.client.put(this.key(organizationId), bytes, {
       allowOverwrite: false,
     });
-    logStorageOperation({ backend: this.backend, operation: "create", organizationId, metadata });
     return { ...value, revision: result.etag };
   }
 
@@ -379,7 +355,6 @@ implements OrganizationRuntimeRepository {
       allowOverwrite: true,
       ifMatch: expectedRevision,
     });
-    logStorageOperation({ backend: this.backend, operation: "replace", organizationId, metadata });
     return { ...value, revision: result.etag };
   }
 
@@ -396,7 +371,6 @@ implements OrganizationRuntimeRepository {
     await this.client.put(this.backupKey(organizationId, backupId), current.bytes, {
       allowOverwrite: false,
     });
-    logStorageOperation({ backend: this.backend, operation: "backup", organizationId, metadata });
     return current;
   }
 
@@ -413,7 +387,6 @@ implements OrganizationRuntimeRepository {
       allowOverwrite: true,
       ifMatch: expectedRevision,
     });
-    logStorageOperation({ backend: this.backend, operation: "restore", organizationId, metadata });
     return { ...value, revision: result.etag };
   }
 }
