@@ -63,14 +63,55 @@ noncanonical and cannot authorize, mutate Product truth, or influence cognition.
 2. Bounded Product/security corrections discovered by AR-1A
 3. `AR-3 — END-TO-END CONTENT-SAFE OBSERVABILITY`
 4. `AR-4 — PRIVACY-SAFE PRODUCT TELEMETRY`
-5. `AR-5 — CRITICAL FAILURE RECOVERY`
-6. `AR-2 — CRITICAL-PATH TEST PYRAMID FREEZE`
-7. `AR-1B — COMPLETE GOVERNED COGNITION NON-DISCLOSURE ADVERSARIAL ACCEPTANCE`
-8. `AR-6 — INTEGRATED ALPHA READINESS ACCEPTANCE`
+5. `AR-2-PRE-001A — MEASURED ACCEPTANCE CONTRACTS AND ADJUDICATOR`
+6. `AR-2-PRE-001B — AUTHENTICATED ALPHA ACCEPTANCE RUNNER AND AR-3 CURRENT-BUILD CONFORMANCE`
+7. `AR-5A — CORE FAILURE-RECOVERY HARDENING`
+8. `AR-5B — AUTHENTICATED RECOVERY CONFORMANCE`
+9. `AR-2 — CRITICAL-PATH TEST PYRAMID FREEZE`
+10. `AR-1B — COMPLETE GOVERNED COGNITION NON-DISCLOSURE ADVERSARIAL ACCEPTANCE`
+11. `AR-6 — INTEGRATED ALPHA READINESS ACCEPTANCE`
 
 `AR-1A` defines the proof system and `AR-1B` executes its complete adversarial
-acceptance after observability, recovery, and the test pyramid are ready. AR-1
-through AR-5 remain separate bounded commits. Read-only preparation may overlap.
+acceptance after observability, recovery, and the test pyramid are ready. The
+former monolithic AR-5 execution is paused and decomposed; AR-5 remains in
+progress until both AR-5A and AR-5B pass. Each subgate remains a separate
+bounded commit. Read-only preparation may overlap.
+
+The accepted current Product journey is one fully executed and closed
+Occurrence 1 followed by What Changed, explicit Prepare Again, and one distinct
+owner-issued Occurrence 2 that is created, prepared, truthfully not started,
+hard-reload safe, and fresh-process reconstructed. Readiness does not claim
+Occurrence-2 Freeze, Capture, Review, closure, or a second completed cycle.
+
+## Evidence architecture
+
+Alpha Readiness separates three evidence levels:
+
+1. **Framework Qualification** is immutable evidence that a specific version
+   of contracts, adjudicator, runner, scanner, and oracle is trustworthy. Later
+   Product-source changes do not rewrite its historical result.
+2. **Current-Build Conformance** is an append-only result binding one exact
+   source/build digest, one qualified framework identity, one profile identity,
+   and one measured execution result.
+3. **Integrated Readiness Result** is owned by AR-6 and aggregates framework
+   identities, current-build conformance, AR-1B, AR-5A, AR-5B, cleanup,
+   architecture, dependency identity, and authenticated acceptance.
+
+Profiles define required facts, measurement producers emit observations, and
+the adjudicator alone derives PASS, FAIL, or BLOCKED. Static expected values
+cannot become measured conclusions. Parent-controlled child-process IPC is the
+normal structured-observation transfer. Protected atomic handoff is reserved
+for lifecycle ownership manifests and resumable cleanup-progress state; Alpha
+Readiness does not create a generalized HMAC-certificate platform.
+
+The preserved dirty AR-5 worktree is historical implementation evidence.
+Approximately 70% is conceptually reusable, 55–65% may be deliberately
+reconstructed byte-for-byte after review, 20–25% informs the shared acceptance
+foundation but requires redesign, and 10–15% is invalid or superseded.
+`UNPROVEN — DEFER GENERALIZATION` remains controlling. Production rollback
+remains owned by `ALPHA-OPS-001`; Baseline A, benchmarks, optimization, Alpha
+Operations, and launch remain blocked. Only one write-bearing subgate may be
+authorized at a time.
 
 ## Execution contract
 

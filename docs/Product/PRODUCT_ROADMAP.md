@@ -123,8 +123,10 @@ has not been performed. Gate 4, both Gate-5 prerequisites, `ALPHA-RM-G5-001`,
 `ALPHA-RM-G6-001`, and `ALPHA-RM-G7-001` are complete. `ALPHA-READY-001` is
 in progress: its AR-1A proof-system foundation, the truthful empty-contribution
 closure correction, AR-3 content-safe observability, and AR-4 privacy-safe
-Product telemetry are complete. The next separately governed boundary is AR-5
-critical failure recovery; AR-5, AR-2, AR-1B, and AR-6 retain their accepted order. The next five ordered
+Product telemetry are complete. The former monolithic AR-5 execution is
+**PAUSED AND DECOMPOSED**; AR-5 remains an incomplete readiness requirement.
+The next separately governed boundary is `AR-2-PRE-001A`, followed by
+`AR-2-PRE-001B`, `AR-5A`, `AR-5B`, AR-2, AR-1B, and AR-6. The next five ordered
 items are `ALPHA-READY-001`, `ALPHA-BASE-A-001`, `ALPHA-BENCH-LONG-001`,
 `ALPHA-OPT-001`, and `ALPHA-BASE-DECIDE-001`; none has begun.
 
@@ -166,7 +168,7 @@ parallel lanes; it does not create another roadmap owner.
 | 10 | `ALPHA-RM-G5-001` | What Changed / Prepare Again | COMPLETE |
 | 11 | `ALPHA-RM-G6-001` | Chief-of-Staff value layer | COMPLETE |
 | 12 | `ALPHA-RM-G7-001` | Alpha experience and operations | COMPLETE |
-| 13 | `ALPHA-READY-001` | Alpha Readiness Foundation | IN PROGRESS — AR-1A, the empty-contribution correction, AR-3, and AR-4 are complete; AR-5 is next and has not begun |
+| 13 | `ALPHA-READY-001` | Alpha Readiness Foundation | IN PROGRESS — AR-1A, the empty-contribution correction, AR-3, and AR-4 are complete; monolithic AR-5 is paused and decomposed; AR-2-PRE-001A is next |
 | 14 | `ALPHA-BASE-A-001` | Freeze Alpha Baseline A | QUEUED — blocked by `ALPHA-READY-001` PASS and separate authorization |
 | 15 | `ALPHA-BENCH-LONG-001` | Longitudinal Chief / Organizational Understanding benchmark | QUEUED — execution blocked until `ALPHA-BASE-A-001` |
 | 16 | `ALPHA-OPT-001` | Bounded cognition optimization | QUEUED — blocked by the frozen baseline benchmark run |
@@ -249,18 +251,36 @@ The accepted readiness sequence is:
    including truthful empty-contribution closure when required;
 3. `AR-3` — End-to-End Content-Safe Observability — COMPLETE;
 4. `AR-4` — Privacy-Safe Product Telemetry — COMPLETE;
-5. `AR-5` — Critical Failure Recovery;
-6. `AR-2` — Critical-Path Test Pyramid Freeze;
-7. `AR-1B` — Complete Governed Cognition Non-Disclosure Adversarial
+5. `AR-2-PRE-001A` — Measured Acceptance Contracts and Adjudicator;
+6. `AR-2-PRE-001B` — Authenticated Alpha Acceptance Runner and AR-3
+   Current-Build Conformance;
+7. `AR-5A` — Core Failure-Recovery Hardening;
+8. `AR-5B` — Authenticated Recovery Conformance;
+9. `AR-2` — Critical-Path Test Pyramid Freeze;
+10. `AR-1B` — Complete Governed Cognition Non-Disclosure Adversarial
    Acceptance; and
-8. `AR-6` — Integrated Alpha Readiness Acceptance.
+11. `AR-6` — Integrated Alpha Readiness Acceptance.
 
-`AR-1A` and `AR-1B` share the `AR-1` program identity. AR-1 through AR-5 use
-separate bounded commits. Only one write-bearing task may be active. Read-only
+`AR-1A` and `AR-1B` share the `AR-1` program identity. AR-5 completes only when
+both AR-5A and AR-5B pass. The accepted Product journey is one completed
+Occurrence 1 followed by one owner-issued Occurrence 2 that is prepared,
+not-started, reload-safe, and fresh-process reconstructed; it does not claim a
+second completed meeting cycle. Every subgate uses a separate bounded commit.
+Only one write-bearing task may be active. Read-only
 preparation may overlap. `ALPHA-BASE-A-001` remains blocked until AR-6 passes.
 Benchmark execution remains blocked until Baseline A is frozen. Optimization,
 the baseline decision, Alpha Operations, and design-partner launch retain their
 existing dependencies.
+
+The dirty AR-5 experimental worktree remains preserved as historical
+implementation evidence rather than an integration candidate. Approximately
+70% is conceptually reusable, 55–65% is suitable for deliberate byte-level
+reconstruction, 20–25% informs the shared acceptance foundation but requires
+redesign, and 10–15% is invalid or superseded and must not be reconstructed.
+Gate-5 generalization remains `UNPROVEN — DEFER GENERALIZATION`. Production
+rollback remains owned by `ALPHA-OPS-001`. Baseline A, benchmark execution,
+optimization, Alpha Operations, and launch remain blocked. Only one
+write-bearing readiness subgate may be authorized at a time.
 
 #### Parallel benchmark-preparation lane
 
