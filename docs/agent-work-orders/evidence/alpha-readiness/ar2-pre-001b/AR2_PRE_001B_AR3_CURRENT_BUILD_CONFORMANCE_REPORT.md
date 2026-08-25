@@ -8,7 +8,7 @@
 - Scanner public findings: 0
 - Cleanup attempts: 2
 - Independent zero: **zero-verified**
-- Source digest: `d3e349179913134e8ae3563b18af446510b37056468cc7e80eeb4fbb2eeeae8d`
-- Result digest: `4d566d0d212baeb570d8ea1d7df80cf37a281265441d4d573c4ca80fdf5ee851`
+- Source digest: `6470e943fae7d38d32d0b987026e4caef9d9dbaa702794f3f6b86ea6a0f3ea59`
+- Result digest: `0470a00f412a9f3d858dc4c4c0e056cb705b143e8fc58cb842a0c50b2c533fc3`
 
 Occurrence 1 completed through What Changed and Prepare Again. Occurrence 2 was owner-issued, prepared, reconstructed, and remained truthfully not started. No later Occurrence-2 execution was claimed.
