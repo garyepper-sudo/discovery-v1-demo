@@ -28,17 +28,24 @@
     "no-loss",
     "owner-issued-replay"
   ],
-  "sourceDigest": "895e237013d55a4212ab9161d5f7b75b270e40b2e58d9841d41cdcb8f04b67b8",
-  "changedPathsDigest": "73ef18fea7ed1a2808be764c5ad3a5dc09f6dfe71e7008f7fd5d33e0e927729b",
-  "envelopeDigestAggregate": "04a916afb6f78edf5e9a6b344f7b17026a6539e695c7afe45f561d92b0d1da6a",
-  "resultDigest": "eb33c849f4e3ed0d7ddebd9dc7fe38c38d995e343341b5c6824e3fbce16dd558",
+  "sourceDigest": "f4f8d9b471c876f3f14a8e3d56acfe252e6509985990e0a45fc192bc6aace692",
+  "changedPathsDigest": "8181cd37bfadd476ddfd10bb5acfa4457d8de31c6768d2c120676ac415fc295a",
+  "envelopeDigestAggregate": "54ce36c557dd2f53c6260acb4805ff347cc65e61e564fe18d81f067c03da8619",
+  "resultDigest": "0b8c6aaf9ce78f86dd29014bc560f6821aae95acdc7134d423c57aba5fc5b32a",
   "measurements": {
     "source": {
       "boundaryHead": "780247cfb8e2efad8ac085fe7ff34900e396dfba",
       "boundaryTree": "2f938a9d66e87656924863cd6b4b292f585f501a",
-      "generationHead": "780247cfb8e2efad8ac085fe7ff34900e396dfba",
-      "pathCount": 2253,
+      "implementationCommit": "e3b035d6bcd7f75285ff2e34111c2732c8642519",
+      "implementationTree": "e930031a26ffdb7255ce9562424f46087760f2b2",
+      "generationHead": "edc497fbb5a9f38e67ba579a391b731f82136e88",
+      "pathCount": 2252,
       "packageLockDigest": "d882c89972018abff19cfc254a6d58d249f17c3e7d1bfb9c5044c077b969a7dc",
+      "excludedPaths": [
+        "docs/Product/PRODUCT_ROADMAP.md",
+        "docs/agent-work-orders/evidence/alpha-readiness/ar5a/AR5A_CORE_FAILURE_RECOVERY_REPORT.md",
+        "docs/agent-work-orders/evidence/alpha-readiness/ar5a/AR5A_CORE_FAILURE_RECOVERY_RESULTS.json"
+      ],
       "manifest": [
         {
           "path": ".discovery-runtime/organizations/Acme2.json",
@@ -2023,10 +2030,6 @@
         {
           "path": "docs/Product/PRODUCT_GOVERNANCE.md",
           "digest": "758ea4dbcad1e27a9c363c14fe20b0035da077bbe52acd44a0a93db08c164045"
-        },
-        {
-          "path": "docs/Product/PRODUCT_ROADMAP.md",
-          "digest": "496877b9cfe406bcd85187106b0bd8274c4fdbdd11f487f58cde87152efaaae0"
         },
         {
           "path": "docs/Product/PRODUCT_WORKFLOW_FRONTEND_INTEGRATION_SPEC.md",
@@ -7498,7 +7501,7 @@
         },
         {
           "path": "product/workflow/leadershipConversation/operations.ts",
-          "digest": "cefc0ac2bb8aaaa081ab2867543f7cd51b40bf7b3de67b3616bae83e327f04a8"
+          "digest": "1f15df5bfdde7033e91fd82841195a1e3f6bdb18520e31383915e96553f1e2d4"
         },
         {
           "path": "product/workflow/leadershipConversation/personalRoomSheetContracts.ts",
@@ -8082,11 +8085,11 @@
         },
         {
           "path": "scripts/alpha-readiness/runCoreFailureRecoveryHarness.ts",
-          "digest": "4921aa3c3526c5b00e48c7009b1c3e3642646baeb8dbfd1510524cdb5f66d0a9"
+          "digest": "c6af6415e618d6c4525af239ebbd0ac197582f6157316db9fef65446987a8882"
         },
         {
           "path": "scripts/alpha-readiness/runNonDisclosureThreatHarness.ts",
-          "digest": "88b93349b8982dab4aa0759516992b82182ef47931e6ed37148af83da8734cc5"
+          "digest": "259e809f8448c298aa6f71a8de2044382ea134cfcfd0a78a529ac600822bdfe4"
         },
         {
           "path": "scripts/alpha-readiness/runPrivacySafeProductTelemetryHarness.ts",
@@ -9053,33 +9056,166 @@
           "digest": "a98817caa899724a967e59285b3380f7b542afc194308e26e4eb243ae94c07a5"
         }
       ],
-      "digest": "895e237013d55a4212ab9161d5f7b75b270e40b2e58d9841d41cdcb8f04b67b8"
+      "implementationSourceDigest": "2553f74f9a7c8b9180e01907637ebf212c682308c0f8eb59fe9c954b9cf06381",
+      "controlTower": {
+        "commit": "edc497fbb5a9f38e67ba579a391b731f82136e88",
+        "parent": "e3b035d6bcd7f75285ff2e34111c2732c8642519",
+        "tree": "6b19044d9e1792e53f0e9303f36a5e26da60561b",
+        "message": "docs: advance alpha readiness to AR-5B",
+        "paths": [
+          "docs/Product/PRODUCT_ROADMAP.md"
+        ],
+        "roadmapBlob": "280803efdc6194688aca5f3f881c3c41c962f290",
+        "diffDigest": "c6109e56fa014cb9d08fbce16307cf183fc3d8b8e09a2aa482f4ea5051592f9d"
+      },
+      "digest": "f4f8d9b471c876f3f14a8e3d56acfe252e6509985990e0a45fc192bc6aace692"
+    },
+    "controlTowerTransition": {
+      "commit": "edc497fbb5a9f38e67ba579a391b731f82136e88",
+      "parent": "e3b035d6bcd7f75285ff2e34111c2732c8642519",
+      "tree": "6b19044d9e1792e53f0e9303f36a5e26da60561b",
+      "message": "docs: advance alpha readiness to AR-5B",
+      "paths": [
+        "docs/Product/PRODUCT_ROADMAP.md"
+      ],
+      "roadmapBlob": "280803efdc6194688aca5f3f881c3c41c962f290",
+      "diffDigest": "c6109e56fa014cb9d08fbce16307cf183fc3d8b8e09a2aa482f4ea5051592f9d"
     },
     "changedPaths": [
       "docs/agent-work-orders/evidence/alpha-readiness/ar5a/AR5A_CORE_FAILURE_RECOVERY_REPORT.md",
       "docs/agent-work-orders/evidence/alpha-readiness/ar5a/AR5A_CORE_FAILURE_RECOVERY_RESULTS.json",
-      "engine/v3/runtime/organizationRuntimeRepository.ts",
-      "package.json",
-      "product/workflow/leadershipConversation/productWorkflowArtifactRepository.ts",
-      "scripts/alpha-readiness/criticalFailureRecoveryContracts.ts",
-      "scripts/alpha-readiness/criticalFailureRecoveryCoordinator.ts",
+      "product/workflow/leadershipConversation/operations.ts",
       "scripts/alpha-readiness/runCoreFailureRecoveryHarness.ts",
-      "scripts/product/validateAlphaCriticalFailureRecovery.ts",
-      "scripts/product/validateCanonicalMutationProductMaterializationAtomicity.ts",
-      "scripts/product/validateCanonicalMutationProductMaterializationFailure.ts",
-      "scripts/product/validateCanonicalMutationProductMaterializationFreshProcess.ts",
-      "scripts/product/validateLeadershipConversationReplay.ts"
+      "scripts/alpha-readiness/runNonDisclosureThreatHarness.ts"
     ],
-    "runId": "acad7124e7cf677d1c67ea51df9c2f2c44062514e2635feda57461b397afda62",
+    "validation": {
+      "sourceBinding": {
+        "status": "PASS",
+        "checkCount": 28,
+        "checks": [
+          "implementation-source-current",
+          "implementation-precedes-control-tower",
+          "canonical-control-tower-transition",
+          "unchanged-descendant-permitted",
+          "implementation-commit-exact",
+          "implementation-tree-exact",
+          "control-tower-current",
+          "wrong-control-tower-commit",
+          "wrong-control-tower-parent",
+          "wrong-control-tower-tree",
+          "wrong-control-tower-message",
+          "wrong-control-tower-path",
+          "wrong-control-tower-blob",
+          "wrong-control-tower-diff",
+          "changed-implementation-digest",
+          "removed-manifest-path",
+          "added-manifest-path",
+          "substituted-manifest-path",
+          "reintroduced-roadmap-invalidates",
+          "overbroad-source-exclusion",
+          "divergent-history",
+          "roadmap-excluded",
+          "evidence-results-excluded",
+          "evidence-report-excluded",
+          "only-three-exclusions",
+          "aggregate-binds-both-identities",
+          "manual-evidence-change-bound",
+          "static-pass-not-source-proof"
+        ]
+      },
+      "measuredRecovery": "PASS",
+      "ar1a": {
+        "validation": "alpha-readiness-ar1a",
+        "mode": "validate-only",
+        "result": "PASS",
+        "cases": {
+          "total": 45,
+          "passed": 45,
+          "failed": 0
+        },
+        "positiveControls": {
+          "total": 1,
+          "passed": 1
+        },
+        "scanner": {
+          "rootsScanned": 46,
+          "expectedProtectedStorageFindings": 7,
+          "leakageFindings": 0,
+          "sensitivityCategories": 12,
+          "falsePositive": 0
+        },
+        "cleanup": {
+          "status": "PASS",
+          "allocatedRoots": 46,
+          "rootsVerifiedAbsent": 46,
+          "rootsRemaining": 0,
+          "childProcessesStarted": 13,
+          "childProcessesExited": 13,
+          "childProcessesRemaining": 0,
+          "stagedStateBefore": "empty",
+          "stagedStateAfter": "empty",
+          "browserProfilesCreated": 0,
+          "serversCreated": 0,
+          "externalStateCreated": false
+        },
+        "deterministicRepeatStatus": {
+          "status": "PASS",
+          "semanticRunDigest": "5f9154b900aecf24138bccfa3e0e9975d47893f9833c9c685b8337d54e042748",
+          "separateProcess": true
+        },
+        "sourceDigest": "8da375f3193877b72f647efb3e606b7c90d9fbd89fad72f3cb0ad4462f256a5e",
+        "resultDigest": "205a77c330fdf6c2cfbf449cb7c4138ff1a3f3d8189d6b271064a6658435bac2"
+      }
+    },
+    "cleanup": {
+      "status": "cleanup-complete",
+      "rootsRemaining": 0
+    },
+    "adjudication": {
+      "contractVersion": "ar5a-core-failure-recovery-v1",
+      "ownerRecoveryStatus": "PASS",
+      "productReadinessStatus": "PASS",
+      "faultCaseTotal": 102,
+      "concurrencyTotal": 4,
+      "freshProcessTotal": 51,
+      "exactReplayTotal": 7,
+      "incompatibleReplayTotal": 4,
+      "recoveryBlockedTotal": 20,
+      "duplicateFindingTotal": 0,
+      "authorizationFindingTotal": 0,
+      "scannerFindingTotal": 0,
+      "scannerSensitivityTotal": 10,
+      "cleanupStatus": "cleanup-complete",
+      "ar3OwnerParityStatus": "PASS",
+      "ar4OwnerParityStatus": "PASS",
+      "historicalEvidenceDisposition": "preserved-source-stale",
+      "deterministicRepeatStatus": "PASS",
+      "bodyRepositoryPath": "unchanged",
+      "replayValidatorPath": "activated",
+      "packageLockStatus": "unchanged",
+      "durationCategories": [
+        "immediate",
+        "bounded-local"
+      ],
+      "recoverableDataCategories": [
+        "no-loss",
+        "owner-issued-replay"
+      ],
+      "sourceDigest": "f4f8d9b471c876f3f14a8e3d56acfe252e6509985990e0a45fc192bc6aace692",
+      "changedPathsDigest": "8181cd37bfadd476ddfd10bb5acfa4457d8de31c6768d2c120676ac415fc295a",
+      "envelopeDigestAggregate": "54ce36c557dd2f53c6260acb4805ff347cc65e61e564fe18d81f067c03da8619",
+      "resultDigest": "0b8c6aaf9ce78f86dd29014bc560f6821aae95acdc7134d423c57aba5fc5b32a"
+    },
+    "runId": "2878237aa1867e7d83c32cfc356c967f260ed8b1eb64d61f52d4cf8af45cde5a",
     "envelopes": [
       {
         "contractVersion": "ar5a-measurement-v1",
         "producer": "focused-owner-recovery",
         "phase": "focused-owner-recovery",
         "sequence": 1,
-        "sourceDigest": "895e237013d55a4212ab9161d5f7b75b270e40b2e58d9841d41cdcb8f04b67b8",
+        "sourceDigest": "f4f8d9b471c876f3f14a8e3d56acfe252e6509985990e0a45fc192bc6aace692",
         "taskId": "ar5a-core-failure-recovery",
-        "runId": "acad7124e7cf677d1c67ea51df9c2f2c44062514e2635feda57461b397afda62",
+        "runId": "2878237aa1867e7d83c32cfc356c967f260ed8b1eb64d61f52d4cf8af45cde5a",
         "measurement": {
           "status": "PASS",
           "checks": 102,
@@ -9514,9 +9650,9 @@
         "producer": "materialization-atomicity",
         "phase": "materialization-atomicity",
         "sequence": 2,
-        "sourceDigest": "895e237013d55a4212ab9161d5f7b75b270e40b2e58d9841d41cdcb8f04b67b8",
+        "sourceDigest": "f4f8d9b471c876f3f14a8e3d56acfe252e6509985990e0a45fc192bc6aace692",
         "taskId": "ar5a-core-failure-recovery",
-        "runId": "acad7124e7cf677d1c67ea51df9c2f2c44062514e2635feda57461b397afda62",
+        "runId": "2878237aa1867e7d83c32cfc356c967f260ed8b1eb64d61f52d4cf8af45cde5a",
         "measurement": {
           "status": "PASS",
           "boundaries": {
@@ -9542,9 +9678,9 @@
         "producer": "materialization-failure",
         "phase": "materialization-failure",
         "sequence": 3,
-        "sourceDigest": "895e237013d55a4212ab9161d5f7b75b270e40b2e58d9841d41cdcb8f04b67b8",
+        "sourceDigest": "f4f8d9b471c876f3f14a8e3d56acfe252e6509985990e0a45fc192bc6aace692",
         "taskId": "ar5a-core-failure-recovery",
-        "runId": "acad7124e7cf677d1c67ea51df9c2f2c44062514e2635feda57461b397afda62",
+        "runId": "2878237aa1867e7d83c32cfc356c967f260ed8b1eb64d61f52d4cf8af45cde5a",
         "measurement": {
           "status": "PASS",
           "stages": {
@@ -9566,9 +9702,9 @@
         "producer": "materialization-fresh-process",
         "phase": "materialization-fresh-process",
         "sequence": 4,
-        "sourceDigest": "895e237013d55a4212ab9161d5f7b75b270e40b2e58d9841d41cdcb8f04b67b8",
+        "sourceDigest": "f4f8d9b471c876f3f14a8e3d56acfe252e6509985990e0a45fc192bc6aace692",
         "taskId": "ar5a-core-failure-recovery",
-        "runId": "acad7124e7cf677d1c67ea51df9c2f2c44062514e2635feda57461b397afda62",
+        "runId": "2878237aa1867e7d83c32cfc356c967f260ed8b1eb64d61f52d4cf8af45cde5a",
         "measurement": {
           "status": "PASS",
           "workers": 5,
@@ -9606,9 +9742,9 @@
         "producer": "joined-replay-inventory",
         "phase": "joined-replay-inventory",
         "sequence": 5,
-        "sourceDigest": "895e237013d55a4212ab9161d5f7b75b270e40b2e58d9841d41cdcb8f04b67b8",
+        "sourceDigest": "f4f8d9b471c876f3f14a8e3d56acfe252e6509985990e0a45fc192bc6aace692",
         "taskId": "ar5a-core-failure-recovery",
-        "runId": "acad7124e7cf677d1c67ea51df9c2f2c44062514e2635feda57461b397afda62",
+        "runId": "2878237aa1867e7d83c32cfc356c967f260ed8b1eb64d61f52d4cf8af45cde5a",
         "measurement": {
           "status": "PASS",
           "checks": 55,
@@ -9657,24 +9793,24 @@
         "producer": "scanner",
         "phase": "scanner",
         "sequence": 6,
-        "sourceDigest": "895e237013d55a4212ab9161d5f7b75b270e40b2e58d9841d41cdcb8f04b67b8",
+        "sourceDigest": "f4f8d9b471c876f3f14a8e3d56acfe252e6509985990e0a45fc192bc6aace692",
         "taskId": "ar5a-core-failure-recovery",
-        "runId": "acad7124e7cf677d1c67ea51df9c2f2c44062514e2635feda57461b397afda62",
+        "runId": "2878237aa1867e7d83c32cfc356c967f260ed8b1eb64d61f52d4cf8af45cde5a",
         "measurement": {
           "findings": 0,
           "sensitivity": 10,
-          "surfaces": 14
+          "surfaces": 16
         },
-        "measurementDigest": "16f04180aa34edd70cff65b076e0279374fb2d3868203f7c95df2bbe5e241de3"
+        "measurementDigest": "8dc6241bf4a5a16522e9fc831e65487e5c625c8429ea2a48d0f707b7c9c1fce6"
       },
       {
         "contractVersion": "ar5a-measurement-v1",
         "producer": "cleanup-zero",
         "phase": "cleanup-zero",
         "sequence": 7,
-        "sourceDigest": "895e237013d55a4212ab9161d5f7b75b270e40b2e58d9841d41cdcb8f04b67b8",
+        "sourceDigest": "f4f8d9b471c876f3f14a8e3d56acfe252e6509985990e0a45fc192bc6aace692",
         "taskId": "ar5a-core-failure-recovery",
-        "runId": "acad7124e7cf677d1c67ea51df9c2f2c44062514e2635feda57461b397afda62",
+        "runId": "2878237aa1867e7d83c32cfc356c967f260ed8b1eb64d61f52d4cf8af45cde5a",
         "measurement": {
           "status": "cleanup-complete",
           "rootsRemaining": 0
