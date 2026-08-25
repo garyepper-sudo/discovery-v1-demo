@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "validate:authenticated-alpha-acceptance-runner": "NODE_OPTIONS=--conditions=react-server tsx scripts/acceptance/validateAuthenticatedAlphaAcceptanceRunner.ts",
+    "validate:ar3-current-build-conformance": "NODE_OPTIONS=--conditions=react-server tsx scripts/acceptance/validateAr3CurrentBuildConformance.ts",
+    "validate:ar3-current-build-conformance:write": "NODE_OPTIONS=--conditions=react-server tsx scripts/acceptance/validateAr3CurrentBuildConformance.ts --write",
+    "validate:ar3-current-build-conformance:verify": "NODE_OPTIONS=--conditions=react-server tsx scripts/acceptance/validateAr3CurrentBuildConformance.ts --verify",
     "validate:authenticated-alpha-acceptance-framework": "tsx scripts/acceptance/validateAuthenticatedAlphaAcceptanceFramework.ts",
     "validate:authenticated-alpha-acceptance-framework:write": "tsx scripts/acceptance/validateAuthenticatedAlphaAcceptanceFramework.ts --write",
     "validate:authenticated-alpha-acceptance-framework:verify": "tsx scripts/acceptance/validateAuthenticatedAlphaAcceptanceFramework.ts --verify",
@@ -497,6 +501,8 @@
     "typescript": "5.7.2"
   },
   "devDependencies": {
+    "@clerk/testing": "2.2.23",
+    "@playwright/test": "1.62.1",
     "@types/pdf-parse": "^1.1.5",
     "drizzle-kit": "0.31.10",
     "eslint": "^8.57.1",

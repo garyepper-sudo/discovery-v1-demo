@@ -1,0 +1,370 @@
+{
+  "schemaVersion": "1",
+  "kind": "ar3-current-build-conformance",
+  "frameworkQualification": {
+    "frameworkId": "authenticated-alpha-acceptance",
+    "frameworkVersion": "1",
+    "qualificationSourceDigest": "55b470abeb44b5269583bbea5bb23d5a8cc2a32d8406ce3627ed6714d6f77d85",
+    "qualificationResultDigest": "590afaaa8a91e7cb57b562d9ccedce40f7bd02d2a2b9f46b068dda3b3933fefd"
+  },
+  "sourceManifest": {
+    "head": "1ae9beb2bfcb0dace4c1740d363f9e5c0c9d2b0d",
+    "trackedFileCount": 2247,
+    "digest": "d3e349179913134e8ae3563b18af446510b37056468cc7e80eeb4fbb2eeeae8d"
+  },
+  "sourceDigest": "d3e349179913134e8ae3563b18af446510b37056468cc7e80eeb4fbb2eeeae8d",
+  "taskDigest": "0b861ef99c2ca77f7426885431317b3f00488080265af638b8b3d054364eea1f",
+  "profile": {
+    "id": "ar3-current-build-conformance",
+    "version": "version-1",
+    "digest": "de69f061c505e254b4466844f1a30fb15f79fccb3e2df835307452dce593763c"
+  },
+  "measurements": [
+    {
+      "schemaVersion": "1",
+      "kind": "acceptance-measurement",
+      "framework": {
+        "id": "authenticated-alpha-acceptance",
+        "version": "1"
+      },
+      "profile": {
+        "id": "ar3-current-build-conformance",
+        "version": "version-1"
+      },
+      "producer": "browser",
+      "phase": "browser-journey",
+      "sourceDigest": "d3e349179913134e8ae3563b18af446510b37056468cc7e80eeb4fbb2eeeae8d",
+      "taskDigest": "0b861ef99c2ca77f7426885431317b3f00488080265af638b8b3d054364eea1f",
+      "measurementId": "d77c001c5905171e60db9f0820c69758e905f1cc80e2c981aa234eb111fdd96e",
+      "producerRunDigest": "22295d06561bf6527848d744a9c312888ad575a3c830647ef1be41e31733c881",
+      "sequence": 1,
+      "observations": [
+        {
+          "factId": "browser-journey-ordered",
+          "state": "observed"
+        },
+        {
+          "factId": "ceo-authorized",
+          "state": "observed"
+        },
+        {
+          "factId": "director-authorized-parity",
+          "state": "observed"
+        },
+        {
+          "factId": "manager-unavailable",
+          "state": "observed"
+        },
+        {
+          "factId": "denied-not-found",
+          "state": "observed"
+        },
+        {
+          "factId": "desktop-viewport",
+          "state": "observed"
+        },
+        {
+          "factId": "narrow-viewport",
+          "state": "observed"
+        },
+        {
+          "factId": "hard-reload-reconstructed",
+          "state": "observed"
+        },
+        {
+          "factId": "successor-fresh-process-reconstructed",
+          "state": "observed"
+        },
+        {
+          "factId": "successor-not-started",
+          "state": "observed"
+        },
+        {
+          "factId": "successor-execution-not-claimed",
+          "state": "observed"
+        }
+      ],
+      "measurementDigest": "84fb61f36312642b1703045007af0f4a798f6b2b10d9cb3464730323f421eb0b"
+    },
+    {
+      "schemaVersion": "1",
+      "kind": "acceptance-measurement",
+      "framework": {
+        "id": "authenticated-alpha-acceptance",
+        "version": "1"
+      },
+      "profile": {
+        "id": "ar3-current-build-conformance",
+        "version": "version-1"
+      },
+      "producer": "replay-recovery",
+      "phase": "replay-recovery",
+      "sourceDigest": "d3e349179913134e8ae3563b18af446510b37056468cc7e80eeb4fbb2eeeae8d",
+      "taskDigest": "0b861ef99c2ca77f7426885431317b3f00488080265af638b8b3d054364eea1f",
+      "measurementId": "65a4f1ded987d894b2fcad7e872ce31d60c88b541dd9f95189fa994957688585",
+      "producerRunDigest": "22295d06561bf6527848d744a9c312888ad575a3c830647ef1be41e31733c881",
+      "sequence": 2,
+      "observations": [
+        {
+          "factId": "exact-replay",
+          "state": "observed"
+        },
+        {
+          "factId": "incompatible-replay",
+          "state": "observed"
+        },
+        {
+          "factId": "cas-conflict",
+          "state": "observed"
+        },
+        {
+          "factId": "recovered",
+          "state": "observed"
+        },
+        {
+          "factId": "durable-state-parity",
+          "state": "match"
+        },
+        {
+          "factId": "same-product-question",
+          "state": "match"
+        },
+        {
+          "factId": "distinct-successor",
+          "state": "observed"
+        },
+        {
+          "factId": "successor-duplicate-zero",
+          "state": "match"
+        }
+      ],
+      "measurementDigest": "119d6b4d3de794d5b857e890f1da9b06337356b978def8d47bdddda888ffd250"
+    },
+    {
+      "schemaVersion": "1",
+      "kind": "acceptance-measurement",
+      "framework": {
+        "id": "authenticated-alpha-acceptance",
+        "version": "1"
+      },
+      "profile": {
+        "id": "ar3-current-build-conformance",
+        "version": "version-1"
+      },
+      "producer": "observability",
+      "phase": "event-observation",
+      "sourceDigest": "d3e349179913134e8ae3563b18af446510b37056468cc7e80eeb4fbb2eeeae8d",
+      "taskDigest": "0b861ef99c2ca77f7426885431317b3f00488080265af638b8b3d054364eea1f",
+      "measurementId": "e00bc3a65ed64152ef203d4a84eadce44453ab7195699bec1b825ffc71a9dabb",
+      "producerRunDigest": "22295d06561bf6527848d744a9c312888ad575a3c830647ef1be41e31733c881",
+      "sequence": 3,
+      "observations": [
+        {
+          "factId": "event-ordering",
+          "state": "observed"
+        },
+        {
+          "factId": "bounded-cardinality",
+          "state": "match"
+        },
+        {
+          "factId": "protected-load-pairing",
+          "state": "match"
+        },
+        {
+          "factId": "sink-parity",
+          "state": "match"
+        }
+      ],
+      "measurementDigest": "0e00607fd201505408c3426e1cb9ae2456054df20d7462ed6606d8a022a39844"
+    },
+    {
+      "schemaVersion": "1",
+      "kind": "acceptance-measurement",
+      "framework": {
+        "id": "authenticated-alpha-acceptance",
+        "version": "1"
+      },
+      "profile": {
+        "id": "ar3-current-build-conformance",
+        "version": "version-1"
+      },
+      "producer": "scanner",
+      "phase": "surface-scan",
+      "sourceDigest": "d3e349179913134e8ae3563b18af446510b37056468cc7e80eeb4fbb2eeeae8d",
+      "taskDigest": "0b861ef99c2ca77f7426885431317b3f00488080265af638b8b3d054364eea1f",
+      "measurementId": "c8efe1335c72c5646ff4d138cae7cbe89d8a4a3e7b384f416c60f6a3ba652713",
+      "producerRunDigest": "22295d06561bf6527848d744a9c312888ad575a3c830647ef1be41e31733c881",
+      "sequence": 5,
+      "observations": [
+        {
+          "factId": "scanner-sensitive",
+          "state": "observed"
+        },
+        {
+          "factId": "public-surfaces-clean",
+          "state": "match"
+        }
+      ],
+      "measurementDigest": "bd3a8ac50d5ffce43355eda38bec4cbaec918f590cfbb96040a90f094fa1ee5a"
+    },
+    {
+      "schemaVersion": "1",
+      "kind": "acceptance-measurement",
+      "framework": {
+        "id": "authenticated-alpha-acceptance",
+        "version": "1"
+      },
+      "profile": {
+        "id": "ar3-current-build-conformance",
+        "version": "version-1"
+      },
+      "producer": "lifecycle",
+      "phase": "resource-lifecycle",
+      "sourceDigest": "d3e349179913134e8ae3563b18af446510b37056468cc7e80eeb4fbb2eeeae8d",
+      "taskDigest": "0b861ef99c2ca77f7426885431317b3f00488080265af638b8b3d054364eea1f",
+      "measurementId": "32905e5e7ac47e0c22d9dcecb30e3df54315673fd4f0d604d80d4dbe64023ed6",
+      "producerRunDigest": "22295d06561bf6527848d744a9c312888ad575a3c830647ef1be41e31733c881",
+      "sequence": 4,
+      "observations": [
+        {
+          "factId": "resource-plan-frozen",
+          "state": "observed"
+        },
+        {
+          "factId": "acknowledgement-loss-recovered",
+          "state": "observed"
+        },
+        {
+          "factId": "foreign-preserved",
+          "state": "match"
+        },
+        {
+          "factId": "organizations-capability-measured",
+          "state": "observed"
+        }
+      ],
+      "measurementDigest": "8eb9f4b3f628cf82eae4877d8762386a23c4be79e942863367ee14a96d67b863"
+    },
+    {
+      "schemaVersion": "1",
+      "kind": "acceptance-measurement",
+      "framework": {
+        "id": "authenticated-alpha-acceptance",
+        "version": "1"
+      },
+      "profile": {
+        "id": "ar3-current-build-conformance",
+        "version": "version-1"
+      },
+      "producer": "cleanup",
+      "phase": "cleanup-attempts",
+      "sourceDigest": "d3e349179913134e8ae3563b18af446510b37056468cc7e80eeb4fbb2eeeae8d",
+      "taskDigest": "0b861ef99c2ca77f7426885431317b3f00488080265af638b8b3d054364eea1f",
+      "measurementId": "d0fa7baadbca3091fea8b9d883619a46fa188bce26ddd6fe59ce4bc8866fd48a",
+      "producerRunDigest": "22295d06561bf6527848d744a9c312888ad575a3c830647ef1be41e31733c881",
+      "sequence": 6,
+      "observations": [
+        {
+          "factId": "cleanup-first-attempt",
+          "state": "executed"
+        },
+        {
+          "factId": "cleanup-second-converged",
+          "state": "match"
+        },
+        {
+          "factId": "server-browser-roots-zero",
+          "state": "match"
+        }
+      ],
+      "measurementDigest": "c5d2f0d56bf36968259f2a46d0ff8ca474f3441055b87fe49c8e9d358d7078c2"
+    },
+    {
+      "schemaVersion": "1",
+      "kind": "acceptance-measurement",
+      "framework": {
+        "id": "authenticated-alpha-acceptance",
+        "version": "1"
+      },
+      "profile": {
+        "id": "ar3-current-build-conformance",
+        "version": "version-1"
+      },
+      "producer": "independent-zero",
+      "phase": "zero-verification",
+      "sourceDigest": "d3e349179913134e8ae3563b18af446510b37056468cc7e80eeb4fbb2eeeae8d",
+      "taskDigest": "0b861ef99c2ca77f7426885431317b3f00488080265af638b8b3d054364eea1f",
+      "measurementId": "eb67863267c245daa35f67f76e4c4b09b472d4311f0e4a8ccc08e93e76dde8cc",
+      "producerRunDigest": "22295d06561bf6527848d744a9c312888ad575a3c830647ef1be41e31733c881",
+      "sequence": 7,
+      "observations": [
+        {
+          "factId": "users-zero",
+          "state": "match"
+        },
+        {
+          "factId": "sessions-zero",
+          "state": "match"
+        },
+        {
+          "factId": "memberships-zero",
+          "state": "match"
+        },
+        {
+          "factId": "organizations-zero-or-disabled",
+          "state": "match"
+        },
+        {
+          "factId": "local-residue-zero",
+          "state": "match"
+        }
+      ],
+      "measurementDigest": "3fbc1fc17b09bb2c7023b8c157d115402c6738792e60554262089d2d40d52d3c"
+    }
+  ],
+  "producerEnvelopeDigests": [
+    "84fb61f36312642b1703045007af0f4a798f6b2b10d9cb3464730323f421eb0b",
+    "119d6b4d3de794d5b857e890f1da9b06337356b978def8d47bdddda888ffd250",
+    "0e00607fd201505408c3426e1cb9ae2456054df20d7462ed6606d8a022a39844",
+    "bd3a8ac50d5ffce43355eda38bec4cbaec918f590cfbb96040a90f094fa1ee5a",
+    "8eb9f4b3f628cf82eae4877d8762386a23c4be79e942863367ee14a96d67b863",
+    "c5d2f0d56bf36968259f2a46d0ff8ca474f3441055b87fe49c8e9d358d7078c2",
+    "3fbc1fc17b09bb2c7023b8c157d115402c6738792e60554262089d2d40d52d3c"
+  ],
+  "adjudication": {
+    "schemaVersion": "1",
+    "framework": {
+      "id": "authenticated-alpha-acceptance",
+      "version": "1"
+    },
+    "profileId": "ar3-current-build-conformance",
+    "sourceDigest": "d3e349179913134e8ae3563b18af446510b37056468cc7e80eeb4fbb2eeeae8d",
+    "taskDigest": "0b861ef99c2ca77f7426885431317b3f00488080265af638b8b3d054364eea1f",
+    "result": "PASS",
+    "reasonCategories": [],
+    "inventory": {
+      "requiredMeasurements": 7,
+      "observedMeasurements": 7,
+      "requiredFacts": 37,
+      "observedFacts": 37,
+      "failedFacts": 0,
+      "blockedFacts": 0
+    },
+    "adjudicationDigest": "c5e864cf86afe7548a25d458df7bc6597af595e3d04b1c84b26d4390cd28e271"
+  },
+  "scanner": {
+    "sensitivityFindings": 2,
+    "publicFindings": 0
+  },
+  "cleanup": {
+    "attempts": 2,
+    "status": "zero-verified"
+  },
+  "independentZero": {
+    "status": "zero-verified",
+    "organizations": "not_applicable_capability_disabled"
+  },
+  "status": "PASS",
+  "resultDigest": "4d566d0d212baeb570d8ea1d7df80cf37a281265441d4d573c4ca80fdf5ee851"
+}
