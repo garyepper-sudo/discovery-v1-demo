@@ -1,19 +1,197 @@
-import assert from"node:assert/strict";
-import{spawnSync}from"node:child_process";
-import{mkdtemp,rm}from"node:fs/promises";
-import{tmpdir}from"node:os";
-import path from"node:path";
-import{RuntimeStorageConflictError}from"../../engine/v3/runtime/organizationRuntimeRepository";
-import type{ProductDecisionDraftAuthorityGrantV1,ProductDecisionDraftOperation}from"../../product/decisions";
-import{ProductDecisionDraftService}from"../../product/integration/productDecisionDraftService";
-import{CanonicalLeadershipConversationProductMaterializer}from"../../product/integration/canonicalLeadershipConversationProductMaterializer";
-import{LeadershipConversationProductOperations}from"../../product/workflow/leadershipConversation/operations";
-import{createOwnerBackedDraftDependencies,MemoryRuntimeRepository,MemoryWorkflowRepository,instruction,organizationId,questionId,runtimeWithInstruction}from"./validateCanonicalMutationProductMaterializationAtomicity";
+import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
+import { spawnSync } from "node:child_process";
+import { mkdtemp, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
+import { RuntimeStorageConflictError } from "../../engine/v3/runtime/organizationRuntimeRepository";
+import type {
+  ProductDecisionDraftAuthorityGrantV1,
+  ProductDecisionDraftOperation,
+} from "../../product/decisions";
+import { ProductDecisionDraftService } from "../../product/integration/productDecisionDraftService";
+import { CanonicalLeadershipConversationProductMaterializer } from "../../product/integration/canonicalLeadershipConversationProductMaterializer";
+import { LeadershipConversationProductOperations } from "../../product/workflow/leadershipConversation/operations";
+import {
+  createOwnerBackedDraftDependencies,
+  MemoryRuntimeRepository,
+  MemoryWorkflowRepository,
+  instruction,
+  organizationId,
+  questionId,
+  runtimeWithInstruction,
+} from "./validateCanonicalMutationProductMaterializationAtomicity";
 
-const grant=(operation:ProductDecisionDraftOperation,at:string):ProductDecisionDraftAuthorityGrantV1=>({contractVersion:"1",operation,organizationId,questionId,scope:{type:"product-question",id:questionId},purpose:operation==="product-decision-draft:create"?"create-product-decision-draft":operation==="product-decision-draft:revise"?"revise-product-decision-draft":"read-product-decision-draft",sensitivity:"standard",actorRef:"actor-1",authorityRef:"authority-1",policyRef:"policy-1",authorized:true,status:"active",validFrom:at,authorizedAt:at});
-class DraftConflictRepository extends MemoryRuntimeRepository{override async replace():Promise<never>{throw new RuntimeStorageConflictError("Runtime revision changed");}}
-class WorkflowConflictRepository extends MemoryWorkflowRepository{override async replace():Promise<never>{throw new Error("Product Workflow store revision changed.");}}
-async function build(runtimeRepository:MemoryRuntimeRepository,workflowRepository:MemoryWorkflowRepository,root:string){const value=instruction(true),operations=new LeadershipConversationProductOperations({repository:workflowRepository,clock:{now:()=>value.evaluatedAt},authorize:async()=>false,verifyCanonicalInstructionProvenance:async()=>true,loadBase:async()=>{throw new Error("frontend read prohibited");},source:{write:async()=>{throw new Error("source write prohibited");},readForProposal:async()=>{throw new Error("source read prohibited");},readForEvidenceAdmission:async()=>{throw new Error("source read prohibited");}}}),ownerBacked=await createOwnerBackedDraftDependencies(root),service=new ProductDecisionDraftService({runtimeRepository:runtimeRepository as never,...ownerBacked,authorize:async input=>grant(input.operation,input.evaluatedAt),authorizeMaterialization:async({operation})=>grant(operation,value.evaluatedAt)}),materializer=new CanonicalLeadershipConversationProductMaterializer({productDecisionDraftService:service,productWorkflowOperations:operations,storageOperation:()=>({requestId:"failure",operatorId:"system"})});return{value,service,materializer};}
-async function run(){const root=await mkdtemp(path.join(tmpdir(),"discovery-northstar-preparation-lineage-materialization-failure-"));try{const value=instruction(true);let built=await build(new DraftConflictRepository(runtimeWithInstruction(value)),new MemoryWorkflowRepository(),root),result=await built.materializer.materialize({contractVersion:"1",instruction:value,draftResult:null});assert.equal(result.stage,"canonical-committed-draft-pending");const runtime=new MemoryRuntimeRepository(runtimeWithInstruction(value));built=await build(runtime,new MemoryWorkflowRepository(),root);await built.service.materializeCommittedInstruction({instruction:value,storageOperation:{requestId:"before-crash",operatorId:"system"}});result=await built.materializer.materialize({contractVersion:"1",instruction:value,draftResult:null});assert.equal(result.stage,"canonical-committed-product-materialized");assert.equal(runtime.replaceCount,1);built=await build(new MemoryRuntimeRepository(runtimeWithInstruction(value)),new WorkflowConflictRepository(),root);result=await built.materializer.materialize({contractVersion:"1",instruction:value,draftResult:null});assert.equal(result.stage,"canonical-committed-draft-materialized-product-workflow-pending");await assert.rejects(()=>built.materializer.materialize({contractVersion:"1",instruction:{...value,instructionDigest:"0".repeat(64)},draftResult:null}),/integrity failed/);console.log("Canonical mutation Product materialization failure validation PASS (pre-CAS, post-CAS pending, crash replay, no cognition rerun)");}finally{await rm(root,{recursive:true,force:true});}}
-function main(){if(!process.argv.includes("--react-server-child")){const child=spawnSync(process.execPath,["--conditions=react-server",...process.execArgv,process.argv[1]!,"--react-server-child"],{cwd:process.cwd(),encoding:"utf8",env:{...process.env,NODE_ENV:"test"}});if(child.stdout)process.stdout.write(child.stdout);if(child.stderr)process.stderr.write(child.stderr);if(child.status!==0)process.exitCode=child.status??1;}else void run();}
+const grant = (
+  operation: ProductDecisionDraftOperation,
+  at: string,
+): ProductDecisionDraftAuthorityGrantV1 => ({
+  contractVersion: "1",
+  operation,
+  organizationId,
+  questionId,
+  scope: { type: "product-question", id: questionId },
+  purpose:
+    operation === "product-decision-draft:create"
+      ? "create-product-decision-draft"
+      : operation === "product-decision-draft:revise"
+        ? "revise-product-decision-draft"
+        : "read-product-decision-draft",
+  sensitivity: "standard",
+  actorRef: "actor-1",
+  authorityRef: "authority-1",
+  policyRef: "policy-1",
+  authorized: true,
+  status: "active",
+  validFrom: at,
+  authorizedAt: at,
+});
+class DraftConflictRepository extends MemoryRuntimeRepository {
+  override async replace(): Promise<never> {
+    throw new RuntimeStorageConflictError("Runtime revision changed");
+  }
+}
+class WorkflowConflictRepository extends MemoryWorkflowRepository {
+  override async replace(): Promise<never> {
+    throw new Error("Product Workflow store revision changed.");
+  }
+}
+async function build(
+  runtimeRepository: MemoryRuntimeRepository,
+  workflowRepository: MemoryWorkflowRepository,
+  root: string,
+) {
+  const value = instruction(true),
+    operations = new LeadershipConversationProductOperations({
+      repository: workflowRepository,
+      clock: { now: () => value.evaluatedAt },
+      authorize: async () => false,
+      verifyCanonicalInstructionProvenance: async () => true,
+      loadBase: async () => {
+        throw new Error("frontend read prohibited");
+      },
+      source: {
+        write: async () => {
+          throw new Error("source write prohibited");
+        },
+        readForProposal: async () => {
+          throw new Error("source read prohibited");
+        },
+        readForEvidenceAdmission: async () => {
+          throw new Error("source read prohibited");
+        },
+      },
+    }),
+    ownerBacked = await createOwnerBackedDraftDependencies(root),
+    service = new ProductDecisionDraftService({
+      runtimeRepository: runtimeRepository as never,
+      ...ownerBacked,
+      authorize: async (input) => grant(input.operation, input.evaluatedAt),
+      authorizeMaterialization: async ({ operation }) =>
+        grant(operation, value.evaluatedAt),
+    }),
+    materializer = new CanonicalLeadershipConversationProductMaterializer({
+      productDecisionDraftService: service,
+      productWorkflowOperations: operations,
+      storageOperation: () => ({ requestId: "failure", operatorId: "system" }),
+    });
+  return { value, service, materializer };
+}
+async function run() {
+  const root = await mkdtemp(
+    path.join(
+      tmpdir(),
+      "discovery-northstar-preparation-lineage-materialization-failure-",
+    ),
+  );
+  try {
+    const value = instruction(true);
+    let built = await build(
+        new DraftConflictRepository(runtimeWithInstruction(value)),
+        new MemoryWorkflowRepository(),
+        root,
+      ),
+      result = await built.materializer.materialize({
+        contractVersion: "1",
+        instruction: value,
+        draftResult: null,
+      });
+    assert.equal(result.stage, "canonical-committed-draft-pending");
+    const draftConflict = result.stage,
+      runtime = new MemoryRuntimeRepository(runtimeWithInstruction(value));
+    built = await build(runtime, new MemoryWorkflowRepository(), root);
+    await built.service.materializeCommittedInstruction({
+      instruction: value,
+      storageOperation: { requestId: "before-crash", operatorId: "system" },
+    });
+    const writesBeforeRecovery = runtime.replaceCount;
+    result = await built.materializer.materialize({
+      contractVersion: "1",
+      instruction: value,
+      draftResult: null,
+    });
+    assert.equal(result.stage, "canonical-committed-product-materialized");
+    assert.equal(runtime.replaceCount, 1);
+    const recovered = result.stage;
+    built = await build(
+      new MemoryRuntimeRepository(runtimeWithInstruction(value)),
+      new WorkflowConflictRepository(),
+      root,
+    );
+    result = await built.materializer.materialize({
+      contractVersion: "1",
+      instruction: value,
+      draftResult: null,
+    });
+    assert.equal(
+      result.stage,
+      "canonical-committed-draft-materialized-product-workflow-pending",
+    );
+    const workflowPending = result.stage;
+    await assert.rejects(
+      () =>
+        built.materializer.materialize({
+          contractVersion: "1",
+          instruction: { ...value, instructionDigest: "0".repeat(64) },
+          draftResult: null,
+        }),
+      /integrity failed/,
+    );
+    const measurement = {
+      status: "PASS" as const,
+      stages: { draftConflict, recovered, workflowPending },
+      inventory: {
+        writesBeforeRecovery,
+        writesAfterRecovery: runtime.replaceCount,
+        duplicateRuntimeWrites: runtime.replaceCount - writesBeforeRecovery,
+      },
+    };
+    process.stdout.write(
+      `${JSON.stringify({ ...measurement, measurementDigest: createHash("sha256").update(JSON.stringify(measurement)).digest("hex") })}\n`,
+    );
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+}
+function main() {
+  if (!process.argv.includes("--react-server-child")) {
+    const child = spawnSync(
+      process.execPath,
+      [
+        "--conditions=react-server",
+        ...process.execArgv,
+        process.argv[1]!,
+        "--react-server-child",
+      ],
+      {
+        cwd: process.cwd(),
+        encoding: "utf8",
+        env: { ...process.env, NODE_ENV: "test" },
+      },
+    );
+    if (child.stdout) process.stdout.write(child.stdout);
+    if (child.stderr) process.stderr.write(child.stderr);
+    if (child.status !== 0) process.exitCode = child.status ?? 1;
+  } else void run();
+}
 main();

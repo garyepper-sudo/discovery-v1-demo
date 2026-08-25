@@ -477,6 +477,8 @@
     "sprint:architecture": "npm run cognition:validate && npm run audit:executive-capabilities && npm run architecture:state && npm run architecture:handoff && cat \"docs/Sprint Updates/ARCHITECTURE_HANDOFF.md\"",
     "validate:alpha-readiness-ar3": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/alpha-readiness/runContentSafeObservabilityHarness.ts",
     "validate:alpha-readiness-ar4": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/alpha-readiness/runPrivacySafeProductTelemetryHarness.ts",
+    "validate:alpha-core-failure-recovery": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateAlphaCriticalFailureRecovery.ts",
+    "validate:alpha-readiness-ar5a": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/alpha-readiness/runCoreFailureRecoveryHarness.ts",
     "validate:alpha-privacy-safe-telemetry": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateAlphaPrivacySafeProductTelemetry.ts",
     "deps:validate": "node scripts/performance/validatePerformanceReport.mjs",
     "deps:report": "npm run deps:validate && node scripts/performance/renderPerformanceReport.mjs"
