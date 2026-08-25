@@ -106,6 +106,7 @@ gates cannot make the Alpha ready.
 | AR-4. Privacy-safe Product telemetry | PASS | Written-consent-gated pseudonymous telemetry, 90-day retention, exact multi-key deletion, organization-scoped audited access, 13-state Product parity, authenticated acceptance, and zero cleanup are source-bound and independently reviewed |
 | AR-2-PRE-001A. Measured acceptance contracts | PASS | Closed measured-acceptance contracts and the sole deterministic adjudicator are qualified, source-bound, and independently reviewed |
 | AR-2-PRE-001B. Authenticated Alpha acceptance runner | PASS | Real Clerk development/test and Playwright current-build conformance covers the accepted two-occurrence journey, roles, viewports, replay/observability, surface scanning, double cleanup, and fresh independent zero verification |
+| AR-5A. Core failure-recovery hardening | PASS | Existing Runtime and Product Workflow filesystem owners provide cross-process one-winner CAS, exact replay/incompatible/conflict outcomes, bounded claim help, backup/restore recovery, typed source-bound evidence, and zero cleanup without changing canonical schemas |
 | 8. Design-partner launch | NOT STARTED — blocked by Alpha Readiness, baseline decision, Alpha Operations, and human approval | Two-cycle acceptance, no unresolved high-severity trust failure, verified instrumentation, onboarding, support, limitations, measures, and observation plan |
 
 Gates 6–7 must strengthen current-step and primary-action hierarchy; use
@@ -126,9 +127,10 @@ has not been performed. Gate 4, both Gate-5 prerequisites, `ALPHA-RM-G5-001`,
 in progress: its AR-1A proof-system foundation, the truthful empty-contribution
 closure correction, AR-3 content-safe observability, and AR-4 privacy-safe
 Product telemetry, AR-2-PRE-001A measured acceptance contracts, and
-AR-2-PRE-001B authenticated current-build conformance are complete. The former monolithic AR-5 execution is
+AR-2-PRE-001B authenticated current-build conformance and AR-5A core
+failure-recovery hardening are complete. The former monolithic AR-5 execution is
 **PAUSED AND DECOMPOSED**; AR-5 remains an incomplete readiness requirement.
-The next separately governed boundary is `AR-5A`, followed by `AR-5B`, AR-2,
+The next separately governed boundary is `AR-5B`, followed by AR-2,
 AR-1B, and AR-6. The next five ordered
 items are `ALPHA-READY-001`, `ALPHA-BASE-A-001`, `ALPHA-BENCH-LONG-001`,
 `ALPHA-OPT-001`, and `ALPHA-BASE-DECIDE-001`; none has begun.
@@ -171,7 +173,7 @@ parallel lanes; it does not create another roadmap owner.
 | 10 | `ALPHA-RM-G5-001` | What Changed / Prepare Again | COMPLETE |
 | 11 | `ALPHA-RM-G6-001` | Chief-of-Staff value layer | COMPLETE |
 | 12 | `ALPHA-RM-G7-001` | Alpha experience and operations | COMPLETE |
-| 13 | `ALPHA-READY-001` | Alpha Readiness Foundation | IN PROGRESS — AR-1A, the empty-contribution correction, AR-3, AR-4, AR-2-PRE-001A, and AR-2-PRE-001B are complete; monolithic AR-5 is paused and decomposed; AR-5A is next |
+| 13 | `ALPHA-READY-001` | Alpha Readiness Foundation | IN PROGRESS — AR-1A, the empty-contribution correction, AR-3, AR-4, AR-2-PRE-001A, AR-2-PRE-001B, and AR-5A are complete; monolithic AR-5 is paused and decomposed; AR-5B is next |
 | 14 | `ALPHA-BASE-A-001` | Freeze Alpha Baseline A | QUEUED — blocked by `ALPHA-READY-001` PASS and separate authorization |
 | 15 | `ALPHA-BENCH-LONG-001` | Longitudinal Chief / Organizational Understanding benchmark | QUEUED — execution blocked until `ALPHA-BASE-A-001` |
 | 16 | `ALPHA-OPT-001` | Bounded cognition optimization | QUEUED — blocked by the frozen baseline benchmark run |
@@ -257,7 +259,7 @@ The accepted readiness sequence is:
 5. `AR-2-PRE-001A` — Measured Acceptance Contracts and Adjudicator — COMPLETE;
 6. `AR-2-PRE-001B` — Authenticated Alpha Acceptance Runner and AR-3
    Current-Build Conformance — COMPLETE;
-7. `AR-5A` — Core Failure-Recovery Hardening;
+7. `AR-5A` — Core Failure-Recovery Hardening — COMPLETE;
 8. `AR-5B` — Authenticated Recovery Conformance;
 9. `AR-2` — Critical-Path Test Pyramid Freeze;
 10. `AR-1B` — Complete Governed Cognition Non-Disclosure Adversarial
