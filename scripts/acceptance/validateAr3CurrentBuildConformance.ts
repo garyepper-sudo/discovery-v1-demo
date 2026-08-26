@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
-import { createHash, randomBytes } from "node:crypto";
+import { createHash, createHmac, randomBytes } from "node:crypto";
 import {
   access,
   mkdtemp,
@@ -60,6 +60,10 @@ import {
 } from "./ar3BrowserMeasurementProducer.spec";
 import {
   classifyAcceptanceChildProcess,
+  createAcceptanceProducerDescriptorV1,
+  createAcceptanceProducerRegistryV1,
+  createAcceptanceProducerSourceManifestV1,
+  inspectAcceptanceProducerSourceEntriesV1,
   runAcceptanceMeasurementChild,
 } from "./authenticatedAlphaAcceptanceRunner";
 import { scanText } from "../alpha-readiness/protectedValueScanner";
@@ -97,22 +101,6 @@ const sourceBoundaryHead = "1ae9beb2bfcb0dace4c1740d363f9e5c0c9d2b0d",
 const sha = (value: string) => createHash("sha256").update(value).digest("hex");
 console.warn = () => {};
 let failurePhase = "initialization";
-const producerChildEnvironment = (
-  workflowRoot: string,
-): Record<string, string | undefined> =>
-  Object.freeze({
-    ...Object.fromEntries(
-      Object.keys(process.env).map((key) => [key, undefined]),
-    ),
-    PATH: process.env.PATH,
-    NODE_PATH: process.env.NODE_PATH,
-    NODE_OPTIONS: process.env.NODE_OPTIONS,
-    TMPDIR: process.env.TMPDIR ?? "/private/tmp",
-    TZ: "UTC",
-    LANG: "C",
-    NODE_ENV: "test",
-    AR2_PRE_001B_WORKFLOW_ROOT: workflowRoot,
-  });
 async function sourceIdentity(
   input: { committed: boolean } = { committed: false },
 ) {
@@ -200,6 +188,7 @@ const exists = (root: string) =>
 const ownedProfileRoot = (taskRef: string, ordinal: number) =>
   `/private/tmp/discovery-ar2-pre-001b-profile-${sha(`${taskRef}:${ordinal}`).slice(0, 24)}`;
 async function independentZeroChild() {
+  failurePhase = "independent-zero-input";
   const input = JSON.parse(
       Buffer.from(
         process.env.AR2_PRE_001B_ZERO_MANIFEST ?? "",
@@ -210,12 +199,15 @@ async function independentZeroChild() {
     secret = Buffer.from(process.env.AR2_PRE_001B_TASK_SECRET ?? "", "base64");
   if (!secretKey || secret.length !== 32)
     throw new Error("Independent zero configuration unavailable");
-  const manifest = await readProtectedManifest(input.manifestPath, secret),
-    receipt = await readClerkIdentityInventoryReceipt(
+  failurePhase = "independent-zero-manifest";
+  const manifest = await readProtectedManifest(input.manifestPath, secret);
+  failurePhase = "independent-zero-receipt";
+  const receipt = await readClerkIdentityInventoryReceipt(
       input.inventoryPath,
       manifest,
       secret,
     );
+  failurePhase = "independent-zero-clerk";
   process.stdout.write(
     `${JSON.stringify(await verifyAcceptanceClerkZero({ manifest, inventory: { userIds: [...receipt.userIds], sessionIds: [...receipt.sessionIds] }, secretKey }))}\n`,
   );
@@ -620,7 +612,7 @@ async function measured() {
     taskRoot = await mkdtemp(
       path.join(tmpdir(), "discovery-ar2-pre-001b-task-"),
     ),
-    serverRoot = `/private/tmp/discovery-ar2-pre-001b-server-${randomBytes(10).toString("hex")}`,
+    serverRoot = path.join(taskRoot,`server-${randomBytes(10).toString("hex")}`),
     browserRoot = process.env.PLAYWRIGHT_BROWSERS_PATH,
     secretKey = process.env.CLERK_SECRET_KEY,
     publishable = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
@@ -661,7 +653,8 @@ async function measured() {
     localZero = false,
     scannerSensitivity = 0,
     scannerPublic = 0,
-    freshReconstructed = false;
+    freshReconstructed = false,
+    primaryFailurePhase = "none";
   try {
     users = await provisionAcceptanceUsers({
       manifest,
@@ -787,15 +780,31 @@ async function measured() {
       }),
     );
     assert.equal(counts.consoleErrors + counts.pageErrors, 0);
-    for (const [producer, phase, mode, sequence] of [
-      ["replay-recovery", "replay-recovery", "replay-recovery", 2],
-      ["observability", "event-observation", "event-observation", 3],
+    const producerStages=[
+        {token:"initialize",category:"bootstrap" as const},
+        ...["replay-enabled","replay-repeat","replay-disabled","replay-rejecting","replay-throwing","replay-compare","parity","typed-runtime","typed-recovery","typed-cas","owner-inventory"].map(token=>({token,category:"execution" as const})),
+        {token:"measurement-envelope",category:"measurement" as const},
+      ],
+      producerScripts=["scripts/acceptance/ar3ReplayObservabilityMeasurementProducer.ts"],
+      producerEntries=await inspectAcceptanceProducerSourceEntriesV1(producerScripts),
+      producerAuthorityMac=createHmac("sha256",secret).update(JSON.stringify({schemaVersion:"1",sourceDigest:source,entries:producerEntries})).digest("hex"),
+      producerSourceManifest=await createAcceptanceProducerSourceManifestV1({sourceDigest:source,scripts:producerScripts,authorityMac:producerAuthorityMac,taskOwnership:{manifestPath,secret}}),
+      producerDescriptors=await Promise.all(([
+        ["replay-recovery","replay-recovery",2],
+        ["observability","event-observation",3],
+      ] as const).map(([producer,phase,sequence])=>createAcceptanceProducerDescriptorV1({script:"scripts/acceptance/ar3ReplayObservabilityMeasurementProducer.ts",mode:producer,environmentKeys:["AR2_PRE_001B_WORKFLOW_ROOT"],sourceManifestDigest:producerSourceManifest.manifestDigest,profileId:ar3CurrentBuildProfile.profile.id,profileVersion:ar3CurrentBuildProfile.profile.version,producer,phase,sequence,stages:producerStages,timeoutMs:600_000}))),
+      producerRegistry=createAcceptanceProducerRegistryV1(producerSourceManifest,producerDescriptors);
+    for (const [producer, phase, sequence] of [
+      ["replay-recovery", "replay-recovery", 2],
+      ["observability", "event-observation", 3],
     ] as const) {
       failurePhase = `measurement-${producer}`;
+      const descriptor=producerDescriptors.find(value=>value.producer===producer&&value.phase===phase)!;
       const child = await runAcceptanceMeasurementChild({
-        script:
-          "scripts/acceptance/ar3ReplayObservabilityMeasurementProducer.ts",
-        mode,
+        descriptor,
+        registry:producerRegistry,
+        profile:ar3CurrentBuildProfile,
+        taskOwnership:{root:taskRoot,manifestPath,secret},
         request: {
           frameworkId: ar3CurrentBuildProfile.framework.id,
           frameworkVersion: ar3CurrentBuildProfile.framework.version,
@@ -807,8 +816,7 @@ async function measured() {
           producer,
           phase,
         },
-        env: producerChildEnvironment(path.join(serverRoot, "workflow")),
-        timeoutMs: 600_000,
+        producerEnvironment: {AR2_PRE_001B_WORKFLOW_ROOT:path.join(serverRoot, "workflow")},
       });
       if (child.outcome !== "accepted-envelope") {
         failurePhase = `measurement-${producer}-${child.outcome}-${child.diagnostic.protocolCategory}-${child.diagnostic.producerStageCategory}-${child.diagnostic.structuralAdmissionCategory}-${child.diagnostic.identityBindingCategory}`;
@@ -869,6 +877,9 @@ async function measured() {
         ],
       }),
     );
+  } catch(error) {
+    primaryFailurePhase=failurePhase==="initialization"?`server-${currentAcceptanceServerLifecyclePhase()}`:failurePhase;
+    throw error;
   } finally {
     failurePhase = "cleanup-server-stop";
     if (server) await stopAcceptanceServer(server).catch(() => {});
@@ -886,8 +897,10 @@ async function measured() {
         userIds: inventory.userIds,
         sessionIds: inventory.sessionIds,
       });
+    if(inventory.userIds.length!==4||inventory.sessionIds.length!==6){failurePhase=`cleanup-identity-cardinality-${inventory.userIds.length}-${inventory.sessionIds.length}-primary-${primaryFailurePhase}`;throw new Error("Acceptance identity inventory cardinality is invalid");}
     failurePhase = "cleanup-identity-receipt";
     await writeClerkIdentityInventoryReceipt(inventoryPath, receipt);
+    await readClerkIdentityInventoryReceipt(inventoryPath,manifest,secret);
     let convergedCleanup: Awaited<ReturnType<typeof cleanupAcceptanceClerk>> | null =
       null;
     for (const attempt of ["first", "second"] as const) {
@@ -914,8 +927,6 @@ async function measured() {
       : [];
     failurePhase = "cleanup-browser-profiles";
     await removeAcceptanceBrowserProfileRoots(profileRoots);
-    failurePhase = "cleanup-browser-binary";
-    await removeBrowserBinaryRoot(browserRoot);
     failurePhase = "cleanup-canary";
     await rm(canaryFile, { force: true });
     failurePhase = "cleanup-independent-zero-child";
@@ -948,11 +959,14 @@ async function measured() {
         errorCode: (child.error as NodeJS.ErrnoException | undefined)?.code,
         stdout: child.stdout,
       });
-      failurePhase = `cleanup-independent-zero-child-${childDiagnostic.spawn}-${childDiagnostic.exit}-${childDiagnostic.signal}-${childDiagnostic.protocol}`;
+      const zeroStage=["input","manifest","receipt","clerk"].find(value=>child.stderr.includes(`independent-zero-${value}-server-failure`))??"unclassified";
+      failurePhase = `cleanup-independent-zero-child-${zeroStage}-${childDiagnostic.spawn}-${childDiagnostic.exit}-${childDiagnostic.signal}-${childDiagnostic.protocol}`;
       throw new Error("Independent zero verification failed");
     }
     failurePhase = "cleanup-independent-zero-result";
     external = JSON.parse(child.stdout.trim());
+    failurePhase = "cleanup-browser-binary";
+    await removeBrowserBinaryRoot(browserRoot);
     failurePhase = "cleanup-task-root";
     await rm(taskRoot, { recursive: true, force: true });
     failurePhase = "cleanup-local-zero";
@@ -1217,8 +1231,8 @@ const operation = process.argv.includes("--independent-zero-child")
         : process.argv.includes("--verify")
           ? verify()
           : measured().then((value) =>
-              process.stdout.write(
-                `${JSON.stringify({ validation: "ar3-current-build-conformance", result: value.status, sourceDigest: value.sourceDigest, resultDigest: value.resultDigest })}\n`,
+          process.stdout.write(
+                `${JSON.stringify({ validation: "ar3-current-build-conformance", result: value.status, sourceDigest: value.sourceDigest, resultDigest: value.resultDigest, scanner:value.scanner, cleanup:value.cleanup, independentZero:value.independentZero, measurementCount:value.measurements.length, adjudication:value.adjudication.result })}\n`,
               ),
             );
 void operation.catch(() => {
