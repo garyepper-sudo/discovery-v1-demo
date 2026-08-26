@@ -107,6 +107,7 @@ gates cannot make the Alpha ready.
 | AR-2-PRE-001A. Measured acceptance contracts | PASS | Closed measured-acceptance contracts and the sole deterministic adjudicator are qualified, source-bound, and independently reviewed |
 | AR-2-PRE-001B. Authenticated Alpha acceptance runner | PASS | Real Clerk development/test and Playwright current-build conformance covers the accepted two-occurrence journey, roles, viewports, replay/observability, surface scanning, double cleanup, and fresh independent zero verification |
 | AR-2-PRE-001B-CORR-001. Acceptance Foundation V1.1 producer registry | PASS | The original V1 and historical PRE-001B evidence remain valid for their exact bytes; V1.1 closes the previously incomplete multi-profile reuse promise with source-authorized, profile-bound producer dispatch and renewed real authenticated qualification |
+| AR-2-PRE-001B-CORR-002. Acceptance Foundation V1.2 profile-bound lifecycle API | PASS | The existing authenticated browser, lifecycle, scanner, cleanup, and independent-zero owners now expose five observation-only envelopes under an exact supplied profile identity; qualification proves normal double cleanup, fresh independent zero, foreign preservation, and deterministic replay without beginning AR-5B |
 | AR-5A. Core failure-recovery hardening | PASS | Existing Runtime and Product Workflow filesystem owners provide cross-process one-winner CAS, exact replay/incompatible/conflict outcomes, bounded claim help, backup/restore recovery, typed source-bound evidence, and zero cleanup without changing canonical schemas |
 | 8. Design-partner launch | NOT STARTED — blocked by Alpha Readiness, baseline decision, Alpha Operations, and human approval | Two-cycle acceptance, no unresolved high-severity trust failure, verified instrumentation, onboarding, support, limitations, measures, and observation plan |
 
@@ -129,11 +130,13 @@ in progress: its AR-1A proof-system foundation, the truthful empty-contribution
 closure correction, AR-3 content-safe observability, and AR-4 privacy-safe
 Product telemetry, AR-2-PRE-001A measured acceptance contracts, and
 AR-2-PRE-001B authenticated current-build conformance, its Acceptance
-Foundation V1.1 producer-registry correction, and AR-5A core failure-recovery
+Foundation V1.1 producer-registry correction, its Acceptance Foundation V1.2
+profile-bound lifecycle API correction, and AR-5A core failure-recovery
 hardening are complete. The original Acceptance Foundation V1 and its
 historical PRE-001B evidence remain valid for their exact bytes; V1's promised
 multi-profile reuse was incomplete until V1.1 qualified the closed reusable
-dispatch boundary. The former monolithic AR-5 execution is
+dispatch boundary, and V1.2 exposes the five existing ordinary lifecycle
+measurements without transferring adjudication or beginning AR-5B. The former monolithic AR-5 execution is
 **PAUSED AND DECOMPOSED**; AR-5 remains an incomplete readiness requirement.
 The next separately governed boundary is `AR-5B`, followed by AR-2,
 AR-1B, and AR-6. The next five ordered
@@ -178,7 +181,7 @@ parallel lanes; it does not create another roadmap owner.
 | 10 | `ALPHA-RM-G5-001` | What Changed / Prepare Again | COMPLETE |
 | 11 | `ALPHA-RM-G6-001` | Chief-of-Staff value layer | COMPLETE |
 | 12 | `ALPHA-RM-G7-001` | Alpha experience and operations | COMPLETE |
-| 13 | `ALPHA-READY-001` | Alpha Readiness Foundation | IN PROGRESS — AR-1A, the empty-contribution correction, AR-3, AR-4, AR-2-PRE-001A, AR-2-PRE-001B, and AR-5A are complete; monolithic AR-5 is paused and decomposed; AR-5B is next |
+| 13 | `ALPHA-READY-001` | Alpha Readiness Foundation | IN PROGRESS — AR-1A, the empty-contribution correction, AR-3, AR-4, AR-2-PRE-001A, AR-2-PRE-001B, Acceptance Foundation V1.1/V1.2, and AR-5A are complete; monolithic AR-5 is paused and decomposed; AR-5B is next |
 | 14 | `ALPHA-BASE-A-001` | Freeze Alpha Baseline A | QUEUED — blocked by `ALPHA-READY-001` PASS and separate authorization |
 | 15 | `ALPHA-BENCH-LONG-001` | Longitudinal Chief / Organizational Understanding benchmark | QUEUED — execution blocked until `ALPHA-BASE-A-001` |
 | 16 | `ALPHA-OPT-001` | Bounded cognition optimization | QUEUED — blocked by the frozen baseline benchmark run |
@@ -266,12 +269,14 @@ The accepted readiness sequence is:
    Current-Build Conformance — COMPLETE;
 7. `AR-2-PRE-001B-CORR-001` — Acceptance Foundation V1.1 Producer Registry —
    COMPLETE;
-8. `AR-5A` — Core Failure-Recovery Hardening — COMPLETE;
-9. `AR-5B` — Authenticated Recovery Conformance — NOT BEGUN;
-10. `AR-2` — Critical-Path Test Pyramid Freeze;
-11. `AR-1B` — Complete Governed Cognition Non-Disclosure Adversarial
+8. `AR-2-PRE-001B-CORR-002` — Acceptance Foundation V1.2 Profile-Bound
+   Lifecycle API — COMPLETE;
+9. `AR-5A` — Core Failure-Recovery Hardening — COMPLETE;
+10. `AR-5B` — Authenticated Recovery Conformance — NOT BEGUN;
+11. `AR-2` — Critical-Path Test Pyramid Freeze;
+12. `AR-1B` — Complete Governed Cognition Non-Disclosure Adversarial
    Acceptance; and
-12. `AR-6` — Integrated Alpha Readiness Acceptance.
+13. `AR-6` — Integrated Alpha Readiness Acceptance.
 
 `AR-1A` and `AR-1B` share the `AR-1` program identity. AR-5 completes only when
 both AR-5A and AR-5B pass. The accepted Product journey is one completed
