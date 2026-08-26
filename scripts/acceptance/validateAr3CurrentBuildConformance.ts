@@ -3,28 +3,38 @@ import { execFileSync, spawnSync } from "node:child_process";
 import { createHash, createHmac, randomBytes } from "node:crypto";
 import {
   access,
+  lstat,
   mkdtemp,
   mkdir,
   readFile,
+  realpath,
   rm,
   writeFile,
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   acceptanceDigest,
+  assertAcceptanceProfileRequirementsV1,
   createAcceptanceMeasurementEnvelopeV1,
+  observationStates,
+  type AcceptanceMeasurementEnvelopeV1,
+  type AcceptanceProfileRequirementsV1,
 } from "./authenticatedAlphaAcceptanceContracts";
 import { adjudicateAuthenticatedAlphaAcceptance } from "./authenticatedAlphaAcceptanceAdjudicator";
 import { ar3CurrentBuildProfile } from "./ar3CurrentBuildAcceptanceProfile";
 import {
   createAcceptanceTaskManifest,
   createClerkIdentityInventoryReceipt,
+  createPartialClerkIdentityInventoryReceipt,
   createTaskSecret,
   readClerkIdentityInventoryReceipt,
   readProtectedManifest,
   writeClerkIdentityInventoryReceipt,
   writeProtectedManifest,
+  type AnyClerkIdentityInventoryReceipt,
+  type PartialResourceInventory,
 } from "./authenticatedAlphaAcceptanceTaskManifest";
 import {
   captureAcceptanceClerkIdentityInventory,
@@ -99,8 +109,81 @@ const sourceBoundaryHead = "1ae9beb2bfcb0dace4c1740d363f9e5c0c9d2b0d",
   evidencePrefix =
     "docs/agent-work-orders/evidence/alpha-readiness/ar2-pre-001b/";
 const sha = (value: string) => createHash("sha256").update(value).digest("hex");
-console.warn = () => {};
 let failurePhase = "initialization";
+
+export const AUTHENTICATED_ALPHA_CURRENT_BUILD_API_ID =
+  "authenticated-alpha-current-build-observation-api@1" as const;
+export const AUTHENTICATED_ALPHA_ORDINARY_JOURNEY_ID =
+  "leadership-conversation-occurrence1-complete-occurrence2-prepared-v1" as const;
+export const AUTHENTICATED_ALPHA_ORDINARY_FACT_CATALOG = Object.freeze({
+  browser: Object.freeze([
+    "browser-journey-ordered",
+    "ceo-authorized",
+    "director-authorized-parity",
+    "manager-unavailable",
+    "denied-not-found",
+    "desktop-viewport",
+    "narrow-viewport",
+    "hard-reload-reconstructed",
+    "successor-fresh-process-reconstructed",
+    "successor-not-started",
+    "successor-execution-not-claimed",
+  ]),
+  lifecycle: Object.freeze([
+    "resource-plan-frozen",
+    "acknowledgement-loss-recovered",
+    "foreign-preserved",
+    "organizations-capability-measured",
+  ]),
+  scanner: Object.freeze(["scanner-sensitive", "public-surfaces-clean"]),
+  cleanup: Object.freeze([
+    "cleanup-first-attempt",
+    "cleanup-second-converged",
+    "server-browser-roots-zero",
+  ]),
+  independentZero: Object.freeze([
+    "users-zero",
+    "sessions-zero",
+    "memberships-zero",
+    "organizations-zero-or-disabled",
+    "local-residue-zero",
+  ]),
+});
+
+export type AuthenticatedAlphaCurrentBuildMeasurementInputV1 = Readonly<{
+  schemaVersion: "1";
+  framework: { id: "authenticated-alpha-acceptance"; version: "1" };
+  profile: AcceptanceProfileRequirementsV1;
+  sourceDigest: string;
+  taskDigest: string;
+  runDigest: string;
+  taskOwnership: ValidatedAuthenticatedAlphaTaskOwnershipV1;
+  journeyProgram: typeof AUTHENTICATED_ALPHA_ORDINARY_JOURNEY_ID;
+  roles: readonly ["ceo", "director", "manager", "denied"];
+  viewports: readonly ["desktop-1440x1000", "narrow-390x844"];
+  ordinaryFactIds: readonly string[];
+}>;
+export type AuthenticatedAlphaCurrentBuildObservationsV1=Readonly<{schemaVersion:"1";kind:"authenticated-alpha-current-build-observations";apiIdentity:typeof AUTHENTICATED_ALPHA_CURRENT_BUILD_API_ID;journeyProgram:typeof AUTHENTICATED_ALPHA_ORDINARY_JOURNEY_ID;framework:Readonly<{id:"authenticated-alpha-acceptance";version:"1"}>;profile:AcceptanceProfileRequirementsV1["profile"];sourceDigest:string;taskDigest:string;runDigest:string;resourcePlanDigest:string;envelopes:readonly AcceptanceMeasurementEnvelopeV1[];capturedSurfaceDigest:string;scanner:Readonly<{sensitivity:number;publicFindings:number}>;cleanup:Readonly<{attempts:number;localRoots:0|1;foreignPreserved:boolean;independentZero:"zero-verified"|"blocked"}>}>;
+export type ValidatedAuthenticatedAlphaTaskOwnershipV1 = Readonly<{
+  schemaVersion:"1";root:string;manifestPath:string;sourceDigest:string;taskDigest:string;runDigest:string;
+  framework:Readonly<{id:"authenticated-alpha-acceptance";version:"1"}>;profile:AcceptanceProfileRequirementsV1;
+  manifest:Awaited<ReturnType<typeof readProtectedManifest>>;resourcePlanDigest:string;
+}>;
+const activeTaskOwnerships=new WeakSet<object>();
+const privateTaskSecrets=new WeakMap<object,Buffer>();
+function deepFreeze<T>(value:T):T{if(value&&typeof value==="object"&&!Object.isFrozen(value)){for(const child of Object.values(value as Record<string,unknown>))deepFreeze(child);Object.freeze(value);}return value;}
+const ordinaryProducerKeys=new Set(["browser:browser-journey","lifecycle:resource-lifecycle","scanner:surface-scan","cleanup:cleanup-attempts","independent-zero:zero-verification"]);
+const ordinaryCatalogIds=Object.freeze(Object.values(AUTHENTICATED_ALPHA_ORDINARY_FACT_CATALOG).flat());
+export async function validateAuthenticatedAlphaTaskOwnershipV1(input:Readonly<{schemaVersion:"1";root:string;manifestPath:string;secret:Buffer;framework:Readonly<{id:"authenticated-alpha-acceptance";version:"1"}>;profile:AcceptanceProfileRequirementsV1;sourceDigest:string;taskDigest:string;runDigest:string}>):Promise<ValidatedAuthenticatedAlphaTaskOwnershipV1>{
+  if(Object.keys(input).sort().join("\0")!==["framework","manifestPath","profile","root","runDigest","schemaVersion","secret","sourceDigest","taskDigest"].sort().join("\0")||input.schemaVersion!=="1"||input.framework.id!=="authenticated-alpha-acceptance"||input.framework.version!=="1"||input.secret.length!==32||!/^[a-f0-9]{64}$/.test(input.sourceDigest)||!/^[a-f0-9]{64}$/.test(input.taskDigest)||!/^[a-f0-9]{64}$/.test(input.runDigest))throw new Error("Authenticated acceptance task ownership is invalid");
+  assertAcceptanceProfileRequirementsV1(input.profile);if(input.profile.framework.id!==input.framework.id||input.profile.framework.version!==input.framework.version)throw new Error("Authenticated acceptance task ownership is invalid");
+  const requestedRoot=path.resolve(input.root),requestedManifest=path.resolve(input.manifestPath),requestedRootStat=await lstat(requestedRoot),requestedManifestStat=await lstat(requestedManifest);
+  if(!requestedRootStat.isDirectory()||requestedRootStat.isSymbolicLink()||(requestedRootStat.mode&0o777)!==0o700||path.dirname(requestedRoot)!=="/private/tmp"||!path.basename(requestedRoot).startsWith("discovery-ar2-pre-001b-task-")||!requestedManifestStat.isFile()||requestedManifestStat.isSymbolicLink())throw new Error("Authenticated acceptance task ownership is invalid");
+  const root=await realpath(requestedRoot),manifestPath=await realpath(requestedManifest),relativeManifest=path.relative(root,manifestPath);
+  if(!relativeManifest||relativeManifest===".."||relativeManifest.startsWith(`..${path.sep}`))throw new Error("Authenticated acceptance task ownership is invalid");
+  const manifest=await readProtectedManifest(manifestPath,input.secret);if(manifest.environment!=="development"||manifest.sourceDigest!==input.sourceDigest||manifest.taskDigest!==input.taskDigest)throw new Error("Authenticated acceptance task ownership is invalid");
+  const frozenManifest=deepFreeze(structuredClone(manifest)),frozenProfile=deepFreeze(structuredClone(input.profile)),value=deepFreeze({schemaVersion:"1" as const,root,manifestPath,sourceDigest:input.sourceDigest,taskDigest:input.taskDigest,runDigest:input.runDigest,framework:{...input.framework},profile:frozenProfile,manifest:frozenManifest,resourcePlanDigest:acceptanceDigest(frozenManifest.resources)});activeTaskOwnerships.add(value);privateTaskSecrets.set(value,Buffer.from(input.secret));return value;
+}
 async function sourceIdentity(
   input: { committed: boolean } = { committed: false },
 ) {
@@ -187,6 +270,7 @@ const exists = (root: string) =>
   );
 const ownedProfileRoot = (taskRef: string, ordinal: number) =>
   `/private/tmp/discovery-ar2-pre-001b-profile-${sha(`${taskRef}:${ordinal}`).slice(0, 24)}`;
+const receiptIdentityInventory=(receipt:AnyClerkIdentityInventoryReceipt)=>receipt.schemaVersion==="1"?{userIds:[...receipt.userIds],sessionIds:[...receipt.sessionIds]}:{userIds:[...(receipt.resources.find(value=>value.kind==="user")?.identityRefs??[])],sessionIds:[...(receipt.resources.find(value=>value.kind==="session")?.identityRefs??[])]};
 async function independentZeroChild() {
   failurePhase = "independent-zero-input";
   const input = JSON.parse(
@@ -209,7 +293,7 @@ async function independentZeroChild() {
     );
   failurePhase = "independent-zero-clerk";
   process.stdout.write(
-    `${JSON.stringify(await verifyAcceptanceClerkZero({ manifest, inventory: { userIds: [...receipt.userIds], sessionIds: [...receipt.sessionIds] }, secretKey }))}\n`,
+    `${JSON.stringify(await verifyAcceptanceClerkZero({ manifest, inventory: receiptIdentityInventory(receipt), secretKey }))}\n`,
   );
 }
 async function freshBrowserChild() {
@@ -230,6 +314,7 @@ async function freshBrowserChild() {
       userId: input.userId,
       baseUrl: input.baseUrl,
     });
+    process.stdout.write(`${JSON.stringify({kind:"execution-phase",frameworkId:input.frameworkId,profileId:input.profileId,sourceDigest:input.sourceDigest,taskDigest:input.taskDigest,runDigest:input.runDigest,producer:"browser",phase:"browser-journey",action:"fresh-reconstruction"})}\n`);
     const observation = await observeFreshSuccessorReconstruction(
         browser.page,
         input.baseUrl,
@@ -244,7 +329,7 @@ async function freshBrowserChild() {
         })),
       ).length;
     process.stdout.write(
-      `${JSON.stringify({ reconstructed: observation.reconstructed === true, renderedFindings })}\n`,
+      `${JSON.stringify({kind:"fresh-browser-measurement",reconstructed: observation.reconstructed === true, renderedFindings})}\n`,
     );
   } finally {
     await closeAcceptanceBrowser(browser);
@@ -253,6 +338,7 @@ async function freshBrowserChild() {
 function freshReconstructionProcess(
   baseUrl: string,
   user: { email: string; id: string; protectedValues?: string[] },
+  identity: {frameworkId:string;profileId:string;sourceDigest:string;taskDigest:string;runDigest:string},
   protectedValues = user.protectedValues ?? [],
   profileRoot = ownedProfileRoot(user.id, 5),
 ) {
@@ -278,6 +364,7 @@ function freshReconstructionProcess(
             userId: user.id,
             profileRoot,
             protectedValues,
+            ...identity,
           }),
         ).toString("base64"),
       },
@@ -286,7 +373,9 @@ function freshReconstructionProcess(
   );
   if (child.status !== 0) failurePhase = "fresh-child-unavailable";
   assert.equal(child.status, 0);
-  const measured = JSON.parse(child.stdout.trim());
+  const frames=child.stdout.split("\n").filter(Boolean).map(line=>JSON.parse(line)),phaseFrames=frames.filter(value=>value.kind==="execution-phase"),measurementFrames=frames.filter(value=>value.kind==="fresh-browser-measurement");
+  assert.equal(phaseFrames.length,1);assert.equal(measurementFrames.length,1);assert.deepEqual(phaseFrames[0],{kind:"execution-phase",...identity,producer:"browser",phase:"browser-journey",action:"fresh-reconstruction"});
+  const measured = measurementFrames[0];
   assert.equal(measured.renderedFindings, 0);
   return {
     reconstructed: measured.reconstructed === true,
@@ -296,6 +385,7 @@ function freshReconstructionProcess(
   };
 }
 function envelope(input: {
+  profile: AcceptanceProfileRequirementsV1;
   source: string;
   task: string;
   run: string;
@@ -305,8 +395,8 @@ function envelope(input: {
   facts: { factId: string; state: any }[];
 }) {
   return createAcceptanceMeasurementEnvelopeV1({
-    framework: ar3CurrentBuildProfile.framework,
-    profile: ar3CurrentBuildProfile.profile,
+    framework: input.profile.framework,
+    profile: input.profile.profile,
     producer: input.producer,
     phase: input.phase,
     sourceDigest: input.source,
@@ -393,7 +483,7 @@ function roleBrowserProcess(
   action: "ceo" | "denied" | "manager" | "narrow" | "director",
   profileRoot: string,
   protectedValues: string[],
-  identity: { sourceDigest: string; taskDigest: string; runDigest: string },
+  identity: { frameworkId:string;profileId:string;sourceDigest: string; taskDigest: string; runDigest: string },
 ) {
   const request = {
       baseUrl,
@@ -402,8 +492,6 @@ function roleBrowserProcess(
       action,
       profileRoot,
       protectedValues,
-      frameworkId: ar3CurrentBuildProfile.framework.id,
-      profileId: ar3CurrentBuildProfile.profile.id,
       ...identity,
     },
     child = spawnSync(
@@ -503,8 +591,8 @@ function roleBrowserProcess(
       action: phase.action,
     },
     {
-      frameworkId: request.frameworkId,
-      profileId: request.profileId,
+      frameworkId: identity.frameworkId,
+      profileId: identity.profileId,
       sourceDigest: identity.sourceDigest,
       taskDigest: identity.taskDigest,
       runDigest: identity.runDigest,
@@ -522,7 +610,7 @@ function roleBrowserProcess(
 async function browserRun(
   baseUrl: string,
   users: Awaited<ReturnType<typeof provisionAcceptanceUsers>>,
-  identity: { sourceDigest: string; taskDigest: string; runDigest: string },
+  identity: { frameworkId:string;profileId:string;sourceDigest: string; taskDigest: string; runDigest: string },
   profileRoots = [
     ownedProfileRoot(users.users.ceo.id, 0),
     ownedProfileRoot(users.users.denied.id, 1),
@@ -606,17 +694,16 @@ async function browserRun(
     }),
   };
 }
-async function measured() {
-  const source = await sourceDigest(),
-    secret = createTaskSecret(),
-    taskRoot = await mkdtemp(
-      path.join(tmpdir(), "discovery-ar2-pre-001b-task-"),
-    ),
+async function measured(execution?:Readonly<{ownership:ValidatedAuthenticatedAlphaTaskOwnershipV1;ordinaryOnly:true;ordinaryFactIds:readonly string[]}>) {
+  const profile=execution?.ownership.profile??ar3CurrentBuildProfile,
+    source = execution?.ownership.sourceDigest??await sourceDigest(),
+    secret = execution?privateTaskSecrets.get(execution.ownership):createTaskSecret(),
+    taskRoot = execution?.ownership.root??await mkdtemp(path.join(tmpdir(), "discovery-ar2-pre-001b-task-")),
     serverRoot = path.join(taskRoot,`server-${randomBytes(10).toString("hex")}`),
     browserRoot = process.env.PLAYWRIGHT_BROWSERS_PATH,
     secretKey = process.env.CLERK_SECRET_KEY,
     publishable = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
-  if (
+  if (!secret||execution&&!activeTaskOwnerships.has(execution.ownership)||
     !browserRoot ||
     path.dirname(browserRoot) !== "/private/tmp" ||
     !path.basename(browserRoot).startsWith("discovery-ar2-pre-001b-browser-") ||
@@ -624,23 +711,23 @@ async function measured() {
     !publishable?.startsWith("pk_test_")
   )
     throw new Error("Authenticated acceptance environment is unavailable");
-  const manifest = createAcceptanceTaskManifest({
+  const manifest = execution?.ownership.manifest??createAcceptanceTaskManifest({
       sourceDigest: source,
       secret,
       organizationPlan: "not-applicable-capability-disabled",
     }),
-    manifestPath = path.join(taskRoot, "manifest.json"),
-    run = acceptanceDigest({
+    manifestPath = execution?.ownership.manifestPath??path.join(taskRoot, "manifest.json"),
+    run = execution?.ownership.runDigest??acceptanceDigest({
       source,
       task: manifest.taskDigest,
-      profile: ar3CurrentBuildProfile.profile,
+      profile: profile.profile,
     }),
     measurements: any[] = [],
     streams: string[] = [],
     protectedCanary = "AR2 PRE001B protected canary",
     credentialCanary = "AR2-PRE001B-secret-credential",
     canaryFile = path.join(taskRoot, "protected-canary.txt");
-  await writeProtectedManifest(manifestPath, manifest);
+  if(!execution)await writeProtectedManifest(manifestPath, manifest);
   assert.deepEqual(await readProtectedManifest(manifestPath, secret), manifest);
   await writeFile(canaryFile, `${protectedCanary}\n${credentialCanary}\n`, {
     mode: 0o600,
@@ -654,7 +741,8 @@ async function measured() {
     scannerSensitivity = 0,
     scannerPublic = 0,
     freshReconstructed = false,
-    primaryFailurePhase = "none";
+    primaryFailurePhase = "none",
+    includeExtendedProducers=!execution?.ordinaryOnly;
   try {
     users = await provisionAcceptanceUsers({
       manifest,
@@ -672,6 +760,8 @@ async function measured() {
       browserRoot,
     });
     const browser = await browserRun(server.baseUrl, users, {
+      frameworkId:profile.framework.id,
+      profileId:profile.profile.id,
       sourceDigest: source,
       taskDigest: manifest.taskDigest,
       runDigest: run,
@@ -688,7 +778,7 @@ async function measured() {
       },
       browserRoot,
     });
-    const fresh = freshReconstructionProcess(server.baseUrl, users.users.ceo);
+    const fresh = freshReconstructionProcess(server.baseUrl, users.users.ceo,{frameworkId:profile.framework.id,profileId:profile.profile.id,sourceDigest:source,taskDigest:manifest.taskDigest,runDigest:run});
     freshReconstructed = fresh.reconstructed;
     streams.push(
       fresh.stdout,
@@ -702,6 +792,7 @@ async function measured() {
     const counts = browser.counts();
     measurements.push(
       envelope({
+        profile,
         source,
         task: manifest.taskDigest,
         run,
@@ -780,7 +871,7 @@ async function measured() {
       }),
     );
     assert.equal(counts.consoleErrors + counts.pageErrors, 0);
-    const producerStages=[
+    if(includeExtendedProducers){const producerStages=[
         {token:"initialize",category:"bootstrap" as const},
         ...["replay-enabled","replay-repeat","replay-disabled","replay-rejecting","replay-throwing","replay-compare","parity","typed-runtime","typed-recovery","typed-cas","owner-inventory"].map(token=>({token,category:"execution" as const})),
         {token:"measurement-envelope",category:"measurement" as const},
@@ -826,7 +917,7 @@ async function measured() {
       }
       measurements.push(child.measurement);
       streams.push(child.stdout, child.stderr);
-    }
+    }}
     failurePhase = "post-admission-protected-inventory";
     const protectedValues = [
       { category: "protected", value: protectedCanary },
@@ -859,6 +950,7 @@ async function measured() {
     failurePhase = "post-admission-scanner-envelope";
     measurements.push(
       envelope({
+        profile,
         source,
         task: manifest.taskDigest,
         run,
@@ -883,24 +975,17 @@ async function measured() {
   } finally {
     failurePhase = "cleanup-server-stop";
     if (server) await stopAcceptanceServer(server).catch(() => {});
-    const inventory: ClerkOwnedIdentityInventory = (users as any)
-        ?.identityInventory ?? {
-        userIds: Object.values(users?.users ?? {}).map(
-          (value: any) => value.id,
-        ),
-        sessionIds: [],
-      },
-      inventoryPath = path.join(taskRoot, "clerk-identity-inventory.json"),
-      receipt = createClerkIdentityInventoryReceipt({
-        manifest,
-        secret,
-        userIds: inventory.userIds,
-        sessionIds: inventory.sessionIds,
-      });
-    if(inventory.userIds.length!==4||inventory.sessionIds.length!==6){failurePhase=`cleanup-identity-cardinality-${inventory.userIds.length}-${inventory.sessionIds.length}-primary-${primaryFailurePhase}`;throw new Error("Acceptance identity inventory cardinality is invalid");}
-    failurePhase = "cleanup-identity-receipt";
-    await writeClerkIdentityInventoryReceipt(inventoryPath, receipt);
-    await readClerkIdentityInventoryReceipt(inventoryPath,manifest,secret);
+    const inventoryPath = path.join(taskRoot, "clerk-identity-inventory.json"),primarySucceeded=primaryFailurePhase==="none";let inventory:ClerkOwnedIdentityInventory={userIds:[],sessionIds:[]},inventoryPreparationFailure=false;
+    try{inventory=(users as any)?.identityInventory??await captureAcceptanceClerkIdentityInventory({manifest,secretKey});if(inventory.userIds.length>4||inventory.sessionIds.length>6||(primarySucceeded&&(inventory.userIds.length!==4||inventory.sessionIds.length!==6)))throw new Error("Acceptance identity inventory cardinality is invalid");}catch{inventoryPreparationFailure=true;}
+    const partial=(kind:PartialResourceInventory["kind"],plannedMaximum:number,identityRefs:string[],dispatchState:PartialResourceInventory["dispatchState"],acknowledgedCount:number,rediscoveredCount:number,cleanupAttemptedCount=0,removedCount=0,zeroVerifiedCount=0,cleanupBlockedCount=0,absenceVerified=false):PartialResourceInventory=>({kind,plannedMaximum,identityRefs,dispatchState,acknowledgedCount,acknowledgementLostCount:rediscoveredCount,rediscoveredCount,cleanupAttemptedCount,removedCount,zeroVerifiedCount,cleanupBlockedCount,absenceVerified}),receiptFor=(state:"observed"|"blocked"|"removed"|"zero-verified",remaining:ClerkOwnedIdentityInventory=inventory)=>{
+      const userRemaining=new Set(remaining.userIds),sessionRemaining=new Set(remaining.sessionIds),userRemoved=inventory.userIds.filter(value=>!userRemaining.has(value)).length,sessionRemoved=inventory.sessionIds.filter(value=>!sessionRemaining.has(value)).length,userState=state==="blocked"?(userRemaining.size?"cleanup-blocked":"removed"):state==="observed"?(inventory.userIds.length?(users?(users.acknowledgementLossRecovered?"rediscovered":"acknowledged"):"rediscovered"):"not-dispatched"):state==="removed"?"removed":"zero-verified",sessionState=state==="blocked"?(sessionRemaining.size?"cleanup-blocked":"removed"):state==="observed"?(inventory.sessionIds.length?"acknowledged":"not-dispatched"):state==="removed"?"removed":"zero-verified";
+      return createPartialClerkIdentityInventoryReceipt({manifest,secret,resources:[
+        partial("user",4,inventory.userIds,userState,users?.acknowledgementLossRecovered?Math.max(0,inventory.userIds.length-1):users?inventory.userIds.length:0,users?.acknowledgementLossRecovered&&inventory.userIds.length?1:users?0:inventory.userIds.length,state==="observed"?0:inventory.userIds.length,state==="observed"?0:state==="blocked"?userRemoved:inventory.userIds.length,state==="zero-verified"?inventory.userIds.length:0,state==="blocked"?userRemaining.size:0,state==="zero-verified"),
+        partial("session",6,inventory.sessionIds,sessionState,inventory.sessionIds.length,0,state==="observed"?0:inventory.sessionIds.length,state==="observed"?0:state==="blocked"?sessionRemoved:inventory.sessionIds.length,state==="zero-verified"?inventory.sessionIds.length:0,state==="blocked"?sessionRemaining.size:0,state==="zero-verified"),
+        partial("membership",0,[],"never-created",0,0),partial("organization",0,[],"never-created",0,0),
+      ]});
+    };
+    if(!inventoryPreparationFailure){failurePhase="cleanup-identity-receipt";try{await writeClerkIdentityInventoryReceipt(inventoryPath,receiptFor("observed"));await readClerkIdentityInventoryReceipt(inventoryPath,manifest,secret);}catch{inventoryPreparationFailure=true;}}
     let convergedCleanup: Awaited<ReturnType<typeof cleanupAcceptanceClerk>> | null =
       null;
     for (const attempt of ["first", "second"] as const) {
@@ -909,9 +994,13 @@ async function measured() {
       try {
         convergedCleanup = await cleanupAcceptanceClerk({ manifest, secretKey });
       } catch {
+        if(!inventoryPreparationFailure){try{const remaining=await captureAcceptanceClerkIdentityInventory({manifest,secretKey});await writeClerkIdentityInventoryReceipt(inventoryPath,receiptFor("blocked",remaining));}catch{inventoryPreparationFailure=true;}}
         if (attempt === "second") throw new Error("Clerk cleanup did not converge");
+        continue;
       }
+      if(!inventoryPreparationFailure)await writeClerkIdentityInventoryReceipt(inventoryPath,receiptFor("removed",{userIds:[],sessionIds:[]}));
     }
+    if(inventoryPreparationFailure)throw new Error("Acceptance cleanup inventory remains blocked");
     cleanupForeign = convergedCleanup?.foreignPreserved === true;
     failurePhase = "cleanup-server-root";
     if (server) await removeAcceptanceServerRoot(server);
@@ -929,6 +1018,9 @@ async function measured() {
     await removeAcceptanceBrowserProfileRoots(profileRoots);
     failurePhase = "cleanup-canary";
     await rm(canaryFile, { force: true });
+    failurePhase = "cleanup-independent-zero-child";
+    failurePhase = "cleanup-browser-binary";
+    await removeBrowserBinaryRoot(browserRoot);
     failurePhase = "cleanup-independent-zero-child";
     const child = spawnSync(
       process.execPath,
@@ -965,8 +1057,7 @@ async function measured() {
     }
     failurePhase = "cleanup-independent-zero-result";
     external = JSON.parse(child.stdout.trim());
-    failurePhase = "cleanup-browser-binary";
-    await removeBrowserBinaryRoot(browserRoot);
+    await writeClerkIdentityInventoryReceipt(inventoryPath,receiptFor("zero-verified"));
     failurePhase = "cleanup-task-root";
     await rm(taskRoot, { recursive: true, force: true });
     failurePhase = "cleanup-local-zero";
@@ -1002,6 +1093,7 @@ async function measured() {
   failurePhase = "post-cleanup-lifecycle-envelopes";
   measurements.push(
     envelope({
+      profile,
       source,
       task: manifest.taskDigest,
       run,
@@ -1030,6 +1122,7 @@ async function measured() {
       ],
     }),
     envelope({
+      profile,
       source,
       task: manifest.taskDigest,
       run,
@@ -1052,6 +1145,7 @@ async function measured() {
       ],
     }),
     envelope({
+      profile,
       source,
       task: manifest.taskDigest,
       run,
@@ -1087,6 +1181,15 @@ async function measured() {
       ],
     }),
   );
+  if(execution){
+    const requirements=profile.requiredMeasurements.filter(value=>ordinaryProducerKeys.has(`${value.producer}:${value.phase}`)),expectedFacts=requirements.flatMap(value=>value.factIds).sort(),requestedFacts=[...execution.ordinaryFactIds].sort();
+    if(requirements.length!==5||new Set(requestedFacts).size!==requestedFacts.length||requestedFacts.some(value=>!ordinaryCatalogIds.includes(value))||JSON.stringify(requestedFacts)!==JSON.stringify(expectedFacts))throw new Error("Authenticated acceptance ordinary fact contract is invalid");
+    const requested=new Set(requestedFacts),ordinary=measurements.filter(value=>ordinaryProducerKeys.has(`${value.producer}:${value.phase}`));
+    if(ordinary.length!==5||new Set(ordinary.map(value=>`${value.producer}:${value.phase}`)).size!==5)throw new Error("Authenticated acceptance ordinary measurements are incomplete");
+    const projected=ordinary.map(value=>{const required=requirements.find(item=>item.producer===value.producer&&item.phase===value.phase)!,facts=value.observations.filter((fact:{factId:string})=>requested.has(fact.factId));if(JSON.stringify(facts.map((fact:{factId:string})=>fact.factId).sort())!==JSON.stringify([...required.factIds].sort()))throw new Error("Authenticated acceptance ordinary facts are incomplete");return createAcceptanceMeasurementEnvelopeV1({framework:value.framework,profile:value.profile,producer:value.producer,phase:value.phase,sourceDigest:value.sourceDigest,taskDigest:value.taskDigest,measurementId:acceptanceDigest({producer:value.producer,phase:value.phase,task:value.taskDigest,facts}),producerRunDigest:value.producerRunDigest,sequence:value.sequence,observations:facts});});
+    for(const measurement of projected)for(const observation of measurement.observations)if(!observationStates.includes(observation.state))throw new Error("Authenticated acceptance ordinary fact state is invalid");
+    return Object.freeze({schemaVersion:"1" as const,kind:"authenticated-alpha-current-build-observations" as const,apiIdentity:AUTHENTICATED_ALPHA_CURRENT_BUILD_API_ID,journeyProgram:AUTHENTICATED_ALPHA_ORDINARY_JOURNEY_ID,framework:execution.ownership.framework,profile:execution.ownership.profile.profile,sourceDigest:source,taskDigest:manifest.taskDigest,runDigest:run,resourcePlanDigest:execution.ownership.resourcePlanDigest,envelopes:Object.freeze(projected),capturedSurfaceDigest:acceptanceDigest({scannerSensitivity,scannerPublic}),scanner:Object.freeze({sensitivity:scannerSensitivity,publicFindings:scannerPublic}),cleanup:Object.freeze({attempts:cleanupAttempts,localRoots:localZero?0:1,foreignPreserved:cleanupForeign,independentZero:externalZero&&localZero?"zero-verified" as const:"blocked" as const})});
+  }
   failurePhase = "post-cleanup-fact-validation";
   for (const measurement of measurements)
     for (const observation of measurement.observations)
@@ -1096,7 +1199,7 @@ async function measured() {
       }
   failurePhase = "post-cleanup-adjudication";
   const adjudication = adjudicateAuthenticatedAlphaAcceptance({
-    profile: ar3CurrentBuildProfile,
+    profile,
     measurements,
     sourceDigest: source,
     taskDigest: manifest.taskDigest,
@@ -1169,6 +1272,11 @@ async function measured() {
   assert.equal(value.status, "PASS");
   return finalValue;
 }
+export async function measureAuthenticatedAlphaCurrentBuild(input:AuthenticatedAlphaCurrentBuildMeasurementInputV1):Promise<AuthenticatedAlphaCurrentBuildObservationsV1>{
+  const keys=["framework","journeyProgram","ordinaryFactIds","profile","roles","runDigest","schemaVersion","sourceDigest","taskDigest","taskOwnership","viewports"].sort().join("\0");
+  if(Object.keys(input).sort().join("\0")!==keys||input.schemaVersion!=="1"||input.journeyProgram!==AUTHENTICATED_ALPHA_ORDINARY_JOURNEY_ID||JSON.stringify(input.roles)!==JSON.stringify(["ceo","director","manager","denied"])||JSON.stringify(input.viewports)!==JSON.stringify(["desktop-1440x1000","narrow-390x844"])||!activeTaskOwnerships.has(input.taskOwnership)||input.framework.id!==input.taskOwnership.framework.id||input.framework.version!==input.taskOwnership.framework.version||acceptanceDigest(input.profile)!==acceptanceDigest(input.taskOwnership.profile)||input.sourceDigest!==input.taskOwnership.sourceDigest||input.taskDigest!==input.taskOwnership.taskDigest||input.runDigest!==input.taskOwnership.runDigest)throw new Error("Authenticated acceptance observation request is invalid");
+  try{const result=await measured({ownership:input.taskOwnership,ordinaryOnly:true,ordinaryFactIds:input.ordinaryFactIds});if(result.kind!=="authenticated-alpha-current-build-observations"||!("apiIdentity" in result))throw new Error("Authenticated acceptance observation result is invalid");return result;}finally{activeTaskOwnerships.delete(input.taskOwnership);const secret=privateTaskSecrets.get(input.taskOwnership);secret?.fill(0);privateTaskSecrets.delete(input.taskOwnership);}
+}
 function report(value: any) {
   return `# AR-2-PRE-001B AR-3 Current-Build Conformance\n\n- Result: **${value.status}**\n- Framework: \`${value.frameworkQualification.frameworkId}@${value.frameworkQualification.frameworkVersion}\`\n- Profile: \`${value.profile.id}@${value.profile.version}\`\n- Adjudication: **${value.adjudication.result}**\n- Producer envelopes: ${value.producerEnvelopeDigests.length}\n- Scanner public findings: ${value.scanner.publicFindings}\n- Cleanup attempts: ${value.cleanup.attempts}\n- Independent zero: **${value.independentZero.status}**\n- Source digest: \`${value.sourceDigest}\`\n- Result digest: \`${value.resultDigest}\`\n\nOccurrence 1 completed through What Changed and Prepare Again. Occurrence 2 was owner-issued, prepared, reconstructed, and remained truthfully not started. No later Occurrence-2 execution was claimed.\n`;
 }
@@ -1220,7 +1328,7 @@ async function verify() {
     `${JSON.stringify({ validation: "ar3-current-build-conformance", mode: "verify", result: "PASS", sourceDigest: value.sourceDigest, resultDigest, sourceBindingChecks })}\n`,
   );
 }
-const operation = process.argv.includes("--independent-zero-child")
+if(fileURLToPath(import.meta.url)===path.resolve(process.argv[1]??"")){const operation = process.argv.includes("--independent-zero-child")
   ? independentZeroChild()
   : process.argv.includes("--fresh-browser-child")
     ? freshBrowserChild()
@@ -1230,11 +1338,9 @@ const operation = process.argv.includes("--independent-zero-child")
         ? write()
         : process.argv.includes("--verify")
           ? verify()
-          : measured().then((value) =>
-          process.stdout.write(
+          : measured().then((value) => {if(value.kind!=="ar3-current-build-conformance")throw new Error("Historical conformance result is invalid");return process.stdout.write(
                 `${JSON.stringify({ validation: "ar3-current-build-conformance", result: value.status, sourceDigest: value.sourceDigest, resultDigest: value.resultDigest, scanner:value.scanner, cleanup:value.cleanup, independentZero:value.independentZero, measurementCount:value.measurements.length, adjudication:value.adjudication.result })}\n`,
-              ),
-            );
+              );});
 void operation.catch(() => {
   if (process.argv.includes("--role-browser-child"))
     process.stdout.write(
@@ -1246,4 +1352,4 @@ void operation.catch(() => {
       : `${failurePhase}-server-failure`;
   process.stderr.write(`AR-3 current-build conformance failed: ${phase}.\n`);
   process.exitCode = 1;
-});
+});}

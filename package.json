@@ -4,6 +4,9 @@
   "private": true,
   "scripts": {
     "validate:authenticated-alpha-acceptance-runner": "NODE_OPTIONS=--conditions=react-server tsx scripts/acceptance/validateAuthenticatedAlphaAcceptanceRunner.ts",
+    "validate:acceptance-foundation-v1-2:write": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/acceptance/validateAuthenticatedAlphaAcceptanceRunner.ts --write-v1-2",
+    "validate:acceptance-foundation-v1-2:verify": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/acceptance/validateAuthenticatedAlphaAcceptanceRunner.ts --verify-v1-2",
+    "validate:acceptance-foundation-v1-2:controls": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/acceptance/validateAuthenticatedAlphaAcceptanceRunner.ts --validate-v1-2-controls",
     "validate:ar3-current-build-conformance": "NODE_OPTIONS=--conditions=react-server tsx scripts/acceptance/validateAr3CurrentBuildConformance.ts",
     "validate:ar3-current-build-conformance:write": "NODE_OPTIONS=--conditions=react-server tsx scripts/acceptance/validateAr3CurrentBuildConformance.ts --write",
     "validate:ar3-current-build-conformance:verify": "NODE_OPTIONS=--conditions=react-server tsx scripts/acceptance/validateAr3CurrentBuildConformance.ts --verify",
