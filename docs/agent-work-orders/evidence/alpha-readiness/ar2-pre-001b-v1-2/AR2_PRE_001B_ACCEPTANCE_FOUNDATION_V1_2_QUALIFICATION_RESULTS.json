@@ -8031,7 +8031,7 @@
       },
       {
         "path": "scripts/acceptance/validateAuthenticatedAlphaAcceptanceRunner.ts",
-        "digest": "1b6681dd70cbf5ee77d9c341b79426eb02ac98e46feceb14a82a841d66954267"
+        "digest": "834ab75f18668dee47a642c3e777950c4da59448532ffeabbd8422e3eb6d93f7"
       },
       {
         "path": "scripts/alpha-readiness/criticalFailureRecoveryContracts.ts",
@@ -9034,7 +9034,7 @@
         "digest": "a98817caa899724a967e59285b3380f7b542afc194308e26e4eb243ae94c07a5"
       }
     ],
-    "digest": "5c865f95f916505dfeb0d2a21c01692651efb9a80f986058e9c0c90bf6b42b5c",
+    "digest": "168c656f83ce2310d71ef8ed80baed548fd294b2dd2cedf0e98b2b3c22debbca",
     "changedPaths": [
       "docs/agent-work-orders/evidence/alpha-readiness/ar2-pre-001b-v1-2/AR2_PRE_001B_ACCEPTANCE_FOUNDATION_V1_2_QUALIFICATION_REPORT.md",
       "docs/agent-work-orders/evidence/alpha-readiness/ar2-pre-001b-v1-2/AR2_PRE_001B_ACCEPTANCE_FOUNDATION_V1_2_QUALIFICATION_RESULTS.json",
@@ -9284,8 +9284,8 @@
       "id": "authenticated-alpha-current-build-secondary-profile-v1",
       "version": "version-1"
     },
-    "taskDigest": "cb5cf3fdf017f828c79ae242ecac92b7b03b288792489f21866e0faf14d9a612",
-    "runDigest": "108800237bcaa5e051b21347174d2d5d9ad4046ced9a16c8fcbb8467e5cddb91",
+    "taskDigest": "2e586b8f24d7ca6e3dd733c136d4f84b1515e675261084bf508c6b59e607e480",
+    "runDigest": "d412a1c76a3045adc5580c33bd818179acfd0e5e8cfaf7bc8be4786726ee0ea0",
     "measurements": [
       {
         "schemaVersion": "1",
@@ -9300,10 +9300,10 @@
         },
         "producer": "browser",
         "phase": "browser-journey",
-        "sourceDigest": "5c865f95f916505dfeb0d2a21c01692651efb9a80f986058e9c0c90bf6b42b5c",
-        "taskDigest": "cb5cf3fdf017f828c79ae242ecac92b7b03b288792489f21866e0faf14d9a612",
-        "measurementId": "1a7e87e9c2dbc9efdd6838a1c205af08b8302722519f5f21406b163fd08207dd",
-        "producerRunDigest": "108800237bcaa5e051b21347174d2d5d9ad4046ced9a16c8fcbb8467e5cddb91",
+        "sourceDigest": "168c656f83ce2310d71ef8ed80baed548fd294b2dd2cedf0e98b2b3c22debbca",
+        "taskDigest": "2e586b8f24d7ca6e3dd733c136d4f84b1515e675261084bf508c6b59e607e480",
+        "measurementId": "74f4a86d8d3e06479e589eae6132c231f7fbade755f6b48ea3e9f748b5f0a4c8",
+        "producerRunDigest": "d412a1c76a3045adc5580c33bd818179acfd0e5e8cfaf7bc8be4786726ee0ea0",
         "sequence": 1,
         "observations": [
           {
@@ -9351,7 +9351,7 @@
             "state": "observed"
           }
         ],
-        "measurementDigest": "954f243b9a6355ccf976ff97fa37e8ccdfb26dc894690084db25dbb720ddca9b"
+        "measurementDigest": "8a5a31d57a96b4bbfe48bd2383937ad2f899c1622cb2593bbc0154e8a9d05c13"
       },
       {
         "schemaVersion": "1",
@@ -9366,10 +9366,10 @@
         },
         "producer": "scanner",
         "phase": "surface-scan",
-        "sourceDigest": "5c865f95f916505dfeb0d2a21c01692651efb9a80f986058e9c0c90bf6b42b5c",
-        "taskDigest": "cb5cf3fdf017f828c79ae242ecac92b7b03b288792489f21866e0faf14d9a612",
-        "measurementId": "c82a4fd120e989ff3c3774a2ef79a9df381bbd15128cbb198d47e03be61eca0f",
-        "producerRunDigest": "108800237bcaa5e051b21347174d2d5d9ad4046ced9a16c8fcbb8467e5cddb91",
+        "sourceDigest": "168c656f83ce2310d71ef8ed80baed548fd294b2dd2cedf0e98b2b3c22debbca",
+        "taskDigest": "2e586b8f24d7ca6e3dd733c136d4f84b1515e675261084bf508c6b59e607e480",
+        "measurementId": "df506c7aa289be6a3bdba2216ebbe95a4bfead29d2a457c97e45365d97a5a763",
+        "producerRunDigest": "d412a1c76a3045adc5580c33bd818179acfd0e5e8cfaf7bc8be4786726ee0ea0",
         "sequence": 5,
         "observations": [
           {
@@ -9381,7 +9381,7 @@
             "state": "match"
           }
         ],
-        "measurementDigest": "5c4dbef0b8d582e5ac55305b624f053cb1268e983b1a833eac6cdf6aae03988e"
+        "measurementDigest": "7cffd3af6a39dc3900e12e8620f8e83a9d70e90e041aa4d35d7f88d62ec2a5b1"
       },
       {
         "schemaVersion": "1",
@@ -9396,10 +9396,10 @@
         },
         "producer": "lifecycle",
         "phase": "resource-lifecycle",
-        "sourceDigest": "5c865f95f916505dfeb0d2a21c01692651efb9a80f986058e9c0c90bf6b42b5c",
-        "taskDigest": "cb5cf3fdf017f828c79ae242ecac92b7b03b288792489f21866e0faf14d9a612",
-        "measurementId": "447a819f4dbd1b1a27cca973cade3971d4e65a037ba4bb10ad0c837c6f4bbd9a",
-        "producerRunDigest": "108800237bcaa5e051b21347174d2d5d9ad4046ced9a16c8fcbb8467e5cddb91",
+        "sourceDigest": "168c656f83ce2310d71ef8ed80baed548fd294b2dd2cedf0e98b2b3c22debbca",
+        "taskDigest": "2e586b8f24d7ca6e3dd733c136d4f84b1515e675261084bf508c6b59e607e480",
+        "measurementId": "ae3984b2bcbfd3260be7ba2c4bdd5f969056be6223d8597014f1c88878460e7d",
+        "producerRunDigest": "d412a1c76a3045adc5580c33bd818179acfd0e5e8cfaf7bc8be4786726ee0ea0",
         "sequence": 4,
         "observations": [
           {
@@ -9419,7 +9419,7 @@
             "state": "observed"
           }
         ],
-        "measurementDigest": "6c4a6f3618ac72c8c6a25cb04191ca312c8e920a2ade26e874c86c850594e644"
+        "measurementDigest": "cc8b880c217241200b8b14a377223bb0d0058234841d2d498c1d8ef83482ead8"
       },
       {
         "schemaVersion": "1",
@@ -9434,10 +9434,10 @@
         },
         "producer": "cleanup",
         "phase": "cleanup-attempts",
-        "sourceDigest": "5c865f95f916505dfeb0d2a21c01692651efb9a80f986058e9c0c90bf6b42b5c",
-        "taskDigest": "cb5cf3fdf017f828c79ae242ecac92b7b03b288792489f21866e0faf14d9a612",
-        "measurementId": "58d979e820342c465326b4617016177246e44c1e302741542eb70f2bfd6a772c",
-        "producerRunDigest": "108800237bcaa5e051b21347174d2d5d9ad4046ced9a16c8fcbb8467e5cddb91",
+        "sourceDigest": "168c656f83ce2310d71ef8ed80baed548fd294b2dd2cedf0e98b2b3c22debbca",
+        "taskDigest": "2e586b8f24d7ca6e3dd733c136d4f84b1515e675261084bf508c6b59e607e480",
+        "measurementId": "ec91bfb83c7a57651ff632c0aea33aa8daab44f3abf2ab629db49b382bf01b1e",
+        "producerRunDigest": "d412a1c76a3045adc5580c33bd818179acfd0e5e8cfaf7bc8be4786726ee0ea0",
         "sequence": 6,
         "observations": [
           {
@@ -9453,7 +9453,7 @@
             "state": "match"
           }
         ],
-        "measurementDigest": "6bda16c151f81567923b78fc027cd5fcb3d2e66d9a16947fdd39d1a8f042ef8f"
+        "measurementDigest": "c5d4b668641cfa6d8955ab144bd0135569fb95282eed8f8744217c08d4506a76"
       },
       {
         "schemaVersion": "1",
@@ -9468,10 +9468,10 @@
         },
         "producer": "independent-zero",
         "phase": "zero-verification",
-        "sourceDigest": "5c865f95f916505dfeb0d2a21c01692651efb9a80f986058e9c0c90bf6b42b5c",
-        "taskDigest": "cb5cf3fdf017f828c79ae242ecac92b7b03b288792489f21866e0faf14d9a612",
-        "measurementId": "5b037b3becbc03bf44747544b34f07de7ccf233dc6f1550a44cbcc01126c186c",
-        "producerRunDigest": "108800237bcaa5e051b21347174d2d5d9ad4046ced9a16c8fcbb8467e5cddb91",
+        "sourceDigest": "168c656f83ce2310d71ef8ed80baed548fd294b2dd2cedf0e98b2b3c22debbca",
+        "taskDigest": "2e586b8f24d7ca6e3dd733c136d4f84b1515e675261084bf508c6b59e607e480",
+        "measurementId": "c5470565166c3abed150f91b4f545cd9cae63e4b7bc043bac08bfcccb2f4150a",
+        "producerRunDigest": "d412a1c76a3045adc5580c33bd818179acfd0e5e8cfaf7bc8be4786726ee0ea0",
         "sequence": 7,
         "observations": [
           {
@@ -9495,17 +9495,17 @@
             "state": "match"
           }
         ],
-        "measurementDigest": "be91a31480d82e581e45bbfefdc5fe100520dfeacd7057ad4406681c3d374666"
+        "measurementDigest": "734e9c5e27f82ac9c722025d32e77c343aab30b8229987234d334b09be69ea55"
       }
     ],
     "measurementDigests": [
-      "954f243b9a6355ccf976ff97fa37e8ccdfb26dc894690084db25dbb720ddca9b",
-      "5c4dbef0b8d582e5ac55305b624f053cb1268e983b1a833eac6cdf6aae03988e",
-      "6c4a6f3618ac72c8c6a25cb04191ca312c8e920a2ade26e874c86c850594e644",
-      "6bda16c151f81567923b78fc027cd5fcb3d2e66d9a16947fdd39d1a8f042ef8f",
-      "be91a31480d82e581e45bbfefdc5fe100520dfeacd7057ad4406681c3d374666"
+      "8a5a31d57a96b4bbfe48bd2383937ad2f899c1622cb2593bbc0154e8a9d05c13",
+      "7cffd3af6a39dc3900e12e8620f8e83a9d70e90e041aa4d35d7f88d62ec2a5b1",
+      "cc8b880c217241200b8b14a377223bb0d0058234841d2d498c1d8ef83482ead8",
+      "c5d4b668641cfa6d8955ab144bd0135569fb95282eed8f8744217c08d4506a76",
+      "734e9c5e27f82ac9c722025d32e77c343aab30b8229987234d334b09be69ea55"
     ],
-    "measurementAggregateDigest": "5e1642c7eb3226434ddd69d7fc39358dc764fd085f11b5b3437cf54c139b8946",
+    "measurementAggregateDigest": "032c78cfe6b6f9610fb02324b464c619cf6eddb7f170a4d11f965ff7576c0eb1",
     "adjudication": {
       "schemaVersion": "1",
       "framework": {
@@ -9513,8 +9513,8 @@
         "version": "1"
       },
       "profileId": "authenticated-alpha-current-build-secondary-profile-v1",
-      "sourceDigest": "5c865f95f916505dfeb0d2a21c01692651efb9a80f986058e9c0c90bf6b42b5c",
-      "taskDigest": "cb5cf3fdf017f828c79ae242ecac92b7b03b288792489f21866e0faf14d9a612",
+      "sourceDigest": "168c656f83ce2310d71ef8ed80baed548fd294b2dd2cedf0e98b2b3c22debbca",
+      "taskDigest": "2e586b8f24d7ca6e3dd733c136d4f84b1515e675261084bf508c6b59e607e480",
       "result": "PASS",
       "reasonCategories": [],
       "inventory": {
@@ -9525,7 +9525,7 @@
         "failedFacts": 0,
         "blockedFacts": 0
       },
-      "adjudicationDigest": "4e4d86173ec685f97953c91048d207fac221307cfa36e14d56943dd0d1dd72f4"
+      "adjudicationDigest": "2f5b7460a6f20a217d81954ae2f795d65738b0ad99a18dd6b2c6cd9229a501c5"
     },
     "scanner": {
       "sensitivity": 2,
@@ -9542,6 +9542,6 @@
   "deterministicSecondaryDigest": "88d5346fa7779ca95af1ea9681cf48df910f8da9ebe4c42dfc5d79c1f09d2b50",
   "deterministicRepeat": "PASS",
   "status": "PASS",
-  "semanticDigest": "9ac35254f4e069f251d67699ab2e5cec77bc19cf367bd5fc15c00924cccd13c5",
-  "resultDigest": "991380d6ad43fcc7b7adeb80061c9c024e2386b10eff823a1ee4a657fe5f3b77"
+  "semanticDigest": "d2591707e997ecb83926b3c9c65622a8fab66bf885e0e68d60c3e54df5764d60",
+  "resultDigest": "f43c119bb7bec9fbff4afe65db64d1b2f98a2d7d2e09d4f70b48d33931fe467f"
 }

@@ -1,8 +1,8 @@
 # Acceptance Foundation V1.2 Qualification
 
 - Status: PASS
-- Source: 5c865f95f916505dfeb0d2a21c01692651efb9a80f986058e9c0c90bf6b42b5c
-- Result: 991380d6ad43fcc7b7adeb80061c9c024e2386b10eff823a1ee4a657fe5f3b77
+- Source: 168c656f83ce2310d71ef8ed80baed548fd294b2dd2cedf0e98b2b3c22debbca
+- Result: f43c119bb7bec9fbff4afe65db64d1b2f98a2d7d2e09d4f70b48d33931fe467f
 - Observation API: authenticated-alpha-current-build-observation-api@1
 - Named controls: 50/50
 - PRE-001A regression: 43/43
