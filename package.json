@@ -482,6 +482,8 @@
     "validate:alpha-readiness-ar4": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/alpha-readiness/runPrivacySafeProductTelemetryHarness.ts",
     "validate:alpha-core-failure-recovery": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateAlphaCriticalFailureRecovery.ts",
     "validate:alpha-readiness-ar5a": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/alpha-readiness/runCoreFailureRecoveryHarness.ts",
+    "validate:alpha-readiness-ar5b": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/acceptance/validateAr5bAuthenticatedRecoveryConformance.ts",
+    "validate:alpha-readiness-ar5b:write": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/acceptance/validateAr5bAuthenticatedRecoveryConformance.ts --write",
     "validate:alpha-privacy-safe-telemetry": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateAlphaPrivacySafeProductTelemetry.ts",
     "deps:validate": "node scripts/performance/validatePerformanceReport.mjs",
     "deps:report": "npm run deps:validate && node scripts/performance/renderPerformanceReport.mjs"

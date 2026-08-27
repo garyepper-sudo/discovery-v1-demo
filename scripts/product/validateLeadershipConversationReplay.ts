@@ -1,7 +1,24 @@
 import assert from "node:assert/strict";
-import { execFile } from "node:child_process";
-import { createHash } from "node:crypto";
-import { lstat, mkdtemp, readFile, readdir, rm } from "node:fs/promises";
+import { execFile, fork } from "node:child_process";
+import {
+  createHash,
+  createPublicKey,
+  generateKeyPairSync,
+  randomBytes,
+  sign,
+  verify,
+  type KeyObject,
+} from "node:crypto";
+import { constants } from "node:fs";
+import {
+  lstat,
+  mkdtemp,
+  open,
+  readFile,
+  readdir,
+  realpath,
+  rm,
+} from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
@@ -41,8 +58,42 @@ import {
 import { SANDBOX_ORGANIZATION_ID } from "../../product/simulations/living-organization-sandbox/manifest";
 import { AlphaContentSafeObservabilityOwner } from "../../lib/observability/alphaContentSafeObservabilityOwner";
 import type { AlphaContentSafeObservabilityEventV1 } from "../../lib/observability/alphaContentSafeObservabilityContracts";
+import type { AcceptanceProfileRequirementsV1 } from "../acceptance/authenticatedAlphaAcceptanceContracts";
+import {
+  acceptanceTaskManifestDigest,
+  createAcceptanceTaskManifest,
+  createTaskSecret,
+  writeProtectedManifest,
+} from "../acceptance/authenticatedAlphaAcceptanceTaskManifest";
+import { validateAuthenticatedAlphaTaskOwnershipV1 } from "../acceptance/validateAr3CurrentBuildConformance";
+import { ar5bAuthenticatedRecoveryConformanceProfile } from "../acceptance/ar5bAuthenticatedRecoveryConformanceProfile";
 
+type ReplayTaskAuthorityInputV1 = Readonly<{
+  schemaVersion: "1";
+  root: string;
+  manifestPath: string;
+  secretPath: string;
+  joinedResultPath: string;
+  sourceDigest: string;
+  taskDigest: string;
+  runDigest: string;
+  framework: Readonly<{ id: "authenticated-alpha-acceptance"; version: "1" }>;
+  profile: AcceptanceProfileRequirementsV1;
+}>;
+type ReplayExecutionAuthorityV1 = Readonly<{
+  input: ReplayTaskAuthorityInputV1;
+  taskAuthorityDigest: string;
+  resourcePlanDigest: string;
+  delegationPrivateKey: KeyObject;
+  delegationPublicKey: string;
+}>;
+let activeReplayAuthority: ReplayExecutionAuthorityV1 | undefined;
+let activeExecutionSegmentDigests: string[] = [];
 const runFile = promisify(execFile);
+const standaloneHistoricalCapability = Symbol(
+  "standalone-historical-replay-validation",
+);
+let activeStandaloneCapability: symbol | undefined;
 let questionId: string;
 const scope = {
   organizationId: fixture.organizationId,
@@ -306,6 +357,45 @@ async function processB(root: string, encodedA: string): Promise<WorkerResult> {
     root: locations.workflowRoot,
     environment: "test",
   });
+  const foreignOrganizationId = "ar5b-joined-inventory-foreign";
+  const foreignRuntimeRepository = new FilesystemOrganizationRuntimeRepository(
+    locations.runtimeRoot,
+  );
+  let foreignRuntime = await foreignRuntimeRepository.read(
+    foreignOrganizationId,
+  );
+  if (!foreignRuntime) {
+    const foreignBytes = new TextEncoder().encode(
+      JSON.stringify(
+        createEmptyOrganizationRuntime({
+          organizationId: foreignOrganizationId,
+          name: "Foreign preservation control",
+          now: fixture.at,
+        }),
+      ),
+    );
+    foreignRuntime = await foreignRuntimeRepository.create(
+      foreignOrganizationId,
+      foreignBytes,
+      {
+        requestId: "foreign-preservation-seed",
+        operatorId: "replay-validator",
+      },
+    );
+  }
+  const foreignWorkflowInitial = await workflow.read(foreignOrganizationId);
+  const foreignWorkflow =
+    foreignWorkflowInitial.revision === null
+      ? await workflow.replace(
+          foreignOrganizationId,
+          foreignWorkflowInitial.store,
+          null,
+        )
+      : foreignWorkflowInitial;
+  const foreignRuntimeBeforeDigest = digest(foreignRuntime.bytes);
+  const foreignWorkflowBeforeDigest = digest(
+    leadershipStableSerialize(foreignWorkflow.store),
+  );
   let stored = await workflow.read(fixture.organizationId);
   assert.equal(stored.revision, a.productWorkflowRepositoryRevision);
   assert.equal(
@@ -449,6 +539,9 @@ async function processB(root: string, encodedA: string): Promise<WorkerResult> {
     productWorkflowRepositoryRevision: stored.revision,
     runtimeRepositoryRevision: runtime.revision,
     sourceContentRepositoryRevision: sourceRevision,
+    foreignOrganizationId,
+    foreignRuntimeDigest: foreignRuntimeBeforeDigest,
+    foreignWorkflowDigest: foreignWorkflowBeforeDigest,
   });
   return {
     role: "capture-and-review",
@@ -1156,15 +1249,26 @@ async function processC(
       ).catch(() => [])
     ).filter((value) => value.endsWith(".json"));
   const terminalBindings = async (root: string, files: string[]) =>
-      Promise.all(files.map(async (file) => {
-        const value = JSON.parse(await readFile(path.join(root, file), "utf8")) as Record<string, unknown>;
-        return `${String(value.requestFingerprint)}\0${String(value.operationBindingDigest ?? "workflow")}\0${String(value.expectedRevision)}\0${String(value.intendedDigest)}\0${String(value.disposition ?? (file.endsWith(".conflict.json") ? "cas-conflict" : "already-committed"))}`;
-      })),
+      Promise.all(
+        files.map(async (file) => {
+          const value = JSON.parse(
+            await readFile(path.join(root, file), "utf8"),
+          ) as Record<string, unknown>;
+          return `${String(value.requestFingerprint)}\0${String(value.operationBindingDigest ?? "workflow")}\0${String(value.expectedRevision)}\0${String(value.intendedDigest)}\0${String(value.disposition ?? (file.endsWith(".conflict.json") ? "cas-conflict" : "already-committed"))}`;
+        }),
+      ),
     runtimeTerminalBindings = await terminalBindings(
-      path.join(locations.runtimeRoot, ".operations", fixture.organizationId), runtimeTerminals,
+      path.join(locations.runtimeRoot, ".operations", fixture.organizationId),
+      runtimeTerminals,
     ),
     workflowTerminalBindings = await terminalBindings(
-      path.join(locations.workflowRoot, "organizations", ".operations", fixture.organizationId), workflowTerminals,
+      path.join(
+        locations.workflowRoot,
+        "organizations",
+        ".operations",
+        fixture.organizationId,
+      ),
+      workflowTerminals,
     );
   const evidenceRoutes = stored.store.canonicalRoutingReceipts.filter(
       (value) => value.ownerKind === "evidence",
@@ -1181,13 +1285,22 @@ async function processC(
       runtimeOperations.includes(value.contributionOperationId),
     ),
   );
-  const capturePublicationTuples = (stored.store.privateWorkingContributionCaptures ?? []).map((value) =>
-      `${value.snapshotId}\0${value.captureId}\0${digest(value.contributionRefs)}\0${value.idempotencyKeyDigest}\0${value.requestFingerprint}`,
+  const capturePublicationTuples = (
+      stored.store.privateWorkingContributionCaptures ?? []
+    ).map(
+      (value) =>
+        `${value.snapshotId}\0${value.captureId}\0${digest(value.contributionRefs)}\0${value.idempotencyKeyDigest}\0${value.requestFingerprint}`,
     ),
-    captureReceiptTuples = (stored.store.privateWorkingContributionCaptureReceipts ?? []).map((value) =>
-      `${value.snapshotId}\0${value.captureId}\0${value.contributionRefsDigest}\0${value.idempotencyKeyDigest}\0${value.requestFingerprint}`,
+    captureReceiptTuples = (
+      stored.store.privateWorkingContributionCaptureReceipts ?? []
+    ).map(
+      (value) =>
+        `${value.snapshotId}\0${value.captureId}\0${value.contributionRefsDigest}\0${value.idempotencyKeyDigest}\0${value.requestFingerprint}`,
     );
-  assert.deepEqual(new Set(captureReceiptTuples), new Set(capturePublicationTuples));
+  assert.deepEqual(
+    new Set(captureReceiptTuples),
+    new Set(capturePublicationTuples),
+  );
   const inventoryFamilies = {
     occurrences: stored.store.contexts.length,
     protectedBodyRefs: protectedBodyRefs.length,
@@ -1196,12 +1309,20 @@ async function processC(
     preparedPublications: (stored.store.preparedWorkPublications ?? []).length,
     frozenPublications: (stored.store.frozenSnapshotPublications ?? []).length,
     publicationReceipts: (stored.store.publicationReceipts ?? []).length,
-    contributionPublications: (stored.store.privateWorkingContributionPublications ?? []).length,
-    contributionReceipts: (stored.store.privateWorkingContributionReceipts ?? []).length,
-    capturePublications: (stored.store.privateWorkingContributionCaptures ?? []).length,
-    captureReceipts: (stored.store.privateWorkingContributionCaptureReceipts ?? []).length,
+    contributionPublications: (
+      stored.store.privateWorkingContributionPublications ?? []
+    ).length,
+    contributionReceipts: (
+      stored.store.privateWorkingContributionReceipts ?? []
+    ).length,
+    capturePublications: (stored.store.privateWorkingContributionCaptures ?? [])
+      .length,
+    captureReceipts: (
+      stored.store.privateWorkingContributionCaptureReceipts ?? []
+    ).length,
     captureCorrespondenceTuples: capturePublicationTuples.length,
-    whatChangedPublications: (stored.store.whatChangedPublications ?? []).length,
+    whatChangedPublications: (stored.store.whatChangedPublications ?? [])
+      .length,
     futurePreparationLinks: stored.store.futurePreparationLinks.length,
     routingLinks: stored.store.routingLinks.length,
     idempotencyRecords: stored.store.idempotency.length,
@@ -1242,16 +1363,31 @@ async function processC(
     publicationReceipts: (stored.store.publicationReceipts ?? []).map(
       (value) => value.receiptId,
     ),
-    contributionPublications: (stored.store.privateWorkingContributionPublications ?? []).map((value) => value.artifactId),
-    contributionReceipts: (stored.store.privateWorkingContributionReceipts ?? []).map((value) => value.receiptId),
-    capturePublications: (stored.store.privateWorkingContributionCaptures ?? []).map((value) => value.captureId),
-    captureReceipts: (stored.store.privateWorkingContributionCaptureReceipts ?? []).map((value) => value.receiptId),
+    contributionPublications: (
+      stored.store.privateWorkingContributionPublications ?? []
+    ).map((value) => value.artifactId),
+    contributionReceipts: (
+      stored.store.privateWorkingContributionReceipts ?? []
+    ).map((value) => value.receiptId),
+    capturePublications: (
+      stored.store.privateWorkingContributionCaptures ?? []
+    ).map((value) => value.captureId),
+    captureReceipts: (
+      stored.store.privateWorkingContributionCaptureReceipts ?? []
+    ).map((value) => value.receiptId),
     capturePublicationTuples,
     captureReceiptTuples,
-    whatChangedPublications: (stored.store.whatChangedPublications ?? []).map((value) => value.artifactId),
-    futurePreparationLinks: stored.store.futurePreparationLinks.map((value) => value.futurePreparationLinkId),
+    whatChangedPublications: (stored.store.whatChangedPublications ?? []).map(
+      (value) => value.artifactId,
+    ),
+    futurePreparationLinks: stored.store.futurePreparationLinks.map(
+      (value) => value.futurePreparationLinkId,
+    ),
     routingLinks: stored.store.routingLinks.map((value) => value.routingLinkId),
-    idempotencyRecords: stored.store.idempotency.map((value) => `${value.keyDigest}\0${value.requestFingerprint}\0${value.recordRef}`),
+    idempotencyRecords: stored.store.idempotency.map(
+      (value) =>
+        `${value.keyDigest}\0${value.requestFingerprint}\0${value.recordRef}`,
+    ),
     routingReceipts: stored.store.canonicalRoutingReceipts.map(
       (value) => value.integrationReceiptId,
     ),
@@ -1277,16 +1413,39 @@ async function processC(
     },
     0,
   );
-  assert.equal((stored.store.privateWorkingContributionPublications ?? []).length, 0);
-  assert.equal((stored.store.privateWorkingContributionReceipts ?? []).length, 0);
+  assert.equal(
+    (stored.store.privateWorkingContributionPublications ?? []).length,
+    0,
+  );
+  assert.equal(
+    (stored.store.privateWorkingContributionReceipts ?? []).length,
+    0,
+  );
   assert.ok((stored.store.privateWorkingContributionCaptures ?? []).length > 0);
-  assert.ok((stored.store.privateWorkingContributionCaptureReceipts ?? []).length > 0);
-  assert.equal((stored.store.privateWorkingContributionPublications ?? []).length, (stored.store.privateWorkingContributionReceipts ?? []).length);
-  assert.equal((stored.store.privateWorkingContributionCaptures ?? []).length, (stored.store.privateWorkingContributionCaptureReceipts ?? []).length);
+  assert.ok(
+    (stored.store.privateWorkingContributionCaptureReceipts ?? []).length > 0,
+  );
+  assert.equal(
+    (stored.store.privateWorkingContributionPublications ?? []).length,
+    (stored.store.privateWorkingContributionReceipts ?? []).length,
+  );
+  assert.equal(
+    (stored.store.privateWorkingContributionCaptures ?? []).length,
+    (stored.store.privateWorkingContributionCaptureReceipts ?? []).length,
+  );
   assert.ok((stored.store.whatChangedPublications ?? []).length > 0);
   assert.ok(stored.store.futurePreparationLinks.length > 0);
   assert.ok(stored.store.routingLinks.length > 0);
   assert.ok(stored.store.idempotency.length > 0);
+  const foreignOrganizationId = String(b.foreignOrganizationId),
+    foreignRuntimeAfter = await runtimeRepository.read(foreignOrganizationId),
+    foreignWorkflowAfter = await workflow.read(foreignOrganizationId);
+  assert.ok(foreignRuntimeAfter);
+  const foreignStatePreserved =
+    digest(foreignRuntimeAfter.bytes) === b.foreignRuntimeDigest &&
+    digest(leadershipStableSerialize(foreignWorkflowAfter.store)) ===
+      b.foreignWorkflowDigest;
+  assert.equal(foreignStatePreserved, true);
   const manifest = handoff({
     processAHandoffDigest: a.handoffDigest,
     processBHandoffDigest: b.handoffDigest,
@@ -1310,6 +1469,11 @@ async function processC(
     neutralityCaseCount: neutralTraces.length,
     inventoryFamilies,
     duplicateInventoryFindings,
+    foreignStatePreserved,
+    foreignStateDigest: digest({
+      runtime: b.foreignRuntimeDigest,
+      workflow: b.foreignWorkflowDigest,
+    }),
   });
   return {
     role: "route-actual-owners-and-prepare-again",
@@ -1433,6 +1597,207 @@ async function worker(
   return { ...result, observations: observedEvents };
 }
 
+async function readReplayTaskSecret(
+  input: ReplayTaskAuthorityInputV1,
+): Promise<Buffer> {
+  const root = await realpath(input.root),
+    secretPath = await realpath(input.secretPath);
+  const relative = path.relative(root, secretPath);
+  assert.ok(
+    relative && relative !== ".." && !relative.startsWith(`..${path.sep}`),
+  );
+  const handle = await open(
+    secretPath,
+    constants.O_RDONLY | constants.O_NOFOLLOW,
+  );
+  try {
+    const status = await handle.stat();
+    assert.ok(status.isFile() && !status.isSymbolicLink());
+    assert.equal(status.mode & 0o777, 0o600);
+    const secret = await handle.readFile();
+    assert.equal(secret.length, 32);
+    return secret;
+  } finally {
+    await handle.close();
+  }
+}
+
+async function validateReplayTaskAuthority(
+  input: ReplayTaskAuthorityInputV1,
+): Promise<ReplayExecutionAuthorityV1> {
+  const secret = await readReplayTaskSecret(input);
+  try {
+    const validated = await validateAuthenticatedAlphaTaskOwnershipV1({
+      schemaVersion: input.schemaVersion,
+      root: input.root,
+      manifestPath: input.manifestPath,
+      secret,
+      framework: input.framework,
+      profile: input.profile,
+      sourceDigest: input.sourceDigest,
+      taskDigest: input.taskDigest,
+      runDigest: input.runDigest,
+    });
+    assert.equal(
+      validated.profile.profile.id,
+      "ar5b-authenticated-recovery-conformance",
+    );
+    assert.equal(validated.profile.profile.version, "version-1");
+    assert.ok(
+      validated.manifest.resources.some((value) => value.kind === "task-root"),
+    );
+    assert.ok(
+      validated.manifest.resources.filter(
+        (value) => value.kind === "protected-file",
+      ).length >= 2,
+    );
+    const root = await realpath(validated.root),
+      secretPath = await realpath(input.secretPath),
+      resultParent = await realpath(path.dirname(input.joinedResultPath));
+    assert.notEqual(
+      path.resolve(input.secretPath),
+      path.resolve(input.joinedResultPath),
+    );
+    const secretRelative = path.relative(root, secretPath);
+    assert.ok(
+      secretRelative &&
+        !secretRelative.startsWith(`..${path.sep}`) &&
+        secretRelative !== "..",
+    );
+    assert.equal(resultParent, root);
+    const taskAuthorityDigest = digest({
+      manifestDigest: acceptanceTaskManifestDigest(validated.manifest),
+      resourcePlanDigest: validated.resourcePlanDigest,
+      sourceDigest: validated.sourceDigest,
+      taskDigest: validated.taskDigest,
+      runDigest: validated.runDigest,
+      framework: validated.framework,
+      profile: validated.profile.profile,
+      recipe: "leadership-conversation-joined-replay-v1",
+      processTopology: "existing-multiprocess-replay-topology-v1",
+    });
+    const delegation = generateKeyPairSync("ed25519");
+    return Object.freeze({
+      input,
+      taskAuthorityDigest,
+      resourcePlanDigest: validated.resourcePlanDigest,
+      delegationPrivateKey: delegation.privateKey,
+      delegationPublicKey: delegation.publicKey
+        .export({ type: "spki", format: "der" })
+        .toString("base64"),
+    });
+  } finally {
+    secret.fill(0);
+  }
+}
+
+async function publishJoinedReplayResult(
+  file: string,
+  value: unknown,
+): Promise<void> {
+  const candidate = `${file}.${randomBytes(16).toString("hex")}.candidate`,
+    bytes = Buffer.from(JSON.stringify(value));
+  const handle = await open(
+    candidate,
+    constants.O_CREAT |
+      constants.O_EXCL |
+      constants.O_WRONLY |
+      constants.O_NOFOLLOW,
+    0o600,
+  );
+  try {
+    await handle.writeFile(bytes);
+    await handle.sync();
+  } finally {
+    await handle.close();
+  }
+  await import("node:fs/promises").then((fs) => fs.rename(candidate, file));
+  const directory = await open(path.dirname(file), "r");
+  try {
+    await directory.sync();
+  } finally {
+    await directory.close();
+  }
+  const verifyHandle = await open(
+    file,
+    constants.O_RDONLY | constants.O_NOFOLLOW,
+  );
+  try {
+    const status = await verifyHandle.stat();
+    assert.ok(status.isFile() && !status.isSymbolicLink());
+    assert.equal(status.mode & 0o777, 0o600);
+    assert.deepEqual(await verifyHandle.readFile(), bytes);
+  } finally {
+    await verifyHandle.close();
+  }
+}
+
+async function executeStandaloneHistoricalWorker(
+  root: string,
+  role: string,
+  lineageFixtureRoot: string | null,
+  expectedSeedDigest: string | null,
+  handoffs: SafeHandoff[],
+): Promise<WorkerResult> {
+  assert.equal(activeStandaloneCapability, standaloneHistoricalCapability);
+  const args = [
+      "--conditions=react-server",
+      ...process.execArgv.filter(
+        (argument) => argument !== "--conditions=react-server",
+      ),
+      import.meta.filename,
+      "--worker",
+      role,
+      root,
+      questionId,
+      lineageFixtureRoot ?? "-",
+      expectedSeedDigest ?? "-",
+      ...handoffs.map((item) =>
+        Buffer.from(JSON.stringify(item)).toString("base64url"),
+      ),
+    ],
+    { stdout, stderr } = await runFile(process.execPath, args, {
+      cwd: process.cwd(),
+      env: {
+        PATH: process.env.PATH ?? "",
+        NODE_PATH: process.env.NODE_PATH ?? "",
+        NODE_ENV: "test",
+        TZ: "UTC",
+        LANG: "C",
+        TMPDIR: tmpdir(),
+        AR3_OBSERVER_MODE: process.env.AR3_OBSERVER_MODE ?? "enabled",
+        ...(process.env.DISCOVERY_ALPHA_TELEMETRY_ROOT
+          ? {
+              DISCOVERY_ALPHA_TELEMETRY_ROOT:
+                process.env.DISCOVERY_ALPHA_TELEMETRY_ROOT,
+            }
+          : {}),
+        ...(process.env.DISCOVERY_ALPHA_TELEMETRY_ACTIVE_KEY_VERSION
+          ? {
+              DISCOVERY_ALPHA_TELEMETRY_ACTIVE_KEY_VERSION:
+                process.env.DISCOVERY_ALPHA_TELEMETRY_ACTIVE_KEY_VERSION,
+            }
+          : {}),
+        ...(process.env.DISCOVERY_ALPHA_TELEMETRY_KEY_RING_JSON
+          ? {
+              DISCOVERY_ALPHA_TELEMETRY_KEY_RING_JSON:
+                process.env.DISCOVERY_ALPHA_TELEMETRY_KEY_RING_JSON,
+            }
+          : {}),
+        ...(process.env.DISCOVERY_ENV
+          ? { DISCOVERY_ENV: process.env.DISCOVERY_ENV }
+          : {}),
+      },
+      timeout: 30_000,
+      maxBuffer: 128 * 1024,
+      shell: false,
+    });
+  assert.equal(stderr, "");
+  const parsed = JSON.parse(stdout) as WorkerResult;
+  assert.equal(Object.hasOwn(parsed, "taskAuthorityDigest"), false);
+  return parsed;
+}
+
 async function execute(
   root: string,
   role: string,
@@ -1440,60 +1805,157 @@ async function execute(
   expectedSeedDigest: string | null,
   ...handoffs: SafeHandoff[]
 ): Promise<WorkerResult> {
-  const args = [
-    "--conditions=react-server",
-    ...process.execArgv.filter(
-      (argument) => argument !== "--conditions=react-server",
-    ),
-    import.meta.filename,
-    "--worker",
-    role,
-    root,
-    questionId,
-    lineageFixtureRoot ?? "-",
-    expectedSeedDigest ?? "-",
-    ...handoffs.map((item) =>
-      Buffer.from(JSON.stringify(item)).toString("base64url"),
-    ),
-  ];
-  const { stdout, stderr } = await runFile(process.execPath, args, {
-    cwd: process.cwd(),
-    env: {
-      PATH: process.env.PATH ?? "",
-      NODE_PATH: process.env.NODE_PATH ?? "",
-      NODE_ENV: "test",
-      TZ: "UTC",
-      LANG: "C",
-      TMPDIR: tmpdir(),
-      AR3_OBSERVER_MODE: process.env.AR3_OBSERVER_MODE ?? "enabled",
-      ...(process.env.DISCOVERY_ALPHA_TELEMETRY_ROOT
-        ? {
-            DISCOVERY_ALPHA_TELEMETRY_ROOT:
-              process.env.DISCOVERY_ALPHA_TELEMETRY_ROOT,
-          }
-        : {}),
-      ...(process.env.DISCOVERY_ALPHA_TELEMETRY_ACTIVE_KEY_VERSION
-        ? {
-            DISCOVERY_ALPHA_TELEMETRY_ACTIVE_KEY_VERSION:
-              process.env.DISCOVERY_ALPHA_TELEMETRY_ACTIVE_KEY_VERSION,
-          }
-        : {}),
-      ...(process.env.DISCOVERY_ALPHA_TELEMETRY_KEY_RING_JSON
-        ? {
-            DISCOVERY_ALPHA_TELEMETRY_KEY_RING_JSON:
-              process.env.DISCOVERY_ALPHA_TELEMETRY_KEY_RING_JSON,
-          }
-        : {}),
-      ...(process.env.DISCOVERY_ENV
-        ? { DISCOVERY_ENV: process.env.DISCOVERY_ENV }
-        : {}),
-    },
-    timeout: 30_000,
-    maxBuffer: 128 * 1024,
-    shell: false,
+  if (activeStandaloneCapability === standaloneHistoricalCapability)
+    return executeStandaloneHistoricalWorker(
+      root,
+      role,
+      lineageFixtureRoot,
+      expectedSeedDigest,
+      handoffs,
+    );
+  assert.ok(activeReplayAuthority);
+  const challenge = randomBytes(32).toString("hex"),
+    child = fork(import.meta.filename, ["--worker-ipc"], {
+      cwd: process.cwd(),
+      execArgv: ["--conditions=react-server", "--import", "tsx"],
+      env: {
+        PATH: process.env.PATH ?? "",
+        NODE_PATH: process.env.NODE_PATH ?? "",
+        NODE_ENV: "test",
+        TZ: "UTC",
+        LANG: "C",
+        TMPDIR: tmpdir(),
+        AR3_OBSERVER_MODE: process.env.AR3_OBSERVER_MODE ?? "enabled",
+        ...(process.env.DISCOVERY_ALPHA_TELEMETRY_ROOT
+          ? {
+              DISCOVERY_ALPHA_TELEMETRY_ROOT:
+                process.env.DISCOVERY_ALPHA_TELEMETRY_ROOT,
+            }
+          : {}),
+        ...(process.env.DISCOVERY_ALPHA_TELEMETRY_ACTIVE_KEY_VERSION
+          ? {
+              DISCOVERY_ALPHA_TELEMETRY_ACTIVE_KEY_VERSION:
+                process.env.DISCOVERY_ALPHA_TELEMETRY_ACTIVE_KEY_VERSION,
+            }
+          : {}),
+        ...(process.env.DISCOVERY_ALPHA_TELEMETRY_KEY_RING_JSON
+          ? {
+              DISCOVERY_ALPHA_TELEMETRY_KEY_RING_JSON:
+                process.env.DISCOVERY_ALPHA_TELEMETRY_KEY_RING_JSON,
+            }
+          : {}),
+        ...(process.env.DISCOVERY_ENV
+          ? { DISCOVERY_ENV: process.env.DISCOVERY_ENV }
+          : {}),
+      },
+      stdio: ["ignore", "ignore", "ignore", "ipc"],
+    });
+  assert.ok(child.pid);
+  const parsed = await new Promise<WorkerResult>((resolve, reject) => {
+    const messages: unknown[] = [];
+    const timer = setTimeout(() => {
+      child.kill("SIGTERM");
+      reject(new Error("Replay worker timed out"));
+    }, 30_000);
+    child.on("message", (message) => messages.push(message));
+    child.on("error", reject);
+    child.on("exit", (code, signal) => {
+      clearTimeout(timer);
+      try {
+        assert.equal(code, 0);
+        assert.equal(signal, null);
+        assert.equal(messages.length, 1);
+        const frame = messages[0] as Record<string, unknown>;
+        const succeeded = frame.kind === "leadership-replay-worker-result";
+        assert.deepEqual(
+          Object.keys(frame).sort(),
+          (succeeded
+            ? [
+                "challenge",
+                "executionNonce",
+                "kind",
+                "pid",
+                "ppid",
+                "result",
+                "resultDigest",
+                "role",
+                "taskAuthorityDigest",
+              ]
+            : [
+                "challenge",
+                "executionNonce",
+                "failureCategory",
+                "kind",
+                "pid",
+                "ppid",
+                "resultDigest",
+                "role",
+                "taskAuthorityDigest",
+              ]
+          ).sort(),
+        );
+        assert.ok(
+          succeeded || frame.kind === "leadership-replay-worker-failure",
+        );
+        assert.equal(frame.pid, child.pid);
+        assert.equal(frame.ppid, process.pid);
+        assert.equal(frame.challenge, challenge);
+        assert.equal(frame.role, role);
+        assert.equal(
+          frame.taskAuthorityDigest,
+          activeReplayAuthority!.taskAuthorityDigest,
+        );
+        assert.match(String(frame.executionNonce), /^[a-f0-9]{64}$/);
+        const { resultDigest, ...unsigned } = frame;
+        assert.equal(resultDigest, digest(unsigned));
+        activeExecutionSegmentDigests.push(
+          digest({
+            role,
+            processBinding: digest({
+              pid: frame.pid,
+              ppid: frame.ppid,
+              challenge: frame.challenge,
+              executionNonce: frame.executionNonce,
+            }),
+            taskAuthorityDigest: frame.taskAuthorityDigest,
+            resultDigest,
+          }),
+        );
+        if (!succeeded) {
+          assert.equal(frame.failureCategory, "owner-validation-rejected");
+          throw new Error("Replay owner validation rejected the operation");
+        }
+        resolve(frame.result as WorkerResult);
+      } catch (error) {
+        reject(error);
+      }
+    });
+    const delegationPayload = {
+      challenge,
+      role,
+      root,
+      lineageFixtureRoot: lineageFixtureRoot ?? "-",
+      taskAuthorityDigest: activeReplayAuthority!.taskAuthorityDigest,
+    };
+    child.send({
+      kind: "leadership-replay-worker-request",
+      challenge,
+      role,
+      root,
+      ownerIssuedQuestionId: questionId,
+      lineageFixtureRoot: lineageFixtureRoot ?? "-",
+      expectedSeedDigest: expectedSeedDigest ?? "-",
+      handoffs,
+      authorityRoot: activeReplayAuthority!.input.root,
+      expectedTaskAuthorityDigest: activeReplayAuthority!.taskAuthorityDigest,
+      delegationPublicKey: activeReplayAuthority!.delegationPublicKey,
+      delegationSignature: sign(
+        null,
+        Buffer.from(digest(delegationPayload), "hex"),
+        activeReplayAuthority!.delegationPrivateKey,
+      ).toString("base64"),
+    });
   });
-  assert.equal(stderr, "");
-  const parsed = JSON.parse(stdout) as WorkerResult;
   assert.deepEqual(Object.keys(parsed).sort(), [
     "assertions",
     "handoff",
@@ -1517,8 +1979,132 @@ async function execute(
   return parsed;
 }
 
-async function main(): Promise<void> {
-  if (process.argv.includes("--worker")) {
+async function ipcWorker(): Promise<void> {
+  process.once("message", async (raw) => {
+    try {
+      const request = raw as {
+        kind: string;
+        challenge: string;
+        role: string;
+        root: string;
+        ownerIssuedQuestionId: string;
+        lineageFixtureRoot: string;
+        expectedSeedDigest: string;
+        handoffs: SafeHandoff[];
+        authorityRoot: string;
+        expectedTaskAuthorityDigest: string;
+        delegationPublicKey: string;
+        delegationSignature: string;
+      };
+      assert.equal(request.kind, "leadership-replay-worker-request");
+      assert.match(request.challenge, /^[a-f0-9]{64}$/);
+      assert.match(request.expectedTaskAuthorityDigest, /^[a-f0-9]{64}$/);
+      const delegationPayload = {
+        challenge: request.challenge,
+        role: request.role,
+        root: request.root,
+        lineageFixtureRoot: request.lineageFixtureRoot,
+        taskAuthorityDigest: request.expectedTaskAuthorityDigest,
+      };
+      assert.equal(
+        verify(
+          null,
+          Buffer.from(digest(delegationPayload), "hex"),
+          createPublicKey({
+            key: Buffer.from(request.delegationPublicKey, "base64"),
+            type: "spki",
+            format: "der",
+          }),
+          Buffer.from(request.delegationSignature, "base64"),
+        ),
+        true,
+      );
+      const authorityRoot = await realpath(request.authorityRoot),
+        workerRoot = await realpath(request.root),
+        workerRelative = path.relative(authorityRoot, workerRoot);
+      assert.ok(
+        workerRelative &&
+          !workerRelative.startsWith(`..${path.sep}`) &&
+          workerRelative !== "..",
+      );
+      if (request.lineageFixtureRoot === "-")
+        assert.equal(request.role, "capture-and-review");
+      else {
+        const lineageRoot = await realpath(request.lineageFixtureRoot),
+          lineageRelative = path.relative(authorityRoot, lineageRoot);
+        assert.ok(
+          lineageRelative &&
+            !lineageRelative.startsWith(`..${path.sep}`) &&
+            lineageRelative !== "..",
+        );
+      }
+      const originalInfo = console.info,
+        originalLog = console.log;
+      console.info = () => {};
+      console.log = () => {};
+      let result: WorkerResult;
+      try {
+        result = await worker(
+          request.role,
+          request.root,
+          request.ownerIssuedQuestionId,
+          request.lineageFixtureRoot,
+          request.expectedSeedDigest,
+          request.handoffs[0]
+            ? Buffer.from(JSON.stringify(request.handoffs[0])).toString(
+                "base64url",
+              )
+            : undefined,
+          request.handoffs[1]
+            ? Buffer.from(JSON.stringify(request.handoffs[1])).toString(
+                "base64url",
+              )
+            : undefined,
+        );
+      } catch {
+        const failed = {
+          kind: "leadership-replay-worker-failure" as const,
+          pid: process.pid,
+          ppid: process.ppid,
+          challenge: request.challenge,
+          role: request.role,
+          executionNonce: randomBytes(32).toString("hex"),
+          taskAuthorityDigest: request.expectedTaskAuthorityDigest,
+          failureCategory: "owner-validation-rejected" as const,
+        };
+        process.send?.({ ...failed, resultDigest: digest(failed) }, () =>
+          process.exit(0),
+        );
+        return;
+      } finally {
+        console.info = originalInfo;
+        console.log = originalLog;
+      }
+      const unsigned = {
+        kind: "leadership-replay-worker-result" as const,
+        pid: process.pid,
+        ppid: process.ppid,
+        challenge: request.challenge,
+        role: request.role,
+        executionNonce: randomBytes(32).toString("hex"),
+        taskAuthorityDigest: request.expectedTaskAuthorityDigest,
+        result,
+      };
+      process.send?.({ ...unsigned, resultDigest: digest(unsigned) }, () =>
+        process.exit(0),
+      );
+    } catch {
+      process.exit(1);
+    }
+  });
+}
+
+async function main(forceValidation = false) {
+  if (!forceValidation && process.argv.includes("--worker-ipc")) {
+    await ipcWorker();
+    return;
+  }
+  if (!forceValidation && process.argv.includes("--worker")) {
     const index = process.argv.indexOf("--worker");
     const originalInfo = console.info,
       originalLog = console.log;
@@ -1544,12 +2130,21 @@ async function main(): Promise<void> {
     }
     return;
   }
+  if (forceValidation) {
+    assert.ok(activeReplayAuthority);
+    activeStandaloneCapability = undefined;
+  } else {
+    assert.equal(activeReplayAuthority, undefined);
+    activeStandaloneCapability = standaloneHistoricalCapability;
+  }
+  activeExecutionSegmentDigests = [];
   let checks = 0;
+  const rootBase = activeReplayAuthority?.input.root ?? tmpdir();
   const root = await mkdtemp(
-    path.join(tmpdir(), "discovery-leadership-conversation-replay-"),
+    path.join(rootBase, "discovery-leadership-conversation-replay-"),
   );
   const lineageFixtureRoot = await mkdtemp(
-    path.join(tmpdir(), "discovery-northstar-preparation-lineage-"),
+    path.join(rootBase, "discovery-northstar-preparation-lineage-"),
   );
   try {
     const evaluationScope = {
@@ -1754,7 +2349,7 @@ async function main(): Promise<void> {
       ),
     );
     const wrongRoot = await mkdtemp(
-      path.join(tmpdir(), "discovery-leadership-conversation-replay-"),
+      path.join(rootBase, "discovery-leadership-conversation-replay-"),
     );
     try {
       await reject(() =>
@@ -1770,7 +2365,7 @@ async function main(): Promise<void> {
       await rm(wrongRoot, { recursive: true, force: true });
     }
     const missingLineageRoot = await mkdtemp(
-      path.join(tmpdir(), "discovery-northstar-preparation-lineage-"),
+      path.join(rootBase, "discovery-northstar-preparation-lineage-"),
     );
     try {
       await reject(() =>
@@ -1849,7 +2444,7 @@ async function main(): Promise<void> {
     assert.doesNotMatch(telemetryOwner, /throw new Error/);
     checks += 4;
     const ambiguousRoot = await mkdtemp(
-      path.join(tmpdir(), "discovery-leadership-conversation-replay-"),
+      path.join(rootBase, "discovery-leadership-conversation-replay-"),
     );
     try {
       const ambiguousA = await execute(
@@ -1882,65 +2477,125 @@ async function main(): Promise<void> {
       ...(c.observations ?? []),
       ...(d.observations ?? []),
     ];
-    console.log(
-      JSON.stringify({
-        validation: "leadership-conversation-replay-001",
-        result: "PASS",
-        checks,
-        freshProcesses: 17,
-        processA: "persisted",
-        processB: "loaded-a-and-persisted-capture-review",
-        processC: "loaded-a-b-and-executed-actual-owners",
-        processD: "reloaded-direct-evidence-successor",
-        northstarFixtureProvisionerInvocations: 1,
-        processCSeedIntegrityReloads: 1,
-        processCHiddenProvisioningInvocations: 0,
-        missingLineageFailsClosed: true,
-        materialEvidence: "actual-path",
-        duplicateEvidence: "actual-class-2",
-        productDecisionDraft: "actual-service",
-        additionalOwner: "actual-unknown",
-        futurePreparation: "persisted",
-        idempotentReentry: "passed",
-        negativeBindingControls: 13,
-        handoffDigestsVerified: true,
-        canonicalComposition: true,
-        stubbedPositiveOwners: false,
-        boundedEnvironment: true,
-        shell: false,
-        timeoutMilliseconds: 30000,
-        networkCalls: 0,
-        connectorCalls: 0,
-        driveReads: 0,
-        driveWrites: 0,
-        productionAccess: 0,
-        deployments: 0,
-        inventory: {
-          families: c.handoff.inventoryFamilies,
-          duplicateFindings: c.handoff.duplicateInventoryFindings,
-        },
-        observability: {
-          eventCount: observations.length,
-          neutralityCaseCount: c.handoff.neutralityCaseCount,
-          stages: [
-            ...new Set(observations.map((value) => value.workflowStage)),
-          ],
-          categories: [
-            ...new Set(observations.map((value) => value.eventCategory)),
-          ],
-          segments: [a, b, c, d].map((result, index) => ({
-            segment: index + 1,
-            events: (result.observations ?? []).map(
-              ({ correlation, ...event }) => ({
-                ...event,
-                correlation: `run-${index + 1}`,
-              }),
-            ),
-          })),
-          freshProcess: true,
-        },
-      }),
+    const inventoryFamilies = c.handoff.inventoryFamilies as Record<
+      string,
+      number
+    >;
+    const expectedNonzeroFamilies = [
+      "occurrences",
+      "protectedBodyRefs",
+      "physicalBodyRefs",
+      "physicalBlobs",
+      "preparedPublications",
+      "frozenPublications",
+      "publicationReceipts",
+      "capturePublications",
+      "captureReceipts",
+      "captureCorrespondenceTuples",
+      "whatChangedPublications",
+      "futurePreparationLinks",
+      "routingLinks",
+      "idempotencyRecords",
+      "evidenceRoutes",
+      "runtimeEvidence",
+      "runtimeCanonicalOperations",
+      "runtimeTerminals",
+      "workflowTerminals",
+      "runtimeTerminalBindings",
+      "workflowTerminalBindings",
+      "closures",
+      "productMaterializations",
+      "productMaterializationReceipts",
+      "events",
+    ] as const;
+    const missingFindingIds = expectedNonzeroFamilies.filter(
+      (family) =>
+        !Number.isSafeInteger(inventoryFamilies[family]) ||
+        inventoryFamilies[family]! <= 0,
     );
+    for (const zeroFamily of [
+      "contributionPublications",
+      "contributionReceipts",
+    ] as const)
+      if (inventoryFamilies[zeroFamily] !== 0)
+        missingFindingIds.push(zeroFamily as never);
+    assert.deepEqual(missingFindingIds, []);
+    assert.equal(c.handoff.foreignStatePreserved, true);
+    return {
+      validation: "leadership-conversation-replay-001",
+      result: "PASS",
+      checks,
+      freshProcesses: 17,
+      processA: "persisted",
+      processB: "loaded-a-and-persisted-capture-review",
+      processC: "loaded-a-b-and-executed-actual-owners",
+      processD: "reloaded-direct-evidence-successor",
+      northstarFixtureProvisionerInvocations: 1,
+      processCSeedIntegrityReloads: 1,
+      processCHiddenProvisioningInvocations: 0,
+      missingLineageFailsClosed: true,
+      materialEvidence: "actual-path",
+      duplicateEvidence: "actual-class-2",
+      productDecisionDraft: "actual-service",
+      additionalOwner: "actual-unknown",
+      futurePreparation: "persisted",
+      idempotentReentry: "passed",
+      negativeBindingControls: 13,
+      handoffDigestsVerified: true,
+      canonicalComposition: true,
+      stubbedPositiveOwners: false,
+      boundedEnvironment: true,
+      shell: false,
+      timeoutMilliseconds: 30000,
+      networkCalls: 0,
+      connectorCalls: 0,
+      driveReads: 0,
+      driveWrites: 0,
+      productionAccess: 0,
+      deployments: 0,
+      inventory: {
+        families: inventoryFamilies,
+        duplicateFindings: c.handoff.duplicateInventoryFindings,
+        missingFindings: missingFindingIds.length,
+        foreignPreserved: c.handoff.foreignStatePreserved,
+        foreignStateDigest: c.handoff.foreignStateDigest,
+      },
+      observerModes: {
+        productOutputDigests: [d, disabled, throwing].map((value) =>
+          digest(value.handoff),
+        ),
+        durableStateDigests: [d, disabled, throwing].map((value) =>
+          digest({
+            workflowRevision: value.handoff.workflowRevision,
+            artifactVersionId: value.handoff.artifactVersionId,
+          }),
+        ),
+        eventInventoryDigests: [d, disabled, throwing].map((value) =>
+          digest(value.observations ?? []),
+        ),
+        eventCounts: [d, disabled, throwing].map(
+          (value) => (value.observations ?? []).length,
+        ),
+      },
+      observability: {
+        eventCount: observations.length,
+        neutralityCaseCount: c.handoff.neutralityCaseCount,
+        stages: [...new Set(observations.map((value) => value.workflowStage))],
+        categories: [
+          ...new Set(observations.map((value) => value.eventCategory)),
+        ],
+        segments: [a, b, c, d].map((result, index) => ({
+          segment: index + 1,
+          events: (result.observations ?? []).map(
+            ({ correlation, ...event }) => ({
+              ...event,
+              correlation: `run-${index + 1}`,
+            }),
+          ),
+        })),
+        freshProcess: true,
+      },
+    } as const;
   } finally {
     await rm(root, { recursive: true, force: true });
     await rm(lineageFixtureRoot, { recursive: true, force: true });
@@ -1950,7 +2605,108 @@ async function main(): Promise<void> {
     await assert.rejects(() =>
       import("node:fs/promises").then((fs) => fs.lstat(lineageFixtureRoot)),
     );
+    if (!forceValidation) activeStandaloneCapability = undefined;
   }
 }
 
-void main();
+export async function measureLeadershipConversationReplayJoinedInventory(
+  input: ReplayTaskAuthorityInputV1,
+) {
+  assert.equal(
+    input.profile.profile.id,
+    "ar5b-authenticated-recovery-conformance",
+  );
+  assert.equal(input.profile.profile.version, "version-1");
+  const authority = await validateReplayTaskAuthority(input);
+  activeReplayAuthority = authority;
+  let result: Awaited<ReturnType<typeof main>>;
+  try {
+    result = await main(true);
+  } finally {
+    activeReplayAuthority = undefined;
+  }
+  assert.ok(result);
+  assert.equal(activeExecutionSegmentDigests.length, 22);
+  assert.equal(new Set(activeExecutionSegmentDigests).size, 22);
+  assert.equal(result.inventory.duplicateFindings, 0);
+  assert.equal(result.inventory.missingFindings, 0);
+  assert.equal(result.inventory.foreignPreserved, true);
+  assert.match(String(result.inventory.foreignStateDigest), /^[a-f0-9]{64}$/);
+  const observerModes = result.observerModes,
+    productOutputMatched =
+      new Set(observerModes.productOutputDigests).size === 1,
+    durableStateMatched = new Set(observerModes.durableStateDigests).size === 1,
+    observerFailureContained =
+      observerModes.eventCounts[1] === 0 && observerModes.eventCounts[2] === 0;
+  const eventSegments = result.observability.segments,
+    orderingFindings = eventSegments.reduce(
+      (total, segment) =>
+        total +
+        segment.events.filter((event, index) => event.sequence !== index + 1)
+          .length,
+      0,
+    ),
+    pairingFindings = eventSegments.reduce(
+      (total, segment) =>
+        total +
+        segment.events.filter(
+          (event, index) =>
+            event.transitionCategory === "attempted" &&
+            !segment.events
+              .slice(index + 1)
+              .some(
+                (candidate) =>
+                  candidate.workflowStage === event.workflowStage &&
+                  candidate.transitionCategory !== "attempted",
+              ),
+        ).length,
+      0,
+    );
+  assert.equal(orderingFindings, 0);
+  assert.equal(pairingFindings, 0);
+  assert.ok(
+    productOutputMatched && durableStateMatched && observerFailureContained,
+  );
+  const unsigned = {
+    schemaVersion: "1" as const,
+    owner: "leadership-conversation-replay-joined-inventory" as const,
+    executionAuthorityCategory:
+      "foundation-v1-2-task-authorized-measurement" as const,
+    taskAuthorityDigest: authority.taskAuthorityDigest,
+    sourceDigest: input.sourceDigest,
+    taskDigest: input.taskDigest,
+    runDigest: input.runDigest,
+    profileDigest: digest(input.profile),
+    recipe: "leadership-conversation-joined-replay-v1" as const,
+    processTopology: "existing-multiprocess-replay-topology-v1" as const,
+    executionSegmentDigest: digest(activeExecutionSegmentDigests),
+    executionSegmentCount: activeExecutionSegmentDigests.length,
+    familyCount: Object.keys(result.inventory.families).length,
+    inventoryDigest: digest(result.inventory.families),
+    duplicateFindings: result.inventory.duplicateFindings,
+    missingFindings: result.inventory.missingFindings,
+    foreignPreserved: result.inventory.foreignPreserved,
+    foreignStateDigest: result.inventory.foreignStateDigest as string,
+    observerModeProductOutputDigest: digest(observerModes.productOutputDigests),
+    observerModeDurableStateDigest: digest(observerModes.durableStateDigests),
+    observerModeEventInventoryDigest: digest(
+      observerModes.eventInventoryDigests,
+    ),
+    observerParityCategory: "measured-match" as const,
+    eventCount: result.observability.eventCount,
+    eventOrderingFindings: orderingFindings,
+    eventPairingFindings: pairingFindings,
+    cleanupCategory: "path-8-local-zero" as const,
+  };
+  const measured = { ...unsigned, measurementDigest: digest(unsigned) };
+  await publishJoinedReplayResult(input.joinedResultPath, measured);
+  return measured;
+}
+
+if (
+  process.argv[1] &&
+  import.meta.url === new URL(`file://${process.argv[1]}`).href
+)
+  void main().then((result) => {
+    if (result) process.stdout.write(`${JSON.stringify(result)}\n`);
+  });

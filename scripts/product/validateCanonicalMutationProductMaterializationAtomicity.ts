@@ -1,7 +1,16 @@
 import assert from "node:assert/strict";
-import { spawnSync } from "node:child_process";
-import { createHash } from "node:crypto";
-import { mkdir, mkdtemp, rm } from "node:fs/promises";
+import { fork, spawnSync } from "node:child_process";
+import { createHash, randomBytes } from "node:crypto";
+import {
+  lstat,
+  mkdir,
+  mkdtemp,
+  open,
+  readFile,
+  realpath,
+  rm,
+  writeFile,
+} from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import {
@@ -426,7 +435,22 @@ export function runtimeWithInstruction(
   });
   return runtime;
 }
-async function durableMaterializationStage(
+export type DurableMaterializationStageMeasurement =
+  | { stage: "seeded"; runtimeRevision: string }
+  | {
+      stage: "runtime-committed-workflow-absent";
+      runtimeEvents: number;
+      workflowMaterializations: number;
+    }
+  | {
+      stage: "canonical-committed-product-materialized";
+      runtimeEvents: number;
+      workflowMaterializations: number;
+      workflowReceipts: number;
+      workflowPublications: number;
+      duplicateFindings: number;
+    };
+export async function durableMaterializationStage(
   mode: "seed" | "runtime-only" | "recover",
   root: string,
 ) {
@@ -451,14 +475,11 @@ async function durableMaterializationStage(
         requestId: "durable-seed",
         operatorId: "ar5-validator",
       });
-    process.stdout.write(
-      JSON.stringify({
-        status: "PASS",
-        stage: "seeded",
-        runtimeRevision: created.revision,
-      }),
-    );
-    return;
+    return {
+      status: "PASS",
+      stage: "seeded",
+      runtimeRevision: created.revision,
+    } as const;
   }
   const operations = new LeadershipConversationProductOperations({
       repository: workflowRepository,
@@ -497,16 +518,13 @@ async function durableMaterializationStage(
     });
     const runtime = await runtimeRepository.read(organizationId),
       workflow = await workflowRepository.read(organizationId);
-    process.stdout.write(
-      JSON.stringify({
-        status: "PASS",
-        stage: "runtime-committed-workflow-absent",
-        runtimeEvents: runtime?.runtime.memory.events.length ?? 0,
-        workflowMaterializations: (workflow.store.productMaterializations ?? [])
-          .length,
-      }),
-    );
-    return;
+    return {
+      status: "PASS",
+      stage: "runtime-committed-workflow-absent",
+      runtimeEvents: runtime?.runtime.memory.events.length ?? 0,
+      workflowMaterializations: (workflow.store.productMaterializations ?? [])
+        .length,
+    } as const;
   }
   const materializer = new CanonicalLeadershipConversationProductMaterializer({
       productDecisionDraftService: service,
@@ -523,26 +541,23 @@ async function durableMaterializationStage(
     }),
     runtime = await runtimeRepository.read(organizationId),
     workflow = await workflowRepository.read(organizationId);
-  process.stdout.write(
-    JSON.stringify({
-      status: "PASS",
-      stage: result.stage,
-      runtimeEvents: runtime?.runtime.memory.events.length ?? 0,
-      workflowMaterializations: (workflow.store.productMaterializations ?? [])
-        .length,
-      workflowReceipts: (workflow.store.productMaterializationReceipts ?? [])
-        .length,
-      workflowPublications: (workflow.store.whatChangedPublications ?? [])
-        .length,
-      duplicateFindings:
-        (workflow.store.productMaterializations ?? []).length -
-        new Set(
-          (workflow.store.productMaterializations ?? []).map(
-            (item) => item.materializationRecordId,
-          ),
-        ).size,
-    }),
-  );
+  return {
+    status: "PASS",
+    stage: result.stage,
+    runtimeEvents: runtime?.runtime.memory.events.length ?? 0,
+    workflowMaterializations: (workflow.store.productMaterializations ?? [])
+      .length,
+    workflowReceipts: (workflow.store.productMaterializationReceipts ?? [])
+      .length,
+    workflowPublications: (workflow.store.whatChangedPublications ?? []).length,
+    duplicateFindings:
+      (workflow.store.productMaterializations ?? []).length -
+      new Set(
+        (workflow.store.productMaterializations ?? []).map(
+          (item) => item.materializationRecordId,
+        ),
+      ).size,
+  } as const;
 }
 function grant(
   operation: ProductDecisionDraftOperation,
@@ -894,36 +909,457 @@ export async function runAtomicityValidation(): Promise<CanonicalMaterialization
   }
 }
 
+export type DurableMaterializationObservationInputV1 = Readonly<{
+  schemaVersion: "1";
+  sourceDigest: string;
+  frameworkId: "authenticated-alpha-acceptance";
+  frameworkVersion: "1";
+  profileId: "ar5b-authenticated-recovery-conformance";
+  profileVersion: "version-1";
+  taskDigest: string;
+  runDigest: string;
+  parentSegmentDigest: string;
+  freshSegmentDigest: string;
+  recipe: "shared-durable-root-materialization-fresh-process-reconstruction-v1";
+}>;
+export type DurableMaterializationObservationV1 = Readonly<{
+  schemaVersion: "1";
+  owner: "canonical-mutation-product-materialization-atomicity";
+  sourceDigest: string;
+  taskDigest: string;
+  runDigest: string;
+  parentSegmentDigest: string;
+  freshSegmentDigest: string;
+  recipe: "shared-durable-root-materialization-fresh-process-reconstruction-v1";
+  processAttestationDigest: string;
+  sharedRootAttestationDigest: string;
+  instructionDigest: string;
+  runtimeOnlyDigest: string;
+  reconstructedDigest: string;
+  runtimeEvents: number;
+  workflowMaterializations: number;
+  workflowReceipts: number;
+  workflowPublications: number;
+  duplicateFindings: number;
+  rootAbsentAfterCleanup: boolean;
+  measurementDigest: string;
+}>;
+const observationDigest = /^[a-f0-9]{64}$/;
+const stageNames = {
+  seed: "shared-root-seed",
+  "runtime-only": "runtime-only-durable-stage",
+  recover: "fresh-materialization-reconstruction",
+} as const;
+type DurableRootManifest = {
+  schemaVersion: "1";
+  sourceDigest: string;
+  frameworkId: "authenticated-alpha-acceptance";
+  frameworkVersion: "1";
+  profileId: "ar5b-authenticated-recovery-conformance";
+  profileVersion: "version-1";
+  taskDigest: string;
+  runDigest: string;
+  recipe: "shared-durable-root-materialization-fresh-process-reconstruction-v1";
+  rootNonce: string;
+  stages: readonly [
+    "shared-root-seed",
+    "runtime-only-durable-stage",
+    "fresh-materialization-reconstruction",
+  ];
+};
+type DurableChildResult = {
+  kind: "durable-stage-result";
+  stage: (typeof stageNames)[keyof typeof stageNames];
+  pid: number;
+  ppid: number;
+  challenge: string;
+  executionNonce: string;
+  rootAttestationDigest: string;
+  instructionDigest: string;
+  measurement: Awaited<ReturnType<typeof durableMaterializationStage>>;
+  resultDigest: string;
+};
+function assertObservationInput(
+  value: DurableMaterializationObservationInputV1,
+) {
+  assert.deepEqual(
+    Object.keys(value).sort(),
+    [
+      "frameworkId",
+      "frameworkVersion",
+      "freshSegmentDigest",
+      "parentSegmentDigest",
+      "profileId",
+      "profileVersion",
+      "recipe",
+      "runDigest",
+      "schemaVersion",
+      "sourceDigest",
+      "taskDigest",
+    ].sort(),
+  );
+  assert.equal(value.schemaVersion, "1");
+  assert.equal(value.frameworkId, "authenticated-alpha-acceptance");
+  assert.equal(value.frameworkVersion, "1");
+  assert.equal(value.profileId, "ar5b-authenticated-recovery-conformance");
+  assert.equal(value.profileVersion, "version-1");
+  assert.equal(
+    value.recipe,
+    "shared-durable-root-materialization-fresh-process-reconstruction-v1",
+  );
+  for (const valueDigest of [
+    value.sourceDigest,
+    value.taskDigest,
+    value.runDigest,
+    value.parentSegmentDigest,
+    value.freshSegmentDigest,
+  ])
+    assert.match(valueDigest, observationDigest);
+  assert.notEqual(value.parentSegmentDigest, value.freshSegmentDigest);
+}
+async function rootAttestation(
+  root: string,
+  manifestPath: string,
+  expected: DurableRootManifest,
+) {
+  const resolvedRoot = await realpath(root),
+    resolvedManifest = await realpath(manifestPath);
+  assert.equal(resolvedRoot, root);
+  assert.equal(resolvedManifest, manifestPath);
+  const rootStatus = await lstat(root),
+    manifestStatus = await lstat(manifestPath);
+  assert.ok(rootStatus.isDirectory() && !rootStatus.isSymbolicLink());
+  assert.ok(manifestStatus.isFile() && !manifestStatus.isSymbolicLink());
+  assert.equal(rootStatus.mode & 0o777, 0o700);
+  assert.equal(manifestStatus.mode & 0o777, 0o600);
+  const bytes = await readFile(manifestPath),
+    parsed = JSON.parse(bytes.toString("utf8"));
+  assert.deepEqual(parsed, expected);
+  const manifestDigest = sha(bytes.toString("utf8"));
+  return sha(
+    JSON.stringify({
+      rootDevice: rootStatus.dev,
+      rootInode: rootStatus.ino,
+      rootMode: rootStatus.mode & 0o777,
+      manifestDevice: manifestStatus.dev,
+      manifestInode: manifestStatus.ino,
+      manifestMode: manifestStatus.mode & 0o777,
+      manifestDigest,
+    }),
+  );
+}
+async function writeDurableRootManifest(
+  root: string,
+  input: DurableMaterializationObservationInputV1,
+) {
+  const manifest: DurableRootManifest = {
+      schemaVersion: "1",
+      sourceDigest: input.sourceDigest,
+      frameworkId: input.frameworkId,
+      frameworkVersion: input.frameworkVersion,
+      profileId: input.profileId,
+      profileVersion: input.profileVersion,
+      taskDigest: input.taskDigest,
+      runDigest: input.runDigest,
+      recipe: input.recipe,
+      rootNonce: randomBytes(32).toString("hex"),
+      stages: [
+        "shared-root-seed",
+        "runtime-only-durable-stage",
+        "fresh-materialization-reconstruction",
+      ],
+    },
+    manifestPath = path.join(root, "durable-root-manifest.json"),
+    handle = await open(manifestPath, "wx", 0o600);
+  try {
+    await handle.writeFile(JSON.stringify(manifest));
+    await handle.sync();
+  } finally {
+    await handle.close();
+  }
+  const directory = await open(root, "r");
+  try {
+    await directory.sync();
+  } finally {
+    await directory.close();
+  }
+  return {
+    manifest,
+    manifestPath,
+    attestationDigest: await rootAttestation(root, manifestPath, manifest),
+  };
+}
+async function runDurableChild(
+  mode: keyof typeof stageNames,
+  root: string,
+  manifestPath: string,
+  manifest: DurableRootManifest,
+): Promise<{
+  handlePid: number;
+  result: DurableChildResult;
+  exitCode: number;
+  signal: null | string;
+}> {
+  return await new Promise((resolve, reject) => {
+    const challenge = randomBytes(32).toString("hex"),
+      child = fork(import.meta.filename, ["--durable-observation-child"], {
+        cwd: process.cwd(),
+        execArgv: ["--conditions=react-server", "--import", "tsx"],
+        env: {
+          PATH: "/usr/local/bin:/usr/bin:/bin",
+          TMPDIR: tmpdir(),
+          TZ: "UTC",
+          LANG: "C",
+          NODE_ENV: "test",
+        },
+        stdio: ["ignore", "ignore", "ignore", "ipc"],
+      }),
+      handlePid = child.pid;
+    assert.ok(handlePid);
+    let messages: Array<
+        | DurableChildResult
+        | { kind: "durable-stage-failure"; failureCategory: string }
+      > = [],
+      result: DurableChildResult | undefined;
+    const timer = setTimeout(() => {
+      child.kill("SIGTERM");
+      reject(new Error("Durable stage child timed out"));
+    }, 120_000);
+    child.on("message", (message) => {
+      messages.push(message as DurableChildResult);
+    });
+    child.on("error", reject);
+    child.on("exit", (code, signal) => {
+      clearTimeout(timer);
+      try {
+        if (code !== 0) {
+          const failure = messages[0] as
+            | { failureCategory?: string }
+            | undefined;
+          throw new Error(
+            `Durable stage child failed: ${failure?.failureCategory ?? "not-observed"}`,
+          );
+        }
+        assert.equal(signal, null);
+        assert.equal(messages.length, 1);
+        result = messages[0] as DurableChildResult;
+        const { resultDigest, ...unsigned } = result;
+        assert.equal(result.kind, "durable-stage-result");
+        assert.equal(result.stage, stageNames[mode]);
+        assert.equal(result.pid, handlePid);
+        assert.equal(result.ppid, process.pid);
+        assert.notEqual(result.pid, process.pid);
+        assert.equal(result.challenge, challenge);
+        assert.match(result.executionNonce, observationDigest);
+        assert.equal(result.resultDigest, sha(JSON.stringify(unsigned)));
+        resolve({ handlePid, result, exitCode: code, signal });
+      } catch (error) {
+        reject(error);
+      }
+    });
+    child.send({
+      kind: "durable-stage-request",
+      mode,
+      root,
+      manifestPath,
+      manifest,
+      challenge,
+    });
+  });
+}
+async function durableObservationChild() {
+  process.once("message", async (raw) => {
+    let failureCategory = "request-validation";
+    try {
+      const request = raw as {
+        kind: string;
+        mode: keyof typeof stageNames;
+        root: string;
+        manifestPath: string;
+        manifest: DurableRootManifest;
+        challenge: string;
+      };
+      assert.equal(request.kind, "durable-stage-request");
+      assert.ok(Object.hasOwn(stageNames, request.mode));
+      assert.match(request.challenge, /^[a-f0-9]{64}$/);
+      failureCategory = "root-attestation";
+      const attestation = await rootAttestation(
+        request.root,
+        request.manifestPath,
+        request.manifest,
+      );
+      failureCategory = "owner-stage";
+      const measurement = await durableMaterializationStage(
+        request.mode,
+        request.root,
+      );
+      failureCategory = "result-framing";
+      const instructionDigest = instruction(true).instructionDigest,
+        executionNonce = randomBytes(32).toString("hex"),
+        unsigned = {
+          kind: "durable-stage-result" as const,
+          stage: stageNames[request.mode],
+          pid: process.pid,
+          ppid: process.ppid,
+          challenge: request.challenge,
+          executionNonce,
+          rootAttestationDigest: attestation,
+          instructionDigest,
+          measurement,
+        },
+        result = { ...unsigned, resultDigest: sha(JSON.stringify(unsigned)) };
+      process.send?.(result, () => process.exit(0));
+    } catch {
+      process.send?.({ kind: "durable-stage-failure", failureCategory }, () =>
+        process.exit(1),
+      );
+    }
+  });
+}
+export async function measureCanonicalMutationProductMaterializationDurableStage(
+  input: DurableMaterializationObservationInputV1,
+): Promise<DurableMaterializationObservationV1> {
+  assertObservationInput(input);
+  const createdRoot = await mkdtemp(
+      path.join(tmpdir(), "discovery-ar5b-materialization-durable-"),
+    ),
+    root = await realpath(createdRoot);
+  let base:
+    | Omit<
+        DurableMaterializationObservationV1,
+        "rootAbsentAfterCleanup" | "measurementDigest"
+      >
+    | undefined;
+  try {
+    const rootStatus = await lstat(root);
+    assert.ok(rootStatus.isDirectory() && !rootStatus.isSymbolicLink());
+    assert.equal(rootStatus.mode & 0o777, 0o700);
+    await mkdir(path.join(root, "lineage"), { recursive: true, mode: 0o700 });
+    const ownership = await writeDurableRootManifest(root, input),
+      seed = await runDurableChild(
+        "seed",
+        root,
+        ownership.manifestPath,
+        ownership.manifest,
+      ),
+      runtimeOnly = await runDurableChild(
+        "runtime-only",
+        root,
+        ownership.manifestPath,
+        ownership.manifest,
+      ),
+      reconstructed = await runDurableChild(
+        "recover",
+        root,
+        ownership.manifestPath,
+        ownership.manifest,
+      ),
+      results = [seed.result, runtimeOnly.result, reconstructed.result],
+      pids = [seed.handlePid, runtimeOnly.handlePid, reconstructed.handlePid],
+      nonces = results.map((value) => value.executionNonce);
+    assert.equal(new Set(pids).size, 3);
+    assert.equal(new Set(nonces).size, 3);
+    assert.ok(
+      results.every(
+        (value) => value.rootAttestationDigest === ownership.attestationDigest,
+      ),
+    );
+    assert.equal(
+      new Set(results.map((value) => value.instructionDigest)).size,
+      1,
+    );
+    assert.equal(seed.result.measurement.stage, "seeded");
+    assert.equal(
+      runtimeOnly.result.measurement.stage,
+      "runtime-committed-workflow-absent",
+    );
+    assert.equal(
+      reconstructed.result.measurement.stage,
+      "canonical-committed-product-materialized",
+    );
+    base = {
+      schemaVersion: "1",
+      owner: "canonical-mutation-product-materialization-atomicity",
+      sourceDigest: input.sourceDigest,
+      taskDigest: input.taskDigest,
+      runDigest: input.runDigest,
+      parentSegmentDigest: input.parentSegmentDigest,
+      freshSegmentDigest: input.freshSegmentDigest,
+      recipe: input.recipe,
+      processAttestationDigest: sha(
+        JSON.stringify({
+          pids,
+          ppids: results.map((value) => value.ppid),
+          nonces,
+          challenges: results.map((value) => value.challenge),
+          exitCodes: [
+            seed.exitCode,
+            runtimeOnly.exitCode,
+            reconstructed.exitCode,
+          ],
+          signals: [seed.signal, runtimeOnly.signal, reconstructed.signal],
+        }),
+      ),
+      sharedRootAttestationDigest: ownership.attestationDigest,
+      instructionDigest: reconstructed.result.instructionDigest,
+      runtimeOnlyDigest: sha(JSON.stringify(runtimeOnly.result.measurement)),
+      reconstructedDigest: sha(
+        JSON.stringify(reconstructed.result.measurement),
+      ),
+      runtimeEvents: reconstructed.result.measurement.runtimeEvents,
+      workflowMaterializations:
+        reconstructed.result.measurement.workflowMaterializations,
+      workflowReceipts: reconstructed.result.measurement.workflowReceipts,
+      workflowPublications:
+        reconstructed.result.measurement.workflowPublications,
+      duplicateFindings: reconstructed.result.measurement.duplicateFindings,
+    };
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+  const rootAbsentAfterCleanup = await lstat(root).then(
+    () => false,
+    (error) => (error as NodeJS.ErrnoException).code === "ENOENT",
+  );
+  assert.ok(base);
+  const unsigned = { ...base, rootAbsentAfterCleanup };
+  return { ...unsigned, measurementDigest: sha(JSON.stringify(unsigned)) };
+}
+
 if (
   process.argv[1] &&
   import.meta.url === pathToFileURL(process.argv[1]).href
 ) {
-  const durableIndex = process.argv.indexOf("--durable-stage");
-  if (durableIndex >= 0)
-    void durableMaterializationStage(
-      process.argv[durableIndex + 1] as "seed" | "runtime-only" | "recover",
-      process.argv[durableIndex + 2]!,
-    );
-  else if (!process.argv.includes("--react-server-child")) {
-    const child = spawnSync(
-      process.execPath,
-      [
-        "--conditions=react-server",
-        ...process.execArgv,
-        process.argv[1]!,
-        "--react-server-child",
-      ],
-      {
-        cwd: process.cwd(),
-        encoding: "utf8",
-        env: { ...process.env, NODE_ENV: "test" },
-      },
-    );
-    if (child.stdout) process.stdout.write(child.stdout);
-    if (child.stderr) process.stderr.write(child.stderr);
-    if (child.status !== 0) process.exitCode = child.status ?? 1;
-  } else
-    void runAtomicityValidation().then((value) =>
-      process.stdout.write(`${JSON.stringify(value)}\n`),
-    );
+  if (process.argv.includes("--durable-observation-child"))
+    void durableObservationChild();
+  else {
+    const durableIndex = process.argv.indexOf("--durable-stage");
+    if (durableIndex >= 0)
+      void durableMaterializationStage(
+        process.argv[durableIndex + 1] as "seed" | "runtime-only" | "recover",
+        process.argv[durableIndex + 2]!,
+      ).then((value) => process.stdout.write(JSON.stringify(value)));
+    else if (!process.argv.includes("--react-server-child")) {
+      const child = spawnSync(
+        process.execPath,
+        [
+          "--conditions=react-server",
+          ...process.execArgv,
+          process.argv[1]!,
+          "--react-server-child",
+        ],
+        {
+          cwd: process.cwd(),
+          encoding: "utf8",
+          env: { ...process.env, NODE_ENV: "test" },
+        },
+      );
+      if (child.stdout) process.stdout.write(child.stdout);
+      if (child.stderr) process.stderr.write(child.stderr);
+      if (child.status !== 0) process.exitCode = child.status ?? 1;
+    } else
+      void runAtomicityValidation().then((value) =>
+        process.stdout.write(`${JSON.stringify(value)}\n`),
+      );
+  }
 }

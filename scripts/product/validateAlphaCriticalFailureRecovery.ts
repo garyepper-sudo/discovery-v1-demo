@@ -8,6 +8,7 @@ import {
   mkdtemp,
   readFile,
   readdir,
+  realpath,
   rename,
   rm,
   symlink,
@@ -15,6 +16,7 @@ import {
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { spawn } from "node:child_process";
 import { createEmptyOrganizationRuntime } from "../../engine/v3/runtime/organizationRuntime";
 import {
@@ -40,6 +42,8 @@ import { createAlphaTelemetryComposition } from "../../lib/telemetry/alphaTeleme
 const ORG = "ar5-validation-org";
 let spawnedChildProcesses = 0;
 let diagnosticStage = "owner-recovery";
+type TelemetryParityStateMeasurementV1=Readonly<{schemaVersion:"1";state:string;telemetryOwnerOutcome:string;productOutputDigest:string;durableProductBeforeDigest:string;durableProductAfterDigest:string;authorizationReadDigest:string;recoveryOutcomeDigest:string;eventInventoryDigest:string;stateMeasurementDigest:string}>;
+const alphaTelemetryParityStates=["enabled-consent","disabled","consent-absent","consent-expired","consent-revoked","missing-active-key","missing-historical-key","repository-rejecting","repository-throwing","repository-unavailable","sweep-failure","deletion-pending","denied-operator"] as const;
 const bytes = (name: string) =>
   new TextEncoder().encode(
     JSON.stringify(
@@ -52,6 +56,7 @@ const bytes = (name: string) =>
   );
 const digest = (value: Uint8Array | string) =>
   createHash("sha256").update(value).digest("hex");
+async function telemetryTreeDigest(root:string){const entries=await readdir(root,{recursive:true}),measured=[] as {entryDigest:string;contentDigest:string}[];for(const entry of entries.sort()){const absolute=path.join(root,entry),status=await lstat(absolute);if(status.isFile()&&!status.isSymbolicLink())measured.push({entryDigest:digest(entry),contentDigest:digest(await readFile(absolute))});}return digest(JSON.stringify(measured));}
 
 async function child(
   root: string,
@@ -455,7 +460,7 @@ async function runWorkflowChild(
   });
 }
 
-async function main() {
+async function main(options?:Readonly<{externalRoot:string;suppressOutput:true;telemetryCollector:(value:TelemetryParityStateMeasurementV1)=>void}>) {
   if (process.argv[2] === "--child")
     return child(
       process.argv[3]!,
@@ -482,7 +487,7 @@ async function main() {
   if (process.argv[2] === "--restore-fault-child")
     return restoreFaultChild(process.argv[3]!, process.argv[4]!);
   const rootIndex = process.argv.indexOf("--root");
-  const externalRoot = rootIndex >= 0 ? process.argv[rootIndex + 1] : undefined;
+  const externalRoot = options?.externalRoot??(rootIndex >= 0 ? process.argv[rootIndex + 1] : undefined);
   const root = externalRoot
     ? path.resolve(externalRoot)
     : await mkdtemp(path.join(tmpdir(), "discovery-ar5-recovery-"));
@@ -1531,21 +1536,7 @@ async function main() {
       "recovery-unavailable-observer-parity",
       deniedParity.every((value) => value.outcome === "unavailable"),
     );
-    const telemetryCases = [
-        "enabled-consent",
-        "disabled",
-        "consent-absent",
-        "consent-expired",
-        "consent-revoked",
-        "missing-active-key",
-        "missing-historical-key",
-        "repository-rejecting",
-        "repository-throwing",
-        "repository-unavailable",
-        "sweep-failure",
-        "deletion-pending",
-        "denied-operator",
-      ] as const,
+    const telemetryCases = alphaTelemetryParityStates,
       validRing: AlphaTelemetryKeyRing = {
         environment: "test",
         activeVersion: "v1",
@@ -1579,13 +1570,13 @@ async function main() {
       await mkdir(telemetryRoot, { recursive: true, mode: 0o700 });
       let nowMs = Date.parse("2026-08-23T12:00:00.000Z"),
         now = () => new Date(nowMs).toISOString(),
-        observe: () => Promise<void> = async () => {};
+        observe: () => Promise<"persisted"|"disabled"|"repository-unavailable"|"safe-absence"> = async () => "safe-absence";
       if (
         state === "missing-active-key" ||
         state === "disabled" ||
         state === "repository-unavailable"
       )
-        observe = async () => {};
+        observe = async () => "safe-absence";
       else if (state === "missing-historical-key") {
         const ringTwo: AlphaTelemetryKeyRing = {
             environment: "test",
@@ -1658,10 +1649,9 @@ async function main() {
         assert.ok(missing);
         await missing.ready;
         observe = async () => {
-          assert.equal(
-            await missing.telemetry.observe(ORG, recoveryEvent),
-            "disabled",
-          );
+          const disposition=await missing.telemetry.observe(ORG,recoveryEvent);
+          assert.equal(disposition,"disabled");
+          return disposition;
         };
         distinctTelemetryOwnerStates += 1;
       } else if (
@@ -1747,6 +1737,7 @@ async function main() {
             assert.equal(disposition, "persisted");
             if (state === "enabled-consent") persistedTelemetry += 1;
           } else assert.notEqual(disposition, "persisted");
+          return disposition;
         };
         distinctTelemetryOwnerStates += 1;
       } else {
@@ -1765,16 +1756,16 @@ async function main() {
             now,
           );
         observe = async () => {
-          assert.notEqual(
-            await telemetry.observe(ORG, recoveryEvent),
-            "persisted",
-          );
+          const disposition=await telemetry.observe(ORG,recoveryEvent);
+          assert.notEqual(disposition,"persisted");
+          return disposition;
         };
       }
+      let telemetryOwnerOutcome:"persisted"|"disabled"|"repository-unavailable"|"safe-absence"="safe-absence",protectedReadCount=0;
       const result = await recoverAuthorizedProtectedState({
         authorizeCurrent: async () => "authorized",
-        loadProtected: async () => "owner-issued",
-        observe,
+        loadProtected: async () => {protectedReadCount+=1;return "owner-issued";},
+        observe:async()=>{telemetryOwnerOutcome=await observe();},
       });
       if (state === "denied-operator") {
         if (JSON.stringify(result) !== JSON.stringify(parityBaseline))
@@ -1793,6 +1784,7 @@ async function main() {
             await readFile(path.join(runtimeRoot, `${ORG}.json`)),
           ).equals(telemetryProductBefore),
       );
+      if(options?.telemetryCollector){const durableAfter=await readFile(path.join(runtimeRoot,`${ORG}.json`)),unsigned={schemaVersion:"1" as const,state,telemetryOwnerOutcome,productOutputDigest:digest(JSON.stringify(result)),durableProductBeforeDigest:digest(telemetryProductBefore),durableProductAfterDigest:digest(durableAfter),authorizationReadDigest:digest(JSON.stringify({protectedReadCount})),recoveryOutcomeDigest:digest(JSON.stringify(result)),eventInventoryDigest:await telemetryTreeDigest(telemetryRoot)};options.telemetryCollector({...unsigned,stateMeasurementDigest:digest(JSON.stringify(unsigned))});}
     }
     checked(
       "recovery-telemetry-enabled-positive-control",
@@ -1878,7 +1870,7 @@ async function main() {
           ? "PASS"
           : "FAIL";
     assert.equal(status, "PASS");
-    process.stdout.write(
+    if(!options?.suppressOutput)process.stdout.write(
       JSON.stringify({
         status,
         checks: caseResults.length,
@@ -1907,7 +1899,14 @@ async function main() {
     if (!externalRoot) await rm(root, { recursive: true, force: true });
   }
 }
-if (process.argv.includes("--actual-owner-authorization-child")) {
+export async function measureAlphaTelemetryParityMatrix(input:Readonly<{schemaVersion:"1";sourceDigest:string;frameworkId:"authenticated-alpha-acceptance";frameworkVersion:"1";foundationId:"authenticated-alpha-acceptance-foundation";foundationVersion:"1.2";profileId:"ar5b-authenticated-recovery-conformance";profileVersion:"version-1";taskDigest:string;runDigest:string;executionSegmentDigest:string;recipe:"alpha-current-build-telemetry-parity-13-state-v1";root:string}>){
+ const keys=["executionSegmentDigest","foundationId","foundationVersion","frameworkId","frameworkVersion","profileId","profileVersion","recipe","root","runDigest","schemaVersion","sourceDigest","taskDigest"].sort().join("\0");if(Object.keys(input).sort().join("\0")!==keys||input.schemaVersion!=="1"||input.frameworkId!=="authenticated-alpha-acceptance"||input.frameworkVersion!=="1"||input.foundationId!=="authenticated-alpha-acceptance-foundation"||input.foundationVersion!=="1.2"||input.profileId!=="ar5b-authenticated-recovery-conformance"||input.profileVersion!=="version-1"||input.recipe!=="alpha-current-build-telemetry-parity-13-state-v1"||![input.sourceDigest,input.taskDigest,input.runDigest,input.executionSegmentDigest].every(value=>/^[a-f0-9]{64}$/.test(value)))throw new Error("Telemetry parity measurement request is invalid");
+ const root=await realpath(input.root),status=await lstat(root),taskRoot=await realpath(path.dirname(root));if(!status.isDirectory()||status.isSymbolicLink()||(status.mode&0o777)!==0o700||path.dirname(taskRoot)!=="/private/tmp"||!path.basename(taskRoot).startsWith("discovery-ar2-pre-001b-task-")||!path.basename(root).startsWith("telemetry-parity-"))throw new Error("Telemetry parity measurement root is invalid");
+ const captured:TelemetryParityStateMeasurementV1[]=[];let unsigned:Record<string,unknown>|undefined,discoveredBeforeCleanup=0;try{await main({externalRoot:root,suppressOutput:true,telemetryCollector:value=>captured.push(value)});const measurements=captured.map(value=>{const{stateMeasurementDigest:_,...owner}=value,record={...owner,sourceDigest:input.sourceDigest,frameworkId:input.frameworkId,frameworkVersion:input.frameworkVersion,foundationId:input.foundationId,foundationVersion:input.foundationVersion,profileId:input.profileId,profileVersion:input.profileVersion,taskDigest:input.taskDigest,runDigest:input.runDigest,executionSegmentDigest:input.executionSegmentDigest,recipe:input.recipe};return{...record,stateMeasurementDigest:digest(JSON.stringify(record))};});discoveredBeforeCleanup=(await readdir(root,{recursive:true})).length;unsigned={schemaVersion:"1",ownerValidator:"alpha-critical-failure-recovery-telemetry-parity",sourceDigest:input.sourceDigest,frameworkId:input.frameworkId,frameworkVersion:input.frameworkVersion,foundationId:input.foundationId,foundationVersion:input.foundationVersion,profileId:input.profileId,profileVersion:input.profileVersion,taskDigest:input.taskDigest,runDigest:input.runDigest,executionSegmentDigest:input.executionSegmentDigest,recipe:input.recipe,stateInventory:measurements.map(value=>value.state),measurements,enabledControlMeasurementDigest:measurements.find(value=>value.state==="enabled-consent")?.stateMeasurementDigest??null,distinctOwnerStateControlDigest:digest(JSON.stringify(measurements.map(value=>value.telemetryOwnerOutcome))),stateMeasurementAggregateDigest:digest(JSON.stringify(measurements.map(value=>value.stateMeasurementDigest)))};}finally{await rm(root,{recursive:true,force:true});}
+ let rootAbsent=false;try{await lstat(root);}catch{rootAbsent=true;}assert.ok(unsigned);const completed={...unsigned,telemetryLocalCleanup:{discoveredBeforeCleanup,remainingAfterCleanup:rootAbsent?0:1,rootAbsent}};return{...completed,measurementDigest:digest(JSON.stringify(completed))};
+}
+const direct=process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href;
+if (direct&&process.argv.includes("--actual-owner-authorization-child")) {
   import("./validateProductArtifactAuthorizationBeforeBodyRead")
     .then(async (module) => {
       const original = console.log;
@@ -1927,7 +1926,7 @@ if (process.argv.includes("--actual-owner-authorization-child")) {
       );
       process.exitCode = 1;
     });
-} else
+} else if(direct)
   main().catch(() => {
     process.stderr.write(
       `AR-5 critical failure recovery validation failed (${diagnosticStage})\n`,
