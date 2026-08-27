@@ -27,7 +27,8 @@ No critical invariant may rely only on L4 when a lower owner-aligned proof is pr
 ## Frozen inventory
 
 - Critical paths: **31**
-- Distinct semantic owner path/symbol bindings: **19**
+- Inline critical-path owner assignments: **31**
+- Distinct normalized owner path/symbol bindings: **18**
 - Unsupported critical invariants: **0**
 - Duplicate or conflicting semantic owner mappings: **0**
 - Negative controls: **26**

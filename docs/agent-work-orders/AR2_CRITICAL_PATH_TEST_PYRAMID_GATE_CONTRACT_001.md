@@ -48,7 +48,7 @@ No critical invariant may rely only on L4 when an owner-level proof is practical
 
 ## Critical-path inventory and ownership
 
-The JSON freezes 31 launch-critical invariants and 19 distinct semantic owner path/symbol bindings. Every entry contains:
+The JSON freezes 31 launch-critical invariants, each with one inline owner binding, resolving to 18 distinct normalized owner path/symbol bindings. Every entry contains:
 
 - stable invariant ID and precise semantics;
 - exactly one canonical owner path and symbol/operation;
