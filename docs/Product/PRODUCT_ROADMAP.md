@@ -110,6 +110,7 @@ gates cannot make the Alpha ready.
 | AR-2-PRE-001B-CORR-002. Acceptance Foundation V1.2 profile-bound lifecycle API | PASS | The existing authenticated browser, lifecycle, scanner, cleanup, and independent-zero owners now expose five observation-only envelopes under an exact supplied profile identity; qualification proves normal double cleanup, fresh independent zero, foreign preservation, and deterministic replay without beginning AR-5B |
 | AR-5A. Core failure-recovery hardening | PASS | Existing Runtime and Product Workflow filesystem owners provide cross-process one-winner CAS, exact replay/incompatible/conflict outcomes, bounded claim help, backup/restore recovery, typed source-bound evidence, and zero cleanup without changing canonical schemas |
 | AR-5B. Authenticated recovery conformance | PASS | Foundation V1.2 composes the authenticated Product journey with current-build Runtime, Workflow, materialization, authorization, observability, telemetry, scanner, cleanup, and independent-zero owner measurements; seven source-bound envelopes pass unchanged PRE-001A adjudication with deterministic replay and zero task residue |
+| AR-2-GOV-001. Critical-path test-pyramid gate contract | PASS | The requirements-only 31-invariant, 24-command governance inventory freezes exact owner proofs, layer mappings, thresholds, evidence/cleanup rules, and the six-path AR-2 implementation maximum; AR-2 execution has not begun |
 | 8. Design-partner launch | NOT STARTED — blocked by Alpha Readiness, baseline decision, Alpha Operations, and human approval | Two-cycle acceptance, no unresolved high-severity trust failure, verified instrumentation, onboarding, support, limitations, measures, and observation plan |
 
 Gates 6–7 must strengthen current-step and primary-action hierarchy; use
@@ -133,7 +134,9 @@ Product telemetry, AR-2-PRE-001A measured acceptance contracts, and
 AR-2-PRE-001B authenticated current-build conformance, its Acceptance
 Foundation V1.1 producer-registry correction, its Acceptance Foundation V1.2
 profile-bound lifecycle API correction, and AR-5A core failure-recovery
-hardening and AR-5B authenticated recovery conformance are complete. The original Acceptance Foundation V1 and its
+hardening and AR-5B authenticated recovery conformance are complete. The
+requirements-only `AR-2-GOV-001` gate contract and inventory are canonical;
+AR-2 execution remains not begun. The original Acceptance Foundation V1 and its
 historical PRE-001B evidence remain valid for their exact bytes; V1's promised
 multi-profile reuse was incomplete until V1.1 qualified the closed reusable
 dispatch boundary, and V1.2 exposes the five existing ordinary lifecycle
@@ -273,10 +276,11 @@ The accepted readiness sequence is:
    Lifecycle API — COMPLETE;
 9. `AR-5A` — Core Failure-Recovery Hardening — COMPLETE;
 10. `AR-5B` — Authenticated Recovery Conformance — COMPLETE;
-11. `AR-2` — Critical-Path Test Pyramid Freeze;
-12. `AR-1B` — Complete Governed Cognition Non-Disclosure Adversarial
+11. `AR-2-GOV-001` — Critical-Path Test Pyramid Gate Contract — COMPLETE;
+12. `AR-2` — Critical-Path Test Pyramid Freeze — NOT BEGUN;
+13. `AR-1B` — Complete Governed Cognition Non-Disclosure Adversarial
    Acceptance; and
-13. `AR-6` — Integrated Alpha Readiness Acceptance.
+14. `AR-6` — Integrated Alpha Readiness Acceptance.
 
 `AR-1A` and `AR-1B` share the `AR-1` program identity. AR-5 is complete because
 both AR-5A and AR-5B pass. The accepted Product journey is one completed
