@@ -1,0 +1,2923 @@
+{
+  "schemaVersion": "1",
+  "kind": "ar2-critical-path-test-pyramid-governance-inventory",
+  "identity": "AR-2-CRITICAL-PATH-TEST-PYRAMID-FREEZE-001",
+  "title": "AR-2 — CRITICAL-PATH TEST PYRAMID FREEZE",
+  "canonicalParent": "20619629c3330aabbd3cb63a05ddf1ce44fccca0",
+  "purpose": "Freeze the smallest complete, owner-aligned, deterministic test pyramid proving the Alpha consequential Product path and launch-critical invariants.",
+  "executionResult": null,
+  "layers": [
+    {
+      "id": "L0",
+      "name": "static-and-contract-firewall",
+      "meaning": "Type, build, schema, import, package, source, architecture, and governance integrity; produces no Product fact."
+    },
+    {
+      "id": "L1",
+      "name": "canonical-owner-deterministic-validation",
+      "meaning": "Direct typed execution of existing semantic owners."
+    },
+    {
+      "id": "L2",
+      "name": "cross-owner-composition-and-integration",
+      "meaning": "Composition, lifecycle transitions, lineage, and joined correspondence."
+    },
+    {
+      "id": "L3",
+      "name": "replay-restart-recovery-and-fresh-process",
+      "meaning": "Replay, CAS, failure recovery, restart, byte preservation, and duplicate/foreign safety."
+    },
+    {
+      "id": "L4",
+      "name": "authenticated-product-journey",
+      "meaning": "Small real user-visible journey through frozen Foundation V1.2 owners."
+    },
+    {
+      "id": "L5",
+      "name": "integrated-readiness-and-evidence-closure",
+      "meaning": "Qualified observations, sole PRE-001A adjudication, scanning, cleanup, source binding, verification, and preservation."
+    }
+  ],
+  "criticalPaths": [
+    {
+      "id": "CP-01",
+      "semantic": "Organization and tenant confinement",
+      "layers": [
+        "L1",
+        "L3",
+        "L4"
+      ],
+      "commands": [
+        "owner-authorization",
+        "replay-joined",
+        "authenticated-current-build"
+      ],
+      "negativeControls": [
+        "cross-organization",
+        "foreign-state-preserved"
+      ],
+      "semanticOwner": {
+        "path": "engine/v3/runtime/organizationRuntimeRepository.ts",
+        "symbol": "FilesystemOrganizationRuntimeRepository"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "owner-authorization",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L3",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateProductArtifactAuthorizationBeforeBodyRead.ts",
+        "symbol": "validateCurrentAccessScenario"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-02",
+      "semantic": "Authorization is renewed before protected loading",
+      "layers": [
+        "L1",
+        "L2",
+        "L4"
+      ],
+      "commands": [
+        "owner-authorization",
+        "authenticated-current-build"
+      ],
+      "negativeControls": [
+        "zero-unauthorized-reads",
+        "authorization-after-load-rejected"
+      ],
+      "semanticOwner": {
+        "path": "product/integration/canonicalProductArtifactCurrentAccessComposition.ts",
+        "symbol": "CanonicalProductArtifactCurrentAccessComposition"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "owner-authorization",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "owner-authorization"
+        },
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateProductArtifactAuthorizationBeforeBodyRead.ts",
+        "symbol": "validateCurrentAccessScenario"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-03",
+      "semantic": "Denied, foreign, stale, revoked, absent, malformed, unavailable, and withheld states disclose one neutral shape",
+      "layers": [
+        "L1",
+        "L4",
+        "L5"
+      ],
+      "commands": [
+        "owner-authorization",
+        "non-disclosure",
+        "authenticated-current-build"
+      ],
+      "negativeControls": [
+        "protected-existence",
+        "protected-count",
+        "raw-identity",
+        "path-revision-timing"
+      ],
+      "semanticOwner": {
+        "path": "product/integration/productArtifactCurrentAccessResolver.ts",
+        "symbol": "resolveProductArtifactCurrentAccessV1"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "owner-authorization",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        },
+        {
+          "layer": "L5",
+          "commandId": "non-disclosure"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateProductArtifactAuthorizationBeforeBodyRead.ts",
+        "symbol": "validateCurrentAccessScenario"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-04",
+      "semantic": "Owner-issued Product Question, series, occurrence, operation, receipt, and replay identity",
+      "layers": [
+        "L1",
+        "L2",
+        "L3"
+      ],
+      "commands": [
+        "replay-joined",
+        "core-recovery"
+      ],
+      "negativeControls": [
+        "identity-substitution",
+        "cross-series-replay"
+      ],
+      "semanticOwner": {
+        "path": "product/workflow/leadershipConversation/operations.ts",
+        "symbol": "LeadershipConversationProductOperations"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "replay-joined",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L3",
+          "commandId": "replay-joined"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateLeadershipConversationReplay.ts",
+        "symbol": "measureLeadershipConversationReplayJoinedInventory"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "none",
+      "cleanupRequirement": "isolated-local-root-zero-or-none",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-05",
+      "semantic": "Exact replay, incompatible replay, and CAS conflict remain typed and distinct",
+      "layers": [
+        "L1",
+        "L3"
+      ],
+      "commands": [
+        "replay-joined",
+        "core-recovery"
+      ],
+      "negativeControls": [
+        "prose-classification",
+        "changed-request-replay"
+      ],
+      "semanticOwner": {
+        "path": "product/workflow/leadershipConversation/productWorkflowArtifactRepository.ts",
+        "symbol": "ProductWorkflowArtifactRepository"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "replay-joined",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L3",
+          "commandId": "replay-joined"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateLeadershipConversationReplay.ts",
+        "symbol": "measureLeadershipConversationReplayJoinedInventory"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "none",
+      "cleanupRequirement": "isolated-local-root-zero-or-none",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-06",
+      "semantic": "Private Working is user-scoped and non-authoritative",
+      "layers": [
+        "L1",
+        "L2",
+        "L4"
+      ],
+      "commands": [
+        "replay-joined",
+        "authenticated-current-build"
+      ],
+      "negativeControls": [
+        "unselected-carry-forward",
+        "canonical-authority-from-private-state"
+      ],
+      "semanticOwner": {
+        "path": "product/workflow/leadershipConversation/operations.ts",
+        "symbol": "LeadershipConversationProductOperations"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "replay-joined",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateLeadershipConversationReplay.ts",
+        "symbol": "measureLeadershipConversationReplayJoinedInventory"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-07",
+      "semantic": "Intentional contribution persists only explicit selections and permits the truthful empty boundary",
+      "layers": [
+        "L1",
+        "L2",
+        "L4"
+      ],
+      "commands": [
+        "replay-joined",
+        "authenticated-current-build"
+      ],
+      "negativeControls": [
+        "synthetic-contribution",
+        "implicit-private-transfer"
+      ],
+      "semanticOwner": {
+        "path": "product/workflow/leadershipConversation/operations.ts",
+        "symbol": "LeadershipConversationProductOperations"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "replay-joined",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateLeadershipConversationReplay.ts",
+        "symbol": "measureLeadershipConversationReplayJoinedInventory"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-08",
+      "semantic": "Freeze is owner-issued, durable, and idempotent",
+      "layers": [
+        "L1",
+        "L2",
+        "L3",
+        "L4"
+      ],
+      "commands": [
+        "replay-joined",
+        "core-recovery",
+        "authenticated-current-build"
+      ],
+      "negativeControls": [
+        "duplicate-freeze",
+        "incompatible-freeze-replay"
+      ],
+      "semanticOwner": {
+        "path": "product/workflow/leadershipConversation/operations.ts",
+        "symbol": "LeadershipConversationProductOperations"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "replay-joined",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L3",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateLeadershipConversationReplay.ts",
+        "symbol": "measureLeadershipConversationReplayJoinedInventory"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-09",
+      "semantic": "Capture binds the exact frozen occurrence without importing private material",
+      "layers": [
+        "L1",
+        "L2",
+        "L4"
+      ],
+      "commands": [
+        "replay-joined",
+        "authenticated-current-build"
+      ],
+      "negativeControls": [
+        "capture-before-freeze",
+        "private-body-leak"
+      ],
+      "semanticOwner": {
+        "path": "product/workflow/leadershipConversation/operations.ts",
+        "symbol": "LeadershipConversationProductOperations"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "replay-joined",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateLeadershipConversationReplay.ts",
+        "symbol": "measureLeadershipConversationReplayJoinedInventory"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-10",
+      "semantic": "Review records explicit disposition over exact captured material",
+      "layers": [
+        "L1",
+        "L2",
+        "L4"
+      ],
+      "commands": [
+        "replay-joined",
+        "authenticated-current-build"
+      ],
+      "negativeControls": [
+        "unreviewed-routing",
+        "foreign-proposal"
+      ],
+      "semanticOwner": {
+        "path": "product/workflow/leadershipConversation/operations.ts",
+        "symbol": "LeadershipConversationProductOperations"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "replay-joined",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateLeadershipConversationReplay.ts",
+        "symbol": "measureLeadershipConversationReplayJoinedInventory"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-11",
+      "semantic": "Closure is truthful, immutable, and binds Freeze, Capture, Review, organization, question, series, occurrence, user, and authorization",
+      "layers": [
+        "L1",
+        "L2",
+        "L3",
+        "L4"
+      ],
+      "commands": [
+        "replay-joined",
+        "authenticated-current-build"
+      ],
+      "negativeControls": [
+        "premature-closure",
+        "duplicate-closure"
+      ],
+      "semanticOwner": {
+        "path": "product/workflow/leadershipConversation/operations.ts",
+        "symbol": "LeadershipConversationProductOperations"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "replay-joined",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L3",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateLeadershipConversationReplay.ts",
+        "symbol": "measureLeadershipConversationReplayJoinedInventory"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-12",
+      "semantic": "What Changed appears only after truthful closure",
+      "layers": [
+        "L1",
+        "L2",
+        "L4"
+      ],
+      "commands": [
+        "replay-joined",
+        "authenticated-current-build"
+      ],
+      "negativeControls": [
+        "pre-closure-what-changed",
+        "wrong-predecessor"
+      ],
+      "semanticOwner": {
+        "path": "product/workflow/leadershipConversation/buildLeadershipConversationWorkspace.ts",
+        "symbol": "buildLeadershipConversationWorkspace"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "replay-joined",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateLeadershipConversationReplay.ts",
+        "symbol": "measureLeadershipConversationReplayJoinedInventory"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-13",
+      "semantic": "Prepare Again is explicit and owner-issued",
+      "layers": [
+        "L1",
+        "L2",
+        "L4"
+      ],
+      "commands": [
+        "replay-joined",
+        "authenticated-current-build"
+      ],
+      "negativeControls": [
+        "implicit-successor",
+        "duplicate-successor"
+      ],
+      "semanticOwner": {
+        "path": "product/workflow/leadershipConversation/operations.ts",
+        "symbol": "LeadershipConversationProductOperations"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "replay-joined",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateLeadershipConversationReplay.ts",
+        "symbol": "measureLeadershipConversationReplayJoinedInventory"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-14",
+      "semantic": "Successor preserves exact Product Question and recurring-series lineage while receiving a distinct occurrence identity",
+      "layers": [
+        "L1",
+        "L2",
+        "L3",
+        "L4"
+      ],
+      "commands": [
+        "replay-joined",
+        "authenticated-current-build"
+      ],
+      "negativeControls": [
+        "cross-question-successor",
+        "same-occurrence-reuse"
+      ],
+      "semanticOwner": {
+        "path": "product/workflow/leadershipConversation/operations.ts",
+        "symbol": "LeadershipConversationProductOperations"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "replay-joined",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L3",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateLeadershipConversationReplay.ts",
+        "symbol": "measureLeadershipConversationReplayJoinedInventory"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-15",
+      "semantic": "Occurrence 2 is prepared and truthfully not started",
+      "layers": [
+        "L1",
+        "L2",
+        "L4"
+      ],
+      "commands": [
+        "replay-joined",
+        "authenticated-current-build"
+      ],
+      "negativeControls": [
+        "occurrence-two-execution-claimed",
+        "later-stage-record-present"
+      ],
+      "semanticOwner": {
+        "path": "product/workflow/leadershipConversation/buildLeadershipConversationWorkspace.ts",
+        "symbol": "buildLeadershipConversationWorkspace"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "replay-joined",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateLeadershipConversationReplay.ts",
+        "symbol": "measureLeadershipConversationReplayJoinedInventory"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-16",
+      "semantic": "Accepted state reconstructs after hard reload",
+      "layers": [
+        "L1",
+        "L2",
+        "L3",
+        "L4"
+      ],
+      "commands": [
+        "page-authorization",
+        "replay-joined",
+        "materialization-fresh",
+        "authenticated-current-build"
+      ],
+      "negativeControls": [
+        "memory-only-state",
+        "identity-drift"
+      ],
+      "semanticOwner": {
+        "path": "product/integration/leadershipConversationServerComposition.ts",
+        "symbol": "createLeadershipConversationServerCompositionForValidation"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "page-authorization",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "page-authorization"
+        },
+        {
+          "layer": "L3",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateLeadershipConversationPageAuthorization.ts",
+        "symbol": "CLI:leadership-conversation-page-authorization"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-17",
+      "semantic": "Accepted state reconstructs in a fresh server and operating-system/browser process",
+      "layers": [
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5"
+      ],
+      "commands": [
+        "materialization-fresh",
+        "authenticated-current-build",
+        "ar2-write",
+        "ar2-verify"
+      ],
+      "negativeControls": [
+        "same-process-substitution",
+        "unbound-fresh-child"
+      ],
+      "semanticOwner": {
+        "path": "product/integration/canonicalLeadershipConversationProductMaterializer.ts",
+        "symbol": "CanonicalLeadershipConversationProductMaterializer"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "materialization-fresh",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "materialization-fresh"
+        },
+        {
+          "layer": "L3",
+          "commandId": "materialization-fresh"
+        },
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        },
+        {
+          "layer": "L5",
+          "commandId": "ar2-write"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/acceptance/validateAr5bAuthenticatedRecoveryConformance.ts",
+        "symbol": "measureAr5bAuthenticatedRecoveryCurrentBuild"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-18",
+      "semantic": "Runtime and Product Workflow recover deterministically from interruption without changing canonical schemas",
+      "layers": [
+        "L1",
+        "L3",
+        "L5"
+      ],
+      "commands": [
+        "core-recovery",
+        "ar5a-evidence",
+        "authenticated-current-build"
+      ],
+      "negativeControls": [
+        "ambiguous-residue",
+        "unknown-residue-deletion",
+        "stale-terminal"
+      ],
+      "semanticOwner": {
+        "path": "engine/v3/runtime/organizationRuntimeRepository.ts",
+        "symbol": "FilesystemOrganizationRuntimeRepository"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "core-recovery",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L3",
+          "commandId": "core-recovery"
+        },
+        {
+          "layer": "L5",
+          "commandId": "ar5a-evidence"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateAlphaCriticalFailureRecovery.ts",
+        "symbol": "CLI:alpha-critical-failure-recovery"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "none",
+      "cleanupRequirement": "isolated-local-root-zero-or-none",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-19",
+      "semantic": "Runtime-to-Workflow materialization is atomic, idempotent, and fresh-process reconstructable",
+      "layers": [
+        "L1",
+        "L2",
+        "L3"
+      ],
+      "commands": [
+        "materialization-success",
+        "materialization-atomicity",
+        "materialization-failure",
+        "materialization-fresh"
+      ],
+      "negativeControls": [
+        "runtime-only-interruption",
+        "duplicate-materialization",
+        "incompatible-instruction"
+      ],
+      "semanticOwner": {
+        "path": "product/integration/canonicalLeadershipConversationProductMaterializer.ts",
+        "symbol": "CanonicalLeadershipConversationProductMaterializer"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "materialization-atomicity",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "materialization-atomicity"
+        },
+        {
+          "layer": "L3",
+          "commandId": "materialization-atomicity"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateCanonicalMutationProductMaterializationAtomicity.ts",
+        "symbol": "runAtomicityValidation"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "none",
+      "cleanupRequirement": "isolated-local-root-zero-or-none",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-20",
+      "semantic": "Joined owner inventory has exact cross-owner correspondence",
+      "layers": [
+        "L1",
+        "L2",
+        "L3",
+        "L5"
+      ],
+      "commands": [
+        "materialization-success",
+        "replay-joined",
+        "authenticated-current-build",
+        "ar2-write",
+        "ar2-verify"
+      ],
+      "negativeControls": [
+        "orphan-record",
+        "unmatched-receipt",
+        "foreign-record"
+      ],
+      "semanticOwner": {
+        "path": "product/integration/canonicalLeadershipConversationProductMaterializer.ts",
+        "symbol": "CanonicalLeadershipConversationProductMaterializer"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "replay-joined",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L3",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L5",
+          "commandId": "ar2-write"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateLeadershipConversationReplay.ts",
+        "symbol": "measureLeadershipConversationReplayJoinedInventory"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "none",
+      "cleanupRequirement": "isolated-local-root-zero-or-none",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-21",
+      "semantic": "Canonical record families contain zero missing and disallowed duplicate identities",
+      "layers": [
+        "L1",
+        "L2",
+        "L3",
+        "L5"
+      ],
+      "commands": [
+        "replay-joined",
+        "core-recovery",
+        "authenticated-current-build",
+        "ar2-write",
+        "ar2-verify"
+      ],
+      "negativeControls": [
+        "duplicate-id",
+        "missing-correspondence"
+      ],
+      "semanticOwner": {
+        "path": "product/workflow/leadershipConversation/productWorkflowArtifactRepository.ts",
+        "symbol": "ProductWorkflowArtifactRepository"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "replay-joined",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L3",
+          "commandId": "replay-joined"
+        },
+        {
+          "layer": "L5",
+          "commandId": "ar2-write"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateLeadershipConversationReplay.ts",
+        "symbol": "measureLeadershipConversationReplayJoinedInventory"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "none",
+      "cleanupRequirement": "isolated-local-root-zero-or-none",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-22",
+      "semantic": "Foreign owner state and ambiguous resource groups remain byte-identical",
+      "layers": [
+        "L1",
+        "L3",
+        "L4",
+        "L5"
+      ],
+      "commands": [
+        "core-recovery",
+        "authenticated-current-build",
+        "ar2-write",
+        "ar2-verify"
+      ],
+      "negativeControls": [
+        "foreign-selection",
+        "broad-cleanup"
+      ],
+      "semanticOwner": {
+        "path": "scripts/alpha-readiness/criticalFailureRecoveryCoordinator.ts",
+        "symbol": "coordinateCriticalFailureRecovery"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "core-recovery",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L3",
+          "commandId": "core-recovery"
+        },
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        },
+        {
+          "layer": "L5",
+          "commandId": "ar2-write"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateAlphaCriticalFailureRecovery.ts",
+        "symbol": "CLI:alpha-critical-failure-recovery"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-23",
+      "semantic": "AR-3 observations are closed, content-safe, ordered, and non-influential",
+      "layers": [
+        "L1",
+        "L2",
+        "L5"
+      ],
+      "commands": [
+        "observability-semantic",
+        "authenticated-current-build",
+        "ar2-write",
+        "ar2-verify"
+      ],
+      "negativeControls": [
+        "rejecting-sink",
+        "throwing-sink",
+        "content-bearing-event"
+      ],
+      "semanticOwner": {
+        "path": "lib/observability/alphaContentSafeObservabilityOwner.ts",
+        "symbol": "AlphaContentSafeObservabilityOwner"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "observability-semantic",
+        "admissionCategory": "B"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "observability-semantic"
+        },
+        {
+          "layer": "L5",
+          "commandId": "ar2-write"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/acceptance/validateAr5bAuthenticatedRecoveryConformance.ts",
+        "symbol": "measureAr5bAuthenticatedRecoveryCurrentBuild"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "none",
+      "cleanupRequirement": "isolated-local-root-zero-or-none",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-24",
+      "semantic": "AR-4 telemetry is consent-gated, pseudonymous, bounded, expiring, deletable, and cannot influence Product or recovery",
+      "layers": [
+        "L1",
+        "L2",
+        "L5"
+      ],
+      "commands": [
+        "telemetry-semantic",
+        "authenticated-current-build",
+        "ar2-write",
+        "ar2-verify"
+      ],
+      "negativeControls": [
+        "disabled",
+        "expired",
+        "revoked",
+        "missing-key",
+        "repository-unavailable",
+        "cleanup-failure"
+      ],
+      "semanticOwner": {
+        "path": "lib/telemetry/alphaProductTelemetryOwner.ts",
+        "symbol": "AlphaProductTelemetryOwner"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "telemetry-semantic",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "telemetry-semantic"
+        },
+        {
+          "layer": "L5",
+          "commandId": "ar2-write"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/product/validateAlphaCriticalFailureRecovery.ts",
+        "symbol": "measureAlphaTelemetryParityMatrix"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "none",
+      "cleanupRequirement": "isolated-local-root-zero-or-none",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-25",
+      "semantic": "Authenticated CEO, Director, Manager, and denied behavior is correct at desktop and narrow viewports",
+      "layers": [
+        "L1",
+        "L2",
+        "L4",
+        "L5"
+      ],
+      "commands": [
+        "leadership-frontend",
+        "page-authorization",
+        "authenticated-current-build",
+        "ar2-write",
+        "ar2-verify"
+      ],
+      "negativeControls": [
+        "manager-protected-surface",
+        "denied-action",
+        "viewport-overflow"
+      ],
+      "semanticOwner": {
+        "path": "components/product-alpha/leadership-conversation/LeadershipConversationExperience.tsx",
+        "symbol": "LeadershipConversationExperience"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "leadership-frontend",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L2",
+          "commandId": "leadership-frontend"
+        },
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        },
+        {
+          "layer": "L5",
+          "commandId": "ar2-write"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/acceptance/validateAr5bAuthenticatedRecoveryConformance.ts",
+        "symbol": "measureAr5bAuthenticatedRecoveryCurrentBuild"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-26",
+      "semantic": "Acknowledgement-lost partial external provisioning is rediscovered only by exact task ownership",
+      "layers": [
+        "L1",
+        "L4",
+        "L5"
+      ],
+      "commands": [
+        "foundation-v12-controls",
+        "authenticated-current-build"
+      ],
+      "negativeControls": [
+        "foreign-marker",
+        "ambiguous-discovery",
+        "over-plan-inventory"
+      ],
+      "semanticOwner": {
+        "path": "scripts/acceptance/authenticatedAlphaClerkLifecycle.ts",
+        "symbol": "provisionAcceptanceUsers"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "foundation-v12-controls",
+        "admissionCategory": "B"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        },
+        {
+          "layer": "L5",
+          "commandId": "foundation-v12-controls"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/acceptance/validateAr3CurrentBuildConformance.ts",
+        "symbol": "measureAuthenticatedAlphaCurrentBuild"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-27",
+      "semantic": "Every valid external run executes cleanup attempt one and idempotent cleanup attempt two",
+      "layers": [
+        "L1",
+        "L4",
+        "L5"
+      ],
+      "commands": [
+        "foundation-v12-controls",
+        "authenticated-current-build",
+        "ar2-write",
+        "ar2-verify"
+      ],
+      "negativeControls": [
+        "cleanup-skipped",
+        "preparation-failure",
+        "partial-deletion"
+      ],
+      "semanticOwner": {
+        "path": "scripts/acceptance/authenticatedAlphaClerkLifecycle.ts",
+        "symbol": "cleanupAcceptanceClerk"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "foundation-v12-controls",
+        "admissionCategory": "B"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        },
+        {
+          "layer": "L5",
+          "commandId": "foundation-v12-controls"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/acceptance/validateAr3CurrentBuildConformance.ts",
+        "symbol": "measureAuthenticatedAlphaCurrentBuild"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-28",
+      "semantic": "A distinct process and fresh client prove exact task-scoped zero",
+      "layers": [
+        "L1",
+        "L4",
+        "L5"
+      ],
+      "commands": [
+        "foundation-v12-controls",
+        "authenticated-current-build",
+        "ar2-write",
+        "ar2-verify"
+      ],
+      "negativeControls": [
+        "deleted-user-session-vacuity",
+        "global-zero-substitution"
+      ],
+      "semanticOwner": {
+        "path": "scripts/acceptance/authenticatedAlphaClerkLifecycle.ts",
+        "symbol": "verifyAcceptanceClerkZero"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "foundation-v12-controls",
+        "admissionCategory": "B"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        },
+        {
+          "layer": "L5",
+          "commandId": "foundation-v12-controls"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/acceptance/authenticatedAlphaClerkLifecycle.ts",
+        "symbol": "verifyAcceptanceClerkZero"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-29",
+      "semantic": "Protected-value scanner is sensitive and all public surfaces contain zero findings",
+      "layers": [
+        "L0",
+        "L1",
+        "L4",
+        "L5"
+      ],
+      "commands": [
+        "non-disclosure",
+        "authenticated-current-build",
+        "ar2-write",
+        "ar2-verify"
+      ],
+      "negativeControls": [
+        "protected-canary",
+        "credential-canary",
+        "raw-stream-leak"
+      ],
+      "semanticOwner": {
+        "path": "scripts/alpha-readiness/protectedValueScanner.ts",
+        "symbol": "scanText"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "non-disclosure",
+        "admissionCategory": "A"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L0",
+          "commandId": "ar2-write"
+        },
+        {
+          "layer": "L4",
+          "commandId": "authenticated-current-build"
+        },
+        {
+          "layer": "L5",
+          "commandId": "non-disclosure"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/alpha-readiness/protectedValueScanner.ts",
+        "symbol": "scanText"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "foundation-v1.2-task-scoped-development-resources",
+      "cleanupRequirement": "two-normal-attempts-plus-fresh-independent-task-zero-and-foreign-preservation",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-30",
+      "semantic": "Evidence is source-bound, deterministic, closed, and adjudicated only by PRE-001A",
+      "layers": [
+        "L0",
+        "L1",
+        "L5"
+      ],
+      "commands": [
+        "pre001a-framework",
+        "foundation-v12-controls",
+        "ar5b-historical-provenance",
+        "authenticated-current-build",
+        "ar2-write",
+        "ar2-verify"
+      ],
+      "negativeControls": [
+        "static-pass",
+        "transformed-evidence",
+        "producer-overall-result",
+        "identity-mismatch"
+      ],
+      "semanticOwner": {
+        "path": "scripts/acceptance/authenticatedAlphaAcceptanceAdjudicator.ts",
+        "symbol": "adjudicateAuthenticatedAlphaAcceptance"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "pre001a-framework",
+        "admissionCategory": "B"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L0",
+          "commandId": "pre001a-framework"
+        },
+        {
+          "layer": "L5",
+          "commandId": "pre001a-framework"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/acceptance/authenticatedAlphaAcceptanceAdjudicator.ts",
+        "symbol": "adjudicateAuthenticatedAlphaAcceptance"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "none",
+      "cleanupRequirement": "isolated-local-root-zero-or-none",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    },
+    {
+      "id": "CP-31",
+      "semantic": "Repository type, lint, build, governance, architecture, and dependency identities remain governed",
+      "layers": [
+        "L0",
+        "L1",
+        "L5"
+      ],
+      "commands": [
+        "typecheck",
+        "lint",
+        "build",
+        "product-governance",
+        "architecture",
+        "ar2-write",
+        "ar2-verify"
+      ],
+      "negativeControls": [
+        "new-architecture-finding",
+        "package-lock-drift",
+        "missing-command"
+      ],
+      "semanticOwner": {
+        "path": "package.json",
+        "symbol": "scripts"
+      },
+      "lowerLayerProof": {
+        "layer": "L1",
+        "commandId": "ar2-write",
+        "admissionCategory": "A",
+        "ownerProof": "criticalPathTestPyramidContracts pure schema validation; carried by L5 without semantic reinterpretation"
+      },
+      "higherLayerProofs": [
+        {
+          "layer": "L0",
+          "commandId": "typecheck"
+        },
+        {
+          "layer": "L5",
+          "commandId": "ar2-write"
+        }
+      ],
+      "evidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "verifyCriticalPathTestPyramid"
+      },
+      "sourceEvidenceOwner": {
+        "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "symbol": "runCriticalPathTestPyramid"
+      },
+      "externalResourceCategory": "none",
+      "cleanupRequirement": "isolated-local-root-zero-or-none",
+      "deterministicRepeat": "two-consecutive-normalized-equal-results-on-identical-source",
+      "currentStatus": "mapped-requirement-not-executed"
+    }
+  ],
+  "commands": [
+    {
+      "id": "typecheck",
+      "lane": "fast",
+      "command": "npm run typecheck",
+      "owner": "TypeScript compiler",
+      "external": false,
+      "cleanup": "none",
+      "repeat": "after every critical source change",
+      "result": "zero exit with diagnostics absent",
+      "admissionCategory": "C",
+      "criticalPathIds": [
+        "CP-31"
+      ],
+      "sourceInputs": [
+        "TypeScript compiler",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "transient-closed-structured-result"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "command-firewall-result",
+      "executionFrequency": "after every critical source change",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L0",
+      "evidenceLayersCarried": [
+        "L0"
+      ]
+    },
+    {
+      "id": "lint",
+      "lane": "fast",
+      "command": "npm run lint",
+      "owner": "Next lint configuration",
+      "external": false,
+      "cleanup": "none",
+      "repeat": "before implementation commit",
+      "result": "zero new errors; warnings recorded",
+      "admissionCategory": "C",
+      "criticalPathIds": [
+        "CP-31"
+      ],
+      "sourceInputs": [
+        "Next lint configuration",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "transient-closed-structured-result"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "command-firewall-result",
+      "executionFrequency": "before implementation commit",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L0",
+      "evidenceLayersCarried": [
+        "L0"
+      ]
+    },
+    {
+      "id": "build",
+      "lane": "fast",
+      "command": "npm run build",
+      "owner": "Next production build",
+      "external": false,
+      "cleanup": "repository build output only",
+      "repeat": "before implementation commit",
+      "result": "build success",
+      "admissionCategory": "C",
+      "criticalPathIds": [
+        "CP-31"
+      ],
+      "sourceInputs": [
+        "Next production build",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "transient-closed-structured-result"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "command-firewall-result",
+      "executionFrequency": "before implementation commit",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L0",
+      "evidenceLayersCarried": [
+        "L0"
+      ]
+    },
+    {
+      "id": "product-governance",
+      "lane": "fast",
+      "command": "npm run validate:product-governance",
+      "owner": "scripts/product/validateProductGovernance.ts",
+      "external": false,
+      "cleanup": "none",
+      "repeat": "after every governance or Product path change",
+      "result": "typed PASS",
+      "admissionCategory": "C",
+      "criticalPathIds": [
+        "CP-31"
+      ],
+      "sourceInputs": [
+        "scripts/product/validateProductGovernance.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "transient-closed-structured-result"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "command-firewall-result",
+      "executionFrequency": "after every governance or Product path change",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L0",
+      "evidenceLayersCarried": [
+        "L0"
+      ]
+    },
+    {
+      "id": "architecture",
+      "lane": "fast",
+      "command": "npm run verify:architecture",
+      "owner": "engine/benchmark/verifyArchitecture.ts",
+      "external": false,
+      "cleanup": "none",
+      "repeat": "before review",
+      "result": "exact inherited seven; zero new",
+      "admissionCategory": "C",
+      "criticalPathIds": [
+        "CP-31"
+      ],
+      "sourceInputs": [
+        "engine/benchmark/verifyArchitecture.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "transient-closed-structured-result"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "command-firewall-result",
+      "executionFrequency": "before review",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L0",
+      "evidenceLayersCarried": [
+        "L0"
+      ]
+    },
+    {
+      "id": "pre001a-framework",
+      "lane": "fast",
+      "command": "npm run validate:authenticated-alpha-acceptance-framework",
+      "owner": "scripts/acceptance/validateAuthenticatedAlphaAcceptanceFramework.ts",
+      "external": false,
+      "cleanup": "none",
+      "repeat": "before review",
+      "result": "43/43 PASS",
+      "admissionCategory": "B",
+      "criticalPathIds": [
+        "CP-30"
+      ],
+      "sourceInputs": [
+        "scripts/acceptance/validateAuthenticatedAlphaAcceptanceFramework.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "existing-source-bound-governed-evidence"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "source-bound-governed-evidence-verification",
+      "executionFrequency": "before review",
+      "alternatives": [
+        "historical qualification/provenance only; never relabel as current owner fact"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L0",
+      "evidenceLayersCarried": [
+        "L0",
+        "L1",
+        "L5"
+      ]
+    },
+    {
+      "id": "foundation-v12-controls",
+      "lane": "fast",
+      "command": "npm run validate:acceptance-foundation-v1-2:controls",
+      "owner": "scripts/acceptance/validateAuthenticatedAlphaAcceptanceRunner.ts",
+      "external": false,
+      "cleanup": "local control fixtures removed",
+      "repeat": "before review",
+      "result": "closed control inventory PASS",
+      "admissionCategory": "B",
+      "criticalPathIds": [
+        "CP-26",
+        "CP-27",
+        "CP-28",
+        "CP-30"
+      ],
+      "sourceInputs": [
+        "scripts/acceptance/validateAuthenticatedAlphaAcceptanceRunner.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "existing-source-bound-governed-evidence"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "source-bound-governed-evidence-verification",
+      "executionFrequency": "before review",
+      "alternatives": [
+        "historical qualification/provenance only; never relabel as current owner fact"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L0",
+      "evidenceLayersCarried": [
+        "L0",
+        "L1",
+        "L5"
+      ]
+    },
+    {
+      "id": "non-disclosure",
+      "lane": "fast",
+      "command": "npm run validate:alpha-readiness-ar1a",
+      "owner": "scripts/alpha-readiness/runNonDisclosureThreatHarness.ts",
+      "external": false,
+      "cleanup": "all isolated roots and children zero",
+      "repeat": "after critical source change",
+      "result": "45/45 plus positive control PASS",
+      "admissionCategory": "A",
+      "criticalPathIds": [
+        "CP-03",
+        "CP-29"
+      ],
+      "sourceInputs": [
+        "scripts/alpha-readiness/runNonDisclosureThreatHarness.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "transient-closed-structured-result"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "closed-typed-owner-or-orchestrator-result",
+      "executionFrequency": "after critical source change",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L1",
+      "evidenceLayersCarried": [
+        "L1",
+        "L5"
+      ]
+    },
+    {
+      "id": "owner-authorization",
+      "lane": "fast",
+      "command": "npm run validate:product-artifact-authorization-before-body-read",
+      "owner": "scripts/product/validateProductArtifactAuthorizationBeforeBodyRead.ts",
+      "external": false,
+      "cleanup": "isolated root zero",
+      "repeat": "after authorization/current-access change",
+      "result": "typed owner checks PASS; unauthorized reads zero",
+      "admissionCategory": "A",
+      "criticalPathIds": [
+        "CP-01",
+        "CP-02",
+        "CP-03"
+      ],
+      "sourceInputs": [
+        "scripts/product/validateProductArtifactAuthorizationBeforeBodyRead.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "transient-closed-structured-result"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "closed-typed-owner-or-orchestrator-result",
+      "executionFrequency": "after authorization/current-access change",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L1",
+      "evidenceLayersCarried": [
+        "L1",
+        "L2"
+      ]
+    },
+    {
+      "id": "leadership-frontend",
+      "lane": "fast",
+      "command": "npm run validate:leadership-conversation-frontend",
+      "owner": "scripts/product/validateLeadershipConversationFrontend.ts",
+      "external": false,
+      "cleanup": "none",
+      "repeat": "after Product experience or action change",
+      "result": "structured Product surface/action contract PASS",
+      "admissionCategory": "A",
+      "criticalPathIds": [
+        "CP-25"
+      ],
+      "sourceInputs": [
+        "scripts/product/validateLeadershipConversationFrontend.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "transient-closed-structured-result"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "closed-typed-owner-or-orchestrator-result",
+      "executionFrequency": "after Product experience or action change",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L1",
+      "evidenceLayersCarried": [
+        "L1",
+        "L2"
+      ]
+    },
+    {
+      "id": "page-authorization",
+      "lane": "fast",
+      "command": "npm run validate:leadership-conversation-page-authorization",
+      "owner": "scripts/product/validateLeadershipConversationPageAuthorization.ts",
+      "external": false,
+      "cleanup": "isolated root zero",
+      "repeat": "after page authorization or current-access change",
+      "result": "structured role/denial authorization PASS",
+      "admissionCategory": "A",
+      "criticalPathIds": [
+        "CP-16",
+        "CP-25"
+      ],
+      "sourceInputs": [
+        "scripts/product/validateLeadershipConversationPageAuthorization.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "transient-closed-structured-result"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "closed-typed-owner-or-orchestrator-result",
+      "executionFrequency": "after page authorization or current-access change",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L1",
+      "evidenceLayersCarried": [
+        "L1",
+        "L2"
+      ]
+    },
+    {
+      "id": "materialization-success",
+      "lane": "fast",
+      "command": "npm run validate:canonical-mutation-product-materialization-success",
+      "owner": "scripts/product/validateCanonicalMutationProductMaterializationSuccess.ts",
+      "external": false,
+      "cleanup": "isolated root zero",
+      "repeat": "before implementation commit",
+      "result": "typed PASS",
+      "admissionCategory": "D",
+      "criticalPathIds": [],
+      "sourceInputs": [
+        "scripts/product/validateCanonicalMutationProductMaterializationSuccess.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "transient-closed-structured-result"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "diagnostic-exit-and-prose-result-not-admissible-as-owner-proof",
+      "executionFrequency": "before implementation commit",
+      "alternatives": [
+        "diagnostic regression only; runAtomicityValidation supplies the admissible materialization owner measurement"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L2",
+      "evidenceLayersCarried": []
+    },
+    {
+      "id": "materialization-atomicity",
+      "lane": "recovery",
+      "command": "npm run validate:canonical-mutation-product-materialization-atomicity",
+      "owner": "scripts/product/validateCanonicalMutationProductMaterializationAtomicity.ts",
+      "external": false,
+      "cleanup": "isolated root zero",
+      "repeat": "before review and after recovery-owner change",
+      "result": "typed boundary inventory PASS",
+      "admissionCategory": "A",
+      "criticalPathIds": [
+        "CP-19"
+      ],
+      "sourceInputs": [
+        "scripts/product/validateCanonicalMutationProductMaterializationAtomicity.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "transient-closed-structured-result"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "closed-typed-owner-or-orchestrator-result",
+      "executionFrequency": "before review and after recovery-owner change",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L3",
+      "evidenceLayersCarried": [
+        "L1",
+        "L2",
+        "L3"
+      ]
+    },
+    {
+      "id": "materialization-failure",
+      "lane": "recovery",
+      "command": "npm run validate:canonical-mutation-product-materialization-failure-atomicity",
+      "owner": "scripts/product/validateCanonicalMutationProductMaterializationFailure.ts",
+      "external": false,
+      "cleanup": "isolated root zero",
+      "repeat": "before review and after recovery-owner change",
+      "result": "typed failure/recovery PASS",
+      "admissionCategory": "A",
+      "criticalPathIds": [
+        "CP-19"
+      ],
+      "sourceInputs": [
+        "scripts/product/validateCanonicalMutationProductMaterializationFailure.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "transient-closed-structured-result"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "closed-typed-owner-or-orchestrator-result",
+      "executionFrequency": "before review and after recovery-owner change",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L3",
+      "evidenceLayersCarried": [
+        "L1",
+        "L3"
+      ]
+    },
+    {
+      "id": "materialization-fresh",
+      "lane": "recovery",
+      "command": "npm run validate:canonical-mutation-product-materialization-fresh-process",
+      "owner": "scripts/product/validateCanonicalMutationProductMaterializationFreshProcess.ts",
+      "external": false,
+      "cleanup": "shared isolated root zero",
+      "repeat": "before review and after recovery-owner change",
+      "result": "fresh-process digest-bound PASS",
+      "admissionCategory": "A",
+      "criticalPathIds": [
+        "CP-16",
+        "CP-17",
+        "CP-19"
+      ],
+      "sourceInputs": [
+        "scripts/product/validateCanonicalMutationProductMaterializationFreshProcess.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "transient-closed-structured-result"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "closed-typed-owner-or-orchestrator-result",
+      "executionFrequency": "before review and after recovery-owner change",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L3",
+      "evidenceLayersCarried": [
+        "L1",
+        "L2",
+        "L3"
+      ]
+    },
+    {
+      "id": "replay-joined",
+      "lane": "recovery",
+      "command": "npm run validate:leadership-conversation-replay",
+      "owner": "scripts/product/validateLeadershipConversationReplay.ts",
+      "external": false,
+      "cleanup": "isolated owner roots zero",
+      "repeat": "before review",
+      "result": "joined inventory PASS; missing/duplicates zero",
+      "admissionCategory": "A",
+      "criticalPathIds": [
+        "CP-01",
+        "CP-04",
+        "CP-05",
+        "CP-06",
+        "CP-07",
+        "CP-08",
+        "CP-09",
+        "CP-10",
+        "CP-11",
+        "CP-12",
+        "CP-13",
+        "CP-14",
+        "CP-15",
+        "CP-16",
+        "CP-20",
+        "CP-21"
+      ],
+      "sourceInputs": [
+        "scripts/product/validateLeadershipConversationReplay.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "transient-closed-structured-result"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "closed-typed-owner-or-orchestrator-result",
+      "executionFrequency": "before review",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L3",
+      "evidenceLayersCarried": [
+        "L1",
+        "L2",
+        "L3"
+      ]
+    },
+    {
+      "id": "core-recovery",
+      "lane": "recovery",
+      "command": "npm run validate:alpha-core-failure-recovery",
+      "owner": "scripts/product/validateAlphaCriticalFailureRecovery.ts",
+      "external": false,
+      "cleanup": "isolated roots zero",
+      "repeat": "twice before review; again after recovery-owner change",
+      "result": "102/102 typed cases PASS",
+      "admissionCategory": "A",
+      "criticalPathIds": [
+        "CP-04",
+        "CP-05",
+        "CP-08",
+        "CP-18",
+        "CP-21",
+        "CP-22"
+      ],
+      "sourceInputs": [
+        "scripts/product/validateAlphaCriticalFailureRecovery.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "transient-closed-structured-result"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "closed-typed-owner-or-orchestrator-result",
+      "executionFrequency": "twice before review; again after recovery-owner change",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L3",
+      "evidenceLayersCarried": [
+        "L1",
+        "L3"
+      ]
+    },
+    {
+      "id": "ar5a-evidence",
+      "lane": "recovery",
+      "command": "npm run validate:alpha-readiness-ar5a",
+      "owner": "scripts/alpha-readiness/runCoreFailureRecoveryHarness.ts",
+      "external": false,
+      "cleanup": "isolated roots zero",
+      "repeat": "verify exact immutable provenance",
+      "result": "source-bound evidence verification PASS",
+      "admissionCategory": "B",
+      "criticalPathIds": [
+        "CP-18"
+      ],
+      "sourceInputs": [
+        "scripts/alpha-readiness/runCoreFailureRecoveryHarness.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "existing-source-bound-governed-evidence"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "source-bound-governed-evidence-verification",
+      "executionFrequency": "verify exact immutable provenance",
+      "alternatives": [
+        "historical qualification/provenance only; never relabel as current owner fact"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L5",
+      "evidenceLayersCarried": [
+        "L5"
+      ]
+    },
+    {
+      "id": "observability-semantic",
+      "lane": "recovery",
+      "command": "npm run validate:alpha-readiness-ar3",
+      "owner": "scripts/alpha-readiness/runContentSafeObservabilityHarness.ts",
+      "external": false,
+      "cleanup": "isolated roots zero",
+      "repeat": "before review",
+      "result": "current owner semantic parity PASS; historical identity preserved",
+      "admissionCategory": "B",
+      "criticalPathIds": [
+        "CP-23"
+      ],
+      "sourceInputs": [
+        "scripts/alpha-readiness/runContentSafeObservabilityHarness.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "existing-source-bound-governed-evidence"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "source-bound-governed-evidence-verification",
+      "executionFrequency": "before review",
+      "alternatives": [
+        "historical qualification/provenance only; never relabel as current owner fact"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L2",
+      "evidenceLayersCarried": [
+        "L1",
+        "L2"
+      ]
+    },
+    {
+      "id": "telemetry-semantic",
+      "lane": "recovery",
+      "command": "npm run validate:alpha-privacy-safe-telemetry",
+      "owner": "scripts/product/validateAlphaPrivacySafeProductTelemetry.ts",
+      "external": false,
+      "cleanup": "isolated roots zero",
+      "repeat": "before review",
+      "result": "exact 13-state typed parity PASS",
+      "admissionCategory": "A",
+      "criticalPathIds": [
+        "CP-24"
+      ],
+      "sourceInputs": [
+        "scripts/product/validateAlphaPrivacySafeProductTelemetry.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "transient-closed-structured-result"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "repository-local process; child processes only where existing owner declares them",
+      "browserClerkRequirement": "none",
+      "localRootRequirement": "exact isolated local roots where owner requires; otherwise none",
+      "expectedResultType": "closed-typed-owner-or-orchestrator-result",
+      "executionFrequency": "before review",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L2",
+      "evidenceLayersCarried": [
+        "L1",
+        "L2"
+      ]
+    },
+    {
+      "id": "ar5b-historical-provenance",
+      "lane": "recovery",
+      "command": "npm run validate:alpha-readiness-ar5b",
+      "owner": "scripts/acceptance/validateAr5bAuthenticatedRecoveryConformance.ts",
+      "external": true,
+      "cleanup": "normal attempts one and two, then fresh independent task-scoped zero",
+      "repeat": "verify exact immutable AR-5B provenance when its source identity remains applicable",
+      "result": "source-bound historical evidence verification; never current AR-2 fact",
+      "admissionCategory": "B",
+      "criticalPathIds": [
+        "CP-30"
+      ],
+      "sourceInputs": [
+        "scripts/acceptance/validateAr5bAuthenticatedRecoveryConformance.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "existing-source-bound-governed-evidence"
+      ],
+      "environment": "repository-local deterministic environment; react-server conditions where command declares them",
+      "processRequirements": "parent-controlled child processes with structured admission",
+      "browserClerkRequirement": "Foundation V1.2 Playwright Chromium and Clerk development/test lifecycle",
+      "localRootRequirement": "manifest-owned /private/tmp task/browser/measurement roots",
+      "expectedResultType": "source-bound-governed-evidence-verification",
+      "executionFrequency": "verify exact immutable AR-5B provenance when its source identity remains applicable",
+      "alternatives": [
+        "historical qualification/provenance only; never relabel as current owner fact"
+      ],
+      "sourceModificationRequired": false,
+      "executionLayer": "L5",
+      "evidenceLayersCarried": [
+        "L5"
+      ]
+    },
+    {
+      "id": "authenticated-current-build",
+      "lane": "authenticated",
+      "command": "npm run validate:alpha-readiness-ar2:authenticated",
+      "owner": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+      "status": "planned-by-later-implementation-maximum",
+      "external": true,
+      "cleanup": "normal attempts one and two, then fresh independent task-scoped zero",
+      "repeat": "once final candidate and once canonical integration",
+      "result": "Foundation V1.2 current-build observations and PRE-001A adjudication from exported AR-5B measurement API",
+      "admissionCategory": "A",
+      "criticalPathIds": [
+        "CP-01",
+        "CP-02",
+        "CP-03",
+        "CP-06",
+        "CP-07",
+        "CP-08",
+        "CP-09",
+        "CP-10",
+        "CP-11",
+        "CP-12",
+        "CP-13",
+        "CP-14",
+        "CP-15",
+        "CP-16",
+        "CP-17",
+        "CP-18",
+        "CP-20",
+        "CP-21",
+        "CP-22",
+        "CP-23",
+        "CP-24",
+        "CP-25",
+        "CP-26",
+        "CP-27",
+        "CP-28",
+        "CP-29",
+        "CP-30"
+      ],
+      "sourceInputs": [
+        "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "transient-closed-structured-result"
+      ],
+      "environment": "NODE_ENV=test; react-server conditions; owner-issued task manifest; existing test credentials only",
+      "processRequirements": "parent-controlled child processes with structured admission",
+      "browserClerkRequirement": "Foundation V1.2 Playwright Chromium and Clerk development/test lifecycle",
+      "localRootRequirement": "manifest-owned /private/tmp task/browser/measurement roots",
+      "expectedResultType": "closed-typed-owner-or-orchestrator-result",
+      "executionFrequency": "once final candidate and once canonical integration",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": true,
+      "executionLayer": "L4",
+      "evidenceLayersCarried": [
+        "L1",
+        "L2",
+        "L3",
+        "L4"
+      ]
+    },
+    {
+      "id": "ar2-write",
+      "lane": "closure",
+      "command": "npm run validate:alpha-readiness-ar2:write",
+      "owner": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+      "status": "planned-by-later-implementation-maximum",
+      "external": true,
+      "cleanup": "delegated commands must finish terminal cleanup before admission",
+      "repeat": "two consecutive semantic-equal executions before commit",
+      "result": "closed AR-2 JSON and derived Markdown",
+      "admissionCategory": "A",
+      "criticalPathIds": [
+        "CP-17",
+        "CP-20",
+        "CP-21",
+        "CP-22",
+        "CP-23",
+        "CP-24",
+        "CP-25",
+        "CP-27",
+        "CP-28",
+        "CP-29",
+        "CP-30",
+        "CP-31"
+      ],
+      "sourceInputs": [
+        "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "docs/agent-work-orders/evidence/alpha-readiness/ar2/AR2_CRITICAL_PATH_TEST_PYRAMID_RESULTS.json",
+        "docs/agent-work-orders/evidence/alpha-readiness/ar2/AR2_CRITICAL_PATH_TEST_PYRAMID_REPORT.md"
+      ],
+      "environment": "NODE_ENV=test; react-server conditions; owner-issued task manifest; existing test credentials only",
+      "processRequirements": "parent-controlled child processes with structured admission",
+      "browserClerkRequirement": "Foundation V1.2 Playwright Chromium and Clerk development/test lifecycle",
+      "localRootRequirement": "manifest-owned /private/tmp task/browser/measurement roots",
+      "expectedResultType": "closed-typed-owner-or-orchestrator-result",
+      "executionFrequency": "two consecutive semantic-equal executions before commit",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": true,
+      "executionLayer": "L5",
+      "evidenceLayersCarried": [
+        "L0",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5"
+      ]
+    },
+    {
+      "id": "ar2-verify",
+      "lane": "closure",
+      "command": "npm run validate:alpha-readiness-ar2",
+      "owner": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+      "status": "planned-by-later-implementation-maximum",
+      "external": true,
+      "cleanup": "fresh execution where current-build reproduction is required",
+      "repeat": "post-commit, canonical integration, and post-Control-Tower",
+      "result": "recompute source, inventory, command results, evidence, and report",
+      "admissionCategory": "A",
+      "criticalPathIds": [
+        "CP-17",
+        "CP-20",
+        "CP-21",
+        "CP-22",
+        "CP-23",
+        "CP-24",
+        "CP-25",
+        "CP-27",
+        "CP-28",
+        "CP-29",
+        "CP-30",
+        "CP-31"
+      ],
+      "sourceInputs": [
+        "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+        "package.json"
+      ],
+      "evidenceOutputs": [
+        "docs/agent-work-orders/evidence/alpha-readiness/ar2/AR2_CRITICAL_PATH_TEST_PYRAMID_RESULTS.json",
+        "docs/agent-work-orders/evidence/alpha-readiness/ar2/AR2_CRITICAL_PATH_TEST_PYRAMID_REPORT.md"
+      ],
+      "environment": "NODE_ENV=test; react-server conditions; owner-issued task manifest; existing test credentials only",
+      "processRequirements": "parent-controlled child processes with structured admission",
+      "browserClerkRequirement": "Foundation V1.2 Playwright Chromium and Clerk development/test lifecycle",
+      "localRootRequirement": "manifest-owned /private/tmp task/browser/measurement roots",
+      "expectedResultType": "closed-typed-owner-or-orchestrator-result",
+      "executionFrequency": "post-commit, canonical integration, and post-Control-Tower",
+      "alternatives": [
+        "overlapping validators are diagnostic unless separately listed"
+      ],
+      "sourceModificationRequired": true,
+      "executionLayer": "L5",
+      "evidenceLayersCarried": [
+        "L0",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5"
+      ]
+    }
+  ],
+  "thresholds": {
+    "mandatoryCommandPassPercent": 100,
+    "requiredFactSupportPercent": 100,
+    "unsupportedCriticalFacts": 0,
+    "duplicateOrConflictingOwners": 0,
+    "staticTransformedInferredObservations": 0,
+    "trustedFails": 0,
+    "blockedResults": 0,
+    "unauthorizedProtectedReads": 0,
+    "disallowedDuplicateCanonicalRecords": 0,
+    "publicScannerFindings": 0,
+    "taskOwnedResidue": 0,
+    "newArchitectureFindings": 0,
+    "allowedInheritedArchitectureFindings": 7,
+    "packageLockDrift": 0,
+    "deterministicConsecutiveRuns": 2,
+    "resultPrecedence": [
+      "BLOCKED",
+      "FAIL",
+      "PASS"
+    ],
+    "flakeRule": "Any timing-luck, arbitrary-retry, timeout-increase, order, ambient-state, prior-residue, manual-browser, or inferred-cleanup dependency is BLOCKED — NONDETERMINISTIC TEST PYRAMID."
+  },
+  "evidenceContract": {
+    "schemaVersion": "1",
+    "requiredBindings": [
+      "contractIdentity",
+      "canonicalParent",
+      "criticalPathInventoryDigest",
+      "layerDigest",
+      "commandInventoryDigest",
+      "ownerMapDigest",
+      "thresholdDigest",
+      "implementationSourceManifest",
+      "sourceDigest",
+      "layerResults",
+      "criticalPathResults",
+      "deterministicRepeat",
+      "scanner",
+      "cleanup",
+      "independentZero",
+      "architecture",
+      "packageLockDigest",
+      "overallResult"
+    ],
+    "overallResults": [
+      "PASS",
+      "FAIL",
+      "BLOCKED"
+    ],
+    "precedence": [
+      "BLOCKED",
+      "FAIL",
+      "PASS"
+    ],
+    "markdownDerivedOnlyFromJson": true,
+    "prohibited": [
+      "declared-totals",
+      "static-pass",
+      "historical-relabel",
+      "exit-code-as-owner-fact",
+      "manual-coverage",
+      "silent-not-applicable"
+    ]
+  },
+  "laterImplementationMaximum": [
+    {
+      "ordinal": 1,
+      "path": "package.json",
+      "state": "MODIFIED",
+      "responsibility": "Add exact AR-2 authenticated, write, and verify commands only.",
+      "ownerBoundary": "repository command manifest",
+      "reason": "Without it the canonical command lanes are not reproducible.",
+      "sourceInputs": [
+        "canonical inventory",
+        "AR-2 runner path"
+      ],
+      "outputs": [
+        "three exact npm commands"
+      ],
+      "executesProcesses": false,
+      "externalResources": false,
+      "writesEvidence": false,
+      "packageLockAffected": false,
+      "activation": "always",
+      "negativeControl": "package-lock byte equality and exact three-command diff"
+    },
+    {
+      "ordinal": 2,
+      "path": "scripts/alpha-readiness/criticalPathTestPyramidContracts.ts",
+      "state": "NEW",
+      "responsibility": "Own only closed AR-2 layer, command, coverage, determinism, source-binding, evidence, and PASS/FAIL/BLOCKED schemas plus pure validation.",
+      "ownerBoundary": "noncanonical AR-2 evidence contracts",
+      "reason": "PRE-001A cannot represent command/layer/path pyramid results; removing this path leaves schema admission unowned.",
+      "sourceInputs": [
+        "canonical governance inventory"
+      ],
+      "outputs": [
+        "closed types",
+        "pure validators",
+        "digest helpers"
+      ],
+      "executesProcesses": false,
+      "externalResources": false,
+      "writesEvidence": false,
+      "packageLockAffected": false,
+      "activation": "always",
+      "negativeControl": "no process, filesystem mutation, owner fact, or Product import"
+    },
+    {
+      "ordinal": 3,
+      "path": "scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
+      "state": "NEW",
+      "responsibility": "Load inventory, execute lanes, validate structured results/evidence identities, enforce order/frequency/repeats, calculate coverage, run scanner/cleanup gates, write/verify JSON and derived Markdown, and verify Control Tower.",
+      "ownerBoundary": "noncanonical AR-2 orchestration and evidence",
+      "reason": "Removing it leaves execution ordering, admission, deterministic evidence, and verification unowned.",
+      "sourceInputs": [
+        "canonical inventory",
+        "AR-2 contracts",
+        "existing commands/APIs"
+      ],
+      "outputs": [
+        "AR-2 JSON",
+        "derived Markdown",
+        "verify result"
+      ],
+      "executesProcesses": true,
+      "externalResources": true,
+      "writesEvidence": true,
+      "packageLockAffected": false,
+      "activation": "always",
+      "negativeControl": "cannot recreate semantic owners, parse prose into facts, or hard-code totals/PASS"
+    },
+    {
+      "ordinal": 4,
+      "path": "scripts/acceptance/validateAr5bAuthenticatedRecoveryConformance.ts",
+      "state": "MODIFIED",
+      "responsibility": "Expose one import-safe typed current-build measurement API using existing AR-5B/Foundation owners while preserving historical CLI/evidence semantics.",
+      "ownerBoundary": "AR-5B current-build measurement adapter only",
+      "reason": "AR-2 changes source identity; without this adapter only stale historical AR-5B evidence or CLI prose is available, neither admissible as current-build L4 proof.",
+      "sourceInputs": [
+        "Foundation V1.2 owner-issued task authority",
+        "AR-2 source/profile/task/run identities"
+      ],
+      "outputs": [
+        "seven closed current-build envelopes and owner packets; no AR-2 result"
+      ],
+      "executesProcesses": true,
+      "externalResources": true,
+      "writesEvidence": false,
+      "packageLockAffected": false,
+      "activation": "always-before-any-implementation-mutation",
+      "negativeControl": "historical CLI cannot be relabelled; API returns observations only and never AR-2 PASS"
+    },
+    {
+      "ordinal": 5,
+      "path": "docs/agent-work-orders/evidence/alpha-readiness/ar2/AR2_CRITICAL_PATH_TEST_PYRAMID_RESULTS.json",
+      "state": "NEW",
+      "responsibility": "Persist complete source-bound AR-2 machine evidence.",
+      "ownerBoundary": "AR-2 evidence artifact",
+      "reason": "Removing it leaves no independently verifiable machine result.",
+      "sourceInputs": [
+        "validated orchestrator result"
+      ],
+      "outputs": [
+        "machine evidence"
+      ],
+      "executesProcesses": false,
+      "externalResources": false,
+      "writesEvidence": true,
+      "packageLockAffected": false,
+      "activation": "always",
+      "negativeControl": "closed schema; no raw identities/content/paths or manually authored observations"
+    },
+    {
+      "ordinal": 6,
+      "path": "docs/agent-work-orders/evidence/alpha-readiness/ar2/AR2_CRITICAL_PATH_TEST_PYRAMID_REPORT.md",
+      "state": "NEW",
+      "responsibility": "Persist deterministic report derived solely from the JSON result.",
+      "ownerBoundary": "AR-2 evidence presentation",
+      "reason": "Removing it leaves no canonical human-readable closure report.",
+      "sourceInputs": [
+        "AR-2 JSON only"
+      ],
+      "outputs": [
+        "Markdown report"
+      ],
+      "executesProcesses": false,
+      "externalResources": false,
+      "writesEvidence": true,
+      "packageLockAffected": false,
+      "activation": "always",
+      "negativeControl": "byte-exact renderer parity with JSON"
+    }
+  ],
+  "conditionalImplementationPaths": [],
+  "negativeControls": [
+    "unknown-layer",
+    "unknown-command",
+    "missing-critical-path",
+    "duplicate-critical-path-id",
+    "duplicate-semantic-owner",
+    "unsupported-fact",
+    "static-pass",
+    "transformed-historical-result",
+    "profile-as-observation",
+    "producer-overall-result",
+    "identity-mismatch",
+    "source-manifest-missing-extra-stale",
+    "command-missing-or-changed",
+    "exit-only-substantive-proof",
+    "nondeterministic-repeat",
+    "browser-only-owner-proof",
+    "unauthorized-read",
+    "duplicate-canonical-record",
+    "public-scanner-leak",
+    "cleanup-residue",
+    "foreign-resource-mutation",
+    "architecture-baseline-drift",
+    "package-lock-drift",
+    "report-json-divergence",
+    "postcommit-source-drift",
+    "control-tower-scope-drift"
+  ],
+  "stoppingConditions": [
+    "new-product-or-architecture-decision",
+    "foundation-or-completed-gate-change",
+    "new-owner-or-persistence-boundary",
+    "implementation-path-six",
+    "dependency-or-lock-change",
+    "production-or-customer-access",
+    "unmapped-critical-invariant",
+    "ambiguous-owner",
+    "missing-command",
+    "nondeterministic-critical-test",
+    "cleanup-or-independent-zero-failure",
+    "scanner-leak",
+    "new-architecture-finding",
+    "review-refusal",
+    "non-fast-forward-integration-or-preservation"
+  ],
+  "implementationClassification": "contracts-plus-aggregator-with-one-bounded-authenticated-owner-adapter",
+  "contractsDecision": {
+    "model": "B",
+    "selected": "one AR-2-specific contracts path is necessary",
+    "reason": "PRE-001A models authenticated profile measurements and adjudication, not AR-2 layer, command, coverage, deterministic-repeat, source/inventory, and overall pyramid result schemas.",
+    "rejectedModel": "aggregator-only would place closed AR-2 schemas and pure validation inside process orchestration and leave no independent schema owner."
+  },
+  "authenticatedExecutionDecision": {
+    "option": "2-rerun-foundation-v1-2",
+    "activationRule": "always for AR-2 final candidate because package.json and new AR-2 source paths change the complete current-build source identity bound by AR-5B; historical AR-5B evidence remains immutable provenance only",
+    "command": "npm run validate:alpha-readiness-ar2:authenticated",
+    "adapterPath": "scripts/acceptance/validateAr5bAuthenticatedRecoveryConformance.ts",
+    "adapterSymbol": "measureAr5bAuthenticatedRecoveryCurrentBuild",
+    "resourcePlan": "one Foundation V1.2 owner-issued finite development/test task plan",
+    "cleanup": "normal attempts one and two plus distinct fresh process/client exact task-scoped zero and foreign/ambiguous preservation",
+    "authority": "later consolidated Sensitive Gate Contract"
+  },
+  "controlTower": {
+    "path": "docs/Product/PRODUCT_ROADMAP.md",
+    "countedInImplementationMaximum": false,
+    "commitMessage": "docs: complete AR-2 test-pyramid freeze",
+    "scope": "one-path direct descendant after implementation; immutable parent/tree/blob/diff verification"
+  },
+  "implementationCommitMessage": "test: freeze AR-2 critical-path test pyramid",
+  "sourceDigestExclusions": [
+    "docs/agent-work-orders/evidence/alpha-readiness/ar2/AR2_CRITICAL_PATH_TEST_PYRAMID_RESULTS.json",
+    "docs/agent-work-orders/evidence/alpha-readiness/ar2/AR2_CRITICAL_PATH_TEST_PYRAMID_REPORT.md",
+    "docs/Product/PRODUCT_ROADMAP.md"
+  ],
+  "auditedExcludedCandidates": [
+    {
+      "path": "package-lock.json",
+      "reason": "no dependency change; byte equality mandatory"
+    },
+    {
+      "path": "scripts/acceptance/authenticatedAlphaAcceptanceContracts.ts",
+      "reason": "PRE-001A remains sufficient for authenticated envelopes; AR-2-specific schemas have a separate noncanonical contracts owner"
+    },
+    {
+      "path": "scripts/acceptance/authenticatedAlphaAcceptanceAdjudicator.ts",
+      "reason": "unchanged PRE-001A remains sole authenticated adjudicator"
+    },
+    {
+      "path": "scripts/acceptance/validateAr3CurrentBuildConformance.ts",
+      "reason": "Foundation V1.2 already exposes the ordinary lifecycle API; AR-5B adapter composes it without changing Foundation"
+    },
+    {
+      "path": "scripts/alpha-readiness/runNonDisclosureThreatHarness.ts",
+      "reason": "existing structured AR-1A command is directly admissible"
+    },
+    {
+      "path": "scripts/alpha-readiness/runContentSafeObservabilityHarness.ts",
+      "reason": "historical evidence remains provenance; current owner observations come through the AR-5B adapter"
+    },
+    {
+      "path": "scripts/alpha-readiness/runPrivacySafeProductTelemetryHarness.ts",
+      "reason": "historical evidence remains provenance; typed current 13-state API already exists"
+    },
+    {
+      "path": "scripts/alpha-readiness/runCoreFailureRecoveryHarness.ts",
+      "reason": "historical AR-5A provenance only; current owner APIs are already typed"
+    },
+    {
+      "path": "scripts/product/validateAlphaCriticalFailureRecovery.ts",
+      "reason": "required telemetry API already exported and import-safe; no correction required"
+    },
+    {
+      "path": "scripts/product/validateCanonicalMutationProductMaterializationAtomicity.ts",
+      "reason": "required durable materialization API already exported and import-safe"
+    },
+    {
+      "path": "scripts/product/validateLeadershipConversationReplay.ts",
+      "reason": "required joined inventory API already exported and task-authority-bound"
+    },
+    {
+      "path": "scripts/product/validateLeadershipConversationFrontend.ts",
+      "reason": "existing command is sufficient; no source correction"
+    },
+    {
+      "path": "scripts/product/validateLeadershipConversationPageAuthorization.ts",
+      "reason": "existing command is sufficient; no source correction"
+    },
+    {
+      "path": "Product/Runtime/Workflow/authorization/telemetry owners",
+      "reason": "existing owners are measured, not modified"
+    },
+    {
+      "path": "historical evidence paths",
+      "reason": "immutable provenance; never rewritten for AR-2"
+    }
+  ],
+  "inventoryDigest": "40bfc9de7e27db5107b2bf275c59784e8aac66bd58b2076e958509ca69fd84fb"
+}

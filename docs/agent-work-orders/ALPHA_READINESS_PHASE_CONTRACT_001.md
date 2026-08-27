@@ -67,15 +67,29 @@ noncanonical and cannot authorize, mutate Product truth, or influence cognition.
 6. `AR-2-PRE-001B — AUTHENTICATED ALPHA ACCEPTANCE RUNNER AND AR-3 CURRENT-BUILD CONFORMANCE`
 7. `AR-5A — CORE FAILURE-RECOVERY HARDENING`
 8. `AR-5B — AUTHENTICATED RECOVERY CONFORMANCE`
-9. `AR-2 — CRITICAL-PATH TEST PYRAMID FREEZE`
-10. `AR-1B — COMPLETE GOVERNED COGNITION NON-DISCLOSURE ADVERSARIAL ACCEPTANCE`
-11. `AR-6 — INTEGRATED ALPHA READINESS ACCEPTANCE`
+9. `AR-2-GOV-001 — CRITICAL-PATH TEST PYRAMID GATE CONTRACT`
+10. `AR-2 — CRITICAL-PATH TEST PYRAMID FREEZE`
+11. `AR-1B — COMPLETE GOVERNED COGNITION NON-DISCLOSURE ADVERSARIAL ACCEPTANCE`
+12. `AR-6 — INTEGRATED ALPHA READINESS ACCEPTANCE`
 
 `AR-1A` defines the proof system and `AR-1B` executes its complete adversarial
 acceptance after observability, recovery, and the test pyramid are ready. The
-former monolithic AR-5 execution is paused and decomposed; AR-5 remains in
-progress until both AR-5A and AR-5B pass. Each subgate remains a separate
-bounded commit. Read-only preparation may overlap.
+former monolithic AR-5 execution was decomposed; AR-5 is complete because both
+AR-5A and AR-5B pass. Each subgate remains a separate bounded commit. Read-only
+preparation may overlap.
+
+`AR-2-GOV-001` is the prerequisite governance definition for AR-2 execution.
+Its canonical work order and requirements-only inventory are:
+
+- `docs/agent-work-orders/AR2_CRITICAL_PATH_TEST_PYRAMID_GATE_CONTRACT_001.md`;
+- `docs/agent-work-orders/evidence/alpha-readiness/ar2-gov-001/AR2_CRITICAL_PATH_TEST_PYRAMID_INVENTORY.json`; and
+- `docs/agent-work-orders/evidence/alpha-readiness/ar2-gov-001/AR2_CRITICAL_PATH_TEST_PYRAMID_INVENTORY_REPORT.md`.
+
+AR-2 implementation may not begin until those paths are canonically integrated
+and a separate Sensitive Gate Contract authorizes the exact frozen execution
+maximum. PRE-001A, Foundation V1.2, AR-5A, and AR-5B remain frozen completed
+dependencies. The execution order remains AR-2, then AR-1B, then AR-6; Baseline
+A and all later exclusions remain unchanged.
 
 The accepted current Product journey is one fully executed and closed
 Occurrence 1 followed by What Changed, explicit Prepare Again, and one distinct
