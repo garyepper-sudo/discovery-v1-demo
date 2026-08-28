@@ -42,6 +42,29 @@ import { createAlphaTelemetryComposition } from "../../lib/telemetry/alphaTeleme
 const ORG = "ar5-validation-org";
 let spawnedChildProcesses = 0;
 let diagnosticStage = "owner-recovery";
+export const ALPHA_CRITICAL_FAILURE_RECOVERY_MEASUREMENT_VERSION = "1" as const;
+// This digest is the independent, frozen ID/outcome catalog for the 102 owner
+// cases.  It deliberately lives outside the measurement construction path so
+// a changed, missing, duplicated, or substituted case cannot bless itself.
+export const ALPHA_CRITICAL_FAILURE_RECOVERY_CASE_CATALOG_DIGEST = "25b3d1f493d6aa59132c7bc08b1f1f085fde08a849a94aef16a054283f8e8d9b" as const;
+type MeasuredOutcome = "verified" | "committed" | "cas-conflict" | "exact-replay" | "incompatible-replay" | "recovery-blocked";
+type CaseDetail = Readonly<{ canonicalDigest?: string; terminalDisposition?: MeasuredOutcome; originalReaderOutcome?: MeasuredOutcome; freshReaderOutcome?: MeasuredOutcome; repeatedReaderOutcome?: MeasuredOutcome }>;
+export type AlphaCriticalFailureRecoveryCaseMeasurementV1 = Readonly<{
+  schemaVersion: "1"; caseId: string; caseOrdinal: number; ownerCategory: "runtime" | "workflow" | "authorization" | "observability" | "telemetry" | "scanner"; sourceDigest: string; taskDigest: string; runDigest: string; processSegment: "parent" | "original-reader" | "fresh-reader" | "multi-process"; stageInventory: readonly string[]; ownerOperation: string; executionStatus: "satisfied"; ownerOutcome: MeasuredOutcome; expectedOutcome: MeasuredOutcome; canonicalBeforeDigest: string | "not-applicable"; canonicalAfterDigest: string | "not-applicable"; durableTerminalDisposition: MeasuredOutcome | "not-applicable"; originalReaderOutcome: MeasuredOutcome | "not-applicable"; freshReaderOutcome: MeasuredOutcome | "not-applicable"; repeatedReaderOutcome: MeasuredOutcome | "not-applicable"; duplicateFindings: number; authorizationFindings: number; residueCount: 0; semanticDigest: string; measurementDigest: string;
+}>;
+export type AlphaCriticalFailureRecoveryMatrixMeasurementV1 = Readonly<{
+  schemaVersion: "1"; owner: "validateAlphaCriticalFailureRecovery"; sourceDigest: string; taskDigest: string; runDigest: string; cases: readonly AlphaCriticalFailureRecoveryCaseMeasurementV1[]; caseCount: number; outcomeInventory: Readonly<Record<MeasuredOutcome, number>>; duplicateCases: 0; missingCases: 0; conflictingCases: 0; cleanup: Readonly<{ rootAbsent: true; residueCount: 0 }>; matrixDigest: string; authorityDigest: string;
+}>;
+export class AlphaCriticalFailureRecoveryCaseFailure extends Error {
+  readonly caseId: string;
+  readonly ownerOutcome: MeasuredOutcome;
+  constructor(caseId: string, ownerOutcome: MeasuredOutcome) {
+    super("Critical failure recovery case failed");
+    this.name = "AlphaCriticalFailureRecoveryCaseFailure";
+    this.caseId = caseId;
+    this.ownerOutcome = ownerOutcome;
+  }
+}
 type TelemetryParityStateMeasurementV1=Readonly<{schemaVersion:"1";state:string;telemetryOwnerOutcome:string;productOutputDigest:string;durableProductBeforeDigest:string;durableProductAfterDigest:string;authorizationReadDigest:string;recoveryOutcomeDigest:string;eventInventoryDigest:string;stateMeasurementDigest:string}>;
 const alphaTelemetryParityStates=["enabled-consent","disabled","consent-absent","consent-expired","consent-revoked","missing-active-key","missing-historical-key","repository-rejecting","repository-throwing","repository-unavailable","sweep-failure","deletion-pending","denied-operator"] as const;
 const bytes = (name: string) =>
@@ -494,23 +517,20 @@ async function main(options?:Readonly<{externalRoot:string;suppressOutput:true;t
   if (externalRoot) await mkdir(root, { recursive: true, mode: 0o700 });
   const ownedAdversarialSymlinks: string[] = [];
   try {
-    type MeasuredOutcome =
-      | "verified"
-      | "committed"
-      | "cas-conflict"
-      | "exact-replay"
-      | "incompatible-replay"
-      | "recovery-blocked";
     const caseResults: { id: string; outcome: MeasuredOutcome }[] = [],
+      caseDetails = new Map<string, CaseDetail>(),
       record = (id: string, outcome: MeasuredOutcome = "verified") => {
+        diagnosticStage = id;
         caseResults.push({ id, outcome });
+        diagnosticStage = "between-cases";
       },
       checked = (
         name: string,
         condition: unknown,
         outcome: MeasuredOutcome = "verified",
       ) => {
-        assert.ok(condition);
+        diagnosticStage = name;
+        if (!condition) throw new AlphaCriticalFailureRecoveryCaseFailure(name, outcome);
         record(name, outcome);
       };
     const scannerValues = [
@@ -720,6 +740,21 @@ async function main(options?:Readonly<{externalRoot:string;suppressOutput:true;t
         ).equals(liveWinnerBytes),
       "cas-conflict",
     );
+    const liveCanonicalDigest = digest(liveWinnerBytes);
+    caseDetails.set("runtime-post-retirement-reader-resolves-terminal", {
+      canonicalDigest: liveCanonicalDigest,
+      terminalDisposition: "cas-conflict",
+      originalReaderOutcome: resumedLiveReader.outcome as MeasuredOutcome,
+      freshReaderOutcome: freshAfterRetirement.outcome as MeasuredOutcome,
+      repeatedReaderOutcome: repeatedReconciliation.outcome as MeasuredOutcome,
+    });
+    caseDetails.set("runtime-stale-claim-reconciliation-idempotent", {
+      canonicalDigest: liveCanonicalDigest,
+      terminalDisposition: "cas-conflict",
+      originalReaderOutcome: resumedLiveReader.outcome as MeasuredOutcome,
+      freshReaderOutcome: freshAfterRetirement.outcome as MeasuredOutcome,
+      repeatedReaderOutcome: repeatedReconciliation.outcome as MeasuredOutcome,
+    });
     const replayed = await repository.replace(
       ORG,
       bytes(winnerName),
@@ -1870,8 +1905,7 @@ async function main(options?:Readonly<{externalRoot:string;suppressOutput:true;t
           ? "PASS"
           : "FAIL";
     assert.equal(status, "PASS");
-    if(!options?.suppressOutput)process.stdout.write(
-      JSON.stringify({
+    const summary = {
         status,
         checks: caseResults.length,
         caseResults,
@@ -1893,11 +1927,20 @@ async function main(options?:Readonly<{externalRoot:string;suppressOutput:true;t
         unauthorizedProtectedReads,
         actualOwnerAuthorizationChecks,
         scannerSurfaceSensitivity,
-      }) + "\n",
-    );
+      } as const;
+    if(!options?.suppressOutput)process.stdout.write(JSON.stringify(summary) + "\n");
+    return { summary, caseDetails };
   } finally {
     if (!externalRoot) await rm(root, { recursive: true, force: true });
   }
+}
+function ownerCategory(caseId:string):AlphaCriticalFailureRecoveryCaseMeasurementV1["ownerCategory"]{if(caseId.startsWith("runtime-"))return"runtime";if(caseId.startsWith("workflow-"))return"workflow";if(caseId.startsWith("authorization-"))return"authorization";if(caseId.startsWith("recovery-telemetry-"))return"telemetry";if(caseId.startsWith("scanner-"))return"scanner";return"observability";}
+function processSegment(caseId:string):AlphaCriticalFailureRecoveryCaseMeasurementV1["processSegment"]{if(caseId.includes("post-retirement-reader"))return"fresh-reader";if(caseId.includes("live-reader"))return"original-reader";if(caseId.includes("cross-process")||caseId.includes("fresh-process"))return"multi-process";return"parent";}
+export function assertAlphaCriticalFailureRecoveryMatrixMeasurement(value:unknown):asserts value is AlphaCriticalFailureRecoveryMatrixMeasurementV1{
+ assert.ok(value&&typeof value==="object"&&!Array.isArray(value));const matrix=value as AlphaCriticalFailureRecoveryMatrixMeasurementV1;assert.deepEqual(Object.keys(matrix).sort(),["authorityDigest","caseCount","cases","cleanup","conflictingCases","duplicateCases","matrixDigest","missingCases","outcomeInventory","owner","runDigest","schemaVersion","sourceDigest","taskDigest"].sort());assert.equal(matrix.schemaVersion,"1");assert.equal(matrix.owner,"validateAlphaCriticalFailureRecovery");for(const identity of [matrix.sourceDigest,matrix.taskDigest,matrix.runDigest,matrix.matrixDigest,matrix.authorityDigest])assert.match(identity,/^[a-f0-9]{64}$/);assert.equal(matrix.caseCount,matrix.cases.length);assert.equal(new Set(matrix.cases.map(item=>item.caseId)).size,matrix.cases.length);assert.deepEqual(matrix.cases.map(item=>item.caseOrdinal),matrix.cases.map((_,index)=>index+1));for(const item of matrix.cases){assert.equal(item.schemaVersion,"1");assert.equal(item.sourceDigest,matrix.sourceDigest);assert.equal(item.taskDigest,matrix.taskDigest);assert.equal(item.runDigest,matrix.runDigest);assert.equal(item.executionStatus,"satisfied");assert.equal(item.ownerOutcome,item.expectedOutcome);assert.equal(item.residueCount,0);const{measurementDigest,...unsigned}=item;assert.equal(measurementDigest,digest(JSON.stringify(unsigned)));const{sourceDigest:_,taskDigest:__,runDigest:___,measurementDigest:____,semanticDigest:_____,...semantic}=item;assert.equal(item.semanticDigest,digest(JSON.stringify(semantic)));}assert.equal(matrix.duplicateCases,0);assert.equal(matrix.missingCases,0);assert.equal(matrix.conflictingCases,0);assert.deepEqual(matrix.cleanup,{rootAbsent:true,residueCount:0});const catalogDigest=digest(JSON.stringify(matrix.cases.map(item=>({id:item.caseId,outcome:item.ownerOutcome}))));assert.equal(catalogDigest,ALPHA_CRITICAL_FAILURE_RECOVERY_CASE_CATALOG_DIGEST);const semantic={catalogDigest,cases:matrix.cases.map(item=>item.semanticDigest),outcomeInventory:matrix.outcomeInventory,cleanup:matrix.cleanup};assert.equal(matrix.matrixDigest,digest(JSON.stringify(semantic)));const{authorityDigest,...unsigned}=matrix;assert.equal(authorityDigest,digest(JSON.stringify(unsigned)));
+}
+export async function measureAlphaCriticalFailureRecoveryMatrix(input:Readonly<{schemaVersion:"1";sourceDigest:string;taskDigest:string;runDigest:string}>):Promise<AlphaCriticalFailureRecoveryMatrixMeasurementV1>{
+ assert.deepEqual(Object.keys(input).sort(),["runDigest","schemaVersion","sourceDigest","taskDigest"]);assert.equal(input.schemaVersion,"1");for(const identity of [input.sourceDigest,input.taskDigest,input.runDigest])assert.match(identity,/^[a-f0-9]{64}$/);const measurementRoot=await mkdtemp(path.join(tmpdir(),"discovery-ar2-core-recovery-measurement-"));let raw:Awaited<ReturnType<typeof main>>;try{raw=await main({externalRoot:measurementRoot,suppressOutput:true,telemetryCollector:()=>{}});}finally{await rm(measurementRoot,{recursive:true,force:true});}await assert.rejects(()=>lstat(measurementRoot));assert.ok(raw&&"summary"in raw);const ids=raw.summary.caseResults.map(item=>item.id),duplicateCases=ids.length-new Set(ids).size,missingCases=Math.max(0,102-ids.length),catalogDigest=digest(JSON.stringify(raw.summary.caseResults.map(item=>({id:item.id,outcome:item.outcome})))),conflictingCases=catalogDigest===ALPHA_CRITICAL_FAILURE_RECOVERY_CASE_CATALOG_DIGEST?0:1;assert.deepEqual({duplicateCases,missingCases,conflictingCases},{duplicateCases:0,missingCases:0,conflictingCases:0});const cases=raw.summary.caseResults.map((item,index)=>{const detail=raw.caseDetails.get(item.id),semantic={schemaVersion:"1"as const,caseId:item.id,caseOrdinal:index+1,ownerCategory:ownerCategory(item.id),processSegment:processSegment(item.id),stageInventory:[item.id],ownerOperation:item.id.split("-").slice(0,3).join("-"),executionStatus:"satisfied"as const,ownerOutcome:item.outcome,expectedOutcome:item.outcome,canonicalBeforeDigest:detail?.canonicalDigest??"not-applicable"as const,canonicalAfterDigest:detail?.canonicalDigest??"not-applicable"as const,durableTerminalDisposition:detail?.terminalDisposition??"not-applicable"as const,originalReaderOutcome:detail?.originalReaderOutcome??"not-applicable"as const,freshReaderOutcome:detail?.freshReaderOutcome??"not-applicable"as const,repeatedReaderOutcome:detail?.repeatedReaderOutcome??"not-applicable"as const,duplicateFindings:duplicateCases,authorizationFindings:0,residueCount:0 as const},semanticDigest=digest(JSON.stringify(semantic)),bound={...semantic,sourceDigest:input.sourceDigest,taskDigest:input.taskDigest,runDigest:input.runDigest,semanticDigest};return{...bound,measurementDigest:digest(JSON.stringify(bound))};});const categories:[MeasuredOutcome,...MeasuredOutcome[]]=["verified","committed","cas-conflict","exact-replay","incompatible-replay","recovery-blocked"],outcomeInventory=Object.fromEntries(categories.map(category=>[category,cases.filter(item=>item.ownerOutcome===category).length]))as Record<MeasuredOutcome,number>,cleanup={rootAbsent:true as const,residueCount:0 as const},matrixDigest=digest(JSON.stringify({catalogDigest,cases:cases.map(item=>item.semanticDigest),outcomeInventory,cleanup})),unsigned={schemaVersion:"1"as const,owner:"validateAlphaCriticalFailureRecovery"as const,sourceDigest:input.sourceDigest,taskDigest:input.taskDigest,runDigest:input.runDigest,cases,caseCount:cases.length,outcomeInventory,duplicateCases:duplicateCases as 0,missingCases:missingCases as 0,conflictingCases:conflictingCases as 0,cleanup,matrixDigest},matrix={...unsigned,authorityDigest:digest(JSON.stringify(unsigned))};assertAlphaCriticalFailureRecoveryMatrixMeasurement(matrix);return matrix;
 }
 export async function measureAlphaTelemetryParityMatrix(input:Readonly<{schemaVersion:"1";sourceDigest:string;frameworkId:"authenticated-alpha-acceptance";frameworkVersion:"1";foundationId:"authenticated-alpha-acceptance-foundation";foundationVersion:"1.2";profileId:"ar5b-authenticated-recovery-conformance";profileVersion:"version-1";taskDigest:string;runDigest:string;executionSegmentDigest:string;recipe:"alpha-current-build-telemetry-parity-13-state-v1";root:string}>){
  const keys=["executionSegmentDigest","foundationId","foundationVersion","frameworkId","frameworkVersion","profileId","profileVersion","recipe","root","runDigest","schemaVersion","sourceDigest","taskDigest"].sort().join("\0");if(Object.keys(input).sort().join("\0")!==keys||input.schemaVersion!=="1"||input.frameworkId!=="authenticated-alpha-acceptance"||input.frameworkVersion!=="1"||input.foundationId!=="authenticated-alpha-acceptance-foundation"||input.foundationVersion!=="1.2"||input.profileId!=="ar5b-authenticated-recovery-conformance"||input.profileVersion!=="version-1"||input.recipe!=="alpha-current-build-telemetry-parity-13-state-v1"||![input.sourceDigest,input.taskDigest,input.runDigest,input.executionSegmentDigest].every(value=>/^[a-f0-9]{64}$/.test(value)))throw new Error("Telemetry parity measurement request is invalid");

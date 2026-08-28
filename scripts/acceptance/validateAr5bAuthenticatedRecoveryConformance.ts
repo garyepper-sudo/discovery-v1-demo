@@ -1134,7 +1134,9 @@ async function observabilityMeasurements(context: Context) {
       );
     });
 }
+let ar5bProducerStage = "producer-bootstrap";
 async function producer(mode: string) {
+  ar5bProducerStage = "producer-authority";
   const raw = process.env.AR2_PRE_001B_MEASUREMENT_REQUEST,
     manifestPath = process.env.AR2_PRE_001B_AR5B_MANIFEST_PATH,
     secretPath = process.env.AR2_PRE_001B_AR5B_SECRET_PATH,
@@ -1170,6 +1172,7 @@ async function producer(mode: string) {
       observabilityRecordsPath,
     };
   if (mode === "ar5b-observability") {
+    ar5bProducerStage = "producer-observability";
     const records = await observabilityMeasurements(context);
     await writeOwnerRecordPacket(
       observabilityRecordsPath,
@@ -1184,13 +1187,17 @@ async function producer(mode: string) {
   }
   assert.equal(mode, "ar5b-replay-recovery");
   const measured = new Map<RecoveryFact, RecordV1>();
-  for (const item of [
-    ...(await runtimeMeasurements(context)),
-    ...(await workflowMeasurements(context)),
-    ...(await materializationMeasurements(context)),
-    ...(await authorizationMeasurements(context)),
-    ...(await provenanceMeasurements(context)),
-  ])
+  ar5bProducerStage = "producer-runtime";
+  const runtime = await runtimeMeasurements(context);
+  ar5bProducerStage = "producer-workflow";
+  const workflow = await workflowMeasurements(context);
+  ar5bProducerStage = "producer-materialization";
+  const materialization = await materializationMeasurements(context);
+  ar5bProducerStage = "producer-authorization";
+  const authorization = await authorizationMeasurements(context);
+  ar5bProducerStage = "producer-provenance";
+  const provenance = await provenanceMeasurements(context);
+  for (const item of [...runtime, ...workflow, ...materialization, ...authorization, ...provenance])
     measured.set(item.factId, item);
   const make = recorder(context, "replay-recovery", "replay-recovery"),
     records = ar5bAuthenticatedRecoveryConformanceProfile.requiredMeasurements
@@ -1209,6 +1216,7 @@ async function producer(mode: string) {
             { reasonCategory: "owner-measurement-not-yet-executed" },
           ),
       );
+  ar5bProducerStage = "producer-envelope";
   await writeOwnerRecordPacket(
     replayRecordsPath,
     "replay-recovery",
@@ -1344,7 +1352,17 @@ async function createRegistry(
       script: producerScript,
       sourceManifestDigest: sourceManifest.manifestDigest,
       timeoutMs: 900_000,
-      stages: [{ category: "execution" as const, token: "owner-measurement" }],
+      stages: [
+        { category: "bootstrap" as const, token: "producer-bootstrap" },
+        { category: "bootstrap" as const, token: "producer-authority" },
+        { category: "execution" as const, token: "producer-runtime" },
+        { category: "execution" as const, token: "producer-workflow" },
+        { category: "execution" as const, token: "producer-materialization" },
+        { category: "execution" as const, token: "producer-authorization" },
+        { category: "execution" as const, token: "producer-provenance" },
+        { category: "execution" as const, token: "producer-observability" },
+        { category: "measurement" as const, token: "producer-envelope" },
+      ],
     },
     environmentKeys = [
       "AR2_PRE_001B_AR5B_MANIFEST_PATH",
@@ -1444,6 +1462,10 @@ function semanticProjection(value: any) {
       cleanupCategory: value.joinedOwnerMeasurement.cleanupCategory,
     },
   };
+}
+export function ar5bAuthenticatedRecoveryStableSemanticDigest(value: unknown) {
+  assertAr5bAuthenticatedRecoveryCurrentBuildMeasurement(value);
+  return acceptanceDigest(semanticProjection(value));
 }
 function semanticDifferencePaths(left: any, right: any, prefix = "root"): string[] {
   if (typeof left !== typeof right) return [prefix];
@@ -1882,6 +1904,37 @@ async function writeEvidence() {
   await writeFile(reportPath, markdown);
   return value;
 }
+
+/**
+ * Re-executes the accepted AR-5B profile against the current repository bytes
+ * without writing or relabelling historical AR-5B evidence. Importing this
+ * module remains side-effect free; lifecycle work begins only on invocation.
+ */
+export async function measureAr5bAuthenticatedRecoveryCurrentBuild() {
+  const value = await measured();
+  assertAr5bAuthenticatedRecoveryCurrentBuildMeasurement(value);
+  return value;
+}
+export async function measureAr5bAuthenticatedRecoveryCurrentBuildPair() {
+  const first = await measured();
+  const second = await measured();
+  assert.notEqual(first.taskDigest, second.taskDigest);
+  assert.notEqual(first.runDigest, second.runDigest);
+  const firstSemanticDigest = acceptanceDigest(semanticProjection(first));
+  const secondSemanticDigest = acceptanceDigest(semanticProjection(second));
+  assert.equal(firstSemanticDigest, secondSemanticDigest);
+  assertAr5bAuthenticatedRecoveryCurrentBuildMeasurement(first);
+  assertAr5bAuthenticatedRecoveryCurrentBuildMeasurement(second);
+  return { first, second, semanticDigest: firstSemanticDigest } as const;
+}
+export function assertAr5bAuthenticatedRecoveryCurrentBuildMeasurement(value: any) {
+  assert.equal(value.adjudication.result, "PASS");
+  assert.equal(value.resultDigest, acceptanceDigest((({ resultDigest: _, ...base }) => base)(value)));
+  validatePersistedOwnerMeasurements(value);
+  assert.deepEqual(adjudicateAuthenticatedAlphaAcceptance({ profile: ar5bAuthenticatedRecoveryConformanceProfile, measurements: value.envelopes, sourceDigest: value.sourceDigest, taskDigest: value.taskDigest }), value.adjudication);
+  assert.deepEqual(value.cleanup, { attempts: 2, localRoots: 0, foreignPreserved: true, independentZero: "zero-verified" });
+  assert.equal(value.scanner.publicFindings, 0);
+}
 async function verifyEvidence() {
   const stored = JSON.parse(await readFile(jsonPath, "utf8")),
     { resultDigest, ...base } = stored;
@@ -1950,7 +2003,10 @@ if (direct) {
     process.argv[2] === "ar5b-replay-recovery" ||
     process.argv[2] === "ar5b-observability"
   )
-    void producer(process.argv[2]);
+    void producer(process.argv[2]).catch(() => {
+      process.stderr.write(`AR2_PRE001B_PRODUCER_FAILED:${ar5bProducerStage}\n`);
+      process.exitCode = 1;
+    });
   else if (process.argv.includes("--write"))
     void writeEvidence().then((value) =>
       process.stdout.write(

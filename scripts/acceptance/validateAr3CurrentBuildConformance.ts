@@ -477,6 +477,24 @@ async function roleBrowserChild() {
     await closeAcceptanceBrowser(browser);
   }
 }
+type RoleBrowserFailureDiagnostic = Readonly<{
+  action: "ceo" | "denied" | "manager" | "narrow" | "director";
+  phase: string;
+  spawn: string;
+  exit: string;
+  signal: string;
+  protocol: string;
+  executionPhaseCount: number;
+  measurementCount: number;
+}>;
+export class RoleBrowserProcessFailure extends Error {
+  readonly diagnostic: RoleBrowserFailureDiagnostic;
+  constructor(diagnostic: RoleBrowserFailureDiagnostic) {
+    super("Role browser child did not produce one admitted typed result");
+    this.name = "RoleBrowserProcessFailure";
+    this.diagnostic = Object.freeze({ ...diagnostic });
+  }
+}
 function roleBrowserProcess(
   baseUrl: string,
   user: { email: string; id: string },
@@ -494,6 +512,18 @@ function roleBrowserProcess(
       protectedValues,
       ...identity,
     },
+    childEnvironment: NodeJS.ProcessEnv = {
+      PATH: "/usr/local/bin:/usr/bin:/bin",
+      TMPDIR: "/private/tmp",
+      TZ: "UTC",
+      LANG: "C",
+      NODE_ENV: "test",
+      ...(process.env.PLAYWRIGHT_BROWSERS_PATH ? { PLAYWRIGHT_BROWSERS_PATH: process.env.PLAYWRIGHT_BROWSERS_PATH } : {}),
+      ...(process.env.CLERK_PUBLISHABLE_KEY ? { CLERK_PUBLISHABLE_KEY: process.env.CLERK_PUBLISHABLE_KEY } : {}),
+      ...(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ? { NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY } : {}),
+      ...(process.env.CLERK_SECRET_KEY ? { CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY } : {}),
+      AR2_PRE_001B_ROLE_BROWSER: Buffer.from(JSON.stringify(request)).toString("base64"),
+    },
     child = spawnSync(
       process.execPath,
       [
@@ -506,12 +536,7 @@ function roleBrowserProcess(
       {
         cwd: process.cwd(),
         encoding: "utf8",
-        env: {
-          ...process.env,
-          AR2_PRE_001B_ROLE_BROWSER: Buffer.from(
-            JSON.stringify(request),
-          ).toString("base64"),
-        },
+        env: childEnvironment,
         timeout: 180_000,
         maxBuffer: 4_000_000,
       },
@@ -574,7 +599,19 @@ function roleBrowserProcess(
       ]);
     failurePhase = `browser-${action}-${allowed.has(closed?.phase) ? closed.phase : `pre-phase-${diagnostic.spawn}-${diagnostic.exit}-${diagnostic.signal}-${diagnostic.protocol}`}`;
   }
-  assert.equal(child.status, 0);
+  if (child.status !== 0) {
+    const failedFrame = frames.findLast((value) => value?.outcome === "failed");
+    throw new RoleBrowserProcessFailure({
+      action,
+      phase: typeof failedFrame?.phase === "string" ? failedFrame.phase : "pre-phase",
+      spawn: diagnostic.spawn,
+      exit: diagnostic.exit,
+      signal: diagnostic.signal,
+      protocol: diagnostic.protocol,
+      executionPhaseCount: phaseFrames.length,
+      measurementCount: measurementFrames.length,
+    });
+  }
   assert.equal(diagnostic.protocol, "complete");
   assert.equal(phaseFrames.length, 1);
   assert.equal(measurementFrames.length, 1);
