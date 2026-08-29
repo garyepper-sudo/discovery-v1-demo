@@ -12,6 +12,30 @@ import type { HistoricalCheckpointLifecycleLinkReceiptV1, HistoricalCheckpointLi
 import type { GovernedScopeRef } from "../../../engine/v3/governance/scopedGovernanceContext";
 
 export const LEADERSHIP_CONVERSATION_CONTRACT_VERSION = "1" as const;
+export const LEADERSHIP_CONVERSATION_CONSEQUENCE_CONTRACT_VERSION = "1" as const;
+export const LEADERSHIP_CONVERSATION_CONSEQUENCE_KINDS = ["source-grounded-observation","inferred-assessment","suspected-possibility","contradiction","mechanism","decision","non-decision","commitment","open-question","resolved-unknown","new-unknown","recommendation","executive-attention-item","no-intervention-item"] as const;
+export type LeadershipConversationConsequenceKindV1 = typeof LEADERSHIP_CONVERSATION_CONSEQUENCE_KINDS[number];
+export type LeadershipConversationConsequenceSourceV1 = { eventId:string; eventDigest:string; start:number; end:number };
+export type LeadershipConversationConsequenceCandidateV1 = {
+  contractVersion:"1";
+  candidateKind:LeadershipConversationConsequenceKindV1;
+  candidateId:string;
+  runId:string;
+  captureId:string;
+  sourceReferences:LeadershipConversationConsequenceSourceV1[];
+  cognitionReferences:string[];
+  statement:string;
+  epistemicCategory:"source-stated"|"supported-inference"|"tentative"|"not-applicable";
+  supportCategory:"explicit"|"corroborated"|"preliminary"|"conflicted"|"unavailable";
+  owner:string|null;
+  dueDate:string|null;
+  status:"available"|"unavailable";
+  unavailableReason:"owner-not-supported"|"due-date-not-supported"|"current-owner-boundary-unavailable"|null;
+  candidateDigest:string;
+};
+export type LeadershipConversationConsequenceEventV1 = { contractVersion:"1";eventId:string;eventDigest:string;eventType:"authorized-document"|"meeting-capture"|"email-message"|"operational-report"|"decision"|"commitment-update"|"contradictory-statement"|"new-evidence"|"correction"|"private-working-simulation"|"access-unavailable";timestamp:string;title:string;body:string;sourceAuthority:"authoritative"|"preliminary"|"reported"|"private-simulation"|"unavailable";enabled:boolean };
+export type LeadershipConversationConsequenceExtractionInputV1 = { contractVersion:"1";runId:string;captureId:string;objective:string;events:LeadershipConversationConsequenceEventV1[];cognition:{evidence:Array<{id:string;text:string}>;observations:Array<{id:string;statement:string}>;contradictions:Array<{id:string;statement:string}>;mechanisms:Array<{id:string;statement:string}>;beliefs:Array<{id:string;statement:string}>;understandings:Array<{id:string;statement:string;recommendations:string[];unknowns:string[]}>} };
+export type LeadershipConversationConsequenceExtractionResultV1 = { contractVersion:"1";runId:string;captureId:string;candidates:LeadershipConversationConsequenceCandidateV1[];unavailableKinds:LeadershipConversationConsequenceKindV1[];inputDigest:string;resultDigest:string };
 export type DigestAudit = { idempotencyKeyDigest: string; requestFingerprint: string; contentDigest: string };
 export type LeadershipConversationContextV1 = DigestAudit & { contractVersion:"1";organizationId:string;questionId:string;conversationId:string;contextVersionId:string;contextVersion:number;predecessorContextVersionId:string|null;conversationType:"leadership-conversation";scenarioId:"northstar-recurring-cross-functional-staff-conversation";title:string;purpose:string;intendedOutcome:string;timeframe:string;participants:Array<{participantRef:string;displayName:string;titleLabel:string}>;leaderContext:string|null;recordedAt:string;recordedByUserId:string };
 export type PreparedWorkProductContentV1 = { headline:string;situationSummary:string;whatChanged:string[];decisionsRequiringAttention:string[];importantTensions:string[];contradictions:string[];unknowns:string[];priorCommitments:string[];suggestedAgenda:string[];talkingPoints:string[];questionsToResolve:string[];evidenceReferences:string[];uncertaintyAndLimitations:string[];unavailableAreas:string[] };

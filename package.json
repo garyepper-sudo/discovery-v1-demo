@@ -489,7 +489,12 @@
     "validate:alpha-readiness-ar2": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server node --import tsx scripts/alpha-readiness/runCriticalPathTestPyramid.ts",
     "validate:alpha-privacy-safe-telemetry": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateAlphaPrivacySafeProductTelemetry.ts",
     "deps:validate": "node scripts/performance/validatePerformanceReport.mjs",
-    "deps:report": "npm run deps:validate && node scripts/performance/renderPerformanceReport.mjs"
+    "deps:report": "npm run deps:validate && node scripts/performance/renderPerformanceReport.mjs",
+    "validate:leadership-conversation-generic-consequences": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server node --import tsx scripts/product/validateLeadershipConversationGenericConsequenceExtraction.ts",
+    "validate:leadership-conversation-read-only-surfaces": "NODE_ENV=test node --import tsx scripts/product/validateLeadershipConversationReadOnlySurfaces.ts",
+    "studio:validate": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server node --import tsx scripts/discovery-studio/validateDiscoveryStudio.ts",
+    "studio:frontier:validate": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server node --import tsx scripts/discovery-studio/validateOpenAIFrontierBaseline.ts",
+    "studio:dev": "DISCOVERY_STUDIO_ENABLED=1 DISCOVERY_STUDIO_ROOT=/private/tmp/discovery-studio next dev -H 127.0.0.1 -p 3138"
   },
   "dependencies": {
     "@clerk/nextjs": "6.39.6",

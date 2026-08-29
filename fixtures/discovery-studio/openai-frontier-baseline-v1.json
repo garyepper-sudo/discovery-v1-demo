@@ -1,0 +1,22 @@
+{
+  "baselineId": "discovery-studio-openai-frontier-v1",
+  "version": "1",
+  "structuredPromptIdentity": "discovery-studio-frontier-structured-v1",
+  "executivePromptIdentity": "discovery-studio-frontier-executive-v1",
+  "sourcePacketSchemaIdentity": "discovery-studio-frontier-source-v1",
+  "structuredOutputSchemaIdentity": "discovery-studio-frontier-structured-output-v1",
+  "executiveOutputSchemaIdentity": "discovery-studio-frontier-executive-output-v1",
+  "toolPolicy": "none",
+  "externalKnowledgePolicy": "prohibited",
+  "storagePolicy": "store-false",
+  "maximumRunCountPerExperiment": 3,
+  "maximumSourceEvents": 32,
+  "maximumSourceBytes": 100000,
+  "minimumOutputTokens": 256,
+  "highReasoningMinimumOutputTokens": 25000,
+  "maximumOutputTokens": 50000,
+  "refusalHandling": "typed-unavailable",
+  "incompleteOutputHandling": "typed-unavailable",
+  "promptInjectionPolicy": "source-is-untrusted-data",
+  "promptConfigDigest": "581e2e39805435ec8b88ef1819e8eb91a022f9252ef17a0d891f8d5bf699ee4d"
+}

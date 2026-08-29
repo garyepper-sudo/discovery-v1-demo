@@ -1,0 +1,91 @@
+{
+  "contractVersion": "2",
+  "scenarioId": "northstar-delivery-recovery-v1",
+  "scenarioVersion": "northstar-controlled-v1",
+  "name": "Northstar controlled delivery recovery",
+  "objective": "What is constraining reliable delivery, and what changed across the two leadership meetings?",
+  "organization": {
+    "name": "Northstar Systems (Synthetic)",
+    "industry": "Enterprise software",
+    "website": "https://northstar.invalid"
+  },
+  "events": [
+    {
+      "contractVersion": "1",
+      "eventId": "m1-leadership-capture",
+      "eventType": "meeting-capture",
+      "timestamp": "2026-09-01T16:00:00.000Z",
+      "title": "Leadership meeting one",
+      "body": "Decision: Project CERULEAN is cancelled. Jordan believes staffing is the primary delivery constraint. It remains unknown whether the vendor can meet the target. Maya will complete the vendor audit by September 14. Additional hiring was not approved.",
+      "sourceAuthority": "authoritative",
+      "enabled": true,
+      "eventDigest": "d21c5b7e7ab3e7e8e32c9a913affb837152a7e586c7a16d8570dd460352ebb3c"
+    },
+    {
+      "contractVersion": "1",
+      "eventId": "m1-audit-rework-evidence",
+      "eventType": "operational-report",
+      "timestamp": "2026-09-02T16:00:00.000Z",
+      "title": "Vendor audit and rework evidence",
+      "body": "The vendor audit found that 42 percent of delivery rework follows delayed interface decisions. This evidence contradicts the staffing explanation and supports release coordination as the current material constraint.",
+      "sourceAuthority": "authoritative",
+      "enabled": true,
+      "eventDigest": "15e344a150f9f58b8a2121919d8fdb7aa566b45dda198b964f3572c7641fee3c"
+    },
+    {
+      "contractVersion": "1",
+      "eventId": "m2-sso-resolution",
+      "eventType": "decision",
+      "timestamp": "2026-09-08T16:00:00.000Z",
+      "title": "SSO scope resolved",
+      "body": "SSO is explicitly not required for Phase 1.",
+      "sourceAuthority": "authoritative",
+      "enabled": false,
+      "eventDigest": "f17b0abb4dc86755a1f00be4dda0d8b38846acfe19b96764d69161493e642d8d"
+    },
+    {
+      "contractVersion": "1",
+      "eventId": "m2-tie-break-readiness",
+      "eventType": "decision",
+      "timestamp": "2026-09-08T16:05:00.000Z",
+      "title": "Tie-break ownership and readiness evidence",
+      "body": "Decision: the delivery council owns the tie-break when staffing and release coordination assessments conflict. Interface decision latency improved from six days to two days, supporting the readiness mechanism.",
+      "sourceAuthority": "authoritative",
+      "enabled": false,
+      "eventDigest": "5919a21eefd67555cb9cc145976d511b4c091c46ceb99ee0ab46281cb3d14e9c"
+    },
+    {
+      "contractVersion": "1",
+      "eventId": "m2-vendor-sandbox",
+      "eventType": "operational-report",
+      "timestamp": "2026-09-08T16:10:00.000Z",
+      "title": "Vendor sandbox access",
+      "body": "Vendor sandbox access has emerged as a possible new delivery bottleneck and remains unresolved.",
+      "sourceAuthority": "preliminary",
+      "enabled": false,
+      "eventDigest": "2ceebb3ba61af18780055f3640e78b3296eceb9b9ab213fcc2cae64833c26752"
+    },
+    {
+      "contractVersion": "1",
+      "eventId": "m2-executive-attention",
+      "eventType": "commitment-update",
+      "timestamp": "2026-09-08T16:15:00.000Z",
+      "title": "Executive attention shift",
+      "body": "Executive attention shifted from headcount approval to release coordination readiness and vendor sandbox access.",
+      "sourceAuthority": "authoritative",
+      "enabled": false,
+      "eventDigest": "20fea06b13f913c6b8aedaaf2d8a9703aa7fd9c2cee30b06833f36c4a29a970a"
+    },
+    {
+      "contractVersion": "1",
+      "eventId": "m2-staffing-contradiction",
+      "eventType": "contradictory-statement",
+      "timestamp": "2026-09-08T16:20:00.000Z",
+      "title": "Contradictory staffing assessment",
+      "body": "A leadership source continues to believe staffing remains the primary delivery problem despite the audit and readiness evidence.",
+      "sourceAuthority": "authoritative",
+      "enabled": false,
+      "eventDigest": "38bee62707f11ed39e598caf7296b8582ab67a34492acdb46c84244567bc2998"
+    }
+  ]
+}
