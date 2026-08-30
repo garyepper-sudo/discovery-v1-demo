@@ -1,1 +1,24 @@
-export const discoveryStudioCapabilityRegistry=[{id:"access-localhost",category:"access",status:"active",label:"Local development route"},{id:"lens-prepare",category:"lens",status:"active",label:"Prepare preview"},{id:"lens-review",category:"lens",status:"active",label:"Review preview"},{id:"lens-closure",category:"lens",status:"active",label:"Closure preview"},{id:"lens-temporal",category:"lens",status:"active",label:"Cross-run What Changed"},{id:"domain-understanding",category:"domain",status:"active",label:"Organizational understanding"},{id:"controlled-manifest",category:"evaluation",status:"active",label:"Source-bound evaluation manifests"},{id:"dynamic-frontier-run-plan",category:"evaluation",status:"active",label:"Source-bound dynamic frontier run plans"},{id:"pairwise-comparison",category:"evaluation",status:"active",label:"General pairwise comparison"},{id:"two-way-blind-review",category:"evaluation",status:"active",label:"Two-way Discovery and frontier blind review"},{id:"sentinel-trace",category:"evaluation",status:"active",label:"Sentinel traceability"},{id:"atomic-packet",category:"evaluation",status:"active",label:"Complete atomic review packets"},{id:"openai-frontier-structured",category:"evaluation",status:"active",label:"OpenAI frontier structured baseline"},{id:"openai-frontier-executive",category:"evaluation",status:"active",label:"OpenAI frontier executive baseline"},{id:"manual-chatgpt-import",category:"evaluation",status:"active",label:"Manual ChatGPT product import"},{id:"blind-system-comparison",category:"evaluation",status:"active",label:"Blinded system comparison"},{id:"independent-model-judge",category:"evaluation",status:"disabled",label:"Independent model judge (not implemented)"},{id:"ask",category:"capability",status:"stub",label:"Ask (not implemented)"},{id:"persona",category:"capability",status:"disabled",label:"Persona simulation"},{id:"integrated-product",category:"capability",status:"disabled",label:"Canonical Product writeback"}] as const;
+export const discoveryStudioCapabilityRegistry=[
+ {id:"access-localhost",category:"access",status:"active",label:"Local development route"},
+ {id:"lens-prepare",category:"lens",status:"active",label:"Prepare preview"},
+ {id:"lens-review",category:"lens",status:"active",label:"Review preview"},
+ {id:"lens-closure",category:"lens",status:"active",label:"Closure preview"},
+ {id:"lens-temporal",category:"lens",status:"active",label:"Cross-run What Changed"},
+ {id:"domain-understanding",category:"domain",status:"active",label:"Organizational understanding"},
+ {id:"multi-domain-scenario-v3",category:"evaluation",status:"active",label:"Closed local multi-domain scenarios"},
+ {id:"future-frontier-source-only",category:"evaluation",status:"active",label:"No-request future frontier source packets"},
+ {id:"controlled-manifest",category:"evaluation",status:"active",label:"Source-bound evaluation manifests"},
+ {id:"dynamic-frontier-run-plan",category:"evaluation",status:"active",label:"Source-bound dynamic frontier run plans"},
+ {id:"pairwise-comparison",category:"evaluation",status:"active",label:"General pairwise comparison"},
+ {id:"two-way-blind-review",category:"evaluation",status:"active",label:"Two-way Discovery and frontier blind review"},
+ {id:"sentinel-trace",category:"evaluation",status:"active",label:"Sentinel traceability"},
+ {id:"atomic-packet",category:"evaluation",status:"active",label:"Complete atomic review packets"},
+ {id:"openai-frontier-structured",category:"evaluation",status:"active",label:"OpenAI frontier structured baseline"},
+ {id:"openai-frontier-executive",category:"evaluation",status:"active",label:"OpenAI frontier executive baseline"},
+ {id:"manual-chatgpt-import",category:"evaluation",status:"active",label:"Manual ChatGPT product import"},
+ {id:"blind-system-comparison",category:"evaluation",status:"active",label:"Blinded system comparison"},
+ {id:"independent-model-judge",category:"evaluation",status:"disabled",label:"Independent model judge (not implemented)"},
+ {id:"ask",category:"capability",status:"stub",label:"Ask (not implemented)"},
+ {id:"persona",category:"capability",status:"disabled",label:"Persona simulation"},
+ {id:"integrated-product",category:"capability",status:"disabled",label:"Canonical Product writeback"}
+] as const;
