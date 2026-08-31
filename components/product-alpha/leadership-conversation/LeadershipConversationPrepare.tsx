@@ -1,12 +1,17 @@
 "use client";
+import {useState,useTransition} from "react";
 import type { ChiefFirstPrepareViewV1 } from "../../../product/workflow/leadershipConversation";
 import type { ChiefOfStaffValueItemV1, ChiefOfStaffValueLayerV1 } from "../../../product/workflow/leadershipConversation/chiefCommunicationPlan";
+import type {SourceScopedCandidateV1} from "../../../lib/analysis/sourceScopedExecutiveAnalysisContracts";
+import {generateSourceScopedExecutiveAnalysisAction} from "../../../app/product-alpha/leadership-conversation/actions";
 import styles from "./LeadershipConversationExperience.module.css";
 
 const List = ({ items }: { items: string[] }) => <ul>{items.map(item => <li key={item}>{item}</li>)}</ul>;
 const ValueList = ({ items, empty }: { items: ChiefOfStaffValueItemV1[]; empty: string }) => items.length
   ? <ul>{items.map(item => <li key={item.itemId}><span className={styles.epistemic}>{item.status}</span>{item.text}</li>)}</ul>
   : <p className={styles.quiet}>{empty}</p>;
+const labels:Record<keyof SourceScopedCandidateV1["sections"],string>={whatMattersNow:"What matters now",whyItMatters:"Why it matters",competingExplanations:"Competing explanations",whatChanged:"What changed",decisions:"Decisions",notDecided:"Not decided",commitments:"Commitments",openQuestions:"Open questions",contradictions:"Contradictions",evidenceUncertainty:"Evidence uncertainty",modelUncertainty:"Model uncertainty",organizationalDisagreement:"Organizational disagreement",attention:"Attention",whatWouldChangeAssessment:"What would change the assessment"};
+function SourceScopedAnalysisPanel(){const[candidate,setCandidate]=useState<SourceScopedCandidateV1|null>(null),[error,setError]=useState(false),[pending,start]=useTransition();const generate=()=>start(async()=>{setError(false);const result=await generateSourceScopedExecutiveAnalysisAction();if(result.status==="eligible")setCandidate(result.candidate);else setError(true);});return <section aria-labelledby="ai-working-analysis-heading"><h3 id="ai-working-analysis-heading">AI working analysis</h3><p>Based on the sources currently available in this Leadership Conversation.</p><p>AI-generated working analysis — not yet reviewed</p><button type="button" disabled={pending} onClick={generate}>{pending?"Generating…":candidate?"Refresh analysis":"Generate analysis"}</button>{candidate&&<p className={styles.quiet}>Refreshing makes another model request.</p>}{error&&<p role="status">Analysis unavailable</p>}{candidate&&<>{Object.entries(candidate.sections).map(([key,items])=><section key={key}><h4>{labels[key as keyof typeof labels]}</h4>{items.length?<ul>{items.map((item,index)=><li key={`${key}-${index}`}>{item.statement}<details><summary>Sources</summary><ul>{item.citations.map(citation=><li key={`${citation.sourceId}:${citation.sourceVersion}`}>Source used for this analysis</li>)}</ul></details></li>)}</ul>:<p className={styles.quiet}>No supported item.</p>}</section>)}</>}</section>}
 
 export function LeadershipConversationPrepare({ prepare, valueLayer, onProgressiveDisclosure }: { prepare: ChiefFirstPrepareViewV1; valueLayer?: ChiefOfStaffValueLayerV1; onProgressiveDisclosure?:(category:"questions-tensions"|"reasoning-provenance")=>void }) {
   if (!valueLayer) return <section aria-labelledby="first-prepare-heading">
@@ -25,7 +30,7 @@ export function LeadershipConversationPrepare({ prepare, valueLayer, onProgressi
       <h4>Uncertainty</h4><List items={prepare.uncertainty} />
       <h4>Reasoning</h4><List items={prepare.reasoning} />
       <h4>Other explanations and unknowns</h4><List items={prepare.competingExplanations} />
-    </details>
+    </details>{prepare.priorCycle.status==="none"&&<SourceScopedAnalysisPanel />}
   </section>;
 
   return <section aria-labelledby="first-prepare-heading" className={styles.valueLayer}>
@@ -52,7 +57,7 @@ export function LeadershipConversationPrepare({ prepare, valueLayer, onProgressi
         <section><h3>Questions worth asking</h3><ValueList items={valueLayer.questions} empty="No grounded question is available." /></section>
         <section className={styles.acquire}><h3>What would improve understanding</h3><ValueList items={valueLayer.acquisition} empty="Discovery abstains from recommending evidence acquisition without a grounded gap." /></section>
       </div>
-    </details>
+    </details>{prepare.priorCycle.status==="none"&&<SourceScopedAnalysisPanel />}
     <details onToggle={event=>{if(event.currentTarget.open)onProgressiveDisclosure?.("reasoning-provenance");}}>
       <summary>How Discovery reached this view</summary>
       <p className={styles.legend}>Supported = grounded in authorized material · Inferred = reasoned from that material · Suspected = a bounded possibility · Unknown = not established.</p>

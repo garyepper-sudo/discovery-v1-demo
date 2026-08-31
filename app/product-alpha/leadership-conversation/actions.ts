@@ -67,6 +67,7 @@ export async function getLeadershipConversationWorkspaceAction(input: {
   return createLeadershipConversationServerComposition().workspace({ ...input, userId });
 }
 export async function activateAndPrepareLeadershipConversationAction(input:ChiefFirstPrepareActivationV1){observeJourney("activate","attempted","attempted");const result=await createLeadershipConversationServerComposition().activateAndPrepare({...input,userId:await signedInUserId()});observeJourney("prepare","completed","success");return result;}
+export async function generateSourceScopedExecutiveAnalysisAction(){const{server,identity}=await occurrence1Context();return server.analyzeSourceScoped({...identity,seriesId:`leadership-conversation-series:${identity.conversationId}`,occurrenceId:identity.conversationId});}
 
 export async function routeApprovedTakeawayProposalAction(input: {
   organizationId: string;

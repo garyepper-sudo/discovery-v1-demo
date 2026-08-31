@@ -14,3 +14,4 @@ export * from "./canonicalHistoricalCheckpointLifecycleLinkRouter";
 export * from "./canonicalMutationProductMaterializationContracts";
 export * from "./canonicalLeadershipConversationProductMaterializer";
 export * from "./canonicalExecutiveHistoryAccessComposition";
+export * from "./sourceScopedExecutiveAnalysis";

@@ -1360,3 +1360,12 @@ Workflow persistence, fresh-process and concurrent collision proof, and safe
 projection non-disclosure. Architecture compression, generalized relationship
 primitives, authoritative Decision/expected-Outcome linkage, and ordinary UI
 remain sequenced after independent L1 review and closure.
+## Active — Chief V1 Analysis Integration Phase 1
+
+One designated executive may manually generate source-scoped frontier working analysis in Prepare for controlled local/founder development. The exact source scope is the current Prepared Work material lineage; complete organization-wide source coverage is not claimed. The model is provisional and replaceable; the real provider has not yet executed. Output is noncanonical, unreviewed, session-only, and cannot write Product, Workflow, Runtime, Evidence, What Changed, or Prepare Again. Complete multi-role permission proof is deferred. Longitudinal compounding remains unproven.
+
+Next: **Chief V1 Analysis Integration Phase 2 — Human Review and authentic owner-issued carry-forward.** Accepted source-bound decisions, commitments, questions, corrections, and unknowns must route through existing Product owners before What Changed or Prepare Again can consume them.
+
+Deferred gate: **TEAM-SCOPED-ANALYSIS-NONINTERFERENCE-001.** Required before enabling a second principal, sharing or reusing analysis across roles/access envelopes, or claiming team-wide AI alignment.
+
+Deferred gate: **CHIEF-V1-PERSISTED-INVALID-STATE-QUALIFICATION-001 — DEFERRED — REQUIRED BEFORE UNSUPERVISED EXTERNAL LAUNCH OR SECOND-PRINCIPAL ENABLEMENT.** It must prove persisted owner-backed stale lineage, digest and version mismatch, revocation, malformed metadata, ambiguous access, foreign selected-source injection, multi-role source closure, and shared-analysis reuse. Current development-Alpha evidence qualifies those invalid states at the production owner boundary, not as a complete persisted end-to-end matrix. This gate does not block local founder use, a separately authorized one-call synthetic smoke test, human Review development, authentic one-principal carry-forward, or the controlled two-cycle walkthrough.

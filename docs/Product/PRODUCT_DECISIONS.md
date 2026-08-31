@@ -1448,3 +1448,18 @@ boundary.
   operator guidance, and production rollback prerequisites. Production Runtime rollback, customer-state access,
   release identity, deployment, and promotion remain owned by
   `ALPHA-OPS-001`.
+## DEC-PROD-060 — Single-principal, source-scoped design-partner Alpha
+
+**Status:** Accepted for controlled local/founder development Alpha.
+
+Exactly one authenticated executive principal, selected by the existing server-side Leadership Conversation operation-authorization boundary, may manually request AI working analysis. The request uses only the finite raw-source set already bound to that principal's current Prepare occurrence, rechecks current access before each protected read, and is never reused across users, roles, audiences, or access envelopes. Every other principal receives the same unavailable result. This does not establish organization-wide or multi-role permission noninterference. `TEAM-SCOPED-ANALYSIS-NONINTERFERENCE-001` is required before a second principal or shared analysis is enabled.
+
+The result is user-scoped, AI-generated, noncanonical, unreviewed, non-writing, and session-only. Phase 2 must add human Review and route only accepted source-bound objects through existing Product owners.
+
+The source scope is exactly the current Prepared Work material lineage; complete organization-wide source coverage is not claimed. The real provider has not been executed. Invalid selected-source states are qualified at the production owner boundary but are not yet all proven through persisted end-to-end Product composition. This residual risk blocks unsupervised external launch, a second analysis principal, cross-user analysis sharing, and production-readiness claims. It does not block controlled local founder inspection, one later synthetic provider smoke test, human Review implementation, authentic carry-forward development, or a controlled two-cycle founder walkthrough.
+
+## DEC-PROD-059 — Provisional Alpha executive-synthesis architecture
+
+**Status:** Accepted provisionally for Alpha.
+
+Chief V1 uses current-access-safe governed raw sources → replaceable frontier synthesis → exact citation closure and mechanical checks where represented → user-scoped noncanonical working analysis → mandatory human Review. Persisted research was mixed: reviewed structured context won the Sales comparison, while raw frontier won the Scientific comparison and remained a strong Sales baseline. Reviewed oracle context is not a capability current Discovery can generate automatically; it is deferred, not discarded. Current handcrafted synthesis is demoted from primary user-facing synthesis. No longitudinal-compounding claim is made.
