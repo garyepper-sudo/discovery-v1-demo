@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
-import { createLeadershipConversationServerComposition, resolveCurrentLeadershipConversationCheckpoint, resolveCurrentLeadershipConversationClosureMetadata } from "../../../product/integration/leadershipConversationServerComposition";
+import { assertCloseAndContinueOccurrence1Arguments, createLeadershipConversationServerComposition, executeCloseAndContinueOccurrence1Boundary, resolveCurrentLeadershipConversationCheckpoint, resolveCurrentLeadershipConversationClosureMetadata } from "../../../product/integration/leadershipConversationServerComposition";
 import type { CanonicalProductWorkspaceAdapter } from "../../../product/integration/canonicalProductWorkspaceAdapter";
 import type { ChiefFirstPrepareActivationV1 } from "../../../product/workflow/leadershipConversation";
 import { composeChiefFirstPrepareViewFromWorkspace } from "../../../product/integration/chiefLeadershipPreparationComposer";
@@ -228,6 +228,19 @@ export async function completeOccurrence1Action(): Promise<LeadershipConversatio
   const completed = await server.workspace(identity);
   if (completed.closureCompletion?.seriesId !== frozen.seriesId || completed.closureCompletion.authorizedProjectionDigest !== frozen.authorizedProjectionDigest || completed.closureCompletion.personalRoomSheetDigest !== frozen.personalRoomSheetDigest) throw new Error("Occurrence 1 completion is unavailable.");
   observeJourney("closure","completed","success");return completed;
+}
+
+export async function closeAndContinueOccurrence1Action(...runtimeArguments: unknown[]) {
+  assertCloseAndContinueOccurrence1Arguments(runtimeArguments);
+  const {server,identity}=await occurrence1Context();
+  let current=await server.workspace(identity);
+  try{
+    const result=await executeCloseAndContinueOccurrence1Boundary({argumentsList:runtimeArguments,server,identity,initialWorkspace:current,completeOccurrence:completeOccurrence1Action});
+    return{...result,valueLayer:compileChiefOfStaffValueLayerV1(result.nextPrepare),error:null};
+  }catch{
+    current=await server.workspace(identity);
+    return{sourceWorkspace:current,nextWorkspace:null,nextPrepare:null,valueLayer:null,error:current.closureCompletion?"Your saved progress is intact. Continue preparing the next occurrence.":"Close and continue is unavailable. Finish the required review steps and try again."};
+  }
 }
 
 export async function prepareAgainOccurrence1Action() {

@@ -58,7 +58,7 @@ async function main() {
     check(actions.includes("prepareAgainOccurrence1Action") && server.includes("prepareNextOccurrence"), "Prepare Again uses server-owned orchestration");
     check(component.indexOf("Occurrence 2 is prepared") < component.indexOf("<LeadershipConversationPrepare prepare={nextPrepare}"), "Occurrence 2 renders Prepare only");
     check(!component.includes("freezeOccurrence2") && !component.includes("captureOccurrence2"), "Occurrence 2 execution is not invented");
-    check(component.includes("Current stage") && component.includes('aria-current="step"') && component.includes("completed ? null"), "active workflow step is explicit and completed cycles have no current step");
+    check(component.includes("Current stage") && component.includes('aria-current="step"') && component.includes("gate2Complete ? null"), "active workflow step is explicit and completed continuation has no current step");
     check(component.includes("LeadershipConversationObservabilityObserver") && sheetPanel.includes("onPrivateWorkingOpened"), "content-safe client observer is wired");
     check(observer.includes("viewportCategory") && observer.includes("observeLeadershipConversationBrowserEventAction") && !observer.includes("document.") && !observer.includes("localStorage") && !observer.includes("sessionStorage") && !observer.includes("innerText") && !observer.includes("textContent"), "client observer uses enum-only state and no protected DOM or storage");
     check(page.indexOf("authorizePageCurrentAccess")<page.indexOf("telemetry.consent.current")&&component.includes("telemetryNotice&&<AlphaTelemetryNotice"),"telemetry notice follows Product authorization");
