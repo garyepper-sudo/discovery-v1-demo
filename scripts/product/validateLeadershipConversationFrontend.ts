@@ -48,7 +48,8 @@ async function main() {
     check(successor.includes("server.workspace") && successor.includes("isLeadershipConversationPrepareAvailable(nextWorkspace)") && !successor.includes("getPersonalRoomSheetPreviewAction"), "fresh reload resolves authorized successor before predecessor personal work");
     check(page.indexOf("if (workspace.futurePreparationLink)") < page.indexOf("if (!isLeadershipConversationPrepareAvailable(workspace)") && page.includes("Discovery has not loaded or revealed protected meeting content."), "unavailable successor fails closed");
     check(actions.includes('"use server"') && actions.includes("activateAndPrepareLeadershipConversationAction") && !actions.includes("dispatchLeadershipConversation"), "explicit server actions");
-    check(actions.includes("acceptOccurrence1EvidenceAction") && actions.includes('proposal.kind !== "evidence-candidate"') && component.includes("Accept as Evidence"), "Evidence acceptance remains explicit");
+    check(actions.includes("dispositionOccurrence1CarryForwardAction") && actions.includes("resumeOccurrence1CarryForwardRouteAction") && component.includes("Proposed carry-forward") && component.includes("Only explicitly accepted or corrected material is offered to its existing owner.") && component.includes("Resume owner route") && component.includes("reviewedCarryForwardCompletion"), "Reviewed Carry-Forward remains an explicit, resumable human disposition boundary");
+    check(actions.includes("resumeOccurrence1CarryForwardCompletionAction")&&component.includes("Finalize review summary")&&component.includes("completionReady&&!workspace.reviewedCarryForwardCompletion"),"durable terminal review can resume server-owned completion after reload");
     check(!component.includes("SourceContentRepository") && !prepare.includes("OrganizationRuntime"), "frontend firewall");
     check(page.includes('href="/your-organization"') && !page.includes("authorization failed"), "safe non-disclosing unavailable next action");
     check(server.includes("productArtifactAccess.readAuthorized<PreparedWorkProductBodyV1>") && !server.includes("preparedWorkProducts.push"), "authorized split-persistence body reader unchanged");
@@ -63,7 +64,7 @@ async function main() {
     check(page.indexOf("authorizePageCurrentAccess")<page.indexOf("telemetry.consent.current")&&component.includes("telemetryNotice&&<AlphaTelemetryNotice"),"telemetry notice follows Product authorization");
     check(telemetryNotice.includes("Private Working")&&telemetryNotice.includes("meeting notes")&&!telemetryNotice.includes("textarea"),"notice excludes protected content and feedback is closed");
     check(prepare.includes("onProgressiveDisclosure")&&!prepare.includes("textContent")&&!prepare.includes("innerText"),"progressive disclosure observation is content-free");
-    console.log(JSON.stringify({ validation: "leadership-conversation-frontend-001", result: "PASS", checks, desktop: true, narrow: true, keyboard: true, rawSourceContent: false, runtime: false, cognition: false, authorizationContext: false, networkCalls: 0, productionAccess: 0 }));
+    console.log(JSON.stringify({ validation: "leadership-conversation-frontend-001", evidence: "structural", result: "PASS", checks, desktop: true, narrow: true, keyboard: true, rawSourceContent: false, runtime: false, cognition: false, authorizationContext: false, networkCalls: 0, productionAccess: 0 }));
   } finally {
     await rm(root, { recursive: true, force: true });
   }

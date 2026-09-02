@@ -149,7 +149,7 @@ export async function captureOccurrence1Action(input: { meetingNotes: string }):
   const text = `${new TextDecoder().decode(NORTHSTAR_LEADERSHIP_CONVERSATION_FIXTURE.captureBytes)}\n${contributionRecord}\n\nMeeting notes:\n${meetingNotes}\n`;
   const stored = await server.receiveUpload({ ...identity, frozenSnapshotId: checkpoint.checkpointId, purposeRef: fixture.purposeRef, mediaType: "text/plain", bytes: new TextEncoder().encode(text), displayLabel: "Occurrence 1 meeting record", originalFilename: null, idempotencyKey: `occurrence-1-capture:${identity.conversationId}` }), uploadReceipt = stored.uploadReceipts.filter(item => item.conversationId === identity.conversationId).at(-1);
   if (!uploadReceipt) throw new Error("Occurrence 1 Capture is unavailable.");
-  await server.generateProposals({ ...identity, uploadReceiptId: uploadReceipt.uploadReceiptId, purposeRef: fixture.purposeRef, idempotencyKey: `occurrence-1-proposals:${identity.conversationId}` });
+  await server.beginReviewedCarryForward({ ...identity, uploadReceiptId: uploadReceipt.uploadReceiptId, idempotencyKey: `occurrence-1-reviewed-carry-forward:${identity.conversationId}` });
   const workspace=await server.workspace(identity);observeJourney("capture","completed","success");return workspace;
 }
 
@@ -160,6 +160,22 @@ export async function reviewOccurrence1ProposalAction(input: { proposalId: strin
   await server.review({ ...identity, proposalId: proposal.proposalId, disposition: input.disposition, effectivePayload: null, reason: input.disposition === "deferred" ? "Kept open for a later governed review." : "Not carried forward from Occurrence 1.", idempotencyKey: `occurrence-1-review:${proposal.proposalId}:${input.disposition}` });
   const workspace=await server.workspace(identity);observeJourney("review","completed",input.disposition==="deferred"?"expected-abstention":"success");return workspace;
 }
+
+export async function dispositionOccurrence1CarryForwardAction(input:{proposalId:string;disposition:"accept"|"correct"|"reject"|"needs-information";correctedSummary?:string}):Promise<LeadershipConversationWorkspaceV1>{
+  observeJourney("review","attempted","attempted");
+  const{server,identity,fixture}=await occurrence1Context();let current=await server.workspace(identity),proposal=current.proposals.find(item=>item.proposalId===input.proposalId);
+  if(!proposal?.reviewedCarryForward)throw new Error("Reviewed carry-forward disposition is unavailable.");
+  const corrected=input.correctedSummary?.trim();if(input.disposition==="correct"&&(!corrected||corrected.length>500))throw new Error("Reviewed carry-forward correction is unavailable.");
+  const disposition:ProposalDisposition=input.disposition==="accept"?"approved":input.disposition==="correct"?"approved-with-edit":input.disposition==="reject"?"rejected":"deferred",effectivePayload=disposition==="approved-with-edit"?{summary:corrected!,targetRef:proposal.payload.targetRef}:null,reason=input.disposition==="correct"?"Human-authored correction approved for owner routing.":input.disposition==="accept"?"Explicitly accepted for owner routing.":input.disposition==="reject"?"Explicitly rejected; remains noncanonical.":"Reviewed as needing information; remains noncanonical.";
+  const existing=current.dispositions.find(item=>item.proposalId===proposal!.proposalId);if(existing&&(existing.disposition!==disposition||JSON.stringify(existing.effectivePayload)!==JSON.stringify(effectivePayload)))throw new Error("Reviewed carry-forward disposition conflicts with the durable review.");if(!existing)await server.review({...identity,proposalId:proposal.proposalId,disposition,effectivePayload,reason,idempotencyKey:`occurrence-1-carry-forward-review:${proposal.proposalId}:${disposition}:${corrected??"none"}`});
+  current=await server.workspace(identity);
+  if(disposition.startsWith("approved"))await server.ensureReviewedCarryForwardRoute({...identity,proposalId:proposal.proposalId,purposeRef:fixture.purposeRef,expectedWorkflowRevision:current.workflowRevision,idempotencyKey:`occurrence-1-carry-forward-route:${proposal.proposalId}`});
+  else{current=await server.workspace(identity);const reviewed=current.proposals.filter(item=>item.reviewedCarryForward),allReviewed=reviewed.every(item=>current.dispositions.some(value=>value.proposalId===item.proposalId)),allTerminal=current.dispositions.filter(item=>item.disposition.startsWith("approved")&&reviewed.some(value=>value.proposalId===item.proposalId)).every(item=>current.canonicalRoutingReceipts.some(value=>value.proposalId===item.proposalId&&value.dispositionReceiptId===item.dispositionReceiptId)||current.reviewedCarryForwardNonpromotions.some(value=>value.proposalId===item.proposalId&&value.dispositionReceiptId===item.dispositionReceiptId));if(allReviewed&&allTerminal&&!current.reviewedCarryForwardCompletion)await server.ensureReviewedCarryForwardCompletion(identity);}
+  const workspace=await server.workspace(identity);observeJourney("review","completed",input.disposition==="needs-information"?"expected-abstention":"success");return workspace;
+}
+
+export async function resumeOccurrence1CarryForwardRouteAction(input:{proposalId:string}):Promise<LeadershipConversationWorkspaceV1>{const{server,identity,fixture}=await occurrence1Context();const current=await server.workspace(identity),proposal=current.proposals.find(item=>item.proposalId===input.proposalId&&item.reviewedCarryForward),disposition=current.dispositions.find(item=>item.proposalId===input.proposalId);if(!proposal||!disposition?.disposition.startsWith("approved"))throw new Error("Reviewed carry-forward route is unavailable.");return server.ensureReviewedCarryForwardRoute({...identity,proposalId:proposal.proposalId,purposeRef:fixture.purposeRef,expectedWorkflowRevision:current.workflowRevision,idempotencyKey:`occurrence-1-carry-forward-route:${proposal.proposalId}`});}
+export async function resumeOccurrence1CarryForwardCompletionAction():Promise<LeadershipConversationWorkspaceV1>{const{server,identity}=await occurrence1Context();return server.ensureReviewedCarryForwardCompletion(identity);}
 
 export async function acceptOccurrence1EvidenceAction(input: { proposalId: string }): Promise<LeadershipConversationWorkspaceV1> {
   const { server, identity, fixture } = await occurrence1Context();

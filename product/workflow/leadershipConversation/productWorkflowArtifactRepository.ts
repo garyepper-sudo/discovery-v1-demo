@@ -15,6 +15,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import {
   assertGovernedConsequenceScopeBindingV1,
+  assertReviewedCarryForwardProposalAuthorityV1,
   type LeadershipConversationArtifactStoreV1,
   type ProposalKind,
 } from "./contracts";
@@ -41,6 +42,8 @@ const empty = (
   publicationReceipts: [],
   whatChangedPublications: [],
   cycle1ClosureCompletions: [],
+  reviewedCarryForwardNonpromotions: [],
+  reviewedCarryForwardCompletions: [],
   uploadReceipts: [],
   proposals: [],
   dispositions: [],
@@ -76,6 +79,8 @@ export function normalizeLeadershipConversationArtifactStore(
     publicationReceipts: store.publicationReceipts ?? [],
     whatChangedPublications: store.whatChangedPublications ?? [],
     cycle1ClosureCompletions: store.cycle1ClosureCompletions ?? [],
+    reviewedCarryForwardNonpromotions: store.reviewedCarryForwardNonpromotions ?? [],
+    reviewedCarryForwardCompletions: store.reviewedCarryForwardCompletions ?? [],
     productMaterializations: store.productMaterializations ?? [],
     productMaterializationReceipts: store.productMaterializationReceipts ?? [],
     historicalCheckpointLifecycleLinks:
@@ -184,6 +189,7 @@ export type ProductWorkflowOccurrenceMutation = {
   cycle1ClosureCompletions?: NonNullable<
     LeadershipConversationArtifactStoreV1["cycle1ClosureCompletions"]
   >;
+  reviewedCarryForwardCompletions?: NonNullable<LeadershipConversationArtifactStoreV1["reviewedCarryForwardCompletions"]>;
   events?: LeadershipConversationArtifactStoreV1["events"];
   idempotency?: LeadershipConversationArtifactStoreV1["idempotency"];
 };
@@ -483,6 +489,8 @@ class FilesystemProductWorkflowArtifactRepository
           value.productWorkflowId === workflowId,
       ),
       cycle1ClosureCompletions: closures,
+      reviewedCarryForwardNonpromotions: conversation(source.reviewedCarryForwardNonpromotions ?? []).filter(value=>proposalIds.has(value.proposalId)&&dispositionIds.has(value.dispositionReceiptId)),
+      reviewedCarryForwardCompletions: conversation(source.reviewedCarryForwardCompletions ?? []),
       uploadReceipts: conversation(source.uploadReceipts),
       proposals,
       dispositions,
@@ -590,10 +598,13 @@ class FilesystemProductWorkflowArtifactRepository
         previousEventId: questionEvents.at(-1)?.eventId ?? null,
       }),
       next = structuredClone(current.store);
+    if((mutation.reviewedCarryForwardCompletions??[]).length){const proposals=slice.store.proposals.filter(value=>value.reviewedCarryForward);if(proposals.length!==5)throw new Error("Reviewed carry-forward completion authority is invalid.");for(const proposal of proposals){assertReviewedCarryForwardProposalAuthorityV1(proposal);const dispositions=slice.store.dispositions.filter(value=>value.proposalId===proposal.proposalId);if(dispositions.length!==1)throw new Error("Reviewed carry-forward completion authority is invalid.");const disposition=dispositions[0]!;if(disposition.originalPayloadDigest!==proposal.payloadDigest||disposition.disposition==="approved-with-edit"&&(!disposition.effectivePayload||disposition.effectivePayload.targetRef!==proposal.payload.targetRef||!disposition.effectivePayload.summary.trim()||disposition.effectivePayloadDigest!==leadershipDigest(leadershipStableSerialize(disposition.effectivePayload))))throw new Error("Reviewed carry-forward completion authority is invalid.");if(disposition.disposition.startsWith("approved")){const routes=slice.store.canonicalRoutingReceipts.filter(value=>value.proposalId===proposal.proposalId&&value.dispositionReceiptId===disposition.dispositionReceiptId),nonpromotions=(slice.store.reviewedCarryForwardNonpromotions??[]).filter(value=>value.proposalId===proposal.proposalId&&value.dispositionReceiptId===disposition.dispositionReceiptId);if(routes.length+nonpromotions.length!==1)throw new Error("Reviewed carry-forward completion authority is invalid.");if(routes.length){const route=routes[0]!,{receiptDigest,...unsigned}=route,expected=proposal.kind==="decision-draft"?["product-decision-draft","product-decision-draft:create"]:proposal.kind==="unknown"?["unknown","product-unknown:open"]:proposal.kind==="follow-up-question"?["follow-up-product-question","product-question:create"]:proposal.kind==="commitment"?["commitment","leadership-conversation:commitment:record"]:proposal.kind==="assumption-change"?["assumption-change","leadership-conversation:assumption-change:record"]:null;if(!expected||route.ownerKind!==expected[0]||route.canonicalOperation!==expected[1]||receiptDigest!==leadershipDigest(leadershipStableSerialize(unsigned)))throw new Error("Reviewed carry-forward completion authority is invalid.");}if(nonpromotions.length){const receipt=nonpromotions[0]!,{contentDigest,...unsigned}=receipt;if(proposal.kind!=="decision-draft"||receipt.reason!=="decision-current-answer-unavailable"||contentDigest!==leadershipDigest(leadershipStableSerialize(unsigned)))throw new Error("Reviewed carry-forward completion authority is invalid.");}}}}
     next.cycle1ClosureCompletions ??= [];
     next.cycle1ClosureCompletions.push(
       ...(mutation.cycle1ClosureCompletions ?? []),
     );
+    next.reviewedCarryForwardCompletions ??= [];
+    next.reviewedCarryForwardCompletions.push(...(mutation.reviewedCarryForwardCompletions ?? []));
     next.events.push(...(mutation.events ?? []));
     next.idempotency.push(...(mutation.idempotency ?? []));
     const committed = await this.replaceBound(

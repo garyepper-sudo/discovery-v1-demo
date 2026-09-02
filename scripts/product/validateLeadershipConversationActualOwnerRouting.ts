@@ -22,6 +22,8 @@ async function main(): Promise<void> {
   check(router.includes("contributeEvidenceWithCanonicalMaterializationInstruction"), "Evidence routing persists the actual operation-bound result and instruction together");
   check(router.includes("decisionDraftService.create"), "Product Decision Draft uses the actual service");
   check(router.includes("deriveProductUnknownCandidate") && router.includes("mutateUnknown"), "Unknown identity and result use the actual owner");
+  check(router.includes("class ReviewedCarryForwardOwnerIneligibleError") && composition.includes("error instanceof ReviewedCarryForwardOwnerIneligibleError") && !composition.includes("requires an exact current Product Answer|requires an explicit target"), "only the typed deterministic owner-ineligible outcome becomes terminal nonpromotion");
+  check(router.includes('throw new Error("Leadership Conversation proposal kind is not executable.")'), "unsupported proposal families remain ordinary fail-closed errors");
   check(router.includes("createQuestion") && router.includes("result.workspace.question.id"), "follow-up Question receipts derive from the actual owner result");
   check(!router.includes("canonicalReceiptRefs:string[]") && !router.includes("classification:string"), "caller cannot supply authoritative receipt arrays or change classification");
   check(router.includes("resolveCurrentSourceBinding") && router.includes("readForEvidenceAdmission"), "Evidence routing resolves Binding and rereads governed content");
@@ -50,13 +52,13 @@ async function main(): Promise<void> {
   check(replay.includes("route-actual-owners-and-prepare-again") && replay.includes("createLeadershipConversationServerCompositionForValidation"), "unified Process C uses the actual root-bound server composition");
   check(!replay.includes("stubbedPositiveOwners: true") && replay.includes("stubbedPositiveOwners: false"), "focused synthetic positive-owner acceptance has been removed");
   check(replay.includes("processAHandoffDigest") && replay.includes("processBHandoffDigest") && replay.includes("handoff digest mismatch"), "fresh-process handoffs are cryptographically chained and fail closed");
-  check(replay.includes("actual-class-2") && replay.includes("persisted canonical Evidence replay receipt unavailable") && replay.includes("duplicate.receiptDigest,material.receiptDigest"), "Class 2 duplicate acceptance reuses the exact persisted canonical Evidence route");
+  check(replay.includes("actual-class-2") && replay.includes("persisted canonical Evidence replay receipt unavailable") && replay.includes("duplicate.receiptDigest, material.receiptDigest"), "Class 2 duplicate acceptance reuses the exact persisted canonical Evidence route");
   check(replay.includes("productMaterializationReceipts") && replay.includes("evidenceMaterialization.whatChangedArtifactId"), "replay binds the canonical route to one staged Product materialization and What Changed publication");
   check(replay.includes("different-purpose") && replay.includes("assert.rejects"), "same-key different-request control fails closed");
   check(composition.includes("historicalCheckpointLifecycle") && composition.includes("CanonicalProductArtifactCurrentAccessComposition") && composition.includes("executiveHistoryAccess.readReview") && composition.includes("executiveHistoryAccess.readOutcome") && composition.includes("executiveHistoryAccess.readLearning"), "server composition routes L1 through actual Product-artifact and Executive History access owners");
   check(lifecycleRouter.includes("resolveCheckpoint") && lifecycleRouter.includes("resolveLinkedRecord") && !lifecycleRouter.includes("runtimeRepository"), "L1 router accepts no Runtime repository or caller-supplied owner proof");
 
-  console.log(JSON.stringify({ validation: "leadership-conversation-actual-owner-routing-001", result: "PASS", checks, positiveAcceptance: "unified-fresh-process-replay", focusedRole: "contract-and-adversarial-controls", syntheticPositiveOwners: false, networkCalls: 0, connectorCalls: 0, driveReads: 0, driveWrites: 0, productionAccess: 0, deployments: 0 }));
+  console.log(JSON.stringify({ validation: "leadership-conversation-actual-owner-routing-001", evidence: "structural", result: "PASS", checks, positiveAcceptance: "unified-fresh-process-replay", focusedRole: "contract-and-adversarial-controls", syntheticPositiveOwners: false, networkCalls: 0, connectorCalls: 0, driveReads: 0, driveWrites: 0, productionAccess: 0, deployments: 0 }));
 }
 
 void main();

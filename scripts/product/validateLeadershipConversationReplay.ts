@@ -2437,9 +2437,9 @@ async function main(forceValidation = false) {
       );
     assert.match(
       occurrenceActions,
-      /acceptOccurrence1EvidenceAction[\s\S]*server\.review[\s\S]*server\.routeApproved/,
+      /dispositionOccurrence1CarryForwardAction[\s\S]*server\.review[\s\S]*server\.routeApproved/,
     );
-    assert.match(experience, /Accept as Evidence/);
+    assert.match(experience, /Proposed carry-forward/);
     assert.match(telemetryOwner, /return"repository-unavailable"/);
     assert.doesNotMatch(telemetryOwner, /throw new Error/);
     checks += 4;
