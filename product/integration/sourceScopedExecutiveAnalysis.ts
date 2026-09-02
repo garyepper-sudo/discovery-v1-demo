@@ -4,9 +4,10 @@ import {mkdir,open,readFile,readdir,rename,stat,unlink} from "node:fs/promises";
 import path from "node:path";
 import {buildSourceScopedExecutiveAnalysisRequest,sourceScopedModelConfiguration} from "../../lib/analysis/buildSourceScopedExecutiveAnalysisRequest";
 import {runSourceScopedFrontierAnalysis} from "../../lib/analysis/runSourceScopedFrontierAnalysis";
-import {sourceScopedDigest,sourceScopedStable,unavailable,type SourceScopedPacketV1,type SourceScopedResultV1,type SourceScopedTransportV1} from "../../lib/analysis/sourceScopedExecutiveAnalysisContracts";
+import {DEFAULT_SOURCE_SCOPED_ANALYSIS_TIMEOUT_MS,sourceScopedDigest,sourceScopedStable,unavailable,type SourceScopedPacketV1,type SourceScopedResultV1,type SourceScopedTransportV1} from "../../lib/analysis/sourceScopedExecutiveAnalysisContracts";
 export type SelectedLeadershipSourceV1={organizationId:string;sourceId:string;sourceVersion:string;title:string;effectiveAt:string;authority:"authoritative"|"preliminary";normalizedBodyDigest:string};
 export type SelectedSourceAccessV1={disposition:"eligible";accessDigest:string}|{disposition:"unavailable"};
+export type SourceScopedUnavailableReasonV1="no-authorized-source-bodies"|"source-access-changed"|"analysis-construction-failure"|"request-failed";
 export const SOURCE_SCOPED_LIFECYCLE_STAGES=["plan-frozen","request-digests-frozen","transport-entry-persisted","response-headers-received","response-body-received","candidate-parsed","candidate-validated","terminal-result-persisted"] as const;
 export type SourceScopedLifecycleStageV1=typeof SOURCE_SCOPED_LIFECYCLE_STAGES[number];
 export type SourceScopedTerminalV1="eligible"|"provider-rejected"|"transport-failed"|"response-too-large"|"malformed-response"|"model-mismatch"|"citation-failed"|"candidate-validation-failed"|"pre-dispatch-failed";
@@ -39,10 +40,55 @@ export class SourceScopedFrontierAttemptLifecycleV1{
  receipt(){return this.attempt;}
 }
 export type SourceScopedExecutiveAnalysisDependencies={authorizeDesignatedPrincipal(input:{subjectId:string;organizationId:string;questionId:string;seriesId:string;occurrenceId:string}):Promise<boolean>;selectCurrentPrepareSources(input:{subjectId:string;organizationId:string;questionId:string;seriesId:string;occurrenceId:string}):Promise<SelectedLeadershipSourceV1[]>;resolveLifecycleBinding?(input:{subjectId:string;organizationId:string;questionId:string;seriesId:string;occurrenceId:string}):Promise<{preparedWorkPublicationDigest:string;materialLineageDigest:string}>;resolveCurrentAccess(input:{subjectId:string;organizationId:string;source:SelectedLeadershipSourceV1}):Promise<SelectedSourceAccessV1>;readProtectedBody(input:{subjectId:string;organizationId:string;source:SelectedLeadershipSourceV1;access:Extract<SelectedSourceAccessV1,{disposition:"eligible"}>}):Promise<string>;transport?:LifecycleAwareSourceScopedTransportV1;model:string;providerFamily:string;timeoutMs?:number|null;lifecycleRoot?:string;onRequestBuilt?():void};
-export class SourceScopedExecutiveAnalysisOwner{private lifecycleConfiguration:{root:string;resolve(input:{subjectId:string;organizationId:string;questionId:string;seriesId:string;occurrenceId:string}):Promise<{preparedWorkPublicationDigest:string;materialLineageDigest:string}>}|undefined;constructor(private readonly dependencies:SourceScopedExecutiveAnalysisDependencies){}configureLifecycle(value:NonNullable<SourceScopedExecutiveAnalysisOwner["lifecycleConfiguration"]>){this.lifecycleConfiguration=value;}async analyze(input:{subjectId:string;organizationId:string;questionId:string;seriesId:string;occurrenceId:string;question:string}):Promise<SourceScopedResultV1>{let lifecycle:SourceScopedFrontierAttemptLifecycleV1|undefined;try{if(this.dependencies.timeoutMs===null||!await this.dependencies.authorizeDesignatedPrincipal(input))return unavailable(0);const selected=await this.dependencies.selectCurrentPrepareSources(input);if(!selected.length||selected.some(source=>source.organizationId!==input.organizationId)||new Set(selected.map(source=>source.sourceId)).size!==selected.length)return unavailable(0);const sources=[];for(const source of [...selected].sort((a,b)=>a.effectiveAt.localeCompare(b.effectiveAt)||a.sourceId.localeCompare(b.sourceId))){const access=await this.dependencies.resolveCurrentAccess({...input,source});if(access.disposition!=="eligible")return unavailable(0);const body=await this.dependencies.readProtectedBody({...input,source,access}),bodyDigest=sourceScopedDigest(body);if(!body.trim()||bodyDigest!==source.normalizedBodyDigest)return unavailable(0);const base={organizationId:source.organizationId,sourceId:source.sourceId,sourceVersion:source.sourceVersion,title:source.title,effectiveAt:source.effectiveAt,authority:source.authority,bodyDigest,body};sources.push({...base,entryDigest:sourceScopedDigest(base)});}const packetBase={contractVersion:"1" as const,organizationId:input.organizationId,subjectId:input.subjectId,questionId:input.questionId,seriesId:input.seriesId,occurrenceId:input.occurrenceId,sources},packet:SourceScopedPacketV1={...packetBase,packetDigest:sourceScopedDigest(packetBase)},configuration=sourceScopedModelConfiguration({providerFamily:this.dependencies.providerFamily,model:this.dependencies.model,timeoutMs:this.dependencies.timeoutMs??undefined}),built=buildSourceScopedExecutiveAnalysisRequest({packet,question:input.question,configuration});this.dependencies.onRequestBuilt?.();let transport:SourceScopedTransportV1|undefined=this.dependencies.transport;const lifecycleConfiguration=this.lifecycleConfiguration??(this.dependencies.lifecycleRoot&&this.dependencies.resolveLifecycleBinding?{root:this.dependencies.lifecycleRoot,resolve:this.dependencies.resolveLifecycleBinding}:undefined);if(this.dependencies.transport&&lifecycleConfiguration){const binding=await lifecycleConfiguration.resolve(input);lifecycle=await SourceScopedFrontierAttemptLifecycleV1.begin(lifecycleConfiguration.root,{occurrenceDigest:sourceScopedDigest({organizationId:input.organizationId,questionId:input.questionId,seriesId:input.seriesId,occurrenceId:input.occurrenceId}),...binding,sourcePacketDigest:packet.packetDigest,requestDigest:built.request.requestDigest,promptDigest:built.request.promptDigest,schemaDigest:built.request.schemaDigest,configurationDigest:configuration.configurationDigest,requestedModel:configuration.model});const hooks=lifecycle.hooks(),aware=this.dependencies.transport;transport=aware.withLifecycle?aware.withLifecycle(hooks):async value=>{await hooks.transportEntry();return aware(value);};}const result=await runSourceScopedFrontierAnalysis({...built,transport});if(lifecycle){if(result.status==="eligible")await lifecycle.validated();else await lifecycle.finish("candidate-validation-failed");}return result;}catch{const classification=lifecycle?.classification();if(lifecycle&&classification==="CONCLUSIVELY NOT DISPATCHED")await lifecycle.finish("pre-dispatch-failed").catch(()=>{});return unavailable(classification&&classification!=="CONCLUSIVELY NOT DISPATCHED"?1:0);}}}
+export class SourceScopedExecutiveAnalysisOwner {
+  private lifecycleConfiguration:{root:string;resolve(input:{subjectId:string;organizationId:string;questionId:string;seriesId:string;occurrenceId:string}):Promise<{preparedWorkPublicationDigest:string;materialLineageDigest:string}>}|undefined;
+  private lastUnavailableReason:SourceScopedUnavailableReasonV1|undefined;
+  constructor(private readonly dependencies:SourceScopedExecutiveAnalysisDependencies) {}
+  configureLifecycle(value:NonNullable<SourceScopedExecutiveAnalysisOwner["lifecycleConfiguration"]>){this.lifecycleConfiguration=value;}
+  unavailableReason(){return this.lastUnavailableReason;}
+  async analyze(input:{subjectId:string;organizationId:string;questionId:string;seriesId:string;occurrenceId:string;question:string}):Promise<SourceScopedResultV1>{
+    let lifecycle:SourceScopedFrontierAttemptLifecycleV1|undefined, stage:SourceScopedUnavailableReasonV1="analysis-construction-failure";
+    const unavailableResult=(reason:SourceScopedUnavailableReasonV1,dispatchCount:0|1)=>{this.lastUnavailableReason=reason;return unavailable(dispatchCount);};
+    try {
+      if(this.dependencies.timeoutMs===null||!await this.dependencies.authorizeDesignatedPrincipal(input))return unavailableResult("source-access-changed",0);
+      stage="no-authorized-source-bodies";
+      const selected=await this.dependencies.selectCurrentPrepareSources(input);
+      if(!selected.length||selected.some(source=>source.organizationId!==input.organizationId)||new Set(selected.map(source=>source.sourceId)).size!==selected.length)return unavailableResult(stage,0);
+      const sources=[];
+      for(const source of [...selected].sort((a,b)=>a.effectiveAt.localeCompare(b.effectiveAt)||a.sourceId.localeCompare(b.sourceId))){
+        stage="source-access-changed";
+        const access=await this.dependencies.resolveCurrentAccess({...input,source});
+        if(access.disposition!=="eligible")return unavailableResult(stage,0);
+        stage="no-authorized-source-bodies";
+        const body=await this.dependencies.readProtectedBody({...input,source,access}),bodyDigest=sourceScopedDigest(body);
+        if(!body.trim()||bodyDigest!==source.normalizedBodyDigest)return unavailableResult(stage,0);
+        const base={organizationId:source.organizationId,sourceId:source.sourceId,sourceVersion:source.sourceVersion,title:source.title,effectiveAt:source.effectiveAt,authority:source.authority,bodyDigest,body};
+        sources.push({...base,entryDigest:sourceScopedDigest(base)});
+      }
+      stage="analysis-construction-failure";
+      const packetBase={contractVersion:"1" as const,organizationId:input.organizationId,subjectId:input.subjectId,questionId:input.questionId,seriesId:input.seriesId,occurrenceId:input.occurrenceId,sources},packet:SourceScopedPacketV1={...packetBase,packetDigest:sourceScopedDigest(packetBase)},configuration=sourceScopedModelConfiguration({providerFamily:this.dependencies.providerFamily,model:this.dependencies.model,timeoutMs:this.dependencies.timeoutMs??undefined}),built=buildSourceScopedExecutiveAnalysisRequest({packet,question:input.question,configuration});
+      this.dependencies.onRequestBuilt?.();
+      let transport:SourceScopedTransportV1|undefined=this.dependencies.transport;
+      const lifecycleConfiguration=this.lifecycleConfiguration??(this.dependencies.lifecycleRoot&&this.dependencies.resolveLifecycleBinding?{root:this.dependencies.lifecycleRoot,resolve:this.dependencies.resolveLifecycleBinding}:undefined);
+      if(this.dependencies.transport&&lifecycleConfiguration){const binding=await lifecycleConfiguration.resolve(input);lifecycle=await SourceScopedFrontierAttemptLifecycleV1.begin(lifecycleConfiguration.root,{occurrenceDigest:sourceScopedDigest({organizationId:input.organizationId,questionId:input.questionId,seriesId:input.seriesId,occurrenceId:input.occurrenceId}),...binding,sourcePacketDigest:packet.packetDigest,requestDigest:built.request.requestDigest,promptDigest:built.request.promptDigest,schemaDigest:built.request.schemaDigest,configurationDigest:configuration.configurationDigest,requestedModel:configuration.model});const hooks=lifecycle.hooks(),aware=this.dependencies.transport;transport=aware.withLifecycle?aware.withLifecycle(hooks):async value=>{await hooks.transportEntry();return aware(value);};}
+      const result=await runSourceScopedFrontierAnalysis({...built,transport});
+      if(lifecycle){if(result.status==="eligible")await lifecycle.validated();else await lifecycle.finish("candidate-validation-failed");}
+      if(result.status!=="eligible")this.lastUnavailableReason=result.dispatchCount===1?"request-failed":"analysis-construction-failure";
+      return result;
+    } catch {
+      const classification=lifecycle?.classification();
+      if(lifecycle&&classification==="CONCLUSIVELY NOT DISPATCHED")await lifecycle.finish("pre-dispatch-failed").catch(()=>{});
+      const dispatchCount=classification&&classification!=="CONCLUSIVELY NOT DISPATCHED"?1:0;
+      return unavailableResult(dispatchCount===1?"request-failed":stage,dispatchCount);
+    }
+  }
+}
 
-export async function analyzeDeterministicDevelopmentCandidate(owner:SourceScopedExecutiveAnalysisOwner,input:{subjectId:string;organizationId:string;questionId:string;seriesId:string;occurrenceId:string;question:string},transport:SourceScopedTransportV1):Promise<SourceScopedResultV1>{
+export async function analyzeDeterministicDevelopmentCandidate(owner:SourceScopedExecutiveAnalysisOwner,input:{subjectId:string;organizationId:string;questionId:string;seriesId:string;occurrenceId:string;question:string},transport:SourceScopedTransportV1,onUnavailable?:(reason:SourceScopedUnavailableReasonV1)=>void):Promise<SourceScopedResultV1>{
   if(process.env.NODE_ENV==="production")return unavailable(0);
   const dependencies=(owner as unknown as {dependencies:SourceScopedExecutiveAnalysisDependencies}).dependencies;
-  return new SourceScopedExecutiveAnalysisOwner({...dependencies,providerFamily:"deterministic-development",transport,lifecycleRoot:undefined,resolveLifecycleBinding:undefined}).analyze(input);
+  const deterministicOwner=new SourceScopedExecutiveAnalysisOwner({...dependencies,timeoutMs:DEFAULT_SOURCE_SCOPED_ANALYSIS_TIMEOUT_MS,providerFamily:"deterministic-development",transport,lifecycleRoot:undefined,resolveLifecycleBinding:undefined});
+  const result=await deterministicOwner.analyze(input);
+  if(result.status!=="eligible")onUnavailable?.(deterministicOwner.unavailableReason()??(result.dispatchCount===1?"request-failed":"analysis-construction-failure"));
+  return result;
 }

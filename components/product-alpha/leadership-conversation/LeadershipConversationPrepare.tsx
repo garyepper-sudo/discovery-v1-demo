@@ -11,7 +11,40 @@ const ValueList = ({ items, empty }: { items: ChiefOfStaffValueItemV1[]; empty: 
   ? <ul>{items.map(item => <li key={item.itemId}><span className={styles.epistemic}>{item.status}</span>{item.text}</li>)}</ul>
   : <p className={styles.quiet}>{empty}</p>;
 const labels:Record<keyof SourceScopedCandidateV1["sections"],string>={whatMattersNow:"What matters now",whyItMatters:"Why it matters",competingExplanations:"Competing explanations",whatChanged:"What changed",decisions:"Decisions",notDecided:"Not decided",commitments:"Commitments",openQuestions:"Open questions",contradictions:"Contradictions",evidenceUncertainty:"Evidence uncertainty",modelUncertainty:"Model uncertainty",organizationalDisagreement:"Organizational disagreement",attention:"Attention",whatWouldChangeAssessment:"What would change the assessment"};
-function SourceScopedAnalysisPanel(){const[candidate,setCandidate]=useState<SourceScopedCandidateV1|null>(null),[error,setError]=useState(false),[pending,start]=useTransition();const generate=()=>start(async()=>{setError(false);const result=await generateSourceScopedExecutiveAnalysisAction();if(result.status==="eligible")setCandidate(result.candidate);else setError(true);});return <section aria-labelledby="ai-working-analysis-heading"><h3 id="ai-working-analysis-heading">AI working analysis</h3><p>Based on the sources currently available in this Leadership Conversation.</p><p>AI-generated working analysis — not yet reviewed</p><button type="button" disabled={pending} onClick={generate}>{pending?"Generating…":candidate?"Refresh analysis":"Generate analysis"}</button>{candidate&&<p className={styles.quiet}>Refreshing makes another model request.</p>}{error&&<p role="status">Analysis unavailable</p>}{candidate&&<>{Object.entries(candidate.sections).map(([key,items])=><section key={key}><h4>{labels[key as keyof typeof labels]}</h4>{items.length?<ul>{items.map((item,index)=><li key={`${key}-${index}`}>{item.statement}<details><summary>Sources</summary><ul>{item.citations.map(citation=><li key={`${citation.sourceId}:${citation.sourceVersion}`}>Source used for this analysis</li>)}</ul></details></li>)}</ul>:<p className={styles.quiet}>No supported item.</p>}</section>)}</>}</section>}
+export type SourceScopedAnalysisPanelState=
+  |{status:"idle"}
+  |{status:"pending"}
+  |{status:"success";candidate:SourceScopedCandidateV1}
+  |{status:"failure";reason:"no-authorized-source-bodies"|"source-access-changed"|"analysis-construction-failure"|"request-failed"};
+
+const failureCopy:Record<Extract<SourceScopedAnalysisPanelState,{status:"failure"}>["reason"],string>={
+  "no-authorized-source-bodies":"No currently authorized source material is available for this analysis. Nothing was generated.",
+  "source-access-changed":"Source access changed before analysis completed. Nothing was generated.",
+  "analysis-construction-failure":"Discovery could not construct the development analysis. Nothing was generated.",
+  "request-failed":"The development analysis request did not complete. Nothing was generated.",
+};
+
+export function SourceScopedAnalysisPanelView({state,onGenerate}:{state:SourceScopedAnalysisPanelState;onGenerate?:()=>void}){
+  const pending=state.status==="pending",candidate=state.status==="success"?state.candidate:null;
+  return <section aria-labelledby="working-analysis-heading">
+    <h3 id="working-analysis-heading">Working analysis</h3>
+    {state.status==="idle"&&<p>No working analysis has been generated. Any generated result is noncanonical and requires human review.</p>}
+    {pending&&<p role="status" aria-live="polite">Generating development analysis…</p>}
+    {candidate&&<><p><strong>Deterministic development analysis — not a live provider result</strong></p><p>Noncanonical · not yet reviewed</p></>}
+    {state.status==="failure"&&<p role="status">{failureCopy[state.reason]}</p>}
+    <button type="button" disabled={pending} onClick={onGenerate}>{candidate?"Run deterministic analysis again":"Generate analysis"}</button>
+    {candidate&&Object.entries(candidate.sections).map(([key,items])=>{
+      const sectionKey=key as keyof typeof labels;
+      return <section key={key}><h4>{labels[sectionKey]}</h4>{items.length?<ul>{items.map((item,index)=><li key={`${key}-${index}`}><span className={styles.epistemic}>{item.factCheck==="PASS"?"Source check passed":"Human review required"}</span>{item.statement}<details><summary>Sources</summary><ul>{item.citations.map(citation=><li key={`${citation.sourceId}:${citation.sourceVersion}:${citation.bodyDigest}`}>Source {citation.sourceId} · version {citation.sourceVersion} · material {citation.bodyDigest}</li>)}</ul></details></li>)}</ul>:<p className={styles.quiet}>No supported item.</p>}</section>;
+    })}
+  </section>;
+}
+
+function SourceScopedAnalysisPanel(){
+  const[state,setState]=useState<SourceScopedAnalysisPanelState>({status:"idle"}),[pending,start]=useTransition();
+  const generate=()=>start(async()=>{setState({status:"pending"});try{const response=await generateSourceScopedExecutiveAnalysisAction(),result=response.result;setState(result.status==="eligible"?{status:"success",candidate:result.candidate}:{status:"failure",reason:response.failureCategory??"analysis-construction-failure"});}catch{setState({status:"failure",reason:"request-failed"});}});
+  return <SourceScopedAnalysisPanelView state={pending&&state.status!=="success"?{status:"pending"}:state} onGenerate={generate}/>;
+}
 
 export function LeadershipConversationPrepare({ prepare, valueLayer, onProgressiveDisclosure }: { prepare: ChiefFirstPrepareViewV1; valueLayer?: ChiefOfStaffValueLayerV1; onProgressiveDisclosure?:(category:"questions-tensions"|"reasoning-provenance")=>void }) {
   if (!valueLayer) return <section aria-labelledby="first-prepare-heading">
@@ -59,7 +92,7 @@ export function LeadershipConversationPrepare({ prepare, valueLayer, onProgressi
       </div>
     </details>{prepare.priorCycle.status==="none"&&<SourceScopedAnalysisPanel />}
     <details onToggle={event=>{if(event.currentTarget.open)onProgressiveDisclosure?.("reasoning-provenance");}}>
-      <summary>How Discovery reached this view</summary>
+      <summary>How Discovery reached the prepared view</summary>
       <p className={styles.legend}>Supported = grounded in authorized material · Inferred = reasoned from that material · Suspected = a bounded possibility · Unknown = not established.</p>
       <h4>What Discovery does not know</h4>
       <ValueList items={valueLayer.unknowns} empty="No additional unknown is represented." />

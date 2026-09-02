@@ -17,6 +17,7 @@ import { writeAlphaOperationalLog } from "../../../lib/operations/alphaOperation
 import type { AlphaContentSafeObservabilityEventV1 } from "../../../lib/observability/alphaContentSafeObservabilityContracts";
 import { createAlphaTelemetryComposition } from "../../../lib/telemetry/alphaTelemetryComposition";
 import { assertClosedFeedback, type AlphaFeedbackDimension, type AlphaFeedbackRating } from "../../../lib/telemetry/alphaProductTelemetryContracts";
+import { unavailable } from "../../../lib/analysis/sourceScopedExecutiveAnalysisContracts";
 
 function guard(): void {
   if (process.env.NODE_ENV === "production") {
@@ -67,7 +68,7 @@ export async function getLeadershipConversationWorkspaceAction(input: {
   return createLeadershipConversationServerComposition().workspace({ ...input, userId });
 }
 export async function activateAndPrepareLeadershipConversationAction(input:ChiefFirstPrepareActivationV1){observeJourney("activate","attempted","attempted");const result=await createLeadershipConversationServerComposition().activateAndPrepare({...input,userId:await signedInUserId()});observeJourney("prepare","completed","success");return result;}
-export async function generateSourceScopedExecutiveAnalysisAction(){const{server,identity}=await occurrence1Context();return server.analyzeSourceScoped({...identity,seriesId:`leadership-conversation-series:${identity.conversationId}`,occurrenceId:identity.conversationId});}
+export async function generateSourceScopedExecutiveAnalysisAction(){try{const{server,identity}=await occurrence1Context();return await server.analyzeSourceScopedForDevelopment({...identity,seriesId:`leadership-conversation-series:${identity.conversationId}`,occurrenceId:identity.conversationId});}catch{return{result:unavailable(0),failureCategory:"source-access-changed" as const};}}
 
 export async function routeApprovedTakeawayProposalAction(input: {
   organizationId: string;
