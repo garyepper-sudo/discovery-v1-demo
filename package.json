@@ -107,6 +107,7 @@
     "validate:canonical-replay-clock-determinism": "tsx scripts/product/validateCanonicalReplayClockDeterminism.ts",
     "validate:reconstruction-input-snapshot": "tsx scripts/product/validateReconstructionInputSnapshot.ts",
     "validate:multi-user-sandbox-access": "tsx scripts/product/validateMultiUserSandboxAccess.ts",
+    "validate:development-sandbox-sign-in": "tsx scripts/product/validateDevelopmentSandboxSignIn.ts",
     "validate:live-scoped-role-aware-adapter": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateLiveScopedRoleAwareAdapter.ts",
     "validate:canonical-scope-lineage": "tsx scripts/product/validateCanonicalScopeLineage.ts",
     "validate:canonical-evidence-contribution-result": "tsx scripts/product/validateCanonicalEvidenceContributionResult.ts",

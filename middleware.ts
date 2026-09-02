@@ -17,7 +17,22 @@ const activatedYourOrganizationPath = /^\/your-organization(?:\/|$)/;
 const inactiveDesignPartnerSurface =
   /^\/(?:ask|brief|decisions|experiment|organizations|research|discovery-v1|executive-decision|api\/(?:analyze|discovery-lab|executive-decision|executive-decision-record|executive-scenario|product-interaction))(?:\/|$)/;
 const onboardingTestSurface =
-  /^\/(?:onboarding|development\/(?:sandbox-access|role-aware-live)|discovery-v1|your-organization|organizations|product-alpha|api\/(?:discovery-lab|product-alpha|development\/(?:google-drive|current-identity|sandbox-access)))(?:\/|$)/;
+  /^\/(?:onboarding|development\/(?:sandbox-access|role-aware-live)|discovery-v1|your-organization|organizations|product-alpha|api\/(?:discovery-lab|product-alpha|development\/(?:google-drive|current-identity)|development\/sandbox-access))(?:\/|$)/;
+const sandboxSignInSurface = /^\/development\/sandbox-sign-in(?:\/|$)/;
+
+export function isDevelopmentSandboxSignInRequest(
+  pathname: string,
+  environment: Readonly<Record<string, string | undefined>> = process.env,
+): boolean {
+  if (isHostedDiscoveryEnvironment(environment) || !sandboxSignInSurface.test(pathname)) {
+    return false;
+  }
+  try {
+    return onboardingTestEnvironmentEnabled(environment);
+  } catch {
+    return false;
+  }
+}
 
 function protectedHeaders(response: NextResponse): NextResponse {
   response.headers.set("Cache-Control", "private, no-store, max-age=0");
@@ -79,6 +94,12 @@ const protectActivatedYourOrganization = clerkMiddleware(async (auth, request) =
   return protectedHeaders(NextResponse.next({ request: { headers } }));
 });
 
+const attachSandboxSignInAuthentication = clerkMiddleware(async (_auth, request) => {
+  const headers = new Headers(request.headers);
+  headers.set("x-discovery-request-id", requestId(request));
+  return protectedHeaders(NextResponse.next({ request: { headers } }));
+});
+
 async function legacyAlphaMiddleware(request: NextRequest) {
   if (
     !protectedAlphaPath.test(request.nextUrl.pathname) &&
@@ -120,6 +141,29 @@ export async function middleware(
   event?: NextFetchEvent,
 ): Promise<NextResponse> {
   const activationEnabled = isYourOrganizationAlphaActivationEnabled();
+  if (
+    isDevelopmentSandboxSignInRequest(request.nextUrl.pathname)
+  ) {
+    if (!event) {
+      return new NextResponse("Authentication boundary unavailable.", {
+        status: 503,
+      });
+    }
+    const response = await attachSandboxSignInAuthentication(request, event);
+    if (!response) {
+      return new NextResponse("Authentication boundary unavailable.", {
+        status: 503,
+      });
+    }
+    const nextResponse = response instanceof NextResponse
+      ? response
+      : new NextResponse(response.body, {
+          status: response.status,
+          statusText: response.statusText,
+          headers: response.headers,
+        });
+    return normalizeClerkSameRequestContinuation(request, nextResponse);
+  }
   if (
     !isHostedDiscoveryEnvironment() &&
     onboardingTestEnvironmentEnabled() &&
@@ -199,6 +243,7 @@ export const config = {
     "/discovery-v1/:path*",
     "/product-alpha/:path*",
     "/development/sandbox-access/:path*",
+    "/development/sandbox-sign-in/:path*",
     "/development/role-aware-live/:path*",
     "/executive-decision/:path*",
     "/cognition-lab/:path*",
