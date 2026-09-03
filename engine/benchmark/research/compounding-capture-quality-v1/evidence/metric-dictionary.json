@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "compounding-capture-quality-metrics/v1",
+  "zeroDenominator": "not-observed",
+  "contextUnit": "estimated tokens = ceil(UTF-8 bytes / 4); not provider-billed tokens",
+  "metrics": {
+    "agendaRetentionRate": "retained generated agenda items / generated agenda items",
+    "agendaModifiedRate": "modified generated agenda items / generated agenda items",
+    "agendaRemovedRate": "removed generated agenda items / generated agenda items",
+    "agendaAddedRate": "user-added agenda items / generated agenda items",
+    "reviewedCorrectionRate": "Correct dispositions / all explicit dispositions",
+    "unresolvedRate": "unreviewed or route-pending proposals / admitted proposals",
+    "continuityRecall": "relevant prior durable items correctly available / all relevant prior durable items in hidden truth",
+    "continuityPrecision": "relevant prior durable items correctly available / all prior-state items presented as relevant",
+    "activeContextEfficiency": "correct relevant current-state items available per 10,000 estimated context tokens",
+    "cycleLift": "treatment outcome at cycle t - paired baseline outcome at cycle t",
+    "compoundingSlope": "centered-cycle OLS slope of paired lift; equivalent to condition-by-cycle interaction"
+  },
+  "claimBoundary": {
+    "modelMediatedQuality": "NOT TESTED",
+    "authenticCustomerCompounding": "NOT TESTED",
+    "organizationalOutcomes": "NOT TESTED"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "accepted-full-bundle-ledger/v1",
+  "acceptedCommit": "033f88797cdcf2ad699d3802fca0f28b1096587c",
+  "label": "SYNTHETIC BENCHMARK — NOT CUSTOMER OR PRODUCTION EVIDENCE",
+  "scope": "Complete deterministic generated evidence bundle. The aggregate is SHA-256 over lexicographically sorted UTF-8 records: name + NUL + decimal byte size + NUL + lowercase SHA-256 + LF.",
+  "artifactCount": 15,
+  "totalBytes": 121920896,
+  "rowCount": 1920,
+  "modelPacketCount": 1920,
+  "graderPacketCount": 1920,
+  "aggregateSha256": "a1ec72ad9ac4f50a9fe67cdd390e53fddaf4762b9213584d20dacf3ae4cc3375",
+  "artifacts": {
+    "active-context-growth.svg": {
+      "bytes": 1665,
+      "sha256": "4493d2a1952bf3465e7e9c5863c45cd77ee5af14f257e2fed518f65110e10cbd"
+    },
+    "benchmark-manifest.json": {
+      "bytes": 594,
+      "sha256": "79a4fa234108c19b73d6fc77e6e803da22aaac99fa7907aced7a3b96e36c09d8"
+    },
+    "context-efficiency.svg": {
+      "bytes": 1689,
+      "sha256": "736bf23d7191d87a21b2e5873f674496281be9646898bc0c1c4888a6d643f544"
+    },
+    "coverage-by-cycle.svg": {
+      "bytes": 6500,
+      "sha256": "4dcaf8e4e98e8c57bec978dfba2759102649390718ddb035a3d3b121b01c6be2"
+    },
+    "grader-packets.json": {
+      "bytes": 108019664,
+      "sha256": "a4d1cf456611424f2ee18a782864d7573e14ce9d9c62adbae78d454339e8d064"
+    },
+    "hidden-truth-ledger.json": {
+      "bytes": 666527,
+      "sha256": "ddada8d97971b1ae40776d25acff3d00e3e4130019f09500b2915f82c1b541ac"
+    },
+    "metric-dictionary.json": {
+      "bytes": 1436,
+      "sha256": "7c57098e49ec6ab7c42d2a6dddc7bc6b7dcb4eb12d0f3d56b2ccda48724ebeb1"
+    },
+    "model-packets.json": {
+      "bytes": 11164007,
+      "sha256": "a68e63cbbca37bb83e795bc901e16c0a9324ab50f48ecb90a4414ba62adaf6d3"
+    },
+    "raw-observations.csv": {
+      "bytes": 200642,
+      "sha256": "0356dde55aa68acff657c277b1189bc1fe79e5783ea507bf99ae820f340bd3b7"
+    },
+    "raw-observations.json": {
+      "bytes": 1411872,
+      "sha256": "a2d3241221a77c08e0baf056c7f3d4515260c89c16719a640f208258bc33da34"
+    },
+    "reproducibility-manifest.json": {
+      "bytes": 1615,
+      "sha256": "242b9db7fdea5e86ac4a1aaa482fc436674c15b0a258eaae656ad2dd29650619"
+    },
+    "review-quality-sensitivity.svg": {
+      "bytes": 2031,
+      "sha256": "ef52641f5ccb12d2b476c6a768bc46ca1fe34451a920cc082a09ddde3c2577a0"
+    },
+    "statistical-summary.json": {
+      "bytes": 149090,
+      "sha256": "5c2b77e2eac1358a6def5a29e371fe27e7eec541b17f24d2d7f83a6450c99147"
+    },
+    "synthetic-corpus-specification.json": {
+      "bytes": 1373,
+      "sha256": "6528d2359d4cf959a3b6a8d8d3f5f19b242b15894f0da38d67746885d8c038aa"
+    },
+    "synthetic-source-corpus.json": {
+      "bytes": 292191,
+      "sha256": "1b4b9018be988868f75568b920265d769caf9af422fb4275bae3cdf6e026a11b"
+    }
+  }
+}

@@ -1471,3 +1471,11 @@ Chief V1 uses current-access-safe governed raw sources → replaceable frontier 
 Chief now turns one authorized Leadership Conversation preparation into two editable, noncanonical drafts: a proposed agenda that is not shared automatically and a user-and-occurrence-scoped private talking-points sheet. Chief is the visible orchestrator; Counsel contributes supported challenge, Operator contributes bounded decision and follow-through structure, and Scout contributes only already-identified evidence gaps or authorized changes. These roles share one permission-aware Organizational Understanding and create no persona-specific model, memory, store, authority, or interface.
 
 Private context defaults to `Keep private`. Only explicit `Use in my talking points` or `Propose for the agenda` intent may influence the corresponding user-owned draft; agenda intent is not sharing, Capture, Evidence, or organizational truth. Meeting Pack V1 precedes Multi-Meeting Shell V1. Customer roles and meeting profiles remain separate from Discovery personas. Full chat, multiple visible meeting series, role lenses, calendar sharing, PDF generation, and external Scout monitoring remain deferred.
+
+## DEC-PROD-062 — Compounding and Capture-Quality Instrumentation V1
+
+**Status:** Implemented research candidate pending independent review; no production promotion.
+
+Discovery derives content-safe cycle observations locally from existing Leadership Conversation, Meeting Pack, Reviewed Carry-Forward, closure, What Changed, and recurrence metadata. The projector is read-only, current-access scoped, replay-idempotent, and owns no persistence, Product route, telemetry event, persona store, authority, or truth. Explicit operator export contains pseudonyms, digests, counts, revisions, and `not-observed` fields only; protected bodies and identifiers are prohibited.
+
+The frozen synthetic benchmark tests structural continuity and active-context efficiency across four paired conditions. It does not establish model behavior, customer value, production compounding, or organizational outcomes. All generated evidence must say `SYNTHETIC BENCHMARK — NOT CUSTOMER OR PRODUCTION EVIDENCE`. A separately authorized model-mediated comparison of frozen packets is next; Multi-Meeting Shell remains sequenced afterward.

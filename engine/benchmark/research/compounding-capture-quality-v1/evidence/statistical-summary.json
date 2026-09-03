@@ -1,0 +1,6595 @@
+{
+  "schemaVersion": "compounding-statistics/v1",
+  "label": "SYNTHETIC BENCHMARK — NOT CUSTOMER OR PRODUCTION EVIDENCE",
+  "method": {
+    "pairing": "scenario × seed × cycle × budget",
+    "bootstrap": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+    "interaction": "centered-cycle OLS paired-lift slope"
+  },
+  "byCondition": [
+    {
+      "budget": 2048,
+      "condition": "A",
+      "quality": "100",
+      "metric": "coverage",
+      "mean": 0.41336,
+      "median": 0.28,
+      "sampleSd": 0.238361
+    },
+    {
+      "budget": 2048,
+      "condition": "A",
+      "quality": "100",
+      "metric": "continuityRecall",
+      "mean": 0,
+      "median": 0,
+      "sampleSd": 0
+    },
+    {
+      "budget": 2048,
+      "condition": "A",
+      "quality": "100",
+      "metric": "continuityPrecision",
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0
+    },
+    {
+      "budget": 2048,
+      "condition": "A",
+      "quality": "100",
+      "metric": "contextEfficiency",
+      "mean": 217.639652,
+      "median": 216.049383,
+      "sampleSd": 2.258409
+    },
+    {
+      "budget": 2048,
+      "condition": "B",
+      "quality": "100",
+      "metric": "coverage",
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0
+    },
+    {
+      "budget": 2048,
+      "condition": "B",
+      "quality": "100",
+      "metric": "continuityRecall",
+      "mean": 0.875,
+      "median": 1,
+      "sampleSd": 0.332106
+    },
+    {
+      "budget": 2048,
+      "condition": "B",
+      "quality": "100",
+      "metric": "continuityPrecision",
+      "mean": 0.749043,
+      "median": 0.803571,
+      "sampleSd": 0.198828
+    },
+    {
+      "budget": 2048,
+      "condition": "B",
+      "quality": "100",
+      "metric": "contextEfficiency",
+      "mean": 293.348318,
+      "median": 294.770215,
+      "sampleSd": 55.165318
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "100",
+      "metric": "coverage",
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "100",
+      "metric": "continuityRecall",
+      "mean": 0.875,
+      "median": 1,
+      "sampleSd": 0.332106
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "100",
+      "metric": "continuityPrecision",
+      "mean": 0.751838,
+      "median": 0.803571,
+      "sampleSd": 0.194638
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "100",
+      "metric": "contextEfficiency",
+      "mean": 191.270609,
+      "median": 204.400945,
+      "sampleSd": 41.303826
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "95",
+      "metric": "coverage",
+      "mean": 0.977927,
+      "median": 1,
+      "sampleSd": 0.028771
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "95",
+      "metric": "continuityRecall",
+      "mean": 0.841667,
+      "median": 0.944444,
+      "sampleSd": 0.322489
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "95",
+      "metric": "continuityPrecision",
+      "mean": 0.753502,
+      "median": 0.818788,
+      "sampleSd": 0.19633
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "95",
+      "metric": "contextEfficiency",
+      "mean": 191.374698,
+      "median": 208.265269,
+      "sampleSd": 41.739246
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "90",
+      "metric": "coverage",
+      "mean": 0.947741,
+      "median": 0.96,
+      "sampleSd": 0.046628
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "90",
+      "metric": "continuityRecall",
+      "mean": 0.797222,
+      "median": 0.888889,
+      "sampleSd": 0.309312
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "90",
+      "metric": "continuityPrecision",
+      "mean": 0.755249,
+      "median": 0.823333,
+      "sampleSd": 0.197869
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "90",
+      "metric": "contextEfficiency",
+      "mean": 191.337482,
+      "median": 209.079173,
+      "sampleSd": 41.893851
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "80",
+      "metric": "coverage",
+      "mean": 0.886479,
+      "median": 0.88,
+      "sampleSd": 0.076824
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "80",
+      "metric": "continuityRecall",
+      "mean": 0.704861,
+      "median": 0.833333,
+      "sampleSd": 0.28556
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "80",
+      "metric": "continuityPrecision",
+      "mean": 0.759927,
+      "median": 0.815152,
+      "sampleSd": 0.197597
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "80",
+      "metric": "contextEfficiency",
+      "mean": 191.444355,
+      "median": 209.079173,
+      "sampleSd": 41.359785
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "stale-biased",
+      "metric": "coverage",
+      "mean": 0.754815,
+      "median": 0.736842,
+      "sampleSd": 0.125456
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "stale-biased",
+      "metric": "continuityRecall",
+      "mean": 0.50787,
+      "median": 0.555556,
+      "sampleSd": 0.231768
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "stale-biased",
+      "metric": "continuityPrecision",
+      "mean": 0.776409,
+      "median": 0.821429,
+      "sampleSd": 0.190097
+    },
+    {
+      "budget": 2048,
+      "condition": "C",
+      "quality": "stale-biased",
+      "metric": "contextEfficiency",
+      "mean": 200.305409,
+      "median": 216.049383,
+      "sampleSd": 38.168055
+    },
+    {
+      "budget": 2048,
+      "condition": "D",
+      "quality": "100",
+      "metric": "coverage",
+      "mean": 0.619332,
+      "median": 0.48,
+      "sampleSd": 0.205303
+    },
+    {
+      "budget": 2048,
+      "condition": "D",
+      "quality": "100",
+      "metric": "continuityRecall",
+      "mean": 0.329861,
+      "median": 0.277778,
+      "sampleSd": 0.219833
+    },
+    {
+      "budget": 2048,
+      "condition": "D",
+      "quality": "100",
+      "metric": "continuityPrecision",
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0
+    },
+    {
+      "budget": 2048,
+      "condition": "D",
+      "quality": "100",
+      "metric": "contextEfficiency",
+      "mean": 289.079878,
+      "median": 297.029703,
+      "sampleSd": 27.291871
+    },
+    {
+      "budget": 4096,
+      "condition": "A",
+      "quality": "100",
+      "metric": "coverage",
+      "mean": 0.41336,
+      "median": 0.28,
+      "sampleSd": 0.238361
+    },
+    {
+      "budget": 4096,
+      "condition": "A",
+      "quality": "100",
+      "metric": "continuityRecall",
+      "mean": 0,
+      "median": 0,
+      "sampleSd": 0
+    },
+    {
+      "budget": 4096,
+      "condition": "A",
+      "quality": "100",
+      "metric": "continuityPrecision",
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0
+    },
+    {
+      "budget": 4096,
+      "condition": "A",
+      "quality": "100",
+      "metric": "contextEfficiency",
+      "mean": 217.639652,
+      "median": 216.049383,
+      "sampleSd": 2.258409
+    },
+    {
+      "budget": 4096,
+      "condition": "B",
+      "quality": "100",
+      "metric": "coverage",
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0
+    },
+    {
+      "budget": 4096,
+      "condition": "B",
+      "quality": "100",
+      "metric": "continuityRecall",
+      "mean": 0.875,
+      "median": 1,
+      "sampleSd": 0.332106
+    },
+    {
+      "budget": 4096,
+      "condition": "B",
+      "quality": "100",
+      "metric": "continuityPrecision",
+      "mean": 0.749043,
+      "median": 0.803571,
+      "sampleSd": 0.198828
+    },
+    {
+      "budget": 4096,
+      "condition": "B",
+      "quality": "100",
+      "metric": "contextEfficiency",
+      "mean": 293.348318,
+      "median": 294.770215,
+      "sampleSd": 55.165318
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "100",
+      "metric": "coverage",
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "100",
+      "metric": "continuityRecall",
+      "mean": 0.875,
+      "median": 1,
+      "sampleSd": 0.332106
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "100",
+      "metric": "continuityPrecision",
+      "mean": 0.749043,
+      "median": 0.803571,
+      "sampleSd": 0.198828
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "100",
+      "metric": "contextEfficiency",
+      "mean": 190.543546,
+      "median": 204.400945,
+      "sampleSd": 42.466189
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "95",
+      "metric": "coverage",
+      "mean": 0.977927,
+      "median": 1,
+      "sampleSd": 0.028771
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "95",
+      "metric": "continuityRecall",
+      "mean": 0.841667,
+      "median": 0.944444,
+      "sampleSd": 0.322489
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "95",
+      "metric": "continuityPrecision",
+      "mean": 0.752801,
+      "median": 0.818788,
+      "sampleSd": 0.197394
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "95",
+      "metric": "contextEfficiency",
+      "mean": 191.193397,
+      "median": 208.265269,
+      "sampleSd": 42.028996
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "90",
+      "metric": "coverage",
+      "mean": 0.947741,
+      "median": 0.96,
+      "sampleSd": 0.046628
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "90",
+      "metric": "continuityRecall",
+      "mean": 0.797222,
+      "median": 0.888889,
+      "sampleSd": 0.309312
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "90",
+      "metric": "continuityPrecision",
+      "mean": 0.755111,
+      "median": 0.823333,
+      "sampleSd": 0.19808
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "90",
+      "metric": "contextEfficiency",
+      "mean": 191.301516,
+      "median": 209.079173,
+      "sampleSd": 41.951167
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "80",
+      "metric": "coverage",
+      "mean": 0.886479,
+      "median": 0.88,
+      "sampleSd": 0.076824
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "80",
+      "metric": "continuityRecall",
+      "mean": 0.704861,
+      "median": 0.833333,
+      "sampleSd": 0.28556
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "80",
+      "metric": "continuityPrecision",
+      "mean": 0.759927,
+      "median": 0.815152,
+      "sampleSd": 0.197597
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "80",
+      "metric": "contextEfficiency",
+      "mean": 191.444355,
+      "median": 209.079173,
+      "sampleSd": 41.359785
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "stale-biased",
+      "metric": "coverage",
+      "mean": 0.754815,
+      "median": 0.736842,
+      "sampleSd": 0.125456
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "stale-biased",
+      "metric": "continuityRecall",
+      "mean": 0.50787,
+      "median": 0.555556,
+      "sampleSd": 0.231768
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "stale-biased",
+      "metric": "continuityPrecision",
+      "mean": 0.776409,
+      "median": 0.821429,
+      "sampleSd": 0.190097
+    },
+    {
+      "budget": 4096,
+      "condition": "C",
+      "quality": "stale-biased",
+      "metric": "contextEfficiency",
+      "mean": 200.305409,
+      "median": 216.049383,
+      "sampleSd": 38.168055
+    },
+    {
+      "budget": 4096,
+      "condition": "D",
+      "quality": "100",
+      "metric": "coverage",
+      "mean": 0.619332,
+      "median": 0.48,
+      "sampleSd": 0.205303
+    },
+    {
+      "budget": 4096,
+      "condition": "D",
+      "quality": "100",
+      "metric": "continuityRecall",
+      "mean": 0.329861,
+      "median": 0.277778,
+      "sampleSd": 0.219833
+    },
+    {
+      "budget": 4096,
+      "condition": "D",
+      "quality": "100",
+      "metric": "continuityPrecision",
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0
+    },
+    {
+      "budget": 4096,
+      "condition": "D",
+      "quality": "100",
+      "metric": "contextEfficiency",
+      "mean": 289.079878,
+      "median": 297.029703,
+      "sampleSd": 27.291871
+    }
+  ],
+  "paired": [
+    {
+      "budget": 2048,
+      "quality": "100",
+      "comparison": "C-A",
+      "metric": "coverage",
+      "meanDifference": 0.58664,
+      "slope": 0.078543,
+      "interaction": 0.078543,
+      "bootstrap95CI": [
+        0.58664,
+        0.58664
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.461538,
+        "3": 0.631579,
+        "4": 0.72,
+        "5": 0.72,
+        "6": 0.72,
+        "7": 0.72,
+        "8": 0.72
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "100",
+      "comparison": "C-A",
+      "metric": "continuityRecall",
+      "meanDifference": 0.875,
+      "slope": 0.083333,
+      "interaction": 0.083333,
+      "bootstrap95CI": [
+        0.875,
+        0.875
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "100",
+      "comparison": "C-A",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.248162,
+      "slope": -0.082351,
+      "interaction": -0.082351,
+      "bootstrap95CI": [
+        -0.248453,
+        -0.247944
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.071429,
+        "3": -0.095238,
+        "4": -0.107143,
+        "5": -0.285714,
+        "6": -0.404762,
+        "7": -0.489796,
+        "8": -0.531214
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "100",
+      "comparison": "C-A",
+      "metric": "contextEfficiency",
+      "meanDifference": -26.369043,
+      "slope": -15.98193,
+      "interaction": -15.98193,
+      "bootstrap95CI": [
+        -26.814258,
+        -26.014281
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 10.716651,
+        "3": 14.952817,
+        "4": 17.248514,
+        "5": -27.05089,
+        "6": -57.340206,
+        "7": -79.317093,
+        "8": -90.162136
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "100",
+      "comparison": "C-B",
+      "metric": "coverage",
+      "meanDifference": 0,
+      "slope": 0,
+      "interaction": 0,
+      "bootstrap95CI": [
+        0,
+        0
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "100",
+      "comparison": "C-B",
+      "metric": "continuityRecall",
+      "meanDifference": 0,
+      "slope": 0,
+      "interaction": 0,
+      "bootstrap95CI": [
+        0,
+        0
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "100",
+      "comparison": "C-B",
+      "metric": "continuityPrecision",
+      "meanDifference": 0.002795,
+      "slope": 0.001863,
+      "interaction": 0.001863,
+      "bootstrap95CI": [
+        0.002503,
+        0.003013
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0.022357
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "100",
+      "comparison": "C-B",
+      "metric": "contextEfficiency",
+      "meanDifference": -102.077709,
+      "slope": -11.113397,
+      "interaction": -11.113397,
+      "bootstrap95CI": [
+        -103.347554,
+        -101.102928
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -72.38124,
+        "3": -117.797915,
+        "4": -147.822981,
+        "5": -136.691826,
+        "6": -125.576123,
+        "7": -115.616535,
+        "8": -100.735053
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "100",
+      "comparison": "C-D",
+      "metric": "coverage",
+      "meanDifference": 0.380668,
+      "slope": 0.07512,
+      "interaction": 0.07512,
+      "bootstrap95CI": [
+        0.380668,
+        0.380668
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.076923,
+        "3": 0.368421,
+        "4": 0.52,
+        "5": 0.52,
+        "6": 0.52,
+        "7": 0.52,
+        "8": 0.52
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "100",
+      "comparison": "C-D",
+      "metric": "continuityRecall",
+      "meanDifference": 0.545139,
+      "slope": 0.098214,
+      "interaction": 0.098214,
+      "bootstrap95CI": [
+        0.545139,
+        0.545139
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.166667,
+        "3": 0.583333,
+        "4": 0.722222,
+        "5": 0.722222,
+        "6": 0.722222,
+        "7": 0.722222,
+        "8": 0.722222
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "100",
+      "comparison": "C-D",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.248162,
+      "slope": -0.082351,
+      "interaction": -0.082351,
+      "bootstrap95CI": [
+        -0.248453,
+        -0.247944
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.071429,
+        "3": -0.095238,
+        "4": -0.107143,
+        "5": -0.285714,
+        "6": -0.404762,
+        "7": -0.489796,
+        "8": -0.531214
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "100",
+      "comparison": "C-D",
+      "metric": "contextEfficiency",
+      "meanDifference": -97.809269,
+      "slope": -22.785761,
+      "interaction": -22.785761,
+      "bootstrap95CI": [
+        -98.727263,
+        -97.107571
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -70.929322,
+        "3": -66.693156,
+        "4": -64.397459,
+        "5": -108.696863,
+        "6": -138.986179,
+        "7": -160.963066,
+        "8": -171.808109
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "95",
+      "comparison": "C-A",
+      "metric": "coverage",
+      "meanDifference": 0.564567,
+      "slope": 0.075941,
+      "interaction": 0.075941,
+      "bootstrap95CI": [
+        0.56033,
+        0.568831
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.441025,
+        "3": 0.603509,
+        "4": 0.693333,
+        "5": 0.698667,
+        "6": 0.696,
+        "7": 0.693333,
+        "8": 0.690667
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "95",
+      "comparison": "C-A",
+      "metric": "continuityRecall",
+      "meanDifference": 0.841667,
+      "slope": 0.080864,
+      "interaction": 0.080864,
+      "bootstrap95CI": [
+        0.834259,
+        0.848611
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.955555,
+        "3": 0.955556,
+        "4": 0.962963,
+        "5": 0.97037,
+        "6": 0.966666,
+        "7": 0.962963,
+        "8": 0.959259
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "95",
+      "comparison": "C-A",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.246498,
+      "slope": -0.082947,
+      "interaction": -0.082947,
+      "bootstrap95CI": [
+        -0.248653,
+        -0.244356
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.072894,
+        "3": -0.08543,
+        "4": -0.109872,
+        "5": -0.278864,
+        "6": -0.394812,
+        "7": -0.487964,
+        "8": -0.542147
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "95",
+      "comparison": "C-A",
+      "metric": "contextEfficiency",
+      "meanDifference": -26.264954,
+      "slope": -16.097808,
+      "interaction": -16.097808,
+      "bootstrap95CI": [
+        -26.870622,
+        -25.616165
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 9.781353,
+        "3": 16.646821,
+        "4": 16.09857,
+        "5": -25.559054,
+        "6": -54.96964,
+        "7": -79.010859,
+        "8": -93.106824
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "95",
+      "comparison": "C-B",
+      "metric": "coverage",
+      "meanDifference": -0.022073,
+      "slope": -0.002602,
+      "interaction": -0.002602,
+      "bootstrap95CI": [
+        -0.026364,
+        -0.017816
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.020513,
+        "3": -0.02807,
+        "4": -0.026667,
+        "5": -0.021333,
+        "6": -0.024,
+        "7": -0.026667,
+        "8": -0.029333
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "95",
+      "comparison": "C-B",
+      "metric": "continuityRecall",
+      "meanDifference": -0.033333,
+      "slope": -0.002469,
+      "interaction": -0.002469,
+      "bootstrap95CI": [
+        -0.040509,
+        -0.026389
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.044445,
+        "3": -0.044444,
+        "4": -0.037037,
+        "5": -0.02963,
+        "6": -0.033334,
+        "7": -0.037037,
+        "8": -0.040741
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "95",
+      "comparison": "C-B",
+      "metric": "continuityPrecision",
+      "meanDifference": 0.004459,
+      "slope": 0.001267,
+      "interaction": 0.001267,
+      "bootstrap95CI": [
+        0.002282,
+        0.006707
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.001465,
+        "3": 0.009808,
+        "4": -0.002729,
+        "5": 0.00685,
+        "6": 0.00995,
+        "7": 0.001832,
+        "8": 0.011424
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "95",
+      "comparison": "C-B",
+      "metric": "contextEfficiency",
+      "meanDifference": -101.97362,
+      "slope": -11.229274,
+      "interaction": -11.229274,
+      "bootstrap95CI": [
+        -103.227356,
+        -100.779408
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -73.316538,
+        "3": -116.10391,
+        "4": -148.972925,
+        "5": -135.19999,
+        "6": -123.205557,
+        "7": -115.3103,
+        "8": -103.679741
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "95",
+      "comparison": "C-D",
+      "metric": "coverage",
+      "meanDifference": 0.358595,
+      "slope": 0.072519,
+      "interaction": 0.072519,
+      "bootstrap95CI": [
+        0.354164,
+        0.362877
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.05641,
+        "3": 0.340351,
+        "4": 0.493333,
+        "5": 0.498667,
+        "6": 0.496,
+        "7": 0.493333,
+        "8": 0.490667
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "95",
+      "comparison": "C-D",
+      "metric": "continuityRecall",
+      "meanDifference": 0.511805,
+      "slope": 0.095745,
+      "interaction": 0.095745,
+      "bootstrap95CI": [
+        0.504861,
+        0.518981
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.122222,
+        "3": 0.538889,
+        "4": 0.685185,
+        "5": 0.692592,
+        "6": 0.688888,
+        "7": 0.685185,
+        "8": 0.681481
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "95",
+      "comparison": "C-D",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.246498,
+      "slope": -0.082947,
+      "interaction": -0.082947,
+      "bootstrap95CI": [
+        -0.24854,
+        -0.244316
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.072894,
+        "3": -0.08543,
+        "4": -0.109872,
+        "5": -0.278864,
+        "6": -0.394812,
+        "7": -0.487964,
+        "8": -0.542147
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "95",
+      "comparison": "C-D",
+      "metric": "contextEfficiency",
+      "meanDifference": -97.70518,
+      "slope": -22.901639,
+      "interaction": -22.901639,
+      "bootstrap95CI": [
+        -98.640965,
+        -96.792247
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -71.86462,
+        "3": -64.999152,
+        "4": -65.547403,
+        "5": -107.205027,
+        "6": -136.615613,
+        "7": -160.656832,
+        "8": -174.752797
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "90",
+      "comparison": "C-A",
+      "metric": "coverage",
+      "meanDifference": 0.534381,
+      "slope": 0.071979,
+      "interaction": 0.071979,
+      "bootstrap95CI": [
+        0.527826,
+        0.540181
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.425641,
+        "3": 0.561403,
+        "4": 0.653333,
+        "5": 0.661333,
+        "6": 0.666667,
+        "7": 0.648,
+        "8": 0.658667
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "90",
+      "comparison": "C-A",
+      "metric": "continuityRecall",
+      "meanDifference": 0.797222,
+      "slope": 0.076367,
+      "interaction": 0.076367,
+      "bootstrap95CI": [
+        0.786574,
+        0.806944
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.922222,
+        "3": 0.888889,
+        "4": 0.907407,
+        "5": 0.918518,
+        "6": 0.925926,
+        "7": 0.9,
+        "8": 0.914815
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "90",
+      "comparison": "C-A",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.244751,
+      "slope": -0.083355,
+      "interaction": -0.083355,
+      "bootstrap95CI": [
+        -0.248322,
+        -0.241006
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.064103,
+        "3": -0.085312,
+        "4": -0.106907,
+        "5": -0.279359,
+        "6": -0.392931,
+        "7": -0.489367,
+        "8": -0.540031
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "90",
+      "comparison": "C-A",
+      "metric": "contextEfficiency",
+      "meanDifference": -26.302169,
+      "slope": -16.136111,
+      "interaction": -16.136111,
+      "bootstrap95CI": [
+        -27.322531,
+        -25.345705
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 11.153858,
+        "3": 15.450531,
+        "4": 16.108304,
+        "5": -26.076011,
+        "6": -54.733426,
+        "7": -79.65822,
+        "8": -92.662391
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "90",
+      "comparison": "C-B",
+      "metric": "coverage",
+      "meanDifference": -0.052259,
+      "slope": -0.006563,
+      "interaction": -0.006563,
+      "bootstrap95CI": [
+        -0.058927,
+        -0.04626
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.035897,
+        "3": -0.070176,
+        "4": -0.066667,
+        "5": -0.058667,
+        "6": -0.053333,
+        "7": -0.072,
+        "8": -0.061333
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "90",
+      "comparison": "C-B",
+      "metric": "continuityRecall",
+      "meanDifference": -0.077778,
+      "slope": -0.006967,
+      "interaction": -0.006967,
+      "bootstrap95CI": [
+        -0.088426,
+        -0.068287
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.077778,
+        "3": -0.111111,
+        "4": -0.092593,
+        "5": -0.081482,
+        "6": -0.074074,
+        "7": -0.1,
+        "8": -0.085185
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "90",
+      "comparison": "C-B",
+      "metric": "continuityPrecision",
+      "meanDifference": 0.006205,
+      "slope": 0.000859,
+      "interaction": 0.000859,
+      "bootstrap95CI": [
+        0.00264,
+        0.009741
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.007326,
+        "3": 0.009926,
+        "4": 0.000236,
+        "5": 0.006355,
+        "6": 0.011831,
+        "7": 0.000429,
+        "8": 0.01354
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "90",
+      "comparison": "C-B",
+      "metric": "contextEfficiency",
+      "meanDifference": -102.010836,
+      "slope": -11.267577,
+      "interaction": -11.267577,
+      "bootstrap95CI": [
+        -103.599789,
+        -100.578812
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -71.944033,
+        "3": -117.3002,
+        "4": -148.963191,
+        "5": -135.716947,
+        "6": -122.969343,
+        "7": -115.957662,
+        "8": -103.235308
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "90",
+      "comparison": "C-D",
+      "metric": "coverage",
+      "meanDifference": 0.328409,
+      "slope": 0.068557,
+      "interaction": 0.068557,
+      "bootstrap95CI": [
+        0.321933,
+        0.334166
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.041026,
+        "3": 0.298245,
+        "4": 0.453333,
+        "5": 0.461333,
+        "6": 0.466667,
+        "7": 0.448,
+        "8": 0.458667
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "90",
+      "comparison": "C-D",
+      "metric": "continuityRecall",
+      "meanDifference": 0.467361,
+      "slope": 0.091248,
+      "interaction": 0.091248,
+      "bootstrap95CI": [
+        0.456713,
+        0.476852
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.088889,
+        "3": 0.472222,
+        "4": 0.629629,
+        "5": 0.64074,
+        "6": 0.648148,
+        "7": 0.622222,
+        "8": 0.637037
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "90",
+      "comparison": "C-D",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.244751,
+      "slope": -0.083355,
+      "interaction": -0.083355,
+      "bootstrap95CI": [
+        -0.248393,
+        -0.241175
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.064103,
+        "3": -0.085312,
+        "4": -0.106907,
+        "5": -0.279359,
+        "6": -0.392931,
+        "7": -0.489367,
+        "8": -0.540031
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "90",
+      "comparison": "C-D",
+      "metric": "contextEfficiency",
+      "meanDifference": -97.742396,
+      "slope": -22.939942,
+      "interaction": -22.939942,
+      "bootstrap95CI": [
+        -99.02838,
+        -96.552651
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -70.492115,
+        "3": -66.195442,
+        "4": -65.537669,
+        "5": -107.721984,
+        "6": -136.379399,
+        "7": -161.304193,
+        "8": -174.308364
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "80",
+      "comparison": "C-A",
+      "metric": "coverage",
+      "meanDifference": 0.473119,
+      "slope": 0.066127,
+      "interaction": 0.066127,
+      "bootstrap95CI": [
+        0.462977,
+        0.483971
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.36923,
+        "3": 0.487719,
+        "4": 0.576,
+        "5": 0.568,
+        "6": 0.610667,
+        "7": 0.586667,
+        "8": 0.586667
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "80",
+      "comparison": "C-A",
+      "metric": "continuityRecall",
+      "meanDifference": 0.704861,
+      "slope": 0.071362,
+      "interaction": 0.071362,
+      "bootstrap95CI": [
+        0.687963,
+        0.721991
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.8,
+        "3": 0.772222,
+        "4": 0.8,
+        "5": 0.788889,
+        "6": 0.848148,
+        "7": 0.814815,
+        "8": 0.814815
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "80",
+      "comparison": "C-A",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.240073,
+      "slope": -0.08289,
+      "interaction": -0.08289,
+      "bootstrap95CI": [
+        -0.245781,
+        -0.234845
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.048568,
+        "3": -0.085197,
+        "4": -0.110903,
+        "5": -0.279377,
+        "6": -0.379378,
+        "7": -0.482783,
+        "8": -0.53438
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "80",
+      "comparison": "C-A",
+      "metric": "contextEfficiency",
+      "meanDifference": -26.195296,
+      "slope": -15.868034,
+      "interaction": -15.868034,
+      "bootstrap95CI": [
+        -27.856715,
+        -24.676162
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 12.524199,
+        "3": 13.638889,
+        "4": 13.443461,
+        "5": -27.264486,
+        "6": -51.971736,
+        "7": -78.387409,
+        "8": -91.54529
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "80",
+      "comparison": "C-B",
+      "metric": "coverage",
+      "meanDifference": -0.113521,
+      "slope": -0.012415,
+      "interaction": -0.012415,
+      "bootstrap95CI": [
+        -0.123614,
+        -0.103098
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.092308,
+        "3": -0.14386,
+        "4": -0.144,
+        "5": -0.152,
+        "6": -0.109333,
+        "7": -0.133333,
+        "8": -0.133333
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "80",
+      "comparison": "C-B",
+      "metric": "continuityRecall",
+      "meanDifference": -0.170139,
+      "slope": -0.011971,
+      "interaction": -0.011971,
+      "bootstrap95CI": [
+        -0.186574,
+        -0.152546
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.2,
+        "3": -0.227778,
+        "4": -0.2,
+        "5": -0.211111,
+        "6": -0.151852,
+        "7": -0.185185,
+        "8": -0.185185
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "80",
+      "comparison": "C-B",
+      "metric": "continuityPrecision",
+      "meanDifference": 0.010883,
+      "slope": 0.001324,
+      "interaction": 0.001324,
+      "bootstrap95CI": [
+        0.005083,
+        0.016068
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.022861,
+        "3": 0.010041,
+        "4": -0.00376,
+        "5": 0.006337,
+        "6": 0.025384,
+        "7": 0.007013,
+        "8": 0.019191
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "80",
+      "comparison": "C-B",
+      "metric": "contextEfficiency",
+      "meanDifference": -101.903963,
+      "slope": -10.999501,
+      "interaction": -10.999501,
+      "bootstrap95CI": [
+        -103.965809,
+        -100.056252
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -70.573692,
+        "3": -119.111842,
+        "4": -151.628035,
+        "5": -136.905422,
+        "6": -120.207653,
+        "7": -114.686851,
+        "8": -102.118207
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "80",
+      "comparison": "C-D",
+      "metric": "coverage",
+      "meanDifference": 0.267147,
+      "slope": 0.062705,
+      "interaction": 0.062705,
+      "bootstrap95CI": [
+        0.256764,
+        0.277846
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.015385,
+        "3": 0.224561,
+        "4": 0.376,
+        "5": 0.368,
+        "6": 0.410667,
+        "7": 0.386667,
+        "8": 0.386667
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "80",
+      "comparison": "C-D",
+      "metric": "continuityRecall",
+      "meanDifference": 0.375,
+      "slope": 0.086243,
+      "interaction": 0.086243,
+      "bootstrap95CI": [
+        0.358102,
+        0.392367
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.033333,
+        "3": 0.355555,
+        "4": 0.522222,
+        "5": 0.511111,
+        "6": 0.57037,
+        "7": 0.537037,
+        "8": 0.537037
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "80",
+      "comparison": "C-D",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.240073,
+      "slope": -0.08289,
+      "interaction": -0.08289,
+      "bootstrap95CI": [
+        -0.245626,
+        -0.234968
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.048568,
+        "3": -0.085197,
+        "4": -0.110903,
+        "5": -0.279377,
+        "6": -0.379378,
+        "7": -0.482783,
+        "8": -0.53438
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "80",
+      "comparison": "C-D",
+      "metric": "contextEfficiency",
+      "meanDifference": -97.635523,
+      "slope": -22.671866,
+      "interaction": -22.671866,
+      "bootstrap95CI": [
+        -99.566107,
+        -95.95187
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -69.121774,
+        "3": -68.007084,
+        "4": -68.202512,
+        "5": -108.910459,
+        "6": -133.617709,
+        "7": -160.033382,
+        "8": -173.191263
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "stale-biased",
+      "comparison": "C-A",
+      "metric": "coverage",
+      "meanDifference": 0.341455,
+      "slope": 0.049543,
+      "interaction": 0.049543,
+      "bootstrap95CI": [
+        0.327732,
+        0.353398
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.25641,
+        "3": 0.357895,
+        "4": 0.394667,
+        "5": 0.418667,
+        "6": 0.450667,
+        "7": 0.416,
+        "8": 0.437333
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "stale-biased",
+      "comparison": "C-A",
+      "metric": "continuityRecall",
+      "meanDifference": 0.50787,
+      "slope": 0.054453,
+      "interaction": 0.054453,
+      "bootstrap95CI": [
+        0.484954,
+        0.528472
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.555556,
+        "3": 0.566667,
+        "4": 0.548148,
+        "5": 0.581482,
+        "6": 0.625926,
+        "7": 0.577778,
+        "8": 0.607407
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "stale-biased",
+      "comparison": "C-A",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.223591,
+      "slope": -0.078197,
+      "interaction": -0.078197,
+      "bootstrap95CI": [
+        -0.233884,
+        -0.213933
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.037811,
+        "3": -0.082181,
+        "4": -0.09684,
+        "5": -0.259608,
+        "6": -0.356806,
+        "7": -0.458722,
+        "8": -0.496762
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "stale-biased",
+      "comparison": "C-A",
+      "metric": "contextEfficiency",
+      "meanDifference": -17.334242,
+      "slope": -13.484739,
+      "interaction": -13.484739,
+      "bootstrap95CI": [
+        -20.54863,
+        -14.503518
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 14.968711,
+        "3": 18.156879,
+        "4": 22.213498,
+        "5": -15.175431,
+        "6": -38.871416,
+        "7": -65.181284,
+        "8": -74.784895
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "stale-biased",
+      "comparison": "C-B",
+      "metric": "coverage",
+      "meanDifference": -0.245185,
+      "slope": -0.029,
+      "interaction": -0.029,
+      "bootstrap95CI": [
+        -0.259451,
+        -0.233329
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.205128,
+        "3": -0.273684,
+        "4": -0.325333,
+        "5": -0.301333,
+        "6": -0.269333,
+        "7": -0.304,
+        "8": -0.282667
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "stale-biased",
+      "comparison": "C-B",
+      "metric": "continuityRecall",
+      "meanDifference": -0.36713,
+      "slope": -0.02888,
+      "interaction": -0.02888,
+      "bootstrap95CI": [
+        -0.389352,
+        -0.346296
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.444444,
+        "3": -0.433333,
+        "4": -0.451852,
+        "5": -0.418518,
+        "6": -0.374074,
+        "7": -0.422222,
+        "8": -0.392593
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "stale-biased",
+      "comparison": "C-B",
+      "metric": "continuityPrecision",
+      "meanDifference": 0.027365,
+      "slope": 0.006017,
+      "interaction": 0.006017,
+      "bootstrap95CI": [
+        0.016937,
+        0.037518
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.033618,
+        "3": 0.013057,
+        "4": 0.010303,
+        "5": 0.026106,
+        "6": 0.047956,
+        "7": 0.031074,
+        "8": 0.056809
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "stale-biased",
+      "comparison": "C-B",
+      "metric": "contextEfficiency",
+      "meanDifference": -93.042909,
+      "slope": -8.616205,
+      "interaction": -8.616205,
+      "bootstrap95CI": [
+        -96.530938,
+        -90.01831
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -68.12918,
+        "3": -114.593852,
+        "4": -142.857998,
+        "5": -124.816367,
+        "6": -107.107333,
+        "7": -101.480726,
+        "8": -85.357812
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "stale-biased",
+      "comparison": "C-D",
+      "metric": "coverage",
+      "meanDifference": 0.135483,
+      "slope": 0.046121,
+      "interaction": 0.046121,
+      "bootstrap95CI": [
+        0.121866,
+        0.147792
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.128205,
+        "3": 0.094737,
+        "4": 0.194667,
+        "5": 0.218667,
+        "6": 0.250667,
+        "7": 0.216,
+        "8": 0.237333
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "stale-biased",
+      "comparison": "C-D",
+      "metric": "continuityRecall",
+      "meanDifference": 0.178009,
+      "slope": 0.069334,
+      "interaction": 0.069334,
+      "bootstrap95CI": [
+        0.154398,
+        0.199537
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.277777,
+        "3": 0.15,
+        "4": 0.27037,
+        "5": 0.303704,
+        "6": 0.348148,
+        "7": 0.3,
+        "8": 0.329629
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "stale-biased",
+      "comparison": "C-D",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.223591,
+      "slope": -0.078197,
+      "interaction": -0.078197,
+      "bootstrap95CI": [
+        -0.234081,
+        -0.213762
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.037811,
+        "3": -0.082181,
+        "4": -0.09684,
+        "5": -0.259608,
+        "6": -0.356806,
+        "7": -0.458722,
+        "8": -0.496762
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "stale-biased",
+      "comparison": "C-D",
+      "metric": "contextEfficiency",
+      "meanDifference": -88.774469,
+      "slope": -20.28857,
+      "interaction": -20.28857,
+      "bootstrap95CI": [
+        -92.143414,
+        -85.858167
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -66.677262,
+        "3": -63.489094,
+        "4": -59.432475,
+        "5": -96.821404,
+        "6": -120.517389,
+        "7": -146.827257,
+        "8": -156.430868
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "100",
+      "comparison": "C-A",
+      "metric": "coverage",
+      "meanDifference": 0.58664,
+      "slope": 0.078543,
+      "interaction": 0.078543,
+      "bootstrap95CI": [
+        0.58664,
+        0.58664
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.461538,
+        "3": 0.631579,
+        "4": 0.72,
+        "5": 0.72,
+        "6": 0.72,
+        "7": 0.72,
+        "8": 0.72
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "100",
+      "comparison": "C-A",
+      "metric": "continuityRecall",
+      "meanDifference": 0.875,
+      "slope": 0.083333,
+      "interaction": 0.083333,
+      "bootstrap95CI": [
+        0.875,
+        0.875
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "100",
+      "comparison": "C-A",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.250957,
+      "slope": -0.084214,
+      "interaction": -0.084214,
+      "bootstrap95CI": [
+        -0.250957,
+        -0.250957
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.071429,
+        "3": -0.095238,
+        "4": -0.107143,
+        "5": -0.285714,
+        "6": -0.404762,
+        "7": -0.489796,
+        "8": -0.553571
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "100",
+      "comparison": "C-A",
+      "metric": "contextEfficiency",
+      "meanDifference": -27.096105,
+      "slope": -16.466639,
+      "interaction": -16.466639,
+      "bootstrap95CI": [
+        -27.470751,
+        -26.793784
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 10.716651,
+        "3": 14.952817,
+        "4": 17.248514,
+        "5": -27.05089,
+        "6": -57.340206,
+        "7": -79.317093,
+        "8": -95.978637
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "100",
+      "comparison": "C-B",
+      "metric": "coverage",
+      "meanDifference": 0,
+      "slope": 0,
+      "interaction": 0,
+      "bootstrap95CI": [
+        0,
+        0
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "100",
+      "comparison": "C-B",
+      "metric": "continuityRecall",
+      "meanDifference": 0,
+      "slope": 0,
+      "interaction": 0,
+      "bootstrap95CI": [
+        0,
+        0
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "100",
+      "comparison": "C-B",
+      "metric": "continuityPrecision",
+      "meanDifference": 0,
+      "slope": 0,
+      "interaction": 0,
+      "bootstrap95CI": [
+        0,
+        0
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "100",
+      "comparison": "C-B",
+      "metric": "contextEfficiency",
+      "meanDifference": -102.804772,
+      "slope": -11.598105,
+      "interaction": -11.598105,
+      "bootstrap95CI": [
+        -104.001714,
+        -101.890727
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -72.38124,
+        "3": -117.797915,
+        "4": -147.822981,
+        "5": -136.691826,
+        "6": -125.576123,
+        "7": -115.616535,
+        "8": -106.551554
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "100",
+      "comparison": "C-D",
+      "metric": "coverage",
+      "meanDifference": 0.380668,
+      "slope": 0.07512,
+      "interaction": 0.07512,
+      "bootstrap95CI": [
+        0.380668,
+        0.380668
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.076923,
+        "3": 0.368421,
+        "4": 0.52,
+        "5": 0.52,
+        "6": 0.52,
+        "7": 0.52,
+        "8": 0.52
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "100",
+      "comparison": "C-D",
+      "metric": "continuityRecall",
+      "meanDifference": 0.545139,
+      "slope": 0.098214,
+      "interaction": 0.098214,
+      "bootstrap95CI": [
+        0.545139,
+        0.545139
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.166667,
+        "3": 0.583333,
+        "4": 0.722222,
+        "5": 0.722222,
+        "6": 0.722222,
+        "7": 0.722222,
+        "8": 0.722222
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "100",
+      "comparison": "C-D",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.250957,
+      "slope": -0.084214,
+      "interaction": -0.084214,
+      "bootstrap95CI": [
+        -0.250957,
+        -0.250957
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.071429,
+        "3": -0.095238,
+        "4": -0.107143,
+        "5": -0.285714,
+        "6": -0.404762,
+        "7": -0.489796,
+        "8": -0.553571
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "100",
+      "comparison": "C-D",
+      "metric": "contextEfficiency",
+      "meanDifference": -98.536332,
+      "slope": -23.27047,
+      "interaction": -23.27047,
+      "bootstrap95CI": [
+        -99.379275,
+        -97.887169
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -70.929322,
+        "3": -66.693156,
+        "4": -64.397459,
+        "5": -108.696863,
+        "6": -138.986179,
+        "7": -160.963066,
+        "8": -177.62461
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "95",
+      "comparison": "C-A",
+      "metric": "coverage",
+      "meanDifference": 0.564567,
+      "slope": 0.075941,
+      "interaction": 0.075941,
+      "bootstrap95CI": [
+        0.560336,
+        0.568867
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.441025,
+        "3": 0.603509,
+        "4": 0.693333,
+        "5": 0.698667,
+        "6": 0.696,
+        "7": 0.693333,
+        "8": 0.690667
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "95",
+      "comparison": "C-A",
+      "metric": "continuityRecall",
+      "meanDifference": 0.841667,
+      "slope": 0.080864,
+      "interaction": 0.080864,
+      "bootstrap95CI": [
+        0.834491,
+        0.848611
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.955555,
+        "3": 0.955556,
+        "4": 0.962963,
+        "5": 0.97037,
+        "6": 0.966666,
+        "7": 0.962963,
+        "8": 0.959259
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "95",
+      "comparison": "C-A",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.247199,
+      "slope": -0.083414,
+      "interaction": -0.083414,
+      "bootstrap95CI": [
+        -0.249377,
+        -0.244885
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.072894,
+        "3": -0.08543,
+        "4": -0.109872,
+        "5": -0.278864,
+        "6": -0.394812,
+        "7": -0.487964,
+        "8": -0.547757
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "95",
+      "comparison": "C-A",
+      "metric": "contextEfficiency",
+      "meanDifference": -26.446255,
+      "slope": -16.218675,
+      "interaction": -16.218675,
+      "bootstrap95CI": [
+        -27.129322,
+        -25.743504
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 9.781353,
+        "3": 16.646821,
+        "4": 16.09857,
+        "5": -25.559054,
+        "6": -54.96964,
+        "7": -79.010859,
+        "8": -94.557231
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "95",
+      "comparison": "C-B",
+      "metric": "coverage",
+      "meanDifference": -0.022073,
+      "slope": -0.002602,
+      "interaction": -0.002602,
+      "bootstrap95CI": [
+        -0.026258,
+        -0.0178
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.020513,
+        "3": -0.02807,
+        "4": -0.026667,
+        "5": -0.021333,
+        "6": -0.024,
+        "7": -0.026667,
+        "8": -0.029333
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "95",
+      "comparison": "C-B",
+      "metric": "continuityRecall",
+      "meanDifference": -0.033333,
+      "slope": -0.002469,
+      "interaction": -0.002469,
+      "bootstrap95CI": [
+        -0.040509,
+        -0.026158
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.044445,
+        "3": -0.044444,
+        "4": -0.037037,
+        "5": -0.02963,
+        "6": -0.033334,
+        "7": -0.037037,
+        "8": -0.040741
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "95",
+      "comparison": "C-B",
+      "metric": "continuityPrecision",
+      "meanDifference": 0.003757,
+      "slope": 0.0008,
+      "interaction": 0.0008,
+      "bootstrap95CI": [
+        0.001618,
+        0.006065
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.001465,
+        "3": 0.009808,
+        "4": -0.002729,
+        "5": 0.00685,
+        "6": 0.00995,
+        "7": 0.001832,
+        "8": 0.005814
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "95",
+      "comparison": "C-B",
+      "metric": "contextEfficiency",
+      "meanDifference": -102.154921,
+      "slope": -11.350141,
+      "interaction": -11.350141,
+      "bootstrap95CI": [
+        -103.446346,
+        -100.938072
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -73.316538,
+        "3": -116.10391,
+        "4": -148.972925,
+        "5": -135.19999,
+        "6": -123.205557,
+        "7": -115.3103,
+        "8": -105.130148
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "95",
+      "comparison": "C-D",
+      "metric": "coverage",
+      "meanDifference": 0.358595,
+      "slope": 0.072519,
+      "interaction": 0.072519,
+      "bootstrap95CI": [
+        0.354313,
+        0.363063
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.05641,
+        "3": 0.340351,
+        "4": 0.493333,
+        "5": 0.498667,
+        "6": 0.496,
+        "7": 0.493333,
+        "8": 0.490667
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "95",
+      "comparison": "C-D",
+      "metric": "continuityRecall",
+      "meanDifference": 0.511805,
+      "slope": 0.095745,
+      "interaction": 0.095745,
+      "bootstrap95CI": [
+        0.504398,
+        0.518524
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.122222,
+        "3": 0.538889,
+        "4": 0.685185,
+        "5": 0.692592,
+        "6": 0.688888,
+        "7": 0.685185,
+        "8": 0.681481
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "95",
+      "comparison": "C-D",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.247199,
+      "slope": -0.083414,
+      "interaction": -0.083414,
+      "bootstrap95CI": [
+        -0.249401,
+        -0.244888
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.072894,
+        "3": -0.08543,
+        "4": -0.109872,
+        "5": -0.278864,
+        "6": -0.394812,
+        "7": -0.487964,
+        "8": -0.547757
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "95",
+      "comparison": "C-D",
+      "metric": "contextEfficiency",
+      "meanDifference": -97.886481,
+      "slope": -23.022506,
+      "interaction": -23.022506,
+      "bootstrap95CI": [
+        -98.886581,
+        -96.871287
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -71.86462,
+        "3": -64.999152,
+        "4": -65.547403,
+        "5": -107.205027,
+        "6": -136.615613,
+        "7": -160.656832,
+        "8": -176.203204
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "90",
+      "comparison": "C-A",
+      "metric": "coverage",
+      "meanDifference": 0.534381,
+      "slope": 0.071979,
+      "interaction": 0.071979,
+      "bootstrap95CI": [
+        0.528036,
+        0.540241
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.425641,
+        "3": 0.561403,
+        "4": 0.653333,
+        "5": 0.661333,
+        "6": 0.666667,
+        "7": 0.648,
+        "8": 0.658667
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "90",
+      "comparison": "C-A",
+      "metric": "continuityRecall",
+      "meanDifference": 0.797222,
+      "slope": 0.076367,
+      "interaction": 0.076367,
+      "bootstrap95CI": [
+        0.786805,
+        0.806713
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.922222,
+        "3": 0.888889,
+        "4": 0.907407,
+        "5": 0.918518,
+        "6": 0.925926,
+        "7": 0.9,
+        "8": 0.914815
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "90",
+      "comparison": "C-A",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.244889,
+      "slope": -0.083447,
+      "interaction": -0.083447,
+      "bootstrap95CI": [
+        -0.248349,
+        -0.241416
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.064103,
+        "3": -0.085312,
+        "4": -0.106907,
+        "5": -0.279359,
+        "6": -0.392931,
+        "7": -0.489367,
+        "8": -0.541134
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "90",
+      "comparison": "C-A",
+      "metric": "contextEfficiency",
+      "meanDifference": -26.338135,
+      "slope": -16.160088,
+      "interaction": -16.160088,
+      "bootstrap95CI": [
+        -27.358386,
+        -25.336016
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 11.153858,
+        "3": 15.450531,
+        "4": 16.108304,
+        "5": -26.076011,
+        "6": -54.733426,
+        "7": -79.65822,
+        "8": -92.950121
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "90",
+      "comparison": "C-B",
+      "metric": "coverage",
+      "meanDifference": -0.052259,
+      "slope": -0.006563,
+      "interaction": -0.006563,
+      "bootstrap95CI": [
+        -0.058795,
+        -0.046548
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.035897,
+        "3": -0.070176,
+        "4": -0.066667,
+        "5": -0.058667,
+        "6": -0.053333,
+        "7": -0.072,
+        "8": -0.061333
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "90",
+      "comparison": "C-B",
+      "metric": "continuityRecall",
+      "meanDifference": -0.077778,
+      "slope": -0.006967,
+      "interaction": -0.006967,
+      "bootstrap95CI": [
+        -0.088426,
+        -0.068287
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.077778,
+        "3": -0.111111,
+        "4": -0.092593,
+        "5": -0.081482,
+        "6": -0.074074,
+        "7": -0.1,
+        "8": -0.085185
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "90",
+      "comparison": "C-B",
+      "metric": "continuityPrecision",
+      "meanDifference": 0.006068,
+      "slope": 0.000767,
+      "interaction": 0.000767,
+      "bootstrap95CI": [
+        0.002546,
+        0.009564
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.007326,
+        "3": 0.009926,
+        "4": 0.000236,
+        "5": 0.006355,
+        "6": 0.011831,
+        "7": 0.000429,
+        "8": 0.012437
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "90",
+      "comparison": "C-B",
+      "metric": "contextEfficiency",
+      "meanDifference": -102.046802,
+      "slope": -11.291555,
+      "interaction": -11.291555,
+      "bootstrap95CI": [
+        -103.571393,
+        -100.616741
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -71.944033,
+        "3": -117.3002,
+        "4": -148.963191,
+        "5": -135.716947,
+        "6": -122.969343,
+        "7": -115.957662,
+        "8": -103.523038
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "90",
+      "comparison": "C-D",
+      "metric": "coverage",
+      "meanDifference": 0.328409,
+      "slope": 0.068557,
+      "interaction": 0.068557,
+      "bootstrap95CI": [
+        0.321794,
+        0.334227
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.041026,
+        "3": 0.298245,
+        "4": 0.453333,
+        "5": 0.461333,
+        "6": 0.466667,
+        "7": 0.448,
+        "8": 0.458667
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "90",
+      "comparison": "C-D",
+      "metric": "continuityRecall",
+      "meanDifference": 0.467361,
+      "slope": 0.091248,
+      "interaction": 0.091248,
+      "bootstrap95CI": [
+        0.456944,
+        0.476852
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.088889,
+        "3": 0.472222,
+        "4": 0.629629,
+        "5": 0.64074,
+        "6": 0.648148,
+        "7": 0.622222,
+        "8": 0.637037
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "90",
+      "comparison": "C-D",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.244889,
+      "slope": -0.083447,
+      "interaction": -0.083447,
+      "bootstrap95CI": [
+        -0.248353,
+        -0.241333
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.064103,
+        "3": -0.085312,
+        "4": -0.106907,
+        "5": -0.279359,
+        "6": -0.392931,
+        "7": -0.489367,
+        "8": -0.541134
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "90",
+      "comparison": "C-D",
+      "metric": "contextEfficiency",
+      "meanDifference": -97.778362,
+      "slope": -22.963919,
+      "interaction": -22.963919,
+      "bootstrap95CI": [
+        -99.093561,
+        -96.548946
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -70.492115,
+        "3": -66.195442,
+        "4": -65.537669,
+        "5": -107.721984,
+        "6": -136.379399,
+        "7": -161.304193,
+        "8": -174.596094
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "80",
+      "comparison": "C-A",
+      "metric": "coverage",
+      "meanDifference": 0.473119,
+      "slope": 0.066127,
+      "interaction": 0.066127,
+      "bootstrap95CI": [
+        0.46288,
+        0.483882
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.36923,
+        "3": 0.487719,
+        "4": 0.576,
+        "5": 0.568,
+        "6": 0.610667,
+        "7": 0.586667,
+        "8": 0.586667
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "80",
+      "comparison": "C-A",
+      "metric": "continuityRecall",
+      "meanDifference": 0.704861,
+      "slope": 0.071362,
+      "interaction": 0.071362,
+      "bootstrap95CI": [
+        0.688889,
+        0.722454
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.8,
+        "3": 0.772222,
+        "4": 0.8,
+        "5": 0.788889,
+        "6": 0.848148,
+        "7": 0.814815,
+        "8": 0.814815
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "80",
+      "comparison": "C-A",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.240073,
+      "slope": -0.08289,
+      "interaction": -0.08289,
+      "bootstrap95CI": [
+        -0.245804,
+        -0.234764
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.048568,
+        "3": -0.085197,
+        "4": -0.110903,
+        "5": -0.279377,
+        "6": -0.379378,
+        "7": -0.482783,
+        "8": -0.53438
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "80",
+      "comparison": "C-A",
+      "metric": "contextEfficiency",
+      "meanDifference": -26.195296,
+      "slope": -15.868034,
+      "interaction": -15.868034,
+      "bootstrap95CI": [
+        -27.894064,
+        -24.668964
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 12.524199,
+        "3": 13.638889,
+        "4": 13.443461,
+        "5": -27.264486,
+        "6": -51.971736,
+        "7": -78.387409,
+        "8": -91.54529
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "80",
+      "comparison": "C-B",
+      "metric": "coverage",
+      "meanDifference": -0.113521,
+      "slope": -0.012415,
+      "interaction": -0.012415,
+      "bootstrap95CI": [
+        -0.12346,
+        -0.102953
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.092308,
+        "3": -0.14386,
+        "4": -0.144,
+        "5": -0.152,
+        "6": -0.109333,
+        "7": -0.133333,
+        "8": -0.133333
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "80",
+      "comparison": "C-B",
+      "metric": "continuityRecall",
+      "meanDifference": -0.170139,
+      "slope": -0.011971,
+      "interaction": -0.011971,
+      "bootstrap95CI": [
+        -0.186574,
+        -0.153009
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.2,
+        "3": -0.227778,
+        "4": -0.2,
+        "5": -0.211111,
+        "6": -0.151852,
+        "7": -0.185185,
+        "8": -0.185185
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "80",
+      "comparison": "C-B",
+      "metric": "continuityPrecision",
+      "meanDifference": 0.010883,
+      "slope": 0.001324,
+      "interaction": 0.001324,
+      "bootstrap95CI": [
+        0.005173,
+        0.016129
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.022861,
+        "3": 0.010041,
+        "4": -0.00376,
+        "5": 0.006337,
+        "6": 0.025384,
+        "7": 0.007013,
+        "8": 0.019191
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "80",
+      "comparison": "C-B",
+      "metric": "contextEfficiency",
+      "meanDifference": -101.903963,
+      "slope": -10.999501,
+      "interaction": -10.999501,
+      "bootstrap95CI": [
+        -104.031323,
+        -99.950596
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -70.573692,
+        "3": -119.111842,
+        "4": -151.628035,
+        "5": -136.905422,
+        "6": -120.207653,
+        "7": -114.686851,
+        "8": -102.118207
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "80",
+      "comparison": "C-D",
+      "metric": "coverage",
+      "meanDifference": 0.267147,
+      "slope": 0.062705,
+      "interaction": 0.062705,
+      "bootstrap95CI": [
+        0.257104,
+        0.277643
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.015385,
+        "3": 0.224561,
+        "4": 0.376,
+        "5": 0.368,
+        "6": 0.410667,
+        "7": 0.386667,
+        "8": 0.386667
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "80",
+      "comparison": "C-D",
+      "metric": "continuityRecall",
+      "meanDifference": 0.375,
+      "slope": 0.086243,
+      "interaction": 0.086243,
+      "bootstrap95CI": [
+        0.358333,
+        0.392361
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.033333,
+        "3": 0.355555,
+        "4": 0.522222,
+        "5": 0.511111,
+        "6": 0.57037,
+        "7": 0.537037,
+        "8": 0.537037
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "80",
+      "comparison": "C-D",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.240073,
+      "slope": -0.08289,
+      "interaction": -0.08289,
+      "bootstrap95CI": [
+        -0.245846,
+        -0.234751
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.048568,
+        "3": -0.085197,
+        "4": -0.110903,
+        "5": -0.279377,
+        "6": -0.379378,
+        "7": -0.482783,
+        "8": -0.53438
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "80",
+      "comparison": "C-D",
+      "metric": "contextEfficiency",
+      "meanDifference": -97.635523,
+      "slope": -22.671866,
+      "interaction": -22.671866,
+      "bootstrap95CI": [
+        -99.537262,
+        -95.944497
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -69.121774,
+        "3": -68.007084,
+        "4": -68.202512,
+        "5": -108.910459,
+        "6": -133.617709,
+        "7": -160.033382,
+        "8": -173.191263
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "stale-biased",
+      "comparison": "C-A",
+      "metric": "coverage",
+      "meanDifference": 0.341455,
+      "slope": 0.049543,
+      "interaction": 0.049543,
+      "bootstrap95CI": [
+        0.327097,
+        0.353419
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.25641,
+        "3": 0.357895,
+        "4": 0.394667,
+        "5": 0.418667,
+        "6": 0.450667,
+        "7": 0.416,
+        "8": 0.437333
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "stale-biased",
+      "comparison": "C-A",
+      "metric": "continuityRecall",
+      "meanDifference": 0.50787,
+      "slope": 0.054453,
+      "interaction": 0.054453,
+      "bootstrap95CI": [
+        0.484491,
+        0.528704
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.555556,
+        "3": 0.566667,
+        "4": 0.548148,
+        "5": 0.581482,
+        "6": 0.625926,
+        "7": 0.577778,
+        "8": 0.607407
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "stale-biased",
+      "comparison": "C-A",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.223591,
+      "slope": -0.078197,
+      "interaction": -0.078197,
+      "bootstrap95CI": [
+        -0.233672,
+        -0.213873
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.037811,
+        "3": -0.082181,
+        "4": -0.09684,
+        "5": -0.259608,
+        "6": -0.356806,
+        "7": -0.458722,
+        "8": -0.496762
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "stale-biased",
+      "comparison": "C-A",
+      "metric": "contextEfficiency",
+      "meanDifference": -17.334242,
+      "slope": -13.484739,
+      "interaction": -13.484739,
+      "bootstrap95CI": [
+        -20.35479,
+        -14.497067
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 14.968711,
+        "3": 18.156879,
+        "4": 22.213498,
+        "5": -15.175431,
+        "6": -38.871416,
+        "7": -65.181284,
+        "8": -74.784895
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "stale-biased",
+      "comparison": "C-B",
+      "metric": "coverage",
+      "meanDifference": -0.245185,
+      "slope": -0.029,
+      "interaction": -0.029,
+      "bootstrap95CI": [
+        -0.259087,
+        -0.232819
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.205128,
+        "3": -0.273684,
+        "4": -0.325333,
+        "5": -0.301333,
+        "6": -0.269333,
+        "7": -0.304,
+        "8": -0.282667
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "stale-biased",
+      "comparison": "C-B",
+      "metric": "continuityRecall",
+      "meanDifference": -0.36713,
+      "slope": -0.02888,
+      "interaction": -0.02888,
+      "bootstrap95CI": [
+        -0.390509,
+        -0.347216
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.444444,
+        "3": -0.433333,
+        "4": -0.451852,
+        "5": -0.418518,
+        "6": -0.374074,
+        "7": -0.422222,
+        "8": -0.392593
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "stale-biased",
+      "comparison": "C-B",
+      "metric": "continuityPrecision",
+      "meanDifference": 0.027365,
+      "slope": 0.006017,
+      "interaction": 0.006017,
+      "bootstrap95CI": [
+        0.016956,
+        0.037423
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.033618,
+        "3": 0.013057,
+        "4": 0.010303,
+        "5": 0.026106,
+        "6": 0.047956,
+        "7": 0.031074,
+        "8": 0.056809
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "stale-biased",
+      "comparison": "C-B",
+      "metric": "contextEfficiency",
+      "meanDifference": -93.042909,
+      "slope": -8.616205,
+      "interaction": -8.616205,
+      "bootstrap95CI": [
+        -96.650026,
+        -90.047955
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -68.12918,
+        "3": -114.593852,
+        "4": -142.857998,
+        "5": -124.816367,
+        "6": -107.107333,
+        "7": -101.480726,
+        "8": -85.357812
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "stale-biased",
+      "comparison": "C-D",
+      "metric": "coverage",
+      "meanDifference": 0.135483,
+      "slope": 0.046121,
+      "interaction": 0.046121,
+      "bootstrap95CI": [
+        0.121247,
+        0.148069
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.128205,
+        "3": 0.094737,
+        "4": 0.194667,
+        "5": 0.218667,
+        "6": 0.250667,
+        "7": 0.216,
+        "8": 0.237333
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "stale-biased",
+      "comparison": "C-D",
+      "metric": "continuityRecall",
+      "meanDifference": 0.178009,
+      "slope": 0.069334,
+      "interaction": 0.069334,
+      "bootstrap95CI": [
+        0.154624,
+        0.199305
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.277777,
+        "3": 0.15,
+        "4": 0.27037,
+        "5": 0.303704,
+        "6": 0.348148,
+        "7": 0.3,
+        "8": 0.329629
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "stale-biased",
+      "comparison": "C-D",
+      "metric": "continuityPrecision",
+      "meanDifference": -0.223591,
+      "slope": -0.078197,
+      "interaction": -0.078197,
+      "bootstrap95CI": [
+        -0.233964,
+        -0.213687
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -0.037811,
+        "3": -0.082181,
+        "4": -0.09684,
+        "5": -0.259608,
+        "6": -0.356806,
+        "7": -0.458722,
+        "8": -0.496762
+      }
+    },
+    {
+      "budget": 4096,
+      "quality": "stale-biased",
+      "comparison": "C-D",
+      "metric": "contextEfficiency",
+      "meanDifference": -88.774469,
+      "slope": -20.28857,
+      "interaction": -20.28857,
+      "bootstrap95CI": [
+        -92.035811,
+        -85.831785
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": -66.677262,
+        "3": -63.489094,
+        "4": -59.432475,
+        "5": -96.821404,
+        "6": -120.517389,
+        "7": -146.827257,
+        "8": -156.430868
+      }
+    }
+  ],
+  "scenarioHeterogeneity": [
+    {
+      "scenarioPseudonym": "d4feb518a643f218",
+      "rows": 640
+    },
+    {
+      "scenarioPseudonym": "b627b5e14e05de42",
+      "rows": 640
+    },
+    {
+      "scenarioPseudonym": "bc4cef10d7afb340",
+      "rows": 640
+    }
+  ],
+  "structuralCompoundingClassification": "Structural compounding supported",
+  "efficiencyCompoundingClassification": "Inconclusive",
+  "reviewSensitivity": [
+    {
+      "budget": 2048,
+      "quality": "100",
+      "comparison": "C-A",
+      "metric": "continuityRecall",
+      "meanDifference": 0.875,
+      "slope": 0.083333,
+      "interaction": 0.083333,
+      "bootstrap95CI": [
+        0.875,
+        0.875
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "95",
+      "comparison": "C-A",
+      "metric": "continuityRecall",
+      "meanDifference": 0.841667,
+      "slope": 0.080864,
+      "interaction": 0.080864,
+      "bootstrap95CI": [
+        0.834259,
+        0.848611
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.955555,
+        "3": 0.955556,
+        "4": 0.962963,
+        "5": 0.97037,
+        "6": 0.966666,
+        "7": 0.962963,
+        "8": 0.959259
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "90",
+      "comparison": "C-A",
+      "metric": "continuityRecall",
+      "meanDifference": 0.797222,
+      "slope": 0.076367,
+      "interaction": 0.076367,
+      "bootstrap95CI": [
+        0.786574,
+        0.806944
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.922222,
+        "3": 0.888889,
+        "4": 0.907407,
+        "5": 0.918518,
+        "6": 0.925926,
+        "7": 0.9,
+        "8": 0.914815
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "80",
+      "comparison": "C-A",
+      "metric": "continuityRecall",
+      "meanDifference": 0.704861,
+      "slope": 0.071362,
+      "interaction": 0.071362,
+      "bootstrap95CI": [
+        0.687963,
+        0.721991
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.8,
+        "3": 0.772222,
+        "4": 0.8,
+        "5": 0.788889,
+        "6": 0.848148,
+        "7": 0.814815,
+        "8": 0.814815
+      }
+    },
+    {
+      "budget": 2048,
+      "quality": "stale-biased",
+      "comparison": "C-A",
+      "metric": "continuityRecall",
+      "meanDifference": 0.50787,
+      "slope": 0.054453,
+      "interaction": 0.054453,
+      "bootstrap95CI": [
+        0.484954,
+        0.528472
+      ],
+      "byCycle": {
+        "1": 0,
+        "2": 0.555556,
+        "3": 0.566667,
+        "4": 0.548148,
+        "5": 0.581482,
+        "6": 0.625926,
+        "7": 0.577778,
+        "8": 0.607407
+      }
+    }
+  ],
+  "harmfulConditions": [
+    "stale-biased"
+  ],
+  "breakEven": "discrete tested qualities only",
+  "modelMediatedQuality": "NOT TESTED",
+  "authenticCustomerCompounding": "NOT TESTED",
+  "organizationalOutcomes": "NOT TESTED",
+  "cycleLevelCoverageIntervals": [
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "b1f7f1845923c12e25707e27d8da974b01791b1ca7109d002d88bae48b40d746",
+      "condition": "A",
+      "cycle": 1,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "644a3722ac496219496528303b518c8b6deec7c969e500d4646a0d92ca9cad6c",
+      "condition": "A",
+      "cycle": 2,
+      "mean": 0.538462,
+      "median": 0.538462,
+      "sampleSd": 0,
+      "lowerBound": 0.538462,
+      "upperBound": 0.538462,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 0.538462
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 0.538462
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 0.538462
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 0.538462
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 0.538462
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 0.538462
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 0.538462
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 0.538462
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 0.538462
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 0.538462
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 0.538462
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 0.538462
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 0.538462
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 0.538462
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 0.538462
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "5b46699a8548cb0ddee1b669af77cbc2b8df92680f956d3d8afeb930403f3eaa",
+      "condition": "A",
+      "cycle": 3,
+      "mean": 0.368421,
+      "median": 0.368421,
+      "sampleSd": 0,
+      "lowerBound": 0.368421,
+      "upperBound": 0.368421,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 0.368421
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 0.368421
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 0.368421
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 0.368421
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 0.368421
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 0.368421
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 0.368421
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 0.368421
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 0.368421
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 0.368421
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 0.368421
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 0.368421
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 0.368421
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 0.368421
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 0.368421
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "fe8f1c30402732471a7a6d0f7a0b97b8901062e9df23b73cac19ae6f22baff75",
+      "condition": "A",
+      "cycle": 4,
+      "mean": 0.28,
+      "median": 0.28,
+      "sampleSd": 0,
+      "lowerBound": 0.28,
+      "upperBound": 0.28,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 0.28
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "1d42df58f7b9ab02ce2a8b19a76b06d8777a5346f31d3c8e540477d44a25ec12",
+      "condition": "A",
+      "cycle": 5,
+      "mean": 0.28,
+      "median": 0.28,
+      "sampleSd": 0,
+      "lowerBound": 0.28,
+      "upperBound": 0.28,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 0.28
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "3e9258ff129b82f9b0586c837cbea96d05a9d0b3ff5947fbaaf8aa8d6f4f5beb",
+      "condition": "A",
+      "cycle": 6,
+      "mean": 0.28,
+      "median": 0.28,
+      "sampleSd": 0,
+      "lowerBound": 0.28,
+      "upperBound": 0.28,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 0.28
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "10ec1c138e0deeb412c1e2a5e486a5df2e4d2a70dbf03c0a06356fdb298a9e8b",
+      "condition": "A",
+      "cycle": 7,
+      "mean": 0.28,
+      "median": 0.28,
+      "sampleSd": 0,
+      "lowerBound": 0.28,
+      "upperBound": 0.28,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 0.28
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "26632b5ac3d53326cdf4258e1005ff6f5384f1bfdd8211fb10909861c5ae142d",
+      "condition": "A",
+      "cycle": 8,
+      "mean": 0.28,
+      "median": 0.28,
+      "sampleSd": 0,
+      "lowerBound": 0.28,
+      "upperBound": 0.28,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 0.28
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 0.28
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 0.28
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 0.28
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "974e6795ac8168350b0103c0d05622eb2e9a209b18b37e5dc05a68fefc17bb8d",
+      "condition": "B",
+      "cycle": 1,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "42d03f30b6a7defa357978f48dd340dc5b9aa1b32df504e01bf7a193405cb5c0",
+      "condition": "B",
+      "cycle": 2,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "e515761c25ab9e8dc6bb41faa3ec40c781eb09c484eb1f9010b748bf402da390",
+      "condition": "B",
+      "cycle": 3,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "40c06978875e6508908e551056fb0efe31858289f650c346e0ea085b74545c62",
+      "condition": "B",
+      "cycle": 4,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "6f3c9baf7f7586468ee5d556a5396d178fb71220abf91c5a16cb786df80530ab",
+      "condition": "B",
+      "cycle": 5,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "6c68e6add66b5991a994f9657b1da63f904c883fbb751dd2b82bef06e80752c3",
+      "condition": "B",
+      "cycle": 6,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "d62f4e5c0c7c04ea7bbbd57fb78ba567b081c4e1f0554c6857815df5312e375a",
+      "condition": "B",
+      "cycle": 7,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "971b4329863c5af5ec1c2530fa21543c3cdc4a89d0c20daa90b3b9c249211a18",
+      "condition": "B",
+      "cycle": 8,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "2612654d86026760b17243f2b14d6c62cbeb9852e2f62a5ef5804036bb1e8bf7",
+      "condition": "C",
+      "cycle": 1,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "7f221e049718392280c2cfe607567e1a860adc1d25e07c821dfd756d78e7127e",
+      "condition": "C",
+      "cycle": 2,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "7b0f06359596b919d03b888291ca64cbc0cb7e407b68012ecefc54b8961a503e",
+      "condition": "C",
+      "cycle": 3,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "7f52ccea5a9134bf07af37fe7a5727dcc4722260a2786835e274a3da7426033c",
+      "condition": "C",
+      "cycle": 4,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "596090557b473c00d9d5395f4dcf74fd6fb26cc1a3e95c778c2a92cc9151d3e3",
+      "condition": "C",
+      "cycle": 5,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "e6172fbfa1c5da97920496cb7c6de754033bbd1e422b19f73022592d944ea29a",
+      "condition": "C",
+      "cycle": 6,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "4a65cfc0d3ad9ab578d7c3bea9c2052b358a5392d0c0217909dfbf9615b54b47",
+      "condition": "C",
+      "cycle": 7,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "c53b04e185fc2e8bdce070be81602c61bc1371f9f30dba51ce0bbfc04e18033f",
+      "condition": "C",
+      "cycle": 8,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "fe622b443786b51c48bb96a5e6c0417c1e53f018590cc4365ac95a07f37300d3",
+      "condition": "D",
+      "cycle": 1,
+      "mean": 1,
+      "median": 1,
+      "sampleSd": 0,
+      "lowerBound": 1,
+      "upperBound": 1,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 1
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 1
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "623e79980946c13e3b9bd4b1c092b88ee855ebb3f40c1aa9008d2e7f3b41679a",
+      "condition": "D",
+      "cycle": 2,
+      "mean": 0.923077,
+      "median": 0.923077,
+      "sampleSd": 0,
+      "lowerBound": 0.923077,
+      "upperBound": 0.923077,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 0.923077
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 0.923077
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 0.923077
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 0.923077
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 0.923077
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 0.923077
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 0.923077
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 0.923077
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 0.923077
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 0.923077
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 0.923077
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 0.923077
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 0.923077
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 0.923077
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 0.923077
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "33d34369cdf6a46059d2a7ade385586b285b6a2bed0a892d282f5fac9f576f0a",
+      "condition": "D",
+      "cycle": 3,
+      "mean": 0.631579,
+      "median": 0.631579,
+      "sampleSd": 0,
+      "lowerBound": 0.631579,
+      "upperBound": 0.631579,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 0.631579
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 0.631579
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 0.631579
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 0.631579
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 0.631579
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 0.631579
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 0.631579
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 0.631579
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 0.631579
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 0.631579
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 0.631579
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 0.631579
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 0.631579
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 0.631579
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 0.631579
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "03c5eec63b9727a8b231967a7214a6e166d243060d383a6306c0fd54363cca52",
+      "condition": "D",
+      "cycle": 4,
+      "mean": 0.48,
+      "median": 0.48,
+      "sampleSd": 0,
+      "lowerBound": 0.48,
+      "upperBound": 0.48,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 0.48
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "31740ca4b6d3e4e82de0428a4ce116f9196730c28665735359c9f7d37f9f920d",
+      "condition": "D",
+      "cycle": 5,
+      "mean": 0.48,
+      "median": 0.48,
+      "sampleSd": 0,
+      "lowerBound": 0.48,
+      "upperBound": 0.48,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 0.48
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "c7e5ac6b7367391e65efbc96a262646120429bd5ef9a5ced497c18914083844f",
+      "condition": "D",
+      "cycle": 6,
+      "mean": 0.48,
+      "median": 0.48,
+      "sampleSd": 0,
+      "lowerBound": 0.48,
+      "upperBound": 0.48,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 0.48
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "efded3d2f5c5c94beeee7be8c8c46ff79d11bfdb8d4c4474addd78bc022b0d3e",
+      "condition": "D",
+      "cycle": 7,
+      "mean": 0.48,
+      "median": 0.48,
+      "sampleSd": 0,
+      "lowerBound": 0.48,
+      "upperBound": 0.48,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 0.48
+        }
+      ]
+    },
+    {
+      "schemaVersion": "cycle-level-coverage-interval/v1",
+      "contextBudget": 2048,
+      "reviewQuality": "100",
+      "samplingUnit": "scenario × seed",
+      "unitCount": 15,
+      "confidenceLevel": 0.95,
+      "intervalMethod": "5000 scenario×seed cluster resamples; fixed SHA-256 seed; type-7 percentile",
+      "bootstrapReplicates": 5000,
+      "deterministicSeedDigest": "cd37c4bfe65d73805b3e55f4f05a902cdb30b83387bfdfb9533172e20d5adf71",
+      "condition": "D",
+      "cycle": 8,
+      "mean": 0.48,
+      "median": 0.48,
+      "sampleSd": 0,
+      "lowerBound": 0.48,
+      "upperBound": 0.48,
+      "intervalWidth": 0,
+      "degenerate": true,
+      "units": [
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 1103,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 2207,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 3301,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 4409,
+          "value": 0.48
+        },
+        {
+          "scenario": "d4feb518a643f218",
+          "seed": 5519,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 1103,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 2207,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 3301,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 4409,
+          "value": 0.48
+        },
+        {
+          "scenario": "b627b5e14e05de42",
+          "seed": 5519,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 1103,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 2207,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 3301,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 4409,
+          "value": 0.48
+        },
+        {
+          "scenario": "bc4cef10d7afb340",
+          "seed": 5519,
+          "value": 0.48
+        }
+      ]
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 # Discovery Product Roadmap
 
-## Immediate baseline milestone — Chief Meeting Pack V1
+## Immediate baseline milestone — Compounding and Capture-Quality Instrumentation V1
 
-Founder evaluation of Chief Meeting Pack V1 precedes Multi-Meeting Shell V1. The current bounded milestone composes authorized preparation, reviewed continuity, What Changed, working analysis, open commitments and questions, and explicit private context into a draft agenda plus a separate user-private talking-points sheet. Chief remains the visible orchestrator; Counsel and Operator are embedded, while Scout is limited to already-authorized evidence gaps and changes.
+Chief Meeting Pack V1 is complete. The immediate post-Meeting-Pack milestone is a noncanonical, read-only, privacy-safe longitudinal observation projector plus deterministic synthetic structural dry run under `GAP-D-005`. It tests representation and context efficiency only: model-mediated quality, authentic customer compounding, and organizational outcomes are **NOT TESTED**. The next bounded task is the frozen-packet model-mediated comparison; Multi-Meeting Shell and Meeting Home V1 follow it. Synthetic results may not be marketed as customer evidence.
 
 Next, after founder acceptance: an authorized meeting directory, parameterized meeting-series routes, left navigation, and three simultaneous meeting series. Full chat, customer-role lenses, meeting profiles, calendar sharing, PDF generation, and external Scout monitoring remain deferred. Customer roles and meeting profiles are not Discovery personas.
 

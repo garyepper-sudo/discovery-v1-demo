@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "compounding-synthetic-corpus/v1",
+  "label": "SYNTHETIC BENCHMARK — NOT CUSTOMER OR PRODUCTION EVIDENCE",
+  "scenarioFamilies": ["sales leadership and pipeline performance", "product/engineering delivery and capacity", "marketing/agency client performance"],
+  "cyclesPerScenario": 8,
+  "sourceForms": ["meeting note", "project update", "metric snapshot", "short report", "synthetic email or memo", "conflicting account", "stale repeat", "irrelevant noise", "duplicate source"],
+  "sourceStatuses": ["authoritative", "observational", "private", "generated", "reviewed", "rejected", "superseded"],
+  "ledgerFeatures": ["chronology", "effective interval", "supersession", "decision", "explicit non-decision", "commitment", "owner", "deadline", "completed commitment", "missed commitment", "strengthening assumption", "weakening assumption", "stale assumption", "support", "contradiction", "unresolved question", "competing explanation", "nonauthoritative observation", "rejected proposal", "human correction", "later-revealed outcome", "permission boundary"],
+  "futureRule": "An item is unavailable before its cycle and reviewed carry-forward uses only information available through the preceding cycle.",
+  "separationRule": "Hidden truth and answer keys exist only in grader packets; model packet construction accepts no hidden-ledger argument."
+}

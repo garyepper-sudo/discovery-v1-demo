@@ -93,6 +93,12 @@ Localized nonlinear research: replicate
 
 No benchmark result may be represented as completed production work.
 
+### Compounding and Capture-Quality Instrumentation V1
+
+Path: `compounding-capture-quality-v1/`
+
+This GAP-D-005 lane defines a privacy-safe derived observation, explicit local export, frozen metric dictionary, deterministic three-scenario/eight-cycle structural dry run, separate model/grader packets, statistical summary, and four labelled SVGs. It creates no production owner or persistence. Structural and efficiency findings are synthetic; model-mediated quality and authentic customer compounding are **NOT TESTED**.
+
 ### Organizational Understanding Evaluator 001 — Phases 1–2
 
 Path:

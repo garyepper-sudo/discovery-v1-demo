@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "benchmark-manifest/v1",
+  "label": "SYNTHETIC BENCHMARK — NOT CUSTOMER OR PRODUCTION EVIDENCE",
+  "scenarios": [
+    "sales-pipeline",
+    "product-delivery",
+    "marketing-agency"
+  ],
+  "cycles": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "seeds": [
+    1103,
+    2207,
+    3301,
+    4409,
+    5519
+  ],
+  "budgets": [
+    2048,
+    4096
+  ],
+  "qualities": [
+    "100",
+    "95",
+    "90",
+    "80",
+    "stale-biased"
+  ],
+  "conditions": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "packetCount": 1920,
+  "estimator": "ceil UTF-8 bytes / 4"
+}

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "reproducibility-manifest/v1",
+  "label": "SYNTHETIC BENCHMARK — NOT CUSTOMER OR PRODUCTION EVIDENCE",
+  "scope": "all generated evidence except this self-describing manifest",
+  "hashes": {
+    "metric-dictionary.json": "7c57098e49ec6ab7c42d2a6dddc7bc6b7dcb4eb12d0f3d56b2ccda48724ebeb1",
+    "benchmark-manifest.json": "79a4fa234108c19b73d6fc77e6e803da22aaac99fa7907aced7a3b96e36c09d8",
+    "synthetic-corpus-specification.json": "6528d2359d4cf959a3b6a8d8d3f5f19b242b15894f0da38d67746885d8c038aa",
+    "synthetic-source-corpus.json": "1b4b9018be988868f75568b920265d769caf9af422fb4275bae3cdf6e026a11b",
+    "hidden-truth-ledger.json": "ddada8d97971b1ae40776d25acff3d00e3e4130019f09500b2915f82c1b541ac",
+    "raw-observations.json": "a2d3241221a77c08e0baf056c7f3d4515260c89c16719a640f208258bc33da34",
+    "raw-observations.csv": "0356dde55aa68acff657c277b1189bc1fe79e5783ea507bf99ae820f340bd3b7",
+    "statistical-summary.json": "5c2b77e2eac1358a6def5a29e371fe27e7eec541b17f24d2d7f83a6450c99147",
+    "model-packets.json": "a68e63cbbca37bb83e795bc901e16c0a9324ab50f48ecb90a4414ba62adaf6d3",
+    "grader-packets.json": "a4d1cf456611424f2ee18a782864d7573e14ce9d9c62adbae78d454339e8d064",
+    "coverage-by-cycle.svg": "4dcaf8e4e98e8c57bec978dfba2759102649390718ddb035a3d3b121b01c6be2",
+    "active-context-growth.svg": "4493d2a1952bf3465e7e9c5863c45cd77ee5af14f257e2fed518f65110e10cbd",
+    "context-efficiency.svg": "736bf23d7191d87a21b2e5873f674496281be9646898bc0c1c4888a6d643f544",
+    "review-quality-sensitivity.svg": "ef52641f5ccb12d2b476c6a768bc46ca1fe34451a920cc082a09ddde3c2577a0"
+  }
+}
