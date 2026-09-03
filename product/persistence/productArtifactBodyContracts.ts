@@ -6,6 +6,8 @@ export type PersistedProductArtifactTypeV1 =
   | "prepared-work"
   | "frozen-snapshot"
   | "private-working-contribution"
+  | "meeting-pack-private-note"
+  | "meeting-pack-draft"
   | "what-changed"
   | "product-decision-draft";
 
@@ -72,7 +74,7 @@ export function createProductArtifactBodyRefV1(
 
 export function validateProductArtifactBodyRefV1(value: ProductArtifactBodyRefV1): void {
   const { refDigest, ...unsigned } = value;
-  const types: readonly string[] = ["prepared-work", "frozen-snapshot", "private-working-contribution", "what-changed", "product-decision-draft"];
+  const types: readonly string[] = ["prepared-work", "frozen-snapshot", "private-working-contribution", "meeting-pack-private-note", "meeting-pack-draft", "what-changed", "product-decision-draft"];
   if (
     value.contractVersion !== "1" ||
     !types.includes(value.artifactType) ||

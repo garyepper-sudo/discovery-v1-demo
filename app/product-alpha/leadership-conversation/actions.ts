@@ -18,6 +18,8 @@ import type { AlphaContentSafeObservabilityEventV1 } from "../../../lib/observab
 import { createAlphaTelemetryComposition } from "../../../lib/telemetry/alphaTelemetryComposition";
 import { assertClosedFeedback, type AlphaFeedbackDimension, type AlphaFeedbackRating } from "../../../lib/telemetry/alphaProductTelemetryContracts";
 import { unavailable } from "../../../lib/analysis/sourceScopedExecutiveAnalysisContracts";
+import type { MeetingPackPrivateNoteIntentV1 } from "../../../product/workflow/leadershipConversation/meetingPackContracts";
+import { leadershipDigest, leadershipStableSerialize } from "../../../product/workflow/leadershipConversation/determinism";
 
 function guard(): void {
   if (process.env.NODE_ENV === "production") {
@@ -68,7 +70,17 @@ export async function getLeadershipConversationWorkspaceAction(input: {
   return createLeadershipConversationServerComposition().workspace({ ...input, userId });
 }
 export async function activateAndPrepareLeadershipConversationAction(input:ChiefFirstPrepareActivationV1){observeJourney("activate","attempted","attempted");const result=await createLeadershipConversationServerComposition().activateAndPrepare({...input,userId:await signedInUserId()});observeJourney("prepare","completed","success");return result;}
-export async function generateSourceScopedExecutiveAnalysisAction(){try{const{server,identity}=await occurrence1Context();return await server.analyzeSourceScopedForDevelopment({...identity,seriesId:`leadership-conversation-series:${identity.conversationId}`,occurrenceId:identity.conversationId});}catch{return{result:unavailable(0),failureCategory:"source-access-changed" as const};}}
+function exactActionRecord(value:unknown,keys:readonly string[]):value is Record<string,unknown>{return Boolean(value&&typeof value==="object"&&!Array.isArray(value)&&Object.keys(value).length===keys.length&&keys.every(key=>Object.prototype.hasOwnProperty.call(value,key)));}
+function assertGenerateSourceScopedExecutiveAnalysisArguments(argumentsList:readonly unknown[]):void{if(argumentsList.length!==0)throw new Error("Generate analysis request is invalid.");}
+export async function generateSourceScopedExecutiveAnalysisAction(...runtimeArguments:unknown[]){assertGenerateSourceScopedExecutiveAnalysisArguments(runtimeArguments);try{const{server,identity,seriesId}=await currentMeetingPackContext();return await server.analyzeSourceScopedForDevelopment({...identity,seriesId,occurrenceId:identity.conversationId});}catch{return{result:unavailable(0),failureCategory:"source-access-changed" as const};}}
+function assertGetMeetingPackArguments(argumentsList:readonly unknown[]):void{if(argumentsList.length!==0)throw new Error("Meeting Pack request is invalid.");}
+export async function getMeetingPackAction(...runtimeArguments:unknown[]){assertGetMeetingPackArguments(runtimeArguments);const{server,identity,seriesId}=await currentMeetingPackContext();return server.readMeetingPack({...identity,seriesId});}
+function parseAddMeetingPackPrivateNoteArguments(argumentsList:readonly unknown[]):{text:string;intent:MeetingPackPrivateNoteIntentV1}{const input=argumentsList[0];if(argumentsList.length!==1||!exactActionRecord(input,["text","intent"])||typeof input.text!=="string"||!(["keep-private","talking-points","agenda"] as const).includes(input.intent as MeetingPackPrivateNoteIntentV1))throw new Error("Private context request is invalid.");return{text:input.text,intent:input.intent as MeetingPackPrivateNoteIntentV1};}
+export async function addMeetingPackPrivateNoteAction(...runtimeArguments:unknown[]){const input=parseAddMeetingPackPrivateNoteArguments(runtimeArguments),{server,identity,seriesId}=await currentMeetingPackContext(),text=input.text.trim(),idempotencyKey=`meeting-pack-note:${leadershipDigest(leadershipStableSerialize({seriesId,occurrenceId:identity.conversationId,intent:input.intent,text}))}`;await server.addMeetingPackPrivateNote({...identity,seriesId,text,intent:input.intent,idempotencyKey});return server.readMeetingPack({...identity,seriesId});}
+function assertBuildMeetingPackArguments(argumentsList:readonly unknown[]):void{if(argumentsList.length!==0)throw new Error("Meeting Pack request is invalid.");}
+export async function buildMeetingPackAction(...runtimeArguments:unknown[]){assertBuildMeetingPackArguments(runtimeArguments);const{server,identity,seriesId}=await currentMeetingPackContext();return server.buildMeetingPack({...identity,seriesId});}
+function parseSaveMeetingPackArguments(argumentsList:readonly unknown[]):{agendaText:string;talkingPointsText:string;expectedArtifactRevision:string}{const input=argumentsList[0];if(argumentsList.length!==1||!exactActionRecord(input,["agendaText","talkingPointsText","expectedArtifactRevision"])||typeof input.agendaText!=="string"||typeof input.talkingPointsText!=="string"||typeof input.expectedArtifactRevision!=="string")throw new Error("Meeting Pack save request is invalid.");return{agendaText:input.agendaText,talkingPointsText:input.talkingPointsText,expectedArtifactRevision:input.expectedArtifactRevision};}
+export async function saveMeetingPackAction(...runtimeArguments:unknown[]){const input=parseSaveMeetingPackArguments(runtimeArguments),{server,identity,seriesId}=await currentMeetingPackContext(),idempotencyKey=`meeting-pack-save:${leadershipDigest(leadershipStableSerialize({expectedArtifactRevision:input.expectedArtifactRevision,agendaText:input.agendaText,talkingPointsText:input.talkingPointsText}))}`;return server.reviseMeetingPack({...identity,seriesId,...input,idempotencyKey});}
 
 export async function routeApprovedTakeawayProposalAction(input: {
   organizationId: string;
@@ -105,6 +117,7 @@ async function occurrence1Context() {
   const seed = await readNorthstarPreparationLineageSeed({ fixtureRoot, organizationId: SANDBOX_ORGANIZATION_ID, fixtureId: "northstar-preparation-lineage-fixture-v1", provisioningKey: "northstar-preparation-lineage:v1" }), fixture = northstarLeadershipConversationFixture(seed.productQuestionId), identity = { userId, organizationId: seed.organizationId, questionId: seed.productQuestionId, conversationId: fixture.conversationId };
   return { server, identity, fixture };
 }
+async function currentMeetingPackContext(){const current=await occurrence1Context(),workspace=await current.server.workspace(current.identity);if(workspace.futurePreparationLink&&workspace.closureCompletion){const identity={...current.identity,conversationId:workspace.futurePreparationLink.nextConversationId};return{server:current.server,identity,seriesId:workspace.closureCompletion.seriesId};}return{server:current.server,identity:current.identity,seriesId:`leadership-conversation-series:${current.identity.conversationId}`};}
 
 export async function freezeOccurrence1Action(input: { preparedWorkProductVersionId: string; expectedPersonalRoomSheetDigest: string; contributedItemIds: string[] }): Promise<{ checkpointId: string; contributionArtifactIds: string[]; workspace: LeadershipConversationWorkspaceV1 }> {
   observeJourney("contribute","attempted","attempted");

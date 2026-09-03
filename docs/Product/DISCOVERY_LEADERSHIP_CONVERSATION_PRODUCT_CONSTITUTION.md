@@ -1,5 +1,11 @@
 # Discovery Leadership Conversation Product Constitution
 
+## Chief Meeting Pack V1 boundary
+
+Within the Alpha, Chief may compose the current authorized Leadership Conversation into one proposed agenda and one separate private talking-points sheet. Both are editable noncanonical working drafts. The agenda is not shared until a later explicit user action; talking points are user-and-occurrence scoped and may not enter the agenda, Capture, Review, canonical state, logs, telemetry, or the agenda print projection. Private context defaults to `Keep private`; only explicit intent may make it eligible for the user's talking points or agenda draft.
+
+Counsel contributes supported analytical challenge, Operator contributes bounded decision and follow-through structure, and Scout contributes only evidence gaps or already-authorized change awareness. They do not become separate agents, interfaces, memories, truth stores, or authorities. Customer roles and meeting profiles remain separate concepts. Meeting Pack evaluation precedes any Multi-Meeting Shell.
+
 **Status:** Canonical Product and architecture governance
 
 **Scope:** Leadership Conversation Product direction and first-slice boundary

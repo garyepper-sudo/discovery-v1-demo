@@ -3,7 +3,8 @@ import {useState,useTransition} from "react";
 import type { ChiefFirstPrepareViewV1 } from "../../../product/workflow/leadershipConversation";
 import type { ChiefOfStaffValueItemV1, ChiefOfStaffValueLayerV1 } from "../../../product/workflow/leadershipConversation/chiefCommunicationPlan";
 import type {SourceScopedCandidateV1} from "../../../lib/analysis/sourceScopedExecutiveAnalysisContracts";
-import {generateSourceScopedExecutiveAnalysisAction} from "../../../app/product-alpha/leadership-conversation/actions";
+import {reconcileMeetingPackDraftBuffers,type ChiefMeetingPackViewV1,type MeetingPackPrivateNoteIntentV1} from "../../../product/workflow/leadershipConversation/meetingPackContracts";
+import {addMeetingPackPrivateNoteAction,buildMeetingPackAction,generateSourceScopedExecutiveAnalysisAction,saveMeetingPackAction} from "../../../app/product-alpha/leadership-conversation/actions";
 import styles from "./LeadershipConversationExperience.module.css";
 
 const List = ({ items }: { items: string[] }) => <ul>{items.map(item => <li key={item}>{item}</li>)}</ul>;
@@ -40,13 +41,24 @@ export function SourceScopedAnalysisPanelView({state,onGenerate}:{state:SourceSc
   </section>;
 }
 
-function SourceScopedAnalysisPanel(){
-  const[state,setState]=useState<SourceScopedAnalysisPanelState>({status:"idle"}),[pending,start]=useTransition();
-  const generate=()=>start(async()=>{setState({status:"pending"});try{const response=await generateSourceScopedExecutiveAnalysisAction(),result=response.result;setState(result.status==="eligible"?{status:"success",candidate:result.candidate}:{status:"failure",reason:response.failureCategory??"analysis-construction-failure"});}catch{setState({status:"failure",reason:"request-failed"});}});
-  return <SourceScopedAnalysisPanelView state={pending&&state.status!=="success"?{status:"pending"}:state} onGenerate={generate}/>;
+export function MeetingPackPanel({analysisReady,initialPack,hasPrior=false}:{analysisReady:boolean;initialPack:ChiefMeetingPackViewV1|null;hasPrior?:boolean}){
+  const[pack,setPack]=useState(initialPack),[note,setNote]=useState(""),[intent,setIntent]=useState<MeetingPackPrivateNoteIntentV1>("keep-private"),[agenda,setAgenda]=useState(initialPack?.agendaText??""),[talking,setTalking]=useState(initialPack?.talkingPointsText??""),[message,setMessage]=useState<string|null>(null),[pending,start]=useTransition();
+  const update=(next:ChiefMeetingPackViewV1|null,preserveEdits=false)=>{setPack(next);const buffers=reconcileMeetingPackDraftBuffers({agendaText:agenda,talkingPointsText:talking},next,preserveEdits);setAgenda(buffers.agendaText);setTalking(buffers.talkingPointsText);};
+  const run=(work:()=>Promise<ChiefMeetingPackViewV1|null>,success:string,preserveEdits=false)=>start(async()=>{setMessage(null);try{const next=await work();update(next,preserveEdits);setMessage(success);}catch{setMessage("Your meeting pack could not be changed. Your saved work remains intact.");}});
+  const print=(target:"agenda"|"private")=>{document.body.dataset.meetingPackPrint=target;window.print();delete document.body.dataset.meetingPackPrint;};
+  return <section className={styles.meetingPack} aria-labelledby="meeting-pack-heading"><p className={styles.badge}>Chief Meeting Pack</p><h3 id="meeting-pack-heading">Ready to turn this into a meeting plan?</h3><p>{hasPrior?"Discovery will use the last meeting’s reviewed outcomes, what changed, current analysis, open commitments, unresolved questions, and your private context to prepare two drafts.":"For this first occurrence, Discovery will use current analysis, open commitments, unresolved questions, and your private context to prepare two drafts. There is no prior reviewed meeting state yet."}</p>
+    <details><summary>Add private context</summary><p>Tell Discovery something it could not infer. The default keeps it private.</p><label>Private context<textarea value={note} maxLength={1000} disabled={pending} onChange={event=>setNote(event.target.value)} /></label><label>How may Discovery use this note?<select value={intent} disabled={pending} onChange={event=>setIntent(event.target.value as MeetingPackPrivateNoteIntentV1)}><option value="keep-private">Keep private</option><option value="talking-points">Use in my talking points</option><option value="agenda">Propose for the agenda</option></select></label><button type="button" disabled={pending||!note.trim()} onClick={()=>run(async()=>{const next=await addMeetingPackPrivateNoteAction({text:note,intent});setNote("");return next;},"Private context saved.",true)}>Save private context</button>{pack?.privateNotes.length?<ul>{pack.privateNotes.map(item=><li key={item.noteId}>{item.intent==="keep-private"?"Kept private":item.intent==="talking-points"?"Talking points":"Agenda suggestion"}: {item.text}</li>)}</ul>:null}</details>
+    {!pack?<button className={styles.primaryAction} type="button" disabled={pending||!analysisReady} onClick={()=>run(buildMeetingPackAction,"Your meeting pack is ready.")}>{pending?"Building your meeting pack…":"Build my meeting pack"}</button>:<><button className={styles.primaryAction} type="button" onClick={()=>document.getElementById("meeting-pack-drafts")?.scrollIntoView({behavior:"smooth"})}>Review meeting pack</button><p>Built from: {hasPrior?<>prior reviewed outcomes {pack.inputBasis.priorReviewedOutcomes} · material changes {pack.inputBasis.materialChanges}</>:<>current analysis updates {pack.inputBasis.materialChanges}</>} · open commitments {pack.inputBasis.openCommitments} · unresolved questions {pack.inputBasis.unresolvedQuestions} · private notes {pack.inputBasis.privateNotes}</p>{pack.potentiallyOutOfDate&&<p role="status"><strong>This pack may be out of date.</strong> Your edits were preserved; Discovery did not regenerate them.</p>}<div id="meeting-pack-drafts" className={styles.packGrid}><section className={`${styles.packDraft} ${styles.agendaPrint}`}><p><strong>Draft agenda · not yet shared</strong></p><label>Proposed agenda<textarea rows={18} value={agenda} disabled={pending} onChange={event=>setAgenda(event.target.value)} /></label><button type="button" onClick={()=>print("agenda")}>Print agenda</button></section><section className={`${styles.packDraft} ${styles.privatePrint}`}><p><strong>Private talking points · only you can see this</strong></p><label>My talking points<textarea rows={18} value={talking} disabled={pending} onChange={event=>setTalking(event.target.value)} /></label><button type="button" onClick={()=>print("private")}>Print private talking points</button></section></div><button type="button" disabled={pending||agenda===pack.agendaText&&talking===pack.talkingPointsText} onClick={()=>run(()=>saveMeetingPackAction({agendaText:agenda,talkingPointsText:talking,expectedArtifactRevision:pack.artifactRevision}),"Meeting pack edits saved." )}>{pending?"Saving…":"Save meeting pack"}</button><details><summary>How Discovery assembled this pack</summary><p>Chief prioritized continuity and attention. Counsel added supported challenge. Operator added decisions and follow-through. Scout contributed only identified evidence gaps. These are governed roles over one authorized understanding, not separate agents or truth stores.</p></details></>}{message&&<p role="status">{message}</p>}
+  </section>;
 }
 
-export function LeadershipConversationPrepare({ prepare, valueLayer, onProgressiveDisclosure }: { prepare: ChiefFirstPrepareViewV1; valueLayer?: ChiefOfStaffValueLayerV1; onProgressiveDisclosure?:(category:"questions-tensions"|"reasoning-provenance")=>void }) {
+function SourceScopedAnalysisPanel({initialMeetingPack,hasPrior,meetingPackUnavailable}:{initialMeetingPack:ChiefMeetingPackViewV1|null;hasPrior:boolean;meetingPackUnavailable:boolean}){
+  const[state,setState]=useState<SourceScopedAnalysisPanelState>({status:"idle"}),[pending,start]=useTransition();
+  const generate=()=>start(async()=>{setState({status:"pending"});try{const response=await generateSourceScopedExecutiveAnalysisAction(),result=response.result;setState(result.status==="eligible"?{status:"success",candidate:result.candidate}:{status:"failure",reason:response.failureCategory??"analysis-construction-failure"});}catch{setState({status:"failure",reason:"request-failed"});}});
+  return <><SourceScopedAnalysisPanelView state={pending&&state.status!=="success"?{status:"pending"}:state} onGenerate={generate}/>{meetingPackUnavailable?<section className={styles.meetingPack}><h3>Meeting pack unavailable</h3><p role="status">Discovery cannot safely reconstruct this meeting pack with your current access. No private content was shown or changed.</p></section>:<MeetingPackPanel analysisReady={state.status==="success"||Boolean(initialMeetingPack)} initialPack={initialMeetingPack} hasPrior={hasPrior}/>}</>;
+}
+
+export function LeadershipConversationPrepare({ prepare, valueLayer, initialMeetingPack=null, meetingPackUnavailable=false, onProgressiveDisclosure }: { prepare: ChiefFirstPrepareViewV1; valueLayer?: ChiefOfStaffValueLayerV1; initialMeetingPack?:ChiefMeetingPackViewV1|null; meetingPackUnavailable?:boolean; onProgressiveDisclosure?:(category:"questions-tensions"|"reasoning-provenance")=>void }) {
   if (!valueLayer) return <section aria-labelledby="first-prepare-heading">
     <p>Prepared · guidance only</p>
     <h2 id="first-prepare-heading">Prepare</h2>
@@ -63,7 +75,7 @@ export function LeadershipConversationPrepare({ prepare, valueLayer, onProgressi
       <h4>Uncertainty</h4><List items={prepare.uncertainty} />
       <h4>Reasoning</h4><List items={prepare.reasoning} />
       <h4>Other explanations and unknowns</h4><List items={prepare.competingExplanations} />
-    </details>{prepare.priorCycle.status==="none"&&<SourceScopedAnalysisPanel />}
+    </details><SourceScopedAnalysisPanel initialMeetingPack={initialMeetingPack} hasPrior={prepare.priorCycle.status==="completed"} meetingPackUnavailable={meetingPackUnavailable}/>
   </section>;
 
   return <section aria-labelledby="first-prepare-heading" className={styles.valueLayer}>
@@ -90,7 +102,7 @@ export function LeadershipConversationPrepare({ prepare, valueLayer, onProgressi
         <section><h3>Questions worth asking</h3><ValueList items={valueLayer.questions} empty="No grounded question is available." /></section>
         <section className={styles.acquire}><h3>What would improve understanding</h3><ValueList items={valueLayer.acquisition} empty="Discovery abstains from recommending evidence acquisition without a grounded gap." /></section>
       </div>
-    </details>{prepare.priorCycle.status==="none"&&<SourceScopedAnalysisPanel />}
+    </details><SourceScopedAnalysisPanel initialMeetingPack={initialMeetingPack} hasPrior={prepare.priorCycle.status==="completed"} meetingPackUnavailable={meetingPackUnavailable}/>
     <details onToggle={event=>{if(event.currentTarget.open)onProgressiveDisclosure?.("reasoning-provenance");}}>
       <summary>How Discovery reached the prepared view</summary>
       <p className={styles.legend}>Supported = grounded in authorized material · Inferred = reasoned from that material · Suspected = a bounded possibility · Unknown = not established.</p>

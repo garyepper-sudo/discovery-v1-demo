@@ -39,6 +39,8 @@ const empty = (
   privateWorkingContributionReceipts: [],
   privateWorkingContributionCaptures: [],
   privateWorkingContributionCaptureReceipts: [],
+  meetingPackPrivateNotePublications: [],
+  meetingPackPublications: [],
   publicationReceipts: [],
   whatChangedPublications: [],
   cycle1ClosureCompletions: [],
@@ -76,6 +78,9 @@ export function normalizeLeadershipConversationArtifactStore(
       store.privateWorkingContributionCaptures ?? [],
     privateWorkingContributionCaptureReceipts:
       store.privateWorkingContributionCaptureReceipts ?? [],
+    meetingPackPrivateNotePublications:
+      store.meetingPackPrivateNotePublications ?? [],
+    meetingPackPublications: store.meetingPackPublications ?? [],
     publicationReceipts: store.publicationReceipts ?? [],
     whatChangedPublications: store.whatChangedPublications ?? [],
     cycle1ClosureCompletions: store.cycle1ClosureCompletions ?? [],
@@ -470,6 +475,10 @@ class FilesystemProductWorkflowArtifactRepository
       privateWorkingContributionCaptureReceipts: conversation(
         source.privateWorkingContributionCaptureReceipts ?? [],
       ).filter((value) => checkpointIds.has(value.snapshotId)),
+      meetingPackPrivateNotePublications: conversation(
+        source.meetingPackPrivateNotePublications ?? [],
+      ),
+      meetingPackPublications: conversation(source.meetingPackPublications ?? []),
       publicationReceipts: (source.publicationReceipts ?? []).filter(
         (value) =>
           prepared.some(

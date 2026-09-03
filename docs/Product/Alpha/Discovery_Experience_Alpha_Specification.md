@@ -1,5 +1,11 @@
 # Discovery Experience Alpha Specification
 
+## Meeting Pack V1
+
+After a successful working analysis, the Leadership Conversation offers `Build my meeting pack`. The action creates an editable `Draft agenda · not yet shared` and an editable `Private talking points · only you can see this` sheet through the existing Leadership Conversation/Product Workflow and protected-body owners. Build, view, edit, save, and print do not create canonical, Review, promotion, Capture, What Changed, closure, or successor-occurrence state.
+
+Private context supports `Keep private`, `Use in my talking points`, and `Propose for the agenda`; the default is private and agenda use requires explicit originating-user intent. Saved edits reconstruct on reload and in a fresh process. Changed inputs mark an edited pack potentially out of date rather than silently regenerating it. The agenda and private print projections remain separate. Multiple visible meeting series, role lenses, meeting profiles, full chat, calendar sharing, PDF generation, and external Scout monitoring are outside this milestone.
+
 **Status:** Foundational Alpha specification — historical where superseded
 **Version:** 0.1
 **Program:** Discovery Experience Alpha

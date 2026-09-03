@@ -5,3 +5,4 @@ export * from "./productWorkflowArtifactRepository";
 export * from "./operations";
 export * from "./buildLeadershipConversationWorkspace";
 export * from "./northstarFixtures";
+export * from "./meetingPackContracts";

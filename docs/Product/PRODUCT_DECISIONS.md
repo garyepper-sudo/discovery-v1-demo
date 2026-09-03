@@ -1463,3 +1463,11 @@ The source scope is exactly the current Prepared Work material lineage; complete
 **Status:** Accepted provisionally for Alpha.
 
 Chief V1 uses current-access-safe governed raw sources → replaceable frontier synthesis → exact citation closure and mechanical checks where represented → user-scoped noncanonical working analysis → mandatory human Review. Persisted research was mixed: reviewed structured context won the Sales comparison, while raw frontier won the Scientific comparison and remained a strong Sales baseline. Reviewed oracle context is not a capability current Discovery can generate automatically; it is deferred, not discarded. Current handcrafted synthesis is demoted from primary user-facing synthesis. No longitudinal-compounding claim is made.
+
+## DEC-PROD-061 — Chief Meeting Pack V1
+
+**Status:** Accepted for the controlled Alpha.
+
+Chief now turns one authorized Leadership Conversation preparation into two editable, noncanonical drafts: a proposed agenda that is not shared automatically and a user-and-occurrence-scoped private talking-points sheet. Chief is the visible orchestrator; Counsel contributes supported challenge, Operator contributes bounded decision and follow-through structure, and Scout contributes only already-identified evidence gaps or authorized changes. These roles share one permission-aware Organizational Understanding and create no persona-specific model, memory, store, authority, or interface.
+
+Private context defaults to `Keep private`. Only explicit `Use in my talking points` or `Propose for the agenda` intent may influence the corresponding user-owned draft; agenda intent is not sharing, Capture, Evidence, or organizational truth. Meeting Pack V1 precedes Multi-Meeting Shell V1. Customer roles and meeting profiles remain separate from Discovery personas. Full chat, multiple visible meeting series, role lenses, calendar sharing, PDF generation, and external Scout monitoring remain deferred.
