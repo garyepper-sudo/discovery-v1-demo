@@ -1472,6 +1472,8 @@ Chief now turns one authorized Leadership Conversation preparation into two edit
 
 Private context defaults to `Keep private`. Only explicit `Use in my talking points` or `Propose for the agenda` intent may influence the corresponding user-owned draft; agenda intent is not sharing, Capture, Evidence, or organizational truth. Meeting Pack V1 precedes Multi-Meeting Shell V1. Customer roles and meeting profiles remain separate from Discovery personas. Full chat, multiple visible meeting series, role lenses, calendar sharing, PDF generation, and external Scout monitoring remain deferred.
 
+**Meeting Pack-first UX V1:** The Meeting Pack is the primary preparation surface. Existing analysis runs behind Build, remains noncanonical, and stays inspectable through progressive disclosure rather than requiring a standalone Generate step. Private Working remains the governed privacy and intentional-contribution boundary, but its ordinary entry is lightweight. The visible sequence is `Prepare → Meet → Confirm outcomes → Continue`; internal occurrence, Freeze, Capture, Review, and continuation identities remain unchanged. Multi-Meeting Shell and Meeting Home remain the next Product milestone.
+
 ## DEC-PROD-062 — Compounding and Capture-Quality Instrumentation V1
 
 **Status:** Implemented research candidate pending independent review; no production promotion.

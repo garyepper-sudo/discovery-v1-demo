@@ -61,6 +61,10 @@
 .meetingPack { margin-top:1.5rem; padding:1.25rem; border:2px solid #7971c0; border-radius:1rem; background:#faf9ff; }
 .packGrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; margin-block:1rem; }
 .packDraft { padding:1rem; border:1px solid #cbc6e8; border-radius:.75rem; background:#fff; }
+.draftNotice { margin-block:1rem; padding:.85rem 1rem; border-left:4px solid #7971c0; background:#fff; }
+.draftNotice p { margin-bottom:0; }
+.contributionDisclosure > summary { font-size:1rem; }
+.contributionDisclosure > section { margin-top:1rem; }
 .page footer { margin-top: 2rem; color: #555; }
 @media(max-width:700px) {
   .page { padding: 1rem; }

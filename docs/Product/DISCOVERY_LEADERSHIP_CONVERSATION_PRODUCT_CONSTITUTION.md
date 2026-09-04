@@ -4,6 +4,8 @@
 
 Within the Alpha, Chief may compose the current authorized Leadership Conversation into one proposed agenda and one separate private talking-points sheet. Both are editable noncanonical working drafts. The agenda is not shared until a later explicit user action; talking points are user-and-occurrence scoped and may not enter the agenda, Capture, Review, canonical state, logs, telemetry, or the agenda print projection. Private context defaults to `Keep private`; only explicit intent may make it eligible for the user's talking points or agenda draft.
 
+The Meeting Pack is the primary visible preparation surface. Analysis is reconstructed behind Build through its existing owner and remains inspectable, noncanonical supporting work. Private Working remains a governed privacy and intentional-contribution boundary but is lightweight by default. Product language may compress the experience to `Prepare → Meet → Confirm outcomes → Continue`; this does not rename or bypass the internal Freeze, Capture, Review, closure, or recurrence boundaries.
+
 Counsel contributes supported analytical challenge, Operator contributes bounded decision and follow-through structure, and Scout contributes only evidence gaps or already-authorized change awareness. They do not become separate agents, interfaces, memories, truth stores, or authorities. Customer roles and meeting profiles remain separate concepts. Meeting Pack evaluation precedes any Multi-Meeting Shell.
 
 **Status:** Canonical Product and architecture governance

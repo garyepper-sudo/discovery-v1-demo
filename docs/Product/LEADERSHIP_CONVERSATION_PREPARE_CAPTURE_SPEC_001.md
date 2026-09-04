@@ -188,6 +188,8 @@ One `ProductQuestion`-centered workspace progresses through:
 Set up → Prepare → Freeze → Capture → Review → What changed → Prepare again
 ```
 
+Meeting Pack-first UX V1 presents this as `Prepare → Meet → Confirm outcomes → Continue`. The Meeting Pack is the primary preparation artifact; existing analysis runs behind Build and is inspectable through progressive disclosure. Private Working remains the same governed privacy and intentional-contribution boundary while using a lightweight default control. The internal lifecycle and identities above remain authoritative and unchanged.
+
 - Entry: “What are you trying to accomplish?”
 - Primary action: “Prepare for a leadership conversation.”
 - Setup: minimum context fields.
