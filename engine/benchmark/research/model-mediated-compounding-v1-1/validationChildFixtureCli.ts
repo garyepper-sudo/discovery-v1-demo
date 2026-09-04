@@ -1,0 +1,2 @@
+import {spawnSync} from "node:child_process";import {validateSummaries,type SuiteSummary} from "./validationProgram";
+const file=process.argv[2],suite=process.argv[3],run=spawnSync(process.execPath,[file],{encoding:"utf8",timeout:10_000});if(run.status!==0||run.signal||run.error)throw new Error(`META_CHILD_NONZERO:${suite}`);let summary:SuiteSummary;try{summary=JSON.parse(run.stdout.trim().split(/\n/).at(-1)??"")}catch{throw new Error(`META_CHILD_MISSING_OR_MALFORMED_SUMMARY:${suite}`)}validateSummaries([summary],[suite]);console.log(JSON.stringify(summary));

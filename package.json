@@ -495,6 +495,8 @@
     "validate:chief-meeting-pack": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateChiefMeetingPackV1.ts && NODE_ENV=test node --import ./scripts/product/generateAnalysisRenderLoader.mjs --import tsx scripts/product/renderChiefMeetingPackV1.tsx",
     "research:compounding-capture-quality": "node --import tsx engine/benchmark/research/compounding-capture-quality-v1/runBenchmark.ts",
     "validate:compounding-capture-quality": "node --import tsx engine/benchmark/research/compounding-capture-quality-v1/validateBenchmark.ts",
+    "research:model-mediated-compounding": "node --import tsx engine/benchmark/research/model-mediated-compounding-v1/prepare.ts",
+    "validate:model-mediated-compounding": "node --import tsx engine/benchmark/research/model-mediated-compounding-v1-1/validateProgram.ts",
     "research:export-cycle-observations": "node --import tsx engine/benchmark/research/compounding-capture-quality-v1/exportObservations.ts",
     "deps:validate": "node scripts/performance/validatePerformanceReport.mjs",
     "deps:report": "npm run deps:validate && node scripts/performance/renderPerformanceReport.mjs"

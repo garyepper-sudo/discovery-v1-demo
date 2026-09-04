@@ -99,6 +99,12 @@ Path: `compounding-capture-quality-v1/`
 
 This GAP-D-005 lane defines a privacy-safe derived observation, explicit local export, frozen metric dictionary, deterministic three-scenario/eight-cycle structural dry run, separate model/grader packets, statistical summary, and four labelled SVGs. It creates no production owner or persistence. Structural and efficiency findings are synthetic; model-mediated quality and authentic customer compounding are **NOT TESTED**.
 
+Paths: `model-mediated-compounding-v1/` and `model-mediated-compounding-v1-1/`
+
+V1 preserves the complete failed 16-request schema preflight and its immutable external archive. V1.1 stopped after one provider-error canary because `gpt-5.6-sol` rejected `temperature` before schema evaluation. No pilot output exists; 191 packets were not transmitted; the exploratory result is **NOT EXECUTED** and confirmatory model-mediated compounding, authentic user value, and organizational outcomes remain **NOT TESTED**. Its terminal controller permanently rejects request two, restart, resume, direct claim, concurrent claim, and later review-based reopening. A future continuation requires a separately authorized V1.2 and new execution identities.
+
+For this bounded synthetic V1.1 lane only, the founder authorizes procedural distinct-agent provenance for pre-dispatch, stage, final-research, and Sensitive Governed Lane reviews. The orchestration layer appoints a distinct read-only subagent and records its invocation; the repository verifies the content address, frozen state binding, commands, checks, no-mutation statement, and classification. The hash proves content integrity, not reviewer identity: no signature, PKI, or allowlist is claimed or required. This grants no Product authorization, canonical-promotion authority, production-deployment authority, customer-data access, future-study precedent, or spend beyond the frozen pilot limits.
+
 ### Organizational Understanding Evaluator 001 — Phases 1–2
 
 Path:

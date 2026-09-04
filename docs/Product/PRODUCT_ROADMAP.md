@@ -2,7 +2,7 @@
 
 ## Immediate baseline milestone — Compounding and Capture-Quality Instrumentation V1
 
-Chief Meeting Pack V1 is complete. The immediate post-Meeting-Pack milestone is a noncanonical, read-only, privacy-safe longitudinal observation projector plus deterministic synthetic structural dry run under `GAP-D-005`. It tests representation and context efficiency only: model-mediated quality, authentic customer compounding, and organizational outcomes are **NOT TESTED**. The next bounded task is the frozen-packet model-mediated comparison; Multi-Meeting Shell and Meeting Home V1 follow it. Synthetic results may not be marketed as customer evidence.
+Chief Meeting Pack V1 is complete. The noncanonical, read-only longitudinal instrumentation and deterministic synthetic structural dry run under `GAP-D-005` are complete. V1.1 stopped after one provider-error canary rejected `temperature` before schema evaluation; no pilot output exists, 191 packets were not transmitted, and the exploratory result is **NOT EXECUTED**. Confirmatory model-mediated compounding, authentic customer compounding, and organizational outcomes are **NOT TESTED**. Any continuation requires a separately authorized V1.2 with a new parameter contract and execution identities. Multi-Meeting Shell and Meeting Home V1 follow the research gate. Synthetic results may not be marketed as customer evidence.
 
 Next, after founder acceptance: an authorized meeting directory, parameterized meeting-series routes, left navigation, and three simultaneous meeting series. Full chat, customer-role lenses, meeting profiles, calendar sharing, PDF generation, and external Scout monitoring remain deferred. Customer roles and meeting profiles are not Discovery personas.
 
