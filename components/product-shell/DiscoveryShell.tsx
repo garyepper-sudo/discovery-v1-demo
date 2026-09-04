@@ -23,6 +23,7 @@ type DiscoveryShellProps = {
   organization: ProductOrganizationSummary;
   showSessionImpact?: boolean;
   sessionControl?: ReactNode;
+  productNavigation?: ReactNode;
 };
 
 const navigation = [
@@ -63,6 +64,7 @@ export default function DiscoveryShell({
   organization,
   showSessionImpact = true,
   sessionControl,
+  productNavigation,
 }: DiscoveryShellProps) {
   const pathname = usePathname();
   const environmentLabel =
@@ -101,7 +103,7 @@ export default function DiscoveryShell({
           </span>
         </Link>
 
-        <nav
+        {productNavigation ?? <nav
           className={styles.navigation}
           aria-label="Primary navigation"
         >
@@ -139,14 +141,14 @@ export default function DiscoveryShell({
               </Link>
             );
           })}
-        </nav>
+        </nav>}
 
-        <section className={styles.modelHealth} aria-label="Model health">
+        {!productNavigation && <section className={styles.modelHealth} aria-label="Model health">
           <strong>Model Health</strong><i aria-hidden="true" />
           <span>Understanding <b>{organization.coherence ?? "—"}{organization.coherence == null ? "" : "%"}</b></span>
           <span>Confidence <b>{organization.confidence ?? "—"}{organization.confidence == null ? "" : "%"}</b></span>
           <span>Primary Constraint <b>{organization.primaryConstraint ?? "Still emerging"}</b></span>
-        </section>
+        </section>}
 
         <Link className={styles.stewardship} href={buildProductHref("/your-organization", organization.organizationId) + "#teach-discovery"}>
           Teach Discovery
