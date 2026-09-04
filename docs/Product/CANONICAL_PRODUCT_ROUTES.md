@@ -134,3 +134,7 @@ it must not reproduce the Experience or bypass the authentication boundary.
    shortcut.
 8. Preserve existing middleware, Clerk, access, Runtime, and production-policy
    boundaries. This route contract grants no new authority.
+
+### `/product-alpha/meetings`
+
+The development Alpha meeting portfolio is a permission-aware application projection, not a second Product Shell or truth owner. `/product-alpha/meetings` resolves the authorized directory server-side and delegates to `/product-alpha/meetings/[seriesAddress]`. The opaque address is untrusted input and must resolve uniquely to an existing, currently authorized meeting series and occurrence before metadata, protected content, or an operation is available. `/product-alpha/leadership-conversation` remains a thin authorized compatibility redirect to the existing default series.

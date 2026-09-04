@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { confirmPersonalRoomSheetAction } from "../../../app/product-alpha/leadership-conversation/actions";
+import { confirmPersonalRoomSheetAction as confirmSheet } from "../../../app/product-alpha/leadership-conversation/actions";
 import { PERSONAL_ROOM_SHEET_CONFIRMATION_TEXT, serializePersonalRoomSheetPlainText, type ContentSafePersonalRoomSheetViewV1 } from "../../../product/workflow/leadershipConversation/personalRoomSheetContracts";
 import styles from "./PersonalRoomSheetPanel.module.css";
 
-type Props = { initialSheet: ContentSafePersonalRoomSheetViewV1; occurrenceRef: string; contributedItemIds: string[]; onContribute: (items: string[]) => void; onPrivateWorkingOpened?:()=>void; contributionLocked?: boolean; disabled?: boolean };
-export function PersonalRoomSheetPanel({ initialSheet, occurrenceRef, contributedItemIds, onContribute, onPrivateWorkingOpened, contributionLocked = false, disabled = false }: Props) {
+type Props = { initialSheet: ContentSafePersonalRoomSheetViewV1; occurrenceRef: string; contributedItemIds: string[]; onContribute: (items: string[]) => void; onPrivateWorkingOpened?:()=>void; contributionLocked?: boolean; disabled?: boolean;seriesAddress?:string };
+export function PersonalRoomSheetPanel({ initialSheet, occurrenceRef, contributedItemIds, onContribute, onPrivateWorkingOpened, contributionLocked = false, disabled = false,seriesAddress }: Props) {
+  const confirmPersonalRoomSheetAction=(input:Parameters<typeof confirmSheet>[0])=>confirmSheet({...input,seriesAddress});
   const [open, setOpen] = useState(false), [reviewed, setReviewed] = useState(false), [confirmed, setConfirmed] = useState<ContentSafePersonalRoomSheetViewV1 | null>(null), [selected, setSelected] = useState<string[]>(contributedItemIds), [pending, setPending] = useState(false), [error, setError] = useState<string | null>(null), [copied, setCopied] = useState(false), sequence = useRef(0);
   useEffect(() => () => { sequence.current++; }, []);
   useEffect(() => { setSelected([...contributedItemIds]); }, [contributedItemIds]);

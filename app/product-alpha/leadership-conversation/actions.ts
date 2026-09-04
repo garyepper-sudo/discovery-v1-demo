@@ -20,6 +20,7 @@ import { assertClosedFeedback, type AlphaFeedbackDimension, type AlphaFeedbackRa
 import { unavailable } from "../../../lib/analysis/sourceScopedExecutiveAnalysisContracts";
 import type { MeetingPackPrivateNoteIntentV1 } from "../../../product/workflow/leadershipConversation/meetingPackContracts";
 import { leadershipDigest, leadershipStableSerialize } from "../../../product/workflow/leadershipConversation/determinism";
+import { resolveAuthorizedMeetingAddress } from "../../../product/integration/authorizedMeetingDirectory";
 
 function guard(): void {
   if (process.env.NODE_ENV === "production") {
@@ -39,24 +40,23 @@ async function signedInUserId(): Promise<string> {
   return userId;
 }
 
-async function composeCurrentPersonalRoomSheet() {
-  const userId = await signedInUserId(), server = createLeadershipConversationServerComposition();
-  if (!await server.authorizePageCurrentAccess({ userId, organizationId: SANDBOX_ORGANIZATION_ID })) throw new Error("Personal Room Sheet current access is unavailable.");
+async function composeCurrentPersonalRoomSheet(seriesAddress?:string) {
+  const {server,identity,seriesId}=await occurrence1Context(seriesAddress),userId=identity.userId;
   const fixtureRoot = process.env.DISCOVERY_NORTHSTAR_PREPARATION_LINEAGE_FIXTURE_ROOT;
   if (!fixtureRoot) throw new Error("Northstar preparation lineage seed is unavailable.");
-  const seed = await readNorthstarPreparationLineageSeed({ fixtureRoot, organizationId: SANDBOX_ORGANIZATION_ID, fixtureId: "northstar-preparation-lineage-fixture-v1", provisioningKey: "northstar-preparation-lineage:v1" }), fixture = northstarLeadershipConversationFixture(seed.productQuestionId), workspace = await server.workspace({ userId, organizationId: seed.organizationId, questionId: seed.productQuestionId, conversationId: fixture.conversationId }), view = stabilizePersonalRoomSheetPrepareInput(composeChiefFirstPrepareViewFromWorkspace(workspace)), replayKey = createPersonalRoomSheetReplayKey(seed.seedDigest, userId), support = await server.resolveEvidenceSupport({ contractVersion: "1", organizationId: seed.organizationId, questionId: seed.productQuestionId, subjectId: userId, requestedScope: { organizationId: seed.organizationId, type: "organization", id: seed.organizationId }, purposeRef: seed.purpose, sensitivity: seed.sensitivity, evaluatedAt: workspace.context?.recordedAt ?? fixture.at, evidenceIds: seed.canonicalMaterial.map(item => item.canonicalObjectId), replayKey }), candidate = composeChiefLeadershipAnalysisToAction({ view, productQuestion: workspace.base.base.question.text, meetingPurpose: view.meeting.purpose, support, permissionScope: "organization", replayKey });
-  const sheet = await server.composePersonalRoomSheet({ userId, organizationId: seed.organizationId, seriesId: view.seriesId, occurrenceId: view.conversationId, questionId: seed.productQuestionId, meetingPurpose: view.meeting.purpose, sourceProjectionDigest: support.projection.projectionDigest, analysis: candidate.analysis, b11Plan: candidate.communication.plan, b11CommunicationDigest: candidate.communication.rendered.planDigest });
+  const seed = await readNorthstarPreparationLineageSeed({ fixtureRoot, organizationId: SANDBOX_ORGANIZATION_ID, fixtureId: "northstar-preparation-lineage-fixture-v1", provisioningKey: "northstar-preparation-lineage:v1" }), fixture = northstarLeadershipConversationFixture(seed.productQuestionId), workspace = await server.workspace(identity), baseView=composeChiefFirstPrepareViewFromWorkspace(workspace),view = stabilizePersonalRoomSheetPrepareInput({...baseView,seriesId}), replayKey = createPersonalRoomSheetReplayKey(`${seed.seedDigest}:${seriesId}:${identity.conversationId}`, userId), support = await server.resolveEvidenceSupport({ contractVersion: "1", organizationId: seed.organizationId, questionId: seed.productQuestionId, subjectId: userId, requestedScope: { organizationId: seed.organizationId, type: "organization", id: seed.organizationId }, purposeRef: seed.purpose, sensitivity: seed.sensitivity, evaluatedAt: workspace.context?.recordedAt ?? fixture.at, evidenceIds: seed.canonicalMaterial.map(item => item.canonicalObjectId), replayKey }), candidate = composeChiefLeadershipAnalysisToAction({ view, productQuestion: workspace.base.base.question.text, meetingPurpose: view.meeting.purpose, support, permissionScope: "organization", replayKey });
+  const sheet = await server.composePersonalRoomSheet({ userId, organizationId: seed.organizationId, seriesId, occurrenceId: identity.conversationId, questionId: seed.productQuestionId, meetingPurpose: view.meeting.purpose, sourceProjectionDigest: support.projection.projectionDigest, analysis: candidate.analysis, b11Plan: candidate.communication.plan, b11CommunicationDigest: candidate.communication.rendered.planDigest });
   return { sheet, occurrenceRef: view.conversationId };
 }
 
-export async function getPersonalRoomSheetPreviewAction() {
-  const current = await composeCurrentPersonalRoomSheet();
+export async function getPersonalRoomSheetPreviewAction(seriesAddress?:string) {
+  const current = await composeCurrentPersonalRoomSheet(seriesAddress);
   return { sheet: projectContentSafePersonalRoomSheet(current.sheet), occurrenceRef: current.occurrenceRef };
 }
 
-export async function confirmPersonalRoomSheetAction(input: PersonalRoomSheetConfirmationRequestV1): Promise<PersonalRoomSheetConfirmationResponseV1> {
+export async function confirmPersonalRoomSheetAction(input: PersonalRoomSheetConfirmationRequestV1&{seriesAddress?:string}): Promise<PersonalRoomSheetConfirmationResponseV1> {
   if (input.contractVersion !== PERSONAL_ROOM_SHEET_CONTRACT_VERSION || !Number.isSafeInteger(input.requestSequence) || input.requestSequence < 0) throw new Error("Personal Room Sheet confirmation request is invalid.");
-  const current = await composeCurrentPersonalRoomSheet(), sheet = current.sheet;
+  const current = await composeCurrentPersonalRoomSheet(input.seriesAddress), sheet = current.sheet;
   if (input.occurrenceRef !== current.occurrenceRef || input.expectedSourceProjectionDigest !== sheet.sourceProjectionDigest || input.expectedCandidate1AssessmentDigest !== sheet.candidate1AssessmentDigest || input.expectedB11CommunicationDigest !== sheet.b11CommunicationDigest || input.expectedPersonalRoomSheetDigest !== sheet.personalRoomSheetDigest) throw Object.assign(new Error("Personal Room Sheet confirmation is stale."), { code: "PERSONAL_ROOM_SHEET_STALE" });
   return { contractVersion: PERSONAL_ROOM_SHEET_CONTRACT_VERSION, sheet: projectContentSafePersonalRoomSheet(sheet), personalRoomSheetDigest: sheet.personalRoomSheetDigest, confirmationDigest: createPersonalRoomSheetConfirmationDigest(sheet), requestSequence: input.requestSequence };
 }
@@ -72,15 +72,15 @@ export async function getLeadershipConversationWorkspaceAction(input: {
 export async function activateAndPrepareLeadershipConversationAction(input:ChiefFirstPrepareActivationV1){observeJourney("activate","attempted","attempted");const result=await createLeadershipConversationServerComposition().activateAndPrepare({...input,userId:await signedInUserId()});observeJourney("prepare","completed","success");return result;}
 function exactActionRecord(value:unknown,keys:readonly string[]):value is Record<string,unknown>{return Boolean(value&&typeof value==="object"&&!Array.isArray(value)&&Object.keys(value).length===keys.length&&keys.every(key=>Object.prototype.hasOwnProperty.call(value,key)));}
 function assertGenerateSourceScopedExecutiveAnalysisArguments(argumentsList:readonly unknown[]):void{if(argumentsList.length!==0)throw new Error("Generate analysis request is invalid.");}
-export async function generateSourceScopedExecutiveAnalysisAction(...runtimeArguments:unknown[]){assertGenerateSourceScopedExecutiveAnalysisArguments(runtimeArguments);try{const{server,identity,seriesId}=await currentMeetingPackContext();return await server.analyzeSourceScopedForDevelopment({...identity,seriesId,occurrenceId:identity.conversationId});}catch{return{result:unavailable(0),failureCategory:"source-access-changed" as const};}}
+export async function generateSourceScopedExecutiveAnalysisAction(seriesAddress?:string){try{const{server,identity,seriesId}=await currentMeetingPackContext(seriesAddress);return await server.analyzeSourceScopedForDevelopment({...identity,seriesId,occurrenceId:identity.conversationId});}catch{return{result:unavailable(0),failureCategory:"source-access-changed" as const};}}
 function assertGetMeetingPackArguments(argumentsList:readonly unknown[]):void{if(argumentsList.length!==0)throw new Error("Meeting Pack request is invalid.");}
 export async function getMeetingPackAction(...runtimeArguments:unknown[]){assertGetMeetingPackArguments(runtimeArguments);const{server,identity,seriesId}=await currentMeetingPackContext();return server.readMeetingPack({...identity,seriesId});}
 function parseAddMeetingPackPrivateNoteArguments(argumentsList:readonly unknown[]):{text:string;intent:MeetingPackPrivateNoteIntentV1}{const input=argumentsList[0];if(argumentsList.length!==1||!exactActionRecord(input,["text","intent"])||typeof input.text!=="string"||!(["keep-private","talking-points","agenda"] as const).includes(input.intent as MeetingPackPrivateNoteIntentV1))throw new Error("Private context request is invalid.");return{text:input.text,intent:input.intent as MeetingPackPrivateNoteIntentV1};}
-export async function addMeetingPackPrivateNoteAction(...runtimeArguments:unknown[]){const input=parseAddMeetingPackPrivateNoteArguments(runtimeArguments),{server,identity,seriesId}=await currentMeetingPackContext(),text=input.text.trim(),idempotencyKey=`meeting-pack-note:${leadershipDigest(leadershipStableSerialize({seriesId,occurrenceId:identity.conversationId,intent:input.intent,text}))}`;await server.addMeetingPackPrivateNote({...identity,seriesId,text,intent:input.intent,idempotencyKey});return server.readMeetingPack({...identity,seriesId});}
+export async function addMeetingPackPrivateNoteAction(input:{text:string;intent:MeetingPackPrivateNoteIntentV1;seriesAddress?:string}){if(typeof input.text!=="string"||!(["keep-private","talking-points","agenda"] as const).includes(input.intent))throw new Error("Private context request is invalid.");const{server,identity,seriesId}=await currentMeetingPackContext(input.seriesAddress),text=input.text.trim(),idempotencyKey=`meeting-pack-note:${leadershipDigest(leadershipStableSerialize({seriesId,occurrenceId:identity.conversationId,intent:input.intent,text}))}`;await server.addMeetingPackPrivateNote({...identity,seriesId,text,intent:input.intent,idempotencyKey});return server.readMeetingPack({...identity,seriesId});}
 function assertBuildMeetingPackArguments(argumentsList:readonly unknown[]):void{if(argumentsList.length!==0)throw new Error("Meeting Pack request is invalid.");}
-export async function buildMeetingPackAction(...runtimeArguments:unknown[]){assertBuildMeetingPackArguments(runtimeArguments);const{server,identity,seriesId}=await currentMeetingPackContext();return server.buildMeetingPack({...identity,seriesId});}
+export async function buildMeetingPackAction(seriesAddress?:string){const{server,identity,seriesId}=await currentMeetingPackContext(seriesAddress);return server.buildMeetingPack({...identity,seriesId});}
 function parseSaveMeetingPackArguments(argumentsList:readonly unknown[]):{agendaText:string;talkingPointsText:string;expectedArtifactRevision:string}{const input=argumentsList[0];if(argumentsList.length!==1||!exactActionRecord(input,["agendaText","talkingPointsText","expectedArtifactRevision"])||typeof input.agendaText!=="string"||typeof input.talkingPointsText!=="string"||typeof input.expectedArtifactRevision!=="string")throw new Error("Meeting Pack save request is invalid.");return{agendaText:input.agendaText,talkingPointsText:input.talkingPointsText,expectedArtifactRevision:input.expectedArtifactRevision};}
-export async function saveMeetingPackAction(...runtimeArguments:unknown[]){const input=parseSaveMeetingPackArguments(runtimeArguments),{server,identity,seriesId}=await currentMeetingPackContext(),idempotencyKey=`meeting-pack-save:${leadershipDigest(leadershipStableSerialize({expectedArtifactRevision:input.expectedArtifactRevision,agendaText:input.agendaText,talkingPointsText:input.talkingPointsText}))}`;return server.reviseMeetingPack({...identity,seriesId,...input,idempotencyKey});}
+export async function saveMeetingPackAction(input:{agendaText:string;talkingPointsText:string;expectedArtifactRevision:string;seriesAddress?:string}){if(typeof input.agendaText!=="string"||typeof input.talkingPointsText!=="string"||typeof input.expectedArtifactRevision!=="string")throw new Error("Meeting Pack save request is invalid.");const{seriesAddress,...edit}=input,{server,identity,seriesId}=await currentMeetingPackContext(seriesAddress),idempotencyKey=`meeting-pack-save:${leadershipDigest(leadershipStableSerialize(edit))}`;return server.reviseMeetingPack({...identity,seriesId,...edit,idempotencyKey});}
 
 export async function routeApprovedTakeawayProposalAction(input: {
   organizationId: string;
@@ -109,26 +109,27 @@ export async function completeLeadershipConversationCycle1ClosureFormAction(inpu
 export async function prepareNextLeadershipConversationAction(input: AdapterInput<"prepareNextLeadershipConversation">) { return createLeadershipConversationServerComposition().prepareAgain({ ...input, userId: await signedInUserId() }); }
 export async function resetLeadershipConversationDevelopmentScenarioAction(input: AdapterInput<"resetLeadershipConversationDevelopmentScenario">) { return createLeadershipConversationServerComposition().reset({ ...input, userId: await signedInUserId() }); }
 
-async function occurrence1Context() {
+async function occurrence1Context(seriesAddress?:string) {
   const userId = await signedInUserId(), server = createLeadershipConversationServerComposition();
+  if(seriesAddress){const resolved=await resolveAuthorizedMeetingAddress({userId,organizationId:SANDBOX_ORGANIZATION_ID,seriesAddress});if(!resolved)throw new Error("Meeting is unavailable.");const fixtureRoot=process.env.DISCOVERY_NORTHSTAR_PREPARATION_LINEAGE_FIXTURE_ROOT;if(!fixtureRoot)throw new Error("Meeting is unavailable.");const seed=await readNorthstarPreparationLineageSeed({fixtureRoot,organizationId:SANDBOX_ORGANIZATION_ID,fixtureId:"northstar-preparation-lineage-fixture-v1",provisioningKey:"northstar-preparation-lineage:v1"}),fixture=northstarLeadershipConversationFixture(seed.productQuestionId);return{server,identity:{userId,organizationId:resolved.organizationId,questionId:resolved.questionId,conversationId:resolved.occurrenceId},fixture,seriesId:resolved.seriesId};}
   if (!await server.authorizePageCurrentAccess({ userId, organizationId: SANDBOX_ORGANIZATION_ID })) throw new Error("Occurrence 1 is unavailable.");
   const fixtureRoot = process.env.DISCOVERY_NORTHSTAR_PREPARATION_LINEAGE_FIXTURE_ROOT;
   if (!fixtureRoot) throw new Error("Occurrence 1 is unavailable.");
   const seed = await readNorthstarPreparationLineageSeed({ fixtureRoot, organizationId: SANDBOX_ORGANIZATION_ID, fixtureId: "northstar-preparation-lineage-fixture-v1", provisioningKey: "northstar-preparation-lineage:v1" }), fixture = northstarLeadershipConversationFixture(seed.productQuestionId), identity = { userId, organizationId: seed.organizationId, questionId: seed.productQuestionId, conversationId: fixture.conversationId };
-  return { server, identity, fixture };
+  return { server, identity, fixture,seriesId:`leadership-conversation-series:${identity.conversationId}` };
 }
-async function currentMeetingPackContext(){const current=await occurrence1Context(),workspace=await current.server.workspace(current.identity);if(workspace.futurePreparationLink&&workspace.closureCompletion){const identity={...current.identity,conversationId:workspace.futurePreparationLink.nextConversationId};return{server:current.server,identity,seriesId:workspace.closureCompletion.seriesId};}return{server:current.server,identity:current.identity,seriesId:`leadership-conversation-series:${current.identity.conversationId}`};}
+async function currentMeetingPackContext(seriesAddress?:string){if(seriesAddress){const userId=await signedInUserId(),resolved=await resolveAuthorizedMeetingAddress({userId,organizationId:SANDBOX_ORGANIZATION_ID,seriesAddress});if(!resolved)throw new Error("Meeting is unavailable.");return{server:createLeadershipConversationServerComposition(),identity:{userId,organizationId:resolved.organizationId,questionId:resolved.questionId,conversationId:resolved.occurrenceId},seriesId:resolved.seriesId};}const current=await occurrence1Context(),workspace=await current.server.workspace(current.identity);if(workspace.futurePreparationLink&&workspace.closureCompletion){const identity={...current.identity,conversationId:workspace.futurePreparationLink.nextConversationId};return{server:current.server,identity,seriesId:workspace.closureCompletion.seriesId};}return{server:current.server,identity:current.identity,seriesId:`leadership-conversation-series:${current.identity.conversationId}`};}
 
-export async function freezeOccurrence1Action(input: { preparedWorkProductVersionId: string; expectedPersonalRoomSheetDigest: string; contributedItemIds: string[] }): Promise<{ checkpointId: string; contributionArtifactIds: string[]; workspace: LeadershipConversationWorkspaceV1 }> {
+export async function freezeOccurrence1Action(input: { preparedWorkProductVersionId: string; expectedPersonalRoomSheetDigest: string; contributedItemIds: string[];seriesAddress?:string }): Promise<{ checkpointId: string; contributionArtifactIds: string[]; workspace: LeadershipConversationWorkspaceV1 }> {
   observeJourney("contribute","attempted","attempted");
-  const { server, identity } = await occurrence1Context();
+  const { server, identity,seriesId } = await occurrence1Context(input.seriesAddress);
   if (!input.preparedWorkProductVersionId) throw new Error("Occurrence 1 preparation is unavailable.");
-  const currentPersonalRoomSheet = await composeCurrentPersonalRoomSheet();
+  const currentPersonalRoomSheet = await composeCurrentPersonalRoomSheet(input.seriesAddress);
   const currentSheet = projectContentSafePersonalRoomSheet(currentPersonalRoomSheet.sheet);
   if (input.expectedPersonalRoomSheetDigest !== currentSheet.personalRoomSheetDigest) throw new Error("Occurrence 1 contribution is unavailable.");
   const selectedContent = input.contributedItemIds.length ? resolvePersonalRoomSheetContribution(currentSheet, { expectedPersonalRoomSheetDigest: input.expectedPersonalRoomSheetDigest, selectedItemIds: input.contributedItemIds }) : [];
   await server.freeze({ ...identity, artifactVersionId: input.preparedWorkProductVersionId, privateWorkingContribution: { seriesId: currentPersonalRoomSheet.sheet.seriesId, occurrenceId: currentPersonalRoomSheet.sheet.occurrenceId, authorizationRevision: currentPersonalRoomSheet.sheet.sourceProjectionDigest, provenanceDigest: currentPersonalRoomSheet.sheet.personalRoomSheetDigest, selectedContent }, idempotencyKey: `occurrence-1-freeze:${identity.conversationId}` });
-  const checkpoint = await resolveCurrentLeadershipConversationCheckpoint(identity);
+  const checkpoint = await resolveCurrentLeadershipConversationCheckpoint({...identity,seriesId});
   observeJourney("contribute",input.contributedItemIds.length?"completed":"intentionally-empty",input.contributedItemIds.length?"success":"expected-abstention");observeJourney("freeze","completed","success");
   return { checkpointId: checkpoint.checkpointId, contributionArtifactIds: checkpoint.contributionArtifactIds, workspace: await server.workspace(identity) };
 }
@@ -145,6 +146,7 @@ export async function freezeOccurrence1FormAction(
       preparedWorkProductVersionId: String(formData.get("preparedWorkProductVersionId") ?? ""),
       expectedPersonalRoomSheetDigest: String(formData.get("expectedPersonalRoomSheetDigest") ?? ""),
       contributedItemIds,
+      seriesAddress:String(formData.get("seriesAddress")||"")||undefined,
     });
     return reconstructPersonalRoomSheetContributionActionState(previous, result);
   } catch {
@@ -152,11 +154,11 @@ export async function freezeOccurrence1FormAction(
   }
 }
 
-export async function captureOccurrence1Action(input: { meetingNotes: string }): Promise<LeadershipConversationWorkspaceV1> {
+export async function captureOccurrence1Action(input: { meetingNotes: string;seriesAddress?:string }): Promise<LeadershipConversationWorkspaceV1> {
   observeJourney("capture","attempted","attempted");
-  const { server, identity, fixture } = await occurrence1Context(), meetingNotes = input.meetingNotes.trim();
+  const { server, identity, fixture,seriesId } = await occurrence1Context(input.seriesAddress), meetingNotes = input.meetingNotes.trim();
   if (!meetingNotes || meetingNotes.length > 4000) throw new Error("Occurrence 1 Capture is invalid.");
-  const checkpoint = await resolveCurrentLeadershipConversationCheckpoint(identity);
+  const checkpoint = await resolveCurrentLeadershipConversationCheckpoint({...identity,seriesId});
   const contributedItems = checkpoint.contributionArtifactIds.length ? await server.readFrozenPrivateWorkingContribution({ ...identity, snapshotId: checkpoint.checkpointId, artifactIds: checkpoint.contributionArtifactIds }) : [];
   await server.captureFrozenPrivateWorkingContribution({ ...identity, snapshotId: checkpoint.checkpointId, idempotencyKey: `occurrence-1-contribution-capture:${identity.conversationId}` });
   const contributionRecord = contributedItems.length ? `Contributed from Private Working:\n${contributedItems.map(item => `- ${item}`).join("\n")}` : "No Private Working content was contributed.";
@@ -175,9 +177,9 @@ export async function reviewOccurrence1ProposalAction(input: { proposalId: strin
   const workspace=await server.workspace(identity);observeJourney("review","completed",input.disposition==="deferred"?"expected-abstention":"success");return workspace;
 }
 
-export async function dispositionOccurrence1CarryForwardAction(input:{proposalId:string;disposition:"accept"|"correct"|"reject"|"needs-information";correctedSummary?:string}):Promise<LeadershipConversationWorkspaceV1>{
+export async function dispositionOccurrence1CarryForwardAction(input:{proposalId:string;disposition:"accept"|"correct"|"reject"|"needs-information";correctedSummary?:string;seriesAddress?:string}):Promise<LeadershipConversationWorkspaceV1>{
   observeJourney("review","attempted","attempted");
-  const{server,identity,fixture}=await occurrence1Context();let current=await server.workspace(identity),proposal=current.proposals.find(item=>item.proposalId===input.proposalId);
+  const{server,identity,fixture}=await occurrence1Context(input.seriesAddress);let current=await server.workspace(identity),proposal=current.proposals.find(item=>item.proposalId===input.proposalId);
   if(!proposal?.reviewedCarryForward)throw new Error("Reviewed carry-forward disposition is unavailable.");
   const corrected=input.correctedSummary?.trim();if(input.disposition==="correct"&&(!corrected||corrected.length>500))throw new Error("Reviewed carry-forward correction is unavailable.");
   const disposition:ProposalDisposition=input.disposition==="accept"?"approved":input.disposition==="correct"?"approved-with-edit":input.disposition==="reject"?"rejected":"deferred",effectivePayload=disposition==="approved-with-edit"?{summary:corrected!,targetRef:proposal.payload.targetRef}:null,reason=input.disposition==="correct"?"Human-authored correction approved for owner routing.":input.disposition==="accept"?"Explicitly accepted for owner routing.":input.disposition==="reject"?"Explicitly rejected; remains noncanonical.":"Reviewed as needing information; remains noncanonical.";
@@ -188,8 +190,8 @@ export async function dispositionOccurrence1CarryForwardAction(input:{proposalId
   const workspace=await server.workspace(identity);observeJourney("review","completed",input.disposition==="needs-information"?"expected-abstention":"success");return workspace;
 }
 
-export async function resumeOccurrence1CarryForwardRouteAction(input:{proposalId:string}):Promise<LeadershipConversationWorkspaceV1>{const{server,identity,fixture}=await occurrence1Context();const current=await server.workspace(identity),proposal=current.proposals.find(item=>item.proposalId===input.proposalId&&item.reviewedCarryForward),disposition=current.dispositions.find(item=>item.proposalId===input.proposalId);if(!proposal||!disposition?.disposition.startsWith("approved"))throw new Error("Reviewed carry-forward route is unavailable.");return server.ensureReviewedCarryForwardRoute({...identity,proposalId:proposal.proposalId,purposeRef:fixture.purposeRef,expectedWorkflowRevision:current.workflowRevision,idempotencyKey:`occurrence-1-carry-forward-route:${proposal.proposalId}`});}
-export async function resumeOccurrence1CarryForwardCompletionAction():Promise<LeadershipConversationWorkspaceV1>{const{server,identity}=await occurrence1Context();return server.ensureReviewedCarryForwardCompletion(identity);}
+export async function resumeOccurrence1CarryForwardRouteAction(input:{proposalId:string;seriesAddress?:string}):Promise<LeadershipConversationWorkspaceV1>{const{server,identity,fixture}=await occurrence1Context(input.seriesAddress);const current=await server.workspace(identity),proposal=current.proposals.find(item=>item.proposalId===input.proposalId&&item.reviewedCarryForward),disposition=current.dispositions.find(item=>item.proposalId===input.proposalId);if(!proposal||!disposition?.disposition.startsWith("approved"))throw new Error("Reviewed carry-forward route is unavailable.");return server.ensureReviewedCarryForwardRoute({...identity,proposalId:proposal.proposalId,purposeRef:fixture.purposeRef,expectedWorkflowRevision:current.workflowRevision,idempotencyKey:`occurrence-1-carry-forward-route:${proposal.proposalId}`});}
+export async function resumeOccurrence1CarryForwardCompletionAction(seriesAddress?:string):Promise<LeadershipConversationWorkspaceV1>{const{server,identity}=await occurrence1Context(seriesAddress);return server.ensureReviewedCarryForwardCompletion(identity);}
 
 export async function acceptOccurrence1EvidenceAction(input: { proposalId: string }): Promise<LeadershipConversationWorkspaceV1> {
   const { server, identity, fixture } = await occurrence1Context();
@@ -225,12 +227,12 @@ export async function acceptOccurrence1EvidenceAction(input: { proposalId: strin
   return routed;
 }
 
-export async function completeOccurrence1Action(): Promise<LeadershipConversationWorkspaceV1> {
+export async function completeOccurrence1Action(seriesAddress?:string): Promise<LeadershipConversationWorkspaceV1> {
   observeJourney("closure","attempted","attempted");
-  const { server, identity } = await occurrence1Context(), current = await server.workspace(identity);
+  const { server, identity,seriesId } = await occurrence1Context(seriesAddress), current = await server.workspace(identity);
   if (current.closureCompletion) return current;
   if (!current.actions.some(action => action.id === "complete-closure" && action.enabled)) throw new Error("Occurrence 1 completion is unavailable.");
-  const frozen = await resolveCurrentLeadershipConversationClosureMetadata(identity);
+  const frozen = await resolveCurrentLeadershipConversationClosureMetadata({...identity,seriesId});
   if (frozen.workflowRevision !== current.workflowRevision || frozen.occurrenceId !== identity.conversationId) throw new Error("Occurrence 1 completion is unavailable.");
   try {
     await server.completeCycle1Closure({ ...identity, seriesId: frozen.seriesId, expectedWorkflowRevision: frozen.workflowRevision, authorizedProjectionDigest: frozen.authorizedProjectionDigest, candidateAssessmentDigest: null, b11CommunicationDigest: null, personalRoomSheetDigest: frozen.personalRoomSheetDigest, idempotencyKey: `occurrence-1-completion:${identity.conversationId}` });
@@ -244,12 +246,12 @@ export async function completeOccurrence1Action(): Promise<LeadershipConversatio
   observeJourney("closure","completed","success");return completed;
 }
 
-export async function closeAndContinueOccurrence1Action(...runtimeArguments: unknown[]) {
-  assertCloseAndContinueOccurrence1Arguments(runtimeArguments);
-  const {server,identity}=await occurrence1Context();
+export async function closeAndContinueOccurrence1Action(seriesAddress?:string) {
+  const runtimeArguments:unknown[]=[];assertCloseAndContinueOccurrence1Arguments(runtimeArguments);
+  const {server,identity}=await occurrence1Context(seriesAddress);
   let current=await server.workspace(identity);
   try{
-    const result=await executeCloseAndContinueOccurrence1Boundary({argumentsList:runtimeArguments,server,identity,initialWorkspace:current,completeOccurrence:completeOccurrence1Action});
+    const result=await executeCloseAndContinueOccurrence1Boundary({argumentsList:runtimeArguments,server,identity,initialWorkspace:current,completeOccurrence:()=>completeOccurrence1Action(seriesAddress)});
     return{...result,valueLayer:compileChiefOfStaffValueLayerV1(result.nextPrepare),error:null};
   }catch{
     current=await server.workspace(identity);

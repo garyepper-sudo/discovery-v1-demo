@@ -376,19 +376,19 @@ export function createLeadershipConversationServerComposition(validation?:{analy
   return constructLeadershipConversationServerComposition({runtimeRepository:createOrganizationRuntimeRepository(),workflowRoot:process.env.DISCOVERY_LEADERSHIP_CONVERSATION_WORKFLOW_ROOT??path.join(process.cwd(),".discovery-runtime/product-workflow"),contentRoot:sourceContentRoot,lineageFixtureRoot,analysisTransport:analysisLifecycleRoot&&analysisTimeoutMs!==null?createOpenAIExecutiveAnalysisTransport():undefined,analysisTimeoutMs,analysisLifecycleRoot,analysisModel:process.env.DISCOVERY_ALPHA_ANALYSIS_MODEL,environment:"development",authorized:exactDevelopmentIdentity,resolvePersonaKey:(userId)=>resolvePersonaForSignedInUser(userId)?.key,resolvePersonaUser:(key)=>resolveSandboxPersonas().find(item=>item.key===key)?.userId});
 }
 
-export async function resolveCurrentLeadershipConversationCheckpoint(input:{userId:string;organizationId:string;questionId:string;conversationId:string}) {
+export async function resolveCurrentLeadershipConversationCheckpoint(input:{userId:string;organizationId:string;questionId:string;conversationId:string;seriesId?:string}) {
   if (!exactDevelopmentIdentity(input.userId, input.organizationId)) throw new Error("Leadership Conversation checkpoint is unavailable.");
   const repository=createProductWorkflowArtifactRepository({root:process.env.DISCOVERY_LEADERSHIP_CONVERSATION_WORKFLOW_ROOT??path.join(process.cwd(),".discovery-runtime/product-workflow"),environment:"development"});
   if (!repository.readOccurrence) throw new Error("Leadership Conversation checkpoint is unavailable.");
-  const snapshot=await repository.readOccurrence({...input,seriesId:`leadership-conversation-series:${input.conversationId}`});
+  const snapshot=await repository.readOccurrence({...input,seriesId:input.seriesId??`leadership-conversation-series:${input.conversationId}`});
   return resolveCurrentOccurrenceCheckpointIdentityV1({store:snapshot.store,organizationId:input.organizationId,questionId:input.questionId,conversationId:input.conversationId});
 }
 
-export async function resolveCurrentLeadershipConversationClosureMetadata(input:{userId:string;organizationId:string;questionId:string;conversationId:string}) {
+export async function resolveCurrentLeadershipConversationClosureMetadata(input:{userId:string;organizationId:string;questionId:string;conversationId:string;seriesId?:string}) {
   if (!exactDevelopmentIdentity(input.userId, input.organizationId)) throw new Error("Leadership Conversation closure metadata is unavailable.");
   const repository=createProductWorkflowArtifactRepository({root:process.env.DISCOVERY_LEADERSHIP_CONVERSATION_WORKFLOW_ROOT??path.join(process.cwd(),".discovery-runtime/product-workflow"),environment:"development"});
   if (!repository.readOccurrence) throw new Error("Leadership Conversation closure metadata is unavailable.");
-  const snapshot=await repository.readOccurrence({...input,seriesId:`leadership-conversation-series:${input.conversationId}`});
+  const snapshot=await repository.readOccurrence({...input,seriesId:input.seriesId??`leadership-conversation-series:${input.conversationId}`});
   return {...resolveCurrentOccurrenceClosureMetadataV1({store:snapshot.store,organizationId:input.organizationId,questionId:input.questionId,conversationId:input.conversationId}),workflowRevision:snapshot.storeRevision};
 }
 
