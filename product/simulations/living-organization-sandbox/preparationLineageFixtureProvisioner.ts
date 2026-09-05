@@ -35,6 +35,37 @@ const SAFE_ID = /^[A-Za-z0-9_-]+$/u;
 const stable = (value: unknown): string => Array.isArray(value) ? `[${value.map(stable).join(",")}]` : value && typeof value === "object" ? `{${Object.entries(value as Record<string, unknown>).sort(([a],[b])=>a.localeCompare(b)).map(([key,item])=>`${JSON.stringify(key)}:${stable(item)}`).join(",")}}` : JSON.stringify(value);
 const digest = (value: unknown): string => createHash("sha256").update(typeof value === "string" ? value : stable(value)).digest("hex");
 
+export const MEETING_PREPARATION_SCOPE_REFS = {
+  northstar: "meeting-preparation-scope:northstar-staff:v1",
+  pipeline: "meeting-preparation-scope:pipeline-review:v1",
+  product: "meeting-preparation-scope:product-leadership:v1",
+} as const;
+export type MeetingPreparationScopeRefV1 = typeof MEETING_PREPARATION_SCOPE_REFS[keyof typeof MEETING_PREPARATION_SCOPE_REFS];
+export type RegisteredMeetingPreparationScopeV1 = {
+  contractVersion:"1"; organizationId:string; referenceId:MeetingPreparationScopeRefV1;
+  sourceContentVersions:NorthstarPreparationLineageSeedV1["sourceContentVersions"];
+  sourceBindings:NorthstarPreparationLineageSeedV1["sourceBindings"];
+  admissibility:"admitted"; semanticDigest:string;
+};
+
+/** Finite, server-owned projection over an integrity-checked governed source seed. */
+export function registeredMeetingPreparationScopes(seed:NorthstarPreparationLineageSeedV1):RegisteredMeetingPreparationScopeV1[]{
+  validateSeed(seed);
+  const versions=[...seed.sourceContentVersions].sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)||a.sourceContentVersionId.localeCompare(b.sourceContentVersionId));
+  if(versions.length<7)throw new Error("Meeting preparation source registry is unavailable.");
+  const refs=Object.values(MEETING_PREPARATION_SCOPE_REFS),groups=[versions.slice(0,1).concat(versions.slice(1,3)),versions.slice(0,1).concat(versions.slice(3,5)),versions.slice(0,1).concat(versions.slice(5,7))];
+  return refs.map((referenceId,index)=>{const sourceContentVersions=groups[index]!,ids=new Set(sourceContentVersions.map(item=>item.sourceBindingId)),sourceBindings=seed.sourceBindings.filter(item=>ids.has(item.sourceBindingId)).sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)),unsigned={contractVersion:"1" as const,organizationId:seed.organizationId,referenceId,sourceContentVersions,sourceBindings,admissibility:"admitted" as const};return{...unsigned,semanticDigest:digest(unsigned)};});
+}
+
+export function resolveRegisteredMeetingPreparationScope(input:{seed:NorthstarPreparationLineageSeedV1;organizationId:string;referenceId:string;canonicalMaterial?:NorthstarPreparationLineageSeedV1["canonicalMaterial"]}):NorthstarPreparationLineageSeedV1{
+  const match=registeredMeetingPreparationScopes(input.seed).find(item=>item.referenceId===input.referenceId&&item.organizationId===input.organizationId);
+  if(!match)throw new Error("Meeting preparation source scope is unavailable.");
+  const allowedMaterial=new Map(input.seed.canonicalMaterial.map(item=>[`${item.canonicalObjectId}\u0000${item.revisionRef}`,item])),canonicalMaterial=input.canonicalMaterial??input.seed.canonicalMaterial;
+  if(!canonicalMaterial.length||new Set(canonicalMaterial.map(item=>item.canonicalObjectId)).size!==canonicalMaterial.length||canonicalMaterial.some(item=>!allowedMaterial.has(`${item.canonicalObjectId}\u0000${item.revisionRef}`)))throw new Error("Meeting preparation source scope is unavailable.");
+  const unsigned={...input.seed,sourceBindings:match.sourceBindings,sourceContentVersions:match.sourceContentVersions,canonicalMaterial:[...canonicalMaterial].sort((a,b)=>a.canonicalObjectId.localeCompare(b.canonicalObjectId)),creationOperationId:`${input.seed.creationOperationId}:${match.semanticDigest}`};
+  const{seedDigest:_,...base}=unsigned;return{...base,seedDigest:digest(base)};
+}
+
 export type NorthstarPreparationLineageSeedV1 = {
   contractVersion: "1";
   organizationId: typeof SANDBOX_ORGANIZATION_ID;
@@ -272,13 +303,17 @@ export async function provisionNorthstarPreparationLineageFixture(input: Northst
   } };
   const contentService = new GovernedSourceContentService(sourceRepository, bindingResolver, clock);
   const scope = { organizationId: SANDBOX_ORGANIZATION_ID, type: "organization" as const, id: SANDBOX_ORGANIZATION_ID };
-  const documents = sandboxManifest.documents.filter(item => item.negativeControl === null && ["batch-0", "batch-1"].includes(item.batchId));
+  const documents = [
+    ...sandboxManifest.documents.filter(item => item.negativeControl === null && ["batch-0", "batch-1"].includes(item.batchId)).map(item=>({...item,inline:null as string|null})),
+    {id:"meeting-product-roadmap",batchId:"batch-1",relativePath:"",version:"1",sha256:"",effectiveAt:at,sourceType:"text/markdown" as const,semanticRole:"product roadmap sequencing",negativeControl:null,inline:"# Product roadmap sequencing\n\nThe next product release depends on completing the governed interface contract before customer commitment. Technical risk remains concentrated in migration sequencing and owner acceptance.\n"},
+    {id:"meeting-product-customer-commitment",batchId:"batch-1",relativePath:"",version:"1",sha256:"",effectiveAt:at,sourceType:"text/markdown" as const,semanticRole:"product customer commitment",negativeControl:null,inline:"# Product customer commitment\n\nThe customer commitment requires a stable review boundary and explicit ownership before launch. Product leadership must decide whether to delay the milestone or narrow its scope.\n"},
+  ];
   const bindings: NorthstarPreparationLineageSeedV1["sourceBindings"] = [];
   const versions: NorthstarPreparationLineageSeedV1["sourceContentVersions"] = [];
   const evidenceSources: Array<{ sourceId: string; sourceType: "upload"; observedAt: string; contentDigest: string; content: string }> = [];
   for (const document of documents) {
-    const bytes = new Uint8Array(await readFile(path.join(process.cwd(), "product/simulations/living-organization-sandbox", document.relativePath)));
-    if (sourceContentDigest(bytes) !== document.sha256) throw new Error("Committed Northstar source integrity failed.");
+    const bytes = document.inline===null?new Uint8Array(await readFile(path.join(process.cwd(), "product/simulations/living-organization-sandbox", document.relativePath))):new TextEncoder().encode(document.inline);
+    if (document.inline===null&&sourceContentDigest(bytes) !== document.sha256) throw new Error("Committed Northstar source integrity failed.");
     const normalized = decodeAndNormalizeSourceContent(bytes);
     stored = (await runtimeRepository.read(SANDBOX_ORGANIZATION_ID))!;
     const binding = await bindingService.registerCanonicalLocalSourceBinding({ contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID, productQuestionId, sourceType: "markdown-upload", purposeRef: PURPOSE, normalizedContentDigest: sourceContentDigest(new TextEncoder().encode(normalized.normalizedText)), requestedScopeAssertions: [{ relationship: "applies-to", scope }], sensitivity: "standard", recordedAt: at, recordedByActorRef: ACTOR, idempotencyKey: `northstar-preparation-binding:${document.id}:v1`, expectedRuntimeRevision: stored.revision, operation: { requestId: `northstar-preparation-binding:${document.id}`, operatorId: ACTOR }, authorization: authorization("source-binding:register-local", at) });

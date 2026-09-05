@@ -134,6 +134,8 @@ acceptance, not a new history owner or reconstruction mechanism.
 
 Multi-Meeting Shell V1 closes only the bounded three-series application-projection portion of `GAP-D-005`: one server-authorized directory now reuses Meeting Pack-first UX with strict series, occurrence, publication, lifecycle, and private-state binding. Authentic customer value, Universal Ask, cross-meeting relevance, meeting-profile infrastructure, calendar integration, and multi-user alignment/divergence remain open.
 
+Meeting-Scoped Governed Source Lineage V1 closes the shared-seed blocker within `GAP-D-005`: three server-owned preparation references now select exact finite lineages through the existing source owner, with one shared and two exclusive synthetic source versions per meeting. Meeting-specific relevance wording and presentation remain open.
+
 ## Audit result
 
 The register consolidates previously identified connector, freshness,
