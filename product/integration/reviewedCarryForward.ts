@@ -7,8 +7,34 @@ import type {LeadershipConversationProductOperations} from "../workflow/leadersh
 const empty:never[]=[];
 export const reviewedCarryForwardDevelopmentTransport:SourceScopedTransportV1=async({request})=>{
   const cite=(index:number)=>{const source=request.packet.sources[index%request.packet.sources.length]!;return{sourceId:source.sourceId,sourceVersion:source.sourceVersion,bodyDigest:source.bodyDigest,sourcePacketDigest:request.packet.packetDigest};};
-  const item=(statement:string,index:number,factCheck:SourceScopedItemV1["factCheck"]="HUMAN REVIEW REQUIRED"):SourceScopedItemV1[]=>[{statement,citations:[cite(index)],factCheck}];
-  const sections:SourceScopedSectionsV1={whatMattersNow:item("Segment performance and delivery capacity need a bounded executive decision.",0),whyItMatters:item("A broad response could obscure materially different segment conditions.",0),competingExplanations:item("Lead mix, conversion lag, market conditions, and delivery capacity remain competing explanations.",2),whatChanged:empty,decisions:item("Keep the current broad hiring restraint while segment evidence is reviewed.",1),notDecided:empty,commitments:item("Review enterprise capacity and segment conversion at the next leadership checkpoint.",1),openQuestions:item("Which segment and constraint account for the largest share of the current gap?",0),contradictions:empty,evidenceUncertainty:item("The current evidence does not isolate one causal explanation.",2),modelUncertainty:item("This development synthesis may omit interpretations not explicit in the selected sources.",0),organizationalDisagreement:empty,attention:item("Compare segment conversion with delivery capacity before changing staffing or incentives.",1),whatWouldChangeAssessment:item("A controlled segment comparison or corrected authoritative source would change this assessment.",2)};
+  const item=(statement:string,index:number,factCheck:SourceScopedItemV1["factCheck"]="HUMAN REVIEW REQUIRED"):SourceScopedItemV1=>({statement,citations:[cite(index)],factCheck});
+  const bodies=request.packet.sources.map(source=>source.body.toLowerCase()),contains=(...phrases:string[])=>phrases.some(phrase=>bodies.some(body=>body.includes(phrase)));
+  const product=contains("product roadmap sequencing","governed interface contract","stable review boundary"),pipeline=!product&&contains("implementation portfolio status","delivery capacity summary"),profile=product?"product":pipeline?"pipeline":"northstar";
+  const sections:SourceScopedSectionsV1=profile==="product"?{
+    whatMattersNow:[item("Interface sequencing remains the most material product delivery constraint.",1,"PASS"),item("Product leadership must choose whether to delay the milestone or narrow its scope.",2)],
+    whyItMatters:[item("Customer commitments depend on a stable review boundary, explicit ownership, and the governed interface contract.",1,"PASS")],
+    competingExplanations:[item("Migration sequencing and owner acceptance may each account for the current delivery risk.",1)],whatChanged:empty,
+    decisions:[item("Choose whether to delay the product milestone or narrow its scope.",2)],notDecided:[item("The roadmap sequence and resource trade-off remain unresolved.",1)],
+    commitments:[item("Complete the governed interface contract before confirming the customer commitment.",1)],openQuestions:[item("Which scope reduction preserves the customer commitment without bypassing the review boundary?",2)],contradictions:empty,
+    evidenceUncertainty:[item("The current sources do not establish whether schedule or scope is the safer trade-off.",2)],modelUncertainty:[item("This working interpretation is limited to the authorized product source packet.",0)],organizationalDisagreement:empty,
+    attention:[item("Resolve product and engineering sequencing before the next customer milestone.",1)],whatWouldChangeAssessment:[item("A validated migration plan and owner acceptance would change the delivery-risk assessment.",1)]
+  }:profile==="pipeline"?{
+    whatMattersNow:[item("Pipeline reliability is at risk where commitments precede feasibility and dependency review.",1,"PASS"),item("Conversion and delivery-capacity evidence must be separated before revising the forecast.",2)],
+    whyItMatters:[item("Date changes and unresolved dependencies can make current coverage look more reliable than delivery evidence supports.",1,"PASS")],
+    competingExplanations:[item("Lead mix, conversion lag, premature commitments, and delivery capacity remain competing explanations.",2)],whatChanged:empty,
+    decisions:[item("Hold forecast changes until segment movement and delivery capacity are compared.",1)],notDecided:[item("No source establishes which segment accounts for the largest current gap.",2)],
+    commitments:[item("Review enterprise conversion and delivery capacity at the next commercial checkpoint.",1)],openQuestions:[item("Which segment accounts for the largest share of the coverage and conversion gap?",2)],contradictions:empty,
+    evidenceUncertainty:[item("The current packet does not isolate segment conversion from delivery feasibility.",2)],modelUncertainty:[item("This working interpretation is limited to the authorized commercial source packet.",0)],organizationalDisagreement:empty,
+    attention:[item("Compare segment movement, conversion, and delivery dependencies before changing the forecast.",1)],whatWouldChangeAssessment:[item("A controlled segment comparison with current delivery capacity would change the forecast-risk assessment.",2)]
+  }:{
+    whatMattersNow:[item("Cross-functional sequencing and unclear decision ownership remain the primary organization-wide delivery constraint.",1,"PASS"),item("Leadership needs to resolve dependencies before adding or reaffirming commitments.",2)],
+    whyItMatters:[item("Unresolved ownership and overloaded specialist capacity can propagate delay across product, sales, and delivery.",1,"PASS")],
+    competingExplanations:[item("Capacity, governance, sequencing, and premature commitments remain plausible competing explanations.",2)],whatChanged:empty,
+    decisions:[item("Set one cross-functional sequence and name the tie-breaker for feasibility exceptions.",1)],notDecided:[item("The current sources do not establish one primary cause of delay.",2)],
+    commitments:[item("Leadership will assign owners to the highest-risk dependencies before the next staff conversation.",1)],openQuestions:[item("Which unresolved dependency requires the next leadership decision?",2)],contradictions:empty,
+    evidenceUncertainty:[item("Similar utilization produced different outcomes, so staffing alone is not established as the cause.",2)],modelUncertainty:[item("This working interpretation is limited to the authorized leadership source packet.",0)],organizationalDisagreement:empty,
+    attention:[item("Resolve the cross-functional dependency with the widest delivery impact.",1)],whatWouldChangeAssessment:[item("A dependency-level comparison of sequencing, ownership, and capacity would change the assessment.",2)]
+  };
   return{model:request.configuration.model,sections,usage:{inputTokens:0,outputTokens:0,totalTokens:0},latencyMs:0};
 };
 

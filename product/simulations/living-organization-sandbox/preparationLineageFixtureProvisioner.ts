@@ -47,13 +47,19 @@ export type RegisteredMeetingPreparationScopeV1 = {
   sourceBindings:NorthstarPreparationLineageSeedV1["sourceBindings"];
   admissibility:"admitted"; semanticDigest:string;
 };
+const MEETING_PREPARATION_SCOPE_SOURCE_DIGESTS={
+  shared:"9ab5aaf6ca38c0f3a6f40fe6771a4109690e16b384995725d1844626686aa3dd",
+  northstar:["53200c0d6c88b66d76e13ab6764287e502f70653ece66838b007a90490ed613d","b26ce579adb3fd8340f9e3aa7a0109cc972fd1da91c302206e46461f2ad052f7"],
+  pipeline:["0010e6034e5370646b900326f9a6d85f9333d062910514bab91a48e2a02ca1a5","644d9233433f06c89ead22bbc6acc2791bb889733d9bf44a7fcf196dee5abc31"],
+  product:["1304c6e69eae463edcbf3277f400cc15a42dedac2f6e708b41df202cb40ef111","ae558e508a74c3c5a1bc96572b04926444336e100ff1bbc750bd02d111301d70"],
+} as const;
 
 /** Finite, server-owned projection over an integrity-checked governed source seed. */
 export function registeredMeetingPreparationScopes(seed:NorthstarPreparationLineageSeedV1):RegisteredMeetingPreparationScopeV1[]{
   validateSeed(seed);
   const versions=[...seed.sourceContentVersions].sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)||a.sourceContentVersionId.localeCompare(b.sourceContentVersionId));
   if(versions.length<7)throw new Error("Meeting preparation source registry is unavailable.");
-  const refs=Object.values(MEETING_PREPARATION_SCOPE_REFS),groups=[versions.slice(0,1).concat(versions.slice(1,3)),versions.slice(0,1).concat(versions.slice(3,5)),versions.slice(0,1).concat(versions.slice(5,7))];
+  const exact=(digests:readonly string[])=>digests.map(normalizedContentDigest=>{const matches=versions.filter(item=>item.normalizedContentDigest===normalizedContentDigest);if(matches.length!==1)throw new Error("Meeting preparation source registry is unavailable.");return matches[0]!;}),shared=exact([MEETING_PREPARATION_SCOPE_SOURCE_DIGESTS.shared]),refs=Object.values(MEETING_PREPARATION_SCOPE_REFS),groups=[shared.concat(exact(MEETING_PREPARATION_SCOPE_SOURCE_DIGESTS.northstar)),shared.concat(exact(MEETING_PREPARATION_SCOPE_SOURCE_DIGESTS.pipeline)),shared.concat(exact(MEETING_PREPARATION_SCOPE_SOURCE_DIGESTS.product))];
   return refs.map((referenceId,index)=>{const sourceContentVersions=groups[index]!,ids=new Set(sourceContentVersions.map(item=>item.sourceBindingId)),sourceBindings=seed.sourceBindings.filter(item=>ids.has(item.sourceBindingId)).sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)),unsigned={contractVersion:"1" as const,organizationId:seed.organizationId,referenceId,sourceContentVersions,sourceBindings,admissibility:"admitted" as const};return{...unsigned,semanticDigest:digest(unsigned)};});
 }
 
@@ -244,12 +250,15 @@ async function readSeedRecord(input: { fixtureRoot: string; organizationId: stri
   return record;
 }
 
-async function persistSeedRecord(root: string, seed: NorthstarPreparationLineageSeedV1): Promise<NorthstarPreparationLineageSeedRecordV1> {
+async function persistSeedRecord(root: string, seed: NorthstarPreparationLineageSeedV1, reconcileCanonicalPreparationCorpus = false): Promise<NorthstarPreparationLineageSeedRecordV1> {
   const record = completeSeedRecord(seed), next = seedRecordBytes(record), paths = await seedRecordTarget(root, SANDBOX_ORGANIZATION_ID, FIXTURE_ID, PROVISIONING_KEY);
   try {
     const existing = await readSeedRecord({ fixtureRoot: root, organizationId: SANDBOX_ORGANIZATION_ID, fixtureId: FIXTURE_ID, provisioningKey: PROVISIONING_KEY });
-    if (!Buffer.from(next).equals(Buffer.from(seedRecordBytes(existing)))) throw new Error("Northstar preparation lineage seed record collision.");
-    return existing;
+    if (Buffer.from(next).equals(Buffer.from(seedRecordBytes(existing)))) return existing;
+    const priorVersions=new Map(existing.seed.sourceContentVersions.map(item=>[item.normalizedContentDigest,item])),nextVersions=new Map(seed.sourceContentVersions.map(item=>[item.normalizedContentDigest,item])),added=[...nextVersions.keys()].filter(value=>!priorVersions.has(value));
+    if(!reconcileCanonicalPreparationCorpus||existing.seed.sourceContentVersions.length!==5||seed.sourceContentVersions.length!==7||[...priorVersions].some(([contentDigest,item])=>stable(nextVersions.get(contentDigest))!==stable(item))||added.length!==2||added.some(value=>!MEETING_PREPARATION_SCOPE_SOURCE_DIGESTS.product.includes(value as never))||stable({...existing.seed,sourceBindings:undefined,sourceContentVersions:undefined,seedDigest:undefined,creationOperationId:undefined})!==stable({...seed,sourceBindings:undefined,sourceContentVersions:undefined,seedDigest:undefined,creationOperationId:undefined}))throw new Error("Northstar preparation lineage seed record collision.");
+    try { await unlink(paths.temporary); } catch (error) { if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error; }
+    const handle=await open(paths.temporary,constants.O_CREAT|constants.O_EXCL|constants.O_WRONLY,0o600);try{await handle.writeFile(next);await handle.sync();}finally{await handle.close();}await rename(paths.temporary,paths.target);return readSeedRecord({fixtureRoot:root,organizationId:SANDBOX_ORGANIZATION_ID,fixtureId:FIXTURE_ID,provisioningKey:PROVISIONING_KEY,expectedSeedDigest:seed.seedDigest});
   } catch (error) { if (!/record is unavailable/u.test((error as Error).message)) throw error; }
   try { await unlink(paths.temporary); } catch (error) { if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error; }
   const handle = await open(paths.temporary, constants.O_CREAT | constants.O_EXCL | constants.O_WRONLY, 0o600);
@@ -264,9 +273,10 @@ export async function readNorthstarPreparationLineageSeed(input: { fixtureRoot: 
   return structuredClone((await readSeedRecord(input)).seed);
 }
 
-export async function provisionNorthstarPreparationLineageFixture(input: NorthstarPreparationLineageProvisioningInput): Promise<NorthstarPreparationLineageProvisioningResult> {
+async function provisionNorthstarPreparationLineageFixtureInternal(input: NorthstarPreparationLineageProvisioningInput,reconcileCanonicalPreparationCorpus:boolean): Promise<NorthstarPreparationLineageProvisioningResult> {
   if (!(["development", "sandbox", "test"] as string[]).includes(input.environment)) throw new Error("Northstar preparation lineage provisioning is development-only.");
   const root = await safeFixtureRoot(input.fixtureRoot);
+  const priorSeed=reconcileCanonicalPreparationCorpus?await readNorthstarPreparationLineageSeed({fixtureRoot:root,organizationId:SANDBOX_ORGANIZATION_ID,fixtureId:FIXTURE_ID,provisioningKey:PROVISIONING_KEY}).catch(()=>undefined):undefined;
   const at = input.now ?? sandboxManifest.replayTimestamps[1];
   const runtimeRepository = new FilesystemOrganizationRuntimeRepository(path.join(root, "runtime"));
   const sourceRepository = createFilesystemSourceContentRepository({ root: path.join(root, "discovery-governed-source-content-northstar-preparation"), environment: input.environment });
@@ -354,11 +364,15 @@ export async function provisionNorthstarPreparationLineageFixture(input: Northst
   if(eligibility.disposition!=="eligible")throw new Error("Canonical Northstar Understanding is not currently eligible.");
   const projection=readScopedOrganizationalProductProjection({authenticatedUserId:ACTOR,organizationId:SANDBOX_ORGANIZATION_ID,context:disclosure,repository:{readAuthorizedSource:()=>buildGenericScopedProductSource({stored,organizationId:SANDBOX_ORGANIZATION_ID,requestedScope:scope,currentEligibility:eligibility})}});
   if(projection.disposition!=="available")throw new Error("Canonical Northstar scoped projection is unavailable.");
-  const unsigned: Omit<NorthstarPreparationLineageSeedV1, "seedDigest"> = { contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID as typeof SANDBOX_ORGANIZATION_ID, semanticOwner: "leadership-conversation", productQuestionId, creationOperationId: `northstar-preparation-lineage:v1:${digest([SANDBOX_ORGANIZATION_ID, documents.map(item=>item.id)])}`, lineagePolicyVersion: POLICY, sourceBindings: bindings.sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)), sourceContentVersions: versions.sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)||a.sourceContentVersionId.localeCompare(b.sourceContentVersionId)||a.normalizedContentDigest.localeCompare(b.normalizedContentDigest)), canonicalMaterial: admissions.map(item=>({ canonicalObjectId: item.canonicalEvidenceId, revisionRef: item.canonicalAdmissionId, owner: "canonical-evidence-admission" as const })).sort((a,b)=>a.canonicalObjectId.localeCompare(b.canonicalObjectId)), canonicalUnderstandingRevision: current.revisionId, projectionSourceRef: current.id, scopeDigest:digest(scope), purpose:PURPOSE, sensitivity:"standard" };
+  const unsigned: Omit<NorthstarPreparationLineageSeedV1, "seedDigest"> = { contractVersion: "1", organizationId: SANDBOX_ORGANIZATION_ID as typeof SANDBOX_ORGANIZATION_ID, semanticOwner: "leadership-conversation", productQuestionId, creationOperationId: `northstar-preparation-lineage:v1:${digest([SANDBOX_ORGANIZATION_ID, documents.map(item=>item.id)])}`, lineagePolicyVersion: POLICY, sourceBindings: bindings.sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)), sourceContentVersions: versions.sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)||a.sourceContentVersionId.localeCompare(b.sourceContentVersionId)||a.normalizedContentDigest.localeCompare(b.normalizedContentDigest)), canonicalMaterial: priorSeed?.canonicalMaterial??admissions.map(item=>({ canonicalObjectId: item.canonicalEvidenceId, revisionRef: item.canonicalAdmissionId, owner: "canonical-evidence-admission" as const })).sort((a,b)=>a.canonicalObjectId.localeCompare(b.canonicalObjectId)), canonicalUnderstandingRevision: priorSeed?.canonicalUnderstandingRevision??current.revisionId, projectionSourceRef: priorSeed?.projectionSourceRef??current.id, scopeDigest:digest(scope), purpose:PURPOSE, sensitivity:"standard" };
   const seed = { ...unsigned, seedDigest: digest(unsigned) };
-  await persistSeedRecord(root, seed);
+  await persistSeedRecord(root, seed,reconcileCanonicalPreparationCorpus);
   return { disposition: replay ? "idempotent-replay" : "provisioned", seed, counts: { sources: bindings.length, material: admissions.length, understandings: compositions.length }, runtimeRevision: stored.revision };
 }
+
+export function provisionNorthstarPreparationLineageFixture(input:NorthstarPreparationLineageProvisioningInput){return provisionNorthstarPreparationLineageFixtureInternal(input,false);}
+/** Bounded development-fixture evolution from the authenticated five-source legacy seed to the canonical seven-source preparation corpus. */
+export function reconcileNorthstarPreparationLineageFixture(input:NorthstarPreparationLineageProvisioningInput){return provisionNorthstarPreparationLineageFixtureInternal(input,true);}
 
 export async function resetNorthstarPreparationLineageFixture(input: NorthstarPreparationLineageProvisioningInput): Promise<void> {
   const root = await safeFixtureRoot(input.fixtureRoot);

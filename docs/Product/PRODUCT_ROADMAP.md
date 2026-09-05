@@ -1145,6 +1145,8 @@ Multi-Meeting Shell and Meeting Home V1 compose three deterministic recurring me
 
 Meeting-Scoped Governed Source Lineage V1 extends the existing preparation-reference seam into three finite server-owned scopes over one Organizational Understanding and one Governed Source Content owner. Each initial occurrence freezes its exact admitted source versions; shared identity is preserved and display titles grant no authority. Meeting Truth, Relevance, and Differentiation V1 follows on this foundation.
 
+Meeting Truth, Relevance, and Differentiation V1 makes the three Alpha meetings materially distinct through their exact source lineage and meeting purpose. Its bounded founder-fixture reconciliation retains the admitted non-seed sample, expands only the canonical preparation seed, and issues new current publications without rewriting history. Meeting Packs remain concise read-first working artifacts, internal mechanics remain progressively disclosed, and directory, header, phase, status, and next action share one truthful projection. Universal Ask / Add Context V1 follows; cross-meeting relevance and configurable meeting profiles remain deferred.
+
 The Alpha presentation projects those owners through one compact Meetings navigation and an orientation-first Meeting Home. Agenda and private talking points are read-first and editable on demand; analysis and provenance remain available through disclosure; four visible phases compress, but never rename or migrate, the durable lifecycle.
 
 `GAP-D-001`, `GAP-D-002`, and `GAP-D-003` require independent evidence,

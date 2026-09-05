@@ -2394,7 +2394,7 @@ async function main(forceValidation = false) {
       occurrenceActions,
       /dispositionOccurrence1CarryForwardAction[\s\S]*server\.review[\s\S]*server\.routeApproved/,
     );
-    assert.match(experience, /Proposed carry-forward/);
+    assert.match(experience, /Confirm what Discovery should carry forward/);
     assert.match(telemetryOwner, /return"repository-unavailable"/);
     assert.doesNotMatch(telemetryOwner, /throw new Error/);
     checks += 4;

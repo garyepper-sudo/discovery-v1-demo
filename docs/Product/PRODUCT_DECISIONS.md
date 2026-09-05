@@ -1488,6 +1488,14 @@ Discovery may enumerate several recurring Leadership Conversation series through
 
 The controlled Alpha presents Meetings as the active workspace inside one coherent Organizational Understanding shell. Meeting Home begins with compact orientation, makes the Meeting Pack the primary preparation artifact, renders agenda and private talking points read-first with editing on demand, and places supporting analysis and provenance behind progressive disclosure. Its visible `Prepare → Meet → Confirm outcomes → Continue` phases are presentation only; the authorized directory, internal lifecycle, artifact owners, privacy boundaries, and persistence remain unchanged.
 
+## DEC-PROD-065 — Meeting relevance is conditioned by purpose and exact governed lineage
+
+One canonical organizational reality may produce distinct noncanonical meeting projections when a server-resolved meeting purpose and its exact Prepared Work source lineage differ. The deterministic development analysis consumes only the authorized packet; display titles, route labels, and client categories have no source-selection or reasoning authority. A shared source retains one identity, digest, provenance, and factual meaning across every lawful scope even when its meeting-specific consequence differs.
+
+The authorized directory and Meeting Home use one read-only status projection. Meeting Packs render concise structured sections first, preserve exact edit and persistence contracts, and keep workflow mechanics, source identities, citations, and reasoning accessible through progressive disclosure. Configurable profiles and cross-meeting relevance remain deferred.
+
+The local synthetic founder fixture may reconcile its legacy five-source seed through the existing source and Prepared Work owners: additional admitted material remains out of scope, the canonical seven-source corpus alone resolves the three registered references, and new occurrence publications supersede without rewriting historical publications or packs.
+
 ## DEC-PROD-064 — Meeting-scoped governed preparation lineage
 
 Each recurring Alpha meeting series resolves one server-owned registered preparation scope before its first Prepared Work publication. The scope is a finite projection over the existing Governed Source Content owner, and the publication freezes exact source-version identities and digests for its occurrence. Shared facts retain one source identity; distinct scopes do not create distinct organizational realities. Display titles and caller-created references carry no source authority. Meeting-specific relevance and presentation remain separate Product work.

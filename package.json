@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "validate:meeting-scoped-source-lineage": "NODE_OPTIONS=--conditions=react-server node --import tsx scripts/product/validateMeetingScopedSourceLineageV1.ts",
+    "validate:meeting-truth-differentiation-v1": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server node --import tsx scripts/product/validateMeetingTruthDifferentiationV1.ts",
     "validate:authenticated-alpha-acceptance-runner": "NODE_OPTIONS=--conditions=react-server tsx scripts/acceptance/validateAuthenticatedAlphaAcceptanceRunner.ts",
     "validate:acceptance-foundation-v1-2:write": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/acceptance/validateAuthenticatedAlphaAcceptanceRunner.ts --write-v1-2",
     "validate:acceptance-foundation-v1-2:verify": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/acceptance/validateAuthenticatedAlphaAcceptanceRunner.ts --verify-v1-2",
