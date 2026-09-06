@@ -495,6 +495,7 @@
     "validate:source-scoped-executive-analysis": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server node --import tsx scripts/product/validateSourceScopedExecutiveAnalysis.ts",
     "validate:generate-analysis-real-route": "NODE_ENV=test node --import ./scripts/product/generateAnalysisRenderLoader.mjs --import tsx scripts/product/validateGenerateAnalysisRealRoute.tsx && NODE_ENV=test node --import ./scripts/product/generateAnalysisActionLoader.mjs --import tsx scripts/product/validateGenerateAnalysisActionBoundary.ts",
     "validate:chief-meeting-pack": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateChiefMeetingPackV1.ts && NODE_ENV=test node --import ./scripts/product/generateAnalysisRenderLoader.mjs --import tsx scripts/product/renderChiefMeetingPackV1.tsx",
+    "validate:universal-ask-add-context-v1": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateUniversalAskAddContextV1.ts",
     "validate:multi-meeting-shell-v1": "tsx scripts/product/validateMultiMeetingShellV1.ts",
     "provision:multi-meeting-shell-v1": "tsx scripts/product/provisionMultiMeetingShellV1.ts",
     "research:compounding-capture-quality": "node --import tsx engine/benchmark/research/compounding-capture-quality-v1/runBenchmark.ts",

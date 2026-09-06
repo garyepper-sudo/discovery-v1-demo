@@ -138,6 +138,8 @@ Meeting-Scoped Governed Source Lineage V1 closes the shared-seed blocker within 
 
 Meeting Truth, Relevance, and Differentiation V1 closes the bounded presentation portion of that open work: exact governed source packets now condition deterministic noncanonical analysis, meeting attention, agenda, and private talking points. The synthetic founder fixture reconciles its legacy seed non-destructively while preserving admitted out-of-scope sample material and every historical publication. Shared facts retain one identity, display titles have no selection or reasoning authority, and one server-derived status projection drives the directory and Meeting Home. Configurable profiles, cross-meeting relevance, and authentic customer evidence remain open; Universal Ask / Add Context is the next Product milestone.
 
+Universal Ask / Add Context V1 closes the meeting-adapter interaction portion of `GAP-D-005`: private questions use only the selected meeting's current authorized context and create no durable transcript, while explicitly scoped context reuses the existing private-note owner. Persistent chat, Project and Research adapters, organization-wide retrieval, and cross-meeting relevance remain open.
+
 ## Audit result
 
 The register consolidates previously identified connector, freshness,

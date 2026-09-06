@@ -150,9 +150,9 @@ export default function DiscoveryShell({
           <span>Primary Constraint <b>{organization.primaryConstraint ?? "Still emerging"}</b></span>
         </section>}
 
-        <Link className={styles.stewardship} href={buildProductHref("/your-organization", organization.organizationId) + "#teach-discovery"}>
-          Teach Discovery
-          <span>Add context · Correct the model · Add evidence</span>
+        <Link className={styles.stewardship} href={pathname.startsWith("/product-alpha/meetings/")?"#ask-add-context":buildProductHref("/your-organization", organization.organizationId) + "#teach-discovery"}>
+          {pathname.startsWith("/product-alpha/meetings/")?"Ask or add context":"Teach Discovery"}
+          <span>{pathname.startsWith("/product-alpha/meetings/")?"Private · scoped to this meeting":"Add context · Correct the model · Add evidence"}</span>
         </Link>
 
         {sessionControl && (

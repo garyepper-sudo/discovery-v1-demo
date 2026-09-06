@@ -1499,3 +1499,7 @@ The local synthetic founder fixture may reconcile its legacy five-source seed th
 ## DEC-PROD-064 — Meeting-scoped governed preparation lineage
 
 Each recurring Alpha meeting series resolves one server-owned registered preparation scope before its first Prepared Work publication. The scope is a finite projection over the existing Governed Source Content owner, and the publication freezes exact source-version identities and digests for its occurrence. Shared facts retain one source identity; distinct scopes do not create distinct organizational realities. Display titles and caller-created references carry no source authority. Meeting-specific relevance and presentation remain separate Product work.
+
+## DEC-PROD-066 — Meeting-scoped Ask and Add Context V1
+
+The controlled Alpha exposes one reusable Ask / Add Context surface scoped to the exact server-resolved meeting. Ask is private, noncanonical, nonpersistent, phase-aware, source-grounded, and abstains when the selected meeting's authorized context is insufficient. It creates no chat transcript or organizational state. Add Context reuses the existing meeting-private-note owner: Keep private does not affect pack currentness, while talking-point and agenda intent may make an explicit pack update available without rebuilding automatically. Shared contribution remains a separate intentional workflow, and preparation-context writes remain closed after Freeze. Project, Research, organization-wide, persistent-chat, and cross-meeting adapters remain deferred.
