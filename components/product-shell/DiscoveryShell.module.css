@@ -227,6 +227,7 @@
   min-height: 100vh;
   margin: 0 auto;
   padding: clamp(34px, 5vw, 72px) clamp(28px, 6vw, 88px);
+  background: #f7f5ef;
 }
 
 @media (max-width: 820px) {
