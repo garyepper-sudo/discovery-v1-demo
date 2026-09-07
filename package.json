@@ -507,7 +507,8 @@
     "validate:model-mediated-compounding": "node --import tsx engine/benchmark/research/model-mediated-compounding-v1-1/validateProgram.ts",
     "research:export-cycle-observations": "node --import tsx engine/benchmark/research/compounding-capture-quality-v1/exportObservations.ts",
     "deps:validate": "node scripts/performance/validatePerformanceReport.mjs",
-    "deps:report": "npm run deps:validate && node scripts/performance/renderPerformanceReport.mjs"
+    "deps:report": "npm run deps:validate && node scripts/performance/renderPerformanceReport.mjs",
+    "validate:persisted-meeting-preparation-scope-activation": "NODE_OPTIONS=--conditions=react-server node --import tsx scripts/product/validatePersistedMeetingPreparationScopeActivation.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "6.39.6",

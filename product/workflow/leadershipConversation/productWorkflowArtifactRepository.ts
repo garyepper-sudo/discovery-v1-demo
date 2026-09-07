@@ -1139,6 +1139,20 @@ class FilesystemProductWorkflowArtifactRepository
       requestFingerprint,
     );
   }
+  async registerMeetingPreparationScope(input: import("./contracts").RegisteredMeetingPreparationScopeV1 & { expectedRevision: string | null }) {
+    const current = await this.read(input.organizationId);
+    if (current.revision !== input.expectedRevision) throw new ProductWorkflowRevisionConflictError();
+    const store = current.store as LeadershipConversationArtifactStoreV1 & { registeredMeetingPreparationScopes?: import("./contracts").RegisteredMeetingPreparationScopeV1[] };
+    const existing = (store.registeredMeetingPreparationScopes ?? []).find(value => value.scopeId === input.scopeId);
+    if (existing) {
+      if (existing.scopeDigest !== input.scopeDigest) throw new ProductWorkflowIncompatibleIdempotencyReplayError();
+      return { scope: existing, committed: false, revision: current.revision };
+    }
+    const next = structuredClone(store);
+    next.registeredMeetingPreparationScopes = [...(next.registeredMeetingPreparationScopes ?? []), input].sort((a,b) => a.scopeId.localeCompare(b.scopeId));
+    const committed = await this.replaceBound(input.organizationId, next, current.revision, input.requestFingerprint);
+    return { scope: input, committed: true, revision: committed.revision };
+  }
   private async replaceBound(
     organizationId: string,
     store: LeadershipConversationArtifactStoreV1,
