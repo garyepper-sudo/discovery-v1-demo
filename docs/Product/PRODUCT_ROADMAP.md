@@ -1360,6 +1360,11 @@ share the exact canonical Product Question. It adds no owner, persistence
 family, source scope, search, or Meeting Pack integration. Broad relevance,
 cross-user disclosure, and organization-wide search remain deferred.
 
+#### Minimum Multi-User Alignment and Divergence V1
+
+Phase: Alpha Prepare composition. Addresses `GAP-ALPHA-ALIGNMENT-001`.
+This bounded view projects only intentionally shared, meeting-scoped typed stances on the exact current Product Question and working-analysis identity. It uses the existing Product Workflow owner and current access; it creates no organizational truth, consensus, ranking, or new authorization boundary. Capture and human Review remain required for any durable conclusion.
+
 Intelligent carry-forward is the highest-priority competitive mechanic to
 evaluate, but creates no `CarryForward` owner. **Brief Me** and **Protect My
 Attention** are Projection plus Workflow directions. **Help Me Communicate** is

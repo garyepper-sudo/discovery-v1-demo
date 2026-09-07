@@ -1,4 +1,9 @@
 import type { LeadershipConversationWorkspaceV1 } from "../workflow/leadershipConversation";
+import type { SharedMeetingPerspectiveV1 } from "../workflow/leadershipConversation/contracts";
+
+export type MeetingAlignmentProjectionV1={category:"no-signal"|"shared-support"|"shared-challenge"|"shared-uncertainty"|"different-perspectives";perspectives:readonly SharedMeetingPerspectiveV1[]};
+/** This projection is intentionally stance-only: it never interprets rationale text. */
+export function projectMeetingAlignmentV1(perspectives:readonly SharedMeetingPerspectiveV1[]):MeetingAlignmentProjectionV1{const current=[...perspectives].sort((a,b)=>a.createdAt.localeCompare(b.createdAt)||a.perspectiveId.localeCompare(b.perspectiveId));if(current.length<2)return{category:"no-signal",perspectives:current};const stances=new Set(current.map(value=>value.stance));if(stances.size!==1)return{category:"different-perspectives",perspectives:current};const stance=current[0]!.stance;return{category:stance==="agree"?"shared-support":stance==="challenge"?"shared-challenge":stance==="need-information"?"shared-uncertainty":"different-perspectives",perspectives:current};}
 import type {ChiefMeetingPackBodyV1} from "../workflow/leadershipConversation/meetingPackContracts";
 
 export type MeetingExecutiveContinuityV1={label:"Decision"|"Explicit non-decision"|"Open commitment"|"Unresolved question"|"Changed understanding"|"Still uncertain";text:string};

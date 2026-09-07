@@ -373,6 +373,7 @@ export class CanonicalProductWorkspaceAdapter {
   recordLeadershipConversationContext(input: Parameters<LeadershipConversationProductOperations["recordContext"]>[0]) { return this.leadership().recordContext(input); }
   createPreparedWorkProductVersion(input: Parameters<LeadershipConversationProductOperations["recordPreparation"]>[0]) { return this.leadership().recordPreparation(input); }
   freezePreparedWorkProduct(input: Parameters<LeadershipConversationProductOperations["freeze"]>[0]) { return this.leadership().freeze(input); }
+  freeze(input: Parameters<LeadershipConversationProductOperations["freeze"]>[0]) { return this.freezePreparedWorkProduct(input); }
   receiveLeadershipConversationUpload(input: Parameters<LeadershipConversationProductOperations["receiveUpload"]>[0]) { return this.leadership().receiveUpload(input); }
   generateLeadershipConversationProposals(input: Parameters<LeadershipConversationProductOperations["generateFixtureProposals"]>[0]) { return this.leadership().generateFixtureProposals(input); }
   recordTakeawayProposalDisposition(input: Parameters<LeadershipConversationProductOperations["review"]>[0]) { return this.leadership().review(input); }

@@ -269,6 +269,12 @@ or working material. Meeting Pack, Capture, and Review state are unchanged.
 
 Validation: `validate:cross-meeting-relevance-v1`.
 
+### GAP-ALPHA-ALIGNMENT-001 explicit multi-user meeting alignment
+
+**Status:** Resolved for bounded Alpha Prepare projection.
+
+Meeting participants may intentionally share one typed perspective on the exact current working-analysis digest for the selected Product Question. The existing Leadership Conversation workflow store retains the noncanonical, attributed record; the server reconstructs identity and current analysis. The projection uses typed stances only and excludes private content, silence, stale views, and unauthorized readers. Organization-wide alignment, Ask integration, and durable conclusion are deferred.
+
 ### GAP-C-022 reusable governed-protocol conformance foundation
 
 **Status:** Planned, not implemented.

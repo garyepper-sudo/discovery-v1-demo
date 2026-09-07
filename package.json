@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "validate:cross-meeting-relevance-v1": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateCrossMeetingRelevanceV1.ts",
+    "validate:multi-user-alignment-divergence-v1": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateMultiUserAlignmentDivergenceV1.ts",
     "validate:meeting-scoped-source-lineage": "NODE_OPTIONS=--conditions=react-server node --import tsx scripts/product/validateMeetingScopedSourceLineageV1.ts",
     "validate:meeting-truth-differentiation-v1": "NODE_ENV=test NODE_OPTIONS=--conditions=react-server node --import tsx scripts/product/validateMeetingTruthDifferentiationV1.ts",
     "validate:authenticated-alpha-acceptance-runner": "NODE_OPTIONS=--conditions=react-server tsx scripts/acceptance/validateAuthenticatedAlphaAcceptanceRunner.ts",
