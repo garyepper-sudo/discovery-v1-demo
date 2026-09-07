@@ -63,6 +63,18 @@ import { ChiefMeetingPackOwner } from "./chiefMeetingPackOwner";
 import { chiefMeetingPackInputSnapshotDigest, composeChiefMeetingPack } from "./chiefMeetingPackComposer";
 import type { ChiefMeetingPackViewV1, MeetingPackPrivateNoteIntentV1 } from "../workflow/leadershipConversation/meetingPackContracts";
 
+export type OptionalMeetingPackForAskV1=
+  |{status:"current";pack:ChiefMeetingPackViewV1}
+  |{status:"absent"}
+  |{status:"stale";stalePackIdentity:string};
+
+type OptionalMeetingPackForAskValidationRead=(input:Parameters<LeadershipConversationServerComposition["readMeetingPack"]>[0],read:()=>ReturnType<LeadershipConversationServerComposition["readMeetingPack"]>)=>ReturnType<LeadershipConversationServerComposition["readMeetingPack"]>;
+let optionalMeetingPackForAskValidationRead:OptionalMeetingPackForAskValidationRead|undefined;
+export function setOptionalMeetingPackForAskValidationReadV1(read?:OptionalMeetingPackForAskValidationRead):void{
+  if(process.env.DISCOVERY_UNIVERSAL_ASK_RUNTIME_REPAIR_VALIDATION!=="true")throw new Error("Meeting Pack Ask validation injection is unavailable.");
+  optionalMeetingPackForAskValidationRead=read;
+}
+
 export type LeadershipConversationServerComposition = {
   authorizePageCurrentAccess(input:{userId:string;organizationId:string}):Promise<boolean>;
   executiveHistoryAccess: CanonicalExecutiveHistoryAccessComposition;
@@ -100,6 +112,16 @@ export type LeadershipConversationServerComposition = {
   buildMeetingPack(input:{userId:string;organizationId:string;questionId:string;conversationId:string;seriesId:string}):Promise<ChiefMeetingPackViewV1>;
   reviseMeetingPack(input:{userId:string;organizationId:string;questionId:string;conversationId:string;seriesId:string;agendaText:string;talkingPointsText:string;expectedArtifactRevision:string;idempotencyKey:string}):Promise<ChiefMeetingPackViewV1|null>;
 };
+
+export async function readOptionalMeetingPackForAskV1(
+  server:Pick<LeadershipConversationServerComposition,"readMeetingPack">,
+  input:Parameters<LeadershipConversationServerComposition["readMeetingPack"]>[0],
+):Promise<OptionalMeetingPackForAskV1>{
+  const pack=await(optionalMeetingPackForAskValidationRead?optionalMeetingPackForAskValidationRead(input,()=>server.readMeetingPack(input)):server.readMeetingPack(input));
+  if(!pack)return{status:"absent"};
+  if(pack.potentiallyOutOfDate)return{status:"stale",stalePackIdentity:pack.artifactRevision};
+  return{status:"current",pack};
+}
 
 export function assertCloseAndContinueOccurrence1Arguments(argumentsList: readonly unknown[]): void {
   if (argumentsList.length !== 0) throw new Error("Close and continue request is invalid.");
