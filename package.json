@@ -38,6 +38,7 @@
     "validate:nine-artifact-current-access-delivery": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateNineArtifactCurrentAccessDelivery.ts",
     "validate:prepared-work-current-access": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validatePreparedWorkCurrentAccess.ts",
     "validate:participant-reference-meeting-access": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateParticipantReferenceMeetingAccess.ts",
+    "validate:backend-verified-clerk-target-identity": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateBackendVerifiedClerkTargetIdentity.ts",
     "validate:frozen-snapshot-current-access": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateFrozenSnapshotCurrentAccess.ts",
     "validate:leadership-history-current-access": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateLeadershipHistoryCurrentAccess.ts",
     "validate:executive-history-current-access": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateExecutiveHistoryCurrentAccess.ts",
