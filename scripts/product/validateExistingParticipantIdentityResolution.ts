@@ -26,10 +26,22 @@ class IsolatedBindings implements ExistingParticipantIdentityBindingRepository {
     await writeFile(this.file, JSON.stringify([...records, binding]), { mode: 0o600 });
     return binding;
   }
+
+  async findExistingParticipantIdentityBinding(input: { provider: "clerk"; providerSubject: string; }) {
+    const locatorDigest = createHmac("sha256", key).update(`${input.provider}:${input.providerSubject}`).digest("hex");
+    const records = await this.all();
+    const matches = records.filter((record) => record.locatorDigest === locatorDigest);
+    if (matches.length > 1) throw new Error("ambiguous binding");
+    return matches[0];
+  }
 }
 
 async function resolve(file: string, subject: string) {
   return new ExistingParticipantIdentityResolutionService(new IsolatedBindings(file)).resolve({ authenticatedIdentity: safeIdentity(subject) });
+}
+
+async function lookup(file: string, subject: string) {
+  return new ExistingParticipantIdentityResolutionService(new IsolatedBindings(file)).lookupExistingParticipantBinding(safeIdentity(subject));
 }
 
 async function fresh(file: string) {
@@ -42,7 +54,9 @@ async function main() {
   if (process.argv[2] === "--fresh") {
     const a = await resolve(process.argv[3]!, "synthetic-user-a");
     const b = await resolve(process.argv[3]!, "synthetic-user-b");
-    process.stdout.write(JSON.stringify({ a, b }));
+    const lookupA = await lookup(process.argv[3]!, "synthetic-user-a");
+    const lookupB = await lookup(process.argv[3]!, "synthetic-user-b");
+    process.stdout.write(JSON.stringify({ a, b, lookupA, lookupB }));
     return;
   }
   const root = await mkdtemp(path.join(tmpdir(), "discovery-existing-participant-identity-"));
@@ -59,11 +73,20 @@ async function main() {
     assert.deepEqual(replay, a); assert.equal(await readFile(file, "utf8"), first);
     const restart = await fresh(file);
     assert.deepEqual(restart.a, a); assert.deepEqual(restart.b, b);
+    assert.deepEqual(restart.lookupA, { status: "found", participantRef: a.status === "resolved" ? a.participantRef : "" });
+    assert.deepEqual(restart.lookupB, { status: "found", participantRef: b.status === "resolved" ? b.participantRef : "" });
+    const beforeLookup = await readFile(file, "utf8");
+    assert.deepEqual(await lookup(file, "synthetic-user-a"), { status: "found", participantRef: a.status === "resolved" ? a.participantRef : "" });
+    assert.deepEqual(await lookup(file, "synthetic-user-b"), { status: "found", participantRef: b.status === "resolved" ? b.participantRef : "" });
+    assert.deepEqual(await lookup(file, "synthetic-user-unknown"), { status: "not-found" });
+    assert.deepEqual(await lookup(file, "synthetic-user-unknown"), { status: "not-found" });
+    assert.equal(await readFile(file, "utf8"), beforeLookup);
     const beforeFailures = await readFile(file, "utf8");
     const service = new ExistingParticipantIdentityResolutionService(new IsolatedBindings(file));
     const unknown = await service.resolve({ authenticatedIdentity: { status: "denied", reason: "clerk-authentication-required" } });
     const forged = await service.resolve({ authenticatedIdentity: safeIdentity("synthetic-user-a"), participantRef: "participant:forged", actorRef: "actor:forged", organizationId: "foreign", role: "admin", capability: "all" });
     assert.deepEqual(unknown, { status: "unavailable" }); assert.deepEqual(forged, unknown);
+    assert.deepEqual(await service.lookupExistingParticipantBinding({ status: "denied", reason: "clerk-authentication-required" } as never), { status: "unavailable" });
     assert.equal(await readFile(file, "utf8"), beforeFailures);
     await writeFile(file, JSON.stringify([...JSON.parse(beforeFailures) as StoredBinding[], { ...(JSON.parse(beforeFailures) as StoredBinding[])[0]!, bindingId: "binding:duplicate" }]));
     const ambiguous = await resolve(file, "synthetic-user-a");

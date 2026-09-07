@@ -21,6 +21,7 @@ import {
   type AlphaDisclosureAuditRepository,
   type AssignPersistenceSafeActorInput,
   type ExistingParticipantIdentityBindingRepository,
+  type ExistingParticipantIdentityBindingV1,
   type PersistenceSafeActorReferenceRepository,
   type GrantAlphaAccessInput,
   type RevokeAlphaAccessInput,
@@ -96,6 +97,29 @@ export class PostgresAlphaAccessRecordRepository
       `;
       return { bindingId: rows[0]!.binding_id, participantRef: rows[0]!.participant_ref, createdAt: new Date(rows[0]!.created_at).toISOString() };
     });
+  }
+
+  async findExistingParticipantIdentityBinding(input: { provider: "clerk"; providerSubject: string }): Promise<ExistingParticipantIdentityBindingV1 | undefined> {
+    validateIdentity(input.providerSubject, "providerSubject");
+    if (input.provider !== "clerk") {
+      throw new AlphaStorageError("integrity-failure", "Invalid participant identity provider");
+    }
+    const locatorDigest = this.participantLocatorDigest(input.provider, input.providerSubject);
+    try {
+      const rows = await this.sql<{ binding_id: string; participant_ref: string; created_at: Date | string }[]>`
+        SELECT binding_id, participant_ref, created_at
+        FROM existing_participant_identity_bindings
+        WHERE provider = ${input.provider} AND locator_digest = ${locatorDigest}
+      `;
+      if (rows.length > 1) throw new AlphaStorageError("integrity-failure", "Ambiguous participant identity binding");
+      const row = rows[0];
+      return row
+        ? { bindingId: row.binding_id, participantRef: row.participant_ref, createdAt: new Date(row.created_at).toISOString() }
+        : undefined;
+    } catch (error) {
+      if (error instanceof AlphaStorageError) throw error;
+      throw new AlphaStorageError("unavailable", "Participant identity binding store unavailable", true);
+    }
   }
 
   async assignPersistenceSafeActor(input: AssignPersistenceSafeActorInput) {

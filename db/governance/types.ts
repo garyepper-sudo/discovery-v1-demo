@@ -51,12 +51,20 @@ export type ExistingParticipantIdentityBindingV1 = {
   createdAt: string;
 };
 
+export type ExistingParticipantIdentityLookup =
+  | { status: "found"; participantRef: string }
+  | { status: "not-found" };
+
 export interface ExistingParticipantIdentityBindingRepository {
   resolveOrBindExistingParticipantIdentity(input: {
     provider: "clerk";
     providerSubject: string;
     resolvedAt: string;
   }): Promise<ExistingParticipantIdentityBindingV1>;
+  findExistingParticipantIdentityBinding(input: {
+    provider: "clerk";
+    providerSubject: string;
+  }): Promise<ExistingParticipantIdentityBindingV1 | undefined>;
 }
 
 export type RevokeAlphaAccessInput = {

@@ -1,5 +1,7 @@
-import type { ExistingParticipantIdentityBindingRepository } from "../../db/governance/types";
+import type { ExistingParticipantIdentityBindingRepository, ExistingParticipantIdentityLookup } from "../../db/governance/types";
 import type { ClerkVerifiedConsumerIdentityResolution } from "../../engine/v3/governance/clerkVerifiedConsumerIdentity";
+
+export type VerifiedClerkLocator = Extract<ClerkVerifiedConsumerIdentityResolution, { status: "verified" }>;
 
 export type ExistingParticipantIdentityResolution =
   | { status: "resolved"; participantRef: string }
@@ -31,6 +33,28 @@ export class ExistingParticipantIdentityResolutionService {
         resolvedAt: identity.verifiedAt,
       });
       return { status: "resolved", participantRef: binding.participantRef };
+    } catch {
+      return unavailable();
+    }
+  }
+
+  async lookupExistingParticipantBinding(verifiedLocator: VerifiedClerkLocator): Promise<ExistingParticipantIdentityLookup | { status: "unavailable" }> {
+    if (
+      !verifiedLocator ||
+      typeof verifiedLocator !== "object" ||
+      verifiedLocator.status !== "verified" ||
+      !verifiedLocator.identity ||
+      typeof verifiedLocator.identity !== "object" ||
+      Array.isArray(verifiedLocator.identity)
+    ) return unavailable();
+    const identity = parseVerifiedIdentity(verifiedLocator);
+    if (!identity) return unavailable();
+    try {
+      const binding = await this.participantBindings.findExistingParticipantIdentityBinding({
+        provider: identity.provider,
+        providerSubject: identity.providerSubject,
+      });
+      return binding ? { status: "found", participantRef: binding.participantRef } : { status: "not-found" };
     } catch {
       return unavailable();
     }
