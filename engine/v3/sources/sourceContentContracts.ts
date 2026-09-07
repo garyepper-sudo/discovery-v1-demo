@@ -48,6 +48,27 @@ export type SourceContentWriteReceiptV1 = {
   receiptDigest: string;
 };
 
+export type SourceContentBodyRestorationRequestV1 = {
+  contractVersion: "1";
+  organizationId: string;
+  sourceBindingId: string;
+  sourceContentVersionId: string;
+  purposeRef: string;
+  bytes: Uint8Array;
+  restoredByActorRef: string;
+  authorization: ScopedGovernanceContext;
+};
+
+export type SourceContentBodyRestorationResultV1 = {
+  contractVersion: "1";
+  organizationId: string;
+  sourceBindingId: string;
+  sourceContentVersionId: string;
+  exactContentDigest: string;
+  byteLength: number;
+  disposition: "restored" | "already-present";
+};
+
 export type SourceContentReadRequestV1 = {
   contractVersion: "1";
   organizationId: string;
@@ -116,6 +137,7 @@ export interface SourceContentRepository {
   write(input: ResolvedSourceContentWriteV1): Promise<SourceContentWriteReceiptV1>;
   read(organizationId: string, sourceContentVersionId: string): Promise<{ version: SourceContentVersionV1; bytes: Uint8Array } | null>;
   resolveExactMetadata?(organizationId: string, sourceBindingId: string, normalizedContentDigest: string): Promise<SourceContentVersionV1 | null>;
+  restoreMissingBody?(input: { organizationId: string; sourceBindingId: string; sourceContentVersionId: string; bytes: Uint8Array }): Promise<SourceContentBodyRestorationResultV1>;
   resetDevelopmentFixture(organizationId: string): Promise<boolean>;
 }
 
