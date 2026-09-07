@@ -99,6 +99,24 @@ export const alphaActorMappings = pgTable(
   ],
 );
 
+export const existingParticipantIdentityBindings = pgTable(
+  "existing_participant_identity_bindings",
+  {
+    bindingId: text("binding_id").primaryKey(),
+    provider: text("provider").notNull(),
+    locatorDigest: text("locator_digest").notNull(),
+    participantRef: text("participant_ref").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true, mode: "string" }).notNull(),
+  },
+  (table) => [
+    check("existing_participant_identity_binding_provider_check", sql`${table.provider} = 'clerk'`),
+    check("existing_participant_identity_binding_locator_digest_check", sql`${table.locatorDigest} ~ '^[0-9a-f]{64}$'`),
+    check("existing_participant_identity_binding_participant_ref_check", sql`${table.participantRef} ~ '^participant:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'`),
+    uniqueIndex("existing_participant_identity_binding_locator_uq").on(table.provider, table.locatorDigest),
+    uniqueIndex("existing_participant_identity_binding_participant_uq").on(table.participantRef),
+  ],
+);
+
 export const alphaAccessLifecycleEvents = pgTable(
   "alpha_access_lifecycle_events",
   {

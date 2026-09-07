@@ -20,6 +20,7 @@ import {
   type AlphaAccessRecordRepository,
   type AlphaDisclosureAuditRepository,
   type AssignPersistenceSafeActorInput,
+  type ExistingParticipantIdentityBindingRepository,
   type PersistenceSafeActorReferenceRepository,
   type GrantAlphaAccessInput,
   type RevokeAlphaAccessInput,
@@ -55,15 +56,46 @@ function stable(value: unknown): string {
 }
 
 export class PostgresAlphaAccessRecordRepository
-  implements AlphaAccessRecordRepository, RestorableAlphaAccessRecordRepository, PersistenceSafeActorReferenceRepository
+  implements AlphaAccessRecordRepository, RestorableAlphaAccessRecordRepository, PersistenceSafeActorReferenceRepository, ExistingParticipantIdentityBindingRepository
 {
-  constructor(private readonly sql: GovernanceSql, private readonly actorSubjectLookupKey?: string) {}
+  constructor(private readonly sql: GovernanceSql, private readonly actorSubjectLookupKey?: string, private readonly participantLocatorKey?: string) {}
 
   private subjectLookupDigest(consumerId: string): string {
     if (!this.actorSubjectLookupKey || this.actorSubjectLookupKey.length < 32) {
       throw new AlphaStorageError("unavailable", "Alpha actor mapping key unavailable");
     }
     return createHmac("sha256", this.actorSubjectLookupKey).update(consumerId).digest("hex");
+  }
+
+  private participantLocatorDigest(provider: "clerk", providerSubject: string): string {
+    if (!this.participantLocatorKey || this.participantLocatorKey.length < 32) {
+      throw new AlphaStorageError("unavailable", "Participant identity locator key unavailable");
+    }
+    return createHmac("sha256", this.participantLocatorKey).update(`${provider}:${providerSubject}`).digest("hex");
+  }
+
+  async resolveOrBindExistingParticipantIdentity(input: { provider: "clerk"; providerSubject: string; resolvedAt: string; }) {
+    validateIdentity(input.providerSubject, "providerSubject");
+    if (input.provider !== "clerk" || !Number.isFinite(Date.parse(input.resolvedAt))) {
+      throw new AlphaStorageError("integrity-failure", "Invalid participant identity resolution");
+    }
+    const locatorDigest = this.participantLocatorDigest(input.provider, input.providerSubject);
+    return this.serializable(async (tx) => {
+      await tx`SELECT pg_advisory_xact_lock(hashtextextended(${`participant:${locatorDigest}`}, 0))`;
+      const existing = await tx<{ binding_id: string; participant_ref: string; created_at: Date | string }[]>`
+        SELECT binding_id, participant_ref, created_at
+        FROM existing_participant_identity_bindings
+        WHERE provider = ${input.provider} AND locator_digest = ${locatorDigest}
+      `;
+      if (existing.length > 1) throw new AlphaStorageError("integrity-failure", "Ambiguous participant identity binding");
+      if (existing[0]) return { bindingId: existing[0].binding_id, participantRef: existing[0].participant_ref, createdAt: new Date(existing[0].created_at).toISOString() };
+      const rows = await tx<{ binding_id: string; participant_ref: string; created_at: Date | string }[]>`
+        INSERT INTO existing_participant_identity_bindings (binding_id, provider, locator_digest, participant_ref, created_at)
+        VALUES (${`participant-identity-binding:${randomUUID()}`}, ${input.provider}, ${locatorDigest}, ${`participant:${randomUUID()}`}, ${input.resolvedAt})
+        RETURNING binding_id, participant_ref, created_at
+      `;
+      return { bindingId: rows[0]!.binding_id, participantRef: rows[0]!.participant_ref, createdAt: new Date(rows[0]!.created_at).toISOString() };
+    });
   }
 
   async assignPersistenceSafeActor(input: AssignPersistenceSafeActorInput) {

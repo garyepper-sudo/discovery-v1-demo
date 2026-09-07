@@ -45,6 +45,20 @@ export interface PersistenceSafeActorReferenceRepository {
   resolvePersistenceSafeActor(input: { consumerId: string; organizationId: string; resolvedAt: string }): Promise<PersistenceSafeActorReferenceV1 | undefined>;
 }
 
+export type ExistingParticipantIdentityBindingV1 = {
+  bindingId: string;
+  participantRef: string;
+  createdAt: string;
+};
+
+export interface ExistingParticipantIdentityBindingRepository {
+  resolveOrBindExistingParticipantIdentity(input: {
+    provider: "clerk";
+    providerSubject: string;
+    resolvedAt: string;
+  }): Promise<ExistingParticipantIdentityBindingV1>;
+}
+
 export type RevokeAlphaAccessInput = {
   accessRecordId: string;
   actor: string;
