@@ -97,6 +97,20 @@ The Northstar preparation-time fixture uses an explicit server-only coordinator 
 **Architecture:** [CANONICAL_PRODUCT_ARCHITECTURE.md](./CANONICAL_PRODUCT_ARCHITECTURE.md)
 
 Each decision below is active unless explicitly superseded by a later entry.
+
+## DEC-PROD-067 — Narrow cross-meeting relevance is a read-only Product Question projection
+
+- **Decision:** In Prepare only, show at most three reviewed owner results from
+  another authorized meeting when both workspaces share the exact canonical
+  `ProductQuestion` identity. Use existing workspace access, reviewed
+  dispositions, owner routing receipts, and proposal citations; do not read
+  origin source bodies for card rendering.
+- **Boundary:** The projection is non-persistent and non-authoritative. It does
+  not alter Prepared Work, Meeting Packs, Capture, Review, or lifecycle state.
+  Private notes, talking points, drafts, Ask results, working analysis,
+  unreviewed proposals, rejected items, and inaccessible meetings are omitted.
+- **Status:** Canonical bounded Alpha direction; broad relevance and
+  organization-wide search remain deferred.
 Changing one requires the process in
 [PRODUCT_GOVERNANCE.md](./PRODUCT_GOVERNANCE.md).
 

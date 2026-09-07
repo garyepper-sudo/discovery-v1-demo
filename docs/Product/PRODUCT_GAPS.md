@@ -256,6 +256,19 @@ cross-user learning expansions below.
 
 ## Architecture-compression deferrals
 
+### GAP-ALPHA-RELEVANCE-001 narrow cross-meeting relevance
+
+**Status:** Resolved for bounded Alpha Prepare projection; broad relevance and
+organization-wide search remain deferred.
+
+The Prepare experience now composes at most three reviewed developments from
+another authorized meeting only when both meetings share the exact existing
+`ProductQuestion` identity. The projection is read-only, uses current
+authorized workspace access and reviewed owner receipts, and exposes no private
+or working material. Meeting Pack, Capture, and Review state are unchanged.
+
+Validation: `validate:cross-meeting-relevance-v1`.
+
 ### GAP-C-022 reusable governed-protocol conformance foundation
 
 **Status:** Planned, not implemented.

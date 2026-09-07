@@ -107,3 +107,9 @@
   :global(body[data-meeting-pack-print="agenda"]) .page .privateSavedPrint { display:none !important; }
   .packDraft button { display:none; }
 }
+.relevantElsewhere { margin-top: 1.25rem; }
+.relevantElsewhereList { display: grid; gap: .75rem; }
+.relevantElsewhereCard { border: 1px solid var(--alpha-border, #d8d3c8); border-radius: .75rem; padding: 1rem; background: var(--alpha-surface, #fffdf8); }
+.relevantElsewhereCard p { margin: .35rem 0; }
+.relevantElsewhereCard details { margin-top: .65rem; }
+@media (max-width: 420px) { .relevantElsewhereList { grid-template-columns: 1fr; } }

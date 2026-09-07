@@ -1351,6 +1351,15 @@ revocation design, privacy hard gates, and adversarial re-identification tests.
 
 ### Chief capability direction
 
+#### Narrow Cross-Meeting Relevance V1
+
+Phase: Alpha Prepare composition. Addresses `GAP-ALPHA-RELEVANCE-001`.
+This bounded read-only projection surfaces up to three reviewed owner results
+from another authorized meeting when the receiving and originating workspaces
+share the exact canonical Product Question. It adds no owner, persistence
+family, source scope, search, or Meeting Pack integration. Broad relevance,
+cross-user disclosure, and organization-wide search remain deferred.
+
 Intelligent carry-forward is the highest-priority competitive mechanic to
 evaluate, but creates no `CarryForward` owner. **Brief Me** and **Protect My
 Attention** are Projection plus Workflow directions. **Help Me Communicate** is
