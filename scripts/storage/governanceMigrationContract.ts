@@ -24,6 +24,33 @@ export type GovernanceMigrationState = {
   reason: string;
 };
 
+export type GovernanceMigrationIdentity = {
+  hash: string;
+  folderMillis: number;
+};
+
+export type GovernanceMigrationJournalEntry = {
+  hash: string;
+  created_at: string;
+};
+
+/**
+ * A database journal is eligible to advance only when it is the exact ordered
+ * prefix of the committed migration journal.  In particular, this rejects
+ * reordered, duplicated, skipped, altered, and extra applied entries.
+ */
+export function hasExactCanonicalMigrationPrefix(
+  expected: readonly GovernanceMigrationIdentity[],
+  applied: readonly GovernanceMigrationJournalEntry[],
+): boolean {
+  return applied.length <= expected.length && applied.every((entry, index) => {
+    const canonical = expected[index];
+    return canonical !== undefined &&
+      entry.hash === canonical.hash &&
+      entry.created_at === String(canonical.folderMillis);
+  });
+}
+
 const JOURNAL_SCHEMA = "drizzle";
 const JOURNAL_TABLE = "__drizzle_migrations";
 const LOCK_NAME = "discovery:alpha-governance-migrations";
@@ -90,17 +117,31 @@ const expectedActorColumns = [
   ["assigned_at", "timestamp with time zone", "NO"], ["revoked_at", "timestamp with time zone", "YES"],
   ["predecessor_mapping_id", "text", "YES"], ["assignment_idempotency_key", "text", "NO"],
 ] as const;
-const actorSchemaObjects = new Set([
-  "relation:alpha_actor_mappings",
-  ...expectedIndexes.filter((name) => name.startsWith("alpha_actor")).map((name) => `index:${name}`),
-  ...expectedConstraints.filter((name) => name.startsWith("alpha_actor")).map((name) => `constraint:${name}`),
-  ...expectedActorColumns.map(([name, type, nullable]) => `column:alpha_actor_mappings:${name}:${type}:${nullable}`),
-]);
-
 export const canonicalGovernanceMigrationsFolder = path.join(
   process.cwd(),
   "db/migrations",
 );
+
+async function readGovernanceMigrationPrefix(
+  sql: Sql,
+  migrationsFolder: string,
+): Promise<{
+  expected: readonly GovernanceMigrationIdentity[];
+  applied: readonly GovernanceMigrationJournalEntry[];
+  exact: boolean;
+}> {
+  const expected = readMigrationFiles({ migrationsFolder });
+  const applied = await sql<GovernanceMigrationJournalEntry[]>`
+    SELECT hash, created_at::text
+    FROM drizzle.__drizzle_migrations
+    ORDER BY created_at, id
+  `;
+  return {
+    expected,
+    applied,
+    exact: hasExactCanonicalMigrationPrefix(expected, applied),
+  };
+}
 
 async function schemaEvidence(sql: Sql): Promise<{
   complete: boolean;
@@ -216,53 +257,36 @@ export async function inspectGovernanceMigrationState(
       };
     }
 
-    const applied = await sql<{
-      id: number;
-      hash: string;
-      created_at: string;
-    }[]>`
-      SELECT id, hash, created_at::text
-      FROM drizzle.__drizzle_migrations
-      ORDER BY created_at, id
-    `;
-    const journalMatches =
-      applied.length <= expected.length &&
-      applied.every((row, index) =>
-        row.hash === expected[index]?.hash &&
-        Number(row.created_at) === expected[index]?.folderMillis
-      );
-    if (!journalMatches || applied.length > expected.length) {
+    const prefix = await readGovernanceMigrationPrefix(sql, migrationsFolder);
+    if (!prefix.exact) {
       return {
         status: "DRIFTED",
         expectedMigrations: expected.length,
-        appliedMigrations: applied.length,
+        appliedMigrations: prefix.applied.length,
         journalPresent: true,
         schemaComplete: schema.complete,
         missingSchemaObjects: schema.missing,
         reason: "Database migration history does not match committed migration identity or digest.",
       };
     }
-    if (applied.length < expected.length) {
-      const predecessorIsValid = applied.length === expected.length - 1 &&
-        schema.missing.length === actorSchemaObjects.size &&
-        schema.missing.every((item) => actorSchemaObjects.has(item));
+    if (prefix.applied.length < expected.length) {
       return {
-        status: predecessorIsValid ? "PENDING" : "PARTIAL",
+        status: prefix.exact ? "PENDING" : "PARTIAL",
         expectedMigrations: expected.length,
-        appliedMigrations: applied.length,
+        appliedMigrations: prefix.applied.length,
         journalPresent: true,
         schemaComplete: false,
         missingSchemaObjects: schema.missing,
-        reason: predecessorIsValid
-          ? "Valid predecessor schema; persistence-safe actor migration remains pending."
+        reason: prefix.exact
+          ? "Valid canonical migration prefix; remaining migrations are pending."
           : "Migration journal and predecessor schema are inconsistent.",
       };
     }
-    if (!schema.complete && (applied.length > 0 || schema.anyPresent)) {
+    if (!schema.complete && (prefix.applied.length > 0 || schema.anyPresent)) {
       return {
         status: "PARTIAL",
         expectedMigrations: expected.length,
-        appliedMigrations: applied.length,
+        appliedMigrations: prefix.applied.length,
         journalPresent: true,
         schemaComplete: false,
         missingSchemaObjects: schema.missing,
@@ -272,7 +296,7 @@ export async function inspectGovernanceMigrationState(
     return {
       status: "CURRENT",
       expectedMigrations: expected.length,
-      appliedMigrations: applied.length,
+      appliedMigrations: prefix.applied.length,
       journalPresent: true,
       schemaComplete: true,
       missingSchemaObjects: [],
@@ -305,6 +329,13 @@ export async function applyGovernanceMigrations(
       `Migration refused from ${before.status} state: ${before.reason}`,
     );
     if (before.status !== "CURRENT") {
+      if (before.journalPresent) {
+        const prefix = await readGovernanceMigrationPrefix(sql, migrationsFolder);
+        assert.ok(
+          prefix.exact,
+          "Migration refused because the database journal is not an exact canonical prefix.",
+        );
+      }
       await migrate(drizzle(sql), { migrationsFolder });
     }
     const after = await inspectGovernanceMigrationState(sql, migrationsFolder);
