@@ -29,6 +29,13 @@
       "when": 1789063200000,
       "tag": "0003_participant_reference_meeting_access",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1789156800000,
+      "tag": "0004_participant_identity_stable_subject_v2",
+      "breakpoints": true
     }
   ]
 }

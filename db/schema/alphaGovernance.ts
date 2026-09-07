@@ -117,6 +117,26 @@ export const existingParticipantIdentityBindings = pgTable(
   ],
 );
 
+export const participantIdentityStableSubjectMappings = pgTable(
+  "participant_identity_stable_subject_mappings",
+  {
+    bindingId: text("binding_id").primaryKey(), provider: text("provider").notNull(), stableSubjectDigest: text("stable_subject_digest").notNull(), participantRef: text("participant_ref").notNull(), createdAt: timestamp("created_at", { withTimezone: true, mode: "string" }).notNull(),
+  },
+  (table) => [
+    check("participant_identity_stable_subject_mapping_provider_check", sql`${table.provider} = 'clerk'`), check("participant_identity_stable_subject_mapping_digest_check", sql`${table.stableSubjectDigest} ~ '^[0-9a-f]{64}$'`), check("participant_identity_stable_subject_mapping_participant_ref_check", sql`${table.participantRef} ~ '^participant:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'`), uniqueIndex("participant_identity_stable_subject_mapping_locator_uq").on(table.provider, table.stableSubjectDigest), uniqueIndex("participant_identity_stable_subject_mapping_participant_uq").on(table.participantRef),
+  ],
+);
+
+export const participantIdentityNamespaceAnchors = pgTable(
+  "participant_identity_namespace_anchors",
+  {
+    namespace: text("namespace").primaryKey(), anchorId: text("anchor_id").notNull().unique(), legacyNamespaceFingerprint: text("legacy_namespace_fingerprint").notNull(), stableInstanceFingerprint: text("stable_instance_fingerprint").notNull(), activationIdempotencyKey: text("activation_idempotency_key").notNull().unique(), activatedAt: timestamp("activated_at", { withTimezone: true, mode: "string" }).notNull(),
+  },
+  (table) => [
+    check("participant_identity_namespace_anchor_namespace_check", sql`${table.namespace} = 'clerk-participant-identity-v1-to-v2'`), check("participant_identity_namespace_anchor_id_check", sql`${table.anchorId} <> '' AND ${table.anchorId} <> '*' AND ${table.anchorId} = btrim(${table.anchorId})`), check("participant_identity_namespace_anchor_legacy_fingerprint_check", sql`${table.legacyNamespaceFingerprint} ~ '^[0-9a-f]{64}$'`), check("participant_identity_namespace_anchor_instance_fingerprint_check", sql`${table.stableInstanceFingerprint} ~ '^[0-9a-f]{64}$'`), check("participant_identity_namespace_anchor_activation_key_check", sql`${table.activationIdempotencyKey} <> '' AND ${table.activationIdempotencyKey} <> '*' AND ${table.activationIdempotencyKey} = btrim(${table.activationIdempotencyKey})`),
+  ],
+);
+
 export const alphaAccessLifecycleEvents = pgTable(
   "alpha_access_lifecycle_events",
   {

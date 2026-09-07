@@ -51,6 +51,11 @@ export type ExistingParticipantIdentityBindingV1 = {
   createdAt: string;
 };
 
+export type LegacyParticipantIdentityNamespaceAnchorV1 = {
+  anchorId: string;
+  activatedAt: string;
+};
+
 export type ExistingParticipantIdentityLookup =
   | { status: "found"; participantRef: string }
   | { status: "not-found" };
@@ -65,6 +70,10 @@ export interface ExistingParticipantIdentityBindingRepository {
     provider: "clerk";
     providerSubject: string;
   }): Promise<ExistingParticipantIdentityBindingV1 | undefined>;
+  activateLegacyParticipantIdentityNamespaceAnchor(input: {
+    activationIdempotencyKey: string;
+    activatedAt: string;
+  }): Promise<LegacyParticipantIdentityNamespaceAnchorV1>;
 }
 
 export type ParticipantReferenceAccessGrantRecord = {

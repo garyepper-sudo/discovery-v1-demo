@@ -22,6 +22,7 @@ import {
   type AssignPersistenceSafeActorInput,
   type ExistingParticipantIdentityBindingRepository,
   type ExistingParticipantIdentityBindingV1,
+  type LegacyParticipantIdentityNamespaceAnchorV1,
   type PersistenceSafeActorReferenceRepository,
   type GrantAlphaAccessInput,
   type RevokeAlphaAccessInput,
@@ -58,11 +59,12 @@ function stable(value: unknown): string {
   }
   return JSON.stringify(value);
 }
+const PARTICIPANT_IDENTITY_CUTOVER_NAMESPACE = "clerk-participant-identity-v1-to-v2";
 
 export class PostgresAlphaAccessRecordRepository
   implements AlphaAccessRecordRepository, RestorableAlphaAccessRecordRepository, PersistenceSafeActorReferenceRepository, ExistingParticipantIdentityBindingRepository
 {
-  constructor(private readonly sql: GovernanceSql, private readonly actorSubjectLookupKey?: string, private readonly participantLocatorKey?: string) {}
+  constructor(private readonly sql: GovernanceSql, private readonly actorSubjectLookupKey?: string, private readonly participantLocatorKey?: string, private readonly participantStableInstanceIdentity?: string) {}
 
   private subjectLookupDigest(consumerId: string): string {
     if (!this.actorSubjectLookupKey || this.actorSubjectLookupKey.length < 32) {
@@ -77,6 +79,34 @@ export class PostgresAlphaAccessRecordRepository
     }
     return createHmac("sha256", this.participantLocatorKey).update(`${provider}:${providerSubject}`).digest("hex");
   }
+  private participantLegacyNamespaceFingerprint(): string { return this.participantFingerprint("discovery:participant-identity:legacy-namespace:v1"); }
+  private participantStableInstanceFingerprint(): string {
+    if (!this.participantStableInstanceIdentity) throw new AlphaStorageError("unavailable", "Participant identity stable instance unavailable");
+    return this.participantFingerprint(`discovery:participant-identity:stable-instance:v2:${this.participantStableInstanceIdentity}`);
+  }
+  private participantFingerprint(value: string): string {
+    if (!this.participantLocatorKey || this.participantLocatorKey.length < 32) throw new AlphaStorageError("unavailable", "Participant identity locator key unavailable");
+    return createHmac("sha256", this.participantLocatorKey).update(value).digest("hex");
+  }
+  private participantV2StableSubjectDigest(provider: "clerk", providerSubject: string): string {
+    return this.participantFingerprint(`discovery:participant-identity:stable-subject:v2:${this.participantStableInstanceFingerprint()}:${provider}:${providerSubject}`);
+  }
+  private async activeParticipantIdentityAnchor(executor: GovernanceExecutor): Promise<LegacyParticipantIdentityNamespaceAnchorV1 | undefined> {
+    const rows = await executor<{ anchor_id: string; legacy_namespace_fingerprint: string; stable_instance_fingerprint: string; activated_at: Date | string }[]>`SELECT anchor_id, legacy_namespace_fingerprint, stable_instance_fingerprint, activated_at FROM participant_identity_namespace_anchors WHERE namespace = ${PARTICIPANT_IDENTITY_CUTOVER_NAMESPACE}`;
+    if (rows.length > 1) throw new AlphaStorageError("integrity-failure", "Ambiguous participant identity namespace anchor");
+    const row = rows[0]; if (!row) return undefined;
+    if (row.legacy_namespace_fingerprint !== this.participantLegacyNamespaceFingerprint() || row.stable_instance_fingerprint !== this.participantStableInstanceFingerprint()) throw new AlphaStorageError("integrity-failure", "Participant identity namespace anchor does not match this stable instance");
+    return { anchorId: row.anchor_id, activatedAt: new Date(row.activated_at).toISOString() };
+  }
+  private async resolveParticipantBinding(executor: GovernanceExecutor, provider: "clerk", v1Digest: string, v2Digest?: string) {
+    const v2 = v2Digest ? await executor<{ binding_id: string; participant_ref: string; created_at: Date | string }[]>`SELECT binding_id, participant_ref, created_at FROM participant_identity_stable_subject_mappings WHERE provider = ${provider} AND stable_subject_digest = ${v2Digest}` : undefined;
+    if (v2 && v2.length > 1) throw new AlphaStorageError("integrity-failure", "Ambiguous V2 participant identity binding");
+    const v1 = await executor<{ binding_id: string; participant_ref: string; created_at: Date | string }[]>`SELECT binding_id, participant_ref, created_at FROM existing_participant_identity_bindings WHERE provider = ${provider} AND locator_digest = ${v1Digest}`;
+    if (v1.length > 1) throw new AlphaStorageError("integrity-failure", "Ambiguous V1 participant identity binding");
+    if (!v2Digest) return { selected: v1[0] ? { bindingId: v1[0].binding_id, participantRef: v1[0].participant_ref, createdAt: new Date(v1[0].created_at).toISOString() } : undefined, v1: v1[0], v2: undefined };
+    if (v1[0] && v2![0] && v1[0].participant_ref !== v2![0].participant_ref) throw new AlphaStorageError("integrity-failure", "Conflicting V1 and V2 participant identity bindings");
+    const selected = v2![0] ?? v1[0]; return { selected: selected ? { bindingId: selected.binding_id, participantRef: selected.participant_ref, createdAt: new Date(selected.created_at).toISOString() } : undefined, v1: v1[0], v2: v2![0] };
+  }
 
   async resolveOrBindExistingParticipantIdentity(input: { provider: "clerk"; providerSubject: string; resolvedAt: string; }) {
     validateIdentity(input.providerSubject, "providerSubject");
@@ -86,13 +116,17 @@ export class PostgresAlphaAccessRecordRepository
     const locatorDigest = this.participantLocatorDigest(input.provider, input.providerSubject);
     return this.serializable(async (tx) => {
       await tx`SELECT pg_advisory_xact_lock(hashtextextended(${`participant:${locatorDigest}`}, 0))`;
-      const existing = await tx<{ binding_id: string; participant_ref: string; created_at: Date | string }[]>`
-        SELECT binding_id, participant_ref, created_at
-        FROM existing_participant_identity_bindings
-        WHERE provider = ${input.provider} AND locator_digest = ${locatorDigest}
-      `;
-      if (existing.length > 1) throw new AlphaStorageError("integrity-failure", "Ambiguous participant identity binding");
-      if (existing[0]) return { bindingId: existing[0].binding_id, participantRef: existing[0].participant_ref, createdAt: new Date(existing[0].created_at).toISOString() };
+      const anchor = await this.activeParticipantIdentityAnchor(tx);
+      const v2Digest = anchor ? this.participantV2StableSubjectDigest(input.provider, input.providerSubject) : undefined;
+      const existing = await this.resolveParticipantBinding(tx, input.provider, locatorDigest, v2Digest);
+      if (existing.selected) {
+        if (v2Digest && existing.v1 && !existing.v2) await tx`INSERT INTO participant_identity_stable_subject_mappings (binding_id, provider, stable_subject_digest, participant_ref, created_at) VALUES (${`participant-identity-stable-subject-mapping:${randomUUID()}`}, ${input.provider}, ${v2Digest}, ${existing.v1.participant_ref}, ${input.resolvedAt})`;
+        return existing.selected;
+      }
+      if (v2Digest) {
+        const rows = await tx<{ binding_id: string; participant_ref: string; created_at: Date | string }[]>`INSERT INTO participant_identity_stable_subject_mappings (binding_id, provider, stable_subject_digest, participant_ref, created_at) VALUES (${`participant-identity-stable-subject-mapping:${randomUUID()}`}, ${input.provider}, ${v2Digest}, ${`participant:${randomUUID()}`}, ${input.resolvedAt}) RETURNING binding_id, participant_ref, created_at`;
+        return { bindingId: rows[0]!.binding_id, participantRef: rows[0]!.participant_ref, createdAt: new Date(rows[0]!.created_at).toISOString() };
+      }
       const rows = await tx<{ binding_id: string; participant_ref: string; created_at: Date | string }[]>`
         INSERT INTO existing_participant_identity_bindings (binding_id, provider, locator_digest, participant_ref, created_at)
         VALUES (${`participant-identity-binding:${randomUUID()}`}, ${input.provider}, ${locatorDigest}, ${`participant:${randomUUID()}`}, ${input.resolvedAt})
@@ -109,20 +143,26 @@ export class PostgresAlphaAccessRecordRepository
     }
     const locatorDigest = this.participantLocatorDigest(input.provider, input.providerSubject);
     try {
-      const rows = await this.sql<{ binding_id: string; participant_ref: string; created_at: Date | string }[]>`
-        SELECT binding_id, participant_ref, created_at
-        FROM existing_participant_identity_bindings
-        WHERE provider = ${input.provider} AND locator_digest = ${locatorDigest}
-      `;
-      if (rows.length > 1) throw new AlphaStorageError("integrity-failure", "Ambiguous participant identity binding");
-      const row = rows[0];
-      return row
-        ? { bindingId: row.binding_id, participantRef: row.participant_ref, createdAt: new Date(row.created_at).toISOString() }
-        : undefined;
+      const anchor = await this.activeParticipantIdentityAnchor(this.sql);
+      return (await this.resolveParticipantBinding(this.sql, input.provider, locatorDigest, anchor ? this.participantV2StableSubjectDigest(input.provider, input.providerSubject) : undefined)).selected;
     } catch (error) {
       if (error instanceof AlphaStorageError) throw error;
       throw new AlphaStorageError("unavailable", "Participant identity binding store unavailable", true);
     }
+  }
+
+  async activateLegacyParticipantIdentityNamespaceAnchor(input: { activationIdempotencyKey: string; activatedAt: string }): Promise<LegacyParticipantIdentityNamespaceAnchorV1> {
+    validateIdentity(input.activationIdempotencyKey, "activationIdempotencyKey"); if (!Number.isFinite(Date.parse(input.activatedAt))) throw new AlphaStorageError("integrity-failure", "Invalid participant identity namespace activation time");
+    const legacyNamespaceFingerprint = this.participantLegacyNamespaceFingerprint(), stableInstanceFingerprint = this.participantStableInstanceFingerprint();
+    return this.serializable(async (tx) => {
+      await tx`SELECT pg_advisory_xact_lock(hashtextextended(${"participant-identity-namespace-anchor:v1"}, 0))`;
+      const existing = await tx<{ anchor_id: string; legacy_namespace_fingerprint: string; stable_instance_fingerprint: string; activation_idempotency_key: string; activated_at: Date | string }[]>`SELECT anchor_id, legacy_namespace_fingerprint, stable_instance_fingerprint, activation_idempotency_key, activated_at FROM participant_identity_namespace_anchors WHERE namespace = ${PARTICIPANT_IDENTITY_CUTOVER_NAMESPACE}`;
+      if (existing.length > 1) throw new AlphaStorageError("integrity-failure", "Ambiguous participant identity namespace anchor");
+      if (existing[0]) { const row = existing[0]; if (row.activation_idempotency_key !== input.activationIdempotencyKey || row.legacy_namespace_fingerprint !== legacyNamespaceFingerprint || row.stable_instance_fingerprint !== stableInstanceFingerprint) throw new AlphaStorageError("conflict", "Participant identity namespace anchor conflict"); return { anchorId: row.anchor_id, activatedAt: new Date(row.activated_at).toISOString() }; }
+      const anchorId = `participant-identity-namespace-anchor:${randomUUID()}`;
+      await tx`INSERT INTO participant_identity_namespace_anchors (namespace, anchor_id, legacy_namespace_fingerprint, stable_instance_fingerprint, activation_idempotency_key, activated_at) VALUES (${PARTICIPANT_IDENTITY_CUTOVER_NAMESPACE}, ${anchorId}, ${legacyNamespaceFingerprint}, ${stableInstanceFingerprint}, ${input.activationIdempotencyKey}, ${input.activatedAt})`;
+      return { anchorId, activatedAt: new Date(input.activatedAt).toISOString() };
+    });
   }
 
   async assignPersistenceSafeActor(input: AssignPersistenceSafeActorInput) {
