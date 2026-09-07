@@ -67,6 +67,18 @@ export interface ExistingParticipantIdentityBindingRepository {
   }): Promise<ExistingParticipantIdentityBindingV1 | undefined>;
 }
 
+export type ParticipantReferenceAccessGrantRecord = {
+  grantId: string; organizationId: string; participantRef: string; scope: "organization" | "meeting-series"; meetingSeriesId: string | null; status: "active" | "revoked"; issuedBy: string; operationId: string; requestFingerprint: string; createdAt: string; revokedAt: string | null; supersedesGrantId: string | null;
+};
+export type ParticipantReferenceAccessPolicyRecord = { organizationId: string; mode: "participant-reference-v1"; issuedBy: string; operationId: string; requestFingerprint: string; createdAt: string; };
+export interface ParticipantReferenceAccessRepository {
+  activatePolicy(input: ParticipantReferenceAccessPolicyRecord): Promise<ParticipantReferenceAccessPolicyRecord>;
+  findPolicy(organizationId: string): Promise<ParticipantReferenceAccessPolicyRecord | undefined>;
+  createGrant(input: ParticipantReferenceAccessGrantRecord): Promise<ParticipantReferenceAccessGrantRecord>;
+  revokeGrant(input: { grantId: string; organizationId: string; issuedBy: string; operationId: string; requestFingerprint: string; revokedAt: string }): Promise<ParticipantReferenceAccessGrantRecord>;
+  findGrants(input: { organizationId: string; participantRef: string; scope: "organization" | "meeting-series"; meetingSeriesId?: string }): Promise<readonly ParticipantReferenceAccessGrantRecord[]>;
+}
+
 export type RevokeAlphaAccessInput = {
   accessRecordId: string;
   actor: string;

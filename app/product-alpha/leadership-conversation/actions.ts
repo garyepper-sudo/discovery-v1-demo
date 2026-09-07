@@ -22,6 +22,9 @@ import type { MeetingPackPrivateNoteIntentV1 } from "../../../product/workflow/l
 import { leadershipDigest, leadershipStableSerialize } from "../../../product/workflow/leadershipConversation/determinism";
 import { resolveAuthorizedMeetingAddress } from "../../../product/integration/authorizedMeetingDirectory";
 import {projectMeetingAskAnswer,type MeetingAskAnswerV1} from "../../../product/integration/meetingAskProjection";
+import {createParticipantReferenceMeetingCurrentAccessFromEnvironment} from "../../../lib/alpha-activation/participantReferenceMeetingAccessServer";
+
+async function resolveCurrentAuthorizedMeeting(userId:string,seriesAddress:string){return resolveAuthorizedMeetingAddress({userId,organizationId:SANDBOX_ORGANIZATION_ID,seriesAddress,currentAccess:createParticipantReferenceMeetingCurrentAccessFromEnvironment()??undefined});}
 
 function guard(): void {
   if (process.env.NODE_ENV === "production") {

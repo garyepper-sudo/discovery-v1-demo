@@ -7,7 +7,7 @@ export type ExistingParticipantIdentityResolution =
   | { status: "resolved"; participantRef: string }
   | { status: "unavailable" };
 
-const unavailable = (): ExistingParticipantIdentityResolution => ({ status: "unavailable" });
+const unavailable = (): { status: "unavailable" } => ({ status: "unavailable" });
 const exact = (value: unknown): value is string => typeof value === "string" && value.length > 0 && value.trim() === value && value !== "*" && !value.includes("\0");
 
 function parseVerifiedIdentity(value: unknown): { provider: "clerk"; providerSubject: string; verifiedAt: string } | null {
