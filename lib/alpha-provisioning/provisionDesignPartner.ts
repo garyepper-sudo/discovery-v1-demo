@@ -3,10 +3,12 @@ import { createHash } from "node:crypto";
 
 import type { AlphaAccessRecordRepository } from "../../db/governance/types";
 import {
+  createEmptyOrganizationRuntime,
   type OrganizationRuntime,
   type OrganizationRuntimeRepository,
 } from "../../engine/v3/runtime";
 import { normalizeOrganizationRuntime } from "../../engine/v3/runtime/organizationStateStore";
+import { issueInitialUnderstandingQuestionIdentity, recordInitialUnderstandingQuestion } from "../../product/questions/initialUnderstandingQuestion";
 
 export type ProvisionDesignPartnerInput = {
   organizationId: string;
@@ -49,6 +51,27 @@ export type ProvisionOrganizationRuntimeReceipt = {
   runtimeSha256: string;
   runtimeRevision: string;
   backupId?: string;
+};
+
+export type ProvisionOrganizationUnderstandingBootstrapInput = {
+  organizationId: string;
+  organizationName: string;
+  purpose: string;
+  primaryQuestion: string;
+  meetingExternalKey: string;
+  bootstrapOperationId: string;
+  actor: string;
+  createdAt: string;
+  repository: OrganizationRuntimeRepository;
+};
+
+export type ProvisionOrganizationUnderstandingBootstrapReceipt = {
+  result: "BOOTSTRAP_CREATED" | "BOOTSTRAP_REPLAYED";
+  organizationId: string;
+  productQuestionId: string;
+  productQuestionExternalKey: string;
+  productQuestionRole: "initial-understanding-requester";
+  runtimeRevision: string;
 };
 
 export type ProvisionAlphaAccessInput = {
@@ -172,6 +195,61 @@ export async function provisionOrganizationRuntime(
     runtimeRevision: stored.revision,
     backupId,
   };
+}
+
+/**
+ * Access-neutral organization creation for the truthful pre-cognition state.
+ * Completed-Runtime provisioning deliberately remains stricter above.
+ */
+export async function provisionOrganizationUnderstandingBootstrap(
+  input: ProvisionOrganizationUnderstandingBootstrapInput,
+): Promise<ProvisionOrganizationUnderstandingBootstrapReceipt> {
+  exact(input.organizationId, "organization id");
+  exact(input.organizationName, "organization name");
+  exact(input.purpose, "purpose");
+  exact(input.primaryQuestion, "primary question");
+  exact(input.meetingExternalKey, "meeting external key");
+  exact(input.bootstrapOperationId, "bootstrap operation id");
+  exact(input.actor, "operator id");
+  assert.match(input.organizationId, /^[a-zA-Z0-9_-]+$/);
+  assert.ok(Number.isFinite(Date.parse(input.createdAt)), "Invalid bootstrap time");
+  const question = issueInitialUnderstandingQuestionIdentity({
+    contractVersion: "1",
+    organizationId: input.organizationId,
+    activationOperationId: input.bootstrapOperationId,
+    meetingExternalKey: input.meetingExternalKey,
+    primaryQuestion: input.primaryQuestion,
+    purpose: input.purpose,
+  });
+  const purposeDigest = createHash("sha256").update(input.purpose.trim().replace(/\s+/gu, " ")).digest("hex");
+  const requestFingerprint = createHash("sha256").update(JSON.stringify({ organizationId: input.organizationId, organizationName: input.organizationName, purposeDigest, primaryQuestionDigest: question.normalizedQuestionDigest, meetingExternalKey: input.meetingExternalKey, bootstrapOperationId: input.bootstrapOperationId })).digest("hex");
+  const bootstrap = {
+    contractVersion: "1" as const,
+    status: "awaiting-initial-understanding" as const,
+    organizationId: input.organizationId,
+    bootstrapOperationId: input.bootstrapOperationId,
+    requestFingerprint,
+    purposeDigest,
+    initialProductQuestionId: question.questionId,
+    initialProductQuestionRole: question.role,
+    createdAt: input.createdAt,
+  };
+  const existing = await input.repository.read(input.organizationId);
+  if (existing) {
+    const completed = existing.runtime.metadata.investigationCount > 0
+      || (existing.runtime.memory.organizationalUnderstandingState.canonicalCompositions?.length ?? 0) > 0
+      || existing.runtime.memory.organizationalExplanations.length > 0;
+    if (completed) throw new Error("Organization bootstrap is not ready after completed Runtime advancement.");
+    const current = existing.runtime.memory.initialUnderstandingBootstrap;
+    if (!current || JSON.stringify(current) !== JSON.stringify(bootstrap)) throw new Error("Organization bootstrap immutable facts conflict.");
+    return { result: "BOOTSTRAP_REPLAYED", organizationId: input.organizationId, productQuestionId: question.questionId, productQuestionExternalKey: question.externalKey, productQuestionRole: question.role, runtimeRevision: existing.revision };
+  }
+  const empty = createEmptyOrganizationRuntime({ organizationId: input.organizationId, name: input.organizationName, now: input.createdAt });
+  const initial = recordInitialUnderstandingQuestion({ runtime: { ...empty, memory: { ...empty.memory, initialUnderstandingBootstrap: bootstrap } }, identity: question, primaryQuestion: input.primaryQuestion, createdAt: input.createdAt });
+  const bytes = new TextEncoder().encode(JSON.stringify(initial.runtime, null, 2));
+  const requestId = createHash("sha256").update(input.bootstrapOperationId).digest("hex");
+  const stored = await input.repository.create(input.organizationId, bytes, { requestId, operatorId: input.actor });
+  return { result: "BOOTSTRAP_CREATED", organizationId: input.organizationId, productQuestionId: question.questionId, productQuestionExternalKey: question.externalKey, productQuestionRole: question.role, runtimeRevision: stored.revision };
 }
 
 export async function provisionAlphaAccess(

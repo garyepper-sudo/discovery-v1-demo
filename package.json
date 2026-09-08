@@ -92,6 +92,7 @@
     "validate:governed-source-content": "tsx scripts/product/validateGovernedSourceContentOwner.ts",
     "validate:governed-source-content-owner": "tsx scripts/product/validateGovernedSourceContentOwner.ts",
     "validate:governed-source-content-replay": "tsx scripts/product/validateGovernedSourceContentReplay.ts",
+    "validate:initial-understanding-bootstrap": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateInitialUnderstandingBootstrap.ts",
     "validate:canonical-local-source-binding": "tsx scripts/product/validateCanonicalLocalSourceBindingRegistration.ts",
     "validate:canonical-local-source-binding-registration": "tsx scripts/product/validateCanonicalLocalSourceBindingRegistration.ts",
     "validate:canonical-local-source-binding-replay": "tsx scripts/product/validateCanonicalLocalSourceBindingReplay.ts",

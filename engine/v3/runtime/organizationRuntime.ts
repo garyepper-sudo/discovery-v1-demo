@@ -84,7 +84,25 @@ export type OrganizationRuntimeMetadata = {
   }>;
 };
 
+/**
+ * Immutable, pre-cognition provenance for a newly established organization.
+ * This is deliberately not an Organizational Understanding or a completed
+ * Runtime result.
+ */
+export type OrganizationUnderstandingBootstrapV1 = {
+  contractVersion: "1";
+  status: "awaiting-initial-understanding";
+  organizationId: string;
+  bootstrapOperationId: string;
+  requestFingerprint: string;
+  purposeDigest: string;
+  initialProductQuestionId: string;
+  initialProductQuestionRole: "initial-understanding-requester";
+  createdAt: string;
+};
+
 export type OrganizationRuntimeMemory = {
+  initialUnderstandingBootstrap?: OrganizationUnderstandingBootstrapV1;
   /**
    * Additive provenance index. It never grants authority and is excluded from
    * existing Evidence, investigation, and cognitive-object identities.

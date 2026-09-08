@@ -1,6 +1,7 @@
 import "server-only";
 
 import { productArtifactBodyDigest } from "../persistence";
+import { issueInitialUnderstandingQuestionIdentity, type InitialUnderstandingQuestionIdentityV1 } from "../questions/initialUnderstandingQuestion";
 import {
   completeRegisteredMeetingPreparationScopeV1,
   deriveRecurringMeetingOccurrenceIdentity,
@@ -44,6 +45,19 @@ export type GeneralRecurringMeetingProvisioningSummaryV1 = {
   preparedWorkProductVersionId: string;
   sourceCount: number;
   created: { preparationScopeBinding: boolean };
+};
+
+export type InitialUnderstandingRecurringMeetingInputV1 = {
+  contractVersion: "1";
+  userId: string;
+  organizationExternalKey: string;
+  activationOperationId: string;
+  meetingExternalKey: string;
+  productQuestion: string;
+  title: string;
+  purpose: string;
+  cadenceLabel: string;
+  preparationScopeExternalKey: string;
 };
 
 export type GeneralRecurringMeetingProvisionerDependencies = {
@@ -99,6 +113,21 @@ export class GeneralRecurringMeetingProvisioner {
   constructor(private readonly dependencies: GeneralRecurringMeetingProvisionerDependencies) {}
 
   async provision(input: ProvisionInput): Promise<GeneralRecurringMeetingProvisioningSummaryV1> {
+    return this.provisionInternal(input);
+  }
+
+  /** Bootstrap callers cannot supply a Question external key or role. The
+   * Product Question owner issues both before this meeting owner consumes them. */
+  async provisionInitialUnderstanding(input: InitialUnderstandingRecurringMeetingInputV1): Promise<GeneralRecurringMeetingProvisioningSummaryV1> {
+    const organizationExternalKey = key(input.organizationExternalKey, "organization key");
+    const meetingExternalKey = key(input.meetingExternalKey, "meeting key");
+    const organization = await this.dependencies.resolveOrganization({ userId: input.userId, organizationExternalKey });
+    if (!organization.organizationId) throw new Error("Recurring meeting organization is unavailable.");
+    const identity = issueInitialUnderstandingQuestionIdentity({ contractVersion: "1", organizationId: organization.organizationId, activationOperationId: key(input.activationOperationId, "activation operation"), meetingExternalKey, primaryQuestion: text(input.productQuestion, "Product Question"), purpose: text(input.purpose, "purpose") });
+    return this.provisionInternal({ contractVersion: "1", userId: input.userId, organizationExternalKey, meetingExternalKey, productQuestionExternalKey: identity.externalKey, productQuestion: input.productQuestion, title: input.title, purpose: input.purpose, cadenceLabel: input.cadenceLabel, role: identity.role, preparationScopeExternalKey: input.preparationScopeExternalKey }, identity);
+  }
+
+  private async provisionInternal(input: ProvisionInput, issuedIdentity?: InitialUnderstandingQuestionIdentityV1): Promise<GeneralRecurringMeetingProvisioningSummaryV1> {
     assertInput(input);
     const organizationExternalKey = key(input.organizationExternalKey, "organization key");
     const meetingExternalKey = key(input.meetingExternalKey, "meeting key");
@@ -124,7 +153,7 @@ export class GeneralRecurringMeetingProvisioner {
     const identity = deriveRecurringMeetingOccurrenceIdentity({ organizationId: organization.organizationId, meetingExternalKey });
     // A meeting has one Question binding. Keep its owner idempotency keyed to the
     // meeting, then retain the Question external key in immutable scope facts.
-    const questionOperationId = leadershipId("general-recurring-meeting-question", organization.organizationId, meetingExternalKey);
+    const questionOperationId = issuedIdentity?.idempotencyKey ?? leadershipId("general-recurring-meeting-question", organization.organizationId, meetingExternalKey);
     const question = await this.dependencies.createQuestion({
       userId: input.userId,
       organizationId: organization.organizationId,
@@ -134,7 +163,7 @@ export class GeneralRecurringMeetingProvisioner {
       operation: { requestId: questionOperationId, operatorId: input.userId },
     });
     const questionId = question.workspace.question.id;
-    if (!questionId) throw new Error("Recurring meeting Product Question is unavailable.");
+    if (!questionId || (issuedIdentity && questionId !== issuedIdentity.questionId)) throw new Error("Recurring meeting Product Question is unavailable.");
 
     const scopeId = leadershipId("registered-meeting-preparation-scope", organization.organizationId, identity.seriesId, preparationScopeExternalKey);
     const immutableFacts = { contractVersion: "1" as const, organizationExternalKey, meetingExternalKey, productQuestionExternalKey, productQuestion, questionId, title, purpose, cadenceLabel, preparationScopeExternalKey, sourceVersions };

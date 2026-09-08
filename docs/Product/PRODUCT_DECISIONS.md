@@ -98,6 +98,13 @@ The Northstar preparation-time fixture uses an explicit server-only coordinator 
 
 Each decision below is active unless explicitly superseded by a later entry.
 
+## DEC-PROD-068 — Initial organizational understanding bootstrap is truthful pre-cognition
+
+- **Decision:** A new organization may persist an immutable Runtime-owned bootstrap record before completed Organizational Understanding exists. It records organization identity, purpose digest, and the server-issued first Product Question only; it never represents an investigation, explanation, canonical understanding, or authority grant.
+- **Question identity:** The Product Question owner derives the initial Question external key and provenance-only `initial-understanding-requester` role from server-owned activation semantics. Packets do not select either field.
+- **Boundary:** Completed-Runtime consumers continue to fail closed for bootstrap Runtime. First preparation may truthfully state that prior reviewed history and completed understanding are absent.
+- **Status:** Active bounded foundation. Founder-operated activation resumes only after this foundation is accepted.
+
 ## DEC-PROD-067 — Narrow cross-meeting relevance is a read-only Product Question projection
 
 - **Decision:** In Prepare only, show at most three reviewed owner results from
