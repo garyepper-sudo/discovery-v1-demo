@@ -9,6 +9,7 @@ import {
 } from "../../engine/v3/runtime";
 import { normalizeOrganizationRuntime } from "../../engine/v3/runtime/organizationStateStore";
 import { issueInitialUnderstandingQuestionIdentity, recordInitialUnderstandingQuestion } from "../../product/questions/initialUnderstandingQuestion";
+import { createCanonicalScopeTopology, createCanonicalScopeLineageIndex } from "../../engine/v3/governance/canonicalScopeLineage";
 
 export type ProvisionDesignPartnerInput = {
   organizationId: string;
@@ -241,11 +242,12 @@ export async function provisionOrganizationUnderstandingBootstrap(
       || existing.runtime.memory.organizationalExplanations.length > 0;
     if (completed) throw new Error("Organization bootstrap is not ready after completed Runtime advancement.");
     const current = existing.runtime.memory.initialUnderstandingBootstrap;
-    if (!current || JSON.stringify(current) !== JSON.stringify(bootstrap)) throw new Error("Organization bootstrap immutable facts conflict.");
+    if (!current || JSON.stringify({ ...current, createdAt: input.createdAt }) !== JSON.stringify(bootstrap)) throw new Error("Organization bootstrap immutable facts conflict.");
     return { result: "BOOTSTRAP_REPLAYED", organizationId: input.organizationId, productQuestionId: question.questionId, productQuestionExternalKey: question.externalKey, productQuestionRole: question.role, runtimeRevision: existing.revision };
   }
   const empty = createEmptyOrganizationRuntime({ organizationId: input.organizationId, name: input.organizationName, now: input.createdAt });
-  const initial = recordInitialUnderstandingQuestion({ runtime: { ...empty, memory: { ...empty.memory, initialUnderstandingBootstrap: bootstrap } }, identity: question, primaryQuestion: input.primaryQuestion, createdAt: input.createdAt });
+  const topology = createCanonicalScopeTopology({ organizationId: input.organizationId, topologyVersion: 1, effectiveAt: input.createdAt, nodes: [{ organizationId: input.organizationId, type: "organization", id: input.organizationId }], relationships: [] });
+  const initial = recordInitialUnderstandingQuestion({ runtime: { ...empty, memory: { ...empty.memory, initialUnderstandingBootstrap: bootstrap, canonicalScopeLineageIndex: createCanonicalScopeLineageIndex({ organizationId: input.organizationId, topology }) } }, identity: question, primaryQuestion: input.primaryQuestion, createdAt: input.createdAt });
   const bytes = new TextEncoder().encode(JSON.stringify(initial.runtime, null, 2));
   const requestId = createHash("sha256").update(input.bootstrapOperationId).digest("hex");
   const stored = await input.repository.create(input.organizationId, bytes, { requestId, operatorId: input.actor });

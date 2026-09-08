@@ -428,6 +428,14 @@ export function createLeadershipConversationServerComposition(validation?:{analy
   return constructLeadershipConversationServerComposition({runtimeRepository:createOrganizationRuntimeRepository(),workflowRoot:process.env.DISCOVERY_LEADERSHIP_CONVERSATION_WORKFLOW_ROOT??path.join(process.cwd(),".discovery-runtime/product-workflow"),contentRoot:sourceContentRoot,lineageFixtureRoot,analysisTransport:analysisLifecycleRoot&&analysisTimeoutMs!==null?createOpenAIExecutiveAnalysisTransport():undefined,analysisTimeoutMs,analysisLifecycleRoot,analysisModel:process.env.DISCOVERY_ALPHA_ANALYSIS_MODEL,environment:"development",authorized:exactDevelopmentIdentity,resolvePersonaKey:(userId)=>resolvePersonaForSignedInUser(userId)?.key,resolvePersonaUser:(key)=>resolveSandboxPersonas().find(item=>item.key===key)?.userId});
 }
 
+/** Nonpublic Founder Local Alpha composition.  It is intentionally separate
+ * from sandbox personas and unavailable in Production.  Callers must resolve
+ * the founder server-side before constructing this boundary. */
+export function createFounderLocalAlphaLeadershipConversationComposition(input:{runtimeRoot:string;workflowRoot:string;sourceContentRoot:string;userId:string;organizationId:string;authorityGrants:readonly ScopedAuthorityGrant[];bodyRepository?:ProductArtifactBodyRepository}):LeadershipConversationServerComposition {
+  if(process.env.NODE_ENV==="production"||![input.runtimeRoot,input.workflowRoot,input.sourceContentRoot].every(path.isAbsolute)||!input.userId||!input.organizationId||!input.authorityGrants.length)throw new Error("Founder Local Alpha composition is unavailable.");
+  return constructLeadershipConversationServerComposition({runtimeRepository:new FilesystemOrganizationRuntimeRepository(input.runtimeRoot),workflowRoot:input.workflowRoot,contentRoot:input.sourceContentRoot,bodyRepository:input.bodyRepository,authorityGrants:input.authorityGrants,environment:"development",authorized:(userId,organizationId)=>userId===input.userId&&organizationId===input.organizationId,resolvePersonaKey:()=>undefined,resolvePersonaUser:()=>undefined});
+}
+
 export async function resolveCurrentLeadershipConversationCheckpoint(input:{userId:string;organizationId:string;questionId:string;conversationId:string;seriesId?:string}) {
   if (!exactDevelopmentIdentity(input.userId, input.organizationId)) throw new Error("Leadership Conversation checkpoint is unavailable.");
   const repository=createProductWorkflowArtifactRepository({root:process.env.DISCOVERY_LEADERSHIP_CONVERSATION_WORKFLOW_ROOT??path.join(process.cwd(),".discovery-runtime/product-workflow"),environment:"development"});

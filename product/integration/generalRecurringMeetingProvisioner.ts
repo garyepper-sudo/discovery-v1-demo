@@ -148,7 +148,7 @@ export class GeneralRecurringMeetingProvisioner {
     });
     if (persistedScope.scopeExternalKey !== preparationScopeExternalKey || !persistedScope.sourceVersions.length || !/^\d{4}-\d{2}-\d{2}T/u.test(persistedScope.persistedAt)) throw new Error("Recurring meeting preparation scope is unavailable.");
     const sourceVersions = [...persistedScope.sourceVersions].sort((left, right) => left.sourceBindingId.localeCompare(right.sourceBindingId));
-    if (sourceVersions.length !== 2 || new Set(sourceVersions.map((value) => value.sourceBindingId)).size !== sourceVersions.length || sourceVersions.some((value) => !value.sourceBindingId || !value.sourceContentVersionId || !/^[a-f0-9]{64}$/u.test(value.normalizedContentDigest))) throw new Error("Recurring meeting preparation scope is unavailable.");
+    if (sourceVersions.length < 1 || sourceVersions.length > 5 || new Set(sourceVersions.map((value) => value.sourceBindingId)).size !== sourceVersions.length || sourceVersions.some((value) => !value.sourceBindingId || !value.sourceContentVersionId || !/^[a-f0-9]{64}$/u.test(value.normalizedContentDigest))) throw new Error("Recurring meeting preparation scope is unavailable.");
 
     const identity = deriveRecurringMeetingOccurrenceIdentity({ organizationId: organization.organizationId, meetingExternalKey });
     // A meeting has one Question binding. Keep its owner idempotency keyed to the
@@ -199,7 +199,7 @@ export class GeneralRecurringMeetingProvisioner {
       idempotencyKey: activationId,
       identity,
     });
-    if (prepared.seriesId !== identity.seriesId || prepared.conversationId !== identity.conversationId || prepared.provenance.sourceRevisionReferences.length !== 2) throw new Error("Recurring meeting Prepared Work is unavailable.");
+    if (prepared.seriesId !== identity.seriesId || prepared.conversationId !== identity.conversationId || prepared.provenance.sourceRevisionReferences.length !== sourceVersions.length) throw new Error("Recurring meeting Prepared Work is unavailable.");
     return {
       contractVersion: "1",
       organizationId: organization.organizationId,

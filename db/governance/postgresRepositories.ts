@@ -50,6 +50,7 @@ function eventId(action: string, idempotencyKey: string): string {
 }
 
 function stable(value: unknown): string {
+  if (value instanceof Date) return JSON.stringify(value.toISOString());
   if (Array.isArray(value)) return `[${value.map(stable).join(",")}]`;
   if (value && typeof value === "object") {
     return `{${Object.entries(value as Record<string, unknown>)
@@ -97,6 +98,10 @@ export class PostgresAlphaAccessRecordRepository
     const row = rows[0]; if (!row) return undefined;
     if (row.legacy_namespace_fingerprint !== this.participantLegacyNamespaceFingerprint() || row.stable_instance_fingerprint !== this.participantStableInstanceFingerprint()) throw new AlphaStorageError("integrity-failure", "Participant identity namespace anchor does not match this stable instance");
     return { anchorId: row.anchor_id, activatedAt: new Date(row.activated_at).toISOString() };
+  }
+  async inspectActiveParticipantIdentityNamespace(): Promise<{scheme:"clerk-user-v2";anchorId:string}|undefined> {
+    const anchor=await this.activeParticipantIdentityAnchor(this.sql);
+    return anchor?{scheme:"clerk-user-v2",anchorId:anchor.anchorId}:undefined;
   }
   private async resolveParticipantBinding(executor: GovernanceExecutor, provider: "clerk", v1Digest: string, v2Digest?: string) {
     const v2 = v2Digest ? await executor<{ binding_id: string; participant_ref: string; created_at: Date | string }[]>`SELECT binding_id, participant_ref, created_at FROM participant_identity_stable_subject_mappings WHERE provider = ${provider} AND stable_subject_digest = ${v2Digest}` : undefined;
@@ -513,6 +518,10 @@ export class PostgresAlphaAccessRecordRepository
 /** Durable repository for the closed participant-reference grant capability. */
 export class PostgresParticipantReferenceAccessRepository implements ParticipantReferenceAccessRepository {
   constructor(private readonly sql: GovernanceSql) {}
+  async findOrganizationIdsForParticipant(participantRef: string): Promise<string[]> {
+    const rows = await this.sql<{ organizationId: string }[]>`SELECT DISTINCT organization_id as "organizationId" FROM participant_reference_access_grants WHERE participant_ref=${participantRef} AND scope='organization' AND status='active' ORDER BY organization_id`;
+    return rows.map(row => row.organizationId);
+  }
   private async serializable<T>(operation:(tx:TransactionSql<Record<string,unknown>>)=>Promise<T>):Promise<T>{try{return await this.sql.begin("isolation level serializable",operation) as T;}catch(error){if(error instanceof AlphaStorageError)throw error;const code=(error as {code?:string}).code;if(code==="23505"||code==="40001")throw new AlphaStorageError("conflict","Participant reference access conflict");throw new AlphaStorageError("unavailable","Participant reference access store unavailable",true);}}
   async activatePolicy(input:ParticipantReferenceAccessPolicyRecord):Promise<ParticipantReferenceAccessPolicyRecord>{return this.serializable(async tx=>{const replay=await tx<ParticipantReferenceAccessPolicyRecord[]>`SELECT organization_id as "organizationId",mode,issued_by as "issuedBy",operation_id as "operationId",request_fingerprint as "requestFingerprint",created_at as "createdAt" FROM participant_reference_access_policies WHERE operation_id=${input.operationId}`;if(replay.length===1){if(stable(replay[0])!==stable(input))throw new AlphaStorageError("conflict","Participant policy replay conflict");return replay[0]!;}await tx`INSERT INTO participant_reference_access_policies (organization_id,mode,issued_by,operation_id,request_fingerprint,created_at) VALUES (${input.organizationId},${input.mode},${input.issuedBy},${input.operationId},${input.requestFingerprint},${input.createdAt})`;return input;});}
   async findPolicy(organizationId:string):Promise<ParticipantReferenceAccessPolicyRecord|undefined>{const rows=await this.sql<ParticipantReferenceAccessPolicyRecord[]>`SELECT organization_id as "organizationId",mode,issued_by as "issuedBy",operation_id as "operationId",request_fingerprint as "requestFingerprint",created_at as "createdAt" FROM participant_reference_access_policies WHERE organization_id=${organizationId}`;if(rows.length>1)throw new AlphaStorageError("integrity-failure","Ambiguous participant policy");return rows[0];}

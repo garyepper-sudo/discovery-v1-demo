@@ -101,6 +101,7 @@ export class ProductArtifactCurrentOwnerStateResolver {
     try {
       validateProductArtifactInspectionMetadataV1(input.metadata);
       if(lineage.contractVersion==="2")return this.resolveDirectEvidence(input,lineage);
+      if(lineage.contractVersion==="3")return unavailable(input);
       const stored = await this.dependencies.runtimeRepository.read(input.organizationId);
       if (!stored || stored.runtime.metadata.organizationId !== input.organizationId) {
         return unavailable(input);

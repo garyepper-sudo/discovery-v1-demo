@@ -349,6 +349,12 @@ class FilesystemProductWorkflowArtifactRepository
   }
   async read(organizationId: string): Promise<ProductWorkflowStoreSnapshot> {
     await this.prepare();
+    return this.inspect(organizationId);
+  }
+  /** Read-only inspection for onboarding preview and request page loads. */
+  async inspect(organizationId:string):Promise<ProductWorkflowStoreSnapshot> {
+    await this.noLink(this.root);
+    await this.noLink(path.join(this.root,"organizations"));
     const target = this.target(organizationId);
     await this.noLink(target);
     try {
@@ -1402,14 +1408,12 @@ export function createProductWorkflowArtifactRepository(input: {
     afterClaim?(): void;
     afterPublication?(): void;
   }>;
-}): ProductWorkflowArtifactRepository &
-  Required<
-    Pick<
-      ProductWorkflowArtifactRepository,
-      | "readHistoricalCheckpointLifecycle"
-      | "mutateHistoricalCheckpointLifecycle"
-    >
-  > {
+}): ProductWorkflowArtifactRepository & {
+  inspect: FilesystemProductWorkflowArtifactRepository["inspect"];
+  registerMeetingPreparationScope: FilesystemProductWorkflowArtifactRepository["registerMeetingPreparationScope"];
+  readHistoricalCheckpointLifecycle: FilesystemProductWorkflowArtifactRepository["readHistoricalCheckpointLifecycle"];
+  mutateHistoricalCheckpointLifecycle: FilesystemProductWorkflowArtifactRepository["mutateHistoricalCheckpointLifecycle"];
+} {
   if (!["development", "sandbox", "test"].includes(input.environment))
     throw new Error(
       "Product Workflow persistence is unavailable outside development.",

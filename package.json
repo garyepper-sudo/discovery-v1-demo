@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "validate:founder-first-understanding-composition": "NODE_ENV=test node --conditions=react-server --import tsx scripts/product/validateFounderFirstUnderstandingComposition.ts",
+    "validate:founder-first-understanding-apply": "NODE_ENV=test node --conditions=react-server --import tsx scripts/product/validateFounderFirstUnderstandingApply.ts",
     "validate:general-recurring-meeting-provisioning": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateGeneralRecurringMeetingProvisioning.ts",
     "validate:cross-meeting-relevance-v1": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateCrossMeetingRelevanceV1.ts",
     "validate:multi-user-alignment-divergence-v1": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateMultiUserAlignmentDivergenceV1.ts",
@@ -92,6 +94,8 @@
     "validate:governed-source-content": "tsx scripts/product/validateGovernedSourceContentOwner.ts",
     "validate:governed-source-content-owner": "tsx scripts/product/validateGovernedSourceContentOwner.ts",
     "validate:governed-source-content-replay": "tsx scripts/product/validateGovernedSourceContentReplay.ts",
+    "validate:founder-local-alpha-understanding-activation": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateFounderLocalAlphaUnderstandingActivation.ts",
+    "activate:founder-local-alpha": "NODE_OPTIONS=--conditions=react-server tsx scripts/development/activateFounderLocalAlpha.ts",
     "validate:initial-understanding-bootstrap": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateInitialUnderstandingBootstrap.ts",
     "validate:canonical-local-source-binding": "tsx scripts/product/validateCanonicalLocalSourceBindingRegistration.ts",
     "validate:canonical-local-source-binding-registration": "tsx scripts/product/validateCanonicalLocalSourceBindingRegistration.ts",
