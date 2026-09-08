@@ -1,0 +1,4 @@
+"use client";
+import { useState } from "react";
+import { completeDiscoveryIdentitySetup } from "./actions";
+export function IdentitySetup() { const [state,setState]=useState<"idle"|"working"|"ready"|"unavailable">("idle"); const submit=async()=>{setState("working");setState((await completeDiscoveryIdentitySetup()).status);}; return state==="ready"?<main><h1>Your Discovery identity is ready.</h1><p>Organization and meeting access are managed separately.</p></main>:<main><h1>Complete your Discovery setup</h1><p>You are signed in.</p><p>Discovery will establish your private participant identity so your organization and meeting access can be granted separately.</p><p>This does not grant access to any organization, meeting, or source.</p><button type="button" disabled={state==="working"} onClick={submit}>{state==="working"?"Preparing…":"Continue"}</button>{state==="unavailable"?<p role="status">Discovery identity setup is temporarily unavailable.</p>:null}</main>; }
