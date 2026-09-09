@@ -5,6 +5,7 @@
   "scripts": {
     "validate:founder-first-understanding-composition": "NODE_ENV=test node --conditions=react-server --import tsx scripts/product/validateFounderFirstUnderstandingComposition.ts",
     "validate:founder-first-understanding-apply": "NODE_ENV=test node --conditions=react-server --import tsx scripts/product/validateFounderFirstUnderstandingApply.ts",
+    "validate:founder-add-governed-context": "NODE_ENV=test node --conditions=react-server --import tsx scripts/product/validateFounderAddGovernedContext.ts",
     "validate:general-recurring-meeting-provisioning": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateGeneralRecurringMeetingProvisioning.ts",
     "validate:cross-meeting-relevance-v1": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateCrossMeetingRelevanceV1.ts",
     "validate:multi-user-alignment-divergence-v1": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateMultiUserAlignmentDivergenceV1.ts",

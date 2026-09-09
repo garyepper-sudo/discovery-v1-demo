@@ -40,13 +40,14 @@ export async function resolveFounderFirstUnderstandingMeetingHome(seriesAddress:
       }}});
       for(const meeting of meetings.filter(value=>value.seriesAddress===seriesAddress)) {
         if(classifyLegacyMeetingOrganizationClaim(suppliedOrganizationId,organizationId)==="conflict")return {status:"organization-conflict" as const};
-        const {store}=await workflow.read(organizationId), scopes=(store as typeof store&{registeredMeetingPreparationScopes?:RegisteredMeetingPreparationScopeV1[]}).registeredMeetingPreparationScopes??[], scope=scopes.find(value=>value.organizationId===organizationId&&value.questionId===meeting.questionId&&value.conversationId===meeting.occurrenceId&&value.seriesId===meeting.seriesId), publications=(store.preparedWorkPublications??[]).filter(value=>value.productQuestionId===meeting.questionId&&value.productWorkflowId===`leadership-conversation:${meeting.occurrenceId}`);
-        if(!scope||publications.length!==1)continue;
-        const publication=publications[0]!,lineage=publication.materialLineage;
+        const {store}=await workflow.read(organizationId), scopes=(store as typeof store&{registeredMeetingPreparationScopes?:RegisteredMeetingPreparationScopeV1[]}).registeredMeetingPreparationScopes??[], publications=(store.preparedWorkPublications??[]).filter(value=>value.productQuestionId===meeting.questionId&&value.productWorkflowId===`leadership-conversation:${meeting.occurrenceId}`),publication=publications.at(-1),currentScopeDigest=publication?.materialLineage?.contractVersion==="3"?publication.materialLineage.preparationScopeDigest:null,matchingScopes=scopes.filter(value=>value.organizationId===organizationId&&value.questionId===meeting.questionId&&value.conversationId===meeting.occurrenceId&&value.seriesId===meeting.seriesId&&value.scopeDigest===currentScopeDigest);
+        if(!publication||matchingScopes.length!==1)continue;
+        const scope=matchingScopes[0]!,lineage=publication.materialLineage;
         validateProductArtifactInspectionMetadataV1(publication);
         if(lineage?.contractVersion!=="3"||lineage.bootstrapFingerprint!==bootstrap.requestFingerprint||lineage.preparationScopeDigest!==scope.scopeDigest)continue;
         const prepared=JSON.parse(new TextDecoder().decode(await bodies.readStagedExact(publication.protectedBody))) as PreparedWorkProductBodyV1;
-        matches.push({status:"found" as const,organizationId,organizationName:stored.runtime.metadata.name??"Your organization",title:meeting.title,cadence:meeting.timeframe,question:buildProductQuestionWorkspace({runtime:stored.runtime,questionId:meeting.questionId}).question.title,sourceCount:scope.sourceVersions.length,prepared:prepared.content});
+        const packed=(store.meetingPackPublications??[]).some(value=>value.conversationId===meeting.occurrenceId),advanced=(store.frozenSnapshotPublications??[]).some(value=>value.productWorkflowId===`leadership-conversation:${meeting.occurrenceId}`)||(store.cycle1ClosureCompletions??[]).some(value=>value.conversationId===meeting.occurrenceId);
+        matches.push({status:"found" as const,organizationId,organizationName:stored.runtime.metadata.name??"Your organization",title:meeting.title,cadence:meeting.timeframe,question:buildProductQuestionWorkspace({runtime:stored.runtime,questionId:meeting.questionId}).question.title,sourceCount:scope.sourceVersions.length,canAddContext:!packed&&!advanced&&scope.sourceVersions.length<5,prepared:prepared.content});
       }
     }
     return matches.length===1?matches[0]!:null;

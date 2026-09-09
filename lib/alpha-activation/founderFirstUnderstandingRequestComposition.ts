@@ -10,6 +10,7 @@ import { ParticipantReferenceAccessAdministration } from "./participantReference
 import { createFounderFirstUnderstandingOwnerBundleFromEnvironment } from "./founderFirstUnderstandingOwnerBundle";
 import { verifyFounderFirstUnderstandingRequest, type FounderFirstUnderstandingVerifiedRequest } from "./founderFirstUnderstandingRequestAuthority";
 import { FounderFirstUnderstandingApplicationService } from "./founderFirstUnderstandingApplicationService";
+import { FounderAddGovernedContextApplicationService } from "./founderAddGovernedContextApplicationService";
 
 export type FounderFirstUnderstandingRequestComposition={participantRef:string;consumerId:string;access:ParticipantReferenceAccessAdministration;accessRepository:PostgresParticipantReferenceAccessRepository;verifiedRequest:FounderFirstUnderstandingVerifiedRequest;close():Promise<void>};
 /** Constructs only from a verified active request and an existing V2 mapping.
@@ -26,4 +27,10 @@ export async function createFounderFirstUnderstandingApplicationServiceFromReque
  const request=await createFounderFirstUnderstandingRequestComposition();
  try { return new FounderFirstUnderstandingApplicationService(await createFounderFirstUnderstandingOwnerBundleFromEnvironment(request)); }
  catch(error) { await request.close(); throw error; }
+}
+
+export async function createFounderAddGovernedContextApplicationServiceFromRequest(){
+ const request=await createFounderFirstUnderstandingRequestComposition();
+ try{return new FounderAddGovernedContextApplicationService(await createFounderFirstUnderstandingOwnerBundleFromEnvironment(request));}
+ catch(error){await request.close();throw error;}
 }
