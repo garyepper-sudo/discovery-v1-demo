@@ -24,6 +24,6 @@ export async function createFounderFirstUnderstandingRequestComposition():Promis
 /** Complete request composition owns its client through final cleanup. */
 export async function createFounderFirstUnderstandingApplicationServiceFromRequest() {
  const request=await createFounderFirstUnderstandingRequestComposition();
- try { return new FounderFirstUnderstandingApplicationService(createFounderFirstUnderstandingOwnerBundleFromEnvironment(request)); }
+ try { return new FounderFirstUnderstandingApplicationService(await createFounderFirstUnderstandingOwnerBundleFromEnvironment(request)); }
  catch(error) { await request.close(); throw error; }
 }

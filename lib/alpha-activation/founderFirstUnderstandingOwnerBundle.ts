@@ -20,6 +20,7 @@ import { completeRegisteredMeetingPreparationScopeV1, deriveRecurringMeetingOccu
 import { ParticipantReferenceAccessAdministration, type ParticipantReferenceAccessRepository } from "./participantReferenceAccess";
 import type { FirstUnderstandingInput, FirstUnderstandingUpload } from "./founderFirstUnderstandingForm";
 import { assertFounderFirstUnderstandingVerifiedRequest, createFounderFirstUnderstandingVerifiedRequestForIsolatedValidation, type FounderFirstUnderstandingVerifiedRequest } from "./founderFirstUnderstandingRequestAuthority";
+import { resolveFounderLocalAlphaRuntimeRootFromEnvironment } from "./founderLocalAlphaRuntimeRoot";
 import type { ProductArtifactMaterialLineageSeedV3 } from "../../product/workflow/productArtifactInspectionMetadataContracts";
 
 const hash = (value: unknown) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
@@ -181,9 +182,11 @@ export class FounderFirstUnderstandingOwnerBundle {
 }
 
 /** Environment construction is called only by the authenticated request root. */
-export function createFounderFirstUnderstandingOwnerBundleFromEnvironment(input: Omit<FounderBundleConfiguration, "runtime" | "workflowRoot" | "sourceRoot" | "bodyRoot">): FounderFirstUnderstandingOwnerBundle {
+export async function createFounderFirstUnderstandingOwnerBundleFromEnvironment(input: Omit<FounderBundleConfiguration, "runtime" | "workflowRoot" | "sourceRoot" | "bodyRoot">): Promise<FounderFirstUnderstandingOwnerBundle> {
   if (process.env.NODE_ENV === "production" || process.env.DISCOVERY_FOUNDER_LOCAL_ALPHA_ENABLED !== "true") throw new Error("Founder Local Alpha is unavailable.");
   const root = path.join(process.cwd(), ".discovery-runtime");
-  return new FounderFirstUnderstandingOwnerBundle({ ...input, runtime: new FilesystemOrganizationRuntimeRepository(), workflowRoot: process.env.DISCOVERY_LEADERSHIP_CONVERSATION_WORKFLOW_ROOT ?? path.join(root,"product-workflow"), sourceRoot: process.env.DISCOVERY_SOURCE_CONTENT_ROOT ?? path.join(root,"source-content"), bodyRoot: process.env.DISCOVERY_PRODUCT_ARTIFACT_BODY_ROOT ?? path.join(root,"product-artifact-bodies") });
+  const protectedRoot = await resolveFounderLocalAlphaRuntimeRootFromEnvironment();
+  if (protectedRoot.status !== "ready") throw new Error("Founder Local Alpha protected storage is unavailable.");
+  return new FounderFirstUnderstandingOwnerBundle({ ...input, runtime: new FilesystemOrganizationRuntimeRepository(), workflowRoot: process.env.DISCOVERY_LEADERSHIP_CONVERSATION_WORKFLOW_ROOT ?? path.join(root,"product-workflow"), sourceRoot: protectedRoot.value.sourceContentRoot, bodyRoot: protectedRoot.value.productArtifactBodyRoot });
 }
 export function createFounderFirstUnderstandingOwnerBundleForIsolatedValidation(input: Omit<FounderBundleConfiguration,"verifiedRequest">) { if (process.env.NODE_ENV !== "test") throw new Error("Isolated validation is unavailable."); return new FounderFirstUnderstandingOwnerBundle({...input,verifiedRequest:createFounderFirstUnderstandingVerifiedRequestForIsolatedValidation(input.participantRef,input.consumerId)}); }

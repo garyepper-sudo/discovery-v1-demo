@@ -24,6 +24,7 @@ type DiscoveryShellProps = {
   showSessionImpact?: boolean;
   sessionControl?: ReactNode;
   productNavigation?: ReactNode;
+  opaqueMeetingHref?: string;
 };
 
 const navigation = [
@@ -65,6 +66,7 @@ export default function DiscoveryShell({
   showSessionImpact = true,
   sessionControl,
   productNavigation,
+  opaqueMeetingHref,
 }: DiscoveryShellProps) {
   const pathname = usePathname();
   const environmentLabel =
@@ -73,7 +75,7 @@ export default function DiscoveryShell({
       : process.env.NEXT_PUBLIC_DISCOVERY_ENV === "staging"
         ? "Staging"
         : null;
-  const homeHref = buildProductHref(
+  const homeHref = opaqueMeetingHref ?? buildProductHref(
     "/your-organization",
     organization.organizationId,
   );
@@ -103,7 +105,12 @@ export default function DiscoveryShell({
           </span>
         </Link>
 
-        {productNavigation ?? <nav
+        {productNavigation ?? (opaqueMeetingHref ? <nav className={styles.navigation} aria-label="Primary navigation">
+          <Link href={opaqueMeetingHref} className={`${styles.navigationItem} ${styles.active}`} aria-current="page">
+            <Building2 className={styles.navigationIcon} size={18} strokeWidth={1.55} aria-hidden="true" />
+            <span className={styles.navigationCopy}><strong>Meeting Home</strong><span>Current understanding</span></span>
+          </Link>
+        </nav> : <nav
           className={styles.navigation}
           aria-label="Primary navigation"
         >
@@ -141,7 +148,7 @@ export default function DiscoveryShell({
               </Link>
             );
           })}
-        </nav>}
+        </nav>)}
 
         {!productNavigation && <section className={styles.modelHealth} aria-label="Model health">
           <strong>Model Health</strong><i aria-hidden="true" />

@@ -8,14 +8,25 @@ import type { PreparedWorkProductBodyV1, RegisteredMeetingPreparationScopeV1 } f
 import { founderAuthorizedMeetingDirectory } from "../../product/integration/founderAuthorizedMeetingDirectory";
 import { buildProductQuestionWorkspace } from "../../product/workflow/buildProductQuestionWorkspace";
 import { createFounderFirstUnderstandingRequestComposition } from "./founderFirstUnderstandingRequestComposition";
+import { resolveFounderLocalAlphaRuntimeRootFromEnvironment } from "./founderLocalAlphaRuntimeRoot";
+
+export function classifyLegacyMeetingOrganizationClaim(
+  supplied: string | string[] | undefined,
+  resolvedOrganizationId: string,
+): "absent" | "matching" | "conflict" {
+  if (supplied === undefined) return "absent";
+  return typeof supplied === "string" && supplied === resolvedOrganizationId ? "matching" : "conflict";
+}
 
 /** A bounded current-grant projection of initial Prepared Work; no Pack or
  * source body is loaded by this Meeting Home path. */
-export async function resolveFounderFirstUnderstandingMeetingHome(seriesAddress: string) {
+export async function resolveFounderFirstUnderstandingMeetingHome(seriesAddress: string, suppliedOrganizationId?: string | string[]) {
   if (process.env.NODE_ENV === "production" || process.env.DISCOVERY_FOUNDER_LOCAL_ALPHA_ENABLED !== "true" || !/^[A-Za-z0-9_-]{24}$/u.test(seriesAddress)) return null;
   const request = await createFounderFirstUnderstandingRequestComposition();
   try {
-    const runtime = new FilesystemOrganizationRuntimeRepository(), root = path.join(process.cwd(),".discovery-runtime"), workflowRoot = process.env.DISCOVERY_LEADERSHIP_CONVERSATION_WORKFLOW_ROOT ?? path.join(root,"product-workflow"), workflow = createProductWorkflowArtifactRepository({ root: workflowRoot, environment:"development" }), bodies = createProductArtifactBodyRepository({ root: process.env.DISCOVERY_PRODUCT_ARTIFACT_BODY_ROOT ?? path.join(root,"product-artifact-bodies") });
+    const protectedRoot=await resolveFounderLocalAlphaRuntimeRootFromEnvironment();
+    if(protectedRoot.status!=="ready")return null;
+    const runtime = new FilesystemOrganizationRuntimeRepository(), root = path.join(process.cwd(),".discovery-runtime"), workflowRoot = process.env.DISCOVERY_LEADERSHIP_CONVERSATION_WORKFLOW_ROOT ?? path.join(root,"product-workflow"), workflow = createProductWorkflowArtifactRepository({ root: workflowRoot, environment:"development" }), bodies = createProductArtifactBodyRepository({ root: protectedRoot.value.productArtifactBodyRoot });
     const matches=[];
     for (const organizationId of await request.accessRepository.findOrganizationIdsForParticipant(request.participantRef)) {
       const policy = await request.accessRepository.findPolicy(organizationId);
@@ -28,13 +39,14 @@ export async function resolveFounderFirstUnderstandingMeetingHome(seriesAddress:
         return org.filter(value=>value.status==="active").length===1&&meeting.filter(value=>value.status==="active").length===1?"authorized":"denied";
       }}});
       for(const meeting of meetings.filter(value=>value.seriesAddress===seriesAddress)) {
+        if(classifyLegacyMeetingOrganizationClaim(suppliedOrganizationId,organizationId)==="conflict")return {status:"organization-conflict" as const};
         const {store}=await workflow.read(organizationId), scopes=(store as typeof store&{registeredMeetingPreparationScopes?:RegisteredMeetingPreparationScopeV1[]}).registeredMeetingPreparationScopes??[], scope=scopes.find(value=>value.organizationId===organizationId&&value.questionId===meeting.questionId&&value.conversationId===meeting.occurrenceId&&value.seriesId===meeting.seriesId), publications=(store.preparedWorkPublications??[]).filter(value=>value.productQuestionId===meeting.questionId&&value.productWorkflowId===`leadership-conversation:${meeting.occurrenceId}`);
         if(!scope||publications.length!==1)continue;
         const publication=publications[0]!,lineage=publication.materialLineage;
         validateProductArtifactInspectionMetadataV1(publication);
         if(lineage?.contractVersion!=="3"||lineage.bootstrapFingerprint!==bootstrap.requestFingerprint||lineage.preparationScopeDigest!==scope.scopeDigest)continue;
         const prepared=JSON.parse(new TextDecoder().decode(await bodies.readStagedExact(publication.protectedBody))) as PreparedWorkProductBodyV1;
-        matches.push({organizationId,organizationName:stored.runtime.metadata.name??"Your organization",title:meeting.title,cadence:meeting.timeframe,question:buildProductQuestionWorkspace({runtime:stored.runtime,questionId:meeting.questionId}).question.title,sourceCount:scope.sourceVersions.length,prepared:prepared.content});
+        matches.push({status:"found" as const,organizationId,organizationName:stored.runtime.metadata.name??"Your organization",title:meeting.title,cadence:meeting.timeframe,question:buildProductQuestionWorkspace({runtime:stored.runtime,questionId:meeting.questionId}).question.title,sourceCount:scope.sourceVersions.length,prepared:prepared.content});
       }
     }
     return matches.length===1?matches[0]!:null;

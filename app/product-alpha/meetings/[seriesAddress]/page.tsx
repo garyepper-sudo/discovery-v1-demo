@@ -1,5 +1,5 @@
 import {auth} from "@clerk/nextjs/server";
-import {notFound} from "next/navigation";
+import {notFound,redirect} from "next/navigation";
 import DiscoveryShell from "../../../../components/product-shell/DiscoveryShell";
 import {MeetingPortfolioNavigation,MeetingPortfolioShell} from "../../../../components/product-alpha/meetings/MeetingPortfolioShell";
 import {LeadershipConversationExperience} from "../../../../components/product-alpha/leadership-conversation/LeadershipConversationExperience";
@@ -11,14 +11,17 @@ import {compileChiefOfStaffValueLayerV1} from "../../../../product/workflow/lead
 import {SANDBOX_ORGANIZATION_ID} from "../../../../lib/access/sandboxMultiUserAccess";
 import {projectCrossMeetingRelevanceV1,projectMeetingExecutiveContinuity} from "../../../../product/integration/meetingExecutiveContentProjection";
 import {createParticipantReferenceMeetingCurrentAccessFromEnvironment} from "../../../../lib/alpha-activation/participantReferenceMeetingAccessServer";
-import {resolveFounderFirstUnderstandingMeetingHome} from "../../../../lib/alpha-activation/founderFirstUnderstandingMeetingHome";
+import {classifyLegacyMeetingOrganizationClaim,resolveFounderFirstUnderstandingMeetingHome} from "../../../../lib/alpha-activation/founderFirstUnderstandingMeetingHome";
 export const dynamic="force-dynamic";
-export default async function MeetingHome({params}:{params:Promise<{seriesAddress:string}>}){
+export default async function MeetingHome({params,searchParams}:{params:Promise<{seriesAddress:string}>;searchParams:Promise<{organizationId?:string|string[]}>}){
  const {userId}=await auth();if(!userId)notFound();
  const {seriesAddress}=await params;
- const founder=await resolveFounderFirstUnderstandingMeetingHome(seriesAddress);
- if(founder)return <DiscoveryShell organization={{organizationId:founder.organizationId,organizationName:founder.organizationName,runtimeAvailable:true,coherence:null,confidence:null,coherenceLabel:"Understanding beginning"}} showSessionImpact={false}><main style={{maxWidth:800,margin:"32px auto",padding:24}}><h1>{founder.title}</h1><p>{founder.cadence}</p><h2>{founder.question}</h2><p>{founder.sourceCount} governed sources are connected to this question.</p><h2>Initial Prepared Work</h2><p>{founder.prepared.situationSummary}</p><ul>{founder.prepared.uncertaintyAndLimitations.map(value=><li key={value}>{value}</li>)}</ul><p>No prior reviewed state or meeting history exists.</p></main></DiscoveryShell>;
+ const suppliedOrganization=(await searchParams).organizationId;
+ const founder=await resolveFounderFirstUnderstandingMeetingHome(seriesAddress,suppliedOrganization);
+ if(founder?.status==="organization-conflict")notFound();
+ if(founder?.status==="found"){if(suppliedOrganization!==undefined)redirect(`/product-alpha/meetings/${seriesAddress}`);const destination=`/product-alpha/meetings/${seriesAddress}`;return <DiscoveryShell organization={{organizationId:"",organizationName:founder.organizationName,runtimeAvailable:true,coherence:null,confidence:null,coherenceLabel:"Understanding beginning"}} showSessionImpact={false} opaqueMeetingHref={destination}><main style={{maxWidth:800,margin:"32px auto",padding:24}}><h1>{founder.title}</h1><p>{founder.cadence}</p><h2>{founder.question}</h2><p>{founder.sourceCount} governed sources are connected to this question.</p><h2>Initial Prepared Work</h2><p>{founder.prepared.situationSummary}</p><ul>{founder.prepared.uncertaintyAndLimitations.map(value=><li key={value}>{value}</li>)}</ul><p>No prior reviewed state or meeting history exists.</p></main></DiscoveryShell>;}
  const meetingAccess=createParticipantReferenceMeetingCurrentAccessFromEnvironment(),meeting=await resolveAuthorizedMeetingAddress({userId,organizationId:SANDBOX_ORGANIZATION_ID,seriesAddress,currentAccess:meetingAccess});if(!meeting)notFound();
+ const legacyClaim=classifyLegacyMeetingOrganizationClaim(suppliedOrganization,meeting.organizationId);if(legacyClaim==="conflict")notFound();if(legacyClaim==="matching")redirect(`/product-alpha/meetings/${seriesAddress}`);
  const server=createLeadershipConversationServerComposition(),workspace=await server.workspace({userId,organizationId:meeting.organizationId,questionId:meeting.questionId,conversationId:meeting.occurrenceId});
  let prepare=composeChiefFirstPrepareViewFromWorkspace(workspace);if(meeting.predecessorOccurrenceId){const priorWorkspace=await server.workspace({userId,organizationId:meeting.organizationId,questionId:meeting.questionId,conversationId:meeting.predecessorOccurrenceId}),closure=priorWorkspace.closureCompletion;if(!closure)notFound();const continuity=projectMeetingExecutiveContinuity(priorWorkspace);prepare={...prepare,seriesId:meeting.seriesId,priorCycle:{status:"completed",message:continuity.items.length?continuity.items.map(item=>`${item.label}: ${item.text}`).join("\n"):"No consequential reviewed continuity was recorded.",...continuity}};}
  let pack=null,unavailable=false;try{pack=await server.readMeetingPack({userId,organizationId:meeting.organizationId,questionId:meeting.questionId,conversationId:meeting.occurrenceId,seriesId:meeting.seriesId})}catch{unavailable=true}
