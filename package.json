@@ -521,7 +521,8 @@
     "deps:validate": "node scripts/performance/validatePerformanceReport.mjs",
     "deps:report": "npm run deps:validate && node scripts/performance/renderPerformanceReport.mjs",
     "validate:persisted-meeting-preparation-scope-activation": "NODE_OPTIONS=--conditions=react-server node --import tsx scripts/product/validatePersistedMeetingPreparationScopeActivation.ts",
-    "validate:founder-runtime-storage-navigation": "NODE_ENV=test node --import ./scripts/product/founderRuntimeStorageNavigationLoader.mjs --import tsx scripts/product/validateFounderRuntimeStorageAndOpaqueNavigation.tsx"
+    "validate:founder-runtime-storage-navigation": "NODE_ENV=test node --import ./scripts/product/founderRuntimeStorageNavigationLoader.mjs --import tsx scripts/product/validateFounderRuntimeStorageAndOpaqueNavigation.tsx",
+    "validate:founder-meeting-home-fixture-separation": "NODE_ENV=test node --import ./scripts/product/founderMeetingHomeFixtureSeparationLoader.mjs --import tsx scripts/product/validateFounderMeetingHomeFixtureSeparation.tsx"
   },
   "dependencies": {
     "@clerk/nextjs": "6.39.6",

@@ -16,7 +16,7 @@ async function main() {
     const setup = await provisionNorthstarPreparationLineageFixture({ environment: "test", fixtureRoot: root });
     const workspace = readLeadershipConversationFixture(setup.seed.productQuestionId);
     const managerWorkspace = { ...workspace, currentPreparedWorkProduct: null };
-    const [component, sheetPanel, observer, activation, prepare, page,meetingHome, actions, server, builder, css,telemetryNotice] = await Promise.all([
+    const [component, sheetPanel, observer, activation, prepare, page,founderMeetingHome,sandboxMeetingHome, actions, server, builder, css,telemetryNotice] = await Promise.all([
       readFile("components/product-alpha/leadership-conversation/LeadershipConversationExperience.tsx", "utf8"),
       readFile("components/product-alpha/leadership-conversation/PersonalRoomSheetPanel.tsx", "utf8"),
       readFile("components/product-alpha/leadership-conversation/LeadershipConversationObservabilityObserver.tsx", "utf8"),
@@ -24,12 +24,14 @@ async function main() {
       readFile("components/product-alpha/leadership-conversation/LeadershipConversationPrepare.tsx", "utf8"),
       readFile("app/product-alpha/leadership-conversation/page.tsx", "utf8"),
       readFile("app/product-alpha/meetings/[seriesAddress]/page.tsx", "utf8"),
+      readFile("app/product-alpha/meetings/[seriesAddress]/SandboxMeetingHome.tsx", "utf8"),
       readFile("app/product-alpha/leadership-conversation/actions.ts", "utf8"),
       readFile("product/integration/leadershipConversationServerComposition.ts", "utf8"),
       readFile("product/workflow/leadershipConversation/buildLeadershipConversationWorkspace.ts", "utf8"),
       readFile("components/product-alpha/leadership-conversation/LeadershipConversationExperience.module.css", "utf8"),
       readFile("components/product-alpha/leadership-conversation/AlphaTelemetryNotice.tsx","utf8"),
     ]);
+    const meetingHome = `${founderMeetingHome}\n${sandboxMeetingHome}`;
     check(workspace.contractVersion === "1" && workspace.base.contractVersion === "2", "workspace composes V2");
     check(isLeadershipConversationPrepareAvailable(workspace) && !isLeadershipConversationPrepareAvailable(managerWorkspace), "body-free Manager workspace fails closed");
     check(workspace.currentStep === "freeze", "Product owns current step");

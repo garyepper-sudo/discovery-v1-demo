@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { lstat, mkdir, mkdtemp, rm, symlink, writeFile } from "node:fs/promises";
+import { lstat, mkdir, mkdtemp, readFile, rm, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import React from "react";
@@ -69,7 +69,22 @@ async function main() {
     assert.equal(markup.includes("organizationId="), false, "opaque shell emits no organization query parameter");
     assert.equal((markup.match(/href="\/product-alpha\/meetings\/opaque-address"/g) ?? []).length, 2, "brand and navigation use the opaque Meeting Home address"); checks++;
 
-    console.log(`PASS founder runtime storage and opaque navigation checks=${checks} worktree-writes=0 product-writes=0`);
+    const founderRoute = await readFile("app/product-alpha/meetings/[seriesAddress]/page.tsx", "utf8");
+    const sandboxRoute = await readFile("app/product-alpha/meetings/[seriesAddress]/SandboxMeetingHome.tsx", "utf8");
+    for (const forbidden of [
+      "authorizedMeetingDirectory",
+      "createLeadershipConversationServerComposition",
+      "getPersonalRoomSheetPreviewAction",
+      "preparationLineageFixtureProvisioner",
+      "readNorthstarPreparationLineageSeed",
+    ]) assert.equal(founderRoute.includes(forbidden), false, `founder Meeting Home has no ${forbidden} dependency`);
+    assert.equal(founderRoute.includes('process.env.DISCOVERY_FOUNDER_LOCAL_ALPHA_ENABLED==="true"'), true, "founder mode has an explicit route boundary");
+    assert.equal(founderRoute.indexOf('await import("./SandboxMeetingHome")') > founderRoute.indexOf('process.env.DISCOVERY_FOUNDER_LOCAL_ALPHA_ENABLED==="true"'), true, "sandbox composition loads only after the founder branch");
+    assert.equal(sandboxRoute.includes("authorizedMeetingDirectory"), true, "sandbox meeting directory remains available");
+    assert.equal(sandboxRoute.includes("createLeadershipConversationServerComposition"), true, "sandbox composition remains available");
+    assert.equal(sandboxRoute.includes("getPersonalRoomSheetPreviewAction"), true, "sandbox private sheet path remains available"); checks++;
+
+    console.log(`PASS founder runtime storage, opaque navigation, and fixture separation checks=${checks} worktree-writes=0 product-writes=0`);
   } finally {
     await rm(isolated, { recursive: true, force: true });
   }
