@@ -71,6 +71,7 @@
     "validate:persistence-safe-actor-owner": "tsx scripts/product/validatePersistenceSafeActorReferenceOwner.ts",
     "validate:persistence-safe-actor-fresh-process": "tsx scripts/product/validatePersistenceSafeActorReferenceFreshProcess.ts",
     "validate:existing-participant-identity-resolution": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateExistingParticipantIdentityResolution.ts",
+    "validate:authenticated-participant-identity-recognition": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateAuthenticatedParticipantIdentityRecognition.ts",
     "validate:leadership-conversation-prepare-capture": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateLeadershipConversationPrepareCapture.ts",
     "validate:prepared-work-material-lineage-publication": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validatePreparedWorkMaterialLineagePublication.ts",
     "validate:leadership-conversation-replay": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateLeadershipConversationReplay.ts",
