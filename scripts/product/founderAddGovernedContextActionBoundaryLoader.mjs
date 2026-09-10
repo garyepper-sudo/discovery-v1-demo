@@ -1,7 +1,7 @@
 import { registerHooks } from "node:module";
 
 const asModule = source => `data:text/javascript,${encodeURIComponent(source)}`;
-const parser = asModule('export async function parseFounderAddGovernedContextForm(data){const keys=[...data.keys()];globalThis.__founderAddContextParsed.push(keys);if(keys.some(key=>!["intent","files","sourcePurpose"].includes(key)))throw new Error("Unexpected add-context field.");return {sources:[{name:"validated-source"}]}}');
+const parser = asModule('export async function parseFounderAddGovernedContextForm(data){const keys=[...data.keys()];globalThis.__founderAddContextParsed.push(keys);if(keys.some(key=>!["intent","files","sourcePurpose"].includes(key)))throw new Error("Unexpected add-context field.");return {sources:data.getAll("files").map((file,index)=>({name:`validated-source-${index}`,purpose:data.getAll("sourcePurpose")[index]}))}}');
 const composition = asModule('export async function createFounderAddGovernedContextApplicationServiceFromRequest(){globalThis.__founderAddContextServices++;return {apply:async(seriesAddress,input)=>{globalThis.__founderAddContextApplications.push({seriesAddress,input});return {status:"applied",sourceCount:5,meetingHomeDestination:`/product-alpha/meetings/${seriesAddress}`}},close:async()=>undefined}}');
 
 registerHooks({
