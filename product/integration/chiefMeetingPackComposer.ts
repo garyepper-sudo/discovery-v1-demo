@@ -10,6 +10,13 @@ import {
 type Note = { noteId: string; intent: "keep-private" | "talking-points" | "agenda"; text: string };
 const statements = (candidate: SourceScopedCandidateV1, key: keyof SourceScopedCandidateV1["sections"]) => candidate.sections[key].map(item => item.statement);
 const unique = (values: string[], limit: number) => [...new Set(values.map(value => value.trim()).filter(Boolean))].slice(0, limit);
+const citationProjection = (item:SourceScopedCandidateV1["sections"][keyof SourceScopedCandidateV1["sections"]][number], itemId:string) => ({
+  itemId,
+  statement:item.statement,
+  classification:"source-derived" as const,
+  citations:item.citations.map(citation => ({sourceId:citation.sourceId,sourceVersion:citation.sourceVersion,bodyDigest:citation.bodyDigest})),
+});
+const nonSourceDerived = (itemId:string, statement:string) => ({itemId,statement,classification:"non-source-derived" as const,citations:[]});
 
 export function chiefMeetingPackInputSnapshotDigest(input: {
   organizationId: string;
@@ -101,6 +108,31 @@ export function composeChiefMeetingPack(input: {
     preparedWorkPublicationDigest: input.preparedWorkPublicationDigest,
     priorCompletionDigest: input.priorCompletionDigest,
     sourceLineageDigest: input.sourceLineageDigest,
+    citationProjection: {
+      agenda: [
+        ...priorChanges.map((statement,index)=>nonSourceDerived(leadershipId("meeting-pack-agenda-item",input.inputSnapshotDigest,"change",index+1),statement)),
+        ...input.analysis.sections.whatChanged.map((item,index)=>citationProjection(item,leadershipId("meeting-pack-agenda-item",input.inputSnapshotDigest,"analysis-update",index+1))),
+        ...input.analysis.sections.decisions.map((item,index)=>citationProjection(item,leadershipId("meeting-pack-agenda-item",input.inputSnapshotDigest,"decision",index+1))),
+        ...input.analysis.sections.openQuestions.map((item,index)=>citationProjection(item,leadershipId("meeting-pack-agenda-item",input.inputSnapshotDigest,"question",index+1))),
+        ...input.analysis.sections.competingExplanations.map((item,index)=>citationProjection(item,leadershipId("meeting-pack-agenda-item",input.inputSnapshotDigest,"alternative",index+1))),
+        ...input.analysis.sections.evidenceUncertainty.map((item,index)=>citationProjection(item,leadershipId("meeting-pack-agenda-item",input.inputSnapshotDigest,"gap",index+1))),
+        ...agendaNotes.map((note,index)=>nonSourceDerived(leadershipId("meeting-pack-agenda-item",input.inputSnapshotDigest,"user",index+1),note.text)),
+      ].filter(item=>agendaItems.some(agenda=>agenda.itemId===item.itemId)),
+      talkingPoints: [
+        ...priorReviewed.map((statement,index)=>nonSourceDerived(leadershipId("meeting-pack-talking-point",input.inputSnapshotDigest,"prior",index+1),statement)),
+        ...talkingNotes.map((note,index)=>nonSourceDerived(leadershipId("meeting-pack-talking-point",input.inputSnapshotDigest,"private",index+1),note.text)),
+        ...[
+          ...input.analysis.sections.openQuestions,
+          ...input.analysis.sections.whatWouldChangeAssessment,
+          ...input.analysis.sections.whatMattersNow,
+          ...input.analysis.sections.contradictions,
+          ...input.analysis.sections.competingExplanations,
+          ...input.analysis.sections.evidenceUncertainty,
+          ...input.analysis.sections.commitments,
+          ...input.analysis.sections.attention,
+        ].map((item,index)=>citationProjection(item,leadershipId("meeting-pack-talking-point",input.inputSnapshotDigest,index+1))),
+      ],
+    },
     createdAt: input.createdAt,
   };
   return body;

@@ -44,6 +44,15 @@ export type ChiefMeetingPackAgendaItemV1 = {
   reason: "Changed since last time" | "Current analysis" | "Decision required" | "Commitment at risk" | "Unresolved question" | "Competing explanations" | "Evidence gap" | "Added by you";
 };
 
+/** Compact provenance is projected with the draft item rather than replacing
+ * it with a lineage aggregate.  It deliberately carries no source body. */
+export type ChiefMeetingPackCitationProjectionV1 = {
+  itemId: string;
+  statement: string;
+  classification: "source-derived" | "non-source-derived";
+  citations: Array<{ sourceId: string; sourceVersion: string; bodyDigest: string }>;
+};
+
 export type ChiefMeetingPackBodyV1 = {
   contractVersion: "1";
   authority: "noncanonical-user-working-draft";
@@ -57,6 +66,10 @@ export type ChiefMeetingPackBodyV1 = {
   purpose: string;
   desiredOutcomes: string[];
   agendaItems: ChiefMeetingPackAgendaItemV1[];
+  citationProjection?: {
+    agenda: ChiefMeetingPackCitationProjectionV1[];
+    talkingPoints: ChiefMeetingPackCitationProjectionV1[];
+  };
   closingCheck: string[];
   talkingPoints: {
     questionsToAsk: string[];

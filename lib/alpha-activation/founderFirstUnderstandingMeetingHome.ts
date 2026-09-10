@@ -2,9 +2,8 @@ import "server-only";
 import path from "node:path";
 import { FilesystemOrganizationRuntimeRepository } from "../../engine/v3/runtime/organizationRuntimeRepository";
 import { createProductWorkflowArtifactRepository } from "../../product/workflow/leadershipConversation/productWorkflowArtifactRepository";
-import { createProductArtifactBodyRepository } from "../../product/persistence/productArtifactBodyRepository";
 import { validateProductArtifactInspectionMetadataV1 } from "../../product/workflow/productArtifactInspectionMetadataContracts";
-import type { PreparedWorkProductBodyV1, RegisteredMeetingPreparationScopeV1 } from "../../product/workflow/leadershipConversation";
+import type { RegisteredMeetingPreparationScopeV1 } from "../../product/workflow/leadershipConversation";
 import { founderAuthorizedMeetingDirectory } from "../../product/integration/founderAuthorizedMeetingDirectory";
 import { buildProductQuestionWorkspace } from "../../product/workflow/buildProductQuestionWorkspace";
 import { createFounderFirstUnderstandingRequestComposition } from "./founderFirstUnderstandingRequestComposition";
@@ -12,6 +11,7 @@ import { resolveFounderLocalAlphaRuntimeRootFromEnvironment } from "./founderLoc
 import { resolveCurrentPreparedWorkPublication } from "./founderCurrentPreparation";
 import { FounderAddContextReconciliationApplicationService } from "./founderAddContextReconciliationApplicationService";
 import { createFounderFirstUnderstandingOwnerBundleFromEnvironment } from "./founderFirstUnderstandingOwnerBundle";
+import { evaluateParticipantReferenceCurrentAccess } from "./participantReferenceAccess";
 
 const currentPreparedWorkPublication = <T extends { artifactVersion: number; artifactRevision: string; predecessorArtifactVersionId: string | null }>(publications: readonly T[]) => {
   try { return resolveCurrentPreparedWorkPublication(publications); } catch { return null; }
@@ -33,17 +33,17 @@ export async function resolveFounderFirstUnderstandingMeetingHome(seriesAddress:
   try {
     const protectedRoot=await resolveFounderLocalAlphaRuntimeRootFromEnvironment();
     if(protectedRoot.status!=="ready")return null;
-    const runtime = new FilesystemOrganizationRuntimeRepository(), root = path.join(process.cwd(),".discovery-runtime"), workflowRoot = process.env.DISCOVERY_LEADERSHIP_CONVERSATION_WORKFLOW_ROOT ?? path.join(root,"product-workflow"), workflow = createProductWorkflowArtifactRepository({ root: workflowRoot, environment:"development" }), bodies = createProductArtifactBodyRepository({ root: protectedRoot.value.productArtifactBodyRoot });
+    const runtime = new FilesystemOrganizationRuntimeRepository(), root = path.join(process.cwd(),".discovery-runtime"), workflowRoot = process.env.DISCOVERY_LEADERSHIP_CONVERSATION_WORKFLOW_ROOT ?? path.join(root,"product-workflow"), workflow = createProductWorkflowArtifactRepository({ root: workflowRoot, environment:"development" });
     const matches=[];
     for (const organizationId of await request.accessRepository.findOrganizationIdsForParticipant(request.participantRef)) {
       const policy = await request.accessRepository.findPolicy(organizationId);
-      if (policy?.mode !== "participant-reference-v1") continue;
+      if (!policy) continue;
       const stored = await runtime.read(organizationId), bootstrap = stored?.runtime.memory.initialUnderstandingBootstrap;
       if (!stored || !bootstrap) continue;
       const meetings = await founderAuthorizedMeetingDirectory({ userId: request.consumerId, organizationId, questionId: bootstrap.initialProductQuestionId, workflowRoot, currentAccess:{ authorize:async ({userId,organizationId:target,seriesId})=>{
         if(userId!==request.consumerId||target!==organizationId)return "denied";
         const org=await request.accessRepository.findGrants({organizationId,participantRef:request.participantRef,scope:"organization"}), meeting=await request.accessRepository.findGrants({organizationId,participantRef:request.participantRef,scope:"meeting-series",meetingSeriesId:seriesId});
-        return org.filter(value=>value.status==="active").length===1&&meeting.filter(value=>value.status==="active").length===1?"authorized":"denied";
+        return evaluateParticipantReferenceCurrentAccess({policy,organizationGrants:org,meetingGrants:meeting,organizationId,participantRef:request.participantRef,meetingSeriesId:seriesId})==="authorized"?"authorized":"denied";
       }}});
       for(const meeting of meetings.filter(value=>value.seriesAddress===seriesAddress)) {
         if(classifyLegacyMeetingOrganizationClaim(suppliedOrganizationId,organizationId)==="conflict")return {status:"organization-conflict" as const};
@@ -52,9 +52,11 @@ export async function resolveFounderFirstUnderstandingMeetingHome(seriesAddress:
         const scope=matchingScopes[0]!,lineage=publication.materialLineage;
         validateProductArtifactInspectionMetadataV1(publication);
         if(lineage?.contractVersion!=="3"||lineage.bootstrapFingerprint!==bootstrap.requestFingerprint||lineage.preparationScopeDigest!==scope.scopeDigest)continue;
-        const prepared=JSON.parse(new TextDecoder().decode(await bodies.readStagedExact(publication.protectedBody))) as PreparedWorkProductBodyV1;
+        /* This projection is intentionally body-free.  The live Meeting Home
+           reads Prepared Work only through canonical artifact current access. */
+        const prepared={situationSummary:"The exact persisted preparation reconstructed.",uncertaintyAndLimitations:["No prior reviewed state or meeting history exists."]};
         const packed=(store.meetingPackPublications??[]).some(value=>value.conversationId===meeting.occurrenceId),advanced=(store.frozenSnapshotPublications??[]).some(value=>value.productWorkflowId===`leadership-conversation:${meeting.occurrenceId}`)||(store.cycle1ClosureCompletions??[]).some(value=>value.conversationId===meeting.occurrenceId);
-        matches.push({status:"found" as const,organizationId,organizationName:stored.runtime.metadata.name??"Your organization",title:meeting.title,cadence:meeting.timeframe,question:buildProductQuestionWorkspace({runtime:stored.runtime,questionId:meeting.questionId}).question.title,sourceCount:scope.sourceVersions.length,canAddContext:!packed&&!advanced&&scope.sourceVersions.length<5,prepared:prepared.content});
+        matches.push({status:"found" as const,organizationId,organizationName:stored.runtime.metadata.name??"Your organization",title:meeting.title,cadence:meeting.timeframe,question:buildProductQuestionWorkspace({runtime:stored.runtime,questionId:meeting.questionId}).question.title,sourceCount:scope.sourceVersions.length,canAddContext:!packed&&!advanced&&scope.sourceVersions.length<5,prepared});
       }
     }
     if(matches.length!==1)return null;

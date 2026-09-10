@@ -123,6 +123,7 @@ export default async function SandboxMeetingHome({
     const citationAccess = citations.length > 0 && await server.verifyReviewedCarryForwardCitations({
       userId,
       organizationId: meeting.organizationId,
+      seriesId: item.seriesId,
       citations,
     });
     return { meeting: item, workspace: originWorkspace, citationAccess };

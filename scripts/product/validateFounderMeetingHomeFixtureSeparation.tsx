@@ -3,9 +3,9 @@ import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import MeetingHome from "../../app/product-alpha/meetings/[seriesAddress]/page";
 
-type FounderResult = Awaited<ReturnType<typeof import("../../lib/alpha-activation/founderFirstUnderstandingMeetingHome").resolveFounderFirstUnderstandingMeetingHome>>;
 const globals = globalThis as typeof globalThis & {
-  __discoveryFounderMeetingHomeResult: (address: string, supplied?: string | string[]) => FounderResult;
+  __discoveryFounderMeetingHomeComposition: (address: string) => Promise<any>;
+  __discoveryFounderMeetingHomeExperience?:any;
   __discoverySandboxMeetingHomeLoads?: number;
 };
 (globalThis as typeof globalThis & { React: typeof React }).React = React;
@@ -18,35 +18,25 @@ async function main() {
   process.env.DISCOVERY_FOUNDER_LOCAL_ALPHA_ENABLED = "true";
   globals.__discoverySandboxMeetingHomeLoads = 0;
   let checks = 0;
-  globals.__discoveryFounderMeetingHomeResult = () => ({
-    status: "found",
-    organizationId: "organization-private",
-    organizationName: "Asterline Software",
-    title: "Weekly SignalGrid Launch Readiness Review",
-    cadence: "Weekly",
-    question: "Should Asterline keep the launch date?",
-    sourceCount: 1,
-    canAddContext: true,
-    recovery: { status: "available", sourceCount: 5 },
-    prepared: {
-      headline: "Initial Prepared Work",
-      situationSummary: "The exact persisted preparation reconstructed.",
-      whatChanged: [], decisionsRequiringAttention: [], importantTensions: [], contradictions: [], unknowns: [], priorCommitments: [], suggestedAgenda: [], talkingPoints: [], questionsToResolve: [], evidenceReferences: [], uncertaintyAndLimitations: ["No prior reviewed state or meeting history exists."], unavailableAreas: [],
-    },
+  let closed=0;
+  globals.__discoveryFounderMeetingHomeComposition = async address => ({
+    request:{consumerId:"user_founder_route_validation"},
+    meeting:{organizationId:"organization-private",questionId:"question-private",occurrenceId:"occurrence-private",seriesId:"series-private",seriesAddress:address},
+    server:{workspace:async()=>({}),readMeetingPack:async()=>null},
+    close:async()=>{closed+=1},
   });
   const markup = renderToStaticMarkup(await invoke("2mjUlX61y_lU76Z0g7Oh2O1G"));
-  assert.match(markup, /Weekly SignalGrid Launch Readiness Review/);
-  assert.match(markup, /The exact persisted preparation reconstructed/);
-  assert.match(markup, /data-add-context="eligible"/);
-  assert.match(markup, /data-context-recovery="eligible"/);
+  assert.match(markup, /data-authenticated-founder-composition="used"/);
   assert.equal(markup.includes("organization-private"), false);
-  assert.equal(globals.__discoverySandboxMeetingHomeLoads, 0); checks += 6;
+  assert.equal(globals.__discoveryFounderMeetingHomeExperience.seriesAddress,"2mjUlX61y_lU76Z0g7Oh2O1G");
+  assert.equal(closed,1);
+  assert.equal(globals.__discoverySandboxMeetingHomeLoads, 0); checks += 5;
 
-  globals.__discoveryFounderMeetingHomeResult = () => null;
+  globals.__discoveryFounderMeetingHomeComposition = async () => { throw new Error("NEXT_NOT_FOUND"); };
   await assert.rejects(() => invoke("foreignOpaqueMeeting1234"), /NEXT_NOT_FOUND/);
   assert.equal(globals.__discoverySandboxMeetingHomeLoads, 0); checks += 2;
 
-  globals.__discoveryFounderMeetingHomeResult = () => ({ status: "organization-conflict" });
+  globals.__discoveryFounderMeetingHomeComposition = async () => ({request:{consumerId:"user_founder_route_validation"},meeting:{organizationId:"organization-private",questionId:"question-private",occurrenceId:"occurrence-private",seriesId:"series-private"},server:{workspace:async()=>({}),readMeetingPack:async()=>null},close:async()=>{closed+=1}});
   await assert.rejects(() => invoke("2mjUlX61y_lU76Z0g7Oh2O1G", "forged-organization"), /NEXT_NOT_FOUND/);
   assert.equal(globals.__discoverySandboxMeetingHomeLoads, 0); checks += 2;
 
