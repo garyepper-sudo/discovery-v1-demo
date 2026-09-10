@@ -17,6 +17,46 @@ import { issueInitialUnderstandingQuestionIdentity } from "../../product/questio
 import { founderAuthorizedMeetingDirectory } from "../../product/integration/founderAuthorizedMeetingDirectory";
 import { createFounderFirstUnderstandingOwnerBundleForIsolatedValidation } from "../../lib/alpha-activation/founderFirstUnderstandingOwnerBundle";
 
+const verifiedRequest = {
+  status: "verified" as const,
+  identity: { consumerId: "user_synthetic_request", provider: "clerk" as const, verificationId: "session_synthetic_request", verifiedAt: "2026-09-09T00:00:00.000Z" },
+};
+
+function participantLookupRepository(input: { binding: "found" | "absent" | "unavailable"; namespace?: "ready" | "unavailable" }) {
+  let writes = 0;
+  let protectedReads = 0;
+  const repository = {
+    inspectActiveParticipantIdentityNamespace: async () => input.namespace === "unavailable" ? undefined : { scheme: "clerk-user-v2" as const, anchorId: "synthetic-anchor" },
+    findExistingParticipantIdentityBinding: async () => {
+      if (input.binding === "unavailable") throw new Error("synthetic participant lookup unavailable");
+      return input.binding === "found" ? { bindingId: "synthetic-binding", participantRef: "participant:synthetic-existing-v2", createdAt: "2026-09-09T00:00:00.000Z" } : undefined;
+    },
+    resolveOrBindExistingParticipantIdentity: async () => { writes += 1; throw new Error("page load must not create a binding"); },
+    activateLegacyParticipantIdentityNamespaceAnchor: async () => { writes += 1; throw new Error("page load must not activate a namespace"); },
+    readProtectedWorkspace: async () => { protectedReads += 1; throw new Error("denied request must not read protected workspace"); },
+  };
+  return { repository, writes: () => writes, protectedReads: () => protectedReads };
+}
+
+async function assertParticipantLookupParity() {
+  const found = participantLookupRepository({ binding: "found" });
+  const request = await verifyFounderFirstUnderstandingRequest(verifiedRequest, found.repository);
+  assert.equal(request.participantRef, "participant:synthetic-existing-v2");
+  assert.equal(found.writes(), 0);
+  assert.equal(found.protectedReads(), 0);
+
+  const absent = participantLookupRepository({ binding: "absent" });
+  await assert.rejects(() => verifyFounderFirstUnderstandingRequest(verifiedRequest, absent.repository), /Founder participant setup is required/);
+  assert.equal(absent.writes(), 0);
+  assert.equal(absent.protectedReads(), 0);
+
+  for (const denied of [participantLookupRepository({ binding: "unavailable" }), participantLookupRepository({ binding: "found", namespace: "unavailable" })]) {
+    await assert.rejects(() => verifyFounderFirstUnderstandingRequest(verifiedRequest, denied.repository), /Founder participant identity is unavailable|Active V2 participant namespace is unavailable/);
+    assert.equal(denied.writes(), 0);
+    assert.equal(denied.protectedReads(), 0);
+  }
+}
+
 async function main() {
   const root = await mkdtemp(path.join(tmpdir(), "discovery-first-understanding-construction-"));
   const sql = postgres(process.env.DISCOVERY_TEST_DATABASE_URL??"postgres://discovery_local:discovery_local_only@127.0.0.1:55432/discovery_alpha", { max: 1, connect_timeout: 1 });
@@ -46,6 +86,7 @@ async function main() {
     }
     for(let index=0;index<canonicalMethods.length;index++){const substituted=[...canonicalMethods];substituted[index]=async()=>({status:"success"});assert.throws(()=>assertConcrete(categories,substituted));}
     assert.throws(()=>assertFounderFirstUnderstandingVerifiedRequest({participantRef:"participant:forged",consumerId:"user_forged",route:"/onboarding/first-understanding",namespaceScheme:"clerk-user-v2",namespaceAnchorId:"forged"}),"plain objects cannot mint request authority");
+    await assertParticipantLookupParity();
     assert.deepEqual(await readdir(root), [], "construction performs no filesystem writes");
     await bundle.close();
     console.log("PASS concrete owner categories=14 placeholder owner categories=0 missing owner categories=0 construction writes=0 negative control=PASS");
