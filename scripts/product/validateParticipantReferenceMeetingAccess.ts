@@ -15,6 +15,10 @@ async function main(){
   const organization=await admin.grant({organizationId:org,participantRef:subject,scope:"organization",issuerAuthority:issuer,operationId:"a-org",occurredAt:at});
   const meeting=await admin.grant({organizationId:org,participantRef:subject,scope:"meeting-series",meetingSeriesId:"m1",issuerAuthority:issuer,operationId:"a-m1",occurredAt:at});
   assert.equal(await access.authorize(request),"authorized"); checks++;
+  memory.policies.set(org,{...memory.policies.get(org)!,createdAt:new Date(at) as unknown as string}); memory.grants.set(organization.grantId,{...organization,createdAt:new Date(at) as unknown as string}); memory.grants.set(meeting.grantId,{...meeting,createdAt:new Date(at) as unknown as string}); assert.equal(await access.authorize(request),"authorized"); checks++;
+  memory.policies.set(org,{...memory.policies.get(org)!,createdAt:new Date("invalid") as unknown as string}); assert.equal(await access.authorize(request),"unavailable"); checks++;
+  memory.policies.set(org,{...memory.policies.get(org)!,createdAt:at}); memory.grants.set(organization.grantId,{...organization,createdAt:"not-a-date"}); assert.equal(await access.authorize(request),"denied"); checks++;
+  memory.grants.set(organization.grantId,organization); memory.grants.set(meeting.grantId,meeting);
   memory.policies.set(org,{...memory.policies.get(org)!,issuedBy:"unrelated-issuer"}); assert.equal(await access.authorize(request),"denied"); checks++;
   memory.policies.set(org,{...memory.policies.get(org)!,issuedBy:issuer}); memory.grants.set(meeting.grantId,{...meeting,issuedBy:"other-issuer"}); assert.equal(await access.authorize(request),"denied"); checks++;
   memory.grants.set(meeting.grantId,meeting); memory.grants.set(organization.grantId,{...organization,requestFingerprint:""}); assert.equal(await access.authorize(request),"denied"); checks++;

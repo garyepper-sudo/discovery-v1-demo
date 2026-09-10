@@ -41,8 +41,12 @@ export interface ParticipantReferenceAccessRepository {
 const exact = (value: unknown): value is string => typeof value === "string" && value.length > 0 && value.trim() === value && value !== "*" && !value.includes("\0");
 const fingerprint = (input: Record<string, unknown>) => createHash("sha256").update(JSON.stringify(Object.entries(input).sort(([a], [b]) => a.localeCompare(b)))).digest("hex");
 const active = (grants: readonly ParticipantReferenceGrant[]) => grants.filter((grant) => grant.status === "active");
-const validPolicyAuthority = (policy:ParticipantReferencePolicy, organizationId:string) => policy.organizationId===organizationId&&policy.mode==="participant-reference-v1"&&[policy.issuedBy,policy.operationId,policy.requestFingerprint,policy.createdAt].every(exact)&&Number.isFinite(Date.parse(policy.createdAt));
-const validGrantIssuer = (grant:ParticipantReferenceGrant, input:{organizationId:string;participantRef:string;scope:ParticipantReferenceGrantScope;meetingSeriesId?:string}, issuer:string) => grant.organizationId===input.organizationId&&grant.participantRef===input.participantRef&&grant.scope===input.scope&&grant.meetingSeriesId===(input.scope==="meeting-series"?input.meetingSeriesId!:null)&&grant.status==="active"&&grant.issuedBy===issuer&&[grant.grantId,grant.operationId,grant.requestFingerprint,grant.createdAt].every(exact)&&Number.isFinite(Date.parse(grant.createdAt))&&grant.revokedAt===null;
+/** postgres materializes timestamp columns as Date; in-memory owners persist
+ * canonical UTC strings.  Both are accepted only when they name a real,
+ * canonical instant. */
+const validTimestamp = (value:unknown) => value instanceof Date ? Number.isFinite(value.getTime()) : typeof value==="string"&&exact(value)&&Number.isFinite(Date.parse(value))&&new Date(value).toISOString()===value;
+const validPolicyAuthority = (policy:ParticipantReferencePolicy, organizationId:string) => policy.organizationId===organizationId&&policy.mode==="participant-reference-v1"&&[policy.issuedBy,policy.operationId,policy.requestFingerprint].every(exact)&&validTimestamp(policy.createdAt);
+const validGrantIssuer = (grant:ParticipantReferenceGrant, input:{organizationId:string;participantRef:string;scope:ParticipantReferenceGrantScope;meetingSeriesId?:string}, issuer:string) => grant.organizationId===input.organizationId&&grant.participantRef===input.participantRef&&grant.scope===input.scope&&grant.meetingSeriesId===(input.scope==="meeting-series"?input.meetingSeriesId!:null)&&grant.status==="active"&&grant.issuedBy===issuer&&[grant.grantId,grant.operationId,grant.requestFingerprint].every(exact)&&validTimestamp(grant.createdAt)&&grant.revokedAt===null;
 
 /** The sole current-access decision boundary.  Policy mode never falls back
  * to legacy authorization: each active grant must be singular and issued by
