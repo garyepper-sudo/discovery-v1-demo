@@ -101,7 +101,14 @@ export class ProductArtifactCurrentOwnerStateResolver {
     try {
       validateProductArtifactInspectionMetadataV1(input.metadata);
       if(lineage.contractVersion==="2")return this.resolveDirectEvidence(input,lineage);
-      if(lineage.contractVersion==="3")return unavailable(input);
+      if(lineage.contractVersion==="3")return {
+        contractVersion:"1",organizationId:input.organizationId,productQuestionId:input.metadata.productQuestionId,
+        sourceGovernanceDigest:digest(lineage.sourceContentVersions.map(item=>({sourceBindingId:item.sourceBindingId,sourceContentVersionId:item.sourceContentVersionId,normalizedContentDigest:item.normalizedContentDigest})).sort((left,right)=>left.sourceBindingId.localeCompare(right.sourceBindingId))),
+        eligibilityDigest:digest({bootstrapOperationId:lineage.bootstrapOperationId,bootstrapFingerprint:lineage.bootstrapFingerprint,preparationScopeDigest:lineage.preparationScopeDigest,scopeDigest:lineage.scopeDigest}),
+        eligibilityDisposition:"eligible",projectionRevision:input.metadata.artifactRevision,projectionDigest:lineage.envelopeDigest,
+        canonicalUnderstandingRevision:null,canonicalChangeResultDigest:"not-applicable",lineagePolicyVersion:lineage.lineagePolicyVersion,
+        accessBasis:{contractVersion:"2",kind:"initial-understanding-bootstrap",canonicalUnderstandingRevision:null,bootstrapFingerprint:lineage.bootstrapFingerprint,preparationScopeDigest:lineage.preparationScopeDigest},
+      };
       const stored = await this.dependencies.runtimeRepository.read(input.organizationId);
       if (!stored || stored.runtime.metadata.organizationId !== input.organizationId) {
         return unavailable(input);

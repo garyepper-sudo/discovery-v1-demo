@@ -5,9 +5,12 @@ import type { ProductArtifactCurrentAccessRequestV1,ProductArtifactCurrentAccess
 const requestBound=(r:ProductArtifactCurrentAccessRequestV1)=>r.governance.disposition==="authorized"&&r.governance.organizationId===r.organizationId&&r.governance.subjectId===r.subjectId&&r.governance.operation===r.operation&&r.governance.purpose===r.purpose&&r.governance.sensitivity===r.sensitivity&&r.governance.evaluatedAt===r.evaluatedAt;
 export function resolveProductArtifactCurrentAccessV1(request:ProductArtifactCurrentAccessRequestV1,current:ProductArtifactCurrentOwnerStateV1):ProductArtifactCurrentAccessResultV1{
  validateProductArtifactInspectionMetadataV1(request.metadata);const metadataBound=request.metadata.organizationId===request.organizationId&&request.metadata.productQuestionId===current.productQuestionId&&Boolean(request.metadata.materialLineage);
- const lineage=request.metadata.materialLineage,direct=lineage?.contractVersion==="2"&&lineage.lineageVariant==="direct-canonical-evidence";
+  const lineage=request.metadata.materialLineage,direct=lineage?.contractVersion==="2"&&lineage.lineageVariant==="direct-canonical-evidence";
+ const bootstrap=lineage?.contractVersion==="3"&&lineage.lineageVariant==="initial-understanding-bootstrap";
  const basisValid=direct
   ? current.accessBasis?.contractVersion==="2"&&current.accessBasis.kind==="direct-canonical-evidence"&&current.accessBasis.canonicalUnderstandingRevision===null&&current.canonicalUnderstandingRevision===null&&current.canonicalChangeResultDigest==="not-applicable"&&current.accessBasis.provenanceBundleDigest===lineage.directEvidenceProvenance.bundleDigest
+  : bootstrap
+    ? current.accessBasis?.contractVersion==="2"&&current.accessBasis.kind==="initial-understanding-bootstrap"&&current.accessBasis.canonicalUnderstandingRevision===null&&current.canonicalUnderstandingRevision===null&&current.canonicalChangeResultDigest==="not-applicable"&&current.accessBasis.bootstrapFingerprint===lineage.bootstrapFingerprint&&current.accessBasis.preparationScopeDigest===lineage.preparationScopeDigest
   : (!current.accessBasis||current.accessBasis.kind==="canonical-understanding")&&Boolean(current.canonicalUnderstandingRevision&&current.canonicalChangeResultDigest);
  const complete=current.contractVersion==="1"&&current.organizationId===request.organizationId&&Boolean(current.sourceGovernanceDigest&&current.eligibilityDigest&&current.projectionRevision&&current.projectionDigest&&current.lineagePolicyVersion)&&basisValid;
  const disposition:ProductArtifactCurrentAccessResultV1["disposition"]=!requestBound(request)||current.eligibilityDisposition==="withheld"?"withheld":!metadataBound||!complete||current.eligibilityDisposition!=="eligible"?"unavailable":"eligible";

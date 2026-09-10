@@ -36,7 +36,7 @@ import {
   completeProductArtifactMaterialLineageV1,
   completeProductArtifactInspectionMetadataV1,
   validateProductArtifactInspectionMetadataV1,
-  type ProductArtifactMaterialLineageSeedV2,
+  type ProductArtifactMaterialLineageSeedV2, type ProductArtifactMaterialLineageSeedV3,
 } from "../../product/workflow/productArtifactInspectionMetadataContracts";
 import type { ProductArtifactCurrentOwnerStateV1 } from "../../product/workflow/productArtifactCurrentAccessContracts";
 import {
@@ -1361,13 +1361,18 @@ else if (process.argv[2] === "--seed-child")
     console.error(e);
     process.exitCode = 1;
   });
-else if (
+async function validateBootstrapPreparedWorkCurrentAccess():Promise<void>{
+ const organizationId="bootstrap-access-org",questionId="bootstrap-access-question",artifactId="bootstrap-prepared",artifactRevision="1",workflowId="leadership-conversation:bootstrap",h=(value:unknown)=>productArtifactBodyDigest(value),scope={organizationId,type:"organization" as const,id:organizationId},root=await mkdtemp(path.join(tmpdir(),"discovery-bootstrap-access-"));
+ try{const repository=createProductArtifactBodyRepository({root}),staged=await repository.stage({contractVersion:"1",organizationId,semanticOwner:"leadership-conversation",artifactType:"prepared-work",artifactId,artifactRevision,schemaRef:"prepared-work:v1",bytes:serializeProductArtifactBodyV1({contractVersion:"1",title:"bootstrap",summary:"safe"})}),unsigned:Omit<ProductArtifactMaterialLineageSeedV3,"seedDigest">={contractVersion:"3",lineageVariant:"initial-understanding-bootstrap",organizationId,semanticOwner:"leadership-conversation",productQuestionId:questionId,creationOperationId:"bootstrap-operation",lineagePolicyVersion:"bootstrap:v1",sourceBindings:[{sourceBindingId:"binding:bootstrap",bindingRevisionId:"binding:bootstrap"}],sourceContentVersions:[{sourceBindingId:"binding:bootstrap",sourceContentVersionId:"source:bootstrap",normalizedContentDigest:h("source")}],canonicalMaterial:[],canonicalUnderstandingRevision:null,projectionSourceRef:null,scopeDigest:h(scope),purpose:"current-product-delivery",sensitivity:"standard",bootstrapOperationId:"bootstrap-operation",bootstrapFingerprint:h("bootstrap"),preparationScopeDigest:h("scope")},seed:ProductArtifactMaterialLineageSeedV3={...unsigned,seedDigest:h(unsigned)},lineage=completeProductArtifactMaterialLineageV1({seed,productWorkflowId:workflowId,artifactType:"prepared-work",artifactId,artifactRevision}),metadata=completeProductArtifactInspectionMetadataV1({organizationId,semanticOwner:"leadership-conversation",artifactType:"prepared-work",artifactId,artifactRevision,productQuestionId:questionId,productWorkflowId:workflowId,creationEnvelopeDigest:h("create"),materialReferencesDigest:h("material"),protectedBody:staged.body,ownerStageReceiptDigest:staged.receiptDigest,materialLineage:lineage}),governance=resolveScopedGovernanceContext({organizationId,subjectId:"founder",requestedScope:scope,operation:"product-artifact:read",purpose:"current-product-delivery",sensitivity:"standard",evaluatedAt:"2026-09-10T00:00:00.000Z",temporal:{mode:"current"},serverResolvedAuthority:[{authorityRef:"authority",policyRef:"policy",organizationId,subjectId:"founder",scope,operations:["product-artifact:read"],sensitivity:["standard"],relationship:"direct",status:"active",validFrom:"2026-01-01T00:00:00.000Z"}]}),request={contractVersion:"1" as const,organizationId,subjectId:"founder",operation:"product-artifact:read" as const,purpose:"current-product-delivery",scopeDigest:h(scope),sensitivity:"standard" as const,evaluatedAt:"2026-09-10T00:00:00.000Z",metadata,governance},resolver=new ProductArtifactCurrentOwnerStateResolver({runtimeRepository:{read:async()=>null}}),state=await resolver.resolve({organizationId,subjectId:"founder",purpose:request.purpose,sensitivity:request.sensitivity,evaluatedAt:request.evaluatedAt,governance,metadata});assert.equal(resolveProductArtifactCurrentAccessV1(request,state).disposition,"eligible");console.log("bootstrap-prepared-work-current-access: PASS");}finally{await rm(root,{recursive:true,force:true});}}
+
+if (
   process.argv[1]?.endsWith(
     "validateProductArtifactAuthorizationBeforeBodyRead.ts",
   )
 )
   Promise.all([
     validateDirectEvidenceHardGates(),
+    validateBootstrapPreparedWorkCurrentAccess(),
     validateSeedRecordScenario(),
     validateCurrentAccessScenario(),
     validateCanonicalServerCurrentAccess(),
