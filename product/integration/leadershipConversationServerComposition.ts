@@ -256,7 +256,13 @@ function constructLeadershipConversationServerComposition(construction:Compositi
     if(contexts.length!==1)throw new Error("Meeting Pack is unavailable.");
     const context=contexts[0]!,links=store.futurePreparationLinks.filter(value=>value.organizationId===input.organizationId&&value.questionId===input.questionId&&value.nextConversationId===input.occurrenceId);
     if(links.length>1)throw new Error("Meeting Pack is unavailable.");
-    if(!links.length){const seriesId=`leadership-conversation-series:${input.occurrenceId}`;if(input.seriesId!==seriesId)throw new Error("Meeting Pack is unavailable.");return{kind:"initial" as const,context,seriesId,predecessorLink:null,predecessorClosure:null};}
+    if(!links.length){
+      const persistedScopes=(store.registeredMeetingPreparationScopes??[]).filter(scope=>scope.organizationId===input.organizationId&&scope.questionId===input.questionId&&scope.conversationId===input.occurrenceId),persistedSeriesIds=new Set(persistedScopes.map(scope=>scope.seriesId));
+      if(persistedScopes.length){
+        if(persistedSeriesIds.size!==1||input.seriesId!==persistedScopes[0]!.seriesId)throw new Error("Meeting Pack is unavailable.");
+      }else if(input.seriesId!==`leadership-conversation-series:${input.occurrenceId}`)throw new Error("Meeting Pack is unavailable.");
+      return{kind:"initial" as const,context,seriesId:input.seriesId,predecessorLink:null,predecessorClosure:null};
+    }
     const predecessorLink=links[0]!,closures=(store.cycle1ClosureCompletions??[]).filter(value=>value.organizationId===input.organizationId&&value.questionId===input.questionId&&value.conversationId===predecessorLink.conversationId),predecessorContexts=store.contexts.filter(value=>value.organizationId===input.organizationId&&value.questionId===input.questionId&&value.conversationId===predecessorLink.conversationId);
     if(closures.length!==1||predecessorContexts.length!==1)throw new Error("Meeting Pack is unavailable.");
     const predecessorClosure=closures[0]!,expectedOccurrenceId=leadershipId("leadership-conversation",predecessorClosure.seriesId,"occurrence",2);
