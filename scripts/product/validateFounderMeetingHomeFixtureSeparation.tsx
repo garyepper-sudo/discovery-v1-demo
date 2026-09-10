@@ -32,8 +32,13 @@ async function main() {
   assert.equal(globals.__discoveryFounderMeetingHomeExperience.seriesAddress,"2mjUlX61y_lU76Z0g7Oh2O1G");
   assert.deepEqual(workspaceInputs,[{userId:"user_founder_route_validation",organizationId:"organization-private",questionId:"question-private",conversationId:"occurrence-private",seriesId:"series-private"}]);
   assert.equal((await (await import("node:fs/promises")).readFile("app/product-alpha/meetings/[seriesAddress]/page.tsx","utf8")).includes("leadership-conversation-series:${"), false);
+  const composition=await (await import("node:fs/promises")).readFile("product/integration/leadershipConversationServerComposition.ts","utf8");
+  assert.match(composition,/if\(construction\.persistedPreparedWorkLineage\)return persistedPreparedWorkLineage\(input\);/);
+  assert.match(composition,/persistedPreparedWorkLineage:true/);
+  assert.ok(composition.indexOf("if(construction.persistedPreparedWorkLineage)return persistedPreparedWorkLineage(input);")<composition.indexOf("const seed=await readNorthstarPreparationLineageSeed"));
+  assert.ok(composition.indexOf("if(construction.persistedPreparedWorkLineage)throw new Error(\"Product Decision Draft inspection lineage is unavailable.\");")<composition.lastIndexOf("const seed=await readNorthstarPreparationLineageSeed"));
   assert.equal(closed,1);
-  assert.equal(globals.__discoverySandboxMeetingHomeLoads, 0); checks += 7;
+  assert.equal(globals.__discoverySandboxMeetingHomeLoads, 0); checks += 11;
 
   globals.__discoveryFounderMeetingHomeComposition = async () => { throw new Error("NEXT_NOT_FOUND"); };
   await assert.rejects(() => invoke("foreignOpaqueMeeting1234"), /NEXT_NOT_FOUND/);
