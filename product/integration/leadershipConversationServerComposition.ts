@@ -57,13 +57,22 @@ import type { AlphaContentSafeObservabilityEventV1 } from "../../lib/observabili
 import {analyzeDeterministicDevelopmentCandidate,SourceScopedExecutiveAnalysisOwner,type SourceScopedUnavailableReasonV1} from "./sourceScopedExecutiveAnalysis";
 import {createOpenAIExecutiveAnalysisTransport} from "../../lib/analysis/openAIExecutiveAnalysisTransport";
 import {admitDeterministicReviewedCarryForward,reviewedCarryForwardDevelopmentTransport} from "./reviewedCarryForward";
-import {assertLeadershipConversationPublicationProofV1,assertReviewedCarryForwardProposalAuthorityV1} from "../workflow/leadershipConversation/contracts";
+import {assertLeadershipConversationPublicationProofV1,assertRegisteredMeetingPreparationScopeV1,assertReviewedCarryForwardProposalAuthorityV1} from "../workflow/leadershipConversation/contracts";
 import {DEFAULT_SOURCE_SCOPED_ANALYSIS_TIMEOUT_MS,MAX_SOURCE_SCOPED_ANALYSIS_TIMEOUT_MS,MIN_SOURCE_SCOPED_ANALYSIS_TIMEOUT_MS,unavailable,type SourceScopedResultV1,type SourceScopedTransportV1} from "../../lib/analysis/sourceScopedExecutiveAnalysisContracts";
 import { ChiefMeetingPackOwner } from "./chiefMeetingPackOwner";
 import { chiefMeetingPackInputSnapshotDigest, composeChiefMeetingPack } from "./chiefMeetingPackComposer";
 import { projectSavedTalkingPointAdditions } from "./meetingExecutiveContentProjection";
 import type { ChiefMeetingPackViewV1, MeetingPackPrivateNoteIntentV1 } from "../workflow/leadershipConversation/meetingPackContracts";
 import { resolveCurrentPreparedWorkPublication } from "../../lib/alpha-activation/founderCurrentPreparation";
+
+export function assertBootstrapPreparedWorkScopeProofV1(input:{scope:import("../workflow/leadershipConversation").RegisteredMeetingPreparationScopeV1&{expectedRevision?:string|null};lineage:Extract<NonNullable<ProductArtifactInspectionMetadataV1["materialLineage"]>,{contractVersion:"3"}>}):void{
+  const {expectedRevision,...scope}=input.scope;
+  if((expectedRevision!==undefined&&expectedRevision!==null&&typeof expectedRevision!=="string")||Object.keys(scope).some(key=>!["contractVersion","scopeId","organizationId","questionId","conversationId","seriesId","sourceVersions","scopeDigest","createdAt","createdByUserId","idempotencyKeyDigest","requestFingerprint"].includes(key)))throw new Error("Bootstrap Prepared Work scope is unavailable.");
+  assertRegisteredMeetingPreparationScopeV1(scope);
+  if(scope.scopeDigest!==input.lineage.preparationScopeDigest)throw new Error("Bootstrap Prepared Work scope is unavailable.");
+  const tuples=(values:readonly {sourceBindingId:string;sourceContentVersionId:string;normalizedContentDigest:string}[])=>values.map(value=>`${value.sourceBindingId}\u0000${value.sourceContentVersionId}\u0000${value.normalizedContentDigest}`);
+  if(JSON.stringify(tuples(input.scope.sourceVersions))!==JSON.stringify(tuples(input.lineage.sourceContentVersions))||input.lineage.sourceBindings.some((binding,index)=>binding.sourceBindingId!==input.scope.sourceVersions[index]?.sourceBindingId||binding.bindingRevisionId!==input.scope.sourceVersions[index]?.sourceBindingId))throw new Error("Bootstrap Prepared Work scope is unavailable.");
+}
 
 export type OptionalMeetingPackForAskV1=
   |{status:"current";pack:ChiefMeetingPackViewV1}
@@ -275,10 +284,8 @@ function constructLeadershipConversationServerComposition(construction:Compositi
     if(current.artifactId!==metadata.artifactId||current.artifactRevision!==metadata.artifactRevision)return false;
     const scopes=((store as typeof store&{registeredMeetingPreparationScopes?:Array<{contractVersion:string;scopeId:string;organizationId:string;questionId:string;conversationId:string;seriesId:string;scopeDigest:string;sourceVersions:Array<{sourceBindingId:string;sourceContentVersionId:string;normalizedContentDigest:string}>;createdAt:string;createdByUserId:string;idempotencyKeyDigest:string;requestFingerprint:string}>}).registeredMeetingPreparationScopes??[]).filter(value=>value.contractVersion==="1"&&value.organizationId===organizationId&&value.questionId===metadata.productQuestionId&&value.conversationId===conversationId&&value.scopeDigest===lineage.preparationScopeDigest);
     if(scopes.length!==1)return false;
-    const scope=scopes[0]!,{scopeDigest,...unsignedScope}=scope;
-    if(productArtifactBodyDigest(unsignedScope)!==scopeDigest)return false;
-    const tuples=(values:readonly {sourceBindingId:string;sourceContentVersionId:string;normalizedContentDigest:string}[])=>values.map(value=>`${value.sourceBindingId}\u0000${value.sourceContentVersionId}\u0000${value.normalizedContentDigest}`);
-    if(JSON.stringify(tuples(scope.sourceVersions))!==JSON.stringify(tuples(lineage.sourceContentVersions))||lineage.sourceBindings.some((binding,index)=>binding.sourceBindingId!==scope.sourceVersions[index]?.sourceBindingId||binding.bindingRevisionId!==scope.sourceVersions[index]?.sourceBindingId))return false;
+    const scope=scopes[0]!;
+    assertBootstrapPreparedWorkScopeProofV1({scope:scope as import("../workflow/leadershipConversation").RegisteredMeetingPreparationScopeV1,lineage});
     const events=(store.events??[]).filter(value=>value.organizationId===organizationId&&value.questionId===metadata.productQuestionId&&value.eventType==="prepared-work-product-version-recorded"&&value.recordRef===metadata.artifactRevision),receipts=(store.publicationReceipts??[]).filter(value=>value.receiptKind==="prepared-work-publication"&&value.artifactId===metadata.artifactId&&value.artifactRevision===metadata.artifactRevision);
     if(events.length!==1||receipts.length!==1)return false;
     assertLeadershipConversationPublicationProofV1({publication:publication[0]!,event:events[0]!,receipt:receipts[0]!});
