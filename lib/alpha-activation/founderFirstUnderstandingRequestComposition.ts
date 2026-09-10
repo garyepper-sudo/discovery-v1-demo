@@ -11,6 +11,7 @@ import { createFounderFirstUnderstandingOwnerBundleFromEnvironment } from "./fou
 import { verifyFounderFirstUnderstandingRequest, type FounderFirstUnderstandingVerifiedRequest } from "./founderFirstUnderstandingRequestAuthority";
 import { FounderFirstUnderstandingApplicationService } from "./founderFirstUnderstandingApplicationService";
 import { FounderAddGovernedContextApplicationService } from "./founderAddGovernedContextApplicationService";
+import { FounderAddContextReconciliationApplicationService } from "./founderAddContextReconciliationApplicationService";
 
 export type FounderFirstUnderstandingRequestComposition={participantRef:string;consumerId:string;access:ParticipantReferenceAccessAdministration;accessRepository:PostgresParticipantReferenceAccessRepository;verifiedRequest:FounderFirstUnderstandingVerifiedRequest;close():Promise<void>};
 /** Constructs only from a verified active request and an existing V2 mapping.
@@ -32,5 +33,11 @@ export async function createFounderFirstUnderstandingApplicationServiceFromReque
 export async function createFounderAddGovernedContextApplicationServiceFromRequest(){
  const request=await createFounderFirstUnderstandingRequestComposition();
  try{return new FounderAddGovernedContextApplicationService(await createFounderFirstUnderstandingOwnerBundleFromEnvironment(request));}
+ catch(error){await request.close();throw error;}
+}
+
+export async function createFounderAddContextReconciliationApplicationServiceFromRequest(){
+ const request=await createFounderFirstUnderstandingRequestComposition();
+ try{return new FounderAddContextReconciliationApplicationService(await createFounderFirstUnderstandingOwnerBundleFromEnvironment(request));}
  catch(error){await request.close();throw error;}
 }

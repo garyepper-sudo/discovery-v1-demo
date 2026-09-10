@@ -27,6 +27,7 @@ async function main() {
     question: "Should Asterline keep the launch date?",
     sourceCount: 1,
     canAddContext: true,
+    recovery: { status: "available", sourceCount: 5 },
     prepared: {
       headline: "Initial Prepared Work",
       situationSummary: "The exact persisted preparation reconstructed.",
@@ -37,8 +38,9 @@ async function main() {
   assert.match(markup, /Weekly SignalGrid Launch Readiness Review/);
   assert.match(markup, /The exact persisted preparation reconstructed/);
   assert.match(markup, /data-add-context="eligible"/);
+  assert.match(markup, /data-context-recovery="eligible"/);
   assert.equal(markup.includes("organization-private"), false);
-  assert.equal(globals.__discoverySandboxMeetingHomeLoads, 0); checks += 5;
+  assert.equal(globals.__discoverySandboxMeetingHomeLoads, 0); checks += 6;
 
   globals.__discoveryFounderMeetingHomeResult = () => null;
   await assert.rejects(() => invoke("foreignOpaqueMeeting1234"), /NEXT_NOT_FOUND/);

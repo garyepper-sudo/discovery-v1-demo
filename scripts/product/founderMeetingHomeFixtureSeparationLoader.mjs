@@ -5,6 +5,7 @@ const clerk = asModule('export async function auth(){return {userId:"user_founde
 const navigation = asModule('export function notFound(){const error=new Error("NEXT_NOT_FOUND");error.code="NEXT_NOT_FOUND";throw error} export function redirect(destination){const error=new Error(`NEXT_REDIRECT:${destination}`);error.code="NEXT_REDIRECT";throw error} export function usePathname(){return "/product-alpha/meetings/founder-route-validation"}');
 const founder = asModule('export async function resolveFounderFirstUnderstandingMeetingHome(address,supplied){return globalThis.__discoveryFounderMeetingHomeResult(address,supplied)}');
 const addContext = asModule('import React from "react";export function FounderAddGovernedContextForm(){return React.createElement("div",{"data-add-context":"eligible"},"Add governed context") }');
+const recovery = asModule('import React from "react";export function FounderAddContextRecovery(){return React.createElement("div",{"data-context-recovery":"eligible"},"Finish context refresh") }');
 const sandbox = asModule('globalThis.__discoverySandboxMeetingHomeLoads=(globalThis.__discoverySandboxMeetingHomeLoads??0)+1;export default function SandboxMeetingHome(){return null}');
 const serverOnly = asModule("export default undefined");
 
@@ -15,6 +16,7 @@ registerHooks({
     if (specifier === "server-only") return { url: serverOnly, shortCircuit: true };
     if (specifier.endsWith("/founderFirstUnderstandingMeetingHome")) return { url: founder, shortCircuit: true };
     if (specifier.endsWith("/FounderAddGovernedContextForm")) return { url: addContext, shortCircuit: true };
+    if (specifier.endsWith("/FounderAddContextRecovery")) return { url: recovery, shortCircuit: true };
     if (specifier === "./SandboxMeetingHome") return { url: sandbox, shortCircuit: true };
     return nextResolve(specifier, context);
   },

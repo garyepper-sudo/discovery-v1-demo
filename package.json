@@ -6,6 +6,8 @@
     "validate:founder-first-understanding-composition": "NODE_ENV=test node --conditions=react-server --import tsx scripts/product/validateFounderFirstUnderstandingComposition.ts",
     "validate:founder-first-understanding-apply": "NODE_ENV=test node --conditions=react-server --import tsx scripts/product/validateFounderFirstUnderstandingApply.ts",
     "validate:founder-add-governed-context": "NODE_ENV=test node --conditions=react-server --import tsx scripts/product/validateFounderAddGovernedContext.ts",
+    "validate:authenticated-add-context-reconciliation": "NODE_ENV=test node --conditions=react-server --import tsx scripts/product/validateFounderAddContextReconciliation.ts",
+    "validate:authenticated-add-context-reconciliation-action": "NODE_ENV=test node --conditions=react-server --import ./scripts/product/founderAddContextReconciliationActionBoundaryLoader.mjs --import tsx scripts/product/validateFounderAddContextReconciliationActionBoundary.ts",
     "validate:general-recurring-meeting-provisioning": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateGeneralRecurringMeetingProvisioning.ts",
     "validate:cross-meeting-relevance-v1": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateCrossMeetingRelevanceV1.ts",
     "validate:multi-user-alignment-divergence-v1": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateMultiUserAlignmentDivergenceV1.ts",

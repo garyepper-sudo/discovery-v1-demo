@@ -10,6 +10,8 @@ import { buildProductQuestionWorkspace } from "../../product/workflow/buildProdu
 import { createFounderFirstUnderstandingRequestComposition } from "./founderFirstUnderstandingRequestComposition";
 import { resolveFounderLocalAlphaRuntimeRootFromEnvironment } from "./founderLocalAlphaRuntimeRoot";
 import { resolveCurrentPreparedWorkPublication } from "./founderCurrentPreparation";
+import { FounderAddContextReconciliationApplicationService } from "./founderAddContextReconciliationApplicationService";
+import { createFounderFirstUnderstandingOwnerBundleFromEnvironment } from "./founderFirstUnderstandingOwnerBundle";
 
 const currentPreparedWorkPublication = <T extends { artifactVersion: number; artifactRevision: string; predecessorArtifactVersionId: string | null }>(publications: readonly T[]) => {
   try { return resolveCurrentPreparedWorkPublication(publications); } catch { return null; }
@@ -55,6 +57,10 @@ export async function resolveFounderFirstUnderstandingMeetingHome(seriesAddress:
         matches.push({status:"found" as const,organizationId,organizationName:stored.runtime.metadata.name??"Your organization",title:meeting.title,cadence:meeting.timeframe,question:buildProductQuestionWorkspace({runtime:stored.runtime,questionId:meeting.questionId}).question.title,sourceCount:scope.sourceVersions.length,canAddContext:!packed&&!advanced&&scope.sourceVersions.length<5,prepared:prepared.content});
       }
     }
-    return matches.length===1?matches[0]!:null;
+    if(matches.length!==1)return null;
+    const match=matches[0]!;
+    const reconciliation=new FounderAddContextReconciliationApplicationService(await createFounderFirstUnderstandingOwnerBundleFromEnvironment(request));
+    const recovery=await reconciliation.project(seriesAddress);
+    return {...match,recovery};
   } finally { await request.close(); }
 }
