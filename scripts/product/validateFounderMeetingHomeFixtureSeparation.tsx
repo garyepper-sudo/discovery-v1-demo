@@ -10,8 +10,8 @@ const globals = globalThis as typeof globalThis & {
 };
 (globalThis as typeof globalThis & { React: typeof React }).React = React;
 
-async function invoke(seriesAddress: string, organizationId?: string | string[]) {
-  return MeetingHome({ params: Promise.resolve({ seriesAddress }), searchParams: Promise.resolve({ organizationId }) });
+async function invoke(seriesAddress: string, organizationId?: string | string[], ignoredQuery: Record<string, unknown> = {}) {
+  return MeetingHome({ params: Promise.resolve({ seriesAddress }), searchParams: Promise.resolve({ ...ignoredQuery, organizationId }) as never });
 }
 
 async function main() {
@@ -19,18 +19,21 @@ async function main() {
   globals.__discoverySandboxMeetingHomeLoads = 0;
   let checks = 0;
   let closed=0;
+  const workspaceInputs:any[]=[];
   globals.__discoveryFounderMeetingHomeComposition = async address => ({
     request:{consumerId:"user_founder_route_validation"},
     meeting:{organizationId:"organization-private",questionId:"question-private",occurrenceId:"occurrence-private",seriesId:"series-private",seriesAddress:address},
-    server:{workspace:async()=>({}),readMeetingPack:async()=>null},
+    server:{workspace:async(input:any)=>{workspaceInputs.push(input);return{};},readMeetingPack:async()=>null},
     close:async()=>{closed+=1},
   });
-  const markup = renderToStaticMarkup(await invoke("2mjUlX61y_lU76Z0g7Oh2O1G"));
+  const markup = renderToStaticMarkup(await invoke("2mjUlX61y_lU76Z0g7Oh2O1G", undefined, {seriesId:"forged-series",conversationId:"forged-occurrence",participantRef:"forged-participant"}));
   assert.match(markup, /data-authenticated-founder-composition="used"/);
   assert.equal(markup.includes("organization-private"), false);
   assert.equal(globals.__discoveryFounderMeetingHomeExperience.seriesAddress,"2mjUlX61y_lU76Z0g7Oh2O1G");
+  assert.deepEqual(workspaceInputs,[{userId:"user_founder_route_validation",organizationId:"organization-private",questionId:"question-private",conversationId:"occurrence-private",seriesId:"series-private"}]);
+  assert.equal((await (await import("node:fs/promises")).readFile("app/product-alpha/meetings/[seriesAddress]/page.tsx","utf8")).includes("leadership-conversation-series:${"), false);
   assert.equal(closed,1);
-  assert.equal(globals.__discoverySandboxMeetingHomeLoads, 0); checks += 5;
+  assert.equal(globals.__discoverySandboxMeetingHomeLoads, 0); checks += 7;
 
   globals.__discoveryFounderMeetingHomeComposition = async () => { throw new Error("NEXT_NOT_FOUND"); };
   await assert.rejects(() => invoke("foreignOpaqueMeeting1234"), /NEXT_NOT_FOUND/);

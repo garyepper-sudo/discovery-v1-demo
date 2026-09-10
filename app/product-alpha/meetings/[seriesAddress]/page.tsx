@@ -15,7 +15,7 @@ export default async function MeetingHome({params,searchParams}:{params:Promise<
     const {server,meeting,request}=composition;
     if(suppliedOrganization!==undefined){if(typeof suppliedOrganization!=="string"||suppliedOrganization!==meeting.organizationId)notFound();redirect(`/product-alpha/meetings/${seriesAddress}`);}
     const identity={userId:request.consumerId,organizationId:meeting.organizationId,questionId:meeting.questionId,conversationId:meeting.occurrenceId};
-    const workspace=await server.workspace(identity),prepare=composeChiefFirstPrepareViewFromWorkspace(workspace);
+    const workspace=await server.workspace({...identity,seriesId:meeting.seriesId}),prepare=composeChiefFirstPrepareViewFromWorkspace(workspace);
     let pack=null,unavailable=false;
     try{pack=await server.readMeetingPack({...identity,seriesId:meeting.seriesId});}catch{unavailable=true;}
     return <DiscoveryShell organization={{organizationId:meeting.organizationId,organizationName:"Your organization",runtimeAvailable:true,coherence:null,confidence:null,coherenceLabel:"Understanding beginning"}} showSessionImpact={false} opaqueMeetingHref={`/product-alpha/meetings/${seriesAddress}`}><LeadershipConversationExperience initialWorkspace={workspace} prepare={prepare} valueLayer={undefined} personalSheet={undefined} occurrenceRef={meeting.occurrenceId} initialCheckpoint={null} initialMeetingPack={pack} meetingPackUnavailable={unavailable} workingAnalysisDigest={null} seriesAddress={seriesAddress} readOnlyMeetingHome/></DiscoveryShell>;
