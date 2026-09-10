@@ -7,7 +7,8 @@ export type MeetingPackBuildTraceStage =
   | "authenticated-request-resolved" | "participant-resolved" | "opaque-meeting-resolved"
   | "organization-access-allowed" | "meeting-access-allowed" | "preparation-open-verified"
   | "current-scope-resolved" | "current-prepared-work-resolved" | "contract3-access-allowed"
-  | "source-material-authorized" | "source-material-built" | "pack-identity-derived"
+  | "source-material-authorized" | "analysis-owner-entered" | "analysis-input-constructed"
+  | "analysis-completed" | "analysis-failed" | "source-material-built" | "pack-identity-derived"
   | "composer-entered" | "composer-completed" | "publication-entered" | "publication-completed"
   | "artifact-body-write-entered" | "artifact-body-write-completed" | "canonical-reread-entered"
   | "canonical-reread-found" | "action-success-returned" | "action-failed";
