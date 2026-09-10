@@ -22,11 +22,15 @@ import type { FirstUnderstandingInput, FirstUnderstandingUpload } from "./founde
 import { assertFounderFirstUnderstandingVerifiedRequest, createFounderFirstUnderstandingVerifiedRequestForIsolatedValidation, type FounderFirstUnderstandingVerifiedRequest } from "./founderFirstUnderstandingRequestAuthority";
 import { resolveFounderLocalAlphaRuntimeRootFromEnvironment } from "./founderLocalAlphaRuntimeRoot";
 import type { ProductArtifactMaterialLineageSeedV3 } from "../../product/workflow/productArtifactInspectionMetadataContracts";
+import { resolveCurrentPreparedWorkPublication } from "./founderCurrentPreparation";
 
 const hash = (value: unknown) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const PURPOSE = "leadership-conversation-capture" as const;
 type ScopeStore = { registeredMeetingPreparationScopes?: RegisteredMeetingPreparationScopeV1[] };
 type SourceVersion = RegisteredMeetingPreparationScopeV1["sourceVersions"][number];
+const sourceTuple = (value: SourceVersion) => `${value.sourceBindingId}:${value.sourceContentVersionId}:${value.normalizedContentDigest}`;
+const sameSourceSet = (left: readonly SourceVersion[], right: readonly SourceVersion[]) =>
+  JSON.stringify(left.map(sourceTuple).sort()) === JSON.stringify(right.map(sourceTuple).sort());
 type FounderOperation = {
   mode: "initial" | "add-context";
   id: string;
@@ -39,6 +43,7 @@ type FounderOperation = {
   conversationId?: string;
   priorScope?: RegisteredMeetingPreparationScopeV1;
   successorScope?: RegisteredMeetingPreparationScopeV1;
+  targetSourceVersions?: readonly SourceVersion[];
 };
 export type FounderBundleConfiguration = { runtime: OrganizationRuntimeRepository; accessRepository: ParticipantReferenceAccessRepository&{findOrganizationIdsForParticipant?(participantRef:string):Promise<string[]>}; workflowRoot: string; sourceRoot: string; bodyRoot: string; participantRef: string; consumerId: string; verifiedRequest: FounderFirstUnderstandingVerifiedRequest; close(): Promise<void> };
 
@@ -160,7 +165,7 @@ export class FounderFirstUnderstandingOwnerBundle {
       const meetingGrants=await this.config.accessRepository.findGrants({organizationId,participantRef:this.config.participantRef,scope:"meeting-series",meetingSeriesId:identity.seriesId}),activeMeetingGrants=meetingGrants.filter(value=>value.status==="active");if(activeMeetingGrants.length!==1||activeMeetingGrants[0]!.issuedBy!==policy.issuedBy)continue;
       const snapshot=await this.workflow.read(organizationId),store=snapshot.store,contexts=store.contexts.filter(value=>value.organizationId===organizationId&&value.questionId===bootstrap.initialProductQuestionId&&value.conversationId===identity.conversationId),scopes=((store as typeof store&ScopeStore).registeredMeetingPreparationScopes??[]).filter(value=>value.organizationId===organizationId&&value.questionId===bootstrap.initialProductQuestionId&&value.conversationId===identity.conversationId&&value.seriesId===identity.seriesId),publications=(store.preparedWorkPublications??[]).filter(value=>value.organizationId===organizationId&&value.productQuestionId===bootstrap.initialProductQuestionId&&value.productWorkflowId===`leadership-conversation:${identity.conversationId}`);
       if(contexts.length!==1||!scopes.length||!publications.length||(store.frozenSnapshotPublications??[]).some(value=>value.productWorkflowId===`leadership-conversation:${identity.conversationId}`)||(store.meetingPackPublications??[]).some(value=>value.conversationId===identity.conversationId)||(store.cycle1ClosureCompletions??[]).some(value=>value.conversationId===identity.conversationId)||(store.futurePreparationLinks??[]).some(value=>value.conversationId===identity.conversationId))throw new Error("Meeting context addition is unavailable.");
-      const currentPublication=publications.at(-1)!,currentScopeDigest=currentPublication.materialLineage?.contractVersion==="3"?currentPublication.materialLineage.preparationScopeDigest:null,currentScope=scopes.filter(value=>value.scopeDigest===currentScopeDigest);if(currentScope.length!==1)throw new Error("Current preparation scope is unavailable.");
+      const currentPublication=resolveCurrentPreparedWorkPublication(publications),currentScopeDigest=currentPublication.materialLineage?.contractVersion==="3"?currentPublication.materialLineage.preparationScopeDigest:null,currentScope=scopes.filter(value=>value.scopeDigest===currentScopeDigest);if(currentScope.length!==1)throw new Error("Current preparation scope is unavailable.");
       await this.bodies.readStagedExact(currentPublication.protectedBody);
       const current=currentScope[0]!,newDigests=new Set(sources.map(value=>value.normalizedDigest)),currentDigests=new Set(current.sourceVersions.map(value=>value.normalizedContentDigest)),included=sources.filter(value=>currentDigests.has(value.normalizedDigest));
       if(newDigests.size!==sources.length||(included.length!==0&&included.length!==sources.length))throw new Error("Source batch conflicts with the current preparation.");
@@ -182,13 +187,103 @@ export class FounderFirstUnderstandingOwnerBundle {
     this.authority.bind(id);this.instant=match.successorScope?.createdAt??new Date().toISOString();this.operation={mode:"add-context",id,organizationId:match.organizationId,meetingKey:match.meetingKey,scopeKey:`successor-scope:${hash({prior:match.priorScope.scopeDigest,sources:sources.map(value=>value.normalizedDigest).sort()})}`,input:match.input,issuerAuthority:match.issuerAuthority,seriesId:match.seriesId,conversationId:match.conversationId,priorScope:match.priorScope,successorScope:match.successorScope};
     return{organizationId:match.organizationId,questionId:match.priorScope.questionId,seriesId:match.seriesId,conversationId:match.conversationId,priorSourceCount:match.priorScope.sourceVersions.length,replayed:Boolean(match.successorScope)};
   }
+
+  /**
+   * Nonpublic recovery for a previously interrupted Add Context operation.
+   * It never accepts browser source bytes: it discovers the authorized meeting
+   * and uses only complete, already-governed source versions found in its
+   * immutable scope history.  The caller may dry-run before it requests the
+   * bounded scope/Prepared Work repair.
+   */
+  async reconcileAddContext(seriesAddress: string, apply: boolean) {
+    this.authority.assert(this.config.participantRef);
+    if (!/^[A-Za-z0-9_-]{24}$/u.test(seriesAddress)) throw new Error("Meeting context addition is unavailable.");
+    const findOrganizations = this.config.accessRepository.findOrganizationIdsForParticipant?.bind(this.config.accessRepository);
+    if (!findOrganizations) throw new Error("Meeting context addition is unavailable.");
+    const matches: Array<{ organizationId: string; questionId: string; seriesId: string; conversationId: string; meetingKey: string; issuerAuthority: string; input: FirstUnderstandingInput; priorScope: RegisteredMeetingPreparationScopeV1; final: readonly SourceVersion[]; existing?: RegisteredMeetingPreparationScopeV1; finalAlreadyCurrent: boolean }> = [];
+    for (const organizationId of await findOrganizations(this.config.participantRef)) {
+      const policy = await this.config.accessRepository.findPolicy(organizationId);
+      const organizationGrants = await this.config.accessRepository.findGrants({ organizationId, participantRef: this.config.participantRef, scope: "organization" });
+      const activeOrganizationGrants = organizationGrants.filter(value => value.status === "active");
+      if (policy?.mode !== "participant-reference-v1" || activeOrganizationGrants.length !== 1 || activeOrganizationGrants[0]!.issuedBy !== policy.issuedBy) continue;
+      const runtime = await this.runtime.read(organizationId), bootstrap = runtime?.runtime.memory.initialUnderstandingBootstrap;
+      if (!runtime || !bootstrap) continue;
+      const meetingKey = `initial-meeting:${hash(bootstrap.bootstrapOperationId)}`;
+      const identity = deriveRecurringMeetingOccurrenceIdentity({ organizationId, meetingExternalKey: meetingKey });
+      const address = createHash("sha256").update(`meeting-series-address:v1:${organizationId}:${identity.seriesId}`).digest("base64url").slice(0, 24);
+      if (address !== seriesAddress) continue;
+      const meetingGrants = await this.config.accessRepository.findGrants({ organizationId, participantRef: this.config.participantRef, scope: "meeting-series", meetingSeriesId: identity.seriesId });
+      const activeMeetingGrants = meetingGrants.filter(value => value.status === "active");
+      if (activeMeetingGrants.length !== 1 || activeMeetingGrants[0]!.issuedBy !== policy.issuedBy) continue;
+      const snapshot = await this.workflow.read(organizationId), store = snapshot.store;
+      if ((store.meetingPackPublications ?? []).some(value => value.conversationId === identity.conversationId)
+        || (store.frozenSnapshotPublications ?? []).some(value => value.productWorkflowId === `leadership-conversation:${identity.conversationId}`)) throw new Error("Meeting context addition is unavailable.");
+      const questionId = bootstrap.initialProductQuestionId;
+      const contexts = store.contexts.filter(value => value.organizationId === organizationId && value.questionId === questionId && value.conversationId === identity.conversationId);
+      const scopes = ((store as typeof store & ScopeStore).registeredMeetingPreparationScopes ?? []).filter(value => value.organizationId === organizationId && value.questionId === questionId && value.conversationId === identity.conversationId && value.seriesId === identity.seriesId);
+      const publications = (store.preparedWorkPublications ?? []).filter(value => value.organizationId === organizationId && value.productQuestionId === questionId && value.productWorkflowId === `leadership-conversation:${identity.conversationId}`);
+      if (contexts.length !== 1 || !scopes.length || !publications.length) throw new Error("Meeting context addition is unavailable.");
+      const current = resolveCurrentPreparedWorkPublication(publications), currentDigest = current.materialLineage?.contractVersion === "3" ? current.materialLineage.preparationScopeDigest : null;
+      const currentScopes = scopes.filter(value => value.scopeDigest === currentDigest);
+      if (currentScopes.length !== 1) throw new Error("Current preparation scope is unavailable.");
+      await this.bodies.readStagedExact(current.protectedBody);
+      const byBinding = new Map<string, SourceVersion>();
+      for (const scope of scopes) for (const source of scope.sourceVersions) {
+        const previous = byBinding.get(source.sourceBindingId);
+        if (previous && sourceTuple(previous) !== sourceTuple(source)) throw new Error("Historical preparation source lineage is ambiguous.");
+        byBinding.set(source.sourceBindingId, source);
+      }
+      // A crash may have completed a canonical source admission after the last
+      // historical scope was recorded. Discover that source through the same
+      // Runtime lineage and exact content owner, never through filenames or a
+      // storage directory listing.
+      for (const binding of runtime.runtime.memory.canonicalScopeLineageIndex?.sourceBindings ?? []) {
+        if (!binding.basisRefs.includes(`product-question:${questionId}`)) continue;
+        const metadata = await this.sourceContent.resolveExactMetadata({ contractVersion: "1", organizationId, sourceBindingId: binding.bindingId, normalizedContentDigest: binding.source.normalizedContentDigest, purposeRef: PURPOSE, authorization: this.sourceAuthorizationFor(organizationId, policy.issuedBy, "reconciliation", "source-content:read-for-claim-support") });
+        const source = { sourceBindingId: binding.bindingId, sourceContentVersionId: metadata.version.sourceContentVersionId, normalizedContentDigest: metadata.version.normalizedContentDigest };
+        const previous = byBinding.get(source.sourceBindingId);
+        if (previous && sourceTuple(previous) !== sourceTuple(source)) throw new Error("Historical preparation source lineage is ambiguous.");
+        byBinding.set(source.sourceBindingId, source);
+      }
+      const final = [...byBinding.values()].sort((left, right) => left.sourceBindingId.localeCompare(right.sourceBindingId));
+      if (final.length < currentScopes[0]!.sourceVersions.length || final.length > 5) throw new Error("Historical preparation cannot be reconciled.");
+      for (const source of final) {
+        const read = await this.sourceContent.read({ contractVersion: "1", organizationId, sourceBindingId: source.sourceBindingId, sourceContentVersionId: source.sourceContentVersionId, purposeRef: PURPOSE, authorization: this.sourceAuthorizationFor(organizationId, policy.issuedBy, "reconciliation", "source-content:read-for-claim-support") });
+        if (read.version.sourceContentVersionId !== source.sourceContentVersionId || read.version.normalizedContentDigest !== source.normalizedContentDigest) throw new Error("Historical preparation source integrity is unavailable.");
+      }
+      const exact = scopes.filter(scope => sameSourceSet(scope.sourceVersions, final));
+      if (exact.length > 1) throw new Error("Historical preparation successor is ambiguous.");
+      const workspace = buildProductQuestionWorkspace({ runtime: runtime.runtime, questionId });
+      matches.push({ organizationId, questionId, seriesId: identity.seriesId, conversationId: identity.conversationId, meetingKey, issuerAuthority: policy.issuedBy, input: { organizationDisplayName: runtime.runtime.metadata.name ?? "Your organization", understandingPurpose: contexts[0]!.purpose, primaryQuestion: workspace.question.title, meetingTitle: contexts[0]!.title, cadence: contexts[0]!.timeframe, sources: [] }, priorScope: currentScopes[0]!, final, existing: exact[0], finalAlreadyCurrent: currentDigest === exact[0]?.scopeDigest });
+    }
+    if (matches.length !== 1) throw new Error("Meeting context addition is unavailable.");
+    const match = matches[0]!;
+    const id = `reconcile-add-governed-context:${hash({ organizationId: match.organizationId, seriesId: match.seriesId, conversationId: match.conversationId, priorScopeDigest: match.priorScope.scopeDigest, final: match.final.map(sourceTuple) })}`;
+    this.authority.bind(id);
+    this.instant = match.existing?.createdAt ?? new Date().toISOString();
+    this.operation = { mode: "add-context", id, organizationId: match.organizationId, meetingKey: match.meetingKey, scopeKey: `reconciled-successor-scope:${hash(match.final.map(sourceTuple))}`, input: match.input, issuerAuthority: match.issuerAuthority, seriesId: match.seriesId, conversationId: match.conversationId, priorScope: match.priorScope, successorScope: match.existing, targetSourceVersions: match.final };
+    const dryRun = { sourceWrites: 0, scopeWrites: match.existing ? 0 : 1, preparedWorkWrites: match.finalAlreadyCurrent ? 0 : 1, sourceCount: match.final.length };
+    if (!apply) return { status: "dry-run" as const, ...dryRun };
+    await this.registerSuccessorScope(match.questionId);
+    await this.recordSuccessorPreparation();
+    const currentResult = await this.rereadAddContextResult();
+    return { status: "applied" as const, ...dryRun, sourceCount: currentResult.sourceCount };
+  }
   async applyBootstrap() {
     const op = this.requireOperation();
     return this.bootstrap({ organizationId: op.organizationId, organizationName: op.input.organizationDisplayName, purpose: op.input.understandingPurpose, primaryQuestion: op.input.primaryQuestion, meetingExternalKey: op.meetingKey, bootstrapOperationId: op.id, actor: this.config.participantRef, createdAt: this.instant, repository: this.runtime });
   }
   async applyAccess() { const op = this.requireOperation(); await this.access.activatePolicy({ organizationId: op.organizationId, issuerAuthority: this.issuer(), operationId: `${op.id}:policy`, occurredAt: this.instant }); await this.access.grant({ organizationId: op.organizationId, participantRef: this.config.participantRef, scope: "organization", issuerAuthority: this.issuer(), operationId: `${op.id}:organization-grant`, occurredAt: this.instant }); }
   private async authorizedOrganization(userId: string, organizationId: string) { if (userId !== this.config.consumerId) return false; const policy = await this.config.accessRepository.findPolicy(organizationId); const grants = await this.config.accessRepository.findGrants({ organizationId, participantRef: this.config.participantRef, scope: "organization" }); return policy?.mode === "participant-reference-v1" && grants.filter(value => value.status === "active").length === 1; }
-  private sourceAuthorization(operation: ScopedGovernanceOperation) { const op = this.requireOperation(); if (!["source-binding:register-local", "source-binding:resolve-current", "source-content:write", "source-content:read-for-claim-support"].includes(operation)) throw new Error("Source authority is unavailable."); const scope = { organizationId: op.organizationId, type: "organization" as const, id: op.organizationId }; return resolveScopedGovernanceContext({ organizationId: op.organizationId, subjectId: this.config.participantRef, requestedScope: scope, operation, purpose: PURPOSE, sensitivity: "standard", evaluatedAt: this.instant, temporal: { mode: "current" }, serverResolvedAuthority: [{ authorityRef: this.issuer(), policyRef: op.mode==="initial"?"founder-initial-understanding-local-alpha:1":"founder-add-governed-context-local-alpha:1", organizationId: op.organizationId, subjectId: this.config.participantRef, scope, operations: [operation], sensitivity: ["standard"], relationship: "direct", status: "active", validFrom: this.instant }] }); }
+  private sourceAuthorizationFor(organizationId: string, issuerAuthority: string, policyVariant: "initial" | "add-context" | "reconciliation", operation: ScopedGovernanceOperation) {
+    if (!["source-binding:register-local", "source-binding:resolve-current", "source-content:write", "source-content:read-for-claim-support"].includes(operation)) throw new Error("Source authority is unavailable.");
+    const scope = { organizationId, type: "organization" as const, id: organizationId };
+    return resolveScopedGovernanceContext({ organizationId, subjectId: this.config.participantRef, requestedScope: scope, operation, purpose: PURPOSE, sensitivity: "standard", evaluatedAt: this.instant, temporal: { mode: "current" }, serverResolvedAuthority: [{ authorityRef: issuerAuthority, policyRef: policyVariant === "initial" ? "founder-initial-understanding-local-alpha:1" : "founder-add-governed-context-local-alpha:1", organizationId, subjectId: this.config.participantRef, scope, operations: [operation], sensitivity: ["standard"], relationship: "direct", status: "active", validFrom: this.instant }] });
+  }
+  private sourceAuthorization(operation: ScopedGovernanceOperation) {
+    const op = this.requireOperation();
+    return this.sourceAuthorizationFor(op.organizationId, this.issuer(), op.mode === "initial" ? "initial" : "add-context", operation);
+  }
   async admit(source: FirstUnderstandingUpload, questionId: string) {
     const op = this.requireOperation(), sourceKey = hash({ name: source.name, purpose: source.purpose }), organizationId = op.organizationId;
     const sourceRuntime=await this.runtime.read(organizationId);
@@ -222,14 +317,45 @@ export class FounderFirstUnderstandingOwnerBundle {
   }
   private inspectSource(sourceBindingId:string,questionId:string,source:FirstUnderstandingUpload){return this.sourceContent.inspectExactWriteState({organizationId:this.requireOperation().organizationId,productQuestionId:questionId,sourceBindingId,purposeRef:PURPOSE,normalizedContentDigest:source.normalizedDigest,exactContentDigest:source.exactDigest,byteLength:source.bytes.byteLength,authorization:this.sourceAuthorization("source-content:write")});}
 
-  async admitSources(questionId: string) { this.admitted = []; for (const source of this.requireOperation().input.sources) this.admitted.push((await this.admit(source, questionId)).version); return this.admitted; }
+  /** Source durability is intentionally completed before a scope is even
+   * constructed. A partial admission is therefore recoverable without an
+   * incomplete preparation revision. */
+  async admitSources(questionId: string) {
+    this.admitted = [];
+    for (const source of this.requireOperation().input.sources) this.admitted.push((await this.admit(source, questionId)).version);
+    const unique = new Set(this.admitted.map(sourceTuple));
+    if (unique.size !== this.admitted.length) throw new Error("Source batch conflicts with the current preparation.");
+    return this.admitted;
+  }
   async registerScope(questionId: string) { const op = this.requireOperation(), identity = deriveRecurringMeetingOccurrenceIdentity({ organizationId: op.organizationId, meetingExternalKey: op.meetingKey }), scopeId = leadershipId("registered-meeting-preparation-scope", op.organizationId, identity.seriesId, op.scopeKey); const scope = completeRegisteredMeetingPreparationScopeV1({ contractVersion: "1", scopeId, organizationId: op.organizationId, questionId, conversationId: identity.conversationId, seriesId: identity.seriesId, sourceVersions: [...this.admitted].sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)), createdAt: this.instant, createdByUserId: this.config.consumerId, idempotencyKeyDigest: leadershipId("general-recurring-meeting-scope-key", op.organizationId, op.meetingKey), requestFingerprint: this.scopeFingerprint(questionId) }); const before = await this.workflow.read(op.organizationId); return this.workflow.registerMeetingPreparationScope({ ...scope, expectedRevision: before.revision }); }
-  async registerSuccessorScope(questionId:string){const op=this.requireOperation();if(op.mode!=="add-context"||!op.priorScope||!op.seriesId||!op.conversationId)throw new Error("Successor preparation scope is unavailable.");const sourceVersions=[...op.priorScope.sourceVersions,...this.admitted].sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId));if(sourceVersions.length>5||new Set(sourceVersions.map(value=>value.sourceBindingId)).size!==sourceVersions.length)throw new Error("Successor preparation scope is invalid.");const scopeId=leadershipId("registered-meeting-preparation-scope",op.organizationId,op.seriesId,op.scopeKey),scope=completeRegisteredMeetingPreparationScopeV1({contractVersion:"1",scopeId,organizationId:op.organizationId,questionId,conversationId:op.conversationId,seriesId:op.seriesId,sourceVersions,createdAt:this.instant,createdByUserId:this.config.consumerId,idempotencyKeyDigest:leadershipId("add-governed-context-scope-key",op.id),requestFingerprint:productArtifactBodyDigest({operation:op.id,priorScopeDigest:op.priorScope.scopeDigest,sourceVersions})});if(op.successorScope){if(op.successorScope.scopeDigest!==scope.scopeDigest)throw new Error("Successor preparation scope conflict.");return{scope:op.successorScope,committed:false};}const before=await this.workflow.read(op.organizationId),result=await this.workflow.registerMeetingPreparationScope({...scope,expectedRevision:before.revision});op.successorScope=result.scope;return result;}
+  async registerSuccessorScope(questionId: string) {
+    const op = this.requireOperation();
+    if (op.mode !== "add-context" || !op.priorScope || !op.seriesId || !op.conversationId) throw new Error("Successor preparation scope is unavailable.");
+    const sourceVersions = [...(op.targetSourceVersions ?? [...op.priorScope.sourceVersions, ...this.admitted])]
+      .sort((a, b) => a.sourceBindingId.localeCompare(b.sourceBindingId));
+    if (sourceVersions.length > 5 || new Set(sourceVersions.map(value => value.sourceBindingId)).size !== sourceVersions.length) throw new Error("Successor preparation scope is invalid.");
+    const scopeId = leadershipId("registered-meeting-preparation-scope", op.organizationId, op.seriesId, op.scopeKey);
+    const scope = completeRegisteredMeetingPreparationScopeV1({
+      contractVersion: "1", scopeId, organizationId: op.organizationId, questionId, conversationId: op.conversationId, seriesId: op.seriesId,
+      sourceVersions, createdAt: this.instant, createdByUserId: this.config.consumerId,
+      idempotencyKeyDigest: leadershipId("add-governed-context-scope-key", op.id),
+      requestFingerprint: productArtifactBodyDigest({ operation: op.id, priorScopeDigest: op.priorScope.scopeDigest, sourceVersions }),
+    });
+    if (op.successorScope) {
+      if (op.successorScope.scopeDigest !== scope.scopeDigest) throw new Error("Successor preparation scope conflict.");
+      return { scope: op.successorScope, committed: false };
+    }
+    const before = await this.workflow.read(op.organizationId);
+    const result = await this.workflow.registerMeetingPreparationScope({ ...scope, expectedRevision: before.revision });
+    op.successorScope = result.scope;
+    return result;
+  }
   private scopeFingerprint(questionId: string) { const op = this.requireOperation(), q = this.question({ contractVersion: "1", organizationId: op.organizationId, activationOperationId: op.id, meetingExternalKey: op.meetingKey, primaryQuestion: op.input.primaryQuestion, purpose: op.input.understandingPurpose }); return productArtifactBodyDigest({ contractVersion: "1", organizationExternalKey: op.organizationId, meetingExternalKey: op.meetingKey, productQuestionExternalKey: q.externalKey, productQuestion: op.input.primaryQuestion, questionId, title: op.input.meetingTitle, purpose: op.input.understandingPurpose, cadenceLabel: op.input.cadence, preparationScopeExternalKey: op.scopeKey, sourceVersions: [...this.admitted].sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)) }); }
   private async exactScope() { const op = this.requireOperation();if(op.mode==="add-context"){if(!op.successorScope)throw new Error("Exact successor preparation scope is unavailable.");return op.successorScope;}const scopes = ((await this.workflow.read(op.organizationId)).store as ScopeStore).registeredMeetingPreparationScopes ?? []; const matches = scopes.filter(scope => scope.requestFingerprint === this.scopeFingerprint(scope.questionId)); if (matches.length !== 1) throw new Error("Exact preparation scope is unavailable."); return matches[0]!; }
   private async materialLineage(organizationId: string, questionId: string, conversationId: string): Promise<ProductArtifactMaterialLineageSeedV3> { const stored = await this.runtime.read(organizationId), bootstrap = stored?.runtime.memory.initialUnderstandingBootstrap, scope = await this.exactScope(); if (!bootstrap || bootstrap.initialProductQuestionId !== questionId || scope.conversationId !== conversationId) throw new Error("Bootstrap lineage is unavailable."); for (const version of scope.sourceVersions) { const result=await this.sourceContent.read({contractVersion:"1",organizationId,sourceBindingId:version.sourceBindingId,sourceContentVersionId:version.sourceContentVersionId,purposeRef:PURPOSE,authorization:this.sourceAuthorization("source-content:read-for-claim-support")});if(result.version.sourceContentVersionId!==version.sourceContentVersionId||result.version.normalizedContentDigest!==version.normalizedContentDigest)throw new Error("Prepared Work source integrity is unavailable."); } const unsigned = { contractVersion: "3" as const, lineageVariant: "initial-understanding-bootstrap" as const, organizationId, semanticOwner: "leadership-conversation" as const, productQuestionId: questionId, creationOperationId: this.requireOperation().id, lineagePolicyVersion: this.requireOperation().mode==="initial"?"initial-understanding-bootstrap:1":"founder-add-governed-context:1", sourceBindings: scope.sourceVersions.map(value => ({ sourceBindingId: value.sourceBindingId, bindingRevisionId: value.sourceBindingId })), sourceContentVersions: [...scope.sourceVersions], canonicalMaterial: [], canonicalUnderstandingRevision: null, projectionSourceRef: null, scopeDigest: scope.scopeDigest, purpose: PURPOSE, sensitivity: "standard" as const, bootstrapOperationId: bootstrap.bootstrapOperationId, bootstrapFingerprint: bootstrap.requestFingerprint, preparationScopeDigest: scope.scopeDigest }; return { ...unsigned, seedDigest: productArtifactBodyDigest(unsigned) }; }
   private async recordPreparationExact(input: Parameters<LeadershipConversationProductOperations["recordPreparation"]>[0]) { const store = (await this.workflow.read(input.organizationId)).store, prior = store.preparedWorkPublications?.find(value => value.productWorkflowId === `leadership-conversation:${input.conversationId}`); if (prior) { await this.bodies.readStagedExact(prior.protectedBody); return store; } return this.operations.recordPreparation({ ...input, stableCreatedAt: this.instant }); }
-  async recordSuccessorPreparation(){const op=this.requireOperation();if(op.mode!=="add-context"||!op.priorScope||!op.successorScope||!op.conversationId||!op.seriesId)throw new Error("Successor Prepared Work is unavailable.");const snapshot=await this.workflow.read(op.organizationId),publications=(snapshot.store.preparedWorkPublications??[]).filter(value=>value.organizationId===op.organizationId&&value.productQuestionId===op.priorScope!.questionId&&value.productWorkflowId===`leadership-conversation:${op.conversationId}`),current=publications.at(-1);if(!current)throw new Error("Current Prepared Work is unavailable.");const currentScopeDigest=current.materialLineage?.contractVersion==="3"?current.materialLineage.preparationScopeDigest:null;if(currentScopeDigest===op.successorScope.scopeDigest){await this.bodies.readStagedExact(current.protectedBody);return{store:snapshot.store,replayed:true};}if(currentScopeDigest!==op.priorScope.scopeDigest)throw new Error("Current Prepared Work changed.");const prior=JSON.parse(new TextDecoder().decode(await this.bodies.readStagedExact(current.protectedBody))) as PreparedWorkProductBodyV1,sourceRefs=op.successorScope.sourceVersions.map(value=>value.sourceContentVersionId).sort(),content={...prior.content,headline:"Your updated understanding is beginning",situationSummary:`Discovery preserved the original preparation and connected ${sourceRefs.length} governed sources to your existing question. Organizational understanding has not yet been completed.`,whatChanged:[`${sourceRefs.length-op.priorScope.sourceVersions.length} governed sources were added to the current preparation while the prior source scope was preserved.`],evidenceReferences:sourceRefs,uncertaintyAndLimitations:["The sources have been connected but have not been analyzed.","No prior reviewed state or meeting history exists."]},lineage={...prior.lineage,sourceRevisionReferences:sourceRefs},store=await this.operations.recordPreparation({userId:this.config.consumerId,organizationId:op.organizationId,questionId:op.priorScope.questionId,conversationId:op.conversationId,idempotencyKey:`${op.id}:prepared-work`,contextVersionId:current.contextVersionId,content,lineage,changeSummary:"Added governed context while preserving the prior preparation.",stableCreatedAt:op.successorScope.createdAt});return{store,replayed:false};}
+  async recordSuccessorPreparation(){const op=this.requireOperation();if(op.mode!=="add-context"||!op.priorScope||!op.successorScope||!op.conversationId||!op.seriesId)throw new Error("Successor Prepared Work is unavailable.");const snapshot=await this.workflow.read(op.organizationId),publications=(snapshot.store.preparedWorkPublications??[]).filter(value=>value.organizationId===op.organizationId&&value.productQuestionId===op.priorScope!.questionId&&value.productWorkflowId===`leadership-conversation:${op.conversationId}`),current=resolveCurrentPreparedWorkPublication(publications);const currentScopeDigest=current.materialLineage?.contractVersion==="3"?current.materialLineage.preparationScopeDigest:null;if(currentScopeDigest===op.successorScope.scopeDigest){await this.bodies.readStagedExact(current.protectedBody);return{store:snapshot.store,replayed:true};}if(currentScopeDigest!==op.priorScope.scopeDigest)throw new Error("Current Prepared Work changed.");const prior=JSON.parse(new TextDecoder().decode(await this.bodies.readStagedExact(current.protectedBody))) as PreparedWorkProductBodyV1,sourceRefs=op.successorScope.sourceVersions.map(value=>value.sourceContentVersionId).sort(),content={...prior.content,headline:"Your updated understanding is beginning",situationSummary:`Discovery preserved the original preparation and connected ${sourceRefs.length} governed sources to your existing question. Organizational understanding has not yet been completed.`,whatChanged:[`${sourceRefs.length-op.priorScope.sourceVersions.length} governed sources were added to the current preparation while the prior source scope was preserved.`],evidenceReferences:sourceRefs,uncertaintyAndLimitations:["The sources have been connected but have not been analyzed.","No prior reviewed state or meeting history exists."]},lineage={...prior.lineage,sourceRevisionReferences:sourceRefs},store=await this.operations.recordPreparation({userId:this.config.consumerId,organizationId:op.organizationId,questionId:op.priorScope.questionId,conversationId:op.conversationId,idempotencyKey:`${op.id}:prepared-work`,contextVersionId:current.contextVersionId,content,lineage,changeSummary:"Added governed context while preserving the prior preparation.",stableCreatedAt:op.successorScope.createdAt});return{store,replayed:false};}
+  async rereadAddContextResult(){const op=this.requireOperation();if(op.mode!=="add-context"||!op.conversationId||!op.seriesId||!op.successorScope)throw new Error("Current preparation is unavailable.");const store=(await this.workflow.read(op.organizationId)).store,publications=(store.preparedWorkPublications??[]).filter(value=>value.organizationId===op.organizationId&&value.productQuestionId===op.priorScope!.questionId&&value.productWorkflowId===`leadership-conversation:${op.conversationId}`),current=resolveCurrentPreparedWorkPublication(publications),digest=current.materialLineage?.contractVersion==="3"?current.materialLineage.preparationScopeDigest:null;if(digest!==op.successorScope.scopeDigest)throw new Error("Current preparation did not reach the complete source batch.");const scopes=((store as typeof store&ScopeStore).registeredMeetingPreparationScopes??[]).filter(value=>value.scopeDigest===digest&&value.organizationId===op.organizationId&&value.questionId===op.priorScope!.questionId&&value.seriesId===op.seriesId&&value.conversationId===op.conversationId),expected=op.successorScope.sourceVersions.map(value=>`${value.sourceBindingId}:${value.sourceContentVersionId}:${value.normalizedContentDigest}`).sort();if(scopes.length!==1||JSON.stringify(scopes[0]!.sourceVersions.map(value=>`${value.sourceBindingId}:${value.sourceContentVersionId}:${value.normalizedContentDigest}`).sort())!==JSON.stringify(expected))throw new Error("Current preparation did not reach the complete source batch.");return{sourceCount:scopes[0]!.sourceVersions.length};}
   async provisionMeeting() { const op = this.requireOperation(); return this.provisioner.provisionInitialUnderstanding({ contractVersion: "1", userId: this.config.consumerId, organizationExternalKey: op.organizationId, activationOperationId: op.id, meetingExternalKey: op.meetingKey, productQuestion: op.input.primaryQuestion, title: op.input.meetingTitle, purpose: op.input.understandingPurpose, cadenceLabel: op.input.cadence, preparationScopeExternalKey: op.scopeKey }); }
   async destination(questionId: string, seriesId: string) { const op = this.requireOperation(); const directory = await this.meetingAddress({ userId: this.config.consumerId, organizationId: op.organizationId, questionId, workflowRoot: this.config.workflowRoot, currentAccess: { authorize: async ({userId, organizationId, seriesId: requested}) => { if (!await this.authorizedOrganization(userId,organizationId)) return "denied"; const grants = await this.config.accessRepository.findGrants({ organizationId, participantRef: this.config.participantRef, scope: "meeting-series", meetingSeriesId: requested }); return grants.filter(value=>value.status==="active").length===1 ? "authorized" : "denied"; } } }); const meeting = directory.find(value => value.seriesId === seriesId); if (!meeting) throw new Error("Authorized Meeting Home is unavailable."); return `/product-alpha/meetings/${meeting.seriesAddress}`; }
   close() { return this.config.close(); }

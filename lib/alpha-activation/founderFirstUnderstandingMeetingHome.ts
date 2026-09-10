@@ -9,6 +9,11 @@ import { founderAuthorizedMeetingDirectory } from "../../product/integration/fou
 import { buildProductQuestionWorkspace } from "../../product/workflow/buildProductQuestionWorkspace";
 import { createFounderFirstUnderstandingRequestComposition } from "./founderFirstUnderstandingRequestComposition";
 import { resolveFounderLocalAlphaRuntimeRootFromEnvironment } from "./founderLocalAlphaRuntimeRoot";
+import { resolveCurrentPreparedWorkPublication } from "./founderCurrentPreparation";
+
+const currentPreparedWorkPublication = <T extends { artifactVersion: number; artifactRevision: string; predecessorArtifactVersionId: string | null }>(publications: readonly T[]) => {
+  try { return resolveCurrentPreparedWorkPublication(publications); } catch { return null; }
+};
 
 export function classifyLegacyMeetingOrganizationClaim(
   supplied: string | string[] | undefined,
@@ -40,7 +45,7 @@ export async function resolveFounderFirstUnderstandingMeetingHome(seriesAddress:
       }}});
       for(const meeting of meetings.filter(value=>value.seriesAddress===seriesAddress)) {
         if(classifyLegacyMeetingOrganizationClaim(suppliedOrganizationId,organizationId)==="conflict")return {status:"organization-conflict" as const};
-        const {store}=await workflow.read(organizationId), scopes=(store as typeof store&{registeredMeetingPreparationScopes?:RegisteredMeetingPreparationScopeV1[]}).registeredMeetingPreparationScopes??[], publications=(store.preparedWorkPublications??[]).filter(value=>value.productQuestionId===meeting.questionId&&value.productWorkflowId===`leadership-conversation:${meeting.occurrenceId}`),publication=publications.at(-1),currentScopeDigest=publication?.materialLineage?.contractVersion==="3"?publication.materialLineage.preparationScopeDigest:null,matchingScopes=scopes.filter(value=>value.organizationId===organizationId&&value.questionId===meeting.questionId&&value.conversationId===meeting.occurrenceId&&value.seriesId===meeting.seriesId&&value.scopeDigest===currentScopeDigest);
+        const {store}=await workflow.read(organizationId), scopes=(store as typeof store&{registeredMeetingPreparationScopes?:RegisteredMeetingPreparationScopeV1[]}).registeredMeetingPreparationScopes??[], publications=(store.preparedWorkPublications??[]).filter(value=>value.productQuestionId===meeting.questionId&&value.productWorkflowId===`leadership-conversation:${meeting.occurrenceId}`),publication=currentPreparedWorkPublication(publications),currentScopeDigest=publication?.materialLineage?.contractVersion==="3"?publication.materialLineage.preparationScopeDigest:null,matchingScopes=scopes.filter(value=>value.organizationId===organizationId&&value.questionId===meeting.questionId&&value.conversationId===meeting.occurrenceId&&value.seriesId===meeting.seriesId&&value.scopeDigest===currentScopeDigest);
         if(!publication||matchingScopes.length!==1)continue;
         const scope=matchingScopes[0]!,lineage=publication.materialLineage;
         validateProductArtifactInspectionMetadataV1(publication);
