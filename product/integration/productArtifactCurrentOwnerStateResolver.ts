@@ -62,6 +62,7 @@ export class ProductArtifactCurrentOwnerStateResolver {
   constructor(
     private readonly dependencies: {
       runtimeRepository: Pick<OrganizationRuntimeRepository, "read">;
+      verifyBootstrapPreparedWorkProof?: (input:{organizationId:string;metadata:ProductArtifactInspectionMetadataV1;lineage:import("../workflow/productArtifactInspectionMetadataContracts").ProductArtifactMaterialLineageV3})=>Promise<boolean>;
       verifyDirectEvidenceOwnerProof?: (input:{organizationId:string;productQuestionId:string;provenance:import("../workflow/productArtifactInspectionMetadataContracts").DirectCanonicalEvidenceProvenanceV2})=>Promise<boolean>;
       resolveExactSourceMetadata?: (input:{organizationId:string;subjectId:string;purpose:string;evaluatedAt:string;sourceBindingId:string;normalizedContentDigest:string})=>Promise<{sourceContentVersionId:string;exactContentDigest:string;normalizedContentDigest:string;storageIntegrityDigest:string}|null>;
     },
@@ -88,7 +89,7 @@ export class ProductArtifactCurrentOwnerStateResolver {
       lineage.artifactRevision !== input.metadata.artifactRevision ||
       lineage.purpose !== input.purpose ||
       lineage.sensitivity !== input.sensitivity ||
-      lineage.scopeDigest !== digest(governance.requestedScope) ||
+      (lineage.contractVersion !== "3" && lineage.scopeDigest !== digest(governance.requestedScope)) ||
       governance.disposition !== "authorized" ||
       governance.organizationId !== input.organizationId ||
       governance.subjectId !== input.subjectId ||
@@ -101,14 +102,19 @@ export class ProductArtifactCurrentOwnerStateResolver {
     try {
       validateProductArtifactInspectionMetadataV1(input.metadata);
       if(lineage.contractVersion==="2")return this.resolveDirectEvidence(input,lineage);
-      if(lineage.contractVersion==="3")return {
+      if(lineage.contractVersion==="3"){
+        const stored=await this.dependencies.runtimeRepository.read(input.organizationId);
+        const bootstrap=stored?.runtime.memory.initialUnderstandingBootstrap;
+        if(!stored||stored.runtime.metadata.organizationId!==input.organizationId||!bootstrap||bootstrap.initialProductQuestionId!==lineage.productQuestionId||bootstrap.bootstrapOperationId!==lineage.bootstrapOperationId||bootstrap.requestFingerprint!==lineage.bootstrapFingerprint||!this.dependencies.verifyBootstrapPreparedWorkProof||!await this.dependencies.verifyBootstrapPreparedWorkProof({organizationId:input.organizationId,metadata:input.metadata,lineage}))return unavailable(input);
+        return {
         contractVersion:"1",organizationId:input.organizationId,productQuestionId:input.metadata.productQuestionId,
         sourceGovernanceDigest:digest(lineage.sourceContentVersions.map(item=>({sourceBindingId:item.sourceBindingId,sourceContentVersionId:item.sourceContentVersionId,normalizedContentDigest:item.normalizedContentDigest})).sort((left,right)=>left.sourceBindingId.localeCompare(right.sourceBindingId))),
         eligibilityDigest:digest({bootstrapOperationId:lineage.bootstrapOperationId,bootstrapFingerprint:lineage.bootstrapFingerprint,preparationScopeDigest:lineage.preparationScopeDigest,scopeDigest:lineage.scopeDigest}),
         eligibilityDisposition:"eligible",projectionRevision:input.metadata.artifactRevision,projectionDigest:lineage.envelopeDigest,
         canonicalUnderstandingRevision:null,canonicalChangeResultDigest:"not-applicable",lineagePolicyVersion:lineage.lineagePolicyVersion,
         accessBasis:{contractVersion:"2",kind:"initial-understanding-bootstrap",canonicalUnderstandingRevision:null,bootstrapFingerprint:lineage.bootstrapFingerprint,preparationScopeDigest:lineage.preparationScopeDigest},
-      };
+        };
+      }
       const stored = await this.dependencies.runtimeRepository.read(input.organizationId);
       if (!stored || stored.runtime.metadata.organizationId !== input.organizationId) {
         return unavailable(input);
