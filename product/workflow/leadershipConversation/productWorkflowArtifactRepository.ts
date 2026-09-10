@@ -18,6 +18,7 @@ import {
   assertReviewedCarryForwardProposalAuthorityV1,
   type LeadershipConversationArtifactStoreV1,
   type ProposalKind,
+  type RegisteredMeetingPreparationScopeV1,
 } from "./contracts";
 import { leadershipDigest, leadershipStableSerialize } from "./determinism";
 
@@ -389,6 +390,9 @@ class FilesystemProductWorkflowArtifactRepository
     idempotencyKeyDigests: readonly string[] = [],
   ): ProductWorkflowOccurrenceSlice {
     const source = snapshot.store,
+      scopedSource = source as typeof source & {
+        registeredMeetingPreparationScopes?: RegisteredMeetingPreparationScopeV1[];
+      },
       conversation = <T extends { conversationId: string; questionId: string }>(
         values: readonly T[],
       ) =>
@@ -403,6 +407,15 @@ class FilesystemProductWorkflowArtifactRepository
         (value) =>
           value.productQuestionId === input.questionId &&
           value.productWorkflowId === workflowId,
+      ),
+      registeredMeetingPreparationScopes = (
+        scopedSource.registeredMeetingPreparationScopes ?? []
+      ).filter(
+        (value) =>
+          value.organizationId === input.organizationId &&
+          value.questionId === input.questionId &&
+          value.conversationId === input.conversationId &&
+          value.seriesId === input.seriesId,
       ),
       frozen = (source.frozenSnapshotPublications ?? []).filter(
         (value) =>
@@ -454,13 +467,14 @@ class FilesystemProductWorkflowArtifactRepository
           eventRefs.has(value.recordRef) ||
           linkIds.has(value.recordRef),
       );
-    const store: LeadershipConversationArtifactStoreV1 = {
+    const store = {
       contractVersion: "1",
       organizationId: input.organizationId,
       contexts,
       preparedWorkProducts: [],
       frozenSnapshots: [],
       preparedWorkPublications: prepared,
+      registeredMeetingPreparationScopes,
       frozenSnapshotPublications: frozen,
       privateWorkingContributionFreezeIntents: (
         source.privateWorkingContributionFreezeIntents ?? []
@@ -526,6 +540,8 @@ class FilesystemProductWorkflowArtifactRepository
       events,
       idempotency,
       storeDigest: "",
+    } as LeadershipConversationArtifactStoreV1 & {
+      registeredMeetingPreparationScopes?: RegisteredMeetingPreparationScopeV1[];
     };
     return {
       contractVersion: "1",
