@@ -118,6 +118,9 @@ export type ChiefMeetingPackPublicationV1 = {
   generatedAgendaId: string;
   generatedTalkingPointsId: string;
   inputSnapshotDigest: string;
+  /** Present on content-aware refresh publications. Historical publications
+   * remain readable and derive this value from their protected body. */
+  candidateSemanticDigest?: string;
   sourceLineageDigest: string;
   protectedBody: ProductArtifactBodyRefV1;
   ownerStageReceiptDigest: string;

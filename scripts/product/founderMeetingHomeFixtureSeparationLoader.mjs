@@ -1,12 +1,15 @@
-import { registerHooks } from "node:module";
+import { createRequire, registerHooks } from "node:module";
+import { pathToFileURL } from "node:url";
 
 const asModule = source => `data:text/javascript,${encodeURIComponent(source)}`;
+const require = createRequire(import.meta.url);
+const reactUrl = pathToFileURL(require.resolve("react")).href;
 const clerk = asModule('export async function auth(){return {userId:globalThis.__discoveryFounderMeetingHomeUserId??"user_founder_route_validation"}}');
 const navigation = asModule('export function notFound(){const error=new Error("NEXT_NOT_FOUND");error.code="NEXT_NOT_FOUND";throw error} export function redirect(destination){const error=new Error(`NEXT_REDIRECT:${destination}`);error.code="NEXT_REDIRECT";throw error} export function usePathname(){return "/product-alpha/meetings/founder-route-validation"}');
 const founder = asModule('export async function createFounderMeetingHomeComposition(address){return globalThis.__discoveryFounderMeetingHomeComposition(address)}');
 const meetingPackActions = asModule('export async function addMeetingPackPrivateNoteAction(){return null}export async function buildMeetingPackAction(){return null}export async function generateSourceScopedExecutiveAnalysisAction(){return {result:{status:"ineligible"}}}export async function refreshMeetingPackDraftAction(){return null}export async function saveMeetingPackAction(){return null}export async function shareMeetingPerspectiveAction(){return []}');
 const composer = asModule('export function composeChiefFirstPrepareViewFromWorkspace(){return globalThis.__discoveryFounderMeetingHomePrepare}');
-const shell = asModule('import React from "react";export default function DiscoveryShell(props){return React.createElement("div",null,props.children)}');
+const shell = asModule(`import React from ${JSON.stringify(reactUrl)};export default function DiscoveryShell(props){return React.createElement("div",null,props.children)}`);
 const sandbox = asModule('globalThis.__discoverySandboxMeetingHomeLoads=(globalThis.__discoverySandboxMeetingHomeLoads??0)+1;export default function SandboxMeetingHome(){return null}');
 const serverOnly = asModule("export default undefined");
 
