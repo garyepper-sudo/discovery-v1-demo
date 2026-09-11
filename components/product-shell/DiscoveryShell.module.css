@@ -197,6 +197,31 @@
   color: rgba(240, 213, 138, 0.84);
 }
 
+.sessionControl section {
+  display: grid;
+  gap: 5px;
+  color: rgba(245, 245, 245, 0.42);
+  font-size: 0.65rem;
+}
+
+.sessionControl strong {
+  overflow-wrap: anywhere;
+  color: rgba(245, 245, 245, 0.78);
+  font-size: 0.72rem;
+  font-weight: 560;
+}
+
+.sessionControl section > div {
+  display: grid;
+  gap: 6px;
+  margin-top: 5px;
+}
+
+.sessionControl button:focus-visible {
+  outline: 1px solid rgba(240, 213, 138, 0.7);
+  outline-offset: 3px;
+}
+
 .statusMark {
   width: 5px;
   height: 5px;
