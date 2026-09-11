@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import { veilProtectedPage } from "./ProtectedPageLifecycleGuard";
 
-const SIGNED_OUT_DESTINATION = "/sign-in";
+const SIGNED_OUT_DESTINATION = "/onboarding/identity";
 
 export function accountDisplayLabel(
   primaryEmail: string | null | undefined,
