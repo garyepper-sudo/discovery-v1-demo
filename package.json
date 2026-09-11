@@ -286,6 +286,7 @@
     "experiment:expected-explanation-discrimination-001": "tsx engine/benchmark/research/expected-explanation-discrimination-experiment-001/runExperiment.ts",
     "experiment:organizational-understanding-gate1-v1": "tsx engine/benchmark/research/organizational-understanding-gate1-v1/run.ts",
     "experiment:organizational-understanding-gate2-v1": "tsx engine/benchmark/research/organizational-understanding-gate2-v1/harness.ts export",
+    "validate:organizational-understanding-gate2-permission-revocation-addendum-v3": "tsx engine/benchmark/research/organizational-understanding-gate2-permission-revocation-addendum-v3/harness.ts validate",
     "validate:organizational-objective-optimization-context-001": "tsx engine/benchmark/research/organizational-objective-optimization-context-experiment-001/validate.ts",
     "validate:organizational-objective-optimization-context-contract": "tsx scripts/product/validateOrganizationalObjectiveContext.ts",
     "validate:organizational-objective-context-backend-acceptance-001": "tsx scripts/product/validateOrganizationalObjectiveContextBackendAcceptance001.ts",
