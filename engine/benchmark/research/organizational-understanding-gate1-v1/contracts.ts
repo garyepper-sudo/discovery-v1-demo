@@ -1,0 +1,11 @@
+export const GATE_1_VERSION = "organizational-understanding-gate1-v1" as const;
+export type ClaimKind = "observation" | "attributed-assertion" | "inference" | "disagreement" | "requirement" | "assumption" | "unknown";
+export type ScenarioVariant = "baseline" | "selective-change" | "temporal-state" | "contradiction-origin";
+export type SourceFixture = { label: `Source-${string}`; recordedAt: string; knownAt: string; lines: string[] };
+export type WorldFixture = { worldId: string; question: string; earlier: string; current: string; epistemicContext: string; permissionScope: string; sources: SourceFixture[] };
+export type Citation = { sourceLabel: string; lineStart: number; lineEnd: number };
+export type CandidateClaim = { statement: string; kind: ClaimKind; applicableTime: string; citations: Citation[] };
+export type CandidateOutput = { currentConsequentialState: CandidateClaim[]; decisionsOrOptions: CandidateClaim[]; materialFacts: CandidateClaim[]; historicalFacts: CandidateClaim[]; contradictionsAndDisagreements: CandidateClaim[]; commitments: CandidateClaim[]; competingExplanations: CandidateClaim[]; unresolvedInformationNeeds: CandidateClaim[]; executiveAssessment: CandidateClaim[] };
+export type AuthorizedPacket = { contractVersion: typeof GATE_1_VERSION; packetId: string; worldId: string; variant: ScenarioVariant; sourcePacketDigest: string; modelRequest: { instruction: string; question: string; timeHorizon: { earlier: string; current: string }; epistemicContext: string; permissionScope: string; authorizedSources: Array<{ label: string; recordedAt: string; knownAt: string; lines: Array<{ line: number; text: string }> }>; outputContract: "gate1-structured-candidate/v1" } };
+export type ExtractiveBaseline = { packetId: string; sourcePacketDigest: string; chronology: Array<{ sourceLabel: string; knownAt: string; passages: Citation[] }>; explicitConflictPassages: Citation[]; commitmentPassages: Citation[] };
+export type StructuralEvaluation = { citationSupport: number; unsupportedClaims: number; unauthorizedCitations: number; withheldSourceLeakage: number; malformedClaims: number; valid: boolean };
