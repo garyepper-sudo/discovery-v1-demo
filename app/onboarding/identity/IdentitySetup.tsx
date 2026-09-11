@@ -4,12 +4,15 @@ import type { AuthenticatedParticipantLookupStatus } from "../../../lib/auth/aut
 import ClerkSessionTerminationControl, {
   useVerifiedPrimaryEmail,
 } from "../../../components/product-shell/ClerkSessionTerminationControl";
+import type { FounderAuthorizedMeetingContinuation } from "../../../lib/alpha-activation/founderAuthorizedMeetingContinuation";
 import { completeDiscoveryIdentitySetup } from "./actions";
 
 export function IdentitySetup({
   initialStatus,
+  continuation,
 }: {
   initialStatus: AuthenticatedParticipantLookupStatus;
+  continuation: FounderAuthorizedMeetingContinuation | null;
 }) {
   const primaryEmail = useVerifiedPrimaryEmail();
   const [state, setState] = useState<"idle" | "working" | "ready" | "unavailable">(
@@ -31,7 +34,17 @@ export function IdentitySetup({
       <main>
         <ClerkSessionTerminationControl />
         <h1>Your Discovery identity is ready.</h1>
-        <p>Organization and meeting access are managed separately.</p>
+        {continuation ? (
+          <>
+            <p>Organization and meeting access are managed separately.</p>
+            <a href={continuation.href}>
+              Continue to Discovery
+            </a>
+            <p>Open {continuation.title}</p>
+          </>
+        ) : (
+          <p>You do not currently have access to a Discovery meeting.</p>
+        )}
       </main>
     );
   }
