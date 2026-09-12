@@ -129,7 +129,9 @@ order, digests, or known-corpus profiles.
 - **DO NOT RECONSTRUCT OR TREAT AS PRODUCT EVIDENCE.** No complete matching,
   sealed Astra Product artifact is recoverable.
 - **CANONICAL DEVELOPMENT SCAFFOLDING — MUST NOT BE TREATED AS GENUINE PRODUCT
-  UNDERSTANDING.** This applies to the current deterministic Founder synthesis.
+  UNDERSTANDING.** Deterministic synthesis remains available only through
+  explicit test/development transport injection; it is no longer the default
+  configured Founder Build or Refresh transport.
 - **RESEARCH-DEMONSTRATED CONTROLLED CAPABILITY EVIDENCE.** Gate 1 and the
   combined Gate 2 demonstrate bounded synthetic capability; they are not
   founder-visible Product proof.
@@ -144,13 +146,20 @@ organizational understanding, real-world generalization, outcome-linked
 learning, authentic-history compounding, or longitudinal organizational
 learning.
 
-## Immediate Product milestone
+## Current Product transport status
 
-The next and only immediate implementation milestone is
-**Model-Agnostic Source-Scoped Transport Adapter V1**. It adapts the existing
-source-scoped seam and bounded useful portions of the preserved response-
-envelope candidate while retaining the existing source, analysis, Meeting
-Pack, Review, and revision owners.
+**Model-Agnostic Source-Scoped Transport Adapter V1 is INTEGRATED and
+VALIDATED offline.** It projects only the server-resolved organizational
+question and authorized line-numbered source bodies through request-local
+generic aliases, strictly validates a supported Responses envelope, and
+rehydrates passage citations into existing source lineage before the existing
+Meeting Pack composition. Existing packs remain readable when configured
+generation is unavailable.
+
+This is not real-provider proof: a real provider response has not yet
+survived validation; a provider-generated durable Meeting Pack has not been
+demonstrated; and founder-visible content-grounded understanding has not been
+demonstrated.
 
 Maximum implementation inventory:
 
@@ -159,7 +168,9 @@ Maximum implementation inventory:
 - migration paths: 0;
 - new owners: 0.
 
-The controlled acceptance must prove one real model response through:
+The next and only immediate implementation milestone is **Isolated
+Provider-to-Durable-Pack and Cold-Reconstruction Proof V1**. Its controlled
+acceptance must prove one real model response through:
 
 ```text
 provider-safe request

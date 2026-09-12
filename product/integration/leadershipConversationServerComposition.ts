@@ -369,9 +369,8 @@ function constructLeadershipConversationServerComposition(construction:Compositi
   const analyzeSourceScopedForDevelopment=async(input:{userId:string;organizationId:string;questionId:string;seriesId:string;occurrenceId:string})=>{
     let failureCategory:SourceScopedUnavailableReasonV1|undefined;
     const questionWorkspace=await workspaceForPersona({...input,conversationId:input.occurrenceId});
-    const result=environment==="development"
-      ?await analyzeDeterministicDevelopmentCandidate(sourceScopedAnalysis,mapAnalysisInput(input,questionWorkspace.base.base.question.text),reviewedCarryForwardDevelopmentTransport,reason=>{failureCategory=reason;})
-      :unavailable(0);
+    const result=await sourceScopedAnalysis.analyze(mapAnalysisInput(input,questionWorkspace.base.base.question.text));
+    failureCategory=sourceScopedAnalysis.unavailableReason();
     return{result,failureCategory:result.status==="eligible"?null:failureCategory??(result.dispatchCount===1?"request-failed":"analysis-construction-failure")};
   };
   async function issueCurrentPreparedWorkMaterialLineage(input:{userId:string;organizationId:string;questionId:string;conversationId:string;contextVersionId:string;evaluatedAt:string;request:CurrentPreparedWorkMaterialLineageRequestV1}):Promise<CurrentPreparedWorkMaterialLineageResultV1>{
@@ -446,7 +445,7 @@ function constructLeadershipConversationServerComposition(construction:Compositi
     trace?.("analysis-owner-entered");
     const analysisInput=mapAnalysisInput({...input,occurrenceId:input.conversationId},workspace.base.base.question.text);
     trace?.("analysis-input-constructed","completed");
-    const analyzed=await analyzeDeterministicDevelopmentCandidate(sourceScopedAnalysis,analysisInput,reviewedCarryForwardDevelopmentTransport);
+    const analyzed=await sourceScopedAnalysis.analyze(analysisInput);
     if(analyzed.status!=="eligible")throw new Error("Meeting Pack analysis is unavailable.");
     trace?.("analysis-completed","completed");
     (construction.meetingPackTrace??currentMeetingPackBuildTrace())?.("source-material-built","completed");
@@ -468,11 +467,10 @@ function constructLeadershipConversationServerComposition(construction:Compositi
   };
   const readMeetingPack=async(input:{userId:string;organizationId:string;questionId:string;conversationId:string;seriesId:string})=>{
     if(!await meetingPackOwner.hasPublishedPack(input))return null;
-    const current=await meetingPackContext(input),pack=await meetingPackOwner.read(input,{preparedWorkPublicationDigest:current.publication.headerDigest,priorCompletionDigest:current.priorCompletionDigest,inputSnapshotDigest:current.inputSnapshotDigest,sourceLineageDigest:current.publication.materialLineage!.envelopeDigest});
-    if(!pack||!verifyPackCitationClosure(pack,current))throw new Error("Meeting Pack citation closure is unavailable.");
-    return pack;
+    const basis=await meetingPackReadBasis(input);
+    return meetingPackOwner.read(input,basis);
   };
-  const composeMeetingPack=async(input:{userId:string;organizationId:string;questionId:string;conversationId:string;seriesId:string})=>{const current=await meetingPackContext(input),body=composeChiefMeetingPack({...input,occurrenceId:input.conversationId,userScopeDigest:current.privateState.userScopeDigest,prepare:current.prepare,workspace:current.workspace,analysis:current.analysis,notes:current.privateState.notes,inputSnapshotDigest:current.inputSnapshotDigest,sourceLineageDigest:current.publication.materialLineage!.envelopeDigest,preparedWorkPublicationDigest:current.publication.headerDigest,priorCompletionDigest:current.priorCompletionDigest,priorReviewedItems:current.priorReviewedItems,priorMaterialChanges:current.priorMaterialChanges,createdAt:current.workspace.context?.recordedAt??clock.now()});return{current,body};};
+  const composeMeetingPack=async(input:{userId:string;organizationId:string;questionId:string;conversationId:string;seriesId:string})=>{const current=await meetingPackContext(input),body=composeChiefMeetingPack({...input,occurrenceId:input.conversationId,userScopeDigest:current.privateState.userScopeDigest,prepare:current.prepare,workspace:current.workspace,analysis:current.analysis,notes:current.privateState.notes,inputSnapshotDigest:current.inputSnapshotDigest,sourceLineageDigest:current.publication.materialLineage!.envelopeDigest,preparedWorkPublicationDigest:current.publication.headerDigest,priorCompletionDigest:current.priorCompletionDigest,priorReviewedItems:current.priorReviewedItems,priorMaterialChanges:current.priorMaterialChanges,createdAt:current.workspace.context?.recordedAt??clock.now()});if(!verifyPackCitationClosure(body,current))throw new Error("Meeting Pack citation closure is unavailable.");return{current,body};};
   const buildMeetingPack=async(input:{userId:string;organizationId:string;questionId:string;conversationId:string;seriesId:string})=>{const trace=construction.meetingPackTrace??currentMeetingPackBuildTrace(),{current,body}=await composeMeetingPack(input);trace?.("pack-identity-derived","completed");trace?.("composer-entered");trace?.("composer-completed","completed");trace?.("publication-entered");const result=await meetingPackOwner.publish({...input,body,idempotencyKey:`chief-meeting-pack-build:${current.inputSnapshotDigest}`});trace?.("publication-completed","completed");if(!result)throw new Error("Meeting Pack is unavailable.");return result;};
   const refreshMeetingPack=async(input:{userId:string;organizationId:string;questionId:string;conversationId:string;seriesId:string})=>{const trace=construction.meetingPackTrace??currentMeetingPackBuildTrace(),{body}=await composeMeetingPack(input);trace?.("pack-identity-derived","completed");trace?.("composer-entered");trace?.("composer-completed","completed");trace?.("publication-entered");const result=await meetingPackOwner.refresh({...input,body});trace?.("publication-completed","completed");if(!result)throw new Error("Meeting Pack is unavailable.");return result;};
   const ensureReviewedCarryForwardRoute=async(input:Parameters<CanonicalLeadershipConversationOwnerRouter["routeApproved"]>[0])=>{

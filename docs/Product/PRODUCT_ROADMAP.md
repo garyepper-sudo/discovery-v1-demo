@@ -1,17 +1,16 @@
 # Discovery Product Roadmap
 
-## Immediate milestone — Model-Agnostic Source-Scoped Transport Adapter V1
+## Immediate milestone — Isolated Provider-to-Durable-Pack and Cold-Reconstruction Proof V1
 
-Canonical architecture is intact, but Founder Build and Refresh currently
-select deterministic development synthesis. The next and only immediate
-implementation milestone is the bounded model-agnostic source-scoped transport
-adapter defined by `DEC-PROD-070` and
-`CANONICAL_CAPABILITY_STATUS.md`.
+Canonical architecture is intact. The model-agnostic source-scoped transport
+adapter is integrated and validated offline: normal Founder Build and Refresh
+use configured source-scoped transport, while deterministic synthesis requires
+explicit test/development injection.
 
-It reuses the current Prepared Work lineage, current-access checks, protected
-body loader, source-scoped analysis owner, Meeting Pack composer, publication
-and immutable-revision owner, and human Review path. It adds no owner or
-migration. The change is capped at four production and two validation paths.
+The next proof reuses the current Prepared Work lineage, current-access checks,
+protected body loader, source-scoped analysis owner, Meeting Pack composer,
+publication and immutable-revision owner, and human Review path. It adds no
+owner or migration.
 
 Before Founder interaction, one controlled real response must survive the
 provider-safe request, actual Responses-envelope extraction, schema and
@@ -1441,8 +1440,8 @@ Deferred gate: **TEAM-SCOPED-ANALYSIS-NONINTERFERENCE-001.** Required before ena
 Deferred gate: **CHIEF-V1-PERSISTED-INVALID-STATE-QUALIFICATION-001 — DEFERRED — REQUIRED BEFORE UNSUPERVISED EXTERNAL LAUNCH OR SECOND-PRINCIPAL ENABLEMENT.** It must prove persisted owner-backed stale lineage, digest and version mismatch, revocation, malformed metadata, ambiguous access, foreign selected-source injection, multi-role source closure, and shared-analysis reuse. Current development-Alpha evidence qualifies those invalid states at the production owner boundary, not as a complete persisted end-to-end matrix. This gate does not block local founder use, a separately authorized one-call synthetic smoke test, human Review development, authentic one-principal carry-forward, or the controlled two-cycle walkthrough.
 
 **Superseded Control Tower task — Live frontier Prepare smoke test.** The
-source-scoped seam is integrated, but the Founder path now selects deterministic
-development synthesis and no provider-generated Meeting Pack has been proven.
-The controlling next step is Model-Agnostic Source-Scoped Transport Adapter V1,
-with isolated provider-to-durable-pack proof before Founder interaction. The
-persisted invalid-state matrix remains a pre-launch gate.
+source-scoped seam and offline model-agnostic transport adapter are integrated,
+but no provider-generated Meeting Pack has been proven. The controlling next
+step is isolated provider-to-durable-pack and cold-reconstruction proof before
+Founder interaction. The persisted invalid-state matrix remains a pre-launch
+gate.
