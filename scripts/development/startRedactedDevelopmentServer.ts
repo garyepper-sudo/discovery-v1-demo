@@ -7,6 +7,7 @@ import { resolveFounderLocalAlphaRuntimeRootFromEnvironment } from "../../lib/al
 import { createGoogleDriveOAuthLogSanitizer, redactGoogleDriveOAuthLogText } from "../../product/connectors/google-drive/logRedaction";
 import { SourceScopedFrontierAttemptLifecycleV1 } from "../../product/integration/sourceScopedExecutiveAnalysis";
 
+async function main() {
 if (process.env.DISCOVERY_FOUNDER_LOCAL_ALPHA_ENABLED === "true") {
   const founderRoot = await resolveFounderLocalAlphaRuntimeRootFromEnvironment();
   if (founderRoot.status !== "ready") throw new Error("Founder source-scoped analysis lifecycle root is unavailable.");
@@ -57,3 +58,6 @@ child.on("error", (error) => {
 child.on("close", (code, signal) => {
   process.exitCode = code ?? (signal ? 1 : 0);
 });
+}
+
+void main();
