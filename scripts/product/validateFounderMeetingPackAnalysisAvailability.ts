@@ -20,7 +20,12 @@ try {
   assert.match(composition, /refreshMeetingPackAvailable[\s\S]*lifecycleRootReady/);
   assert.match(page, /server\.refreshMeetingPack\.available/);
   assert.doesNotMatch(page, /analyzeSourceScopedForDevelopment/);
-  assert.match(startup, /SourceScopedFrontierAttemptLifecycleV1\.inspect\(lifecycleRoot\)/);
+  assert.match(startup, /founderRoot = process\.env\.DISCOVERY_FOUNDER_LOCAL_ALPHA_RUNTIME_ROOT/);
+  assert.match(startup, /!founderRoot \|\| !path\.isAbsolute\(founderRoot\)/);
+  assert.match(startup, /state\.isSymbolicLink\(\) \|\| \(state\.mode & 0o777\) !== 0o700/);
+  assert.match(startup, /ensureDirectory\(lifecycleRoot\)/);
+  assert.match(startup, /for \(const child of \["attempts", "active"\]\) await ensureDirectory/);
+  assert.doesNotMatch(startup, /server-only/);
   process.stdout.write(JSON.stringify({ validation: "founder-meeting-pack-analysis-availability-001", result: "PASS", founderEvaluationTime: "current", fixtureEvaluationTime: "fixed", liveTransport: "configured", lifecycle: "startup-provisioned", pageLoadAnalysis: 0, providerRequests: 0, productWrites: 0 }));
 } finally {
   prior === undefined ? delete process.env.DISCOVERY_FOUNDER_LOCAL_ALPHA_ENABLED : process.env.DISCOVERY_FOUNDER_LOCAL_ALPHA_ENABLED = prior;
