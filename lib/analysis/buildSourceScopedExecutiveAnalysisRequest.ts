@@ -32,13 +32,15 @@ export function projectProviderSafeSourceScopedRequest(request:SourceScopedReque
       if(!Array.isArray(items))throw new Error("Provider candidate is invalid.");
       return[name,items.map(item=>{
         if(!exact(item,["statement","citations","factCheck"])||typeof (item as {statement?:unknown}).statement!=="string"||!Array.isArray((item as {citations?:unknown}).citations)||!((item as {citations:unknown[]}).citations).length||!(["PASS","HUMAN REVIEW REQUIRED"] as string[]).includes((item as {factCheck?:unknown}).factCheck as string))throw new Error("Provider candidate is invalid.");
-        const seenAliases=new Set<string>(),citations=(item as {citations:unknown[]}).citations.map(citation=>{
+        const seenPassages=new Set<string>(),citations=(item as {citations:unknown[]}).citations.flatMap(citation=>{
           if(!exact(citation,["sourceAlias","startLine","endLine"]))throw new Error("Provider citation is invalid.");
           const {sourceAlias,startLine,endLine}=citation as ProviderCitationV1,source=aliases.get(sourceAlias);
-          if(!source||seenAliases.has(sourceAlias)||!Number.isSafeInteger(startLine)||!Number.isSafeInteger(endLine)||startLine<1||endLine<startLine||endLine>source.lineCount)throw new Error("Provider citation is invalid.");
-          seenAliases.add(sourceAlias);
+          if(!source||!Number.isSafeInteger(startLine)||!Number.isSafeInteger(endLine)||startLine<1||endLine<startLine||endLine>source.lineCount)throw new Error("Provider citation is invalid.");
+          const passage=`${sourceAlias}\u0000${startLine}\u0000${endLine}`;
+          if(seenPassages.has(passage))return[];
+          seenPassages.add(passage);
           const internal:SourceScopedCitationV1={sourceId:source.sourceId,sourceVersion:source.sourceVersion,bodyDigest:source.bodyDigest,sourcePacketDigest:source.sourcePacketDigest,startLine,endLine};
-          return internal;
+          return[internal];
         });
         return{statement:(item as ProviderItemV1).statement,citations,factCheck:(item as ProviderItemV1).factCheck};
       })];

@@ -17,7 +17,7 @@ import {CanonicalLocalSourceBindingService} from "../../engine/v3/governance/can
 import {resolveScopedGovernanceContext} from "../../engine/v3/governance/scopedGovernanceContext";
 import {SOURCE_SCOPED_RESPONSE_BYTE_LIMIT,createOpenAIExecutiveAnalysisTransport} from "../../lib/analysis/openAIExecutiveAnalysisTransport";
 
-const rawEnvelope=(model:string,sections:unknown,input_tokens:number,output_tokens:number,total_tokens:number)=>({model,status:"completed",output:[{type:"message",role:"assistant",status:"completed",content:[{type:"output_text",text:JSON.stringify({sections})}]}],usage:{input_tokens,output_tokens,total_tokens}});
+const rawEnvelope=(model:string,sections:unknown,input_tokens:number,output_tokens:number,total_tokens:number)=>({object:"response",model,status:"completed",output:[{type:"message",role:"assistant",status:"completed",content:[{type:"output_text",text:JSON.stringify({sections})}]}],usage:{input_tokens,output_tokens,total_tokens}});
 const sourceText=readFileSync(new URL("../../app/product-alpha/leadership-conversation/actions.ts",import.meta.url),"utf8");
 const providerSections=(request:ReturnType<typeof buildSourceScopedExecutiveAnalysisRequest>["request"],sections:unknown)=>{
   const aliases=new Map(request.packet.sources.map((source,index)=>[source.sourceId,`Source ${String.fromCharCode(65+index)}`]));
