@@ -10,9 +10,12 @@ This section supersedes the historical continuation instructions below.
 - Historical composition: visible Generate, Build, and Refresh drifted to
   deterministic development synthesis. The model-agnostic source-scoped
   transport adapter repaired that drift.
-- Current composition: Founder Build and Refresh use the configured
-  model-agnostic source-scoped transport. Deterministic synthesis is available
-  only by explicit test/development transport injection.
+- Before Live Founder Source-Scoped Runtime Wiring V1, the isolated proof
+  composition was configured but the real Founder composition omitted the
+  transport and lifecycle configuration. The bounded wiring correction now
+  injects the canonical model-agnostic transport and server-owned durable
+  lifecycle into real Founder Build and Refresh. Deterministic synthesis remains
+  available only by explicit test/development transport injection.
 - Research: Gate 1 and combined Gate 2 provide bounded synthetic evidence.
 - Live Product: no Founder-visible provider-generated content-grounded Meeting
   Pack has been demonstrated.
@@ -21,8 +24,10 @@ This section supersedes the historical continuation instructions below.
   replay, cold reconstruction, and private Meeting Pack component rendering.
 - The private render retained all material agenda and talking-point entries;
   private-only content did not enter the shareable agenda projection.
-- Immediate implementation milestone: **Founder-Visible Content-Grounded
-  Meeting Pack Verification V1** under `GAP-D-007` and `DEC-PROD-070`.
+- Immediate proof milestone: **Founder-Visible Content-Grounded Meeting Pack
+  Verification V1** under `GAP-D-007` and `DEC-PROD-070`; a live
+  provider-generated Founder revision remains unproven until the authorized
+  Founder Refresh succeeds.
 
 Read `CANONICAL_CAPABILITY_STATUS.md` before beginning. Reconcile the actual
 clean canonical HEAD and update this commit reference in the closure if main

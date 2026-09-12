@@ -21,10 +21,7 @@ export default async function MeetingHome({params,searchParams}:{params:Promise<
     try{
       pack=await server.readMeetingPack({...identity,seriesId:meeting.seriesId});
     }catch{unavailable=true;}
-    if(pack)try{
-      const analysis=await server.analyzeSourceScopedForDevelopment({...identity,seriesId:meeting.seriesId,occurrenceId:meeting.occurrenceId});
-      refreshMeetingPackAvailable=analysis.result.status==="eligible";
-    }catch{}
+    if(pack)refreshMeetingPackAvailable=await server.refreshMeetingPack.available({...identity,seriesId:meeting.seriesId});
     return <DiscoveryShell organization={{organizationId:meeting.organizationId,organizationName:"Your organization",runtimeAvailable:true,coherence:null,confidence:null,coherenceLabel:"Understanding beginning"}} showSessionImpact={false} opaqueMeetingHref={`/product-alpha/meetings/${seriesAddress}`} sessionControl={<ClerkSessionTerminationControl />}><LeadershipConversationExperience initialWorkspace={workspace} prepare={prepare} valueLayer={undefined} personalSheet={undefined} occurrenceRef={meeting.occurrenceId} initialCheckpoint={null} initialMeetingPack={pack} meetingPackUnavailable={unavailable} refreshMeetingPackAvailable={refreshMeetingPackAvailable} workingAnalysisDigest={null} seriesAddress={seriesAddress} readOnlyMeetingHome/></DiscoveryShell>;
   }finally{await composition.close();}
  }

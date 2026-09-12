@@ -71,13 +71,16 @@ consequential promotion, and acceptance of uncertainty.
 | Passage-exact citation closure | INTEGRATED and VALIDATED against a real response | Multi-passage source-lineage closure passed before durable publication |
 | Analysis-to-Pack composition | INTEGRATED and VALIDATED in isolated state | The accepted real candidate produced durable isolated Meeting Pack revision 3 |
 | Pack publication, immutable revision, replay, and concurrency | INTEGRATED and VALIDATED | Executable owner-path and persistence validation |
-| Founder Build and Refresh | INTEGRATED with configured model-agnostic source-scoped transport; not FOUNDER-PROVEN | Real isolated response, revision 3, exact replay, cold reconstruction, and private-component rendering are validated |
+| Founder Build and Refresh | Live composition wiring integrated; not FOUNDER-PROVEN | The canonical model-agnostic transport and durable lifecycle are now injected into the real Founder composition; a Founder click has not yet produced a provider-generated revision |
 | Founder-visible provider-generated Meeting Pack | DESIGNED only | Never demonstrated |
 | Reviewed Carry-Forward | INTEGRATED and VALIDATED | Structural and executable owner-path proof; human disposition remains authoritative |
 | Two-occurrence continuity | INTEGRATED and fixture-VALIDATED | Not provider-backed end to end |
 
 The current Product does not demonstrate live content-grounded Founder analysis
-through the replaceable model seam. Isolated proof has validated one real
+through the replaceable model seam. Before the Live Founder Source-Scoped
+Runtime Wiring V1 correction, the real Founder composition omitted the
+canonical transport and lifecycle configuration despite the isolated proof.
+That bounded composition defect is now repaired; isolated proof has validated one real
 response, durable revision 3, exact replay, cold reconstruction, and rendering
 through the private Meeting Pack component; Founder-visible use remains
 unproven. A Founder Meeting Pack must not be described as provider-backed or
@@ -91,8 +94,9 @@ fresh-process reconstruction, and fresh-process private component rendering
 are **VALIDATED in isolated state**. The render preserved all material agenda
 and private talking-point entries; private-only content did not enter the
 shareable agenda projection. This does not establish a Founder-visible result.
-The next milestone is **Founder-Visible Content-Grounded Meeting Pack
-Verification V1**.
+The next milestone remains **Founder-Visible Content-Grounded Meeting Pack
+Verification V1**. A live provider-generated Founder revision is not
+FOUNDER-PROVEN until the authorized Founder Refresh succeeds.
 
 ## Historical transport and deterministic composition
 
@@ -163,17 +167,19 @@ learning.
 ## Current Product transport status
 
 **Model-Agnostic Source-Scoped Transport Adapter V1 is INTEGRATED and
-VALIDATED offline.** It projects only the server-resolved organizational
+VALIDATED in isolated state, and is wired into the real Founder composition.** It projects only the server-resolved organizational
 question and authorized line-numbered source bodies through request-local
 generic aliases, strictly validates a supported Responses envelope, and
 rehydrates passage citations into existing source lineage before the existing
 Meeting Pack composition. Existing packs remain readable when configured
 generation is unavailable.
 
-This is not real-provider proof: a real provider response has not yet
-survived validation; a provider-generated durable Meeting Pack has not been
-demonstrated; and founder-visible content-grounded understanding has not been
-demonstrated.
+The adapter has one sealed real-provider response that survived validation and
+produced a durable isolated Meeting Pack. The real Founder composition was not
+wired to that transport and lifecycle until Live Founder Source-Scoped Runtime
+Wiring V1. A provider-generated Founder Meeting Pack and Founder-visible
+content-grounded understanding remain unproven until the authorized Founder
+Refresh succeeds.
 
 Maximum implementation inventory:
 
