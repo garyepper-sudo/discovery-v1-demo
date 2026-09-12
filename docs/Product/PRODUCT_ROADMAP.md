@@ -1,22 +1,22 @@
 # Discovery Product Roadmap
 
-## Immediate milestone — Isolated Provider-to-Durable-Pack and Cold-Reconstruction Proof V1
+## Immediate milestone — Founder-Visible Content-Grounded Meeting Pack Verification V1
 
 Canonical architecture is intact. The model-agnostic source-scoped transport
 adapter is integrated and validated offline: normal Founder Build and Refresh
 use configured source-scoped transport, while deterministic synthesis requires
 explicit test/development injection.
 
-The next proof reuses the current Prepared Work lineage, current-access checks,
-protected body loader, source-scoped analysis owner, Meeting Pack composer,
-publication and immutable-revision owner, and human Review path. It adds no
-owner or migration.
+The isolated proof reused the current Prepared Work lineage, current-access
+checks, protected body loader, source-scoped analysis owner, Meeting Pack
+composer, publication and immutable-revision owner, and human Review path. It
+added no owner or migration. One sealed real response passed strict
+Responses-envelope, schema/request/packet, multi-passage citation, independent
+quality, durable revision 3, exact replay, cold reconstruction, and
+private-component rendering checks.
 
-Before Founder interaction, one controlled real response must survive the
-provider-safe request, actual Responses-envelope extraction, schema and
-passage-exact citation validation, Meeting Pack composition, durable isolated
-publication, and cold reconstruction. Founder-visible rendering follows that
-isolated proof.
+The remaining proof is Founder-visible rendering and use of the accepted path.
+No second provider request is required or authorized for this milestone.
 
 After one content-grounded Meeting Pack and the first real two-cycle reviewed
 loop, bounded longitudinal evaluation may hold model and current evidence

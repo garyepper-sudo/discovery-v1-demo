@@ -14,25 +14,25 @@ This section supersedes the historical continuation instructions below.
   model-agnostic source-scoped transport. Deterministic synthesis is available
   only by explicit test/development transport injection.
 - Research: Gate 1 and combined Gate 2 provide bounded synthetic evidence.
-- Live Product: no provider-generated content-grounded Meeting Pack has been
-  demonstrated.
-- Adapter status: integrated and validated offline; no real provider response,
-  durable provider-generated Meeting Pack, cold reconstruction, or
-  founder-visible content-grounded understanding has been demonstrated.
-- Immediate implementation milestone: **Isolated Provider-to-Durable-Pack and
-  Cold-Reconstruction Proof V1** under `GAP-D-007` and `DEC-PROD-070`.
+- Live Product: no Founder-visible provider-generated content-grounded Meeting
+  Pack has been demonstrated.
+- Adapter status: integrated and validated in isolated state against one sealed
+  real response, durable revision 3, multi-passage citation closure, exact
+  replay, cold reconstruction, and private Meeting Pack component rendering.
+- The private render retained all material agenda and talking-point entries;
+  private-only content did not enter the shareable agenda projection.
+- Immediate implementation milestone: **Founder-Visible Content-Grounded
+  Meeting Pack Verification V1** under `GAP-D-007` and `DEC-PROD-070`.
 
 Read `CANONICAL_CAPABILITY_STATUS.md` before beginning. Reconcile the actual
 clean canonical HEAD and update this commit reference in the closure if main
 has advanced.
 
 The next proof must reuse the integrated adapter and current authorization,
-source, Prepared Work, analysis, Meeting Pack, Review, and revision owners.
-It must prove one controlled real response through the adapter, schema and
-passage citation validation, durable isolated pack publication, exact replay,
-and fresh-process cold reconstruction before Founder interaction. Do not build
-another adapter or restore deterministic synthesis as normal Build or Refresh
-composition.
+source, Prepared Work, analysis, Meeting Pack, Review, and revision owners. It
+must prove the Founder-visible presentation of the already accepted isolated
+path without making another provider request. Do not build another adapter or
+restore deterministic synthesis as normal Build or Refresh composition.
 
 Prohibited next work: a new Understanding Engine; digest/title/filename/source-
 order or known-corpus profiles; operator-reconstructed model output; another

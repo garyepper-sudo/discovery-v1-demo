@@ -65,21 +65,34 @@ consequential promotion, and acceptance of uncertainty.
 | Authorized exact source selection | INTEGRATED and VALIDATED | Current Prepared Work material-lineage selection and access-denial validators |
 | Full protected body loading | INTEGRATED and VALIDATED | Real protected reads through `SourceScopedExecutiveAnalysisOwner` with injected transport |
 | Organizational-question propagation to request construction | INTEGRATED and VALIDATED | Stable request construction and executable validation |
-| Replaceable frontier transport seam | INTEGRATED and VALIDATED offline; not end-to-end provider-proven | Structural, mocked, and offline executable transport validation only |
-| Provider-safe source projection | INTEGRATED and VALIDATED offline | Server-resolved question, authorized bodies, request-local generic aliases, and offline validation; no real provider proof |
-| Actual Responses-envelope extraction | INTEGRATED and VALIDATED offline | Strict supported-envelope extraction and offline validation; no real provider response has survived it |
-| Passage-exact citation closure | INTEGRATED and VALIDATED offline | Bounded source-lineage rehydration and offline validation; no provider-generated durable pack |
-| Analysis-to-Pack composition | INTEGRATED and fixture-VALIDATED | Existing composition accepts validated analysis; fixture-injected or preconstructed analysis only, provider requests `0` |
+| Replaceable frontier transport seam | INTEGRATED and VALIDATED in isolated state | One sealed real provider response passed the current adapter; Founder use remains unproven |
+| Provider-safe source projection | INTEGRATED and VALIDATED in isolated state | The real isolated request used the bounded question and five authorized bodies without internal metadata |
+| Actual Responses-envelope extraction | INTEGRATED and VALIDATED in isolated state | One sealed real Responses envelope passed strict extraction and schema validation |
+| Passage-exact citation closure | INTEGRATED and VALIDATED against a real response | Multi-passage source-lineage closure passed before durable publication |
+| Analysis-to-Pack composition | INTEGRATED and VALIDATED in isolated state | The accepted real candidate produced durable isolated Meeting Pack revision 3 |
 | Pack publication, immutable revision, replay, and concurrency | INTEGRATED and VALIDATED | Executable owner-path and persistence validation |
-| Founder Build and Refresh | INTEGRATED with configured model-agnostic source-scoped transport; not FOUNDER-PROVEN | Offline adapter validation only; a real provider response and durable provider-generated pack remain unproven |
+| Founder Build and Refresh | INTEGRATED with configured model-agnostic source-scoped transport; not FOUNDER-PROVEN | Real isolated response, revision 3, exact replay, cold reconstruction, and private-component rendering are validated |
 | Founder-visible provider-generated Meeting Pack | DESIGNED only | Never demonstrated |
 | Reviewed Carry-Forward | INTEGRATED and VALIDATED | Structural and executable owner-path proof; human disposition remains authoritative |
 | Two-occurrence continuity | INTEGRATED and fixture-VALIDATED | Not provider-backed end to end |
 
 The current Product does not demonstrate live content-grounded Founder analysis
-through the replaceable model seam. A founder-visible deterministic Meeting
-Pack must not be described as provider-backed or as genuine Product
-understanding.
+through the replaceable model seam. Isolated proof has validated one real
+response, durable revision 3, exact replay, cold reconstruction, and rendering
+through the private Meeting Pack component; Founder-visible use remains
+unproven. A Founder Meeting Pack must not be described as provider-backed or
+as genuine Product understanding.
+
+## Isolated provider proof status — 2026-09-11
+
+The model-agnostic transport, sealed real response, multi-passage citation
+closure, durable isolated Meeting Pack revision 3, exact publication replay,
+fresh-process reconstruction, and fresh-process private component rendering
+are **VALIDATED in isolated state**. The render preserved all material agenda
+and private talking-point entries; private-only content did not enter the
+shareable agenda projection. This does not establish a Founder-visible result.
+The next milestone is **Founder-Visible Content-Grounded Meeting Pack
+Verification V1**.
 
 ## Historical transport and deterministic composition
 
