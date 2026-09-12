@@ -1,5 +1,38 @@
 # Leadership Conversation Implementation-Planning Handoff 001
 
+## Current controlling handoff — 2026-09-11
+
+This section supersedes the historical continuation instructions below.
+
+- Canonical baseline at handoff creation:
+  `a63db5e1a0680602b159593c232dc24b4dc62595`.
+- Canonical architecture: intact.
+- Current composition: drifted to deterministic Founder synthesis.
+- Research: Gate 1 and combined Gate 2 provide bounded synthetic evidence.
+- Live Product: no provider-generated content-grounded Meeting Pack has been
+  demonstrated.
+- Immediate implementation milestone: **Model-Agnostic Source-Scoped Transport
+  Adapter V1** under `GAP-D-007` and `DEC-PROD-070`.
+
+Read `CANONICAL_CAPABILITY_STATUS.md` before beginning. Reconcile the actual
+clean canonical HEAD and update this commit reference in the closure if main
+has advanced.
+
+The adapter must reuse current authorization, source, Prepared Work, analysis,
+Meeting Pack, Review, and revision owners. It is capped at four production and
+two validation paths, zero migrations, and zero new owners. One controlled
+real response must survive transport, schema and passage citation validation,
+durable isolated pack publication, and cold reconstruction before Founder
+interaction.
+
+Prohibited next work: a new Understanding Engine; digest/title/filename/source-
+order or known-corpus profiles; operator-reconstructed model output; another
+Gate 3 run; Gate 4; compounding before real reviewed cycles; and external
+design-partner rollout.
+
+The remaining content below is retained as historical planning context and is
+not a current work order.
+
 **Current status:** Chief V1 Activation and First Prepare Phase 1 is complete at
 canonical commit `6ca1ec1f4420f1852b21c334adb177ff32ade9f3`.
 

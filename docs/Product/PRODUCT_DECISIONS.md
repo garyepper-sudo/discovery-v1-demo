@@ -1479,11 +1479,45 @@ The result is user-scoped, AI-generated, noncanonical, unreviewed, non-writing, 
 
 The source scope is exactly the current Prepared Work material lineage; complete organization-wide source coverage is not claimed. The real provider has not been executed. Invalid selected-source states are qualified at the production owner boundary but are not yet all proven through persisted end-to-end Product composition. This residual risk blocks unsupervised external launch, a second analysis principal, cross-user analysis sharing, and production-readiness claims. It does not block controlled local founder inspection, one later synthetic provider smoke test, human Review implementation, authentic carry-forward development, or a controlled two-cycle founder walkthrough.
 
+Current qualification is maintained in
+`CANONICAL_CAPABILITY_STATUS.md`. Founder Build and Refresh are visible and
+integrated, but currently select deterministic development synthesis. No real
+provider candidate has survived the current transport and citation contract or
+reached a durable founder-visible Meeting Pack.
+
 ## DEC-PROD-059 — Provisional Alpha executive-synthesis architecture
 
 **Status:** Accepted provisionally for Alpha.
 
 Chief V1 uses current-access-safe governed raw sources → replaceable frontier synthesis → exact citation closure and mechanical checks where represented → user-scoped noncanonical working analysis → mandatory human Review. Persisted research was mixed: reviewed structured context won the Sales comparison, while raw frontier won the Scientific comparison and remained a strong Sales baseline. Reviewed oracle context is not a capability current Discovery can generate automatically; it is deferred, not discarded. Current handcrafted synthesis is demoted from primary user-facing synthesis. No longitudinal-compounding claim is made.
+
+This describes the accepted architecture, not current end-to-end Product proof.
+Current canonical citations are source-level, not passage-exact, and the
+Founder composition still selects deterministic development scaffolding.
+
+## DEC-PROD-070 — Capability status and model-boundary restoration discipline
+
+**Status:** Accepted as Product and development governance.
+
+Discovery uses the status vocabulary and proof rules in
+`CANONICAL_CAPABILITY_STATUS.md`. The source, analysis, Meeting Pack, Review,
+and revision owners remain authoritative. No new Understanding Engine or
+parallel persistence path is required.
+
+The immediate Product milestone is one model-agnostic, provider-safe adapter
+at the existing source-scoped transport boundary. It may project already-
+authorized complete bodies under generic line-numbered aliases, send the
+server-resolved organizational question, strictly extract the actual Responses
+envelope, rehydrate passage ranges to internal lineage, and return the existing
+validated candidate contract. A model proposes working synthesis only;
+Discovery retains access, identity, provenance, citation, persistence, replay,
+revision, routing, and promotion authority, and human Review controls
+consequential disposition.
+
+Known-corpus recognition, filename/title/source-order selection, semantic use
+of digests, operator-reconstructed output, and unsealed historical model output
+are prohibited. A persisted pack or accepted human disposition does not prove
+empirical truth or content grounding.
 
 ## DEC-PROD-061 — Chief Meeting Pack V1
 

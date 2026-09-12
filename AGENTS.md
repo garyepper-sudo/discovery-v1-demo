@@ -21,6 +21,7 @@ Before any product implementation, read:
 3. `docs/Product/PRODUCT_ROADMAP.md`
 4. `docs/Product/PRODUCT_DECISIONS.md`
 5. `docs/Product/PRODUCT_GOVERNANCE.md`
+6. `docs/Product/CANONICAL_CAPABILITY_STATUS.md`
 
 Every product implementation must identify the registered Gap ID and roadmap
 phase it addresses, declare whether architecture changes, and reuse existing
@@ -46,6 +47,30 @@ Mandatory product boundaries:
 
 Run `npm run validate:product-governance` for every product architecture or
 contract change.
+
+## Milestone and capability reporting discipline
+
+- Reconcile the repository and controlling documents before every milestone.
+- Each task answers one bounded question or delivers one bounded capability.
+- Normally use one writer and one independent reviewer.
+- Allow one bounded correction pass; after that, simplify or stop.
+- Uncommitted work is never Product capability, and structural validation is
+  not integration.
+- Research demonstration is not live Product proof. Capability reports use the
+  vocabulary in `CANONICAL_CAPABILITY_STATUS.md`.
+- Every closure records either `documentation updated` or `no documentation
+  change required`, with the reason.
+- Changes to Product decisions, owner boundaries, roadmap, capability claims,
+  gaps, operating procedures, or known limitations update controlling
+  documentation in the same closure.
+- Chat coordinates work; repository canon is durable truth.
+- Reconcile current owners and preserved historical candidates before proposing
+  new synthesis architecture.
+- A provider or browser detour may not displace the active founder-visible
+  Product milestone. Every one or two implementation tasks must deliver visible
+  founder value.
+- Before describing an earlier candidate as available, mechanically verify its
+  path, bytes, branch, and integration state.
 
 ---
 

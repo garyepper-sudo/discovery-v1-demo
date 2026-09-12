@@ -1,0 +1,180 @@
+# Discovery Canonical Capability Status
+
+This document is the controlling capability-status ledger for Product planning.
+It records what the current repository supports, the proof actually obtained,
+and the distinction between Product capability and research evidence. When a
+claim conflicts with an uncommitted worktree, experiment report, or chat
+summary, current canonical code and this ledger control.
+
+## Status vocabulary
+
+- **DESIGNED** — a contract or architecture decision exists.
+- **IMPLEMENTED** — code exists in a named branch, worktree, or canonical path.
+- **VALIDATED** — executable or structural validation passed.
+- **INTEGRATED** — the capability is present in canonical `main`.
+- **FOUNDER-PROVEN** — the real Founder workflow passed end to end.
+- **RESEARCH-DEMONSTRATED** — a controlled research benchmark passed.
+- **CONTENT-GROUNDED** — substantive output was shown to follow source-body
+  evidence.
+- **BOUNDED UNDERSTANDING DEMONSTRATED** — independent grounding, temporal,
+  contradiction, mechanism, information-value, permission, and revision gates
+  passed for a stated scope.
+- **LONGITUDINAL LEARNING DEMONSTRATED** — authentic reviewed history and
+  outcomes measurably improve later judgment.
+
+These statuses are cumulative only when the evidence supports each one.
+In particular:
+
+- Uncommitted work is never described as integrated Product capability.
+- Structural validation is never described as founder-visible proof.
+- Research-demonstrated cognition is never described as live Product cognition.
+- Architecture capable of supporting understanding is not proof that the
+  Product currently demonstrates understanding.
+- A persisted Meeting Pack is not content-grounded merely because its source
+  lineage is valid.
+- Human acceptance establishes organizational disposition or authority, not
+  empirical truth.
+
+## Canonical responsibility boundary
+
+The intended source-to-pack sequence is:
+
+```text
+Prepared Work exact lineage
+→ authorization before protected body reads
+→ complete governed source bodies
+→ server-resolved organizational question
+→ replaceable frontier synthesis
+→ runtime candidate and citation validation
+→ Meeting Pack composition and immutable revision
+→ human review before promotion or carry-forward
+```
+
+Discovery owns authentication and current access, source selection, protected
+source-body loading, identities and versions, question scope, provenance and
+chronology, citations, replay and revisions, persistence, routing, and
+promotion authority. A replaceable model may propose synthesis,
+prioritization, competing explanations, information needs, and executive
+language. The human owns correction, usefulness judgment, disposition,
+consequential promotion, and acceptance of uncertainty.
+
+## Current Product capability ledger
+
+| Capability | Current status | Evidence ceiling |
+| --- | --- | --- |
+| Authorized exact source selection | INTEGRATED and VALIDATED | Current Prepared Work material-lineage selection and access-denial validators |
+| Full protected body loading | INTEGRATED and VALIDATED | Real protected reads through `SourceScopedExecutiveAnalysisOwner` with injected transport |
+| Organizational-question propagation to request construction | INTEGRATED and VALIDATED | Stable request construction and executable validation |
+| Replaceable frontier transport seam | INTEGRATED, not end-to-end provider-proven | Structural and mocked transport validation only |
+| Provider-safe source projection | IMPLEMENTED only in a preserved uncommitted candidate | Not canonical; bounded adaptation evidence |
+| Actual Responses-envelope extraction | IMPLEMENTED only in a preserved uncommitted candidate | Not canonical or provider-proven |
+| Passage-exact citation closure | IMPLEMENTED only in a preserved uncommitted candidate | Not canonical; current citations remain source-level |
+| Analysis-to-Pack composition | INTEGRATED and fixture-VALIDATED | Fixture-injected or preconstructed analysis; provider requests `0` |
+| Pack publication, immutable revision, replay, and concurrency | INTEGRATED and VALIDATED | Executable owner-path and persistence validation |
+| Founder Build and Refresh | INTEGRATED and Founder-visible as deterministic UI workflows; not FOUNDER-PROVEN | They currently select deterministic development synthesis, not the real model seam |
+| Founder-visible provider-generated Meeting Pack | DESIGNED only | Never demonstrated |
+| Reviewed Carry-Forward | INTEGRATED and VALIDATED | Structural and executable owner-path proof; human disposition remains authoritative |
+| Two-occurrence continuity | INTEGRATED and fixture-VALIDATED | Not provider-backed end to end |
+
+The current Product does not demonstrate live content-grounded Founder analysis
+through the replaceable model seam. A founder-visible deterministic Meeting
+Pack must not be described as provider-backed or as genuine Product
+understanding.
+
+## Historical transport and deterministic composition
+
+The reusable canonical source-scoped seam was introduced through:
+
+- `42a314c599e17ca43554afb2791977215999e122` — source-scoped owner,
+  request, candidate, transport, and validator integration;
+- `d132e7476223d800d8687d8dd5c0341834fbe731` — configured frontier
+  transport wired into Chief Prepare;
+- `9d98c205f15e2cda2c169e837a7f951f4bb4e1dc` — bounded lifecycle and
+  response-memory behavior;
+- `a7357167151cfd416ce372e918ef1f554aef29f4` — bounded timeout contract.
+
+Its proof ceiling is: source inspection yes; structural validation yes;
+isolated executable validation yes; real protected-body loading with injected
+transport yes; actual provider response surviving current validation no; real
+model result reaching a Meeting Pack no; founder-visible provider-generated
+Meeting Pack no.
+
+The deterministic path became controlling through this sequence:
+
+1. `114d9fc` introduced deterministic development analysis and the Reviewed
+   Carry-Forward development transport.
+2. `bb653459` routed visible Generate through deterministic development
+   analysis.
+3. `5d1aa803` introduced Meeting Pack Build through `meetingPackContext`, which
+   also selected deterministic development analysis.
+4. Later Refresh work reused `meetingPackContext`.
+5. `a480117` added explicit Asterline recognition and fixed deterministic
+   claims.
+
+This was development scaffolding, not a canonical decision to replace
+frontier synthesis. It became an effectively permanent Founder composition
+dependency. It must not be extended through filenames, source titles, source
+order, digests, or known-corpus profiles.
+
+## Candidate and research dispositions
+
+- **REJECTED_FOR_PRODUCT_LANE — EXACT_CORPUS_FIXTURE_RECOGNITION.** Preserve
+  only as fixture evidence; it may not select Product conclusions.
+- **PRESERVE FOR BOUNDED ADAPTATION REVIEW.** The uncommitted
+  `discovery-source-scoped-response-envelope-compatibility-v1-001` worktree
+  contains useful generic question-scoped projection, provider-safe aliases,
+  strict Responses extraction, passage line-range rehydration, and
+  network-body privacy validation. It is not canonical and has not survived a
+  real provider result.
+- **DO NOT RECONSTRUCT OR TREAT AS PRODUCT EVIDENCE.** No complete matching,
+  sealed Astra Product artifact is recoverable.
+- **CANONICAL DEVELOPMENT SCAFFOLDING — MUST NOT BE TREATED AS GENUINE PRODUCT
+  UNDERSTANDING.** This applies to the current deterministic Founder synthesis.
+- **RESEARCH-DEMONSTRATED CONTROLLED CAPABILITY EVIDENCE.** Gate 1 and the
+  combined Gate 2 demonstrate bounded synthetic capability; they are not
+  founder-visible Product proof.
+- **UNPROVEN.** Invalid or incomplete Gate 3 runs are research-integrity
+  history, not cognitive results.
+
+Controlled research has demonstrated content grounding, temporal coherence,
+contradiction handling, mechanism discrimination, information value,
+institutional separation, institutional adaptation, and bounded permission
+noninterference under synthetic conditions. It has not demonstrated general
+organizational understanding, real-world generalization, outcome-linked
+learning, authentic-history compounding, or longitudinal organizational
+learning.
+
+## Immediate Product milestone
+
+The next and only immediate implementation milestone is
+**Model-Agnostic Source-Scoped Transport Adapter V1**. It adapts the existing
+source-scoped seam and bounded useful portions of the preserved response-
+envelope candidate while retaining the existing source, analysis, Meeting
+Pack, Review, and revision owners.
+
+Maximum implementation inventory:
+
+- production paths: 4;
+- validation paths: 2;
+- migration paths: 0;
+- new owners: 0.
+
+The controlled acceptance must prove one real model response through:
+
+```text
+provider-safe request
+→ actual Responses-envelope extraction
+→ schema validation
+→ passage-exact citation closure
+→ Meeting Pack composition
+→ durable publication
+→ founder-visible rendering
+→ cold reconstruction
+```
+
+No Founder interaction occurs until the result has already survived transport,
+validation, composition, and durable publication in isolated state. Actual
+content-grounded analysis and the first real two-cycle reviewed loop precede
+compounding research. External multi-user rollout, broad connector ingestion,
+and generalized access administration remain later. No new Understanding
+Engine is required.

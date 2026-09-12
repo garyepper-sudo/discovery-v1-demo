@@ -1,8 +1,48 @@
 # Discovery Product Roadmap
 
-## Immediate baseline milestone — Compounding and Capture-Quality Instrumentation V1
+## Immediate milestone — Model-Agnostic Source-Scoped Transport Adapter V1
 
-Chief Meeting Pack V1 is complete. The noncanonical, read-only longitudinal instrumentation and deterministic synthetic structural dry run under `GAP-D-005` are complete. V1.1 stopped after one provider-error canary rejected `temperature` before schema evaluation; no pilot output exists, 191 packets were not transmitted, and the exploratory result is **NOT EXECUTED**. Confirmatory model-mediated compounding, authentic customer compounding, and organizational outcomes are **NOT TESTED**. Any continuation requires a separately authorized V1.2 with a new parameter contract and execution identities. Multi-Meeting Shell and Meeting Home V1 follow the research gate. Synthetic results may not be marketed as customer evidence.
+Canonical architecture is intact, but Founder Build and Refresh currently
+select deterministic development synthesis. The next and only immediate
+implementation milestone is the bounded model-agnostic source-scoped transport
+adapter defined by `DEC-PROD-070` and
+`CANONICAL_CAPABILITY_STATUS.md`.
+
+It reuses the current Prepared Work lineage, current-access checks, protected
+body loader, source-scoped analysis owner, Meeting Pack composer, publication
+and immutable-revision owner, and human Review path. It adds no owner or
+migration. The change is capped at four production and two validation paths.
+
+Before Founder interaction, one controlled real response must survive the
+provider-safe request, actual Responses-envelope extraction, schema and
+passage-exact citation validation, Meeting Pack composition, durable isolated
+publication, and cold reconstruction. Founder-visible rendering follows that
+isolated proof.
+
+After one content-grounded Meeting Pack and the first real two-cycle reviewed
+loop, bounded longitudinal evaluation may hold model and current evidence
+constant while comparing current evidence only, authentic owner-issued reviewed
+history, irrelevant token-matched history, stale or superseded history, and a
+compact current-state checkpoint where useful. No automatic promotion occurs.
+
+External multi-user rollout, broad connector ingestion, generalized access
+administration, Gate 4, and broader compounding work remain later. Broad rollout
+also remains blocked until the applicable scope-inspector and permission gates
+pass. Invalid or incomplete Gate 3 runs are historical integrity records only
+and must not be used as capability evidence.
+
+## Historical baseline — Compounding and Capture-Quality Instrumentation V1
+
+Chief Meeting Pack V1 is complete as a deterministic Product artifact workflow,
+not as provider-backed understanding. The noncanonical, read-only longitudinal
+instrumentation and deterministic synthetic structural dry run under
+`GAP-D-005` are complete. V1.1 stopped after one provider-error canary rejected
+`temperature` before schema evaluation; no pilot output exists, 191 packets
+were not transmitted, and the exploratory result is **NOT EXECUTED**.
+Confirmatory model-mediated compounding, authentic customer compounding, and
+organizational outcomes are **NOT TESTED**. This historical lane does not
+precede the immediate adapter and real reviewed-cycle milestones above.
+Synthetic results may not be marketed as customer evidence.
 
 Meeting Pack-first UX V1 makes that existing pack the primary preparation surface: concise context and optional private input lead directly to Build, while analysis remains inspectable supporting work. The visible experience is `Prepare → Meet → Confirm outcomes → Continue`; the governed internal lifecycle is unchanged. Multi-Meeting Shell and Meeting Home remain next.
 
@@ -1400,4 +1440,9 @@ Deferred gate: **TEAM-SCOPED-ANALYSIS-NONINTERFERENCE-001.** Required before ena
 
 Deferred gate: **CHIEF-V1-PERSISTED-INVALID-STATE-QUALIFICATION-001 — DEFERRED — REQUIRED BEFORE UNSUPERVISED EXTERNAL LAUNCH OR SECOND-PRINCIPAL ENABLEMENT.** It must prove persisted owner-backed stale lineage, digest and version mismatch, revocation, malformed metadata, ambiguous access, foreign selected-source injection, multi-role source closure, and shared-analysis reuse. Current development-Alpha evidence qualifies those invalid states at the production owner boundary, not as a complete persisted end-to-end matrix. This gate does not block local founder use, a separately authorized one-call synthetic smoke test, human Review development, authentic one-principal carry-forward, or the controlled two-cycle walkthrough.
 
-**Active Control Tower task — Live frontier Prepare smoke test.** The controlled development-Alpha analysis slice is canonically integrated. The real provider has not yet executed. The next separately authorized task is exactly one synthetic frontier request through the actual Prepare path, with no retry, followed by founder inspection. After that, implement human Review and authentic owner-issued carry-forward. The persisted invalid-state matrix remains the deferred pre-launch gate above.
+**Superseded Control Tower task — Live frontier Prepare smoke test.** The
+source-scoped seam is integrated, but the Founder path now selects deterministic
+development synthesis and no provider-generated Meeting Pack has been proven.
+The controlling next step is Model-Agnostic Source-Scoped Transport Adapter V1,
+with isolated provider-to-durable-pack proof before Founder interaction. The
+persisted invalid-state matrix remains a pre-launch gate.
