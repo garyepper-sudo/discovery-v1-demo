@@ -21,6 +21,7 @@ try {
   assert.match(page, /server\.refreshMeetingPack\.available/);
   assert.doesNotMatch(page, /analyzeSourceScopedForDevelopment/);
   assert.match(startup, /founderRoot = process\.env\.DISCOVERY_FOUNDER_LOCAL_ALPHA_RUNTIME_ROOT/);
+  assert.match(startup, /process\.loadEnvFile\(path\.join\(process\.cwd\(\), "\.env\.local"\)\)/);
   assert.match(startup, /!founderRoot \|\| !path\.isAbsolute\(founderRoot\)/);
   assert.match(startup, /state\.isSymbolicLink\(\) \|\| \(state\.mode & 0o777\) !== 0o700/);
   assert.match(startup, /ensureDirectory\(lifecycleRoot\)/);

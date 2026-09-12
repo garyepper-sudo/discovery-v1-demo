@@ -7,6 +7,7 @@ import { createGoogleDriveOAuthLogSanitizer, redactGoogleDriveOAuthLogText } fro
 
 async function main() {
 if (process.env.DISCOVERY_FOUNDER_LOCAL_ALPHA_ENABLED === "true") {
+  if (!process.env.DISCOVERY_FOUNDER_LOCAL_ALPHA_RUNTIME_ROOT) process.loadEnvFile(path.join(process.cwd(), ".env.local"));
   const founderRoot = process.env.DISCOVERY_FOUNDER_LOCAL_ALPHA_RUNTIME_ROOT;
   if (!founderRoot || !path.isAbsolute(founderRoot)) throw new Error("Founder source-scoped analysis lifecycle root is unavailable.");
   const lifecycleRoot = path.join(founderRoot, "source-scoped-lifecycle");
