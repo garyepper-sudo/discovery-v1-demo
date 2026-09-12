@@ -1481,9 +1481,10 @@ The source scope is exactly the current Prepared Work material lineage; complete
 
 Current qualification is maintained in
 `CANONICAL_CAPABILITY_STATUS.md`. Founder Build and Refresh are visible and
-integrated, but currently select deterministic development synthesis. No real
-provider candidate has survived the current transport and citation contract or
-reached a durable founder-visible Meeting Pack.
+integrated through the configured model-agnostic source-scoped transport;
+deterministic synthesis requires explicit test/development transport injection.
+No real provider candidate has survived the current transport and citation
+contract or reached a durable founder-visible Meeting Pack.
 
 ## DEC-PROD-059 — Provisional Alpha executive-synthesis architecture
 
@@ -1492,8 +1493,10 @@ reached a durable founder-visible Meeting Pack.
 Chief V1 uses current-access-safe governed raw sources → replaceable frontier synthesis → exact citation closure and mechanical checks where represented → user-scoped noncanonical working analysis → mandatory human Review. Persisted research was mixed: reviewed structured context won the Sales comparison, while raw frontier won the Scientific comparison and remained a strong Sales baseline. Reviewed oracle context is not a capability current Discovery can generate automatically; it is deferred, not discarded. Current handcrafted synthesis is demoted from primary user-facing synthesis. No longitudinal-compounding claim is made.
 
 This describes the accepted architecture, not current end-to-end Product proof.
-Current canonical citations are source-level, not passage-exact, and the
-Founder composition still selects deterministic development scaffolding.
+The integrated adapter supports bounded passage-exact citation closure through
+offline validation, but no real provider response has survived that contract or
+become a durable Meeting Pack. Deterministic development scaffolding is not the
+normal Founder Build or Refresh composition.
 
 ## DEC-PROD-070 — Capability status and model-boundary restoration discipline
 

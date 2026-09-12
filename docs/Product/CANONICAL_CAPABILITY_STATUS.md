@@ -65,13 +65,13 @@ consequential promotion, and acceptance of uncertainty.
 | Authorized exact source selection | INTEGRATED and VALIDATED | Current Prepared Work material-lineage selection and access-denial validators |
 | Full protected body loading | INTEGRATED and VALIDATED | Real protected reads through `SourceScopedExecutiveAnalysisOwner` with injected transport |
 | Organizational-question propagation to request construction | INTEGRATED and VALIDATED | Stable request construction and executable validation |
-| Replaceable frontier transport seam | INTEGRATED, not end-to-end provider-proven | Structural and mocked transport validation only |
-| Provider-safe source projection | IMPLEMENTED only in a preserved uncommitted candidate | Not canonical; bounded adaptation evidence |
-| Actual Responses-envelope extraction | IMPLEMENTED only in a preserved uncommitted candidate | Not canonical or provider-proven |
-| Passage-exact citation closure | IMPLEMENTED only in a preserved uncommitted candidate | Not canonical; current citations remain source-level |
-| Analysis-to-Pack composition | INTEGRATED and fixture-VALIDATED | Fixture-injected or preconstructed analysis; provider requests `0` |
+| Replaceable frontier transport seam | INTEGRATED and VALIDATED offline; not end-to-end provider-proven | Structural, mocked, and offline executable transport validation only |
+| Provider-safe source projection | INTEGRATED and VALIDATED offline | Server-resolved question, authorized bodies, request-local generic aliases, and offline validation; no real provider proof |
+| Actual Responses-envelope extraction | INTEGRATED and VALIDATED offline | Strict supported-envelope extraction and offline validation; no real provider response has survived it |
+| Passage-exact citation closure | INTEGRATED and VALIDATED offline | Bounded source-lineage rehydration and offline validation; no provider-generated durable pack |
+| Analysis-to-Pack composition | INTEGRATED and fixture-VALIDATED | Existing composition accepts validated analysis; fixture-injected or preconstructed analysis only, provider requests `0` |
 | Pack publication, immutable revision, replay, and concurrency | INTEGRATED and VALIDATED | Executable owner-path and persistence validation |
-| Founder Build and Refresh | INTEGRATED and Founder-visible as deterministic UI workflows; not FOUNDER-PROVEN | They currently select deterministic development synthesis, not the real model seam |
+| Founder Build and Refresh | INTEGRATED with configured model-agnostic source-scoped transport; not FOUNDER-PROVEN | Offline adapter validation only; a real provider response and durable provider-generated pack remain unproven |
 | Founder-visible provider-generated Meeting Pack | DESIGNED only | Never demonstrated |
 | Reviewed Carry-Forward | INTEGRATED and VALIDATED | Structural and executable owner-path proof; human disposition remains authoritative |
 | Two-occurrence continuity | INTEGRATED and fixture-VALIDATED | Not provider-backed end to end |
@@ -120,12 +120,13 @@ order, digests, or known-corpus profiles.
 
 - **REJECTED_FOR_PRODUCT_LANE — EXACT_CORPUS_FIXTURE_RECOGNITION.** Preserve
   only as fixture evidence; it may not select Product conclusions.
-- **PRESERVE FOR BOUNDED ADAPTATION REVIEW.** The uncommitted
-  `discovery-source-scoped-response-envelope-compatibility-v1-001` worktree
-  contains useful generic question-scoped projection, provider-safe aliases,
-  strict Responses extraction, passage line-range rehydration, and
-  network-body privacy validation. It is not canonical and has not survived a
-  real provider result.
+- **HISTORICAL BOUNDED ADAPTATION REVIEW.** The former
+  `discovery-source-scoped-response-envelope-compatibility-v1-001` candidate
+  informed the canonical adapter's generic question-scoped projection,
+  provider-safe aliases, strict Responses extraction, passage line-range
+  rehydration, and network-body privacy validation. Its historical result was
+  not real-provider proof; the integrated adapter has likewise not yet
+  survived a real provider result.
 - **DO NOT RECONSTRUCT OR TREAT AS PRODUCT EVIDENCE.** No complete matching,
   sealed Astra Product artifact is recoverable.
 - **CANONICAL DEVELOPMENT SCAFFOLDING — MUST NOT BE TREATED AS GENUINE PRODUCT
