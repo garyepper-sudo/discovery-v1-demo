@@ -1,6 +1,6 @@
 # Discovery Product Roadmap
 
-## Immediate milestone — Founder-Visible Content-Grounded Meeting Pack Verification V1
+## Completed milestone — Founder-Visible Content-Grounded Meeting Pack Verification V1
 
 Canonical architecture is intact. The model-agnostic source-scoped transport
 adapter is integrated and validated offline: normal Founder Build and Refresh
@@ -15,11 +15,21 @@ Responses-envelope, schema/request/packet, multi-passage citation, independent
 quality, durable revision 3, exact replay, cold reconstruction, and
 private-component rendering checks.
 
-The remaining proof is Founder-visible rendering and use of the accepted path.
-No second provider request is required or authorized for this milestone.
+Founder-Visible Content-Grounded Meeting Pack Verification V1 is complete for
+the bounded Asterline question and five-source scope. One authorized Founder
+Refresh made one provider request with zero retries, produced durable Meeting
+Pack revision 3, and rendered a source-grounded agenda, private talking points,
+and citation projections. Revision 3 remained current and intact through a
+clean server restart and Founder-visible reconstruction. No second provider
+request was made or is authorized for this completed milestone.
 
-After one content-grounded Meeting Pack and the first real two-cycle reviewed
-loop, bounded longitudinal evaluation may hold model and current evidence
+The next Product milestones are ordered: (1) Founder Reviewed Carry-Forward
+from Content-Grounded Analysis V1; (2) Close / What Changed / Prepare Again /
+real Occurrence 2; (3) Governed Execution Context and Scope Inspector V1; (4)
+Compounding Understanding Demonstration V1; and (5) external design-partner
+shadow use. General organizational understanding and longitudinal learning are
+not demonstrated. After the first real two-cycle reviewed loop, bounded
+longitudinal evaluation may hold model and current evidence
 constant while comparing current evidence only, authentic owner-issued reviewed
 history, irrelevant token-matched history, stale or superseded history, and a
 compact current-state checkpoint where useful. No automatic promotion occurs.

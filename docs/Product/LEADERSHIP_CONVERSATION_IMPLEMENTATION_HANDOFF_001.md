@@ -1,6 +1,6 @@
 # Leadership Conversation Implementation-Planning Handoff 001
 
-## Current controlling handoff — 2026-09-11
+## Current controlling handoff — 2026-09-12
 
 This section supersedes the historical continuation instructions below.
 
@@ -17,27 +17,28 @@ This section supersedes the historical continuation instructions below.
   lifecycle into real Founder Build and Refresh. Deterministic synthesis remains
   available only by explicit test/development transport injection.
 - Research: Gate 1 and combined Gate 2 provide bounded synthetic evidence.
-- Live Product: no Founder-visible provider-generated content-grounded Meeting
-  Pack has been demonstrated.
-- Adapter status: integrated and validated in isolated state against one sealed
-  real response, durable revision 3, multi-passage citation closure, exact
-  replay, cold reconstruction, and private Meeting Pack component rendering.
-- The private render retained all material agenda and talking-point entries;
-  private-only content did not enter the shareable agenda projection.
-- Immediate proof milestone: **Founder-Visible Content-Grounded Meeting Pack
-  Verification V1** under `GAP-D-007` and `DEC-PROD-070`; a live
-  provider-generated Founder revision remains unproven until the authorized
-  Founder Refresh succeeds.
+- Live Product: **Founder-Visible Content-Grounded Meeting Pack Verification
+  V1 is FOUNDER-PROVEN for the bounded Asterline question and five-source
+  scope.** One authorized Refresh made one provider request with zero retries,
+  produced durable revision 3, and preserved its source-grounded agenda,
+  private talking points, and citation projections through a clean server
+  restart.
+- Adapter status: integrated, validated, and Founder-proven for that bounded
+  scope. No general organizational-understanding or longitudinal-learning
+  claim follows from this proof.
+- Immediate next Product milestone: **Founder Reviewed Carry-Forward from
+  Content-Grounded Analysis V1**, then Close / What Changed / Prepare Again /
+  real Occurrence 2, Governed Execution Context and Scope Inspector V1,
+  Compounding Understanding Demonstration V1, and external design-partner
+  shadow use.
 
 Read `CANONICAL_CAPABILITY_STATUS.md` before beginning. Reconcile the actual
 clean canonical HEAD and update this commit reference in the closure if main
 has advanced.
 
-The next proof must reuse the integrated adapter and current authorization,
-source, Prepared Work, analysis, Meeting Pack, Review, and revision owners. It
-must prove the Founder-visible presentation of the already accepted isolated
-path without making another provider request. Do not build another adapter or
-restore deterministic synthesis as normal Build or Refresh composition.
+The next milestone must reuse the integrated authorization, source, Prepared
+Work, Meeting Pack, Review, and revision owners. Do not build another adapter
+or restore deterministic synthesis as normal Build or Refresh composition.
 
 Prohibited next work: a new Understanding Engine; digest/title/filename/source-
 order or known-corpus profiles; operator-reconstructed model output; another

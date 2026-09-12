@@ -71,20 +71,18 @@ consequential promotion, and acceptance of uncertainty.
 | Passage-exact citation closure | INTEGRATED and VALIDATED against a real response | Multi-passage source-lineage closure passed before durable publication |
 | Analysis-to-Pack composition | INTEGRATED and VALIDATED in isolated state | The accepted real candidate produced durable isolated Meeting Pack revision 3 |
 | Pack publication, immutable revision, replay, and concurrency | INTEGRATED and VALIDATED | Executable owner-path and persistence validation |
-| Founder Build and Refresh | Live composition wiring integrated; not FOUNDER-PROVEN | The canonical model-agnostic transport and durable lifecycle are now injected into the real Founder composition; a Founder click has not yet produced a provider-generated revision |
-| Founder-visible provider-generated Meeting Pack | DESIGNED only | Never demonstrated |
+| Founder Build and Refresh | INTEGRATED, VALIDATED, and FOUNDER-PROVEN for the bounded Asterline five-source scope | One authorized Founder Refresh produced one provider-generated durable revision; no retry was used |
+| Founder-visible provider-generated Meeting Pack | FOUNDER-PROVEN for the bounded Asterline question and five-source scope | The Founder viewed revision 3 after production and after a clean server restart |
 | Reviewed Carry-Forward | INTEGRATED and VALIDATED | Structural and executable owner-path proof; human disposition remains authoritative |
 | Two-occurrence continuity | INTEGRATED and fixture-VALIDATED | Not provider-backed end to end |
 
-The current Product does not demonstrate live content-grounded Founder analysis
-through the replaceable model seam. Before the Live Founder Source-Scoped
-Runtime Wiring V1 correction, the real Founder composition omitted the
-canonical transport and lifecycle configuration despite the isolated proof.
-That bounded composition defect is now repaired; isolated proof has validated one real
-response, durable revision 3, exact replay, cold reconstruction, and rendering
-through the private Meeting Pack component; Founder-visible use remains
-unproven. A Founder Meeting Pack must not be described as provider-backed or
-as genuine Product understanding.
+The Product has demonstrated one live content-grounded Founder analysis through
+the replaceable model seam for the bounded Asterline question and five-source
+scope. The Founder-authorized Refresh produced one sealed provider response,
+durable revision 3, and a source-grounded agenda and private talking points;
+the Founder then verified the same revision after a clean server restart. This
+does not demonstrate general organizational understanding or longitudinal
+learning.
 
 ## Isolated provider proof status — 2026-09-11
 
@@ -93,10 +91,12 @@ closure, durable isolated Meeting Pack revision 3, exact publication replay,
 fresh-process reconstruction, and fresh-process private component rendering
 are **VALIDATED in isolated state**. The render preserved all material agenda
 and private talking-point entries; private-only content did not enter the
-shareable agenda projection. This does not establish a Founder-visible result.
-The next milestone remains **Founder-Visible Content-Grounded Meeting Pack
-Verification V1**. A live provider-generated Founder revision is not
-FOUNDER-PROVEN until the authorized Founder Refresh succeeds.
+shareable agenda projection. Founder-Visible Content-Grounded Meeting Pack
+Verification V1 subsequently completed: one authorized Founder Refresh
+produced revision 3 and the Founder verified its source-grounded agenda and
+private talking points both before and after clean server reconstruction. The
+next Product milestone is **Founder Reviewed Carry-Forward from
+Content-Grounded Analysis V1**.
 
 ## Historical transport and deterministic composition
 
@@ -166,8 +166,8 @@ learning.
 
 ## Current Product transport status
 
-**Model-Agnostic Source-Scoped Transport Adapter V1 is INTEGRATED and
-VALIDATED in isolated state, and is wired into the real Founder composition.** It projects only the server-resolved organizational
+**Model-Agnostic Source-Scoped Transport Adapter V1 is INTEGRATED, VALIDATED,
+and FOUNDER-PROVEN for the bounded Asterline five-source scope.** It projects only the server-resolved organizational
 question and authorized line-numbered source bodies through request-local
 generic aliases, strictly validates a supported Responses envelope, and
 rehydrates passage citations into existing source lineage before the existing
@@ -175,11 +175,11 @@ Meeting Pack composition. Existing packs remain readable when configured
 generation is unavailable.
 
 The adapter has one sealed real-provider response that survived validation and
-produced a durable isolated Meeting Pack. The real Founder composition was not
-wired to that transport and lifecycle until Live Founder Source-Scoped Runtime
-Wiring V1. A provider-generated Founder Meeting Pack and Founder-visible
-content-grounded understanding remain unproven until the authorized Founder
-Refresh succeeds.
+produced durable Founder Meeting Pack revision 3. The exact revision survived a
+clean server restart and was Founder-visible with its source-grounded agenda,
+private talking points, and citation projections intact. This proof is bounded
+to the Asterline question and five-source scope; general organizational
+understanding and longitudinal learning remain unproven.
 
 Maximum implementation inventory:
 
@@ -188,9 +188,11 @@ Maximum implementation inventory:
 - migration paths: 0;
 - new owners: 0.
 
-The next and only immediate implementation milestone is **Isolated
-Provider-to-Durable-Pack and Cold-Reconstruction Proof V1**. Its controlled
-acceptance must prove one real model response through:
+The next Product milestone is **Founder Reviewed Carry-Forward from
+Content-Grounded Analysis V1**, followed in order by: (1) Close / What Changed
+/ Prepare Again / real Occurrence 2; (2) Governed Execution Context and Scope
+Inspector V1; (3) Compounding Understanding Demonstration V1; and (4) external
+design-partner shadow use. The completed bounded proof established:
 
 ```text
 provider-safe request
