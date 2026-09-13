@@ -121,6 +121,27 @@ export type ChiefMeetingPackPublicationV1 = {
   /** Present on content-aware refresh publications. Historical publications
    * remain readable and derive this value from their protected body. */
   candidateSemanticDigest?: string;
+  /** A protected, noncanonical copy of the validated candidate which produced
+   * this revision.  Historical presentation-only revisions deliberately omit it. */
+  sourceScopedAnalysisBodyReference?: ProductArtifactBodyRefV1;
+  /** Server-derived, immutable provenance for a protected source-scoped candidate. */
+  sourceScopedAnalysisBinding?: {
+    contractVersion: "1";
+    candidateDigest: string;
+    questionDigest: string;
+    requestDigest: string;
+    sourcePacketDigest: string;
+    configurationDigest: string;
+    model: string;
+    preparedWorkPublicationDigest: string;
+    sourceLineageDigest: string;
+    sourceVersions: Array<{ sourceId: string; sourceVersion: string; bodyDigest: string }>;
+    citationSetDigest: string;
+    usageDigest: string;
+    lifecycleAttemptId: string;
+    lifecycleReceiptDigest: string;
+    resultDigest: string;
+  };
   sourceLineageDigest: string;
   protectedBody: ProductArtifactBodyRefV1;
   ownerStageReceiptDigest: string;

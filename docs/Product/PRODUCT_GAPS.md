@@ -255,6 +255,10 @@ The initial one-user Alpha does not authorize the deferred authoritative
 Decision, expected Outcome/signal, supersession, general historical-query, or
 cross-user learning expansions below.
 
+### GAP-ALPHA-DURABLE-CANDIDATE-001 cross-process candidate-body first publication
+
+**Status:** Deferred. Durable candidate preservation is integrated and validated only for Founder-only single-instance Alpha. Before multi-instance or broad external rollout, prove a first candidate-preserving publication across processes without orphan candidate or presentation bodies, partial bindings, missing-body revisions, or duplicate successors. Live candidate-preserving revision proof remains Founder-unproven. Meeting Pack-based Reviewed Carry-Forward remains separate and unimplemented.
+
 ## Architecture-compression deferrals
 
 ### GAP-ALPHA-RELEVANCE-001 narrow cross-meeting relevance

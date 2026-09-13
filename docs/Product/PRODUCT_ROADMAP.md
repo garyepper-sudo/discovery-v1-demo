@@ -1439,6 +1439,10 @@ Workflow persistence, fresh-process and concurrent collision proof, and safe
 projection non-disclosure. Architecture compression, generalized relationship
 primitives, authoritative Decision/expected-Outcome linkage, and ordinary UI
 remain sequenced after independent L1 review and closure.
+## Next — Founder Revision 4 Durable Analysis Verification V1
+
+Verify one Founder-only single-instance Alpha revision that preserves an exact server-minted source-scoped candidate through the existing Meeting Pack owner. This milestone follows the completed isolated durable-binding controls and must not claim cross-process first-publication safety, multi-instance atomicity, broad external rollout, or Meeting Pack-based Reviewed Carry-Forward.
+
 ## Active — Chief V1 Analysis Integration Phase 1
 
 One designated executive may manually generate source-scoped frontier working analysis in Prepare for controlled local/founder development. The exact source scope is the current Prepared Work material lineage; complete organization-wide source coverage is not claimed. The model is provisional and replaceable; the real provider has not yet executed. Output is noncanonical, unreviewed, session-only, and cannot write Product, Workflow, Runtime, Evidence, What Changed, or Prepare Again. Complete multi-role permission proof is deferred. Longitudinal compounding remains unproven.

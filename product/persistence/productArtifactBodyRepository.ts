@@ -2,7 +2,7 @@ import "server-only";
 
 import { randomUUID } from "node:crypto";
 import { constants } from "node:fs";
-import { chmod, link, lstat, mkdir, open, readFile, realpath, unlink } from "node:fs/promises";
+import { chmod, link, lstat, mkdir, open, readFile, readdir, realpath, unlink } from "node:fs/promises";
 import path from "node:path";
 import {
   createProductArtifactBodyRefV1,
@@ -20,7 +20,11 @@ export interface ProductArtifactBodyRepository {
   readonly backend: "filesystem";
   stage(input: ProductArtifactBodyStageRequestV1): Promise<ProductArtifactBodyStageReceiptV1>;
   readStagedExact(body: ProductArtifactBodyRefV1): Promise<Uint8Array>;
+  discardUnreferenced?(body: ProductArtifactBodyRefV1): Promise<void>;
+  withPublicationLock?<T>(organizationId:string,semanticOwner:string,operation:()=>Promise<T>):Promise<T>;
 }
+
+const publicationQueues=new Map<string,Promise<void>>();
 
 function safe(value: string): string {
   if (!SAFE.test(value)) throw new Error("Product artifact body storage identifier is invalid.");
@@ -117,6 +121,28 @@ export class FilesystemProductArtifactBodyRepository implements ProductArtifactB
     }
     return bytes;
   }
+  async discardUnreferenced(body: ProductArtifactBodyRefV1): Promise<void> {
+    validateProductArtifactBodyRefV1(body);
+    await this.prepare(body.organizationId, body.semanticOwner);
+    const refTarget=this.refTarget(body);
+    try {
+      await this.noLink(refTarget);
+      const recorded=JSON.parse(await readFile(refTarget,"utf8")) as ProductArtifactBodyRefV1;
+      if(recorded.refDigest!==body.refDigest) throw new Error("Product artifact body cleanup is unavailable.");
+      await unlink(refTarget);
+    } catch(error) {
+      if((error as NodeJS.ErrnoException).code!=="ENOENT") throw error;
+      return;
+    }
+    const refs=await readdir(this.refDirectory(body.organizationId,body.semanticOwner));
+    for(const ref of refs){
+      if(!ref.endsWith(".json")) continue;
+      const value=JSON.parse(await readFile(path.join(this.refDirectory(body.organizationId,body.semanticOwner),ref),"utf8")) as ProductArtifactBodyRefV1;
+      if(value.exactBodyDigest===body.exactBodyDigest) return;
+    }
+    try { await unlink(this.target(body)); } catch(error) { if((error as NodeJS.ErrnoException).code!=="ENOENT") throw error; }
+  }
+  async withPublicationLock<T>(organizationId:string,semanticOwner:string,operation:()=>Promise<T>):Promise<T>{const key=`${this.root}\0${safe(organizationId)}\0${safe(semanticOwner)}`,prior=publicationQueues.get(key)??Promise.resolve();let release!:()=>void;const current=new Promise<void>(resolve=>{release=resolve;}),tail=prior.then(()=>current);publicationQueues.set(key,tail);await prior;try{return await operation();}finally{release();if(publicationQueues.get(key)===tail)publicationQueues.delete(key);}}
 }
 
 export function createProductArtifactBodyRepository(input: { root: string }): ProductArtifactBodyRepository {

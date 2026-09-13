@@ -110,6 +110,10 @@ If the existing architecture cannot persist a required artifact without
 duplicate ownership, stop and produce a bounded architecture decision. Do not
 improvise a generic Runtime document store.
 
+## Durable Analysis Binding V1 closure
+
+Founder-only single-instance Alpha now has an integrated and validated durable Meeting Pack binding for a server-minted, exact source-scoped candidate. Structural-clone and serialized mint proofs are rejected without durable writes or disclosure; corrupt candidate bodies and request/packet bindings disclose neither candidate prose nor protected provenance; late persistence failure removes staged candidate and presentation bodies; historical revisions remain unchanged while the current revision receives the sole truthful candidate-preserving successor; and exact replay creates neither a revision 5 nor additional bodies. Presentation edits preserve the exact candidate reference and binding. Cross-process candidate-body first publication remains unproven and is required before multi-instance or broad external rollout. The next milestone is **Founder Revision 4 Durable Analysis Verification V1**. Meeting Pack-based Reviewed Carry-Forward remains unimplemented.
+
 ## Required first-slice behavior
 
 ```text

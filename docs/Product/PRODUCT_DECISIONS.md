@@ -1566,6 +1566,12 @@ The controlled Alpha exposes one reusable Ask / Add Context surface scoped to th
 
 Alignment is a read-only, deterministic projection of explicitly shared participant perspectives held by the existing Leadership Conversation Product Workflow owner. A perspective binds the exact selected meeting, Product Question, current working-analysis digest, authenticated actor, and typed stance. Silence, private activity, role, attendance, rationale similarity, and sentiment are not signals. Perspectives are attributed, noncanonical, meeting-scoped context; divergence is preserved rather than resolved. Durable conclusions continue through Capture and human Review. Ask consumption, organization-wide alignment, and generalized opinion modeling remain deferred.
 
+## DEC-PROD-071 — Durable validated source-scoped analysis binding in Meeting Packs
+
+**Status:** Accepted for Founder-only single-instance Alpha.
+
+For the Founder-only single-instance Alpha, a provider-backed Meeting Pack may preserve an exact validated source-scoped candidate only through a server-minted publication result issued after request, packet, Prepared Work, source-lineage, model, lifecycle, and passage-citation validation. `ChiefMeetingPackOwner` independently derives and verifies the durable binding, rejects structurally cloned and serialized publication proofs, and preserves that binding across presentation-only edits. Historical revisions remain immutable and are not backfilled. Cross-process candidate-body first-publication proof remains required before multi-instance or broad external rollout.
+
 ## DEC-PROD-069 — Preparation-stage governed context advances through immutable successors
 
 An authorized participant may add Question-bound governed sources to an existing preparation-stage meeting without creating another organization, Product Question, meeting series, or occurrence. Source identity and exact bytes remain owned by Canonical Local Source Binding and Governed Source Content. Product Workflow appends one deterministic finite successor scope and one versioned Prepared Work publication for the same occurrence; the prior scope and publication remain immutable and reconstructable.

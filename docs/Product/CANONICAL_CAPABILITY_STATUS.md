@@ -164,6 +164,10 @@ organizational understanding, real-world generalization, outcome-linked
 learning, authentic-history compounding, or longitudinal organizational
 learning.
 
+## Durable candidate preservation — Founder-only single-instance Alpha
+
+Durable candidate preservation and server-minted binding are **INTEGRATED and VALIDATED** for Founder-only single-instance Alpha. Structural-clone mint rejection, serialized-mint rejection, candidate-body corruption nondisclosure, request/packet corruption nondisclosure, late-publication cleanup, historical revision-3 successor upgrade and replay, and normal Meeting Pack edit preservation are **VALIDATED**. The proof uses isolated server-owned composition and provider requests remain zero. A live candidate-preserving revision is not yet **FOUNDER-PROVEN**. Cross-process candidate-body first publication is **UNPROVEN** and required before multi-instance or broad external rollout. Meeting Pack-based Reviewed Carry-Forward is not yet implemented. The next milestone is **Founder Revision 4 Durable Analysis Verification V1**.
+
 ## Current Product transport status
 
 **Model-Agnostic Source-Scoped Transport Adapter V1 is INTEGRATED, VALIDATED,
