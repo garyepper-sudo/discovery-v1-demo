@@ -215,7 +215,7 @@ export class ChiefLeadershipEvidenceSupportResolver {
       validateRecord(record);
       if (item.sourceBindings.length !== 1) fail();
       const instruction = record.productMaterializationInstruction!;
-      const proposals = workflow.proposals.filter(proposal => proposal.organizationId === request.organizationId && proposal.questionId === request.questionId && proposal.conversationId === instruction.conversationId && proposal.proposalId === instruction.proposalId && proposal.kind === "evidence-candidate");
+      const proposals = workflow.proposals.filter((proposal): proposal is Extract<typeof proposal,{contractVersion:"1"|"2"}> => proposal.contractVersion !== "3" && proposal.organizationId === request.organizationId && proposal.questionId === request.questionId && proposal.conversationId === instruction.conversationId && proposal.proposalId === instruction.proposalId && proposal.kind === "evidence-candidate");
       if (proposals.length !== 1) fail();
       const proposal = proposals[0]!, lineageBinding = item.sourceBindings[0]!;
       const uploads = workflow.uploadReceipts.filter(upload => upload.uploadReceiptId === proposal.uploadReceiptId && upload.organizationId === request.organizationId && upload.questionId === request.questionId && upload.conversationId === proposal.conversationId);

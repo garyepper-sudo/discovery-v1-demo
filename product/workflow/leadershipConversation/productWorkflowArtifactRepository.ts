@@ -111,7 +111,7 @@ function assertGovernedScopeLineage(
   store: LeadershipConversationArtifactStoreV1,
 ): void {
   for (const proposal of store.proposals) {
-    if (proposal.contractVersion === "2")
+    if (proposal.contractVersion === "2" || proposal.contractVersion === "3")
       assertGovernedConsequenceScopeBindingV1(
         proposal.governedScopeBinding,
         store.organizationId,
@@ -129,7 +129,7 @@ function assertGovernedScopeLineage(
     if (!proposal)
       throw new Error("Product Workflow governed scope lineage is invalid.");
     const expected =
-      proposal.contractVersion === "2"
+      proposal.contractVersion === "2" || proposal.contractVersion === "3"
         ? proposal.governedScopeBinding.bindingDigest
         : undefined;
     if (
@@ -142,11 +142,11 @@ function assertGovernedScopeLineage(
   for (const receipt of store.canonicalRoutingReceipts) {
     if (
       receipt.sourceProposalContractVersion !== undefined &&
-      receipt.sourceProposalContractVersion !== "2"
+      receipt.sourceProposalContractVersion !== undefined && !["2", "3"].includes(receipt.sourceProposalContractVersion)
     )
       throw new Error("Product Workflow governed routing lineage is invalid.");
     if (
-      receipt.sourceProposalContractVersion === "2" &&
+      receipt.sourceProposalContractVersion !== undefined && ["2", "3"].includes(receipt.sourceProposalContractVersion) &&
       !receipt.governedScopeBindingDigest
     )
       throw new Error("Product Workflow governed routing lineage is invalid.");
@@ -154,11 +154,11 @@ function assertGovernedScopeLineage(
   for (const link of store.routingLinks) {
     if (
       link.sourceProposalContractVersion !== undefined &&
-      link.sourceProposalContractVersion !== "2"
+      link.sourceProposalContractVersion !== undefined && !["2", "3"].includes(link.sourceProposalContractVersion)
     )
       throw new Error("Product Workflow governed routing lineage is invalid.");
     if (
-      link.sourceProposalContractVersion === "2" &&
+      link.sourceProposalContractVersion !== undefined && ["2", "3"].includes(link.sourceProposalContractVersion) &&
       !link.governedScopeBindingDigest
     )
       throw new Error("Product Workflow governed routing lineage is invalid.");

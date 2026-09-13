@@ -313,3 +313,6 @@ The bounded L1 checkpoint relationship foundation covers Draft, Review,
 observed Outcome, and Learning only. Authoritative Decision linkage, expected
 Outcome linkage, expected-signal linkage, supersession semantics, ordinary UI,
 and any architecture-compression or universal graph remain explicitly deferred.
+# GAP-PROD-072 — Meeting Pack Reviewed Carry-Forward review experience
+
+The durable Meeting Pack admission foundation exists, but review UI, routing, completion, and founder-visible workflow are not yet implemented.

@@ -1572,6 +1572,10 @@ Alignment is a read-only, deterministic projection of explicitly shared particip
 
 For the Founder-only single-instance Alpha, a provider-backed Meeting Pack may preserve an exact validated source-scoped candidate only through a server-minted publication result issued after request, packet, Prepared Work, source-lineage, model, lifecycle, and passage-citation validation. `ChiefMeetingPackOwner` independently derives and verifies the durable binding, rejects structurally cloned and serialized publication proofs, and preserves that binding across presentation-only edits. Historical revisions remain immutable and are not backfilled. Cross-process candidate-body first-publication proof remains required before multi-instance or broad external rollout.
 
+## DEC-PROD-072 — Meeting Pack carry-forward has its own atomic admission basis
+
+Validated durable Meeting Pack analysis may create reviewed carry-forward proposals through a distinct V3 envelope. Its complete set is validated before one compare-and-swap write and binds the exact participant scope, current Prepared Work, Pack revision, protected candidate reference, request, packet, configuration, lifecycle, citation set, and source versions. It does not reuse upload or Capture receipt fields. Review, routing, completion, and UI exposure remain deferred.
+
 ## DEC-PROD-069 — Preparation-stage governed context advances through immutable successors
 
 An authorized participant may add Question-bound governed sources to an existing preparation-stage meeting without creating another organization, Product Question, meeting series, or occurrence. Source identity and exact bytes remain owned by Canonical Local Source Binding and Governed Source Content. Product Workflow appends one deterministic finite successor scope and one versioned Prepared Work publication for the same occurrence; the prior scope and publication remain immutable and reconstructable.

@@ -195,3 +195,6 @@ Before implementation, return:
 
 These are implementation-planning decisions. Product thesis, ownership,
 initial wedge, loop, exclusions, and acceptance semantics are closed.
+# Reviewed Carry-Forward Meeting Pack Admission V1
+
+Use the server-only `ChiefMeetingPackOwner.readSourceScopedAnalysisAdmission` boundary and `admitReviewedCarryForwardFromMeetingPack`; never construct upload-shaped fields for this path. The operation validates the whole V3 batch before one repository replacement.
