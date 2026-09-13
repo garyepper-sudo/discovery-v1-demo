@@ -315,4 +315,4 @@ Outcome linkage, expected-signal linkage, supersession semantics, ordinary UI,
 and any architecture-compression or universal graph remain explicitly deferred.
 # GAP-PROD-072 — Meeting Pack Reviewed Carry-Forward review experience
 
-The durable Meeting Pack admission foundation exists, but review UI, routing, completion, and founder-visible workflow are not yet implemented.
+The durable Meeting Pack admission foundation exists, but review UI, routing, completion, and founder-visible workflow are not yet implemented. Passage-exact citation uniqueness now accepts multiple valid passages from the same source and version when their complete citation tuples differ, while exact duplicate citation tuples fail closed. The unchanged copied Founder revision-4 candidate admits offline; live Founder proposal admission remains unverified after this correction.
