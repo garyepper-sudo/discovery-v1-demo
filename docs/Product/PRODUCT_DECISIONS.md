@@ -1574,7 +1574,33 @@ For the Founder-only single-instance Alpha, a provider-backed Meeting Pack may p
 
 ## DEC-PROD-072 — Meeting Pack carry-forward has its own atomic admission basis
 
-Validated durable Meeting Pack analysis may create reviewed carry-forward proposals through a distinct V3 envelope. Its complete set is validated before one compare-and-swap write and binds the exact participant scope, current Prepared Work, Pack revision, protected candidate reference, request, packet, configuration, lifecycle, citation set, and source versions. It does not reuse upload or Capture receipt fields. Review, routing, completion, and UI exposure remain deferred.
+Validated durable Meeting Pack analysis may create reviewed carry-forward proposals through a distinct V3 envelope. Its complete set is validated before one compare-and-swap write and binds the exact participant scope, current Prepared Work, Pack revision, protected candidate reference, request, packet, configuration, lifecycle, citation set, and source versions. It does not reuse upload or Capture receipt fields. Human review, owner routing, completion, and bounded UI exposure now use that durable admission basis.
+
+The accepted Close Occurrence / What Changed / Prepare Again V1 candidate
+extends the existing closure and future-link families with version-2 Meeting
+Pack variants. Closure requires the exact complete proposal, disposition, and
+terminal-outcome graph and its reviewed completion receipt. Legacy version-1
+freeze/Capture records retain their interpretation. There is no migration or
+backfill; rollback must preserve the append-only versioned records and must
+not reinterpret a Meeting Pack basis as a legacy checkpoint.
+
+What Changed derives from owner-issued reviewed outcomes. Effective Founder
+corrections retain their attribution, while originals remain historical.
+Decision nonpromotion preserves the review and truthfully records that the
+exact current Product Answer was unavailable. Rejected and deferred items are
+excluded from organizational changes. Private review wording remains in the
+authorized private projection and is excluded from the shared successor
+preparation and manager closure projection.
+
+Prepare Again rechecks current access, uses the same Product Question and
+persisted recurring series, and converges on one distinct successor. Partial
+failures resume from the first incomplete durable stage. The action returns
+only the validated `status`, `stage`, and `nextStep` tuple; the completed banner
+derives from durable owner records. G1–G12 and preserved legacy controls prove
+these boundaries in isolated state. Canonical integration requires accepted
+Git closure; Founder-visible continuation remains unproven until the separate
+live verification milestone. No new owner, truth store, provider request,
+confidence authority, or compounding claim is introduced.
 
 ## DEC-PROD-069 — Preparation-stage governed context advances through immutable successors
 

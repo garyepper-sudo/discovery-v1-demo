@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
-import { assertCloseAndContinueOccurrence1Arguments, createLeadershipConversationServerComposition, executeCloseAndContinueOccurrence1Boundary, readOptionalMeetingPackForAskV1, resolveCurrentLeadershipConversationCheckpoint, resolveCurrentLeadershipConversationClosureMetadata, type ReviewedCarryForwardFinalizationAcknowledgementV1 } from "../../../product/integration/leadershipConversationServerComposition";
+import { createLeadershipConversationServerComposition, readOptionalMeetingPackForAskV1, resolveCurrentLeadershipConversationCheckpoint, resolveCurrentLeadershipConversationClosureMetadata, type ReviewedCarryForwardFinalizationAcknowledgementV1 } from "../../../product/integration/leadershipConversationServerComposition";
 import type { CanonicalProductWorkspaceAdapter } from "../../../product/integration/canonicalProductWorkspaceAdapter";
 import type { ChiefFirstPrepareActivationV1 } from "../../../product/workflow/leadershipConversation";
 import { composeChiefFirstPrepareViewFromWorkspace } from "../../../product/integration/chiefLeadershipPreparationComposer";
@@ -276,17 +276,12 @@ export async function completeOccurrence1Action(seriesAddress?:string): Promise<
   observeJourney("closure","completed","success");return completed;
 }
 
-export async function closeAndContinueOccurrence1Action(seriesAddress?:string) {
-  const runtimeArguments:unknown[]=[];assertCloseAndContinueOccurrence1Arguments(runtimeArguments);
-  const {server,identity}=await occurrence1Context(seriesAddress);
-  let current=await server.workspace(identity);
-  try{
-    const result=await executeCloseAndContinueOccurrence1Boundary({argumentsList:runtimeArguments,server,identity,initialWorkspace:current,completeOccurrence:()=>completeOccurrence1Action(seriesAddress)});
-    return{...result,valueLayer:compileChiefOfStaffValueLayerV1(result.nextPrepare),error:null};
-  }catch{
-    current=await server.workspace(identity);
-    return{sourceWorkspace:current,nextWorkspace:null,nextPrepare:null,valueLayer:null,error:current.closureCompletion?"Your saved progress is intact. Continue preparing the next occurrence.":"Close and continue is unavailable. Finish the required review steps and try again."};
-  }
+export async function closeAndContinueOccurrence1Action(...args:unknown[]):Promise<import("../../../product/workflow/leadershipConversation/contracts").CloseContinuationAcknowledgementV1>{
+  if(args.length!==1||typeof args[0]!=="string"||!/^[A-Za-z0-9_-]{24}$/.test(args[0]))return{status:"integrity-conflict",stage:"unknown",nextStep:"none"};
+  let close:(()=>Promise<void>)|undefined,outcome:import("../../../product/workflow/leadershipConversation/contracts").CloseContinuationAcknowledgementV1={status:"outcome-unavailable",stage:"unknown",nextStep:"reload"};
+  try{const context=await reviewedCarryForwardContext(args[0]);close=context.close;outcome=await context.server.closeAndContinue({...context.identity,seriesId:context.seriesId});}catch{/* Closed acknowledgement only. */}
+  try{await close?.();}catch{if(outcome.stage==="complete")outcome={status:"saved-refresh-required",stage:"complete",nextStep:"reload"};}
+  return outcome;
 }
 
 export async function prepareAgainOccurrence1Action() {

@@ -315,4 +315,25 @@ Outcome linkage, expected-signal linkage, supersession semantics, ordinary UI,
 and any architecture-compression or universal graph remain explicitly deferred.
 # GAP-PROD-072 — Meeting Pack Reviewed Carry-Forward review experience
 
-The durable Meeting Pack admission foundation exists, but review UI, routing, completion, and founder-visible workflow are not yet implemented. Passage-exact citation uniqueness now accepts multiple valid passages from the same source and version when their complete citation tuples differ, while exact duplicate citation tuples fail closed. The unchanged copied Founder revision-4 candidate admits offline; live Founder proposal admission remains unverified after this correction.
+The durable Meeting Pack admission, review UI, owner routing, and reviewed completion are integrated; the current Founder state has been reconciled through those owners. Passage-exact citation uniqueness now accepts multiple valid passages from the same source and version when their complete citation tuples differ, while exact duplicate citation tuples fail closed. The unchanged copied Founder revision-4 candidate admits offline; live Founder proposal admission remains unverified after this correction.
+
+
+### GAP-D-005 — reviewed occurrence continuation validation
+
+Close Occurrence / What Changed / Prepare Again V1 is implemented and validated
+as an independently accepted isolated candidate. It closes only the completed
+human-review continuation portion of this gap: exact completion-bound closure,
+owner-result-derived What Changed, deterministic same-series successor,
+current-access checks, durable resume, replay, concurrency, reconstruction, and
+truthful action feedback. Existing owners and persistence families remain
+unchanged; version-2 records distinguish Meeting Pack closure from legacy
+freeze/Capture closure without fabricating legacy receipts.
+
+Canonical integration requires the accepted Git closure. The live Founder
+workflow remains at completed Reviewed Carry-Forward, with no occurrence
+closure or successor and no revision 5. **Founder Close Occurrence 1 and
+Occurrence 2 Live Verification V1** remains pending and has not begun. Provider
+requests and live mutations were zero during implementation. Universal Ask,
+compounding measurement, longitudinal learning proof, external multi-user
+rollout, and broader readiness remain open; isolated two-cycle reconstruction
+is not live two-cycle proof.
