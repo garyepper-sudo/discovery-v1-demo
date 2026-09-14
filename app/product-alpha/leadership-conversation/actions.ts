@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@clerk/nextjs/server";
-import { assertCloseAndContinueOccurrence1Arguments, createLeadershipConversationServerComposition, executeCloseAndContinueOccurrence1Boundary, readOptionalMeetingPackForAskV1, resolveCurrentLeadershipConversationCheckpoint, resolveCurrentLeadershipConversationClosureMetadata } from "../../../product/integration/leadershipConversationServerComposition";
+import { assertCloseAndContinueOccurrence1Arguments, createLeadershipConversationServerComposition, executeCloseAndContinueOccurrence1Boundary, readOptionalMeetingPackForAskV1, resolveCurrentLeadershipConversationCheckpoint, resolveCurrentLeadershipConversationClosureMetadata, type ReviewedCarryForwardFinalizationAcknowledgementV1 } from "../../../product/integration/leadershipConversationServerComposition";
 import type { CanonicalProductWorkspaceAdapter } from "../../../product/integration/canonicalProductWorkspaceAdapter";
 import type { ChiefFirstPrepareActivationV1 } from "../../../product/workflow/leadershipConversation";
 import { composeChiefFirstPrepareViewFromWorkspace } from "../../../product/integration/chiefLeadershipPreparationComposer";
@@ -211,7 +211,13 @@ export async function dispositionOccurrence1CarryForwardAction(input:{proposalId
 }
 
 export async function resumeOccurrence1CarryForwardRouteAction(input:{proposalId:string;seriesAddress?:string}):Promise<LeadershipConversationWorkspaceV1>{const{server,identity,seriesId,purposeRef,close}=await reviewedCarryForwardContext(input.seriesAddress);try{const current=await server.workspace({...identity,seriesId}),proposal=current.proposals.find(item=>item.proposalId===input.proposalId&&item.reviewedCarryForward),disposition=current.dispositions.find(item=>item.proposalId===input.proposalId);if(!proposal||!disposition?.disposition.startsWith("approved"))throw new Error("Reviewed carry-forward route is unavailable.");return await server.ensureReviewedCarryForwardRoute({...identity,seriesId,proposalId:proposal.proposalId,purposeRef,expectedWorkflowRevision:current.workflowRevision,idempotencyKey:`occurrence-1-carry-forward-route:${proposal.proposalId}`});}finally{await close();}}
-export async function resumeOccurrence1CarryForwardCompletionAction(seriesAddress?:string):Promise<LeadershipConversationWorkspaceV1>{const{server,identity,seriesId,close}=await reviewedCarryForwardContext(seriesAddress);try{return await server.ensureReviewedCarryForwardCompletion({...identity,seriesId});}finally{await close();}}
+export async function resumeOccurrence1CarryForwardCompletionAction(seriesAddress?:string):Promise<ReviewedCarryForwardFinalizationAcknowledgementV1>{
+  let outcome:ReviewedCarryForwardFinalizationAcknowledgementV1={status:"outcome-unavailable",reviewComplete:null,nextStep:"reload"},close:(()=>Promise<void>)|undefined;
+  try{const context=await reviewedCarryForwardContext(seriesAddress);close=context.close;outcome=await context.server.finalizeReviewedCarryForward({...context.identity,seriesId:context.seriesId});}
+  catch{/* The boundary deliberately exposes no server failure detail. */}
+  finally{if(close)try{await close();}catch{if(outcome.reviewComplete)outcome={status:"saved-refresh-required",reviewComplete:true,nextStep:"reload"};}}
+  return outcome;
+}
 
 export async function acceptOccurrence1EvidenceAction(input: { proposalId: string }): Promise<LeadershipConversationWorkspaceV1> {
   const { server, identity, fixture } = await occurrence1Context();
