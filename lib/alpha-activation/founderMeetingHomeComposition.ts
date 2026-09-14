@@ -13,6 +13,7 @@ import { resolveFounderLocalAlphaRuntimeRootFromEnvironment } from "./founderLoc
 const operations: ScopedAuthorityGrant["operations"] = [
   "source-binding:resolve-current", "source-content:read-for-proposal", "source-content:read-for-claim-support",
   "product-artifact:read", "product-artifact:reuse", "product-artifact:compare", "product-workspace:read",
+  "product-artifact:prepare-again", "product-artifact:create-successor",
 ];
 
 /** Resolves an opaque Meeting Home solely from the authenticated V2 binding.
@@ -53,7 +54,9 @@ export async function createFounderMeetingHomeComposition(seriesAddress: string)
       subjectId: request.consumerId, scope: { organizationId: meeting.organizationId, type: "organization", id: meeting.organizationId },
       operations, sensitivity: ["standard"], relationship: "direct", status: "active", validFrom: "2026-01-01T00:00:00.000Z",
     }];
-    const server = createFounderLocalAlphaLeadershipConversationComposition({ runtimeRoot, workflowRoot, sourceContentRoot: protectedRoot.value.sourceContentRoot, bodyRepository: createProductArtifactBodyRepository({ root: protectedRoot.value.productArtifactBodyRoot }), userId: request.consumerId, organizationId: meeting.organizationId, participantRef: request.participantRef, authorityGrants, currentMeetingAccess: currentAccess });
+    const requestMeetingAccess = async (input: { userId: string; organizationId: string; seriesId: string }) =>
+      input.userId === request.consumerId && input.organizationId === meeting.organizationId && input.seriesId === meeting.seriesId && await currentAccess(input);
+    const server = createFounderLocalAlphaLeadershipConversationComposition({ runtimeRoot, workflowRoot, sourceContentRoot: protectedRoot.value.sourceContentRoot, bodyRepository: createProductArtifactBodyRepository({ root: protectedRoot.value.productArtifactBodyRoot }), userId: request.consumerId, organizationId: meeting.organizationId, participantRef: request.participantRef, authorityGrants, currentMeetingAccess: requestMeetingAccess });
     return { request, server, meeting, close: request.close };
   } catch (error) { await request.close(); throw error; }
 }
