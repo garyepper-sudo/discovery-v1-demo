@@ -12,11 +12,12 @@ export async function createFounderMeetingHomeComposition(seriesAddress){
   const raw=process.env.REVIEWED_FINALIZATION_ACTION_CONTEXT;
   if(!raw)throw new Error("Founder Meeting Home validation context is unavailable.");
   const input=JSON.parse(raw);
+  if(input.unauthenticated)throw new Error("Validation actor unavailable.");
   if(seriesAddress!==input.seriesAddress)throw new Error("Meeting is unavailable.");
   const {createLeadershipConversationServerCompositionForValidation}=await import(compositionUrl);
   const state=globalThis.__reviewedFinalizationValidationState??={closeCalls:0,projectionReads:0,sourceReads:0,protectedReadsAfterClose:0,completionFaultCalls:0,closed:false};
   const observed=(kind)=>{if(kind==="artifact")state.projectionReads+=1;else state.sourceReads+=1;if(state.closed)state.protectedReadsAfterClose+=1;};
-  const server=createLeadershipConversationServerCompositionForValidation({...input.roots,userId:input.userId,organizationId:input.organizationId,onProtectedArtifactRead(){observed("artifact");if(input.projectionFailure)throw new Error("validation-finalization-projection-failure");},onProtectedSourceContentRead(){observed("source");},...(input.completionFailure?{workflowFaultInjector:{afterClaim(){state.completionFaultCalls+=1;throw new Error("validation-finalization-before-publication");}}}:{})});
+  const server=createLeadershipConversationServerCompositionForValidation({...input.roots,userId:input.userId,organizationId:input.organizationId,analysisTransport:async()=>{state.providerRequests=(state.providerRequests??0)+1;throw new Error("Provider disabled for action validation");},onProtectedArtifactRead(){observed("artifact");if(input.projectionFailure||input.projectionAfter!==undefined&&state.projectionReads>input.projectionAfter||input.routeProjectionFailure&&(state.routeCalls??0)>=3)throw new Error("validation-finalization-projection-failure");},onProtectedSourceContentRead(){observed("source");},...((input.completionFailure||input.routeFailureAt)?{workflowFaultInjector:{beforeReviewedRoute(){state.routeCalls=(state.routeCalls??0)+1;if(state.routeCalls===input.routeFailureAt)throw new Error("validation-route-failure");},afterClaim(){if(input.completionFailure){state.completionFaultCalls+=1;throw new Error("validation-finalization-before-publication");}}}}:{})});
   return{server,request:{consumerId:input.userId},meeting:{organizationId:input.organizationId,questionId:input.questionId,occurrenceId:input.conversationId,seriesId:input.seriesId},close:async()=>{state.closed=true;state.closeCalls+=1;if(input.closeFailure)throw new Error("validation-finalization-close-failure");}};
 }`)}`;
 
