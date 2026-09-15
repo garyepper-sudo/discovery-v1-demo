@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
+const navigationHarness=`data:text/javascript,${encodeURIComponent('export function notFound(){const error=new Error("NEXT_NOT_FOUND");throw error}export function redirect(destination){const error=new Error(`NEXT_REDIRECT:${destination}`);throw error}export function useRouter(){return{refresh(){}}}')}`;
+
 const globals = globalThis as typeof globalThis & {
   __discoveryFounderMeetingHomeComposition: (address: string) => Promise<any>;
   __discoveryFounderMeetingHomePrepare?:any;
@@ -17,8 +19,12 @@ async function invoke(seriesAddress: string, organizationId?: string | string[],
 
 async function main() {
   process.env.DISCOVERY_FOUNDER_LOCAL_ALPHA_ENABLED = "true";
+  const {registerHooks}=(await import("node:module")) as unknown as {registerHooks:(hooks:any)=>void};
+  registerHooks({resolve(specifier:any,context:any,nextResolve:any){if(specifier==="next/navigation")return{url:navigationHarness,shortCircuit:true};return nextResolve(specifier,context);},load(url:any,context:any,nextLoad:any){if(url===navigationHarness)return{format:"module",source:decodeURIComponent(url.slice(url.indexOf(",")+1)),shortCircuit:true};return nextLoad(url,context);}});
   (React as typeof React & {useActionState:typeof React.useActionState}).useActionState=((_action:unknown,initialState:unknown)=>[initialState,()=>{},false]) as typeof React.useActionState;
   meetingHome=(await import("../../app/product-alpha/meetings/[seriesAddress]/page")).default;
+  const directComposerUrl=new URL("../../product/integration/chiefLeadershipPreparationComposer.ts?founder-meeting-home-direct",import.meta.url).href;
+  const {composeChiefFirstPrepareViewFromWorkspace}=await import(directComposerUrl);
   globals.__discoverySandboxMeetingHomeLoads = 0;
   let checks = 0;
   let closed=0;
@@ -32,7 +38,7 @@ async function main() {
   globals.__discoveryFounderMeetingHomeComposition = async address => ({
     request:{consumerId:"user_founder_route_validation"},
     meeting:{organizationId:"organization-private",questionId:"question-private",occurrenceId:"occurrence-private",seriesId:"series-private",seriesAddress:address},
-    server:{workspace:async(input:any)=>{workspaceInputs.push(input);return workspace;},readMeetingPack:async()=>currentPack,analyzeSourceScopedForDevelopment:async()=>({result:{status:"eligible"}})},
+    server:{workspace:async(input:any)=>{workspaceInputs.push(input);return workspace;},readMeetingPack:async()=>currentPack,refreshMeetingPack:{available:async()=>true},reviewedCarryForwardFromMeetingPackAvailable:async()=>false,analyzeSourceScopedForDevelopment:async()=>({result:{status:"eligible"}})},
     close:async()=>{closed+=1},
   });
   const markup = renderToStaticMarkup(await invoke("2mjUlX61y_lU76Z0g7Oh2O1G", undefined, {seriesId:"forged-series",conversationId:"forged-occurrence",participantRef:"forged-participant"}));
@@ -51,10 +57,45 @@ async function main() {
   assert.equal(closed,1);
   assert.equal(globals.__discoverySandboxMeetingHomeLoads, 0); checks += 10;
 
+  const composerCurrent={organizationId:"organization-current",questionId:"question-current",conversationId:"occurrence-2",currentStep:"prepare",context:{title:"Successor",timeframe:"This week",purpose:"Prepare",participants:[{titleLabel:"Founder"}],contextVersionId:"context-2"},currentPreparedWorkProduct:{artifactVersionId:"prepared-2",content:{whatChanged:["Supported predecessor change"],situationSummary:"Current supported state",decisionsRequiringAttention:[],importantTensions:[],contradictions:[],questionsToResolve:[],evidenceReferences:["source-1"],uncertaintyAndLimitations:[],talkingPoints:[],unknowns:[]},lineage:{authorizedProjectionRevision:"projection-2",authorizedProjectionDigest:"digest-2",sourceRevisionReferences:["source-1"]}}} as any;
+  const completePredecessor={closeContinuation:{stage:"complete"},reviewedCarryForwardCompletion:{counts:{}},canonicalRoutingReceipts:[{},{}],proposals:[{proposalId:"reviewed",reviewedCarryForward:{}}],reviewedCarryForwardNonpromotions:[]} as any;
+  const completeProjection=composeChiefFirstPrepareViewFromWorkspace(composerCurrent,{predecessor:completePredecessor,seriesId:"series-current"});
+  assert.equal(completeProjection.priorCycle.status,"completed");
+  assert.deepEqual(completeProjection.whatChanged,["Supported predecessor change"]);
+  assert.equal(completeProjection.seriesId,"series-current");
+  assert.match(completeProjection.priorCycle.items[1]!.label,/not organizational truth/);
+  for(const predecessor of [{...completePredecessor,closeContinuation:{stage:"partial"}},{...completePredecessor,reviewedCarryForwardCompletion:null}])assert.equal(composeChiefFirstPrepareViewFromWorkspace(composerCurrent,{predecessor,seriesId:"series-current"}).priorCycle.status,"none");
+  assert.equal(composeChiefFirstPrepareViewFromWorkspace(composerCurrent).priorCycle.status,"none"); checks += 8;
+
+  const successorInputs:any[]=[];
+  globals.__discoveryFounderMeetingHomePrepare={...prepare,priorCycle:{status:"completed",message:"Occurrence 1 is complete. Reviewed outcomes and What Changed are available for continuity.",items:[{label:"Canonical owner results",text:"2 owner-recorded results remain available for continuity."},{label:"Reviewed records — not organizational truth",text:"2 reviewed records remain distinct from organizational truth."},{label:"Decision preserved without promotion",text:"A reviewed Decision was preserved without promotion because the required current Product Answer was unavailable."},{label:"Open matters",text:"Open matters remain available for follow-up."}]}};
+  globals.__discoveryFounderMeetingHomeComposition=async address=>({request:{consumerId:"user_founder_route_validation"},meeting:{organizationId:"organization-private",questionId:"question-private",occurrenceId:"occurrence-2",predecessorOccurrenceId:"occurrence-1",seriesId:"series-private",seriesAddress:address},server:{workspace:async(input:any)=>{successorInputs.push(input);return workspace;},readMeetingPack:async()=>null,refreshMeetingPack:{available:async()=>false},reviewedCarryForwardFromMeetingPackAvailable:async()=>false},close:async()=>{closed+=1}});
+  const successorMarkup=renderToStaticMarkup(await invoke("2mjUlX61y_lU76Z0g7Oh2O1G"));
+  assert.match(successorMarkup,/Occurrence 2 · Prepare/);
+  assert.doesNotMatch(successorMarkup,/Occurrence 1 · Prepare/);
+  assert.match(successorMarkup,/Occurrence 1 is complete/);
+  assert.match(successorMarkup,/Reviewed records — not organizational truth/);
+  assert.match(successorMarkup,/Build the Occurrence 2 Meeting Pack/);
+  assert.match(successorMarkup,/Available after you build the Occurrence 2 Meeting Pack/);
+  assert.doesNotMatch(successorMarkup,/No prior reviewed meeting yet/);
+  assert.deepEqual(successorInputs.map(value=>value.conversationId),["occurrence-2","occurrence-1"]); checks += 8;
+
+  let successorPackReads=0;
+  globals.__discoveryFounderMeetingHomeComposition=async address=>({request:{consumerId:"user_founder_route_validation"},meeting:{organizationId:"organization-private",questionId:"question-private",occurrenceId:"occurrence-2",predecessorOccurrenceId:"occurrence-1",seriesId:"series-private",seriesAddress:address},server:{workspace:async()=>workspace,readMeetingPack:async()=>{successorPackReads+=1;return{...currentPack,artifactRevision:"pack-revision-4",revision:4};},refreshMeetingPack:{available:async()=>false},reviewedCarryForwardFromMeetingPackAvailable:async()=>false},close:async()=>{closed+=1}});
+  const existingPackMarkup=renderToStaticMarkup(await invoke("2mjUlX61y_lU76Z0g7Oh2O1G"));
+  assert.match(existingPackMarkup,/Pack ready/);
+  assert.doesNotMatch(existingPackMarkup,/Build the Occurrence 2 Meeting Pack/);
+  assert.doesNotMatch(existingPackMarkup,/Available after you build the Occurrence 2 Meeting Pack/);
+  assert.equal(successorPackReads,1);
+  const existingPackReload=renderToStaticMarkup(await invoke("2mjUlX61y_lU76Z0g7Oh2O1G"));
+  assert.equal(existingPackReload,existingPackMarkup);
+  assert.equal(successorPackReads,2); checks += 6;
+  globals.__discoveryFounderMeetingHomePrepare=prepare;
+
   globals.__discoveryFounderMeetingHomeComposition = async address => ({
     request:{consumerId:"user_founder_route_validation"},
     meeting:{organizationId:"organization-private",questionId:"question-private",occurrenceId:"occurrence-private",seriesId:"series-private",seriesAddress:address},
-    server:{workspace:async()=>workspace,readMeetingPack:async()=>currentPack,analyzeSourceScopedForDevelopment:async()=>{throw new Error("analysis unavailable");}},
+    server:{workspace:async()=>workspace,readMeetingPack:async()=>currentPack,refreshMeetingPack:{available:async()=>false},reviewedCarryForwardFromMeetingPackAvailable:async()=>false,analyzeSourceScopedForDevelopment:async()=>{throw new Error("analysis unavailable");}},
     close:async()=>{closed+=1},
   });
   const analysisUnavailableMarkup=renderToStaticMarkup(await invoke("2mjUlX61y_lU76Z0g7Oh2O1G"));
@@ -77,7 +118,12 @@ async function main() {
   await assert.rejects(() => invoke("2mjUlX61y_lU76Z0g7Oh2O1G", "forged-organization"), /NEXT_NOT_FOUND/);
   assert.equal(globals.__discoverySandboxMeetingHomeLoads, 0); checks += 2;
 
-  console.log(`PASS founder Meeting Home fixture separation checks=${checks} sandbox-module-loads=0 page-writes=0 product-writes=0 provider-requests=0`);
+  for(const protectedValue of ["organization-private","question-private","series-private","occurrence-private","a".repeat(64),"forged-series","forged-occurrence","forged-participant"])assert.equal(markup.includes(protectedValue),false);
+  assert.match(markup,/Nothing here becomes organizational truth or a shared meeting record from this page/);
+  assert.match(successorMarkup,/Reviewed records — not organizational truth/);
+  assert.equal(closed,6); checks += 10;
+
+  console.log(`PASS founder Meeting Home fixture separation checks=${checks} sandbox-module-loads=0 page-writes=0 product-writes=0 provider-requests=0 x3-x13=PASS`);
 }
 
 main().catch(error => { console.error(error); process.exitCode = 1; });
