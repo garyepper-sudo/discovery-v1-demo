@@ -1,0 +1,998 @@
+{
+  "schemaVersion": "2",
+  "fixtureArchitecture": "direct/historical/completed-cycle",
+  "contractAmendment": {
+    "canonicalParent": "56881b7e08c42c63d5cde61b5064f7b710e35df1",
+    "propertyModel": [
+      "ATOMIC_DENIAL",
+      "LAWFUL_POSITIVE",
+      "SURVIVING_DISCLOSURE",
+      "HISTORICAL_POLICY",
+      "REPLAY_RECONSTRUCTION",
+      "SCANNER",
+      "EXECUTION_BOUNDARY",
+      "CLEANUP_REPEATABILITY"
+    ],
+    "allowedDelta": "protected Prepared Work body or reviewed correction; identical baseline, identity, grants, keys and owner sequence",
+    "oracle": "typed atomic denial; available anchored OU disclosure equality; same-publication derived positive; historical policy and replay separately classified",
+    "normalization": "surface: drop only two declared opaque Organizational Understanding audit identities (projectionMetadata.disclosureDecisionId and projectionId) plus existing value-layer item IDs; all text, order, status, role and other fields remain bound. Repeat: exclude only per-run input-sequence digest, operational telemetry and temporary-file counts.",
+    "topology": {
+      "independentHistoricalCurrentSupportReachable": false,
+      "futureRegate": "Any future lawful public H/C continuation topology must trigger new AR-1B acceptance proving independent authorization, zero H body reads, lawful C availability, fallback projection and replay/reconstruction preservation.",
+      "ownerConflictEvidence": [
+        "reviewed completion membership is distinct from generic V2 Evidence proposal membership",
+        "canonical Evidence materialization publishes What Changed under the occurrence workflow, conflicting with closure-owned What Changed identity/cardinality"
+      ]
+    },
+    "evidenceGate": "all A01–A14, deterministic repeat, cleanup and scanner must succeed; reachable denial controls and topology finding must be complete"
+  },
+  "pairedInput": {
+    "manifestA": {
+      "lawfulInputDigest": "35261c1fe30cdcd7a17d6990265834d5533c553e6abe64e59ae0802079a39d83",
+      "payloadDigest": "88631bd3eb08955d7bb56bb3add18bfe0b69436ba3ee1b831303bf23b6d8e882"
+    },
+    "manifestB": {
+      "lawfulInputDigest": "35261c1fe30cdcd7a17d6990265834d5533c553e6abe64e59ae0802079a39d83",
+      "payloadDigest": "a9c9fb4572748ff65c7ad8eaac96bb725777e309fc343aee7c99fe05dec55cdd"
+    }
+  },
+  "cases": {
+    "A01": {
+      "property": "ATOMIC_DENIAL",
+      "surface": "Prepared Work summary",
+      "owner": "Product Artifact Current Access owner",
+      "denials": {
+        "absent": {
+          "A": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "f1409d9dae7a7d34f8484f3209fe2bb9b623531c57500c7af2fefd85681c1d86",
+            "unchanged": true
+          },
+          "B": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "c770f860e9ec81c54740264e4195ef45c80bec9f53356ecb02369a98c6bffb47",
+            "unchanged": true
+          }
+        },
+        "stale": {
+          "A": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "f1409d9dae7a7d34f8484f3209fe2bb9b623531c57500c7af2fefd85681c1d86",
+            "unchanged": true
+          },
+          "B": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "c770f860e9ec81c54740264e4195ef45c80bec9f53356ecb02369a98c6bffb47",
+            "unchanged": true
+          }
+        },
+        "revoked": {
+          "A": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "f1409d9dae7a7d34f8484f3209fe2bb9b623531c57500c7af2fefd85681c1d86",
+            "unchanged": true
+          },
+          "B": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "c770f860e9ec81c54740264e4195ef45c80bec9f53356ecb02369a98c6bffb47",
+            "unchanged": true
+          }
+        }
+      },
+      "positive": {
+        "digestA": "7ab83d97d5376785df4b63b2479a8e335f95fbe0d456c3a1ed4b60baccc9d5fa",
+        "digestB": "0c8eb13e062e0c2643f874bea14ed82486252b77834afb98e33edd2b7c2af1a0",
+        "differencePaths": [
+          "$.0",
+          "$.1"
+        ],
+        "expectedEquality": false,
+        "actualEquality": false
+      },
+      "availablePositive": true,
+      "authorizationOutcome": "absent/stale/revoked typed denial; allowed twin lawful",
+      "readAttribution": "artifact body attempts/completions measured as 0 on denial",
+      "semanticEvidence": "same publication identity and no denied projection",
+      "limitation": "Required support is atomic; no non-influence claim."
+    },
+    "A02": {
+      "property": "LAWFUL_POSITIVE",
+      "surface": "Chief priority projection",
+      "owner": "preparation composer → Chief value-layer compiler",
+      "denials": {
+        "absent": {
+          "A": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "f1409d9dae7a7d34f8484f3209fe2bb9b623531c57500c7af2fefd85681c1d86",
+            "unchanged": true
+          },
+          "B": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "c770f860e9ec81c54740264e4195ef45c80bec9f53356ecb02369a98c6bffb47",
+            "unchanged": true
+          }
+        },
+        "stale": {
+          "A": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "f1409d9dae7a7d34f8484f3209fe2bb9b623531c57500c7af2fefd85681c1d86",
+            "unchanged": true
+          },
+          "B": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "c770f860e9ec81c54740264e4195ef45c80bec9f53356ecb02369a98c6bffb47",
+            "unchanged": true
+          }
+        },
+        "revoked": {
+          "A": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "f1409d9dae7a7d34f8484f3209fe2bb9b623531c57500c7af2fefd85681c1d86",
+            "unchanged": true
+          },
+          "B": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "c770f860e9ec81c54740264e4195ef45c80bec9f53356ecb02369a98c6bffb47",
+            "unchanged": true
+          }
+        }
+      },
+      "positive": {
+        "digestA": "34e71ddcb4e49cbfd6022b7761733258e83075ee9a3ea4b33328aa40cb7c1ded",
+        "digestB": "51005a20fbc580a7a0a36d37d32178c9d5839b97d5d91bcf0879e5d052f8cc40",
+        "differencePaths": [
+          "$.0.text"
+        ],
+        "expectedEquality": false,
+        "actualEquality": false
+      },
+      "availablePositive": true,
+      "authorizationOutcome": "allowed twin succeeds; denied twins fail closed",
+      "readAttribution": "authorized artifact body completion only on allowed path",
+      "semanticEvidence": "protected candidate changes derived priority",
+      "limitation": "Positive coupling is limited to same-publication authorized reads."
+    },
+    "A04": {
+      "property": "SURVIVING_DISCLOSURE",
+      "surface": "Organizational Understanding",
+      "owner": "allowlist preflight → Runtime → disclosure resolver → organization composer",
+      "denials": {
+        "absent": {
+          "A": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "f1409d9dae7a7d34f8484f3209fe2bb9b623531c57500c7af2fefd85681c1d86",
+            "unchanged": true
+          },
+          "B": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "c770f860e9ec81c54740264e4195ef45c80bec9f53356ecb02369a98c6bffb47",
+            "unchanged": true
+          }
+        },
+        "stale": {
+          "A": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "f1409d9dae7a7d34f8484f3209fe2bb9b623531c57500c7af2fefd85681c1d86",
+            "unchanged": true
+          },
+          "B": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "c770f860e9ec81c54740264e4195ef45c80bec9f53356ecb02369a98c6bffb47",
+            "unchanged": true
+          }
+        },
+        "revoked": {
+          "A": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "f1409d9dae7a7d34f8484f3209fe2bb9b623531c57500c7af2fefd85681c1d86",
+            "unchanged": true
+          },
+          "B": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "c770f860e9ec81c54740264e4195ef45c80bec9f53356ecb02369a98c6bffb47",
+            "unchanged": true
+          }
+        }
+      },
+      "positive": {
+        "digestA": "579c60ddef6ea43baaaf026e390d06e83a8e7d16e92308227b2f5192c63d7d24",
+        "digestB": "2ef23bd68e52cb0c38decf8785f6e9aab429c4f01d86d2c4e0f67dd13a8447d3",
+        "differencePaths": [
+          "$.summary.0",
+          "$.summary.1"
+        ],
+        "expectedEquality": false,
+        "actualEquality": false
+      },
+      "availablePositive": true,
+      "organizationalUnderstandingDisclosure": {
+        "property": "surviving-lawful-disclosure",
+        "surface": "/your-organization",
+        "available": [
+          true,
+          true,
+          true
+        ],
+        "lawfulAnchorPresent": true,
+        "lawfulAnchorDigest": "43f37b9f946d6a6ce6e0b3961daeaeb64b8f4ac269600e6504781286c74adf5e",
+        "CA": {
+          "digestA": "be4907fd72756471eae9694762f2921d2aef37764842d7539ac143411b55d92a",
+          "digestB": "be4907fd72756471eae9694762f2921d2aef37764842d7539ac143411b55d92a",
+          "differencePaths": [],
+          "expectedEquality": true,
+          "actualEquality": true
+        },
+        "CB": {
+          "digestA": "be4907fd72756471eae9694762f2921d2aef37764842d7539ac143411b55d92a",
+          "digestB": "be4907fd72756471eae9694762f2921d2aef37764842d7539ac143411b55d92a",
+          "differencePaths": [],
+          "expectedEquality": true,
+          "actualEquality": true
+        },
+        "AB": {
+          "digestA": "be4907fd72756471eae9694762f2921d2aef37764842d7539ac143411b55d92a",
+          "digestB": "be4907fd72756471eae9694762f2921d2aef37764842d7539ac143411b55d92a",
+          "differencePaths": [],
+          "expectedEquality": true,
+          "actualEquality": true
+        },
+        "outcomes": [
+          "disclosed",
+          "partially-disclosed",
+          "partially-disclosed"
+        ],
+        "runtimeReadsAfterOrganizationAuthorization": 1,
+        "protectedSourceBodyReads": 0,
+        "sourceBodyAccessExercised": false,
+        "sourceBodyHookObservation": "not exercised by Organizational Understanding surface",
+        "sourceBodyNonInfluenceClaimed": false,
+        "positiveCouplingClaimed": false,
+        "durableDisclosureTransactionExercised": false,
+        "limitation": "Already-derived Runtime disclosure only; no same-material authority promotion or source-body claim."
+      },
+      "authorizationOutcome": "lawful Runtime projection available; optional material partially disclosed",
+      "readAttribution": "Runtime authorization and disclosure selection measured; protected source-body hook not exercised by this OU surface",
+      "semanticEvidence": "lawful anchor identical across inaccessible optional twins",
+      "limitation": "No protected source-body non-influence claim is made."
+    },
+    "A12": {
+      "property": "LAWFUL_POSITIVE",
+      "negativeProperty": "same-publication atomic-denial",
+      "owner": "authorized Prepared Work current-access → Product projection",
+      "protectedInput": "owner-published Prepared Work body",
+      "digestA": "c273452e52552e130d7b9eadf790eec2ba86d3999317fae3f4b7c4e0f35f1316",
+      "digestB": "ed3ec16b5d8758b989321d98598de1b82403eb3ae8e6eaecf5c35bd36dc11d59",
+      "differencePaths": [
+        "$.priority.0.text",
+        "$.recommendation.acquisition.0.text",
+        "$.recommendation.questions.0.text",
+        "$.summary.0",
+        "$.summary.1",
+        "$.workspace.summary.0",
+        "$.workspace.summary.1"
+      ],
+      "expectedEquality": false,
+      "actualEquality": false,
+      "authorizedReads": [
+        {
+          "artifact": 1,
+          "source": 0,
+          "sourceBindingIds": []
+        },
+        {
+          "artifact": 1,
+          "source": 0,
+          "sourceBindingIds": []
+        }
+      ],
+      "expectedDifference": "summary, ordered priority and derived evidence-acquisition request",
+      "derivedAcquisition": {
+        "digestA": "4e0ceb7836bfb8a6ef81e4b3b65edcb2340c4d97d6fe6915dd0bc2a30f581e58",
+        "digestB": "61c79f1d8f4f43fdc94e3556fa8983b2cefc093410d740cf7a26fa718e54f80a",
+        "differencePaths": [
+          "$.0.text"
+        ],
+        "expectedEquality": false,
+        "actualEquality": false
+      },
+      "surface": "same-publication acquisition text",
+      "authorizationOutcome": "lawful source produces expected semantic effect",
+      "readAttribution": "authorized artifact reads recorded; no provider request",
+      "semanticEvidence": "derived acquisition request differs materially with protected candidate",
+      "limitation": "Does not claim unsupported fallback coupling."
+    },
+    "A05": {
+      "foreignOrganization": {
+        "eligible": false,
+        "protectedReads": {
+          "artifact": 0,
+          "source": 0,
+          "sourceBindingIds": []
+        }
+      },
+      "foreignParticipant": {
+        "eligible": false,
+        "protectedReads": {
+          "artifact": 0,
+          "source": 0,
+          "sourceBindingIds": []
+        }
+      },
+      "missingArtifact": {
+        "eligible": false,
+        "protectedReads": {
+          "artifact": 0,
+          "source": 0,
+          "sourceBindingIds": []
+        }
+      },
+      "malformedRevision": {
+        "eligible": false,
+        "protectedReads": {
+          "artifact": 0,
+          "source": 0,
+          "sourceBindingIds": []
+        }
+      },
+      "staleRevision": {
+        "eligible": false,
+        "protectedReads": {
+          "artifact": 0,
+          "source": 0,
+          "sourceBindingIds": []
+        }
+      },
+      "foreignQuestion": {
+        "eligible": false,
+        "protectedSourceReads": 0
+      },
+      "foreignSeries": {
+        "eligible": false,
+        "protectedSourceReads": 0
+      },
+      "foreignOccurrence": {
+        "eligible": false,
+        "protectedSourceReads": 0
+      },
+      "property": "ATOMIC_DENIAL",
+      "surface": "artifact and source identity boundaries",
+      "owner": "Product Artifact Current Access and Source Scoped Analysis owners",
+      "authorizationOutcome": "foreign/malformed/stale identities denied",
+      "readAttribution": "zero artifact body attempts and zero source-body completion hooks on denied cases",
+      "semanticEvidence": "durable inventories unchanged",
+      "limitation": "Counters are bounded to the injected fixture composition."
+    },
+    "A06": {
+      "boundaries": {
+        "foreignOrganization": {
+          "eligible": false,
+          "protectedReads": {
+            "artifact": 0,
+            "source": 0,
+            "sourceBindingIds": []
+          }
+        },
+        "foreignParticipant": {
+          "eligible": false,
+          "protectedReads": {
+            "artifact": 0,
+            "source": 0,
+            "sourceBindingIds": []
+          }
+        },
+        "missingArtifact": {
+          "eligible": false,
+          "protectedReads": {
+            "artifact": 0,
+            "source": 0,
+            "sourceBindingIds": []
+          }
+        },
+        "malformedRevision": {
+          "eligible": false,
+          "protectedReads": {
+            "artifact": 0,
+            "source": 0,
+            "sourceBindingIds": []
+          }
+        },
+        "staleRevision": {
+          "eligible": false,
+          "protectedReads": {
+            "artifact": 0,
+            "source": 0,
+            "sourceBindingIds": []
+          }
+        },
+        "foreignQuestion": {
+          "eligible": false,
+          "protectedSourceReads": 0
+        },
+        "foreignSeries": {
+          "eligible": false,
+          "protectedSourceReads": 0
+        },
+        "foreignOccurrence": {
+          "eligible": false,
+          "protectedSourceReads": 0
+        },
+        "property": "ATOMIC_DENIAL",
+        "surface": "artifact and source identity boundaries",
+        "owner": "Product Artifact Current Access and Source Scoped Analysis owners",
+        "authorizationOutcome": "foreign/malformed/stale identities denied",
+        "readAttribution": "zero artifact body attempts and zero source-body completion hooks on denied cases",
+        "semanticEvidence": "durable inventories unchanged",
+        "limitation": "Counters are bounded to the injected fixture composition."
+      },
+      "currentAccess": {
+        "absent": {
+          "A": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "f1409d9dae7a7d34f8484f3209fe2bb9b623531c57500c7af2fefd85681c1d86",
+            "unchanged": true
+          },
+          "B": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "c770f860e9ec81c54740264e4195ef45c80bec9f53356ecb02369a98c6bffb47",
+            "unchanged": true
+          }
+        },
+        "stale": {
+          "A": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "f1409d9dae7a7d34f8484f3209fe2bb9b623531c57500c7af2fefd85681c1d86",
+            "unchanged": true
+          },
+          "B": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "c770f860e9ec81c54740264e4195ef45c80bec9f53356ecb02369a98c6bffb47",
+            "unchanged": true
+          }
+        },
+        "revoked": {
+          "A": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "f1409d9dae7a7d34f8484f3209fe2bb9b623531c57500c7af2fefd85681c1d86",
+            "unchanged": true
+          },
+          "B": {
+            "property": "atomic-denial",
+            "ownerDisposition": "inaccessible",
+            "workspaceOutcome": "owner-denied",
+            "available": false,
+            "unauthorizedProtectedReadAttempts": 0,
+            "unauthorizedProtectedReadCompletions": 0,
+            "publicationIdentityDigest": "c770f860e9ec81c54740264e4195ef45c80bec9f53356ecb02369a98c6bffb47",
+            "unchanged": true
+          }
+        }
+      },
+      "historical": {
+        "malformed": "malformed",
+        "stale": "stale",
+        "foreign": "foreign",
+        "absent": "absent",
+        "withheld": "withheld",
+        "ambiguous": "ambiguous",
+        "lineage-tampered": "malformed"
+      },
+      "property": "HISTORICAL_POLICY",
+      "surface": "historical predecessor access",
+      "owner": "Product Artifact historical current-access owner",
+      "authorizationOutcome": "typed malformed/stale/foreign/withheld/revoked outcomes",
+      "readAttribution": "warm/cold body counters and historical outcomes recorded",
+      "semanticEvidence": "positive historical projection only when accessible",
+      "limitation": "Historical policy follows actual current-access semantics."
+    },
+    "A07": {
+      "owner": "historical current-access owner",
+      "positive": {
+        "property": "LAWFUL_POSITIVE",
+        "digestA": "a1e0dfd1ef1932c6263fe9f96424968fd8aab1b91efdb821e205018c8a479d52",
+        "digestB": "b95b6f194455b0bc2a7db72a6e68bca2165c78dafaf7b514816e7df45adceae4",
+        "differencePaths": [
+          "$.questions.0",
+          "$.whatMattersNow.0",
+          "$.whatMattersNow.1"
+        ],
+        "expectedEquality": false,
+        "actualEquality": false
+      },
+      "revoked": {
+        "property": "ATOMIC_DENIAL",
+        "outcomes": [
+          "revoked",
+          "revoked"
+        ],
+        "available": false
+      },
+      "boundaries": {
+        "malformed": "malformed",
+        "stale": "stale",
+        "foreign": "foreign",
+        "absent": "absent",
+        "withheld": "withheld",
+        "ambiguous": "ambiguous",
+        "lineage-tampered": "malformed"
+      },
+      "warmReadDelta": [
+        0,
+        0
+      ],
+      "coldReads": [
+        0,
+        0
+      ],
+      "freshProcessDenial": [
+        {
+          "outcome": "revoked",
+          "digest": "350496bba6da0bcb3e807c743d2dfbea5c78c79a9a4adbc8c655d3e17c5d553a",
+          "reads": {
+            "artifact": 0,
+            "source": 0
+          }
+        },
+        {
+          "outcome": "revoked",
+          "digest": "350496bba6da0bcb3e807c743d2dfbea5c78c79a9a4adbc8c655d3e17c5d553a",
+          "reads": {
+            "artifact": 0,
+            "source": 0
+          }
+        }
+      ],
+      "property": "HISTORICAL_POLICY",
+      "surface": "revoked predecessor",
+      "authorizationOutcome": "revoked denial before body read",
+      "readAttribution": "zero protected artifact body reads on revoked path",
+      "semanticEvidence": "projection null and canary-free denial",
+      "limitation": "Revoked required material does not enter equality oracle."
+    },
+    "A08": {
+      "owner": "historical current-access owner across warm/cold/fresh process",
+      "positive": {
+        "property": "LAWFUL_POSITIVE",
+        "digestA": "a1e0dfd1ef1932c6263fe9f96424968fd8aab1b91efdb821e205018c8a479d52",
+        "digestB": "b95b6f194455b0bc2a7db72a6e68bca2165c78dafaf7b514816e7df45adceae4",
+        "differencePaths": [
+          "$.questions.0",
+          "$.whatMattersNow.0",
+          "$.whatMattersNow.1"
+        ],
+        "expectedEquality": false,
+        "actualEquality": false
+      },
+      "revoked": {
+        "property": "ATOMIC_DENIAL",
+        "outcomes": [
+          "revoked",
+          "revoked"
+        ],
+        "available": false
+      },
+      "boundaries": {
+        "malformed": "malformed",
+        "stale": "stale",
+        "foreign": "foreign",
+        "absent": "absent",
+        "withheld": "withheld",
+        "ambiguous": "ambiguous",
+        "lineage-tampered": "malformed"
+      },
+      "warmReadDelta": [
+        0,
+        0
+      ],
+      "coldReads": [
+        0,
+        0
+      ],
+      "freshProcessDenial": [
+        {
+          "outcome": "revoked",
+          "digest": "350496bba6da0bcb3e807c743d2dfbea5c78c79a9a4adbc8c655d3e17c5d553a",
+          "reads": {
+            "artifact": 0,
+            "source": 0
+          }
+        },
+        {
+          "outcome": "revoked",
+          "digest": "350496bba6da0bcb3e807c743d2dfbea5c78c79a9a4adbc8c655d3e17c5d553a",
+          "reads": {
+            "artifact": 0,
+            "source": 0
+          }
+        }
+      ],
+      "property": "REPLAY_RECONSTRUCTION",
+      "surface": "historical denial replay",
+      "authorizationOutcome": "revoked denial preserved",
+      "readAttribution": "fresh process artifact body counters remain zero; source completion hook is reported separately",
+      "semanticEvidence": "denial outcome stable across warm/cold/fresh process",
+      "limitation": "Replay and reconstruction preserve denial; no cache bypass is observed."
+    },
+    "A03": {
+      "owner": "reviewed carry-forward owners → closure/What Changed → Prepare Again",
+      "twinVariable": "lawfully accepted reviewed commitment correction",
+      "lifecycle": {
+        "conflictingSuccessorRejected": true,
+        "wrongSeriesClosureRejected": true,
+        "inputSequenceDigest": "dcaecc072184f6b06c1644e5bb8e22e8a8b2c193a54de49400bcefe95461ed0f",
+        "conflictingReviewRejected": true,
+        "reviewReplayUnchanged": true,
+        "concurrentReentry": 2,
+        "preCompletionClosureRejected": true,
+        "completionCounts": {
+          "accepted": 3,
+          "canonicalPromotions": 1,
+          "corrected": 1,
+          "needsInformation": 1,
+          "nonauthoritativeRecords": 2,
+          "nonpromotable": 1,
+          "rejected": 0,
+          "routePending": 0,
+          "unresolved": 0
+        },
+        "proposals": 5,
+        "closure": 1,
+        "whatChanged": 1,
+        "successors": 1,
+        "occurrence3": 0,
+        "replay": "already-complete",
+        "interruptedStage": "prepare-again",
+        "nextId": "leadership-conversation:888095247894ef6bc76c57631bb1d667c29e8755281c8ec71e0b195e2d0e0308"
+      },
+      "legacy": {
+        "property": "HISTORICAL_POLICY",
+        "surface": "legacy shared-support continuation",
+        "owner": "historical current-access owner → Prepare Again owner",
+        "closureVersion": "1",
+        "availableHistoricalPrepare": true,
+        "samePublicationSemanticPositive": true,
+        "revokedHistoricalOutcome": "revoked",
+        "sharedRequiredCurrentSupport": true,
+        "revokedContinuationDenied": true,
+        "replayUnchanged": true,
+        "independentSupportFallbackExecuted": false,
+        "denialAttribution": {
+          "historical": {
+            "artifactBodyAttempts": 0,
+            "artifactBodyCompletions": 0,
+            "sourceBodyCompletionHooks": 0
+          },
+          "warmPrepare": {
+            "artifactBodyAttempts": 0,
+            "artifactBodyCompletions": 0,
+            "sourceBodyCompletionHooks": 3
+          },
+          "coldPrepare": {
+            "artifactBodyAttempts": 0,
+            "artifactBodyCompletions": 0,
+            "sourceBodyCompletionHooks": 3
+          },
+          "freshPrepare": {
+            "artifactBodyAttempts": 0,
+            "sourceBodyCompletionHooks": 3
+          },
+          "revokedHistoricalSourceBodyCompletions": 0,
+          "measuredHookCompletions": 9,
+          "authorizationBasis": "source-audited governed owner enforcement; no independent authorization instrumentation",
+          "ownerRuntimeInspection": "not independently instrumented"
+        },
+        "denialReplayReconstruction": {
+          "warm": "typed denial",
+          "cold": "typed denial",
+          "freshProcess": {
+            "outcome": "owner-denied",
+            "reads": {
+              "artifact": 0,
+              "source": 3
+            }
+          },
+          "writes": 0
+        },
+        "topologyFinding": {
+          "independentHistoricalCurrentSupportReachable": false,
+          "basis": "source-audited owner conflict; independent fallback is not executed"
+        },
+        "limitation": "Shared-support revocation must deny; lawful current source reads may precede exact-set denial, so no whole-set pre-read claim is made. Independently supported fallback is not reachable through the current public owner sequence."
+      },
+      "authorizedWhatChanged": {
+        "digestA": "d9d2e9e4be27c3c4548e35e0c6118044103a408b46d5ed6c3ad7a6eb04903f6d",
+        "digestB": "adedc439f15f6f14b8aa54a6f9371fd7dde185358c7e739ede8c1e43a2b15845",
+        "differencePaths": [
+          "$.1.items.0"
+        ],
+        "expectedEquality": false,
+        "actualEquality": false
+      },
+      "property": "HISTORICAL_POLICY",
+      "inaccessibleTwinClaimed": false,
+      "deniedWhatChanged": [
+        "owner-denied",
+        "owner-denied"
+      ],
+      "deniedPrepare": [
+        "owner-denied",
+        "owner-denied"
+      ],
+      "protectedReads": 0,
+      "limitation": "Independent H/C fallback is unreachable and not claimed.",
+      "surface": "reviewed closure and shared-support successor Prepare",
+      "authorizationOutcome": "accepted history succeeds; revoked required support is denied",
+      "readAttribution": "historical and current support attribution kept separate",
+      "semanticEvidence": "closure and What Changed remain singular; successor denial replays"
+    },
+    "A09": {
+      "property": "REPLAY_RECONSTRUCTION",
+      "surface": "successor Prepare workspace",
+      "owner": "current-access owner → preparation composer",
+      "freshProcesses": 3,
+      "worker1": {
+        "outcome": "available",
+        "digest": "3b4cc34cbb059fa81b7d9368256662589b6689390c31b104eb47f479b0fdb07b",
+        "reads": {
+          "artifact": 2,
+          "source": 0
+        }
+      },
+      "worker2": {
+        "outcome": "available",
+        "digest": "3b4cc34cbb059fa81b7d9368256662589b6689390c31b104eb47f479b0fdb07b",
+        "reads": {
+          "artifact": 2,
+          "source": 0
+        }
+      },
+      "deniedWorker": {
+        "outcome": "owner-denied",
+        "digest": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "reads": {
+          "artifact": 0,
+          "source": 0
+        }
+      },
+      "exactResultEquality": true,
+      "limitation": "Denied replay is not normalized into equality.",
+      "authorizationOutcome": "allowed replay available; revoked replay typed denial",
+      "readAttribution": "fresh child-process results and body counters recorded",
+      "semanticEvidence": "authorized fresh processes exact-equal"
+    },
+    "A10": {
+      "property": "REPLAY_RECONSTRUCTION",
+      "surface": "Close and Continue lifecycle",
+      "owner": "closeAndContinue lifecycle owner",
+      "lifecycle": {
+        "conflictingSuccessorRejected": true,
+        "wrongSeriesClosureRejected": true,
+        "inputSequenceDigest": "9af77f9bb742ae867508e296cf65785d850df4573a3893f840a443ce063e064e",
+        "conflictingReviewRejected": true,
+        "reviewReplayUnchanged": true,
+        "concurrentReentry": 2,
+        "preCompletionClosureRejected": true,
+        "completionCounts": {
+          "accepted": 4,
+          "canonicalPromotions": 1,
+          "corrected": 0,
+          "needsInformation": 1,
+          "nonauthoritativeRecords": 2,
+          "nonpromotable": 1,
+          "rejected": 0,
+          "routePending": 0,
+          "unresolved": 0
+        },
+        "proposals": 5,
+        "closure": 1,
+        "whatChanged": 1,
+        "successors": 1,
+        "occurrence3": 0,
+        "replay": "already-complete",
+        "interruptedStage": "prepare-again",
+        "nextId": "leadership-conversation:888095247894ef6bc76c57631bb1d667c29e8755281c8ec71e0b195e2d0e0308"
+      },
+      "unchangedOnReplay": true,
+      "authorizationOutcome": "interruption and concurrent re-entry converge lawfully",
+      "readAttribution": "replay inventory is write-free",
+      "semanticEvidence": "same lifecycle identity and successor link",
+      "limitation": "Task-owned fixture only."
+    },
+    "A11": {
+      "scannerFindings": 0,
+      "sensitivityFindings": 2,
+      "telemetryEvents": 393,
+      "filesScanned": 589,
+      "designatedInputFiles": 12,
+      "unauthorizedPersistedFindings": 0,
+      "protectedFixtureInputExcluded": "exact owner-staged input bytes, all denied invocations inventory-equal",
+      "property": "SCANNER",
+      "surface": "content-safe evidence and persistence boundaries",
+      "owner": "content-safe observability and protected-value scanner",
+      "authorizationOutcome": "protected plaintext excluded from outputs",
+      "readAttribution": "designated owner-staged fixture inputs separated from persistence scan",
+      "semanticEvidence": "zero unauthorized persisted findings",
+      "limitation": "Sensitive values are counted in bounded fixture scan only."
+    },
+    "A13": {
+      "network": 0,
+      "provider": 0,
+      "connectors": 0,
+      "drive": 0,
+      "live": 0,
+      "deterministicTransport": 2,
+      "categoryCeilingBasis": "network is measured by intercepted socket/fetch calls; provider/connectors/Drive/live are bounded by injected task-owned composition and zero observed activity",
+      "independentCategoryCounters": false,
+      "deterministicTransportIsNotProvider": true,
+      "property": "EXECUTION_BOUNDARY",
+      "surface": "all AR-1B transports and roots",
+      "owner": "injected deterministic transport and task-owned fixture roots",
+      "authorizationOutcome": "network/live configuration blocked",
+      "readAttribution": "network socket/fetch interceptions measured; provider/connectors/Drive/live activity bounded by injected composition and zero observed activity",
+      "semanticEvidence": "all prohibited external counters zero",
+      "limitation": "Deterministic transport is not a provider request; independent category counters are not claimed."
+    },
+    "A14": {
+      "semanticDigest": "bb7d8d93396ec02fc66626bb8721aa79b071312ec95b7ba1acf299c6575780f1",
+      "repeatedDigest": "bb7d8d93396ec02fc66626bb8721aa79b071312ec95b7ba1acf299c6575780f1",
+      "rootsRemoved": 15,
+      "rootsRemaining": 0,
+      "unrelatedSentinelPreserved": true,
+      "sourceAndLockUnchanged": true,
+      "property": "CLEANUP_REPEATABILITY",
+      "surface": "complete A01–A14 execution",
+      "owner": "task-owned fixture lifecycle",
+      "authorizationOutcome": "repeat process reproduces same semantic digest",
+      "readAttribution": "temporary roots removed and source/lock unchanged",
+      "semanticEvidence": "semanticDigest equals repeatedDigest",
+      "limitation": "Operational counters are excluded only where declared."
+    }
+  },
+  "sourceDigest": "01e84d3399640514f515df8aa4f6ea54fc6d455ae1ed3ef5efb9c69d3147fd34",
+  "substantiveAcceptance": "PASS",
+  "repositoryValidation": {
+    "status": "LIMITED",
+    "typecheck": {
+      "candidateCleanPass": false,
+      "canonicalCleanPass": false,
+      "candidateSpecificDeltaEstablished": false,
+      "candidateObservation": "Recorded candidate validation encountered dependency/type-resolution failures, including unresolved Next metadata types and React namespace.",
+      "canonicalObservation": "Recorded canonical typecheck reported existing baseline errors.",
+      "limitation": "Dependency/type-resolution and baseline conditions prevented a clean final candidate-specific comparison."
+    },
+    "build": {
+      "candidateCleanPass": false,
+      "canonicalCleanPass": false,
+      "candidateSpecificDeltaEstablished": false,
+      "candidateObservation": "Recorded candidate build failed on Next metadata type resolution.",
+      "canonicalObservation": "Recorded canonical build was separately blocked by filesystem permissions writing .next/trace.",
+      "limitation": "Candidate and canonical repository/build environments did not establish a clean comparable build result."
+    },
+    "interpretation": "These limitations do not invalidate completed AR-1B substantive privacy acceptance. They prevent claiming clean repository-wide typecheck/build closure or a clean candidate-specific delta. No Product/privacy defect is inferred from these repository-validation failures.",
+    "validationRerun": false
+  },
+  "evidenceAmendment": {
+    "kind": "post-execution-repository-validation-annotation",
+    "acceptanceRerun": false,
+    "priorExecutionResultDigest": "a682a09b6baa897bb44055a2157182f3bce60002e8b1ec203472ee0b3ba01dd9",
+    "priorJsonSha256": "701a72fcfc5efe7810ea5821a6f01aa0a3a10ddeebe3dbd2c56b20f331409423",
+    "priorReportSha256": "76985672b9c2246c42ade6f6a58813dec45caef62f4d7e5adc182c18c4f220e9",
+    "digestSemantics": "resultDigest uses the existing safeDigest helper over the amended JSON payload excluding result and resultDigest. Removing substantiveAcceptance, repositoryValidation, and evidenceAmendment recovers the original execution payload and its priorExecutionResultDigest. This annotation does not represent a new acceptance execution."
+  },
+  "result": "PASS",
+  "resultDigest": "0589c67a49719a2c4049e6d84118791b22b2d0191dc610e9b9e02d42ab23b811"
+}
