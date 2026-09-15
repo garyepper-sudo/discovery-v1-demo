@@ -106,17 +106,27 @@ export function LeadershipConversationExperience({ closeOccurrence=closeAndConti
   const criticalDisabled=Boolean(critical?.pending||critical?.ack&&critical.ack.status!=="not-saved"&&!criticalProjectionArrived&&criticalBusy.current);
   const carryProposals=workspace.proposals.filter(value=>value.reviewedCarryForward),carryChoices=carryProposals.flatMap(proposal=>workspace.dispositions.filter(value=>value.proposalId===proposal.proposalId)),carryPending=carryChoices.filter(choice=>choice.disposition.startsWith("approved")&&!workspace.canonicalRoutingReceipts.some(route=>route.proposalId===choice.proposalId&&route.dispositionReceiptId===choice.dispositionReceiptId)&&!workspace.reviewedCarryForwardNonpromotions.some(receipt=>receipt.proposalId===choice.proposalId&&receipt.dispositionReceiptId===choice.dispositionReceiptId)),carryAllReviewed=carryProposals.length>0&&carryProposals.every(proposal=>carryChoices.filter(choice=>choice.proposalId===proposal.proposalId).length===1);
   const criticalFeedback=critical&&<p role="status" aria-live="polite" style={{whiteSpace:"pre-line"}}>{criticalMessage(critical,carryProposals.length,carryPending.length,criticalProjectionArrived)}</p>;
-  const[closeRefreshFailed,setCloseRefreshFailed]=useState(false),[closing,setClosing]=useState(false),[closeAck,setCloseAck]=useState<CloseAcknowledgement|null>(null),closeBusy=useRef(false),closeRefresh=useRef(false),closeTimer=useRef<ReturnType<typeof setTimeout>|null>(null),closeOrigin=useRef(initialWorkspace);
+  const[closeRefreshFailed,setCloseRefreshFailed]=useState(false),[closing,setClosing]=useState(false),[closeAck,setCloseAck]=useState<CloseAcknowledgement|null>(null),closeBusy=useRef(false),closeRefresh=useRef(false),closeTimer=useRef<ReturnType<typeof setTimeout>|null>(null),closeOrigin=useRef(initialWorkspace),closeTarget=useRef(seriesAddress);
   const closeStage=initialWorkspace.closeContinuation?.stage,closeProjectionArrived=Boolean(closeAck&&initialWorkspace!==closeOrigin.current&&closeStage===closeAck.stage&&closeStage!==closeOrigin.current.closeContinuation?.stage);
   const closeProjection=useRef(initialWorkspace);
   const resumingClose=Boolean(closeStage&&["what-changed","prepare-again","successor"].includes(closeStage));
   useEffect(()=>{
+    if(closeTarget.current===seriesAddress)return;
+    closeTarget.current=seriesAddress;
+    if(closeTimer.current){clearTimeout(closeTimer.current);closeTimer.current=null;}
+    closeBusy.current=false;closeRefresh.current=false;closeOrigin.current=initialWorkspace;setCloseRefreshFailed(false);setCloseAck(null);
+  },[seriesAddress,initialWorkspace]);
+  useEffect(()=>{
     if(closing||closeProjection.current===initialWorkspace)return;
     closeProjection.current=initialWorkspace;
+    if(closeAck?.status==="partial"&&closeAck.stage===closeStage){
+      if(closeTimer.current){clearTimeout(closeTimer.current);closeTimer.current=null;}
+      closeBusy.current=false;closeRefresh.current=true;setCloseRefreshFailed(false);return;
+    }
     if(!resumingClose&&closeStage!=="complete")return;
     if(closeTimer.current){clearTimeout(closeTimer.current);closeTimer.current=null;}
     closeBusy.current=false;closeRefresh.current=true;setCloseRefreshFailed(false);setCloseAck(null);
-  },[initialWorkspace,closing,resumingClose,closeStage]);
+  },[initialWorkspace,closing,resumingClose,closeStage,closeAck]);
   useEffect(()=>{if(closeProjectionArrived){if(closeTimer.current)clearTimeout(closeTimer.current);closeBusy.current=false;}},[closeProjectionArrived]);
   useEffect(()=>{if(!closeAck||!["complete","already-complete","partial"].includes(closeAck.status)||closeRefresh.current||closeProjectionArrived)return;closeRefresh.current=true;
     const failed=()=>{setCloseRefreshFailed(true);if(closeAck.status!=="partial")setCloseAck({status:"saved-refresh-required",stage:"complete",nextStep:"reload"});};
