@@ -257,7 +257,14 @@ cross-user learning expansions below.
 
 ### GAP-ALPHA-DURABLE-CANDIDATE-001 cross-process candidate-body first publication
 
-**Status:** Deferred. Durable candidate preservation is integrated and validated only for Founder-only single-instance Alpha. Before multi-instance or broad external rollout, prove a first candidate-preserving publication across processes without orphan candidate or presentation bodies, partial bindings, missing-body revisions, or duplicate successors. Live candidate-preserving revision proof remains Founder-unproven. Meeting Pack-based Reviewed Carry-Forward remains separate and unimplemented.
+**Status:** Deferred beyond the bounded Alpha. Durable candidate preservation,
+Meeting Pack Reviewed Carry-Forward, and occurrence continuation are integrated
+and validated for the accepted one-authorized-leader, one-recurring-series AR-6
+path. Before multi-instance or broad external rollout, prove a first
+candidate-preserving publication across processes without orphan candidate or
+presentation bodies, partial bindings, missing-body revisions, or duplicate
+successors. Cross-process candidate-body first-publication proof remains
+unproven.
 
 ## Architecture-compression deferrals
 
@@ -315,7 +322,18 @@ Outcome linkage, expected-signal linkage, supersession semantics, ordinary UI,
 and any architecture-compression or universal graph remain explicitly deferred.
 # GAP-PROD-072 — Meeting Pack Reviewed Carry-Forward review experience
 
-The durable Meeting Pack admission, review UI, owner routing, and reviewed completion are integrated; the current Founder state has been reconciled through those owners. Passage-exact citation uniqueness now accepts multiple valid passages from the same source and version when their complete citation tuples differ, while exact duplicate citation tuples fail closed. The unchanged copied Founder revision-4 candidate admits offline; live Founder proposal admission remains unverified after this correction.
+**Current bounded Alpha status:** The durable Meeting Pack admission, review
+UI, owner routing, and reviewed completion are integrated and were exercised in
+the accepted AR-6 path. Passage-exact citation uniqueness accepts multiple
+valid passages from the same source and version when their complete citation
+tuples differ, while exact duplicate citation tuples fail closed. This does not
+establish multi-instance, broad external, or generalized provider proof.
+
+**Historical pre-AR-6 record:** The unchanged copied Founder revision-4
+candidate admitted offline while live Founder proposal admission was still
+unverified after the citation correction. That record explains the prior
+admission concern; it is superseded for the bounded AR-6 acceptance scope, not
+deleted or generalized.
 
 
 ### GAP-D-005 — reviewed occurrence continuation validation
@@ -329,16 +347,26 @@ truthful action feedback. Existing owners and persistence families remain
 unchanged; version-2 records distinguish Meeting Pack closure from legacy
 freeze/Capture closure without fabricating legacy receipts.
 
-Canonical integration requires the accepted Git closure. The live Founder
-workflow remains at completed Reviewed Carry-Forward, with no occurrence
-closure or successor and no revision 5. **Founder Close Occurrence 1 and
-Occurrence 2 Live Verification V1** remains pending and has not begun. Provider
-requests and live mutations were zero during implementation. Universal Ask,
-compounding measurement, longitudinal learning proof, external multi-user
-rollout, and broader readiness remain open; isolated two-cycle reconstruction
-is not live two-cycle proof.
+**Current bounded Alpha status:** AR-6 attempt 90 accepted the integrated path
+through one completed occurrence and a distinct successor that is prepared and
+not started. It exercised current authorization, source-scoped provider-backed
+analysis, Meeting Pack publication, Capture proposals, reviewed carry-forward,
+finalization, closure/What Changed, successor preparation, reload, fresh
+reconstruction, replay, and cleanup. The associated reconciler recorded 63/63
+facts and 7/7 measurements with zero failures or blocks. This is a technical
+Alpha acceptance, not a claim of a completed second meeting, general
+multi-user operation, continuous monitoring, broad external rollout, or
+longitudinal learning proof.
 
-**AR-6 authorization finding (2026-09-16):** the bounded development regression
+**Historical pre-AR-6 record:** Canonical integration then required accepted
+Git closure; the Founder workflow was recorded at completed Reviewed
+Carry-Forward with no occurrence closure or successor, and Founder Close
+Occurrence 1 / Occurrence 2 Live Verification V1 had not begun. Provider
+requests and live mutations were zero during that implementation lane. This
+record is retained for provenance and is superseded only by the bounded AR-6
+acceptance above.
+
+**Historical AR-6 authorization finding (2026-09-16):** the bounded development regression
 `scripts/product/validateDevelopmentCaptureAuthorizationBoundary.ts` proves
 missing registered preparation scope denies and registered scope admits five
 carry-forward proposals with stable replay. Its actual
@@ -350,5 +378,8 @@ an authorization boundary defect, not a policy-grant correction: Astra B
 confirmed the existing canonical claim-support grant is sufficient, and the
 unsupported sandbox CEO operation addition was removed. Enforce current
 organization and exact-series participant access at the existing action/owner
-boundary before protected reads or writes. AR-6 remains blocked; no Product
-capability is promoted and no live Clerk proof is claimed.
+boundary before protected reads or writes. This finding was resolved before
+attempt 90: accepted validation exercised real Clerk authentication,
+onboarding, organization, and exact-series access with authorization before
+protected retrieval and body reads. No broader capability promotion follows
+from that bounded proof.

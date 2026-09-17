@@ -1,9 +1,15 @@
 # Leadership Conversation Prepare/Capture Specification 001
 
-**Status:** Canonical implementation boundary; implementation not begun
+**Status:** Canonical behavioral boundary; implemented and validated for the bounded Chief V1 Alpha acceptance
 **Gap:** `GAP-B-019`
 **Roadmap phase:** Leadership Conversation Phase 1
 **Architecture change:** None. This specification composes existing owners.
+
+The implementation status above is limited to the accepted AR-6 bounded Alpha
+path (attempt 90). This document remains the behavioral contract, not the
+acceptance receipt or a claim of broader rollout. For the current visible
+experience, internal lifecycle, acceptance boundary, and remaining limits, see
+[Chief V1 Alpha — Current Experience and Lifecycle](./CHIEF_V1_ALPHA_CURRENT_EXPERIENCE_AND_LIFECYCLE.md).
 
 ## Objective
 

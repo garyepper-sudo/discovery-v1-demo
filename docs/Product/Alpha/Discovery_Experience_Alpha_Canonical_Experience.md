@@ -2,7 +2,7 @@
 
 # Canonical Experience Specification
 
-**Status:** Implemented Alpha experience specification — canonical for Discovery Experience Alpha
+**Status:** Historical prototype authority — canonical only for Discovery Experience Alpha `/alpha`
 **Version:** 1.0
 **Program:** Discovery Experience Alpha
 **Primary phase:** High-fidelity interactive prototype
@@ -10,7 +10,11 @@
 **Production integration:** Deferred
 **Detailed supplements:** Scene One through Scene Nine specifications
 
-This document is canonical only for Discovery Experience Alpha. It remains
+This document is canonical only for the historical Discovery Experience Alpha
+`/alpha` prototype. It is not the authority for the current Chief V1 Alpha
+experience. See
+[Chief V1 Alpha — Current Experience and Lifecycle](../CHIEF_V1_ALPHA_CURRENT_EXPERIENCE_AND_LIFECYCLE.md)
+for that bounded accepted path. This document remains
 subordinate to the Product Canon, Discovery Platform Principles, Shared
 Organizational Intelligence, the Organization Experience Canon, and applicable
 architecture canon. It does not define platform-wide product or technical

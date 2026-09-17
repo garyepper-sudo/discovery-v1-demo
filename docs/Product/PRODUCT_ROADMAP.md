@@ -1,6 +1,27 @@
 # Discovery Product Roadmap
 
-## Completed milestone — Founder-Visible Content-Grounded Meeting Pack Verification V1
+## Current bounded Alpha closure
+
+**Status:** AR-6 technical acceptance is complete. Attempt 90 reconciled 63/63
+facts and 7/7 measurements with zero failures or blocks, then completed cleanup
+and an independent zero check. The accepted scope is one authorized leader,
+one recurring consequential Leadership Conversation, and one long-lived
+`ProductQuestion`; it completes one occurrence and prepares a distinct
+successor without starting it.
+
+The accepted path uses Meeting Pack-first preparation, source-scoped
+provider-backed analysis, Capture proposals rather than truth, reviewed
+carry-forward, finalization, closure/What Changed, and Prepare Again. It
+separately proves real Clerk authentication, onboarding, organization, and
+exact-series access before protected retrieval/body reads. It does not prove a
+completed second occurrence, multi-user operation, continuous monitoring,
+broad external rollout, longitudinal learning, or launch readiness. Those
+remain separately governed.
+
+The current concise reference is
+[Chief V1 Alpha — Current Experience and Lifecycle](./CHIEF_V1_ALPHA_CURRENT_EXPERIENCE_AND_LIFECYCLE.md).
+
+## Historical baseline — Founder-Visible Content-Grounded Meeting Pack Verification V1
 
 Canonical architecture is intact. The model-agnostic source-scoped transport
 adapter is integrated and validated offline: normal Founder Build and Refresh
@@ -23,12 +44,14 @@ and citation projections. Revision 3 remained current and intact through a
 clean server restart and Founder-visible reconstruction. No second provider
 request was made or is authorized for this completed milestone.
 
-The next Product milestones are ordered: (1) Founder Reviewed Carry-Forward
-from Content-Grounded Analysis V1; (2) Close / What Changed / Prepare Again /
-real Occurrence 2; (3) Governed Execution Context and Scope Inspector V1; (4)
-Compounding Understanding Demonstration V1; and (5) external design-partner
-shadow use. General organizational understanding and longitudinal learning are
-not demonstrated. After the first real two-cycle reviewed loop, bounded
+The next Product milestones after that historical proof were Founder Reviewed
+Carry-Forward, Close / What Changed / Prepare Again, and a successor
+occurrence. The bounded AR-6 acceptance has since exercised those lifecycle
+steps through a prepared-not-started successor. Governed Execution Context and
+Scope Inspector V1, Compounding Understanding Demonstration V1, and external
+design-partner shadow use remain separate. General organizational understanding
+and longitudinal learning are not demonstrated. After a separately authorized
+real two-cycle reviewed loop, bounded
 longitudinal evaluation may hold model and current evidence
 constant while comparing current evidence only, authentic owner-issued reviewed
 history, irrelevant token-matched history, stale or superseded history, and a
@@ -53,9 +76,15 @@ organizational outcomes are **NOT TESTED**. This historical lane does not
 precede the immediate adapter and real reviewed-cycle milestones above.
 Synthetic results may not be marketed as customer evidence.
 
-Meeting Pack-first UX V1 makes that existing pack the primary preparation surface: concise context and optional private input lead directly to Build, while analysis remains inspectable supporting work. The visible experience is `Prepare → Meet → Confirm outcomes → Continue`; the governed internal lifecycle is unchanged. Multi-Meeting Shell and Meeting Home remain next.
-
-Next, after founder acceptance: an authorized meeting directory, parameterized meeting-series routes, left navigation, and three simultaneous meeting series. Full chat, customer-role lenses, meeting profiles, calendar sharing, PDF generation, and external Scout monitoring remain deferred. Customer roles and meeting profiles are not Discovery personas.
+Meeting Pack-first UX V1 makes the pack the primary preparation surface:
+concise context and optional private input lead directly to Build, while
+analysis remains inspectable supporting work. The visible experience is
+`Meeting Home / Meeting Pack → Prepare → Meet → Confirm outcomes → Continue`;
+the governed internal lifecycle is unchanged. The accepted bounded Alpha
+includes its authorized meeting directory and Meeting Home. Multiple visible
+meeting series, full chat, customer-role lenses, meeting profiles, calendar
+sharing, PDF generation, and external Scout monitoring remain deferred.
+Customer roles and meeting profiles are not Discovery personas.
 
 ## Persona architecture and organizational-learning application sequence
 
@@ -199,10 +228,10 @@ historical PRE-001B evidence remain valid for their exact bytes; V1's promised
 multi-profile reuse was incomplete until V1.1 qualified the closed reusable
 dispatch boundary, and V1.2 exposes the five existing ordinary lifecycle
 measurements without transferring adjudication. The decomposed AR-5 program is
-complete because both AR-5A and AR-5B pass. The next separately governed
-boundary is AR-1B, followed by AR-6. The next five ordered
-items are `ALPHA-READY-001`, `ALPHA-BASE-A-001`, `ALPHA-BENCH-LONG-001`,
-`ALPHA-OPT-001`, and `ALPHA-BASE-DECIDE-001`; none has begun.
+complete because both AR-5A and AR-5B pass. AR-1B and AR-6 subsequently
+completed. The next separately governed items are `ALPHA-BASE-A-001`,
+`ALPHA-BENCH-LONG-001`, `ALPHA-OPT-001`, and `ALPHA-BASE-DECIDE-001`; none is
+implied complete by AR-6.
 
 Gate-5 product-necessity classification is `UNPROVEN — DEFER GENERALIZATION`.
 Chief necessity is proven, but no real second Product consumer has established
@@ -242,7 +271,7 @@ parallel lanes; it does not create another roadmap owner.
 | 10 | `ALPHA-RM-G5-001` | What Changed / Prepare Again | COMPLETE |
 | 11 | `ALPHA-RM-G6-001` | Chief-of-Staff value layer | COMPLETE |
 | 12 | `ALPHA-RM-G7-001` | Alpha experience and operations | COMPLETE |
-| 13 | `ALPHA-READY-001` | Alpha Readiness Foundation | IN PROGRESS — AR-1A, the empty-contribution correction, AR-3, AR-4, AR-2-PRE-001A, AR-2-PRE-001B, Acceptance Foundation V1.1/V1.2, AR-5A, AR-5B, and AR-2 are complete; AR-1B is next, followed by AR-6 |
+| 13 | `ALPHA-READY-001` | Alpha Readiness Foundation | COMPLETE for bounded AR-6 technical acceptance — AR-1B and AR-6 completed; this does not freeze a baseline, authorize operations, or authorize launch |
 | 14 | `ALPHA-BASE-A-001` | Freeze Alpha Baseline A | QUEUED — blocked by `ALPHA-READY-001` PASS and separate authorization |
 | 15 | `ALPHA-BENCH-LONG-001` | Longitudinal Chief / Organizational Understanding benchmark | QUEUED — execution blocked until `ALPHA-BASE-A-001` |
 | 16 | `ALPHA-OPT-001` | Bounded cognition optimization | QUEUED — blocked by the frozen baseline benchmark run |
@@ -337,8 +366,8 @@ The accepted readiness sequence is:
 11. `AR-2-GOV-001` — Critical-Path Test Pyramid Gate Contract — COMPLETE;
 12. `AR-2` — Critical-Path Test Pyramid Freeze — COMPLETE;
 13. `AR-1B` — Complete Governed Cognition Non-Disclosure Adversarial
-   Acceptance; and
-14. `AR-6` — Integrated Alpha Readiness Acceptance.
+   Acceptance — COMPLETE; and
+14. `AR-6` — Integrated Alpha Readiness Acceptance — COMPLETE (attempt 90).
 
 `AR-1A` and `AR-1B` share the `AR-1` program identity. AR-5 is complete because
 both AR-5A and AR-5B pass. The accepted Product journey is one completed
@@ -346,7 +375,8 @@ Occurrence 1 followed by one owner-issued Occurrence 2 that is prepared,
 not-started, reload-safe, and fresh-process reconstructed; it does not claim a
 second completed meeting cycle. Every subgate uses a separate bounded commit.
 Only one write-bearing task may be active. Read-only
-preparation may overlap. `ALPHA-BASE-A-001` remains blocked until AR-6 passes.
+preparation may overlap. AR-6 has passed; `ALPHA-BASE-A-001` remains a
+separately authorized baseline-freeze decision.
 Benchmark execution remains blocked until Baseline A is frozen. Optimization,
 the baseline decision, Alpha Operations, and design-partner launch retain their
 existing dependencies.

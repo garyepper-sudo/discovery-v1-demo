@@ -6,17 +6,19 @@ After a successful working analysis, the Leadership Conversation offers `Build m
 
 Private context supports `Keep private`, `Use in my talking points`, and `Propose for the agenda`; the default is private and agenda use requires explicit originating-user intent. Saved edits reconstruct on reload and in a fresh process. Changed inputs mark an edited pack potentially out of date rather than silently regenerating it. The agenda and private print projections remain separate. Multiple visible meeting series, role lenses, meeting profiles, full chat, calendar sharing, PDF generation, and external Scout monitoring are outside this milestone.
 
-**Status:** Foundational Alpha specification — historical where superseded
+**Status:** Historical prototype specification — superseded for current Chief V1 Alpha
 **Version:** 0.1
 **Program:** Discovery Experience Alpha
 **Primary implementation phase:** Mocked interactive experience
 **Implementation:** Implemented selectively through deterministic fixtures
 **Production integration:** Explicitly deferred
 
-This document preserves the foundational Alpha design. The later canonical
-Alpha experience specification governs the Alpha journey, and the committed
-prototype records implemented behavior where either document differs. All
-Alpha documentation remains subordinate to the Product Canon, Discovery
+This document preserves the foundational `/alpha` prototype design. It is not
+the current Chief V1 Alpha experience or acceptance authority. The later
+canonical Alpha experience specification governs that prototype where the two
+differ; the current bounded Chief V1 Alpha reference is
+[Chief V1 Alpha — Current Experience and Lifecycle](../CHIEF_V1_ALPHA_CURRENT_EXPERIENCE_AND_LIFECYCLE.md).
+All Alpha documentation remains subordinate to the Product Canon, Discovery
 Platform Principles, Shared Organizational Intelligence, the Organization
 Experience Canon, and applicable architecture canon.
 
