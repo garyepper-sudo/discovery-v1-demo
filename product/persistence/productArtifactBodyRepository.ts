@@ -4,6 +4,8 @@ import { randomUUID } from "node:crypto";
 import { constants } from "node:fs";
 import { chmod, link, lstat, mkdir, open, readFile, readdir, realpath, unlink } from "node:fs/promises";
 import path from "node:path";
+import type { Sql } from "postgres";
+import { del, get, put } from "@vercel/blob";
 import {
   createProductArtifactBodyRefV1,
   productArtifactBodyDigest,
@@ -17,11 +19,21 @@ const SAFE = /^[A-Za-z0-9_-]+$/;
 const DIGEST = /^[a-f0-9]{64}$/;
 
 export interface ProductArtifactBodyRepository {
-  readonly backend: "filesystem";
+  readonly backend: "filesystem" | "postgres-blob";
   stage(input: ProductArtifactBodyStageRequestV1): Promise<ProductArtifactBodyStageReceiptV1>;
   readStagedExact(body: ProductArtifactBodyRefV1): Promise<Uint8Array>;
   discardUnreferenced?(body: ProductArtifactBodyRefV1): Promise<void>;
   withPublicationLock?<T>(organizationId:string,semanticOwner:string,operation:()=>Promise<T>):Promise<T>;
+}
+
+export class PostgresBlobProductArtifactBodyRepository implements ProductArtifactBodyRepository {
+  readonly backend="postgres-blob" as const;
+  constructor(private readonly sql:Sql<Record<string,unknown>>,private readonly prefix=process.env.DISCOVERY_CHIEF_BLOB_PREFIX??"discovery/chief/v1"){}
+  private key(body:ProductArtifactBodyRefV1){return `${this.prefix.replace(/^\/+|\/+$/g,"")}/artifacts/${body.organizationId}/${body.semanticOwner}/${body.bodyId}.json`;}
+  async stage(input:ProductArtifactBodyStageRequestV1){const staged=receipt(input,"staged"),key=this.key(staged.body);const found=await this.sql<{ref_payload_text:string;blob_key:string}[]>`SELECT ref_payload_text,blob_key FROM chief_artifact_bodies WHERE organization_id=${input.organizationId} AND semantic_owner=${input.semanticOwner} AND artifact_type=${input.artifactType} AND artifact_id=${input.artifactId} AND artifact_revision=${input.artifactRevision}`;if(found[0]){const prior=JSON.parse(found[0].ref_payload_text) as ProductArtifactBodyRefV1;if(prior.refDigest!==staged.body.refDigest)throw new Error("Product artifact body identity collision.");return receipt(input,"exact-replay");}await put(key,Buffer.from(input.bytes),{access:"private",addRandomSuffix:false,allowOverwrite:false,contentType:"application/json"});await this.sql.begin("isolation level serializable",async tx=>{const prior=await tx<{ref_payload_text:string}[]>`SELECT ref_payload_text FROM chief_artifact_bodies WHERE organization_id=${input.organizationId} AND semantic_owner=${input.semanticOwner} AND artifact_type=${input.artifactType} AND artifact_id=${input.artifactId} AND artifact_revision=${input.artifactRevision} FOR UPDATE`;if(prior[0]){if((JSON.parse(prior[0].ref_payload_text) as ProductArtifactBodyRefV1).refDigest!==staged.body.refDigest)throw new Error("Product artifact body identity collision.");return;}await tx`INSERT INTO chief_artifact_bodies (organization_id,semantic_owner,artifact_type,artifact_id,artifact_revision,ref_digest,exact_body_digest,byte_length,schema_ref,ref_payload_text,blob_key,storage_generation,storage_state) VALUES (${input.organizationId},${input.semanticOwner},${input.artifactType},${input.artifactId},${input.artifactRevision},${staged.body.refDigest},${staged.body.exactBodyDigest},${staged.body.byteLength},${staged.body.schemaRef},${JSON.stringify(staged.body)},${key},gen_random_uuid(),'ready')`;});return staged;}
+  async readStagedExact(body:ProductArtifactBodyRefV1){validateProductArtifactBodyRefV1(body);const rows=await this.sql<{ref_payload_text:string;blob_key:string;storage_state:string}[]>`SELECT ref_payload_text,blob_key,storage_state FROM chief_artifact_bodies WHERE organization_id=${body.organizationId} AND semantic_owner=${body.semanticOwner} AND artifact_type=${body.artifactType} AND artifact_id=${body.artifactId} AND artifact_revision=${body.artifactRevision}`;if(rows.length!==1||rows[0].storage_state!=="ready"||(JSON.parse(rows[0].ref_payload_text) as ProductArtifactBodyRefV1).refDigest!==body.refDigest)throw new Error("Product artifact body reference integrity failed.");const result=await get(rows[0].blob_key,{access:"private",useCache:false});if(!result||result.statusCode!==200)throw new Error("Product artifact body integrity failed.");const bytes=new Uint8Array(await new Response(result.stream).arrayBuffer());if(bytes.byteLength!==body.byteLength||productArtifactBodyDigest(bytes)!==body.exactBodyDigest)throw new Error("Product artifact body integrity failed.");return bytes;}
+  async discardUnreferenced(body:ProductArtifactBodyRefV1):Promise<void>{validateProductArtifactBodyRefV1(body);const target=await this.sql.begin("isolation level serializable",async tx=>{await tx`SELECT pg_advisory_xact_lock(hashtextextended(${`chief-artifact:${body.organizationId}:${body.semanticOwner}:${body.exactBodyDigest}`},0))`;const rows=await tx<{blob_key:string;storage_state:string}[]>`SELECT blob_key,storage_state FROM chief_artifact_bodies WHERE ref_digest=${body.refDigest} FOR UPDATE`;if(rows.length!==1||rows[0].storage_state!=="ready")return null;const references=await tx<{count:string}[]>`SELECT count(*)::text AS count FROM chief_artifact_bodies WHERE exact_body_digest=${body.exactBodyDigest} AND storage_state='ready' AND ref_digest<>${body.refDigest}`;if(Number(references[0]!.count)>0){await tx`UPDATE chief_artifact_bodies SET storage_state='deleted' WHERE ref_digest=${body.refDigest}`;return null;}await tx`UPDATE chief_artifact_bodies SET storage_state='delete-pending' WHERE ref_digest=${body.refDigest}`;return rows[0]!.blob_key;});if(!target)return;try{await del(target);}catch{throw new Error("Product artifact body cleanup is unavailable.");}await this.sql`UPDATE chief_artifact_bodies SET storage_state='deleted' WHERE ref_digest=${body.refDigest} AND storage_state='delete-pending'`;}
+  async withPublicationLock<T>(organizationId:string,semanticOwner:string,operation:()=>Promise<T>):Promise<T>{const lock=`chief-artifact-publication:${organizationId}:${semanticOwner}`;await this.sql`SELECT pg_advisory_lock(hashtextextended(${lock},0))`;try{return await operation();}finally{await this.sql`SELECT pg_advisory_unlock(hashtextextended(${lock},0))`;}}
 }
 
 const publicationQueues=new Map<string,Promise<void>>();
