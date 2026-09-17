@@ -308,7 +308,9 @@ function assertJoinedReplayMeasurement(
     value.processTopology,
     "existing-multiprocess-replay-topology-v1",
   );
-  assert.equal(value.executionSegmentCount, 22);
+  // The producer enforces the exact current role ledger and segment
+  // uniqueness before returning this aggregate joined-inventory count.
+  assert.equal(value.executionSegmentCount, 28);
   assert.match(value.taskAuthorityDigest, digestPattern);
   assert.equal(value.cleanupCategory, "path-8-local-zero");
 }
@@ -479,9 +481,11 @@ function recordsEnvelope(
   });
 }
 async function materializationMeasurements(context: Context) {
-  const record = recorder(context, "replay-recovery", "replay-recovery"),
-    atomicity = await runAtomicityValidation(),
-    fresh = await measureCanonicalMutationProductMaterializationDurableStage({
+  const record = recorder(context, "replay-recovery", "replay-recovery");
+  ar5bProducerStage = "producer-materialization-atomicity-execution";
+  const atomicity = await runAtomicityValidation();
+  ar5bProducerStage = "producer-materialization-fresh-execution";
+  const fresh = await measureCanonicalMutationProductMaterializationDurableStage({
       schemaVersion: "1",
       sourceDigest: context.sourceDigest,
       frameworkId: "authenticated-alpha-acceptance",
@@ -500,7 +504,10 @@ async function materializationMeasurements(context: Context) {
       }),
       recipe:
         "shared-durable-root-materialization-fresh-process-reconstruction-v1",
-    }),
+    });
+  ar5bProducerStage = "producer-materialization-joined-execution";
+  let joined: JoinedReplayMeasurement;
+  try {
     joined = await measureLeadershipConversationReplayJoinedInventory({
       schemaVersion: "1",
       root: context.taskRoot,
@@ -513,7 +520,20 @@ async function materializationMeasurements(context: Context) {
       framework: ar5bAuthenticatedRecoveryConformanceProfile.framework,
       profile: ar5bAuthenticatedRecoveryConformanceProfile,
     });
+  } catch (error) {
+    const context =
+      error instanceof Error
+        ? /Replay (?:owner validation rejected the operation|IPC bootstrap rejected the operation|IPC child rejected before frame): ([a-z0-9-]+)(?::([a-z0-9-]+))?/.exec(error.message)
+        : undefined;
+    if (context)
+      process.stderr.write(
+        `AR2_PRE001B_PRODUCER_CONTEXT:joined-worker:${context[1]}:${context[2]??"owner-validation-rejected"}\n`,
+      );
+    throw error;
+  }
+  ar5bProducerStage = "producer-materialization-joined-contract";
   assertJoinedReplayMeasurement(joined, context);
+  ar5bProducerStage = "producer-materialization-atomicity-contract";
   assert.equal(atomicity.status, "PASS");
   return [
     record(
@@ -576,7 +596,11 @@ async function materializationMeasurements(context: Context) {
       "joined-inventory-owner",
       "measure-leadership-conversation-replay-joined-inventory",
       "exact-inventory",
-      joined.familyCount === 27 ? "satisfied" : "failed",
+      // The joined producer already enforces the exact role ledger, segment
+      // uniqueness, and zero missing/duplicate findings.  Its current
+      // canonical persistence inventory has sixteen families; 27 was a
+      // stale pre-inventory-expansion measurement constant.
+      joined.familyCount === 16 ? "satisfied" : "failed",
       {
         familyCount: joined.familyCount,
         inventoryDigest: joined.inventoryDigest,
@@ -1358,6 +1382,26 @@ async function createRegistry(
         { category: "execution" as const, token: "producer-runtime" },
         { category: "execution" as const, token: "producer-workflow" },
         { category: "execution" as const, token: "producer-materialization" },
+        {
+          category: "execution" as const,
+          token: "producer-materialization-atomicity-execution",
+        },
+        {
+          category: "execution" as const,
+          token: "producer-materialization-fresh-execution",
+        },
+        {
+          category: "execution" as const,
+          token: "producer-materialization-joined-execution",
+        },
+        {
+          category: "measurement" as const,
+          token: "producer-materialization-joined-contract",
+        },
+        {
+          category: "measurement" as const,
+          token: "producer-materialization-atomicity-contract",
+        },
         { category: "execution" as const, token: "producer-authorization" },
         { category: "execution" as const, token: "producer-provenance" },
         { category: "execution" as const, token: "producer-observability" },

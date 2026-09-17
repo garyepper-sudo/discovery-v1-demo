@@ -136,8 +136,10 @@ async function occurrence1Context(seriesAddress?:string) {
   if (!await server.authorizePageCurrentAccess({ userId, organizationId: SANDBOX_ORGANIZATION_ID })) throw new Error("Occurrence 1 is unavailable.");
   const fixtureRoot = process.env.DISCOVERY_NORTHSTAR_PREPARATION_LINEAGE_FIXTURE_ROOT;
   if (!fixtureRoot) throw new Error("Occurrence 1 is unavailable.");
-  const seed = await readNorthstarPreparationLineageSeed({ fixtureRoot, organizationId: SANDBOX_ORGANIZATION_ID, fixtureId: "northstar-preparation-lineage-fixture-v1", provisioningKey: "northstar-preparation-lineage:v1" }), fixture = northstarLeadershipConversationFixture(seed.productQuestionId), identity = { userId, organizationId: seed.organizationId, questionId: seed.productQuestionId, conversationId: fixture.conversationId };
-  return { server, identity, fixture,seriesId:`leadership-conversation-series:${identity.conversationId}` };
+  const seed = await readNorthstarPreparationLineageSeed({ fixtureRoot, organizationId: SANDBOX_ORGANIZATION_ID, fixtureId: "northstar-preparation-lineage-fixture-v1", provisioningKey: "northstar-preparation-lineage:v1" }), fixture = northstarLeadershipConversationFixture(seed.productQuestionId), identity = { userId, organizationId: seed.organizationId, questionId: seed.productQuestionId, conversationId: fixture.conversationId }, seriesId = `leadership-conversation-series:${fixture.conversationId}`;
+  const currentAccess = createParticipantReferenceMeetingCurrentAccessFromEnvironment();
+  if ((await currentAccess.authorize({ userId, organizationId: identity.organizationId, seriesId })) !== "authorized") throw new Error("Occurrence 1 is unavailable.");
+  return { server, identity, fixture,seriesId };
 }
 async function currentMeetingPackContext(seriesAddress?:string){if(seriesAddress){if(process.env.DISCOVERY_FOUNDER_LOCAL_ALPHA_ENABLED==="true"){const founder=await createFounderMeetingHomeComposition(seriesAddress);return{server:founder.server,identity:{userId:founder.request.consumerId,organizationId:founder.meeting.organizationId,questionId:founder.meeting.questionId,conversationId:founder.meeting.occurrenceId},seriesId:founder.meeting.seriesId,close:founder.close};}const userId=await signedInUserId(),resolved=await resolveAuthorizedMeetingAddress({userId,organizationId:SANDBOX_ORGANIZATION_ID,seriesAddress});if(!resolved)throw new Error("Meeting is unavailable.");return{server:createLeadershipConversationServerComposition(),identity:{userId,organizationId:resolved.organizationId,questionId:resolved.questionId,conversationId:resolved.occurrenceId},seriesId:resolved.seriesId,close:async()=>{}};}const current=await occurrence1Context(),workspace=await current.server.workspace(current.identity);if(workspace.futurePreparationLink&&workspace.closureCompletion){const identity={...current.identity,conversationId:workspace.futurePreparationLink.nextConversationId};return{server:current.server,identity,seriesId:workspace.closureCompletion.seriesId,close:async()=>{}};}return{server:current.server,identity:current.identity,seriesId:`leadership-conversation-series:${current.identity.conversationId}`,close:async()=>{}};}
 async function reviewedCarryForwardContext(seriesAddress?:string){
@@ -186,11 +188,12 @@ export async function captureOccurrence1Action(input: { meetingNotes: string;ser
   const checkpoint = await resolveCurrentLeadershipConversationCheckpoint({...identity,seriesId});
   const contributedItems = checkpoint.contributionArtifactIds.length ? await server.readFrozenPrivateWorkingContribution({ ...identity, snapshotId: checkpoint.checkpointId, artifactIds: checkpoint.contributionArtifactIds }) : [];
   await server.captureFrozenPrivateWorkingContribution({ ...identity, snapshotId: checkpoint.checkpointId, idempotencyKey: `occurrence-1-contribution-capture:${identity.conversationId}` });
+  await server.buildMeetingPack({ ...identity, seriesId });
   const contributionRecord = contributedItems.length ? `Contributed from Private Working:\n${contributedItems.map(item => `- ${item}`).join("\n")}` : "No Private Working content was contributed.";
   const text = `${new TextDecoder().decode(NORTHSTAR_LEADERSHIP_CONVERSATION_FIXTURE.captureBytes)}\n${contributionRecord}\n\nMeeting notes:\n${meetingNotes}\n`;
   const stored = await server.receiveUpload({ ...identity, frozenSnapshotId: checkpoint.checkpointId, purposeRef: fixture.purposeRef, mediaType: "text/plain", bytes: new TextEncoder().encode(text), displayLabel: "Occurrence 1 meeting record", originalFilename: null, idempotencyKey: `occurrence-1-capture:${identity.conversationId}` }), uploadReceipt = stored.uploadReceipts.filter(item => item.conversationId === identity.conversationId).at(-1);
   if (!uploadReceipt) throw new Error("Occurrence 1 Capture is unavailable.");
-  await server.beginReviewedCarryForward({ ...identity, uploadReceiptId: uploadReceipt.uploadReceiptId, idempotencyKey: `occurrence-1-reviewed-carry-forward:${identity.conversationId}` });
+  await server.beginReviewedCarryForwardFromMeetingPack({ ...identity, seriesId });
   const workspace=await server.workspace(identity);observeJourney("capture","completed","success");return workspace;
 }
 

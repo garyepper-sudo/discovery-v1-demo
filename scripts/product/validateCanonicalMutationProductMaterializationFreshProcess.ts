@@ -43,7 +43,7 @@ export async function runWorker(
   assert.equal(stderr, "");
   assert.match(stdout, /PASS/);
   if (role === "owner-replay") {
-    assert.match(stdout, /"freshProcesses":17/);
+    assert.match(stdout, /"freshProcesses":23/);
     assert.match(stdout, /"networkCalls":0/);
     assert.match(stdout, /"driveReads":0/);
     assert.match(stdout, /"productionAccess":0/);

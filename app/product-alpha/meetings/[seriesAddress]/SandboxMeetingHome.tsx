@@ -94,7 +94,7 @@ export default async function SandboxMeetingHome({
         questionId: meeting.questionId,
         conversationId: meeting.occurrenceId,
         seriesId: meeting.seriesId,
-        workingAnalysisDigest: analysis.candidateDigest,
+        workingAnalysisDigest: analysis.sourcePacketDigest,
       })
     : [];
   const personal = await getPersonalRoomSheetPreviewAction(seriesAddress);
@@ -132,7 +132,7 @@ export default async function SandboxMeetingHome({
 
   return <DiscoveryShell organization={{ organizationId: meeting.organizationId, organizationName: "Northstar Implementation Services", runtimeAvailable: true, coherence: null, confidence: null, coherenceLabel: "Understanding available" }} showSessionImpact={false} productNavigation={<MeetingPortfolioNavigation meetings={directory}/>}>
     <MeetingPortfolioShell meetings={directory}>
-      <LeadershipConversationExperience initialWorkspace={workspace} prepare={prepare} valueLayer={compileChiefOfStaffValueLayerV1(prepare, analysis)} personalSheet={personal.sheet} occurrenceRef={personal.occurrenceRef} initialCheckpoint={checkpoint ? { checkpointId: checkpoint.checkpointId, contributionArtifactIds: checkpoint.contributionArtifactIds } : null} initialMeetingPack={pack} meetingPackUnavailable={unavailable} relevantElsewhere={relevantElsewhere} alignment={alignment} workingAnalysisDigest={analysis?.candidateDigest ?? null} seriesAddress={seriesAddress} occurrenceLabel={meeting.predecessorOccurrenceId ? "Successor occurrence" : "Current occurrence"}/>
+      <LeadershipConversationExperience initialWorkspace={workspace} prepare={prepare} valueLayer={compileChiefOfStaffValueLayerV1(prepare, analysis)} personalSheet={personal.sheet} occurrenceRef={personal.occurrenceRef} initialCheckpoint={checkpoint ? { checkpointId: checkpoint.checkpointId, contributionArtifactIds: checkpoint.contributionArtifactIds } : null} initialMeetingPack={pack} meetingPackUnavailable={unavailable} relevantElsewhere={relevantElsewhere} alignment={alignment} workingAnalysisDigest={analysis?.sourcePacketDigest ?? null} seriesAddress={seriesAddress} occurrenceLabel={meeting.predecessorOccurrenceId ? "Successor occurrence" : "Current occurrence"}/>
     </MeetingPortfolioShell>
   </DiscoveryShell>;
 }

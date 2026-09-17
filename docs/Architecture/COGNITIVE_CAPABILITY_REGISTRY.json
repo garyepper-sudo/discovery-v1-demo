@@ -383,6 +383,7 @@
       ],
       "consumesCapabilities": [
         "CAP-ABS-001",
+        "CAP-UND-001",
         "CAP-UND-002"
       ],
       "producesObjects": [
@@ -960,7 +961,8 @@
       ],
       "consumesCapabilities": [
         "CAP-MEM-001",
-        "CAP-LRN-001"
+        "CAP-LRN-001",
+        "CAP-ADP-001"
       ],
       "producesObjects": [
         "OrganizationalLearningProfile"
@@ -1424,8 +1426,8 @@
         "PredictionEvaluation"
       ],
       "consumedByCapabilities": [
-        "CAP-LRN-002",
-        "CAP-SIM-001"
+        "CAP-SIM-001",
+        "CAP-LRN-002"
       ],
       "runtimeDestination": "OrganizationRuntime.predictionEvaluations",
       "executiveDestinations": [
@@ -1434,7 +1436,7 @@
         "ExecutiveWorkspace",
         "Atlas"
       ],
-      "atlasCoverage": "planned",
+      "atlasCoverage": "yes",
       "benchmarkCoverage": [
         "Atlas"
       ],
@@ -1480,7 +1482,8 @@
       "consumesCapabilities": [
         "CAP-MEM-001",
         "CAP-SELF-001",
-        "CAP-SELF-002"
+        "CAP-SELF-002",
+        "CAP-SIM-001"
       ],
       "producesObjects": [
         "ArchitectureRecommendation"
@@ -1508,7 +1511,9 @@
           "fileId": "INFRA-009",
           "architecturalLayer": "INFRA",
           "cognitiveDomain": null,
-          "exports": [],
+          "exports": [
+            "main"
+          ],
           "imports": [
             "node:fs",
             "node:path"
@@ -1556,7 +1561,9 @@
           "fileId": "INFRA-010",
           "architecturalLayer": "INFRA",
           "cognitiveDomain": null,
-          "exports": [],
+          "exports": [
+            "main"
+          ],
           "imports": [
             "node:fs",
             "node:path"

@@ -194,7 +194,7 @@ function buildProjection(recommendation) {
   };
 }
 
-function main() {
+export function main() {
   const recommendation = loadJson(
     PATHS.recommendation,
     "Architecture recommendation",
@@ -235,4 +235,4 @@ function main() {
   console.log("");
 }
 
-main();
+if (import.meta.url === `file://${process.argv[1]}`) main();

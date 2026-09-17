@@ -1305,7 +1305,7 @@ function buildRecommendation({
   };
 }
 
-function main() {
+export function main() {
   const architectureState = loadJson(
     PATHS.architectureState,
     "Architecture state",
@@ -1382,4 +1382,4 @@ function main() {
   console.log("");
 }
 
-main();
+if (import.meta.url === `file://${process.argv[1]}`) main();

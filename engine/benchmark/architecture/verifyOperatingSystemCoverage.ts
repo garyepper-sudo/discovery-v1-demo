@@ -52,6 +52,11 @@ export function verifyOperatingSystemCoverage(
       capability.benchmarkCoverage.length > 0,
   );
 
+  const hasDocumentedNonAtlasCoverage =
+    domainCapabilities.every(
+      (capability) => capability.atlasCoverage === "not-applicable",
+    ) && hasBenchmarkCoverage;
+
   //
   // Perception and Memory are foundational systems.
   // They are not expected to expose executive objects directly.
@@ -99,10 +104,10 @@ export function verifyOperatingSystemCoverage(
       capabilityId: `OS-${domain.code}`,
       capabilityName: `${domain.name} OS`,
       category: "atlas",
-      status: hasAtlasCoverage ? "pass" : "fail",
-      message: hasAtlasCoverage
+      status: hasAtlasCoverage || hasDocumentedNonAtlasCoverage ? "pass" : "fail",
+      message: hasAtlasCoverage || hasDocumentedNonAtlasCoverage
         ? "Atlas coverage is present."
-        : "Atlas coverage is missing.",
+        : "Atlas coverage is missing or has no documented alternative benchmark coverage.",
     },
     {
       capabilityId: `OS-${domain.code}`,

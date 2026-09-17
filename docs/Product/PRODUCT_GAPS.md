@@ -278,7 +278,7 @@ Validation: `validate:cross-meeting-relevance-v1`.
 
 **Status:** Resolved for bounded Alpha Prepare projection.
 
-Meeting participants may intentionally share one typed perspective on the exact current working-analysis digest for the selected Product Question. The existing Leadership Conversation workflow store retains the noncanonical, attributed record; the server reconstructs identity and current analysis. The projection uses typed stances only and excludes private content, silence, stale views, and unauthorized readers. Organization-wide alignment, Ask integration, and durable conclusion are deferred.
+Meeting participants may intentionally share one typed perspective on the exact current source-packet digest for the selected Product Question. The existing Leadership Conversation workflow store retains the noncanonical, attributed record; the server reconstructs identity and current analysis. The projection uses typed stances only and excludes private content, silence, stale views, and unauthorized readers. Organization-wide alignment, Ask integration, and durable conclusion are deferred.
 
 ### GAP-C-022 reusable governed-protocol conformance foundation
 
@@ -337,3 +337,18 @@ requests and live mutations were zero during implementation. Universal Ask,
 compounding measurement, longitudinal learning proof, external multi-user
 rollout, and broader readiness remain open; isolated two-cycle reconstruction
 is not live two-cycle proof.
+
+**AR-6 authorization finding (2026-09-16):** the bounded development regression
+`scripts/product/validateDevelopmentCaptureAuthorizationBoundary.ts` proves
+missing registered preparation scope denies and registered scope admits five
+carry-forward proposals with stable replay. Its actual
+`captureOccurrence1Action({ meetingNotes })` omitted-`seriesAddress` run, using
+a synthetic Clerk-shaped identity, completed while the real participant
+current-access probe returned `unavailable`; safe observations were one upload,
+one private-working capture, five proposals, and zero canonical routes. This is
+an authorization boundary defect, not a policy-grant correction: Astra B
+confirmed the existing canonical claim-support grant is sufficient, and the
+unsupported sandbox CEO operation addition was removed. Enforce current
+organization and exact-series participant access at the existing action/owner
+boundary before protected reads or writes. AR-6 remains blocked; no Product
+capability is promoted and no live Clerk proof is claimed.

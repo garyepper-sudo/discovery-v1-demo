@@ -90,6 +90,7 @@ type ReplayExecutionAuthorityV1 = Readonly<{
 }>;
 let activeReplayAuthority: ReplayExecutionAuthorityV1 | undefined;
 let activeExecutionSegmentDigests: string[] = [];
+let activeExecutionSegmentRoles: string[] = [];
 const runFile = promisify(execFile);
 const standaloneHistoricalCapability = Symbol(
   "standalone-historical-replay-validation",
@@ -1799,11 +1800,17 @@ async function execute(
           ? { DISCOVERY_ENV: process.env.DISCOVERY_ENV }
           : {}),
       },
-      stdio: ["ignore", "ignore", "ignore", "ipc"],
+      stdio: ["ignore", "ignore", "pipe", "ipc"],
     });
   assert.ok(child.pid);
   const parsed = await new Promise<WorkerResult>((resolve, reject) => {
     const messages: unknown[] = [];
+    let stderrCategory = "ipc-bootstrap-rejected";
+    child.stderr?.on("data", (chunk: Buffer) => {
+      const value = chunk.toString("utf8");
+      if (value.includes("ERR_MODULE_NOT_FOUND")) stderrCategory = "module-resolution-rejected";
+      else if (value.includes("ERR_UNKNOWN_FILE_EXTENSION") || value.includes("server-only")) stderrCategory = "loader-rejected";
+    });
     const timer = setTimeout(() => {
       child.kill("SIGTERM");
       reject(new Error("Replay worker timed out"));
@@ -1813,7 +1820,10 @@ async function execute(
     child.on("exit", (code, signal) => {
       clearTimeout(timer);
       try {
-        assert.equal(code, 0);
+        if (code !== 0 || signal)
+          throw new Error(
+            `Replay IPC child rejected before frame: ${role}:${stderrCategory}`,
+          );
         assert.equal(signal, null);
         assert.equal(messages.length, 1);
         const frame = messages[0] as Record<string, unknown>;
@@ -1872,9 +1882,22 @@ async function execute(
             resultDigest,
           }),
         );
+        activeExecutionSegmentRoles.push(role);
         if (!succeeded) {
-          assert.equal(frame.failureCategory, "owner-validation-rejected");
-          throw new Error("Replay owner validation rejected the operation");
+          assert.ok(
+            frame.failureCategory === "owner-validation-rejected" ||
+              [
+                "ipc-request-shape-rejected",
+                "ipc-delegation-signature-rejected",
+                "ipc-authority-root-rejected",
+                "ipc-lineage-root-rejected",
+              ].includes(String(frame.failureCategory)),
+          );
+          throw new Error(
+            frame.failureCategory !== "owner-validation-rejected"
+              ? `Replay IPC bootstrap rejected the operation: ${role}:${frame.failureCategory}`
+              : `Replay owner validation rejected the operation: ${role}`,
+          );
         }
         resolve(frame.result as WorkerResult);
       } catch (error) {
@@ -1932,8 +1955,10 @@ async function execute(
 
 async function ipcWorker(): Promise<void> {
   process.once("message", async (raw) => {
+    let request: any;
+    let bootstrapFailureCategory = "ipc-request-shape-rejected";
     try {
-      const request = raw as {
+      request = raw as {
         kind: string;
         challenge: string;
         role: string;
@@ -1950,6 +1975,7 @@ async function ipcWorker(): Promise<void> {
       assert.equal(request.kind, "leadership-replay-worker-request");
       assert.match(request.challenge, /^[a-f0-9]{64}$/);
       assert.match(request.expectedTaskAuthorityDigest, /^[a-f0-9]{64}$/);
+      bootstrapFailureCategory = "ipc-delegation-signature-rejected";
       const delegationPayload = {
         challenge: request.challenge,
         role: request.role,
@@ -1970,6 +1996,7 @@ async function ipcWorker(): Promise<void> {
         ),
         true,
       );
+      bootstrapFailureCategory = "ipc-authority-root-rejected";
       const authorityRoot = await realpath(request.authorityRoot),
         workerRoot = await realpath(request.root),
         workerRelative = path.relative(authorityRoot, workerRoot);
@@ -1978,6 +2005,7 @@ async function ipcWorker(): Promise<void> {
           !workerRelative.startsWith(`..${path.sep}`) &&
           workerRelative !== "..",
       );
+      bootstrapFailureCategory = "ipc-lineage-root-rejected";
       if (request.lineageFixtureRoot !== "-") {
         const lineageRoot = await realpath(request.lineageFixtureRoot),
           lineageRelative = path.relative(authorityRoot, lineageRoot);
@@ -2043,6 +2071,27 @@ async function ipcWorker(): Promise<void> {
         process.exit(0),
       );
     } catch {
+      if (
+        request &&
+        /^[a-f0-9]{64}$/.test(request.challenge) &&
+        /^[a-z0-9-]+$/.test(request.role) &&
+        /^[a-f0-9]{64}$/.test(request.expectedTaskAuthorityDigest)
+      ) {
+        const failed = {
+          kind: "leadership-replay-worker-failure" as const,
+          pid: process.pid,
+          ppid: process.ppid,
+          challenge: request.challenge,
+          role: request.role,
+          executionNonce: randomBytes(32).toString("hex"),
+          taskAuthorityDigest: request.expectedTaskAuthorityDigest,
+          failureCategory: bootstrapFailureCategory,
+        };
+        process.send?.({ ...failed, resultDigest: digest(failed) }, () =>
+          process.exit(0),
+        );
+        return;
+      }
       process.exit(1);
     }
   });
@@ -2087,6 +2136,7 @@ async function main(forceValidation = false) {
     activeStandaloneCapability = standaloneHistoricalCapability;
   }
   activeExecutionSegmentDigests = [];
+  activeExecutionSegmentRoles = [];
   let checks = 0;
   const rootBase = activeReplayAuthority?.input.root ?? tmpdir();
   const root = await mkdtemp(
@@ -2601,8 +2651,27 @@ export async function measureLeadershipConversationReplayJoinedInventory(
     activeReplayAuthority = undefined;
   }
   assert.ok(result);
-  assert.equal(activeExecutionSegmentDigests.length, 22);
-  assert.equal(new Set(activeExecutionSegmentDigests).size, 22);
+  const executionRoleCounts = Object.fromEntries(
+    [...new Set(activeExecutionSegmentRoles)]
+      .sort()
+      .map((role) => [
+        role,
+        activeExecutionSegmentRoles.filter((value) => value === role).length,
+      ]),
+  );
+  assert.deepEqual(executionRoleCounts, {
+    "capture-and-review": 2,
+    "legacy-capture-and-review": 2,
+    "legacy-operation-linked-ambiguity": 1,
+    "legacy-prepare-and-freeze": 2,
+    "legacy-route-actual-owners": 1,
+    "operation-linked-ambiguity": 1,
+    "prepare-and-freeze": 2,
+    "reload-direct-evidence-successor": 3,
+    "route-actual-owners-and-prepare-again": 14,
+  });
+  assert.equal(activeExecutionSegmentDigests.length, 28);
+  assert.equal(new Set(activeExecutionSegmentDigests).size, 28);
   assert.equal(result.inventory.duplicateFindings, 0);
   assert.equal(result.inventory.missingFindings, 0);
   assert.equal(result.inventory.foreignPreserved, true);

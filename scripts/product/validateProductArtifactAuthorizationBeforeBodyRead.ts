@@ -1376,7 +1376,7 @@ async function validateBootstrapPreparedWorkProofInvariant():Promise<void>{
 }
 
 if (
-  process.argv[1]?.endsWith(
+  !process.argv[2] && process.argv[1]?.endsWith(
     "validateProductArtifactAuthorizationBeforeBodyRead.ts",
   )
 )

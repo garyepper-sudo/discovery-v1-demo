@@ -189,7 +189,7 @@ async function organizationalDisclosure(w: World) {
   // Same order as the Product loader: organization preflight precedes Runtime read.
   const stored = await new FilesystemOrganizationRuntimeRepository(locations(w.root).runtimeRoot).read(w.identity.organizationId);
   assert(stored); const baseline = stored.runtime, before = await files(w.root);
-  const baselineCompositions = baseline.memory.organizationalUnderstandingState.canonicalCompositions;
+  const baselineCompositions = baseline.memory.organizationalUnderstandingState.canonicalCompositions ?? [];
   assert(baselineCompositions.length > 0);
   const observations = [];
   for (const variant of [null, 0, 1] as const) {
@@ -205,10 +205,10 @@ async function organizationalDisclosure(w: World) {
         explanations: [explanation], authorityTransitionMode: 'implicit', previousCompositions: [], now: at });
       assert.equal(implicit.length, 1); assert.equal(implicit[0]!.authorityTransition, undefined);
       runtime.memory.organizationalExplanations.push(explanation);
-      runtime.memory.organizationalUnderstandingState.canonicalCompositions.push(...implicit);
+      runtime.memory.organizationalUnderstandingState.canonicalCompositions!.push(...implicit);
     }
-    assert.deepEqual(runtime.memory.organizationalUnderstandingState.canonicalCompositions.slice(0, baselineCompositions.length), baselineCompositions);
-    const compositions = runtime.memory.organizationalUnderstandingState.canonicalCompositions;
+    assert.deepEqual(runtime.memory.organizationalUnderstandingState.canonicalCompositions!.slice(0, baselineCompositions.length), baselineCompositions);
+    const compositions = runtime.memory.organizationalUnderstandingState.canonicalCompositions ?? [];
     const resolution = resolveAlphaAllowlistDisclosureDecision({ ...request, experience: 'organization',
       requestedCompositions: compositions, authorityReceipts: compositions.flatMap(value => {
         const receipt = buildAlphaCanonicalAuthorityReceipt(value); return receipt ? [receipt] : [];

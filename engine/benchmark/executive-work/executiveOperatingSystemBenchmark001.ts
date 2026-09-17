@@ -1,6 +1,13 @@
+import fs from "fs";
+import path from "path";
+
 import {
   loadOrganizationRuntimeState,
+  persistOrganizationRuntimeState,
 } from "../../v3/runtime";
+import { getRuntimeOrganizationsDirectory } from "../../v3/runtime/runtimeStorageLocation";
+
+import { buildExecutiveProjection } from "../../../components/executive-v2/projection/buildExecutiveProjection";
 
 import {
   runExecutiveDecisionCycle,
@@ -49,6 +56,10 @@ import {
 import {
   applyOperatingModelImprovement,
 } from "../../v3/work/applyOperatingModelImprovement";
+
+import {
+  evaluatePredictionOutcomes,
+} from "../../v3/model/predictions/evaluatePredictionOutcomes";
 
 import type {
   ExecutiveDecision,
@@ -348,6 +359,91 @@ const benchmarkRuntime = {
       [],
   },
 };
+
+const adpEvaluation = requireValue(
+  evaluatePredictionOutcomes({
+    predictions: (
+      runtime.memory as typeof runtime.memory & {
+        organizationalPredictions: Parameters<
+          typeof evaluatePredictionOutcomes
+        >[0]["predictions"];
+      }
+    ).organizationalPredictions,
+    observedConditions: runtime.memory.organizationalConditions,
+    evaluatedAt: NOW,
+    supportingEvidenceIds: [],
+  }).at(0),
+  "ADP coverage requires a PredictionEvaluation from the canonical producer.",
+);
+
+const adpCoverageRuntime = {
+  ...runtime,
+  metadata: {
+    ...runtime.metadata,
+    organizationId: `${ORGANIZATION_ID}-adp-consumer-proof`,
+  },
+  memory: {
+    ...runtime.memory,
+    predictionEvaluations: [
+      ...(runtime.memory.predictionEvaluations ?? []),
+      adpEvaluation,
+    ],
+  },
+};
+
+persistOrganizationRuntimeState(adpCoverageRuntime);
+
+const reloadedAdpCoverageRuntime = loadOrganizationRuntimeState(
+  adpCoverageRuntime.metadata.organizationId,
+);
+
+const persistedAdpEvaluation =
+  reloadedAdpCoverageRuntime.memory.predictionEvaluations.find(
+    (evaluation) => evaluation.id === adpEvaluation.id,
+  );
+
+const adpProjection = buildExecutiveProjection({
+  result: {
+    evidence: [],
+    observations: [],
+    evidenceRelationships: [],
+    signals: [],
+    themes: [],
+    contradictions: [],
+    mechanisms: [],
+    hypotheses: [],
+    causalChains: [],
+    explanations: [],
+    understanding: [],
+    beliefs: [],
+    emergenceEvents: [],
+    executiveUnderstanding: {
+      headline: "ADP projection consumer proof",
+      explanation: "",
+      confidence: 0,
+      evidenceSummary: [],
+      contradictions: [],
+      openQuestions: [],
+      nextMoves: [],
+    },
+  },
+  runtime: reloadedAdpCoverageRuntime,
+});
+
+const projectedAdpEvaluation =
+  adpProjection.predictionEvaluations?.find(
+    (evaluation) =>
+      evaluation.predictionId === adpEvaluation.predictionId &&
+      evaluation.evaluatedAt === adpEvaluation.evaluatedAt &&
+      evaluation.outcomeStatus === adpEvaluation.outcomeStatus,
+  );
+
+fs.unlinkSync(
+  path.join(
+    getRuntimeOrganizationsDirectory(),
+    `${adpCoverageRuntime.metadata.organizationId}.json`,
+  ),
+);
 
 const executiveDecision:
   ExecutiveDecision = {
@@ -1279,6 +1375,25 @@ const lifecycleChecks:
 
 const assertions:
   Assertion[] = [
+    {
+      name:
+        "ADP PredictionEvaluation reaches the canonical Atlas Runtime path",
+
+      passed:
+        adpEvaluation.predictionId.length > 0 &&
+        persistedAdpEvaluation?.id === adpEvaluation.id &&
+        reloadedAdpCoverageRuntime.memory.predictionEvaluations.some(
+          (evaluation) => evaluation.id === adpEvaluation.id,
+        ) &&
+        projectedAdpEvaluation?.predictionId === adpEvaluation.predictionId &&
+        projectedAdpEvaluation.evaluatedAt === adpEvaluation.evaluatedAt &&
+        projectedAdpEvaluation.outcomeStatus === adpEvaluation.outcomeStatus,
+
+      detail:
+        persistedAdpEvaluation && projectedAdpEvaluation
+          ? `${adpEvaluation.id} persisted through OrganizationRuntime and consumed by Executive Projection as ${projectedAdpEvaluation.predictionId} (${projectedAdpEvaluation.evaluatedAt}/${projectedAdpEvaluation.outcomeStatus}).`
+          : `PredictionEvaluation was not persisted and consumed by Executive Projection (persisted=${Boolean(persistedAdpEvaluation)}, projected=${JSON.stringify(projectedAdpEvaluation)}).`,
+    },
     {
       name:
         "Executive Decision Cycle is deterministic",
