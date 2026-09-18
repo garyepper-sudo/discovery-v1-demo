@@ -4,7 +4,7 @@ import postgres from "postgres";
 
 import { requireDiscoveryDatabaseUrl } from "../../db/config";
 import { createExecutiveHistoryAccessRepository } from "../../engine/v3/governance/executiveHistoryAccessRepository";
-import { createOrganizationRuntimeRepository } from "../../engine/v3/runtime/organizationRuntimeRepository";
+import { PostgresOrganizationRuntimeRepository } from "../../engine/v3/runtime/organizationRuntimeRepository";
 import { PostgresBlobSourceContentRepository } from "../../engine/v3/sources/sourceContentRepository";
 import { PostgresAlphaTelemetryRepository } from "../../lib/telemetry/alphaTelemetryRepository";
 import { PostgresBlobProductArtifactBodyRepository } from "../persistence/productArtifactBodyRepository";
@@ -21,8 +21,8 @@ function hasPrivateBlobAuthentication(environment:NodeJS.ProcessEnv):boolean{
 export function createProductionChiefInfrastructure(environment:NodeJS.ProcessEnv=process.env){
   const missing=required.filter(name=>!environment[name]?.trim());
   if(environment.NODE_ENV!=="production"||environment.DISCOVERY_CHIEF_COMPOSITION!=="production"||missing.length)throw new Error(`Chief production configuration unavailable: ${missing.join(",")||"composition"}`);
-  if(environment.DISCOVERY_RUNTIME_STORAGE_BACKEND!=="vercel-blob"||environment.DISCOVERY_EXECUTIVE_HISTORY_ACCESS_STORAGE_BACKEND!=="vercel-blob")throw new Error("Chief production configuration unavailable: hosted Blob owners required");
+  if(environment.DISCOVERY_RUNTIME_STORAGE_BACKEND!=="postgresql"||environment.DISCOVERY_EXECUTIVE_HISTORY_ACCESS_STORAGE_BACKEND!=="vercel-blob")throw new Error("Chief production configuration unavailable: PostgreSQL Runtime and hosted Blob history owners required");
   if(!hasPrivateBlobAuthentication(environment))throw new Error("Chief production configuration unavailable: private Blob authentication required");
   const sql=postgres(requireDiscoveryDatabaseUrl("application",environment),{max:1});
-  return {sql,workflow:new PostgresProductWorkflowArtifactRepository(sql),sources:new PostgresBlobSourceContentRepository(sql,environment.DISCOVERY_CHIEF_BLOB_PREFIX),artifactBodies:new PostgresBlobProductArtifactBodyRepository(sql,environment.DISCOVERY_CHIEF_BLOB_PREFIX),analysisLifecycle:{begin:(input:Parameters<typeof PostgresSourceScopedFrontierAttemptLifecycleV1.begin>[1])=>PostgresSourceScopedFrontierAttemptLifecycleV1.begin(sql,input)},telemetry:new PostgresAlphaTelemetryRepository(sql),runtime:createOrganizationRuntimeRepository(environment),executiveHistory:createExecutiveHistoryAccessRepository(environment),close:()=>sql.end({timeout:1})};
+  return {sql,workflow:new PostgresProductWorkflowArtifactRepository(sql),sources:new PostgresBlobSourceContentRepository(sql,environment.DISCOVERY_CHIEF_BLOB_PREFIX),artifactBodies:new PostgresBlobProductArtifactBodyRepository(sql,environment.DISCOVERY_CHIEF_BLOB_PREFIX),analysisLifecycle:{begin:(input:Parameters<typeof PostgresSourceScopedFrontierAttemptLifecycleV1.begin>[1])=>PostgresSourceScopedFrontierAttemptLifecycleV1.begin(sql,input)},telemetry:new PostgresAlphaTelemetryRepository(sql),runtime:new PostgresOrganizationRuntimeRepository(sql),executiveHistory:createExecutiveHistoryAccessRepository(environment),close:()=>sql.end({timeout:1})};
 }

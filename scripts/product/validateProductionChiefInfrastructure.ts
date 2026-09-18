@@ -10,7 +10,7 @@ const publishableKey=`pk_live_${Buffer.from("example.clerk.accounts$").toString(
 const base=():NodeJS.ProcessEnv=>({
   NODE_ENV:"production",
   DISCOVERY_CHIEF_COMPOSITION:"production",
-  DISCOVERY_RUNTIME_STORAGE_BACKEND:"vercel-blob",
+  DISCOVERY_RUNTIME_STORAGE_BACKEND:"postgresql",
   DISCOVERY_EXECUTIVE_HISTORY_ACCESS_STORAGE_BACKEND:"vercel-blob",
   DISCOVERY_CHIEF_BLOB_PREFIX:"discovery/chief/v1",
   DISCOVERY_PARTICIPANT_IDENTITY_LOCATOR_KEY:"x".repeat(32),
@@ -25,7 +25,7 @@ const input={contractVersion:"1" as const,clerkSubject:"user_test",organization:
 
 async function accepted(environment:NodeJS.ProcessEnv){
   const infrastructure=createProductionChiefInfrastructure(environment);
-  assert.equal(infrastructure.runtime.backend,"vercel-blob");
+  assert.equal(infrastructure.runtime.backend,"postgresql");
   assert.equal(infrastructure.executiveHistory.backend,"vercel-blob");
   await infrastructure.close();
 }

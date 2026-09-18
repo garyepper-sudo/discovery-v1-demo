@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
 
     if (checks.configuration && organizationId) {
       checks.runtime =
-        await createOrganizationRuntimeRepository().exists(organizationId);
+        await createOrganizationRuntimeRepository(process.env, sql).exists(organizationId);
     }
   } catch {
     writeAlphaOperationalLog({eventCategory:"health",workflowStage:"health",transitionCategory:"completed",outcomeCategory:"server-failure",failureCategory:"server"});

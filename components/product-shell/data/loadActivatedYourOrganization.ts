@@ -86,7 +86,7 @@ export async function loadActivatedYourOrganization(
       resolvedAt,
       runtimeLoader: {
         async load({ organizationId: authorizedOrganizationId }) {
-          const stored = await createOrganizationRuntimeRepository().read(
+          const stored = await createOrganizationRuntimeRepository(process.env, sql).read(
             authorizedOrganizationId,
           );
           if (!stored) throw new Error("Runtime unavailable");

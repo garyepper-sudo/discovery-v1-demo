@@ -90,13 +90,14 @@ export async function POST(request: Request): Promise<Response> {
     return new Response("Invalid idempotency key.", { status: 400 });
   }
   if (mode === "diagnostic") {
+    const sql = postgres(requireDiscoveryDatabaseUrl("application"), { max: 1 });
     try {
       const token = await getVercelOidcToken();
       const oidc = boundedVercelOidcEvidence(token, {
         environment: "production",
         projectId: process.env.VERCEL_PROJECT_ID,
       });
-      const repository = createOrganizationRuntimeRepository();
+      const repository = createOrganizationRuntimeRepository(process.env, sql);
       const runtimePresent = await repository.exists(ORGANIZATION_ID);
       return Response.json({
         validation: "production-blob-oidc-diagnostic",
@@ -145,6 +146,8 @@ export async function POST(request: Request): Promise<Response> {
         },
         rawTokenReturned: false,
       }, { status: 502 });
+    } finally {
+      await sql.end({ timeout: 1 });
     }
   }
   if (operation === "access") {
@@ -176,6 +179,7 @@ export async function POST(request: Request): Promise<Response> {
       return new Response("Invalid provisioning mode.", { status: 400 });
     }
     const sql = postgres(requireDiscoveryDatabaseUrl("administration"), { max: 1 });
+    const runtimeSql = postgres(requireDiscoveryDatabaseUrl("application"), { max: 1 });
     const requestId = request.headers.get("x-request-id") ?? crypto.randomUUID();
     try {
       const receipt = await provisionAlphaAccess({
@@ -183,7 +187,7 @@ export async function POST(request: Request): Promise<Response> {
         consumerId,
         actor: OPERATOR_ID,
         idempotencyKey,
-        repository: createOrganizationRuntimeRepository(),
+        repository: createOrganizationRuntimeRepository(process.env, runtimeSql),
         accessRepository: new PostgresAlphaAccessRecordRepository(sql),
       });
       console.info(JSON.stringify({
@@ -212,7 +216,7 @@ export async function POST(request: Request): Promise<Response> {
       }));
       return new Response("Access provisioning failed closed.", { status: 409 });
     } finally {
-      await sql.end();
+      await Promise.all([sql.end(), runtimeSql.end()]);
     }
   }
   if (operation !== "runtime") {
@@ -232,6 +236,7 @@ export async function POST(request: Request): Promise<Response> {
   }
 
   const requestId = request.headers.get("x-request-id") ?? crypto.randomUUID();
+  const sql = postgres(requireDiscoveryDatabaseUrl("application"), { max: 1 });
   try {
     const receipt = await provisionOrganizationRuntime({
       organizationId: ORGANIZATION_ID,
@@ -239,7 +244,7 @@ export async function POST(request: Request): Promise<Response> {
       idempotencyKey,
       expectedRuntimeSha256: RUNTIME_SHA256,
       runtimeBytes,
-      repository: createOrganizationRuntimeRepository(),
+      repository: createOrganizationRuntimeRepository(process.env, sql),
     });
     console.info(JSON.stringify({
       event: "alpha-runtime-provisioning-completed",
@@ -267,6 +272,8 @@ export async function POST(request: Request): Promise<Response> {
       operatorId: OPERATOR_ID,
     }));
     return new Response("Runtime provisioning failed closed.", { status: 409 });
+  } finally {
+    await sql.end({ timeout: 1 });
   }
 }
 

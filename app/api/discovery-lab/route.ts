@@ -141,7 +141,7 @@ export async function POST(
             industry: body.industry,
             website: body.website,
             now: new Date().toISOString(),
-            runtimeRepository: createOrganizationRuntimeRepository(),
+            runtimeRepository: createOrganizationRuntimeRepository(process.env, sql),
             accessRepository,
           });
           organizationId = receipt.organizationId;

@@ -13,6 +13,7 @@ import {
 } from "node:fs/promises";
 import { constants } from "node:fs";
 import path from "node:path";
+import type { Sql } from "postgres";
 
 import {
   BlobNotFoundError,
@@ -26,7 +27,7 @@ import type { OrganizationRuntime } from "./organizationRuntime";
 import { normalizeOrganizationRuntime } from "./organizationStateStore";
 import { getRuntimeOrganizationsDirectory } from "./runtimeStorageLocation";
 
-export type RuntimeStorageBackend = "filesystem" | "vercel-blob";
+export type RuntimeStorageBackend = "filesystem" | "vercel-blob" | "postgresql";
 
 export type StoredOrganizationRuntime = {
   bytes: Uint8Array;
@@ -1514,6 +1515,148 @@ export class VercelBlobOrganizationRuntimeRepository
   }
 }
 
+type RuntimePostgresRow = {
+  organization_id: string;
+  revision: string | number;
+  payload_text: string;
+  payload_digest: string;
+};
+
+/**
+ * The authoritative mutable Runtime owner for hosted production.  Blob may be
+ * used only for named recovery snapshots through this adapter; it is never
+ * consulted for the current Runtime row.
+ */
+export class PostgresOrganizationRuntimeRepository
+  implements OrganizationRuntimeRepository
+{
+  readonly backend = "postgresql" as const;
+
+  constructor(
+    private readonly sql: Sql<Record<string, unknown>>,
+    private readonly historicalBlob: PrivateBlobClient = createVercelPrivateBlobClient(),
+    private readonly historicalPrefix = process.env.DISCOVERY_RUNTIME_BLOB_PREFIX ?? "discovery/runtime/v1",
+  ) {}
+
+  private backupKey(organizationId: string, backupId: string): string {
+    return organizationRuntimeBackupObjectKey(
+      organizationId,
+      backupId,
+      this.historicalPrefix,
+    );
+  }
+
+  private fromRow(organizationId: string, row: RuntimePostgresRow): StoredOrganizationRuntime {
+    if (row.organization_id !== organizationId) {
+      throw new RuntimeStorageIntegrityError("Runtime organization mismatch");
+    }
+    const bytes = new TextEncoder().encode(row.payload_text);
+    if (digest(bytes) !== row.payload_digest) {
+      throw new RuntimeStorageIntegrityError("Runtime payload integrity failed");
+    }
+    return stored(organizationId, bytes, String(row.revision));
+  }
+
+  async read(organizationId: string): Promise<StoredOrganizationRuntime | null> {
+    const rows = await this.sql<RuntimePostgresRow[]>`
+      SELECT organization_id, revision, payload_text, payload_digest
+      FROM organization_runtime_current
+      WHERE organization_id = ${exactId(organizationId, "Organization id")}
+    `;
+    if (rows.length === 0) return null;
+    if (rows.length !== 1) {
+      throw new RuntimeStorageIntegrityError("Runtime current state is ambiguous");
+    }
+    return this.fromRow(organizationId, rows[0]!);
+  }
+
+  async exists(organizationId: string): Promise<boolean> {
+    const rows = await this.sql<{ present: number }[]>`
+      SELECT 1 AS present FROM organization_runtime_current
+      WHERE organization_id = ${exactId(organizationId, "Organization id")}
+    `;
+    return rows.length === 1;
+  }
+
+  async create(
+    organizationId: string,
+    bytes: Uint8Array,
+    _metadata: RuntimeStorageOperationMetadata,
+  ): Promise<StoredOrganizationRuntime> {
+    stored(organizationId, bytes);
+    try {
+      const rows = await this.sql<RuntimePostgresRow[]>`
+        INSERT INTO organization_runtime_current
+          (organization_id, revision, payload_text, payload_digest, created_at, updated_at)
+        VALUES
+          (${exactId(organizationId, "Organization id")}, 1, ${new TextDecoder().decode(bytes)}, ${digest(bytes)}, now(), now())
+        RETURNING organization_id, revision, payload_text, payload_digest
+      `;
+      if (rows.length !== 1) {
+        throw new RuntimeStorageIntegrityError("Runtime creation was not acknowledged");
+      }
+      return this.fromRow(organizationId, rows[0]!);
+    } catch (error) {
+      if ((error as { code?: string }).code === "23505") {
+        throw new RuntimeStorageConflictError("Runtime already exists");
+      }
+      throw error;
+    }
+  }
+
+  async replace(
+    organizationId: string,
+    bytes: Uint8Array,
+    expectedRevision: string,
+    _metadata: RuntimeStorageOperationMetadata,
+  ): Promise<StoredOrganizationRuntime> {
+    const expected = Number(expectedRevision);
+    if (!Number.isSafeInteger(expected) || expected < 1 || String(expected) !== expectedRevision) {
+      throw new RuntimeStorageConflictError("Runtime revision changed");
+    }
+    const rows = await this.sql<RuntimePostgresRow[]>`
+      UPDATE organization_runtime_current
+      SET payload_text = ${new TextDecoder().decode(bytes)},
+          payload_digest = ${digest(bytes)},
+          revision = revision + 1,
+          updated_at = now()
+      WHERE organization_id = ${exactId(organizationId, "Organization id")}
+        AND revision = ${expected}
+      RETURNING organization_id, revision, payload_text, payload_digest
+    `;
+    if (rows.length !== 1) {
+      throw new RuntimeStorageConflictError("Runtime revision changed");
+    }
+    return this.fromRow(organizationId, rows[0]!);
+  }
+
+  async backup(
+    organizationId: string,
+    backupId: string,
+    _metadata: RuntimeStorageOperationMetadata,
+  ): Promise<StoredOrganizationRuntime> {
+    const current = await this.read(organizationId);
+    if (!current) throw new RuntimeStorageIntegrityError("Runtime is missing");
+    const key = this.backupKey(organizationId, backupId);
+    if (await this.historicalBlob.head(key)) {
+      throw new RuntimeStorageConflictError("Backup already exists");
+    }
+    await this.historicalBlob.put(key, current.bytes, { allowOverwrite: false });
+    return current;
+  }
+
+  async restore(
+    organizationId: string,
+    backupId: string,
+    expectedRevision: string,
+    metadata: RuntimeStorageOperationMetadata,
+  ): Promise<StoredOrganizationRuntime> {
+    const backup = await this.historicalBlob.get(this.backupKey(organizationId, backupId));
+    if (!backup) throw new RuntimeStorageIntegrityError("Runtime backup is missing");
+    return this.replace(organizationId, backup.bytes, expectedRevision, metadata);
+  }
+}
+
 type RuntimeReadProvenanceRepository = Pick<
   OrganizationRuntimeRepository,
   "read"
@@ -1534,10 +1677,10 @@ export function configuredRuntimeStorageBackend(
   environment: Readonly<Record<string, string | undefined>> = process.env,
 ): RuntimeStorageBackend {
   const configured = environment.DISCOVERY_RUNTIME_STORAGE_BACKEND;
-  if (configured === "filesystem" || configured === "vercel-blob") {
-    if (environment.VERCEL === "1" && configured !== "vercel-blob") {
+  if (configured === "filesystem" || configured === "vercel-blob" || configured === "postgresql") {
+    if (environment.VERCEL === "1" && configured !== "postgresql") {
       throw new Error(
-        "Vercel requires DISCOVERY_RUNTIME_STORAGE_BACKEND=vercel-blob",
+        "Vercel requires DISCOVERY_RUNTIME_STORAGE_BACKEND=postgresql",
       );
     }
     return configured;
@@ -1550,8 +1693,14 @@ export function configuredRuntimeStorageBackend(
 
 export function createOrganizationRuntimeRepository(
   environment: Readonly<Record<string, string | undefined>> = process.env,
+  sql?: Sql<Record<string, unknown>>,
 ): OrganizationRuntimeRepository {
-  return configuredRuntimeStorageBackend(environment) === "vercel-blob"
+  const backend = configuredRuntimeStorageBackend(environment);
+  if (backend === "postgresql") {
+    if (!sql) throw new Error("PostgreSQL Runtime repository requires an application database client");
+    return new PostgresOrganizationRuntimeRepository(sql);
+  }
+  return backend === "vercel-blob"
     ? new VercelBlobOrganizationRuntimeRepository()
     : new FilesystemOrganizationRuntimeRepository();
 }

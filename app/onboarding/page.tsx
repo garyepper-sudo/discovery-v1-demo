@@ -32,7 +32,7 @@ export default async function OnboardingEntryPage({
       consumerId: authentication.userId,
       resolvedAt: new Date().toISOString(),
       accessRepository: new PostgresAlphaAccessRecordRepository(sql),
-      runtimeRepository: createOrganizationRuntimeRepository(),
+      runtimeRepository: createOrganizationRuntimeRepository(process.env, sql),
     });
     const requestedOrganizationId =
       typeof resolvedSearchParams.organizationId === "string"

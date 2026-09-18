@@ -34,8 +34,8 @@ for (const name of [
 const runtimeBackend = process.env.DISCOVERY_RUNTIME_STORAGE_BACKEND;
 assert.match(
   runtimeBackend!,
-  /^(filesystem|vercel-blob)$/,
-  "Runtime backend must be filesystem or vercel-blob",
+  /^(filesystem|vercel-blob|postgresql)$/,
+  "Runtime backend must be filesystem, vercel-blob, or postgresql",
 );
 if (runtimeBackend === "filesystem") {
   assert.ok(
@@ -53,6 +53,9 @@ if (runtimeBackend === "vercel-blob") {
   assert.ok(process.env.BLOB_READ_WRITE_TOKEN || (
     process.env.BLOB_STORE_ID && process.env.VERCEL === "1" && process.env.VERCEL_ENV === "production"
   ), "Private Blob authentication is required");
+}
+if (runtimeBackend === "postgresql") {
+  assert.equal(process.env.VERCEL, "1", "PostgreSQL Runtime storage is hosted-only");
 }
 assert.match(
   process.env.DISCOVERY_ALPHA_ORGANIZATION_ID!,

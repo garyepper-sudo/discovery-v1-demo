@@ -27,6 +27,7 @@ const expectedMigrationTags = [
   "0005_chief_v1_hosted_state",
   "0006_organization_identity_owner",
   "0007_organization_identity_runtime_compatibility",
+  "0008_organization_runtime_current",
 ] as const;
 const expectedRelations = [
   "alpha_access_records",

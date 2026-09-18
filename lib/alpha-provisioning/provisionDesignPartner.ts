@@ -28,7 +28,7 @@ export type ProvisionDesignPartnerReceipt = {
   result: "PROVISIONED";
   organizationId: string;
   consumerId: string;
-  runtimeBackend: "filesystem" | "vercel-blob";
+  runtimeBackend: "filesystem" | "vercel-blob" | "postgresql";
   runtimeSha256: string;
   runtimeRevision: string;
   accessRecordId: string;
@@ -48,7 +48,7 @@ export type ProvisionOrganizationRuntimeInput = {
 export type ProvisionOrganizationRuntimeReceipt = {
   result: "RUNTIME_PROVISIONED";
   organizationId: string;
-  runtimeBackend: "filesystem" | "vercel-blob";
+  runtimeBackend: "filesystem" | "vercel-blob" | "postgresql";
   runtimeSha256: string;
   runtimeRevision: string;
   backupId?: string;

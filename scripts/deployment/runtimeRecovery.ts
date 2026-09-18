@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
+import postgres from "postgres";
 
+import { requireDiscoveryDatabaseUrl } from "../../db/config";
 import { createOrganizationRuntimeRepository } from "../../engine/v3/runtime";
 
 async function main(): Promise<void> {
@@ -8,12 +10,14 @@ async function main(): Promise<void> {
   assert.match(organizationId ?? "", /^[a-zA-Z0-9_-]+$/, "Exact organization id required");
   assert.match(backupId ?? "", /^[a-zA-Z0-9_-]+$/, "Exact backup id required");
 
-  const repository = createOrganizationRuntimeRepository();
+  const sql = postgres(requireDiscoveryDatabaseUrl("application"), { max: 1 });
+  const repository = createOrganizationRuntimeRepository(process.env, sql);
   const metadata = {
     requestId: process.env.DISCOVERY_OPERATION_REQUEST_ID ?? crypto.randomUUID(),
     operatorId: process.env.DISCOVERY_OPERATION_OPERATOR_ID ?? "runtime-recovery-cli",
   };
 
+  try {
   if (operation === "backup") {
     const current = await repository.backup(organizationId!, backupId!, metadata);
     console.log(JSON.stringify({
@@ -47,6 +51,9 @@ async function main(): Promise<void> {
   }
 
   throw new Error("Operation must be backup or restore");
+  } finally {
+    await sql.end({ timeout: 1 });
+  }
 }
 
 main().catch((error: unknown) => {

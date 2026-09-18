@@ -161,7 +161,7 @@ check(() => assert.match(
 ));
 check(() => assert.ok(
   activatedLoader.indexOf("runDurableAlphaDisclosureTransaction") <
-    activatedLoader.indexOf("createOrganizationRuntimeRepository().read"),
+    activatedLoader.indexOf("createOrganizationRuntimeRepository(process.env, sql).read"),
   "authorization transaction must be established before Runtime loading",
 ));
 check(() => assert.doesNotMatch(

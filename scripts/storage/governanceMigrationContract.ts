@@ -61,6 +61,7 @@ const expectedRelations = [
   "alpha_disclosure_audit_events",
   "alpha_actor_mappings",
   "organization_identities",
+  "organization_runtime_current",
 ] as const;
 const expectedIndexes = [
   "alpha_access_one_active_uq",
@@ -114,6 +115,11 @@ const expectedConstraints = [
   "organization_identities_pkey",
   "organization_identities_creation_key_key",
   "organization_identities_identity_check",
+  "organization_runtime_current_pkey",
+  "organization_runtime_current_revision_check",
+  "organization_runtime_current_payload_text_check",
+  "organization_runtime_current_payload_digest_check",
+  "organization_runtime_current_organization_id_fkey",
 ] as const;
 const expectedActorColumns = [
   ["mapping_id", "text", "NO"], ["mapping_revision", "integer", "NO"],
@@ -225,6 +231,9 @@ async function schemaEvidence(sql: Sql): Promise<{
       application_organization_identity_select: boolean;
       administration_organization_identity_select: boolean;
       administration_organization_identity_insert: boolean;
+      application_runtime_select: boolean;
+      application_runtime_insert: boolean;
+      application_runtime_update: boolean;
     }[]>`
       SELECT
         has_table_privilege('discovery_alpha_application', 'public.alpha_access_records', 'SELECT') AS application_access_select,
@@ -242,7 +251,10 @@ async function schemaEvidence(sql: Sql): Promise<{
         has_table_privilege('discovery_alpha_administration', 'public.alpha_actor_mappings', 'UPDATE') AS administration_actor_update,
         has_table_privilege('discovery_alpha_application', 'public.organization_identities', 'SELECT') AS application_organization_identity_select,
         has_table_privilege('discovery_alpha_administration', 'public.organization_identities', 'SELECT') AS administration_organization_identity_select,
-        has_table_privilege('discovery_alpha_administration', 'public.organization_identities', 'INSERT') AS administration_organization_identity_insert
+        has_table_privilege('discovery_alpha_administration', 'public.organization_identities', 'INSERT') AS administration_organization_identity_insert,
+        has_table_privilege('discovery_alpha_application', 'public.organization_runtime_current', 'SELECT') AS application_runtime_select,
+        has_table_privilege('discovery_alpha_application', 'public.organization_runtime_current', 'INSERT') AS application_runtime_insert,
+        has_table_privilege('discovery_alpha_application', 'public.organization_runtime_current', 'UPDATE') AS application_runtime_update
     `;
     for (const [name, value] of Object.entries(grants)) {
       if (!value) missing.push(`grant:${name}`);

@@ -32,36 +32,39 @@ async function main(): Promise<void> {
   const organizationId = exact("organization");
   const actor = exact("actor");
   const idempotencyKey = exact("idempotency-key");
-  const repository = createOrganizationRuntimeRepository();
-  if (operation === "runtime") {
-    const sourcePath = path.resolve(exact("runtime-source"));
-    const raw = await readFile(sourcePath);
-    console.log(JSON.stringify(await provisionOrganizationRuntime({
-      organizationId,
-      actor,
-      idempotencyKey,
-      expectedRuntimeSha256: exact("runtime-sha256"),
-      runtimeBytes: raw,
-      repository,
-      allowOverwrite: args.get("allow-overwrite") === "true",
-    }), null, 2));
-    return;
-  }
-  if (operation !== "access") {
-    throw new Error("Operation must be runtime or access");
-  }
-  const sql = postgres(requireDiscoveryDatabaseUrl("administration"), { max: 1 });
+  const runtimeSql = postgres(requireDiscoveryDatabaseUrl("application"), { max: 1 });
   try {
-    console.log(JSON.stringify(await provisionAlphaAccess({
-      organizationId,
-      consumerId: exact("consumer"),
-      actor,
-      idempotencyKey,
-      repository,
-      accessRepository: new PostgresAlphaAccessRecordRepository(sql),
-    }), null, 2));
+    const repository = createOrganizationRuntimeRepository(process.env, runtimeSql);
+    if (operation === "runtime") {
+      const sourcePath = path.resolve(exact("runtime-source"));
+      const raw = await readFile(sourcePath);
+      console.log(JSON.stringify(await provisionOrganizationRuntime({
+        organizationId,
+        actor,
+        idempotencyKey,
+        expectedRuntimeSha256: exact("runtime-sha256"),
+        runtimeBytes: raw,
+        repository,
+        allowOverwrite: args.get("allow-overwrite") === "true",
+      }), null, 2));
+      return;
+    }
+    if (operation !== "access") throw new Error("Operation must be runtime or access");
+    const sql = postgres(requireDiscoveryDatabaseUrl("administration"), { max: 1 });
+    try {
+      console.log(JSON.stringify(await provisionAlphaAccess({
+        organizationId,
+        consumerId: exact("consumer"),
+        actor,
+        idempotencyKey,
+        repository,
+        accessRepository: new PostgresAlphaAccessRecordRepository(sql),
+      }), null, 2));
+    } finally {
+      await sql.end();
+    }
   } finally {
-    await sql.end();
+    await runtimeSql.end();
   }
 }
 

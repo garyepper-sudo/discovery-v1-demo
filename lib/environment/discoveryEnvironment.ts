@@ -5,7 +5,7 @@ export type DiscoveryEnvironmentSummary = {
   onboardingTestEnabled: boolean;
   clerkInstance: "development" | "production";
   database: "localhost" | "isolated-remote" | "production-remote";
-  runtimeStorage: "filesystem" | "vercel-blob";
+  runtimeStorage: "filesystem" | "vercel-blob" | "postgresql";
   isolationId?: string;
 };
 
@@ -150,7 +150,8 @@ export function validateOnboardingTestEnvironment(
       : "isolated-remote",
     runtimeStorage: environment.DISCOVERY_RUNTIME_STORAGE_BACKEND as
       | "filesystem"
-      | "vercel-blob",
+      | "vercel-blob"
+      | "postgresql",
     ...(environment.DISCOVERY_NON_PRODUCTION_ISOLATION_ID
       ? { isolationId: environment.DISCOVERY_NON_PRODUCTION_ISOLATION_ID }
       : {}),

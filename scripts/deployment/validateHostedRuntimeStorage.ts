@@ -302,13 +302,13 @@ async function main(): Promise<void> {
   );
   await check(() => assert.ok(
     activationSource.indexOf("runDurableAlphaDisclosureTransaction") <
-      activationSource.indexOf("createOrganizationRuntimeRepository().read"),
+      activationSource.indexOf("createOrganizationRuntimeRepository(process.env, sql).read"),
     "Runtime repository read must remain inside the authorized disclosure transaction",
   ));
   const healthSource = await readFile("app/api/health/route.ts", "utf8");
   await check(() => assert.match(
     healthSource,
-    /createOrganizationRuntimeRepository\(\)\.exists\(organizationId\)/,
+    /createOrganizationRuntimeRepository\(process\.env, sql\)\.exists\(organizationId\)/,
   ));
   const locationSource = await readFile(
     "engine/v3/runtime/runtimeStorageLocation.ts",

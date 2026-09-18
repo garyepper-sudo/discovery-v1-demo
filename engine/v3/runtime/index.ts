@@ -23,6 +23,14 @@ export type {
 export {
   evolveOrganizationRuntime,
 } from "./evolveOrganizationRuntime";
+
+export {
+  importLegacyOrganizationRuntime,
+} from "./organizationRuntimeLegacyImport";
+
+export type {
+  OrganizationRuntimeLegacyImportResult,
+} from "./organizationRuntimeLegacyImport";
 export {
   DEFAULT_ORGANIZATION_ID,
   resolveOrganizationId,
@@ -43,6 +51,7 @@ export {
   readOrganizationRuntimeForOperation,
   organizationRuntimeBackupObjectKey,
   organizationRuntimeObjectKey,
+  PostgresOrganizationRuntimeRepository,
   RuntimeStorageConflictError,
   RuntimeStoragePreconditionFailedError,
   RuntimeStorageIntegrityError,
