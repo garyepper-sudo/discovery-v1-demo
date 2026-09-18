@@ -40,9 +40,11 @@ export {
   configuredRuntimeStorageBackend,
   createOrganizationRuntimeRepository,
   FilesystemOrganizationRuntimeRepository,
+  readOrganizationRuntimeForOperation,
   organizationRuntimeBackupObjectKey,
   organizationRuntimeObjectKey,
   RuntimeStorageConflictError,
+  RuntimeStoragePreconditionFailedError,
   RuntimeStorageIntegrityError,
   VercelBlobOrganizationRuntimeRepository,
 } from "./organizationRuntimeRepository";

@@ -55,6 +55,8 @@ export type RuntimeWriteOwnerClass =
 
 export type OrganizationRuntimeReplaceAuditEvent = Readonly<{
   event:
+    | "ORGANIZATION_RUNTIME_READ"
+    | "ORGANIZATION_RUNTIME_POST_CONFLICT_READ"
     | "ORGANIZATION_RUNTIME_REPLACE_ATTEMPT"
     | "ORGANIZATION_RUNTIME_REPLACE_SUCCESS"
     | "ORGANIZATION_RUNTIME_REPLACE_CONFLICT";
@@ -64,7 +66,10 @@ export type OrganizationRuntimeReplaceAuditEvent = Readonly<{
   correlationFingerprint?: string;
   organizationFingerprint: string;
   runtimeObjectKeyFingerprint: string;
-  expectedRevisionFingerprint: string;
+  blobStoreIdFingerprint: string;
+  expectedRevisionFingerprint?: string;
+  revisionFingerprint?: string;
+  retrievalMethod?: "GET" | "HEAD";
   resultingRevisionFingerprint?: string;
   currentRevisionFingerprint?: string;
   deploymentCommit?: string;
@@ -136,6 +141,8 @@ export interface OrganizationRuntimeRepository {
 }
 
 export class RuntimeStorageConflictError extends Error {}
+/** Preserves a genuine Vercel Blob conditional-write failure for diagnostics. */
+export class RuntimeStoragePreconditionFailedError extends RuntimeStorageConflictError {}
 export class RuntimeStorageIncompatibleReplayError extends Error {
   readonly code = "runtime_storage_incompatible_replay" as const;
 }
@@ -1262,7 +1269,7 @@ export function createVercelPrivateBlobClient(): PrivateBlobClient {
         return { etag: result.etag };
       } catch (error) {
         if (error instanceof BlobPreconditionFailedError) {
-          throw new RuntimeStorageConflictError("Runtime revision changed");
+          throw new RuntimeStoragePreconditionFailedError("Runtime revision changed");
         }
         throw error;
       }
@@ -1302,6 +1309,9 @@ export class VercelBlobOrganizationRuntimeRepository
           : {}),
         organizationFingerprint: safeFingerprint(organizationId),
         runtimeObjectKeyFingerprint: safeFingerprint(key),
+        blobStoreIdFingerprint: safeFingerprint(
+          process.env.BLOB_STORE_ID ?? "unconfigured",
+        ),
         expectedRevisionFingerprint: safeFingerprint(expectedRevision),
         ...revisions,
         ...(process.env.VERCEL_GIT_COMMIT_SHA
@@ -1313,6 +1323,41 @@ export class VercelBlobOrganizationRuntimeRepository
       });
     } catch {
       // Observability is never allowed to affect Runtime write semantics.
+    }
+  }
+
+  private emitReadAudit(
+    event: "ORGANIZATION_RUNTIME_READ" | "ORGANIZATION_RUNTIME_POST_CONFLICT_READ",
+    organizationId: string,
+    key: string,
+    metadata: RuntimeStorageOperationMetadata,
+    result: { etag: string } | null,
+  ): void {
+    try {
+      this.audit({
+        event,
+        timestamp: new Date().toISOString(),
+        writerClass: metadata.writerClass ?? "unclassified",
+        requestFingerprint: safeFingerprint(metadata.requestId),
+        ...(metadata.correlationId
+          ? { correlationFingerprint: safeFingerprint(metadata.correlationId) }
+          : {}),
+        organizationFingerprint: safeFingerprint(organizationId),
+        runtimeObjectKeyFingerprint: safeFingerprint(key),
+        blobStoreIdFingerprint: safeFingerprint(
+          process.env.BLOB_STORE_ID ?? "unconfigured",
+        ),
+        retrievalMethod: "GET",
+        ...(result ? { revisionFingerprint: safeFingerprint(result.etag) } : {}),
+        ...(process.env.VERCEL_GIT_COMMIT_SHA
+          ? { deploymentCommit: process.env.VERCEL_GIT_COMMIT_SHA }
+          : {}),
+        ...(process.env.VERCEL_DEPLOYMENT_ID
+          ? { deploymentId: process.env.VERCEL_DEPLOYMENT_ID }
+          : {}),
+      });
+    } catch {
+      // Observability is never allowed to affect Runtime read semantics.
     }
   }
 
@@ -1328,11 +1373,26 @@ export class VercelBlobOrganizationRuntimeRepository
     );
   }
 
-  async read(
+  private async readStored(
     organizationId: string,
+    metadata?: RuntimeStorageOperationMetadata,
   ): Promise<StoredOrganizationRuntime | null> {
-    const result = await this.client.get(this.key(organizationId));
+    const key = this.key(organizationId);
+    const result = await this.client.get(key);
+    if (metadata)
+      this.emitReadAudit("ORGANIZATION_RUNTIME_READ", organizationId, key, metadata, result);
     return result ? stored(organizationId, result.bytes, result.etag) : null;
+  }
+
+  async read(organizationId: string): Promise<StoredOrganizationRuntime | null> {
+    return this.readStored(organizationId);
+  }
+
+  async readWithRuntimeProvenance(
+    organizationId: string,
+    metadata: RuntimeStorageOperationMetadata,
+  ): Promise<StoredOrganizationRuntime | null> {
+    return this.readStored(organizationId, metadata);
   }
 
   async exists(organizationId: string): Promise<boolean> {
@@ -1384,8 +1444,19 @@ export class VercelBlobOrganizationRuntimeRepository
       );
       return { ...value, revision: result.etag };
     } catch (error) {
+      let current: { etag: string } | null = null;
+      if (error instanceof RuntimeStoragePreconditionFailedError) {
+        current = await this.client.get(key).catch(() => null);
+        this.emitReadAudit(
+          "ORGANIZATION_RUNTIME_POST_CONFLICT_READ",
+          organizationId,
+          key,
+          metadata,
+          current,
+        );
+      }
       if (error instanceof RuntimeStorageConflictError) {
-        const current = await this.client.head(key).catch(() => null);
+        current ??= await this.client.head(key).catch(() => null);
         this.emitReplaceAudit(
           "ORGANIZATION_RUNTIME_REPLACE_CONFLICT",
           organizationId,
@@ -1441,6 +1512,22 @@ export class VercelBlobOrganizationRuntimeRepository
     );
     return { ...value, revision: result.etag };
   }
+}
+
+type RuntimeReadProvenanceRepository = Pick<
+  OrganizationRuntimeRepository,
+  "read"
+> & Partial<Pick<VercelBlobOrganizationRuntimeRepository, "readWithRuntimeProvenance">>;
+
+/** Emits read provenance only when the configured repository supports it. */
+export async function readOrganizationRuntimeForOperation(
+  repository: RuntimeReadProvenanceRepository,
+  organizationId: string,
+  metadata: RuntimeStorageOperationMetadata,
+): Promise<StoredOrganizationRuntime | null> {
+  return repository.readWithRuntimeProvenance
+    ? repository.readWithRuntimeProvenance(organizationId, metadata)
+    : repository.read(organizationId);
 }
 
 export function configuredRuntimeStorageBackend(

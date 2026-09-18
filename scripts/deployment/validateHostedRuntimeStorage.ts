@@ -9,6 +9,7 @@ import {
   organizationRuntimeBackupObjectKey,
   organizationRuntimeObjectKey,
   RuntimeStorageConflictError,
+  RuntimeStoragePreconditionFailedError,
   RuntimeStorageIntegrityError,
   VercelBlobOrganizationRuntimeRepository,
   type OrganizationRuntimeReplaceAuditEvent,
@@ -30,9 +31,17 @@ function bytes(organizationId: string, revision: number): Uint8Array {
 
 class IsolatedPrivateBlobClient implements PrivateBlobClient {
   readonly objects = new Map<string, { bytes: Uint8Array; etag: string }>();
+  getCount = 0;
+  putCount = 0;
+  failNextGet = false;
   private revision = 0;
 
   async get(pathname: string) {
+    this.getCount += 1;
+    if (this.failNextGet) {
+      this.failNextGet = false;
+      throw new Error("diagnostic-read-failure");
+    }
     const value = this.objects.get(pathname);
     return value
       ? { bytes: value.bytes.slice(), etag: value.etag }
@@ -49,12 +58,13 @@ class IsolatedPrivateBlobClient implements PrivateBlobClient {
     value: Uint8Array,
     options: { allowOverwrite: boolean; ifMatch?: string },
   ) {
+    this.putCount += 1;
     const current = this.objects.get(pathname);
     if (!options.allowOverwrite && current) {
       throw new RuntimeStorageConflictError("Object already exists");
     }
     if (options.ifMatch && current?.etag !== options.ifMatch) {
-      throw new RuntimeStorageConflictError("Object revision changed");
+      throw new RuntimeStoragePreconditionFailedError("Object revision changed");
     }
     this.revision += 1;
     const next = { bytes: value.slice(), etag: `etag-${this.revision}` };
@@ -72,6 +82,8 @@ const first = bytes(organizationId, 1);
 const second = bytes(organizationId, 2);
 
 async function main(): Promise<void> {
+  const priorStoreId = process.env.BLOB_STORE_ID;
+  process.env.BLOB_STORE_ID = "store-private-locator";
   const temporaryDirectory = await mkdtemp(
     path.join(os.tmpdir(), "discovery-runtime-repository-"),
   );
@@ -121,6 +133,11 @@ async function main(): Promise<void> {
   const hostedCreated = await hosted.create(organizationId, first, metadata);
   await check(() => assert.deepEqual(hostedCreated.bytes, first));
   await hosted.backup(organizationId, "before-replace", metadata);
+  await hosted.readWithRuntimeProvenance(organizationId, {
+    ...metadata,
+    writerClass: "CanonicalLocalSourceBindingService",
+    correlationId: "correlation-runtime-audit-001",
+  });
   const hostedReplaced = await hosted.replace(
     organizationId,
     second,
@@ -128,33 +145,50 @@ async function main(): Promise<void> {
     { ...metadata, writerClass: "CanonicalLocalSourceBindingService", correlationId: "correlation-runtime-audit-001" },
   );
   await check(() => assert.deepEqual(hostedReplaced.bytes, second));
+  const getsBeforeConflict = client.getCount;
+  const putsBeforeConflict = client.putCount;
   await check(() => assert.rejects(
     hosted.replace(organizationId, first, hostedCreated.revision, { ...metadata, writerClass: "CanonicalProductWorkspaceAdapter" }),
     RuntimeStorageConflictError,
   ));
+  await check(() => assert.equal(client.getCount, getsBeforeConflict + 1, "genuine Blob precondition failure performs exactly one diagnostic read"));
+  await check(() => assert.equal(client.putCount, putsBeforeConflict + 1, "conflict performs no mutation retry"));
   await check(() => assert.deepEqual(
     replaceAudit.map((event) => event.event),
     [
+      "ORGANIZATION_RUNTIME_READ",
       "ORGANIZATION_RUNTIME_REPLACE_ATTEMPT",
       "ORGANIZATION_RUNTIME_REPLACE_SUCCESS",
       "ORGANIZATION_RUNTIME_REPLACE_ATTEMPT",
+      "ORGANIZATION_RUNTIME_POST_CONFLICT_READ",
       "ORGANIZATION_RUNTIME_REPLACE_CONFLICT",
     ],
   ));
   await check(() => {
-    const [attempt, success, conflictAttempt, conflict] = replaceAudit;
+    const [read, attempt, success, conflictAttempt, postConflictRead, conflict] = replaceAudit;
+    assert.equal(read?.writerClass, "CanonicalLocalSourceBindingService");
+    assert.equal(read?.retrievalMethod, "GET");
+    assert.ok(read?.revisionFingerprint);
     assert.equal(attempt?.writerClass, "CanonicalLocalSourceBindingService");
     assert.equal(success?.writerClass, "CanonicalLocalSourceBindingService");
     assert.ok(success?.correlationFingerprint);
     assert.equal(conflictAttempt?.writerClass, "CanonicalProductWorkspaceAdapter");
     assert.equal(conflict?.writerClass, "CanonicalProductWorkspaceAdapter");
+    assert.equal(postConflictRead?.retrievalMethod, "GET");
+    assert.equal(read?.organizationFingerprint, attempt?.organizationFingerprint);
+    assert.equal(read?.runtimeObjectKeyFingerprint, attempt?.runtimeObjectKeyFingerprint);
+    assert.equal(read?.blobStoreIdFingerprint, attempt?.blobStoreIdFingerprint);
+    assert.equal(postConflictRead?.organizationFingerprint, conflict?.organizationFingerprint);
+    assert.equal(postConflictRead?.runtimeObjectKeyFingerprint, conflict?.runtimeObjectKeyFingerprint);
+    assert.equal(postConflictRead?.blobStoreIdFingerprint, conflict?.blobStoreIdFingerprint);
+    assert.equal(postConflictRead?.revisionFingerprint, conflict?.currentRevisionFingerprint);
     assert.ok(success?.resultingRevisionFingerprint);
     assert.ok(conflict?.currentRevisionFingerprint);
     assert.notEqual(conflict?.expectedRevisionFingerprint, conflict?.currentRevisionFingerprint);
   });
   await check(() => {
     const serialized = JSON.stringify(replaceAudit);
-    assert.doesNotMatch(serialized, /etag-[0-9]|validation\/runtime\/v1|atlas-hosted-validation|sensitive-source-body|private-locator|correlation-runtime-audit-001|token|bytes|runtime"/i);
+    assert.doesNotMatch(serialized, /etag-[0-9]|validation\/runtime\/v1|atlas-hosted-validation|sensitive-source-body|private-locator|store-private-locator|correlation-runtime-audit-001|token|bytes|runtime"/i);
     assert.doesNotMatch(serialized, /private.*blob|blob.*private/i);
   });
   await check(async () => {
@@ -181,6 +215,31 @@ async function main(): Promise<void> {
     const serialized = JSON.stringify(hostileEvents);
     assert.equal(hostileEvents.at(-1)?.writerClass, "RuntimeProvisioningRecovery");
     assert.doesNotMatch(serialized, /private-locator|private\.blob\.example|token/i);
+  });
+  await check(async () => {
+    client.failNextGet = true;
+    const putsBeforeDiagnosticFailure = client.putCount;
+    const eventsBeforeDiagnosticFailure = replaceAudit.length;
+    await assert.rejects(
+      hosted.replace(
+        organizationId,
+        first,
+        hostedCreated.revision,
+        { ...metadata, writerClass: "CanonicalLocalSourceBindingService" },
+      ),
+      RuntimeStorageConflictError,
+    );
+    assert.equal(client.putCount, putsBeforeDiagnosticFailure + 1);
+    const diagnosticFailureEvents = replaceAudit.slice(eventsBeforeDiagnosticFailure);
+    assert.deepEqual(
+      diagnosticFailureEvents.map((event) => event.event),
+      [
+        "ORGANIZATION_RUNTIME_REPLACE_ATTEMPT",
+        "ORGANIZATION_RUNTIME_POST_CONFLICT_READ",
+        "ORGANIZATION_RUNTIME_REPLACE_CONFLICT",
+      ],
+    );
+    assert.equal(diagnosticFailureEvents[1]?.revisionFingerprint, undefined);
   });
   const hostedRestored = await hosted.restore(
     organizationId,
@@ -262,6 +321,8 @@ async function main(): Promise<void> {
   ));
   await check(() => assert.match(locationSource, /process\.env\.VERCEL/));
 
+  if (priorStoreId === undefined) delete process.env.BLOB_STORE_ID;
+  else process.env.BLOB_STORE_ID = priorStoreId;
   console.log(JSON.stringify({
     validation: "hosted-runtime-storage",
     result: "PASS",
