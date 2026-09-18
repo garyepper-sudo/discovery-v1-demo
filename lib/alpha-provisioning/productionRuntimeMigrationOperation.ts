@@ -104,6 +104,16 @@ export async function migrateProductionRuntimeToPostgres(environment: NodeJS.Pro
     const legacyRuntime = await legacy.read(organizationId);
     if (!legacyRuntime) throw new Error("Production Runtime migration legacy state is unavailable");
     const sourceDigest = createHash("sha256").update(legacyRuntime.bytes).digest("hex");
+    stage = "MIGRATION_0008_APPLY";
+    // The migration helper owns both the durable write and its own verification;
+    // a thrown result cannot truthfully distinguish their ordering here.
+    if (before.status === "PENDING") durableWriteState = "UNKNOWN";
+    const after = before.status === "PENDING"
+      ? await dependencies.apply(sql, () => { stage = "MIGRATION_STATUS_AFTER"; durableWriteState = "AFTER_MIGRATION_BEFORE_IMPORT"; })
+      : before;
+    durableWriteState = "AFTER_MIGRATION_BEFORE_IMPORT";
+    stage = "MIGRATION_STATUS_AFTER";
+    if (after.status !== "CURRENT" || !after.schemaComplete || after.missingSchemaObjects.length) throw new Error("Production Runtime migration did not reach a complete schema state");
     stage = "POSTGRES_RUNTIME_CONFLICT_CHECK";
     const application = dependencies.application(sql);
     const existing = await application.read(organizationId);
@@ -115,17 +125,6 @@ export async function migrateProductionRuntimeToPostgres(environment: NodeJS.Pro
       return { correlationId, status: "ALREADY_COMPLETE", migrationBefore: "CURRENT", migrationAfter: "CURRENT", migrationNumber: "0008", organizationFingerprint: fingerprint(organizationId), importStatus: "ALREADY_IMPORTED", sourceDigestFingerprint: fingerprint(sourceDigest), postgresDigestFingerprint: fingerprint(existingDigest), parity: "PASS", revision: existing.revision, casSmoke: "PASS" };
     }
     if (before.status === "PENDING" && existing) throw new Error("Production Runtime migration preconditions are not satisfied");
-    if (before.status === "CURRENT") durableWriteState = "AFTER_MIGRATION_BEFORE_IMPORT";
-    stage = "MIGRATION_0008_APPLY";
-    // The migration helper owns both the durable write and its own verification;
-    // a thrown result cannot truthfully distinguish their ordering here.
-    if (before.status === "PENDING") durableWriteState = "UNKNOWN";
-    const after = before.status === "PENDING"
-      ? await dependencies.apply(sql, () => { stage = "MIGRATION_STATUS_AFTER"; durableWriteState = "AFTER_MIGRATION_BEFORE_IMPORT"; })
-      : before;
-    durableWriteState = "AFTER_MIGRATION_BEFORE_IMPORT";
-    stage = "MIGRATION_STATUS_AFTER";
-    if (after.status !== "CURRENT" || !after.schemaComplete || after.missingSchemaObjects.length) throw new Error("Production Runtime migration did not reach a complete schema state");
     stage = "POSTGRES_RUNTIME_IMPORT";
     let importWriteStarted = false;
     const imported = await dependencies.importLegacy({ organizationId, legacy, destination: application, requestId: `production-runtime-migration:${correlationId}`, operatorId: "production-runtime-migration", onBoundary: (boundary: string) => {
