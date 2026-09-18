@@ -458,6 +458,7 @@
     "deployment:validate-protected-provisioning": "tsx scripts/deployment/validateProtectedProvisioningOperation.ts",
     "deployment:validate-staged-provisioning": "tsx scripts/deployment/validateStagedProvisioningOperations.ts",
     "deployment:provision-design-partner": "tsx scripts/deployment/provisionDesignPartner.ts",
+    "deployment:bootstrap-production-design-partner": "NODE_OPTIONS=--conditions=react-server tsx scripts/deployment/bootstrapProductionDesignPartner.ts",
     "deployment:runtime-recovery": "tsx scripts/deployment/runtimeRecovery.ts",
     "deployment:validate-runtime-storage": "tsx scripts/deployment/validateHostedRuntimeStorage.ts",
     "northstar:cognitive-layer-validation:001": "tsx engine/benchmark/high-volume/northstar/runNorthstarCognitiveLayerValidation001.ts",

@@ -14,6 +14,7 @@ const protectedAlphaPath = /^\/alpha(?:\/|$)/;
 const protectedAlphaAsset =
   /^\/_next\/static\/(?:chunks|css)\/app\/alpha(?:\/|$)/;
 const activatedYourOrganizationPath = /^\/your-organization(?:\/|$)/;
+const protectedChiefMeetingPath = /^\/product-alpha\/meetings(?:\/|$)/;
 const inactiveDesignPartnerSurface =
   /^\/(?:ask|brief|decisions|experiment|organizations|research|discovery-v1|executive-decision|api\/(?:analyze|discovery-lab|executive-decision|executive-decision-record|executive-scenario|product-interaction))(?:\/|$)/;
 const onboardingTestSurface =
@@ -197,7 +198,9 @@ export async function middleware(
   }
   if (
     activationEnabled &&
-    activatedYourOrganizationPath.test(request.nextUrl.pathname)
+    (activatedYourOrganizationPath.test(request.nextUrl.pathname) ||
+      (isHostedDiscoveryEnvironment() &&
+        protectedChiefMeetingPath.test(request.nextUrl.pathname)))
   ) {
     if (!event) {
       return new NextResponse("Authentication boundary unavailable.", {

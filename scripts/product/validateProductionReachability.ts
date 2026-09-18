@@ -147,6 +147,18 @@ check(() => assert.match(
   middleware,
   /pathname: request\.nextUrl\.pathname/,
 ));
+check(() => assert.match(
+  middleware,
+  /protectedChiefMeetingPath/,
+));
+check(() => assert.match(
+  middleware,
+  /isHostedDiscoveryEnvironment\(\) &&\s*protectedChiefMeetingPath\.test/,
+));
+check(() => assert.match(
+  middleware,
+  /"\/product-alpha\/:path\*"/,
+));
 check(() => assert.ok(
   activatedLoader.indexOf("runDurableAlphaDisclosureTransaction") <
     activatedLoader.indexOf("createOrganizationRuntimeRepository().read"),
