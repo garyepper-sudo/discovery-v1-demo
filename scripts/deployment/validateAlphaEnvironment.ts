@@ -6,7 +6,6 @@ const required = [
   "DISCOVERY_DATABASE_ADMIN_URL",
   "DISCOVERY_DATABASE_MIGRATION_URL",
   "DISCOVERY_RUNTIME_STORAGE_BACKEND",
-  "DISCOVERY_ALPHA_ORGANIZATION_ID",
   "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
   "CLERK_SECRET_KEY",
 ] as const;
@@ -58,11 +57,6 @@ if (runtimeBackend === "postgresql") {
   assert.equal(process.env.VERCEL, "1", "PostgreSQL Runtime storage is hosted-only");
 }
 assert.match(
-  process.env.DISCOVERY_ALPHA_ORGANIZATION_ID!,
-  /^[a-zA-Z0-9_-]+$/,
-  "Organization id must be exact and filesystem-safe",
-);
-assert.match(
   process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY!,
   /^pk_(test|live)_/,
   "Clerk publishable key has an invalid shape",
@@ -82,6 +76,6 @@ console.log(JSON.stringify({
   validation: "alpha-deployment-environment",
   result: "PASS",
   secretValuesPrinted: false,
-  organizationId: process.env.DISCOVERY_ALPHA_ORGANIZATION_ID,
+  legacyOrganizationConfigurationPresent: Boolean(process.env.DISCOVERY_ALPHA_ORGANIZATION_ID),
   runtimeBackend,
 }));

@@ -42,6 +42,8 @@ async function main(): Promise<void> {
   const check = (condition: unknown, message: string) => { assert.ok(condition, message); checks += 1; };
   const clean = await run({});
   check(clean.preservationState === "P6 — NO_CANONICAL_RUNTIME_OR_DEPENDENT_STATE" && clean.freshRevisionOneInitialization.eligible === "YES", "empty canonical founder state is the sole fresh revision-one case");
+  const optionalConfiguration = await inspectCanonicalFounderRuntimePreservation({ VERCEL_ENV: "production", NODE_ENV: "production", DISCOVERY_DATABASE_URL: "postgresql://safe/test" } as NodeJS.ProcessEnv, dependencies({}));
+  check(optionalConfiguration.configuration.configuredOrganizationFingerprint === null && optionalConfiguration.configuration.targetsLegacyCandidate === false, "absent legacy configuration remains optional for the preservation diagnostic");
   const dependent = await run({ access: { participantBinding: "PRESENT", organizationAccess: "CURRENT", provenance: "FOUNDER_BOOTSTRAP", exactFounderLineage: true, referencesCanonicalFounder: true } });
   check(dependent.preservationState === "P5 — NO_CANONICAL_RUNTIME_BUT_BOOTSTRAP_STATE_PRESENT", "founder access/bootstrap evidence blocks fresh initialization");
   const blob = await run({ blob: stored() });

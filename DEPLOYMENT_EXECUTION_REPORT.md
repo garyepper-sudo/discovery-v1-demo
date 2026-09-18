@@ -453,9 +453,10 @@ governance repository for that consumer's access records and resolves only
 eligible organization authority. One authorized organization resolves
 automatically. Zero or ambiguous authorized organizations fail closed.
 
-`DISCOVERY_ALPHA_ORGANIZATION_ID` is now explicitly a deployment guardrail:
-the configured organization resolves only when the verified consumer already
-has eligible durable access to the same organization. It cannot grant access.
+`DISCOVERY_ALPHA_ORGANIZATION_ID` remains optional legacy compatibility and
+diagnostic configuration. The canonical founder identity is resolved through
+the durable OrganizationIdentityOwner lineage; authenticated durable access
+remains mandatory and identity resolution cannot grant access.
 An explicit `organizationId` query is only an authorized selection, never an
 authority source; malformed, unauthorized, or guardrail-conflicting values
 deny without fallback.

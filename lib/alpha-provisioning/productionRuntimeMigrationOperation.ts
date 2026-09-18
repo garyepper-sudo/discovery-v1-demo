@@ -6,6 +6,7 @@ import postgres from "postgres";
 import { requireDiscoveryDatabaseUrl } from "../../db/config";
 import { PostgresOrganizationRuntimeRepository, PostgresRuntimeCreateConflictError, PostgresRuntimeCreateError, RuntimeStorageConflictError, VercelBlobOrganizationRuntimeRepository, importLegacyOrganizationRuntime } from "../../engine/v3/runtime";
 import { applyGovernanceMigrations, inspectGovernanceMigrationState } from "../../scripts/storage/governanceMigrationContract";
+import { resolveCanonicalFounderIdentity } from "./canonicalFounderIdentity";
 
 export type RuntimeMigrationReceipt = Readonly<{
   correlationId: string;
@@ -25,6 +26,7 @@ export type RuntimeMigrationReceipt = Readonly<{
 /** Closed, content-safe boundaries for the protected one-time operation. */
 export const runtimeMigrationStages = [
   "PRECHECK",
+  "CANONICAL_FOUNDER_IDENTITY_READ",
   "MIGRATION_STATUS_BEFORE",
   "LEGACY_BLOB_RUNTIME_READ",
   "POSTGRES_RUNTIME_CONFLICT_CHECK",
@@ -74,17 +76,12 @@ type RuntimeMigrationDependencies = Readonly<{
   legacy: () => any;
   application: (sql: any) => any;
   importLegacy: (input: any) => Promise<any>;
+  resolveFounder: (sql: any) => Promise<{ organizationId: string }>;
 }>;
 
 const fingerprint = (value: string) => createHash("sha256").update(value).digest("hex").slice(0, 16);
 const stageForCreateBoundary = (boundary: "validate" | "insert" | "return-validate"): RuntimeMigrationStage =>
   boundary === "validate" ? "POSTGRES_RUNTIME_CREATE_VALIDATE" : boundary === "insert" ? "POSTGRES_RUNTIME_CREATE_INSERT" : "POSTGRES_RUNTIME_CREATE_RETURN_VALIDATE";
-const exactOrganizationId = (environment: NodeJS.ProcessEnv): string => {
-  const value = environment.DISCOVERY_ALPHA_ORGANIZATION_ID;
-  if (!value || !/^[A-Za-z0-9_-]+$/.test(value)) throw new Error("Production Runtime migration configuration unavailable");
-  return value;
-};
-
 /** One-time server-side bridge: delegates migration and import to their canonical owners. */
 export async function migrateProductionRuntimeToPostgres(environment: NodeJS.ProcessEnv = process.env, injected?: Partial<RuntimeMigrationDependencies>): Promise<RuntimeMigrationReceipt> {
   const correlationId = randomUUID();
@@ -98,13 +95,15 @@ export async function migrateProductionRuntimeToPostgres(environment: NodeJS.Pro
     legacy: () => new VercelBlobOrganizationRuntimeRepository(),
     application: (connection) => new PostgresOrganizationRuntimeRepository(connection),
     importLegacy: importLegacyOrganizationRuntime,
+    resolveFounder: resolveCanonicalFounderIdentity,
     ...injected,
   };
   try {
     if (environment.VERCEL_ENV !== "production" || environment.NODE_ENV !== "production") throw new Error("Production Runtime migration is unavailable");
-    const organizationId = exactOrganizationId(environment);
     requireDiscoveryDatabaseUrl("migration", environment);
     sql = dependencies.openSql();
+    stage = "CANONICAL_FOUNDER_IDENTITY_READ";
+    const organizationId = (await dependencies.resolveFounder(sql)).organizationId;
     stage = "MIGRATION_STATUS_BEFORE";
     const before = await dependencies.inspect(sql);
     const pendingOnly0008 = before.status === "PENDING" && before.appliedMigrations === 8 && before.expectedMigrations === 9;

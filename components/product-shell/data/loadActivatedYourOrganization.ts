@@ -13,6 +13,7 @@ import {
 } from "../../../engine/v3/runtime";
 import { PostgresAlphaAccessRecordRepository } from "../../../db/governance/postgresRepositories";
 import { resolveAuthorizedOrganization } from "../../../lib/alpha-activation/resolveAuthorizedOrganization";
+import { resolveCanonicalFounderIdentity } from "../../../lib/alpha-provisioning/canonicalFounderIdentity";
 import { resolveVerifiedConsumerIdentityFromClerk } from "../../../lib/auth/resolveVerifiedConsumerIdentityFromClerk";
 import { writeAlphaOperationalLog } from "../../../lib/operations/alphaOperationalLog";
 import {
@@ -57,15 +58,11 @@ export async function loadActivatedYourOrganization(
 
   let runtime: OrganizationRuntime | undefined;
   try {
+    const founder = await resolveCanonicalFounderIdentity(sql);
     const organizationResolution = await resolveAuthorizedOrganization({
       identity: identityResolution.identity,
       ...(requestedOrganizationId ? { requestedOrganizationId } : {}),
-      ...(process.env.DISCOVERY_ALPHA_ORGANIZATION_ID
-        ? {
-            configuredOrganizationId:
-              process.env.DISCOVERY_ALPHA_ORGANIZATION_ID,
-          }
-        : {}),
+      configuredOrganizationId: founder.organizationId,
       resolvedAt,
       accessRepository: new PostgresAlphaAccessRecordRepository(sql),
     });

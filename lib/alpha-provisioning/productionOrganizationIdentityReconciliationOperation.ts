@@ -72,9 +72,10 @@ type Dependencies = Readonly<{
 const emptyCounts = (): StructuralCounts => ({ participantBindings: 0, organizationAccessGrants: 0, exactSeriesAccessGrants: 0, governedSources: 0, recurringMeetingSeries: 0, occurrences: 0, productQuestions: 0, preparedWork: 0, meetingPacks: 0, productWorkflowExists: false });
 const fingerprint = (value: string): string => createHash("sha256").update(value).digest("hex").slice(0, 16);
 const grammar = (value: string): OrganizationIdentityGrammar => /^organization:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u.test(value) ? "ORGANIZATION_COLON_UUID" : /^organization_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u.test(value) ? "ORGANIZATION_UNDERSCORE_UUID" : /^[A-Za-z0-9_-]+$/u.test(value) ? "OTHER_RUNTIME_SAFE" : "INVALID";
-const configuredOrganizationId = (environment: NodeJS.ProcessEnv): string => {
+const configuredOrganizationId = (environment: NodeJS.ProcessEnv): string | null => {
   const value = environment.DISCOVERY_ALPHA_ORGANIZATION_ID;
-  if (!value || grammar(value) === "INVALID") throw new Error("Organization identity reconciliation is unavailable");
+  if (!value) return null;
+  if (grammar(value) === "INVALID") throw new Error("Organization identity reconciliation is unavailable");
   return value;
 };
 const count = (value: unknown): number => {
@@ -124,16 +125,16 @@ export async function reconcileProductionOrganizationIdentity(environment: NodeJ
     requireDiscoveryDatabaseUrl("application", environment);
     sql = dependencies.openSql();
     stage = "LEGACY_RUNTIME_READ";
-    const legacy = await dependencies.legacy().read(configuredId);
-    if (!legacy || legacy.runtime.metadata.organizationId !== configuredId) throw new Error("Organization identity reconciliation is unavailable");
+    const legacy = configuredId ? await dependencies.legacy().read(configuredId) : null;
+    if (configuredId && (!legacy || legacy.runtime.metadata.organizationId !== configuredId)) throw new Error("Organization identity reconciliation is unavailable");
     stage = "CANONICAL_IDENTITY_READ";
-    const [legacyIdentity, founder] = await Promise.all([dependencies.findIdentity(sql, configuredId), dependencies.findFounderIdentity(sql)]);
+    const [legacyIdentity, founder] = await Promise.all([configuredId ? dependencies.findIdentity(sql, configuredId) : Promise.resolve(null), dependencies.findFounderIdentity(sql)]);
     stage = "STRUCTURAL_READ";
     // Constructing the canonical repository makes its read-only owner boundary explicit; no create/replace method is reachable here.
     dependencies.application(sql);
-    const legacyCandidate: Candidate = { status: "PRESENT", fingerprint: fingerprint(configuredId), grammar: grammar(configuredId), organizationIdentityParentExists: legacyIdentity !== null, creationKeyLineage: legacyIdentity?.creation_key === FOUNDER_BOOTSTRAP_CREATION_KEY ? "FOUNDER_BOOTSTRAP" : legacyIdentity ? "NON_FOUNDER" : "ABSENT", structures: await dependencies.structuralCounts(sql, configuredId) };
+    const legacyCandidate: Candidate = configuredId ? { status: "PRESENT", fingerprint: fingerprint(configuredId), grammar: grammar(configuredId), organizationIdentityParentExists: legacyIdentity !== null, creationKeyLineage: legacyIdentity?.creation_key === FOUNDER_BOOTSTRAP_CREATION_KEY ? "FOUNDER_BOOTSTRAP" : legacyIdentity ? "NON_FOUNDER" : "ABSENT", structures: await dependencies.structuralCounts(sql, configuredId) } : await candidate(sql, null, dependencies.structuralCounts);
     const founderCandidate = await candidate(sql, founder, dependencies.structuralCounts);
-    const sameId = founder?.organization_id === configuredId;
+    const sameId = Boolean(configuredId && founder?.organization_id === configuredId);
     // Distinct owner-issued identities with distinct durable creation keys are
     // separate canonical organizations unless an explicit continuity owner says otherwise.
     const provablyDifferent = Boolean(founder && legacyIdentity && !sameId && founder.creation_key !== legacyIdentity.creation_key);
@@ -145,7 +146,7 @@ export async function reconcileProductionOrganizationIdentity(environment: NodeJ
       // The founder creation lineage identifies only the founder candidate; it does not connect that candidate to legacy Runtime state.
       { kind: "FOUNDER_BOOTSTRAP_LINEAGE", classification: "NO_CONNECTION" },
     ];
-    return { status: "COMPLETE", correlationId, readOnly: true, configMatchesLegacyRuntimeMetadata: true, legacyCandidate, canonicalFounderCandidate: founderCandidate, canonicalFounderMatch: founder ? sameId ? "YES" : "NO" : "FOUNDER_ABSENT", continuity: sameId ? "PROVEN_SAME_LOGICAL_ORGANIZATION" : provablyDifferent ? "PROVEN_DIFFERENT_ORGANIZATIONS" : "INSUFFICIENT_EVIDENCE", continuityEvidence: evidence };
+    return { status: "COMPLETE", correlationId, readOnly: true, configMatchesLegacyRuntimeMetadata: Boolean(configuredId), legacyCandidate, canonicalFounderCandidate: founderCandidate, canonicalFounderMatch: founder ? sameId ? "YES" : "NO" : "FOUNDER_ABSENT", continuity: sameId ? "PROVEN_SAME_LOGICAL_ORGANIZATION" : provablyDifferent ? "PROVEN_DIFFERENT_ORGANIZATIONS" : "INSUFFICIENT_EVIDENCE", continuityEvidence: evidence };
   } catch {
     throw new OrganizationIdentityReconciliationOperationError({ status: "FAILED_CLOSED", correlationId, stage, errorCode: "ORGANIZATION_IDENTITY_RECONCILIATION_FAILED", readOnly: true });
   } finally { if (sql) await sql.end({ timeout: 1 }); }

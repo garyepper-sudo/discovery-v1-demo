@@ -2,7 +2,7 @@ import postgres from "postgres";
 import { NextRequest, NextResponse } from "next/server";
 
 import { requireDiscoveryDatabaseUrl } from "../../../db/config";
-import { createOrganizationRuntimeRepository } from "../../../engine/v3/runtime";
+import { canonicalFounderRuntimeHealthy } from "../../../lib/alpha-provisioning/productionFounderRuntimeHealth";
 import { writeAlphaOperationalLog } from "../../../lib/operations/alphaOperationalLog";
 
 export const dynamic = "force-dynamic";
@@ -10,12 +10,10 @@ export const dynamic = "force-dynamic";
 export async function GET(request: NextRequest) {
   const requestId =
     request.headers.get("x-request-id") ?? crypto.randomUUID();
-  const organizationId = process.env.DISCOVERY_ALPHA_ORGANIZATION_ID;
   const checks = { configuration: false, database: false, runtime: false };
   let sql;
 
   checks.configuration = Boolean(
-    organizationId &&
     process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY &&
     process.env.CLERK_SECRET_KEY,
   );
@@ -30,9 +28,8 @@ export async function GET(request: NextRequest) {
     checks.database = ok === 1;
     if (!checks.database) throw new Error("database");
 
-    if (checks.configuration && organizationId) {
-      checks.runtime =
-        await createOrganizationRuntimeRepository(process.env, sql).exists(organizationId);
+    if (checks.configuration) {
+      checks.runtime = await canonicalFounderRuntimeHealthy(sql, process.env);
     }
   } catch {
     writeAlphaOperationalLog({eventCategory:"health",workflowStage:"health",transitionCategory:"completed",outcomeCategory:"server-failure",failureCategory:"server"});

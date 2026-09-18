@@ -4,7 +4,7 @@ import path from "node:path";
 
 import postgres from "postgres";
 
-import { OrganizationIdentityOwner } from "../../lib/alpha-provisioning/organizationIdentityOwner";
+import { OrganizationIdentityOwner, resolveOrganizationIdentityByCreationKey } from "../../lib/alpha-provisioning/organizationIdentityOwner";
 import { inspectGovernanceMigrationState } from "../storage/governanceMigrationContract";
 
 const databaseUrl = process.env.DISCOVERY_TEST_DATABASE_URL;
@@ -25,6 +25,10 @@ async function main(): Promise<void> {
     const owner = new OrganizationIdentityOwner(sql), first = await owner.createOrResolveOrganization(input);
     check("first creation returns an opaque Runtime-compatible owner-issued organization identity", /^organization_[0-9a-f-]{36}$/u.test(first.organizationId) && /^[A-Za-z0-9_-]+$/u.test(first.organizationId));
     check("first creation stores the exact approved creation facts", first.creationKey === input.creationKey && first.displayName === input.displayName && first.provenance === input.provenance);
+    const resolvedExisting = await resolveOrganizationIdentityByCreationKey(sql, creationKey);
+    check("existing identity resolves read-only by creation key without allocation", resolvedExisting?.organizationId === first.organizationId);
+    const missingExisting = await resolveOrganizationIdentityByCreationKey(sql, `${creationKey}:missing`);
+    check("missing creation key resolves absent without allocation", missingExisting === null);
     const replay = await owner.createOrResolveOrganization(input);
     check("identical retry returns the same organization identity", replay.organizationId === first.organizationId);
     const concurrentInput = { ...input, creationKey: `${creationKey}:concurrent` };

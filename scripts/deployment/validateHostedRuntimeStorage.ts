@@ -306,10 +306,7 @@ async function main(): Promise<void> {
     "Runtime repository read must remain inside the authorized disclosure transaction",
   ));
   const healthSource = await readFile("app/api/health/route.ts", "utf8");
-  await check(() => assert.match(
-    healthSource,
-    /createOrganizationRuntimeRepository\(process\.env, sql\)\.exists\(organizationId\)/,
-  ));
+  await check(() => assert.match(healthSource, /canonicalFounderRuntimeHealthy\(sql, process\.env\)/));
   const locationSource = await readFile(
     "engine/v3/runtime/runtimeStorageLocation.ts",
     "utf8",
@@ -333,7 +330,7 @@ async function main(): Promise<void> {
     deterministicKeys: true,
     authorizationBeforeRuntime: true,
     revisionSafeReplacement: true,
-    healthUsesConfiguredRepository: true,
+    healthUsesCanonicalFounderRuntimeRead: true,
     vercelTmpFallbackRejected: true,
   }, null, 2));
   } finally {

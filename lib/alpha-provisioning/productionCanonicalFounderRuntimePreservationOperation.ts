@@ -68,7 +68,7 @@ export type CanonicalFounderRuntimePreservationReceipt = Readonly<{
     excludedLaterWrites: readonly ("PARTICIPANT_BINDING" | "ACCESS_GRANT" | "SOURCE_CREATION" | "MEETING_CREATION" | "PREPARED_WORK")[];
   }>;
   configuration: Readonly<{
-    configuredOrganizationFingerprint: string;
+    configuredOrganizationFingerprint: string | null;
     targetsLegacyCandidate: boolean;
     targetsCanonicalFounder: boolean;
     founderConfigurationSufficientForHealthAndCurrentRuntimeReads: boolean;
@@ -153,7 +153,7 @@ export async function inspectCanonicalFounderRuntimePreservation(environment: No
   try {
     if (environment.VERCEL_ENV !== "production" || environment.NODE_ENV !== "production") throw new Error("Canonical founder Runtime preservation diagnostic is unavailable");
     const configuredId = environment.DISCOVERY_ALPHA_ORGANIZATION_ID;
-    if (!configuredId || !/^[A-Za-z0-9_-]+$/u.test(configuredId)) throw new Error("Canonical founder Runtime preservation diagnostic is unavailable");
+    if (configuredId && !/^[A-Za-z0-9_-]+$/u.test(configuredId)) throw new Error("Canonical founder Runtime preservation diagnostic is unavailable");
     requireDiscoveryDatabaseUrl("application", environment); sql = dependencies.openSql();
     stage = "FOUNDER_IDENTITY_READ";
     const founder = await dependencies.resolveFounder(sql, FOUNDER_CREATION_KEY);
@@ -173,7 +173,7 @@ export async function inspectCanonicalFounderRuntimePreservation(environment: No
       : hasDependentState(structures, access) ? "P5 — NO_CANONICAL_RUNTIME_BUT_BOOTSTRAP_STATE_PRESENT"
       : "P6 — NO_CANONICAL_RUNTIME_OR_DEPENDENT_STATE";
     const fresh = preservationState === "P6 — NO_CANONICAL_RUNTIME_OR_DEPENDENT_STATE";
-    return { status: "COMPLETE", correlationId, readOnly: true, canonicalFounder: { fingerprint: FOUNDER_FINGERPRINT, resolvedThrough: "ORGANIZATION_IDENTITY_OWNER_CREATION_KEY" }, postgresRuntime: postgresFacts, blobRuntime: blobFacts, structuralState: structures, accessGrant: access, preservationState, sameIdBlobImport: { eligible: preservationState === "P2 — BLOB_CANONICAL_RUNTIME_PRESENT" ? "YES" : "NOT_APPLICABLE", owner: preservationState === "P2 — BLOB_CANONICAL_RUNTIME_PRESENT" ? "importLegacyOrganizationRuntime" : null }, freshRevisionOneInitialization: { eligible: fresh ? "YES" : "NOT_APPLICABLE", owner: fresh ? "provisionOrganizationUnderstandingBootstrap" : null, excludedLaterWrites: ["PARTICIPANT_BINDING", "ACCESS_GRANT", "SOURCE_CREATION", "MEETING_CREATION", "PREPARED_WORK"] }, configuration: { configuredOrganizationFingerprint: fingerprint(configuredId), targetsLegacyCandidate: fingerprint(configuredId) === LEGACY_FINGERPRINT, targetsCanonicalFounder: configuredId === founder.organizationId, founderConfigurationSufficientForHealthAndCurrentRuntimeReads: true, otherOrganizationIdentityVariables: "NONE_DISCOVERED", changesApplicationData: false } };
+    return { status: "COMPLETE", correlationId, readOnly: true, canonicalFounder: { fingerprint: FOUNDER_FINGERPRINT, resolvedThrough: "ORGANIZATION_IDENTITY_OWNER_CREATION_KEY" }, postgresRuntime: postgresFacts, blobRuntime: blobFacts, structuralState: structures, accessGrant: access, preservationState, sameIdBlobImport: { eligible: preservationState === "P2 — BLOB_CANONICAL_RUNTIME_PRESENT" ? "YES" : "NOT_APPLICABLE", owner: preservationState === "P2 — BLOB_CANONICAL_RUNTIME_PRESENT" ? "importLegacyOrganizationRuntime" : null }, freshRevisionOneInitialization: { eligible: fresh ? "YES" : "NOT_APPLICABLE", owner: fresh ? "provisionOrganizationUnderstandingBootstrap" : null, excludedLaterWrites: ["PARTICIPANT_BINDING", "ACCESS_GRANT", "SOURCE_CREATION", "MEETING_CREATION", "PREPARED_WORK"] }, configuration: { configuredOrganizationFingerprint: configuredId ? fingerprint(configuredId) : null, targetsLegacyCandidate: configuredId ? fingerprint(configuredId) === LEGACY_FINGERPRINT : false, targetsCanonicalFounder: configuredId === founder.organizationId, founderConfigurationSufficientForHealthAndCurrentRuntimeReads: true, otherOrganizationIdentityVariables: "NONE_DISCOVERED", changesApplicationData: false } };
   } catch {
     throw new CanonicalFounderRuntimePreservationOperationError({ status: "FAILED_CLOSED", correlationId, stage, errorCode: "CANONICAL_FOUNDER_RUNTIME_PRESERVATION_FAILED", readOnly: true });
   } finally { if (sql) await sql.end({ timeout: 1 }); }
