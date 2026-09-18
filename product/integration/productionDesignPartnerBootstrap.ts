@@ -5,7 +5,8 @@ import postgres from "postgres";
 
 import { requireDiscoveryDatabaseUrl } from "../../db/config";
 import { PostgresAlphaAccessRecordRepository, PostgresParticipantReferenceAccessRepository } from "../../db/governance/postgresRepositories";
-import { CanonicalLocalSourceBindingService } from "../../engine/v3/governance/canonicalLocalSourceBindingService";
+import { CanonicalLocalSourceBindingService, CanonicalSourceBindingFailure, type RegisterCanonicalLocalSourceBindingRequestV1, type ResolveCanonicalSourceBindingRequestV1 } from "../../engine/v3/governance/canonicalLocalSourceBindingService";
+import type { OrganizationRuntimeRepository } from "../../engine/v3/runtime/organizationRuntimeRepository";
 import { resolveScopedGovernanceContext, type ScopedAuthorityGrant } from "../../engine/v3/governance/scopedGovernanceContext";
 import { decodeAndNormalizeSourceContent, GovernedSourceContentService, sourceContentDigest } from "../../engine/v3/sources";
 import { resolveClerkStableInstanceIdentity } from "../../lib/auth/clerkStableInstanceIdentity";
@@ -17,7 +18,6 @@ import { createProductionChiefInfrastructure } from "./productionChiefInfrastruc
 import { createHostedLeadershipConversationServerComposition } from "./leadershipConversationServerComposition";
 import { createOpenAIExecutiveAnalysisTransport } from "../../lib/analysis/openAIExecutiveAnalysisTransport";
 import { asFounderBootstrapFailure, type FounderBootstrapStage } from "../../lib/alpha-provisioning/founderBootstrapDiagnostics";
-import { CanonicalSourceBindingFailure } from "../../engine/v3/governance/canonicalLocalSourceBindingService";
 
 const PURPOSE = "leadership-conversation-capture" as const;
 const key = /^[a-z0-9][a-z0-9._:-]{0,127}$/u;
@@ -65,6 +65,24 @@ function authority(input:{organizationId:string;subjectId:string;issuer:string;a
   return resolveScopedGovernanceContext({organizationId:input.organizationId,subjectId:input.subjectId,requestedScope:scope,operation:input.operation,purpose:PURPOSE,sensitivity:"standard",evaluatedAt:input.at,temporal:{mode:"current"},serverResolvedAuthority:[grant]});
 }
 
+type SourceBindingRegistrationBase = Omit<RegisterCanonicalLocalSourceBindingRequestV1,"expectedRuntimeRevision">;
+type SourceBindingResolutionRequest = ResolveCanonicalSourceBindingRequestV1;
+
+/** A single CAS refresh is safe only because the complete canonical request is
+ * rebuilt from the same base; the Runtime revision is the sole changed field. */
+export async function registerProductionSourceBindingWithOneCasRefresh(input:{bindings:Pick<CanonicalLocalSourceBindingService,"registerCanonicalLocalSourceBinding"|"resolveCanonicalCurrentSourceBinding">;runtime:Pick<OrganizationRuntimeRepository,"read">;registration:SourceBindingRegistrationBase;resolution:SourceBindingResolutionRequest}):Promise<{sourceBindingId:string}>{
+  const register=async()=>{const stored=await input.runtime.read(input.registration.organizationId);if(!stored)throw new Error("Production bootstrap Runtime is unavailable.");return input.bindings.registerCanonicalLocalSourceBinding({...input.registration,expectedRuntimeRevision:stored.revision});};
+  const resolve=async()=>({sourceBindingId:(await input.bindings.resolveCanonicalCurrentSourceBinding(input.resolution)).binding.bindingId});
+  try{return{sourceBindingId:(await register()).sourceBindingId};}catch(error){
+    if(!(error instanceof CanonicalSourceBindingFailure)||error.errorCode!=="SOURCE_BINDING_CURRENT_REVISION_CONFLICT")throw error;
+    if(error.resolutionFallbackAllowed)return resolve();
+    try{return{sourceBindingId:(await register()).sourceBindingId};}catch(refreshError){
+      if(refreshError instanceof CanonicalSourceBindingFailure&&refreshError.errorCode==="SOURCE_BINDING_CURRENT_REVISION_CONFLICT"&&refreshError.resolutionFallbackAllowed)return resolve();
+      throw refreshError;
+    }
+  }
+}
+
 /**
  * Closed, server-side operational composition.  It is intentionally not an API
  * route: callers provide the exact Clerk subject and immutable source bytes, and
@@ -110,9 +128,9 @@ export async function bootstrapProductionDesignPartner(input: ProductionDesignPa
     for(const source of input.sources){
       stage="GOVERNED_SOURCE_METADATA";
       const normalized=decodeAndNormalizeSourceContent(source.bytes).normalizedText, normalizedDigest=sourceContentDigest(new TextEncoder().encode(normalized));
-      const stored=await infrastructure.runtime.read(organizationId); if(!stored) throw new Error("Production bootstrap Runtime is unavailable.");
       const context=authority({organizationId,subjectId:participant.participantRef,issuer,at,operation:"source-binding:register-local"});
-      let binding; try { binding=await bindings.registerCanonicalLocalSourceBinding({contractVersion:"1",organizationId,productQuestionId:questionId,sourceType:source.mediaType==="text/markdown"?"markdown-upload":"plain-text-upload",purposeRef:PURPOSE,normalizedContentDigest:normalizedDigest,requestedScopeAssertions:[{relationship:"applies-to",scope:{organizationId,type:"organization",id:organizationId}}],sensitivity:"standard",authorization:context,recordedAt:at,recordedByActorRef:participant.participantRef,idempotencyKey:`${input.operationId}:source:${source.externalKey}:binding`,expectedRuntimeRevision:stored.revision,operation:{requestId:`${input.operationId}:source:${source.externalKey}:binding`,operatorId:participant.participantRef}}); } catch (error) { if (!(error instanceof CanonicalSourceBindingFailure) || !error.resolutionFallbackAllowed) throw error; const resolved=await bindings.resolveCanonicalCurrentSourceBinding({contractVersion:"1",organizationId,productQuestionId:questionId,sourceType:source.mediaType==="text/markdown"?"markdown-upload":"plain-text-upload",purposeRef:PURPOSE,normalizedContentDigest:normalizedDigest,requestedScopeAssertions:[{relationship:"applies-to",scope:{organizationId,type:"organization",id:organizationId}}],sensitivity:"standard",authorization:authority({organizationId,subjectId:participant.participantRef,issuer,at,operation:"source-binding:resolve-current"}),resolvedAt:at}); binding={sourceBindingId:resolved.binding.bindingId}; }
+      const registration={contractVersion:"1" as const,organizationId,productQuestionId:questionId,sourceType:source.mediaType==="text/markdown"?"markdown-upload" as const:"plain-text-upload" as const,purposeRef:PURPOSE,normalizedContentDigest:normalizedDigest,requestedScopeAssertions:[{relationship:"applies-to" as const,scope:{organizationId,type:"organization" as const,id:organizationId}}],sensitivity:"standard" as const,authorization:context,recordedAt:at,recordedByActorRef:participant.participantRef,idempotencyKey:`${input.operationId}:source:${source.externalKey}:binding`,operation:{requestId:`${input.operationId}:source:${source.externalKey}:binding`,operatorId:participant.participantRef}};
+      const binding=await registerProductionSourceBindingWithOneCasRefresh({bindings,runtime:infrastructure.runtime,registration,resolution:{contractVersion:"1",organizationId,productQuestionId:questionId,sourceType:registration.sourceType,purposeRef:PURPOSE,normalizedContentDigest:normalizedDigest,requestedScopeAssertions:registration.requestedScopeAssertions,sensitivity:"standard",authorization:authority({organizationId,subjectId:participant.participantRef,issuer,at,operation:"source-binding:resolve-current"}),resolvedAt:at}});
       stage="GOVERNED_SOURCE_BODY";
       const state=await content.inspectExactWriteState({organizationId,productQuestionId:questionId,sourceBindingId:binding.sourceBindingId,purposeRef:PURPOSE,normalizedContentDigest:normalizedDigest,exactContentDigest:sourceContentDigest(source.bytes),byteLength:source.bytes.byteLength,authorization:authority({organizationId,subjectId:participant.participantRef,issuer,at,operation:"source-content:write"})});
       if(state.status==="conflict") throw new Error("Production bootstrap source content conflicts.");
