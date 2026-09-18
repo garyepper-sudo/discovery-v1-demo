@@ -452,7 +452,7 @@
     "storage:migrate": "tsx scripts/storage/migrateAlphaGovernance.ts up",
     "storage:status": "tsx scripts/storage/migrateAlphaGovernance.ts status",
     "storage:import-legacy-runtime": "tsx scripts/storage/importLegacyOrganizationRuntime.ts",
-    "validate:production-runtime-migration-ops-route": "tsx scripts/product/validateProductionRuntimeMigrationOpsRoute.ts",
+    "validate:production-runtime-migration-ops-route": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateProductionRuntimeMigrationOpsRoute.ts",
     "storage:reset:local": "tsx scripts/storage/migrateAlphaGovernance.ts reset",
     "validate:governance-migration-journal": "tsx scripts/storage/validateGovernanceMigrationJournal.ts",
     "validate:governance-migration-prefix": "tsx scripts/storage/validateGovernanceMigrationPrefix.ts",

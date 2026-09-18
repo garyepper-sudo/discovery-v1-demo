@@ -352,6 +352,7 @@ export async function inspectGovernanceMigrationState(
 export async function applyGovernanceMigrations(
   sql: Sql,
   migrationsFolder = canonicalGovernanceMigrationsFolder,
+  beforePostMigrationVerification?: () => void,
 ): Promise<GovernanceMigrationState> {
   await sql`SELECT pg_advisory_lock(hashtextextended(${LOCK_NAME}, 0))`;
   try {
@@ -372,6 +373,7 @@ export async function applyGovernanceMigrations(
       }
       await migrate(drizzle(sql), { migrationsFolder });
     }
+    try { beforePostMigrationVerification?.(); } catch {}
     const after = await inspectGovernanceMigrationState(sql, migrationsFolder);
     assert.equal(
       after.status,
