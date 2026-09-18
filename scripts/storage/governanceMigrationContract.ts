@@ -60,6 +60,7 @@ const expectedRelations = [
   "alpha_access_lifecycle_events",
   "alpha_disclosure_audit_events",
   "alpha_actor_mappings",
+  "organization_identities",
 ] as const;
 const expectedIndexes = [
   "alpha_access_one_active_uq",
@@ -75,6 +76,7 @@ const expectedIndexes = [
   "alpha_actor_mappings_assignment_idempotency_key_key",
   "alpha_actor_mapping_active_subject_uq",
   "alpha_actor_mapping_subject_history_idx",
+  "organization_identities_creation_key_key",
 ] as const;
 const expectedFunctions = [
   "alpha_reject_append_only_mutation",
@@ -109,6 +111,9 @@ const expectedConstraints = [
   "alpha_actor_mappings_assignment_idempotency_key_key",
   "alpha_actor_mapping_identity_check",
   "alpha_actor_mapping_lifecycle_check",
+  "organization_identities_pkey",
+  "organization_identities_creation_key_key",
+  "organization_identities_identity_check",
 ] as const;
 const expectedActorColumns = [
   ["mapping_id", "text", "NO"], ["mapping_revision", "integer", "NO"],
@@ -116,6 +121,11 @@ const expectedActorColumns = [
   ["subject_lookup_digest", "text", "NO"], ["status", "text", "NO"],
   ["assigned_at", "timestamp with time zone", "NO"], ["revoked_at", "timestamp with time zone", "YES"],
   ["predecessor_mapping_id", "text", "YES"], ["assignment_idempotency_key", "text", "NO"],
+] as const;
+const expectedOrganizationIdentityColumns = [
+  ["organization_id", "text", "NO"], ["creation_key", "text", "NO"],
+  ["display_name", "text", "NO"], ["provenance", "text", "NO"],
+  ["created_at", "timestamp with time zone", "NO"],
 ] as const;
 export const canonicalGovernanceMigrationsFolder = path.join(
   process.cwd(),
@@ -180,6 +190,11 @@ async function schemaEvidence(sql: Sql): Promise<{
     WHERE table_schema = 'public' AND table_name = 'alpha_actor_mappings'
   `;
   for (const column of columns) found.add(`column:alpha_actor_mappings:${column.column_name}:${column.data_type}:${column.is_nullable}`);
+  const organizationIdentityColumns = await sql<{ column_name: string; data_type: string; is_nullable: string }[]>`
+    SELECT column_name, data_type, is_nullable FROM information_schema.columns
+    WHERE table_schema = 'public' AND table_name = 'organization_identities'
+  `;
+  for (const column of organizationIdentityColumns) found.add(`column:organization_identities:${column.column_name}:${column.data_type}:${column.is_nullable}`);
   const expected = [
     ...expectedRelations.map((name) => `relation:${name}`),
     ...expectedIndexes.map((name) => `index:${name}`),
@@ -188,6 +203,7 @@ async function schemaEvidence(sql: Sql): Promise<{
     ...expectedRoles.map((name) => `role:${name}`),
     ...expectedConstraints.map((name) => `constraint:${name}`),
     ...expectedActorColumns.map(([name, type, nullable]) => `column:alpha_actor_mappings:${name}:${type}:${nullable}`),
+    ...expectedOrganizationIdentityColumns.map(([name, type, nullable]) => `column:organization_identities:${name}:${type}:${nullable}`),
   ];
   const missing = expected.filter((item) => !found.has(item));
 
@@ -206,6 +222,9 @@ async function schemaEvidence(sql: Sql): Promise<{
       administration_actor_select: boolean;
       administration_actor_insert: boolean;
       administration_actor_update: boolean;
+      application_organization_identity_select: boolean;
+      administration_organization_identity_select: boolean;
+      administration_organization_identity_insert: boolean;
     }[]>`
       SELECT
         has_table_privilege('discovery_alpha_application', 'public.alpha_access_records', 'SELECT') AS application_access_select,
@@ -220,7 +239,10 @@ async function schemaEvidence(sql: Sql): Promise<{
         has_table_privilege('discovery_alpha_application', 'public.alpha_actor_mappings', 'SELECT') AS application_actor_select,
         has_table_privilege('discovery_alpha_administration', 'public.alpha_actor_mappings', 'SELECT') AS administration_actor_select,
         has_table_privilege('discovery_alpha_administration', 'public.alpha_actor_mappings', 'INSERT') AS administration_actor_insert,
-        has_table_privilege('discovery_alpha_administration', 'public.alpha_actor_mappings', 'UPDATE') AS administration_actor_update
+        has_table_privilege('discovery_alpha_administration', 'public.alpha_actor_mappings', 'UPDATE') AS administration_actor_update,
+        has_table_privilege('discovery_alpha_application', 'public.organization_identities', 'SELECT') AS application_organization_identity_select,
+        has_table_privilege('discovery_alpha_administration', 'public.organization_identities', 'SELECT') AS administration_organization_identity_select,
+        has_table_privilege('discovery_alpha_administration', 'public.organization_identities', 'INSERT') AS administration_organization_identity_insert
     `;
     for (const [name, value] of Object.entries(grants)) {
       if (!value) missing.push(`grant:${name}`);

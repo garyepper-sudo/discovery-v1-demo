@@ -43,6 +43,13 @@
       "when": 1789684231000,
       "tag": "0005_chief_v1_hosted_state",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1789684232000,
+      "tag": "0006_organization_identity_owner",
+      "breakpoints": true
     }
   ]
 }

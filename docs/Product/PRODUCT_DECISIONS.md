@@ -98,6 +98,22 @@ The Northstar preparation-time fixture uses an explicit server-only coordinator 
 
 Each decision below is active unless explicitly superseded by a later entry.
 
+## DEC-PROD-074 — Organization identity is allocated before access and Runtime creation
+
+- **Decision:** `OrganizationIdentityOwner` is the sole server-only production
+  allocator and resolver for opaque organization IDs. Its durable registry
+  records an operator-approved idempotency key, display metadata, provenance,
+  and creation time only. The display name is never identity.
+- **Boundary:** It creates no participant, organization, or meeting access;
+  Runtime; ProductQuestion; source; workflow; or administrative privilege.
+  Creation-key retries with changed intended metadata fail closed, while a
+  distinct approved key with the same display name remains a distinct identity.
+- **Reason:** Initial Runtime bootstrap correctly requires a canonical
+  organization ID, but no prior production owner could allocate one without
+  caller invention. This is the smallest durable predecessor to existing
+  Runtime and authorization owners.
+- **Status:** Active bounded production foundation.
+
 ## DEC-PROD-068 — Initial organizational understanding bootstrap is truthful pre-cognition
 
 - **Decision:** A new organization may persist an immutable Runtime-owned bootstrap record before completed Organizational Understanding exists. It records organization identity, purpose digest, and the server-issued first Product Question only; it never represents an investigation, explanation, canonical understanding, or authority grant.

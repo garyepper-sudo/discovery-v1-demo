@@ -101,6 +101,7 @@
     "validate:founder-local-alpha-understanding-activation": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateFounderLocalAlphaUnderstandingActivation.ts",
     "activate:founder-local-alpha": "NODE_OPTIONS=--conditions=react-server tsx scripts/development/activateFounderLocalAlpha.ts",
     "validate:initial-understanding-bootstrap": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateInitialUnderstandingBootstrap.ts",
+    "validate:organization-identity-owner": "tsx scripts/product/validateOrganizationIdentityOwner.ts",
     "validate:canonical-local-source-binding": "tsx scripts/product/validateCanonicalLocalSourceBindingRegistration.ts",
     "validate:canonical-local-source-binding-registration": "tsx scripts/product/validateCanonicalLocalSourceBindingRegistration.ts",
     "validate:canonical-local-source-binding-replay": "tsx scripts/product/validateCanonicalLocalSourceBindingReplay.ts",

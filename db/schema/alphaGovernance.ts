@@ -72,6 +72,20 @@ export const alphaAccessRecords = pgTable(
   ],
 );
 
+export const organizationIdentities = pgTable(
+  "organization_identities",
+  {
+    organizationId: text("organization_id").primaryKey(),
+    creationKey: text("creation_key").notNull().unique(),
+    displayName: text("display_name").notNull(),
+    provenance: text("provenance").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true, mode: "string" }).notNull(),
+  },
+  (table) => [
+    check("organization_identities_identity_check", sql`${table.organizationId} ~ '^organization:[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$' and ${table.creationKey} <> '' and ${table.creationKey} <> '*' and ${table.creationKey} = btrim(${table.creationKey}) and ${table.displayName} <> '' and ${table.displayName} <> '*' and ${table.displayName} = btrim(${table.displayName}) and ${table.provenance} <> '' and ${table.provenance} <> '*' and ${table.provenance} = btrim(${table.provenance})`),
+  ],
+);
+
 export const alphaActorMappings = pgTable(
   "alpha_actor_mappings",
   {

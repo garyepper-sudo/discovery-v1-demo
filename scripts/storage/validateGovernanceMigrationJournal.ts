@@ -21,18 +21,25 @@ const databaseUrl = url;
 const expectedMigrationTags = [
   "0000_alpha_governance_foundation",
   "0001_alpha_persistence_safe_actor_reference",
+  "0002_existing_participant_identity_binding",
+  "0003_participant_reference_meeting_access",
+  "0004_participant_identity_stable_subject_v2",
+  "0005_chief_v1_hosted_state",
+  "0006_organization_identity_owner",
 ] as const;
 const expectedRelations = [
   "alpha_access_records",
   "alpha_access_lifecycle_events",
   "alpha_disclosure_audit_events",
   "alpha_actor_mappings",
+  "organization_identities",
 ] as const;
 const expectedActorIndexes = [
   "alpha_actor_mappings_actor_ref_key",
   "alpha_actor_mappings_assignment_idempotency_key_key",
   "alpha_actor_mapping_active_subject_uq",
   "alpha_actor_mapping_subject_history_idx",
+  "organization_identities_creation_key_key",
 ] as const;
 const expectedActorColumns = [
   ["mapping_id", "text", "NO"],
@@ -54,7 +61,7 @@ function check(statement: string, condition: unknown): void {
 }
 
 async function reset(sql: postgres.Sql): Promise<void> {
-  await sql`DROP TABLE IF EXISTS alpha_actor_mappings,
+  await sql`DROP TABLE IF EXISTS organization_identities, alpha_actor_mappings,
     alpha_disclosure_audit_events,
     alpha_access_lifecycle_events, alpha_access_records CASCADE`;
   await sql`DROP FUNCTION IF EXISTS alpha_reject_append_only_mutation() CASCADE`;
@@ -119,11 +126,11 @@ async function main(): Promise<void> {
 
     const first = await applyGovernanceMigrations(sql);
     check("first migration reaches CURRENT", first.status === "CURRENT");
-    check("ordered migrations create two journal rows", await journalCount(sql) === 2);
+    check("ordered migrations create the complete journal", await journalCount(sql) === expectedMigrationTags.length);
     check("current history reports both required migrations", first.appliedMigrations === expectedMigrationTags.length);
     const second = await applyGovernanceMigrations(sql);
     check("second invocation is CURRENT", second.status === "CURRENT");
-    check("second invocation is a no-op", await journalCount(sql) === 2);
+    check("second invocation is a no-op", await journalCount(sql) === expectedMigrationTags.length);
 
     const migrationSql = await readFile(
       path.join(canonicalGovernanceMigrationsFolder, "0000_alpha_governance_foundation.sql"),
@@ -245,7 +252,7 @@ async function main(): Promise<void> {
         "concurrent attempts serialize to CURRENT",
         results.every((result) => result.status === "CURRENT"),
       );
-      check("concurrent attempts create two ordered journal rows", await journalCount(sql) === 2);
+      check("concurrent attempts create the complete ordered journal", await journalCount(sql) === expectedMigrationTags.length);
     } finally {
       await Promise.all([concurrentA.end(), concurrentB.end()]);
     }
@@ -274,7 +281,8 @@ async function main(): Promise<void> {
             'alpha_actor_mappings_actor_ref_key',
             'alpha_actor_mappings_assignment_idempotency_key_key',
             'alpha_actor_mapping_active_subject_uq',
-            'alpha_actor_mapping_subject_history_idx'
+            'alpha_actor_mapping_subject_history_idx',
+            'organization_identities_creation_key_key'
           )) AS indexes,
         (SELECT count(*)::int FROM pg_trigger
           WHERE NOT tgisinternal AND tgname LIKE 'alpha_%') AS triggers,
@@ -287,7 +295,7 @@ async function main(): Promise<void> {
         (SELECT count(*)::int FROM pg_constraint
           WHERE conname LIKE 'alpha_%') AS constraints
     `;
-    check("all thirteen reviewed indexes exist", catalog.indexes === 13);
+    check("all fourteen reviewed indexes exist", catalog.indexes === 14);
     check("all three reviewed triggers exist", catalog.triggers === 3);
     check("both reviewed functions exist", catalog.functions === 2);
     check("both reviewed roles exist", catalog.roles === 2);
@@ -297,7 +305,7 @@ async function main(): Promise<void> {
       WHERE table_schema = 'public' AND table_name IN ${sql(expectedRelations)}
       ORDER BY table_name
     `;
-    check("all four canonical governance relations exist", relations.length === expectedRelations.length);
+    check("all canonical governance relations exist", relations.length === expectedRelations.length);
     const actorIndexes = await sql<{ indexname: string }[]>`
       SELECT indexname FROM pg_indexes WHERE schemaname = 'public'
         AND indexname IN ${sql(expectedActorIndexes)}
@@ -322,7 +330,7 @@ async function main(): Promise<void> {
     check("full reset leaves no governance relation or actor row", remaining.count === 0);
     const reapplied = await applyGovernanceMigrations(sql);
     check("reset then reapply reconstructs CURRENT", reapplied.status === "CURRENT");
-    check("reset then replay reconstructs two journal rows", await journalCount(sql) === 2);
+    check("reset then replay reconstructs the complete journal", await journalCount(sql) === expectedMigrationTags.length);
 
     console.log(JSON.stringify({
       validation: "governance-migration-journal",

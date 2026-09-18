@@ -269,8 +269,11 @@ learning. Product code never alters those outputs or confidence.
 
 Organization Runtime is canonical persistence. Question events use the
 existing Runtime event collection and repository replacement contract. No
-parallel Question database, identity, history store, or organization identity
-is permitted.
+parallel Question database, identity, or history store is permitted. The sole
+exception is the server-only `OrganizationIdentityOwner`: its narrowly scoped
+durable registry allocates opaque organization identity before a Runtime
+exists, records only immutable creation facts, and creates no Runtime,
+authorization, source, meeting, or Product state.
 
 ### Product Workflow
 
