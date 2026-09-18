@@ -4,10 +4,13 @@ import { FounderBootstrapFailure, founderBootstrapStages } from "../../lib/alpha
 
 const forbidden = ["postgres://", "sk_", "BLOB_READ_WRITE_TOKEN", "source body", "raw provider response"];
 for (const stage of founderBootstrapStages) {
-  const failure = new FounderBootstrapFailure({ correlationId: "bootstrap-test-correlation", stage, durableWriteState: "AFTER_OR_DURING_DURABLE_WRITE" });
+  const failure = new FounderBootstrapFailure({ correlationId: "bootstrap-test-correlation", stage, operation: "REGISTER", errorCode: "SOURCE_BINDING_PERSISTENCE_FAILED", retrySafe: false, resolutionFallbackAllowed: false, durableWriteOccurred: "unknown", durableWriteState: "AFTER_OR_DURING_DURABLE_WRITE" });
   assert.equal(failure.diagnostic.stage, stage, `stage is retained for ${stage}`);
-  assert.equal(failure.diagnostic.errorCode, "BOOTSTRAP_STAGE_FAILED");
-  assert.equal(failure.diagnostic.retrySafe, true);
+  assert.equal(failure.diagnostic.operation, "REGISTER");
+  assert.equal(failure.diagnostic.errorCode, "SOURCE_BINDING_PERSISTENCE_FAILED");
+  assert.equal(failure.diagnostic.retrySafe, false);
+  assert.equal(failure.diagnostic.resolutionFallbackAllowed, false);
+  assert.equal(failure.diagnostic.durableWriteOccurred, "unknown");
   assert.equal(JSON.stringify(failure.diagnostic).includes("bootstrap-test-correlation"), true);
   assert.equal(forbidden.some(value => JSON.stringify(failure.diagnostic).includes(value)), false);
 }
