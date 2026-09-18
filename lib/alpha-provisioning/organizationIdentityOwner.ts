@@ -35,6 +35,21 @@ function row(value: { organization_id: string; creation_key: string; display_nam
   };
 }
 
+/** Read-only resolution boundary for a previously owner-issued identity. */
+export async function resolveOrganizationIdentityByCreationKey(
+  sql: Sql<Record<string, unknown>>,
+  creationKey: string,
+): Promise<OrganizationIdentityV1 | null> {
+  exact(creationKey, "creation key", 256);
+  const rows = await sql<{ organization_id: string; creation_key: string; display_name: string; provenance: string; created_at: Date | string }[]>`
+    SELECT organization_id, creation_key, display_name, provenance, created_at
+    FROM organization_identities
+    WHERE creation_key = ${creationKey}
+  `;
+  if (rows.length > 1) throw new Error("Organization identity resolution is unavailable.");
+  return rows[0] ? row(rows[0]) : null;
+}
+
 /**
  * The sole production allocator for durable organization identity. It records
  * no memberships, grants, Runtime, Product, source, or meeting state.
