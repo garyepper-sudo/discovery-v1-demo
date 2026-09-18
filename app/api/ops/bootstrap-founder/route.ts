@@ -1,8 +1,9 @@
 import "server-only";
 
-import { createHash, timingSafeEqual } from "node:crypto";
+import { createHash, randomUUID, timingSafeEqual } from "node:crypto";
 import { clerkClient } from "@clerk/nextjs/server";
 import { bootstrapProductionDesignPartner } from "../../../../product/integration/productionDesignPartnerBootstrap";
+import { asFounderBootstrapFailure, FounderBootstrapFailure } from "../../../../lib/alpha-provisioning/founderBootstrapDiagnostics";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -24,6 +25,12 @@ function privateResponse(status: number, body: string): Response {
   return new Response(body, { status, headers: { "Cache-Control": "private, no-store, max-age=0", "X-Robots-Tag": "noindex, nofollow" } });
 }
 
+function diagnosticResponse(status: number, failure: FounderBootstrapFailure): Response {
+  // This deliberate operational event contains only the closed diagnostic schema.
+  console.info("FOUNDER_BOOTSTRAP_DIAGNOSTIC", failure.diagnostic);
+  return Response.json({ status: failure.diagnostic.safeStatus, ...failure.diagnostic }, { status, headers: { "Cache-Control": "private, no-store, max-age=0", "X-Robots-Tag": "noindex, nofollow" } });
+}
+
 function authorized(request: Request): boolean {
   const expected = process.env.DISCOVERY_FOUNDER_BOOTSTRAP_SECRET;
   const supplied = request.headers.get("authorization");
@@ -43,9 +50,12 @@ export async function POST(request: Request): Promise<Response> {
   if (process.env.VERCEL_ENV !== "production" || process.env.NODE_ENV !== "production") return privateResponse(404, "Not found.");
   if (!authorized(request)) return privateResponse(401, "Unauthorized.");
   if ((request.headers.get("content-length") ?? "0") !== "0") return privateResponse(400, "Invalid request.");
+  const correlationId = randomUUID();
   try {
-    const clerkSubject = await founderSubject();
-    if (!clerkSubject) return privateResponse(503, "Founder identity unavailable.");
+    let clerkSubject: string | undefined;
+    try { clerkSubject = await founderSubject(); }
+    catch (error) { return diagnosticResponse(409, asFounderBootstrapFailure(error, { correlationId, stage: "CLERK_SUBJECT_RESOLUTION", durableWriteState: "BEFORE_ANY_DURABLE_WRITE" })); }
+    if (!clerkSubject) return diagnosticResponse(503, new FounderBootstrapFailure({ correlationId, stage: "CLERK_SUBJECT_RESOLUTION", durableWriteState: "BEFORE_ANY_DURABLE_WRITE" }));
     const receipt = await bootstrapProductionDesignPartner({
       contractVersion: "1", clerkSubject,
       organization: { creationKey: OPERATION_ID, displayName: "Asterline Software — Synthetic Test", provenance: "Founder synthetic production bootstrap executed through authorized ops-only Vercel runtime path." },
@@ -53,10 +63,10 @@ export async function POST(request: Request): Promise<Response> {
       meetingExternalKey: "weekly-signalgrid-launch-readiness-review", meetingTitle: "Weekly SignalGrid Launch Readiness Review", meetingPurpose: QUESTION,
       cadenceLabel: "Weekly", role: "Founder", preparationScopeExternalKey: "founder-synthetic-asterline-v1",
       sources: sources.map(([externalKey, body]) => ({ externalKey: `founder-synthetic:${externalKey}`, mediaType: "text/plain" as const, bytes: new TextEncoder().encode(body) })),
-    });
+    }, { correlationId });
     return Response.json({ status: "PROVISIONED_OR_REPLAYED", organizationId: receipt.organizationId, participantRef: receipt.participantRef, productQuestionId: receipt.productQuestionId, meetingSeriesId: receipt.seriesId, meetingAddress: receipt.meetingAddress, occurrenceId: receipt.occurrenceId, preparationScopeId: receipt.preparationScopeId, preparedWorkProductVersionId: receipt.preparedWorkProductVersionId, governedSourceCount: receipt.sourceCount, promotionProvenance: PROMOTION_PROVENANCE, secretReturned: false, sourceBodiesReturned: false }, { headers: { "Cache-Control": "private, no-store, max-age=0", "X-Robots-Tag": "noindex, nofollow" } });
-  } catch {
-    return privateResponse(409, "Founder bootstrap failed closed.");
+  } catch (error) {
+    return diagnosticResponse(409, asFounderBootstrapFailure(error, { correlationId, stage: "FINALIZATION", durableWriteState: "AFTER_OR_DURING_DURABLE_WRITE" }));
   }
 }
 

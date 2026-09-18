@@ -16,6 +16,7 @@ import { completeRegisteredMeetingPreparationScopeV1, deriveRecurringMeetingOccu
 import { createProductionChiefInfrastructure } from "./productionChiefInfrastructure";
 import { createHostedLeadershipConversationServerComposition } from "./leadershipConversationServerComposition";
 import { createOpenAIExecutiveAnalysisTransport } from "../../lib/analysis/openAIExecutiveAnalysisTransport";
+import { asFounderBootstrapFailure, type FounderBootstrapStage } from "../../lib/alpha-provisioning/founderBootstrapDiagnostics";
 
 const PURPOSE = "leadership-conversation-capture" as const;
 const key = /^[a-z0-9][a-z0-9._:-]{0,127}$/u;
@@ -68,40 +69,50 @@ function authority(input:{organizationId:string;subjectId:string;issuer:string;a
  * route: callers provide the exact Clerk subject and immutable source bytes, and
  * every durable write is delegated to an existing canonical owner.
  */
-export async function bootstrapProductionDesignPartner(input: ProductionDesignPartnerBootstrapInputV1): Promise<ProductionDesignPartnerBootstrapReceiptV1> {
-  inputIsValid(input);
-  const locatorKey=process.env.DISCOVERY_PARTICIPANT_IDENTITY_LOCATOR_KEY;
-  const instance=resolveClerkStableInstanceIdentity(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
-  if (!locatorKey || locatorKey.length < 32 || !instance) throw new Error("Production bootstrap is unavailable.");
-  const infrastructure=createProductionChiefInfrastructure();
-  const administration=postgres(requireDiscoveryDatabaseUrl("administration"),{max:1});
+export async function bootstrapProductionDesignPartner(input: ProductionDesignPartnerBootstrapInputV1, diagnostics?: { correlationId: string }): Promise<ProductionDesignPartnerBootstrapReceiptV1> {
+  let stage: FounderBootstrapStage="MEETING_PACK_PREREQUISITES";
+  let durableWriteState: "BEFORE_ANY_DURABLE_WRITE" | "AFTER_OR_DURING_DURABLE_WRITE"="BEFORE_ANY_DURABLE_WRITE";
+  let infrastructure: ReturnType<typeof createProductionChiefInfrastructure> | undefined;
+  let administration: ReturnType<typeof postgres> | undefined;
   const at=input.occurredAt, issuer=`production-design-partner-bootstrap:${input.operationId}`;
   const operationLock=`production-design-partner-bootstrap:${input.operationId}`;
   let lockAcquired=false;
   try {
+    inputIsValid(input);
+    const locatorKey=process.env.DISCOVERY_PARTICIPANT_IDENTITY_LOCATOR_KEY;
+    const instance=resolveClerkStableInstanceIdentity(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
+    if (!locatorKey || locatorKey.length < 32 || !instance) throw new Error("Production bootstrap is unavailable.");
+    infrastructure=createProductionChiefInfrastructure();
+    administration=postgres(requireDiscoveryDatabaseUrl("administration"),{max:1});
     await infrastructure.sql`SELECT pg_advisory_lock(hashtextextended(${operationLock}, 0))`;
     lockAcquired=true;
+    stage="ORGANIZATION_IDENTITY"; durableWriteState="AFTER_OR_DURING_DURABLE_WRITE";
     const organization=await new OrganizationIdentityOwner(administration).createOrResolveOrganization({...input.organization,createdAt:at});
     const organizationId=organization.organizationId;
+    stage="PRODUCT_QUESTION";
     const bootstrap=await provisionOrganizationUnderstandingBootstrap({organizationId,organizationName:organization.displayName,purpose:input.meetingPurpose,primaryQuestion:input.productQuestion,meetingExternalKey:input.meetingExternalKey,bootstrapOperationId:input.operationId,actor:`production-design-partner-bootstrap:${input.operationId}`,createdAt:at,repository:infrastructure.runtime});
     const questionId=bootstrap.productQuestionId;
     const identities=new PostgresAlphaAccessRecordRepository(infrastructure.sql,undefined,locatorKey,instance);
+    stage="PARTICIPANT_BINDING";
     const participant=await identities.resolveOrBindExistingParticipantIdentity({provider:"clerk",providerSubject:input.clerkSubject,resolvedAt:at});
     const accessRepository=new PostgresParticipantReferenceAccessRepository(infrastructure.sql);
     const access=new ParticipantReferenceAccessAdministration(accessRepository);
     const existingRuntime=await infrastructure.runtime.read(organizationId);
     if(!existingRuntime) throw new Error("Production bootstrap organization Runtime is unavailable.");
 
+    stage="ORGANIZATION_ACCESS";
     await access.activatePolicy({organizationId,issuerAuthority:issuer,operationId:`${input.operationId}:policy`,occurredAt:at});
     await access.grant({organizationId,participantRef:participant.participantRef,scope:"organization",issuerAuthority:issuer,operationId:`${input.operationId}:organization`,occurredAt:at});
     const bindings=new CanonicalLocalSourceBindingService(infrastructure.runtime,{now:()=>at});
-    const content=new GovernedSourceContentService(infrastructure.sources,{loadRevisions:async ({organizationId,sourceBindingId})=>{const stored=await infrastructure.runtime.read(organizationId),all=stored?.runtime.memory.canonicalScopeLineageIndex?.sourceBindings??[],target=all.find(value=>value.bindingId===sourceBindingId);return target?all.filter(value=>value.source.sourceId===target.source.sourceId):[];}},{now:()=>at});
+    const content=new GovernedSourceContentService(infrastructure.sources,{loadRevisions:async ({organizationId,sourceBindingId})=>{const stored=await infrastructure!.runtime.read(organizationId),all=stored?.runtime.memory.canonicalScopeLineageIndex?.sourceBindings??[],target=all.find(value=>value.bindingId===sourceBindingId);return target?all.filter(value=>value.source.sourceId===target.source.sourceId):[];}},{now:()=>at});
     const versions=[] as {sourceBindingId:string;sourceContentVersionId:string;normalizedContentDigest:string}[];
     for(const source of input.sources){
+      stage="GOVERNED_SOURCE_METADATA";
       const normalized=decodeAndNormalizeSourceContent(source.bytes).normalizedText, normalizedDigest=sourceContentDigest(new TextEncoder().encode(normalized));
       const stored=await infrastructure.runtime.read(organizationId); if(!stored) throw new Error("Production bootstrap Runtime is unavailable.");
       const context=authority({organizationId,subjectId:participant.participantRef,issuer,at,operation:"source-binding:register-local"});
       let binding; try { binding=await bindings.registerCanonicalLocalSourceBinding({contractVersion:"1",organizationId,productQuestionId:questionId,sourceType:source.mediaType==="text/markdown"?"markdown-upload":"plain-text-upload",purposeRef:PURPOSE,normalizedContentDigest:normalizedDigest,requestedScopeAssertions:[{relationship:"applies-to",scope:{organizationId,type:"organization",id:organizationId}}],sensitivity:"standard",authorization:context,recordedAt:at,recordedByActorRef:participant.participantRef,idempotencyKey:`${input.operationId}:source:${source.externalKey}:binding`,expectedRuntimeRevision:stored.revision,operation:{requestId:`${input.operationId}:source:${source.externalKey}:binding`,operatorId:participant.participantRef}}); } catch { const resolved=await bindings.resolveCanonicalCurrentSourceBinding({contractVersion:"1",organizationId,productQuestionId:questionId,sourceType:source.mediaType==="text/markdown"?"markdown-upload":"plain-text-upload",purposeRef:PURPOSE,normalizedContentDigest:normalizedDigest,requestedScopeAssertions:[{relationship:"applies-to",scope:{organizationId,type:"organization",id:organizationId}}],sensitivity:"standard",authorization:authority({organizationId,subjectId:participant.participantRef,issuer,at,operation:"source-binding:resolve-current"}),resolvedAt:at}); binding={sourceBindingId:resolved.binding.bindingId}; }
+      stage="GOVERNED_SOURCE_BODY";
       const state=await content.inspectExactWriteState({organizationId,productQuestionId:questionId,sourceBindingId:binding.sourceBindingId,purposeRef:PURPOSE,normalizedContentDigest:normalizedDigest,exactContentDigest:sourceContentDigest(source.bytes),byteLength:source.bytes.byteLength,authorization:authority({organizationId,subjectId:participant.participantRef,issuer,at,operation:"source-content:write"})});
       if(state.status==="conflict") throw new Error("Production bootstrap source content conflicts.");
       if(state.status==="incomplete") await content.restoreMissingBody({contractVersion:"1",organizationId,sourceBindingId:binding.sourceBindingId,sourceContentVersionId:state.version.sourceContentVersionId,purposeRef:PURPOSE,bytes:source.bytes,restoredByActorRef:participant.participantRef,authorization:authority({organizationId,subjectId:participant.participantRef,issuer,at,operation:"source-content:write"})});
@@ -110,17 +121,25 @@ export async function bootstrapProductionDesignPartner(input: ProductionDesignPa
       if(complete.status!=="complete") throw new Error("Production bootstrap source content is incomplete.");
       versions.push({sourceBindingId:binding.sourceBindingId,sourceContentVersionId:complete.version.sourceContentVersionId,normalizedContentDigest:normalizedDigest});
     }
+    stage="MEETING_SERIES";
     const identity=deriveRecurringMeetingOccurrenceIdentity({organizationId,meetingExternalKey:input.meetingExternalKey}), seriesId=identity.seriesId;
+    stage="PREPARATION_SCOPE";
     const scope=completeRegisteredMeetingPreparationScopeV1({contractVersion:"1",scopeId:leadershipId("registered-meeting-preparation-scope",organizationId,seriesId,input.preparationScopeExternalKey),organizationId,questionId,conversationId:identity.conversationId,seriesId,sourceVersions:versions.sort((a,b)=>a.sourceBindingId.localeCompare(b.sourceBindingId)),createdAt:at,createdByUserId:input.clerkSubject,idempotencyKeyDigest:leadershipId("general-recurring-meeting-scope-key",organizationId,input.meetingExternalKey),requestFingerprint:digest(input)});
     const before=await infrastructure.workflow.read(organizationId); await infrastructure.workflow.registerMeetingPreparationScope({...scope,expectedRevision:before.revision});
+    stage="EXACT_SERIES_ACCESS";
     await access.grant({organizationId,participantRef:participant.participantRef,scope:"meeting-series",meetingSeriesId:seriesId,issuerAuthority:issuer,operationId:`${input.operationId}:series`,occurredAt:at});
     const grants:ScopedAuthorityGrant["operations"]=["source-binding:resolve-current","source-content:read-for-proposal","source-content:read-for-claim-support","product-artifact:read","product-artifact:reuse","product-artifact:compare","product-workspace:read"];
     const server=createHostedLeadershipConversationServerComposition({runtimeRepository:infrastructure.runtime,workflowRepository:infrastructure.workflow as never,sourceRepository:infrastructure.sources,bodyRepository:infrastructure.artifactBodies,executiveHistoryRepository:infrastructure.executiveHistory,analysisLifecycleStore:infrastructure.analysisLifecycle,analysisTransport:createOpenAIExecutiveAnalysisTransport(),analysisModel:process.env.DISCOVERY_ALPHA_ANALYSIS_MODEL,analysisTimeoutMs:120000,persistedPreparedWorkLineage:true,authorityGrants:[{authorityRef:issuer,policyRef:"production-design-partner-bootstrap:v1",organizationId,subjectId:input.clerkSubject,scope:{organizationId,type:"organization",id:organizationId},operations:grants,sensitivity:["standard"],relationship:"direct",status:"active",validFrom:at}],authorized:(userId,candidateOrganizationId)=>userId===input.clerkSubject&&candidateOrganizationId===organizationId,participantRefForUser:userId=>userId===input.clerkSubject?participant.participantRef:undefined,currentMeetingAccess:async value=>{const policy=await accessRepository.findPolicy(value.organizationId),organizationGrants=await accessRepository.findGrants({organizationId:value.organizationId,participantRef:participant.participantRef,scope:"organization"}),meeting=await accessRepository.findGrants({organizationId:value.organizationId,participantRef:participant.participantRef,scope:"meeting-series",meetingSeriesId:value.seriesId});return evaluateParticipantReferenceCurrentAccess({policy,organizationGrants,meetingGrants:meeting,organizationId:value.organizationId,participantRef:participant.participantRef,meetingSeriesId:value.seriesId})==="authorized";},resolvePersonaKey:()=>undefined,resolvePersonaUser:()=>undefined});
+    stage="PREPARED_WORK";
     const prepared=await server.activateAndPrepareWithIdentity({contractVersion:"1",userId:input.clerkSubject,organizationId,questionId,meetingTitle:input.meetingTitle,timeframe:input.cadenceLabel,role:input.role,purpose:input.meetingPurpose,authorizedSourceRefs:versions.map(value=>value.sourceContentVersionId),idempotencyKey:leadershipId("general-recurring-meeting-activation",organizationId,input.meetingExternalKey),identity});
+    stage="FINALIZATION";
     const address=createHash("sha256").update(`meeting-series-address:v1:${organizationId}:${seriesId}`).digest("base64url").slice(0,24);
     return {contractVersion:"1",organizationId,participantRef:participant.participantRef,productQuestionId:questionId,seriesId,occurrenceId:identity.conversationId,preparationScopeId:scope.scopeId,preparedWorkProductVersionId:prepared.provenance.preparedWorkProductVersionId,meetingAddress:address,sourceCount:versions.length};
+  } catch (error) {
+    if (diagnostics) throw asFounderBootstrapFailure(error, { correlationId: diagnostics.correlationId, stage, durableWriteState });
+    throw error;
   } finally {
-    try { if(lockAcquired) await infrastructure.sql`SELECT pg_advisory_unlock(hashtextextended(${operationLock}, 0))`; }
-    finally { await Promise.all([infrastructure.close(),administration.end({timeout:1})]); }
+    try { if(lockAcquired&&infrastructure) await infrastructure.sql`SELECT pg_advisory_unlock(hashtextextended(${operationLock}, 0))`; }
+    finally { await Promise.all([infrastructure?.close(),administration?.end({timeout:1})]); }
   }
 }
