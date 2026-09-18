@@ -6,9 +6,14 @@ export const founderBootstrapStages = [
 ] as const;
 
 export type FounderBootstrapStage = (typeof founderBootstrapStages)[number];
+export const founderBootstrapInfrastructureSubstages = [
+  "CHIEF_INFRASTRUCTURE_CONSTRUCTION", "ADMINISTRATION_DATABASE_CLIENT", "OPERATION_ADVISORY_LOCK",
+] as const;
+export type FounderBootstrapInfrastructureSubstage = (typeof founderBootstrapInfrastructureSubstages)[number];
 export type FounderBootstrapFailureDiagnostic = Readonly<{
   correlationId: string;
   stage: FounderBootstrapStage;
+  infrastructureSubstage?: FounderBootstrapInfrastructureSubstage;
   operation?: "REGISTER" | "REVISE_AVAILABILITY" | "RESOLVE_CURRENT";
   errorCode: string;
   safeStatus: "FAILED_CLOSED";
@@ -33,7 +38,7 @@ const resourceClassFor = (stage: FounderBootstrapStage): FounderBootstrapFailure
 export class FounderBootstrapFailure extends Error {
   readonly diagnostic: FounderBootstrapFailureDiagnostic;
 
-  constructor(input: Pick<FounderBootstrapFailureDiagnostic, "correlationId" | "stage" | "durableWriteState"> & Partial<Pick<FounderBootstrapFailureDiagnostic, "operation" | "errorCode" | "retrySafe" | "resolutionFallbackAllowed" | "durableWriteOccurred">>) {
+  constructor(input: Pick<FounderBootstrapFailureDiagnostic, "correlationId" | "stage" | "durableWriteState"> & Partial<Pick<FounderBootstrapFailureDiagnostic, "infrastructureSubstage" | "operation" | "errorCode" | "retrySafe" | "resolutionFallbackAllowed" | "durableWriteOccurred">>) {
     super("Founder bootstrap failed closed.");
     this.name = "FounderBootstrapFailure";
     this.diagnostic = {
@@ -48,6 +53,6 @@ export class FounderBootstrapFailure extends Error {
   }
 }
 
-export function asFounderBootstrapFailure(error: unknown, input: Pick<FounderBootstrapFailureDiagnostic, "correlationId" | "stage" | "durableWriteState"> & Partial<Pick<FounderBootstrapFailureDiagnostic, "operation" | "errorCode" | "retrySafe" | "resolutionFallbackAllowed" | "durableWriteOccurred">>): FounderBootstrapFailure {
+export function asFounderBootstrapFailure(error: unknown, input: Pick<FounderBootstrapFailureDiagnostic, "correlationId" | "stage" | "durableWriteState"> & Partial<Pick<FounderBootstrapFailureDiagnostic, "infrastructureSubstage" | "operation" | "errorCode" | "retrySafe" | "resolutionFallbackAllowed" | "durableWriteOccurred">>): FounderBootstrapFailure {
   return error instanceof FounderBootstrapFailure ? error : new FounderBootstrapFailure(input);
 }

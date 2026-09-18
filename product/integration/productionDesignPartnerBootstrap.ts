@@ -16,7 +16,7 @@ import { completeRegisteredMeetingPreparationScopeV1, deriveRecurringMeetingOccu
 import { createProductionChiefInfrastructure } from "./productionChiefInfrastructure";
 import { createHostedLeadershipConversationServerComposition } from "./leadershipConversationServerComposition";
 import { createOpenAIExecutiveAnalysisTransport } from "../../lib/analysis/openAIExecutiveAnalysisTransport";
-import { asFounderBootstrapFailure, type FounderBootstrapStage } from "../../lib/alpha-provisioning/founderBootstrapDiagnostics";
+import { asFounderBootstrapFailure, type FounderBootstrapInfrastructureSubstage, type FounderBootstrapStage } from "../../lib/alpha-provisioning/founderBootstrapDiagnostics";
 
 const PURPOSE = "leadership-conversation-capture" as const;
 const key = /^[a-z0-9][a-z0-9._:-]{0,127}$/u;
@@ -71,6 +71,7 @@ function authority(input:{organizationId:string;subjectId:string;issuer:string;a
  */
 export async function bootstrapProductionDesignPartner(input: ProductionDesignPartnerBootstrapInputV1, diagnostics?: { correlationId: string }): Promise<ProductionDesignPartnerBootstrapReceiptV1> {
   let stage: FounderBootstrapStage="PRODUCTION_INFRASTRUCTURE";
+  let infrastructureSubstage: FounderBootstrapInfrastructureSubstage|undefined;
   let durableWriteState: "BEFORE_ANY_DURABLE_WRITE" | "AFTER_OR_DURING_DURABLE_WRITE"="BEFORE_ANY_DURABLE_WRITE";
   let infrastructure: ReturnType<typeof createProductionChiefInfrastructure> | undefined;
   let administration: ReturnType<typeof postgres> | undefined;
@@ -82,8 +83,11 @@ export async function bootstrapProductionDesignPartner(input: ProductionDesignPa
     const locatorKey=process.env.DISCOVERY_PARTICIPANT_IDENTITY_LOCATOR_KEY;
     const instance=resolveClerkStableInstanceIdentity(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
     if (!locatorKey || locatorKey.length < 32 || !instance) throw new Error("Production bootstrap is unavailable.");
+    infrastructureSubstage="CHIEF_INFRASTRUCTURE_CONSTRUCTION";
     infrastructure=createProductionChiefInfrastructure();
+    infrastructureSubstage="ADMINISTRATION_DATABASE_CLIENT";
     administration=postgres(requireDiscoveryDatabaseUrl("administration"),{max:1});
+    infrastructureSubstage="OPERATION_ADVISORY_LOCK";
     await infrastructure.sql`SELECT pg_advisory_lock(hashtextextended(${operationLock}, 0))`;
     lockAcquired=true;
     stage="ORGANIZATION_IDENTITY"; durableWriteState="AFTER_OR_DURING_DURABLE_WRITE";
@@ -136,7 +140,7 @@ export async function bootstrapProductionDesignPartner(input: ProductionDesignPa
     const address=createHash("sha256").update(`meeting-series-address:v1:${organizationId}:${seriesId}`).digest("base64url").slice(0,24);
     return {contractVersion:"1",organizationId,participantRef:participant.participantRef,productQuestionId:questionId,seriesId,occurrenceId:identity.conversationId,preparationScopeId:scope.scopeId,preparedWorkProductVersionId:prepared.provenance.preparedWorkProductVersionId,meetingAddress:address,sourceCount:versions.length};
   } catch (error) {
-    if (diagnostics) throw asFounderBootstrapFailure(error, { correlationId: diagnostics.correlationId, stage, durableWriteState, ...(error instanceof CanonicalSourceBindingFailure ? { operation: error.operation, errorCode: error.errorCode, retrySafe: error.errorCode === "SOURCE_BINDING_CURRENT_REVISION_CONFLICT", resolutionFallbackAllowed: error.resolutionFallbackAllowed, durableWriteOccurred: error.durableWriteOccurred } : {}) });
+    if (diagnostics) throw asFounderBootstrapFailure(error, { correlationId: diagnostics.correlationId, stage, durableWriteState, ...(stage === "PRODUCTION_INFRASTRUCTURE" && infrastructureSubstage ? { infrastructureSubstage } : {}), ...(error instanceof CanonicalSourceBindingFailure ? { operation: error.operation, errorCode: error.errorCode, retrySafe: error.errorCode === "SOURCE_BINDING_CURRENT_REVISION_CONFLICT", resolutionFallbackAllowed: error.resolutionFallbackAllowed, durableWriteOccurred: error.durableWriteOccurred } : {}) });
     throw error;
   } finally {
     try { if(lockAcquired&&infrastructure) await infrastructure.sql`SELECT pg_advisory_unlock(hashtextextended(${operationLock}, 0))`; }

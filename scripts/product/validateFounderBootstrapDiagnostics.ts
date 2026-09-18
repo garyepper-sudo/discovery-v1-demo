@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 
-import { FounderBootstrapFailure, founderBootstrapStages } from "../../lib/alpha-provisioning/founderBootstrapDiagnostics";
+import { FounderBootstrapFailure, founderBootstrapInfrastructureSubstages, founderBootstrapStages } from "../../lib/alpha-provisioning/founderBootstrapDiagnostics";
 
 const forbidden = ["postgres://", "sk_", "BLOB_READ_WRITE_TOKEN", "source body", "raw provider response"];
 for (const stage of founderBootstrapStages) {
@@ -14,4 +14,9 @@ for (const stage of founderBootstrapStages) {
   assert.equal(JSON.stringify(failure.diagnostic).includes("bootstrap-test-correlation"), true);
   assert.equal(forbidden.some(value => JSON.stringify(failure.diagnostic).includes(value)), false);
 }
-console.log(`RESULT PASS founder-bootstrap-diagnostics stages=${founderBootstrapStages.length}`);
+for (const infrastructureSubstage of founderBootstrapInfrastructureSubstages) {
+  const failure = new FounderBootstrapFailure({ correlationId: "bootstrap-test-correlation", stage: "PRODUCTION_INFRASTRUCTURE", infrastructureSubstage, durableWriteState: "BEFORE_ANY_DURABLE_WRITE" });
+  assert.equal(failure.diagnostic.infrastructureSubstage, infrastructureSubstage);
+  assert.equal(forbidden.some(value => JSON.stringify(failure.diagnostic).includes(value)), false);
+}
+console.log(`RESULT PASS founder-bootstrap-diagnostics stages=${founderBootstrapStages.length} infrastructureSubstages=${founderBootstrapInfrastructureSubstages.length}`);
