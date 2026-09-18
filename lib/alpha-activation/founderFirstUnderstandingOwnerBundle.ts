@@ -2,7 +2,7 @@ import "server-only";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { FilesystemOrganizationRuntimeRepository, type OrganizationRuntimeRepository } from "../../engine/v3/runtime/organizationRuntimeRepository";
-import { CanonicalLocalSourceBindingService } from "../../engine/v3/governance/canonicalLocalSourceBindingService";
+import { CanonicalLocalSourceBindingService, CanonicalSourceBindingFailure } from "../../engine/v3/governance/canonicalLocalSourceBindingService";
 import { resolveScopedGovernanceContext, type ScopedGovernanceOperation } from "../../engine/v3/governance/scopedGovernanceContext";
 import { createFilesystemSourceContentRepository, GovernedSourceContentService, type SourceContentRepository } from "../../engine/v3/sources";
 import { provisionOrganizationUnderstandingBootstrap } from "../alpha-provisioning/provisionDesignPartner";
@@ -291,11 +291,8 @@ export class FounderFirstUnderstandingOwnerBundle {
     const common = { contractVersion: "1" as const, organizationId, productQuestionId: questionId, sourceType: source.mediaType === "text/markdown" ? "markdown-upload" as const : "plain-text-upload" as const, purposeRef: PURPOSE, normalizedContentDigest: source.normalizedDigest, requestedScopeAssertions: [{ relationship: "applies-to" as const, scope: { organizationId, type: "organization" as const, id: organizationId } }], sensitivity: "standard" as const };
     let bindingId:string|undefined;
     const resolveBinding=()=>this.sourceBindings.resolveCanonicalCurrentSourceBinding({...common,authorization:this.sourceAuthorization("source-binding:resolve-current"),resolvedAt:this.instant});
-    for(let attempt=0;attempt<2;attempt++){
-      const stored=await this.runtime.read(organizationId);if(!stored)throw new Error("Runtime is unavailable.");
-      try{const result=await this.sourceBindings.registerCanonicalLocalSourceBinding({...common,authorization:this.sourceAuthorization("source-binding:register-local"),recordedAt:this.instant,recordedByActorRef:this.config.participantRef,idempotencyKey:`${op.id}:source:${sourceKey}:binding`,expectedRuntimeRevision:stored.revision,operation:{requestId:`${op.id}:source:${sourceKey}:binding`,operatorId:this.config.participantRef}});bindingId=result.sourceBindingId;break;}
-      catch(error){const reread=await resolveBinding().catch(()=>null);if(reread?.binding.basisRefs.includes(`product-question:${questionId}`)){bindingId=reread.binding.bindingId;break;}if(attempt===1)throw error;}
-    }
+    try{const result=await this.sourceBindings.registerCanonicalLocalSourceBinding({...common,authorization:this.sourceAuthorization("source-binding:register-local"),recordedAt:this.instant,recordedByActorRef:this.config.participantRef,idempotencyKey:`${op.id}:source:${sourceKey}:binding`,operation:{requestId:`${op.id}:source:${sourceKey}:binding`,operatorId:this.config.participantRef}});bindingId=result.sourceBindingId;}
+    catch(error){if(!(error instanceof CanonicalSourceBindingFailure)||!error.resolutionFallbackAllowed)throw error;const reread=await resolveBinding().catch(()=>null);if(reread?.binding.basisRefs.includes(`product-question:${questionId}`))bindingId=reread.binding.bindingId;else throw error;}
     if(!bindingId)throw new Error("Source binding is unavailable.");
     const inspect=()=>this.inspectSource(bindingId!,questionId,source);
     let state=await inspect(),lastError:unknown;
