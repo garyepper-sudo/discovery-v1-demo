@@ -104,6 +104,7 @@
     "validate:organization-identity-owner": "tsx scripts/product/validateOrganizationIdentityOwner.ts",
     "validate:founder-production-bootstrap-ops-route": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateFounderProductionBootstrapOpsRoute.ts",
     "validate:founder-bootstrap-diagnostics": "tsx scripts/product/validateFounderBootstrapDiagnostics.ts",
+    "validate:production-chief-infrastructure": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateProductionChiefInfrastructure.ts",
     "validate:canonical-local-source-binding": "tsx scripts/product/validateCanonicalLocalSourceBindingRegistration.ts",
     "validate:canonical-local-source-binding-registration": "tsx scripts/product/validateCanonicalLocalSourceBindingRegistration.ts",
     "validate:canonical-local-source-binding-replay": "tsx scripts/product/validateCanonicalLocalSourceBindingReplay.ts",

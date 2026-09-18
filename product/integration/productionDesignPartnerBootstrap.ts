@@ -70,7 +70,7 @@ function authority(input:{organizationId:string;subjectId:string;issuer:string;a
  * every durable write is delegated to an existing canonical owner.
  */
 export async function bootstrapProductionDesignPartner(input: ProductionDesignPartnerBootstrapInputV1, diagnostics?: { correlationId: string }): Promise<ProductionDesignPartnerBootstrapReceiptV1> {
-  let stage: FounderBootstrapStage="MEETING_PACK_PREREQUISITES";
+  let stage: FounderBootstrapStage="PRODUCTION_INFRASTRUCTURE";
   let durableWriteState: "BEFORE_ANY_DURABLE_WRITE" | "AFTER_OR_DURING_DURABLE_WRITE"="BEFORE_ANY_DURABLE_WRITE";
   let infrastructure: ReturnType<typeof createProductionChiefInfrastructure> | undefined;
   let administration: ReturnType<typeof postgres> | undefined;
