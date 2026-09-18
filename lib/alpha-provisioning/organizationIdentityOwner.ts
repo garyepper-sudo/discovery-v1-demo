@@ -65,7 +65,7 @@ export class OrganizationIdentityOwner {
             if (!same(resolved, input)) throw new Error("Organization identity creation facts conflict.");
             return resolved;
           }
-          const organizationId = `organization:${randomUUID()}`;
+          const organizationId = `organization_${randomUUID()}`;
           const created = await transaction<{ organization_id: string; creation_key: string; display_name: string; provenance: string; created_at: Date | string }[]>`
             INSERT INTO organization_identities (organization_id, creation_key, display_name, provenance, created_at)
             VALUES (${organizationId}, ${input.creationKey}, ${input.displayName}, ${input.provenance}, ${input.createdAt})

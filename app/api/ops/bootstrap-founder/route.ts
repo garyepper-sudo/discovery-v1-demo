@@ -7,7 +7,7 @@ import { bootstrapProductionDesignPartner } from "../../../../product/integratio
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-const OPERATION_ID = "founder-production-smoke:asterline-software-synthetic-test:v1";
+const OPERATION_ID = "founder-production-smoke:asterline-software-synthetic-test:v2";
 const OCCURRED_AT = "2026-09-18T04:00:00.000Z";
 const FOUNDER_EMAIL = "garyepper@gmail.com";
 const QUESTION = "Should Asterline keep the October 15 launch date, delay it, or limit the release to a controlled pilot—and what must be resolved before leadership can decide?";

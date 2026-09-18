@@ -50,6 +50,13 @@
       "when": 1789684232000,
       "tag": "0006_organization_identity_owner",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1789684233000,
+      "tag": "0007_organization_identity_runtime_compatibility",
+      "breakpoints": true
     }
   ]
 }

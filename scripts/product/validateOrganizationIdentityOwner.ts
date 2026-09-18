@@ -23,7 +23,7 @@ async function main(): Promise<void> {
     check("migration state is current before owner validation", (await inspectGovernanceMigrationState(sql)).status === "CURRENT");
     await sql`DELETE FROM organization_identities WHERE creation_key IN (${creationKey}, ${`${creationKey}:concurrent`}, ${`${creationKey}:same-name`})`;
     const owner = new OrganizationIdentityOwner(sql), first = await owner.createOrResolveOrganization(input);
-    check("first creation returns opaque owner-issued organization identity", /^organization:[0-9a-f-]{36}$/u.test(first.organizationId));
+    check("first creation returns an opaque Runtime-compatible owner-issued organization identity", /^organization_[0-9a-f-]{36}$/u.test(first.organizationId) && /^[A-Za-z0-9_-]+$/u.test(first.organizationId));
     check("first creation stores the exact approved creation facts", first.creationKey === input.creationKey && first.displayName === input.displayName && first.provenance === input.provenance);
     const replay = await owner.createOrResolveOrganization(input);
     check("identical retry returns the same organization identity", replay.organizationId === first.organizationId);
