@@ -52,6 +52,8 @@ export {
   organizationRuntimeBackupObjectKey,
   organizationRuntimeObjectKey,
   PostgresOrganizationRuntimeRepository,
+  PostgresRuntimeCreateConflictError,
+  PostgresRuntimeCreateError,
   RuntimeStorageConflictError,
   RuntimeStoragePreconditionFailedError,
   RuntimeStorageIntegrityError,
@@ -61,6 +63,8 @@ export {
 export type {
   OrganizationRuntimeRepository,
   OrganizationRuntimeReplaceAuditEvent,
+  PostgresRuntimeCreateBoundary,
+  PostgresRuntimeCreateFailureCode,
   PrivateBlobClient,
   RuntimeStorageBackend,
   RuntimeStorageOperationMetadata,

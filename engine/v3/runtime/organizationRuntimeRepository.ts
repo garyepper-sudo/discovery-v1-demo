@@ -42,7 +42,30 @@ export type RuntimeStorageOperationMetadata = {
   writerClass?: RuntimeWriteOwnerClass;
   /** Ephemeral request correlation supplied by an enclosing server operation. */
   correlationId?: string;
+  /** Optional, content-safe observability for the PostgreSQL initial-create path. */
+  onPostgresRuntimeCreateBoundary?: (boundary: PostgresRuntimeCreateBoundary) => void;
 };
+
+export type PostgresRuntimeCreateBoundary = "validate" | "insert" | "return-validate";
+export const postgresRuntimeCreateFailureCodes = [
+  "POSTGRES_RUNTIME_ORGANIZATION_PARENT_MISSING",
+  "POSTGRES_RUNTIME_ALREADY_EXISTS",
+  "POSTGRES_RUNTIME_CONSTRAINT_FAILED",
+  "POSTGRES_RUNTIME_PERSISTENCE_FAILED",
+  "POSTGRES_RUNTIME_UNKNOWN",
+] as const;
+export type PostgresRuntimeCreateFailureCode = (typeof postgresRuntimeCreateFailureCodes)[number];
+
+/** Closed, content-safe PostgreSQL create failure classification. */
+export class PostgresRuntimeCreateError extends Error {
+  constructor(
+    readonly errorCode: Exclude<PostgresRuntimeCreateFailureCode, "POSTGRES_RUNTIME_ALREADY_EXISTS">,
+    readonly boundary: PostgresRuntimeCreateBoundary,
+  ) {
+    super("PostgreSQL Runtime creation failed");
+  }
+}
+
 
 export type RuntimeWriteOwnerClass =
   | "CanonicalLocalSourceBindingService"
@@ -152,6 +175,15 @@ export class RuntimeStorageRecoveryBlockedError extends Error {
   readonly code = "recovery_blocked" as const;
 }
 
+/** Preserves race recovery while retaining the safe initial-create classification. */
+export class PostgresRuntimeCreateConflictError extends RuntimeStorageConflictError {
+  readonly errorCode = "POSTGRES_RUNTIME_ALREADY_EXISTS" as const;
+
+  constructor(readonly boundary: PostgresRuntimeCreateBoundary) {
+    super("PostgreSQL Runtime already exists");
+  }
+}
+
 const VALID_ID = /^[a-zA-Z0-9_-]+$/;
 
 function exactId(value: string, label: string): string {
@@ -163,6 +195,23 @@ function exactId(value: string, label: string): string {
 
 function digest(bytes: Uint8Array): string {
   return createHash("sha256").update(bytes).digest("hex");
+}
+
+function observePostgresRuntimeCreateBoundary(
+  metadata: RuntimeStorageOperationMetadata,
+  boundary: PostgresRuntimeCreateBoundary,
+): void {
+  try { metadata.onPostgresRuntimeCreateBoundary?.(boundary); } catch {}
+}
+
+function classifyPostgresRuntimeCreateFailure(
+  error: unknown,
+): Exclude<PostgresRuntimeCreateFailureCode, "POSTGRES_RUNTIME_ALREADY_EXISTS"> {
+  if (!(error instanceof Error)) return "POSTGRES_RUNTIME_UNKNOWN";
+  const code = (error as { code?: unknown }).code;
+  if (code === "23503") return "POSTGRES_RUNTIME_ORGANIZATION_PARENT_MISSING";
+  if (typeof code === "string" && code.startsWith("23")) return "POSTGRES_RUNTIME_CONSTRAINT_FAILED";
+  return "POSTGRES_RUNTIME_PERSISTENCE_FAILED";
 }
 
 function safeFingerprint(value: string): string {
@@ -1581,10 +1630,12 @@ export class PostgresOrganizationRuntimeRepository
   async create(
     organizationId: string,
     bytes: Uint8Array,
-    _metadata: RuntimeStorageOperationMetadata,
+    metadata: RuntimeStorageOperationMetadata,
   ): Promise<StoredOrganizationRuntime> {
+    observePostgresRuntimeCreateBoundary(metadata, "validate");
     stored(organizationId, bytes);
     try {
+      observePostgresRuntimeCreateBoundary(metadata, "insert");
       const rows = await this.sql<RuntimePostgresRow[]>`
         INSERT INTO organization_runtime_current
           (organization_id, revision, payload_text, payload_digest, created_at, updated_at)
@@ -1592,15 +1643,22 @@ export class PostgresOrganizationRuntimeRepository
           (${exactId(organizationId, "Organization id")}, 1, ${new TextDecoder().decode(bytes)}, ${digest(bytes)}, now(), now())
         RETURNING organization_id, revision, payload_text, payload_digest
       `;
+      observePostgresRuntimeCreateBoundary(metadata, "return-validate");
       if (rows.length !== 1) {
         throw new RuntimeStorageIntegrityError("Runtime creation was not acknowledged");
       }
       return this.fromRow(organizationId, rows[0]!);
     } catch (error) {
       if ((error as { code?: string }).code === "23505") {
-        throw new RuntimeStorageConflictError("Runtime already exists");
+        throw new PostgresRuntimeCreateConflictError("insert");
       }
-      throw error;
+      if (error instanceof RuntimeStorageIntegrityError ||
+          error instanceof PostgresRuntimeCreateError ||
+          error instanceof PostgresRuntimeCreateConflictError) throw error;
+      throw new PostgresRuntimeCreateError(
+        classifyPostgresRuntimeCreateFailure(error),
+        "insert",
+      );
     }
   }
 

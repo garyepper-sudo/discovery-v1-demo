@@ -4,7 +4,7 @@ import { createHash, randomUUID } from "node:crypto";
 import postgres from "postgres";
 
 import { requireDiscoveryDatabaseUrl } from "../../db/config";
-import { PostgresOrganizationRuntimeRepository, RuntimeStorageConflictError, VercelBlobOrganizationRuntimeRepository, importLegacyOrganizationRuntime } from "../../engine/v3/runtime";
+import { PostgresOrganizationRuntimeRepository, PostgresRuntimeCreateConflictError, PostgresRuntimeCreateError, RuntimeStorageConflictError, VercelBlobOrganizationRuntimeRepository, importLegacyOrganizationRuntime } from "../../engine/v3/runtime";
 import { applyGovernanceMigrations, inspectGovernanceMigrationState } from "../../scripts/storage/governanceMigrationContract";
 
 export type RuntimeMigrationReceipt = Readonly<{
@@ -31,6 +31,9 @@ export const runtimeMigrationStages = [
   "MIGRATION_0008_APPLY",
   "MIGRATION_STATUS_AFTER",
   "POSTGRES_RUNTIME_IMPORT",
+  "POSTGRES_RUNTIME_CREATE_VALIDATE",
+  "POSTGRES_RUNTIME_CREATE_INSERT",
+  "POSTGRES_RUNTIME_CREATE_RETURN_VALIDATE",
   "POSTGRES_RUNTIME_READBACK",
   "PAYLOAD_PARITY_VERIFY",
   "CAS_SMOKE",
@@ -43,11 +46,18 @@ export type RuntimeMigrationDurableWriteState =
   | "AFTER_IMPORT"
   | "UNKNOWN";
 export type RuntimeMigrationRetrySafety = true | false | "unknown";
+export type RuntimeMigrationErrorCode =
+  | "RUNTIME_MIGRATION_STAGE_FAILED"
+  | "POSTGRES_RUNTIME_ORGANIZATION_PARENT_MISSING"
+  | "POSTGRES_RUNTIME_ALREADY_EXISTS"
+  | "POSTGRES_RUNTIME_CONSTRAINT_FAILED"
+  | "POSTGRES_RUNTIME_PERSISTENCE_FAILED"
+  | "POSTGRES_RUNTIME_UNKNOWN";
 export type RuntimeMigrationFailureReceipt = Readonly<{
   status: "FAILED_CLOSED";
   correlationId: string;
   stage: RuntimeMigrationStage;
-  errorCode: "RUNTIME_MIGRATION_STAGE_FAILED";
+  errorCode: RuntimeMigrationErrorCode;
   durableWriteState: RuntimeMigrationDurableWriteState;
   retrySafe: RuntimeMigrationRetrySafety;
 }>;
@@ -67,6 +77,8 @@ type RuntimeMigrationDependencies = Readonly<{
 }>;
 
 const fingerprint = (value: string) => createHash("sha256").update(value).digest("hex").slice(0, 16);
+const stageForCreateBoundary = (boundary: "validate" | "insert" | "return-validate"): RuntimeMigrationStage =>
+  boundary === "validate" ? "POSTGRES_RUNTIME_CREATE_VALIDATE" : boundary === "insert" ? "POSTGRES_RUNTIME_CREATE_INSERT" : "POSTGRES_RUNTIME_CREATE_RETURN_VALIDATE";
 const exactOrganizationId = (environment: NodeJS.ProcessEnv): string => {
   const value = environment.DISCOVERY_ALPHA_ORGANIZATION_ID;
   if (!value || !/^[A-Za-z0-9_-]+$/.test(value)) throw new Error("Production Runtime migration configuration unavailable");
@@ -131,7 +143,7 @@ export async function migrateProductionRuntimeToPostgres(environment: NodeJS.Pro
       stage = boundary === "legacy-read" ? "LEGACY_BLOB_RUNTIME_READ" : boundary === "destination-read" ? "POSTGRES_RUNTIME_CONFLICT_CHECK" : "POSTGRES_RUNTIME_IMPORT";
       if (boundary === "destination-create") { importWriteStarted = true; durableWriteState = "AFTER_OR_DURING_IMPORT"; }
       else if (!importWriteStarted) durableWriteState = "AFTER_MIGRATION_BEFORE_IMPORT";
-    } });
+    }, onCreateBoundary: (boundary: "validate" | "insert" | "return-validate") => { stage = stageForCreateBoundary(boundary); } });
     durableWriteState = "AFTER_IMPORT";
     stage = "POSTGRES_RUNTIME_READBACK";
     const current = await application.read(organizationId);
@@ -144,8 +156,10 @@ export async function migrateProductionRuntimeToPostgres(environment: NodeJS.Pro
     try { await application.replace(organizationId, current.bytes, "0", { requestId: `production-runtime-migration-cas:${correlationId}`, operatorId: "production-runtime-migration", writerClass: "RuntimeProvisioningRecovery", correlationId }); throw new Error("Production Runtime migration CAS verification failed"); }
     catch (error) { if (!(error instanceof RuntimeStorageConflictError)) throw error; }
     return { correlationId, status: "COMPLETE", migrationBefore: before.status === "PENDING" ? "PENDING" : "CURRENT", migrationAfter: "CURRENT", migrationNumber: "0008", organizationFingerprint: fingerprint(organizationId), importStatus: imported.disposition, sourceDigestFingerprint: fingerprint(sourceDigest), postgresDigestFingerprint: fingerprint(currentDigest), parity: "PASS", revision: current.revision, casSmoke: "PASS" };
-  } catch {
-    const retrySafe: RuntimeMigrationRetrySafety = stage === "LEGACY_BLOB_RUNTIME_READ" || stage === "POSTGRES_RUNTIME_IMPORT" || stage === "CAS_SMOKE" ? true : stage === "POSTGRES_RUNTIME_READBACK" || stage === "POSTGRES_RUNTIME_CONFLICT_CHECK" ? "unknown" : false;
-    throw new RuntimeMigrationOperationError({ status: "FAILED_CLOSED", correlationId, stage, errorCode: "RUNTIME_MIGRATION_STAGE_FAILED", durableWriteState, retrySafe });
+  } catch (error) {
+    const createError = error instanceof PostgresRuntimeCreateError || error instanceof PostgresRuntimeCreateConflictError ? error : null;
+    if (createError) stage = stageForCreateBoundary(createError.boundary);
+    const retrySafe: RuntimeMigrationRetrySafety = stage === "LEGACY_BLOB_RUNTIME_READ" || stage === "POSTGRES_RUNTIME_IMPORT" || stage === "POSTGRES_RUNTIME_CREATE_VALIDATE" || stage === "POSTGRES_RUNTIME_CREATE_INSERT" || stage === "POSTGRES_RUNTIME_CREATE_RETURN_VALIDATE" || stage === "CAS_SMOKE" ? true : stage === "POSTGRES_RUNTIME_READBACK" || stage === "POSTGRES_RUNTIME_CONFLICT_CHECK" ? "unknown" : false;
+    throw new RuntimeMigrationOperationError({ status: "FAILED_CLOSED", correlationId, stage, errorCode: createError?.errorCode ?? "RUNTIME_MIGRATION_STAGE_FAILED", durableWriteState, retrySafe });
   } finally { if (sql) await sql.end({ timeout: 1 }); }
 }

@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 
 import {
+  type PostgresRuntimeCreateBoundary,
   RuntimeStorageConflictError,
   RuntimeStorageIntegrityError,
   type OrganizationRuntimeRepository,
@@ -29,6 +30,8 @@ export async function importLegacyOrganizationRuntime(
     operatorId: string;
     /** Optional observability hook; it never affects import control flow. */
     onBoundary?: (boundary: "legacy-read" | "destination-read" | "destination-create") => void;
+    /** Optional PostgreSQL create observability; it never affects import control flow. */
+    onCreateBoundary?: (boundary: PostgresRuntimeCreateBoundary) => void;
   }>,
 ): Promise<OrganizationRuntimeLegacyImportResult> {
   observeBoundary(input.onBoundary, "legacy-read");
@@ -49,6 +52,7 @@ export async function importLegacyOrganizationRuntime(
       requestId: input.requestId,
       operatorId: input.operatorId,
       writerClass: "RuntimeProvisioningRecovery",
+      onPostgresRuntimeCreateBoundary: input.onCreateBoundary,
     });
     if (digest(imported.bytes) !== legacyDigest) {
       throw new RuntimeStorageIntegrityError("Runtime import payload mismatch");

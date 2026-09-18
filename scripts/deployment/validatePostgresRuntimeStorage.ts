@@ -4,7 +4,10 @@ import { createHash } from "node:crypto";
 import {
   importLegacyOrganizationRuntime,
   PostgresOrganizationRuntimeRepository,
+  PostgresRuntimeCreateConflictError,
+  PostgresRuntimeCreateError,
   RuntimeStorageConflictError,
+  RuntimeStorageIntegrityError,
   type PrivateBlobClient,
 } from "../../engine/v3/runtime";
 import { createEmptyOrganizationRuntime } from "../../engine/v3/runtime/organizationRuntime";
@@ -13,7 +16,7 @@ type Row = { organization_id: string; revision: number; payload_text: string; pa
 const digest = (value: Uint8Array) => createHash("sha256").update(value).digest("hex");
 
 /** A strict, isolated PostgreSQL protocol double for this repository's SQL. */
-function isolatedPostgres() {
+function isolatedPostgres(options: Readonly<{ insertFailureCode?: string; genericInsertFailure?: boolean; corruptInsertResult?: boolean }> = {}) {
   const rows = new Map<string, Row>();
   const sql = (async (strings: TemplateStringsArray, ...values: unknown[]) => {
     const query = strings.join("?").replace(/\s+/g, " ").trim();
@@ -23,8 +26,10 @@ function isolatedPostgres() {
     if (query.startsWith("SELECT 1 AS present")) return rows.has(values[0] as string) ? [{ present: 1 }] : [];
     if (query.startsWith("INSERT INTO organization_runtime_current")) {
       const [organization_id, payload_text, payload_digest] = values as [string, string, string];
+      if (options.genericInsertFailure) throw new Error("private-database-error");
+      if (options.insertFailureCode) throw Object.assign(new Error("private-database-error"), { code: options.insertFailureCode });
       if (rows.has(organization_id)) throw Object.assign(new Error("duplicate"), { code: "23505" });
-      const row = { organization_id, revision: 1, payload_text, payload_digest }; rows.set(organization_id, row); return [{ ...row }];
+      const row = { organization_id, revision: 1, payload_text, payload_digest }; rows.set(organization_id, row); return [{ ...row, ...(options.corruptInsertResult ? { payload_digest: "0".repeat(64) } : {}) }];
     }
     if (query.startsWith("UPDATE organization_runtime_current")) {
       const [payload_text, payload_digest, organization_id, expected] = values as [string, string, string, number];
@@ -53,9 +58,26 @@ async function main() {
   const first = bytes(organizationA, 1), second = bytes(organizationA, 2), third = bytes(organizationA, 3);
   assert.equal(repository.backend, "postgresql");
   assert.equal(await repository.read(organizationA), null);
-  const created = await repository.create(organizationA, first, metadata);
+  const createBoundaries: string[] = [];
+  const created = await repository.create(organizationA, first, { ...metadata, onPostgresRuntimeCreateBoundary: boundary => createBoundaries.push(boundary) });
   assert.equal(created.revision, "1"); assert.deepEqual(created.bytes, first);
-  await assert.rejects(repository.create(organizationA, first, metadata), RuntimeStorageConflictError);
+  assert.deepEqual(createBoundaries, ["validate", "insert", "return-validate"]);
+  await assert.rejects(repository.create(organizationA, first, metadata), error => { assert.ok(error instanceof PostgresRuntimeCreateConflictError); assert.equal(error.errorCode, "POSTGRES_RUNTIME_ALREADY_EXISTS"); return true; });
+  const validationDatabase = isolatedPostgres(), validationRepository = new PostgresOrganizationRuntimeRepository(validationDatabase.sql);
+  const validationBoundaries: string[] = [];
+  await assert.rejects(validationRepository.create("postgres-runtime-validation", new TextEncoder().encode("not-json"), { ...metadata, onPostgresRuntimeCreateBoundary: boundary => validationBoundaries.push(boundary) }), RuntimeStorageIntegrityError);
+  assert.deepEqual(validationBoundaries, ["validate"]); assert.equal(validationDatabase.rows.size, 0);
+  const foreignKeyDatabase = isolatedPostgres({ insertFailureCode: "23503" }), foreignKeyRepository = new PostgresOrganizationRuntimeRepository(foreignKeyDatabase.sql);
+  await assert.rejects(foreignKeyRepository.create("postgres-runtime-parent", bytes("postgres-runtime-parent", 1), metadata), error => { assert.ok(error instanceof PostgresRuntimeCreateError); assert.equal(error.errorCode, "POSTGRES_RUNTIME_ORGANIZATION_PARENT_MISSING"); return true; });
+  assert.equal(foreignKeyDatabase.rows.size, 0);
+  const constraintDatabase = isolatedPostgres({ insertFailureCode: "23514" }), constraintRepository = new PostgresOrganizationRuntimeRepository(constraintDatabase.sql);
+  await assert.rejects(constraintRepository.create("postgres-runtime-constraint", bytes("postgres-runtime-constraint", 1), metadata), error => { assert.ok(error instanceof PostgresRuntimeCreateError); assert.equal(error.errorCode, "POSTGRES_RUNTIME_CONSTRAINT_FAILED"); return true; });
+  const persistenceDatabase = isolatedPostgres({ genericInsertFailure: true }), persistenceRepository = new PostgresOrganizationRuntimeRepository(persistenceDatabase.sql);
+  await assert.rejects(persistenceRepository.create("postgres-runtime-persistence", bytes("postgres-runtime-persistence", 1), metadata), error => { assert.ok(error instanceof PostgresRuntimeCreateError); assert.equal(error.errorCode, "POSTGRES_RUNTIME_PERSISTENCE_FAILED"); return true; });
+  const returnDatabase = isolatedPostgres({ corruptInsertResult: true }), returnRepository = new PostgresOrganizationRuntimeRepository(returnDatabase.sql);
+  const returnBoundaries: string[] = [];
+  await assert.rejects(returnRepository.create("postgres-runtime-return", bytes("postgres-runtime-return", 1), { ...metadata, onPostgresRuntimeCreateBoundary: boundary => returnBoundaries.push(boundary) }), RuntimeStorageIntegrityError);
+  assert.deepEqual(returnBoundaries, ["validate", "insert", "return-validate"]);
   const writerA = await repository.read(organizationA), writerB = await repository.read(organizationA); assert.ok(writerA && writerB);
   const advanced = await repository.replace(organizationA, second, writerA.revision, metadata); assert.equal(advanced.revision, "2");
   await assert.rejects(repository.replace(organizationA, third, writerB.revision, metadata), RuntimeStorageConflictError);
