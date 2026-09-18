@@ -28,7 +28,7 @@ export class CanonicalLocalInformationOperationAdapter extends CanonicalProductW
     if (input.request.actorRef !== input.userId || input.request.organizationId !== input.organizationId) throw new Error("Local information operation request scope mismatch.");
     const executed = executeLocalInformationOperation({ runtime: stored.runtime, request: input.request });
     if (executed.runtime === stored.runtime) return { result: executed.result, idempotent: executed.idempotent, runtimeRevision: stored.revision };
-    const persisted = await this.operationDependencies.runtimeRepository.replace(input.organizationId, new TextEncoder().encode(JSON.stringify(executed.runtime, null, 2)), stored.revision, input.operation);
+    const persisted = await this.operationDependencies.runtimeRepository.replace(input.organizationId, new TextEncoder().encode(JSON.stringify(executed.runtime, null, 2)), stored.revision, { ...input.operation, writerClass: "CanonicalLocalInformationOperationAdapter" });
     return { result: executed.result, idempotent: executed.idempotent, runtimeRevision: persisted.revision };
   }
 }

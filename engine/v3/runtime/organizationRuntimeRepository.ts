@@ -37,7 +37,39 @@ export type StoredOrganizationRuntime = {
 export type RuntimeStorageOperationMetadata = {
   requestId: string;
   operatorId: string;
+  /** Ephemeral owner identity for content-safe Runtime write provenance. */
+  writerClass?: RuntimeWriteOwnerClass;
+  /** Ephemeral request correlation supplied by an enclosing server operation. */
+  correlationId?: string;
 };
+
+export type RuntimeWriteOwnerClass =
+  | "CanonicalLocalSourceBindingService"
+  | "CanonicalProductWorkspaceAdapter"
+  | "CanonicalLocalInformationOperationAdapter"
+  | "CanonicalOrganizationalUnderstandingRevisionService"
+  | "productDecisionDraftService"
+  | "canonicalExecutiveHistoryAccessComposition"
+  | "RuntimeProvisioningRecovery"
+  | "unclassified";
+
+export type OrganizationRuntimeReplaceAuditEvent = Readonly<{
+  event:
+    | "ORGANIZATION_RUNTIME_REPLACE_ATTEMPT"
+    | "ORGANIZATION_RUNTIME_REPLACE_SUCCESS"
+    | "ORGANIZATION_RUNTIME_REPLACE_CONFLICT";
+  timestamp: string;
+  writerClass: RuntimeWriteOwnerClass;
+  requestFingerprint: string;
+  correlationFingerprint?: string;
+  organizationFingerprint: string;
+  runtimeObjectKeyFingerprint: string;
+  expectedRevisionFingerprint: string;
+  resultingRevisionFingerprint?: string;
+  currentRevisionFingerprint?: string;
+  deploymentCommit?: string;
+  deploymentId?: string;
+}>;
 
 type RuntimeFilesystemClaimV1 = {
   contractVersion: "1";
@@ -123,6 +155,10 @@ function exactId(value: string, label: string): string {
 
 function digest(bytes: Uint8Array): string {
   return createHash("sha256").update(bytes).digest("hex");
+}
+
+function safeFingerprint(value: string): string {
+  return createHash("sha256").update(value).digest("hex").slice(0, 16);
 }
 
 function parseRuntime(
@@ -1243,7 +1279,42 @@ export class VercelBlobOrganizationRuntimeRepository
     private readonly client: PrivateBlobClient = createVercelPrivateBlobClient(),
     private readonly prefix = process.env.DISCOVERY_RUNTIME_BLOB_PREFIX ??
       "discovery/runtime/v1",
+    private readonly audit: (event: OrganizationRuntimeReplaceAuditEvent) => void =
+      (event) => console.info(event),
   ) {}
+
+  private emitReplaceAudit(
+    event: OrganizationRuntimeReplaceAuditEvent["event"],
+    organizationId: string,
+    key: string,
+    expectedRevision: string,
+    metadata: RuntimeStorageOperationMetadata,
+    revisions: Partial<Pick<OrganizationRuntimeReplaceAuditEvent, "resultingRevisionFingerprint" | "currentRevisionFingerprint">> = {},
+  ): void {
+    try {
+      this.audit({
+        event,
+        timestamp: new Date().toISOString(),
+        writerClass: metadata.writerClass ?? "unclassified",
+        requestFingerprint: safeFingerprint(metadata.requestId),
+        ...(metadata.correlationId
+          ? { correlationFingerprint: safeFingerprint(metadata.correlationId) }
+          : {}),
+        organizationFingerprint: safeFingerprint(organizationId),
+        runtimeObjectKeyFingerprint: safeFingerprint(key),
+        expectedRevisionFingerprint: safeFingerprint(expectedRevision),
+        ...revisions,
+        ...(process.env.VERCEL_GIT_COMMIT_SHA
+          ? { deploymentCommit: process.env.VERCEL_GIT_COMMIT_SHA }
+          : {}),
+        ...(process.env.VERCEL_DEPLOYMENT_ID
+          ? { deploymentId: process.env.VERCEL_DEPLOYMENT_ID }
+          : {}),
+      });
+    } catch {
+      // Observability is never allowed to affect Runtime write semantics.
+    }
+  }
 
   private key(organizationId: string): string {
     return organizationRuntimeObjectKey(organizationId, this.prefix);
@@ -1290,11 +1361,42 @@ export class VercelBlobOrganizationRuntimeRepository
     metadata: RuntimeStorageOperationMetadata,
   ): Promise<StoredOrganizationRuntime> {
     const value = stored(organizationId, bytes);
-    const result = await this.client.put(this.key(organizationId), bytes, {
-      allowOverwrite: true,
-      ifMatch: expectedRevision,
-    });
-    return { ...value, revision: result.etag };
+    const key = this.key(organizationId);
+    this.emitReplaceAudit(
+      "ORGANIZATION_RUNTIME_REPLACE_ATTEMPT",
+      organizationId,
+      key,
+      expectedRevision,
+      metadata,
+    );
+    try {
+      const result = await this.client.put(key, bytes, {
+        allowOverwrite: true,
+        ifMatch: expectedRevision,
+      });
+      this.emitReplaceAudit(
+        "ORGANIZATION_RUNTIME_REPLACE_SUCCESS",
+        organizationId,
+        key,
+        expectedRevision,
+        metadata,
+        { resultingRevisionFingerprint: safeFingerprint(result.etag) },
+      );
+      return { ...value, revision: result.etag };
+    } catch (error) {
+      if (error instanceof RuntimeStorageConflictError) {
+        const current = await this.client.head(key).catch(() => null);
+        this.emitReplaceAudit(
+          "ORGANIZATION_RUNTIME_REPLACE_CONFLICT",
+          organizationId,
+          key,
+          expectedRevision,
+          metadata,
+          current ? { currentRevisionFingerprint: safeFingerprint(current.etag) } : {},
+        );
+      }
+      throw error;
+    }
   }
 
   async backup(

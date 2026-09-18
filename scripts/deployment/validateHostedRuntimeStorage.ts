@@ -11,6 +11,7 @@ import {
   RuntimeStorageConflictError,
   RuntimeStorageIntegrityError,
   VercelBlobOrganizationRuntimeRepository,
+  type OrganizationRuntimeReplaceAuditEvent,
   type PrivateBlobClient,
 } from "../../engine/v3/runtime";
 import { createEmptyOrganizationRuntime } from "../../engine/v3/runtime/organizationRuntime";
@@ -85,7 +86,7 @@ async function main(): Promise<void> {
     assert.deepEqual(onDisk, Buffer.from(first));
   });
   await check(() => assert.rejects(
-    local.create(organizationId, first, metadata),
+    local.create(organizationId, first, { ...metadata, requestId: "hosted-runtime-validation:duplicate" }),
     RuntimeStorageConflictError,
   ));
   await local.backup(organizationId, "before-replace", metadata);
@@ -97,7 +98,7 @@ async function main(): Promise<void> {
   );
   await check(() => assert.deepEqual(localReplaced.bytes, second));
   await check(() => assert.rejects(
-    local.replace(organizationId, first, localCreated.revision, metadata),
+    local.replace(organizationId, first, localCreated.revision, { ...metadata, requestId: "hosted-runtime-validation:stale" }),
     RuntimeStorageConflictError,
   ));
   const localRestored = await local.restore(
@@ -109,9 +110,11 @@ async function main(): Promise<void> {
   await check(() => assert.deepEqual(localRestored.bytes, first));
 
   const client = new IsolatedPrivateBlobClient();
+  const replaceAudit: OrganizationRuntimeReplaceAuditEvent[] = [];
   const hosted = new VercelBlobOrganizationRuntimeRepository(
     client,
     "validation/runtime/v1",
+    (event) => replaceAudit.push(event),
   );
   await check(() => assert.equal(hosted.backend, "vercel-blob"));
   await check(async () => assert.equal(await hosted.read(organizationId), null));
@@ -122,13 +125,63 @@ async function main(): Promise<void> {
     organizationId,
     second,
     hostedCreated.revision,
-    metadata,
+    { ...metadata, writerClass: "CanonicalLocalSourceBindingService", correlationId: "correlation-runtime-audit-001" },
   );
   await check(() => assert.deepEqual(hostedReplaced.bytes, second));
   await check(() => assert.rejects(
-    hosted.replace(organizationId, first, hostedCreated.revision, metadata),
+    hosted.replace(organizationId, first, hostedCreated.revision, { ...metadata, writerClass: "CanonicalProductWorkspaceAdapter" }),
     RuntimeStorageConflictError,
   ));
+  await check(() => assert.deepEqual(
+    replaceAudit.map((event) => event.event),
+    [
+      "ORGANIZATION_RUNTIME_REPLACE_ATTEMPT",
+      "ORGANIZATION_RUNTIME_REPLACE_SUCCESS",
+      "ORGANIZATION_RUNTIME_REPLACE_ATTEMPT",
+      "ORGANIZATION_RUNTIME_REPLACE_CONFLICT",
+    ],
+  ));
+  await check(() => {
+    const [attempt, success, conflictAttempt, conflict] = replaceAudit;
+    assert.equal(attempt?.writerClass, "CanonicalLocalSourceBindingService");
+    assert.equal(success?.writerClass, "CanonicalLocalSourceBindingService");
+    assert.ok(success?.correlationFingerprint);
+    assert.equal(conflictAttempt?.writerClass, "CanonicalProductWorkspaceAdapter");
+    assert.equal(conflict?.writerClass, "CanonicalProductWorkspaceAdapter");
+    assert.ok(success?.resultingRevisionFingerprint);
+    assert.ok(conflict?.currentRevisionFingerprint);
+    assert.notEqual(conflict?.expectedRevisionFingerprint, conflict?.currentRevisionFingerprint);
+  });
+  await check(() => {
+    const serialized = JSON.stringify(replaceAudit);
+    assert.doesNotMatch(serialized, /etag-[0-9]|validation\/runtime\/v1|atlas-hosted-validation|sensitive-source-body|private-locator|correlation-runtime-audit-001|token|bytes|runtime"/i);
+    assert.doesNotMatch(serialized, /private.*blob|blob.*private/i);
+  });
+  await check(async () => {
+    const hostileEvents: OrganizationRuntimeReplaceAuditEvent[] = [];
+    const hostile = new VercelBlobOrganizationRuntimeRepository(
+      client,
+      "validation/runtime/v1",
+      (event) => hostileEvents.push(event),
+    );
+    await assert.rejects(
+      hostile.replace(
+        organizationId,
+        first,
+        hostedCreated.revision,
+        {
+          requestId: "private-locator:https://private.blob.example/token",
+          operatorId: "private-locator",
+          writerClass: "RuntimeProvisioningRecovery",
+          correlationId: "private-locator:correlation",
+        },
+      ),
+      RuntimeStorageConflictError,
+    );
+    const serialized = JSON.stringify(hostileEvents);
+    assert.equal(hostileEvents.at(-1)?.writerClass, "RuntimeProvisioningRecovery");
+    assert.doesNotMatch(serialized, /private-locator|private\.blob\.example|token/i);
+  });
   const hostedRestored = await hosted.restore(
     organizationId,
     "before-replace",
@@ -157,7 +210,7 @@ async function main(): Promise<void> {
     `discovery/runtime/v1/organizations/${organizationId}/backups/backup-001.json`,
   ));
   await check(() => assert.rejects(
-    hosted.create(organizationId, first, metadata),
+    hosted.create(organizationId, first, { ...metadata, requestId: "hosted-runtime-validation:duplicate" }),
     RuntimeStorageConflictError,
   ));
   await check(() => assert.rejects(

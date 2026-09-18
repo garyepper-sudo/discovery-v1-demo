@@ -272,7 +272,7 @@ export class CanonicalExecutiveHistoryAccessComposition {
         input.organizationId,
         new TextEncoder().encode(JSON.stringify(runtime, null, 2)),
         stored.revision,
-        input.runtimeOperation,
+        { ...input.runtimeOperation, writerClass: "canonicalExecutiveHistoryAccessComposition" },
       );
     }
     try {

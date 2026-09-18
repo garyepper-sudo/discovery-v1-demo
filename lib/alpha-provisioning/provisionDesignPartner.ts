@@ -150,7 +150,11 @@ export async function provisionOrganizationRuntime(
   const requestId = createHash("sha256")
     .update(input.idempotencyKey)
     .digest("hex");
-  const metadata = { requestId, operatorId: input.actor };
+  const metadata = {
+    requestId,
+    operatorId: input.actor,
+    writerClass: "RuntimeProvisioningRecovery" as const,
+  };
   const existingRuntime = await input.repository.read(input.organizationId);
   let backupId: string | undefined;
   let stored;

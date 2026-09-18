@@ -423,7 +423,7 @@ export class CanonicalProductWorkspaceAdapter {
       input.runtime.metadata.organizationId,
       bytes,
       input.stored.revision,
-      input.operation,
+      { ...input.operation, writerClass: "CanonicalProductWorkspaceAdapter" },
     );
   }
 

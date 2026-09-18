@@ -49,8 +49,10 @@ export {
 
 export type {
   OrganizationRuntimeRepository,
+  OrganizationRuntimeReplaceAuditEvent,
   PrivateBlobClient,
   RuntimeStorageBackend,
   RuntimeStorageOperationMetadata,
+  RuntimeWriteOwnerClass,
   StoredOrganizationRuntime,
 } from "./organizationRuntimeRepository";

@@ -114,7 +114,7 @@ export class ProductDecisionDraftService {
     const bound=bindProductDecisionDraftBodyPublicationV1({runtime:recorded.runtime,result:recorded.result,body:staged.body,stageReceiptDigest:staged.receiptDigest,inspectionMetadata});
     const bytes = new TextEncoder().encode(JSON.stringify(bound.runtime, null, 2));
     const persisted = await this.dependencies.runtimeRepository.replace(
-      input.request.organizationId, bytes, stored.revision, input.storageOperation,
+      input.request.organizationId, bytes, stored.revision, { ...input.storageOperation, writerClass: "productDecisionDraftService" },
     );
     const persistedEvent = productDecisionDraftEvents(persisted.runtime)
       .find((event) => event.revision.revisionId === bound.result.revision.revisionId);
@@ -246,7 +246,7 @@ export class ProductDecisionDraftService {
       instruction.organizationId,
       bytes,
       stored.revision,
-      input.storageOperation,
+      { ...input.storageOperation, writerClass: "productDecisionDraftService" },
     );
     const persistedEvent = productDecisionDraftEvents(persisted.runtime)
       .find((event) => event.materializationReceipt?.instructionDigest === instruction.instructionDigest);

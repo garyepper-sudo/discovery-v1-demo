@@ -355,7 +355,7 @@ export class CanonicalOrganizationalUnderstandingRevisionService {
     const record: CanonicalUnderstandingCompositionEvaluationOperationV1 = { ...recordUnsigned, recordDigest: digest(recordUnsigned) };
     runtime.memory.organizationalUnderstandingState.canonicalCompositionEvaluationOperations = [...operations, record];
     const persisted = await this.repository.replace(request.organizationId,
-      new TextEncoder().encode(JSON.stringify(runtime, null, 2)), currentRuntime.revision, request.operation);
+      new TextEncoder().encode(JSON.stringify(runtime, null, 2)), currentRuntime.revision, { ...request.operation, writerClass: "CanonicalOrganizationalUnderstandingRevisionService" });
     if (!persisted.runtime.memory.organizationalUnderstandingState.canonicalCompositionEvaluationReceipts
       ?.some((item) => item.receiptDigest === receipt.receiptDigest)) deny();
     return { receipt, idempotent: false };
@@ -580,7 +580,7 @@ export class CanonicalOrganizationalUnderstandingRevisionService {
       request.organizationId,
       bytes,
       stored.revision,
-      request.operation,
+      { ...request.operation, writerClass: "CanonicalOrganizationalUnderstandingRevisionService" },
     );
     const persistedReceipt = (persisted.runtime.memory.events as unknown[]).find(
       (item) =>
