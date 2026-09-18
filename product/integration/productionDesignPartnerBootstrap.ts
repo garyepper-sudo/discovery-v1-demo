@@ -76,7 +76,11 @@ export async function bootstrapProductionDesignPartner(input: ProductionDesignPa
   const infrastructure=createProductionChiefInfrastructure();
   const administration=postgres(requireDiscoveryDatabaseUrl("administration"),{max:1});
   const at=input.occurredAt, issuer=`production-design-partner-bootstrap:${input.operationId}`;
+  const operationLock=`production-design-partner-bootstrap:${input.operationId}`;
+  let lockAcquired=false;
   try {
+    await infrastructure.sql`SELECT pg_advisory_lock(hashtextextended(${operationLock}, 0))`;
+    lockAcquired=true;
     const organization=await new OrganizationIdentityOwner(administration).createOrResolveOrganization({...input.organization,createdAt:at});
     const organizationId=organization.organizationId;
     const bootstrap=await provisionOrganizationUnderstandingBootstrap({organizationId,organizationName:organization.displayName,purpose:input.meetingPurpose,primaryQuestion:input.productQuestion,meetingExternalKey:input.meetingExternalKey,bootstrapOperationId:input.operationId,actor:`production-design-partner-bootstrap:${input.operationId}`,createdAt:at,repository:infrastructure.runtime});
@@ -115,5 +119,8 @@ export async function bootstrapProductionDesignPartner(input: ProductionDesignPa
     const prepared=await server.activateAndPrepareWithIdentity({contractVersion:"1",userId:input.clerkSubject,organizationId,questionId,meetingTitle:input.meetingTitle,timeframe:input.cadenceLabel,role:input.role,purpose:input.meetingPurpose,authorizedSourceRefs:versions.map(value=>value.sourceContentVersionId),idempotencyKey:leadershipId("general-recurring-meeting-activation",organizationId,input.meetingExternalKey),identity});
     const address=createHash("sha256").update(`meeting-series-address:v1:${organizationId}:${seriesId}`).digest("base64url").slice(0,24);
     return {contractVersion:"1",organizationId,participantRef:participant.participantRef,productQuestionId:questionId,seriesId,occurrenceId:identity.conversationId,preparationScopeId:scope.scopeId,preparedWorkProductVersionId:prepared.provenance.preparedWorkProductVersionId,meetingAddress:address,sourceCount:versions.length};
-  } finally { await Promise.all([infrastructure.close(),administration.end({timeout:1})]); }
+  } finally {
+    try { if(lockAcquired) await infrastructure.sql`SELECT pg_advisory_unlock(hashtextextended(${operationLock}, 0))`; }
+    finally { await Promise.all([infrastructure.close(),administration.end({timeout:1})]); }
+  }
 }

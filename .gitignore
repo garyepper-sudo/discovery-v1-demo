@@ -8,3 +8,5 @@ tsconfig.tsbuildinfo
 .discovery-runtime/onboarding-google-drive/
 .discovery-runtime/development-runtime-recovery/
 provider-benchmark.txt
+.vercel
+.env*
