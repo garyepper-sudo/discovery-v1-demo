@@ -50,20 +50,22 @@ async function bootstrapFailure(environment:NodeJS.ProcessEnv,correlationId:stri
 async function main(){
   const staticToken={...base(),BLOB_READ_WRITE_TOKEN:"test-static-token"};
   await accepted(staticToken);
-  const oidc={...base(),VERCEL_OIDC_TOKEN:"test-oidc-token",BLOB_STORE_ID:"store_test"};
-  await accepted(oidc);
-  rejected({...base(),VERCEL_OIDC_TOKEN:"test-oidc-token"});
+  const scoped={...base(),VERCEL:"1",VERCEL_ENV:"production",BLOB_STORE_ID:"store_test"};
+  assert.equal("VERCEL_OIDC_TOKEN" in scoped,false);
+  await accepted(scoped);
+  rejected({...base(),VERCEL:"1",VERCEL_ENV:"production"});
   rejected({...base(),BLOB_STORE_ID:"store_test"});
+  rejected({...base(),VERCEL:"1",VERCEL_ENV:"preview",BLOB_STORE_ID:"store_test"});
   rejected(base());
-  assert.throws(()=>createProductionChiefInfrastructure({...oidc,CRON_SECRET:""}),/CRON_SECRET/);
+  assert.throws(()=>createProductionChiefInfrastructure({...scoped,CRON_SECRET:""}),/CRON_SECRET/);
 
   const construction=await bootstrapFailure(base(),"production-infrastructure-construction");
   assert.equal(construction.diagnostic.stage,"PRODUCTION_INFRASTRUCTURE");
   assert.equal(construction.diagnostic.infrastructureSubstage,"CHIEF_INFRASTRUCTURE_CONSTRUCTION");
-  const missingAdministration:NodeJS.ProcessEnv={...oidc,DISCOVERY_DATABASE_ADMIN_URL:undefined};
+  const missingAdministration:NodeJS.ProcessEnv={...scoped,DISCOVERY_DATABASE_ADMIN_URL:undefined};
   const administration=await bootstrapFailure(missingAdministration,"production-infrastructure-administration");
   assert.equal(administration.diagnostic.infrastructureSubstage,"ADMINISTRATION_DATABASE_CLIENT");
-  const advisoryLock=await bootstrapFailure({...oidc,DISCOVERY_DATABASE_URL:"postgresql://user:password@127.0.0.1:1/application?connect_timeout=1"},"production-infrastructure-advisory-lock");
+  const advisoryLock=await bootstrapFailure({...scoped,DISCOVERY_DATABASE_URL:"postgresql://user:password@127.0.0.1:1/application?connect_timeout=1"},"production-infrastructure-advisory-lock");
   assert.equal(advisoryLock.diagnostic.infrastructureSubstage,"OPERATION_ADVISORY_LOCK");
   const diagnostic=JSON.stringify(advisoryLock.diagnostic);
   assert.equal(diagnostic.includes("postgresql://"),false);
@@ -71,8 +73,11 @@ async function main(){
   assert.equal(diagnostic.includes("password"),false);
   const bootstrapSource=await readFile(path.join(process.cwd(),"product/integration/productionDesignPartnerBootstrap.ts"),"utf8");
   assert.ok(bootstrapSource.includes('await infrastructure.sql`SELECT pg_advisory_lock(hashtextextended(${operationLock}, 0))`;\n    lockAcquired=true;\n    stage="ORGANIZATION_IDENTITY"'),"successful bootstrap sequence remains unchanged after lock acquisition");
+  const deploymentValidator=await readFile(path.join(process.cwd(),"scripts/deployment/validateAlphaEnvironment.ts"),"utf8");
+  assert.ok(deploymentValidator.includes('process.env.BLOB_STORE_ID && process.env.VERCEL === "1" && process.env.VERCEL_ENV === "production"'),"deployment and Chief predicates accept the same scoped Vercel Blob context");
+  assert.equal(deploymentValidator.includes("process.env.VERCEL_OIDC_TOKEN"),false,"deployment predicate does not require an environment OIDC token");
 
-  console.log("RESULT PASS production-chief-infrastructure static=accepted oidc=accepted incompleteOidc=closed infrastructureSubstages=chief,administration,advisory-lock");
+  console.log("RESULT PASS production-chief-infrastructure static=accepted scoped-vercel-oidc=accepted local-store-only=closed infrastructureSubstages=chief,administration,advisory-lock");
 }
 
 void main();

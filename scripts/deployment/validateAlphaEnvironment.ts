@@ -50,12 +50,9 @@ if (runtimeBackend === "filesystem") {
   assert.notEqual(process.env.VERCEL, "1", "Vercel cannot use filesystem Runtime storage");
 }
 if (runtimeBackend === "vercel-blob") {
-  assert.ok(
-    process.env.BLOB_READ_WRITE_TOKEN || (
-      process.env.VERCEL_OIDC_TOKEN && process.env.BLOB_STORE_ID
-    ),
-    "Private Blob authentication is required",
-  );
+  assert.ok(process.env.BLOB_READ_WRITE_TOKEN || (
+    process.env.BLOB_STORE_ID && process.env.VERCEL === "1" && process.env.VERCEL_ENV === "production"
+  ), "Private Blob authentication is required");
 }
 assert.match(
   process.env.DISCOVERY_ALPHA_ORGANIZATION_ID!,

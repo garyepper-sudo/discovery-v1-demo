@@ -14,7 +14,7 @@ import { PostgresSourceScopedFrontierAttemptLifecycleV1 } from "./sourceScopedEx
 const required=["DISCOVERY_CHIEF_COMPOSITION","DISCOVERY_RUNTIME_STORAGE_BACKEND","DISCOVERY_EXECUTIVE_HISTORY_ACCESS_STORAGE_BACKEND","DISCOVERY_CHIEF_BLOB_PREFIX","DISCOVERY_PARTICIPANT_IDENTITY_LOCATOR_KEY","CLERK_SECRET_KEY","NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY","OPENAI_API_KEY","CRON_SECRET"] as const;
 
 function hasPrivateBlobAuthentication(environment:NodeJS.ProcessEnv):boolean{
-  return Boolean(environment.BLOB_READ_WRITE_TOKEN?.trim()||(environment.VERCEL_OIDC_TOKEN?.trim()&&environment.BLOB_STORE_ID?.trim()));
+  return Boolean(environment.BLOB_READ_WRITE_TOKEN?.trim()||(environment.BLOB_STORE_ID?.trim()&&environment.VERCEL==="1"&&environment.VERCEL_ENV==="production"));
 }
 
 /** Single server-only selector for the production Chief durable owners. */
