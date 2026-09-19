@@ -103,6 +103,7 @@
     "validate:initial-understanding-bootstrap": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateInitialUnderstandingBootstrap.ts",
     "validate:organization-identity-owner": "tsx scripts/product/validateOrganizationIdentityOwner.ts",
     "validate:canonical-founder-identity-source": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateCanonicalFounderIdentitySource.ts",
+    "validate:authenticated-founder-access-reconciliation-diagnostic": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateAuthenticatedFounderAccessReconciliationDiagnostic.ts",
     "validate:canonical-founder-runtime-preservation-diagnostic": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateCanonicalFounderRuntimePreservationDiagnostic.ts",
     "validate:founder-production-bootstrap-ops-route": "NODE_OPTIONS=--conditions=react-server tsx scripts/product/validateFounderProductionBootstrapOpsRoute.ts",
     "validate:founder-bootstrap-diagnostics": "tsx scripts/product/validateFounderBootstrapDiagnostics.ts",
