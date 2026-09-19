@@ -306,7 +306,7 @@ async function main(): Promise<void> {
     "Runtime repository read must remain inside the authorized disclosure transaction",
   ));
   const healthSource = await readFile("app/api/health/route.ts", "utf8");
-  await check(() => assert.match(healthSource, /canonicalFounderRuntimeHealthy\(sql, process\.env\)/));
+  await check(() => assert.match(healthSource, /inspectCanonicalFounderRuntimeHealth\(sql, process\.env\)/));
   const locationSource = await readFile(
     "engine/v3/runtime/runtimeStorageLocation.ts",
     "utf8",
