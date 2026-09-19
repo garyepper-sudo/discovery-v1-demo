@@ -2,12 +2,12 @@ import "server-only";
 
 import type { Sql } from "postgres";
 
-import { createOrganizationRuntimeRepository, type StoredOrganizationRuntime } from "../../engine/v3/runtime";
+import { PostgresOrganizationRuntimeRepository, type StoredOrganizationRuntime } from "../../engine/v3/runtime";
 import { resolveCanonicalFounderIdentity } from "./canonicalFounderIdentity";
 
 type Dependencies = Readonly<{
   resolveFounder: (sql: Sql<Record<string, unknown>>) => Promise<{ organizationId: string }>;
-  runtime: (environment: NodeJS.ProcessEnv, sql: Sql<Record<string, unknown>>) => Pick<ReturnType<typeof createOrganizationRuntimeRepository>, "read">;
+  runtime: (sql: Sql<Record<string, unknown>>) => Pick<PostgresOrganizationRuntimeRepository, "read">;
 }>;
 
 /** Closed, content-safe boundaries for the canonical founder Runtime health read. */
@@ -37,16 +37,20 @@ export async function inspectCanonicalFounderRuntimeHealth(
   environment: NodeJS.ProcessEnv = process.env,
   injected?: Partial<Dependencies>,
 ): Promise<CanonicalFounderRuntimeHealthResult> {
-  const dependencies: Dependencies = { resolveFounder: resolveCanonicalFounderIdentity, runtime: createOrganizationRuntimeRepository, ...injected };
+  const dependencies: Dependencies = {
+    resolveFounder: resolveCanonicalFounderIdentity,
+    runtime: (connection) => new PostgresOrganizationRuntimeRepository(connection),
+    ...injected,
+  };
   let founder: { organizationId: string };
   try {
     founder = await dependencies.resolveFounder(sql);
   } catch {
     return { stage: "FOUNDER_IDENTITY_READ", healthy: false };
   }
-  let runtime: Pick<ReturnType<typeof createOrganizationRuntimeRepository>, "read">;
+  let runtime: Pick<PostgresOrganizationRuntimeRepository, "read">;
   try {
-    runtime = dependencies.runtime(environment, sql);
+    runtime = dependencies.runtime(sql);
   } catch {
     return { stage: "POSTGRES_REPOSITORY_CONSTRUCTION", healthy: false };
   }

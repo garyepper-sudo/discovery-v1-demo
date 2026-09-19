@@ -44,6 +44,18 @@ async function main(): Promise<void> {
   assert.equal(runtimeReads, 1);
   assert.deepEqual(canonicalFounderRuntimeHealthReceipt(healthy), { runtime: true });
 
+  let backendSelectionReads = 0;
+  const backendIndependent = await inspectCanonicalFounderRuntimeHealth({} as never, {
+    ...environment,
+    DISCOVERY_RUNTIME_STORAGE_BACKEND: "vercel-blob",
+    VERCEL: "1",
+  }, {
+    resolveFounder: async () => founder,
+    runtime: () => ({ read: async (organizationId: string) => { backendSelectionReads += 1; return stored(organizationId); } }),
+  });
+  assert.deepEqual(backendIndependent, { stage: "PASS", healthy: true });
+  assert.equal(backendSelectionReads, 1);
+
   const absent = await inspectCanonicalFounderRuntimeHealth({} as never, environment, {
     resolveFounder: async () => founder,
     runtime: () => ({ read: async () => null }),

@@ -307,6 +307,9 @@ async function main(): Promise<void> {
   ));
   const healthSource = await readFile("app/api/health/route.ts", "utf8");
   await check(() => assert.match(healthSource, /inspectCanonicalFounderRuntimeHealth\(sql, process\.env\)/));
+  const healthOperationSource = await readFile("lib/alpha-provisioning/productionFounderRuntimeHealth.ts", "utf8");
+  await check(() => assert.match(healthOperationSource, /new PostgresOrganizationRuntimeRepository\(connection\)/));
+  await check(() => assert.doesNotMatch(healthOperationSource, /createOrganizationRuntimeRepository/));
   const locationSource = await readFile(
     "engine/v3/runtime/runtimeStorageLocation.ts",
     "utf8",
